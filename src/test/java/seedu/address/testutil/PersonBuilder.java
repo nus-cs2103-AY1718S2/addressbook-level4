@@ -2,10 +2,13 @@ package seedu.address.testutil;
 
 import static java.util.Objects.isNull;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.logic.parser.ProfileImageUtil;
+import seedu.address.logic.parser.ResumeUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
@@ -72,6 +75,7 @@ public class PersonBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
+
         address = new Address(DEFAULT_ADDRESS);
         university = new University(DEFAULT_UNIVERSITY);
         expectedGraduationYear = new ExpectedGraduationYear(DEFAULT_EXPECTED_GRADUATION_YEAR);
@@ -83,7 +87,17 @@ public class PersonBuilder {
                 Double.valueOf(DEFAULT_PROBLEM_SOLVING_SKILLS_SCORE),
                 Double.valueOf(DEFAULT_EXPERIENCE_SCORE));
         resume = new Resume(formPathFromFileName(DEFAULT_RESUME));
+        try {
+            resume = ResumeUtil.process(resume);
+        } catch (IOException ioe) {
+            throw new AssertionError("Testing environment should not be read only!");
+        }
         profileImage = new ProfileImage(formImagePathFromFileName(DEFAULT_PROFILE_IMAGE));
+        try {
+            profileImage = ProfileImageUtil.process(profileImage);
+        } catch (IOException ioe) {
+            throw new AssertionError("Testing environment should not be read only!");
+        }
         comment = new Comment(DEFAULT_COMMENT);
         interviewDate = new InterviewDate();
         status = new Status();
@@ -209,6 +223,19 @@ public class PersonBuilder {
      */
     public PersonBuilder withResume(String resume) {
         this.resume = new Resume(resume);
+        try {
+            this.resume = ResumeUtil.process(this.resume);
+        } catch (IOException ioe) {
+            throw new AssertionError("Testing environment should not be read only!");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Resume} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withResumeLazy(String resume) {
+        this.resume = new Resume(resume);
         return this;
     }
 
@@ -217,6 +244,19 @@ public class PersonBuilder {
      * Sets the {@code ProfileImage} of the {@code Person} that we are building.
      */
     public PersonBuilder withProfileImage(String profileImage) {
+        this.profileImage = new ProfileImage(profileImage);
+        try {
+            this.profileImage = ProfileImageUtil.process(this.profileImage);
+        } catch (IOException ioe) {
+            throw new AssertionError("Testing environment should not be read only!");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code ProfileImage} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withProfileImageLazy(String profileImage) {
         this.profileImage = new ProfileImage(profileImage);
         return this;
     }

@@ -15,6 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_RESUME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -80,11 +81,12 @@ public class AddCommandParser implements Parser<AddCommand> {
             // Optional fields
             Optional<Resume> resumeOptional = ParserUtil.parseResume(argMultimap.getValue(PREFIX_RESUME));
             Resume resume = resumeOptional.isPresent() ? resumeOptional.get() : new Resume(null);
-
+            resume = ResumeUtil.process(resume);
             Optional<ProfileImage> profileImageOptional =
                     ParserUtil.parseProfileImage(argMultimap.getValue(PREFIX_IMAGE));
             ProfileImage profileImage = profileImageOptional.isPresent()
                     ? profileImageOptional.get() : new ProfileImage(null);
+            profileImage = ProfileImageUtil.process(profileImage);
 
             Optional<Comment> commentOptional =
                     ParserUtil.parseComment(argMultimap.getValue(PREFIX_COMMENT));
@@ -107,6 +109,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
+        } catch (IOException ioe) {
+            throw new ParseException(ioe.getMessage(), ioe);
         }
     }
 

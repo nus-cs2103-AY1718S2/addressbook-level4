@@ -305,6 +305,7 @@ Wildcard search matches:
 
 ****
 
+// tag::filter[]
 === Filter persons by multiple fields: `filter` `[since v1.3]`
 
 Filters persons whose keyword is within the specified range.
@@ -325,6 +326,7 @@ Returns all persons whose graduation year between 2019 and 2021, and whose ratin
 
 Since v1.4, filter command supports filtering by cGPA and interview date. It now takes the format:
 `Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE] [g/CGPA_RANGE] [d/INTERVIEW_DATE_RANGE]`
+// end::filter[]
 
 === Deleting a person : `delete`
 
@@ -366,6 +368,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::rate[]
 === Rating a student : `rate` `[since v1.1]`
 
 Rates the student identified by the index number used in the last person listing based on technical, communication, problem solving skills and experience. +
@@ -387,10 +390,12 @@ Examples:
 Rates the 1st person to have technical skills score of 4.5, communication skills score of 3, problem solving skills of 4, experience score of 3.5. The overall rating is computed to be 3.75.
 * `rate 2 t/3 c/5 p/3.5 e/2` +
 Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2. The overall rating is computed to be 3.38.
+// end::rate[]
 
+// tag::sort[]
 === Sorting the list of students based on different fields : `sort` `[since v1.3]`
 
-Sorts the current list of students in HR+ based on gpa, name or overall rating in descending or ascending order. +
+Sorts the current list of students in HR+ based on GPA, name or overall rating in descending or ascending order. +
 Format: `sort FIELD o/SORT ORDER`
 
 ****
@@ -406,7 +411,9 @@ Examples:
 Sorts the current list of students according to their overall rating in ascending order.
 * `sort gpa o/desc` +
 Sorts the current list of students according to their grade point average in descending order.
+// end::sort[]
 
+// tag::ratingdelete[]
 === Deleting the rating given to an applicant : `rating-delete` `[since v1.2]`
 
 Deletes the rating given to the student identified by the index number used in the last person listing. +
@@ -422,7 +429,9 @@ Examples:
 
 * `rating-delete 1` +
 Deletes the rating of the first applicant in HR+.
+// end::ratingdelete[]
 
+// tag::status[]
 === Update applicant's status: `status` [Since v1.3]
 Updates the status of an applicant. +
 Format: `status INDEX STATUS_INDEX`
@@ -440,6 +449,7 @@ Format: `status INDEX STATUS_INDEX`
 7. Accepted
 8. Withdrawn
 ****
+// end::status[]
 
 === Listing entered commands : `history`
 

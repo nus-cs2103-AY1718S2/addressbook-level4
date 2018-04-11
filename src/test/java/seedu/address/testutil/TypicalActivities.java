@@ -55,11 +55,14 @@ public class TypicalActivities {
     // Manually added
     public static final Task ASSIGNMENT3 = new TaskBuilder().withName("CS2102Assignment")
             .withDateTime("01/04/2018 20:00")
-            .withRemark("nil").build();
+            .withRemark("nil")
+            .withTags("CS2102").build();
     public static final Event DEMO1 = new EventBuilder().withName("CS2102ProjectDemo")
             .withStartDateTime("04/04/2018 09:00")
             .withEndDateTime("04/04/2018 10:00")
-            .withRemark("FinalDemo").build();
+            .withLocation("COM1")
+            .withRemark("FinalDemo")
+            .withTags("CS2102").build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

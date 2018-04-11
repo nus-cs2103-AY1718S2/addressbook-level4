@@ -48,7 +48,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyDeskBoard newData) {
         deskBoard.resetData(newData);
-        indicateAddressBookChanged();
+        indicateDeskBoardChanged();
     }
 
     @Override
@@ -57,30 +57,39 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateAddressBookChanged() {
+    private void indicateDeskBoardChanged() {
         raise(new DeskBoardChangedEvent(deskBoard));
     }
 
     @Override
     public synchronized void deleteActivity(Activity target) throws ActivityNotFoundException {
         deskBoard.removeActivity(target);
-        indicateAddressBookChanged();
+        indicateDeskBoardChanged();
     }
 
     @Override
     public synchronized void addActivity(Activity activity) throws DuplicateActivityException {
         deskBoard.addActivity(activity);
         updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
-        indicateAddressBookChanged();
+        indicateDeskBoardChanged();
     }
 
+    //@@author karenfrilya97
+    /** Adds all activities in the given desk board, except for those already found in the existing desk board*/
+    public synchronized void addActivities(ReadOnlyDeskBoard otherDeskBoard) {
+        deskBoard.addActivities(otherDeskBoard.getActivityList());
+        updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
+        indicateDeskBoardChanged();
+    }
+
+    //@@author YuanQQLer
     @Override
     public synchronized void updateActivity(Activity target, Activity editedActivity)
             throws DuplicateActivityException, ActivityNotFoundException {
         requireAllNonNull(target, editedActivity);
 
         deskBoard.updateActivity(target, editedActivity);
-        indicateAddressBookChanged();
+        indicateDeskBoardChanged();
     }
 
     //=========== Filtered Activity List Accessors =============================================================

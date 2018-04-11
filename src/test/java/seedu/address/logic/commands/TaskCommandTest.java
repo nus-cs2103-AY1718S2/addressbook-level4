@@ -88,7 +88,7 @@ public class TaskCommandTest {
     /**
      * Generates a new TaskCommand with the details of the given task.
      */
-    private TaskCommand getTaskCommandForGivenTask(Task task, Model model) {
+    TaskCommand getTaskCommandForGivenTask(Task task, Model model) {
         TaskCommand command = new TaskCommand(task);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
@@ -100,6 +100,11 @@ public class TaskCommandTest {
     private class ModelStub implements Model {
         @Override
         public void addActivity(Activity activity) throws DuplicateActivityException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addActivities(ReadOnlyDeskBoard deskBoard) {
             fail("This method should not be called.");
         }
 

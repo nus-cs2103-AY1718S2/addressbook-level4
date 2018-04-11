@@ -68,6 +68,15 @@ public class DeskBoardTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author karenfrilya97
+    @Test
+    public void addActivities_withDuplicateActivities_ignoresDuplicate() {
+        DeskBoard modifiedDeskBoard = getTypicalDeskBoard();
+        modifiedDeskBoard.addActivities(Collections.singletonList(ASSIGNMENT1));
+        assertEquals(getTypicalDeskBoard(), modifiedDeskBoard);
+    }
+
+    //@@author
     /**
      * A stub ReadOnlyDeskBoard whose activities and tags lists can violate interface constraints.
      */

@@ -1,10 +1,13 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ACTIVITY;
 import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
 import static seedu.address.testutil.TypicalActivities.ASSIGNMENT2;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
+import static seedu.address.testutil.TypicalActivities.DEMO1;
 
 import java.util.Arrays;
 
@@ -13,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.activity.NameContainsKeywordsPredicate;
+import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.testutil.DeskBoardBuilder;
 
 public class ModelManagerTest {
@@ -25,6 +29,17 @@ public class ModelManagerTest {
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredActivityList().remove(0);
     }
+
+    @Test
+    public void addActivities_validDeskBoard_success() throws DuplicateActivityException {
+        ModelManager modelManager = new ModelManager();
+        DeskBoard deskBoard = new DeskBoard();
+        deskBoard.addActivity(ASSIGNMENT3);
+        deskBoard.addActivity(DEMO1);
+        modelManager.addActivities(deskBoard);
+        assertEquals(deskBoard, modelManager.getDeskBoard());
+    }
+
 
     @Test
     public void equals() {

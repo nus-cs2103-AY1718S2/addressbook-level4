@@ -78,9 +78,4 @@ public class XmlDeskBoardStorage implements DeskBoardStorage {
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableDeskBoard(deskBoard));
     }
-
-    @Override
-    public void backupDeskBoard(ReadOnlyDeskBoard deskBoard) throws IOException {
-        saveDeskBoard(deskBoard, filePath + ".backup");
-    }
 }

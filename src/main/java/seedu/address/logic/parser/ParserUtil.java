@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.FilePath;
 import seedu.address.model.activity.DateTime;
 import seedu.address.model.activity.Location;
 import seedu.address.model.activity.Name;
@@ -170,4 +171,28 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author karenfrilya97
+    /**
+     * Parses a {@code String filePath} into a {@code FilePath}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code filePath} is invalid.
+     */
+    public static FilePath parseFilePath(String filePath) throws IllegalValueException {
+        requireNonNull(filePath);
+        String trimmedFilePath = filePath.trim();
+        if (!FilePath.isValidFilePath(trimmedFilePath)) {
+            throw new IllegalValueException(FilePath.MESSAGE_FILE_PATH_CONSTRAINTS);
+        }
+        return new FilePath(trimmedFilePath);
+    }
+
+    /**
+     * Parses an {@code Optional<String> filePath} into an {@code Optional<FilePath>} if {@code filePath} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<FilePath> parseFilePath(Optional<String> filePath) throws IllegalValueException {
+        requireNonNull(filePath);
+        return filePath.isPresent() ? Optional.of(parseFilePath(filePath.get())) : Optional.empty();
+    }
 }

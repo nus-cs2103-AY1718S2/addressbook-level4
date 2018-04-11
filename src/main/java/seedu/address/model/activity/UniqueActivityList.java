@@ -26,7 +26,6 @@ import seedu.address.model.util.DateTimeComparator;
  */
 public class UniqueActivityList implements Iterable<Activity> {
 
-    //@@author karenfrilya97
     private static DateTimeComparator dateTimeComparator = new DateTimeComparator();
 
     private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
@@ -41,7 +40,7 @@ public class UniqueActivityList implements Iterable<Activity> {
 
 
     /**
-     * Adds a activity to the list.
+     * Adds an activity to the list.
      * If activity is a task or an event, is added to its respective list.
      *
      * @throws DuplicateActivityException if the activity to add is a duplicate of an existing activity in the list.

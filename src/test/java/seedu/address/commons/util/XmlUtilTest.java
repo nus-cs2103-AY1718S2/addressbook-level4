@@ -83,8 +83,7 @@ public class XmlUtilTest {
         XmlUtil.getDataFromFile(EMPTY_FILE, DeskBoard.class);
     }
 
-    //TODO: TEST
-    //@Test
+    @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
         DeskBoard dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableDeskBoard.class).toModelType();
         assertEquals(7, dataFromFile.getActivityList().size());

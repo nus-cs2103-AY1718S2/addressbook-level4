@@ -86,7 +86,6 @@ public class StringUtil {
         return s;
     }
 
-
     //@@author aquarinte-reused
     /**
      * Returns a string with trailing whitespaces on the left removed.

@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
@@ -14,6 +15,7 @@ import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
+import seedu.address.commons.events.ui.ShowUpdatedSessionLogEvent;
 import seedu.address.model.person.Person;
 
 /**
@@ -30,6 +32,9 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
     @FXML
     private StackPane mapPanelPlaceholder;
+
+    @FXML
+    private TextArea sessionLogPanel;
 
     @FXML
     private Label nameLabel;
@@ -71,14 +76,17 @@ public class PersonDetailsPanel extends UiPart<Region> {
             addressLabel.setText(person.getAddress().toString());
             conditionLabel.setText("TO BE IMPLEMENTED IN 2.0");
             priorityLabel.setText("TO BE IMPLEMENTED IN 2.0");
+            String sessionLogToDisplay = person.getSessionLogs().toString();
+            loadSessionLogs(sessionLogToDisplay);
         } else {
             // Person is null, remove all the text.
             nameLabel.setText("");
             phoneNumberLabel.setText("");
             emailLabel.setText("");
             addressLabel.setText("");
-            conditionLabel.setText("TO BE IMPLEMENTED IN 2.0");
-            priorityLabel.setText("TO BE IMPLEMENTED IN 2.0");
+            conditionLabel.setText("");
+            priorityLabel.setText("");
+            sessionLogPanel.setText("Select a Person to display content.");
         }
     }
 
@@ -105,6 +113,19 @@ public class PersonDetailsPanel extends UiPart<Region> {
     }
 
     /**
+     * Loads the session logs stored to {@code Person}.
+     */
+    private void loadSessionLogs(String sessionLogToDisplay) {
+        if (sessionLogToDisplay.equals("")) {
+            sessionLogPanel.setText("No session logs has been added to this person yet!");
+        } else {
+            sessionLogPanel.setText(sessionLogToDisplay);
+        }
+    }
+
+
+
+    /**
      * Frees resources allocated to the map panel if map panel is not empty.
      */
     public void freeResources() {
@@ -120,6 +141,12 @@ public class PersonDetailsPanel extends UiPart<Region> {
             mapPanel.loadAddress(event.getNewSelection().person.getAddress().toString());
         }
         showSelectedPersonDetails(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleShowUpdatedSessionLogEvent(ShowUpdatedSessionLogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadSessionLogs(event.getTargetPerson().getSessionLogs().toString());
     }
 
     @Subscribe

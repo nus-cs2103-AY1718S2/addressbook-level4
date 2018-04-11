@@ -160,10 +160,8 @@ public class    AddressBookParser {
         case ListTagMembersCommand.COMMAND_WORD:
         case ListTagMembersCommand.COMMAND_ALIAS:
             return new ListTagMembersCommandParser().parse(arguments);
-
         //@@author
-
-            case HistoryCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 

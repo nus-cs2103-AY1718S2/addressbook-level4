@@ -1,28 +1,73 @@
 package systemtests;
 
+import static seedu.address.logic.commands.LoginCommand.MESSAGE_LOGIN_ALREADY;
+import static seedu.address.logic.commands.LoginCommand.MESSAGE_LOGIN_FAILURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 import static seedu.address.testutil.TypicalUsers.DEFAULT_USER;
 import static seedu.address.testutil.TypicalUsers.SLAP;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.Model;
-import seedu.address.model.login.Password;
-import seedu.address.model.login.Username;
+import seedu.address.ui.CommandBox;
 
-public class LoginCommandSystemTest extends AddressBookSystemTest{
+public class LoginCommandSystemTest extends AddressBookSystemTestWithLogin {
 
     @Test
-    public void login(){
+    public void login_normal_successful() {
         /*
-         * Case: login using the correct credentials,  command with leading spaces and trailing spaces
+         * Case: login using the correct credentials
          */
-        String command = LoginCommand.COMMAND_WORD + "  " + PREFIX_USERNAME + "user " + PREFIX_PASSWORD
-                + "pass ";
-        Model expectedModel = getLoggedOutModel();
+        String command = LoginCommand.COMMAND_WORD + " " + PREFIX_USERNAME + "u " + PREFIX_PASSWORD
+                + "p ";
+        Model expectedModel = getModel();
         ModelHelper.setUsersList(expectedModel, DEFAULT_USER, SLAP);
         assertCommandSuccess(command, expectedModel);
+
+    }
+
+    @Test
+    public void login_incorrectFormat_failure() {
+        /*
+         * Case: login using the correct credentials with trailing whitespace
+        */
+        String command = "   " + LoginCommand.COMMAND_WORD + " " + PREFIX_USERNAME + "u " + PREFIX_PASSWORD
+                + "p ";
+        Model expectedModel = getModel();
+        ModelHelper.setUsersList(expectedModel, DEFAULT_USER, SLAP);
+        assertCommandFailure(command, CommandBox.MESSAGE_HAVE_NOT_LOGGED_IN);
+    }
+
+    @Test
+    public void login_incorrectCredentials_failure() {
+        /*
+         * Case: login using the incorrect credentials
+         */
+        String command = LoginCommand.COMMAND_WORD + "  " + PREFIX_USERNAME + "l " + PREFIX_PASSWORD
+                + "p ";
+        Model expectedModel = getModel();
+        ModelHelper.setUsersList(expectedModel, DEFAULT_USER, SLAP);
+        assertCommandFailure(command, MESSAGE_LOGIN_FAILURE);
+    }
+
+    @Test
+    public void login_multipleAttempts_failure() {
+        /*
+         * Case: login using the correct credentials
+         */
+        String command = LoginCommand.COMMAND_WORD + "  " + PREFIX_USERNAME + "u " + PREFIX_PASSWORD
+                + "p ";
+        Model expectedModel = getModel();
+        ModelHelper.setUsersList(expectedModel, DEFAULT_USER, SLAP);
+        assertCommandSuccess(command, expectedModel);
+        /*
+         * Case: Login again with the same credentials
+         */
+        command = LoginCommand.COMMAND_WORD + "  " + PREFIX_USERNAME + "u " + PREFIX_PASSWORD
+                + "p ";
+        assertCommandFailureNoClearCommandBox(command, MESSAGE_LOGIN_ALREADY);
 
     }
 
@@ -40,40 +85,47 @@ public class LoginCommandSystemTest extends AddressBookSystemTest{
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
         String expectedResultMessage = LoginCommand.MESSAGE_LOGIN_SUCCESS;
-
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
     }
-
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
     private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertStatusBarUnchanged();
+    }
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailureNoClearCommandBox(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
 
-    public class LoginAttempt {
-        private Username username;
-        private Password password;
-
-
-        LoginAttempt(Username username, Password password){
-            this.username = username;
-            this.password = password;
-        }
-
-        public Username getUsername(){
-            return username;
-        }
-
-        public Password getPassword(){
-            return password;
-        }
-    }
 
 }

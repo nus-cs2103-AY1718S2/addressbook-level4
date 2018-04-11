@@ -98,7 +98,7 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     /**
      * Sets the unique users list to {@code uniqueUserList}
      */
-    public void setUniqueUserList(UniqueUserList uniqueUserList){
+    public void setUniqueUserList(UniqueUserList uniqueUserList) {
         users = uniqueUserList;
     }
 

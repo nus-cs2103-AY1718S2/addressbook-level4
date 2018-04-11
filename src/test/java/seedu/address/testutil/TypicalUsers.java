@@ -9,7 +9,6 @@ import seedu.address.model.login.Password;
 import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.DuplicateUserException;
-import seedu.address.model.person.Person;
 
 //@@author kaisertanqr
 /**
@@ -17,7 +16,7 @@ import seedu.address.model.person.Person;
  */
 public class TypicalUsers {
 
-    public static final User DEFAULT_USER = new User(new Username("user"), new Password("pass"));
+    public static final User DEFAULT_USER = new User(new Username("username"), new Password("pass"));
     public static final User SLAP = new User(new Username("slap"), new Password("pass"));
     public static final User LONG = new User(new Username("long"), new Password("pass"));
     public static final User KARA = new User(new Username("kara"), new Password("pass"));
@@ -26,10 +25,10 @@ public class TypicalUsers {
     private TypicalUsers() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code UserDatabase} with all the typical users.
      */
-    public static UserDatabase getTypicalAddressBook() {
-        UserDatabase ud= new UserDatabase();
+    public static UserDatabase getTypicalUserDatabase() {
+        UserDatabase ud = new UserDatabase();
         for (User user: getTypicalUsers()) {
             try {
                 ud.addUser(user);

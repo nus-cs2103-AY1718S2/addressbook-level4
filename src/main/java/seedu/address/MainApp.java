@@ -27,7 +27,6 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserDatabase;
 import seedu.address.model.UserDatabase;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.login.User;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.model.util.SampleUsersUtil;
 import seedu.address.storage.AddressBookStorage;
@@ -93,11 +92,9 @@ public class MainApp extends Application {
         ui.getMainWindow().showAfterLogin();
     }
 
-    /** Initialise a logged out application for tests */
-    public void initTestLoggedOut() {
-        model.setLoginStatus(false);
-        ui.getMainWindow().hideBeforeLogin();
-    }
+    /** Initialise for tests */
+    public void initTestWithLogin() {}
+
 
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();

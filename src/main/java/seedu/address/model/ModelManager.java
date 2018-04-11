@@ -58,22 +58,6 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
-    /**
-     * Initializes a ModelManager with the given addressBook and userPrefs and a given login status
-     */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlyUserDatabase userDatabase,
-                        Storage storage, boolean loggedIn) {
-        super();
-        requireAllNonNull(addressBook, userPrefs, userDatabase);
-
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
-                + "and user database " + userDatabase);
-        this.storage = storage;
-        this.userDatabase = new UserDatabase(userDatabase, loggedIn);
-        this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-    }
-
     public ModelManager(Storage storage) {
         this(new AddressBook(), new UserPrefs(), new UserDatabase(), storage);
     }

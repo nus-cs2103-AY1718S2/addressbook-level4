@@ -107,6 +107,18 @@ public class SampleDataUtil {
         }
     }
 
+    public static AddressBook getSampleAddressBookForTest() {
+        try {
+            AddressBook sampleAb = new AddressBook();
+            for (Person samplePerson : getSamplePersons()) {
+                sampleAb.addPerson(samplePerson);
+            }
+            return sampleAb;
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("sample data cannot contain duplicate persons", e);
+        }
+    }
+
     /**
      * Returns a tag set containing the list of strings given.
      */

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ResetDirectionsEvent;
 import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
 import seedu.address.logic.OAuthManager;
 import seedu.address.model.login.User;
@@ -48,8 +49,11 @@ public class ShowScheduleCommand extends Command {
                 dailyEventsAsString = MESSAGE_NO_EVENTS;
             }
 
+            //@@author jaronchan
+            EventsCenter.getInstance().post(new ResetDirectionsEvent());
             EventsCenter.getInstance().post(new UpdateNumberOfButtonsEvent(dailyEvents.size() - 1));
 
+            //@@author ifalluphill
             return new CommandResult(dailyEventsAsString);
         } catch (IOException e) {
             return new CommandResult(MESSAGE_ERROR);

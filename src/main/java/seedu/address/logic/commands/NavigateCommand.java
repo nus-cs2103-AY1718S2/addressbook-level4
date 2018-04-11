@@ -36,8 +36,6 @@ public class NavigateCommand extends Command {
     @Override
     public CommandResult execute() {
 
-        //EventsCenter.getInstance().post(new RemoveDirectionsEvent());
-
         EventsCenter.getInstance().post(
             new LoadDirectionsEvent(
                 this.eventPair.get(0).getLocation(),

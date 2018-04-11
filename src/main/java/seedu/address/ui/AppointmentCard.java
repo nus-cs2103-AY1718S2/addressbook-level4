@@ -6,6 +6,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.appointment.Appointment;
 
+//@@author kengsengg
 /**
  * An UI component that displays information of an {@code Appointment}.
  */
@@ -56,3 +57,4 @@ public class AppointmentCard extends UiPart<Region> {
                 && appointment.equals(card.appointment);
     }
 }
+//@@author

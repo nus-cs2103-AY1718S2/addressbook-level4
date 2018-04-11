@@ -17,6 +17,7 @@ import seedu.address.commons.events.ui.AppointmentPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.appointment.Appointment;
 
+//@@author kengsengg
 /**
  * Panel containing the list of appointments
  */
@@ -85,5 +86,5 @@ public class AppointmentListPanel extends UiPart<Region> {
             }
         }
     }
-
 }
+//@@author

@@ -156,7 +156,7 @@ public class MainWindow extends UiPart<Stage> {
         resumePanePlaceholder.getChildren().add(pdfPanel.getRoot());
 
         ObservableList<Person> personList = logic.getActivePersonList();
-        personListPanel = new PersonListPanel(personList, animated);
+        personListPanel = new PersonListPanel(personList, logic, animated);
         listPersonsPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();

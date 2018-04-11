@@ -18,6 +18,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.util.UiUtil;
+import seedu.address.logic.Logic;
 import seedu.address.model.person.Person;
 
 /**
@@ -32,12 +33,14 @@ public class PersonListPanel extends UiPart<Region> {
     @FXML
     private ListView<PersonCard> listPersons;
 
+    private final Logic logic;
     private boolean animated;
     private ArrayList<Person> currentPersonList = new ArrayList<>();
 
-    public PersonListPanel(ObservableList<Person> personList, boolean animated) {
+    public PersonListPanel(ObservableList<Person> personList, Logic logic, boolean animated) {
         super(FXML);
         setConnections(personList);
+        this.logic = logic;
         this.animated = animated;
 
         registerAsAnEventHandler(this);
@@ -146,9 +149,10 @@ public class PersonListPanel extends UiPart<Region> {
 
     private void setEventHandlerForSelectionChangeEvent() {
         listPersons.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                    raise(new PersonPanelSelectionChangedEvent(newValue));
+                .addListener((obs, old, selected) -> {
+                    logger.fine("Selection in person list panel changed to : '" + selected + "'");
+                    logic.setSelectedPerson(selected == null ? null : selected.getPerson());
+                    raise(new PersonPanelSelectionChangedEvent(selected));
                 });
     }
 

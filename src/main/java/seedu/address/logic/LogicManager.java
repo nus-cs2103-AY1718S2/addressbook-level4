@@ -67,6 +67,11 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public void setSelectedPerson(Person selectedPerson) {
+        model.setSelectedPerson(selectedPerson);
+    }
+
+    @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }

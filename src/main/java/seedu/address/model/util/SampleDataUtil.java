@@ -19,8 +19,7 @@ import seedu.address.model.tag.Tag;
  */
 public class SampleDataUtil {
 
-    public static final String SESSION_LOG_DIVIDER = "\n\n======================================================"
-            + "===============";
+    public static final String SESSION_LOG_DIVIDER = "\n\n=============================================";
     public static final String SESSION_LOG_DATE_PREFIX = "\nSession log date added: ";
 
     public static final String SAMPLE_SESSION_REPORT_A =

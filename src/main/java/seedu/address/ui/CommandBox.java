@@ -184,7 +184,9 @@ public class CommandBox extends UiPart<Region> {
 
     //@@author aquarinte
     /**
-     * Sets the pop-up ContextMenu based on the list of autocomplete suggestions retrieved.
+     * Sets and shows the elements of ContextMenu {@code suggestionBox} with autocomplete suggestions.
+     *
+     * @param newValue New user input.
      */
     private void triggerAutocomplete(String newValue) {
         suggestionBox.getItems().clear();
@@ -205,6 +207,7 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Updates text in commandTextField with autocomplete selection {@code toAdd}.
+     *
      * Supports insertion of autocomplete selection in the middle of commandTextField.
      * user input: 'a', selected autocomplete 'add' --> commandTextField will show 'add' and not 'aadd'.
      * user input: 'nr/F012', selected autocomplete 'F0123456B' --> commandTextField will show 'nr/F0123456B'

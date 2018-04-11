@@ -14,6 +14,7 @@ import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 
 /**
+ * @@author demitycho
  * A list of students that enforces uniqueness between its elements and does not allow nulls.
  *
  * Supports a minimal set of list operations.
@@ -140,7 +141,6 @@ public class UniqueStudentList implements Iterable<Student> {
         boolean found = false;
         Student foundStudent = null;
         for (Student student : internalList) {
-
             if (key.equals(student.getUniqueKey())) {
                 found = true;
                 return student;

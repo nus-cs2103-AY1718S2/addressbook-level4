@@ -23,6 +23,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.student.Student;
 
 /**
+ * @@author demitycho
  * Constructs a new GContactsService object to communicate with Google's APIs
  */
 public class GContactsService {

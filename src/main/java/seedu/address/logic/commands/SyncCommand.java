@@ -3,7 +3,8 @@ package seedu.address.logic.commands;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * Displays the user's schedule.
+ * @@author demitycho
+ * Syncs the user's contact list and schedule to Google Contacts and Calendar.
  */
 public class SyncCommand extends Command {
 

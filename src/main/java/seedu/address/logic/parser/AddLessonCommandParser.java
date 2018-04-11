@@ -7,15 +7,18 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
-import seedu.address.commons.core.index.Index;
+import java.util.stream.Stream;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddLessonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Time;
 
+
 /**
+ * @@author demitycho
  * Parses input arguments and creates a new AddCommandCommand object
  */
 public class AddLessonCommandParser implements Parser<AddLessonCommand> {
@@ -29,6 +32,10 @@ public class AddLessonCommandParser implements Parser<AddLessonCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_DAY, PREFIX_START_TIME, PREFIX_END_TIME);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_DAY, PREFIX_START_TIME, PREFIX_END_TIME)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddLessonCommand.MESSAGE_USAGE));
+        }
 
         Index index;
         Day day;
@@ -49,8 +56,17 @@ public class AddLessonCommandParser implements Parser<AddLessonCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
-        //day = new Day("mon");
+
         return new AddLessonCommand(index, day, startTime, endTime);
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        System.out.println(argumentMultimap);
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
 }

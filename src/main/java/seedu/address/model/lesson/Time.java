@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
+ * @@author demitycho
  * Represents a Student's time in a lesson in the Schedule.
  * Guarantees: immutable; is valid as declared in {@link #isValidTime String)}
  */
@@ -11,8 +12,8 @@ public class Time implements Comparable<Time> {
 
     public static final String MESSAGE_TIME_CONSTRAINTS = "Time should be of the format HH:MM "
             + "and adhere to the following constraints:\n"
-            + "1. The hour HH should only contain numbers and be in range [00, 24] inclusive\n"
-            + "2. This is followed by a ':' and then minutes MM. "
+            + "1. The hour HH should only contain numbers and be in range [00, 23] inclusive\n"
+            + "2. This is followed by a ':' and then minutes MM.\n"
             + "3. The minutes MM should only contain numbers and be in range [00, 59] inclusive\n";
     // Numeric characters in Hour or Minute ranges
     private static final String HOUR_PART_REGEX = "([01]?[0-9]|2[0-3])";

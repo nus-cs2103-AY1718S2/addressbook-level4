@@ -275,6 +275,7 @@ Import all entries from another desk board file in the specified file path.
 *Example:*
 
 * `import f/C:\data\deskboard.xml`
+
 // end::import[]
 
 === Exiting the program : `exit` `[As of v1.4.1]`

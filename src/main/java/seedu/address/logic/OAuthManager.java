@@ -47,7 +47,7 @@ import seedu.address.model.login.User;
 public class OAuthManager {
     /** Application name. */
     private static final String APPLICATION_NAME =
-        "Google Calendar API Java Quickstart";
+        "Session Logger and Planner (SLAP) for Social Workers";
 
     /** Directory base path to store user credentials. */
     private static final String CREDENTIAL_PATH = ".credentials/slap-app-calendar/";
@@ -264,7 +264,7 @@ public class OAuthManager {
         DateTime startAsDateTime = event.getStart().getDateTime();
         DateTime endAsDateTime = event.getEnd().getDateTime();
         String location = event.getLocation();
-        String personUniqueId = event.getDescription();
+        //String personUniqueId = event.getDescription();
 
         String start = getDateTimeAsHumanReadable(startAsDateTime);
         String end = getDateTimeAsHumanReadable(endAsDateTime);
@@ -278,11 +278,11 @@ public class OAuthManager {
         if (location == null) {
             location = "No Location Specified";
         }
-        if (personUniqueId == null) {
-            personUniqueId = "No Person Specified";
-        }
+        //if (personUniqueId == null) {
+        //      personUniqueId = "No Person Specified";
+        //}
         String eventAsString = title + " From: " + start + " To: " + end + " @ "
-                + location + " [" + personUniqueId + "]";
+                + location; // + " [" + personUniqueId + "]";
         System.out.printf(eventAsString);
 
         return eventAsString;

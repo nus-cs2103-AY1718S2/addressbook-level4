@@ -35,7 +35,7 @@ public class AddMembersToGroupCommandParser implements Parser<AddMembersToGroupC
         }
 
         try {
-            Index index= ParserUtil.parseIndex(argMultimap.getPreamble());
+            Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
             Information information = ParserUtil.parseInformation(argMultimap.getValue(PREFIX_GROUP).get());
             Group group = new Group(information);
             return new AddMembersToGroupCommand(index, group);

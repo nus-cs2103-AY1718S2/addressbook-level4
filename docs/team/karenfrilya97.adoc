@@ -1,0 +1,54 @@
+= Karen Frilya Celine - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: CLIndar
+
+---
+
+== Overview
+
+CLIndar is a desktop application for managing schedules catered specially to university computing students. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to import data from an xml file.*
+** What it does: allows the user to add all entries from application data previously saved in an xml file.
+** Justification: This feature improves the product significantly because it spares users the trouble of adding each entry one by one from data previously saved in a different file. This file could have been transferred from another computer.
+** Highlights: This enhancement requires new classes to be created that are different from existing classes. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing classes.
+** Credits: This enhancement makes uses and enhances existing code for reading data from an xml file written by previous developers.
+
+* *Minor enhancement*: added an autosorting feature that allows the entries to be sorted by date/time every time a new entry is added.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B3/main/blob/master/collated/functional/karenfrilya97.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B3/main/blob/master/collated/test/karenfrilya97.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Refactored the Storage component for the purpose of morphing Address Book - Level 4 into CLIndar (Pull requests https://github.com/CS2103JAN2018-W13-B3/main/pull/40[#40], https://github.com/CS2103JAN2018-W13-B3/main/pull/53[#53],
+https://github.com/CS2103JAN2018-W13-B3/main/pull/64[#64], https://github.com/CS2103JAN2018-W13-B3/main/pull/93[#93])
+** Documentation:
+*** Edited the grammar and punctuation of the Developer Guide in general: https://github.com/CS2103JAN2018-W13-B3/main/pull/152[#152]
+*** Restructured Section 4 (Implementation) of the Developer Guide: https://github.com/CS2103JAN2018-W13-B3/main/pull/152[#152]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W13-B3/main/pull/52[#52]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F14-B2/main/issues/175[#175], https://github.com/CS2103JAN2018-F14-B2/main/issues/181[#181], https://github.com/CS2103JAN2018-F14-B2/main/issues/182[#182])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=import]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=storage]

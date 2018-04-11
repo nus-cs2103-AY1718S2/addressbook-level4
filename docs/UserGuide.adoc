@@ -265,6 +265,7 @@ Clears all entries from the desk board.
 
 *Format:* `clear` or `c`
 
+// tag::import[]
 === Importing data : `import` `[As of v1.4.1]`
 
 Import all entries from another desk board file in the specified file path.
@@ -274,6 +275,8 @@ Import all entries from another desk board file in the specified file path.
 *Example:*
 
 * `import f/C:\data\deskboard.xml`
+
+// end::import[]
 
 === Exiting the program : `exit` `[As of v1.4.1]`
 
@@ -305,8 +308,8 @@ e.g. `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
 * *Add event*: `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]` +
 e.g. `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 
-* *List uncompleted tasks and upcoming events*: `ls` +
-eg. `ls` or `ls task` or `ls event`
+* *List uncompleted tasks and upcoming events*: `list` or `ls` +
+e.g. `list` or `ls` or `list task` or `ls event`
 
 * *Remove task or event*: `rm` +
 e.g. `rm task 1` or `rm event 2`

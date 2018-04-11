@@ -11,7 +11,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
@@ -22,6 +24,7 @@ import seedu.address.model.person.Person;
 public class FindCommandParser implements Parser<FindCommand> {
 
     //@@author tanhengyeow
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
@@ -41,6 +44,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                         PREFIX_ADDRESS, PREFIX_UNIVERSITY, PREFIX_MAJOR,
                         PREFIX_JOB_APPLIED, PREFIX_COMMENT); // more fields to be added if necessary
         try {
+            logger.info("Parsing user arguments of find command");
             Predicate<Person> finalPredicate = FindUtil.parseFindArgs(trimmedArgs, argMultimap);
             return new FindCommand(finalPredicate);
         } catch (ParseException ive) {

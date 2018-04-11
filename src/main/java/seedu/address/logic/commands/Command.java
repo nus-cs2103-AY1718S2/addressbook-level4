@@ -33,7 +33,7 @@ public abstract class Command {
      */
     public static String getFindMessageForPersonListShownSummary() {
         FindResults.getInstance().formTextResults();
-        FindResults.getInstance().clearResults();
+        FindResults.getInstance().clearResults(); // clear current search results
         return FindResults.getInstance().getTextResults();
     }
 

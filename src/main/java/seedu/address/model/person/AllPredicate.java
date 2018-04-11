@@ -2,12 +2,17 @@ package seedu.address.model.person;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 
 //@@author tanhengyeow
 /**
  * Represents all predicates to form {@code Predicate<Person>}
  */
 public class AllPredicate {
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private NamePredicate namePredicate;
     private PhonePredicate phonePredicate;
@@ -22,6 +27,7 @@ public class AllPredicate {
      * Default constructor for no arguments
      */
     public AllPredicate() {
+        logger.info("Parsing selected predicates in find command");
         this.namePredicate = new NamePredicate(new ArrayList<>(), new ArrayList<>(),
                 new ArrayList<>(), new ArrayList<>());
         this.phonePredicate = new PhonePredicate(new ArrayList<>(), new ArrayList<>(),
@@ -44,6 +50,7 @@ public class AllPredicate {
      */
     public AllPredicate(ArrayList<String> exactKeywords, ArrayList<String> substringKeywords,
                         ArrayList<String> prefixKeywords, ArrayList<String> suffixKeywords) {
+        logger.info("Parsing all predicates in find command");
         this.namePredicate = new NamePredicate(exactKeywords, substringKeywords,
                 prefixKeywords, suffixKeywords);
         this.phonePredicate = new PhonePredicate(exactKeywords, substringKeywords,

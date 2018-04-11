@@ -106,6 +106,8 @@ public class PredicateUtil {
             if (prefix.toString().equals("")) {
                 continue;
             }
+
+            assert !prefix.toString().equals("");
             String[] keywords = argMultimap.getValue(prefix).get().split(",");
             ArrayList<String> substringKeywords = new ArrayList<>();
             ArrayList<String> exactKeywords = new ArrayList<>();
@@ -168,7 +170,7 @@ public class PredicateUtil {
                     prefixKeywords, suffixKeywords);
             break;
         default:
-            throw new IllegalArgumentException("Invalid prefix detected");
+            throw new AssertionError("Invalid prefix detected");
         }
     }
 

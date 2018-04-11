@@ -1,17 +1,15 @@
+//@@author jas5469
 package seedu.address.logic.parser;
 
-//@@author jas5469
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESC_NO_GROUP;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESC_NO_NAME;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_INFORMATION;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddMembersToGroupCommand;
+import seedu.address.model.group.Information;
 
 
 public class AddMembersToGroupCommandParserTest {
@@ -35,16 +33,30 @@ public class AddMembersToGroupCommandParserTest {
     }
 
     @Test
-    public void parse_compulsoryFieldMissing_failure() {
+    public void parse_compulsoryInvalidGroupField_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMembersToGroupCommand.MESSAGE_USAGE);
 
         //missing group prefix
-        assertParseFailure(parser, INVALID_DESC_NO_GROUP, expectedMessage);
-
-        //missing person name prefix
-        assertParseFailure(parser, INVALID_DESC_NO_NAME, expectedMessage);
+        assertParseFailure(parser, INVALID_ADDGROUPMEMBER_NO_GROUP, expectedMessage);
 
         //missing field
         assertParseFailure(parser , " ", expectedMessage);
+    }
+
+    @Test
+    public void parse_indexNegative_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_INDEX);
+
+        //negative index
+        assertParseFailure(parser, INVALID_ADDGROUPMEMBER_INDEX, expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidInformation_failure() {
+        String expectedMessage = String.format(Information.MESSAGE_INFORMATION_CONSTRAINTS);
+
+        //wrong input for Group Information
+        assertParseFailure(parser, INVALID_ADDGROUPMEMBER_INFORMATION, expectedMessage);
+
     }
 }

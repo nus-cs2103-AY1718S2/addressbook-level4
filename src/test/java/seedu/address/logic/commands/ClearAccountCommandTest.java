@@ -19,6 +19,12 @@ public class ClearAccountCommandTest {
         assertCommandSuccess(prepareCommand(model), model, ClearAccountCommand.MESSAGE_SUCCESS, model);
     }
 
+    @Test
+    public void execute_nonEmptyAccountList_success() {
+        Model model = new ModelManager(getTypicalCatalogue(), new UserPrefs());
+        assertCommandSuccess(prepareCommand(model), model, ClearAccountCommand.MESSAGE_SUCCESS, model);
+    }
+
     private ClearAccountCommand prepareCommand (Model model){
         ClearAccountCommand command = new ClearAccountCommand();
         command.setData(model, new CommandHistory(), new UndoRedoStack());

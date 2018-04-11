@@ -35,7 +35,7 @@ public class TypicalPersons {
             .withMatriculationNumber("A2234567X")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
-            .withDisplayPic("/images/displayPic/default.png")
+            .withDisplayPic("/images/displayPic/default.png").withParticipation("0")
             .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withMatriculationNumber("A3234567X")

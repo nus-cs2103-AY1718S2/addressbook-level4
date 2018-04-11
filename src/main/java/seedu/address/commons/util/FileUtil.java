@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author Alaru
 /**
  * Writes and reads files
  */
@@ -108,7 +109,7 @@ public class FileUtil {
     }
 
     /**
-     *
+     * Copies an image from the filepath provided to the specified destination
      */
     public static void copyImage(BufferedImage image, String fileType, String destPath) throws IllegalValueException {
         try {

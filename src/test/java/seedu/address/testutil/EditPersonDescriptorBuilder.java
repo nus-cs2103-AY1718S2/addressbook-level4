@@ -40,6 +40,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setDisplayPic(person.getDisplayPic());
+        descriptor.setParticipation(person.getParticipation());
         descriptor.setTags(person.getTags());
     }
 

@@ -205,6 +205,11 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.showYearMonth(yearMonth);
     }
 
+    /**
+     * changes the week view based on {@code date}.
+     * Does some particular checks (as weekFields give diff result from calendarFX),
+     * to ensure that it runs smoothly.
+     */
     private void changeWeekView(LocalDate date) {
         WeekFields weekFields = WeekFields.SUNDAY_START;
         int week = date.get(weekFields.weekOfWeekBasedYear()) - 1;
@@ -216,7 +221,7 @@ public class CalendarWindow extends UiPart<Region> {
             calendarView.showWeek(Year.of(date.getYear()), week);
         } else if (week == 0 && date.getMonthValue() == 1) {
             //wraparound
-            LocalDate dateOfFirstJan = LocalDate.of(date.getYear(),1,1);
+            LocalDate dateOfFirstJan = LocalDate.of(date.getYear(), 1, 1);
             if (dateOfFirstJan.getDayOfWeek().getValue() != 7) {
                 week = 52;
                 calendarView.showWeek(Year.of(date.getYear() - 1), week);

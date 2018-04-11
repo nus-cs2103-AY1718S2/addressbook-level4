@@ -13,6 +13,9 @@ import seedu.address.logic.commands.ListAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author wynonaK
+/**
+ * Parses input arguments and creates a new ListAppointmentCommand object
+ */
 public class ListAppointmentCommandParser implements Parser<ListAppointmentCommand> {
 
     private static final Pattern LIST_APPOINTMENT_COMMAND_FORMAT_YEAR = Pattern.compile("-(y)+(?<info>.*)");
@@ -30,7 +33,7 @@ public class ListAppointmentCommandParser implements Parser<ListAppointmentComma
     public ListAppointmentCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
 
-         final Matcher matcherForYear = LIST_APPOINTMENT_COMMAND_FORMAT_YEAR.matcher(trimmedArgs);
+        final Matcher matcherForYear = LIST_APPOINTMENT_COMMAND_FORMAT_YEAR.matcher(trimmedArgs);
         if (matcherForYear.matches()) {
             int type = 1;
 

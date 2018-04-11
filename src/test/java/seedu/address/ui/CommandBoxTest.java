@@ -12,6 +12,7 @@ import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -19,7 +20,7 @@ import seedu.address.model.UserPrefs;
 
 public class CommandBoxTest extends GuiUnitTest {
 
-    private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
+    private static final String COMMAND_THAT_SUCCEEDS = ClearCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
 
     private ArrayList<String> defaultStyleOfCommandBox;
@@ -93,7 +94,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
         // insert command in the middle of retrieving previous commands
         guiRobot.push(KeyCode.UP);
-        String thirdCommand = "list";
+        String thirdCommand = "help";
         commandBoxHandle.run_withAutocomplete(thirdCommand);
         assertInputHistory(KeyCode.UP, thirdCommand);
         assertInputHistory(KeyCode.UP, COMMAND_THAT_FAILS);
@@ -203,12 +204,12 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void commandBox_autocompleteOption() {
-        testAutocompleteForUserInput("delete ", "-", 2, "delete -fa ");
-        testAutocompleteForUserInput("delete ", "-", 3, "delete -fo ");
-        testAutocompleteForUserInput("delete ", "-", 4, "delete -fp ");
+        testAutocompleteForUserInput("delete ", "-", 3, "delete -fa ");
+        testAutocompleteForUserInput("delete ", "-", 4, "delete -fo ");
+        testAutocompleteForUserInput("delete ", "-", 5, "delete -fp ");
         testAutocompleteForUserInput("add ", "-", 1, "add -a ");
-        testAutocompleteForUserInput("find ", "-", 5, "find -o ");
-        testAutocompleteForUserInput("find ", "-", 6, "find -p ");
+        testAutocompleteForUserInput("find ", "-", 7, "find -o ");
+        testAutocompleteForUserInput("find ", "-", 8, "find -p ");
     }
 
     @Test

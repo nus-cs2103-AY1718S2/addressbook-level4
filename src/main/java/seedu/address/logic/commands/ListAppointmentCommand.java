@@ -71,7 +71,7 @@ public class ListAppointmentCommand extends Command {
     }
 
     private CommandResult getMonthView() throws NoAppointmentInYearException {
-        if (yearMonth.isBefore(YearMonth.now())){
+        if (yearMonth.isBefore(YearMonth.now())) {
             if (!checkPastAppointment(yearMonth.getYear())) {
                 throw new NoAppointmentInYearException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
             }
@@ -82,7 +82,7 @@ public class ListAppointmentCommand extends Command {
     }
 
     private CommandResult getWeekView() throws NoAppointmentInYearException {
-        if (date.isBefore(LocalDate.now())){
+        if (date.isBefore(LocalDate.now())) {
             if (!checkPastAppointment(date.getYear())) {
                 throw new NoAppointmentInYearException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
             }
@@ -93,7 +93,7 @@ public class ListAppointmentCommand extends Command {
     }
 
     private CommandResult getDayView() throws NoAppointmentInYearException {
-        if (date.isBefore(LocalDate.now())){
+        if (date.isBefore(LocalDate.now())) {
             if (!checkPastAppointment(date.getYear())) {
                 throw new NoAppointmentInYearException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
             }
@@ -103,10 +103,13 @@ public class ListAppointmentCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, "day"));
     }
 
+    /**
+     * Check if there exists a past appointment with in the {@code model} with the {@code year} specified.
+     */
     private boolean checkPastAppointment(int year) {
         model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         List<Appointment> appointmentList = model.getFilteredAppointmentList();
-        for (Appointment appointment : appointmentList){
+        for (Appointment appointment : appointmentList) {
             if  (appointment.getDateTime().getYear() == year)  {
                 return true;
             }
@@ -137,10 +140,43 @@ public class ListAppointmentCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ListAppointmentCommand // instanceof handles nulls
-                && date.equals(((ListAppointmentCommand) other).date)
-                && yearMonth.equals(((ListAppointmentCommand) other).yearMonth)
-                && year.equals(((ListAppointmentCommand) other).year));
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof ListAppointmentCommand)) {
+            return false;
+        }
+
+        ListAppointmentCommand otherListAppointmentCommand = (ListAppointmentCommand) other;
+
+        boolean yearSame = isTheSame(year, otherListAppointmentCommand.year);
+        boolean yearMonthSame = isTheSame(yearMonth, otherListAppointmentCommand.yearMonth);
+        boolean dateSame = isTheSame(date, otherListAppointmentCommand.date);
+
+        if (yearSame || yearMonthSame || dateSame) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if both objects are the same.
+     * Returns true if both objects are equivalent.
+     * Returns true if both objects are null.
+     */
+    public boolean isTheSame(Object one, Object two) {
+        if (one != null && two != null) {
+            if (one.equals(two)) {
+                return true;
+            }
+        }
+
+        if (one == null && two == null) {
+            return true;
+        }
+
+        return false;
     }
 }

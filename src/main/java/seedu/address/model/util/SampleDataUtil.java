@@ -111,6 +111,7 @@ public class SampleDataUtil {
         for (String s : strings) {
             tags.add(new Tag(s));
         }
+
         return tags;
     }
 

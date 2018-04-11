@@ -173,6 +173,7 @@ This section lists all Employees Tracker's command.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+// tag::unlock[]
 === Logging in : `unlock`
 Unlocks Employees Tracker. +
 Format: `unlock`
@@ -192,6 +193,7 @@ Fill in the input box with matching unlock password to unlock ET.
 
 .Pop-up unlock dialog.
 image::unlock_dialog.png[width="790"][height="200"]
+// end::unlock[]
 
 === Viewing help : `help`
 
@@ -213,6 +215,7 @@ Adds John Doe with the information given into Employees Tracker.
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal` +
 Adds Betsy Crowe with the information given into Employees Tracker.
 
+// tag::addphoto[]
 === Adding an profile photo to an employee: `addPhoto`
 
 Adds a profile photo to an existing employee in Employees Tracker by selecting a photo file in a file chooser. +
@@ -234,6 +237,7 @@ Adds a photo to the 1st employee in the last employees listing.
 This command will automatically copy the file you chosed to the application's resource folder if it does not exist. Once
 the photo is copied, you should not delete it from that folder manually.
 ====
+// end::addphoto[]
 
 === Authorizes Employees Tracker : `authenET`
 
@@ -274,6 +278,7 @@ Edits the phone number and email address of the 1^st^ employee to be `91234567` 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2^nd^ employee to be `Betsy Crower` and clears all existing tags.
 
+// tag::export[]
 === Exporting the employees : `export`
 
 Exports current employees in ET to a csv(Excel) file named "employees.csv" inside data folder. +
@@ -287,6 +292,7 @@ Examples:
 
 * `export` +
 Current employees in ET will be exported.
+// end::export[]
 
 === Rating an employee : `rate`
 
@@ -493,6 +499,8 @@ Reapplies the `delete 1` command. +
 Reapplies the `clear` command.
 // end::undoredo[]
 
+
+// tag::lock[]
 === Locking Employees Tracker: `lock`
 
 Locks Employees Tracker, so that the data is protected without the need of closing the program or shutting down your computer. +
@@ -512,7 +520,9 @@ After you locked Employees Tracker, you won't see any information on the User In
 
 .Hiding information when Employees Tracker is locked.
 image::lock_screen.png[width="300"][height="400"]
+// end::lock[]
 
+// tag::ct[]
 === Viewing my own calendar: `myCalendar`
 
 Views my own calendar. +
@@ -535,6 +545,7 @@ Shows the to-do-list in a pop-up window. Refer to _Figure 14_ below.
 
 .To-do list window.
 image::todolist.png[width="300"][height="400"]
+// end::ct[]
 
 === Setting the application unlock password: `setPassword`
 
@@ -576,6 +587,7 @@ Sort the employees by name in alphabetical order (case-insensitive).
 Sort the employees by rating in descending order.
 // end::sort[]
 
+// tag::addevent[]
 === Adding an event on one employee's timetable: `addEvent`
 
 Adds an event to the employee identified by the index number used in the last employees listing. +
@@ -601,8 +613,9 @@ image::login_prompt.png[width="790"][height="200"]
 
 .Done signing in
 image::login_done.png[width="790"][height="200"]
+// end::addevent[]
 
-
+// tag::deleteevent[]
 === Deleting an event in one employee's timetable: `deleteEvent`
 
 Deletes an event with specified title which is the first occurrence in the timetable of employee identified by the index number used in the last employees listing. +
@@ -613,6 +626,13 @@ Format: `deleteEvent INDEX TITLE`
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer 1, 2, 3,* …​
 ****
+
+Examples:
+
+* `list` +
+`deleteEvent 2 some event` +
+Deletes the event with title "some event" in 2^nd^ employee's timetable.
+// end::deleteevent[]
 
 === Changing the theme of Employees Tracker: `changeTheme`
 
@@ -628,6 +648,7 @@ Examples:
 
 * `changeTheme bright` +
 Changes the theme of ET to bright theme
+
 
 === Clearing all entries : `clear`
 

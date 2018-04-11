@@ -35,7 +35,6 @@ public class AddMembersToGroupCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "Person already in Group";
     public static final String MESSAGE_GROUP_NOT_FOUND = "No such Group in Fastis";
     public static final String MESSAGE_DUPLICATE_GROUP = "Group already in Group";
-    public static final String MESSAGE_INVALID_INDEX = "Index is invalid";
 
     private Index index;
     private Person personToAdd;

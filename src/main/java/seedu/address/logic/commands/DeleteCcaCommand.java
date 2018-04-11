@@ -1,11 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURIES_HISTORY;
-import static seedu.address.logic.parser.ParserUtil.parseInjuriesHistory;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -31,18 +29,17 @@ import seedu.address.model.tag.Tag;
 /**
  * Edits the details of an existing person in the address book.
  */
-public class DeleteInjuriesHistoryCommand extends UndoableCommand {
+public class DeleteCcaCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "deleteinjuries";
+    public static final String COMMAND_WORD = "deletecca";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Delete injuries history from the "
-            + "student that you want. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Delete cca records from the student that you want. "
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_INJURIES_HISTORY + "INJURIES_HISTORY...\n"
+            + PREFIX_CCA + "CCA...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_INJURIES_HISTORY + "Torn Ligament" + "\n";
+            + PREFIX_CCA + "Basketball" + "\n";
 
-    public static final String MESSAGE_REMARK_PERSON_SUCCESS = "Injuries Deleted: %1$s\nPerson: %2$s";
+    public static final String MESSAGE_CCA_PERSON_SUCCESS = "CCA Deleted: %1$s\nPerson: %2$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
@@ -56,7 +53,7 @@ public class DeleteInjuriesHistoryCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public DeleteInjuriesHistoryCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public DeleteCcaCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
@@ -65,18 +62,16 @@ public class DeleteInjuriesHistoryCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException, IOException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.updatePerson(personToEdit, editedPerson);
-            model.deletePage(personToEdit);
-            model.addPage(editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editPersonDescriptor.getInjuriesHistory()
+        return new CommandResult(String.format(MESSAGE_CCA_PERSON_SUCCESS, editPersonDescriptor.getCca()
                         .get(), personToEdit.getName()));
     }
 
@@ -105,26 +100,12 @@ public class DeleteInjuriesHistoryCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse((personToEdit.getRemark()));
-        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
-        String[] injuriesHistoryArray = personToEdit.getInjuriesHistory().toString().split("\n");
-        String updateInjuriesHistory = "";
+        InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
+                .orElse(personToEdit.getInjuriesHistory());
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
-        boolean injuriesHistoryIsFound = false;
-        for (String injuriesHistory : injuriesHistoryArray) {
-            if (!injuriesHistory.contains(editPersonDescriptor.getInjuriesHistory().get().toString())) {
-                updateInjuriesHistory = updateInjuriesHistory + injuriesHistory + "\n";
-            } else {
-                editPersonDescriptor.setInjuriesHistory(parseInjuriesHistory(injuriesHistory));
-                injuriesHistoryIsFound = true;
-            }
-        }
-        if (injuriesHistoryIsFound) {
-            InjuriesHistory updatedInjuriesHistory = parseInjuriesHistory(updateInjuriesHistory);
-            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(), updatedRemark, updatedCca,
-                    updatedInjuriesHistory, updatedNameOfKin);
-        } else {
-            throw new CommandException("The target injuriesHistory cannot be missing.");
-        }
+        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(), updatedRemark,
+                updatedCca, updatedInjuriesHistory, updatedNameOfKin);
     }
 
     @Override
@@ -135,12 +116,12 @@ public class DeleteInjuriesHistoryCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof DeleteInjuriesHistoryCommand)) {
+        if (!(other instanceof DeleteCcaCommand)) {
             return false;
         }
 
         // state check
-        DeleteInjuriesHistoryCommand e = (DeleteInjuriesHistoryCommand) other;
+        DeleteCcaCommand e = (DeleteCcaCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);

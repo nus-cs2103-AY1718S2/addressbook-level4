@@ -3,19 +3,22 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-
+import java.net.URL;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -24,6 +27,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 
 import seedu.address.model.person.Person;
@@ -70,12 +74,32 @@ public class ModelManager extends ComponentManager implements Model {
      * @param person
      * @throws IOException
      * Adds a BrowserPanel html Page into StudentPage
+     *
      */
+
     public void addPage(Person person) throws IOException {
 
+        /*
         String path = new File("src/main/resources/StudentPage/template.html").getAbsolutePath();
         File htmlTemplateFile = new File(path);
         String htmlString = FileUtils.readFileToString(htmlTemplateFile);
+        */
+
+        String userHome = System.getProperty("user.home") + File.separator + "StudentPage";
+        String locatie = userHome;
+        File folder = new File(locatie);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        URL personPage = MainApp.class.getResource(PROFILE_DIRECTORY + "template.html");
+
+        String htmlString = Resources.toString(personPage, Charsets.UTF_8);
+
+        File f = new File(System.getProperty("user.home") + "/StudentPage/" + person.getName() + ".html");
+        if (!f.exists()) {
+            f.createNewFile();
+        }
 
         Name titleName = person.getName();
         String title = titleName.toString();
@@ -85,8 +109,11 @@ public class ModelManager extends ComponentManager implements Model {
         String identityNumber = identityNumberClass.toString();
         htmlString = htmlString.replace("$identityNumber", identityNumber);
 
-        Set<Tag> tagList = person.getTags();
-        htmlString = htmlString.replace("Class not Included", tagList.toString());
+        List<Tag> tagList = person.getTagArray();
+        int taglistSize = tagList.size();
+        if (taglistSize != 0) {
+            htmlString = htmlString.replace("Class not Included", tagList.get(0).tagForBrowser());
+        }
 
         //ADD L1R5
 
@@ -112,15 +139,14 @@ public class ModelManager extends ComponentManager implements Model {
         String remark = person.getRemark().toString();
         htmlString = htmlString.replace("Remarks to facilitate teaching should be included here.", remark);
 
-
         //ADD INJURY
         String injury = person.getInjuriesHistory().toString();
         htmlString = htmlString.replace("Insert injury history here", injury);
 
-        String newPath = new File("src/main/resources/StudentPage/" + title + ".html").getAbsolutePath();
-        File newHtmlFile = new File(newPath);
-        FileUtils.writeStringToFile(newHtmlFile, htmlString);
-        //updatePage(person);
+        BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+        bw.write(htmlString);
+        bw.close();
+
     }
 
     /**
@@ -128,9 +154,9 @@ public class ModelManager extends ComponentManager implements Model {
      * Deletes BrowserPanel html
      */
     public void deletePage(Person person) {
-        File deleteTemplateFile = new File("/Users/johnnychan/Documents/"
-                + "GitHub/main/src/main/resources/StudentPage/" + person.getName() + ".html");
-        boolean bool = deleteTemplateFile.delete();
+
+        File f = new File(System.getProperty("user.home") + "/StudentPage/" + person.getName() + ".html");
+        boolean bool = f.delete();
     }
 
     @Override
@@ -160,6 +186,12 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addNextOfKin(NextOfKin nextOfKin) throws DuplicatePersonException {
+        addressBook.addNextOfKin(nextOfKin);
+
     }
 
     @Override

@@ -32,12 +32,13 @@ public class Person {
     private final Remark remark;
     private final Cca cca;
     private final InjuriesHistory injuriesHistory;
+    private final NameOfKin nameOfKin;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Set<Score> scores, Remark remark, Cca cca,
-                  InjuriesHistory injuriesHistory) {
+                  InjuriesHistory injuriesHistory, NameOfKin nameOfKin) {
         requireAllNonNull(name, nric, tags, subjects, cca);
         this.name = name;
         this.nric = nric;
@@ -49,6 +50,7 @@ public class Person {
         this.remark = remark;
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
+        this.nameOfKin = nameOfKin;
     }
 
     public Name getName() {
@@ -71,12 +73,23 @@ public class Person {
         return injuriesHistory;
     }
 
+    public NameOfKin getNameOfKin() {
+        return nameOfKin;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    public List<Tag> getTagArray () {
+        Set<Tag> tagSet = getTags();
+        List<Tag> listTag = new ArrayList<>();
+        listTag.addAll(tagSet);
+        return listTag;
     }
 
     public Set<Subject> getSubjects() {
@@ -408,7 +421,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, tags, subjects, scores, remark, cca, injuriesHistory);
+        return Objects.hash(name, nric, tags, subjects, scores, remark, cca, injuriesHistory, nameOfKin);
     }
 
     @Override
@@ -427,6 +440,7 @@ public class Person {
                .append(getRemark());
         builder.append(" Cca: ").append(getCca());
         builder.append(" InjuriesHistory: ").append(getInjuriesHistory());
+        builder.append("  NextOfKin: ").append(getNameOfKin());
         return builder.toString();
     }
 

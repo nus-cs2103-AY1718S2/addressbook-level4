@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA_POSITION;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NameOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -34,11 +36,12 @@ public class AddCcaCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addcca";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds CCA to the student that you want. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the CCA and the position "
+            + "to the student that you want. "
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_CCA + "CCA\n"
+            + PREFIX_CCA + "CCA " + PREFIX_CCA_POSITION + "POSITION\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_CCA + "Basketball" + "\n";
+            + PREFIX_CCA + "Basketball " + PREFIX_CCA_POSITION + "Member\n";
 
     public static final String MESSAGE_REMARK_PERSON_SUCCESS = "CCA added: %1$s\nPerson: %2$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -75,7 +78,7 @@ public class AddCcaCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editPersonDescriptor.getCca().get(),
-                                                personToEdit.getName()));
+                personToEdit.getName()));
     }
 
     @Override
@@ -102,12 +105,17 @@ public class AddCcaCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+        //String[] editCca = personToEdit.getCca().toString().split(":");
+        //String[] cca = editPersonDescriptor.getCca().toString().split(":");
+        //Cca updatedCca = ParserUtil.parseCca(editCca[0] + "\n" + cca[0], editCca[1] + "\n" + cca[1]);
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                 .orElse(personToEdit.getInjuriesHistory());
+        NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin()
+                .orElse(personToEdit.getNameOfKin());
 
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(),
-                updatedRemark, updatedCca, updatedInjuriesHistory);
+                updatedRemark, updatedCca, updatedInjuriesHistory, updatedNameOfKin);
     }
 
     @Override

@@ -17,7 +17,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Cca;
-import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
@@ -253,27 +252,6 @@ public class ParserUtil {
         return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
     }
 
-    /**
-     * Parses a {@code String ccaPosition} into a {@code CcaPosition}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code CcaPosition} is invalid.
-     */
-    public static CcaPosition parseCcaPosition(String ccaPosition) {
-        requireNonNull(ccaPosition);
-        String trimmedCcaPosition = ccaPosition.trim();
-        return new CcaPosition(trimmedCcaPosition);
-    }
-
-    /**
-     * Parses a {@code Optional<String> ccaPosition} into an {@code Optional<CcaPosition>} if
-     * {@code ccaPosition} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<CcaPosition> parseCcaPosition(Optional<String> ccaPosition) {
-        requireNonNull(ccaPosition);
-        return ccaPosition.isPresent() ? Optional.of(parseCcaPosition(ccaPosition.get())) : Optional.empty();
-    }
     /**
      * Parses a {@code String date} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.

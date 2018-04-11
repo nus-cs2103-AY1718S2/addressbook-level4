@@ -436,6 +436,11 @@ Returns the L1B4-A score obtained by the student based on his/her grades.
 
 *_return to <<toc,Table of Contents>>_*
 
+=== Adding a CCA to a student : `addcca`
+Adds a CCA to the student records in _EduBuddy_. +
+Format: `addcca 1 cca/CCA pos/POSITION` +
+You will be able to see the success message, 
+
 === Clearing all entries : `clear` or `c`
 
 Clears all student entries from _EduBuddy_. +

@@ -196,7 +196,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         personSubjects.forEach(subject -> correctSubjectReferences.add(masterSubjectObjects.get(subject)));
         return new Person(
                 person.getName(), person.getNric(), correctTagReferences, correctSubjectReferences, person.getRemark(),
-                person.getCca(), person.getInjuriesHistory(), person.getNameOfKin(), person.getCcaPosition());
+                person.getCca(), person.getInjuriesHistory(), person.getNameOfKin());
     }
 
     /**
@@ -281,7 +281,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (tagList.remove(tag)) {
             Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
                                         person.getRemark(), person.getCca(), person.getInjuriesHistory(),
-                                        person.getNameOfKin(), person.getCcaPosition());
+                                        person.getNameOfKin());
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {
@@ -306,7 +306,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             tagList.add(tagToBePlaced);
             Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
                                         person.getRemark(), person.getCca(), person.getInjuriesHistory(),
-                                        person.getNameOfKin(), person.getCcaPosition());
+                                        person.getNameOfKin());
 
             try {
                 updatePerson(person, newPerson);

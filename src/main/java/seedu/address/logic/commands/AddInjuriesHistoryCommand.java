@@ -14,7 +14,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Cca;
-import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
@@ -107,11 +106,9 @@ public class AddInjuriesHistoryCommand extends UndoableCommand {
         InjuriesHistory updatedInjuriesHistory = ParserUtil.parseInjuriesHistory(editPersonDescriptor
                 .getInjuriesHistory().get().toString() + "\n" + personToEdit.getInjuriesHistory());
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
-        CcaPosition updatedCcaPosition = editPersonDescriptor.getCcaPosition()
-                .orElse(personToEdit.getCcaPosition());
 
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                        updatedInjuriesHistory, updatedNameOfKin, updatedCcaPosition);
+                        updatedInjuriesHistory, updatedNameOfKin);
     }
 
     @Override

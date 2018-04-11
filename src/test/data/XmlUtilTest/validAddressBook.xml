@@ -8,7 +8,6 @@
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
         <nameOfKin>Fan Muster</nameOfKin>
-        <ccaPosition>" "</ccaPosition>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -18,7 +17,6 @@
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
         <nameOfKin>Jan Mueller</nameOfKin>
-        <ccaPosition>" "</ccaPosition>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -28,7 +26,6 @@
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
         <nameOfKin>Dan Kurz</nameOfKin>
-        <ccaPosition>" "</ccaPosition>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -38,7 +35,6 @@
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
         <nameOfKin>Tan Meier</nameOfKin>
-        <ccaPosition>" "</ccaPosition>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -48,7 +44,6 @@
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
         <nameOfKin>Ran Meyer</nameOfKin>
-        <ccaPosition>" "</ccaPosition>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -58,7 +53,6 @@
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
         <nameOfKin>Lan Kunz</nameOfKin>
-        <ccaPosition>" "</ccaPosition>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -68,7 +62,6 @@
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
         <nameOfKin>Ban Best</nameOfKin>
-        <ccaPosition>" "</ccaPosition>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -78,7 +71,6 @@
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
         <nameOfKin>Van Meier</nameOfKin>
-        <ccaPosition>" "</ccaPosition>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -88,6 +80,5 @@
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
         <nameOfKin>Zan Mueller</nameOfKin>
-        <ccaPosition>" "</ccaPosition>
     </persons>
 </addressbook>

@@ -32,7 +32,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Cca;
-import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
@@ -78,8 +77,7 @@ public class StreamCommandTest {
     public void scoreCalculation_invalidSubjectCombinationForL1R5_throwException() {
         Person selectedPerson = new Person(new Name("John"), new Nric("S9829849H"),
                 Collections.emptySet(), Collections.emptySet(), new Remark(""),
-                new Cca("Basketball", "Captain"), new InjuriesHistory(""), new NameOfKin("Jonathan"),
-                new CcaPosition(""));
+                new Cca("Basketball", "Captain"), new InjuriesHistory(""), new NameOfKin("Jonathan"));
         StringBuilder result = new StringBuilder();
         //test for L1R5
         assertEquals(StreamCommand.scoreCalculation(selectedPerson, 1),

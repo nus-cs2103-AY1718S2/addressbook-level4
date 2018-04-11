@@ -16,9 +16,9 @@ import com.calendarfx.model.Interval;
 public class AppointmentEntry {
 
     public static final String MESSAGE_DATE_TIME_CONSTRAINTS =
-            "Date and Time should be in the format of dd/MM/yyyy HH:mm";
+            "Date and Time should be in the format of d/MM/yyyy HH:mm and the date time must exist";
     public static final String MESSAGE_INTERVAL_CONSTRAINTS = "Start date time must be before end date time";
-    public static final String DATE_VALIDATION = "d/MM/yyyy HH:mm";
+    public static final String DATE_TIME_VALIDATION = "d/MM/uuuu HH:mm";
 
 
     private final CalendarEntry appointmentEntry;
@@ -69,7 +69,7 @@ public class AppointmentEntry {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_VALIDATION);
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_VALIDATION);
         builder.append(givenTitle)
                 .append(" Start Date Time: ")
                 .append(interval.getStartDateTime().format(formatter))

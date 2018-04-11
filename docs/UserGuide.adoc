@@ -338,6 +338,7 @@ Examples:
 Deletes the 2nd to-do in the address book.
 // end::toDoList[]
 
+// tag::listTag[]
 === List Tag Members: `listTagMembers`
 
 List out all persons with the given keywords(group tags). +
@@ -358,8 +359,9 @@ Refer to Figure 4 for example.
 image:lgmExample.png[width="500"] +
 
 Figure 4. Example of ListTagMembers
+// end::listTag[]
 
-
+// tag::addGroup[]
 === Add Group: `addGroup`
 
 Creates a group named `KEYWORD` +
@@ -405,7 +407,6 @@ If person already added, Fastis will output already added person in group.
 Refer to Figure 7. +
 image:addGroupMembersToGroupFailExample.png[width ="800"] +
 Figure 7. Example of addMembersToGroup +
-// end:AddGroup[]
 
 === List Group Members : `listGroupMembers`
 List all the members under the group, that already exist in Fastis, named by user `INPUT`. +
@@ -447,7 +448,7 @@ Examples:
 `CS3243` is already stored in Fastis.
 ====
 Deletes the group `CS3243`.
-// end:deleteGroup[]
+// end:addGroup[]
 
 === Display Calendar : `display` `[coming in v2.0]`
 

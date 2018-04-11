@@ -516,7 +516,7 @@ When a the schedule of a `Person` is needed, the `Model` component will pass the
 ** Pros: No storage and small memory needed
 ** Cons: Reliant on good internet connection
 
-//tag::ListTagMembers[]
+//tag:ListTagMembers[]
 === List Tag Members Feature
 
 Fastis lists all persons in Fastis that have tags similar to input.
@@ -536,6 +536,9 @@ tag and list out all members under the same  tag.
 * **Alternative 2:** Add a new abstract method `ListTagMembersCommand(`
 ** Pros: Edit `ListTagMembersCommand()` easily to suit our needs
 ** Cons: Hard for new developers to understand the template pattern.
+
+//end:ListTagMembers[]
+
 
 //tag::Calendar[]
 === Calendar Feature
@@ -643,7 +646,7 @@ image:AddGroupSequenceDiagram.png[width="800"]
 
 // end::addGroup[]
 
-// tag::addMemberToGroup[]
+// tag::addMembersToGroup[]
 === Add Member To Group feature
 
 Fastis adds a person from the existing contact list to an existing group.
@@ -661,11 +664,11 @@ image:aGMSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-===== Aspect: Implementation of `AddGroupCommand`
+===== Aspect: Implementation of `AddMembersToGroupCommand`
 * **Alternative 1 (current choice):** Add a new command method `AddMembersToGroupCommand()`
 ** Pros: It is easy for developers to modify method to suit what they want
 
-// end::addMembersToGroup[]
+// end:addMembersToGroup[]
 
 // tag::deleteGroup[]
 === Delete Group feature
@@ -707,11 +710,11 @@ The user executes a new `DeleteGroupCommand` with `Information`, to delete a exi
 The new group is deleted from the `UniqueGroupList` and the current state of the address book is saved.
 The following sequence diagram shows how the deleteGroup operation works:
 
-
+image:dGSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-===== Aspect: Implementation of `AddGroupCommand`
+===== Aspect: Implementation of `DeleteGroupCommand`
 * **Alternative 1 (current choice):** Add a new command method `deleteGroupCommand()`
 ** Pros: It is easy for developers to modify method to suit what they want
 * **Alternative 2:** Add a new abstract method `executeDeleteGroupCommand()`

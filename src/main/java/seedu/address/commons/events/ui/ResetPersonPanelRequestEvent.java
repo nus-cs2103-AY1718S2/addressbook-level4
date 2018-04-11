@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * An event requesting to reset the details displayed in Person Panel.
  */
-public class ResetPersonPanelEvent extends BaseEvent {
+public class ResetPersonPanelRequestEvent extends BaseEvent {
 
     @Override
     public String toString() {

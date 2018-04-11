@@ -404,7 +404,7 @@ The calendar has a day view, week view and month view to help you view all your 
 
 ==== Displaying the calendar : `calendar` `since v1.3`
 
-Displays the Calendar at centre of window in specified viewing format. +
+Displays the Calendar in the CenterPanel in specified viewing format. +
 Format: `calendar [VIEW_FORMAT]` +
 Command Alias: `cal`
 

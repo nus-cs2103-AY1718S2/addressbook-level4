@@ -15,7 +15,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.ResetPersonPanelEvent;
+import seedu.address.commons.events.ui.ResetPersonPanelRequestEvent;
 import seedu.address.model.person.Person;
 
 /**
@@ -50,7 +50,7 @@ public class PersonListPanel extends UiPart<Region> {
                         raise(new PersonPanelSelectionChangedEvent(newValue));
                     } else {
                         logger.fine("No selection detected.");
-                        raise(new ResetPersonPanelEvent());
+                        raise(new ResetPersonPanelRequestEvent());
                     }
                 });
     }

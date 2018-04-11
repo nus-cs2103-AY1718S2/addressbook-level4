@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 
 import javafx.scene.layout.Region;
+import seedu.address.model.person.Person;
 
 /**
  * Provides a handle to the Person Panel.
@@ -91,5 +92,15 @@ public class PersonPanelHandle extends NodeHandle<Node> {
                 .stream()
                 .map(Label::getText)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Sets the labels to display given {@code Person}'s information.
+     */
+    public void loadPersonPage(Person person) {
+        name.setText(person.getName().fullName);
+        phone.setText(person.getPhone().value);
+        address.setText(person.getAddress().toString());
+        email.setText(person.getEmail().toString());
     }
 }

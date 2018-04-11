@@ -2805,7 +2805,7 @@ import javafx.scene.layout.StackPane;
 import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
 import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.ResetPersonPanelEvent;
+import seedu.address.commons.events.ui.ResetPersonPanelRequestEvent;
 import seedu.address.model.event.CalendarEntry;
 
 

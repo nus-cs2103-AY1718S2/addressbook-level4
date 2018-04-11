@@ -2,7 +2,6 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
@@ -12,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.PersonPanelHandle;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
 public class PersonPanelTest extends GuiUnitTest {
@@ -29,9 +27,9 @@ public class PersonPanelTest extends GuiUnitTest {
 
     @Test
     public void display() throws Exception {
-        postNow(new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0)));
+        personPanelHandle.loadPersonPage(ALICE);
         assertPersonIsDisplayed(ALICE, personPanelHandle);
-        postNow(new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1)));
+        personPanelHandle.loadPersonPage(BOB);
         assertPersonIsDisplayed(BOB, personPanelHandle);
     }
 

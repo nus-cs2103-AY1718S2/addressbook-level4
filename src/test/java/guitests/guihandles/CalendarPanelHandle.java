@@ -8,7 +8,7 @@ import javafx.scene.layout.StackPane;
 import seedu.address.ui.util.CalendarFxUtil;
 
 /**
- * A handler for {@code CentrePanel} of the Ui.
+ * A handler for {@code CenterPanel} of the Ui.
  */
 //@@author SuxianAlicia
 public class CalendarPanelHandle extends NodeHandle<StackPane> {

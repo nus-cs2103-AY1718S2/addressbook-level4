@@ -124,6 +124,7 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        //@@author Isaaaca
         if (this.link == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     TimeTableLink.class.getSimpleName()));
@@ -132,6 +133,7 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(TimeTableLink.MESSAGE_TIMETABLE_LINK_CONSTRAINTS);
         }
         final TimeTableLink link = new TimeTableLink(this.link);
+        //@@author
 
         if (this.detail == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,

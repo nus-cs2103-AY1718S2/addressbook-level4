@@ -75,6 +75,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author Isaaaca
     /**
      * Sets the {@code TimeTableLink} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -82,6 +83,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setTimeTableLink(new TimeTableLink(link));
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Detail} of the {@code EditPersonDescriptor} that we are building.

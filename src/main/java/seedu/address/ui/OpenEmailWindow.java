@@ -21,6 +21,7 @@ import javafx.stage.StageStyle;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.SyntaxException;
 import seedu.address.MainApp;
 
+//@@author glorialaw
 /**
  * Generates the full email that was received
  */

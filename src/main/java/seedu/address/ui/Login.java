@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
@@ -28,9 +29,13 @@ public class Login extends UiPart<Region> {
     @FXML
     private PasswordField password;
 
+    @FXML
+    private Label passwordIndicator;
+
     public Login(LoginManager login) {
         super(FXML);
         this.login = login;
+        setPasswordIndicator("");
     }
 
     /**
@@ -41,7 +46,12 @@ public class Login extends UiPart<Region> {
         try {
             login.authenticate(username.getText(), password.getText());
         } catch (DuplicateUserException e) {
+            setPasswordIndicator("Invalid username or password.");
             e.printStackTrace();
         }
+    }
+
+    private void setPasswordIndicator(String text) {
+        passwordIndicator.setText(text);
     }
 }

@@ -111,7 +111,7 @@ public class LoginManager extends ComponentManager implements Login {
             if (userList.getUserList().get(username).getPassword().getPassword().equals(password)) {
                 loginUser(filepath);
             } else {
-                ;
+                throw new DuplicateUserException();
             }
         } else {
             addUser(username, password);
@@ -119,7 +119,7 @@ public class LoginManager extends ComponentManager implements Login {
                 File file = new File("data/login/" + filepath);
                 file.createNewFile();
             } catch (IOException e) {
-                ;
+                throw new DuplicateUserException();
             }
             loginUser(filepath);
         }

@@ -235,12 +235,16 @@ public class MainApp extends Application {
     public void stop() {
         logger.info("============================ [ Stopping Address Book ] =============================");
         this.ui = login.getUi();
-        ui.stop();
+        if (ui != null) {
+            ui.stop();
+        }
         try {
             loginStorage.saveLogin(login);
             this.storage = login.getStorage();
             this.userPrefs = login.getUserPrefs();
-            storage.saveUserPrefs(userPrefs);
+            if (storage != null && userPrefs != null) {
+                storage.saveUserPrefs(userPrefs);
+            }
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }

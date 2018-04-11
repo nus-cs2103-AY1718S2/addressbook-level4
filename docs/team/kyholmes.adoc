@@ -1,26 +1,26 @@
-= John Doe - Project Portfolio
+= Tan Kai Yong - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: AddressBook - Level 4
+== PROJECT: IMDB - Integrated Medical DataBase
 
 ---
 
 == Overview
 
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Integrated Medical DataBase (IMDB) is a desktop health records application which is morphed from Address Book Level 4. The purpose of this project is to teach fellow CS2103T students about Software Engineering principles. This application is targeted to private clinics with multiple branches to better manage their records efficiently which also bring convenience to medical staffs and doctors. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+* *Major enhancement*: added new command to allow medical staffs *add/remove patient into/from visiting queue during registration*
+** What it does: allows the user to manage the order of consultations of patient effectively.
+** Justification: This feature improves the product significantly because a user can make mistakes if they do manual management of visiting queue.
+** Highlights: This enhancement affects commands to be added in future. It required an in-depth analysis of design alternatives.
+** Credits: none
 
-* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
+* *Minor enhancement*: added new commands *to manage patient appointments*.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-W15-B2/main/blob/master/collated/functional/Kyholmes.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B2/main/blob/master/collated/test/Kyholmes-test.md[Test code]]
 
 * *Other contributions*:
 

@@ -55,4 +55,10 @@ public class ExportCommand extends Command {
             throw new CommandException(ioe.getMessage());
         }
     }
+
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ExportCommand // instanceof handles nulls
+                && this.filePath.equals(((ExportCommand) other).filePath)); // state check
+    }
 }

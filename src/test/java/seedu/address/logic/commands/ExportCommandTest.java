@@ -51,10 +51,12 @@ public class ExportCommandTest {
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, EXPORT_FILE_PATH)));
 
         assertEquals(getTypicalDeskBoard(), actualDeskBoard);
-        new File(EXPORT_FILE_PATH).delete(); // So that the test will not fail when run the second time onwards
+        new File(EXPORT_FILE_PATH).delete(); // so that the test will not fail when run the second time onwards
     }
 
-    @Test
+    /**
+     * Test
+     */
     public void execute_existingFile_throwsCommandException() throws CommandException {
         thrown.expect(CommandException.class);
         thrown.expectMessage(String.format(MESSAGE_FILE_EXISTS, EXISTING_FILE_PATH));

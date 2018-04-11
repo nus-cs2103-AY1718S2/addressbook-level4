@@ -45,7 +45,6 @@ public class ImportCommandTest {
     /**
      * Test
      */
-    @Test
     public void execute_validFilePath_success() throws CommandException, DuplicateActivityException {
         DeskBoard expectedDeskBoard = new DeskBoard(getTypicalDeskBoard());
         expectedDeskBoard.addActivity(ASSIGNMENT3);
@@ -68,7 +67,6 @@ public class ImportCommandTest {
     /**
      * Test
      */
-    @Test
     public void execute_illegalValuesInFile_throwsCommandException() throws CommandException {
         thrown.expect(CommandException.class);
         thrown.expectMessage(String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, "javax.xml.bind.UnmarshalException\n"

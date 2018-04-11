@@ -130,7 +130,7 @@ When you are ready to start coding,
 
 == Design
 
-The following section provides information about the software architecture of ContactSails. It also illustrate the design of each component.
+The following section provides information about the software architecture of ContactSails. It also illustrates the design of each component.
 
 [[Design-Architecture]]
 === Architecture
@@ -163,7 +163,7 @@ The rest of the App consists of four components:
 1. <<Design-Ui,*`UI`*>>: UI is the user interface of the App.
 2. <<Design-Logic,*`Logic`*>>: Logic is the command executor.
 3. <<Design-Model,*`Model`*>>: Model holds the data of the App in-memory.
-4. <<Design-Storage,*`Storage`*>>: Storage read data from and write data to the hard disk.
+4. <<Design-Storage,*`Storage`*>>: Storage reads data from and writes data to the hard disk.
 
 Each of the four components does the following:
 

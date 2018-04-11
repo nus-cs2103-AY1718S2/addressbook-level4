@@ -18,7 +18,7 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordFuzzyIgnoreCase(person.getName().fullName, keyword) >= 75);
+                .anyMatch(keyword -> StringUtil.getPartialRatioFuzzyIgnoreCase(person.getName().fullName, keyword) >= 75);
     }
 
     @Override

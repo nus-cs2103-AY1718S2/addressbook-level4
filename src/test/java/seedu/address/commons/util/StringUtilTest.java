@@ -138,7 +138,7 @@ public class StringUtilTest {
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));
     }
 
-    //---------------- Tests for containsWordFuzzyIgnoreCase --------------------------------------
+    //---------------- Tests for getPartialRatioFuzzyIgnoreCase --------------------------------------
 
     /*
      * Invalid equivalence partitions for word: null, empty, multiple words
@@ -155,7 +155,7 @@ public class StringUtilTest {
             Optional<String> errorMessage) {
         thrown.expect(exceptionClass);
         errorMessage.ifPresent(message -> thrown.expectMessage(message));
-        StringUtil.containsWordFuzzyIgnoreCase(sentence, word);
+        StringUtil.getPartialRatioFuzzyIgnoreCase(sentence, word);
     }
 
     @Test
@@ -204,25 +204,25 @@ public class StringUtilTest {
     public void containsWordFuzzyIgnoreCase_validInputs_correctResult() {
 
         // Empty sentence
-        assertEquals(0, StringUtil.containsWordFuzzyIgnoreCase("", "abc")); // Boundary case
-        assertEquals(0, StringUtil.containsWordFuzzyIgnoreCase("    ", "123"));
+        assertEquals(0, StringUtil.getPartialRatioFuzzyIgnoreCase("", "abc")); // Boundary case
+        assertEquals(0, StringUtil.getPartialRatioFuzzyIgnoreCase("    ", "123"));
 
         // Matches a partial word only
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "aaa bbb ccc", "bb")); // Sentence word bigger than query word
-        assertEquals(75, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(75, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
 
         // Matches word in the sentence, different upper/lower case letters
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "aaa bBb ccc", "Bbb")); // First word (boundary case)
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "aaa bBb ccc@1", "CCc@1")); // Last word (boundary case)
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "  AAA   bBb   ccc  ", "aaa")); // Sentence has extra spaces
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "Aaa", "aaa")); // Only one word in sentence (boundary case)
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "aaa bbb ccc", "  ccc  ")); // Leading/trailing spaces
 
         // Matches multiple words in sentence

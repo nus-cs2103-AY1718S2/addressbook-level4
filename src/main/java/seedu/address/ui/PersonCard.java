@@ -136,6 +136,8 @@ public class PersonCard extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonChangedEvent(PersonChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
         Person source = event.getSource();
         Person target = event.getTarget();
 

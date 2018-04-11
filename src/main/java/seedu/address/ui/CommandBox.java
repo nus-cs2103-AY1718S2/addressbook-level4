@@ -41,15 +41,17 @@ public class CommandBox extends UiPart<Region> {
 
     // Animation
     private ArrayList<Animation> allAnimation = new ArrayList<>();
+    private boolean animated;
 
     @FXML
     private TextField commandInput;
 
-    public CommandBox(Logic logic, HBox floatParseRealTime, Label floatParseLabel) {
+    public CommandBox(Logic logic, HBox floatParseRealTime, Label floatParseLabel, boolean animated) {
         super(FXML);
         this.logic = logic;
         this.floatParseRealTime = floatParseRealTime;
         this.floatParseLabel = floatParseLabel;
+        this.animated = animated;
 
         // Command helper not tested for now
         if (floatParseRealTime != null && floatParseLabel != null) {
@@ -144,22 +146,28 @@ public class CommandBox extends UiPart<Region> {
         });
 
         commandInput.focusedProperty().addListener((obs, old, focused) -> {
-            Animation animation;
-            allAnimation.forEach(Animation::pause);
-            allAnimation.clear();
+            if (animated) {
+                Animation animation;
+                allAnimation.forEach(Animation::pause);
+                allAnimation.clear();
 
-            if (focused) {
-                floatParseRealTime.setOpacity(0);
-                floatParseRealTime.setVisible(true);
-                animation = UiUtil.fadeNode(floatParseRealTime, true, 100, (e) -> { });
+                if (focused) {
+                    floatParseRealTime.setOpacity(0);
+                    floatParseRealTime.setVisible(true);
+                    animation = UiUtil.fadeNode(floatParseRealTime, true, 100, (e) -> {
+                    });
+                } else {
+                    animation = UiUtil.fadeNode(floatParseRealTime, false, 100, (e) -> {
+                        floatParseRealTime.setVisible(false);
+                    });
+                }
+
+                allAnimation.add(animation);
+                animation.play();
             } else {
-                animation = UiUtil.fadeNode(floatParseRealTime, false, 100, (e) -> {
-                    floatParseRealTime.setVisible(false);
-                });
+                floatParseRealTime.setOpacity(focused ? 1 : 0);
+                floatParseRealTime.setVisible(focused);
             }
-
-            allAnimation.add(animation);
-            animation.play();
         });
     }
     /**

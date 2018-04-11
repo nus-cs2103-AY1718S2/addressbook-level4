@@ -541,6 +541,7 @@ There are a couple of aspects with regards to `Notification` that can be impleme
 ** Pros: has the simplest implementation (only need to pull data from Google, does not need to create local class), saves storage space as nothing is stored locally.
 ** Cons: compromises notification feature if there's no internet access, requires another mechanism for extracting `ownerName` because `Event` class does not store `ownerName`, compromises performance if internet speed is slow).
 
+// tag::sort[]
 === Sort existing employees
 The implementation of `sort` command involves following objects: +
 
@@ -554,14 +555,16 @@ The details of implementation of `sort` command are as follow:
 . `SortCommandParser` extracts the sorting field from user input.
 . `ModelManager` and `UniqueEmployeeList` provide sorting algorithm, called by `AddressBook`.
 . `UniqueEmployeeList` will sort the units by giving field.
+// end::sort[]
 
-
+// tag::changeTheme[]
 === Change theme of Employees Tracker
 
 `changeTheme` command is used to change the theme to `dark` or `bright`.
 
 * `changeTheme` is achieved by handling `changeThemeEvent` in `MainWindow`.
 * a new "theme" field is added in GuiSettings.
+// end::changeTheme[]
 
 === Login
 

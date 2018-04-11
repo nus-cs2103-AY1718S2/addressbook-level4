@@ -6,7 +6,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -115,7 +114,7 @@ public class AddSessionLogCommand extends UndoableCommand {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-        return SESSION_LOG_DIVIDER + SESSION_LOG_DATE_PREFIX + dateFormat.format(date)+ "\n\n"
+        return SESSION_LOG_DIVIDER + SESSION_LOG_DATE_PREFIX + dateFormat.format(date) + "\n\n"
                 + sessionLogsToAdd + SESSION_LOG_DIVIDER;
     }
 

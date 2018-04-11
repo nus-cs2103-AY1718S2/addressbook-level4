@@ -4,7 +4,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -29,7 +28,7 @@
                     <Insets bottom="5" left="5" />
                   </padding>
                 </Label>
-                <ListView fx:id="eventsListView" VBox.vgrow="ALWAYS" prefHeight="-1.0" prefWidth="-1.0" />
+                <VBox fx:id="eventsListStack" VBox.vgrow="ALWAYS" prefHeight="-1.0" prefWidth="-1.0" />
               </children>
             </VBox>
           </children>

@@ -1,12 +1,13 @@
 //@@author jaronchan
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
+import com.google.api.services.calendar.model.Event;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -31,7 +32,7 @@ public class DailySchedulerPanel extends UiPart<Region> {
     private MapPanel directionPanel;
 
     @FXML
-    private ListView<ScheduledEventCard> eventsListView;
+    private VBox eventsListStack;
 
     @FXML
     private StackPane directionPanelPlaceholder;
@@ -52,25 +53,16 @@ public class DailySchedulerPanel extends UiPart<Region> {
      * If the day has no events, a placeholder text will be shown.
      *
      */
-//    private void showPlannedEvents() {
-//        if (person != null) {
-//            // Fill the labels with info from the person object.
-//            nameLabel.setText(person.getName().toString());
-//            phoneNumberLabel.setText(person.getPhone().toString());
-//            emailLabel.setText(person.getEmail().toString());
-//            addressLabel.setText(person.getAddress().toString());
-//            conditionLabel.setText("TO BE IMPLEMENTED IN 2.0");
-//            priorityLabel.setText("TO BE IMPLEMENTED IN 2.0");
-//        } else {
-//            // Person is null, remove all the text.
-//            nameLabel.setText("");
-//            phoneNumberLabel.setText("");
-//            emailLabel.setText("");
-//            addressLabel.setText("");
-//            conditionLabel.setText("TO BE IMPLEMENTED IN 2.0");
-//            priorityLabel.setText("TO BE IMPLEMENTED IN 2.0");
-//        }
-//    }
+    private void showPlannedEvents(List<Event> dailyEventsList) {
+
+        int numOfEvents = dailyEventsList.size();
+        if (numOfEvents != 0) {
+            for (int i = 0; i < numOfEvents; i++) {
+                ScheduledEventCard card = new ScheduledEventCard(dailyEventsList.get(i), i + 1);
+                eventsListStack.getChildren().add(card.getRoot());
+            }
+        }
+    }
 
     /**
      * Buttons depending on how many trips to be made.
@@ -139,6 +131,7 @@ public class DailySchedulerPanel extends UiPart<Region> {
     @Subscribe
     private void handleDailyScheduleShownChangedEvent(DailyScheduleShownChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showPlannedEvents(event.getDailyEventsList());
 
     }
 

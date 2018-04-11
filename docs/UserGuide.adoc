@@ -60,6 +60,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`, Alias: `h`
 
+[TIP]
+The help page can be accessed by moving the mouse over `Help` section of the navigation bar then clicking `Help`. The help page can also be accessed by pressing `F1` on the keyboard.
+
 === Adding a person: `add`
 
 Adds a person to reInsurance +
@@ -102,6 +105,9 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+[TIP]
+Clearing the application can also be done by moving the mouse over `File` section of the navigation bar then clicking `Clear`.
 
 === Locating persons by name: `find`
 
@@ -256,6 +262,9 @@ Clears all entries from reInsurance. +
 Alias: `c` +
 Format: `clear` Alias: `c`
 
+[TIP]
+Clearing all entries from reInsurance can also be done by moving the mouse over `File` section of the navigation bar then clicking `Clear`.
+
 === Export data : `export`
 
 Exports the data from the specified export type (case insensitive). +
@@ -301,6 +310,9 @@ Format: `password` Alias: `pw`
 
 Exits the program. +
 Format: `exit`
+
+[TIP]
+Exiting the application can also be done by moving the mouse over `File` section of the navigation bar then clicking `Exit`.
 
 === Saving the data
 

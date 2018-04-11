@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ShowUpdatedSessionLogEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -41,8 +43,7 @@ public class AddSessionLogCommand extends UndoableCommand {
 
     public static final String MESSAGE_ADD_SESSION_LOG_SUCCESS = "Added new log to %1$s";
 
-    public static final String SESSION_LOG_DIVIDER = "\n\n======================================================"
-            + "===============";
+    public static final String SESSION_LOG_DIVIDER = "\n\n=============================================";
     public static final String SESSION_LOG_DATE_PREFIX = "\nSession log date added: ";
 
 
@@ -72,6 +73,7 @@ public class AddSessionLogCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        EventsCenter.getInstance().post(new ShowUpdatedSessionLogEvent(editedPerson));
         return new CommandResult(String.format(MESSAGE_ADD_SESSION_LOG_SUCCESS, editedPerson));
     }
 

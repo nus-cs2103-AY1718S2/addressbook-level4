@@ -215,7 +215,6 @@ public class OAuthManager {
     public static List<Event> getDailyEvents(User user, LocalDate localDate) throws IOException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String inputDate = localDate.format(formatter);
-
         List<Event> dailyEvents = getEventsByDay(user, inputDate);
         int numberOfEventsRetrieved = dailyEvents.size();
 

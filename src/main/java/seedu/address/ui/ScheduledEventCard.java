@@ -24,7 +24,7 @@ public class ScheduledEventCard extends UiPart<Region> {
     private static final String EVENT_CONDITION_HEADER = "CONDITION: ";
     private static final String EVENT_MOBILE_HEADER = "MOBILE: ";
     private static final String FUTURE_IMPLEMENTATION = "TO BE IMPLEMENTED IN 2.0";
-    private static final String LINE_BREAK = "-------------------------------- \n";
+    private static final String EVENT_DIVIDER = "================================ \n";
 
     public final Event event;
 
@@ -67,12 +67,12 @@ public class ScheduledEventCard extends UiPart<Region> {
         String eventAsString = EVENT_NUM_HEADER + eventIndex + "\n"
                 + EVENT_TITLE_HEADER + title + "\n"
                 + EVENT_TIMING_HEADER + start + " - " + end + "\n"
-                + LINE_BREAK
+                + EVENT_DIVIDER
                 + EVENT_LOCATION_HEADER + location + "\n"
                 + EVENT_PERSON_HEADER + FUTURE_IMPLEMENTATION + "\n"
                 + EVENT_MOBILE_HEADER + FUTURE_IMPLEMENTATION + "\n"
                 + EVENT_CONDITION_HEADER + FUTURE_IMPLEMENTATION + "\n"
-                + LINE_BREAK + LINE_BREAK;
+                + EVENT_DIVIDER + EVENT_DIVIDER;
         System.out.printf(eventAsString);
 
         return eventAsString;

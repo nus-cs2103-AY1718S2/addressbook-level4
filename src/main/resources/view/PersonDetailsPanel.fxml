@@ -4,8 +4,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -84,23 +85,23 @@
             <Insets right="5.0" />
           </padding>
         </StackPane>
-        <StackPane prefHeight="150.0" prefWidth="200.0">
+        <StackPane prefHeight="-1.0" prefWidth="-1.0">
           <padding>
             <Insets left="5.0" />
           </padding>
           <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox prefHeight="-1.0" prefWidth="-1.0">
               <children>
                 <Label text="Session Reports">
                   <padding>
                     <Insets bottom="5.0" left="5.0" top="5.0" />
                   </padding>
                 </Label>
-                <ListView prefHeight="-1.0" prefWidth="-1.0">
-                  <VBox.margin>
-                    <Insets bottom="5.0" right="5.0" />
-                  </VBox.margin>
-                </ListView>
+                <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+                  <content>
+                    <TextArea fx:id="sessionLogPanel" editable="false" prefHeight="600" maxWidth="400" wrapText="true" />
+                  </content>
+                </ScrollPane>
               </children>
             </VBox>
           </children>

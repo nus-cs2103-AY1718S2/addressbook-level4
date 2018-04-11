@@ -17,9 +17,9 @@ public class FindCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose fields contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Option 1 (Search all fields): KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alex david alexyeoh@example.com\n\n"
+            + "Example: " + COMMAND_WORD + " alex, david, alexyeoh@example.com\n\n"
             + "Option 2 (Search by prefix): /n[KEYWORD] [MORE_KEYWORDS] /p...\n"
-            + "Example: " + COMMAND_WORD + " n/Alex Bernice p/999 555";
+            + "Example: " + COMMAND_WORD + " n/Alex, Bernice p/999, 555";
 
     public static final int LEVENSHTEIN_DISTANCE_THRESHOLD = 2;
 

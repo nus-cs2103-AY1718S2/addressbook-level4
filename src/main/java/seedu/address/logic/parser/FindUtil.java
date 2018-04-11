@@ -34,6 +34,7 @@ public class FindUtil {
     public static Predicate<Person> parseFindArgs(String trimmedArgs, ArgumentMultimap argMultimap)
             throws ParseException {
         requireNonNull(trimmedArgs);
+        assert trimmedArgs != null;
         Predicate<Person> finalPredicate;
 
         // no prefix used, search for all fields (global search)
@@ -85,6 +86,7 @@ public class FindUtil {
      * @return boolean value
      */
     private static boolean startWithPrefix(String trimmedArgs) {
+        assert trimmedArgs != null;
         String[] args = trimmedArgs.split("\\s+");
 
         return (args[0].contains(PREFIX_NAME.toString())

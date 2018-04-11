@@ -5,8 +5,11 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
+
+import seedu.address.commons.core.LogsCenter;
 
 //@@author tanhengyeow
 /**
@@ -20,6 +23,7 @@ public class FindResults {
     private HashMap<String, HashSet<String>> wildcardResults;
     private HashMap<String, HashSet<String>> currResults;
     private StringBuilder textResults;
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     public FindResults() {
         this.exactResults = new HashMap<>();
@@ -65,6 +69,7 @@ public class FindResults {
      * Form a StringBuilder containing the find results to display to the user. This is the driver method.
      */
     public void formTextResults() {
+        logger.info("Forming text results to be displayed in application console");
         textResults.setLength(0); //reset from last search
 
         textResults.append("Exact word search matches:\n");
@@ -75,8 +80,6 @@ public class FindResults {
 
         textResults.append("\nWildcard search matches:\n");
         parseTextResults("wildcard");
-
-        clearResults();
     }
 
     /**

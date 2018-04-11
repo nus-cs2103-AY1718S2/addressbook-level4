@@ -42,8 +42,8 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_DISPLAY_AMY = "src\\test\\resources\\images\\displayPic\\test.bmp";
-    public static final String VALID_DISPLAY_BOB = "src\\test\\resources\\images\\displayPic\\testBob.bmp";
+    public static final String VALID_DISPLAY_AMY = "src/test/resources/images/displayPic/test.bmp";
+    public static final String VALID_DISPLAY_BOB = "src/test/resources/images/displayPic/testBob.bmp";
     public static final String VALID_PARTICIPATION_AMY = "0";
     public static final String VALID_PARTICIPATION_BOB = "0";
     public static final String VALID_PARTICIPATION_MARK = "5";
@@ -76,9 +76,9 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_DISPLAY_DESC = " " + PREFIX_DISPLAY_PIC
-            + "src\\test\\resources\\images\\displayPic\\missing"; //Missing file
+            + "src/test/resources/images/displayPic/missing"; //Missing file
     public static final String INVALID_DISPLAY_TYPE_DESC = " " + PREFIX_DISPLAY_PIC
-            + "src\\test\\resources\\images\\displayPic\\wrong.txt"; //not image file
+            + "src/test/resources/images/displayPic/wrong.txt"; //not image file
     public static final String INVALID_ALPHABET_MARK_DESC = " "
             + PREFIX_MARK_PARTICIPATION + INVALID_PARTICIPATION_MARK;
     public static final String INVALID_OVER_MARK_DESC = " "

@@ -203,6 +203,7 @@ public class NotiCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "";
 
+    public static final String MESSAGE_USAGE = "Toggling the notification center, or you can double press SHIFT";
 
     @Override
     public CommandResult execute() {
@@ -549,6 +550,7 @@ public class RateCommandParser implements Parser<RateCommand> {
     public void setNextId(int nextId) {
         this.nextId = nextId;
     }
+
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -582,15 +584,6 @@ public class RateCommandParser implements Parser<RateCommand> {
 ###### \java\seedu\address\model\Model.java
 ``` java
 
-
-    /** Adds the given password */
-    void setPassword(String e);
-
-    /** Gets the password */
-    String getPassword();
-
-    ObservableList<Photo> getPhotoList();
-
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -617,6 +610,7 @@ public class RateCommandParser implements Parser<RateCommand> {
         indicateAddressBookChanged();
         indicateNotificationAdded(e);
     }
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -644,6 +638,7 @@ public class RateCommandParser implements Parser<RateCommand> {
             indicateNotificationAdded(n);
         }
     }
+
 ```
 ###### \java\seedu\address\model\notification\exceptions\TimetableEntryNotFoundException.java
 ``` java

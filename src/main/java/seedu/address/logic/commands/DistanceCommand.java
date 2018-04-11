@@ -77,11 +77,7 @@ public class DistanceCommand extends Command {
             destination = person.getAddress().toString();
 
             //Trim address
-            if (destination.indexOf('#') > 2) {
-                int stringCutIndex;
-                stringCutIndex = destination.indexOf('#') - 2;
-                destination = destination.substring(0, stringCutIndex);
-            }
+            destination = trimAddress(destination);
 
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(origin, destination);
@@ -111,17 +107,9 @@ public class DistanceCommand extends Command {
             destination = personDestination.getAddress().toString();
 
             //Trim addresses
-            if (origin.indexOf('#') > 2) {
-                int stringCutIndex;
-                stringCutIndex = origin.indexOf('#') - 2;
-                origin = origin.substring(0, stringCutIndex);
-            }
+            origin = trimAddress(origin);
 
-            if (destination.indexOf('#') > 2) {
-                int stringCutIndex;
-                stringCutIndex = destination.indexOf('#') - 2;
-                destination = destination.substring(0, stringCutIndex);
-            }
+            destination = trimAddress(destination);
 
             personNameOrigin = personOrigin.getName().toString();
             personNameDestination = personDestination.getName().toString();
@@ -142,6 +130,15 @@ public class DistanceCommand extends Command {
                     MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personNameOrigin, personNameDestination, distance));
 
         }
+    }
+
+    private String trimAddress(String address) {
+        if (address.indexOf('#') > 2) {
+            int stringCutIndex;
+            stringCutIndex = address.indexOf('#') - 2;
+            address = address.substring(0, stringCutIndex);
+        }
+        return address;
     }
 
     @Override

@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GameEvent;
 
-//@@author ncaminh
+//@@author ncaminh-unused
 /**
  * Show game on to the display panel
  */

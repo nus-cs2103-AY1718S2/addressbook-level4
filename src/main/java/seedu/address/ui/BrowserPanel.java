@@ -41,7 +41,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String HQ_ADDRESS = "Kent Ridge MRT";
     public static final String SEARCH_PAGE_URL =
-            "https://www.google.com.sg/maps/dir/Kent+Ridge+MRT+Station/";
+            "https://www.google.com.sg/maps/dir/Kent%20Ridge%20MRT%20Station/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -80,7 +80,7 @@ public class BrowserPanel extends UiPart<Region> {
         }
 
         readPersonName(person);
-        loadPage(SEARCH_PAGE_URL + addressWithoutUnit + "?dg=dbrw&newdg=1");
+        loadPage(SEARCH_PAGE_URL + addressWithoutUnit.replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
     }
 
     /**
@@ -215,7 +215,7 @@ public class BrowserPanel extends UiPart<Region> {
         temp.add(0, HQ_ADDRESS);
         additionalInfo.setText("Estimated Required Time for Deliveries: "
                 + FilterCommand.getDuration(event.sortedList));
-        loadPage(url.toString());
+        loadPage(url.toString().replaceAll(" ", "%20"));
     }
 
     @Subscribe
@@ -229,7 +229,7 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         StringBuilder url = new StringBuilder(SEARCH_PAGE_URL);
         url.append(event.destination);
-        loadPage(url.toString() + "?dg=dbrw&newdg=1");
+        loadPage(url.toString().replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
     }
 
     @Subscribe
@@ -243,7 +243,7 @@ public class BrowserPanel extends UiPart<Region> {
         url.deleteCharAt(url.length() - 1);
         additionalInfo.setText("Estimated Required Time for Deliveries: "
                 + FilterCommand.getDuration(event.sortedList));
-        loadPage(url.toString() + "?dg=dbrw&newdg=1");
+        loadPage(url.toString().replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
     }
 
     @Subscribe

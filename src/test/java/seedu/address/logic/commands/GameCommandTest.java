@@ -10,6 +10,7 @@ import org.junit.Test;
 import seedu.address.commons.events.ui.GameEvent;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author ncaminh-unused
 public class GameCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();

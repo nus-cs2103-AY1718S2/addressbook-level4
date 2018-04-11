@@ -118,12 +118,9 @@ public class DistanceCommandTest {
         try {
             CommandResult commandResult = distanceCommand.execute();
             String address = person.getAddress().toString();
+
             //Trim address
-            if (address.indexOf('#') > 2) {
-                int stringCutIndex;
-                stringCutIndex = address.indexOf('#') - 2;
-                address = address.substring(0, stringCutIndex);
-            }
+            address = trimAddress(address);
 
             String personName = person.getName().toString();
             String headQuarterAddress = "Kent Ridge MRT";
@@ -154,17 +151,9 @@ public class DistanceCommandTest {
             String addressDestination = personAtDestination.getAddress().toString();
 
             //Trim addresses
-            if (addressOrigin.indexOf('#') > 2) {
-                int stringCutIndex;
-                stringCutIndex = addressOrigin.indexOf('#') - 2;
-                addressOrigin = addressOrigin.substring(0, stringCutIndex);
-            }
+            addressOrigin = trimAddress(addressOrigin);
 
-            if (addressDestination.indexOf('#') > 2) {
-                int stringCutIndex;
-                stringCutIndex = addressDestination.indexOf('#') - 2;
-                addressDestination = addressDestination.substring(0, stringCutIndex);
-            }
+            addressDestination = trimAddress(addressDestination);
 
             String nameOrigin = personAtOrigin.getName().fullName;
             String nameDestination = personAtDestination.getName().fullName;
@@ -184,6 +173,18 @@ public class DistanceCommandTest {
             System.out.println(ce.getMessage());
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
+    }
+
+    /**
+     * Trim address
+     */
+    private String trimAddress(String address) {
+        if (address.indexOf('#') > 2) {
+            int stringCutIndex;
+            stringCutIndex = address.indexOf('#') - 2;
+            address = address.substring(0, stringCutIndex);
+        }
+        return address;
     }
 
     /**

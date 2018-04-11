@@ -33,6 +33,9 @@ public class ToDoCard extends UiPart<Region> {
         status.setText(todo.getStatus().value);
     }
 
+    public boolean isDone() {
+        return todo.getStatus().value.equals("done");
+    }
 
     @Override
     public boolean equals(Object other) {

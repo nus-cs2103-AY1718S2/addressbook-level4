@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -9,7 +11,6 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -31,11 +32,83 @@
       <padding>
         <Insets bottom="5" left="15" right="5" top="5" />
       </padding>
-      <FlowPane fx:id="groups" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <FlowPane fx:id="preferences" />
+      <!--@@author amad-person-->
+      <HBox alignment="CENTER_LEFT" spacing="5">
+        <ImageView fx:id="groupIcon" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="/images/group_icon.png" />
+          </image>
+        </ImageView>
+        <FlowPane fx:id="groups">
+          <padding>
+            <Insets top="5" />
+          </padding>
+        </FlowPane>
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="5">
+        <ImageView fx:id="phoneIcon" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="/images/phone_icon.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+          <padding>
+            <Insets top="5" />
+          </padding>
+        </Label>
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="5">
+        <ImageView fx:id="addressIcon" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="/images/address_icon.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="address" styleClass="cell_small_label" text="\$address">
+          <padding>
+            <Insets top="5" />
+          </padding>
+        </Label>
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="5">
+        <ImageView fx:id="emailIcon" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="/images/email_icon.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="email" styleClass="cell_small_label" text="\$email">
+          <padding>
+            <Insets top="5" />
+          </padding>
+        </Label>
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="5">
+        <ImageView fx:id="prefIcon" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="/images/pref_icon.png" />
+          </image>
+        </ImageView>
+        <FlowPane fx:id="preferences">
+          <padding>
+            <Insets top="5" />
+          </padding>
+        </FlowPane>
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </HBox>
+      <!--@@author amad-person-->
     </VBox>
       <rowConstraints>
          <RowConstraints />

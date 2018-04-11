@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -18,6 +19,8 @@ import seedu.address.model.order.Quantity;
  */
 public class OrderCard extends UiPart<Region> {
     private static final String FXML = "OrderListCard.fxml";
+    private static final double ICON_WIDTH = 25;
+    private static final double ICON_HEIGHT = 25;
     private static final String ORDER_STATUS_DONE = "DONE";
 
     public final Order order;
@@ -28,13 +31,13 @@ public class OrderCard extends UiPart<Region> {
     private HBox cardPane;
 
     @FXML
+    private Label id;
+
+    @FXML
     private Label orderInformation;
 
     @FXML
     private Label orderStatus;
-
-    @FXML
-    private Label id;
 
     @FXML
     private Label priceAndQuantity;
@@ -45,6 +48,18 @@ public class OrderCard extends UiPart<Region> {
     @FXML
     private Label deliveryDate;
 
+    @FXML
+    private ImageView orderStatusIcon;
+
+    @FXML
+    private ImageView priceAndQuantityIcon;
+
+    @FXML
+    private ImageView totalPriceIcon;
+
+    @FXML
+    private ImageView deliveryDateIcon;
+
     public OrderCard(Order order, int displayedIndex) {
         super(FXML);
         this.order = order;
@@ -54,6 +69,7 @@ public class OrderCard extends UiPart<Region> {
         setPriceAndQuantity(order);
         setTotalPrice(order);
         deliveryDate.setText("Deliver By: " + order.getDeliveryDate().toString());
+        setImageSizeForAllImages();
     }
 
     /**
@@ -87,6 +103,20 @@ public class OrderCard extends UiPart<Region> {
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
 
         return String.valueOf(decimalFormat.format(totalPrice));
+    }
+
+    private void setImageSizeForAllImages() {
+        orderStatusIcon.setFitWidth(ICON_WIDTH);
+        orderStatusIcon.setFitHeight(ICON_HEIGHT);
+
+        priceAndQuantityIcon.setFitWidth(ICON_WIDTH);
+        priceAndQuantityIcon.setFitHeight(ICON_HEIGHT);
+
+        totalPriceIcon.setFitWidth(ICON_WIDTH);
+        totalPriceIcon.setFitHeight(ICON_HEIGHT);
+
+        deliveryDateIcon.setFitWidth(ICON_WIDTH);
+        deliveryDateIcon.setFitHeight(ICON_HEIGHT);
     }
 
     @Override

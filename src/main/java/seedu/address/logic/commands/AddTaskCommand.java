@@ -4,12 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK_DESC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.Task;
 
 /**
- * Adds a task to the todo list and calendar.
+ * Adds a task to the To-do list and calendar.
  */
 public class AddTaskCommand extends UndoableCommand {
 
@@ -18,10 +19,12 @@ public class AddTaskCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the todo list and calendar. "
             + "Parameters: "
+            + PREFIX_TITLE + "TITLE "
             + PREFIX_TASK_DESC + "TASK "
             + PREFIX_DEADLINE + "DEADLINE "
             + PREFIX_PRIORITY + "PRIORITY LEVEL(from 0 - 50, 0 being lowest priority, 50 being highest priority) \n"
             + "Example: " + COMMAND_WORD + " "
+            + PREFIX_TITLE + "Dance "
             + PREFIX_TASK_DESC + "Dance till I drop "
             + PREFIX_DEADLINE + "20-03-2018 "
             + PREFIX_PRIORITY + "1";
@@ -50,7 +53,7 @@ public class AddTaskCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddCommand // instanceof handles nulls
+                || (other instanceof AddTaskCommand // instanceof handles nulls
                 && toAdd.equals(((AddTaskCommand) other).toAdd));
     }
 }

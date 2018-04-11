@@ -92,13 +92,18 @@ public class AddressBookTest {
         }
 
         @Override
+        public ObservableList<Tag> getTagList() {
+            return tags;
+        }
+
+        @Override
         public ObservableList<Task>[][] getCalendarList() {
             return new ObservableList[0][];
         }
 
         @Override
-        public ObservableList<Tag> getTagList() {
-            return tags;
+        public List<String> getItemList() {
+            return null;
         }
     }
 

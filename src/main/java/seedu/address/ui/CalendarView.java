@@ -137,4 +137,3 @@ public class CalendarView extends UiPart<Region> {
         this.allCalendarDays = allCalendarDays;
     }
 }
-

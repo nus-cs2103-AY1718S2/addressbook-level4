@@ -41,6 +41,7 @@ public class UniqueTaskList implements Iterable<Task> {
             }
         }
     }
+
     /**
      * Returns true if the list contains an equivalent task as the given argument.
      */
@@ -61,6 +62,7 @@ public class UniqueTaskList implements Iterable<Task> {
         Collections.sort(calendarList[diff][toAdd.getDeadlineDay()]);
     }
 
+    //@@author Wu Di
     /**
      * Replaces the task {@code target} in the list with {@code editedTask}.
      *
@@ -89,14 +91,15 @@ public class UniqueTaskList implements Iterable<Task> {
      */
     public boolean remove(Task toRemove) throws TaskNotFoundException {
         requireNonNull(toRemove);
-        final boolean personFoundAndDeleted = internalList.remove(toRemove)
-            && calendarList[toRemove.getDeadline().diff][toRemove.getDeadlineDay()].remove(toRemove);
-        if (!personFoundAndDeleted) {
+        final boolean taskFoundAndDeleted = internalList.remove(toRemove)
+                && calendarList[toRemove.getDeadline().diff][toRemove.getDeadlineDay()].remove(toRemove);
+        if (!taskFoundAndDeleted) {
             throw new TaskNotFoundException();
         }
-        return personFoundAndDeleted;
+        return taskFoundAndDeleted;
     }
 
+    //@@author
     public void setTasks(UniqueTaskList replacement) {
         this.internalList.setAll(replacement.internalList);
         for (int i = 0; i < 7; i++) {

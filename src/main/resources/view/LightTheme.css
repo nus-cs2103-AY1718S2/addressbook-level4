@@ -169,12 +169,6 @@ list-view-calendar .list-cell {
     -fx-border-width: 1;
 }
 
-.list-cell:empty {
-    /* Empty cells will not have alternating colours */
-    -fx-background: #e3e3e3;
-}
-
-
 .list-cell .label {
     -fx-text-fill: black;
 }
@@ -204,7 +198,7 @@ list-view-calendar .list-cell {
 }
 
 .calendar-grid-pane {
-    -fx-background-color: #e3e3e3;
+    -fx-background-color: derive(#e3e3e3, 20%);
 }
 
 .anchor-pane {

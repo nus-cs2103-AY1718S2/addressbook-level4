@@ -21,6 +21,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Priority;
 import seedu.address.model.task.TaskDescription;
+import seedu.address.model.task.Title;
 import seedu.address.storage.DisplayPicStorage;
 
 /**
@@ -220,6 +221,26 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code String marks} into a {@code Integer marks}
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static Integer parseMarks(String marks) throws IllegalValueException {
+        requireNonNull(marks);
+        return Integer.parseInt(marks);
+    }
+
+    /**
+     * Parses a {@code Optional<String> marks} into an {@code Optional<Integer>} if {@code marks} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * @param marks are the marks to add
+     */
+    public static Optional<Integer> parseMarks(Optional<String> marks) throws IllegalValueException {
+        requireNonNull(marks);
+        return marks.isPresent() ? Optional.of(parseMarks(marks.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -246,6 +267,33 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author Wu Di
+    /**
+     * Parses a {@code String taskTitle} into a {@code TaskTitle}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code taskDescription} is invalid.
+     */
+    public static Title parseTaskTitle(String taskTitle) throws IllegalValueException {
+        requireNonNull(taskTitle);
+        String trimmedTaskTitle = taskTitle.trim();
+        if (!TaskDescription.isValidDescription(trimmedTaskTitle)) {
+            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return new Title(trimmedTaskTitle);
+    }
+
+    /**
+     * Parses a {@code Optional<String> taskDescription} into an {@code Optional<TaskDescription>}
+     * if {@code TaskDscription} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Title> parseTaskTitle(Optional<String> title) throws IllegalValueException {
+        requireNonNull(title);
+        return title.isPresent() ? Optional.of(parseTaskTitle(title.get())) : Optional.empty();
+    }
+
+    //@@author
     /**
      * Parses a {@code String taskDescription} into a {@code TaskDescription}.
      * Leading and trailing whitespaces will be trimmed.

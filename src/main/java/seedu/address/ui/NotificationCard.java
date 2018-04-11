@@ -1,8 +1,6 @@
 //@@author IzHoBX
 package seedu.address.ui;
 
-import java.util.Scanner;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -154,10 +152,13 @@ public class NotificationCard extends UiPart<Region> {
         return "Title: " + title.getText() + " Owner: " + ownerName.getText();
     }
 
+    /**
+     * Decreases the index displayed on notification card.
+     */
     public void decreaseIndex(int i) {
         String currIndex = this.index.getText();
         int j;
-        for ( j = 0; j < currIndex.length(); j++) {
+        for (j = 0; j < currIndex.length(); j++) {
             if (currIndex.charAt(j) == '.') {
                 break;
             }

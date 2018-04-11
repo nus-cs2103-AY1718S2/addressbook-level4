@@ -5,18 +5,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import javax.swing.plaf.synth.Region;
-
-import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
-import seedu.address.model.notification.Notification;
 
 /**
  * Encapsulates all the information and functionalities required for Notification Center.
@@ -84,10 +78,11 @@ public class NotificationCenter {
         NotificationCard forCenter = newNotificationCard.getCopyForCenter();
         javafx.scene.layout.Region notificationCard = forCenter.getRoot();
         LinkedList<javafx.scene.layout.Region> cards;
-        if (idToCard.get(forCenter.getId()) == null)
+        if (idToCard.get(forCenter.getId()) == null) {
             cards = new LinkedList<>();
-        else
+        } else {
             cards = idToCard.get(forCenter.getId());
+        }
         cards.add(notificationCard);
         idToCard.put(forCenter.getId(), cards);
         notificationCards.add(notificationCard);
@@ -107,9 +102,10 @@ public class NotificationCenter {
     /**
      * Deletes all notification records associated with the given eventId
      */
-    public void deleteNotification(String id) throws NullPointerException{
-        if (!idToCard.containsKey(id))
+    public void deleteNotification(String id) throws NullPointerException {
+        if (!idToCard.containsKey(id)) {
             return;
+        }
         for (javafx.scene.layout.Region nc: idToCard.get(id)) {
             notificationCardsBox.getChildren().remove(nc);
             notificationCards.remove(nc);
@@ -143,15 +139,18 @@ public class NotificationCenter {
         return notificationCardCopy.get(targetIndex.getOneBased());
     }
 
+    /**
+    * Delete the notification card at the given index
+    */
     public NotificationCard deleteNotificationByIndex(Index targetIndex) {
         notificationCardsBox.getChildren().remove(targetIndex.getZeroBased());
         idToCard.remove(notificationCards.get(targetIndex.getOneBased()).getId());
         notificationCards.remove(targetIndex.getOneBased());
         Iterator<NotificationCard> iterator = notificationCardCopy.iterator();
         for (int i = 0; i < notificationCardCopy.size(); i++) {
-            if (i <= targetIndex.getOneBased())
+            if (i <= targetIndex.getOneBased()) {
                 iterator.next();
-            else {
+            } else {
                 NotificationCard curr = iterator.next();
                 curr.decreaseIndex(1);
             }
@@ -173,9 +172,9 @@ public class NotificationCenter {
             System.out.println("Checking id:" + curr.getOwnerId());
             if (Integer.parseInt(curr.getOwnerId()) == targetId) {
                 iterator.remove();
-                notificationCardsBox.getChildren().remove(notificationCards.remove(i- 1));
+                notificationCardsBox.getChildren().remove(notificationCards.remove(i - 1));
                 totalRemoved++;
-            } else if (totalRemoved > 0){
+            } else if (totalRemoved > 0) {
                 System.out.println("Total removed: " + totalRemoved);
                 curr.decreaseIndex(totalRemoved);
             }

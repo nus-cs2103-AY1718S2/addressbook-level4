@@ -5,12 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
@@ -266,8 +264,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         while (!deletedSuccessfully) {
             try {
                 for (Notification n : notifications) {
-                    if (Integer.parseInt(n.getOwnerId()) == id)
+                    if (Integer.parseInt(n.getOwnerId()) == id) {
                         notifications.remove(n);
+                    }
                 }
                 deletedSuccessfully = true;
             } catch (ConcurrentModificationException e) {

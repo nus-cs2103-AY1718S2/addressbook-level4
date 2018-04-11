@@ -7,12 +7,10 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.logic.Authentication;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 
 /**

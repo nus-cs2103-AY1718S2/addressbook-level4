@@ -2,6 +2,7 @@
 package seedu.address.ui;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.plaf.synth.Region;
@@ -108,10 +109,12 @@ public class NotificationCenter {
             notificationCardsBox.getChildren().remove(nc);
             notificationCards.remove(nc);
         }
-        for (NotificationCard nc: notificationCardCopy) {
-            if (nc!=null && nc.getId().equals(id)) {
-                notificationCardCopy.remove(nc);
-                break;
+        Iterator<NotificationCard> iterator = notificationCardCopy.iterator();
+        iterator.next();
+        //to bypass the null at index 0
+        while (iterator.hasNext()) {
+            if (iterator.next().getId().equals(id)) {
+                iterator.remove();
             }
         }
     }
@@ -122,5 +125,12 @@ public class NotificationCenter {
 
     public NotificationCard getNotificationCard(Index targetIndex) {
         return notificationCardCopy.get(targetIndex.getOneBased());
+    }
+
+    public NotificationCard deleteNotificationByIndex(Index targetIndex) {
+        notificationCardsBox.getChildren().remove(targetIndex.getZeroBased());
+        idToCard.remove(notificationCards.get(targetIndex.getOneBased()).getId());
+        notificationCards.remove(targetIndex.getOneBased());
+        return notificationCardCopy.remove(targetIndex.getOneBased());
     }
 }

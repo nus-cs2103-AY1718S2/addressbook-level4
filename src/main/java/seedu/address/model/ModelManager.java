@@ -96,8 +96,13 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public NotificationCard deleteNotificationByIndex(Index targetIndex) throws NotificationNotFoundException {
-        NotificationCard toDelete = notificationCenter.getNotificationCard(targetIndex);
-        deleteNotification(notificationCenter.getIdByIndex(targetIndex));
+        try {
+            addressBook.deleteNotification(notificationCenter.getIdByIndex(targetIndex));
+            indicateAddressBookChanged();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        NotificationCard toDelete = notificationCenter.deleteNotificationByIndex(targetIndex);
         return toDelete;
     }
 

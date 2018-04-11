@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- @@author jasmoon -->
+<SplitPane fx:id="mainView" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           dividerPositions="0.25" styleClass="background" VBox.vgrow="ALWAYS">
+<items>
+    <VBox  VBox.vgrow="ALWAYS">
+        <children>
+            <StackPane id="taskListPanelPlaceholder" fx:id="taskListPanelPlaceholder"
+                       prefHeight="350.0" VBox.vgrow="ALWAYS">
+                <VBox.margin>
+                    <Insets bottom="8.0" left="30.0" right="30.0" top="10.0"/>
+                </VBox.margin>
+            </StackPane>
+        </children>
+    </VBox>
+
+    <SplitPane dividerPositions="0.66" styleClass="background" prefHeight="350.0"
+               VBox.vgrow="ALWAYS">
+        <items>
+            <VBox VBox.vgrow="ALWAYS">
+            <StackPane id="calendarPanelPlaceholder" fx:id="calendarPanelPlaceholder"
+                       VBox.vgrow="ALWAYS">
+                <VBox.margin>
+                    <Insets bottom="3.0"/>
+                </VBox.margin>
+            </StackPane>
+            </VBox>
+
+            <VBox styleClass="VBox" VBox.vgrow="ALWAYS">
+                <children>
+                    <StackPane id="eventListPanelPlaceholder" fx:id="eventListPanelPlaceholder"
+                               prefHeight="350.0" VBox.vgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets bottom="8.0" left="30.0" right="30.0" top="10.0"/>
+                        </VBox.margin>
+                    </StackPane>
+                </children>
+            </VBox>
+        </items>
+    </SplitPane>
+</items>
+</SplitPane>

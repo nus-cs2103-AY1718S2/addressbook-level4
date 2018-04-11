@@ -5,11 +5,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ACTIVITY_DISPL
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_ACTIVITY_SUCCESS;
-import static seedu.address.testutil.TypicalActivities.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalActivities.getTypicalActivities;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
-
-//import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
@@ -59,7 +56,7 @@ public class SelectCommandSystemTest extends DeskBoardSystemTest {
         /* Case: filtered activity list, select index within bounds of address book but out of bounds of activity list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        //showWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getDeskBoard().getActivityList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
@@ -101,39 +98,41 @@ public class SelectCommandSystemTest extends DeskBoardSystemTest {
                 MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
     }
 
+    //TODO:maybe need for task?
     /**
      * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays an empty string.<br>
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the success message of executing select command with the
-     * {@code expectedSelectedCardIndex} of the selected activity.<br>
-     * 4. {@code Model}, {@code Storage} and {@code ActivityListPanel} remain unchanged.<br>
+     * {@code expectedSelectedCardIndex} of the selected event.<br>
+     * 4. {@code Model}, {@code Storage} and {@code EventListPanel} remain unchanged.<br>
      * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
      * 6. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see DeskBoardSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see DeskBoardSystemTest#assertSelectedCardChanged(Index)
+     * @see DeskBoardSystemTest#assertSelectedEventCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_ACTIVITY_SUCCESS, expectedSelectedCardIndex.getOneBased());
-        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        int preExecutionSelectedCardIndex = getEventListPanel().getSelectedCardIndex();
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
-            assertSelectedCardUnchanged();
+            assertSelectedEventCardUnchanged();
         } else {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
+            assertSelectedEventCardChanged(expectedSelectedCardIndex);
         }
 
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
     }
 
+    //TODO: maybe need for event?
     /**
      * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays {@code command}.<br>
@@ -150,7 +149,7 @@ public class SelectCommandSystemTest extends DeskBoardSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedTaskCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

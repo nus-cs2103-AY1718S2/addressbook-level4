@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE;
+import static seedu.address.logic.commands.HelpCommand.SHOWN_HELP_MESSAGE;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class HelpCommandTest {
     @Test
     public void execute_help_success() {
         HelpCommand command = new HelpCommand();
-        assertCommandSuccess(command, SHOWING_HELP_MESSAGE);
+        assertCommandSuccess(command, SHOWN_HELP_MESSAGE);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowHelpRequestEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
     }

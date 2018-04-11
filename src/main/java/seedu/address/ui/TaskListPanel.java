@@ -22,7 +22,7 @@ import seedu.address.commons.events.ui.PanelSelectionChangedEvent;
 import seedu.address.model.activity.Activity;
 
 /**
- * Panel containing the list of activities.
+ * Panel containing the list of tasks.
  */
 public class TaskListPanel extends UiPart<Region> {
     private static final String FXML = "TaskListPanel.fxml";
@@ -103,8 +103,6 @@ public class TaskListPanel extends UiPart<Region> {
         scrollTo(event.targetIndex);
     }
 
-
-
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code TaskCard}.
      */
@@ -124,10 +122,6 @@ public class TaskListPanel extends UiPart<Region> {
     }
 
     //@@author jasmoon
-    /**
-     * Getter method for taskListView
-     * @return taskListView
-     */
     public ListView<TaskCard> getTaskListView()   {
         return taskListView;
     }

@@ -1,0 +1,56 @@
+= Jarrett Choo - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: CLIndar
+
+---
+
+== Overview
+
+CLIndar is a desktop application that helps university computing students to manage their tasks and events. The user interacts with it using a CLI. It has a GUI created with JavaFX, and is written in Java.
+
+== Summary of contributions
+
+* *Major enhancement*: Added *overdue feature*
+** What it does: Tags task as "overdue" once it has passed its due date and tags event as "finished" once it has passed its end date automatically.
+** Justification: This feature helps users of CLIndar to keep track of their overdue tasks. It also alerts them on the events that have passed.
+** Highlights: The "overdue" and "finished" tags are added automatically by the system, thus knowledge on the Java Concurrency API is needed. There is also a need to remove the "overdue" tag when the user completes the task, and this requires integration
+with the rest of the system.
+** Credits: One problem faced is that the UI cannot be updated by a thread other than the JavaFX application thread. To solve this issue, I refer to Stack Overflow https://stackoverflow.com/questions/21083945/how-to-avoid-not-on-fx-application-thread-currentthread-javafx-application-th[here].
+
+* *Minor enhancement #1*: Added *the ability to add and remove tasks or events*
+** What it does: Adds and removes task or event into CLIndar. Event which end date is before its start date is not allowed.
+** Highlights: This feature is a modification to the add and delete commands. It takes into account the new model of CLIndar.
+
+* *Minor enhancement #2*: Used *Java 8 Date Time API*
+** What it does: Parses the datetimes of tasks and events provided by the user and stores them as LocalDateTime objects. Formats the datetimes for display in the UI.
+** Justification: The datetimes are stored as LocalDateTime objects, so that they can be used more easily by other features in CLIndar, such as overdue, which requires comparing between datetimes.
+
+* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** Project management:
+*** Set up the team repo and added Travis GI, AppVeyor and Coveralls to manage incoming Pull Requests.
+*** Set up a new Project in team repo to manage and classify user stories according to their importance.
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub.
+
+** Enhancements to existing features:
+*** To be continued.
+
+** Documentation:
+*** Wrote the AboutUs: https://github.com/CS2103JAN2018-W13-B3/main/pull/62/files[Pull Request #62]
+*** Wrote the basic outline of User Guide: https://github.com/CS2103JAN2018-W13-B3/main/pull/52[Pull Request #52]
+
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+
+
+== Contributions to the User Guide
+
+== Contributions to the Developer Guide
+
+---
+

@@ -43,7 +43,7 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Activity activity) {
+    private void loadActivityPage(Activity activity) {
         loadPage(SEARCH_PAGE_URL + activity.getName().fullName);
     }
 
@@ -67,8 +67,8 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(ActivityPanelSelectionChangedEvent event) {
+    private void handleActivityPanelSelectionChangedEvent(ActivityPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().activity);
+        loadActivityPage(event.getNewSelection().activity);
     }
 }

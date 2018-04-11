@@ -14,6 +14,7 @@ import seedu.address.commons.events.ui.ShowMilestonesEvent;
 import seedu.address.commons.events.ui.ShowScheduleEvent;
 import seedu.address.commons.events.ui.ShowStudentDashboardEvent;
 import seedu.address.commons.events.ui.ShowStudentNameInDashboardEvent;
+import seedu.address.commons.events.ui.ShowStudentProfileEvent;
 import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.AddressBook;
@@ -92,6 +93,12 @@ public class InfoPanel extends UiPart<Region> {
         dashboardPanelPlaceholder.setVisible(false);
         calendarPlaceholder.setVisible(true);
         calendarPlaceholder.toFront();
+    }
+
+    @Subscribe
+    public void handleShowStudentProfileEvent(ShowStudentProfileEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showBrowserPanel();
     }
 
     @Subscribe

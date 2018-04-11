@@ -3,10 +3,10 @@ package seedu.address.model.student.miscellaneousinfo;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-//@@author samuel
+//@@author samuelloh
 /**
  * Represents a Student's next of kin phone number component of his/her miscellaneous information.
- * Guarantees: immutable; is valid as declared in {@link #isValidPath(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidNextOfKinPhone(String)}
  */
 public class NextOfKinPhone {
 

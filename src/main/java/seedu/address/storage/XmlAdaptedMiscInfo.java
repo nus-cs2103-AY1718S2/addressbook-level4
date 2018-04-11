@@ -8,7 +8,7 @@ import seedu.address.model.student.miscellaneousinfo.MiscellaneousInfo;
 import seedu.address.model.student.miscellaneousinfo.NextOfKinName;
 import seedu.address.model.student.miscellaneousinfo.NextOfKinPhone;
 import seedu.address.model.student.miscellaneousinfo.Remarks;
-
+//@@author samuelloh
 /**
  * JAXB-friendly version of the Miscellaneous info of a student.
  */
@@ -87,3 +87,4 @@ public class XmlAdaptedMiscInfo {
         return new MiscellaneousInfo(modelAllergies, modelNextOfKinName, modelNextOfKinPhone, modelRemarks);
     }
 }
+//author

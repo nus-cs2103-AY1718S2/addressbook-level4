@@ -6,7 +6,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-//@@author samuel
+//@@author samuelloh
 /**
  * Represents a Student's profile picture's pathname in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPath(String)}
@@ -16,7 +16,7 @@ public class ProfilePicturePath {
     public static final String MESSAGE_PICTURE_CONSTRAINTS =
             "File URL must exist and have extensions of '.jpg' or '.png' only.";
     public static final String DEFAULT_PROFILE_PICTURE =
-            "profile_photo_placeholder.png";
+            "data/view/profile_photo_placeholder.png";
 
 
     public final Path profilePicturePath;
@@ -49,10 +49,16 @@ public class ProfilePicturePath {
      */
     public static boolean isValidPath(String test) {
         File testFile = new File(test);
-        if (!testFile.exists()) {
+        if (!testFile.exists() && !validDefaultPictureExists()) {
             return false;
         }
         return ProfilePicturePath.checkPictureExtension(testFile.getPath());
+    }
+
+    private static boolean validDefaultPictureExists() {
+        File validDefaultPicture = new File("src/main/resources/"
+                + DEFAULT_PROFILE_PICTURE.substring(4));
+        return validDefaultPicture.exists();
     }
 
     public Path getProfilePicturePath() {

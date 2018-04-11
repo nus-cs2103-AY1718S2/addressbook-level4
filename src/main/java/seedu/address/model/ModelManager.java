@@ -144,6 +144,7 @@ public class ModelManager extends ComponentManager implements Model {
         return schedule;
     }
 
+    //@@author samuelloh
     /**
      * Displays Student details on a browser panel in the UI
      * @param target
@@ -187,6 +188,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateProfilePictureChange(Student target) {
         raise(new ProfilePictureChangeEvent(target));
     }
+    //@@author
 
     //=========== Filtered Student List Accessors =============================================================
 

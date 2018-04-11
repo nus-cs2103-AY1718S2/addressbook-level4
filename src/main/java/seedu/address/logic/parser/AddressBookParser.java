@@ -152,6 +152,7 @@ public class AddressBookParser {
         case EditPictureCommand.COMMAND_WORD:
             return new EditPictureCommandParser().parse(arguments);
 
+
         //@@author samuelloh
         case MoreInfoCommand.COMMAND_WORD:
             return new MoreInfoCommandParser().parse(arguments);
@@ -162,7 +163,6 @@ public class AddressBookParser {
         //@@author yapni
         case ShowDashboardCommand.COMMAND_WORD:
             return new ShowDashboardCommandParser().parse(arguments);
-
         case CheckTaskCommand.COMMAND_WORD:
             return new CheckTaskCommandParser().parse(arguments);
         //@@author

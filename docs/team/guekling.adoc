@@ -1,3 +1,63 @@
 = Yeo Guek Ling - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+
+== PROJECT: PrioriTask
+
+PrioriTask is a desktop task management application. It is a combination of the to-do list, and calendar features, with an added bonus of automatic updating and sorting of the tasks based on priority levels.
+
+The user interacts with PrioriTask by using a Command Line Interface (CLI), and has a Graphical User Interface (GUI) created with JavaFX.
+
+This application is based on the https://github.com/se-edu/addressbook-level4[AddressBook-Level4 (AB4)] project created by _https://github.com/se-edu/[SE-EDU] initiative_. It is written in Java, and has about 10 ~ 20 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *a calendar*
+** What it does: Allows users to have a have a chronological overview of the deadlines of all their tasks, and to switch between different months.
+** Justification: This feature improves the product significantly because users  would want at-a-glance views of upcoming tasks by month so that they can effectively keep track of their tasks. The GUI was created with JavaFX, and interacts with the `Model` and `Logic` components for users to execute the respective CLI commands. This enhancement  required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to the existing GUI, and no third-party calendar library was used to draw the calendar.
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+** PRs: https://github.com/CS2103JAN2018-W13-B4/main/pull/145[#145], https://github.com/CS2103JAN2018-W13-B4/main/pull/154[#154], https://github.com/CS2103JAN2018-W13-B4/main/pull/165[#165], https://github.com/CS2103JAN2018-W13-B4/main/pull/167[#167], https://github.com/CS2103JAN2018-W13-B4/main/pull/180[#180], https://github.com/CS2103JAN2018-W13-B4/main/pull/183[#183], https://github.com/CS2103JAN2018-W13-B4/main/pull/191[#191]
+
+* *Minor enhancement*: Extended the `Find` command to allow users to either:
+. Search the `NAME`, `DESCRIPTION`, and `DEADLINE` parameters to locate tasks containing any of the given keywords. (PR https://github.com/CS2103JAN2018-W13-B4/main/pull/113[#113])
+. Search either the `DESCRIPTION`, or `DEADLINE` parameter to locate tasks containing any of the given keywords. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/100[#100], https://github.com/CS2103JAN2018-W13-B4/main/pull/118[#118])
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B4/main/blob/master/collated/functional/guekling.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B4/main/blob/master/collated/test/guekling.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` - `v1.4` (3 releases) on GitHub.
+** Enhancements to existing features:
+*** Change existing `Email` field to `Deadline` field. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/75[#75], https://github.com/CS2103JAN2018-W13-B4/main/pull/114[#114])
+*** Change existing `Address` field to `Description` field. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/79[#79], https://github.com/CS2103JAN2018-W13-B4/main/pull/94[#94])
+** Fix bugs:
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide. (PR https://github.com/CS2103JAN2018-W13-B4/main/pull/146[#146])
+*** Made changes to existing sections of the Developer Guide to fix mistakes and to reflect our current product. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/18[#18], https://github.com/CS2103JAN2018-W13-B4/main/pull/82[#82], https://github.com/CS2103JAN2018-W13-B4/main/pull/150[#150], https://github.com/CS2103JAN2018-W13-B4/main/pull/172[#172], https://github.com/CS2103JAN2018-W13-B4/main/pull/198[#198], https://github.com/CS2103JAN2018-W13-B4/main/pull/207[#207])
+*** Made changes to existing sections of the User Guide to reflect our current product. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/16[#16], https://github.com/CS2103JAN2018-W13-B4/main/pull/96[#96])
+*** Updated README and About Us to reflect our current team and our current product. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/69[#69], https://github.com/CS2103JAN2018-W13-B4/main/pull/70[#70])
+*** Modified the User Guide so that it is more organised, and more information is provided for first-time users. (e.g. how to install the application, how to sign up and login, etc.) (PR https://github.com/CS2103JAN2018-W13-B4/main/pull/190[#190])
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W13-B4/main/pull/93[#93], https://github.com/CS2103JAN2018-W13-B4/main/pull/101[#101], https://github.com/CS2103JAN2018-W13-B4/main/pull/123[#123], https://github.com/CS2103JAN2018-W13-B4/main/pull/159[#159]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T11-B2/main/issues/82[1], https://github.com/CS2103JAN2018-T11-B2/main/issues/87[2], https://github.com/CS2103JAN2018-T11-B2/main/issues/92[3], https://github.com/CS2103JAN2018-T11-B2/main/issues/94[4], https://github.com/CS2103JAN2018-T11-B2/main/issues/95[5], https://github.com/CS2103JAN2018-T11-B2/main/issues/98[6], https://github.com/CS2103JAN2018-T11-B2/main/issues/104[7], https://github.com/CS2103JAN2018-T11-B2/main/issues/109[8], https://github.com/CS2103JAN2018-T11-B2/main/issues/113[9])
+** Tools:
+*** Integrated new Github plugins (`AppVeyor`, `Coveralls`, and `Netlify`) to the team repo
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=locate]
+
+include::../UserGuide.adoc[tag=calendar]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=calendar]

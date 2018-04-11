@@ -438,28 +438,28 @@ body {
 .pills-authors .label {
     -fx-text-fill: #222;
     -fx-padding: 1 3 1 3;
-    -fx-background-color: #81C78488;
+    -fx-background-color: #81C78466;
     -fx-font-size: 11pt;
 }
 
 .pills-authors-small .label {
     -fx-text-fill: #222;
     -fx-padding: 1 3 1 3;
-    -fx-background-color: #81C78488;
+    -fx-background-color: #81C78466;
     -fx-font-size: 9.5pt;
 }
 
 .pills-categories .label {
     -fx-text-fill: #222;
     -fx-padding: 1 3 1 3;
-    -fx-background-color: #80DEEA88;
+    -fx-background-color: #80DEEA66;
     -fx-font-size: 11pt;
 }
 
 .pills-categories-small .label {
     -fx-text-fill: #222;
     -fx-padding: 1 3 1 3;
-    -fx-background-color: #80DEEA88;
+    -fx-background-color: #80DEEA66;
     -fx-font-size: 9.5pt;
 }
 

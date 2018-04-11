@@ -595,6 +595,7 @@ Recurs the 1st task weekly for 3 times.
 ====
 // end::recurw[]
 
+// tag::subtaskFeatureSummary[]
 == Subtask Management Features
 
 _This section explains what a *Subtask* is, and the commands to manage them._
@@ -689,6 +690,7 @@ Toggles the fourth subtask of the second task in th result of `find homework` co
 === Reorder subtask `[coming in v2.0]`
 
 _Reorder subtasks using a given condition_
+// end::subtaskFeatureSummary[]
 
 // tag::calendar[]
 == Calendar Features
@@ -917,6 +919,7 @@ e.g.[example-no-box]#`toggle 3`#
 * *Recur weekly* : [format-no-box]#`recurw INDEX x/TIMES`# +
 e.g.[example-no-box]#`recurw 2 x/2`#
 
+// tag::subtaskFeatureSummary[]
 === Subtask Management Features
 * *Add Subtask* : [format-no-box]#`adds INDEX n/NAME`# +
 e.g. [example-no-box]#`adds 1 n/Submit Report`#
@@ -924,6 +927,7 @@ e.g. [example-no-box]#`adds 1 n/Submit Report`#
 e.g. [example-no-box]#`delete-subtask 2 3`#
 * *Toggle Subtask* : [format-no-box]#`toggle-subtask TASK_INDEX SUBTASK_INDEX`# +
 e.g.[example-no-box]#`toggle-subtask 3 2`#
+// end::subtaskFeatureSummary[]
 
 === Calendar Features
 * *Go To Current Month* : [format-no-box]#`cmonth`#

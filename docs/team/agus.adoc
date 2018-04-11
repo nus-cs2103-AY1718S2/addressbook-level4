@@ -1,3 +1,63 @@
 = Agus Sentosa Hermawan - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+
+== PROJECT: PrioriTask
+
+---
+
+== Overview
+
+PrioriTask is a desktop task manager application written in Java (10~20kLOC).
+It helps users manage their tasks and priorities through automatic priority updating and sorting.
+The application also features a calendar which provides users with a chronological overview of upcoming deadlines.
+The user interacts with PrioriTask by using a Command Line Interface (CLI), and has a Graphical User Interface (GUI) created with JavaFX.
+
+[NOTE]
+PrioriTask used https://github.com/nus-cs2103-AY1718S2/addressbook-level4[AddressBook-Level 4] as a base for development.
+
+== Summary of contributions
+
+* *Major enhancement*: added the *Subtask management system*
+** What it does: It allows users to split and manage their task separately. Support Adding, removing, editing, and setting status for each subtask.
+** Justification: This feature improves the product significantly because users will be able to better manage big tasks (epic) becuase they will be able to split those into smaller, more independent task.
+** Highlights: This enhancement affected four components : `Model`, `Storage`, `Logic`, and `UI`. `UI` component is touch only becuase we need to show the subtask somewhere on the ui. Most of the changes happened in the other three components. The most challenging part is to decide how the sutbask data structure will be implemented. Even though it is possible to use faster and more efficient data structure, limited time and the bug-prone nature of the algorithm pushed me to do a compromise between speed and code correctness.
+
+* *Minor enhancement*: added a *Status* parameter, and its corresponding *toggle function*.
+** What it does: It gives user ability to mark their task/subtask as **completed** or **not completed**
+** Justification: It helps user to differentiate completed task without actually deleting them.
+** Highlights: Mainly highlights the immutability of the task. Since I have to preserve the task immutability.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B4/main/blob/master/collated/functional/agus.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B4/main/blob/master/collated/test/agus.md[Test code]]
+
+* *Other contributions*:
+
+** Project initialization:
+*** Refactor (_renaming_) 1669LOC before team starts development (Pull request https://github.com/CS2103JAN2018-W13-B4/main/pull/17[#17]).
+** Community:
+*** Helped team member with git (Cleaning PR https://github.com/CS2103JAN2018-W13-B4/main/pull/67[#67])
+*** Reviewed https://github.com/CS2103JAN2018-W13-B4/main/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aclosed+reviewed-by%3Aaguss787[some PRs] on GitHub (with comments when required).
+*** Reported bugs and suggestions for other teams in the class (Issues https://github.com/CS2103JAN2018-T11-B3/main/issues/133[#113], https://github.com/CS2103JAN2018-T11-B3/main/issues/131[#131], https://github.com/CS2103JAN2018-T11-B3/main/issues/130[#130] and others).
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+Subtask Features
+
+include::../UserGuide.adoc[tag=subtaskFeature]
+
+include::../UserGuide.adoc[tag=subtaskFeatureSummary]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+Subtask Implementation
+
+include::../DeveloperGuide.adoc[tag=subtask]

@@ -618,7 +618,7 @@ There is no need to save manually.
 Exits the program. +
 Format: `exit` +
 Command Alias: `q`
-
+// tag::cominginfuture[]
 === Coming in v2.0
 
 ==== Viewing top customers : `topcustomers` `coming in v2.0`
@@ -697,7 +697,9 @@ Opens an email draft in the browser with recipients as all persons tagged with '
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+// end::cominginfuture[]
 
+// tag::commandsummary[]
 == Command Summary
 
 === Managing Persons
@@ -770,7 +772,7 @@ Opens an email draft in the browser with recipients as all persons tagged with '
 |Clear all data. |`clear` |`c` |`clear`
 |Exit ContactSails. |`exit` |`q` |`exit`
 |===
-
+// end::commandsummary[]
 == Glossary
 
 // add terms: CommandBox, Group, Preference, Orders, Entries, PersonPanel, CalendarPanel, OrderListPanel, EntryListPanel, etc.

@@ -1,5 +1,5 @@
 # amad-person
-###### \java\guitests\guihandles\OrderCardHandle.java
+###### /java/guitests/guihandles/OrderCardHandle.java
 ``` java
 package guitests.guihandles;
 
@@ -53,7 +53,7 @@ public class OrderCardHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### \java\guitests\guihandles\OrderListPanelHandle.java
+###### /java/guitests/guihandles/OrderListPanelHandle.java
 ``` java
 package guitests.guihandles;
 
@@ -113,7 +113,7 @@ public class OrderListPanelHandle extends NodeHandle<ListView<OrderCard>> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddOrderCommandTest.java
+###### /java/seedu/address/logic/commands/AddOrderCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -297,8 +297,8 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public ObservableList<CalendarEntry> getFilteredCalendarEventList() {
-            return model.getFilteredCalendarEventList();
+        public ObservableList<CalendarEntry> getFilteredCalendarEntryList() {
+            return model.getFilteredCalendarEntryList();
         }
 
         @Override
@@ -358,6 +358,13 @@ public class AddOrderCommandTest {
         public void deleteCalendarEntry(CalendarEntry entryToDelete) throws CalendarEntryNotFoundException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void updateCalendarEntry(CalendarEntry entryToEdit, CalendarEntry editedEntry)
+                throws DuplicateCalendarEntryException, CalendarEntryNotFoundException {
+            fail("This method should not be called.");
+
+        }
     }
 
     /**
@@ -405,7 +412,7 @@ public class AddOrderCommandTest {
 }
 
 ```
-###### \java\seedu\address\logic\commands\ChangeThemeCommandTest.java
+###### /java/seedu/address/logic/commands/ChangeThemeCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -528,7 +535,7 @@ public class ChangeThemeCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteOrderCommandTest.java
+###### /java/seedu/address/logic/commands/DeleteOrderCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -656,7 +663,7 @@ public class DeleteOrderCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditOrderCommandTest.java
+###### /java/seedu/address/logic/commands/EditOrderCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -851,7 +858,7 @@ public class EditOrderCommandTest {
     }
 }
 ```
-###### \java\seedu\address\model\order\DeliveryDateTest.java
+###### /java/seedu/address/model/order/DeliveryDateTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -896,7 +903,7 @@ public class DeliveryDateTest {
     }
 }
 ```
-###### \java\seedu\address\model\order\OrderInformationTest.java
+###### /java/seedu/address/model/order/OrderInformationTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -936,7 +943,7 @@ public class OrderInformationTest {
     }
 }
 ```
-###### \java\seedu\address\model\order\OrderTest.java
+###### /java/seedu/address/model/order/OrderTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -952,7 +959,7 @@ public class OrderTest {
     }
 }
 ```
-###### \java\seedu\address\model\order\PriceTest.java
+###### /java/seedu/address/model/order/PriceTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -998,7 +1005,7 @@ public class PriceTest {
     }
 }
 ```
-###### \java\seedu\address\model\order\QuantityTest.java
+###### /java/seedu/address/model/order/QuantityTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -1042,7 +1049,7 @@ public class QuantityTest {
     }
 }
 ```
-###### \java\seedu\address\model\theme\ThemeTest.java
+###### /java/seedu/address/model/theme/ThemeTest.java
 ``` java
 package seedu.address.model.theme;
 
@@ -1120,7 +1127,7 @@ public class ThemeTest {
     }
 }
 ```
-###### \java\seedu\address\model\UniqueGroupListTest.java
+###### /java/seedu/address/model/UniqueGroupListTest.java
 ``` java
     @Test
     public void equals() throws UniqueGroupList.DuplicateGroupException {
@@ -1139,7 +1146,7 @@ public class ThemeTest {
         assertFalse(firstGroupList.equals(secondGroupList));
     }
 ```
-###### \java\seedu\address\model\UniqueGroupListTest.java
+###### /java/seedu/address/model/UniqueGroupListTest.java
 ``` java
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -1157,7 +1164,7 @@ public class ThemeTest {
         uniqueGroupList.add(FRIENDS);
     }
 ```
-###### \java\seedu\address\model\UniqueOrderListTest.java
+###### /java/seedu/address/model/UniqueOrderListTest.java
 ``` java
 package seedu.address.model;
 
@@ -1223,7 +1230,7 @@ public class UniqueOrderListTest {
     }
 }
 ```
-###### \java\seedu\address\model\UniquePreferenceListTest.java
+###### /java/seedu/address/model/UniquePreferenceListTest.java
 ``` java
     @Test
     public void equals() throws UniquePreferenceList.DuplicatePreferenceException {
@@ -1242,7 +1249,7 @@ public class UniqueOrderListTest {
         assertFalse(firstPrefList.equals(secondPrefList));
     }
 ```
-###### \java\seedu\address\model\UniquePreferenceListTest.java
+###### /java/seedu/address/model/UniquePreferenceListTest.java
 ``` java
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -1260,7 +1267,7 @@ public class UniqueOrderListTest {
         uniquePrefList.add(SHOES);
     }
 ```
-###### \java\seedu\address\storage\XmlAdaptedOrderTest.java
+###### /java/seedu/address/storage/XmlAdaptedOrderTest.java
 ``` java
 package seedu.address.storage;
 
@@ -1359,7 +1366,7 @@ public class XmlAdaptedOrderTest {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBookTest.java
+###### /java/seedu/address/storage/XmlSerializableAddressBookTest.java
 ``` java
     @Test
     public void toModelType_typicalOrdersFile_success() throws Exception {
@@ -1370,7 +1377,7 @@ public class XmlAdaptedOrderTest {
         assertEquals(addressBookFromFile, typicalOrdersAddressBook);
     }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBookTest.java
+###### /java/seedu/address/storage/XmlSerializableAddressBookTest.java
 ``` java
     @Test
     public void toModelType_invalidOrderFile_throwsIllegalValueException() throws Exception {
@@ -1380,7 +1387,7 @@ public class XmlAdaptedOrderTest {
         dataFromFile.toModelType();
     }
 ```
-###### \java\seedu\address\testutil\EditOrderDescriptorBuilder.java
+###### /java/seedu/address/testutil/EditOrderDescriptorBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -1451,7 +1458,7 @@ public class EditOrderDescriptorBuilder {
     }
 }
 ```
-###### \java\seedu\address\testutil\OrderBuilder.java
+###### /java/seedu/address/testutil/OrderBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -1530,7 +1537,7 @@ public class OrderBuilder {
     }
 }
 ```
-###### \java\seedu\address\testutil\OrderUtil.java
+###### /java/seedu/address/testutil/OrderUtil.java
 ``` java
 package seedu.address.testutil;
 
@@ -1567,7 +1574,7 @@ public class OrderUtil {
     }
 }
 ```
-###### \java\seedu\address\testutil\TestUtil.java
+###### /java/seedu/address/testutil/TestUtil.java
 ``` java
     /**
      * Returns the middle index of the order in the {@code model}'s order list.
@@ -1583,7 +1590,7 @@ public class OrderUtil {
         return Index.fromOneBased(model.getAddressBook().getOrderList().size());
     }
 ```
-###### \java\seedu\address\testutil\TestUtil.java
+###### /java/seedu/address/testutil/TestUtil.java
 ``` java
 
     /**
@@ -1594,7 +1601,7 @@ public class OrderUtil {
     }
 
 ```
-###### \java\seedu\address\testutil\TestUtil.java
+###### /java/seedu/address/testutil/TestUtil.java
 ``` java
     /**
      * Returns the order in the {@code model}'s order list at {@code index}.
@@ -1603,7 +1610,7 @@ public class OrderUtil {
         return model.getAddressBook().getOrderList().get(index.getZeroBased());
     }
 ```
-###### \java\seedu\address\testutil\TypicalOrders.java
+###### /java/seedu/address/testutil/TypicalOrders.java
 ``` java
 package seedu.address.testutil;
 
@@ -1706,7 +1713,7 @@ public class TypicalOrders {
     }
 }
 ```
-###### \java\seedu\address\ui\CommandBoxTest.java
+###### /java/seedu/address/ui/CommandBoxTest.java
 ``` java
     @Test
     public void handleKeyPress_tab() {
@@ -1723,7 +1730,7 @@ public class TypicalOrders {
         assertInputHistory(KeyCode.TAB, COMMAND_THAT_FAILS);
     }
 ```
-###### \java\seedu\address\ui\OrderCardTest.java
+###### /java/seedu/address/ui/OrderCardTest.java
 ``` java
 package seedu.address.ui;
 
@@ -1792,7 +1799,7 @@ public class OrderCardTest extends GuiUnitTest {
     }
 }
 ```
-###### \java\seedu\address\ui\OrderListPanelTest.java
+###### /java/seedu/address/ui/OrderListPanelTest.java
 ``` java
 package seedu.address.ui;
 
@@ -1837,7 +1844,7 @@ public class OrderListPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### \java\systemtests\AddOrderCommandSystemTest.java
+###### /java/systemtests/AddOrderCommandSystemTest.java
 ``` java
 package systemtests;
 
@@ -2103,7 +2110,7 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\DeleteOrderCommandSystemTest.java
+###### /java/systemtests/DeleteOrderCommandSystemTest.java
 ``` java
 package systemtests;
 
@@ -2277,7 +2284,7 @@ public class DeleteOrderCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### \java\systemtests\EditOrderCommandSystemTest.java
+###### /java/systemtests/EditOrderCommandSystemTest.java
 ``` java
 package systemtests;
 

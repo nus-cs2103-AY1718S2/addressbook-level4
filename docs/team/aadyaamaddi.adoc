@@ -1,0 +1,54 @@
+= Aadyaa Maddi - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: ContactSails
+
+---
+
+== Overview
+
+ContactSails is a desktop application targeted at salespersons who want to manage their customer contacts, sales orders,
+and calendar events in an efficient manner.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added the ability to *manage customer orders*.
+** What it does: Orders can be added, edited, and deleted. A list of current orders can be viewed. Orders can also be marked as ongoing or fulfilled.
+** Justification: For salespersons, this feature will be essential to have as they would want to keep track of what their customers are ordering and what they have ordered already. If customers have any issues regarding their orders, salespersons will be able to view all the relevant information in a single place.
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+* *Minor enhancement*: added *auto-complete functionality* for all commands.
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/functional/amad-person.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/test/amad-person.md[Test code]]
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` - `v1.5rc` (4 releases) on GitHub.
+** Enhancements to existing features:
+*** Added command aliases so users can execute commands in a quicker manner (Pull request https://github.com/CS2103JAN2018-W13-B1/main/pull/51[#51]).
+*** Added ability to change themes (Pull requests https://github.com/CS2103JAN2018-W13-B1/main/pull/98[#98], https://github.com/CS2103JAN2018-W13-B1/main/pull/164[#164]).
+*** Improved the UI of the application (Pull requests https://github.com/CS2103JAN2018-W13-B1/main/pull/130[#130], https://github.com/CS2103JAN2018-W13-B1/main/pull/166[#166], https://github.com/CS2103JAN2018-W13-B1/main/pull/188[#188], https://github.com/CS2103JAN2018-W13-B1/main/pull/191[#191]).
+** Documentation:
+*** Added new sections and improved existing sections of the User Guide. (Pull requests https://github.com/CS2103JAN2018-W13-B1/main/pull/124[#124], https://github.com/CS2103JAN2018-W13-B1/main/pull/141[#141], https://github.com/CS2103JAN2018-W13-B1/main/pull/165[#165]).
+** Community:
+*** Reviewed PRs in the team repository.
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W15-B4/main/issues/196[1], https://github.com/CS2103JAN2018-W15-B4/main/issues/191[2], https://github.com/CS2103JAN2018-W15-B4/main/issues/199[3])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=cominginfuture]
+
+include::../UserGuide.adoc[tag=commandsummary]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=orders]

@@ -16,7 +16,9 @@ public class AppointmentEntry {
 
     public static final String MESSAGE_DATE_TIME_CONSTRAINTS =
             "Date and Time should be in the format of dd/MM/yyyy HH:mm";
+    public static final String MESSAGE_INTERVAL_CONSTRAINTS = "Start date time must be before end date time";
     public static final String DATE_VALIDATION = "d/MM/yyyy HH:mm";
+
 
     private final Entry appointmentEntry;
     private Interval interval;
@@ -54,6 +56,13 @@ public class AppointmentEntry {
 
     public Interval getInterval() {
         return interval;
+    }
+
+    /**
+     * checks if the startDateTime is before the endDateTime
+     */
+    public static boolean isValidInterval(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return startDateTime.isBefore(endDateTime);
     }
 
     @Override

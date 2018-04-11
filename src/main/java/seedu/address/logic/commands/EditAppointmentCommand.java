@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import com.calendarfx.model.Interval;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.calendar.AppointmentEntry;
@@ -77,21 +78,30 @@ public class EditAppointmentCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_FAIL_EDIT_APPOINTMENT);
         }
 
-        appointmentEdited = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
+        try {
+            appointmentEdited = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
+        } catch (IllegalValueException e) {
+            throw new CommandException(AppointmentEntry.MESSAGE_INTERVAL_CONSTRAINTS);
+        }
     }
 
     /**
      * Creates and returns a {@code Appointment} with the details of Appointmententry found by SearchText
      * edited with {@code editAppointmentDescriptor}.
      */
-    private static AppointmentEntry createEditedAppointment(AppointmentEntry appointmentToEdit,
-                                                            EditAppointmentDescriptor descriptor) {
+    private static AppointmentEntry createEditedAppointment(
+            AppointmentEntry appointmentToEdit, EditAppointmentDescriptor descriptor) throws IllegalValueException {
         requireNonNull(appointmentToEdit);
 
         String updatedTitle = descriptor.getGivenTitle().orElse(appointmentToEdit.getGivenTitle());
         LocalDateTime updatedStartDateTime =
                 descriptor.getStartDateTime().orElse(appointmentToEdit.getStartDateTime());
         LocalDateTime updatedEndDateTime = descriptor.getEndDateTime().orElse(appointmentToEdit.getEndDateTime());
+
+        if (!AppointmentEntry.isValidInterval(updatedStartDateTime, updatedEndDateTime)) {
+            throw new IllegalValueException(AppointmentEntry.MESSAGE_INTERVAL_CONSTRAINTS);
+        }
+
         Interval updatedInterval = new Interval(updatedStartDateTime, updatedEndDateTime);
 
         return new AppointmentEntry(updatedTitle, updatedInterval);

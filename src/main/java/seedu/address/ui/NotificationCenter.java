@@ -134,6 +134,11 @@ public class NotificationCenter {
         return notificationCardCopy.get(index.getOneBased()).getId();
     }
 
+    public String getOwnerIdByIndex(Index index) {
+        return notificationCardCopy.get(index.getOneBased()).getOwnerId();
+    }
+
+
     public NotificationCard getNotificationCard(Index targetIndex) {
         return notificationCardCopy.get(targetIndex.getOneBased());
     }

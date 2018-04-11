@@ -16,6 +16,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.DismissCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -146,8 +147,11 @@ public class AddressBookParser {
         case AuthenCommand.COMMAND_WORD:
             return new AuthenCommand();
 
-            case DismissCommand.COMMAND_WORD:
+        case DismissCommand.COMMAND_WORD:
             return new DismissCommandParser().parse(arguments);
+
+        case EmailCommand.COMMAND_WORD:
+            return new EmailCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

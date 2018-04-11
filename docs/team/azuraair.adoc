@@ -55,4 +55,4 @@ include::../UserGuide.adoc[tag=FAQ]
 
 include::../DeveloperGuide.adoc[tag=birthdays]
 
-include::../DeveloperGuide.adoc[tag=timetables]
+include::../DeveloperGuide.adoc[tag=timetable]

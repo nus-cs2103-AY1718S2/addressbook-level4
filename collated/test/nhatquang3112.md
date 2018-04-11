@@ -82,10 +82,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -219,6 +220,12 @@ public class AddToDoCommandTest {
         }
 
         @Override
+        public void deleteGroup(Group target) throws GroupNotFoundException {
+            fail("This method should not be called.");
+        }
+
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -227,6 +234,12 @@ public class AddToDoCommandTest {
         @Override
         public void updateToDo(ToDo target, ToDo editedToDo)
                 throws DuplicateToDoException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateGroup(Group target, Group editedGroup)
+                throws DuplicateGroupException {
             fail("This method should not be called.");
         }
 
@@ -249,6 +262,12 @@ public class AddToDoCommandTest {
         }
 
         @Override
+        public ObservableList<Group> getFilteredGroupList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
@@ -260,6 +279,32 @@ public class AddToDoCommandTest {
 
         @Override
         public void updateFilteredEventList(Predicate<Event> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredGroupList(Predicate<Group> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void indicateCalendarChanged() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void indicateTimetableChanged() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean calendarIsViewed() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void switchView() {
             fail("This method should not be called.");
         }
     }
@@ -1359,7 +1404,8 @@ public class AddToDoCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid keyword -> rejected */
         command = "addsToDo " + ToDoUtil.getToDoDetails(toAdd);
-        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure(command,
+                Messages.MESSAGE_UNKNOWN_COMMAND + Messages.MESSAGE_DID_YOU_MEAN + AddToDoCommand.COMMAND_WORD);
 
         /* Case: add a duplicate to-do -> rejected */
         command = ToDoUtil.getAddToDoCommand(TODO_E);
@@ -1612,6 +1658,7 @@ public class CheckToDoCommandSystemTest extends AddressBookSystemTest {
 ``` java
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_DID_YOU_MEAN;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TODO_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteToDoCommand.MESSAGE_DELETE_TODO_SUCCESS;
@@ -1688,7 +1735,8 @@ public class DeleteToDoCommandSystemTest extends AddressBookSystemTest {
                 DeleteToDoCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_TODO_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("DelETEtOdO 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("DelETEtOdO 1",
+                MESSAGE_UNKNOWN_COMMAND + MESSAGE_DID_YOU_MEAN + DeleteToDoCommand.COMMAND_WORD);
     }
 
     /**

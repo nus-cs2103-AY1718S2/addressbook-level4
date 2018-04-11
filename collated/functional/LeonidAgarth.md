@@ -157,7 +157,7 @@ public class ChangeTagColorCommand extends UndoableCommand {
     private Tag editedTag;
 
     /**
-     * @param name of the tag to edit
+     * @param name  of the tag to edit
      * @param color to change the tag into
      */
     public ChangeTagColorCommand(String name, String color) {
@@ -183,7 +183,7 @@ public class ChangeTagColorCommand extends UndoableCommand {
     protected void preprocessUndoableCommand() throws CommandException {
         editedTag = new Tag(tagName, tagColor);
         List<Tag> allTags = model.getAddressBook().getTagList();
-        for (Tag tag: allTags) {
+        for (Tag tag : allTags) {
             if (tag.name.equals(tagName)) {
                 tagToEdit = tag;
                 return;
@@ -330,13 +330,14 @@ import seedu.address.model.tag.Tag;
 /**
  * Parses the given {@code String} of arguments in the context of the ChangeTagColorCommand
  * and returns an ChangeTagColorCommand object for execution.
+ *
  * @throws ParseException if the user input does not conform the expected format
  */
 public class ChangeTagColorCommandParser implements Parser<ChangeTagColorCommand> {
 
     @Override
     public ChangeTagColorCommand parse(String userInput) throws ParseException {
-        String trimmedInput = userInput.trim().replaceAll(" +", " ");;
+        String trimmedInput = userInput.trim().replaceAll(" +", " ");
         String[] args = trimmedInput.split(" ");
         if (args.length != 2) {
             throw new ParseException(
@@ -643,7 +644,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Event#equals(Object)
@@ -678,7 +679,7 @@ public class UniqueEventList implements Iterable<Event> {
      * Replaces the event {@code target} in the list with {@code editedEvent}.
      *
      * @throws DuplicateEventException if the replacement is equivalent to another existing event in the list.
-     * @throws EventNotFoundException if {@code target} could not be found in the list.
+     * @throws EventNotFoundException  if {@code target} could not be found in the list.
      */
     public void setEvent(Event target, Event editedEvent)
             throws DuplicateEventException, EventNotFoundException {
@@ -1896,6 +1897,7 @@ public class TimetableSlot extends UiPart<Region> {
 #calendarPlaceholder .button:default:hover {
     -fx-background-color: derive(-fx-focus-color, 30%);
 }
+
 #calendarPlaceholder .weekday {
     -fx-background-color: #e2f6ff;
     -fx-border-width: 1px;

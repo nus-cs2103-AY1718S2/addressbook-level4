@@ -74,7 +74,7 @@ public class TimetableSlot extends UiPart<Region> {
         setStyleClass(style, AVAILABLE_COLORS[Math.abs(mod.getName().hashCode()) % AVAILABLE_COLORS.length]);
         module.setText(mod.getName());
         if (!mod.getDetails().isEmpty() && mod.getDetails().size() >= 2) {
-            lectureType.setText(mod.getDetails().get(1));
+            lectureType.setText(mod.getDetails().get(0));
         }
         venue.setText(mod.getVenue());
     }

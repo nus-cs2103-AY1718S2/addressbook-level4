@@ -70,7 +70,7 @@ public class ComposeEmailWindow {
         recipients.setText(email);
         subject.setText(type + sub);
         if (content != "") {
-            this.content = content;
+            addPreviousEmail(type, email, sub, content);
         }
         puWindow.initModality(Modality.APPLICATION_MODAL);
         puWindow.initStyle(StageStyle.UNDECORATED);
@@ -81,6 +81,26 @@ public class ComposeEmailWindow {
         puWindow.show();
     }
 
+    /**
+     * Shows the message that user is trying to reply to or forward
+     * @param type indicates whether or not it is a forwarded email or reply
+     * @param email is the person that sent the previous email
+     * @param subject the subject of the previous email
+     * @param content the contents of the previous email
+     */
+    private void addPreviousEmail(String type, String email, String subject, String content) {
+        String previousMessage = "\n\n\n";
+        if (type == "RE: ") {
+            previousMessage = previousMessage + "-----Original Message-----\n";
+        } else {
+            previousMessage = previousMessage + "Begin Forwarded Message: \n\n";
+        }
+        previousMessage = previousMessage + "From: " + email + "\n"
+                + "To: sell.it.sg@gmail.com\n"
+                + "Subject: " + subject + "\n\n"
+                + content + "\n\n\n";
+        message.setText(previousMessage);
+    }
     /**
      * Handles the Enter button pressed event.
      */

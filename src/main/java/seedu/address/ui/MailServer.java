@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMessage;
  */
 //@@author glorialaw
 public class MailServer {
-    private static String username = "sell.it.sg@gmail.com";
+    private static String username = "sg.salesperson@gmail.com";
     private static String password = "gloriacs2103";
     private static String host = "smtp.gmail.com";
 

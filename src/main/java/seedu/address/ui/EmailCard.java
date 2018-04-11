@@ -31,26 +31,34 @@ public class EmailCard extends UiPart<Region> {
 
     private Message msg;
 
-    public EmailCard(Message message, int index) {
+    public EmailCard(Message message) {
         super(FXML);
-        try {
-            email.setText(message.getFrom()[0].toString());
-            subject.setText(message.getSubject());
-            this.msg = message;
-            //check if it is multipart
-            if (message.getContent() instanceof String) {
-                preview.setText(((String) message.getContent()).substring(0, 20));
-            } else {
-                Multipart multipart = (Multipart) message.getContent();
-                if (multipart.getCount() > 0) {
-                    String msg =  multipart.getBodyPart(0).getContent().toString();
-                    preview.setText(msg);
+        String ERROR_MESSAGE = "Please ensure that you are connected to the internet.";
+        if (message == null) {
+            email.setText("unknown@unknown.com");
+            subject.setText("Error: Unable to retrieve message");
+            preview.setText(ERROR_MESSAGE);
+            this.msg = null;
+        } else if (message != null) {
+            try {
+                email.setText(message.getFrom()[0].toString());
+                subject.setText(message.getSubject());
+                this.msg = message;
+                //check if it is multipart
+                if (message.getContent() instanceof String) {
+                    preview.setText(((String) message.getContent()).substring(0, 20));
+                } else {
+                    Multipart multipart = (Multipart) message.getContent();
+                    if (multipart.getCount() > 0) {
+                        String msg = multipart.getBodyPart(0).getContent().toString();
+                        preview.setText(msg);
+                    }
                 }
+            } catch (MessagingException e) {
+                System.out.println("Messaging Exception");
+            } catch (IOException e) {
+                System.out.println("IOException");
             }
-        } catch (MessagingException e) {
-            System.out.println("Messaging Exception");
-        } catch (IOException e) {
-            System.out.println("IOException");
         }
     }
 
@@ -60,6 +68,7 @@ public class EmailCard extends UiPart<Region> {
      */
     @FXML
     private void openEmail() throws IOException {
+        System.out.println("Attempting to open email");
         try {
             OpenEmailWindow cew = new OpenEmailWindow(this.email.getText(),
                     this.subject.getText(), this.msg);

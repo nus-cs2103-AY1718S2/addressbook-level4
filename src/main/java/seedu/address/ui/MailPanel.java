@@ -38,23 +38,71 @@ public class MailPanel extends UiPart<Region> {
 
     private void setConnections() {
         //gets the list of messages
-        System.out.println("In set Connections");
+        int length = 0;
         ObservableList<EmailCard> emailList = FXCollections.observableArrayList();
-        //try {
         Message[] messages = messageList();
-        for (int i = 0; i < messages.length; i++) {
-            emailList.add(new EmailCard(messages[i], i));
+        if (messages != null){
+            length = messages.length;
+            for (int i = 0; i < length; i++) {
+                emailList.add(new EmailCard(messages[i]));
+            }
+        } else if (messages == null) {
+            emailList.add(new EmailCard(null));
         }
         emailListView.setItems(emailList);
         emailListView.setCellFactory(listView -> new EmailListViewCell());
     }
 
+    /*private void setEventHandlerForSelectionChangeEvent() {
+        personListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }*/
     /**
      * Returns a list of messages in the inbox
      * @return list of messages
      */
     public Message[] messageList() {
-        String username = "sell.it.sg@gmail.com";
+        IMAPFolder inbox = getInbox();
+        if (inbox != null) {
+            try {
+                inbox.open(Folder.READ_ONLY);
+                //gets & returns messages
+                Message[] messages = inbox.getMessages();
+                return messages;
+            } catch (NoSuchProviderException e) {
+                e.printStackTrace();
+                return null;
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Refreshes the inbox so that the contents can be updated
+     * @return
+     */
+    private Message[] refreshMessages() {
+        IMAPFolder inbox = getInbox();
+        if (inbox != null) {
+            try {
+                inbox.open(Folder.READ_ONLY);
+            } catch (MessagingException me) {
+                me.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private IMAPFolder getInbox() {
+        String username = "sg.salesperson@gmail.com";
         String password = "gloriacs2103";
         String host = "imap.gmail.com";
         Properties props = new Properties();
@@ -72,16 +120,15 @@ public class MailPanel extends UiPart<Region> {
             store = (IMAPStore) session.getStore("imaps");
             store.connect(username, password);
             inbox = (IMAPFolder) store.getFolder("INBOX");
-            inbox.open(Folder.READ_ONLY);
-            //gets & returns messages
-            Message[] messages = inbox.getMessages();
-            return messages;
+            return (IMAPFolder) inbox;
         } catch (NoSuchProviderException e) {
             System.out.println("NoSuchProviderException");
+            return null;
         } catch (MessagingException e) {
             System.out.println("Caught MessagingException @MailPanel");
+            System.out.println(e.getCause());
+            return null;
         }
-        return null;
     }
 
     /**

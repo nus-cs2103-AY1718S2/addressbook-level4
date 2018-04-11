@@ -20,6 +20,8 @@ public class AppointmentCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label info;
+    @FXML
     private Label date;
     @FXML
     private Label startTime;
@@ -30,9 +32,10 @@ public class AppointmentCard extends UiPart<Region> {
         super(FXML);
         this.appointment = appointment;
         id.setText(displayedIndex + ". ");
-        date.setText(appointment.getDate());
-        startTime.setText(appointment.getStartTime());
-        endTime.setText(appointment.getEndTime());
+        info.setText(appointment.getInfo());
+        date.setText("Date: " + appointment.getDate());
+        startTime.setText("Start Time: " + appointment.getStartTime());
+        endTime.setText("End Time:  " + appointment.getEndTime());
     }
 
     @Override

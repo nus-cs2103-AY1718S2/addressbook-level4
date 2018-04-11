@@ -215,6 +215,26 @@ public class ParserUtil {
         requireNonNull(remark);
         return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
     }
+
+    /**
+     * Parses a {@code String info} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseInfo(String info) {
+        requireNonNull(info);
+        String trimmedInfo = info.trim();
+
+        return trimmedInfo;
+    }
+
+    /**
+     * Parses a {@code Optional<String> info} into an {@code Optional<String>} if {@code info} is present.
+     */
+    public static Optional<String> parseInfo (Optional<String> info) {
+        requireNonNull(info);
+        return info.isPresent() ? Optional.of(parseInfo(info.get())) : Optional.empty();
+    }
+
     /**
      * Parses a {@code String date} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.

@@ -25,9 +25,9 @@
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
-                <Label fx:id="date" text="\$first" styleClass="cell_big_label" />
+                <Label fx:id="info" text="\$first" styleClass="cell_big_label" />
             </HBox>
-            <FlowPane fx:id="tags" />
+            <Label fx:id="date" text="\$date" styleClass="cell_small_label"  />
             <Label fx:id="startTime" text="\$startTime" styleClass="cell_small_label"  />
             <Label fx:id="endTime" text="\$endTime" styleClass="cell_small_label" />
         </VBox>

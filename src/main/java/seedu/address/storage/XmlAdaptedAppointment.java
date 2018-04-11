@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Appointment;
 
+//@@author kengsengg
 /**
  * JAXB-friendly version of the Person.
  */
@@ -14,6 +15,8 @@ public class XmlAdaptedAppointment {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Appointment's %s field is missing!";
 
+    @XmlElement(required = true)
+    private String info;
     @XmlElement(required = true)
     private String date;
     @XmlElement(required = true)
@@ -30,7 +33,8 @@ public class XmlAdaptedAppointment {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given appointment details.
      */
-    public XmlAdaptedAppointment(String date, String startTime, String endTime) {
+    public XmlAdaptedAppointment(String info, String date, String startTime, String endTime) {
+        this.info = info;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -42,6 +46,7 @@ public class XmlAdaptedAppointment {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedAppointment(Appointment source) {
+        info = source.getInfo();
         date = source.getDate();
         startTime = source.getStartTime();
         endTime = source.getEndTime();
@@ -65,7 +70,7 @@ public class XmlAdaptedAppointment {
             throw new IllegalValueException(Appointment.MESSAGE_APPOINTMENT_END_TIME_CONSTRAINTS);
         }
 
-        return new Appointment(date, startTime, endTime);
+        return new Appointment(info, date, startTime, endTime);
     }
 
     @Override
@@ -79,9 +84,10 @@ public class XmlAdaptedAppointment {
         }
 
         XmlAdaptedAppointment otherAppointment = (XmlAdaptedAppointment) other;
-        return Objects.equals(date, otherAppointment.date)
+        return Objects.equals(info, otherAppointment.info)
+                && Objects.equals(date, otherAppointment.date)
                 && Objects.equals(startTime, otherAppointment.startTime)
                 && Objects.equals(endTime, otherAppointment.endTime);
     }
 }
-
+//@@author

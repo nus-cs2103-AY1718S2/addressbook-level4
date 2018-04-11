@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INFO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
 import java.io.IOException;
@@ -24,17 +25,20 @@ public class AppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "appointment";
     public static final String COMMAND_ALIAS = "appt";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a consultation appointment for the student "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates an appointment for the student "
             + "at the specified index.\n"
             + "Parameters: INDEX (must be a positive integer) "
+            + PREFIX_INFO + "INFO"
             + PREFIX_DATE + "DATE "
             + PREFIX_START_TIME + "START TIME "
             + PREFIX_END_TIME + "END TIME \n"
             + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_INFO + "Consultation"
             + PREFIX_DATE + "28031998 "
             + PREFIX_START_TIME + "1500 "
             + PREFIX_END_TIME + "1600 \n"
             + "Example: " + COMMAND_ALIAS + " 1 "
+            + PREFIX_INFO + "Consultation"
             + PREFIX_DATE + "28031998 "
             + PREFIX_START_TIME + "1500 "
             + PREFIX_END_TIME + "1600 ";
@@ -74,10 +78,10 @@ public class AppointmentCommand extends Command {
         }
     }
 
-    public String getDetails() {
+    private String getDetails() {
         List<Person> lastShownList = model.getFilteredPersonList();
         selectedPerson = lastShownList.get(index.getZeroBased());
-        return toAdd.getStartTime() + " to " + toAdd.getEndTime() + " on " + toAdd.getDate()
+        return toAdd.getInfo() + ": " + toAdd.getStartTime() + " to " + toAdd.getEndTime() + " on " + toAdd.getDate()
                 + " with " + selectedPerson.getName();
     }
 

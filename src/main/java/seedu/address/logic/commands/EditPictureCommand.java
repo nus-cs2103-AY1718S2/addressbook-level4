@@ -29,7 +29,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Edits the profile picture of an existing student in the address book.
  */
-//@@author samuel
+//@@author samuelloh
 public class EditPictureCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "editPicture";
@@ -88,7 +88,7 @@ public class EditPictureCommand extends UndoableCommand {
     }
     /**
      * Creates and returns a {@code Student} with the details of {@code studentToEdit}
-     * edited with the new {@code profilePicturePath}.
+     * edited with the new picture from {@code profilePicturePath}.
      */
     private Student createPictureEditedStudent(Student studentToEditPicture) {
         Name name = studentToEditPicture.getName();
@@ -108,7 +108,7 @@ public class EditPictureCommand extends UndoableCommand {
 
     /**
      * Creates and returns a {@code Student} with the details of {@code studentToEdit}
-     * edited with the designated path for the profile picture in addressbook.
+     * edited with the designated path for the profile picture in the data storage.
      */
     private Student createFinalEditedStudent(Student studentToEdit) {
         Name name = studentToEdit.getName();
@@ -120,7 +120,7 @@ public class EditPictureCommand extends UndoableCommand {
         Set<Tag> tags = studentToEdit.getTags();
         Favourite isFavourite = studentToEdit.getFavourite();
         Dashboard dashboard = studentToEdit.getDashboard();
-        ProfilePicturePath profilePicturePath = new ProfilePicturePath("/data/profilePictures/"
+        ProfilePicturePath profilePicturePath = new ProfilePicturePath("data/profilePictures/"
                     + uniqueKey.toString() + this.newProfilePicturePath.getExtension());
 
 

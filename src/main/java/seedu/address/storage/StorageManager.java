@@ -112,6 +112,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    //@@author samuelloh
 
     /**
      * Saves the required index of the {@code Student}
@@ -196,6 +197,8 @@ public class StorageManager extends ComponentManager implements Storage {
         }
 
     }
+
+    //@@author
 
     // ================ Schedule methods ==============================
 

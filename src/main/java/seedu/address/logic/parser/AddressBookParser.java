@@ -151,18 +151,17 @@ public class AddressBookParser {
         case UnfavouriteCommand.COMMAND_WORD:
             return new UnfavouriteCommandParser().parse(arguments);
 
-        //@@ samuelloh
+        //@@author samuelloh
         case EditPictureCommand.COMMAND_WORD:
             return new EditPictureCommandParser().parse(arguments);
 
-        //@@ samuelloh
+
         case MoreInfoCommand.COMMAND_WORD:
             return new MoreInfoCommandParser().parse(arguments);
 
-        //@@ smauelloh
         case EditMiscCommand.COMMAND_WORD:
             return new EditMiscCommandParser().parse(arguments);
-
+        //@@author
         case ShowDashboardCommand.COMMAND_WORD:
             return new ShowDashboardCommandParser().parse(arguments);
 

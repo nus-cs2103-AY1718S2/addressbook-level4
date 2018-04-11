@@ -10,7 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
-
+//@@author samuelloh
 /**
  * Displays the full information of a student on the browser panel.
  */
@@ -73,4 +73,4 @@ public class MoreInfoCommand extends Command {
                 && Objects.equals(this.studentToGetInfoFrom, ((MoreInfoCommand) other).studentToGetInfoFrom));
     }
 }
-
+//@@author

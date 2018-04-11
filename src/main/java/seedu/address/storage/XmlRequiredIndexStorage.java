@@ -16,7 +16,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.RequiredStudentIndex;
-
+//@@author samuelloh
 /**
  * Stores the XML data of the required index of the particular student.
  */
@@ -68,7 +68,7 @@ public class XmlRequiredIndexStorage {
     }
 
     /**
-     * Exports the resources from the jar file to the directory of the  addressBook data
+     * Exports the resources from the jar file to the directory of the contact data
      */
     private static void exportResource(String resourceName) throws IOException {
         InputStream stream = null;
@@ -86,7 +86,12 @@ public class XmlRequiredIndexStorage {
             jarFolder = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation()
                     .toURI().getPath()).getParentFile().getPath().replace('\\', '/');
 
-            resStreamOut = new FileOutputStream(jarFolder + "/" + resourceName);
+            String destinationOfFile = jarFolder + "/" + resourceName;
+            File testIfExist = new File(destinationOfFile);
+            if(!testIfExist.exists()) {
+                destinationOfFile = resourceName;
+            }
+            resStreamOut = new FileOutputStream(destinationOfFile);
             while ((readBytes = stream.read(buffer)) > 0) {
                 resStreamOut.write(buffer, 0, readBytes);
             }
@@ -100,3 +105,4 @@ public class XmlRequiredIndexStorage {
     }
 
 }
+//@@author

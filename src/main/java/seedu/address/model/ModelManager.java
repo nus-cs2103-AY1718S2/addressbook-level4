@@ -139,6 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
         return schedule;
     }
 
+    //@@author samuelloh
     /**
      * Displays Student details on a browser panel in the UI
      * @param target
@@ -165,10 +166,6 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new RequiredStudentIndexChangeEvent(studentIndex));
     }
 
-    @Override
-    public String printSchedule() {
-        return schedule.print(addressBook);
-    }
 
     @Override
     public void updateProfilePicture (Student target, Student editedStudent, Student finalEditedStudent)
@@ -187,6 +184,14 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateProfilePictureChange(Student target) {
         raise(new ProfilePictureChangeEvent(target));
     }
+    //@@author
+
+    @Override
+    public String printSchedule() {
+        return schedule.print(addressBook);
+    }
+
+
 
     //=========== Filtered Student List Accessors =============================================================
 

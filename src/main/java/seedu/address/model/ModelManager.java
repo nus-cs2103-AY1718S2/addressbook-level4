@@ -127,7 +127,11 @@ public class ModelManager extends ComponentManager implements Model {
         // ADD L1R5
 
         int score = person.calculateL1R5();
-        String scoreString = Integer.toString(score);
+        String scoreString = "-";
+        if (score == 0){
+            scoreString = "-";
+        }
+        else scoreString = Integer.toString(score);
         htmlString = htmlString.replace("STUDENTS SCORE", scoreString);
 
         // ADD CCA

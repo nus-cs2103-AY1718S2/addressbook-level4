@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static java.lang.Integer.min;
+
 import java.io.IOException;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -46,7 +48,8 @@ public class EmailCard extends UiPart<Region> {
                 this.msg = message;
                 //check if it is multipart
                 if (message.getContent() instanceof String) {
-                    preview.setText(((String) message.getContent()).substring(0, 20));
+                    String content = (String) message.getContent();
+                    preview.setText(((String) message.getContent()).substring(0, min(20, content.length())));
                 } else {
                     Multipart multipart = (Multipart) message.getContent();
                     if (multipart.getCount() > 0) {
@@ -68,7 +71,6 @@ public class EmailCard extends UiPart<Region> {
      */
     @FXML
     private void openEmail() throws IOException {
-        System.out.println("Attempting to open email");
         try {
             OpenEmailWindow cew = new OpenEmailWindow(this.email.getText(),
                     this.subject.getText(), this.msg);

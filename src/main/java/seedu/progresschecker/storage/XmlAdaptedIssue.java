@@ -16,7 +16,7 @@ import seedu.progresschecker.model.issues.Title;
 
 //@@author adityaa1998
 /**
- * JAXB-friendly version of the Person.
+ * JAXB-friendly version of the Issue.
  */
 public class XmlAdaptedIssue {
 
@@ -36,7 +36,7 @@ public class XmlAdaptedIssue {
     private List<XmlAdaptedLabel> labelled = new ArrayList<>();
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedIssue.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedIssue() {}
@@ -60,9 +60,9 @@ public class XmlAdaptedIssue {
     }
 
     /**
-     * Converts a given Person into this class for JAXB use.
+     * Converts a given Issue into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedIssue
      */
     public XmlAdaptedIssue(Issue source) {
         title = source.getTitle().fullMessage;
@@ -82,9 +82,9 @@ public class XmlAdaptedIssue {
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Person object.
+     * Converts this jaxb-friendly adapted issue object into the model's Issue object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted issue
      */
     public Issue toModelType() throws IllegalValueException {
         final List<Assignees> issueAssignees = new ArrayList<>();

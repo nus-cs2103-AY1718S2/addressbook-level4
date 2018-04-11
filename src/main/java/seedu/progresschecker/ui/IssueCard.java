@@ -9,7 +9,7 @@ import seedu.progresschecker.model.issues.Issue;
 
 //@@author adityaa1998
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code Issue}.
  */
 public class IssueCard extends UiPart<Region> {
 
@@ -49,20 +49,20 @@ public class IssueCard extends UiPart<Region> {
         milestone.setText(issue.getMilestone().fullMilestone);
         issue.getLabelsList().forEach(labels -> {
             Label label = new Label(labels.fullLabels);
-            label.getStyleClass().add(getTagColor(labels.fullLabels));
+            label.getStyleClass().add(getLabelColor(labels.fullLabels));
             labelled.getChildren().add(label);
         });
         issue.getAssignees().forEach(assignee -> {
             Label label = new Label(assignee.fullAssignees);
-            label.getStyleClass().add(getTagColor(assignee.fullAssignees));
+            label.getStyleClass().add(getLabelColor(assignee.fullAssignees));
             assignees.getChildren().add(label);
         });
     }
 
     /**
-     * Get a deterministic tag color based off tag's name value.
+     * Get a deterministic label color based off label's name value.
      */
-    private String getTagColor(String labelName) {
+    private String getLabelColor(String labelName) {
         int index = getValueOfString(labelName) % LABEL_COLORS.length;
         return LABEL_COLORS[index];
     }

@@ -15,7 +15,7 @@ import seedu.progresschecker.logic.commands.exceptions.CommandException;
 /**
  * Include customized methods (based on Google Tasks API) to manipulate task lists.
  */
-public class MyTaskList {
+public class TaskListUtil {
 
     public static final String AUTHORIZE_FAILURE = "Failed to authorize tasks api client credentials";
     public static final String ADD_FAILURE = "Failed to add new task list to account";

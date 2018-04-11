@@ -22,6 +22,7 @@ import seedu.progresschecker.logic.commands.ExitCommand;
 import seedu.progresschecker.logic.commands.FindCommand;
 import seedu.progresschecker.logic.commands.GitLoginCommand;
 import seedu.progresschecker.logic.commands.GitLogoutCommand;
+import seedu.progresschecker.logic.commands.GoToTaskUrlCommand;
 import seedu.progresschecker.logic.commands.HelpCommand;
 import seedu.progresschecker.logic.commands.HistoryCommand;
 import seedu.progresschecker.logic.commands.ListCommand;
@@ -70,7 +71,7 @@ public class ProgressCheckerParser {
 
         case ViewTaskListCommand.COMMAND_WORD:
         case ViewTaskListCommand.COMMAND_ALIAS:
-            return new ViewTaskListCommand();
+            return new ViewTaskListCommandParser().parse(arguments);
 
         case CompleteTaskCommand.COMMAND_WORD:
         case CompleteTaskCommand.COMMAND_ALIAS:
@@ -79,6 +80,10 @@ public class ProgressCheckerParser {
         case ResetTaskCommand.COMMAND_WORD:
         case ResetTaskCommand.COMMAND_ALIAS:
             return new ResetTaskCommandParser().parse(arguments);
+
+        case GoToTaskUrlCommand.COMMAND_WORD:
+        case GoToTaskUrlCommand.COMMAND_ALIAS:
+            return new GoToTaskUrlCommandParser().parse(arguments);
 
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:

@@ -1,6 +1,6 @@
 package seedu.progresschecker.logic.parser;
 
-import static seedu.progresschecker.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.progresschecker.logic.parser.ParserUtil.MESSAGE_INVALID_WEEK;
 
 import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.logic.commands.ViewTaskListCommand;
@@ -19,11 +19,11 @@ public class ViewTaskListCommandParser implements Parser<ViewTaskListCommand> {
      */
     public ViewTaskListCommand parse(String args) throws ParseException {
         try {
-            String title = ParserUtil.parseTaskTitle(args);
-            return new ViewTaskListCommand(); // title);
+            int week = ParserUtil.parseTaskWeek(args);
+            return new ViewTaskListCommand(week);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewTaskListCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_WEEK, ViewTaskListCommand.MESSAGE_USAGE));
         }
     }
 }

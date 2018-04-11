@@ -2,11 +2,11 @@ package seedu.progresschecker.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import static seedu.progresschecker.model.task.MyTask.createTask;
-import static seedu.progresschecker.model.task.MyTaskList.clearTaskList;
-import static seedu.progresschecker.model.task.MyTaskList.copyTaskList;
-import static seedu.progresschecker.model.task.MyTaskList.createTaskList;
-import static seedu.progresschecker.model.task.MyTaskList.setTaskListTitle;
+import static seedu.progresschecker.model.task.TaskListUtil.clearTaskList;
+import static seedu.progresschecker.model.task.TaskListUtil.copyTaskList;
+import static seedu.progresschecker.model.task.TaskListUtil.createTaskList;
+import static seedu.progresschecker.model.task.TaskListUtil.setTaskListTitle;
+import static seedu.progresschecker.model.task.TaskUtil.createTask;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -35,7 +35,8 @@ public class AddDefaultTasksCommand extends Command {
     public static final String DEFAULT_LIST_TITLE = "CS2103 LOs";
     public static final String FIRST_LIST_TITLE = "My List";
     public static final String DEFAULT_LIST_ID = "@default";
-    public static final String CREATE_FAILURE = "Failed to create task list: ";
+    public static final String CREATE_FAILURE = "Failed to create task list "
+            + "due to unexpected interrupt or API error: ";
 
     private String listTitle;
 

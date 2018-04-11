@@ -42,6 +42,8 @@ import seedu.progresschecker.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_INDEX_OR_FORMAT = "Wrong format or index is not a positive integer.";
+    public static final String MESSAGE_INVALID_WEEK = "Week number is not an integer 1~13 or *.";
     public static final String MESSAGE_INVALID_TAB_TYPE = "Given type must be 'profile', 'task', or 'exercise'";
     public static final String MESSAGE_INVALID_WEEK_NUMBER = "Given week number must be between the range 2 to 12"
             + " (boundary numbers inclusive).";
@@ -73,6 +75,28 @@ public class ParserUtil {
         }
         return Integer.parseInt(trimmedIndex);
     }
+
+    /**
+     * Parses {@code String} into an {@code int} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified week number is invalid (neither an integer ranging from 1 to 13
+     * nor an asterisk(*)).
+     */
+    public static int parseTaskWeek(String week) throws IllegalValueException {
+        String trimmedWeek = week.trim();
+        if (trimmedWeek.equals("*")) {
+            return 0;
+        } else if (!StringUtil.isNonZeroUnsignedInteger(trimmedWeek)) {
+            throw new IllegalValueException(MESSAGE_INVALID_WEEK);
+        }
+        int intWeek = Integer.parseInt(trimmedWeek);
+        if (intWeek >= 1 && intWeek <= 13) {
+            return intWeek;
+        } else {
+            throw new IllegalValueException(MESSAGE_INVALID_WEEK);
+        }
+    }
+    //@@author
 
     //@@author iNekox3
     /**

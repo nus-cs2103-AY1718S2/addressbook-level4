@@ -26,6 +26,7 @@ public class WeeklyEventTest {
 
     private WeeklyEvent event1 = new WeeklyEvent("CS2101", "COM1", "1500", "1600", "WEDNESDAY");
     private WeeklyEvent event2 = new WeeklyEvent(new Module("CS2103", "Software Engineer"), new Schedule());
+    private WeeklyEvent event3 = new WeeklyEvent(new Module("CS2103", "Software Engineer"), new Schedule());
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -66,6 +67,7 @@ public class WeeklyEventTest {
     @Test
     public void equals() {
         assertTrue(event1.equals(event1));
+        assertTrue(event2.equals(event3));
         assertFalse(event1.equals(1));
         assertFalse(event1.equals(event2));
     }

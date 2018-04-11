@@ -13,10 +13,10 @@ public class Tag {
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     //@@author LeonidAgarth
-    public static final String MESSAGE_TAG_COLOR_CONSTRAINTS = "Colors available are: "
-            + "teal, red, yellow, blue, orange, brown, green, pink, black, grey";
-    private static final String[] AVAILABLE_COLORS = new String[] {"teal", "red", "yellow", "blue", "orange", "brown",
-        "green", "pink", "black", "grey", "undefined"};
+    public static final String MESSAGE_TAG_COLOR_CONSTRAINTS = "Colors available are: aqua, black, blue, brown, gold, "
+            + "green, grey, lime, magenta, navy, orange, pink, purple, red, teal, yellow, white";
+    public static final String[] AVAILABLE_COLORS = new String[] {"teal", "red", "yellow", "blue", "orange", "brown",
+        "green", "pink", "black", "grey", "purple", "lime", "magenta", "navy", "aqua", "gold", "white", "undefined"};
 
     public final String name;
     public final String color;

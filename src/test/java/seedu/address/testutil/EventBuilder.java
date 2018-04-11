@@ -12,7 +12,7 @@ public class EventBuilder {
     public static final String DEFAULT_VENUE = "Marina Bay Street Circuit";
     public static final String DEFAULT_DATE = "19/07/2018";
     public static final String DEFAULT_START_TIME = "1000";
-    public static final String DEFAULT_END_TIME = "1300";
+    public static final String DEFAULT_END_TIME = "2100";
 
     private String name;
     private String venue;

@@ -117,6 +117,7 @@ public class Timetable extends UiPart<Region> {
             TimetableSlot node = getSlotNode("time", hour);
             node.getNode().setPadding(new Insets(-7, 15, 5, 5));
             node.getNode().setAlignment(Pos.TOP_RIGHT);
+            node.getBox().setMinWidth(50);
             if (hour < 1000) {
                 node.setText("0" + hour + "");
             } else {

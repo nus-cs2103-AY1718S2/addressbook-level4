@@ -126,7 +126,15 @@ public class ParserUtil {
         if (!Address.isValidAddress(trimmedAddress)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        String[] wordsInAddress = trimmedAddress.split(" ");
+        StringBuilder formattedAddress = new StringBuilder();
+        for (String s : wordsInAddress) {
+            formattedAddress = formattedAddress
+                    .append(s.substring(0, 1).toUpperCase())
+                    .append(s.substring(1).toLowerCase())
+                    .append(" ");
+        }
+        return new Address(formattedAddress.toString().trim());
     }
 
     /**
@@ -393,6 +401,7 @@ public class ParserUtil {
         if (!Tag.isValidTagName(trimmedTag)) {
             throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
+        trimmedTag = trimmedTag.toLowerCase();
         return new Tag(trimmedTag);
     }
 
@@ -449,7 +458,15 @@ public class ParserUtil {
         if (!Species.isValidSpecies(trimmedSpecies)) {
             throw new IllegalValueException(Species.MESSAGE_PET_SPECIES_CONSTRAINTS);
         }
-        return new Species(trimmedSpecies);
+        String[] wordsInSpecies = trimmedSpecies.split(" ");
+        StringBuilder formattedSpecies = new StringBuilder();
+        for (String s : wordsInSpecies) {
+            formattedSpecies = formattedSpecies
+                    .append(s.substring(0, 1).toUpperCase())
+                    .append(s.substring(1).toLowerCase())
+                    .append(" ");
+        }
+        return new Species(formattedSpecies.toString().trim());
     }
 
     /**
@@ -471,7 +488,15 @@ public class ParserUtil {
         if (!Breed.isValidBreed(trimmedBreed)) {
             throw new IllegalValueException(Breed.MESSAGE_PET_BREED_CONSTRAINTS);
         }
-        return new Breed(trimmedBreed);
+        String[] wordsInBreed = trimmedBreed.split(" ");
+        StringBuilder formattedBreed = new StringBuilder();
+        for (String s : wordsInBreed) {
+            formattedBreed = formattedBreed
+                    .append(s.substring(0, 1).toUpperCase())
+                    .append(s.substring(1).toLowerCase())
+                    .append(" ");
+        }
+        return new Breed(formattedBreed.toString().trim());
     }
 
     /**
@@ -493,7 +518,14 @@ public class ParserUtil {
         if (!Colour.isValidColour(trimmedColour)) {
             throw new IllegalValueException(Colour.MESSAGE_PET_COLOUR_CONSTRAINTS);
         }
-        return new Colour(trimmedColour);
+        String[] wordsInColour = trimmedColour.split(" ");
+        StringBuilder formattedColour = new StringBuilder();
+        for (String s : wordsInColour) {
+            formattedColour = formattedColour
+                    .append(s.substring(0).toLowerCase())
+                    .append(" ");
+        }
+        return new Colour(formattedColour.toString().trim());
     }
 
     /**
@@ -515,7 +547,14 @@ public class ParserUtil {
         if (!BloodType.isValidBloodType(trimmedBloodType)) {
             throw new IllegalValueException(BloodType.MESSAGE_PET_BLOODTYPE_CONSTRAINTS);
         }
-        return new BloodType(trimmedBloodType);
+        String[] wordsInBloodType = trimmedBloodType.split(" ");
+        StringBuilder formattedBloodType = new StringBuilder();
+        for (String s : wordsInBloodType) {
+            formattedBloodType = formattedBloodType
+                    .append(s.substring(0).toUpperCase())
+                    .append(" ");
+        }
+        return new BloodType(formattedBloodType.toString().trim());
     }
 
     /**

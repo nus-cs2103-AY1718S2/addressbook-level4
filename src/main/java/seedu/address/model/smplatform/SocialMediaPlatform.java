@@ -10,7 +10,7 @@ public abstract class SocialMediaPlatform {
             "Platforms available are : \n"
                     + "1) " + Facebook.PLATFORM_KEYWORD + " (alias: " + Facebook.PLATFORM_ALIAS + ")\n"
                     + "2) " + Twitter.PLATFORM_KEYWORD + " (alias: " + Twitter.PLATFORM_ALIAS + ")\n";
-    
+
     protected Link link;
 
     public Link getLink() {

@@ -4,12 +4,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 
-import java.util.stream.Stream;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddRemarkCommand;
-import seedu.address.logic.commands.AddRemarkCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author chuakunhong
@@ -27,7 +25,7 @@ public class AddRemarkCommandParser implements Parser<AddRemarkCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_REMARK)) {
+        if (!argMultimap.arePrefixesPresent(PREFIX_REMARK)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemarkCommand.MESSAGE_USAGE));
         }
         Index index;
@@ -45,10 +43,6 @@ public class AddRemarkCommandParser implements Parser<AddRemarkCommand> {
             ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
         }
         return new AddRemarkCommand(index, editPersonDescriptor);
-    }
-
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
     //@@author
 }

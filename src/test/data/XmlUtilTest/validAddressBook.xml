@@ -4,45 +4,81 @@
         <name>Hans Muster</name>
         <nric isPrivate="false">S9482424Z</nric>
         <remark>" "</remark>
+        <cca>Basketball</cca>
+        <pos>Member</pos>
+        <injuriesHistory>" "</injuriesHistory>
+        <nameOfKin>Fan Muster</nameOfKin>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <nric isPrivate="false">S8724924Z</nric>
         <remark>" "</remark>
+        <cca>Basketball</cca>
+        <pos>Member</pos>
+        <injuriesHistory>" "</injuriesHistory>
+        <nameOfKin>Jan Mueller</nameOfKin>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
         <nric isPrivate="false">S9535256Z</nric>
         <remark>" "</remark>
+        <cca>Basketball</cca>
+        <pos>Member</pos>
+        <injuriesHistory>" "</injuriesHistory>
+        <nameOfKin>Dan Kurz</nameOfKin>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
         <nric isPrivate="false">S8765253Z</nric>
         <remark>" "</remark>
+        <cca>Basketball</cca>
+        <pos>Member</pos>
+        <injuriesHistory>" "</injuriesHistory>
+        <nameOfKin>Tan Meier</nameOfKin>
     </persons>
     <persons>
         <name>Werner Meyer</name>
         <nric isPrivate="false">S9482224Z</nric>
         <remark>" "</remark>
+        <cca>Basketball</cca>
+        <pos>Member</pos>
+        <injuriesHistory>" "</injuriesHistory>
+        <nameOfKin>Ran Meyer</nameOfKin>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
         <nric isPrivate="false">S9482427Z</nric>
         <remark>" "</remark>
+        <cca>Basketball</cca>
+        <pos>Member</pos>
+        <injuriesHistory>" "</injuriesHistory>
+        <nameOfKin>Lan Kunz</nameOfKin>
     </persons>
     <persons>
         <name>Anna Best</name>
         <nric isPrivate="false">S9482442Z</nric>
         <remark>" "</remark>
+        <cca>Basketball</cca>
+        <pos>Member</pos>
+        <injuriesHistory>" "</injuriesHistory>
+        <nameOfKin>Ban Best</nameOfKin>
     </persons>
     <persons>
         <name>Stefan Meier</name>
         <nric isPrivate="false">S8482424Z</nric>
         <remark>" "</remark>
+        <cca>Basketball</cca>
+        <pos>Member</pos>
+        <injuriesHistory>" "</injuriesHistory>
+        <nameOfKin>Van Meier</nameOfKin>
     </persons>
     <persons>
         <name>Martin Mueller</name>
         <nric isPrivate="false">S8482131Z</nric>
         <remark>" "</remark>
+        <cca>Basketball</cca>
+        <pos>Member</pos>
+        <injuriesHistory>" "</injuriesHistory>
+        <nameOfKin>Zan Mueller</nameOfKin>
     </persons>
 </addressbook>

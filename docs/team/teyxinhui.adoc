@@ -1,0 +1,54 @@
+= Tey Xin Hui - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: EduBuddy
+
+---
+
+== Overview
+
+EduBuddy is a desktop application designed for secondary school teachers to manage student information better.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Added commands which manages student's academic information
+** What it does:
+** Justification:
+** Highlights:
+** Credits:
+
+* *Minor enhancement*: Created subject database and added L1R5 calculation support
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T09-B1/main/blob/master/collated/functional/TeyXinHui.md[Functional code]] [https://github.com/CS2103JAN2018-T09-B1/main/blob/master/collated/test/TeyXinHui.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+
+** Enhancements to existing features:
+
+** Documentation:
+
+** Community:
+
+** Tools:
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag = select]
+
+include::../UserGuide.adoc[tag = stream]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag = subject]

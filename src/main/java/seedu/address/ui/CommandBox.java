@@ -139,18 +139,20 @@ public class CommandBox extends UiPart<Region> {
      */
     @Subscribe
     private void handlePopulatePrefixesRequestEvent(PopulatePrefixesRequestEvent event) {
+        commandTextField.requestFocus();
         replaceText(event.commandTemplate, event.caretIndex);
     }
 
     /**
      * Handles the event where a valid keyboard shortcut is pressed
      * to execute a command immediately
-     * {@code CommandRequestEvent}.
+     * {@code ExecuteCommandRequestEvent}.
      */
     @Subscribe
     private void handleExecuteCommandRequestEvent(ExecuteCommandRequestEvent event) {
         replaceText(event.commandWord);
         handleCommandInputChanged();
+        commandTextField.requestFocus();
     }
 
     /**

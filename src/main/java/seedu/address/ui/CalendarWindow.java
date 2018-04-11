@@ -94,7 +94,7 @@ public class CalendarWindow extends UiPart<Region> {
 
         this.weekView = calendarView.getWeekPage().getDetailedWeekView().getWeekView();
         weekView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_HEIGHT);
-        weekView.setHourHeight(190);
+        weekView.setHourHeight(250);
     }
 
     private void setTime() {

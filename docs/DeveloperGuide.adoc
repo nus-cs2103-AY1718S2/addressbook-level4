@@ -466,7 +466,7 @@ Users will be required to add their clients to a group when adding a new user. U
 
 // end::group[]
 
-// tag::commission[]
+// tag::insurance[]
 === Insurance with information of commission
 
 *Since V1.4*
@@ -479,7 +479,7 @@ Users will be required to add their clients to a group when adding a new user. U
 
 ==== Design Considerations
 
-===== Aspect: Implementation of Insurance tag
+===== Aspect: Implementation of Insurance
 
 image::InsuranceClassInModel.png[width="790"]
 
@@ -498,16 +498,7 @@ image::InsuranceClassInModel.png[width="790"]
  * **Alternative 2:**Create a storage to keep all commission
  ** Pros: Easy to calculate overall total commission
  ** Cons: Difficult to allocate commission to their respective client.
-
-===== Aspect: Identify top clients
- * **Alternative 1(current choice):** Sort by commission
- ** Pros: Easy to implement
- ** Cons: Difficult to view ranking of individual insurance plan (e.g top Health plan client)
- * **Alternative 2:** Colour code top few client
- ** Pros: Can sort by insurance plan to know if client belong to that category
- ** Cons: Difficult to implement
-
-// end::commission[]
+// end::insurance[]
 
 // tag:: encryption[]
 === Data Encryption

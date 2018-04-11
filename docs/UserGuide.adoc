@@ -77,6 +77,20 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 d/05-05-2018 g/PRIORITY t/friends i/Health`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/29-10-1992 g/friends t/criminal i/General `
 
+// tag::insurance[]
+==== Adding an insurance: Prefix: "i/"
+
+Add one or more insurance to a person +
+Format: `i/INSURANCE[COMMISSION]`
+
+[TIP]
+A person can have any number of insurances, to add in the commission of a particular insurance simply put the amount immediately after the insurance name and inside a '[]' or a '{}' bracket.
+
+Examples:
+
+* `add n/Jeremy Lee p/82286918 e/sebry9@gmail.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 i/Health[10] i/General{20}`
+// end::insurance[]
+
 === Listing all persons : `list`
 
 Shows a list of all persons in reInsurance. +

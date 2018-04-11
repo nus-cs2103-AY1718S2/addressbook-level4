@@ -14,7 +14,7 @@ formed during the course of CS2103T: Software Engineering module.
 
 === Tran Nhat Quang
 image::TranNhatQuang.jpg[width="150", align="left"]
-{empty}[https://github.com/nhatquang3112[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/nhatquang3112[github]] [<<trannhatquang#, portfolio>>]
 
 Role: Team Lead, Developer +
 Responsibility: Model

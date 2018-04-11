@@ -66,6 +66,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.itemList.setItemList(itemList);
     }
 
+    public void updateItemList(ObservableList<Person> persons) {
+        this.itemList.updateItemList(persons);
+    }
+
     public void setTasks(List<Task> tasks) {
         this.tasks.setTasks(tasks);
     }
@@ -85,9 +89,10 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .collect(Collectors.toList());
 
         try {
+            updateItemList(this.persons.asObservableList());
+            setItemList(newData.getItemList());
             setPersons(syncedPersonList);
             setTasks(newData.getTaskList());
-            setItemList(newData.getItemList());
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }

@@ -53,11 +53,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            String uniqueDetails = name.toString() + phone.toString() + email.toString();
             DisplayPic displayPic;
             try {
                 displayPic = ParserUtil.parseDisplayPic(argMultimap.getValue(PREFIX_DISPLAY_PIC)).get();
-                displayPic.saveDisplay(uniqueDetails);
             } catch (NoSuchElementException nsee) {
                 displayPic = new DisplayPic();
             }

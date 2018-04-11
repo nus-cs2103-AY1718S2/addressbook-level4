@@ -3,10 +3,8 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.commons.util.HashUtil;
 import seedu.address.storage.DisplayPicStorage;
 
 /**
@@ -47,7 +45,7 @@ public class DisplayPic {
      * Saves the display picture to the specified storage location.
      */
     public void saveDisplay(String personDetails) throws IllegalValueException {
-        if (originalPath.equals(value)) {
+        if (originalPath.equals(DEFAULT_DISPLAY_PIC)) {
             return;
         }
         String fileType = FileUtil.getFileType(originalPath);

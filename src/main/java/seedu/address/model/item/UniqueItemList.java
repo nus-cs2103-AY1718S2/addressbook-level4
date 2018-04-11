@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javafx.collections.ObservableList;
+import seedu.address.model.person.Person;
+
 /**
  * A list of filepaths that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -51,6 +54,12 @@ public class UniqueItemList {
             if (!this.internalList.contains(item)) {
                 this.internalList.add(item);
             }
+        }
+    }
+
+    public void updateItemList(ObservableList<Person> persons) {
+        for (Person p : persons) {
+            add(p.getDisplayPic().toString());
         }
     }
 

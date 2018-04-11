@@ -9,6 +9,9 @@ import seedu.address.testutil.Assert;
 
 //@@author kexiaowen
 public class UniversityTest {
+
+    private final University university = new University("NUS");
+
     @Test
     public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new University(null));
@@ -37,5 +40,32 @@ public class UniversityTest {
         assertTrue(University.isValidUniversity("nus the 1st")); // alphanumeric characters
         assertTrue(University.isValidUniversity("National University of Singapore")); // with capital letters
         assertTrue(University.isValidUniversity("University of California Santa Barbara")); // long names
+    }
+
+    @Test
+    public void equals_sameObject_returnsTrue() {
+        assertTrue(university.equals(university));
+    }
+
+    @Test
+    public void equals_sameValues_returnsTrue() {
+        University universityCopy = new University("NUS");
+        assertTrue(university.equals(universityCopy));
+    }
+
+    @Test
+    public void equals_differentTypes_returnsFalse() {
+        assertFalse(university.equals(1));
+    }
+
+    @Test
+    public void equals_null_returnsFalse() {
+        assertFalse(university.equals(null));
+    }
+
+    @Test
+    public void equals_differentValues_returnsFalse() {
+        University differentUniversity = new University("NTU");
+        assertFalse(university.equals(differentUniversity));
     }
 }

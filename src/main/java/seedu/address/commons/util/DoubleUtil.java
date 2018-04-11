@@ -3,6 +3,7 @@ package seedu.address.commons.util;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+//@@author kexiaowen
 /**
  * Helper functions for handling doubles.
  */
@@ -23,7 +24,7 @@ public class DoubleUtil {
      * Note: Whole numbers will round to one decimal place.
      */
     public static double roundToTwoDecimalPlaces(double value) {
-        long valueMultipliedByHundred = (long) Math.round(value * 100);
-        return (double) (valueMultipliedByHundred / 100.0);
+        long valueMultipliedByHundred = Math.round(value * 100);
+        return (valueMultipliedByHundred / 100.0);
     }
 }

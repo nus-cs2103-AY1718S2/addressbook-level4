@@ -166,6 +166,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author kexiaowen
     /**
      * Sets the {@code University} of the {@code Person} that we are building.
      */
@@ -173,6 +174,7 @@ public class PersonBuilder {
         this.university = new University(university);
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code ExpectedGraduationYear} of the {@code Person} that we are building.
@@ -198,6 +200,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author kexiaowen
     /**
      * Sets the {@code JobApplied} of the {@code Person} that we are building.
      */
@@ -218,6 +221,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author
     /**
      * Sets the {@code Resume} of the {@code Person} that we are building.
      */

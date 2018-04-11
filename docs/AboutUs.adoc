@@ -19,8 +19,8 @@ Responsibilites: Logic, Model
 '''
 
 === Ang Yee Chin
-image::ANG-YC.png[width="150", align="left"]
-{empty}[http://github.com/ANG-YC[github]] [<<#, portfolio>>]
+image::Ang-YC.png[width="150", align="left"]
+{empty}[http://github.com/Ang-YC[github]] [<<angyeechin#, portfolio>>]
 
 Role: Team Lead, Integration +
 Responsibilities: Ui, Storage
@@ -39,7 +39,7 @@ Responsibilities: Logic, Model
 
 === Ke Xiaowen
 image::kexiaowen.png[width="150", align="left"]
-{empty}[http://github.com/kexiaowen[github]] [<<#kexiaowen, portfolio>>]
+{empty}[http://github.com/kexiaowen[github]] [<<kexiaowen#, portfolio>>]
 
 Role: Code quality, Documentation +
 Responsibilities: Code quality, Documentation

@@ -154,6 +154,24 @@ public class Person {
                 && otherPerson.getComment().equals(this.getComment());
     }
 
+    /**
+     * Equals everything that is significant to change InfoPanel (Every fields except profile picture)
+     * @param other object to compare with
+     * @return true if both are equals
+     */
+    public boolean infoEquals(Object other) {
+        if (!equals(other)) {
+            return false;
+        }
+
+        Person otherPerson = (Person) other;
+        return otherPerson.getJobApplied().equals(this.getJobApplied())
+                && otherPerson.getRating().equals(this.getRating())
+                && otherPerson.getResume().equals(this.getResume())
+                && otherPerson.getInterviewDate().equals(this.getInterviewDate())
+                && otherPerson.getStatus().equals(this.getStatus());
+    }
+
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own

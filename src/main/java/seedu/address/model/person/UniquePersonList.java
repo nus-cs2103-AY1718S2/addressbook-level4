@@ -107,8 +107,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Sorts the list based on overall rating in descending order
      */
     public void sortPersonsRatingDesc() {
-        Collections.sort(internalList, Person::compareByOverallRating);
-        Collections.reverse(internalList);
+        Collections.sort(internalList, Collections.reverseOrder(Person::compareByOverallRating));
     }
 
     /**
@@ -122,8 +121,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Sorts the list based on GPA in descending order
      */
     public void sortPersonsGradePointAverageDesc() {
-        Collections.sort(internalList, Person::compareByGradePointAverage);
-        Collections.reverse(internalList);
+        Collections.sort(internalList, Collections.reverseOrder(Person::compareByGradePointAverage));
     }
 
     /**
@@ -137,8 +135,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Sorts the list based on name in descending order
      */
     public void sortPersonsNameDesc() {
-        Collections.sort(internalList, Person::compareByName);
-        Collections.reverse(internalList);
+        Collections.sort(internalList, Collections.reverseOrder(Person::compareByName));
     }
 
     //@@author

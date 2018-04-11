@@ -4,9 +4,15 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import javax.imageio.ImageIO;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 
 //@@author Ang-YC
 /**
@@ -17,11 +23,15 @@ public class ProfileImage {
     public static final String MESSAGE_IMAGE_CONSTRAINTS =
             "Profile image file should be at least 1 character long, exist in the same directory "
                     + "as the jar executable, smaller than 1MB and readable";
+
     private static final int ONEMEGABYTE = 1 * 1024 * 1024;
     private static final String IMAGE_VALIDATION_REGEX = ".*\\S.*";
+    private static final int CROP_DIMENSION = 100;
+
     public final String value;
     public final String userInput;
     private boolean isHashed;
+    private final Image image;
 
     /**
      * Constructs a {@code ProfileImage}.
@@ -33,10 +43,12 @@ public class ProfileImage {
         if (isNull(fileName)) {
             this.value = null;
             this.userInput = null;
+            this.image = null;
         } else {
             checkArgument(isValidFile(fileName), MESSAGE_IMAGE_CONSTRAINTS);
             this.value = fileName;
-            userInput = fileName;
+            this.userInput = fileName;
+            this.image = loadImage();
         }
     }
 
@@ -45,24 +57,74 @@ public class ProfileImage {
         if (isNull(storageFileName)) {
             this.value = null;
             this.userInput = null;
+            this.image = null;
         } else {
             checkArgument(isValidFile(storageFileName), MESSAGE_IMAGE_CONSTRAINTS);
             this.value = storageFileName;
-            userInput = userFileName;
+            this.userInput = userFileName;
+            this.image = loadImage();
         }
     }
+
+    public Image getImage() {
+        return image;
+    }
+
     /**
      * Return the loaded {@code Image} of the person's Profile Image,
      * resized to 100px for performance issue
      * @return the image in {@code Image}
      */
-    public Image getImage() {
+    private Image loadImage() {
         try {
-            return new Image(getFile().toURI().toString(),
-                    100d, 0d, true, true, false);
+            File file = getFile();
+            if (file != null) {
+                //Image image = new Image(file.toURI().toString(), 0, 0, true, true, true);
+
+                // Load image
+                BufferedImage image = ImageIO.read(file);
+
+                // Scaling amd resizing calculation
+                int width = image.getWidth();
+                int height = image.getHeight();
+                int shorter = Math.min(width, height);
+                double scale = (double) shorter / (double) CROP_DIMENSION;
+                int x = 0;
+                int y = 0;
+
+                if (width < height) {
+                    width = CROP_DIMENSION;
+                    height = (int) Math.round((double) height / scale);
+                    y = (CROP_DIMENSION - height) / 2;
+                } else {
+                    height = CROP_DIMENSION;
+                    width = (int) Math.round((double) width / scale);
+                    x = (CROP_DIMENSION - width) / 2;
+                }
+
+                // Resize start
+                BufferedImage resized = new BufferedImage(CROP_DIMENSION, CROP_DIMENSION,
+                        BufferedImage.TYPE_4BYTE_ABGR);
+                Graphics2D g2d = resized.createGraphics();
+                g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,
+                        RenderingHints.VALUE_RENDER_SPEED));
+                g2d.drawImage(image, x, y, width, height, null);
+
+                // Output
+                WritableImage output = new WritableImage(CROP_DIMENSION, CROP_DIMENSION);
+                SwingFXUtils.toFXImage(resized, output);
+
+                // Clean up
+                image.flush();
+                resized.flush();
+                g2d.dispose();
+
+                return output;
+            }
         } catch (Exception e) {
             return null;
         }
+        return null;
     }
 
     /**

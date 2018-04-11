@@ -68,13 +68,14 @@ public class AddressBookTest {
         addressBook.resetData(newData);
     }
 
+    //@@author kexiaowen
     @Test
     public void sortDesc_sortByRating_sortSuccessful() {
         AddressBook newData = getTypicalAddressBook();
         newData.sortDesc(SortCommand.SortField.RATING);
 
         AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(BENSON).withPerson(ALICE)
-                .withPerson(GEORGE).withPerson(FIONA).withPerson(ELLE).withPerson(DANIEL).withPerson(CARL).build();
+                .withPerson(CARL).withPerson(DANIEL).withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).build();
         assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
     }
 
@@ -128,6 +129,7 @@ public class AddressBookTest {
         assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
     }
 
+    //@@author
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
@@ -25,12 +26,21 @@
         </padding>
     </Label>
 
-    <VBox visible="false" fx:id="resumeLoading" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox visible="false" fx:id="resumeLoading" alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Label fx:id="resumeLoadingLabel">
             <VBox.margin>
-                <Insets bottom="5.0" />
+                <Insets bottom="8.0" />
             </VBox.margin>
         </Label>
-        <ProgressBar fx:id="resumeLoadingBar" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0.5" />
+        <ProgressBar fx:id="resumeLoadingBar" styleClass="hr-progress-bar" maxWidth="Infinity" progress="0">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+        </ProgressBar>
+        <Button fx:id="resumeCancelButton" styleClass="hr-button" onAction="#cancelResume" mnemonicParsing="false" text="Cancel">
+            <padding>
+                <Insets bottom="6.0" left="15.0" right="15.0" top="6.0" />
+            </padding>
+        </Button>
     </VBox>
 </AnchorPane>

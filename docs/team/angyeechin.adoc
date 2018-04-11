@@ -1,0 +1,50 @@
+= Ang Yee Chin - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: HR+
+
+---
+
+== Overview
+
+HR+ is a recruiting and talent management desktop application targeting University Talent Acquisition Specialists. It is built to help them manage a significant number of student contacts and find the best-fitting candidates. University Talent Acquisition Specialists interact with HR+ using a Command Line Interface(CLI). HR+ has a Graphical User Interface(GUI) created with JavaFX and it is written in Java with approximately kLOC.
+
+
+== Summary of contributions
+
+* *Major enhancement*: Revamps the user interface and Improve user experience
+(Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/50[#50])
+** What it does: New user interface featured a clean theme which allows user to find the necessary information easily, thus improve in performance and productivity of the user.
+** Justification: This enhancement is important because the user interface gives the first impression to the users.
+** Highlights: This enhancement involves rewriting almost all FXML and Java code of the UI part. It also required changing and updating of `Logic` and `Model` in order to provide a seamless smooth interaction and animation between each components. Some parts and logic have to be rewritten such as the window event function (minimize, maximize, drag, resize) because it is not come out of the box for borderless window. Besides that, it is also responsive to adapt with different screen sizes.
+
+* *Minor enhancement*: Added `interview` command and field that allows the user to schedule an interview date of students using natural language parser
+(Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/21[#21])
+** What it does: The `interview` command allows the user to schedule an interview with the student using natural language parser.
+** Justification: This command is necessary because most of the company required at least 1 interview with the student in order to hire them.
+** Highlights: This command used the natural language parser from Natty library. Due to the complexity of the parsing process, the `UI` had been updated to reflect the parsed result before executing.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/functional/Ang-YC.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/test/Ang-YC.md[Test code]]
+
+* *Other contributions*:
+** Design:
+*** Logo are created to do product branding.
+*** Scroll bar, split pane, dialog pane and progress are overridden with custom style to adapt with the theme.
+
+** Functionality:
+*** PDF Viewer are added with custom implementation (only the renderer are used from the PDFBox library) (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/80[#80])
+*** Most of the panels in the interface are animated to provide a better interaction and transition. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+*** Radar chart is implemented using Canvas for better visualizing of the rating. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+*** Floating real-time parsing panel are added to show parsed result before executing. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+*** Added `show` command to allow the displaying of panels using command instead of [TAB] button. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+
+** Performance:
+*** Multi-threading are used to prevent from thread blocking when loading the resume / PDF files (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/80[#80])
+*** Caching are enabled for all components that increased the performance. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+*** Profile Image are loaded only once, resized and cropped into correct dimension. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+*** Replaced the use of EasyBind which have a very big performance impact. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+
+** Enhancements to existing features:
+*** Enhanced the `add` and `edit` command to include a new field `ProfileImage` and wrote relevant tests (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/66[#66])
+*** Enhanced the `add` and `edit` command to include a new field `Comment` and wrote relevant tests (Pull request https://github.com/CS2103JAN2018-W14-B3/main/pull/66[#66])

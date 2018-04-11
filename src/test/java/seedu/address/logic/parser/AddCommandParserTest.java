@@ -12,7 +12,9 @@ import static seedu.address.logic.commands.CommandTestUtil.GROUP_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.GROUP_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INSURANCE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMISSION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_INSURANCE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -46,6 +48,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -100,7 +103,7 @@ public class AddCommandParserTest {
     }
 
     @Test
-    public void parse_optionalFieldsMissing_success() {
+    public void parse_optionalTagsMissing_success() {
         // zero tags
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
@@ -109,6 +112,17 @@ public class AddCommandParserTest {
                 + BIRTHDAY_DESC_AMY + GROUP_DESC_AMY, new AddCommand(expectedPerson));
     }
 
+    //@@author Sebry9
+    @Test
+    public void parse_optionalInsurancesMissing_success() {
+        // zero insurances
+        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
+            .withGroup(VALID_GROUP_AMY).withInsurance().build();
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+            + BIRTHDAY_DESC_AMY + GROUP_DESC_AMY, new AddCommand(expectedPerson));
+    }
+    //@@author Sebry9
     @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
@@ -133,9 +147,19 @@ public class AddCommandParserTest {
                 + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INSURANCE_DESC_BOB,
                 expectedMessage);
 
+        // missing birthday prefix
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                    + VALID_BIRTHDAY_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INSURANCE_DESC_BOB,
+            expectedMessage);
+
+        // missing group prefix
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + VALID_GROUP_BOB + INSURANCE_DESC_BOB,
+            expectedMessage);
+
         // all prefixes missing
         assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB
-                + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INSURANCE_DESC_BOB,
+                + VALID_BIRTHDAY_BOB + VALID_APPOINTMENT_BOB + VALID_GROUP_BOB + VALID_INSURANCE_BOB,
                 expectedMessage);
     }
 
@@ -165,6 +189,16 @@ public class AddCommandParserTest {
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INSURANCE_DESC_BOB
                 + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_TAG_CONSTRAINTS);
+
+        // invalid commission
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+            + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INVALID_COMMISSION_DESC,
+            Insurance.MESSAGE_INSURANCE_CONSTRAINTS);
+
+        // invalid insurance
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INVALID_INSURANCE_DESC,
+            Insurance.MESSAGE_INSURANCE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC

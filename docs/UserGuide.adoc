@@ -60,6 +60,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`, Alias: `h`
 
+[TIP]
+The help page can be accessed by moving the mouse over `Help` section of the navigation bar then clicking `Help`. The help page can also be accessed by pressing `F1` on the keyboard.
+
 === Adding a person: `add`
 
 Adds a person to reInsurance +
@@ -67,11 +70,26 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [d/APPOINTMENT] 
 
 [TIP]
 A person can have any number of tags, appointment and insurance plans (including 0) but only one group
+Dates are in the format dd-mm-yyyy
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 d/05-05-2018 g/PRIORITY t/friends i/Health`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/29-10-1992 g/friends t/criminal i/General `
+
+// tag::insurance[]
+==== Adding an insurance: Prefix: "i/"
+
+Add one or more insurance to a person +
+Format: `i/INSURANCE[COMMISSION]`
+
+[TIP]
+A person can have any number of insurances, to add in the commission of a particular insurance simply put the amount immediately after the insurance name and inside a '[]' or a '{}' bracket.
+
+Examples:
+
+* `add n/Jeremy Lee p/82286918 e/sebry9@gmail.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 i/Health[10] i/General{20}`
+// end::insurance[]
 
 === Listing all persons : `list`
 
@@ -90,10 +108,11 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [d/APP
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
+* At least one of the optional fields must be
+provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* You can remove all the person's tags or insurance by typing `t/` for tags and 'i/' for insurances without specifying any tags after it.
 ****
 
 Examples:
@@ -102,6 +121,9 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+[TIP]
+Clearing the application can also be done by moving the mouse over `File` section of the navigation bar then clicking `Clear`.
 
 === Locating persons by name: `find`
 
@@ -256,6 +278,9 @@ Clears all entries from reInsurance. +
 Alias: `c` +
 Format: `clear` Alias: `c`
 
+[TIP]
+Clearing all entries from reInsurance can also be done by moving the mouse over `File` section of the navigation bar then clicking `Clear`.
+
 === Export data : `export`
 
 Exports the data from the specified export type (case insensitive). +
@@ -273,7 +298,7 @@ Exports the data in the portfolio to a .csv file
 ====
 * Coming in v2.0, there will be more options on the types of data to export.
 * As of v1.4, the application handles the command for the portfolio and calendar.
-* Default destination file is at `data/portfolio.csv` for the `export portfolio` command.
+* Default destination file is at `portfolio.csv` for the `export portfolio` command.
 * The default calendar created in Google Calendars is titled `reInsurance Events`, which contains birthdays and appointments.
 * Coming in v2.0, the user will be able to specify what the created calendar is called.
 ====
@@ -301,6 +326,9 @@ Format: `password` Alias: `pw`
 
 Exits the program. +
 Format: `exit`
+
+[TIP]
+Exiting the application can also be done by moving the mouse over `File` section of the navigation bar then clicking `Exit`.
 
 === Saving the data
 

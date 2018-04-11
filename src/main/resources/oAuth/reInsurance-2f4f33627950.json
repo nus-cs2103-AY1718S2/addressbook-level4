@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "reinsurance-200616",
+  "private_key_id": "2f4f33627950ae861c3d3da9c83ecc98dca33a02",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC5BKbp3kV3J9z3\nOKYSL4gRAEbAaxNUS0mOihSlqApcIuRANjy5gkhiStfAGYDveTjE0cjgA5Ik7NRB\nySg1iO4cLeZpJH+Q+aJt2aRUHUXOKF2o+zxr6HD4qVX/sxLMtt/m3ecH/NeLWWeL\n/D26PVqcLpdyTVugvn3FyFrDpRBpfnOvA42QEBI6zW00r6vT3mHfI7mHLRIW2WK5\nEmo/nzMGVre6R7lGxlUFbd+r7n0My4brxyyYicYNuHnrNSL1aL9akhZZQO8rKmSJ\nMgAFGvELqqu9urDbtGDYwMPqpOAr267NyiXs+/SvZeX1Slt5MYH6zw5BM8W55+8q\nHk1HY8xFAgMBAAECggEAFvV9UvMakqU3NdRpQ0NzsoxiuzjuTp0DFTWMR1w5YOKR\niWhRk8GXgt7/s95WUiEsSrwvnaDDz2I2Gq3AGBiUV5nYiD6Xt+FKZzBFRIzXXzRC\nHxiCEG/pKOo2ekL5975PvYHWy/Zztt6Sy1uzOzum1U+wymXQE3vf9p2cqb9/cF+i\n1PVIu0o/KmO7iABnfZWn/qGOygvB7bDbOdP+MZyAZsn9Yl9/Mib/tS+Ps+B3ZBd/\nHn9/XWg9CYzl76RX7Q3ff9Emp7vibpZ86BQ52Y58U+RkQz11gymgyJs5lb46xQKb\ndabX5012/1ucRCG4MmwUiA9ghGx4IFUnRw8vjjwz1wKBgQDz6ufItwill+Y6Dv+X\n8dqg/Zcrh46lIuk8Cg0FON1RqV8BcZQS5Syojx2hlVOTY+5H+nzenYc+1QjvROYN\ndgKYUgH/ZfKWSMhYK33QkKRqZSisApMSwXhaAm5yAotjdCkQW+nJFttZgzx6Ivdl\n3rFN937QazHOrc1UlVl1cQnWbwKBgQDCLtlPwrohRa6usYiek/2An8XVIw/0P+sm\nDF00Hv1f4eO7v/ZZ2hwwQeSe3w5GBB/VEHdW0DIYG8ZNE3/frCLxo8N2skES4G8Q\nnRDwfR/ymDGhDhAAK5s0PNzqE0tJNgJ3Jr488ajaGpfkPEgWwwVT6YD72Od1XI30\nLalr7liCiwKBgB69FLarslBEA0R/zWAVn4q4Sou2ypgu/RuO3LMyxllbMdjZumJj\nNSyM1JwfWGfzqPyzKXdYfMnDSRv2H9PEcnFFrHDGJTshMvZBjNpyz/WEiAqdTHGJ\npiQZuFdv0KcY5W/lVWH9Gml+a2ms7GaPGOMNdJLJX35/Uqf9Jkfxld7LAoGBAJgV\nGR3e5OgqKyWm5dlNDr4uZEMJsvUZGpIyHM01eDwgLrxdHBRDPtCMywGisQslL8kv\nnEfhx1oaZrT3EK+docCfAfd0pIKkRFg+q4WuedcGW9hHq0B25peDE4JAmjY8lrG7\nJkOVASnQqiWXEN7C3ulZeCvHNYA1fPhAyvA9PBUBAoGBANAD1IoaMfNZes7Znl5n\nsbqfMBko68grcLqGQPHnm6JDCI6ZGCefkkrlVDa3HIGcXRRoKLy5WL95MmmTfVHZ\nixcl/dD2iZ4Y22D8Tw/zP3fR7kULhEtghTo3A3mLtCYvGMaIj/8pdTfwFj8nRFNh\nAIK3v5b5BD5O+GRSv7AGXLWR\n-----END PRIVATE KEY-----\n",
+  "client_email": "reinsurance@reinsurance-200616.iam.gserviceaccount.com",
+  "client_id": "102171025064849317152",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/reinsurance%40reinsurance-200616.iam.gserviceaccount.com"
+}

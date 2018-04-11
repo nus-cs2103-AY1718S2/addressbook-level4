@@ -4,13 +4,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.core.ComponentManager;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
+//@@author cambioforma
 /**
  * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
  */
-public class PersonContainsTagsPredicate implements Predicate<Person> {
+public class PersonContainsTagsPredicate extends ComponentManager implements Predicate<Person> {
     private final List<String> keywords;
 
     public PersonContainsTagsPredicate(List<String> keywords) {
@@ -19,15 +21,14 @@ public class PersonContainsTagsPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-        /*return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
-        */
         for (Iterator<String> i = keywords.iterator(); i.hasNext();) {
             String keyword = i.next();
             UniqueTagList personTagList = new UniqueTagList(person.getTags());
-            Tag keyTag = new Tag(keyword);
-            if (personTagList.contains(keyTag)) {
-                return true;
+            if (Tag.isValidTagName(keyword)) {
+                Tag keyTag = new Tag(keyword);
+                if (personTagList.contains(keyTag)) {
+                    return true;
+                }
             }
         }
         return false;

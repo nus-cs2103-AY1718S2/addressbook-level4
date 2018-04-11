@@ -131,7 +131,7 @@ public class PersonBuilder {
     /**
      * Sets the {@code Insurance} of the {@code Person} that we are building.
      */
-    public PersonBuilder withInsurance(String insurance) {
+    public PersonBuilder withInsurance(String ... insurance) {
         this.insurance = SampleDataUtil.getInsuranceSet(insurance);
         return this;
     }

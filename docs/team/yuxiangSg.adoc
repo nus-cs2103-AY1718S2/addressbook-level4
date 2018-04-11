@@ -8,7 +8,8 @@
 
 == Overview
 
-ASmart Insurance Collection(SIC) is for insurance agents who *prefer to use a desktop app for managing contacts and appointments*. More importantly, SIC is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+Smart Insurance Collection(SIC) is for insurance agents who *prefer to use a desktop app for managing contacts and appointments*. More importantly, SIC is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+
 == Summary of contributions
 
 * *Major enhancement*: added *Calendar with appointment related features*
@@ -17,9 +18,9 @@ ASmart Insurance Collection(SIC) is for insurance agents who *prefer to use a de
 ** Highlights: This enhancement touches on all components of the app and create a calendar and task model to enable future implementation of related enhancements. The additions to the components were written in such a way that the previous architecture is largely preserved.
 ** Credits: This enhancement depends heavily on the https://github.com/dlemmermann/CalendarFX[CalendarFx] third party library
 
-* *Minor enhancement*: added look and back feature switch between day view and month view of the calendar GUI
+* *Minor enhancement*: added look and back features which allow switch between day view and month view of the calendar GUI
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/functional/yuxiangSg.md] [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/test/yuxiangSg.md}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/functional/yuxiangSg.md] [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/test/yuxiangSg.md]}_
 
 * *Other contributions*:
 
@@ -35,7 +36,6 @@ ASmart Insurance Collection(SIC) is for insurance agents who *prefer to use a de
 ** Tools:
 *** Integrated a third party library (JFoenix) to the project (https://github.com/CS2103JAN2018-T15-B2/main/commit/8329dde253bea67d61f60fe3ae378c81017bc93c[#42])
 
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 
@@ -56,5 +56,5 @@ include::../UserGuide.adoc[tag=task]
 
 include::../DeveloperGuide.adoc[tag=add_appointment]
 include::../DeveloperGuide.adoc[tag=model]
-include::../DeveloperGuide.adoc[ui=model]
+include::../DeveloperGuide.adoc[tag=ui]
 

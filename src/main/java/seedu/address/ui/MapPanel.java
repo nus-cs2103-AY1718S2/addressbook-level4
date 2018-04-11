@@ -17,7 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.MapManager;
+import seedu.address.logic.map.MapManager;
 
 /**
  * The UI component that handles the display of maps.
@@ -27,6 +27,8 @@ public class MapPanel extends UiPart<Region>
 
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private MapManager mapManager;
 
     @FXML
     private GoogleMapView mapView;
@@ -65,6 +67,7 @@ public class MapPanel extends UiPart<Region>
                 .zoom(10);
 
         map = mapView.createMap(mapOptions);
+        mapManager = new MapManager(map, mapView.getDirec());
         invalidAddressOverlay.setVisible(false);
 
     }
@@ -81,13 +84,13 @@ public class MapPanel extends UiPart<Region>
         }
     }
     public void loadAddress(String address) {
-        MapManager.GeocodeUtil.setMapMarkerFromAddress(map, address);
+        mapManager.setMapMarkerFromAddress(map, address);
     }
     public void showInvalidAddressOverlay(Boolean show) {
         invalidAddressOverlay.setVisible(show);
     }
     public void loadDirections(String addressOrigin, String addressDestination) {
-        MapManager.DirectionsUtil.setDirectionsOnMap(map, mapView.getDirec(), addressOrigin, addressDestination);
+        mapManager.setDirectionsOnMap(addressOrigin, addressDestination);
     }
     //    public void removeDirections() {
     //

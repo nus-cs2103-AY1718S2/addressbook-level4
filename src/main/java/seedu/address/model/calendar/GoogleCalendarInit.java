@@ -56,6 +56,8 @@ public class GoogleCalendarInit {
     private static void writeCalendarIdToFile (String calendarId) {
         try {
             UserPrefs userPrefs = new UserPrefs();
+            File f = new File("data");
+            f.mkdir();
             PrintWriter writer = new PrintWriter(new File(userPrefs.getCalendarIdFilePath()));
             writer.print(calendarId);
             writer.close();

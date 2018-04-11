@@ -39,7 +39,7 @@ Responsibilities: Logic, Model
 
 === Ke Xiaowen
 image::kexiaowen.png[width="150", align="left"]
-{empty}[http://github.com/kexiaowen[github]] [<<#kexiaowen, portfolio>>]
+{empty}[http://github.com/kexiaowen[github]] [<<kexiaowen#, portfolio>>]
 
 Role: Code quality, Documentation +
 Responsibilities: Code quality, Documentation

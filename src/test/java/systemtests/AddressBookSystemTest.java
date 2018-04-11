@@ -20,6 +20,7 @@ import org.junit.ClassRule;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.TitleBarHandle;
@@ -209,11 +210,19 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
+        PersonCardHandle personCardHandle = getPersonListPanel().getHandleToSelectedCard();
 
-        // TODO: Match Person instead of just Name
-        assertEquals(selectedCardName, getInfoPanel().getLoadedPerson().getName().toString());
-        assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+        // Max value is a flag for nothing is selected
+        if (expectedSelectedCardIndex.getZeroBased() != Integer.MAX_VALUE) {
+            String selectedCardName = personCardHandle.getName();
+
+            // TODO: Match Person instead of just Name
+            assertEquals(selectedCardName, getInfoPanel().getLoadedPerson().getName().toString());
+            assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+
+        } else { // Nothing is selected
+            assertTrue(personCardHandle == null);
+        }
     }
 
     /**

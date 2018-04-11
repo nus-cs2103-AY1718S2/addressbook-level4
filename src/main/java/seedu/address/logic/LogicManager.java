@@ -48,8 +48,27 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public Command parse(String commandText) {
+        try {
+            return addressBookParser.parseCommand(commandText);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<Person> getActivePersonList() {
+        return model.getActivePersonList();
+    }
+
+    @Override
+    public void setSelectedPerson(Person selectedPerson) {
+        model.setSelectedPerson(selectedPerson);
     }
 
     @Override

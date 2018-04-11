@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.UiUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -45,7 +46,7 @@ public class InterviewCommandTest {
 
         InterviewCommand interviewCommand = prepareCommand(INDEX_FIRST_PERSON, VALID_DATETIME);
         String expectedMessage = String.format(InterviewCommand.MESSAGE_INTERVIEW_PERSON_SUCCESS,
-                scheduledPerson.getName(), scheduledPerson.getInterviewDate().getDateTime().toString());
+                scheduledPerson.getName(), UiUtil.formatDate(scheduledPerson.getInterviewDate().getDateTime()));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, scheduledPerson);

@@ -10,51 +10,51 @@
 <?import javafx.scene.image.ImageView?>
 
 <!-- @@author Ang-YC -->
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="cardPersonPane" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" VBox.vgrow="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-    <AnchorPane fx:id="cardPerson" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <AnchorPane fx:id="cardPhotoPane" maxHeight="70.0" maxWidth="70.0" minHeight="70.0" minWidth="70.0" prefHeight="70.0" prefWidth="70.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="10.0">
-            <ImageView fx:id="cardPhoto" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-            <Pane fx:id="cardPhotoMask" styleClass="style-mask-circle" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="cardPersonPane" opacity="0.0" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" VBox.vgrow="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
+    <AnchorPane fx:id="cardPerson" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
+        <AnchorPane fx:id="cardPhotoPane" maxHeight="70.0" maxWidth="70.0" minHeight="70.0" minWidth="70.0" prefHeight="70.0" prefWidth="70.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="10.0" cache="true" cacheHint="SPEED">
+            <ImageView fx:id="cardPhoto" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED"/>
+            <Pane fx:id="cardPhotoMask" styleClass="style-mask-circle" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED"/>
         </AnchorPane>
-        <VBox fx:id="cardPersonInfo" alignment="CENTER_LEFT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="88.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <Label fx:id="cardPersonName">
+        <VBox fx:id="cardPersonInfo" alignment="CENTER_LEFT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="88.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
+            <Label fx:id="cardPersonName" cache="true" cacheHint="SPEED">
                 <VBox.margin>
                     <Insets bottom="-2.0" />
                 </VBox.margin>
             </Label>
-            <Label fx:id="cardPersonUniversity">
+            <Label fx:id="cardPersonUniversity" cache="true" cacheHint="SPEED">
                 <VBox.margin>
                     <Insets bottom="3.0" />
                 </VBox.margin>
             </Label>
-            <Label fx:id="cardPersonEmail">
+            <Label fx:id="cardPersonEmail" cache="true" cacheHint="SPEED">
                 <VBox.margin>
                     <Insets bottom="-2.0" />
                 </VBox.margin>
             </Label>
-            <Label fx:id="cardPersonContact">
+            <Label fx:id="cardPersonContact" cache="true" cacheHint="SPEED">
             </Label>
         </VBox>
-        <HBox fx:id="cardPersonRatingPane" alignment="CENTER_RIGHT" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
-            <Label fx:id="cardPersonRating">
+        <HBox fx:id="cardPersonRatingPane" alignment="CENTER_RIGHT" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" cache="true" cacheHint="SPEED">
+            <Label fx:id="cardPersonRating" cache="true" cacheHint="SPEED">
                 <HBox.margin>
                     <Insets bottom="-1.0" right="3.0" top="1.0" />
                 </HBox.margin>
             </Label>
-            <Pane fx:id="iconRating" styleClass="icon-star" maxHeight="12.0" maxWidth="12.0" minHeight="12.0" minWidth="12.0" prefHeight="12.0" prefWidth="12.0"/>
+            <Pane fx:id="iconRating" styleClass="icon-star" maxHeight="12.0" maxWidth="12.0" minHeight="12.0" minWidth="12.0" prefHeight="12.0" prefWidth="12.0" cache="true" cacheHint="SPEED"/>
         </HBox>
-        <Label fx:id="cardPersonStatus" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="8.0">
+        <Label fx:id="cardPersonStatus" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="8.0" cache="true" cacheHint="SPEED">
             <padding>
                 <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
             </padding>
         </Label>
-        <HBox fx:id="cardPersonNumberPane">
-            <Label fx:id="cardPersonNumber" maxHeight="20.0" minHeight="20.0" prefHeight="20.0">
+        <HBox fx:id="cardPersonNumberPane" cache="true" cacheHint="SPEED">
+            <Label fx:id="cardPersonNumber" maxHeight="20.0" minHeight="20.0" prefHeight="20.0" cache="true" cacheHint="SPEED">
                 <padding>
                     <Insets bottom="2.0" left="5.0" top="2.0" />
                 </padding>
             </Label>
-            <Pane fx:id="styleCardPersonNumber" styleClass="style-upper-triangle" maxHeight="20.0" maxWidth="10.0" minHeight="20.0" minWidth="10.0" prefHeight="20.0" prefWidth="10.0"/>
+            <Pane fx:id="styleCardPersonNumber" styleClass="style-upper-triangle" maxHeight="20.0" maxWidth="10.0" minHeight="20.0" minWidth="10.0" prefHeight="20.0" prefWidth="10.0" cache="true" cacheHint="SPEED"/>
         </HBox>
     </AnchorPane>
     <padding>

@@ -69,6 +69,7 @@ public class ParserUtilTest {
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
     }
 
+    //@@author kexiaowen
     @Test
     public void parseSortField_invalidInput_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
@@ -84,6 +85,7 @@ public class ParserUtilTest {
         assertEquals(SortCommand.SortField.RATING, ParserUtil.parseSortField("   rating   "));
     }
 
+    //@@author
     @Test
     public void parseName_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseName((String) null));
@@ -212,6 +214,7 @@ public class ParserUtilTest {
         assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
     }
 
+    //@@author kexiaowen
     @Test
     public void parseSortOrder_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseSortOrder((String) null));
@@ -241,6 +244,7 @@ public class ParserUtilTest {
         assertEquals(Optional.of(expectedSortOrder), ParserUtil.parseSortOrder(Optional.of(sortOrderWithWhitespace)));
     }
 
+    //@@author
     @Test
     public void parseTag_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);

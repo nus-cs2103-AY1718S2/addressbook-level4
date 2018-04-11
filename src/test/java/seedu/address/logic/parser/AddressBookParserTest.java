@@ -123,6 +123,7 @@ public class AddressBookParserTest {
                 person.getExpectedGraduationYear(), person.getExpectedGraduationYear())), command);
     }
 
+    //@@author kexiaowen
     @Test
     public void parseCommand_rate() throws Exception {
         final Rating rating = new Rating(4.5, 4,
@@ -152,6 +153,7 @@ public class AddressBookParserTest {
         assertEquals(new SortCommand(SortCommand.SortOrder.ASC, SortCommand.SortField.NAME), command);
     }
 
+    //@@author
     @Test
     public void parseCommand_status() throws Exception {
         StatusCommand command = (StatusCommand) parser.parseCommand(

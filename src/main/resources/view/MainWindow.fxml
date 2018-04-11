@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.Scene?>
@@ -33,9 +34,9 @@
                                 <AnchorPane fx:id="listPersonsPlaceholder" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                             </AnchorPane>
                             <AnchorPane fx:id="bottomInfoPane" minWidth="400.0">
-                                <VBox fx:id="welcomePane" alignment="CENTER" fillWidth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <VBox fx:id="welcomePane" visible="false" alignment="CENTER" fillWidth="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <Label fx:id="welcomeTitle" text="Welcome to HR+"/>
-                                    <Pane fx:id="logoWelcome" styleClass="logo-hr" maxWidth="-Infinity" prefHeight="80.0" prefWidth="120.0" VBox.vgrow="NEVER">
+                                    <Pane fx:id="logoWelcome" styleClass="logo-hr" maxWidth="-Infinity" prefHeight="80.0" prefWidth="110.0" VBox.vgrow="NEVER">
                                         <VBox.margin>
                                             <Insets bottom="15.0" left="10.0" top="15.0" />
                                         </VBox.margin>
@@ -52,6 +53,17 @@
                         </padding>
                     </AnchorPane>
                 </AnchorPane>
+                <HBox fx:id="floatParseRealTime" visible="false" opacity="0.0" alignment="CENTER_LEFT" AnchorPane.leftAnchor="172.0" AnchorPane.topAnchor="79.0" minWidth="50.0" cache="true" cacheHint="SPEED">
+                    <Pane fx:id="floatParseIcon" styleClass="style-circle" maxHeight="6.0" maxWidth="6.0" minHeight="6.0" minWidth="6.0" prefHeight="6.0" prefWidth="6.0" cache="true" cacheHint="SPEED">
+                        <HBox.margin>
+                            <Insets right="4.0" />
+                        </HBox.margin>
+                    </Pane>
+                    <Label fx:id="floatParseLabel" text="Enter a command..." cache="true" cacheHint="SPEED"/>
+                    <padding>
+                        <Insets left="10.0" right="10.0" bottom="5.0" top="5.0"/>
+                    </padding>
+                </HBox>
             </AnchorPane>
         </Scene>
     </scene>

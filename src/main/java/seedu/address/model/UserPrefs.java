@@ -11,7 +11,8 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String addressBookName = "MainHR+";
+    private boolean animated = true;
 
     public UserPrefs() {
         this.setGuiSettings(800, 600, 0, 0);
@@ -43,6 +44,14 @@ public class UserPrefs {
 
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
+    }
+
+    public boolean isAnimated() {
+        return animated;
+    }
+
+    public void setAnimated(boolean animated) {
+        this.animated = animated;
     }
 
     @Override

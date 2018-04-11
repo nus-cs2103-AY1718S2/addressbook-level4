@@ -96,6 +96,7 @@ public class ModelManagerTest {
         assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
     }
 
+    //@@author kexiaowen
     @Test
     public void sortPersonListAscOrder() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)

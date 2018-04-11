@@ -1,6 +1,5 @@
 package seedu.address.commons.events.ui;
 
-import javafx.collections.ListChangeListener.Change;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
 
@@ -10,14 +9,20 @@ import seedu.address.model.person.Person;
  */
 public class PersonChangedEvent extends BaseEvent {
 
-    private final Change<? extends Person> personChanged;
+    private final Person source;
+    private final Person target;
 
-    public PersonChangedEvent(Change<? extends Person> personChanged) {
-        this.personChanged = personChanged;
+    public PersonChangedEvent(Person source, Person target) {
+        this.source = source;
+        this.target = target;
     }
 
-    public Change<? extends Person> getPersonChanged() {
-        return personChanged;
+    public Person getSource() {
+        return source;
+    }
+
+    public Person getTarget() {
+        return target;
     }
 
     @Override

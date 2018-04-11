@@ -19,7 +19,7 @@ public class ChangeUserPasswordCommand extends Command {
             + "with the parameters: u/USERNAME p/PASSWORD newp/NEWPASSWORD"
             + "\nEXAMPLE: change-user-password u/slap p/123456 newp/543210";
 
-    public static final String MESSAGE_SUCCESS = "Password updated!";
+    public static final String MESSAGE_SUCCESS = "Password updated for %1$s";
     public static final String MESSAGE_UPDATE_FAILURE = "Password update failed. Username or password is incorrect.";
     public static final String MESSAGE_NOT_LOGGED_OUT = "You are not logged out.Please logout to execute this command.";
 
@@ -37,11 +37,11 @@ public class ChangeUserPasswordCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
-            if (model.checkCredentials(this.username, this.password)) {
+            if (model.checkCredentials(username, password)) {
                 User target = new User(username, password);
                 User userWithNewPassword = new User(username, newPassword);
                 model.updateUserPassword(target, userWithNewPassword);
-                return new CommandResult(MESSAGE_SUCCESS);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, username));
             } else {
                 return new CommandResult(MESSAGE_UPDATE_FAILURE);
             }

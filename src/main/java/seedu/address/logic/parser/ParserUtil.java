@@ -16,6 +16,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.SessionLogs;
 import seedu.address.model.tag.Tag;
 
 
@@ -147,6 +148,7 @@ public class ParserUtil {
         return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
     }
 
+
     /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
@@ -239,6 +241,8 @@ public class ParserUtil {
         }
         return trimmedFeature;
     }
+
+    //@@author kaisertanqr
 
     /**
      * Parses a {@code String username} into an {@code Username}.

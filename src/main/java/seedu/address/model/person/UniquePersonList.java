@@ -68,6 +68,23 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Replaces the person {@code target} in the list with {@code editedPersonWithNewLog}.
+     *
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    public void addLogToPerson(Person target, Person editedPersonWithNewLog)
+            throws PersonNotFoundException {
+        requireNonNull(editedPersonWithNewLog);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        internalList.set(index, editedPersonWithNewLog);
+    }
+
+    /**
      * Removes the equivalent person from the list.
      *
      * @throws PersonNotFoundException if no such person could be found in the list.

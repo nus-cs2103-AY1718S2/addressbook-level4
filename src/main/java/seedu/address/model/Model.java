@@ -42,6 +42,14 @@ public interface Model {
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    /**
+     * Replaces the given person {@code target} with {@code editedPersonWithNewLog}.
+     *
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    void addLogToPerson(Person target, Person editedPersonWithNewLog)
+            throws PersonNotFoundException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 

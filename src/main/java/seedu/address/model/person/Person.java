@@ -20,6 +20,7 @@ public class Person {
     private final Email email;
     private final Address address;
     private final int uniqueid;
+    private final SessionLogs sessionLogs;
 
     private final UniqueTagList tags;
 
@@ -36,7 +37,26 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
 
+        this.sessionLogs = new SessionLogs("");
         this.uniqueid = hashCode();
+
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, SessionLogs sessionLogs) {
+        requireAllNonNull(name, phone, email, address, tags, sessionLogs);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.sessionLogs = sessionLogs;
+        this.uniqueid = hashCode();
+
     }
 
     public Name getName() {
@@ -55,9 +75,14 @@ public class Person {
         return address;
     }
 
+    public SessionLogs getSessionLogs(){
+        return sessionLogs;
+    }
+
     public int getUniqueid() {
         return uniqueid;
     }
+
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

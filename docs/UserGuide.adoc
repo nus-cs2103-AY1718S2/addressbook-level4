@@ -32,11 +32,12 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `ContactSails.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The User Interface (UI) should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+.ContactSails Application UI Interface
+image::ContactSails_Interface_StartUp.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+.  Type the command in the command box (located right below Menu Bar) and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
@@ -57,7 +58,22 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == ContactSails UI
 
-// explain where each panel is and what it does
+This section briefly explains the various panels in the UI interface of ContactSails.
+
+.Breakdown of ContactSails UI
+image::ContactSails_Interface_Breakdown.png[width="790"]
+
+With reference to Figure 2 above, there are 5 important sections in the interface:
+
+* Command Box: This is the place for you to type your commands. Pressing kbd:[Enter] will execute the command.
+* Result Display: This place shows the result of the command you have executed. It will display messages indicating whether your command has executed successfully.
+If your command fails to execute, error messages indicating the cause of the failure will be shown here.
+* Person List Panel: This panel displays the list of persons that exist in ContactSails. You can filter this list of persons with `find` commands.
+* Center Panel: This panel can display either a detailed display of a person's information, or a calendar. `calendar` command will display the calendar and `select` command will display selected person's information.
+* Right Panel: This panel can display either a list of orders or a list of calendar entries in ContactSails. On startup, this panel will show the list of orders by default.
+You can use `entrylist` and `orderlist` to switch between the two lists.
+
+Person List Panel, Center Panel and Right Panel will be explained in greater detail in <<Features>>.
 
 [[Features]]
 == Features
@@ -79,6 +95,7 @@ For example, typing `ad` in the command box and then pressing `TAB` will automat
 
 === Viewing help : `help`
 
+Description: Opens User Guide in a new window. +
 Format: `help` +
 Command Alias: `?`
 
@@ -179,6 +196,7 @@ Selects the 1st person in the results of the `find` command.
 === Finding Persons
 
 This section describes commands you can use to find person entries using various query types in ContactSails.
+The Person List in the interface will only show the persons you are finding after executing the command.
 
 ==== Finding persons by name : `find`
 
@@ -377,6 +395,12 @@ Command Alias: `ol`
 === Viewing Calendar
 
 This section describes commands related to viewing the calendar in ContactSails.
+Given below is how the Calendar in ContactSails look like.
+
+.ContactSails interface with Calendar and Calendar Entries displayed.
+image::ContactSails_Ui_Calendar.PNG[width=790]
+
+The calendar has a day view, week view and month view to help you view all your scheduled events.
 
 ==== Displaying the calendar : `calendar` `since v1.3`
 
@@ -401,7 +425,7 @@ Shows Calendar in Day-View.
 `cal month` +
 Shows Calendar in Month-View.
 
-==== Go to next page in the calendar : `calendarnext` `coming in v1.5`
+==== Go to next page in the calendar : `calendarnext` `since v1.5rc`
 
 Displays next page of current displayed date in calendar. +
 Format: `calendarnext` +
@@ -413,7 +437,7 @@ Command Alias: `calnext`
 * If calendar is displaying in month-view, command displays next month of original date in month-view.
 ****
 
-==== Go to previous page in the calendar : `calendarback` `coming in v1.5`
+==== Go to previous page in the calendar : `calendarback` `since v1.5rc`
 
 Displays previous page of current displayed date in calendar. +
 Format: `calendarback` +
@@ -425,7 +449,7 @@ Command Alias: `calback`
 * If calendar is displaying in month-view, command displays previous month of original date in month-view.
 ****
 
-==== Display current day in the calendar : `calendartoday` `coming in v1.5`
+==== Display current day in the calendar : `calendartoday` `since v1.5rc`
 
 Displays today's date in Calendar. +
 Format: `calendartoday` +
@@ -440,6 +464,8 @@ Command Alias: `caltoday`
 === Managing Calendar Entries
 
 This section describes commands you can use to manage calendar entries in ContactSails.
+You can use calendar entries to represent events, deadlines or meetings.
+These entries will be displayed in the calendar.
 
 ==== Adding entries to calendar entry list : `entryadd` `since v1.3`
 
@@ -775,4 +801,4 @@ Opens an email draft in the browser with recipients as all persons tagged with '
 // end::commandsummary[]
 == Glossary
 
-// add terms: CommandBox, Group, Preference, Orders, Entries, PersonPanel, CalendarPanel, OrderListPanel, EntryListPanel, etc.
+// add terms: Group, Preference, Orders, Entries, PersonPanel, CalendarPanel, OrderListPanel, EntryListPanel, etc.

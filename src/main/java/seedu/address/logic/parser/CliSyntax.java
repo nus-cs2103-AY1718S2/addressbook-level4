@@ -63,6 +63,7 @@ public class CliSyntax {
     public static final String OPTION_WEEK = "-w";
     public static final String OPTION_DAY = "-d";
 
+    /* Option with description */
     public static final String OPTION_OWNER_DESC = OPTION_OWNER + "\t: person/owner";
     public static final String OPTION_PETPATIENT_DESC = OPTION_PETPATIENT + "\t: pet patient";
     public static final String OPTION_APPOINTMENT_DESC = OPTION_APPOINTMENT + "\t: appointment";

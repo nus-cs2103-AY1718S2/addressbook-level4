@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.StudentInfoChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.ui.BrowserDisplayEvent;
+import seedu.address.commons.events.ui.ShowStudentProfileEvent;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Student;
 
@@ -102,6 +103,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleStudentInfoDisplayEvent(StudentInfoDisplayEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadStudentInfoPage();
+        raise(new ShowStudentProfileEvent());
     }
 
     @Subscribe

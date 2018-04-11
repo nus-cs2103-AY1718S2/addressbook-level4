@@ -7,7 +7,7 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
 		<miscellaneousInfo>
             <allergies>Not updated</allergies>
@@ -23,7 +23,7 @@
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
 		<miscellaneousInfo>
             <allergies>Not updated</allergies>
@@ -39,7 +39,7 @@
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
 		<miscellaneousInfo>
             <allergies>Not updated</allergies>
@@ -55,7 +55,7 @@
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
 		<miscellaneousInfo>
             <allergies>Not updated</allergies>
@@ -71,7 +71,7 @@
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
 		<miscellaneousInfo>
             <allergies>Not updated</allergies>
@@ -87,7 +87,7 @@
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
 		<miscellaneousInfo>
             <allergies>Not updated</allergies>
@@ -103,7 +103,7 @@
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
 		<miscellaneousInfo>
             <allergies>Not updated</allergies>
@@ -119,7 +119,7 @@
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
 		<miscellaneousInfo>
             <allergies>Not updated</allergies>
@@ -135,7 +135,7 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
 		<programmingLanguage isPrivate ="false">Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
 		<miscellaneousInfo>
             <allergies>Not updated</allergies>

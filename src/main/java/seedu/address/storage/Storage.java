@@ -65,4 +65,9 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, ScheduleS
      * Handles the event where the profile picture of a student is being changed
      */
     void handleProfilePictureChangeEvent(ProfilePictureChangeEvent pce);
+
+    /**
+     * Sets up the view files required for the profile page display for students
+     */
+    void setupViewFiles() throws IOException;
 }

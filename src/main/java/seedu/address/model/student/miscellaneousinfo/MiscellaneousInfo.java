@@ -5,7 +5,7 @@ import static seedu.address.model.student.miscellaneousinfo.NextOfKinName.isVali
 import static seedu.address.model.student.miscellaneousinfo.NextOfKinPhone.isValidNextOfKinPhone;
 import static seedu.address.model.student.miscellaneousinfo.Remarks.isValidRemarks;
 
-//@@author samuel
+//@@author samuelloh
 /**
  * Represents a Student's miscellaneous information.
  * Guarantees: immutable; is valid as declared in {@link #isValidMiscellaneousInfo(MiscellaneousInfo)}

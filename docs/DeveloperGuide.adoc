@@ -18,7 +18,8 @@ By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 == Introduction
 *<<ReciRecipe,ReciRecipé>>* is a desktop recipe storage application for users who prefer using the keyboard instead of a mouse for efficient management. It is useful for tech-savvy cooks that want all their recipes stored in one place.
 
-This *Developer Guide* will take you through the design and implementation of *ReciRecipé*. If you want to understand _how_, and hopefully _why_, *ReciRecipé* works, you are at the right place!
+This *Developer Guide* will take you through the design and implementation of *ReciRecipé*. It takes a top-down approach in explaining the design, beginning from the architecture of the entire application before moving into the specifics of how some functions are implemented.
+If you are new to development, you can choose a component in the architecture that you are more comfortable with and start there first.
 
 == Setting up
 
@@ -42,7 +43,7 @@ Do not disable them. If you have disabled them, go to *File > Settings > Plugins
 
 === Setting up the project
 
-Follow these step carefully to set up ReciRecipé on your computer.
+Follow these steps carefully to set up ReciRecipé on your computer:
 
 . Fork this repo, and clone the fork to your computer.
 . Open IntelliJ (if you are not in the welcome screen, click *File > Close Project* to close the existing project dialog first).
@@ -57,6 +58,8 @@ Follow these step carefully to set up ReciRecipé on your computer.
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
+
+Complete the following steps to verify the setup:
 
 . Run the `seedu.recipe.MainApp` to see if it can starts.
 . Try some simple commands to see if the app can respond.
@@ -75,8 +78,9 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 * For **Class count to use import with '\*'** and **Names count to use static import with '*'**: Set to *999* to prevent IntelliJ from contracting the import statements.
 * For *Import Layout*: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-IntelliJ should look like Figure 1 below after step 3.
+IntelliJ should look like <<fig-CodeStyleImports>> below after step 3.
 
+[[fig-CodeStyleImports]]
 .Code Style Imports
 image::CodeStyleImports.png[width="400"]
 
@@ -123,8 +127,8 @@ The *.pptx* files used to create diagrams in this document can be found in the l
 
 Given below is a quick overview of each component:
 
-. <<Design-Main,*`Main`*>>: Contains the app.
-. <<Design-Commons,*`Commons`*>>: Contains classes that are used by multiple components.
+. <<Design-Main,*`Main`*>>: Contains the initializing, starting-up and exiting of the app.
+. <<Design-Commons,*`Commons`*>>: Contains classes that are used by the following 4 components, `UI`, `Logic`, `Model`, and `Storage`.
 . <<Design-Ui,*`UI`*>>: Contains the UI of the app.
 . <<Design-Logic,*`Logic`*>>: Contains the commands of the app.
 . <<Design-Model,*`Model`*>>: Contains the the data of the app in-memory.
@@ -139,6 +143,8 @@ For example, the <<Design-Logic,*`Logic`*>> component (see the class diagram giv
 
 [discrete]
 ==== Events-Driven nature of the design
+
+In general, the components are designed in such a way that their interactions are being driven by events. And we will now give an example of what happens when a command is being executed.
 
 The _Sequence Diagram_ below (<<fig-ComponentInteraction>>) shows how the components interact in the scenario where the user issues the command *`delete 1`*.
 
@@ -170,7 +176,7 @@ The sections below give more details of each component.
 === Commons component
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
-* `_EventsCenter_` : Written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library] and used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `_EventsCenter_` :  Used by components to communicate with other components using events (i.e. a form of _Event Driven_ design). Written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library].
 * `_LogsCenter_` : Used by many classes to write log messages to the App's log file.
 
 [[Design-Ui]]
@@ -212,7 +218,7 @@ For an overview of the structure of the <<Design-Logic,*`Logic`*>> component, re
 image::LogicClassDiagram.png[width="800"]
 
 {nbsp} +
-For finer details concerning `_XYZCommand_` and `_Command_`, refer to <<fig-LogicCommandClassDiagram>>.
+For finer details concerning `_XYZCommand_` and `_Command_`, refer to the diagram <<fig-LogicCommandClassDiagram>>.
 {nbsp} +
 
 [[fig-LogicCommandClassDiagram]]
@@ -366,14 +372,14 @@ item.setOnAction(event -> commandBox.replaceText(textInputProcessor.replaceLastW
 // tag::change-theme[]
 ==== Current implementation
 
-The command is implemented in `_ChangeThemeCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which posts a `_ChangeThemeRequestEvent_` to the `_EventsCenter_` (refer to <<fig-ChangeThemeSD>>).
+The command is implemented in `_ChangeThemeCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which posts a `_ChangeThemeRequestEvent_` to the `_EventsCenter_`. For more details, refer to <<fig-ChangeThemeSD>>).
 
 [[fig-ChangeThemeSD]]
 .Component interactions for *`theme`* command (part 1)
 image::SDforChangeTheme.png[width="800"]
 {nbsp} +
 
-The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleChangeThemeRequestEvent()` to update the theme accordingly (refer to <<fig-ChangeThemeEventSD>>).
+The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleChangeThemeRequestEvent()` to update the theme accordingly. To understand the execution better, refer to <<fig-ChangeThemeEventSD>>).
 
 [[fig-ChangeThemeEventSD]]
 .Component interactions for *`theme`* command (part 2)
@@ -390,7 +396,7 @@ If the command is called directly from the menu bar, `handleChangeTheme()` will 
 . Changes the main page loaded on the `_BrowserPanel_`.
 . Changes the style using on the `_Stage_`.
 
-For a visualization of the interaction between the components, refer to <<fig-ChangeThemeDetailsSD>>:
+To understand the interaction between the components, refer to <<fig-ChangeThemeDetailsSD>>):
 
 [[fig-ChangeThemeDetailsSD]]
 .Component interactions for `handleChangeTheme()`
@@ -435,17 +441,17 @@ Currently the implementation of `loadDefaultPage()` reloads the `_BrowserPanel_`
 ===== Aspect: Handling of default page in `_BrowserPanel_`.
 
 * **Alternative 1 (current choice):** Reload the default page if there is nothing loaded in `_BrowserPanel_`.
-** Pros: Any loaded page will not be lost.
+** Pros: This would prevent any previously loaded page from being lost.
 ** Cons: This approach requires extra work to detect if there is any page loaded in `_BrowserPanel_`.
 * **Alternative 2:** Reload the style for the default page.
 ** Pros: It is possible to keep the status of the `_BrowserPanel_`, in other words, any page loaded may still retain.
 ** Cons: It is not entirely sure if this implementation is possible.
 * **Alternative 3:** Reload the default page.
 ** Pros: It is easy to implement. This was the implementation until v1.5rc.
-** Cons: Any page loaded on `_BrowserPanel_` will be lost during the operation.
+** Cons: This causes any page loaded on `_BrowserPanel_` to be lost during the operation.
 * **Alternative 4:** Stop using the default page.
-** Pros: It is somewhat easy to implement.
-** Cons: Obviously there is no default page to display so we have to find another approach to make `_BrowserPanel_` display something as a placeholder, *without* using a default page.
+** Pros: It is relatively easy to implement.
+** Cons: There is no default page to display so we have to find another approach to make `_BrowserPanel_` display something as a placeholder, *without* using a default page.
 // end::change-theme[]
 
 // tag::cloud-storage[]
@@ -508,12 +514,12 @@ try (InputStream in = new FileInputStream(RECIPE_BOOK_FILE)) {
 ==== Design considerations
 
 ===== Aspect: Handling of the access token.
-* **Alternative 1 (current choice):** Save the access token within the application for future use within that session.
-** Pros: Convenience. User does not have to keep logging into their Dropbox account every time they want to upload. Since our application does not support multiple users, keeping them "logged in" is acceptable.
-** Cons: Security concerns. Since the access token is meant to be a secret and there is no security aspect to our application at all, it is possible for a someone malicious to obtain this access token.
-* **Alternative 2:** One-time usage of the access token. Delete after using.
-** Pros: Less security issues/concerns.
-** Cons: Very inconvenient. Requires user to keep logging in to their Dropbox account every time they want to upload. This is redundant as our application only supports one user anyway.
+* **Alternative 1 (current choice):** Save it for the current session.
+** Pros: It is more convenient as the user does not have to keep logging in to their Dropbox account every time they want to upload.
+** Cons: There will be security concerns since there is no security aspect to our application at all.
+* **Alternative 2:** One-time usage of the access token.
+** Pros: There will be less security issues/concerns.
+** Cons: This is very inconvenient as it requires the user to keep logging in to their Dropbox account every time they want to upload.
 // end::cloud-storage[]
 
 === Configuration
@@ -644,11 +650,11 @@ public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws Il
 ===== Aspect: Implementation of optional property.
 
 * **Alternative 1 (current choice):** Add a placeholder for omitted URL.
-** Pros: Simple implementation can be used as a reference by new developers for creating optional fields. Interaction with `_BrowserPanel_` requires more control over the status of a recipe's URL property.
-** Cons: `_Recipe_` class may contain unnecessary variables.
+** Pros: A simple implementation can be used as a reference by new developers for creating optional fields. The interaction with `_BrowserPanel_` requires more control over the status of a recipe's URL property.
+** Cons: The `_Recipe_` class may contain unnecessary variables.
 * **Alternative 2:** Store URL property in the same fashion as tag labels.
-** Pros: `_Recipe_` class has better separation of optional and compulsory properties.
-** Cons: Complex implementation may confuse new developers. Interaction with other components may become needlessly complex.
+** Pros: The `_Recipe_` class has better separation of optional and compulsory properties.
+** Cons: The more complex implementation may confuse new developers, and the interaction with other components may become needlessly complex.
 // end::embedded-url[]
 
 // tag::facebook-compatibility[]
@@ -693,11 +699,11 @@ The `_BrowserPanel_` will be updated to show the Facebook feed of the User.
 ===== Aspect: Implementation of Facebook sharing.
 
 * **Alternative 1 (current choice):** Use a feed dialog.
-** Pros: User has more control over what is posted on their Facebook wall. Implementation is easier to maintain.
-** Cons: User has to take more steps to successfully make a post (paste recipe onto post, click "post").
+** Pros: The user has more control over what is posted on their Facebook wall, and the implementation is easier to maintain.
+** Cons: The user has to take more steps to successfully make a post (paste recipe onto post, click "post").
 * **Alternative 2:** Use RestFB API.
-** Pros: Recipe is posted immediately on the User's Facebook wall using the *`share`* command. User need not manually paste the recipe from the clipboard onto the post.
-** Cons: User *must* manually obtain their Facebook access key and input it into the application - this may raise security concerns (Facebook does not allow automatic posting of text even if permission is given by the User upon log in).
+** Pros: The recipe will be posted immediately on the user's Facebook wall using the *`share`* command. The user need not manually paste the recipe from the clipboard onto the post.
+** Cons: The user *must* manually obtain their Facebook access key and input it into the application - this may raise security concerns (Facebook does not allow automatic posting of text even if permission is given by the user upon log in).
 // end::facebook-compatibility[]
 
 // tag::inserting-an-image[]
@@ -722,11 +728,11 @@ The recipe image is displayed using an <img> HTML tag in the HTML formatted reci
 ===== Aspect: Implementation of inserting image.
 
 * **Alternative 1 (current choice):** Insert the absolute image path during an *`add`* command.
-** Pros: No need for a mouse. Ensures that the application still uses Command Line Interface for important operations.
-** Cons: User may take a significant amount of time to type out the image path.
+** Pros: There is no need for a mouse. This ensures that the application still uses Command Line Interface for important operations.
+** Cons: The user may take a significant amount of time to type out the image path.
 * **Alternative 2 :** Drag and drop an image onto the GUI.
-** Pros: More intuitive for the user as there is no need to deal with image paths.
-** Cons: Deviates from the Command Line Interface.
+** Pros: This implementation is more intuitive for the user as there is no need to deal with image paths.
+** Cons: It deviates from the idea of a Command Line Interface.
 // end::inserting-an-image[]
 
 === Keyboard shortcuts
@@ -762,11 +768,11 @@ As seen from above, all key combinations implemented consume the default effect 
 ===== Aspect: Location of the shortcuts.
 
 * **Alternative 1 (current choice):** Store in the `_KeyboardShortcutsMapping_` class.
-** Pros: Good modularity, easier to keep track of the mappings.
+** Pros: There is good modularity, making it easier to keep track of the mappings.
 ** Cons: The shortcuts have to be imported to be used.
 * **Alternative 2:** Store in the `_CommandBox_` class.
-** Pros: No needs for imports. Also, it is possible to declare new mappings on the run and use it directly in the `_CommandBox_`.
-** Cons: Impossible to use them if we want to implement shortcuts for other UI components or globally.
+** Pros: There is no need for imports. Furthermore, it is possible to declare new mappings on the run and use it directly in the `_CommandBox_`.
+** Cons: It is impossible to use them if we want to implement shortcuts for other UI components or globally.
 // end::keyboard-shortcut[]
 
 === Logging
@@ -836,28 +842,28 @@ private void createNewLine() {
 ===== Aspect: Usage of a component that support multiple lines input.
 
 * **Alternative 1 (current choice):** `_TextArea_`.
-** Pros: Easy to use, intuitive.
-** Cons: No default handler for kbd:[Enter]. Furthermore, the <<CSS,CSS>> is particularly hard to handle due to the way `_TextArea_` and its body function separately.
+** Pros: It is easy to use and very intuitive.
+** Cons: The <<CSS,CSS>> is particularly hard to handle due to the way `_TextArea_` and its body function separately. There is no default handler for kbd:[Enter].
 * **Alternative 2:** `_TextField_` with support for `\n`.
-** Pros: Hardly needs any change in the codes.
-** Cons: Unintuitive and ugly inputs. Also, a long line with hundreds of characters is unavoidable. And once the line gets too long, it is near impossible to make changes to the input.
+** Pros: It hardly requires any changes to the code.
+** Cons: The inputs are unintuitive and ugly. Also, a long line with hundreds of characters is unavoidable. Once the line gets too long, it is nearly impossible to make changes to the input.
 * **Alternative 3:** `HTMLEditor`.
-** Pros: Abundant formatting features.
-** Cons: Too complex to implement, unintuitive inputs.
+** Pros: There are abundant formatting features.
+** Cons: It is too complex to implement and contains unintuitive inputs.
 // end::multiple-lines[]
 
 === Parsing a recipe from BrowserPanel
 // tag::web-parse[]
 ==== Current implementation
 
-The command is implemented in `_ParseCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which posts a `_WebParseRequestEvent_` to the `_EventsCenter_`. Refer to <<fig-ParseCommandSD>>.
+The command is implemented in `_ParseCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which posts a `_WebParseRequestEvent_` to the `_EventsCenter_`. For more details, refer to <<fig-ParseCommandSD>>.
 
 [[fig-ParseCommandSD]]
 .Component interactions for *`parse`* command (part 1)
 image::SDforParseCommand.png[width="800"]
 {nbsp} +
 
-The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleWebParseRequestEvent()`. Refer to <<fig-ParseCommandEventSD>>.
+The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleWebParseRequestEvent()`. The process is shown in <<fig-ParseCommandEventSD>> below.
 
 [[fig-ParseCommandEventSD]]
 .Component interactions for *`parse`* command (part 2)
@@ -893,7 +899,7 @@ public String parseRecipe() {
 }
 ----
 
-Refer to <<fig-WebParserCD>> for the interactions between the three classes mentioned above. +
+For the interactions between the three classes mentioned above, refer to <<fig-WebParserCD>> below.  +
 {nbsp} +
 
 [[fig-WebParserCD]]
@@ -951,7 +957,7 @@ image::SDforParseCommandDetails.png[width="800"]
 ** Cons: This approach uses a 3rd-party library.
 * **Alternative 2:** Use a w3c.dom Document directly.
 ** Pros: This approach requires only one line of code.
-** Cons: However, as we are going to see below, this method makes parsing almost impossible without a lot of trial-and-error
+** Cons: However, as we are going to see below, this method makes parsing almost impossible without a lot of trial-and-error.
 
 ===== Aspect: How to parse data from `WebView`.
 
@@ -960,30 +966,30 @@ image::SDforParseCommandDetails.png[width="800"]
 ** Cons: This approach uses a 3rd-party library.
 * **Alternative 2:** Do DOM query on a w3c.dom Document directly.
 ** Pros: This approach uses the built-in Java codes.
-** Cons: DOM queries are very expensive. Furthermore, IntelliJ does not support variable debugging on w3c.dom Document, which, as a result, makes parsing for the correct elements a game of lottery.
+** Cons: The DOM queries that have to be made are very expensive. Furthermore, IntelliJ does not support variable debugging on w3c.dom Document, which, as a result, makes parsing for the correct elements a game of lottery.
 
 ===== Aspect: Testing.
 
 * **Alternative 1 (current choice):** Create a dummy Document object for `WebParserHandler`.
 ** Pros: This is currently the only working approach.
-** Cons: This approach does not fully test for the correctness of `WebParserHandler` constructor. And usually the tests fail even though they should pass.
+** Cons: This approach does not fully test for the correctness of `WebParserHandler` constructor. Furthermore, the tests usually fail even though they should pass.
 * **Alternative 2:** Do a correct test by using a long waiting time.
 ** Pros: This approach works.
-** Cons: But it makes testing a lot slower due to the long waiting time.
+** Cons: It makes testing a lot slower due to the long waiting time.
 // end::web-parse[]
 
 === Searching on the internet
 // tag::internet-search[]
 ==== Current implementation
 
-The command is implemented in `_SearchCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which creates a `_WikiaQueryHandler_` and posts a `_InternetSearchRequestEvent_` to the `_EventsCenter_`. Refer to <<fig-InternetSearchSD>>.
+The command is implemented in `_SearchCommand_`. When user submits the command to the *`UI`* component, it passes on the command to the *`Logic`* component, which creates a `_WikiaQueryHandler_` and posts a `_InternetSearchRequestEvent_` to the `_EventsCenter_`. For a visual understanding, refer to <<fig-InternetSearchSD>>.
 
 [[fig-InternetSearchSD]]
 .Component interactions for *`search chicken rice`* command (part 1)
 image::SDforInternetSearch.png[width="800"]
 {nbsp} +
 
-The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleInternetSearchRequestEvent()` to search for the recipe. Refer to <<fig-InternetSearchEventSD>>.
+The event is then propagated through the `_EventsCenter_` to the `*UI*`. The `*UI*` will call `handleInternetSearchRequestEvent()` to search for the recipe. For details on the execution events, refer to <<fig-InternetSearchEventSD>>.
 
 [[fig-InternetSearchEventSD]]
 .Component interactions for *`search chicken rice`* command (part 2)
@@ -1039,7 +1045,7 @@ private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) 
 * **Alternative 1 (current choice):** Use `_WikiaQueryHandler_`.
 ** Pros: This approach allows more data to be processed separately from the page handling by `_BrowserPanel_`.
 ** Cons: In return, using a separate class makes the implementation a lot harder to manage.
-* **Alternative 2:** Do not use `_WikiaQueryHandler_` and let `_BrowserPanel_` directly load the query URL.
+* **Alternative 2:** Do not use `_WikiaQueryHandler_`. Let `_BrowserPanel_` directly load the query URL.
 ** Pros: This approach is significantly easier to implement, requiring only 3-4 lines in `_BrowserPanel_`.
 ** Cons: However, we don't get any extra information for pre-processing and this could lead to redundant requests.
 // end::internet-search[]
@@ -1049,10 +1055,11 @@ private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) 
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `_LogicManager_`. It supports undoing and redoing of commands that modify the state of the recipe book (e.g. *`add`*, *`edit`*). Such commands will inherit from `_UndoableCommand_`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `_Command_` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `_Command_` instead. The following diagram  <<diag-LogicCommandClass>> shows the inheritance diagram for commands:
 
 {nbsp} +
 
+[[diag-LogicCommandClass]]
 .Logic Command Class Diagram
 image::LogicCommandClassDiagram.png[width="800"]
 {nbsp} +
@@ -1092,18 +1099,21 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `_UndoableCommand_`, *`delete 5`*, to delete the 5th recipe in the recipe book. The current state of the recipe book is saved before the *`delete 5`* command executes. The *`delete 5`* command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `_UndoableCommand_`, *`delete 5`*, to delete the 5th recipe in the recipe book. The current state of the recipe book is saved before the *`delete 5`* command executes. The *`delete 5`* command will then be pushed onto the `undoStack` as seen in <<diag-UndoRedo1>> below (the current state is saved together with the command).
 
 {nbsp} +
 
+[[diag-UndoRedo1]]
 .Undo/Redo Starting Stack Diagram
 image::UndoRedoStartingStackDiagram.png[width="800"]
 {nbsp} +
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute *`add n/David ...`* to add a new recipe.
+The state of the stack is shown in <<diag-UndoRedo2>> below.
 
 {nbsp} +
 
+[[diag-UndoRedo2]]
 .Undo/Redo New Command Stack Diagram
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 {nbsp} +
@@ -1114,9 +1124,11 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 The user now decides that adding the recipe was a mistake, and decides to undo that action using *`undo`*.
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`, thus restoring the recipe book to the state before the *`add`* command executed.
+The details of the execution can be seen in <<diag-UndoRedo3>> below.
 
 {nbsp} +
 
+[[diag-UndoRedo3]]
 .Execute Undo Stack Diagram
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 {nbsp} +
@@ -1124,10 +1136,11 @@ image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `_Exception_` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following sequence diagram <<diag-UndoRedoSeq>> shows how the undo operation works:
 
 {nbsp} +
 
+[[diag-UndoRedoSeq]]
 .Undo/Redo Sequence Diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 {nbsp} +
@@ -1138,25 +1151,29 @@ The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, an
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
 The user now decides to execute a new command, *`clear`*. As before, *`clear`* will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer makes sense to redo the *`add n/David`* command (this is the behavior that most modern desktop applications follow).
+Details can be seen in <<diag-UndoRedo4>> below.
 
 {nbsp} +
 
+[[diag-UndoRedo4]]
 .Undo/Redo New Command Stack Diagram
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 {nbsp} +
 
-Commands that are not undoable are not added into the `undoStack`. For example, *`list`*, which inherits from `_Command_` rather than `UndoableCommand`, will not be added after execution:
+Commands that are not undoable are not added into the `undoStack`. For example, *`list`*, which inherits from `_Command_` rather than `UndoableCommand`, will not be added after execution as can be seen in <<diag-CannotUndoRedo>> below.
 
 {nbsp} +
 
+[[diag-CannotUndoRedo]]
 .Undo/Redo New Command Stack Diagram
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 {nbsp} +
 
-The following activity diagram summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram <<diag-UndoRedoActDiag>> summarizes what happens inside the `UndoRedoStack` when a user executes a new command.
 
 {nbsp} +
 
+[[diag-UndoRedoActDiag]]
 .Undo/Redo Activity Diagram
 image::UndoRedoActivityDiagram.png[width="650"]
 {nbsp} +
@@ -1167,18 +1184,18 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`.
 ** Pros: We will not lose any undone/redone functionality as it is now part of the default behavior. Classes that deal with `_Command_` do not have to know that `executeUndoableCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
+** Cons: It is difficult for new developers to understand the template pattern.
 * **Alternative 2:** Just override `execute()`.
-** Pros: Does not involve the template pattern, easier for new developers to understand.
-** Cons: Classes that inherit from `_UndoableCommand_` must remember to call `super.execute()`, or lose the ability to undo/redo.
+** Pros: This does not involve the template pattern, and is easier for new developers to understand.
+** Cons: The classes that inherit from `_UndoableCommand_` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
 ===== Aspect: How undo & redo executes.
 
 * **Alternative 1 (current choice):** Saves the entire recipe book.
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
+** Pros: It is easy to implement.
+** Cons: There may be performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for *`delete`*, just save the recipe being deleted).
+** Pros: This will use less memory (e.g. for *`delete`*, as it just saves the recipe being deleted).
 ** Cons: We must ensure that the implementation of each individual command is correct.
 
 
@@ -1186,9 +1203,9 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 * **Alternative 1 (current choice):** Only include commands that modify the recipe book (*`add`*, *`clear`*, *`edit`*).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing *`undo`*.
+** Cons: The user might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing *`undo`*.
 * **Alternative 2:** Include all commands.
-** Pros: Might be more intuitive for the user.
+** Pros: It might be more intuitive for the user.
 ** Cons: The user has no way of skipping such commands if he or she just want to reset the state of the book and not the view.
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
@@ -1196,11 +1213,11 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ===== Aspect: Data structure to support the undo/redo commands.
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo.
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
+** Pros: This is easy to for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
+** Cons: The logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo.
-** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+** Pros: We do not need to maintain a separate stack, and can just reuse what is already in the codebase.
+** Cons: This requires dealing with commands that have already been undone, meaning we must remember to skip these commands. It violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 
 == Documentation
 

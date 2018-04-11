@@ -13,10 +13,11 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.SearchPersonOnAllPlatformEvent;
-import seedu.address.commons.events.ui.SearchPersonOnFacebookEvent;
-import seedu.address.commons.events.ui.SearchPersonOnTwitterEvent;
+import seedu.address.commons.events.ui.SearchPersonEvent;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Person;
+import seedu.address.model.smplatform.Facebook;
+import seedu.address.model.smplatform.Twitter;
 
 /**
  * The Browser Panel of the App.
@@ -101,25 +102,26 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleSearchPersonOnAllPlatformEvent(SearchPersonOnAllPlatformEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadBrowserSearchPage(event.getSearchName());
-        loadBrowser1SearchPage(event.getSearchName());
-    }
+    private void handleSearchPersonEvent(SearchPersonEvent event) {
 
-    @Subscribe
-    private void handleSearchPersonOnFacebookEvent(SearchPersonOnFacebookEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadBrowserSearchPage(event.getSearchName());
-        loadBrowser1Page(defaultPage.toExternalForm());
-    }
+        String platformToSearch = event.getPlatform();
 
-    @Subscribe
-    private void handleSearchPersonOnTwitterEvent(SearchPersonOnTwitterEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadBrowserPage(defaultPage.toExternalForm());
-        loadBrowser1SearchPage(event.getSearchName());
+        if (StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_KEYWORD)
+                || StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_ALIAS)) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+            loadBrowserSearchPage(event.getSearchName());
+            loadBrowser1Page(defaultPage.toExternalForm());
+        } else if (StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_KEYWORD)
+                || StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_ALIAS)) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+            loadBrowserPage(defaultPage.toExternalForm());
+            loadBrowser1SearchPage(event.getSearchName());
+        } else {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            loadBrowserSearchPage(event.getSearchName());
+            loadBrowser1SearchPage(event.getSearchName());
+        }
     }
 }

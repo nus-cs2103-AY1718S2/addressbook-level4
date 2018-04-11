@@ -41,12 +41,13 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
+
     /**
     * To load person page according to person name
     */
     public void loadPersonPage(Person person) throws IOException {
-        URL personPage = MainApp.class.getResource(PROFILE_DIRECTORY + person.getName().fullName + PERSON_PAGE);
-        loadPage(personPage.toExternalForm());
+        URL personPage = MainApp.class.getResource("/StudentPage/template.html");
+        loadPage("file:" + System.getProperty("user.home") + "/StudentPage/" + person.getName() + ".html");
     }
 
     public void loadPage(String url) {

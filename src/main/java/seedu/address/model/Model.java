@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -77,5 +78,8 @@ public interface Model {
      * @param tagSet
      */
     void replaceTag(List<Tag> tagSet);
+
+    /** Adds the given nextOfKin */
+    void addNextOfKin(NextOfKin nextOfKin) throws DuplicatePersonException;
     //@@author
 }

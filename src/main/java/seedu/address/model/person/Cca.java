@@ -9,20 +9,24 @@ import static java.util.Objects.requireNonNull;
 public class Cca {
 
     public final String value;
+    public final String pos;
 
     /**
      * Constructs a {@code Remark}.
      *
      * @param cca A valid remark.
      */
-    public Cca(String cca) {
+    public Cca(String cca, String pos) {
         requireNonNull(cca);
         this.value = cca;
+        requireNonNull(pos);
+        this.pos = pos;
+
     }
 
     @Override
     public String toString() {
-        return value;
+        return value + ": " + pos;
     }
 
     @Override
@@ -34,7 +38,10 @@ public class Cca {
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        int hash = 17;
+        hash = 37 * hash + value.hashCode();
+        hash = 37 * hash + pos.hashCode();
+        return hash;
     }
 
 }

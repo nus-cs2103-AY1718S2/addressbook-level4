@@ -16,6 +16,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NameOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -101,6 +102,7 @@ public class DeleteRemarkCommand extends UndoableCommand {
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
         String[] remarkArray = personToEdit.getRemark().toString().split("\n");
         String updateRemark = "";
+        NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
         boolean remarkIsFound = false;
         for (String remark: remarkArray) {
             if (!remark.contains(editPersonDescriptor.getRemark().get().toString())) {
@@ -117,7 +119,7 @@ public class DeleteRemarkCommand extends UndoableCommand {
                     .orElse(personToEdit.getInjuriesHistory());
 
             return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                    updatedInjuriesHistory);
+                    updatedInjuriesHistory, updatedNameOfKin);
         } else {
             throw new CommandException("The target remark cannot be missing.");
         }

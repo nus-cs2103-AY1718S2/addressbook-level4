@@ -69,11 +69,11 @@ Format: `help`
 === Adding a student: `add` or `a`
 
 Adds a student to _EduBuddy_ +
-Format: `add n/NAME ic/NRIC [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]` +
-Abbreviation Format: `a n/NAME ic/NRIC [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]`
+Format: `add n/NAME ic/NRIC nok/NAME_OF_KIN [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]` +
+Abbreviation Format: `a n/NAME ic/NRIC nok/NAME_OF_KIN [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]`
 
 [IMPORTANT]
-When adding a student, at least a `NAME` and a `NRIC` should be provided. +
+When adding a student, at least a `NAME`, a `NRIC` and a `NAME_OF_KIN` should be provided. +
 A `SPACE` should be inserted between each `SUBJECT_NAME` and `SUBJECT_GRADE`. +
 
 [NOTE]
@@ -84,10 +84,11 @@ A `SPACE` should be inserted between each `SUBJECT_NAME` and `SUBJECT_GRADE`. +
 
 Examples:
 
-* `add n/John Doe ic/S9500186H t/1A r/English Rep sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
-* `add n/Betsy Crowe ic/S9511111I`
-* `a n/John Doe ic/S9500186H t/1A r/English Rep sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
-* `a n/Betsy Crowe ic/S9511111I`
+* `add n/John Doe ic/S9500186H nok/Jonathan t/1A r/English Rep
+sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
+* `add n/Betsy Crowe ic/S9511111I nok/Betty Crowe`
+* `a n/John Doe ic/S9500186H nok/Jonathan t/1A r/English Rep sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
+* `a n/Betsy Crowe ic/S9511111I nok/Betty`
 
 *_return to <<toc,Table of Contents>>_*
 
@@ -434,6 +435,12 @@ Returns the L1R5 score obtained by the student based on his/her grades.
 Returns the L1B4-A score obtained by the student based on his/her grades.
 
 *_return to <<toc,Table of Contents>>_*
+
+=== Adding a CCA to a student : `addcca` [since v1.5]
+Adds a CCA to the student records in _EduBuddy_. +
+Format: `addcca 1 cca/CCA pos/POSITION` +
+You will be able to see the success message, `CCA added: CCA: POSITION` +
+`Person: NAME`
 
 === Clearing all entries : `clear` or `c`
 

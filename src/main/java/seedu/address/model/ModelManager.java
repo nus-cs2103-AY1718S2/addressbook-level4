@@ -27,6 +27,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 
 import seedu.address.model.person.Person;
@@ -185,6 +186,12 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addNextOfKin(NextOfKin nextOfKin) throws DuplicatePersonException {
+        addressBook.addNextOfKin(nextOfKin);
+
     }
 
     @Override

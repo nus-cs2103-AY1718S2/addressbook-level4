@@ -39,6 +39,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setTags(person.getTags());
         descriptor.setSubjects(person.getSubjects());
         descriptor.setRemark(person.getRemark());
+        descriptor.setCca(person.getCca());
+        descriptor.setInjuriesHistory(person.getInjuriesHistory());
     }
 
     /**
@@ -88,8 +90,8 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withCca(String cca) {
-        descriptor.setCca(new Cca(cca));
+    public EditPersonDescriptorBuilder withCca(String cca, String pos) {
+        descriptor.setCca(new Cca(cca, pos));
         return this;
     }
 

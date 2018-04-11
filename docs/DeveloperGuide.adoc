@@ -516,7 +516,7 @@ When a the schedule of a `Person` is needed, the `Model` component will pass the
 ** Pros: No storage and small memory needed
 ** Cons: Reliant on good internet connection
 
-//tag:ListTagMembers[]
+// tag::listTagMembers[]
 === List Tag Members Feature
 
 Fastis lists all persons in Fastis that have tags similar to input.
@@ -537,7 +537,7 @@ tag and list out all members under the same  tag.
 ** Pros: Edit `ListTagMembersCommand()` easily to suit our needs
 ** Cons: Hard for new developers to understand the template pattern.
 
-//end:ListTagMembers[]
+// end::listTagMembers[]
 
 
 //tag::Calendar[]
@@ -644,9 +644,7 @@ image:AddGroupSequenceDiagram.png[width="800"]
 ** Pros: It is not able to lose any addGroup functionality as it is now part of the default behaviour. Classes that deal with `AddGroupCommand` do not have to know that `executeAddGroupCommand()` exist.
 ** Cons: It is hard for new developers to understand the template pattern.
 
-// end::addGroup[]
 
-// tag::addMembersToGroup[]
 === Add Member To Group feature
 
 Fastis adds a person from the existing contact list to an existing group.
@@ -668,9 +666,7 @@ image:aGMSequenceDiagram.png[width="800"]
 * **Alternative 1 (current choice):** Add a new command method `AddMembersToGroupCommand()`
 ** Pros: It is easy for developers to modify method to suit what they want
 
-// end:addMembersToGroup[]
 
-// tag::deleteGroup[]
 === Delete Group feature
 
 Fastis deletes a group named by the user from input.
@@ -721,7 +717,7 @@ image:dGSequenceDiagram.png[width="800"]
 ** Pros: It is not able to lose any deleteGroup functionality as it is now part of the default behaviour. Classes that deal with `DeleteGroupCommand` do not have to know that `executeDeleteGroupCommand()` exist.
 ** Cons: It is hard for new developers to understand the template pattern.
 
-// end::deleteGroup[]
+// end::addGroup[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

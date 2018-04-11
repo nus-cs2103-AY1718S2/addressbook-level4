@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
+import com.google.gdata.util.ServiceException;
 import seedu.address.logic.commands.exceptions.CommandException;
+
+import java.io.IOException;
 
 /**
  * @@author demitycho
@@ -22,8 +25,12 @@ public class SyncCommand extends Command {
         try {
             model.synchronize();
             return new CommandResult(MESSAGE_SUCCESS);
-        } catch (Exception e) {
-            throw new CommandException(e.getMessage());
+        } catch (IOException ioe) {
+            throw new CommandException("Failed to sync");
+        } catch (ServiceException se) {
+            throw new CommandException("GG");
+        } catch (NullPointerException ne) {
+            throw new CommandException("Lost");
         }
     }
 }

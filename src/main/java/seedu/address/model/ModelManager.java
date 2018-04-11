@@ -141,7 +141,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Schedule getSchedule() {
+    public ReadOnlySchedule getSchedule() {
         return schedule;
     }
 

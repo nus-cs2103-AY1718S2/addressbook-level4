@@ -17,6 +17,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 
+import com.google.gdata.util.ServiceException;
 import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
@@ -116,19 +117,15 @@ public class GServiceManager {
      * @param addressBook
      * @param schedule
      */
-    public void synchronize(ReadOnlyAddressBook addressBook, ReadOnlySchedule schedule) {
-        try {
-            GContactsService gContactsService = new GContactsService(credential);
-            gContactsService.synchronize(addressBook);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            GCalendarService gCalendarService = new GCalendarService(
-                    credential, httpTransport, JSON_FACTORY);
-            gCalendarService.synchronize(schedule, addressBook);
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
-        }
+    public void synchronize(ReadOnlyAddressBook addressBook, ReadOnlySchedule schedule)
+            throws IOException, ServiceException {
+        GContactsService gContactsService = new GContactsService(credential);
+        gContactsService.synchronize(addressBook);
+
+
+        GCalendarService gCalendarService = new GCalendarService(
+                credential, httpTransport, JSON_FACTORY);
+        gCalendarService.synchronize(schedule, addressBook);
+
     }
 }

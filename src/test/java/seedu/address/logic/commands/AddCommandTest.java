@@ -129,7 +129,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteStudent(Student target) throws StudentNotFoundException {
+        public void deleteStudent(Student target) throws StudentNotFoundException, LessonNotFoundException {
             fail("This method should not be called.");
         }
 

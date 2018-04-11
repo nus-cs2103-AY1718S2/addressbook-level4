@@ -117,7 +117,7 @@ public class GContactsService {
      * @throws IOException
      */
     public static ContactGroupEntry getStudentGroupEntry(ContactsService myService)
-            throws ServiceException, IOException {
+            throws ServiceException, IOException, NullPointerException {
         // Request the feed
         URL feedUrl = new URL("https://www.google.com/m8/feeds/groups/default/full");
         ContactGroupFeed resultFeed = myService.getFeed(feedUrl, ContactGroupFeed.class);

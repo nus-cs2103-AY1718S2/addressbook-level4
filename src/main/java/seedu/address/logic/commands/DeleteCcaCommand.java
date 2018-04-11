@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -103,8 +104,8 @@ public class DeleteCcaCommand extends UndoableCommand {
                 .orElse(personToEdit.getInjuriesHistory());
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                    updatedInjuriesHistory, updatedNameOfKin);
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(), updatedRemark,
+                updatedCca, updatedInjuriesHistory, updatedNameOfKin);
     }
 
     @Override

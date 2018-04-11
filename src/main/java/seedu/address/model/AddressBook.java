@@ -155,8 +155,8 @@ public class AddressBook implements ReadOnlyAddressBook {
             throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
         requireNonNull(orderStatus);
 
-        Order editedOrder = new Order(target.getOrderInformation(), target.getPrice(),
-                target.getQuantity(), target.getDeliveryDate());
+        Order editedOrder = new Order(target.getOrderInformation(), target.getOrderStatus(),
+                target.getPrice(), target.getQuantity(), target.getDeliveryDate());
         editedOrder.getOrderStatus().setCurrentOrderStatus(orderStatus);
 
         orders.setOrder(target, editedOrder);
@@ -166,7 +166,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  Updates the master group list and master preference list to include groups and preferences
      *  in {@code person} that are not in the lists.
      *  @return a copy of this {@code person} such that every group and every preference in this person
-     *  points to a Group object and Preference in the respective master list.
+     *  points to a Group object and Preference object in the respective master list.
      */
     private Person syncWithMasterTagList(Person person) {
         final UniqueGroupList personGroups = new UniqueGroupList(person.getGroupTags());

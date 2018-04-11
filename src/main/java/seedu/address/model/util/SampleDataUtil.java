@@ -7,6 +7,13 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.CalendarManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyCalendarManager;
+import seedu.address.model.order.DeliveryDate;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
+import seedu.address.model.order.Price;
+import seedu.address.model.order.Quantity;
+import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -43,15 +50,42 @@ public class SampleDataUtil {
         };
     }
 
+    public static Order[] getSampleOrders() {
+        return new Order[] {
+            new Order(
+                new OrderInformation("Books"), new OrderStatus("ongoing"), new Price("12.50"),
+                new Quantity("3"), new DeliveryDate("12-08-2018")
+            ),
+            new Order(
+                new OrderInformation("Facewash"), new OrderStatus("done"), new Price("15.00"),
+                new Quantity("2"), new DeliveryDate("05-11-2018")
+            ),
+            new Order(
+                new OrderInformation("Chocolates"), new OrderStatus("ongoing"), new Price("5.00"),
+                new Quantity("10"), new DeliveryDate("22-04-2018")
+            ),
+            new Order(
+                new OrderInformation("Shoes"), new OrderStatus("ongoing"), new Price("129.99"),
+                new Quantity("1"), new DeliveryDate("10-05-2018")
+            )
+        };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
             for (Person samplePerson : getSamplePersons()) {
                 sampleAb.addPerson(samplePerson);
             }
+
+            for (Order sampleOrder : getSampleOrders()) {
+                sampleAb.addOrderToOrderList(sampleOrder);
+            }
             return sampleAb;
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError("sample data cannot contain duplicate persons", e);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("sample data cannot contain duplicate persons", dpe);
+        } catch (UniqueOrderList.DuplicateOrderException doe) {
+            throw new AssertionError("sample data cannot contain duplicate orders", doe);
         }
     }
 

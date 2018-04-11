@@ -58,14 +58,17 @@ public class CommandTestUtil {
     public static final String VALID_PREFERENCE_SHOES = "shoes";
 
     public static final String VALID_ORDER_INFORMATION_CHOC = "Chocolates";
+    public static final String VALID_ORDER_STATUS_CHOC = "ongoing";
     public static final String VALID_PRICE_CHOC = "10.00";
     public static final String VALID_QUANTITY_CHOC = "15";
     public static final String VALID_DELIVERY_DATE_CHOC = "12-08-2018";
     public static final String VALID_ORDER_INFORMATION_BOOKS = "Books";
+    public static final String VALID_ORDER_STATUS_BOOKS = "ongoing";
     public static final String VALID_PRICE_BOOKS = "15.00";
     public static final String VALID_QUANTITY_BOOKS = "3";
     public static final String VALID_DELIVERY_DATE_BOOKS = "04-12-2018";
     public static final String VALID_ORDER_INFORMATION_COMPUTER = "Computer";
+    public static final String VALID_ORDER_STATUS_COMPUTER = "ongoing";
     public static final String VALID_PRICE_COMPUTER = "2000.00";
     public static final String VALID_QUANTITY_COMPUTER = "1";
     public static final String VALID_DELIVERY_DATE_COMPUTER = "18-07-2018";
@@ -176,10 +179,12 @@ public class CommandTestUtil {
 
     static {
         DESC_COMPUTER = new EditOrderDescriptorBuilder().withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER)
+                .withOrderStatus(VALID_ORDER_STATUS_COMPUTER)
                 .withPrice(VALID_PRICE_COMPUTER).withQuantity(VALID_QUANTITY_COMPUTER)
                 .withDeliveryDate(VALID_DELIVERY_DATE_COMPUTER).build();
-        DESC_COMICBOOK = new EditOrderDescriptorBuilder().withOrderInformation("Comic Book").withPrice("17.99")
-                .withQuantity("1")
+        DESC_COMICBOOK = new EditOrderDescriptorBuilder().withOrderInformation("Comic Book")
+                .withOrderStatus("ongoing")
+                .withPrice("17.99").withQuantity("1")
                 .withDeliveryDate("01-01-2018")
                 .build();
     }

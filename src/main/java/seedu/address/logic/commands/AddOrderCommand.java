@@ -16,8 +16,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayOrderListEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.order.Order;
+import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.person.Person;
-// import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Adds an order to a person in the address book.
@@ -26,19 +26,19 @@ public class AddOrderCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "orderadd";
     public static final String COMMAND_ALIAS = "oa";
-    public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
-            + PREFIX_ORDER_INFORMATION + "ORDER INFO "
+    public static final String COMMAND_SYNTAX = COMMAND_WORD + " INDEX "
+            + PREFIX_ORDER_INFORMATION + "ORDER_INFO "
             + PREFIX_PRICE + "PRICE "
             + PREFIX_QUANTITY + "QUANTITY "
-            + PREFIX_DELIVERY_DATE + "DELIVERY DATE ";
+            + PREFIX_DELIVERY_DATE + "DELIVERY_DATE";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an order to the selected person in the "
             + "address book.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_ORDER_INFORMATION + "ORDER INFO "
+            + PREFIX_ORDER_INFORMATION + "ORDER_INFO "
             + PREFIX_PRICE + "PRICE "
             + PREFIX_QUANTITY + "QUANTITY "
-            + PREFIX_DELIVERY_DATE + "DELIVERY DATE\n"
+            + PREFIX_DELIVERY_DATE + "DELIVERY_DATE\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ORDER_INFORMATION + "Books "
             + PREFIX_PRICE + "10.00 "
@@ -69,12 +69,8 @@ public class AddOrderCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            // TODO: update model
-            // model.addOrderToPerson(person, orderToAdd);
             model.addOrderToOrderList(orderToAdd);
-        // } catch (PersonNotFoundException pnfe) {
-            // throw new AssertionError("The target person cannot be missing");
-        } catch (Exception e) { // TODO: define more specific exception
+        } catch (UniqueOrderList.DuplicateOrderException doe) {
             throw new CommandException(MESSAGE_ORDER_NOT_ADDED);
         }
 

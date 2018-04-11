@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 import seedu.address.model.order.UniqueOrderList;
@@ -110,11 +111,12 @@ public class EditOrderCommand extends UndoableCommand {
 
         OrderInformation updatedOrderInformation = editOrderDescriptor.getOrderInformation()
                 .orElse(orderToEdit.getOrderInformation());
+        OrderStatus orderStatus = orderToEdit.getOrderStatus();
         Price updatedPrice = editOrderDescriptor.getPrice().orElse(orderToEdit.getPrice());
         Quantity updatedQuantity = editOrderDescriptor.getQuantity().orElse(orderToEdit.getQuantity());
         DeliveryDate updatedDeliveryDate = editOrderDescriptor.getDeliveryDate().orElse(orderToEdit.getDeliveryDate());
 
-        return new Order(updatedOrderInformation, updatedPrice, updatedQuantity, updatedDeliveryDate);
+        return new Order(updatedOrderInformation, orderStatus, updatedPrice, updatedQuantity, updatedDeliveryDate);
     }
 
     @Override
@@ -142,6 +144,7 @@ public class EditOrderCommand extends UndoableCommand {
      */
     public static class EditOrderDescriptor {
         private OrderInformation orderInformation;
+        private OrderStatus orderStatus;
         private Price price;
         private Quantity quantity;
         private DeliveryDate deliveryDate;
@@ -153,6 +156,7 @@ public class EditOrderCommand extends UndoableCommand {
          */
         public EditOrderDescriptor(EditOrderDescriptor toCopy) {
             setOrderInformation(toCopy.orderInformation);
+            setOrderStatus(toCopy.orderStatus);
             setPrice(toCopy.price);
             setQuantity(toCopy.quantity);
             setDeliveryDate(toCopy.deliveryDate);
@@ -171,6 +175,14 @@ public class EditOrderCommand extends UndoableCommand {
 
         public Optional<OrderInformation> getOrderInformation() {
             return Optional.ofNullable(orderInformation);
+        }
+
+        public void setOrderStatus(OrderStatus orderStatus) {
+            this.orderStatus = orderStatus;
+        }
+
+        public Optional<OrderStatus> getOrderStatus() {
+            return Optional.ofNullable(orderStatus);
         }
 
         public void setPrice(Price price) {
@@ -213,6 +225,7 @@ public class EditOrderCommand extends UndoableCommand {
             EditOrderDescriptor eo = (EditOrderDescriptor) other;
 
             return getOrderInformation().equals(eo.getOrderInformation())
+                    && getOrderStatus().equals(eo.getOrderStatus())
                     && getPrice().equals(eo.getPrice())
                     && getQuantity().equals(eo.getQuantity())
                     && getDeliveryDate().equals(eo.getDeliveryDate());

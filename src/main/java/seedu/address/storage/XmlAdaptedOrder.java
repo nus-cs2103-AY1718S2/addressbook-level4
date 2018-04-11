@@ -9,6 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 
@@ -21,6 +22,8 @@ public class XmlAdaptedOrder {
 
     @XmlElement
     private String orderInformation;
+    @XmlElement
+    private String orderStatus;
     @XmlElement
     private String price;
     @XmlElement
@@ -36,8 +39,10 @@ public class XmlAdaptedOrder {
     /**
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
-    public XmlAdaptedOrder(String orderInformation, String price, String quantity, String deliveryDate) {
+    public XmlAdaptedOrder(String orderInformation, String orderStatus, String price,
+                           String quantity, String deliveryDate) {
         this.orderInformation = orderInformation;
+        this.orderStatus = orderStatus;
         this.price = price;
         this.quantity = quantity;
         this.deliveryDate = deliveryDate;
@@ -50,6 +55,7 @@ public class XmlAdaptedOrder {
      */
     public XmlAdaptedOrder(Order source) {
         orderInformation = source.getOrderInformation().toString();
+        orderStatus = source.getOrderStatus().getCurrentOrderStatus();
         price = source.getPrice().toString();
         quantity = source.getQuantity().toString();
         deliveryDate = source.getDeliveryDate().toString();
@@ -69,6 +75,15 @@ public class XmlAdaptedOrder {
             throw new IllegalValueException(OrderInformation.MESSAGE_ORDER_INFORMATION_CONSTRAINTS);
         }
         final OrderInformation orderInformation = new OrderInformation(this.orderInformation);
+
+        if (this.orderStatus == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    OrderStatus.class.getSimpleName()));
+        }
+        if (!OrderStatus.isValidOrderStatus(this.orderStatus)) {
+            throw new IllegalValueException(OrderStatus.MESSAGE_ORDER_STATUS_CONSTRAINTS);
+        }
+        final OrderStatus orderStatus = new OrderStatus(this.orderStatus);
 
         if (this.price == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Price.class.getSimpleName()));
@@ -99,7 +114,7 @@ public class XmlAdaptedOrder {
         }
         final DeliveryDate deliveryDate = new DeliveryDate(this.deliveryDate);
 
-        return new Order(orderInformation, price, quantity, deliveryDate);
+        return new Order(orderInformation, orderStatus, price, quantity, deliveryDate);
     }
 
     @Override
@@ -114,6 +129,7 @@ public class XmlAdaptedOrder {
 
         XmlAdaptedOrder otherOrder = (XmlAdaptedOrder) other;
         return Objects.equals(orderInformation, otherOrder.orderInformation)
+                && Objects.equals(orderStatus, otherOrder.orderStatus)
                 && Objects.equals(price, otherOrder.price)
                 && Objects.equals(quantity, otherOrder.quantity)
                 && Objects.equals(deliveryDate, otherOrder.deliveryDate);

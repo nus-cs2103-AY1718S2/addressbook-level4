@@ -18,6 +18,8 @@ import seedu.address.model.order.Quantity;
  */
 public class OrderCard extends UiPart<Region> {
     private static final String FXML = "OrderListCard.fxml";
+    private static final String ORDER_STATUS_DONE = "DONE";
+
     public final Order order;
 
     private final Logger logger = LogsCenter.getLogger(OrderCard.class);
@@ -52,6 +54,17 @@ public class OrderCard extends UiPart<Region> {
         setPriceAndQuantity(order);
         setTotalPrice(order);
         deliveryDate.setText("Deliver By: " + order.getDeliveryDate().toString());
+    }
+
+    /**
+     * Returns true if order status equals done.
+     */
+    public boolean isOrderStatusDone() {
+        if (orderStatus.getText().equals(ORDER_STATUS_DONE)) {
+            return true;
+        }
+
+        return false;
     }
 
     private void setPriceAndQuantity(Order order) {

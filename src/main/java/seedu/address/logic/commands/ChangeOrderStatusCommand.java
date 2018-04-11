@@ -24,7 +24,7 @@ import seedu.address.model.order.exceptions.OrderNotFoundException;
 public class ChangeOrderStatusCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "orderstatus";
     public static final String COMMAND_ALIAS = "os";
-    public static final String COMMAND_SYNTAX = COMMAND_WORD + " INDEX " + PREFIX_ORDER_STATUS + " ORDER STATUS";
+    public static final String COMMAND_SYNTAX = COMMAND_WORD + " INDEX " + PREFIX_ORDER_STATUS + "ORDER_STATUS";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Changes the order status of the order identified by the index number used in the last order listing.\n"

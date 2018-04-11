@@ -23,6 +23,9 @@ import seedu.address.model.order.Order;
  */
 public class OrderListPanel extends UiPart<Region> {
     private static final String FXML = "OrderListPanel.fxml";
+    private static final String ORDER_STATUS_ONGOING_CSS = "view/OrderStatusOngoing.css";
+    private static final String ORDER_STATUS_DONE_CSS = "view/OrderStatusDone.css";
+
     private final Logger logger = LogsCenter.getLogger(OrderListPanel.class);
 
     @FXML
@@ -63,15 +66,9 @@ public class OrderListPanel extends UiPart<Region> {
         });
     }
 
-    @FXML
-    private void handleChangeOrderStatus(ChangeOrderStatusEvent event) {
-        // TODO: change background of listcell based on order status change
-    }
-
     @Subscribe
     private void handleChangeOrderStatusEvent(ChangeOrderStatusEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleChangeOrderStatus(event);
     }
 
     /**
@@ -88,6 +85,16 @@ public class OrderListPanel extends UiPart<Region> {
                 setText(null);
             } else {
                 setGraphic(order.getRoot());
+            }
+
+            if (order != null) {
+                this.getStylesheets().clear();
+
+                if (order.isOrderStatusDone()) {
+                    this.getStylesheets().add(ORDER_STATUS_DONE_CSS);
+                } else {
+                    this.getStylesheets().add(ORDER_STATUS_ONGOING_CSS);
+                }
             }
         }
     }

@@ -4,6 +4,7 @@ package seedu.address.testutil;
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 
@@ -13,17 +14,20 @@ import seedu.address.model.order.Quantity;
 public class OrderBuilder {
 
     public static final String DEFAULT_ORDER_INFORMATION = "Books";
+    public static final String DEFAULT_ORDER_STATUS = "ongoing";
     public static final String DEFAULT_PRICE = "15.00";
     public static final String DEFAULT_QUANTITY = "5";
     public static final String DEFAULT_DELIVERY_DATE = "10-05-2018";
 
     private OrderInformation orderInformation;
+    private OrderStatus orderStatus;
     private Price price;
     private Quantity quantity;
     private DeliveryDate deliveryDate;
 
     public OrderBuilder() {
         orderInformation = new OrderInformation(DEFAULT_ORDER_INFORMATION);
+        orderStatus = new OrderStatus(DEFAULT_ORDER_STATUS);
         price = new Price(DEFAULT_PRICE);
         quantity = new Quantity(DEFAULT_QUANTITY);
         deliveryDate = new DeliveryDate(DEFAULT_DELIVERY_DATE);
@@ -34,6 +38,7 @@ public class OrderBuilder {
      */
     public OrderBuilder(Order orderToCopy) {
         orderInformation = orderToCopy.getOrderInformation();
+        orderStatus = orderToCopy.getOrderStatus();
         price = orderToCopy.getPrice();
         quantity = orderToCopy.getQuantity();
         deliveryDate = orderToCopy.getDeliveryDate();
@@ -44,6 +49,14 @@ public class OrderBuilder {
      */
     public OrderBuilder withOrderInformation(String orderInformation) {
         this.orderInformation = new OrderInformation(orderInformation);
+        return this;
+    }
+
+    /**
+     * Sets the {@code OrderStatus} of the {@code Order} that we are building.
+     */
+    public OrderBuilder withOrderStatus(String orderStatus) {
+        this.orderStatus = new OrderStatus(orderStatus);
         return this;
     }
 
@@ -72,6 +85,6 @@ public class OrderBuilder {
     }
 
     public Order build() {
-        return new Order(orderInformation, price, quantity, deliveryDate);
+        return new Order(orderInformation, orderStatus, price, quantity, deliveryDate);
     }
 }

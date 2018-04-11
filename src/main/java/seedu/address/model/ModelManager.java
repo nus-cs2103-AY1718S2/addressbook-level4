@@ -130,22 +130,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
-    //@@author amad-person
-    @Override
-    public void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException {
-        addressBook.addOrderToOrderList(orderToAdd);
-        updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void deleteOrder(Order targetOrder) throws OrderNotFoundException {
-        addressBook.deleteOrder(targetOrder);
-        updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
-        indicateAddressBookChanged();
-    }
-    //@@author
-
     //@@author SuxianAlicia
     @Override
     public void addCalendarEntry(CalendarEntry toAdd) throws DuplicateCalendarEntryException {
@@ -168,7 +152,6 @@ public class ModelManager extends ComponentManager implements Model {
         calendarManager.updateCalendarEntry(entryToEdit, editedEntry);
         indicateCalendarManagerChanged();
     }
-
     //@@author
 
     //@@author amad-person
@@ -180,7 +163,6 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateOrder(target, editedOrder);
         indicateAddressBookChanged();
     }
-    //@@author
 
     @Override
     public void updateOrderStatus(Order target, String orderStatus)
@@ -188,6 +170,21 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateOrderStatus(target, orderStatus);
         indicateAddressBookChanged();
     }
+
+    @Override
+    public void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException {
+        addressBook.addOrderToOrderList(orderToAdd);
+        updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteOrder(Order targetOrder) throws OrderNotFoundException {
+        addressBook.deleteOrder(targetOrder);
+        updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
+        indicateAddressBookChanged();
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

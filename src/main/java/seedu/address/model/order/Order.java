@@ -2,7 +2,6 @@
 package seedu.address.model.order;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.order.OrderStatus.ORDER_STATUS_ONGOING;
 
 import java.util.Objects;
 
@@ -21,10 +20,11 @@ public class Order {
     /**
      * Every field must be present and not null.
      */
-    public Order(OrderInformation orderInformation, Price price, Quantity quantity, DeliveryDate deliveryDate) {
+    public Order(OrderInformation orderInformation, OrderStatus orderStatus, Price price,
+                 Quantity quantity, DeliveryDate deliveryDate) {
         requireAllNonNull(orderInformation, price, quantity, deliveryDate);
         this.orderInformation = orderInformation;
-        this.orderStatus = new OrderStatus(ORDER_STATUS_ONGOING); // default value is ongoing
+        this.orderStatus = orderStatus;
         this.price = price;
         this.quantity = quantity;
         this.deliveryDate = deliveryDate;
@@ -60,7 +60,6 @@ public class Order {
             return false;
         }
 
-        // TODO: orders can have the same information (just the person associated with them can be diff)
         Order otherOrder = (Order) other;
         return otherOrder.getOrderInformation().equals(this.getOrderInformation())
                 && otherOrder.getOrderStatus().equals(this.getOrderStatus())

@@ -17,6 +17,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 
@@ -52,11 +53,12 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
         try {
             OrderInformation orderInformation = ParserUtil.parseOrderInformation(argMultimap
                     .getValue(PREFIX_ORDER_INFORMATION)).get();
+            OrderStatus orderStatus = new OrderStatus(OrderStatus.ORDER_STATUS_ONGOING); // default value is ongoing
             Price price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE)).get();
             Quantity quantity = ParserUtil.parseQuantity(argMultimap.getValue(PREFIX_QUANTITY)).get();
             DeliveryDate deliveryDate = ParserUtil.parseDeliveryDate(argMultimap.getValue(PREFIX_DELIVERY_DATE)).get();
 
-            Order order = new Order(orderInformation, price, quantity, deliveryDate);
+            Order order = new Order(orderInformation, orderStatus, price, quantity, deliveryDate);
             return new AddOrderCommand(index, order);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

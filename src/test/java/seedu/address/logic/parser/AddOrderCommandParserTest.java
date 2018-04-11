@@ -17,6 +17,7 @@ import static seedu.address.logic.commands.CommandTestUtil.QUANTITY_DESC_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.QUANTITY_DESC_CHOC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_CHOC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_CHOC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_STATUS_CHOC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_CHOC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_QUANTITY_CHOC;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -44,6 +45,7 @@ public class AddOrderCommandParserTest {
     public void parse_allFieldsPresent_success() {
         Order expectedOrder = new OrderBuilder()
                 .withOrderInformation(VALID_ORDER_INFORMATION_CHOC)
+                .withOrderStatus(VALID_ORDER_STATUS_CHOC)
                 .withPrice(VALID_PRICE_CHOC)
                 .withQuantity(VALID_QUANTITY_CHOC)
                 .withDeliveryDate(VALID_DELIVERY_DATE_CHOC)

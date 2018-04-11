@@ -11,6 +11,7 @@
     <!-- Order with invalid price field -->
     <orders>
         <orderInformation>Chocolates</orderInformation>
+        <orderStatus>done</orderStatus>
         <price>10.00.00</price>
         <quantity>5</quantity>
         <deliveryDate>11-01-2019</deliveryDate>

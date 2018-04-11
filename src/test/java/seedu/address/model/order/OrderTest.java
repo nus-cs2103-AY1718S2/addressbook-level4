@@ -9,6 +9,6 @@ public class OrderTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Order(null, null, null, null));
+        Assert.assertThrows(NullPointerException.class, () -> new Order(null, null, null, null, null));
     }
 }

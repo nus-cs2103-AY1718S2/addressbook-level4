@@ -5,6 +5,7 @@ import seedu.address.logic.commands.EditOrderCommand.EditOrderDescriptor;
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 
@@ -26,6 +27,7 @@ public class EditOrderDescriptorBuilder {
     public EditOrderDescriptorBuilder(Order order) {
         descriptor = new EditOrderDescriptor();
         descriptor.setOrderInformation(order.getOrderInformation());
+        descriptor.setOrderStatus(order.getOrderStatus());
         descriptor.setPrice(order.getPrice());
         descriptor.setQuantity(order.getQuantity());
         descriptor.setDeliveryDate(order.getDeliveryDate());
@@ -36,6 +38,14 @@ public class EditOrderDescriptorBuilder {
      */
     public EditOrderDescriptorBuilder withOrderInformation(String orderInformation) {
         descriptor.setOrderInformation(new OrderInformation(orderInformation));
+        return this;
+    }
+
+    /**
+     * Sets the {@code OrderStatus} of the {@code EditOrderDescriptor} that we are building.
+     */
+    public EditOrderDescriptorBuilder withOrderStatus(String orderStatus) {
+        descriptor.setOrderStatus(new OrderStatus(orderStatus));
         return this;
     }
 

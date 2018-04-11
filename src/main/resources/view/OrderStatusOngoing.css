@@ -1,0 +1,26 @@
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #852e1e;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #994238;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #71251a;
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: #853046;
+    -fx-border-width: 1;
+}
+
+.list-cell:empty {
+    -fx-background-color: transparent;
+}

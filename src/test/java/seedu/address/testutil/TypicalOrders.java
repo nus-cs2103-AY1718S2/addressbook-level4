@@ -7,6 +7,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_C
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_CHOC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_COMPUTER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_STATUS_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_STATUS_CHOC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_STATUS_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_CHOC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_COMPUTER;
@@ -31,6 +34,7 @@ public class TypicalOrders {
 
     public static final Order SHOES = new OrderBuilder()
             .withOrderInformation("Shoes")
+            .withOrderStatus("ongoing")
             .withPrice("129.99")
             .withQuantity("3")
             .withDeliveryDate("10-09-2018")
@@ -38,6 +42,7 @@ public class TypicalOrders {
 
     public static final Order FACEWASH = new OrderBuilder()
             .withOrderInformation("Face Wash")
+            .withOrderStatus("ongoing")
             .withPrice("24.75")
             .withQuantity("1")
             .withDeliveryDate("05-11-2018")
@@ -45,6 +50,7 @@ public class TypicalOrders {
 
     public static final Order BOOKS = new OrderBuilder()
             .withOrderInformation(VALID_ORDER_INFORMATION_BOOKS)
+            .withOrderStatus(VALID_ORDER_STATUS_BOOKS)
             .withPrice(VALID_PRICE_BOOKS)
             .withQuantity(VALID_QUANTITY_BOOKS)
             .withDeliveryDate(VALID_DELIVERY_DATE_BOOKS)
@@ -52,6 +58,7 @@ public class TypicalOrders {
 
     public static final Order CHOCOLATES = new OrderBuilder()
             .withOrderInformation(VALID_ORDER_INFORMATION_CHOC)
+            .withOrderStatus(VALID_ORDER_STATUS_CHOC)
             .withPrice(VALID_PRICE_CHOC)
             .withQuantity(VALID_QUANTITY_CHOC)
             .withDeliveryDate(VALID_DELIVERY_DATE_CHOC)
@@ -59,6 +66,7 @@ public class TypicalOrders {
 
     public static final Order COMPUTER = new OrderBuilder()
             .withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER)
+            .withOrderStatus(VALID_ORDER_STATUS_COMPUTER)
             .withPrice(VALID_PRICE_COMPUTER)
             .withQuantity(VALID_QUANTITY_COMPUTER)
             .withDeliveryDate(VALID_DELIVERY_DATE_COMPUTER)
@@ -66,6 +74,7 @@ public class TypicalOrders {
 
     public static final Order COMICBOOK = new OrderBuilder()
             .withOrderInformation("Comic Book")
+            .withOrderStatus("ongoing")
             .withPrice("17.99")
             .withQuantity("1")
             .withDeliveryDate("01-01-2018")

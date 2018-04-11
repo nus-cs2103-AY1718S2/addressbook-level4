@@ -131,9 +131,6 @@ public class Subject {
 
     @Override
     public boolean equals(Object other) {
-        //return other == this // short circuit if same object
-        //        || (other instanceof Subject // instanceof handles nulls
-        //        && this.subjectName.equals(((Subject) other).subjectName)); // state check
         if (other == null) {
             return false;
         }
@@ -144,12 +141,11 @@ public class Subject {
             return false;
         }
         Subject object = (Subject) other;
-        return this.subjectName == object.subjectName && this.subjectGrade == object.subjectGrade;
+        return (this.subjectName == object.subjectName && this.subjectGrade == object.subjectGrade);
     }
 
     @Override
     public int hashCode() {
-        //return subjectName.hashCode() && subjectGrade.hashCode();
         int hash = 17;
         hash = 37 * hash + subjectName.hashCode();
         hash = 37 * hash + subjectGrade.hashCode();

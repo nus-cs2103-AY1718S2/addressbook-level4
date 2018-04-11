@@ -87,7 +87,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         File newHtmlFile = new File(newPath);
         FileUtils.writeStringToFile(newHtmlFile, htmlString);
-        updatePage(person);
+        // updatePage(person);
     }
 
     /**
@@ -174,6 +174,7 @@ public class ModelManager extends ComponentManager implements Model {
     /** Adds the given appointment */
     public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         addressBook.addAppointment(appointment);
+        updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         indicateAddressBookChanged();
     }
     //@@author
@@ -191,6 +192,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
+        requireNonNull(predicate);
+        filteredAppointments.setPredicate(predicate);
     }
 
     //@@author kengsengg

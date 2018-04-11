@@ -40,6 +40,7 @@ public class AddMembersToGroupCommand extends UndoableCommand {
     private Person personToAdd;
     private Group groupToAdd;
     private Group groupAdded;
+    private List<Group> groupList;
 
     public AddMembersToGroupCommand(Index index, Group groupToAdd) {
         requireNonNull(index);
@@ -51,39 +52,36 @@ public class AddMembersToGroupCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        List<Group> groupList = model.getFilteredGroupList();
 
-        if (!groupList.contains(groupToAdd)) {
-            throw new CommandException(MESSAGE_NO_SUCH_GROUP);
-        } else {
-            for (Group group : groupList) {
-                if (groupToAdd.getInformation().equals(group.getInformation())) {
-                    try {
-                        groupAdded = new Group(group.getInformation());
-                        groupAdded.addPerson(personToAdd);
-                        model.updateGroup(groupToAdd, groupAdded);
-                    } catch (DuplicatePersonException e) {
-                        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                    } catch (DuplicateGroupException e) {
-                        throw new CommandException(MESSAGE_DUPLICATE_GROUP);
-                    } catch (GroupNotFoundException e) {
-                        throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
-                    }
+        for (Group group : groupList) {
+            if (groupToAdd.getInformation().equals(group.getInformation())) {
+                try {
+                    groupAdded = new Group(group.getInformation(), group.getPersonList());
+                    groupAdded.addPerson(personToAdd);
+                    model.updateGroup(group, groupAdded);
+                } catch (DuplicatePersonException e) {
+                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                } catch (DuplicateGroupException e) {
+                    throw new CommandException(MESSAGE_DUPLICATE_GROUP);
+                } catch (GroupNotFoundException e) {
+                    throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
                 }
             }
-            return new CommandResult(String.format(MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS, personToAdd.getName(),
-                    groupToAdd.getInformation().toString()));
         }
+        return new CommandResult(String.format(MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS, personToAdd.getName(),
+                groupToAdd.getInformation().toString()));
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
-
+        groupList = model.getFilteredGroupList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
+        if (!groupList.contains(groupToAdd)) {
+            throw new CommandException(MESSAGE_NO_SUCH_GROUP);
+        }
         personToAdd = lastShownList.get(index.getZeroBased());
 
     }

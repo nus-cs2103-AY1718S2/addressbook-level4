@@ -31,8 +31,9 @@ public class Group {
      */
     public Group(Information information, UniquePersonList personList) {
         requireAllNonNull(information);
-        this.information = information;
-        this.personList = personList;
+        this.information = new Information(information.value);
+        this.personList = new UniquePersonList();
+        this.personList.setPersons(personList);
     }
 
     public Information getInformation() {

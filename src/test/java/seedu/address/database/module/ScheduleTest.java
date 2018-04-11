@@ -3,6 +3,7 @@ package seedu.address.database.module;
 import org.junit.Assert;
 import org.junit.Test;
 
+//@@author Isaaaca
 public class ScheduleTest {
     private static final String DEFAULT_CLASSNO = "1";
     private static final String DEFAULT_LESSON_TYPE = "Lecture";

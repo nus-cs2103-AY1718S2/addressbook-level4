@@ -24,10 +24,14 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowPanelRequestEvent;
 import seedu.address.model.person.Person;
 
 //@@author Ang-YC
@@ -71,11 +75,29 @@ public class PdfPanel extends UiPart<Region> {
 
     public PdfPanel() {
         super(FXML);
+        setupEscKey();
 
         resumePane.widthProperty().addListener((observable, oldValue, newValue) -> handleResizeEvent());
         resumePane.vvalueProperty().addListener((observable, oldValue, newValue) -> handleScrollEvent());
 
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Setup binding for escape key to hide PDF panel
+     */
+    private void setupEscKey() {
+        resumePane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().equals(KeyCode.ESCAPE)) {
+                cancelResume();
+                event.consume();
+            }
+        });
+    }
+
+    @FXML
+    private void cancelResume() {
+        raise(new ShowPanelRequestEvent(InfoPanel.PANEL_NAME));
     }
 
     /**
@@ -316,6 +338,18 @@ public class PdfPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        selectedPerson = event.getNewSelection().getPerson();
+        PersonCard selectedCard = event.getNewSelection();
+        selectedPerson = (selectedCard == null) ? null : selectedCard.getPerson();
+    }
+
+    @Subscribe
+    private void handlePersonChangedEvent(PersonChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Person source = event.getSource();
+        Person target = event.getTarget();
+
+        if (selectedPerson != null && selectedPerson.equals(source)) {
+            selectedPerson = target;
+        }
     }
 }

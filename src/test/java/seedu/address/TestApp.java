@@ -67,6 +67,7 @@ public class TestApp extends MainApp {
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(800.0, 600.0, (int) x, (int) y));
         userPrefs.setAddressBookFilePath(saveFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
+        userPrefs.setAnimated(false);
         return userPrefs;
     }
 

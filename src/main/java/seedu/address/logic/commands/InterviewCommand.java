@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.UiUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.InterviewDate;
 import seedu.address.model.person.Person;
@@ -32,7 +33,7 @@ public class InterviewCommand extends UndoableCommand {
 
     public static final String MESSAGE_INTERVIEW_PERSON_SUCCESS =
             "Interview of person named %1$s has been scheduled on %2$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in HR+.";
 
     private final Index index;
     private final LocalDateTime dateTime;
@@ -75,7 +76,7 @@ public class InterviewCommand extends UndoableCommand {
         }
 
         return new CommandResult(String.format(MESSAGE_INTERVIEW_PERSON_SUCCESS,
-                scheduledPerson.getName(), dateTime.toString()));
+                scheduledPerson.getName(), UiUtil.formatDate(dateTime)));
     }
 
     @Override
@@ -105,6 +106,11 @@ public class InterviewCommand extends UndoableCommand {
                 personToInterview.getResume(), personToInterview.getProfileImage(), personToInterview.getComment(),
                 new InterviewDate(dateTime), personToInterview.getStatus(),
                 personToInterview.getTags());
+    }
+
+    @Override
+    public String getParsedResult() {
+        return "Parsed date: " + UiUtil.formatDate(dateTime);
     }
 
     @Override

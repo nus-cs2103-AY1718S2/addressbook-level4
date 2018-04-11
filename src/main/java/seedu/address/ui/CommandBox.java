@@ -1,16 +1,22 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import javafx.animation.Animation;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.util.UiUtil;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -21,20 +27,40 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "command-error";
+    public static final String PARSE_INVALID = "parse-invalid";
+    public static final String PARSE_VALID = "parse-valid";
+
     private static final String FXML = "CommandBox.fxml";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
+    private HBox floatParseRealTime;
+    private Label floatParseLabel;
+
+    // Animation
+    private ArrayList<Animation> allAnimation = new ArrayList<>();
+    private boolean animated;
+
     @FXML
     private TextField commandInput;
 
-    public CommandBox(Logic logic) {
+    public CommandBox(Logic logic, HBox floatParseRealTime, Label floatParseLabel, boolean animated) {
         super(FXML);
         this.logic = logic;
+        this.floatParseRealTime = floatParseRealTime;
+        this.floatParseLabel = floatParseLabel;
+        this.animated = animated;
+
+        // Command helper not tested for now
+        if (floatParseRealTime != null && floatParseLabel != null) {
+            setupInputChange();
+        }
+
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandInput.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -94,6 +120,56 @@ public class CommandBox extends UiPart<Region> {
         commandInput.positionCaret(commandInput.getText().length());
     }
 
+    private void setupInputChange() {
+        commandInput.textProperty().addListener((obs, old, inputText) -> {
+            String result = "Enter a command...";
+
+            floatParseRealTime.getStyleClass().remove(PARSE_VALID);
+            floatParseRealTime.getStyleClass().remove(PARSE_INVALID);
+
+            if (!inputText.equals("")) {
+                Command command = logic.parse(inputText);
+
+                if (command == null) {
+                    floatParseRealTime.getStyleClass().add(PARSE_INVALID);
+                    result = "Invalid command";
+
+                } else {
+                    floatParseRealTime.getStyleClass().add(PARSE_VALID);
+                    result = command.getParsedResult();
+                    if (result == null) {
+                        result = "Valid command";
+                    }
+                }
+            }
+            floatParseLabel.setText(result);
+        });
+
+        commandInput.focusedProperty().addListener((obs, old, focused) -> {
+            if (animated) {
+                Animation animation;
+                allAnimation.forEach(Animation::pause);
+                allAnimation.clear();
+
+                if (focused) {
+                    floatParseRealTime.setOpacity(0);
+                    floatParseRealTime.setVisible(true);
+                    animation = UiUtil.fadeNode(floatParseRealTime, true, 100, (e) -> {
+                    });
+                } else {
+                    animation = UiUtil.fadeNode(floatParseRealTime, false, 100, (e) -> {
+                        floatParseRealTime.setVisible(false);
+                    });
+                }
+
+                allAnimation.add(animation);
+                animation.play();
+            } else {
+                floatParseRealTime.setOpacity(focused ? 1 : 0);
+                floatParseRealTime.setVisible(focused);
+            }
+        });
+    }
     /**
      * Handles the Enter button pressed event.
      */

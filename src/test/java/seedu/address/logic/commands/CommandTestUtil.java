@@ -63,7 +63,7 @@ public class CommandTestUtil {
     public static final String VALID_EVENT_DATE_NDP = "09/08/2018";
     public static final String VALID_EVENT_START_TIME_F1 = "1000";
     public static final String VALID_EVENT_START_TIME_NDP = "1700";
-    public static final String VALID_EVENT_END_TIME_F1 = "1300";
+    public static final String VALID_EVENT_END_TIME_F1 = "2100";
     public static final String VALID_EVENT_END_TIME_NDP = "1900";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;

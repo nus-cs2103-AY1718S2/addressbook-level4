@@ -32,6 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final ObservableList<Person> personList;
+    private Person selectedPerson;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -127,6 +128,23 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<Person> getActivePersonList() {
         return personList;
+    }
+
+    /**
+     * Set the currently selected person
+     * @param selectedPerson currently in the list
+     */
+    @Override
+    public void setSelectedPerson(Person selectedPerson) {
+        this.selectedPerson = selectedPerson;
+    }
+
+    /**
+     * Get the currently selected person
+     */
+    @Override
+    public Person getSelectedPerson() {
+        return selectedPerson;
     }
 
     @Override

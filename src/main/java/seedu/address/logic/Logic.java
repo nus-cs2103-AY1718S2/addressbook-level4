@@ -33,6 +33,9 @@ public interface Logic {
     /** Returns an active view of the filtered list of persons (With active predicate change listener) */
     ObservableList<Person> getActivePersonList();
 
+    /** Set the currently selected person */
+    void setSelectedPerson(Person selectedPerson);
+
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 }

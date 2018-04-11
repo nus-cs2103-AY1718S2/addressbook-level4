@@ -24,6 +24,9 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
+    Predicate<Issue> PREDICATE_SHOW_ALL_ISSUES = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
     Predicate<Exercise> PREDICATE_SHOW_ALL_EXERCISES = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
@@ -59,8 +62,16 @@ public interface Model {
      *
      * @throws IOException if while updating the issue there is some problem in authentication
      */
-    void updateIssue(Index index, Issue editedIssue) throws IOException;
+    void updateIssue(Index index, Issue editedIssue) throws IOException, CommandException;
 
+    /** Returns unmodifiable view of the filtered issue list */
+    ObservableList<Issue> getFilteredIssueList();
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredIssueList(Predicate<Issue> predicate);
     //@@author
 
     /**

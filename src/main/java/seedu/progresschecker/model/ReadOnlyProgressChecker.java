@@ -2,6 +2,7 @@ package seedu.progresschecker.model;
 
 import javafx.collections.ObservableList;
 import seedu.progresschecker.model.exercise.Exercise;
+import seedu.progresschecker.model.issues.Issue;
 import seedu.progresschecker.model.person.Person;
 import seedu.progresschecker.model.tag.Tag;
 
@@ -27,5 +28,10 @@ public interface ReadOnlyProgressChecker {
      * This list will not contain any duplicate exercises.
      */
     ObservableList<Exercise> getExerciseList();
+
+    /**
+     * Returns an unmodifiable view of the excercises list.
+     */
+    ObservableList<Issue> getIssueList();
 
 }

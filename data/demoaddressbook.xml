@@ -206,6 +206,13 @@
         <address>402 Orchard Road</address>
         <date>2018-05-07</date>
     </persons>
+    <persons>
+        <name>Email Test</name>
+        <phone>33335555</phone>
+        <email>pigeonscs2103@gmail.com</email>
+        <address>10 Bayfront Road</address>
+        <date>2018-06-04</date>
+    </persons>
     <tags>repeat</tags>
     <tags>fragile</tags>
     <tags>priority</tags>

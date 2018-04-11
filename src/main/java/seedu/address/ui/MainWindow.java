@@ -44,7 +44,7 @@ public class MainWindow extends UiPart<Stage> {
     private String theme;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private CalendarPanel calendarPanel;
     private PersonListPanel personListPanel;
     private AppointmentListPanel appointmentListPanel;
     private Config config;
@@ -52,7 +52,7 @@ public class MainWindow extends UiPart<Stage> {
     private MailPanel mailPanel;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane calendarPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -135,8 +135,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        calendarPanel = new CalendarPanel(logic.getFilteredAppointmentList());
+        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -249,7 +249,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        calendarPanel.freeResources();
     }
 
     @Subscribe

@@ -63,7 +63,7 @@ public class UserPrefs {
     public void setCalendarIdFilePath(String calendarIdFilePath) {
         this.calendarIdFilePath = calendarIdFilePath;
     }
- 
+
     public String getPasswordFilePath() {
         return passwordFilePath;
     }

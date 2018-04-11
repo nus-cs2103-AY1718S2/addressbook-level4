@@ -381,6 +381,24 @@ An example of the edit command would be: edit 1 tz/SGT
 ** Cons: May be more difficult to schedule meetings with clients with unknown time zones.
 // end::timezone[]
 
+//tag::email[]
+=== Email feature
+==== Current Implementation
+The email feature allows the user to send emails in the app by typing their message in an email compose pop up box.
+The inbox feature allows the user to see a preview of the plain text emails that they have received right when they open the app. To view the message, the user clicks the message and an popup will appear with the full message.
+
+==== Design Considerations
+
+===== Aspect: The UI of the inbox panel
+* **Alternative 1 (current choice):** Display the inbox panel so that it can be seen right when the user opens Sell IT.
+** Pros: Convenient and saves time which are key aspects as the user is a busy sales person.
+** Cons: May clutter up the app's start page.
+* **Alternative 2:** Inbox can be displayed on a separate panel which can be accessed by the user through a mail icon button.
+** Pros: Less clutter
+** Cons: May be less convenient for the sales person to always need to click the button to view their inbox.
+// end::email[]
+
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
@@ -950,7 +968,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * *Minor*: Command alias feature so that user does not have to type long commands.
 
 ==== Gloria Law
-* *Major*: A chat bot which the sales person can ask simple questions regarding his schedule and clients.
+* *Major*: An email feature comprised of an email inbox panel and the ability to compose, reply and forward emails.
 * *Minor*: A time zone feature which allows the sales person to add the timezone details of their clients.
 
 ==== Ma Yuqian
@@ -972,6 +990,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
 |`* * *` |user |schedule meetings with my clients |remember when I am supposed to meet them
+
+|`* * *` |user |conveniently send emails to clients |increase efficiency and save time
+
+|`* * *` |user |conveniently see my email inbox |know when my clients are contacting me
 
 |`* * *` |user |tag clients with important info like the products they are interested in | so that I can list and group together related clients quickly.
 
@@ -1050,6 +1072,25 @@ Use case ends.
 +
 Use case ends.
 * 4a. The user does not select any contacts.
++
+Use case ends.
+
+[discrete]
+=== Use case: Send email to client.
+
+*MSS*
+
+1. Sell IT shows the user a list of clients.
+2. User clicks the email of the client they want to contact.
+3. Sell IT displays the email compose pop up box.
+4. User types their email contents and pushes the send button.
+5. Sell IT attempts to send their email and displays a success or failure message.
+6. User closes the pop up by pressing the ESCAPE key or the return button.
+
+*Extensions*
+
+[none]
+* 4a. The user clicks cancel.
 +
 Use case ends.
 

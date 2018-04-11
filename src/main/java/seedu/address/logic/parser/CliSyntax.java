@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.CalendarViewCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -14,6 +13,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListAppointmentCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -44,6 +44,10 @@ public class CliSyntax {
     public static final String OPTIONFORCE_OWNER = "-fo";
     public static final String OPTIONFORCE_PETPATIENT = "-fp";
     public static final String OPTIONFORCE_APPOINTMENT = "-fa";
+    public static final String OPTION_YEAR = "-y";
+    public static final String OPTION_MONTH = "-m";
+    public static final String OPTION_WEEK = "-w";
+    public static final String OPTION_DAY = "-d";
 
     private static CliSyntax instance;
 
@@ -57,10 +61,11 @@ public class CliSyntax {
             AddCommand.COMMAND_WORD, EditCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
             FindCommand.COMMAND_WORD, ChangeThemeCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD,
             HelpCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD,
-            HistoryCommand.COMMAND_WORD, CalendarViewCommand.COMMAND_WORD).collect(Collectors.toSet());
+            HistoryCommand.COMMAND_WORD, ListAppointmentCommand.COMMAND_WORD).collect(Collectors.toSet());
 
     private static final Set<String> options = Stream.of(OPTION_OWNER, OPTION_PETPATIENT, OPTION_APPOINTMENT,
-            OPTIONFORCE_OWNER, OPTIONFORCE_PETPATIENT, OPTIONFORCE_APPOINTMENT)
+            OPTIONFORCE_OWNER, OPTIONFORCE_PETPATIENT, OPTIONFORCE_APPOINTMENT, OPTION_YEAR, OPTION_MONTH,
+            OPTION_WEEK, OPTION_DAY)
             .collect(Collectors.toSet());
 
     public static CliSyntax getInstance() {

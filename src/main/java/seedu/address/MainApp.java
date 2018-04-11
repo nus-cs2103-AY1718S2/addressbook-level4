@@ -40,7 +40,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 4, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -52,6 +52,10 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
 
 
+    /**
+     * This init method is called automatically by Application in javafx package
+     * @throws Exception
+     */
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
@@ -76,7 +80,7 @@ public class MainApp extends Application {
     }
 
     private String getApplicationParameter(String parameterName) {
-        Map<String, String> applicationParameters = getParameters().getNamed();
+        Map<String, String> applicationParameters = this.getParameters().getNamed();
         return applicationParameters.get(parameterName);
     }
 

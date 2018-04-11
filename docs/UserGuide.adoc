@@ -11,13 +11,13 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T15-B2/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Smart Insurance Collection(SIC) is for those who *prefer to use a desktop app for managing contacts and appointments*. More importantly, SIC is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact and appointment management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -38,7 +38,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/29000 as/1000 age/20` : adds a contact
+named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -63,15 +64,15 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/INCOME [as/ACTUALSPENDING] b/AGE [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/29000 as/10000 age/20`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal, i/50000 age/23`
 
 === Listing all persons : `list`
 
@@ -81,7 +82,7 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [i/INCOME] [as/ACTUALSPENDING] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -157,7 +158,65 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+// tag::appointment[]
+=== Adding an appointment: `add_appointment`
 
+Adds an appointment to the address book calendar +
+Format: `add_appointment n/NAME S/START DATE TIME E/END DATE TIME`
+
+[TIP]
+The date time must be entered in the d/MM/yyyy HH:mm format+
+The name given to the appointment as its title must be unique
+
+Examples:
+
+* `add_appointment n/meet John S/11/09/2018 15:00  E/11/09/2018 16:00`
+
+=== remove existing appointment : `remove_appointment`
+
+Removes appointment whose title match the given search text +
+Format: `remove_appointment ST/SEARCH TEXT`
+
+[TIP]
+only the title is searched, appointment with the title that match the given search text will be removed
+This works as we enforces unique titles for appointments.
+
+Examples:
+
+* `remove_appointment ST/Title of the appointment`
+
+=== Editing an appointment: `edit_appointment`
+
+edit an existing appointment in the address book calendar +
+Format: `edit_appointment ST/SEARCH TEXT n/NEW NAME S/NEW START DATE TIME E/NEW END DATE TIME`
+
+[TIP]
+ST/SEARCH TEXT is a mandatory field that must be specified.
+Make sure the search text matches the title of an existing appointment.
+At least one of the other field must be specified. If changing the title, ensure the new title
+do not duplicates with other existing appointments
+
+Examples:
+
+* `edit_appointment ST/meet James n/meet John S/11/09/2018 15:00  E/11/09/2018 16:00`
+
+=== Look At a Date: `look`
+
+look at a specific date, the Calendar GUI will focus on the date +
+Format: `look DF/18/03/2018`
+
+[TIP]
+Note that the date format must be in d/MM/yyyy
+
+Examples:
+
+* `look DF/11/09/2018`
+
+=== Back to calendar Month View: `back`
+
+set the Calendar View to Month View +
+Format: `back`
+// end::appointment[]
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -218,6 +277,119 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Predict: `predict`
+Predict the potential spending of the of a new customer. Some of the customers have
+their "actual spending" recorded down while some don't have because they have
+not spent anything yet on the insurance policy. Hence this command is to
+predict how much they will spend based on the information from the existing customers
+
+Examples:
+
+* `Initially` +
+two customers with `actualSpending` > 0 while the other with
+`actualSpending` == 0(actual spending will actually not be shown
+if it is zero).
+
+* `After` +
+The customer with `actualSpending` == 0 now has `expectedSpending` shown.
+
+Other Specification:
+
+* The solution is persistent. Hence when new users are added and old users are deleted,
+the new solutions are calculated incrementally from the old solution.
+
+*  When adding an new `Person`, the `/as`(Actual Spending) is optional.
+if the actual spending is specified, the person is considered as existing
+customer. Otherwise potential customer. The prediction is to predict
+the potential customer's spending based on the information on the
+existing customers.
+
+* The solution is calculated through numerical methods. And numerical methods,
+unlike Jesus, can't solve everything. There are certain inputs that will lead
+to divergent solution. Also, certain value might be too large to be captured
+even with double. Hence in situations like this, an message of "Divergent solution"
+would be presented with no prediction.
+
+* Like "help" command, the design is fault-tolerant. If you type extra text such
+as `predict abcde` or `predict nothing please`, those are not valid command since
+`predict` takes no other argument. But they will still be accepted as `predict`
+
+Test input: +
+    1. `add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/30000 as/1500 age/20` +
+    2. `add n/John Two p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20` +
+    3. `add n/John Three p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/10000  age/20` +
+    4. `predict` +
+
+    ==>  John Three now shows expected spending of 500
+
+Test Input 2: +
+    0. `clear` +
+    1. `add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/30000 as/1000 age/20` +
+    2. `add n/John Two  p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/9000 as/300 age/20` +
+    3. `add n/John Three p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/20000  age/20` +
+    4. `predict` +
+
+    ==>  John Three should have 666.67 expected spending
+
+Test Input 3: +
+    0. `clear` +
+    1. `add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/12345678000 as/150 age/20` +
+    2. `add n/John Two  p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20` +
+    3. `predict`
+
+    ==>  divergent solution
+
+this is to illustrate unrealistic extreme values might lead to divergent solution.
+
+
+
+
+// tag::policy[]
+=== Add a policy : `add_policy`
+Add a policy to a person in the address book.
+
+Format: `add_policy INDEX beg/BEGINNING DATE exp/EXPIRATION DATE pr/PRICE [is/ISSUE]...`
+
+[TIP]
+A person can have any number of issues covered (including 0)
+These can be added later with `edit_policy`
+
+Examples:
+
+* `add_policy 1 beg/01/04/2018 exp/02/04/2020 pr/140 is/car_damage is/theft`
+* `add_policy 3 beg/01/02/2018 exp/28/02/2018 pr/120`
+
+=== Edit a policy : `edit_policy`
+Edit the policy of a person in the address book.
+
+Format: `edit_policy INDEX [beg/BEGINNING DATE] [exp/EXPIRATION DATE] [pr/PRICE] [is/ISSUE]...`
+
+****
+* Edits the policy of the person at the specified `INDEX`. The index refers to the index number shown
+ in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing issues, the existing issues of the policy will be removed i.e adding of issues is not cumulative.
+* You can remove all the policy's issues by typing `is/` without specifying any issue after it.
+****
+
+Examples:
+
+* `edit_policy 2 beg/01/07/2018 exp/02/04/2019`
+* `edit_policy 1 pr/100`
+* `edit_policy 4 pr/150 is/theft is/house_damage`
+
+=== Remove a policy : `remove_policy`
+Remove the policy of a person in the address book.
+
+Format: `remove_policy INDEX`
+
+Examples:
+
+* `remove_policy 1`
+
+// end::policy[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -233,21 +405,51 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Intended Features
+
+- Enhanced search bar functionality
+- Prediction of purchasing power
+- Enhanced Calendar features
+
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+// tag::task[]
+=== add task to task pad`[coming in v2.0]`
+the user is allowed to use command line to add a task to the task pad GUI  specifying the task title , task details
+
+=== remove task on task pad`[coming in v2.0]`
+the user is allowed to use command line to remove a task to the task pad GUI  specifying the task index
+// end::task[]
+=== Predict Purchasing Power
+
+- User is able to type "Predict" get potential customer's expected spending based on the existing data
+- After new data has been entered, users are able to re-predict and retrain the model
+
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add Appointment* `add_appointment n/NAME S/START DATE E/End Date` +
+e.g. `add_appointment n/Meet James S/14/08/2018 15:00 S/14/08/2018 16:00`
+* *Remove Appointment* `remove_appointment ST/SEARCH TEXT` +
+e.g. `remove_appointment ST/Title of the appointment`
+* *Edit Appointment* `edit_appointment ST/SEARCH TEXT n/NEW NAME S/NEW START DATE E/NEW End Date` +
+e.g. `edit_appointment ST/meet John n/Meet James S/14/08/2018 15:00 S/14/08/2018 16:00`
+* *Look At a Date* `look DF/DATE TO LOOK` +
+e.g. `look DF/18/03/2018`
+* *Back to Month View* `back`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -262,3 +464,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Add a Policy* : `add_policy` +
+e.g. `add_policy 1 beg/01/04/2018 exp/02/04/2020 pr/140 is/car_damage is/theft`
+* *Edit a Policy* : `edit_policy` +
+e.g. `edit_policy 4 pr/150 is/theft is/house_damage`
+* *Remove a Policy* : `remove_policy` +
+e.g. `remove_policy 1`

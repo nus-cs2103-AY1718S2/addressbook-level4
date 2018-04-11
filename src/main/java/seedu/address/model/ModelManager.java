@@ -2,9 +2,13 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +16,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.calendar.AppointmentEntry;
+import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
+import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.EditAppointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -20,7 +29,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.
  */
-public class ModelManager extends ComponentManager implements Model {
+public class ModelManager extends ComponentManager implements Model, PredictionModel {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
@@ -39,6 +48,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
+    //self instantiate new AddressBook and UserPrefs
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
     }
@@ -54,7 +64,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -72,13 +84,40 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author yuxiangSg
+    @Override
+    public void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException {
+        addressBook.addAppointment(appointmentEntry);
+        indicateAddressBookChanged();
+
+    }
+
+    @Override
+    public void removeAppointment(String searchText) throws AppointmentNotFoundException {
+        addressBook.removeAppointment(searchText);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void editAppointment(String searchText, AppointmentEntry reference, AppointmentEntry original)
+            throws EditAppointmentFailException {
+        addressBook.editAppointment(searchText, reference, original);
+        indicateAddressBookChanged();
+
+    }
+    //@@author
+    @Override
+    public AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException {
+        return addressBook.findAppointment(searchText);
+    }
+
     @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
+        this.indicateAddressBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -99,6 +138,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public CalendarSource getCalendar() {
+        return addressBook.getCalendar();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
@@ -116,4 +160,59 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    //@author SoilChang
+    @Override
+    public void preparePredictionData(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets,
+                                      ArrayList<Double> normalizationConstant) {
+        ObservableList<Person> personList = this.getAddressBook().getPersonList();
+        for (int i = 0; i < personList.size(); i++) {
+            double as = personList.get(i).getActualSpending().value;
+
+            //the person has no actual spending recorded
+            if (as == 0.0) {
+                continue;
+            }
+
+            ArrayList<Double> row = new ArrayList<>();
+            //record down the actual value
+            row.add(personList.get(i).getIncome().value / normalizationConstant.get(0));
+            targets.add(as);
+
+
+            //push to matrix
+            matrix.add(row);
+        }
+    }
+
+    //@author SoilChang
+    @Override
+    public void updatePredictionResult(ArrayList<Double> trueWeights) throws CommandException {
+        ObservableList<Person> personList = this.addressBook.getPersonList();
+        for (int i = 0; i < personList.size(); i++) {
+            if (personList.get(i).getActualSpending().value != 0.0) {
+                //the person already has known value of spending
+                continue;
+            }
+
+            //else update the person with expected spending
+            Person p = personList.get(i);
+            logger.info("Prediction results: income coefficient-> " + "\n"
+                    + "Income coefficient: " + trueWeights.get(0) + "\n"
+            );
+
+
+            Person updatedPerson = p.updateSelectedField(trueWeights);
+            //update the model here
+
+
+            try {
+                this.updatePerson(personList.get(i), updatedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+            this.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
+    }
 }

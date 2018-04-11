@@ -45,11 +45,11 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
 
         getBrowserPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowNotOpen();
+        assertHelpWindowOpen();
 
         //use menu button
-        getMainMenu().openHelpWindowUsingMenu();
-        assertHelpWindowOpen();
+        //getMainMenu().openHelpWindowUsingMenu();
+        //assertHelpWindowOpen();
 
         //use command box
         executeCommand(HelpCommand.COMMAND_WORD);

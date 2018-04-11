@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +11,14 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.calendarfx.model.CalendarSource;
+
 import javafx.collections.ObservableList;
+import seedu.address.model.calendar.AppointmentEntry;
+import seedu.address.model.calendar.InsuranceCalendar;
+import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
+import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.EditAppointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -26,8 +34,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final InsuranceCalendar calendar;
 
-    /*
+    /**
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
@@ -37,9 +46,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        calendar = new InsuranceCalendar();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -59,23 +70,69 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author yuxiangSg
+    public void setCalendar(InsuranceCalendar calendar) {
+        this.calendar.clearAppointments();
+        this.calendar.copyAppointments(calendar);
+    }
+    //@@author
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
+        setCalendar(newData.getMyCalendar());
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-
         try {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
     }
+    //@@author yuxiangSg
+    //// calendar-level operations
 
+    /**
+     * Adds a appointment entry to the calendar.
+     *
+     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
+     */
+    public void addAppointment(AppointmentEntry entry) throws DuplicateAppointmentException {
+        calendar.addAppointment(entry);
+    }
+
+    /**
+     * remove appointment entries related to the searchText in the calendar.
+     *
+     * @throws AppointmentNotFoundException if an equivalent appointment already exists.
+     */
+    public void removeAppointment(String searchText) throws AppointmentNotFoundException {
+        calendar.removeAppointment(searchText);
+    }
+
+    /**
+     * edit an existing appointment entry in the calendar.
+     *
+     * @throws EditAppointmentFailException if an equivalent appointment already exists.
+     */
+    public void editAppointment(String searchText, AppointmentEntry referenceEntry, AppointmentEntry original)
+            throws EditAppointmentFailException {
+        calendar.editAppointmentEntry(searchText, referenceEntry, original);
+    }
+
+    /**
+     * find an existing appointment entry in the calendar given the searchText.
+     *
+     * @throws AppointmentNotFoundException if an equivalent appointment already exists.
+     */
+    public AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException {
+        return calendar.findAppointment(searchText);
+    }
+    //@@author
     //// person-level operations
 
     /**
@@ -98,9 +155,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
+     *                                  another existing person in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      * @see #syncWithMasterTagList(Person)
      */
     public void updatePerson(Person target, Person editedPerson)
@@ -114,10 +170,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, syncedEditedPerson);
     }
 
+
     /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
-     *  list.
+     * Updates the master tag list to include tags in {@code person} that are not in the list.
+     *
+     * @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
+     * list.
      */
     private Person syncWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
@@ -131,12 +189,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        //@author SoilChang
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                correctTagReferences, person.getIncome(), person.getActualSpending(),
+                person.getExpectedSpending(), person.getAge(), person.getPolicy());
+        //@author
     }
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
+     *
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException {
@@ -154,10 +217,15 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// util methods
+    //@@author yuxiangSg
+    CalendarSource getCalendar() {
+        return calendar.getCalendar();
+    }
+    //@@author
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 
@@ -169,6 +237,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    @Override
+    public ArrayList<AppointmentEntry> getMyCalendarEntries() {
+        return calendar.getAppointmentEntries();
+    }
+
+    @Override
+    public InsuranceCalendar getMyCalendar() {
+        return calendar;
     }
 
     @Override

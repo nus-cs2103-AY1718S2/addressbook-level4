@@ -2,7 +2,14 @@ package seedu.address.model;
 
 import java.util.function.Predicate;
 
+import com.calendarfx.model.CalendarSource;
+
 import javafx.collections.ObservableList;
+
+import seedu.address.model.calendar.AppointmentEntry;
+import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
+import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.EditAppointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,7 +32,23 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
+    //@@author yuxiangSg
+    /** Adds the given appointment entry */
+    void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException;
 
+    /** remove appointments associated with the given searchText */
+    void removeAppointment(String searchText) throws AppointmentNotFoundException;
+
+    /** edit appointment associated with the given searchText */
+    void editAppointment(String searchText, AppointmentEntry reference, AppointmentEntry original)
+            throws EditAppointmentFailException;
+
+    /** find an appointment associated with the given searchText */
+    AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException;
+
+    /** returns the calendar in the addressbook */
+    CalendarSource getCalendar();
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -44,5 +67,9 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+
+
+
 
 }

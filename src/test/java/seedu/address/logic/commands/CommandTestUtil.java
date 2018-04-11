@@ -3,10 +3,15 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTUALSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_INTERVAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_INTERVAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -31,23 +36,41 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
+    public static final String VALID_TITLE_JOHN = "meet john";
+    public static final String VALID_DATE_TIME_START = "04/04/2018 12:00";
+    public static final String VALID_DATE_TIME_END = "04/04/2018 13:00";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_TAG_HUSBAND = "husband";
+    public static final Double VALID_INCOME_AMY = 2000.0;
+    public static final Double VALID_INCOME_BOB = 2000.0;
+    public static final Double VALID_ACTUALSPENDING_AMY = 2000.0;
+    public static final Double VALID_ACTUALSPENDING_BOB = 2000.0;
+    public static final Integer VALID_AGE_AMY = 20;
+    public static final Integer VALID_AGE_BOB = 20;
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
+    public static final String TITLE_DESC_MEET_JOHN = " " + PREFIX_NAME + VALID_TITLE_JOHN;
+    public static final String START_DATE_DESC = " " + PREFIX_START_INTERVAL + VALID_DATE_TIME_START;
+    public static final String END_DATE_DESC = " " + PREFIX_END_INTERVAL + VALID_DATE_TIME_END;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
     public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
+    public static final String INCOME_DESC_AMY = " " + PREFIX_INCOME + VALID_INCOME_AMY;
+    public static final String ACTUALSPENDING_DESC_AMY = " " + PREFIX_ACTUALSPENDING + VALID_ACTUALSPENDING_AMY;
+    public static final String ACTUALSPENDING_DESC_BOB = " " + PREFIX_ACTUALSPENDING + VALID_ACTUALSPENDING_BOB;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    public static final String INCOME_DESC_BOB = " " + PREFIX_INCOME + VALID_INCOME_BOB;
+    public static final String AGE_DESC_AMY = " " + PREFIX_AGE + VALID_AGE_AMY;
+    public static final String AGE_DESC_BOB = " " + PREFIX_AGE + VALID_AGE_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -56,6 +79,10 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_INCOME_DESC = " " + PREFIX_INCOME + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_AGE_DESC = " " + PREFIX_AGE + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_DATE_TIME_START_DESC = " " + PREFIX_START_INTERVAL + "04-04-2018 12:00";
+    public static final String INVALID_DATE_TIME_END_DESC =  " " + PREFIX_END_INTERVAL + "04-04-2018 13:00";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -78,7 +105,7 @@ public class CommandTestUtil {
      * - the {@code actualModel} matches {@code expectedModel}
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
+                                            Model expectedModel) {
         try {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);

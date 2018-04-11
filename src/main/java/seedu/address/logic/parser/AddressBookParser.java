@@ -6,19 +6,29 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPolicyCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditAppointmentCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditPolicyCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LookDateCommand;
+import seedu.address.logic.commands.PredictCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveAppointmentsCommand;
+import seedu.address.logic.commands.RemovePolicyCommand;
+import seedu.address.logic.commands.ReturnMonthViewCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -69,6 +79,9 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
+        case PredictCommand.COMMAND_WORD:
+            return new PredictCommand();
+
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
@@ -83,6 +96,30 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
+
+        case RemoveAppointmentsCommand.COMMAND_WORD:
+            return  new RemoveAppointmentCommandParser().parse(arguments);
+
+        case AddAppointmentCommand.COMMAND_WORD:
+            return new AddAppointmentCommandParser().parse(arguments);
+
+        case EditAppointmentCommand.COMMAND_WORD:
+            return new EditAppointmentCommandParser().parse(arguments);
+
+        case LookDateCommand.COMMAND_WORD:
+            return new LookDateCommandParser().parse(arguments);
+
+        case ReturnMonthViewCommand.COMMAND_WORD:
+            return new ReturnMonthViewCommand();
+
+        case AddPolicyCommand.COMMAND_WORD:
+            return new AddPolicyCommandParser().parse(arguments);
+
+        case RemovePolicyCommand.COMMAND_WORD:
+            return new RemovePolicyCommandParser().parse(arguments);
+
+        case EditPolicyCommand.COMMAND_WORD:
+            return new EditPolicyCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

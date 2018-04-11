@@ -26,7 +26,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Stage> {
 
-    private static final String FXML = "MainWindow.fxml";
+    private static final String FXML = "NewMainWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -38,6 +38,8 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private CalendarPanel calendarPanel;
+    private AgendaPanel agendaPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -57,6 +59,9 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane agendaPanelPlaceholer;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
 
@@ -69,7 +74,6 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
-
         setAccelerators();
         registerAsAnEventHandler(this);
     }
@@ -130,6 +134,14 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        calendarPanel = new CalendarPanel(logic.getCalendar());
+        browserPlaceholder.getChildren().add(calendarPanel.getCalendarPage());
+
+        agendaPanel = new AgendaPanel(logic.getCalendar());
+        agendaPanelPlaceholer.getChildren().add(agendaPanel.getAgendaView());
+
+
     }
 
     void hide() {

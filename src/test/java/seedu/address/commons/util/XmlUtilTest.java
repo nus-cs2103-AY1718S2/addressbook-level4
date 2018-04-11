@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,11 +35,20 @@ public class XmlUtilTest {
     private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempAddressBook.xml"));
 
     private static final String INVALID_PHONE = "9482asf424";
+    private static final Double INVALID_INCOME = -400000.0;
 
     private static final String VALID_NAME = "Hans Muster";
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
+    private static final Double VALID_INCOME = 200000.3;
+    private static final Double VALID_ACTUALSPENDING = 200.3;
+    private static final Double VALID_EXPECTEDSPENDING = 200.3;
+    private static final Integer VALID_AGE = 20;
+    private static final String VALID_BEG_DATE = "10/10/2018";
+    private static final String VALID_EXP_DATE = "25/10/2018";
+    private static final Double VALID_PRICE = 100.0;
+    private static final List<String> VALID_ISSUES = new ArrayList<>();
     private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
@@ -80,7 +90,9 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, VALID_INCOME,
+                VALID_ACTUALSPENDING, VALID_EXPECTEDSPENDING, VALID_AGE, VALID_BEG_DATE, VALID_EXP_DATE,
+                VALID_PRICE, VALID_ISSUES);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -89,7 +101,9 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, VALID_INCOME,
+                VALID_ACTUALSPENDING, VALID_EXPECTEDSPENDING, VALID_AGE, VALID_BEG_DATE, VALID_EXP_DATE,
+                VALID_PRICE, VALID_ISSUES);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -98,7 +112,9 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, VALID_INCOME,
+                VALID_ACTUALSPENDING, VALID_EXPECTEDSPENDING, VALID_AGE, VALID_BEG_DATE, VALID_EXP_DATE,
+                VALID_PRICE, VALID_ISSUES);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -142,5 +158,6 @@ public class XmlUtilTest {
      * objects.
      */
     @XmlRootElement(name = "person")
-    private static class XmlAdaptedPersonWithRootElement extends XmlAdaptedPerson {}
+    private static class XmlAdaptedPersonWithRootElement extends XmlAdaptedPerson {
+    }
 }

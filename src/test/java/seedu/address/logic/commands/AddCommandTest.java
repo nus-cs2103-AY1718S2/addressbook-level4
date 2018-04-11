@@ -14,6 +14,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.calendarfx.model.CalendarSource;
+
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -21,6 +23,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.calendar.AppointmentEntry;
+import seedu.address.model.calendar.exceptions.AppointmentNotFoundException;
+import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
+import seedu.address.model.calendar.exceptions.EditAppointmentFailException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -102,6 +108,28 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeAppointment(String searchText) throws AppointmentNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void editAppointment(String searchText, AppointmentEntry reference, AppointmentEntry original)
+                throws EditAppointmentFailException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -132,6 +160,16 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public CalendarSource getCalendar() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
+            return null;
         }
     }
 

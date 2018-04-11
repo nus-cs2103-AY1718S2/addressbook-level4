@@ -107,6 +107,7 @@ public class SampleDataUtil {
             for (Appointment sampleAppointment : getSampleAppointments()) {
                 sampleAb.addAppointment(sampleAppointment);
             }
+
             for (NextOfKin sampleNextOfKin : getSampleNextOfKin()) {
                 sampleAb.addNextOfKin(sampleNextOfKin);
             }

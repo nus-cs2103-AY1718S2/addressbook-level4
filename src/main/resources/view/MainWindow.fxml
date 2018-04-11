@@ -47,7 +47,7 @@
         </StackPane>
 
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-          <VBox fx:id="personList" maxWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+          <VBox fx:id="personList" maxWidth="300" prefWidth="250" SplitPane.resizableWithParent="false">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
@@ -60,7 +60,7 @@
             </padding>
           </StackPane>
 
-          <VBox fx:id="appointmentList" maxWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+          <VBox fx:id="appointmentList" maxWidth="280" prefWidth="240" SplitPane.resizableWithParent="false">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>

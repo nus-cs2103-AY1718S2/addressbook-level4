@@ -180,7 +180,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws NotificationNotFoundException {
+        public void deleteNotification(String id, boolean deleteFromAddressBookOnly)
+                throws NotificationNotFoundException {
 
         }
 

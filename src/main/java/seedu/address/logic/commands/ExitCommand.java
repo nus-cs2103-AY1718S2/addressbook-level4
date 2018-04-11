@@ -18,4 +18,8 @@ public class ExitCommand extends Command {
         return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT);
     }
 
+    @Override
+    public String getParsedResult() {
+        return "Press [ENTER] to exit. Are you sure you want to exit HR+? =(";
+    }
 }

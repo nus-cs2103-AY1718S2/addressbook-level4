@@ -13,6 +13,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.SearchCommand;
+import seedu.address.model.ActiveListType;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 
@@ -71,6 +72,7 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
      */
     private void assertSearchSuccess(String command) throws Exception {
         Model expectedModel = getModel();
+        expectedModel.setActiveListType(ActiveListType.SEARCH_RESULTS);
 
         executeCommand(command);
         assertCommandBoxShowsDefaultStyle();

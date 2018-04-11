@@ -8,10 +8,6 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
-import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
-import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
-import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
-import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -60,6 +56,11 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public ObservableList<Book> getActiveList() {
+        return model.getActiveList();
+    }
+
+    @Override
     public ObservableList<Book> getDisplayBookList() {
         return model.getDisplayBookList();
     }
@@ -85,32 +86,10 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Subscribe
-    private void handleShowBookListRequestEvent(SwitchToBookListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.setActiveListType(ActiveListType.BOOK_SHELF);
-    }
-
-    @Subscribe
-    private void handleShowSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
-    }
-
-    @Subscribe
-    private void handleSwitchToRecentBooksRequestEvent(SwitchToRecentBooksRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.setActiveListType(ActiveListType.RECENT_BOOKS);
-    }
-
-    @Subscribe
-    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.addRecentBook(event.getNewSelection());
-    }
-
-    @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.addRecentBook(event.getNewSelection());
+        if (model.getActiveListType() != ActiveListType.RECENT_BOOKS) {
+            model.addRecentBook(event.getNewSelection());
+        }
     }
 }

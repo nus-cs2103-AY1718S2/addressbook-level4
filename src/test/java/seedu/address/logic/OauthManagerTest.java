@@ -2,12 +2,14 @@
 
 package seedu.address.logic;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 
 /**
  * Unit tests for OauthManager and contained function logic.
@@ -38,7 +40,8 @@ public class OauthManagerTest {
                 .setTimeZone("America/Los_Angeles");
         eventToTest.setEnd(end);
 
-        String expectedEventAsString = "Test Calendar Event From: 2018-04-30 09:00 AM To: 2018-04-30 05:00 PM @ One Sansome St., San Francisco, CA 94104";
+        String expectedEventAsString = "Test Calendar Event From: 2018-04-30 09:00 AM To: 2018-04-30 05:00 PM"
+                + " @ One Sansome St., San Francisco, CA 94104";
         assertEquals(expectedEventAsString, OAuthManager.formatEventDetailsAsString(eventToTest));
     }
 
@@ -59,7 +62,8 @@ public class OauthManagerTest {
                 .setTimeZone("America/Los_Angeles");
         eventToTest.setEnd(end);
 
-        String expectedEventAsString = "Test Calendar Event From: 2018-04-30 09:00 AM To: 2018-04-30 05:00 PM @ No Location Specified";
+        String expectedEventAsString = "Test Calendar Event From: 2018-04-30 09:00 AM To: 2018-04-30 05:00 PM"
+                + " @ No Location Specified";
         assertEquals(expectedEventAsString, OAuthManager.formatEventDetailsAsString(eventToTest));
     }
 

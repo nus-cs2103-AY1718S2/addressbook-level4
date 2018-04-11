@@ -20,6 +20,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class CommandBox extends UiPart<Region> {
 
+    public static final String MESSAGE_HAVE_NOT_LOGGED_IN = "You have not logged in yet. Please log in.";
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
 
@@ -127,7 +128,7 @@ public class CommandBox extends UiPart<Region> {
                 raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
             } else {
                 logger.info("Result: " + "User is not logged in yet.");
-                raise(new NewResultAvailableEvent("You have not logged in yet. Please log in."));
+                raise(new NewResultAvailableEvent(MESSAGE_HAVE_NOT_LOGGED_IN));
             }
 
         } catch (CommandException | ParseException e) {

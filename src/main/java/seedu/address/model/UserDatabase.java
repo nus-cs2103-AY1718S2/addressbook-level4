@@ -4,9 +4,11 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.UniqueUserList;
 import seedu.address.model.login.User;
@@ -21,9 +23,11 @@ import seedu.address.model.login.exceptions.UserNotFoundException;
  */
 public class UserDatabase implements ReadOnlyUserDatabase {
 
+    private static final Logger logger = LogsCenter.getLogger(UserDatabase.class);
+
     private static final String AB_FILEPATH_PREFIX = "data/addressbook-";
     private static final String AB_FILEPATH_POSTFIX = ".xml";
-    private final UniqueUserList users;
+    private UniqueUserList users;
 
     private boolean hasLoggedIn;
     private User loggedInUser;
@@ -74,8 +78,8 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     public User getLoggedInUser() {
         return loggedInUser;
     }
-    //@@author kaisertanqr
 
+    //@@author kaisertanqr
     /**
      * Returns the login status of the user.
      */
@@ -91,6 +95,12 @@ public class UserDatabase implements ReadOnlyUserDatabase {
         hasLoggedIn = status;
     }
 
+    /**
+     * Sets the unique users list to {@code uniqueUserList}
+     */
+    public void setUniqueUserList(UniqueUserList uniqueUserList) {
+        users = uniqueUserList;
+    }
 
     /**
      * Checks the login credentials whether it matches any user in UserDatabase.
@@ -102,14 +112,17 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
         User toCheck = new User(username, password,
                 AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX);
+        logger.fine("Attempting to check credentials for login");
 
         if (hasLoggedIn) {
             throw new AlreadyLoggedInException();
         } else if (!users.contains(toCheck)) {
+            logger.fine("Login credentials match failed. Login failed.");
             return hasLoggedIn;
         } else {
             hasLoggedIn = true;
             loggedInUser = toCheck;
+            logger.fine("Login credentials match. Login successful.");
             return hasLoggedIn;
         }
     }
@@ -125,6 +138,7 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     public boolean checkCredentials(Username username, Password password) throws AlreadyLoggedInException {
         User toCheck = new User(username, password,
                 AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX);
+        logger.fine("Attempting to check credentials for permissions.");
         if (!hasLoggedIn) {
             return users.contains(toCheck);
         } else {

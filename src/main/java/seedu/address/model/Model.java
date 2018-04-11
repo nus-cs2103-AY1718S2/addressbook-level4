@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.login.Password;
+import seedu.address.model.login.UniqueUserList;
 import seedu.address.model.login.User;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
@@ -60,6 +61,11 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     //@@author kaisertanqr
+
+    /**
+     * Sets the unique users list to {@code uniqueUserList} in the UserDatabase.
+     */
+    void setUsersList(UniqueUserList uniqueUserList);
 
     /** Returns the UserDatabase */
     ReadOnlyAddressBook getUserDatabase();

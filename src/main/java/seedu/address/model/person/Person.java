@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.person.exceptions.InvalidSubjectCombinationException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.subject.UniqueSubjectList;
 import seedu.address.model.tag.Tag;

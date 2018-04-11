@@ -801,4 +801,32 @@ Opens an email draft in the browser with recipients as all persons tagged with '
 // end::commandsummary[]
 == Glossary
 
-// add terms: Group, Preference, Orders, Entries, PersonPanel, CalendarPanel, OrderListPanel, EntryListPanel, etc.
+[[tag]]Tag::
+A field that you can add to a person's contact to represent additional details about that person.
+
+[[group]]Group::
+A Tag to represent the group of persons a person can be in. For example, group tags can be tags like `friends`, `colleagues`, `twitter`, etc.
+
+[[preference]]Preference::
+A Tag to represent what items the person is interested in. For example, preference tags can be tags like `shoes`, `videogames`, etc.
+
+[[order]]Order::
+An Order represents a sales order you might want to keep track of by adding it into ContactSails. It has fields for item description, price, quantity, and delivery date.
+
+[[entry]]Entry::
+An Entry represents a calendar event that you can add to the integrated calendar in ContactSails to keep track of your deadlines.
+
+[[panel]]Panel::
+An area in the ContactSails UI that displays all related information in a single place. Different panels have different data to display.
+
+[[personpanel]]PersonPanel::
+A Panel that displays the contact details related to a single person that has been selected.
+
+[[calendarpanel]]CalendarPanel::
+A Panel that displays the integrated calendar in ContactSails. You can view all your calendar entries in a graphical manner using this panel.
+
+[[orderlistpanel]]OrderListPanel::
+A Panel that displays all sales orders that you have added to ContactSails.
+
+[[entrylistpanel]]EntryListPanel::
+A Panel that displays all the calendar entries that you have added to ContactSails.

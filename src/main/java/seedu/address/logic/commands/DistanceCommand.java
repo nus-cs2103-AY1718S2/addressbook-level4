@@ -76,6 +76,8 @@ public class DistanceCommand extends Command {
             String personName = person.getName().toString();
             origin = "Kent Ridge MRT";
             destination = person.getAddress().toString();
+
+            //Trim address
             if (destination.indexOf('#') > 2) {
                 int stringCutIndex;
                 stringCutIndex = destination.indexOf('#') - 2;

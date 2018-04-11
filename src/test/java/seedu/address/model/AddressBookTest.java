@@ -146,7 +146,7 @@ public class AddressBookTest {
     public void removeTag_tagUsedByMultiplePersons_tagRemoved() throws Exception {
         amyNBobAddressBook.removeTag(new Tag(VALID_TAG_FRIEND));
 
-        Person expectedAmy = new PersonBuilder(AMY).build();
+        Person expectedAmy = new PersonBuilder(AMY).withTags().build();
         Person expectedBob = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
         AddressBook expectedAddressBook = new AddressBookBuilder()
                 .withPerson(expectedAmy).withPerson(expectedBob).build();

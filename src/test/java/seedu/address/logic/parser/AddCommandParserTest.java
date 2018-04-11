@@ -102,7 +102,7 @@ public class AddCommandParserTest {
         // zero tags
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTimeTableLink(VALID_TIMETABLE_LINK_AMY)
-                .withDetail(VALID_DETAIL_AMY).build();
+                .withDetail(VALID_DETAIL_AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + TIMETABLE_LINK_DESC_AMY + DETAIL_DESC_AMY, new AddCommand(expectedPerson));
     }

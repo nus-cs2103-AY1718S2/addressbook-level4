@@ -1,7 +1,7 @@
 package seedu.address.ui.testutil;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static seedu.address.model.tag.Tag.AVAILABLE_COLORS;
 
 import java.util.Arrays;
 import java.util.List;
@@ -84,32 +84,8 @@ public class GuiTestAssert {
      * @see PersonCard#getTagColorStyleFor(String)
      */
     private static String getTagColorStyleFor(String tagName) {
-        switch (tagName) {
-        case "owesMoney":
-            return "blue";
-
-        case "CS3230":
-            return "navy";
-
-        case "colleagues":
-        case "neighbours":
-            return "yellow";
-
-        case "family":
-        case "friend":
-            return "orange";
-
-        case "classmates":
-        case "friends":
-            return "teal";
-
-        case "husband":
-            return "grey";
-
-        default:
-            fail(tagName + " does not have a color assigned.");
-            return "";
-        }
+        String[] tagColorStyles = AVAILABLE_COLORS;
+        return tagColorStyles[Math.abs(tagName.hashCode()) % tagColorStyles.length - 1];
     }
 
     /**
@@ -119,10 +95,18 @@ public class GuiTestAssert {
     private static void assertTagsEqual(Person expectedPerson, PersonCardHandle actualCard) {
         List<String> expectedTags = expectedPerson.getTags().stream()
                 .map(tag -> tag.name).collect(Collectors.toList());
+        List<String> expectedColors = expectedPerson.getTags().stream()
+                .map(tag -> tag.color).collect(Collectors.toList());
         assertEquals(expectedTags, actualCard.getTags());
-        expectedTags.forEach(tag ->
-                assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColorStyleFor(tag)),
-                        actualCard.getTagStyleClasses(tag)));
+        for (int i = 0; i < expectedTags.size(); i++) {
+            if (expectedColors.get(i).equals("undefined")) {
+                assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getTagColorStyleFor(expectedTags.get(i))),
+                        actualCard.getTagStyleClasses(expectedTags.get(i)));
+            } else {
+                assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, expectedColors.get(i)),
+                        actualCard.getTagStyleClasses(expectedTags.get(i)));
+            }
+        }
     }
 
     /**

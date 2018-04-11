@@ -329,7 +329,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
-    //@@author Isaaaca
+    //@@author Isaaaca-unused
     /**
      * Removes {@code tag} from all {@code persons} in the {@code AddressBook} and from the {@code AddressBook}.
      */

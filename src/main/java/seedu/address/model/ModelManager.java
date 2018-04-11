@@ -81,12 +81,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     public void addPage(Person person) throws IOException {
 
-        /*
-        String path = new File("src/main/resources/StudentPage/template.html").getAbsolutePath();
-        File htmlTemplateFile = new File(path);
-        String htmlString = FileUtils.readFileToString(htmlTemplateFile);
-        */
-
         String userHome = System.getProperty("user.home") + File.separator + "StudentPage";
         String locatie = userHome;
         File folder = new File(locatie);
@@ -114,10 +108,9 @@ public class ModelManager extends ComponentManager implements Model {
         List<Tag> tagList = person.getTagArray();
         int taglistSize = tagList.size();
         if (taglistSize != 0) {
-            htmlString = htmlString.replace("Class not Included", tagList.get(0).tagForBrowser());
+            htmlString = htmlString.replace("Class Not Specified", tagList.get(0).tagForBrowser());
         }
 
-        //ADD L1R5
 
         List<Subject> subjectList = person.getSubjectArray();
         int listSize = subjectList.size();
@@ -131,10 +124,20 @@ public class ModelManager extends ComponentManager implements Model {
             i++;
         }
 
+        // ADD L1R5
+
+        int score = person.calculateL1R5();
+        String scoreString = Integer.toString(score);
+        htmlString = htmlString.replace("STUDENTS SCORE", scoreString);
+
         // ADD CCA
-        Cca ccaList = person.getCca();
-        String ccaString = ccaList.toString();
+        String ccaString = person.getCca().getValue();
         htmlString = htmlString.replace("CCA", ccaString);
+
+        //ADD CCA Rank
+
+        String ccaRank = person.getCca().getPos();
+        htmlString = htmlString.replace("STUDENT RANK", ccaRank);
 
         // ADD REMARK
 
@@ -145,11 +148,23 @@ public class ModelManager extends ComponentManager implements Model {
         String injury = person.getInjuriesHistory().toString();
         htmlString = htmlString.replace("Insert injury history here", injury);
 
+        // NOK Details
+
+        String nokName = person.getNameOfKin().toString();
+        htmlString = htmlString.replace("NOK Name", nokName);
+/*
+        String nokEmail = person.getNextOfKin().getEmail().toString();
+        htmlString = htmlString.replace("NOK Email", nokEmail);
+
+        String nokPhone = person.getNextOfKin().getPhone().toString();
+        htmlString = htmlString.replace("NOK Phone", nokPhone);
+*/
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write(htmlString);
         bw.close();
 
     }
+
 
     /**
      * @@author Johnny chan

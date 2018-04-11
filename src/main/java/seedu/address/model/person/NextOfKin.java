@@ -50,6 +50,19 @@ public class NextOfKin {
         return email;
     }
 
+    /**
+     * Returns a string of Next of Kin's name, email and phone
+     */
+    public String printNOK() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" ")
+                .append(getEmail())
+                .append(" ")
+                .append(getPhone());
+        return builder.toString();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

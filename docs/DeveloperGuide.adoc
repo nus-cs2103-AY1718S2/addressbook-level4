@@ -455,7 +455,7 @@ added appointment is saved to persistent data
 ** Cons: breaks the layering of the current architecture
 // end::add_appointment[]
 
-// tag::add_appointment[]
+
 === Age Field feature (V1.2)
 ==== Current implementation
 

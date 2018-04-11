@@ -104,7 +104,13 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeToDo(target);
         indicateAddressBookChanged();
     }
-
+    //@@author jas5469
+    @Override
+    public synchronized void deleteGroup(Group target) throws GroupNotFoundException {
+        addressBook.removeGroup(target);
+        indicateAddressBookChanged();
+    }
+    //@@author
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
@@ -146,7 +152,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateToDo(target, editedToDo);
         indicateAddressBookChanged();
     }
-
+    //@@author jas5469
     @Override
     public void updateGroup(Group target, Group editedGroup)
             throws DuplicateGroupException, GroupNotFoundException {

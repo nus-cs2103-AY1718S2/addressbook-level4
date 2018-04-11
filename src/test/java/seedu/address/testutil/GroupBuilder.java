@@ -1,6 +1,5 @@
-package seedu.address.testutil;
-
 //@@author jas5469
+package seedu.address.testutil;
 
 import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
@@ -34,6 +33,7 @@ public class GroupBuilder {
      */
     public GroupBuilder withInformation(String information) {
         this.information = new Information(information);
+        personList = new UniquePersonList();
         return this;
     }
 

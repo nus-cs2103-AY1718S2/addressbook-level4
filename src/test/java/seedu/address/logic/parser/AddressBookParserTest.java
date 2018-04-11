@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.commons.core.Messages.MESSAGE_DID_YOU_MEAN;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -24,6 +25,7 @@ import seedu.address.logic.commands.ChangeTagColorCommand;
 import seedu.address.logic.commands.CheckToDoCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.DeleteToDoCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -43,6 +45,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.Information;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.TagContainKeywordsPredicate;
@@ -138,7 +141,7 @@ public class AddressBookParserTest {
                 DeleteToDoCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TODO.getOneBased());
         assertEquals(new DeleteToDoCommand(INDEX_FIRST_TODO), command);
     }
-
+    //@@author jas5469
     @Test
     public void parseCommand_addGroup() throws Exception {
         Group group = new GroupBuilder().build();
@@ -147,13 +150,28 @@ public class AddressBookParserTest {
         assertEquals(new AddGroupCommand(group), command);
     }
 
-
     @Test
     public void parseCommand_addGroupAlias() throws Exception {
         Group group = new GroupBuilder().build();
         AddGroupCommand command = (AddGroupCommand) parser.parseCommand(AddGroupCommand.COMMAND_ALIAS
                 + " " + group.getInformation());
         assertEquals(new AddGroupCommand(group), command);
+    }
+
+    @Test
+    public void parseCommand_deleteGroup() throws Exception {
+        Information information = new Information("Group A");
+        DeleteGroupCommand command = (DeleteGroupCommand) parser.parseCommand(
+                DeleteGroupCommand.COMMAND_WORD + " " + "Group A");
+        assertEquals(new DeleteGroupCommand(information), command);
+    }
+
+    @Test
+    public void parseCommand_deleteGroupAlias() throws Exception {
+        Information information = new Information("Group A");
+        DeleteGroupCommand command = (DeleteGroupCommand) parser.parseCommand(
+                DeleteGroupCommand.COMMAND_ALIAS + " " + "Group A");
+        assertEquals(new DeleteGroupCommand(information), command);
     }
 
     //@@author LeonidAgarth
@@ -284,7 +302,8 @@ public class AddressBookParserTest {
             parser.parseCommand("histories");
             fail("The expected ParseException was not thrown.");
         } catch (ParseException pe) {
-            assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
+            assertEquals(MESSAGE_UNKNOWN_COMMAND + MESSAGE_DID_YOU_MEAN + HistoryCommand.COMMAND_WORD,
+                    pe.getMessage());
         }
     }
 
@@ -305,9 +324,9 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
-
+    //@@author jas5469
     @Test
-    public void parseCommand_listGroupMembers() throws Exception {
+    public void parseCommand_listTagMembers() throws Exception {
         List<String> keywords = Arrays.asList("friends", "CS3230");
         ListTagMembersCommand command = (ListTagMembersCommand) parser.parseCommand(
                 ListTagMembersCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
@@ -315,13 +334,13 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_listGroupMembersAlias() throws Exception {
+    public void parseCommand_listTagGMembersAlias() throws Exception {
         List<String> keywords = Arrays.asList("friends", "CS3230");
         ListTagMembersCommand command = (ListTagMembersCommand) parser.parseCommand(
                 ListTagMembersCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new ListTagMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(

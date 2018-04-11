@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-
+//@@author Isaaaca
 /**
  * Represents a Module from NUSmods
  */

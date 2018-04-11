@@ -2,6 +2,8 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.testutil.TypicalGroups.GROUP_D;
+import static seedu.address.testutil.TypicalGroups.GROUP_E;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
@@ -106,6 +108,7 @@ public class XmlAddressBookStorageTest {
         original.addPerson(HOON);
         original.removePerson(ALICE);
         original.addToDo(TODO_D);
+        original.addGroup(GROUP_D);
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
@@ -113,6 +116,7 @@ public class XmlAddressBookStorageTest {
         //Save and read without specifying file path
         original.addPerson(IDA);
         original.addToDo(TODO_E);
+        original.addGroup(GROUP_E);
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
@@ -158,6 +162,7 @@ public class XmlAddressBookStorageTest {
         original.addPerson(HOON);
         original.removePerson(ALICE);
         original.addToDo(TODO_D);
+        original.addGroup(GROUP_D);
         xmlAddressBookStorage.backupAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBookBackup(filePath).get();
         assertEquals(original, new AddressBook(readBack));
@@ -165,6 +170,7 @@ public class XmlAddressBookStorageTest {
         //Back and read without specifying file path
         original.addPerson(IDA);
         original.addToDo(TODO_E);
+        original.addGroup(GROUP_E);
         xmlAddressBookStorage.backupAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBookBackup().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));

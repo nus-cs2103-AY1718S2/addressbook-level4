@@ -1,9 +1,8 @@
+//@@author jas5469
 package systemtests;
 
-//@@author jas5469
-
-import static seedu.address.logic.commands.CommandTestUtil.INFORMATION_A;
-import static seedu.address.testutil.TypicalGroups.GROUP_A;
+import static seedu.address.logic.commands.CommandTestUtil.INFORMATION_E;
+import static seedu.address.testutil.TypicalGroups.GROUP_E;
 
 import org.junit.Test;
 
@@ -23,16 +22,17 @@ public class AddGroupCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a group to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        Group addGroup = GROUP_A;
-        String command = "   " + AddGroupCommand.COMMAND_WORD + "  " + INFORMATION_A + " ";
+        Group addGroup = GROUP_E;
+        String command = "   " + AddGroupCommand.COMMAND_WORD + "  " + INFORMATION_E + " ";
         assertCommandSuccess(command, addGroup);
 
         /* Case: invalid keyword -> rejected */
         command = "addsGroup " + GroupUtil.getGroupDetails(addGroup);
-        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure(command,
+                Messages.MESSAGE_UNKNOWN_COMMAND + Messages.MESSAGE_DID_YOU_MEAN + AddGroupCommand.COMMAND_WORD);
 
         /* Case: add a duplicate group -> rejected */
-        command = GroupUtil.getAddGroupCommand(GROUP_A);
+        command = GroupUtil.getAddGroupCommand(GROUP_E);
         assertCommandFailure(command, AddGroupCommand.MESSAGE_DUPLICATE_GROUP);
     }
 

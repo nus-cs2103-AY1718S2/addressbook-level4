@@ -209,6 +209,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        //@@author Isaaaca
         public void setTimeTableLink(TimeTableLink link) {
             this.link = link;
         }
@@ -216,6 +217,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<TimeTableLink> getTimeTableLink() {
             return Optional.ofNullable(link);
         }
+        //@@author
 
         public void setDetail(Detail detail) {
             this.detail = detail;

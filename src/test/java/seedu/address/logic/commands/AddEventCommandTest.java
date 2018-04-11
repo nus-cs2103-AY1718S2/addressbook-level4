@@ -160,6 +160,11 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void deleteGroup(Group target) throws GroupNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");

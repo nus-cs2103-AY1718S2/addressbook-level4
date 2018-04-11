@@ -3,6 +3,7 @@ package seedu.address.database.module;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+//@@author Isaaaca
 /**
  * Represents a schedule for a class in a module
  */

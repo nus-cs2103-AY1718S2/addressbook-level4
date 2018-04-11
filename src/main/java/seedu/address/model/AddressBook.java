@@ -249,12 +249,25 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
-
+    //@@author jas5469
     ////Group operation
     public void addGroup(Group group) throws DuplicateGroupException {
         groups.add(group);
     }
 
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     *
+     * @throws ToDoNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeGroup(Group key) throws GroupNotFoundException {
+        if (groups.remove(key)) {
+            return true;
+        } else {
+            throw new GroupNotFoundException();
+        }
+    }
+    //@@author
     ////Event operations
     /**
      * Adds an event to the address book.
@@ -288,6 +301,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public double getToDoListCompleteRatio() {
+        return todos.getCompleteRatio();
+    }
+
+    @Override
     public ObservableList<Group> getGroupList() {
         return groups.asObservableList();
     }
@@ -311,6 +329,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
+    //@@author Isaaaca-unused
     /**
      * Removes {@code tag} from all {@code persons} in the {@code AddressBook} and from the {@code AddressBook}.
      */
@@ -379,7 +398,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                     + "a PersonNotFoundException. See Person#equals(Object).");
         }
     }
-    //@@author
+    //@@author Isaaaca
     /**
      * Removes {@code tag} from all {@code persons} in the {@code AddressBook}.
      */

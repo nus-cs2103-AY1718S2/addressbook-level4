@@ -1,0 +1,59 @@
+= Jason Leo - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Fastis - MeetUp Manager
+
+---
+
+== Overview
+
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time.
+
+== Summary of contributions
+
+* *Major enhancement*: added *group* feature
+** What it does: It allows users to create a group class, which allows users to add members to the group, list them out and delete the group.
+** Justification: This feature allows the user to keep track of members of a certain group project , which allows him to find the person of contact quickly and more easily. It also helps users to better manage members of his group project.
+** Highlights: This enhancement adds many new commands to make the application more convenient for the users to organise their groups. It required an in-depth analysis of model and logic component. The implementation too was challenging as it required adding new commands and required understanding of the model to implement the group features.
+
+* *Minor enhancement*: Added command to list members of the same tags.
+* *Minor enhancement*: Added a status foot bar showing number of members in Fastis.
+* *Minor enhancement*: Added colours to the tags belonging to members in Fastis.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W15-B3/main/tree/master/collated/functional/jas5469.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B3/main/blob/master/collated/test/jas5469.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.4` on GitHub
+** Enhancements to existing features:
+*** Added Colours to tags.
+** Documentation:
+*** Update new screenshots of new commands for the User Guide
+*** Update new screenshots of new commands for the Developer Guide
+** Community:
+*** Help team members fix bugs
+*** Reported bugs and suggestions for other teams
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=listTag]
+
+include::../UserGuide.adoc[tag=addGroup]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=listTagMembers]
+
+include::../DeveloperGuide.adoc[tag=addGroup]
+

@@ -130,6 +130,8 @@ public class XmlAdaptedPersonTest {
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
+
+    //@@author Isaaaca
     @Test
     public void toModelType_invalidLink_throwsIllegalValueException() {
         XmlAdaptedPerson person =
@@ -146,6 +148,7 @@ public class XmlAdaptedPersonTest {
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, TimeTableLink.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
+    //@@author
 
     @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {

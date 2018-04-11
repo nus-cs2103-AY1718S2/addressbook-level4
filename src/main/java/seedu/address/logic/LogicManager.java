@@ -58,6 +58,11 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public double getToDoListCompleteRatio() {
+        return model.getAddressBook().getToDoListCompleteRatio();
+    }
+
+    @Override
     public ObservableList<Event> getFilteredEventList() {
         return model.getFilteredEventList();
     }

@@ -6,6 +6,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+
 /**
  * Helper functions for handling strings.
  */
@@ -13,14 +15,15 @@ public class StringUtil {
 
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
-     *   Ignores case, but a full word match is required.
-     *   <br>examples:<pre>
+     * Ignores case, but a full word match is required.
+     * <br>examples:<pre>
      *       containsWordIgnoreCase("ABc def", "abc") == true
      *       containsWordIgnoreCase("ABc def", "DEF") == true
      *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
      *       </pre>
+     *
      * @param sentence cannot be null
-     * @param word cannot be null, cannot be empty, must be a single word
+     * @param word     cannot be null, cannot be empty, must be a single word
      */
     public static boolean containsWordIgnoreCase(String sentence, String word) {
         requireNonNull(sentence);
@@ -33,13 +36,42 @@ public class StringUtil {
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
-        for (String wordInSentence: wordsInPreppedSentence) {
+        for (String wordInSentence : wordsInPreppedSentence) {
             if (wordInSentence.equalsIgnoreCase(preppedWord)) {
                 return true;
             }
         }
         return false;
     }
+
+    //@@author Isaaaca
+    /**
+     * Returns the partial ratio bewteen the {@code sentence} and the {@code word}.
+     * Ignores case.
+     * <br>examples:<pre>
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "abc") == 100
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "DEF") == 100
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "AB") == 100
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "ABcD") == 75
+     *       </pre>
+     *
+     * @param sentence cannot be null
+     * @param word     cannot be null, cannot be empty, must be a single word
+     */
+    public static int getPartialRatioFuzzyIgnoreCase(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
+
+        String preppedWord = word.trim().toLowerCase();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+
+        String preppedSentence = sentence.toLowerCase();
+        System.out.println("word: " + preppedWord + " | Name: " + sentence + "/n ratio: "
+                + FuzzySearch.partialRatio(preppedWord, preppedSentence));
+        return FuzzySearch.partialRatio(preppedWord, preppedSentence);
+    }
+    //@@author
 
     /**
      * Returns a detailed message of the t, including the stack trace.
@@ -56,6 +88,7 @@ public class StringUtil {
      * e.g. 1, 2, 3, ..., {@code Integer.MAX_VALUE} <br>
      * Will return false for any other non-null string input
      * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
+     *
      * @throws NullPointerException if {@code s} is null.
      */
     public static boolean isNonZeroUnsignedInteger(String s) {

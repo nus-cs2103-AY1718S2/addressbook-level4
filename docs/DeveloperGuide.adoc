@@ -395,6 +395,7 @@ The details of implementation are as follow:
 . `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
 . `edited` Person is used to replace `toEdit` Person in `AddressBook`.
 
+// tag::emer7[]
 === Review system
 
 A `Review` consists of the _review_ content itself and the _reviewer_. _Review_ and _reviewer_ are separated by a single newline character.
@@ -427,6 +428,7 @@ The old `Review` value is obtained from `Person` _personToEdit_.
 . `Person` _editedPerson_ is used to replace `Person` _personToEdit_ in `AddressBook`.
 
 `Review` uses JavaFX's `Dialog` to get the review input from the user instead of from command box.
+// end::emer7[]
 
 === Lock and unlock Employees Tracker
 
@@ -541,6 +543,7 @@ There are a couple of aspects with regards to `Notification` that can be impleme
 ** Pros: has the simplest implementation (only need to pull data from Google, does not need to create local class), saves storage space as nothing is stored locally.
 ** Cons: compromises notification feature if there's no internet access, requires another mechanism for extracting `ownerName` because `Event` class does not store `ownerName`, compromises performance if internet speed is slow).
 
+// tag::sort[]
 === Sort existing employees
 The implementation of `sort` command involves following objects: +
 
@@ -554,14 +557,16 @@ The details of implementation of `sort` command are as follow:
 . `SortCommandParser` extracts the sorting field from user input.
 . `ModelManager` and `UniqueEmployeeList` provide sorting algorithm, called by `AddressBook`.
 . `UniqueEmployeeList` will sort the units by giving field.
+// end::sort[]
 
-
+// tag::changeTheme[]
 === Change theme of Employees Tracker
 
 `changeTheme` command is used to change the theme to `dark` or `bright`.
 
 * `changeTheme` is achieved by handling `changeThemeEvent` in `MainWindow`.
 * a new "theme" field is added in GuiSettings.
+// end::changeTheme[]
 
 === Login
 

@@ -24,18 +24,27 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LockCommand;
+import seedu.address.logic.commands.MyCalendarCommand;
+import seedu.address.logic.commands.NotiCommand;
 import seedu.address.logic.commands.RateCommand;
+import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ReviewCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.TestAddEventCommand;
+import seedu.address.logic.commands.TodoListCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -52,12 +61,18 @@ public class CommandBox extends UiPart<Region> {
         RateCommand.COMMAND_WORD, ReviewCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
         FindCommand.COMMAND_WORD, TestAddEventCommand.COMMAND_WORD, SortCommand.COMMAND_WORD,
         LockCommand.COMMAND_WORD, UnlockCommand.COMMAND_WORD, SetPasswordCommand.COMMAND_WORD,
-        ChangeThemeCommand.COMMAND_WORD, DeleteEventCommand.COMMAND_WORD};
+        ChangeThemeCommand.COMMAND_WORD, DeleteEventCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
+        HelpCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD,
+        MyCalendarCommand.COMMAND_WORD, TodoListCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD,
+        NotiCommand.COMMAND_WORD};
     private static final String[] allCommandsUsage = {AddCommand.MESSAGE_USAGE, EditCommand.MESSAGE_USAGE,
         RateCommand.MESSAGE_USAGE, ReviewCommand.MESSAGE_USAGE, SelectCommand.MESSAGE_USAGE,
         DeleteCommand.MESSAGE_USAGE, FindCommand.MESSAGE_USAGE, TestAddEventCommand.MESSAGE_USAGE,
         SortCommand.MESSAGE_USAGE, LockCommand.MESSAGE_USAGE, UnlockCommand.MESSAGE_USAGE,
-        SetPasswordCommand.MESSAGE_USAGE, ChangeThemeCommand.MESSAGE_USAGE, DeleteEventCommand.MESSAGE_USAGE};
+        SetPasswordCommand.MESSAGE_USAGE, ChangeThemeCommand.MESSAGE_USAGE, DeleteEventCommand.MESSAGE_USAGE,
+        ListCommand.MESSAGE_USAGE, HelpCommand.MESSAGE_USAGE, UndoCommand.MESSAGE_USAGE, RedoCommand.MESSAGE_USAGE,
+        HistoryCommand.MESSAGE_USAGE, MyCalendarCommand.MESSAGE_USAGE, TodoListCommand.MESSAGE_USAGE,
+        ClearCommand.MESSAGE_USAGE, NotiCommand.MESSAGE_USAGE};
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;

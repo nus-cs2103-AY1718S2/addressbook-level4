@@ -14,6 +14,7 @@ import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.NotificationNotFoundException;
@@ -304,6 +305,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Photo> getPhotoList() {
         return photos.asObservableList();
     }
+    //@@author
 
     @Override
     public LinkedList<Notification> getNotificationsList() {

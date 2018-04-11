@@ -41,7 +41,7 @@ public class MailPanel extends UiPart<Region> {
         int length = 0;
         ObservableList<EmailCard> emailList = FXCollections.observableArrayList();
         Message[] messages = messageList();
-        if (messages != null){
+        if (messages != null) {
             length = messages.length;
             for (int i = 0; i < length; i++) {
                 emailList.add(new EmailCard(messages[i]));

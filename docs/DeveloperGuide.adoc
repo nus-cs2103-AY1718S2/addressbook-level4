@@ -530,7 +530,7 @@ When user types in command line `ListTagMembers` or `ltm` , Fastis will use the 
 tag and list out all members under the same  tag.
 
 ==== Design Considerations
-* **Alternative 1 (current choice):** Use a command to list out the group members.
+* **Alternative 1 (current choice):** Use a command to list out the members with same tag.
 ** Pros: Easy to change the methods called by command.
 ** Cons: Unable to link to group class.
 * **Alternative 2:** Add a new abstract method `ListTagMembersCommand(`
@@ -666,8 +666,27 @@ image:aGMSequenceDiagram.png[width="800"]
 * **Alternative 1 (current choice):** Add a new command method `AddMembersToGroupCommand()`
 ** Pros: It is easy for developers to modify method to suit what they want
 
+=== List Group Members Feature
 
-=== Delete Group feature
+Fastis lists all persons under the group keyed by user.
+
+=== Current Implementation
+
+Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
+group.
+
+When user types in command line lListGroupMembers` or `lGM` , Fastis will use the keyword provided to search for the
+group and list out all members under the group.
+
+
+==== Design Considerations
+* **Alternative 1 (current choice):** Use a command to list out the members with same group.
+** Pros: Easy to change the methods called by command.
+* **Alternative 2:** Add a new abstract method `ListGroupMembersCommand(`
+** Pros: Edit `ListGroupMembersCommand()` easily to suit our needs
+** Cons: Hard for new developers to understand the template pattern.
+
+=== Delete Group Feature
 
 Fastis deletes a group named by the user from input.
 

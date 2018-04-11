@@ -86,6 +86,20 @@ public class ParserUtil {
         return trimmedType;
     }
 
+    //@@author Livian1107
+    /**
+     * Parses {@code type} into a {@code String} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified theme is invalid (not of string "day" or "night").
+     */
+    public static String parseTheme(String theme) throws IllegalValueException {
+        String trimmedType = theme.trim();
+        if (!trimmedType.equals("day") && !trimmedType.equals("night")) {
+            throw new IllegalValueException(MESSAGE_INVALID_TAB_TYPE);
+        }
+        return trimmedType;
+    }
+
     //@@author EdwardKSG
     /**
      * Parses a {@code String Title} into a {@code String}.

@@ -29,6 +29,7 @@ import seedu.progresschecker.logic.commands.ReopenIssueCommand;
 import seedu.progresschecker.logic.commands.ResetTaskCommand;
 import seedu.progresschecker.logic.commands.SelectCommand;
 import seedu.progresschecker.logic.commands.SortCommand;
+import seedu.progresschecker.logic.commands.ThemeCommand;
 import seedu.progresschecker.logic.commands.UndoCommand;
 import seedu.progresschecker.logic.commands.UploadCommand;
 import seedu.progresschecker.logic.commands.ViewCommand;
@@ -74,6 +75,10 @@ public class ProgressCheckerParser {
         case CompleteTaskCommand.COMMAND_WORD:
         case CompleteTaskCommand.COMMAND_ALIAS:
             return new CompleteTaskCommandParser().parse(arguments);
+
+        case ThemeCommand.COMMAND_WORD:
+        case ThemeCommand.COMMAND_ALIAS:
+            return new ThemeCommandParser().parse(arguments);
 
         case ResetTaskCommand.COMMAND_WORD:
         case ResetTaskCommand.COMMAND_ALIAS:

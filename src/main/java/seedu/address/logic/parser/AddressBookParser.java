@@ -14,8 +14,12 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
+import seedu.address.logic.commands.DismissCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailAllCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportEmployeesCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -145,6 +149,17 @@ public class AddressBookParser {
         case AuthenCommand.COMMAND_WORD:
             return new AuthenCommand();
 
+        case DismissCommand.COMMAND_WORD:
+            return new DismissCommandParser().parse(arguments);
+
+        case EmailCommand.COMMAND_WORD:
+            return new EmailCommandParser().parse(arguments);
+
+        case EmailAllCommand.COMMAND_WORD:
+            return new EmailAllCommand();
+
+        case ExportEmployeesCommand.COMMAND_WORD:
+            return new ExportEmployeesCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

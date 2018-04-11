@@ -1,0 +1,201 @@
+= Li Yufei - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Employees Tracker
+
+---
+
+== Overview
+
+Employees Tracker (E.T.) is a *Human Resource Manager* application that helps managers to manage their subordinates. Its
+has 2 main functionalities: providing information about employees, as well as helping in tracking the tasks assigned to
+each employee.
+
+Its User Interface (UI) is a hybrid of Command Line Interface (CLI) while still having the benefits of a Graphical User
+Interface (GUI). That said, ET will suit you better if you can type fast and are familiar with CLI.
+
+image::Ui.png[width="600"]
+
+== Summary of contributions
+
+*Code contributed*: [https://github.com/CS2103JAN2018-W15-B1/main/blob/master/collated/functional/crizyli.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B1/main/blob/master/collated/test/crizyli.md[Test code]] {links to collated code files}
+
+=== Enhancement Added: Lock and Unlock Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=unlock]
+include::../UserGuide.adoc[tag=lock]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Employees Tracker is a locked by default application in order to prevent the data from unauthorized access. With the lock-unlock system, only the application owner(typically, the manager) can access the application with a unlock password only known to him.
+
+==== Implementation
+
+(Pull requests https://github.com/CS2103JAN2018-W15-B1/main/pull/6[#6],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/102[#102],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/110[#110],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/192[#192])
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=lockunlock]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add Calendars for Each Employee
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+
+#End of Extract#
+
+---
+
+==== Justification
+Each employee who exists in ET will have his or her owm calendar. Manager can manage all the calendars through some commands
+that will be covered next.
+
+==== Implementation
+
+(Pull requests https://github.com/CS2103JAN2018-W15-B1/main/pull/61[#61],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/122[#122])
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add and Delete Event on Calendars
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addevent]
+include::../UserGuide.adoc[tag=deleteevent]
+
+#End of Extract#
+
+---
+
+==== Justification
+As stated, manager can manage employees' calendars through these commands.
+
+==== Implementation
+
+(Pull request https://github.com/CS2103JAN2018-W15-B1/main/pull/61[#61],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/133[#133])
+
+---
+
+=== Enhancement Added: My Calendar and Todo List
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=ct]
+
+#End of Extract#
+
+---
+==== Justification
+Manager can have his own calendar too, and can view the events on his calendar.
+
+==== Implementation
+
+(Pull requests https://github.com/CS2103JAN2018-W15-B1/main/pull/136[#136],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/143[#143])
+
+
+=== Enhancement Added: AddPhotoCommand
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+
+==== Justification
+Employees have a photo field, and manager can update this field for every employee.
+
+==== Implementation
+
+(Pull request https://github.com/CS2103JAN2018-W15-B1/main/pull/165[#165],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/166[#166],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/169[#169],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/173[#173],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/197[#197],)
+
+=== Enhancement Added: Export Employees Data
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+Manager can export the information of employees to an excel file.
+
+==== Implementation
+
+(Pull request )
+
+
+=== Enhancement Proposed: Edit Events on Calendars
+
+
+
+---
+
+=== Other enhancements and contributions
+
+
+== Contributions to the User Guide
+
+
+
+
+== Contributions to the Developer Guide
+
+
+
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_

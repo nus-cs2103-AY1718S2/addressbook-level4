@@ -12,19 +12,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.logic.GetEmployeesRequestEvent;
 import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AddressBookPasswordChangedEvent;
 import seedu.address.commons.events.model.NotificationAddedEvent;
-import seedu.address.commons.events.model.NotificationDeletedEvent;
+import seedu.address.commons.events.model.ReturnedEmployeesEvent;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.photo.Photo;
+import seedu.address.ui.NotificationCard;
+import seedu.address.ui.NotificationCenter;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -35,6 +40,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private NotificationCenter notificationCenter;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -69,22 +75,39 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
-    @Override
+    /*@Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
+        int targetId = target.getId();
         addressBook.removePerson(target);
+        notificationCenter.removeNotificationForPerson(targetId);
         indicateAddressBookChanged();
-    }
+    }*/
 
     //@@author IzHoBX
     @Override
-    public synchronized void deleteNotification(String id) throws TimetableEntryNotFoundException {
-        addressBook.deleteNotification(id);
-        indicateNotificationDeleted(id);
+    public synchronized void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws
+            NotificationNotFoundException {
+        try {
+            addressBook.deleteNotification(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!deleteFromAddressBookOnly) {
+            try {
+                notificationCenter.deleteNotification(id);
+            } catch (NullPointerException e) {
+                logger.info("NullPointerException encountered when deleting notification for deleted person");
+            }
+        }
         indicateAddressBookChanged();
     }
 
-    private void indicateNotificationDeleted(String id) {
-        raise(new NotificationDeletedEvent(id));
+    @Override
+    public NotificationCard deleteNotificationByIndex(Index targetIndex) throws NotificationNotFoundException {
+        addressBook.deleteNotification(notificationCenter.getIdByIndex(targetIndex));
+        indicateAddressBookChanged();
+        NotificationCard toDelete = notificationCenter.deleteNotificationByIndex(targetIndex);
+        return toDelete;
     }
 
     private void indicateNotificationAdded(Notification e) {
@@ -195,8 +218,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Subscribe
     private void handleRequestToDeleteNotificationEvent(RequestToDeleteNotificationEvent event) {
         try {
-            deleteNotification(event.id);
-        } catch (TimetableEntryNotFoundException e) {
+            deleteNotification(event.id, event.deleteFromAddressbookOnly);
+        } catch (NotificationNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -210,5 +233,24 @@ public class ModelManager extends ComponentManager implements Model {
             indicateNotificationAdded(n);
         }
     }
+
+    public void setNotificationCenter(NotificationCenter notificationCenter) {
+        this.notificationCenter = notificationCenter;
+    }
+
+    public NotificationCenter getNotificationCenter() {
+        return  notificationCenter;
+    }
+
+    @Override
+    public void deletePerson(Person target) throws PersonNotFoundException {
+
+    }
+
     //@@author
+    //@@author crizyli
+    @Subscribe
+    public void handleGetEmployeesRequestEvent(GetEmployeesRequestEvent event) {
+        EventsCenter.getInstance().post(new ReturnedEmployeesEvent(addressBook.getPersonList()));
+    }
 }

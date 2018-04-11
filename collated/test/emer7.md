@@ -4,37 +4,19 @@
     public static final String BROWSER_PANEL_ID = "#detailPanel";
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
-    private static final String PHONE_FIELD_ID = "#phone";
-    private static final String EMAIL_FIELD_ID = "#email";
-    private static final String TAGS_FIELD_ID = "#tags";
 ```
 ###### \java\guitests\guihandles\DetailPanelHandle.java
 ``` java
     private final Label nameLabel;
     private final Label addressLabel;
-    private final Label phoneLabel;
-    private final Label emailLabel;
-    private final List<Label> tagLabels;
 
     private Label oldNameLabel;
     private Label oldAddressLabel;
-    private Label oldPhoneLabel;
-    private Label oldEmailLabel;
-    private List<Label> oldTagLabels;
 ```
 ###### \java\guitests\guihandles\DetailPanelHandle.java
 ``` java
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
-        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
-        this.emailLabel = getChildNode(EMAIL_FIELD_ID);
-
-        Region tagsContainer = getChildNode(TAGS_FIELD_ID);
-        this.tagLabels = tagsContainer
-                .getChildrenUnmodifiable()
-                .stream()
-                .map(Label.class::cast)
-                .collect(Collectors.toList());
 ```
 ###### \java\guitests\guihandles\DetailPanelHandle.java
 ``` java
@@ -46,49 +28,56 @@
         return addressLabel.getText();
     }
 
-    public String getPhone() {
-        return phoneLabel.getText();
-    }
-
-    public String getEmail() {
-        return emailLabel.getText();
-    }
-
-    public List<String> getTags() {
-        return tagLabels
-                .stream()
-                .map(Label::getText)
-                .collect(Collectors.toList());
-    }
-
     /**
      * Remember the current Person details
      */
     public void rememberPersonDetail() {
         oldNameLabel = nameLabel;
         oldAddressLabel = addressLabel;
-        oldPhoneLabel = phoneLabel;
-        oldEmailLabel = emailLabel;
-        oldTagLabels = tagLabels;
     }
 
     public boolean isDetailChanged() {
         return !(oldNameLabel.getText().equals(getName())
-                && oldAddressLabel.getText().equals(getAddress())
-                && oldPhoneLabel.getText().equals(getPhone())
-                && oldEmailLabel.getText().equals(getEmail())
-                && oldTagLabels
-                .stream().map(Label::getText).collect(Collectors.toList())
-                .equals(getTags()));
+                && oldAddressLabel.getText().equals(getAddress()));
     }
 
     public boolean isFieldsEmpty() {
         return nameLabel.getText().equals("")
-                && addressLabel.getText().equals("")
-                && phoneLabel.getText().equals("")
-                && emailLabel.getText().equals("")
-                && oldTagLabels == null;
+                && addressLabel.getText().equals("");
     }
+```
+###### \java\guitests\guihandles\ReviewDialogHandle.java
+``` java
+package guitests.guihandles;
+
+import static seedu.address.ui.ReviewDialog.REVIEW_DIALOG_PANE_FIELD_ID;
+
+import guitests.GuiRobot;
+import javafx.scene.control.DialogPane;
+import javafx.stage.Stage;
+
+/**
+ * A handle to the {@code ReviewDialog} of the application.
+ */
+public class ReviewDialogHandle extends StageHandle {
+
+    public static final String REVIEW_DIALOG_WINDOW_TITLE = "Review Dialog";
+
+    private final DialogPane dialogPane;
+
+    public ReviewDialogHandle(Stage reviewDialogStage) {
+        super(reviewDialogStage);
+
+        this.dialogPane = getChildNode("#" + REVIEW_DIALOG_PANE_FIELD_ID);
+    }
+
+    /**
+     * Returns true if a review dialog is currently present in the application.
+     */
+    public static boolean isWindowPresent() {
+        return new GuiRobot().isWindowShown(REVIEW_DIALOG_WINDOW_TITLE);
+    }
+}
 ```
 ###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
@@ -165,27 +154,19 @@ public class ReviewCommandTest {
                 .withReviews("supervisor@example.com\nLazy")
                 .build();
         EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(reviewedPerson)
-                .withReview("supervisor@example.com\nLazy").build();
+                .withReviews("sales@example.com\nLazy").build();
 
         ReviewCommand reviewCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+
+        HashSet<Review> newReviews = new HashSet<>();
+        newReviews.add(new Review("supervisor@example.com\nLazy"));
+        newReviews.add(new Review("sales@example.com\nLazy"));
+        reviewedPerson.setReviews(newReviews);
 
         String expectedMessage = String.format(ReviewCommand.MESSAGE_REVIEW_PERSON_SUCCESS, reviewedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), reviewedPerson);
-
-        assertCommandSuccess(reviewCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
-        ReviewCommand reviewCommand = prepareCommand(INDEX_FIRST_PERSON, new EditCommand.EditPersonDescriptor());
-        Person reviewedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        reviewedPerson.setReviews(new HashSet<Review>());
-
-        String expectedMessage = String.format(ReviewCommand.MESSAGE_REVIEW_PERSON_SUCCESS, reviewedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
         assertCommandSuccess(reviewCommand, model, expectedMessage, expectedModel);
     }
@@ -199,7 +180,12 @@ public class ReviewCommandTest {
                 .withReviews("supervisor@example.com\nLazy")
                 .build();
         ReviewCommand reviewCommand = prepareCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder().withReview("supervisor@example.com\nLazy").build());
+                new EditPersonDescriptorBuilder().withReviews("sales@example.com\nLazy").build());
+
+        HashSet<Review> newReviews = new HashSet<>();
+        newReviews.add(new Review("supervisor@example.com\nLazy"));
+        newReviews.add(new Review("sales@example.com\nLazy"));
+        reviewedPerson.setReviews(newReviews);
 
         String expectedMessage = String.format(ReviewCommand.MESSAGE_REVIEW_PERSON_SUCCESS,
                 reviewedPerson);
@@ -249,7 +235,7 @@ public class ReviewCommandTest {
                 .build();
         Person personToReview = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(reviewedPerson)
-                .withReview("supervisor@example.com\nLazy")
+                .withReviews("sales@example.com\nLazy")
                 .build();
         ReviewCommand reviewCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -305,7 +291,7 @@ public class ReviewCommandTest {
                 .withReviews("supervisor@example.com\nLazy")
                 .build();
         EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(reviewedPerson)
-                .withReview("supervisor@example.com\nLazy")
+                .withReviews("sales@example.com\nLazy")
                 .build();
         ReviewCommand reviewCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -680,11 +666,11 @@ public class RatingContainsKeyphrasesPredicateTest {
 ###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
-     * Sets the {@code Review} of the {@code EditPersonDescriptor} that we are building.
+     * Parses the {@code reviews} into a {@code Set<Review>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
      */
-    public EditPersonDescriptorBuilder withReview(String review) {
-        HashSet<Review> reviewSet = new HashSet<Review>();
-        reviewSet.add(new Review(review));
+    public EditPersonDescriptorBuilder withReviews(String... reviews) {
+        Set<Review> reviewSet = Stream.of(reviews).map(Review::new).collect(Collectors.toSet());
         descriptor.setReviews(reviewSet);
         return this;
     }
@@ -727,9 +713,56 @@ public class RatingContainsKeyphrasesPredicateTest {
      */
     public static void assertPanelDisplaysPerson(PersonCardHandle expectedPersonCard, DetailPanelHandle actualPanel) {
         assertEquals(expectedPersonCard.getName(), actualPanel.getName());
-        assertEquals(expectedPersonCard.getPhone(), actualPanel.getPhone());
-        assertEquals(expectedPersonCard.getEmail(), actualPanel.getEmail());
-        assertEquals(expectedPersonCard.getAddress(), actualPanel.getAddress());
-        assertEquals(expectedPersonCard.getTags(), actualPanel.getTags());
     }
+```
+###### \java\systemtests\ReviewCommandSystemTest.java
+``` java
+package systemtests;
+
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import guitests.GuiRobot;
+import guitests.guihandles.ReviewDialogHandle;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.ReviewCommand;
+import seedu.address.logic.commands.UnlockCommand;
+
+public class ReviewCommandSystemTest extends AddressBookSystemTest {
+
+    private static final String ERROR_MESSAGE = "ATTENTION!!!! : On some computers, this test may fail when run on "
+            + "non-headless mode as FxRobot#clickOn(Node, MouseButton...) clicks on the wrong location. We suspect "
+            + "that this is a bug with TestFX library that we are using. If this test fails, you have to run your "
+            + "tests on headless mode. See UsingGradle.adoc on how to do so.";
+
+    private final GuiRobot guiRobot = new GuiRobot();
+
+    @Test
+    public void openReviewDialog() {
+        String password = getModel().getPassword();
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setTestMode();
+        testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
+        testUnlockCommand.execute();
+        showAllPersons();
+
+        String command = "     " + ReviewCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
+        executeCommand(command);
+        assertReviewDialogOpen();
+    }
+
+    /**
+     * Asserts that the review dialog is open, and closes it after checking.
+     */
+    private void assertReviewDialogOpen() {
+        assertTrue(ERROR_MESSAGE, ReviewDialogHandle.isWindowPresent());
+        guiRobot.pauseForHuman();
+
+        new ReviewDialogHandle(guiRobot.getStage(ReviewDialogHandle.REVIEW_DIALOG_WINDOW_TITLE)).close();
+        getMainWindowHandle().focus();
+    }
+}
 ```

@@ -12,8 +12,8 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.NotificationAddedEvent;
-import seedu.address.commons.events.model.NotificationDeletedEvent;
 import seedu.address.commons.events.ui.ShowNotificationEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -28,6 +28,7 @@ import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.NotificationTime;
 import seedu.address.model.person.Person;
 import seedu.address.storage.NotificationTimeParserUtil;
+import seedu.address.ui.NotificationCenter;
 
 /**
  * The main LogicManager of the app.
@@ -150,9 +151,14 @@ public class LogicManager extends ComponentManager implements Logic {
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
                 Notification notification = timerTaskToTimetableEntryMap.get(this);
-                String ownerName = ((ModelManager) model).getNameById(notification.getOwnerId());
-                raise(new ShowNotificationEvent(ownerName, notification));
-                //raise(new RequestToDeleteNotificationEvent(timerTaskToTimetableEntryMap.get(this).getId()));
+                String ownerName;
+                try {
+                    ownerName = ((ModelManager) model).getNameById(notification.getOwnerId());
+                    raise(new ShowNotificationEvent(ownerName, notification));
+                } catch (NullPointerException e) {
+                    logger.info("Corresponding person is deleted. Ignoring this notification");
+                    raise(new RequestToDeleteNotificationEvent(notification.getId(), true));
+                }
             }
         };
         timetableEntriesStatus.put(task, true);
@@ -173,10 +179,15 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Subscribe
-    private void handleTimetableEntryDeletedEvent(NotificationDeletedEvent event) {
+    private void handleTimetableEntryDeletedEvent(RequestToDeleteNotificationEvent event) {
         TimerTask associatedTimerTask = scheduledTimerTasks.get(event.id);
         timetableEntriesStatus.put(associatedTimerTask, false);
         scheduledTimerTasks.remove(event.id);
     }
+
+    public void setNotificationCenter(NotificationCenter notificationCenter) {
+        this.model.setNotificationCenter(notificationCenter);
+    }
+
     //@@author
 }

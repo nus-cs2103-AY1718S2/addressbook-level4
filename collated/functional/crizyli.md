@@ -24,6 +24,22 @@ public class FileChoosedEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\logic\GetEmployeesRequestEvent.java
+``` java
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ *  Event to request current list of employees
+ */
+public class GetEmployeesRequestEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
 ###### \java\seedu\address\commons\events\logic\PasswordEnteredEvent.java
 ``` java
 import seedu.address.commons.events.BaseEvent;
@@ -95,6 +111,33 @@ public class AddressBookPasswordChangedEvent extends BaseEvent {
 
     public String toString() {
         return "number of persons " + data.getPersonList().size() + ", number of tags " + data.getTagList().size();
+    }
+}
+```
+###### \java\seedu\address\commons\events\model\ReturnedEmployeesEvent.java
+``` java
+import javafx.collections.ObservableList;
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.person.Person;
+
+/**
+ * Indicates employees list returned.
+ */
+public class ReturnedEmployeesEvent extends BaseEvent {
+
+    private final ObservableList<Person> employees;
+
+    public ReturnedEmployeesEvent(ObservableList<Person> employees) {
+        this.employees = employees;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public ObservableList<Person> getEmployees() {
+        return employees;
     }
 }
 ```
@@ -712,6 +755,100 @@ public class DeleteEventCommand extends Command {
                 || (other instanceof DeleteEventCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteEventCommand) other).getTargetIndex())
                 && this.title.equals(((DeleteEventCommand) other).getTitle())); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ExportEmployeesCommand.java
+``` java
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import com.google.common.eventbus.Subscribe;
+
+import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.logic.GetEmployeesRequestEvent;
+import seedu.address.commons.events.model.ReturnedEmployeesEvent;
+import seedu.address.model.person.Person;
+
+/**
+ * export employees to a csv file.
+ */
+public class ExportEmployeesCommand extends Command {
+
+    public static final String COMMAND_WORD = "export";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Export current employees to a csv file.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "All Employees Exported to employees.csv!";
+
+    public static final String MESSAGE_FAIL = "Export fail! Make sure you haven't opened employees.csv and try again!";
+
+    public static final String EXPORT_FILE_PATH = "data/employees.csv";
+
+    private ObservableList<Person> employees;
+
+    private boolean isTest;
+
+    public ExportEmployeesCommand() {
+        registerAsAnEventHandler(this);
+    }
+
+    public ExportEmployeesCommand(boolean isTest) {
+        this.isTest = isTest;
+        registerAsAnEventHandler(this);
+    }
+
+    @Override
+    public CommandResult execute() {
+
+        EventsCenter.getInstance().post(new GetEmployeesRequestEvent());
+
+        File csv;
+        if (isTest) {
+            csv = new File("employees.csv");
+        } else {
+            csv = new File(EXPORT_FILE_PATH);
+        }
+
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter(csv));
+            bw.write("Name,Phone,Email,Address,Tags\n");
+            for (Person p : employees) {
+                String temp = p.getName().fullName + "," + p.getPhone().value + "," + p.getEmail().value + ","
+                        + p.getAddress().value.replaceAll(",", " ");
+                if (!p.getTags().isEmpty()) {
+                    temp = temp + "," + p.getTags().toString()
+                            .replaceAll(", ", " | ");
+                }
+                temp = temp + "\n";
+                bw.write(temp);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new CommandResult(MESSAGE_FAIL);
+        }
+        try {
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    protected void registerAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().registerHandler(this);
+    }
+
+    @Subscribe
+    private void handleReturnedEmployeesEvent(ReturnedEmployeesEvent event) {
+        this.employees = event.getEmployees();
     }
 }
 ```
@@ -1675,27 +1812,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
     public ObservableList<Photo> getPhotoList() {
         return photos.asObservableList();
     }
-
-    @Override
-    public LinkedList<Notification> getNotificationsList() {
-        return notifications;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
-                && this.notifications.equals(((AddressBook) other).notifications);
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
-    }
-
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -1789,6 +1905,14 @@ public class ListEvent {
     public String getPassword() {
         return addressBook.getPassword();
     }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Subscribe
+    public void handleGetEmployeesRequestEvent(GetEmployeesRequestEvent event) {
+        EventsCenter.getInstance().post(new ReturnedEmployeesEvent(addressBook.getPersonList()));
+    }
+}
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java

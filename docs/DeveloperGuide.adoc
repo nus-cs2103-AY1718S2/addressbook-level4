@@ -395,6 +395,7 @@ The details of implementation are as follow:
 . `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
 . `edited` Person is used to replace `toEdit` Person in `AddressBook`.
 
+// tag::emer7[]
 === Review system
 
 A `Review` consists of the _review_ content itself and the _reviewer_. _Review_ and _reviewer_ are separated by a single newline character.
@@ -427,7 +428,9 @@ The old `Review` value is obtained from `Person` _personToEdit_.
 . `Person` _editedPerson_ is used to replace `Person` _personToEdit_ in `AddressBook`.
 
 `Review` uses JavaFX's `Dialog` to get the review input from the user instead of from command box.
+// end::emer7[]
 
+// tag::lockunlock[]
 === Lock and unlock Employees Tracker
 
 `lock` command is used to lock the application and hide information.
@@ -447,7 +450,9 @@ The details of implementation of `unlock` command are as follow:
 . `UnlockCommand` is used to post an event to pop up a password input dialog, get the password entered by user, and
 compare it with the application's unlock password to decide whether the unlock process is successful.
 . `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
+// end::lockunlock[]
 
+// tag::calendar[]
 === Assign a timetable to every employee
 
 To implement the timetables for employees, we use a third party source which is Google Calendar API. With this API, we
@@ -460,6 +465,7 @@ at the time this employee was added to Employees Tracker.
 
 Additionally, as everyone has their own unique timetables, a new field called `CalendarId` will be created for each
 employee, to indicate their associated timetables.
+// end::calendar[]
 
 === Add events on anyone's timetable
 

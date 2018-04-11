@@ -6,7 +6,9 @@ import java.util.List;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.logic.Authentication;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -27,7 +29,7 @@ public class DeleteEventCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Event deleted!";
     public static final String MESSAGE_NO_SUCH_EVENT = "There is no such event!";
-    public static final String MESSAGE_FAILURE = "Unable to delete event, please try again later.";
+    public static final String MESSAGE_FAILURE = "Unable to deleteNotification event, please try again later.";
 
 
     private final Index targetIndex;
@@ -78,6 +80,7 @@ public class DeleteEventCommand extends Command {
         if (eventId != null) {
             try {
                 service.events().delete(calendarId, eventId).execute();
+                EventsCenter.getInstance().post(new RequestToDeleteNotificationEvent(eventId, false));
             } catch (IOException e) {
                 e.printStackTrace();
             }

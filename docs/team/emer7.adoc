@@ -1,0 +1,51 @@
+= John Doe - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Employees Tracker (E.T.)
+
+---
+
+== Overview
+
+Employees Tracker (E.T.) is a Human Resource Manager application that helps managers to manage their subordinates. Its has 2 main functionalities: providing information about employees, as well as helping in tracking the tasks assigned to each employee.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to review employees.*
+** What it does: allows the user to review employee. A review is tied to a reviewer. It is planned in V2.0 a reviewer can only review once to an employee.
+** Justification: This feature improves the product significantly because a user will be able to review an employee and hence can track and analyse the performance of an employee.
+
+* *Minor enhancement*: enhanced *find command to be able to search by multiple fields and criteria.* +
+** What it does: Before the enhancement, find command can only search by name using a single keyword. The enhancement allows find command to find by multiple fields such as name, tags, and rating using keyphrase. Find command is also enhanced to be able to find using multiple criteria.
+** Justification: Searching employee by multiple fields and also multiple criteria will allow a more powerful search feature for user.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W15-B1/main/blob/master/collated/functional/emer7.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B1/main/blob/master/collated/test/emer7.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` - `v1.4qa` (4 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the GUI detail panel.
+** Documentation:
+*** Maintain consistency in terminology used in documentation.
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T09-B1/main/issues/148[1], https://github.com/CS2103JAN2018-T09-B1/main/issues/156[2], https://github.com/CS2103JAN2018-T09-B1/main/issues/157[3], https://github.com/CS2103JAN2018-T09-B1/main/issues/163[4], https://github.com/CS2103JAN2018-T09-B1/main/issues/168[5], https://github.com/CS2103JAN2018-T09-B1/main/issues/169[6], https://github.com/CS2103JAN2018-T09-B1/main/issues/174[7], https://github.com/CS2103JAN2018-T09-B1/main/issues/177[8])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=emer7]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=emer7]

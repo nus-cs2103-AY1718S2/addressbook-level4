@@ -68,7 +68,7 @@ public class ListAppointmentCommandTest {
 
     @Test
     public void execute_getPastMonthYearNoAppt_failure() throws CommandException {
-       YearMonth yearMonth = YearMonth.of(2017, 01);
+        YearMonth yearMonth = YearMonth.of(2017, 01);
         thrown.expect(NullPointerException.class);
         new ListAppointmentCommand(2, yearMonth).execute();
     }

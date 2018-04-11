@@ -435,7 +435,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseDay_null_returnsTodayDay() throws Exception {
-       LocalDate expectedLocalDate = LocalDate.now();
+        LocalDate expectedLocalDate = LocalDate.now();
         assertEquals(expectedLocalDate, ParserUtil.parseDate(""));
         assertEquals(Optional.of(expectedLocalDate), ParserUtil.parseDate(Optional.of("")));
     }

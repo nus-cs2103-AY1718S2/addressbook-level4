@@ -25,6 +25,8 @@ import seedu.address.commons.events.logic.ReviewInputEvent;
  */
 public class ReviewDialog {
 
+    public static final String REVIEW_DIALOG_PANE_FIELD_ID = "reviewDialogPane";
+
     private Dialog<Pair<String, String>> dialog;
     private ButtonType reviewButtonType;
     private TextField reviewer;
@@ -35,6 +37,7 @@ public class ReviewDialog {
 
     public ReviewDialog() {
         dialog = new Dialog<>();
+        dialog.getDialogPane().setId(REVIEW_DIALOG_PANE_FIELD_ID);
         dialog.setTitle("Review Dialog");
         dialog.setHeaderText("Reviewer must be a valid email address"
                 + "\n"

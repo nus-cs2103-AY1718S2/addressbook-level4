@@ -13,6 +13,7 @@ public class NotiCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "";
 
+    public static final String MESSAGE_USAGE = "Toggling the notification center, or you can double press SHIFT";
 
     @Override
     public CommandResult execute() {

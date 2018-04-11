@@ -62,7 +62,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetData(ReadOnlyAddressBook newData) {
         // Quickfix: Reset the filtered person
         personList.clear();
-        
+
         addressBook.resetData(newData);
         indicateAddressBookChanged();
     }

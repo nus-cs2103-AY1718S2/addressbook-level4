@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class StringUtil {
 
-    private final static Pattern STRING_LEFT_TRIM = Pattern.compile("^\\s+");
+    private static final Pattern STRING_LEFT_TRIM = Pattern.compile("^\\s+");
 
     /**
      * Returns true if the {@code sentence} contains the {@code word}.

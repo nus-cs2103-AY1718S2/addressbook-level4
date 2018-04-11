@@ -22,7 +22,7 @@ image::yoochard.png[width="150", align="left"]
 {empty} [https://github.com/yoochard[github]]
 
 Role: - +
-Responsibilities: UI enhancement and add sort command
+Responsibilities: Add sort command and adjust UI
 
 '''
 

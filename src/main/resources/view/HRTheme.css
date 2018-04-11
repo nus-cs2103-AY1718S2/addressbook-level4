@@ -202,6 +202,7 @@
     -fx-background-radius: 8;
     -fx-font-family: "Roboto";
     -fx-font-size: 13;
+    -fx-text-fill: #616161;
 }
 
 #commandInput.command-error {
@@ -599,6 +600,10 @@
     -fx-background-color: #0D47A1;
 }
 
+.hr-button:disabled {
+    -fx-background-color: #616161;
+}
+
 
 
 /* Logos */
@@ -621,6 +626,8 @@
 
 #floatParseLabel {
     -fx-text-fill: #999;
+    -fx-font-family: "Roboto";
+    -fx-font-size: 13;
 }
 
 #floatParseRealTime {

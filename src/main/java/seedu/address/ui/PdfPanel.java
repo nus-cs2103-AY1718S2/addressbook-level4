@@ -127,7 +127,7 @@ public class PdfPanel extends UiPart<Region> {
 
         // Show progress to user
         resumePane.setVisible(false);
-        resumeLoadingLabel.setText("Opening file: " + filePath);
+        resumeLoadingLabel.setText("Opening " + selectedPerson.getName().fullName + "'s resume");
         resumeLoadingBar.setProgress(0);
         resumeLoading.setVisible(true);
 

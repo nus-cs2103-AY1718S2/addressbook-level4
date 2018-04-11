@@ -159,8 +159,6 @@ public class InfoPanel extends UiPart<Region> {
 
     // Resume
     @FXML
-    private VBox infoSideButtons;
-    @FXML
     private Button infoSideButtonResume;
 
     public InfoPanel(boolean animated) {
@@ -366,7 +364,6 @@ public class InfoPanel extends UiPart<Region> {
         nodes.add(infoMainStatusLabel);
         nodes.add(infoMainStatus);
         nodes.add(infoMainCommentsPane);
-        nodes.add(infoSideButtons);
     }
 
     /**
@@ -410,11 +407,9 @@ public class InfoPanel extends UiPart<Region> {
         infoMainComments.setText(comment == null ? "" : comment);
 
         // Disable resume if it is null
-        boolean resumeVisible = (person.getResume().value != null);
-        infoSideButtons.setManaged(resumeVisible);
-        infoSideButtonResume.setManaged(resumeVisible);
-        infoSideButtons.setVisible(resumeVisible);
-        infoSideButtonResume.setVisible(resumeVisible);
+        boolean resumeAvailable = (person.getResume().value != null);
+        infoSideButtonResume.setDisable(!resumeAvailable);
+        infoSideButtonResume.setText(resumeAvailable ? "View resume" : "Resume not available");
 
         // Process Interview info
         LocalDateTime interviewDate = person.getInterviewDate().getDateTime();

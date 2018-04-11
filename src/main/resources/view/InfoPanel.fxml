@@ -17,7 +17,7 @@
 <!-- @@author Ang-YC -->
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:id="infoPaneWrapper" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
     <ScrollPane fx:id="infoMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" focusTraversable="true" cache="true" cacheHint="SPEED"/>
-    <SplitPane fx:id="infoSplitPane" dividerPositions="0.5" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
+    <SplitPane fx:id="infoSplitPane" dividerPositions="1" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" cache="true" cacheHint="SPEED">
         <ScrollPane fx:id="infoSplitMainPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" focusTraversable="true" cache="true" cacheHint="SPEED">
             <VBox fx:id="infoMain" cache="true" cacheHint="SPEED">
                 <VBox fx:id="infoMainPart" opacity="0" cache="true" cacheHint="SPEED">
@@ -258,8 +258,8 @@
                         </padding>
                     </GridPane>
                 </VBox>
-                <VBox fx:id="infoSideButtons" opacity="0" alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS" cache="true" cacheHint="SPEED">
-                    <Button fx:id="infoSideButtonResume" styleClass="hr-button" onAction="#showResume" maxWidth="Infinity" mnemonicParsing="false" text="View Resume" cache="true" cacheHint="SPEED">
+                <VBox fx:id="infoSideButtons" alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS" cache="true" cacheHint="SPEED">
+                    <Button fx:id="infoSideButtonResume" styleClass="hr-button" onAction="#showResume" maxWidth="Infinity" mnemonicParsing="false" cache="true" cacheHint="SPEED">
                         <padding>
                             <Insets bottom="6.0" left="8.0" right="8.0" top="6.0" />
                         </padding>

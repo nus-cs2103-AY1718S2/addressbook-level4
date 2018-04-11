@@ -85,7 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteStudent(Student target)
             throws StudentNotFoundException, LessonNotFoundException {
-        schedule.removeStudentLesson(target);
+        schedule.removeStudentLessons(target);
         indicateScheduleChanged();
         addressBook.removeStudent(target);
         indicateAddressBookChanged();
@@ -97,7 +97,6 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
         indicateAddressBookChanged();
     }
-
 
 
     @Override

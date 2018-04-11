@@ -13,9 +13,8 @@ import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
-
+//@@author demitycho
 /**
- * @@author demitycho
  * Wraps all data at the schedule level
  * Duplicates are not allowed (by .equals comparison)
  */
@@ -72,7 +71,7 @@ public class Schedule implements ReadOnlySchedule {
     }
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code Schedule} with {@code newData}.
      */
     public void resetData(ReadOnlySchedule newData) {
         requireNonNull(newData);
@@ -102,16 +101,13 @@ public class Schedule implements ReadOnlySchedule {
     }
 
     /**
-     * Deletes all Lessons associated with a Student {@code UniqueKey key}
+     * Deletes all Lessons in LessonList associated with a Student {@code UniqueKey key}
      * @param target
      * @throws LessonNotFoundException
      */
-    public void removeStudentLesson(Student target) throws LessonNotFoundException {
-        for (Lesson lesson : lessons) {
-            if (lesson.getUniqueKey().equals(target.getUniqueKey())) {
-                removeLesson(lesson);
-            }
-        }
+    public void removeStudentLessons(Student target) throws LessonNotFoundException {
+        lessons.removeStudentLessons(target);
+
     }
 
 

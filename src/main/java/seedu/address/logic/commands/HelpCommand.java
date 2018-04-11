@@ -15,7 +15,7 @@ public class HelpCommand extends Command {
     public static final String MESSAGE_USAGE = "Type '" + COMMAND_WORD + "' OR '" + COMMAND_ALIAS
             + "' to shows program usage instructions.\n"  + "Example: " + COMMAND_WORD;
 
-    public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
+    public static final String SHOWN_HELP_MESSAGE = "Opened help window.";
     private String commandRequest = null;
 
 
@@ -31,7 +31,7 @@ public class HelpCommand extends Command {
     public CommandResult execute() throws CommandException {
         if (commandRequest == null)   {
             EventsCenter.getInstance().post(new ShowHelpRequestEvent());
-            return new CommandResult(SHOWING_HELP_MESSAGE);
+            return new CommandResult(SHOWN_HELP_MESSAGE);
         } else   {
             switch(commandRequest) {
 

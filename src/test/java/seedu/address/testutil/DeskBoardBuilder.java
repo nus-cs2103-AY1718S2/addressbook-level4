@@ -7,7 +7,7 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 
 /**
- * A utility class to help with building Addressbook objects.
+ * A utility class to help with building the Desk Board.
  * Example usage: <br>
  *     {@code DeskBoard ab = new DeskBoardBuilder().withActivity("John", "Doe").withTag("Friend").build();}
  */

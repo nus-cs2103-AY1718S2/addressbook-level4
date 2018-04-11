@@ -1,5 +1,6 @@
 package seedu.address.model.activity;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.tag.Tag;
@@ -102,7 +103,14 @@ public class Task extends Activity {
     }
 
     @Override
+    //@@author Kyomian
+    /**
+     * Gets a completely copy of task.
+     * Removes the overdue tag, if any.
+     */
     public Activity getCompletedCopy() {
-        return new Task(getName(), getDueDateTime(), getRemark(), getTags(), true);
+        HashSet<Tag> tags = new HashSet<>(getTags()); // copy constructor
+        tags.remove(new Tag("Overdue"));
+        return new Task(getName(), getDueDateTime(), getRemark(), tags, true);
     }
 }

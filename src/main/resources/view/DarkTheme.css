@@ -1,3 +1,24 @@
+.dashboard-pane {
+    -fx-background-color: white;
+}
+
+.dashboard-title {
+    -fx-font-size: 18pt;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.dashboard-label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+}
+
+.milestone-title {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-fill: #010504;
+}
+
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);
     background-color: #383838; /* Used in the default.html file */

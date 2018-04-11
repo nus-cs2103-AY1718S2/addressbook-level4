@@ -5,19 +5,17 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="cardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="900.0" style="-fx-border-color: black; -fx-background-color: #e0dedc;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="cardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="900.0" styleClass="milestone-panel" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="21.0" prefWidth="600.0">
+      <HBox prefHeight="21.0" prefWidth="600.0" styleClass="milestone-panel" stylesheets="@DarkTheme.css">
          <children>
-            <Text fill="#00000091" strokeType="OUTSIDE" strokeWidth="0.0" text="MILESTONE">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" styleClass="milestone-title" text="MILESTONE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -25,19 +23,19 @@
                   <Insets left="5.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="index" style="-fx-text-fill: #4a4d4f; -fx-font-weight: bold;" text="idx" textFill="#585858">
+            <Label fx:id="index" style="-fx-font-size: 14;" styleClass="milestone-title" text="index">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="Segoe UI Light" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="5.0" top="4.0" />
+                  <Insets left="5.0" top="10.0" />
                </HBox.margin>
             </Label>
          </children>
       </HBox>
-      <HBox prefHeight="20.0" prefWidth="600.0">
+      <HBox prefHeight="20.0" prefWidth="600.0" styleClass="milestone-panel">
          <children>
-            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
+            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" styleClass="milestone-title" text="Description:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -45,12 +43,12 @@
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="description" style="-fx-font-family: Segoe UI; -fx-text-fill: #030303; -fx-font-size: 14;" text="desc">
+            <Label fx:id="description" style="-fx-text-fill: white;" styleClass="milestone-title" text="desc">
                <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
+                  <Insets left="10.0" top="10.0" />
                </HBox.margin>
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Segoe UI Light" size="15.0" />
                </font>
             </Label>
          </children>
@@ -58,9 +56,9 @@
             <Blend />
          </effect>
       </HBox>
-      <HBox prefHeight="20.0" prefWidth="600.0">
+      <HBox prefHeight="20.0" prefWidth="600.0" styleClass="milestone-panel">
          <children>
-            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" text="Due Date:">
+            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" styleClass="milestone-title" text="Due Date:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -68,12 +66,12 @@
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="dueDate" style="-fx-font-family: Segoe UI; -fx-font-size: 14; -fx-text-fill: #030303;" text="date">
+            <Label fx:id="dueDate" style="-fx-text-fill: white;" text="date">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Segoe UI Light" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
+                  <Insets left="10.0" top="10.0" />
                </HBox.margin>
             </Label>
          </children>
@@ -81,9 +79,9 @@
             <Blend />
          </effect>
       </HBox>
-      <HBox prefHeight="150.0" prefWidth="600.0">
+      <HBox prefHeight="150.0" prefWidth="600.0" styleClass="milestone-panel">
          <children>
-            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks:">
+            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" styleClass="milestone-title" text="Tasks:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -95,15 +93,24 @@
                <HBox.margin>
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
+               <opaqueInsets>
+                  <Insets top="3.0" />
+               </opaqueInsets>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
             </ListView>
          </children>
          <effect>
             <Blend />
          </effect>
+         <padding>
+            <Insets top="7.0" />
+         </padding>
       </HBox>
-      <HBox prefHeight="20.0" prefWidth="600.0">
+      <HBox prefHeight="20.0" prefWidth="600.0" styleClass="milestone-panel">
          <children>
-            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress:">
+            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" styleClass="milestone-title" text="Progress:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -111,28 +118,21 @@
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <ProgressBar fx:id="progress" prefWidth="200.0" progress="0.0" />
-                  <Label fx:id="progressPercent" style="-fx-text-fill: black;" text="percent">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-               </children>
+            <Label fx:id="progressPercent" style="-fx-text-fill: white;" text="progress">
+               <font>
+                  <Font name="Segoe UI Light" size="15.0" />
+               </font>
                <HBox.margin>
-                  <Insets left="5.0" top="8.0" />
+                  <Insets left="10.0" top="10.0" />
                </HBox.margin>
-            </StackPane>
+            </Label>
          </children>
          <effect>
             <Blend />
          </effect>
-      </HBox>
-      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="20.0" prefWidth="35.0">
          <VBox.margin>
-            <Insets top="5.0" />
+            <Insets bottom="10.0" />
          </VBox.margin>
-      </StackPane>
+      </HBox>
    </children>
 </VBox>

@@ -41,9 +41,6 @@ public class MilestoneCard extends UiPart<Region> {
     @FXML
     private Label progressPercent;
 
-    @FXML
-    private ProgressBar progress;
-
     public MilestoneCard(Milestone milestone, int displayedIndex) {
         super(FXML);
         this.milestone = milestone;
@@ -51,7 +48,6 @@ public class MilestoneCard extends UiPart<Region> {
         index.setText(Integer.toString(displayedIndex));
         description.setText(milestone.getDescription());
         dueDate.setText(milestone.getDueDate().toString());
-        progress.setProgress(milestone.getProgress().getProgressInPercent() / 100.0);
         progressPercent.setText(milestone.getProgress().getProgressInPercent() + "%");
         loadTaskList(milestone.getTaskList().asObservableList());
     }

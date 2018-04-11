@@ -51,7 +51,7 @@ public class ExportCommandTest {
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, EXPORT_FILE_PATH)));
 
         assertEquals(getTypicalDeskBoard(), actualDeskBoard);
-        new File(EXPORT_FILE_PATH).delete();
+        new File(EXPORT_FILE_PATH).delete(); // So that the test will not fail when run the second time onwards
     }
 
     @Test

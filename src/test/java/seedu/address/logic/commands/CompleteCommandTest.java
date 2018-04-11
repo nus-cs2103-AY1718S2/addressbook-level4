@@ -79,7 +79,7 @@ public class CompleteCommandTest {
         undoRedoStack.push(completeCommand);
 
         // undo -> reverts desk board back to previous state and filtered activity list to show all activities
-            assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first activity completed again
         Activity completedActivity = activityToComplete.getCompletedCopy();

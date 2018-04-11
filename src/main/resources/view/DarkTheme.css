@@ -2,7 +2,7 @@
 /* Part of css file*/
 .background {
     -fx-background-color: derive(beige, 20%);
-    background-color: white; /* Used in the default.html file */
+    background-color: beige; /* Used in the default.html file */
 }
 
 .label {

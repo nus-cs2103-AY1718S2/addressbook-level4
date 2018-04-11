@@ -51,7 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Set<Subject> subjectList = ParserUtil.parseSubjects(argMultimap.getAllValues(PREFIX_SUBJECT));
             Remark remark;
-            Cca cca = ParserUtil.parseCca(" ");
+            Cca cca = ParserUtil.parseCca("", "");
             InjuriesHistory injuriesHistory = ParserUtil.parseInjuriesHistory(" ");
             NameOfKin nameOfKin = ParserUtil.parseNameOfKin(argMultimap.getValue(PREFIX_NOK)).get();
             if (!(argMultimap.getValue(PREFIX_REMARK)).isPresent()) {

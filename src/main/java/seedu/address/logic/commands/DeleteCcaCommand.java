@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
-import static seedu.address.logic.parser.ParserUtil.parseCca;
+import static seedu.address.logic.parser.ParserUtil.parseCcaPosition;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -103,27 +103,11 @@ public class DeleteCcaCommand extends UndoableCommand {
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse((personToEdit.getRemark()));
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                 .orElse(personToEdit.getInjuriesHistory());
-        String[] ccaArray = personToEdit.getCca().toString().split("\n");
-        String updateCca = "";
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
-        CcaPosition updatedCcaPosition = editPersonDescriptor.getCcaPosition()
-                .orElse(personToEdit.getCcaPosition());
-        boolean ccaIsFound = false;
-        for (String cca : ccaArray) {
-            if (!cca.contains(editPersonDescriptor.getCca().get().toString())) {
-                updateCca = updateCca + cca + "\n";
-            } else {
-                editPersonDescriptor.setCca(parseCca(cca));
-                ccaIsFound = true;
-            }
-        }
-        if (ccaIsFound) {
-            Cca updatedCca = parseCca(updateCca);
-            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
+        CcaPosition updatedCcaPosition = parseCcaPosition(" ");
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
                     updatedInjuriesHistory, updatedNameOfKin, updatedCcaPosition);
-        } else {
-            throw new CommandException("The target cca cannot be missing.");
-        }
     }
 
     @Override

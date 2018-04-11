@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA_POSITION;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -23,9 +24,9 @@ public class DeleteCcaCommandParser implements Parser<DeleteCcaCommand> {
      */
     public DeleteCcaCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_CCA);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_CCA, PREFIX_CCA_POSITION);
 
-        if (!argMultimap.arePrefixesPresent(PREFIX_CCA)) {
+        if (!argMultimap.arePrefixesPresent(PREFIX_CCA, PREFIX_CCA_POSITION)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCcaCommand.MESSAGE_USAGE));
         }
         Index index;
@@ -37,11 +38,13 @@ public class DeleteCcaCommandParser implements Parser<DeleteCcaCommand> {
         }
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        if (ParserUtil.parseCca(argMultimap.getValue(PREFIX_CCA)).get().toString().isEmpty()) {
+        if (ParserUtil.parseCca(argMultimap.getValue(PREFIX_CCA), argMultimap.getValue(PREFIX_CCA_POSITION))
+                .get().toString().isEmpty()) {
             throw new ParseException((String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                                                     DeleteCcaCommand.MESSAGE_USAGE)));
         } else {
-            ParserUtil.parseCca(argMultimap.getValue(PREFIX_CCA)).ifPresent(editPersonDescriptor::setCca);
+            ParserUtil.parseCca(argMultimap.getValue(PREFIX_CCA), argMultimap.getValue(PREFIX_CCA_POSITION))
+                    .ifPresent(editPersonDescriptor::setCca);
         }
         return new DeleteCcaCommand(index, editPersonDescriptor);
     }

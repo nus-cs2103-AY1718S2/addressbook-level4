@@ -12,16 +12,20 @@ public class NextOfKin {
 
     private final Name name;
     private final Nric nric;
+    private final Phone phone;
+    private final Email email;
     private final Remark remark;
 
     /**
      * Every field must be present and not null.
      */
 
-    public NextOfKin(Name name, Nric nric, Remark remark) {
+    public NextOfKin(Name name, Nric nric, Phone phone, Email email, Remark remark) {
         requireAllNonNull(name, nric);
         this.name = name;
         this.nric = nric;
+        this.phone = phone;
+        this.email = email;
         // protect internal tags from changes in the arg list
         this.remark = remark;
     }
@@ -36,6 +40,14 @@ public class NextOfKin {
 
     public Remark getRemark() {
         return remark;
+    }
+
+    public Phone getPhone() {
+        return phone;
+    }
+
+    public Email getEmail() {
+        return email;
     }
 
     @Override
@@ -56,7 +68,7 @@ public class NextOfKin {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, remark);
+        return Objects.hash(name, nric, phone, email, remark);
     }
 
     @Override
@@ -65,6 +77,10 @@ public class NextOfKin {
         builder.append(getName())
                 .append(" Nric: ")
                 .append(getNric());
+        builder.append(" Phone: ")
+                .append(getPhone());
+        builder.append(" Email: ")
+                .append(getEmail());
         builder.append(" Remarks: ")
                .append(getRemark());
         return builder.toString();

@@ -40,6 +40,8 @@ public class XmlAdaptedPerson {
     @XmlElement
     private String cca;
     @XmlElement
+    private String pos;
+    @XmlElement
     private String injuriesHistory;
     @XmlElement
     private String nameOfKin;
@@ -56,7 +58,8 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects,
-                            String remark, String cca, String injuriesHistory, String nameOfKin, String ccaPosition) {
+                            String remark, String cca, String injuriesHistory, String nameOfKin,
+                            String ccaPosition) {
         this.name = name;
         this.nric = nric;
         this.remark = remark;
@@ -90,6 +93,7 @@ public class XmlAdaptedPerson {
         }
         remark = source.getRemark().value;
         cca = source.getCca().value;
+        pos = source.getCca().pos;
         injuriesHistory = source.getInjuriesHistory().value;
         nameOfKin = source.getNameOfKin().fullName;
         ccaPosition = source.getCcaPosition().value;
@@ -134,10 +138,11 @@ public class XmlAdaptedPerson {
         }
         final Remark remark = new Remark(this.remark);
 
-        if (this.cca == null) {
+        if (this.cca == null || this.pos == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Cca.class.getSimpleName()));
         }
-        final Cca cca = new Cca(this.cca);
+
+        final Cca cca = new Cca(this.cca, this.pos);
 
         if (this.injuriesHistory == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,

@@ -81,6 +81,8 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+        customerStats.addCount(person.getPhone().toString());
+        indicateCustomerStatsChanged();
     }
 
     @Override

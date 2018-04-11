@@ -45,7 +45,6 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
-        ArgumentTokenizer lexicalAnalyzer = new ArgumentTokenizer();
         TokenStack tokenStack = ArgumentTokenizer.tokenizeToTokenStack(args, EXPECTED_TOKEN_TYPES);
         try {
             Predicate<Coin> coinCondition = ParserUtil.parseCondition(tokenStack);

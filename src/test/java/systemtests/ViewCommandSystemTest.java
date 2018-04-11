@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_TARGET;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_COIN_SUCCESS;
+import static seedu.address.logic.commands.ViewCommand.MESSAGE_SELECT_COIN_SUCCESS;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoins;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
 
@@ -12,11 +12,11 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.model.Model;
 
-public class SelectCommandSystemTest extends CoinBookSystemTest {
+public class ViewCommandSystemTest extends CoinBookSystemTest {
     @Test
     public void select() {
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
@@ -24,12 +24,12 @@ public class SelectCommandSystemTest extends CoinBookSystemTest {
         /* Case: select the first card in the coin list, command with leading spaces and trailing spaces
          * -> selected
          */
-        String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_COIN.getOneBased() + "   ";
+        String command = "   " + ViewCommand.COMMAND_WORD + " " + INDEX_FIRST_COIN.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST_COIN);
 
         /* Case: select the last card in the coin list -> selected */
         Index coinCount = Index.fromOneBased(getTypicalCoins().size());
-        command = SelectCommand.COMMAND_WORD + " " + coinCount.getOneBased();
+        command = ViewCommand.COMMAND_WORD + " " + coinCount.getOneBased();
         assertCommandSuccess(command, coinCount);
 
         /* Case: undo previous selection -> rejected */
@@ -44,7 +44,7 @@ public class SelectCommandSystemTest extends CoinBookSystemTest {
 
         /* Case: select the middle card in the coin list -> selected */
         Index middleIndex = Index.fromOneBased(coinCount.getOneBased() / 2);
-        command = SelectCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
+        command = ViewCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
         assertCommandSuccess(command, middleIndex);
 
         /* Case: select the current selected card -> selected */
@@ -55,37 +55,37 @@ public class SelectCommandSystemTest extends CoinBookSystemTest {
         /* Case: filtered coin list, select index within bounds of address book and coin list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assertTrue(validIndex.getZeroBased() < getModel().getFilteredCoinList().size());
-        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
+        command = ViewCommand.COMMAND_WORD + " " + validIndex.getOneBased();
         assertCommandSuccess(command, validIndex);
 
         /* ----------------------------------- Perform invalid select operations ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(ViewCommand.COMMAND_WORD + " " + 0,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(ViewCommand.COMMAND_WORD + " " + -1,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getFilteredCoinList().size() + 1;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_COMMAND_TARGET);
+        assertCommandFailure(ViewCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_COMMAND_TARGET);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(ViewCommand.COMMAND_WORD + " abc",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(ViewCommand.COMMAND_WORD + " 1 abc",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: select from empty address book -> rejected */
         deleteAllCoins();
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_COIN.getOneBased(),
+        assertCommandFailure(ViewCommand.COMMAND_WORD + " " + INDEX_FIRST_COIN.getOneBased(),
                 MESSAGE_INVALID_COMMAND_TARGET);
     }
 

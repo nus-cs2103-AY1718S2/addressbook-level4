@@ -40,21 +40,21 @@ public class TagCommand extends UndoableCommand {
     public static final String MESSAGE_NOT_EDITED = "At least one tag must be provided.";
     public static final String MESSAGE_DUPLICATE_COIN = "This coin already exists in the coin book.";
 
-    private final Index index;
+    private final CommandTarget target;
     private final EditCoinDescriptor editCoinDescriptor;
 
     private Coin coinToEdit;
     private Coin editedCoin;
 
     /**
-     * @param index of the coin in the filtered coin list to edit
+     * @param target            in the filtered coin list to edit
      * @param editCoinDescriptor details to edit the coin with
      */
-    public TagCommand(Index index, EditCoinDescriptor editCoinDescriptor) {
-        requireNonNull(index);
+    public TagCommand(CommandTarget target, EditCoinDescriptor editCoinDescriptor) {
+        requireNonNull(target);
         requireNonNull(editCoinDescriptor);
 
-        this.index = index;
+        this.target = target;
         this.editCoinDescriptor = new EditCoinDescriptor(editCoinDescriptor);
     }
 
@@ -73,14 +73,17 @@ public class TagCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Coin> lastShownList = model.getFilteredCoinList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
+        try {
+            List<Coin> lastShownList = model.getFilteredCoinList();
+            if (target.toIndex(model.getFilteredCoinList()).getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_TARGET);
+            }
+            Index index = target.toIndex(model.getFilteredCoinList());
+            coinToEdit = lastShownList.get(index.getZeroBased());
+            editedCoin = createEditedCoin(coinToEdit, editCoinDescriptor);
+        } catch (IndexOutOfBoundsException oobe) {
             throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_TARGET);
         }
-
-        coinToEdit = lastShownList.get(index.getZeroBased());
-        editedCoin = createEditedCoin(coinToEdit, editCoinDescriptor);
     }
 
     /**
@@ -110,7 +113,7 @@ public class TagCommand extends UndoableCommand {
 
         // state check
         TagCommand e = (TagCommand) other;
-        return index.equals(e.index)
+        return target.equals(e.target)
                 && editCoinDescriptor.equals(e.editCoinDescriptor)
                 && Objects.equals(coinToEdit, e.coinToEdit);
     }

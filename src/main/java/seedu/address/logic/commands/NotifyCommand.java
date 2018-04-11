@@ -13,6 +13,7 @@ import seedu.address.model.rule.exceptions.DuplicateRuleException;
 public class NotifyCommand extends Command {
 
     public static final String COMMAND_WORD = "notify";
+    public static final String COMMAND_ALIAS = "n";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a new notification to be triggered "
             + "upon the specified rule. Rules are provided in the following format:\n"

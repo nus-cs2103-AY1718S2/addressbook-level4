@@ -21,6 +21,7 @@ import seedu.address.model.coin.exceptions.DuplicateCoinException;
 public class SellCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sell";
+    public static final String COMMAND_ALIAS = "s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes value from the coin account identified "
             + "by the index number used in the last coin listing or its code. "

@@ -26,9 +26,9 @@ import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code SelectCommand}.
+ * Contains integration tests (interaction with the Model) for {@code ViewCommand}.
  */
-public class SelectCommandTest {
+public class ViewCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
@@ -75,14 +75,14 @@ public class SelectCommandTest {
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_COIN);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_COIN);
+        ViewCommand selectFirstCommand = new ViewCommand(INDEX_FIRST_COIN);
+        ViewCommand selectSecondCommand = new ViewCommand(INDEX_SECOND_COIN);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_COIN);
+        ViewCommand selectFirstCommandCopy = new ViewCommand(INDEX_FIRST_COIN);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false
@@ -96,15 +96,15 @@ public class SelectCommandTest {
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
+     * Executes a {@code ViewCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
      * is raised with the correct index.
      */
     private void assertExecutionSuccess(Index index) {
-        SelectCommand selectCommand = prepareCommand(index);
+        ViewCommand viewCommand = prepareCommand(index);
 
         try {
-            CommandResult commandResult = selectCommand.execute();
-            assertEquals(String.format(SelectCommand.MESSAGE_SELECT_COIN_SUCCESS, index.getOneBased()),
+            CommandResult commandResult = viewCommand.execute();
+            assertEquals(String.format(ViewCommand.MESSAGE_SELECT_COIN_SUCCESS, index.getOneBased()),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
@@ -115,14 +115,14 @@ public class SelectCommandTest {
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * Executes a {@code ViewCommand} with the given {@code index}, and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
     private void assertExecutionFailure(Index index, String expectedMessage) {
-        SelectCommand selectCommand = prepareCommand(index);
+        ViewCommand viewCommand = prepareCommand(index);
 
         try {
-            selectCommand.execute();
+            viewCommand.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException ce) {
             assertEquals(expectedMessage, ce.getMessage());
@@ -131,11 +131,11 @@ public class SelectCommandTest {
     }
 
     /**
-     * Returns a {@code SelectCommand} with parameters {@code index}.
+     * Returns a {@code ViewCommand} with parameters {@code index}.
      */
-    private SelectCommand prepareCommand(Index index) {
-        SelectCommand selectCommand = new SelectCommand(index);
-        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return selectCommand;
+    private ViewCommand prepareCommand(Index index) {
+        ViewCommand viewCommand = new ViewCommand(index);
+        viewCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return viewCommand;
     }
 }

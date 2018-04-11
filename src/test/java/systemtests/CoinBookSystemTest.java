@@ -36,7 +36,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalCoins;
@@ -163,7 +163,7 @@ public abstract class CoinBookSystemTest {
      * Selects the coin at {@code index} of the displayed list.
      */
     protected void selectCoin(Index index) {
-        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        executeCommand(ViewCommand.COMMAND_WORD + " " + index.getOneBased());
         assertEquals(index.getZeroBased(), getCoinListPanel().getSelectedCardIndex());
     }
 

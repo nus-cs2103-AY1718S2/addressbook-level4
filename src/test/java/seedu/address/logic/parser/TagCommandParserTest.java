@@ -17,6 +17,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_COIN;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.CommandTarget;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.TagCommand.EditCoinDescriptor;
 import seedu.address.model.tag.Tag;
@@ -34,7 +35,7 @@ public class TagCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_NAME_AMY, TagCommand.MESSAGE_NOT_EDITED);
 
         // no field specified
         assertParseFailure(parser, "1", TagCommand.MESSAGE_NOT_EDITED);
@@ -80,7 +81,7 @@ public class TagCommandParserTest {
 
         EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder()
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-        TagCommand expectedCommand = new TagCommand(targetIndex, descriptor);
+        TagCommand expectedCommand = new TagCommand(new CommandTarget(targetIndex), descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -91,7 +92,7 @@ public class TagCommandParserTest {
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 
         EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder().withTags().build();
-        TagCommand expectedCommand = new TagCommand(targetIndex, descriptor);
+        TagCommand expectedCommand = new TagCommand(new CommandTarget(targetIndex), descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }

@@ -12,10 +12,10 @@ import seedu.address.model.coin.Coin;
 /**
  * Selects a coin identified using it's last displayed index from the address book.
  */
-public class SelectCommand extends Command {
+public class ViewCommand extends Command {
 
-    public static final String COMMAND_WORD = "select";
-    public static final String COMMAND_ALIAS = "s";
+    public static final String COMMAND_WORD = "view";
+    public static final String COMMAND_ALIAS = "v";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the coin identified by the index number used in the last coin listing.\n"
@@ -26,7 +26,7 @@ public class SelectCommand extends Command {
 
     private final Index targetIndex;
 
-    public SelectCommand(Index targetIndex) {
+    public ViewCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -49,7 +49,7 @@ public class SelectCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof SelectCommand // instanceof handles nulls
-                && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
+                || (other instanceof ViewCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ViewCommand) other).targetIndex)); // state check
     }
 }

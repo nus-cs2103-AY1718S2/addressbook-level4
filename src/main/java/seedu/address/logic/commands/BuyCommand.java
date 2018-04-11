@@ -21,6 +21,7 @@ import seedu.address.model.coin.exceptions.DuplicateCoinException;
 public class BuyCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "buy";
+    public static final String COMMAND_ALIAS = "b";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add value to the coin account identified "
             + "by the index number used in the last coin listing or its code. "

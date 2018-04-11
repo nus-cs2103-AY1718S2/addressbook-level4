@@ -9,8 +9,8 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.CommandTarget;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.TagCommand.EditCoinDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -31,10 +31,10 @@ public class TagCommandParser implements Parser<TagCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenizeToArgumentMultimap(args, PREFIX_TAG);
 
-        Index index;
+        CommandTarget target;
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            target = ParserUtil.parseTarget(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
         }
@@ -50,7 +50,7 @@ public class TagCommandParser implements Parser<TagCommand> {
             throw new ParseException(TagCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new TagCommand(index, editCoinDescriptor);
+        return new TagCommand(target, editCoinDescriptor);
     }
 
     /**

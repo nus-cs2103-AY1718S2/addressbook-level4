@@ -132,7 +132,7 @@ public class ParserUtil {
 
     //@@author Eldon-Chung
     /**
-     * Parses a {@code String condition} into a {@code Predicate<Coin>}.
+     * Parses a {@code String condition} represented by a {@TokenStack} into a {@code Predicate<Coin>}.
      * @param argumentTokenStack a {@code TokenStack} representing the tokenized argument.
      * @return a predicate representing the argument
      * @throws IllegalValueException if the given tag names or numbers as parameters are invalid

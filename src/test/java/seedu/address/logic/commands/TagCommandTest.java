@@ -203,17 +203,17 @@ public class TagCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new TagCommand(INDEX_SECOND_COIN, DESC_AMY)));
+        assertFalse(standardCommand.equals(new TagCommand(new CommandTarget(INDEX_SECOND_COIN), DESC_AMY)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new TagCommand(INDEX_FIRST_COIN, DESC_BOB)));
+        assertFalse(standardCommand.equals(new TagCommand(new CommandTarget(INDEX_FIRST_COIN), DESC_BOB)));
     }
 
     /**
      * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
      */
     private TagCommand prepareCommand(Index index, EditCoinDescriptor descriptor) {
-        TagCommand tagCommand = new TagCommand(index, descriptor);
+        TagCommand tagCommand = new TagCommand(new CommandTarget(index), descriptor);
         tagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return tagCommand;
     }

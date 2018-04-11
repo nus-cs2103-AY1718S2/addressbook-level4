@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.TokenType.PREFIX_NAME;
+import static seedu.address.logic.parser.TokenType.PREFIX_CODE;
 import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -18,10 +18,10 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a coin to the coin book. "
             + "Parameters: "
-            + PREFIX_NAME + "NAME "
+            + PREFIX_CODE + "NAME "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "BTC "
+            + PREFIX_CODE + "BTC "
             + PREFIX_TAG + "fav "
             + PREFIX_TAG + "fastTransfer";
 

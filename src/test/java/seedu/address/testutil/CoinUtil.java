@@ -1,6 +1,6 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.parser.TokenType.PREFIX_NAME;
+import static seedu.address.logic.parser.TokenType.PREFIX_CODE;
 import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
 
 import seedu.address.logic.commands.AddCommand;
@@ -30,7 +30,7 @@ public class CoinUtil {
      */
     public static String getCoinDetails(Coin coin) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + coin.getCode().fullName + " ");
+        sb.append(PREFIX_CODE + coin.getCode().fullName + " ");
         coin.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );

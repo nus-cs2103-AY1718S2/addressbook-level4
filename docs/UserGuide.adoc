@@ -63,6 +63,7 @@ Format: `help`, Alias: `h`
 [TIP]
 The help page can be accessed by moving the mouse over `Help` section of the navigation bar then clicking `Help`. The help page can also be accessed by pressing `F1` on the keyboard.
 
+// tag::add[]
 === Adding a person: `add`
 
 Adds a person to reInsurance +
@@ -87,6 +88,7 @@ Format: `list` Alias: `l`
 Returns the number of client in reInsurance
 Format: `count`
 
+// tag::edit[]
 === Editing a person : `edit`
 
 Edits an existing person in the reInsurance. +
@@ -130,6 +132,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::findtag[]
 === Locating persons by tag: `findtag`
 
 Finds persons whose names contain any of the given tags. +

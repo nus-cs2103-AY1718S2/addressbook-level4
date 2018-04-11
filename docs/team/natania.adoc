@@ -1,3 +1,65 @@
 = Natania Djohari - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+
+== PROJECT: AddressBook - Level 4
+
+---
+
+== Overview
+
+PrioriTask is a desktop task manager application written in Java (10~20kLOC).
+It helps users manage their tasks and priorities through automatic priority updating and sorting.
+The application also features a calendar which provides users with a chronological overview of upcoming deadlines.
+The user interacts with PrioriTask by using a Command Line Interface (CLI), and has a Graphical User Interface (GUI) created with JavaFX.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to recur tasks weekly*
+** What it does: allows the user to recur tasks weekly. The tasks that are recurred have deadlines that are on the same day of the week as the original task.
+** Justification: This feature improves the product significantly because a user can add tasks that need to be done weekly much more quickly, as compared to with just the feature to add tasks one by one.
+** Highlights: This feature was difficult to implement because there are many ways a user may want to recur a task. Finding a way to recur tasks that can fit most users' needs was a challenge.
+
+* *Minor enhancement*: added a remove tag command that allows the user to remove a specified tag from all entries in PrioriTask.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B4/main/blob/master/collated/functional/natania.md[Functional code]] [https://github.com[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+** Tools:
+*** Integrated a third party library (Natty) to the project (https://github.com[#42])
+*** Integrated a new Github plugin (CircleCI) to the team repo
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=recurw]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+

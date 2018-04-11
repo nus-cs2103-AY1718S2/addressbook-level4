@@ -1,4 +1,3 @@
-
 = PrioriTask - User Guide
 :linkcss:
 :icons: font
@@ -569,6 +568,7 @@ Clear all of your tasks from PrioriTask. +
 [format-title]#Format:# `clear`
 ====
 
+// tag::recurw[]
 === Recurring a task : `recurw` or `rw` `[since v1.5rc]`
 
 Recurs an existing task in PrioriTask.
@@ -593,7 +593,7 @@ Recurs an existing task in PrioriTask.
 * [example]#`recurw 1 x/3# +
 Recurs the 1st task weekly for 3 times.
 ====
-
+// end::recurw[]
 
 == Subtask Management Features
 

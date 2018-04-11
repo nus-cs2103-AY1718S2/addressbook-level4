@@ -377,6 +377,7 @@ call the respective CommandParser which will parse the input text and return a n
 then execute this command.
 
 This sequence flow is the same as the other commands, an example of the remove appointment logic interactions is shown below
+
 image::RemoveAppointmentSequenceDiagram.png[width="800"]
 
 The `ModelManager` then carry out the actual operations to calendar, `ModelManager` call `AddressBook' and raise a `AddressBookChangedEvent`, finally `AddressBook` calls its `InsuranceCalendar` object to

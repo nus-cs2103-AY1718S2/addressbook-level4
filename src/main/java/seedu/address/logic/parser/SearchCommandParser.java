@@ -8,7 +8,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author KevinChuangCH
 /**
- * Parses input arguments and creates a new SearchTwitterCommand object
+ * Parses input arguments and creates a new SearchCommand object
  */
 public class SearchCommandParser {
 

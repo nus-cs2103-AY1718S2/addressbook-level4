@@ -25,24 +25,25 @@ Integrated Medical DataBase (IMDB) is a desktop health records application which
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+*** Managed releases `v1.2`, `v1.4` - `v1.5rc` (4 releases) on GitHub
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Refactored class name (rename) (Pull requests https://github.com/CS2103JAN2018-W15-B2/main/pull/94[#94])
+*** Modified tag color of patient card (https://github.com/CS2103JAN2018-W15-B2/main/pull/3[#3])
+*** Modified style for different feedback message (https://github.com/CS2103JAN2018-W15-B2/main/pull/4[#4])
+*** Added status bar in status bar footer to display number of records (https://github.com/CS2103JAN2018-W15-B2/main/pull/5[#5])
+*** Updated Application name and icon (https://github.com/CS2103JAN2018-W15-B2/main/pull/186[#186])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** 
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+*** 
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F12-B4/main/issues/140[#140], https://github.com/CS2103JAN2018-F12-B4/main/issues/137[#137], https://github.com/CS2103JAN2018-F12-B4/main/issues/135[#135])
+*** Some parts of the history feature I added was adopted by several other class mates
 ** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
-
-_{you can add/remove categories in the list above}_
+*** Integrated a third party library (CalendarFX) to the project (https://github.com/CS2103JAN2018-W15-B2/main/pull/144[#144])
+*** 
 
 == Contributions to the User Guide
+
 
 
 |===

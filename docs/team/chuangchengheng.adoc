@@ -8,15 +8,15 @@
 
 == Overview
 
-Media Socializer is a desktop address book application used to help social media users to keep track of all the social media platforms they are using. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Media Socializer is a one-stop social media desktop application made to help users to keep track of the many social media platforms they are currently using. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to search on all platforms*
-** What it does: allows user to perform the search action on all the social media platforms available with a single command
-** Justification: This feature improves the product significantly because a user can do search on the application instead of going to the individual social media platform and repeatedly perform the search.
-** Highlights: This enhancement requires interactions with all the social media platform available, each with different interfaces. Thus the implementation involve a lot of third party libraries, and this makes the implementation challenging.
-** Credits: _{Update the social media library used here}_
+* *Major enhancement*: added *the ability to search for person on social media platforms*
+** What it does: allows the user to perform the search function for person's profile on the social media platforms through the application with a single command.
+** Justification: This feature grants the user the ability to search for other person's profile on either the stated social media platforms or all the platforms available through the application. Thus, the user no longer need to go on to the different social media platform and perform the search repeatedly. This feature brings the application one step closer to the goal of being an one-stop social media application.
+** Highlights: This feature has to be able to display the search results of different social media platforms in a convenient way, as such, it requires the implementor to come up with a UI allows the user to jump between search results easily. The implementation is
+** Credits: The design of the UI is inspired by the tab interface of the internet browsers (i.e. Firefox, Google Chrome, and etc)
 
 * *Minor enhancement*: added a findtag command that allows the user to find persons whose tags contain the input keywords.
 
@@ -25,21 +25,16 @@ Media Socializer is a desktop address book application used to help social media
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.0` - `v1.5rc` (6 releases) on GitHub
+*** Ensure the closure of milestone `v1.3` - `v1.5rc` (3 milestones) on GitHub
 ** Enhancements to existing features:
-*** Added aliases to all existing commands (Pull requests https://github.com[#33], https://github.com[#34])
+*** Modified the WebBrowser UI to suit the requirement of Media Socializer (Pull request https://github.com/CS2103JAN2018-F12-B3/main/pull/90[#90])
+*** Edited the typical persons to support testing of findtag feature (Commit https://github.com/CS2103JAN2018-F12-B3/main/pull/57/commits/81e4756a3c4b96af8ef241bb2f09b13da5cdc370[1], https://github.com/CS2103JAN2018-F12-B3/main/pull/57/commits/a96b25048d02a8c135a9e59cd3001efa591f64fc[2], https://github.com/CS2103JAN2018-F12-B3/main/pull/57/commits/8c9c32c0f41d9f15e1f8c440491c3eafd35383a0[3])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Update About Us: https://github.com/CS2103JAN2018-F12-B3/main/pull/56[#56]
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
+*** Follow up with reported bugs (example: https://github.com/CS2103JAN2018-F12-B3/main/issues/112[1], https://github.com/CS2103JAN2018-F12-B3/main/issues/109[2])
 
 
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 
@@ -61,10 +56,3 @@ include::../UserGuide.adoc[tag=dataencryption]
 include::../DeveloperGuide.adoc[tag=non-functional-requirements]
 
 include::../DeveloperGuide.adoc[tag=dataencryption]
-
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

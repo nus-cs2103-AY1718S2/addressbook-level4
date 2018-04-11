@@ -28,10 +28,11 @@ public class UndoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
-        undoStack.popUndo().undo();
+        String message = undoStack.popUndo().undo();
+        model.updateBookListFilter(Model.PREDICATE_SHOW_ALL_BOOKS);
         model.setActiveListType(ActiveListType.BOOK_SHELF);
         EventsCenter.getInstance().post(new ActiveListChangedEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(message);
     }
 
     @Override

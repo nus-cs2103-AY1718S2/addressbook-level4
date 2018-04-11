@@ -38,7 +38,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: undo adding firstBook to the list -> firstBook deleted */
         command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        String expectedResultMessage = String.format(AddCommand.UNDO_SUCCESS, firstBook);
         model.setActiveListType(ActiveListType.BOOK_SHELF);
         assertCommandSuccess(command, model, expectedResultMessage);
 
@@ -64,22 +64,6 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         /* --------------------- Perform add operations on the recent books list -------------------------- */
 
-        /* Case: invalid index -> rejected */
-        executeCommand("recent");
-        model = getModel();
-        assertCommandFailure(AddCommand.COMMAND_WORD + " " + (model.getRecentBooksList().size() + 1),
-                MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
-
-        /* Case: add a duplicate book -> rejected */
-        executeCommand("list");
-        selectBook(INDEX_FIRST_BOOK);
-        executeCommand("recent");
-        model = getModel();
-
-        command = AddCommand.COMMAND_WORD + " 1";
-        executeBackgroundCommand(command, AddCommand.MESSAGE_ADDING);
-        assertApplicationDisplaysExpected("", AddCommand.MESSAGE_DUPLICATE_BOOK, model);
-
         /* Case: add a valid book -> added */
         executeBackgroundCommand(SearchCommand.COMMAND_WORD + " a/iain banks", SearchCommand.MESSAGE_SEARCHING);
         selectBook(INDEX_FIRST_BOOK);
@@ -91,12 +75,17 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         assertCommandSuccess(command, firstBook);
 
+        /* Case: invalid index -> rejected */
+        model = getModel();
+        executeCommand("recent");
+        assertCommandFailure(AddCommand.COMMAND_WORD + " " + (model.getRecentBooksList().size() + 1),
+                MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
         /* ------------------------------- Perform invalid add operations ----------------------------------- */
 
         /* Case: add a duplicate book -> rejected */
         model = getModel();
-        executeBackgroundCommand(command, AddCommand.MESSAGE_ADDING);
-        assertApplicationDisplaysExpected("", AddCommand.MESSAGE_DUPLICATE_BOOK, model);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOK);
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(AddCommand.COMMAND_WORD + " " + 0,

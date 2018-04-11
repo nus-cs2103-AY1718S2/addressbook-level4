@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalAppointmentEntires.MEET_JOHN;
 import static seedu.address.testutil.TypicalAppointmentEntires.getTypicalAppointmentAddressBook;
 
 import java.time.LocalDateTime;
@@ -40,7 +41,7 @@ public class EditAppointmentCommandTest {
         String expectedMessage = String.format(EditAppointmentCommand.MESSAGE_SUCCESS, updatedEntry);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.editAppointment(validSearchText, updatedEntry);
+        expectedModel.editAppointment(validSearchText, updatedEntry, MEET_JOHN);
 
         assertCommandSuccess(editAppointmentCommand, model, expectedMessage, expectedModel);
     }
@@ -60,7 +61,7 @@ public class EditAppointmentCommandTest {
         String expectedMessage = String.format(EditAppointmentCommand.MESSAGE_SUCCESS, updatedEntry);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.editAppointment(validSearchText, updatedEntry);
+        expectedModel.editAppointment(validSearchText, updatedEntry, MEET_JOHN);
 
         assertCommandSuccess(editAppointmentCommand, model, expectedMessage, expectedModel);
     }

@@ -17,7 +17,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Smart Insurance Collection(SIC) is for those who *prefer to use a desktop app for managing contacts*. More importantly, SIC is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Smart Insurance Collection(SIC) is for those who *prefer to use a desktop app for managing contacts and appointments*. More importantly, SIC is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact and appointment management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -158,7 +158,7 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
-
+// tag::appointment[]
 === Adding an appointment: `add_appointment`
 
 Adds an appointment to the address book calendar +
@@ -216,7 +216,7 @@ Examples:
 
 set the Calendar View to Month View +
 Format: `back`
-
+// end::appointment[]
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -417,12 +417,13 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+// tag::task[]
 === add task to task pad`[coming in v2.0]`
 the user is allowed to use command line to add a task to the task pad GUI  specifying the task title , task details
 
 === remove task on task pad`[coming in v2.0]`
 the user is allowed to use command line to remove a task to the task pad GUI  specifying the task index
-
+// end::task[]
 === Predict Purchasing Power
 
 - User is able to type "Predict" get potential customer's expected spending based on the existing data

@@ -56,7 +56,7 @@ public class AddMembersToGroupCommand extends UndoableCommand {
         for (Group group : groupList) {
             if (groupToAdd.getInformation().equals(group.getInformation())) {
                 try {
-                    groupAdded = new Group(group.getInformation(),group.getPersonList());
+                    groupAdded = new Group(group.getInformation(), group.getPersonList());
                     groupAdded.addPerson(personToAdd);
                     model.updateGroup(group, groupAdded);
                 } catch (DuplicatePersonException e) {
@@ -68,8 +68,8 @@ public class AddMembersToGroupCommand extends UndoableCommand {
                 }
             }
         }
-            return new CommandResult(String.format(MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS, personToAdd.getName(),
-                    groupToAdd.getInformation().toString()));
+        return new CommandResult(String.format(MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS, personToAdd.getName(),
+                groupToAdd.getInformation().toString()));
     }
 
     @Override

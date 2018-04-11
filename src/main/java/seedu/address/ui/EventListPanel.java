@@ -38,8 +38,6 @@ public class EventListPanel extends UiPart<Region> {
         setConnections(eventList);
         registerAsAnEventHandler(this);
         setUpPlaceHolder();
-        //maybe do not need this
-        //eventListView.managedProperty().bind(eventListView.visibleProperty());
     }
 
     private void setConnections(ObservableList<Activity> eventList) {

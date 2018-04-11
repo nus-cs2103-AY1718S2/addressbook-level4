@@ -47,6 +47,7 @@ public interface Model {
     /** Adds the given student */
     void addStudent(Student student) throws DuplicatePersonException;
 
+    /** Adds the given shortcut */
     void addCommandShortcut(ShortcutDoubles shortcutDoubles)
             throws UniqueShortcutDoublesList.DuplicateShortcutDoublesException;
 
@@ -79,6 +80,9 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered appointment list */
     ObservableList<Task> getFilteredTaskList();
 
+    /** Returns an unmodifiable view of the filtered commands list */
+    ObservableList<ShortcutDoubles> getFilteredCommandsList();
+
     /** Returns the item type of the curent active list being shown in the GUI */
     String getCurrentActiveListType();
 
@@ -94,7 +98,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-    ObservableList<ShortcutDoubles> getFilteredCommandsList();
+
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 

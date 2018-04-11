@@ -1,12 +1,13 @@
 package seedu.address.logic.commands;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.logic.commands.ListCommand.MESSAGE_SUCCESS;
 import static seedu.address.logic.commands.ListCommand.TYPE_APPOINTMENT;
 import static seedu.address.logic.commands.ListCommand.TYPE_CONTACT;
+import static seedu.address.logic.commands.ListCommand.TYPE_SHORTCUT;
 import static seedu.address.logic.commands.ListCommand.TYPE_TASK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -56,22 +57,32 @@ public class ListCommandTest {
         assertCommandSuccess(listCommand, model, MESSAGE_SUCCESS + TYPE_CONTACT, expectedModel);
     }
 
+    //@@author Sisyphus25
     @Test
-    public void execute_listAppointment_success() throws CommandException {
-        listCommand = new ListCommand(TYPE_APPOINTMENT);
-        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        CommandResult result = listCommand.execute();
-        assertEquals(MESSAGE_SUCCESS + TYPE_APPOINTMENT, result.feedbackToUser);
-        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ToggleListEvent);
-        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+    public void execute_listEvent_success() throws CommandException {
+        assertListEventSuccess(TYPE_APPOINTMENT);
+        assertListEventSuccess(TYPE_TASK);
     }
 
-    @Test
-    public void execute_listTask_success() throws CommandException {
-        listCommand = new ListCommand(TYPE_TASK);
+    /**
+     * assert if execution of listing of event is successful or not
+     * @throws CommandException
+     */
+    private void assertListEventSuccess(String eventType) throws CommandException {
+        listCommand = new ListCommand(eventType);
         listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         CommandResult result = listCommand.execute();
-        assertEquals(MESSAGE_SUCCESS + TYPE_TASK, result.feedbackToUser);
+        assertEquals(MESSAGE_SUCCESS + eventType, result.feedbackToUser);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ToggleListEvent);
+    }
+
+    //@@author shanmu9898
+    @Test
+    public void execute_listShortcut_success() throws CommandException {
+        listCommand = new ListCommand(TYPE_SHORTCUT);
+        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        CommandResult result = listCommand.execute();
+        assertEquals(MESSAGE_SUCCESS + TYPE_SHORTCUT, result.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ToggleListEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
     }

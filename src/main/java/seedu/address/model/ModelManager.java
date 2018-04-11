@@ -112,6 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author shanmu9898
     @Override
     public synchronized void addCommandShortcut(ShortcutDoubles shortcutDoubles)
                throws UniqueShortcutDoublesList.DuplicateShortcutDoublesException {
@@ -124,7 +125,7 @@ public class ModelManager extends ComponentManager implements Model {
             throws UniqueShortcutDoublesList.CommandShortcutNotFoundException {
         addressBook.removeShortcutDouble(shortcutDoubles);
     }
-
+    //@@author
     @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -203,11 +204,12 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredTasks);
     }
 
+    //@@author shanmu9898
     @Override
     public ObservableList<ShortcutDoubles> getFilteredCommandsList() {
         return FXCollections.unmodifiableObservableList(filteredShortcutCommands);
     }
-
+    //@@author
     @Override
     public String getCurrentActiveListType() {
         return currentActiveListType;

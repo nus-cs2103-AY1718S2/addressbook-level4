@@ -76,6 +76,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPersonPage(event.getNewSelection().person);
     }
 
+    //@@author jstarw
     @Subscribe
     private void handlePersonCardDoubleClick(PersonCardDoubleClick event) {
         loadPersonDetail(event.getNewSelection());

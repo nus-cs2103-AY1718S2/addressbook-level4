@@ -65,6 +65,13 @@ public class DailySchedulerPanel extends UiPart<Region> {
     }
 
     /**
+     * Resets schedule panel.
+     */
+    private void removePlannedEvents() {
+        eventsListStack.getChildren().clear();
+    }
+
+    /**
      * Buttons depending on how many trips to be made.
      */
     public void addButtons(int numOfInstances) {
@@ -131,6 +138,7 @@ public class DailySchedulerPanel extends UiPart<Region> {
     @Subscribe
     private void handleDailyScheduleShownChangedEvent(DailyScheduleShownChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        removePlannedEvents();
         showPlannedEvents(event.getDailyEventsList());
 
     }

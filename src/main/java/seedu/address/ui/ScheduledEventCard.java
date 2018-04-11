@@ -34,7 +34,7 @@ public class ScheduledEventCard extends UiPart<Region> {
         this.event = event;
 
         formattedScheduledEvent = scheduledEventFormatter(this.event, eventIndex);
-        eventInfo.setWrapText(false);
+        eventInfo.setWrapText(true);
         eventInfo.setText(formattedScheduledEvent);
     }
 

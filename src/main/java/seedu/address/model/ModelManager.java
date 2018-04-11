@@ -102,7 +102,8 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<Activity> getFilteredActivityList() {
         return FXCollections.unmodifiableObservableList(filteredActivities);
     }
-    
+
+    //@@author jasmoon
     /**
      * Returns an unmodifiable view of the list of {@code Task} backed by the task list of
      * {@code deskBoard}

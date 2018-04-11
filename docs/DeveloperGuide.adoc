@@ -79,7 +79,6 @@ If the clone was successful, a new sub-directory titled 'main' appears on your l
 
 The following should appear if `git clone https://github.com/YOUR-USERNAME/main.git` at C:/Users/temp folder is executed.
 
-
 .Finding cloned directory
 image::git clone.png[width="600"]
 
@@ -246,13 +245,11 @@ Note how the `Model` simply raises a `DeskBoardChangedEvent` when the Desk Board
 
 _Figure 12_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-//TODO: image change
-.Component interactions for `delete task 1` command (part 2)
+.Component interactions for `delete 1` command (part 2)
 image::SDforDeleteActivityEventHandling.png[width="800"]
 
 [NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI`
-without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 
@@ -434,10 +431,10 @@ Once the task is successfully added, it will be reflected in the CLIndar GUI its
 
 ===== Adding an event
 
-`Event` is the second and last type of entry in the desk board in CLIndar.
-`Event` represents an activity with fixed start and end times, such as a test or a doctor appointment etc.
+`Event` is the second and last type of entries in the desk board in CLIndar.
+`Event` represents an activity with fixed start and end times, such as a test, doctor appointment etc.
 
-_Figure 21_ below shows how `Event` is implemented in the application.
+_Figure 19_ below shows how `Event` is implemented in the application.
 
 .UML Class Diagram for Event
 image::EventUMLDiagram.png[width="550"]
@@ -516,7 +513,7 @@ will be reflected in the GUI.
 // tag::complete[]
 ===== Completing a task
 `Task` objects can be completed through the use of the `CompleteCommand` by specifying the `Task`'s index reflected
-in the GUI. Note that `CompleteCommand` can only be applied to `Task`.
+in the GUI. Note that `CompleteCommand` can only be applied to `Task` objects.
 
 Below is a snippet of how the `executeUndoableCommand()` of `CompleteCommand` updates the respective task
 to completed.
@@ -543,14 +540,12 @@ If `CompleteCommand` is successful, 'Uncompleted' will be replaced by 'Completed
 //tag::activitydesign[]
 ==== Design considerations
 
-There are two ways to represent tasks and events in the application. The following shows the pros and cons for each
-alternative:
+There are two ways to represent tasks and events in the application. The following shows the pros and cons for each alternative:
 
 * ** Alternative 1 (Current Choice):**
 Use a single class `Activity` as a superclass for `Task` and `Event`. +
 ** Pros:
-As both `Task` and `Event` can be treated equally in most contexts other than their creation,this can simplify the
-code significantly.
+As both `Task` and `Event` can be treated equally in most contexts other than their creation, this can simplify the code significantly.
 ** Cons:
 It might be a harder to retrieve information as `Event` contains extra attributes that `Task` does not have.
 Extra accessor methods will also be required for `Event`.
@@ -561,8 +556,7 @@ Simply have two different class `Task` and `Event`.
 ** Pros:
 There is a clear distinction between the two classes.
 ** Cons:
-We will need to write codes for classes and methods related to `Task` and `Event` separately, when these could have
-been simplified by having classes and methods related to the superclass only.
+We will need to write codes for classes and methods related to `Task` and `Event` separately, when these could have been simplified by having classes and methods related to the superclass only.
 {empty} +
 {empty} +
 //end::activitydesign[]
@@ -573,14 +567,12 @@ This section describes implementation of features related to the GUI.
 
 ==== Current implementation
 
-There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe the
-implementation for each comman.
+There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe the implementation for each comman.
 
 ===== Listing of tasks and events
 
-A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all the
-`Task` objects added by the user is then displayed using the `TaskListPanel`, while `Event` objects added by user
-are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and an `EventListCard`.
+A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all the `Task` objects added by the user
+is then displayed using the `TaskListPanel`, while `Event` objects added by user are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and an `EventListCard`.
 
 .TaskListCard example
 image::TaskCard.png[width="550"]
@@ -611,10 +603,7 @@ If an invalid request for `ListCommand` happens, a `CommandException` will be th
         }
     }
 ----
-
 If `ListCommand` is successful:
-Operations that manipulate the GUI with respect to `Task` class includes `ListCommand`, `OverdueCommand`.
-These commands are described in more detail below.
 
 * `list` will show only `Task` objects;
 * `list event` will show only `Event` objects; and
@@ -639,8 +628,7 @@ If the current date and time is past an `Event` `s `endDateTime`, the `Event` wi
 
 ==== Design considerations
 
-This section describes various design considerations related to the GUI features. For each aspect, we will discuss the
-2 alternatives considered and the pros and cons for each alternative.
+This section describes various design considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
 ===== Aspect: Implementation of `ListCommand`
 

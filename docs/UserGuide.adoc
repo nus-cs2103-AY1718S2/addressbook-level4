@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= TravelBanker- User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,13 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T11-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN18-T11-B4`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+TravelBanker (TB) is for those who *prefer to use a desktop app for managing the money owed by your fellow travellers *. More importantly, TB is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, TB can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,20 +27,22 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `TravelBanker.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your accounting book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::UIMockup.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the accounting book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
+
+* Except for `exit`, you can also use the first letter of each command to type faster (e.g. `l` for `list`).
 
 .  Refer to <<Features>> for details of each command.
 
@@ -56,32 +58,38 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
-
+=== Viewing help : `help` or `h`
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person: `add` or  `a`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a person to the accounting book. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS m/BALANCE [t/TAG]...`
+Format: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS m/BALANCE [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` m/23.78
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal m/0.0`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal m/-25.0`
 
-=== Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+=== Listing all persons : `list` or `l`
 
-=== Editing a person : `edit`
+Shows a list of all persons in the accounting book. +
+Format: `list` or `l`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+=== Editing a person : `edit` or `e`
+
+Edits an existing person in the accounting book. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [m/MONEY] [t/TAG]...`
+Format: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [m/MONEY] [t/TAG]...`
+
+
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -95,13 +103,14 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+* `edit 2 n/Betsy Crower t/` or `e 2 n/Betsy Crower t/`+
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+
+=== Locating persons by name: `find` or `f`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -118,10 +127,10 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` or `d`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deletes the specified person from the accounting book. +
+Format: `delete INDEX` or `d INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -133,18 +142,19 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the accounting book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+`d 1` +
+Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person : `select` or `s`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
+Selects the person identified by the index number used in the last person listing and address displayed. +
+Format: `select INDEX` or `s INDEX`
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -153,15 +163,15 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the accounting book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Listing entered commands : `history` or `hi`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` or `hi`
 
 [NOTE]
 ====
@@ -169,21 +179,21 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` or `u`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the accounting book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the accounting book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
 
 * `delete 1` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo` or `u` (reverses the `delete 1` command) +
 
 * `select 1` +
 `list` +
@@ -195,7 +205,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo` or `r`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -218,10 +228,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+=== Clearing all entries : `clear` or `c`
+
+Clears all entries from the accounting book. +
+Format: `clear` or `c`
 
 === Exiting the program : `exit`
 
@@ -230,19 +241,255 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+TravelBanker data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
+// tag::balance[]
+=== Checking overall balance: `balance` or `b` [Since v1.2]
+
+Calculates your total balance. This value shows you the overall state of your finances: how much you owe minus
+ how much you're owed. +
+Format: `balance` or `b`
+// end::balance[]
+=== Seeing all the contacts that owe you money: `debt` or `de` [Since v1.2]
+
+Lists all the contacts that owe you an amount.
+Format: `debt` or `de`
+
+=== Seeing all the contacts to which you owe money: `lend` or `le` [Since v1.2]
+
+Lists all the contacts that owe you an amount.
+Format: `lend` or `le`
+
+// tag::removetag[]
+=== Remove Tags: `removetag` or `rt` [Since v1.2]
+
+Remove Tags from a specific person in the TravelBanker. +
+Format: `removetag INDEX [t/TAG]...` +
+Format: `rt INDEX [t/TAG]...`
+
+Examples:
+
+* `removetag 1 t/owesMoney t/friends` +
+Remove the tags `owesMoney` and `friends` from the first person.
+// end::removetag[]
+
+=== Seeing which contact owes you the most: `max` or `mx` [Since v1.2]
+
+Lists the contact which owes you the most money. +
+Format: `max`
+
+// tag::min[]
+=== Seeing which contact owes you the least: `min` or `mi`[Since v1.2]
+
+Lists the contact to which you owe the most money. +
+Format: `min`
+// end::min[]
+
+// tag::sort[]
+=== Sorting all persons: `sort` or  `so` [Since v1.2]
+
+Sorts all persons in ascendingly or descendingly, ordering by the specified keywords. +
+Format: `sort KEYWORD_PREFIX/ORDER` +
+Format: `so KEYWORD_PREFIX/ORDER`
+
+Examples:
+
+* `sort n/asc`
+* `so m/desc`
+// end::sort[]
+
+// tag::split[]
+=== Splitting a bill: `split` or  `sp` [Since v1.3]
+
+Splits a bill among multiple people, specified by their indices. +
+Format: `split INDEX1 [INDEX2...] m/MONEY` +
+Format: `sp INDEX1 [INDEX2...] m/MONEY`
+
+Examples:
+
+* `split 1 2 m/200`
+* `sp 1 2 3 m/400.00`
+// end::split[]
+
+=== Clear up everyone's balance: `wipe` or `w` [Since v1.3]
+
+Wipes everyone's balances to 0.0 +
+Format: `wipe` +
+Format: `w`
+
+=== Settling up your balance with a contact: `settle` or `stl`[Since v1.3]
+
+Sets the balance of the specified contact to 0. +
+Format: `settle INDEX`
+// tag::map[]
+=== Searching for the nearest ATM : `map` or `mp` [Since v1.3]
+
+Displays a search for the nearest ATM in the browser panel.
+Format: `map` or `mp`
+// end::map[]
+
+// tag::item[]
+=== Showing items related to a person : `itemshow` or `is` [Since v1.4]
+
+Show all items related to a person (specified by INDEX). +
+Format: `itemshow INDEX` or `is INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`itemshow 2` +
+Shows items related to the 2nd person in the accounting book.
+* `find Betsy` +
+`itemshow 1` +
+Shows item related to the 1st person in the results of the `find` command.
+
+
+=== Add a New Item : `itemadd` or `ia` [Since v1.4]
+
+Attaching a new item to a specified person. +
+Format: `itemadd INDEX n/ITEM_NAME m/MONEY` or `ia INDEX n/ITEM_NAME m/MONEY`
+
+****
+* To view the newly added item, please use the `itemshow` command!
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `itemadd 2 n/taxiFare m/10.0`
+
+=== Delete an Existing Item : `itemdelete` or `id` [Since v1.5rc]
+
+Deleting an item from a specified person. +
+Format: `itemdelete PERSON_INDEX ITEM_INDEX` or `id PERSON_INDEX ITEM_INDEX`
+
+****
+* The index of person refers to the one shown in the most recent listing.
+* The index of item refers to the one shown in the `itemshow` result.
+* The indices *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `itemdelete 1 2`
+* This deletes the second item from the first person in the contact list.
+// end::item[]
+
+// tag::settle[]
+=== Settling up your balance with a contact: `settle` or `stl`[Since v1.3]
+
+Sets the balance of the specified contact to 0. +
+Format: `settle INDEX`
+// end::settle[]
+// tag::remind[]
+
+=== Remind a contact to pay their balance: `remind` or `rm`[Since v1.4]
+
+Opens the default email client with a generated email to the contact with the balance in the message.
+Format: `remind INDEX`
+// end::remind[]
+// tag::selectAddress[]
+=== View a contact's address on the map with `select` [Since v1.4]
+
+Searches for the contact's address in the map displayed once that contact is selected.
+Format : `select INDEX`
+// end::selectAddress[]
+// tag::convert[]
+=== Converts your balance in a desired currency: `convert` or `cv` [Since v1.4]
+
+Converts an entries certain balance in a currency of your choice.
+Format: `convert` INDEX FROM_CURRENCY TO_CURRENCY` or `cv` INDEX FROM_CURRENCY TO_CURRENCY
+
+Example: `convert 2 USD JPY`
+Example: `convert 1 SGD USD`
+
+// end::convert[]
+=== Delete an Existing Item : `itemdelete` or `id` [Since v1.5rc]
+
+Deleting an item from a specified person. +
+Format: `itemdelete PERSON_INDEX ITEM_INDEX` or `id PERSON_INDEX ITEM_INDEX`
+
+****
+* The index of person refers to the one shown in the most recent listing.
+* The index of item refers to the one shown in the `itemshow` result.
+* The indices *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `itemdelete 1 2`
+* This deletes the second item from the first person in the contact list.
+// end::item[]
+// tag::guiColorTag[]
+=== All similar tags now have a unique color [Since v1.5rc]
+
+All similar tags found in TravelBanker now have a color specific to it.
+// end::guiColorTag[]
+
+// tag::searchTag[]
+=== List of all contacts with a specific tag [Since v1.5rc]
+
+User can have a list of all contacts that contain the specified tags.
+Example: `searchtag t/friends`
+Example: `st t/colleagues t/friends`
+// end::searchTag[]
+
 === Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+=== Applies an interest rate to your balance: `interest FACTOR` or `i FACTOR` [Coming in v2.0]
+
+Displays your balance with an applied interest rate.
+Format: `interest FACTOR` or `i FACTOR`
+
+=== Lists a description of the debts someone owes you: `describe` or `db` [Coming in v2.0]
+
+Lists the description consisting of keywords that explain why someone owes you an amount.
+This facilitates understanding of the debt.
+Format: `describe INDEX`
+
+// tag::transaction[]
+=== Report a transaction and automatically update a contact's balance accordingly [Since v1.5rc]
+
+Updates the contacts balance with the correct new balance after the transaction.
+For TRANSACTION_AMOUNT, a positive number represents money received from the contact and a negative number represents
+money paid to the contact.
+Format : `transaction INDEX TRANSACTION_AMOUNT`
+// tag::transaction[]
+
+// tag::trip[]
+=== Shows on which trip a balance was established from user and contact : `trip [DESTINATION]` or `t` [Coming in v2.0]
+
+Each contact will have a [DESTINATION] field to keep track of where a transaction between the
+user and the contact took place.
+Format: `trip [DESTINATION]`
+
+// end::trip[]
+
+// tag::colorTag[]
+=== Change the color of a specific tag in the address book [Coming in V2.0]
+
+The user can select the color he wants a specific tag to be.
+Format: `colortag c/COLOR t/TAGS` or `ct c/COLOR t/TAGS`
+// end::colorTag[]
+
+=======
+
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous accounting book folder.
 
 == Command Summary
 
@@ -251,6 +498,9 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+// tag::balance[]
+* *Balance* : `balance`
+// end::balance[]
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -260,5 +510,25 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+// tag::map[]
+* *Map*: `map`
+// end::map[]
 * *Undo* : `undo`
 * *Redo* : `redo`
+// tag::removetag[]
+* *RemoveTag* : `removetag INDEX [t/TAG]...`
+// end::removetag[]
+* *SearchTag* : `searchtag t/TAG`
+e.g. `searchtag t/classmates t/friends`
+* *Sort* : `sort KEYWORD_PREFIX/ORDER`
+* *Split* : `split INDEX1 [INDEX2...] m/MONEY`
+* *ItemShow* : `itemshow INDEX`
+* *ItemAdd* : `itemadd INDEX n/ITEM_NAME m/MONEY`
+* *ItemDelete* : `itemdelete PERSON_INDEX ITEM_INDEX`
+* *Max* : `max`
+// tag::min[]
+* *Min* : `min`
+// end::min[]
+* *Currency* : `currency c/`
+e.g. `currency c/USD`
+

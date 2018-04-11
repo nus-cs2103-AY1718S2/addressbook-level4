@@ -1,0 +1,52 @@
+= Chen Chongsong - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: TravelBanker
+
+---
+
+== Overview
+
+This is a desktop java application that helps people, particularly travellers, to informally keep accounts with other people. Most of your user interactions are via command line, while there exists a GUI (Graphical User Interface) created with JavaFX. It is written in Java.
+
+== Summary of contributions
+
+* *Major enhancement*: added *a new model called "item" field* together with three commands to manipulate it
+** What it does: The item fields will record all items related to a person in the contact list. An "item" has its name and its money value. For example, someone may owe the user an item called "taxiFare" and worth "100" dollars. ItemShowCommand, ItemAddCommand, ItemDeleteCommand are implemented, and the user is able to check items, add items and delete them.
+** Justification: This new feature is an important part of the TravelBanker, because this allows the user to check reasons for owing money, in case the user forgets them.
+** Highlights: This enhancement does not affects existing commands and commands to be added in future. It does not interfere with current GUI components, since all operations related to "item" field are done via CLI. The other thing to notice is that the storage XML format has been modified accordingly.
+
+* *Minor enhancement*: implemented a SortCommand to sort contact list ascendingly or descendingly according to balance, name, email, address, phone, etc.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/functional/chenchongsong.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/test/chenchongsong.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Contributed codes towards the releases of `v1.0` - `v1.5rc` (3 releases) on GitHub
+*** Raising Issues
+** Documentation:
+*** Modify the Read Me Page to adapt to TravelBanker: https://github.com/CS2103JAN2018-T11-B4/main/pull/29/files[#29]
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=removetag]
+include::../UserGuide.adoc[tag=sort]
+include::../UserGuide.adoc[tag=split]
+include::../UserGuide.adoc[tag=item]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=itemfield]
+include::../DeveloperGuide.adoc[tag=sortfeature]

@@ -64,4 +64,8 @@ public class Email {
         return value.hashCode();
     }
 
+    public int compareTo(Email other) {
+        return toString().compareToIgnoreCase(other.toString());
+    }
+
 }

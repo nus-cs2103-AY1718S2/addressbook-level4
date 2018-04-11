@@ -1,0 +1,55 @@
+= Prian Kuhanandan - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: TravelBanker
+
+---
+
+== Overview
+
+This is a desktop application that seeks to help travellers who often borrow or lend money to each other during their travels. To do this, the application allows these users to keep track of their balances with their contacts. The user can interact with this Java application using the command line interface, or the JavaFX GUI (Graphical User Interface).
+
+== Summary of contributions
+
+* *Major enhancement*: Implementation of the money field, and a few commands to manipulate the field.
+** What it does: This field allows the user to store the balance of a contact. For example, if the balance of a contact is set to "10", this means the contact owes the user 10 dollars. If the balance is -10 then the user owes 10 dollars to the contact. As a part of this enhancement, there are a couple new commands and changes to existing commands explained below.
+** Justification: This is important because this allows for the user to use and manipulate the money field, which is essential to the primary objective of this product: Keeping track of money between the user and their contacts. It also enables many related features that are essential to our use cases, such as the balance feature.
+** Highlights: The highlights of this include making existing commands work with the new field for adding and editing contacts. In addition, there are two new commands that allow the user to manipulate the money field, which are the `transaction` and `settle` commands. The transaction command allows you to report a transaction with a contact which will update the balance for that contact accordingly.
+For example `transaction 1 20` would be reporting a payment of $20 from contact at index 1, and it would subtract 20 from the balance of that contact. The `settle` command allows the user to easily settle up the balance of any contact, meaning that all debts have been paid with respect to that contact. This enhancement required some extensive changes in many different aspects of the project, and was
+intertwined with several existing components and commands making it quite challenging.
+
+* *Minor enhancement*: Allow the user to be able to easily identify and contact people who owe the most money. This includes a command to find the contact who owes the most money, and another command that auto-generates an email to the specified contact reminding them of their balance owed.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/functional/pkuhanan.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/test/pkuhanan.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Regularly created issues for epics, user stories, and other tasks
+** Code Quality:
+*** Worked on fixing failing tests and style issues that made it into master
+** Documentation:
+*** Regularly updated documentation to keep up to date with current version
+** Tools:
+*** Integrated a new Github plugin (CircleCI) to the team repo
+*** Set up branch protections so that master can only be merged to when all checks pass and PR approval is given
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=settle]
+include::../UserGuide.adoc[tag=remind]
+include::../UserGuide.adoc[tag=transaction]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=moneyfield]

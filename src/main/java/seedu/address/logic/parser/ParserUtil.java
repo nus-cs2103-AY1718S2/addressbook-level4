@@ -1,15 +1,26 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.SortCommand.SORT_ORDER_ASCENDING;
+import static seedu.address.logic.commands.SortCommand.SORT_ORDER_DESCENDING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.money.Money;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -28,6 +39,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_ARGS = "Format of Parameter is not correct.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -42,6 +54,64 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+
+    //@@author chenchongsong
+    /**
+     * Parses {@code oneBasedIndices} into an ArrayList of {@code Index} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static ArrayList<Index> parseIndices(String oneBasedIndices) throws IllegalValueException {
+        String[] splittedIndices = oneBasedIndices.trim().split(" ");
+        ArrayList<Index> indices = new ArrayList<>();
+        for (String indexString : splittedIndices) {
+            if (!StringUtil.isNonZeroUnsignedInteger(indexString)) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+            indices.add(Index.fromOneBased(Integer.parseInt(indexString)));
+        }
+        return indices;
+    }
+
+    /**
+     * Parses {@code args} into an {@code sortKey} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified SortKey is invalid (not non-zero unsigned integer).
+     */
+    public static String parseSortKey(String args) throws IllegalValueException {
+        String[] splittedArgs = args.trim().split("/");
+        String sortKey = splittedArgs[0] + "/";
+        if (splittedArgs.length != 2) {
+            throw new IllegalValueException(MESSAGE_INVALID_ARGS);
+        }
+        if (!sortKey.equals(PREFIX_NAME.getPrefix())
+                && !sortKey.equals(PREFIX_PHONE.getPrefix())
+                && !sortKey.equals(PREFIX_EMAIL.getPrefix())
+                && !sortKey.equals(PREFIX_ADDRESS.getPrefix())
+                && !sortKey.equals(PREFIX_TAG.getPrefix())
+                && !sortKey.equals(PREFIX_MONEY.getPrefix())) {
+            throw new IllegalValueException(MESSAGE_INVALID_ARGS);
+        }
+        return sortKey;
+    }
+
+    /**
+     * Parses {@code args} into an {@code sortOrder} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified SortOrder is invalid (not non-zero unsigned integer).
+     */
+    public static String parseSortOrder(String args) throws IllegalValueException {
+        String[] splittedArgs = args.trim().split("/");
+        String sortKey = splittedArgs[1];
+        if (splittedArgs.length != 2) {
+            throw new IllegalValueException(MESSAGE_INVALID_ARGS);
+        }
+        if ((!sortKey.equals(SORT_ORDER_ASCENDING) && !sortKey.equals(SORT_ORDER_DESCENDING))) {
+            throw new IllegalValueException(MESSAGE_INVALID_ARGS);
+        }
+        return sortKey;
+    }
+    //@@author
 
     /**
      * Parses a {@code String name} into a {@code Name}.
@@ -139,6 +209,32 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
 
+    //@@author pkuhanan
+    /**
+     * Parses a {@code String money} into an {@code Money}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code money} is invalid.
+     */
+    public static Money parseMoney(String money) throws IllegalValueException {
+        requireNonNull(money);
+        String trimmedMoney = money.trim();
+        if (!Money.isValidMoney(trimmedMoney)) {
+            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+        }
+        return new Money(trimmedMoney);
+    }
+
+    /**
+     * Parses a {@code Optional<String> money} into an {@code Optional<money>} if {@code money} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Money> parseMoney(Optional<String> money) throws IllegalValueException {
+        requireNonNull(money);
+        return money.isPresent() ? Optional.of(parseMoney(money.get())) : Optional.empty();
+    }
+    //@@author
+
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
@@ -164,5 +260,13 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    public static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }

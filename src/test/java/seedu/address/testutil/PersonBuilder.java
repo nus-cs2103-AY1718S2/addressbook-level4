@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.money.Money;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -20,12 +21,14 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_BALANCE = "10";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private Money balance;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -33,6 +36,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        balance = new Money(DEFAULT_BALANCE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -44,6 +48,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        balance = personToCopy.getMoney();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -62,6 +67,16 @@ public class PersonBuilder {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
+
+    //@@author chenchongsong
+    /**
+     * Set an empty set {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withoutTags() {
+        this.tags = SampleDataUtil.getTagSet();
+        return this;
+    }
+    //@@author
 
     /**
      * Sets the {@code Address} of the {@code Person} that we are building.
@@ -86,9 +101,18 @@ public class PersonBuilder {
         this.email = new Email(email);
         return this;
     }
+    //@@author pkuhanan
+    /**
+     * Sets the {@code Money} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMoney(String balance) {
+        this.balance = new Money(balance);
+        return this;
+    }
+    //@@author
 
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, balance, tags);
     }
 
 }

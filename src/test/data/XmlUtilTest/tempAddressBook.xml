@@ -4,6 +4,7 @@
         <id>1</id>
         <firstName>John</firstName>
         <lastName>Doe</lastName>
+        <balance>10</balance>
         <githubUsername></githubUsername>
         <street></street>
         <postalCode></postalCode>

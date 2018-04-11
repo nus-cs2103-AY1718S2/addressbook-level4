@@ -1,0 +1,102 @@
+= Artsiom Skliar - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: TravelBanker
+
+---
+
+== Overview
+
+This is a desktop application allowing people, particularly travellers, to keep track of amounts of money
+ lent or borrowed from contacts. User interactions are command-line based, but the app also consists of
+ of a GUI created with JavaFX, which includes a command box, a browser panel, a status bar footer, a list panel
+ and more. It is written in Java.
+
+== Summary of Contributions
+
+* *Major Enhancement*: Implemented map functionality as well as several commands that allow user to get quick and
+accurate insight on the state of his finances as well as finding solutions on settling his books.
+** What it does: When the app is launched, an automatic search for a nearby ATM is performed. This allows the user
+to quickly identify where he can go to get cash to either lend money to his travel companions or get money to reimburse
+his debts. The balance command allows the user to quickly establish how much money he owes/is owed in total, which
+establishes how much money he should take from an ATM. These two features coupled together already give the user quick
+and effective ways to keep track of his travel finances and adjust them, which is the primary objective of the app.
+** Highlights: The select command now automatically performs a search for the address of the contact that is viewed.
+To perform a search for a nearby ATM, user simply has to type `map` or `mp`, if the browser panel is not already
+displaying it (e.g. after a select command). In addition, the `balance` command displays the user's general balance,
+while the `min` command can quickly identify the person that owes the user the most money.
+
+* *Minor Enhancement*: Improve the user experience by including shortcuts for every command of v1.0 and subsequent
+commands I have written, as well coloring tags to improve readability of contacts.
+** Highlights: Along with tag coloring, included a `searchtag` or `st` command that lists all people that contain
+all specified tags. This allows the user to have a quick overview of balances owed by people with specific tags
+(e.g. view only amounts owed by friends). This, once more, contributes to the general purpose of TravelBanker, by
+giving the user the possibility to view only amounts that he/she deems relevant.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/functional/Articho28.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/test/Articho28.md[Test code]]
+
+
+* *Other contributions*:
+
+** Project management:
+*** Initialized issue tracker at v1.2 and regularly created issues for epics, user stories, and other tasks.
+Combed through all issues and assigned them to team members according to their contributions.
+*** Included valid labels in issue tracker to be reused by teammates to comply with NUS scripts.
+*** Created milestones from v1.2 to v1.5rc and managed releases from v1.3 to v1.5rc.
+** Code Quality:
+*** Wrote substantial tests for all my contributions to keep coverage at 92%.
+*** Followed checkstyle guidelines.
+** Documentation:
+*** Regularly updated documentation to keep up to date with current version
+*** Proposed chosen project direction and wrote initial user stories as well as value proposition in Developper Guide.
+*** Consistently reviewed documentation to order features according to released versions
+*** Removed any mentions in documentation of previous versions no longer in line with project (e.g. Addressbooklvl4)
+*** Updated the UI mockup.
+** Tools:
+*** Issue tracker (see above).
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+
+include::../UserGuide.adoc[tag=balance]
+
+include::../UserGuide.adoc[tag=min]
+
+include::../UserGuide.adoc[tag=map]
+
+include::../UserGuide.adoc[tag=selectAddress]
+
+include::../UserGuide.adoc[tag=guiColorTag]
+
+include::../UserGuide.adoc[tag=searchTag]
+
+include::../UserGuide.adoc[tag=trip]
+
+include::../UserGuide.adoc[tag=colorTag]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=userStories]
+
+include::../DeveloperGuide.adoc[tag=featureContribution]
+
+include::../DeveloperGuide.adoc[tag=productScope]
+
+include::../DeveloperGuide.adoc[tag=balancefeature]
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= TravelBanker - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/se-edu/TravelBanker-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN18-T11-B4`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -68,7 +68,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -140,7 +140,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `TravelBankerChangedEvent` when the accounting book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -183,7 +183,7 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  `Logic` uses the `TravelBankerParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
@@ -204,7 +204,7 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores the accounting book data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -219,28 +219,67 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the accounting book data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.TravelBanker.commons` package.
 
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
+=== List Positive/Negative feature
+==== Current Implementation
+
+The positive/negative feature is faciliatated by two new methods `ListPositiveBalanceCommand` and `ListNegativeBalanceCommand` which both reside inside `commands`. It supports listing out the people with negative balances and positive balances. This is helpful because it will allow the phonebook user to quickly list out people who they owe and who owes them money.
+
+For the new class I created `ListPositiveBalanceCommand`, this is the code for execute:
+
+[source,java]
+----
+public CommandResult execute() {
+    model.updateFilteredPersonList(isPositiveBalance());
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+
+As you can see from the code snippet, we update the filtered person list using a new function `isPositiveBalance()`.
+
+`isPositiveBalance()` is implemented as follows:
+
+[source,java]
+----
+public Predicate<Person> isPositiveBalance(){
+    return a -> a.getMoney().balance >= 0;
+}
+----
+
+The negative balance works the same way just checking to see if the balance is less than 0.
+
+====Alternatives Considered
+
+For an alternative way, I considered creating a new empty list `positiveList` and then adding to `positiveList` whenever the balance is greater than 0. Then I was going to display positive list. However this did not end up working because I noticed that updating the flitered list needed a predicate function as a paramter which my approach would not have. Therefore I had to consider a different approach that involved a predicate function.
+
+====Future Additions
+
+I can further refine the function to be much more powerful in filtering and listing out people. For instance, I could allow it to list people with whose names start with a specific letter because in an large addressbook, the user might want to quickly go through the addressbook, not ones who just have a postiive or negative balance.
+
+
+The function is a predicate function that checks to see if `a.getMoney().balance>=0` because the function `updateFilteredPersonList()` takes in a predicate parameter. In our function we see the predicate check to see if the person's money balance is positive and if so, it will be returned.
+
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the accounting book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the accounting book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,7 +314,7 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the accounting book. The current state of the accounting book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
@@ -288,7 +327,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the accounting book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -299,7 +338,7 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the accounting book to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -329,7 +368,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire accounting book.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
@@ -339,13 +378,13 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
+* **Alternative 1 (current choice):** Only include commands that modifies the accounting book (`add`, `clear`, `edit`).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
 ** Pros: Might be more intuitive for the user.
 ** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
+**Additional Info:** See our discussion  https://github.com/se-edu/TravelBanker-level4/issues/390#issuecomment-298936672[here].
 
 
 ===== Aspect: Data structure to support the undo/redo commands
@@ -358,12 +397,319 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::balancefeature[]
+=== Balance Feature
+The balance feature is implemented by the `BalanceCommand` class, which resides in the `Logic` component.
+It extends the Command class and is not an undoable or re-doable command, similar to `list`. The balance command relies on
+the incorporation of the [MONEY] field, which stores the amount that a specific contact owes to the user,
+or the amount the user owes to the said contact if the balance is negative.
+
+The following class diagram shows shows where where the BalanceCommand is implemented.
+
+image::BalanceCommand - Class Diagram.png[width="800"]
+
+Commands that cannot be undone such as BalanceCommand are implemented like this:
+
+[source,java]
+----
+public class ListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+----
+
+The following sequence diagram shows how the `balance` command works.
+
+image::BalanceCommandSequenceDiagram.png[width="800"]
+
+Suppose that the user just launched the application. The TravelBanker will load his contacts and the amount of money owed by/to each
+will be shown to the screen. The user simply types `balance` or `b`, which will be interpreted by the TravelBook Parser.
+Once the command is parsed, it will return a new `BalanceCommand`, which `LogicManager` will call `command`. `LogicManager` will
+then call the execute() function on command. This method calls on `getBalancefromTravelBanker` gets a `Persons` list through `model`,
+and thus gets to manipulate the values in the `m/[MONEY]` field of the current accounting book. It then adds all of them
+and displays to the feedback to the user by returning a `CommandResult` with the found data as argument.
+
+The following activity diagram summarizes the execution of the `balance` command.
+
+image::BalanceCommandActivityDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Making balance not an undoable or re-doable command.
+
+* **Alternative 1 (current choice)**: Make `balance` not an undoable command**.
+
+* **Pros**: There was no need to make balance a re-doable or undoable command since it serves a purpose similar to `list`:
+it only displays information found in TravelBanker, but does not alter it. Thus, the user will not have any issues with this
+command should he make a mistake: it does not write any data.
+
+* ** Cons**: No significant disadvantage.
+
+* **Alternative 2: make `balance` an undoable command.**
+* **Pros**: No serious advantage, as explained in Alternative 1. Since the command does not aim to modify data,
+this method is not applicable.
+* **Cons**:  Extra layer of complexity that does not give any significant benefit
+
+===== Aspect: How balance command result is displayed.
+* **Alternative 1 (current choice)** : Pass the result as a string in the feedback to user.
+* **Pros** : Easy to implement and serves the purpose perfectly.
+* **Cons** : Value cannot be singled out to apply UI effects, such as colors.
+
+* **Alternative 2 ** : Single out result to make it modifiable by UI.
+* **Pros**: Allow for more pleasant user experience.
+* **Cons**: More difficult to implement and not much value added.
+// end::balancefeature[]
+
+// tag::itemfield[]
+=== Add/Delete/Show Item Field
+
+==== Current Implementation
+
+The implementation of the item field touches three components: Model, Logic, and Storage.
+
+===== Model
+
+For Model component, `Person` class was modified and added with exactly one `UniqueItemList`, where each `UniqueItemList` consists of multiple `Item`s. For each `Item`, it has two strings as private attributes, namely the `ItemName` ()
+
+A partial class diagram of the models can be seen below:
+
+image::itemDiagram.png[width="800"]
+
+The `isValidName` and `isValidValue` methods are used to make sure that the user input conforms to the regex for a name and a floating point number:
+
+===== Logic
+
+In the Logic component, three new command, `ItemShowCommand` `ItemAddCommand` `ItemDeleteCommand`, have been added.
+`ItemAddCommand` and `ItemDeleteCommand` are undoable, because these two commands are implemented by replacing the old person in the `ModelManager` with a newly modified person.
+
+[source,java]
+----
+    model.updatePerson(personToEdit, editedPerson);
+----
+
+[NOTE]
+In ItemAddCommand, `editedPerson` is created from personToEdit with a newly added item.
+In ItemDeleteCommand, however, `editedPerson` is created from personToEdit by deleting a specific item.
+
+===== Storage
+
+Storage was also changed in the development of this feature, as new XML elements had to be stored and parsed using the xml storage system.
+
+The three types of new XML elements are `<items>` `<name>` and `<value>`, and they are organised as following:
+
+[source,xml]
+----
+    <persons>
+        <name>John Doe</name>
+        <phone>98765432</phone>
+        ......
+        <items>
+            <name>taxi fare</name>
+            <value>10.5</value>
+        </items>
+        <items>
+            <name>his treat in PizzaHut</name>
+            <value>23.0</value>
+        </items>
+    </persons>
+----
+
+To conform to the required changes, the `XmlAdaptedPerson` class is modified. Additionally, a new class `XmlAdaptedItem` is created .
+
+The new `XmlAdaptedPerson` class is as follows:
+
+[source,java]
+----
+public class XmlAdaptedPerson {
+    @XmlElement(required = true)
+    private String name;
+    @XmlElement(required = true)
+    private String phone;
+    @XmlElement(required = true)
+    private String email;
+    @XmlElement(required = true)
+    private String address;
+    @XmlElement
+    private String balance;
+    @XmlElement
+    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
+
+    @XmlElement
+    private List<XmlAdaptedItem> items = new ArrayList<>();
+
+    ......
+}
+----
+
+Here is the new `XmlAdaptedItem` class:
+
+[source,java]
+----
+public class XmlAdaptedItem {
+
+    @XmlElement(required = true)
+    private String name;
+    @XmlElement(required = true)
+    private String value;
+
+    ......
+}
+----
+
+// end::itemfield[]
+
+// tag::sortfeature[]
+=== sort Feature
+The sort feature is implemented by the `sortCommand` class, which resides in the `Logic` component.
+When `sortCommand` is executed, it would call the `Model` component (`UniquePersonList`) to sort the person list. To specify the sorting order and the keyword to be sorted, two strings would be passed as parameters.
+In support of different keyword, Class `Name`, `Phone`, `Email`, `Address`, `Money` were add with a `compareTo` method for the creation of comparators.
+
+The sortCommand supports sorting of the filteredList (i.e. list that comes from FindCommand execution).
+
+In the current implementation, the sorted result would not be store in the storage.
+
+Commands that cannot be undone such as sortCommand are implemented like this:
+
+[source,java]
+----
+public class sortCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... sort logic ...
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+----
+
+The following activity diagram summarizes the execution of the `sort` command.
+
+image::SortCommand_Activity_Diagram.png[width="800"]
+
+// end::sortfeature[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
+
+// tag::moneyfield[]
+=== Add/Edit Money Field
+
+==== Current Implementation
+
+The implementation of the money field spanned four components: Model, Logic, Storage and UI.
+
+===== Model
+
+In terms of the Model component, a new Money model was created and the Person and Addressbook models required modifications to integrate the new Money model. The Money model was written to be consistent with the existing Person attribute models like "Email" and "Phone".
+
+A class diagram of the models can be seen below:
+
+image::MoneyClassDiagram.png[width="800"]
+
+The most important part of the Money model is the constructor:
+
+[source,java]
+----
+public Money(String balance) {
+    requireNonNull(balance);
+    checkArgument(isValidMoney(balance), MESSAGE_MONEY_CONSTRAINTS);
+    this.balance = Double.parseDouble(balance);
+    this.value = balance;
+}
+----
+
+The constructor was implemented using two properties: `Double balance` and `String value`
+This is because the money value is often used as a string for display and as a double for calculations and comparisons.
+The trade-off here was to either store it as just a Double or a String, and cast the value into the right type when needed, or store the value as both a Double and a String.
+The first option forgoes time performance to provide better space performance and keep one single source of truth for each Money object. The second option however provides better time performance, but falls short on space and source of truth data integrity.
+Our team decided to take the second option as data integrity issues can be mitigated through comprehensive testing, and because time performance is more important than space complexity at this point time.
+
+The other notable parts of the Money model are the validation checking function `isValidMoney` and the `equals` function.
+
+The `isValidMoney` function is used to make sure that the user input conforms to the regex for a number:
+
+[source,java]
+----
+public static boolean isValidMoney(String test) {
+    return test.matches(MONEY_VALIDATION_REGEX);
+}
+----
+
+The `equals` function is mostly used for testing, and provides a way to check if two Money objects have equal values.
+The function makes sure that the objects are of the same type, and share the same `value` property:
+
+[source,java]
+----
+public boolean equals(Object other) {
+    return other == this // short circuit if same object
+            || (other instanceof Money // instanceof handles nulls
+            && this.value.equals(((Money) other).value)); // state check
+}
+----
+
+There were also small modifications to the AddressBook and Person models. These changes mainly have to do with adding Money as a property of Person, and making sure the getters and setters work appropriately for that property.
+
+===== Logic
+
+In the context of the Logic component, the "add" and "edit" components had to be modified. In addition, some parser logic had to be modified in order to work with the new money parameter.
+To be more specific, one of the major changes here was the `parseMoney` function which is used to parse the input from the user into a Money object:
+
+[source,java]
+----
+public static Money parseMoney(String money) throws IllegalValueException {
+    requireNonNull(money);
+    String trimmedMoney = money.trim();
+    if (!Money.isValidMoney(trimmedMoney)) {
+        throw new IllegalValueException(Money.MESSAGE_MONEY_CONSTRAINTS);
+    }
+    return new Money(trimmedMoney);
+}
+----
+
+[NOTE]
+In this implmentation, if an invalid input is received for the money parameter, which is anything that isn't a Double, an IllegalValueExcpetion is thrown.
+
+This implementation was chosen as to stay consistent with the rest of the existing fields. In other words, this `parseMoney` function is comparable to the `parseEmail` or `parsePhone` functions, in order to maintain consistency in parser logic.
+
+===== Storage
+
+Storage was also changed in the development of this feature, as a new parameter had to be stored and parsed using the xml storage system.
+
+The logic for parsing the stored data is very similar to the parsing logic for user input:
+
+[source,java]
+----
+if (!Money.isValidMoney(this.balance)) {
+    throw new IllegalValueException(Money.MESSAGE_MONEY_CONSTRAINTS);
+}
+final Money balance = new Money(this.balance);
+----
+
+Then this money object is used to create the Person object:
+
+[source,java]
+----
+return new Person(name, phone, email, address, balance, tags);
+----
+
+Again, this implementation was chosen to be consistent with the existing logic of parsing the stored xml.
+
+===== UI
+
+The changes in the UI were minor, and simply added the money field to the `PersonCard` UI component:
+
+[source,fxml]
+----
+<Label fx:id="money" styleClass="cell_small_label" text="\$money" />
+----
+
+// end::moneyfield[]
 
 === Logging
 
@@ -493,11 +839,12 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, accounting book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [[GetStartedProgramming]]
+
 [appendix]
 == Suggested Programming Tasks to Get Started
 
@@ -525,42 +872,42 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 ****
 * Hints
 ** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
+** link:{repoURL}/src/main/java/seedu/address/logic/parser/TravelBankerParser.java[`TravelBankerParser`] is responsible for analyzing command words.
 * Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
+** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/TravelBankerParser.java[`TravelBankerParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
 ** Add new tests for each of the aliases that you have added.
 ** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
+** See this https://github.com/se-edu/TravelBanker-level4/pull/785[PR] for the full solution.
 ****
 
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the accounting book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the accounting book.
 +
 ****
 * Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
+** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/TravelBanker.java[`TravelBanker`] API need to be updated.
 ** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/TravelBanker.java[`TravelBanker`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/TravelBanker.java[`TravelBanker`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/TravelBanker.java[`TravelBanker`]. Loop through each person, and remove the `tag` from each person.
+** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `TravelBanker#removeTag(Tag)`.
 ** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
+** See this https://github.com/se-edu/TravelBanker-level4/pull/790[PR] for the full solution.
+*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/TravelBanker.java[`TravelBanker`]. This may cause some tests to fail. See issue  https://github.com/se-edu/TravelBanker-level4/issues/753[`#753`] for more information about this flaw.
 *** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
 ****
 
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your accounting book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
@@ -582,7 +929,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 ** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
 ** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
+** See this https://github.com/se-edu/TravelBanker-level4/pull/798[PR] for the full solution.
 *** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
 ****
 
@@ -605,12 +952,12 @@ image::getting-started-ui-result-after.png[width="200"]
 ** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
 ** You can write two different kinds of tests to ensure that the functionality works:
 *** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
+*** The system tests link:{repoURL}/src/test/java/systemtests/TravelBankerSystemTest.java[`TravelBankerSystemTest#assertCommandBoxShowsDefaultStyle() and TravelBankerSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
+** See this https://github.com/se-edu/TravelBanker-level4/pull/799[PR] for the full solution.
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the accounting book.
 +
 **Before**
 +
@@ -623,31 +970,31 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the accounting book is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleTravelBankerChangedEvent(TravelBankerChangedEvent)`] to update the number of persons whenever there are new changes to the TravelBanker.
 ** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
+** For system tests, modify link:{repoURL}/src/test/java/systemtests/TravelBankerSystemTest.java[`TravelBankerSystemTest`] to also verify the new total number of persons status bar.
+** See this https://github.com/se-edu/TravelBanker-level4/pull/803[PR] for the full solution.
 ****
 
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the accounting book to the cloud. However, the current implementation of the application constantly saves the accounting book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the accounting book storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupTravelBanker(ReadOnlyTravelBanker)`, so that the accounting book can be saved in a fixed temporary location.
 +
 ****
 * Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
+** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/TravelBankerStorage.java[`TravelBankerStorage`] interface.
+** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlTravelBankerStorage.java[`XmlTravelBankerStorage`] class.
 * Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
+** See this https://github.com/se-edu/TravelBanker-level4/pull/594[PR] for the full solution.
 ****
 
 [[GetStartedProgramming-RemarkCommand]]
@@ -655,7 +1002,7 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
+*Scenario:* You are a software maintainer for `TravelBanker`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
 Edits the remark for a person specified in the `INDEX`. +
@@ -676,12 +1023,12 @@ Let's start by teaching the application how to parse a `remark` command. We will
 **Main:**
 
 . Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
+. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/TravelBankerParser.java[`TravelBankerParser`] to accept a `RemarkCommand`.
 
 **Tests:**
 
 . Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
+. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/TravelBankerParserTest.java[`TravelBankerParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
 
 ===== [Step 2] Logic: Teach the app to accept 'remark' arguments
 Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
@@ -690,14 +1037,14 @@ Let's teach the application to parse arguments that our `remark` command will ac
 
 . Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
 . Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
+. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/TravelBankerParser.java[`TravelBankerParser`] to use the newly implemented `RemarkCommandParser`.
 
 **Tests:**
 
 . Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
 . Add `RemarkCommandParserTest` that tests different boundary values
 for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
+. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/TravelBankerParserTest.java[`TravelBankerParserTest`] to test that the correct command is generated according to the user input.
 
 ===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
 Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
@@ -730,7 +1077,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 
 . Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `TravelBanker.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
@@ -741,7 +1088,7 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 
 **Tests:**
 
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
+. Fix `invalidAndValidPersonTravelBanker.xml`, `typicalPersonsTravelBanker.xml`, `validTravelBanker.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
 
 ===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
 Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
@@ -775,7 +1122,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 ==== Full Solution
 
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
+See this https://github.com/se-edu/TravelBanker-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == Product Scope
@@ -787,8 +1134,68 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+// tag::productScope[]
+* has a need to manage finances with fellow contacts
+* has a need to keep track of personal balance
+* has a need to keep track of transactions between contacts
+* travels with a group and lends money/borrows money
+* has a need of finding nearby financial institutions to repay contacts.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
+
+* manage contacts faster than a typical mouse/GUI driven app
+* manage your informal financial transactions accurately than relying on memory.
+* manage your finances in a more organized manner than relying on a text-editing app, spreadsheet, or memory.
+* update your cumulative total automatically, which removes the need of re-adding the numbers every time a new transaction is added,
+as seen in traditional book-keeping methods.
+* find a nearby ATM as soon as a contact is loaded, which removes the need to switch apps when wanting to settle a debt.
+* list the contacts that owe you money or to which you owe money, thus removing the need to manually filter out the contacts you are looking for.
+* lists all the contacts according to specified tags, removing the need to identify amounts owed by groups of people manually.
+
+// end::productScope[]
+=== Feature contribution
+// tag::featureContribution[]
+* *Artsiom Skliar*
+** *Major Enhancement*: Incorporate map functionality to the TravelBanker. MapCommand shows the nearest ATM from the person's location.
+Also, incorporating balance and min commands, which calculates your overall balance as registered in TravelBanker.
+This value will tell the user if he owes more money than he's borrowed or vice-versa. This is essential to the product as
+TravelBanker relies on the need of the user to keep track of his informal finances efficiently and accurately.
+The ability to see view your overall balance is thus necessary as it provides insight to the user on his general
+financial situation. The min and max commands contribute to this goal by listing the largest amounts owed and lent. The
+map functionality also shows the user how he can settle his debts quickly.
+
+** *Minor Enhancement*: created aliases for every command received by TravelBanker to increase its efficiency.
+This is important to the product as it aims to be quick and efficient. Shortcuts for every command (except exit to
+ avoid accidents) allows for a quicker and smoother user experience, thus making book-keeping quick and easy. Incorporate
+ a `searchtag` command to list only people carrying specific tags.
+
+// end::featureContribution[]
+* *Eric Zhou*
+** *Major Enhancement*: incorporating various listing features which will can filter the list to list out people who owe you a negative amount or a positive amount.
+This is essential to the product as a user will be able to quickly see who owes them money or who they owe money to.
+The ability to quickly filter out the list important because in big lists, it might not be the easiest to see what each person owes. With the feature, it increases efficiency for large addressbooks.
+
+** *Minor Enhancement*: added negative value allowance for balance to allow people to see the total amount they owe or need to be paid.
+This is important to the product as people will not always just owe money, sometimes people might need to pay the user, this feature allows that to be accounted for.
+
+** *Minor Enhancement*: case insensitivty of commands.
+This aims to help add ease to the user because the user will not need to type commands in specific way so Add and add will both add a new person.
+
+* *Chen Chongsong*
+** *Major Enhancement*: Implementing a new model called "item" field, which records all items related to a person in the contact list. An "item" has its name and its money value. For example, someone may owe the user an item called "taxiFare" and worth "100" dollars.
+ItemShowCommand, ItemAddCommand, ItemDeleteCommand are implemented, and the user is able to check items, add items and delete them. The storage XML format has been modified accordingly.
+This new feature is important because this allows the user to check reasons for owing money, in case the user forgets them.
+
+** *Minor Enhancement*: implementing a SortCommand to sort contact list according to balance, name, etc.
+If name sorted, the user would be able to search for certain person quickly and alphebatically. This is useful because sometimes the user cannot remember the exact names, and therefore, fail to search names with the FindCommand.
+If balance sorted, the user would be enabled to decide the order of returning money in the future. For example, the user can choose to firstly return money to "small creditors" (because the user owes little money to them, and he can pay them off easily)
+
+* *Prian Kuhanandan*
+** *Major Enhancement*: Implementing the money field, and allowing for existing commands to use the field such as the add and edit commands.
+This is important because this allows for all the money related features that are essential to our use cases, such as the balance feature.
+
+** *Minor Enhancement*: Create a new command to identify the person that owes the user the most money.
+This is important to the product, because the user needs easy ways to interact with the money field that we have added. This is one minor way to use the field and will provide the user with a lot of value as it will help with locating his or her biggest debtor.
 
 [appendix]
 == User Stories
@@ -808,15 +1215,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`*` |user with many persons in the accounting book |sort persons by name |locate a person easily
 
-_{More to be added}_
+|`* *`|user | redo or undo a command I just typed in|
+// tag::userStories[]
+|`* * *` |user | add/update/settle an amount of money that a contact owes me |
+
+|`* * *` |user | check my overall balance |
+
+|`* * *` |user | see which contacts owe me money |
+
+|`* * *` |user | see to which of my contacts do I owe money |
+
+|`* *` |user | see which contact owes me the most money. |
+
+|`* *` |user | see to which contact I owe the most money. |
+
+
+| `* * *`|user | see which contact owes me the most money |
+
+| `* *` |user | see a list of people with specific tags | have an overview of the money a group owes me
+
+| `*` |user | see the address of a user|
+
+
+// end::userStories[]
+|`* *` |user | see for which items/reasons do I owe a contact / a contact owes me |
+
+|`* *` |user | add an item/reason under a specified person |
+
+|`* *` |user | delete an item/reason from a specified person |
+// tag::userStories[]
+|`*` |user | choose the balance the currency that I am owed |
+
+|`*` |user | convert my balance into a different currency |
+
+|`*` |user | calculate the amount I am owed/I owe with an applied interest rate |
+
+| `* * *` |user | have a map functionality | find the nearest ATM to settle my accounts
+// end::userStories[]
+|`*` |user | sort the contact list according to my wishes |
+
+|`*` |user | split a bill evenly among multiple people |
+
+|`*` |user | remove certain tags from a person |
+
+|=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `TravelBanker` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -824,9 +1273,9 @@ _{More to be added}_
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  TravelBanker shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  TravelBanker deletes the person
 +
 Use case ends.
 
@@ -840,11 +1289,48 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. TravelBanker shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: To Split a Bill Among Multiple People
+
+*MSS*
+
+1.  User requests to new a bill
+2.  TravelBanker shows the new bill
+3.  User requests selects who the bill will be splited among
+4.  TravelBanker shows who the bill will be splited among in the contact details
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Specified people does not exist.
++
+[none]
+** 1a1. TravelBanker shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: To See Who Owes Me Money
+
+*MSS*
+
+1.  User requests to see people who owes the user Money
+2.  TravelBanker shows the list of people
++
+Use case ends.
+
+*Extensions*
+
+* 1a. No people owe the user money.
++
+[none]
+** 1a1. TravelBanker shows an message showing that the list is empty.
++
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +1338,10 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  The system should respond within 3 seconds, even for more intensive procedures such as balance calculation.
+.  The system should update its records immediately after the user makes an update.
+.  The system should provide helpful and clear messages to the user when errors occur.
+.  The system should preserve all data and user preferences when software updates are installed.
 
 [appendix]
 == Glossary
@@ -873,8 +1361,8 @@ Author: ...
 
 Pros:
 
-* ...
-* ...
+*  ...
+*  ...
 
 Cons:
 

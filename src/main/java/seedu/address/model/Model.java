@@ -45,4 +45,11 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    //@@author chenchongsong
+    /**
+     * Sorts the person list by a given keyword {}
+     * The person list would be sorted ascendingly or descendingly, depending on {}
+     */
+    void sortUniquePersonList(String sortKey, String sortOrder);
+    //@@author
 }

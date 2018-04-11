@@ -48,6 +48,7 @@ public class XmlAdaptedTask {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedTask (Task source) {
+        title = source.getTitle().toString();
         taskDescription = source.getTaskDesc().value;
         deadline = source.getDeadline().dateString;
         priority = source.getPriority().priority;
@@ -60,14 +61,21 @@ public class XmlAdaptedTask {
      */
     public Task toModelType() throws IllegalValueException {
 
-        if (this.taskDescription == null) {
+        if (this.title == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                TaskDescription.class.getSimpleName()));
+                    Title.class.getSimpleName()));
         }
-        if (!TaskDescription.isValidDescription(this.title)) {
+
+        if (!Title.isValidTitle(this.title)) {
             throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
         }
         final Title title = new Title(this.title);
+
+        if (this.taskDescription == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    TaskDescription.class.getSimpleName()));
+        }
+
         if (!TaskDescription.isValidDescription(this.taskDescription)) {
             throw new IllegalValueException(TaskDescription.MESSAGE_DESCRIPTION_CONSTRAINTS);
         }

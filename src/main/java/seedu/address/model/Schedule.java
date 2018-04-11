@@ -38,7 +38,8 @@ public class Schedule implements ReadOnlySchedule {
      * @param lessonToBeAdded
      * @throws InvalidLessonTimeSlotException if invalid
      */
-    public void addLesson(Lesson lessonToBeAdded) throws InvalidLessonTimeSlotException {
+    public void addLesson(Lesson lessonToBeAdded)
+            throws InvalidLessonTimeSlotException, DuplicateLessonException {
         if (!isValidSlot(lessonToBeAdded)) {
             throw new InvalidLessonTimeSlotException();
         }

@@ -1,6 +1,6 @@
 package seedu.address.external.exceptions;
 
-// @@author demitycho
+//@@author demitycho
 /**
  * An exception related to stored Google credentials
  */

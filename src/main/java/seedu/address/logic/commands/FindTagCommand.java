@@ -2,8 +2,8 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
+//@@author demitycho
 /**
- * @@author demitycho
  * Finds and lists all students in address book whose tag contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */

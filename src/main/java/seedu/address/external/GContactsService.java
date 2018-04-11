@@ -22,7 +22,7 @@ import com.google.gdata.util.ServiceException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.student.Student;
 
-// @@author demitycho
+//@@author demitycho
 /**
  * Constructs a new GContactsService object to communicate with Google's APIs
  */

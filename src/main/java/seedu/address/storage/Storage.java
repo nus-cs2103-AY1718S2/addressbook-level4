@@ -32,7 +32,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, ScheduleS
 
     @Override
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
-
+    //@@author demitycho
     @Override
     String getScheduleFilePath();
 
@@ -41,7 +41,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, ScheduleS
 
     @Override
     void saveSchedule(ReadOnlySchedule schedule) throws IOException;
-
+    //@@author
     /**
      * Saves the current version of the Address Book to the hard disk.
      * Creates the data file if it is missing.
@@ -56,11 +56,12 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, ScheduleS
      */
     void handleScheduleChangedEvent(ScheduleChangedEvent sce);
 
+    //@@author demitycho
     /**
      * Handles the event where the required student index for displaying misc info is changed
      */
     void handleRequiredStudentIndexChangedEvent(RequiredStudentIndexChangeEvent rsice);
-
+    //@@author demitycho
     /**
      * Handles the event where the profile picture of a student is being changed
      */

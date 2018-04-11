@@ -3,8 +3,8 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowScheduleEvent;
 
+//@@author demitycho
 /**
- * @@author demitycho
  * Displays the user's schedule.
  */
 public class ScheduleCommand extends Command {

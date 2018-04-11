@@ -16,9 +16,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Time;
 
-
+//@@author demitycho
 /**
- * @@author demitycho
  * Parses input arguments and creates a new AddCommandCommand object
  */
 public class AddLessonCommandParser implements Parser<AddLessonCommand> {

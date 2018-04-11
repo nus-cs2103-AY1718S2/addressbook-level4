@@ -10,7 +10,7 @@ import java.util.concurrent.TimeoutException;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
-// @@author demitycho
+//@@author demitycho
 /**
  * Logs in to user's Google Account.
  */

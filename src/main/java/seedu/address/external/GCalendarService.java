@@ -26,7 +26,7 @@ import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.student.Student;
 
-// @@author demitycho
+//@@author demitycho
 
 /**
  * Constructs a new GContactsService object to communicate with Google's APIs

@@ -26,15 +26,15 @@ import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.student.Student;
 
+//@@author demitycho
 /**
- * @@author demitycho
- * The Calendar Panel of Codeducator.
+ * The Calendar Panel using the InfoPanel of Codeducator.
  */
 public class CalendarPanel extends UiPart<CalendarView> {
 
     private static final String FXML = "CalendarPanel.fxml";
     private static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm";
-    private static final String ENTRY_TITLE = "Lesson: ";
+    private static final String STRING_ENTRY_TITLE = "%d Lesson: %s";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -43,7 +43,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
     private Calendar calendar;
     private PageBase pageBase;
 
-    private Integer index = 1;
+    private Integer lessonDisplayIndex;
 
     private ReadOnlyAddressBook addressBook;
 
@@ -73,13 +73,13 @@ public class CalendarPanel extends UiPart<CalendarView> {
 
     /**
      * Sets up the calendar view
+     * Uses many methods to modify the default CalendarView
      */
     private void setUpCalendarView() {
         CalendarSource calendarSource = new CalendarSource("My Calendar");
         calendarSource.getCalendars().addAll(calendar);
 
         calendarView.getCalendarSources().addAll(calendarSource);
-
         calendarView.setRequestedTime(LocalTime.now());
         calendarView.showWeekPage();
         calendarView.setShowAddCalendarButton(false);
@@ -95,7 +95,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
         calendarView.setShowToolBar(false);
 
         calendarView.setOnMouseClicked(null);
-
+        calendarView.setDisable(true);
         calendar.setReadOnly(true);
 
         calendarView.getWeekPage().setShowNavigation(false);
@@ -117,7 +117,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
      * Loads {@code lessons} into the calendar
      */
     private void loadEntries(ReadOnlySchedule readOnlySchedule, ReadOnlyAddressBook addressBook) {
-        index = 1;
+        lessonDisplayIndex = 1;
         this.addressBook = addressBook;
         readOnlySchedule.getSchedule().stream().forEach(this::loadEntry);
     }
@@ -137,13 +137,14 @@ public class CalendarPanel extends UiPart<CalendarView> {
         Student student = addressBook.findStudentByKey(lesson.getUniqueKey());
         Entry entry = new Entry();
         entry.setInterval(startDateTime, endDateTime);
-        entry.setTitle(index++ + " " + ENTRY_TITLE + student.getName());
+
+        entry.setTitle(String.format(STRING_ENTRY_TITLE, lessonDisplayIndex++, student.getName()));
         entry.setCalendar(calendar);
     }
 
 
     /**
-     * Handles the event where an lesson is deleted by loading the updated lessons list into the calendar
+     * Handles the event where a lesson is deleted by loading the updated lessons list into the calendar
      * @param event contains the updated lessons list
      */
     @Subscribe
@@ -153,35 +154,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
         loadEntries(event.getLessons(), event.getAddressBook());
     }
 
-
-    /**
-     * Zooms in on the calendar if possible
-     */
-    private void zoomIn() {
-        if (pageBase.equals(calendarView.getYearPage())) {
-            calendarView.showMonthPage();
-        } else if (pageBase.equals(calendarView.getMonthPage())) {
-            calendarView.showWeekPage();
-        } else if (pageBase.equals(calendarView.getWeekPage())) {
-            calendarView.showDayPage();
-        }
-        pageBase = calendarView.getSelectedPage();
-    }
-
-    /**
-     * Zooms out on the calendar if possible
-     */
-    private void zoomOut() {
-        if (pageBase.equals(calendarView.getDayPage())) {
-            calendarView.showWeekPage();
-        } else if (pageBase.equals(calendarView.getWeekPage())) {
-            calendarView.showMonthPage();
-        } else if (pageBase.equals(calendarView.getMonthPage())) {
-            calendarView.showYearPage();
-        }
-        pageBase = calendarView.getSelectedPage();
-    }
-
+    //@@author demitycho-reused
     /**
      * Update the current date and time shown in the calendar as a thread in the background
      * Adapted from http://dlsc.com/wp-content/html/calendarfx/manual.html

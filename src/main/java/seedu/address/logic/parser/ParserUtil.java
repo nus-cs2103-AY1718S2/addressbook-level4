@@ -265,7 +265,7 @@ public class ParserUtil {
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
 
-    //@@ author samuel
+    //@@author samuelloh
     /**
      * Parses a {@code Optional<String> path} into an {@code Optional<ProfilePicturePath>} if {@code path} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -389,6 +389,6 @@ public class ParserUtil {
         requireNonNull(remarks);
         return remarks.isPresent() ? Optional.of(parseRemarks(remarks.get())) : Optional.empty();
     }
-    // @@ author
+    //@@ author
 }
 

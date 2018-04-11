@@ -6,7 +6,7 @@ import com.google.gdata.util.ServiceException;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
-// @@author demitycho
+//@@author demitycho
 
 /**
  * Syncs the user's contact list and schedule to Google Contacts and Calendar.

@@ -166,7 +166,7 @@ public class MainWindow extends UiPart<Stage> {
         topTitlePlaceholder.getChildren().add(titleBar.getRoot());
         setAccelerator(titleBar.getControlHelp(), KeyCombination.valueOf("F1"));
 
-        CommandBox commandBox = new CommandBox(logic, floatParseRealTime, floatParseLabel);
+        CommandBox commandBox = new CommandBox(logic, floatParseRealTime, floatParseLabel, animated);
         topCommandPlaceholder.getChildren().add(commandBox.getRoot());
     }
 

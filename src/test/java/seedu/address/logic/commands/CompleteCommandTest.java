@@ -25,7 +25,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.activity.Activity;
 
 
-
+//@@author YuanQLLer
 public class CompleteCommandTest {
     private Model model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
 
@@ -66,7 +66,6 @@ public class CompleteCommandTest {
     }
 
     @Test
-    //TODO
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);

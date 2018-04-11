@@ -32,7 +32,7 @@ public class TestApp extends MainApp {
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
-    protected static final String ADDRESS_BOOK_NAME = "Test";
+    protected static final String DESK_BOARD_NAME = "Test";
     protected Supplier<ReadOnlyDeskBoard> initialDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
@@ -66,14 +66,14 @@ public class TestApp extends MainApp {
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
         userPrefs.setDeskBoardFilePath(saveFileLocation);
-        userPrefs.setDeskBoardName(ADDRESS_BOOK_NAME);
+        userPrefs.setDeskBoardName(DESK_BOARD_NAME);
         return userPrefs;
     }
 
     /**
      * Returns a defensive copy of the address book data stored inside the storage file.
      */
-    public DeskBoard readStorageAddressBook() {
+    public DeskBoard readStorageDeskBoard() {
         try {
             return new DeskBoard(storage.readDeskBoard().get());
         } catch (DataConversionException dce) {

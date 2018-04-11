@@ -29,7 +29,7 @@ import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing activity in the remark book.
+ * Edits the details of an existing activity in the desk board.
  */
 //TODO: This command need a lot of rework
 public class EditCommand extends UndoableCommand {
@@ -49,9 +49,9 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Activity: %1$s";
+    public static final String MESSAGE_EDIT_ACTIVITY_SUCCESS = "Edited Activity: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This activity already exists in the desk board.";
+    public static final String MESSAGE_DUPLICATE_ACTIVITY = "This activity already exists in the desk board.";
 
     private final Index index;
     private final EditActivityDescriptor editActivityDescriptor;
@@ -76,12 +76,12 @@ public class EditCommand extends UndoableCommand {
         try {
             model.updateActivity(activityToEdit, editedActivity);
         } catch (DuplicateActivityException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_ACTIVITY);
         } catch (ActivityNotFoundException pnfe) {
             throw new AssertionError("The target activity cannot be missing");
         }
         model.updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedActivity));
+        return new CommandResult(String.format(MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity));
     }
 
     @Override
@@ -93,15 +93,15 @@ public class EditCommand extends UndoableCommand {
         }
 
         activityToEdit = lastShownList.get(index.getZeroBased());
-        editedActivity = createEditedPerson(activityToEdit, editActivityDescriptor);
+        editedActivity = createEditedActivity(activityToEdit, editActivityDescriptor);
     }
 
     /**
      * Creates and returns a {@code Activity} with the details of {@code activityToEdit}
      * edited with {@code editActivityDescriptor}.
      */
-    private static Activity createEditedPerson(Activity activityToEdit,
-        EditActivityDescriptor editActivityDescriptor) {
+    private static Activity createEditedActivity(Activity activityToEdit,
+                                                 EditActivityDescriptor editActivityDescriptor) {
         assert activityToEdit != null;
 
         Name updatedName = editActivityDescriptor.getName().orElse(activityToEdit.getName());

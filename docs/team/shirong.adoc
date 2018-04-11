@@ -12,7 +12,7 @@ reInsurance is adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-l
 
 == Summary of contributions
 
-* *Major enhancement*: added *birthday and appointments with a calendar view using Google Calendar API*
+* *Major enhancement*: added birthday and appointments with a calendar view using Google Calendar API
 ** What it does: allows the users to keep track of the birthday and appointment dates with clients. The calendar view allows the user to have a good over view of the dates.
 ** Justification: Allowing the user to record appointments and birthdays are important to the product as these are formation which aids in a centralised management system of clients for an insurance agent. Furthermore, the calendar view allows a good overview which is key when planning for the week or month ahead.
 ** Highlights: This enhancement includes the use of Google Calendar API which allows for much more future possibilities to integrate with Google. The feature for authentication with Google APIs have been done which would make integrating with other Google APIs in the future easier.
@@ -20,7 +20,7 @@ reInsurance is adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-l
 
 * *Minor enhancement*: added a findtag command that allows the user to find clients by tag(s).
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/cambioforma.md[Functional code]] [https://github.com[Test code]]
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/cambioforma.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/test/cambioforma.md[Test code]]
 
 * *Other contributions*:
 

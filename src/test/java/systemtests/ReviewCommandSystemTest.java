@@ -37,7 +37,7 @@ public class ReviewCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the help window is open, and closes it after checking.
+     * Asserts that the review dialog is open, and closes it after checking.
      */
     private void assertReviewDialogOpen() {
         assertTrue(ERROR_MESSAGE, ReviewDialogHandle.isWindowPresent());

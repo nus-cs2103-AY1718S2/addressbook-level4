@@ -57,7 +57,7 @@ import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 
 /**
- * A handle to the {@code HelpWindow} of the application.
+ * A handle to the {@code ReviewDialog} of the application.
  */
 public class ReviewDialogHandle extends StageHandle {
 
@@ -72,7 +72,7 @@ public class ReviewDialogHandle extends StageHandle {
     }
 
     /**
-     * Returns true if a help window is currently present in the application.
+     * Returns true if a review dialog is currently present in the application.
      */
     public static boolean isWindowPresent() {
         return new GuiRobot().isWindowShown(REVIEW_DIALOG_WINDOW_TITLE);
@@ -755,7 +755,7 @@ public class ReviewCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the help window is open, and closes it after checking.
+     * Asserts that the review dialog is open, and closes it after checking.
      */
     private void assertReviewDialogOpen() {
         assertTrue(ERROR_MESSAGE, ReviewDialogHandle.isWindowPresent());

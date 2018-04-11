@@ -39,7 +39,7 @@ public class XmlAdaptedReview {
     /**
      * Converts this jaxb-friendly adapted review object into the model's Review object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted review
      */
     public Review toModelType() throws IllegalValueException {
         if (!Review.isValidCombined(review)) {

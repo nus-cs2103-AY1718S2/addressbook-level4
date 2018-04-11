@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 
 /**
- * Tests that a {@code Person}'s {@code Name} matches any of the keyphrases given.
+ * Tests that a {@code Person}'s {@code Rating} matches any of the keyphrases given.
  */
 public class RatingContainsKeyphrasesPredicate implements Predicate<Person> {
     private final List<String> keyphrases;

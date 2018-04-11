@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 import javafx.collections.FXCollections;

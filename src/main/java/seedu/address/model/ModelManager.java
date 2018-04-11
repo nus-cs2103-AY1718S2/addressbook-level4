@@ -69,6 +69,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
+        addressBook.resetData(newData, newAliasList);
+        addressBook.updatePassword(newData.getPassword());
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }
@@ -95,13 +102,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addAlias(Alias alias) throws DuplicateAliasException {
         addressBook.addAlias(alias);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
-        addressBook.resetData(newData, newAliasList);
-        addressBook.updatePassword(newData.getPassword());
         indicateAddressBookChanged();
     }
 

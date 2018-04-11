@@ -5,27 +5,44 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.Comparator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AppointmentListChangedEvent;
+import seedu.address.model.event.Appointment;
+import seedu.address.model.event.Task;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.shortcuts.ShortcutDoubles;
+import seedu.address.model.shortcuts.UniqueShortcutDoublesList;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
+
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
-    private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Person> filteredContacts;
+    private final FilteredList<Appointment> filteredAppointments;
+    private final FilteredList<Task> filteredTasks;
+    private final FilteredList<ShortcutDoubles> filteredShortcutCommands;
+    private String currentActiveListType;
 
+    private SortedList<Person> sortedFilteredPersons;
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -36,7 +53,12 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredContacts = new FilteredList<>(this.addressBook.getContactList());
+        sortedFilteredPersons = new SortedList<Person>(filteredContacts);
+        filteredAppointments = new FilteredList<>(this.addressBook.getAppointmentList());
+        filteredShortcutCommands = new FilteredList<>(this.addressBook.getCommandsList());
+        filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
+        currentActiveListType = LIST_TYPE_CONTACT;
     }
 
     public ModelManager() {
@@ -59,9 +81,20 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /** Raises an event to indicate the appointment list has changed */
+    private void indicateAppointmentListChanged() {
+        raise(new AppointmentListChangedEvent(addressBook.getAppointmentList()));
+    }
+
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteStudent(Student target) throws PersonNotFoundException {
+        addressBook.removeStudent(target);
         indicateAddressBookChanged();
     }
 
@@ -73,11 +106,67 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void addStudent(Student student) throws DuplicatePersonException {
+        addressBook.addStudent(student);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    //@@author shanmu9898
+    @Override
+    public synchronized void addCommandShortcut(ShortcutDoubles shortcutDoubles)
+               throws UniqueShortcutDoublesList.DuplicateShortcutDoublesException {
+        addressBook.addShortcutDoubles(shortcutDoubles);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteCommandShortcut(ShortcutDoubles shortcutDoubles)
+            throws UniqueShortcutDoublesList.CommandShortcutNotFoundException {
+        addressBook.removeShortcutDouble(shortcutDoubles);
+    }
+    //@@author
+    @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateStudent(Student target, Student editedStudent)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(target, editedStudent);
+
+        addressBook.updateStudent(target, editedStudent);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addAppointment(Appointment appointment) throws DuplicateEventException {
+        addressBook.addAppointment(appointment);
+        indicateAddressBookChanged();
+        indicateAppointmentListChanged();
+    }
+
+    @Override
+    public void deleteAppointment(Appointment target) throws EventNotFoundException {
+        addressBook.removeAppointment(target);
+        indicateAddressBookChanged();
+        indicateAppointmentListChanged();
+    }
+
+    @Override
+    public void addTask(Task task) throws DuplicateEventException {
+        addressBook.addTask(task);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteTask(Task target) throws EventNotFoundException {
+        addressBook.removeTask(target);
         indicateAddressBookChanged();
     }
 
@@ -89,13 +178,52 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+        return FXCollections.unmodifiableObservableList(sortedFilteredPersons);
+    }
+
+    @Override
+    public void sortFilteredPersonList(){
+
+        Comparator<Person> sortByName = new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return o1.getName().fullName.compareTo(o2.getName().fullName);
+            }
+        };
+
+        sortedFilteredPersons.setComparator(sortByName);
+        indicateAddressBookChanged();
+    }
+    @Override
+    public ObservableList<Appointment> getFilteredAppointmentList() {
+        return FXCollections.unmodifiableObservableList(filteredAppointments);
+    }
+
+    @Override
+    public ObservableList<Task> getFilteredTaskList() {
+        return FXCollections.unmodifiableObservableList(filteredTasks);
+    }
+
+    //@@author shanmu9898
+    @Override
+    public ObservableList<ShortcutDoubles> getFilteredCommandsList() {
+        return FXCollections.unmodifiableObservableList(filteredShortcutCommands);
+    }
+    //@@author
+    @Override
+    public String getCurrentActiveListType() {
+        return currentActiveListType;
+    }
+
+    @Override
+    public void changeCurrentActiveListType(String itemType) {
+        currentActiveListType = itemType;
     }
 
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredContacts.setPredicate(predicate);
     }
 
     @Override
@@ -113,7 +241,12 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredContacts.equals(other.filteredContacts);
+    }
+
+    @Override
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        addressBook.removeTag(tag);
     }
 
 }

@@ -3,18 +3,22 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
@@ -49,7 +53,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
     public void setPerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -98,8 +102,24 @@ public class UniquePersonList implements Iterable<Person> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Person> asObservableList() {
+        sort();
         return FXCollections.unmodifiableObservableList(internalList);
     }
+
+    //@@author randypx
+    /**
+     * Add a listener to the list for any changes.
+     * Update {@code contacts} for any changes made.
+     */
+    public void addListener(UniqueContactList contacts) {
+        internalList.addListener(new ListChangeListener<Person>() {
+            @Override
+            public void onChanged(Change<? extends Person> c) {
+                contacts.updateList(c);
+            }
+        });
+    }
+    //@@author
 
     @Override
     public Iterator<Person> iterator() {
@@ -110,11 +130,24 @@ public class UniquePersonList implements Iterable<Person> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                && this.internalList.equals(((UniquePersonList) other).internalList));
     }
 
     @Override
     public int hashCode() {
         return internalList.hashCode();
+    }
+
+    public void sort() {
+        internalList.sort(new Comparator<Person>() {
+            @Override
+            public int compare(Person otherMember1, Person otherMember2) {
+                return otherMember1.getName().toString().compareTo(otherMember2.getName().toString());
+            }
+
+
+        });
+
+
     }
 }

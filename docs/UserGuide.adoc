@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= TeachConnect - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,36 +11,45 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+:repoURL: https://github.com/CS2103JAN2018-W14-B1/main/
+
+By: `Team W14-B1`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+TeachConnect (TC) is created to assist teachers and other educational professionals in *managing their contacts, appointments and tasks*. TeachConnect is also tailored for teachers who would *prefer to use a Desktop App for managing contacts*. Most importantly, it is *optimized for those who prefer to enter input using keyboard while still having the benefits of a Graphical User Interface (GUI). If you can type fast, TeachConnect will manage your contacts faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+You can download the latest Java version link:https://java.com/en/download/[here].
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `Teachconnect.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your TeachConnect.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::StartupUI.jpg[width="800"]
+    Figure 1: Successful start up UI with Light Theme selected
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
++
+image::commandbox.jpg[width="800"]
+    Figure 2: Position of the command box
++
+
 .  Some example commands you can try:
 
+
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe`.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
+
 
 .  Refer to <<Features>> for details of each command.
 
@@ -52,63 +61,321 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items with `…` after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing manual : `help`
 
+Accesses the User Guide for TeachConnect. +
 Format: `help`
 
-=== Adding a person: `add`
+=== Sorting all contacts : `sort`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Sorts and shows a list of all contacts in TeachConnect lexographically +
+Format: `sort`
+
+=== Adding a contact: `add`
+
+Adds a contact.  +
+Format: `add [TYPE] n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+****
+* `[TYPE]` field represents the type of contact you wish to add.  +
+* It can be `student`, or `{nbsp}` (empty for a default contact).
+****
 
 [TIP]
-A person can have any number of tags (including 0)
+A contact can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/friend` +
+Adds a default contact to TeachConnect's contact list.
+* `add student n/Betsy Crowe e/betsycrowe@example.com a/Centre Street, block 238, #02-02` +
+Adds a student contact to TeachConnect's contact list.
 
-=== Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+=== Forming a class `[coming in v1.5]`
 
-=== Editing a person : `edit`
+Forms a class of students for a specified subject and time period. +
+Format: `form subj/SUBJECT s/START_DATE e/END_DATE i/INDEX...`
 
-Edits an existing person in the address book. +
+****
+* Students specified by the `INDEX` are added to the class.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+* Minimum of one student must be entered. There can be more than one student
+* Only a student contact can be entered, default and guardian contacts are not allowed.
+* Dates must be in the format: `DD/MM/YYYY`.
+****
+
+Examples:
+
+* `list students` +
+`form 1,2,5 subj/English s/18/01/2018 e/17/07/2019` +
+Forms an English class containing the first, second and fifth contact in the list that starts in 18 Jan 2018 to 17 July 2019.
+
+// tag::appointment[]
+=== Setting up an appointment : `set_appointment` `[since v1.3]`
+
+Sets up an appointment with the specified contact. +
+Format: `set_appointment t/TITLE s/START_DATE START_TIME e/END_DATE END_TIME i/INDEX`
+
+****
+* This sets an appointment with `TITLE`, from `START_DATE` at `START_TIME` to `END_DATE` at `END_TIME`, with contact at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+* `START_DATE` and `END_DATE` must be in the format `DD/MM/YYYY`.
+* `START_TIME` and `END_TIME` must be in the 24-hr format: HH:MM.
+* The new appointment will be listed on both the appointment list and the TeachConnect Calendar.
+****
+
+Examples:
+
+* `set_appointment t/Tutoring session s/02/04/2018 19:00 e/02/04/2018 20:00` +
+Sets up an appointment on April 2nd, 2018, from 7pm to 8pm.
++
+image::appointmentAdded.jpg[width="800"]
+    Figure 3: Appointment added successfully example
++
+
+// end::appointment[]
+// tag::task[]
+=== Setting up a task : `set_task` `[since v1.3]`
+
+Sets up a task to be done by a deadline. +
+Format: `set_task t/TITLE e/END_DATE END_TIME`
+
+****
+* Task with `TITLE` which needs to completed before `END_DATE` at `END_TIME` is added.
+* `END_DATE` must be in the format `DD/MM/YYYY`.
+* `END_TIME` must be in the 24-hr format: HH:MM.
+****
+
+Examples:
+
+* `set_task t/Mark papers e/05/04/2018 10:00` +
+Sets a task which needs to be completed before April 5th, 2018, 10am.
+// end::task[]
+
+=== Removing an appointment or a task: `remove` `[since v1.4]`
+
+Removes an appointment or a task by the index number used from their respective listing. +
+Format: `remove EVENT_TYPE INDEX`.
+
+****
+* `EVENT_TYPE` can be either `appointment` or `task`.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+****
+
+Examples:
+
+* `list appointments` +
+`remove appointment 2` +
+Removes the appointment with the index 2 in the appointment list.
++
+image::appointmentRemoved.jpg[width="800"]
+    Figure 4: Remove command usage example
++
+
+// tag::theme[]
+=== Changing GUI theme : `theme` `[since v1.4]`
+
+Changes the theme of the GUI.  +
+Format: `theme THEME_NAME`
+
+****
+* This changes the theme of the GUI to `THEME_NAME`.
+* `THEME_NAME` can be `dark`, `light` or `galaxy`.
+
+****
+Examples:
+
+* `theme dark` +
+Changes the theme of TeachConnect to Dark Theme.
++
+image::themeDark.jpg[width="800"]
+    Figure 5: GUI with Dark Theme
++
+* `theme galaxy` +
+Changes the theme of TeachConnect to Galaxy Theme.
++
+image::themeGalaxy.jpg[width="800"]
+    Figure 6: GUI with Galaxy Theme
++
+// end::theme[]
+
+=== Switching Calendar Viewmode : `calendar` `[since v1.4]`
+
+Switches the Calendar view mode.  +
+Format: `calendar VIEW_MODE`
+
+****
+* This changes the view mode of the TeachConnect Calendar.
+* `VIEW_MODE` can be `d`, `w` or `m`, which are respective short forms for day, week and month.
+****
+Examples:
+
+* `calendar d` +
+Changes the view mode of TeachConnect Calendar to Day View.
++
+image::calendarDay.jpg[width="800"]
+    Figure 7: Calendar Day View
++
+* `calendar w` +
+Changes the view mode of TeachConnect Calendar to Week View.
++
+image::calendarWeek.jpg[width="800"]
+    Figure 8: Calendar Week View
++
+* `calendar m` +
+Changes the view mode of TeachConnect Calendar to Month View.
++
+image::calendarMonth.jpg[width="800"]
+    Figure 9: Calendar Month View
++
+
+// tag::list[]
+=== Listing all contact/task/appointment/student : `list` `[since v1.4]`
+
+Shows a list of all of the specified `TYPE`. +
+Format: `list TYPE`.
+
+****
+* `TYPE` can be of the following: `contacts`, `students`, `tasks`, `appointments`, `shortcuts`.
+* `TYPE` cannot be empty.
+****
+
+Examples:
+
+* `list students` +
+Lists all student.
+* `list tasks` +
+Lists all task.
+* `list shortcuts` +
+Lists all command shortcuts.
+
+// end::list[]
+
+// tag::import[]
+=== Importing the contacts : `import` `[since v1.4]`
+
+Imports contacts from a different TeachConnect file by specifying the location of the file. +
+
+Format: `import [TYPE] pathname`
+
+Examples:
+
+* Imports Contacts : `import ./data/importsample.xml`
+
+// end::import[]
+
+// tag::export[]
+=== Exporting the contacts : `export` `[since v1.4]`
+
+Exports contacts from your TeachConnect by specifying the name of the file you want to save it in and the path where you want to save it. It can export the contacts based on a given range of indexes or a given tag or a given tag in a range of indexes. By specifying the type of the export you want it saves either only the xml file or both the xml and Csv file.
+
+Format: `export n/NAME r/RANGE t/TAG p/PATH te/normal`
+
+Format: `export n/NAME r/RANGE p/PATH te/excel`
+
+[TIP]
+You can export all the people at once, all the people with a certain tag at once, all the people with a certain tag in a range at once or all the people in a range with any tags in a single command. +
+You can also choose to export it in Csv format which you can later open in Excel.
+
+[WARNING]
+You can only export all or people based on one or zero tags. +
+Be careful about the parameter value for the format type. It has to exactly be either `normal` or `excel`.
+
+Examples:
+
+* Exports contacts : `export n/StudentsFile1 r/all t/students p/./data te/normal`
+* Exports contacts : `export n/StudentsFile2 r/1,10 t/students p/./data te/excel`
+
+// end::export[]
+
+// tag::shortcut[]
+=== Adding your own shortcut : `shortcut` `[since v1.4]`
+
+Sets your own personal shortcut for any of the commands above.
+
+Format: `shortcut [command word] [shortcut word]`
+
+[TIP]
+You can choose multiple shortcuts for the same command. +
+You can later use these shortcuts in place of the original command even after closing and reopening the app. +
+You can also set shortcut for the shortcut command.
+
+[WARNING]
+You cannot set the shortcut word to a already preregistered command. +
+Your shortcut word cannot be more than a single word.
+
+Examples:
+
+* `shortcut list l` +
+Sets `l` as the Personalised Alias for `list` command.
+* `shortcut add a` +
+Sets `a` as the Personalised Alias for `add` command.
+
+// end::shortcut[]
+
+// tag::deleteshortcut[]
+=== Deleting your personalised Alias : `delete_shortcut` `[since v1.4]`
+
+Deletes your personalised Alias if you don't want them or if you created them by mistake.
+
+Format: `delete_shortcut [command word] [shortcut word]`
+
+[TIP]
+You can choose to just undo the delete_shortcut if you delete a shortcut by mistake. +
+Listing all the shortcuts using the `list shortcuts` command as mentioned above might help in seeing all the shortcuts at once. +
+
+[WARNING]
+You can only delete shortcuts that you have already added.
+
+Examples:
+
+* `delete_shortcut list l` +
+Deletes the Personalised Alias `l` for `list` command.
+* `delete_shortcut add a` +
+Deletes the Personalised Alias `a` for `add` command.
+// end::deleteshortcut[]
+
+=== Editing a contact : `edit`
+
+Edits an existing contact. +
+
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Contact at the specified `INDEX` is edited.
+* The index refers to the index number shown in the last contact listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
+* You can remove all the contact's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st contact to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd contact to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating contacts by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds contacts whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Contacts matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 ****
 
 Examples:
@@ -116,47 +383,55 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any contact having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Deleting an entry in the list : `delete`
 
-Deletes the specified person from the address book. +
+
+Deletes the specified entry in the list. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Entry at the specified `INDEX` is deleted.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* `1, 2, 3, ...`.
 ****
 
 Examples:
 
-* `list` +
+* `list contacts` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd contact in the list
+
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st contact in the results of the `find` command.
 
-=== Selecting a person : `select`
+* `list tasks` +
+`delete 4` +
+Deletes the 4th task in the list
 
-Selects the person identified by the index number used in the last person listing. +
+=== Selecting a contact : `select`
+
+Selects the contact identified by the index number used in the last contact listing. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Contact specified by `INDEX` is selected.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* `1, 2, 3, ...`.
 ****
 
 Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+
+Selects the 2nd contact in the list.
+
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st contact in the results of the `find` command.
 
 === Listing entered commands : `history`
 
@@ -171,12 +446,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores TeachConnect to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify TeachConnect's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -220,7 +495,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -230,35 +505,145 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Saves data in the hard disk automatically [even while sharing TeachConnect] after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+=== Importing the contacts : `import` `[since v1.4]`
+
+Imports contacts from a different TeachConnect file by specifying the location of the file. +
+
+Format: `import [TYPE] pathname`
+
+Examples:
+
+* Imports Contacts : `import ./data/importsample.xml`
+
+=== Exporting the contacts : `export` `[since v1.4]`
+
+Exports contacts from your TeachConnect by specifying the name of the file you want to save it in and the path where you want to save it. It can export the contacts based on a given range of indexes or a given tag or a given tag in a range of indexes. By specifying the type of the export you want it saves either only the xml file or both the xml and Csv file.
+
+Format: `export n/NAME r/RANGE t/TAG p/PATH te/normal`
+
+Format: `export n/NAME r/RANGE p/PATH te/excel`
+
+[TIP]
+You can export all the people at once, all the people with a certain tag at once, all the people with a certain tag in a range at once or all the people in a range with any tags in a single command. +
+You can also choose to export it in Csv format which you can later open in Excel.
+
+[WARNING]
+You can only export all or people based on one or zero tags. +
+Be careful about the parameter value for the format type. It has to exactly be either `normal` or `excel`.
+
+Examples:
+
+* Exports contacts : `export n/StudentsFile1 r/all t/students p/./data te/normal`
+* Exports contacts : `export n/StudentsFile2 r/1,10 t/students p/./data te/excel`
+
+=== Adding your own shortcut : `shortcut` `[since v1.4]`
+
+Sets your own personal shortcut for any of the commands above.
+
+Format: `shortcut [command word] [shortcut word]`
+
+[TIP]
+You can choose multiple shortcuts for the same command. +
+You can later use these shortcuts in place of the original command even after closing and reopening the app. +
+You can also set shortcut for the shortcut command.
+
+[WARNING]
+You cannot set the shortcut word to a already preregistered command. +
+Your shortcut word cannot be more than a single word.
+
+Examples:
+
+* `shortcut list l` +
+Sets `l` as the Personalised Alias for `list` command.
+* `shortcut add a` +
+Sets `a` as the Personalised Alias for `add` command.
+
+=== Deleting your personalised Alias : `delete_shortcut` `[since v1.4]`
+
+Deletes your personalised Alias if you don't want them or if you created them by mistake.
+
+Format: `delete_shortcut [command word] [shortcut word]`
+
+[TIP]
+You can choose to just undo the delete_shortcut if you delete a shortcut by mistake. +
+Listing all the shortcuts using the `list shortcuts` command as mentioned above might help in seeing all the shortcuts at once. +
+
+[WARNING]
+You can only delete shortcuts that you have already added.
+
+Examples:
+
+* `delete_shortcut list l` +
+Deletes the Personalised Alias `l` for `list` command.
+* `delete_shortcut add a` +
+Deletes the Personalised Alias `a` for `add` command.
+
+
+=== Upcoming features `[coming soon]`
+
+* A login feature [coming in v2.0]
+* Dynamic search [coming in v2.0]
+* NLP for event and appointment scheduling [coming in v2.0]
+* Encrypting data files [coming in v2.0]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. Alternatively you can also choose the import and export commands!
 
 == Command Summary
+The table below summarizes TeachConnect's command list.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="59%",cols="22%,<30%,<30%",options="header",]
+|=======================================================================
+|Command |Format |Example
+
+|*Add*|`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`|`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+
+|*Clear*|`clear`|`clear`
+
+|*Delete*|`delete INDEX`|`delete 3`
+
+|*Edit*|`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`|`edit 2 n/James Lee e/jameslee@example.com`
+
+|*Find*|`find KEYWORD [MORE_KEYWORDS]` | `find James Jake`
+
+|*List*|`list TYPE` | `list student`
+
+|*Help*|`help`|`help`
+
+|*Select Contact*|`select INDEX` |`select 2`
+
+|*Set Appointment*|`set_appointment t/TITLE s/START_DATE START_TIME e/END_DATE END_TIME i/INDEX`|`set_appointment t/Meet parent s/05/04/2018 10:00 e/05/04/2018 11:00 i/3`
+
+|*Set Task*|`set_task t/TITLE e/END_DATE END_TIME` |`set_task t/Mark papers d/05/04/2018 10:00`
+
+|*Remove*|`remove EVENT_TYPE INDEX` | `remove task 3`
+
+|*Change GUI theme*|`theme THEME_NAME` | `theme dark`
+
+|*Change Calendar View mode*|`calendar VIEW_MODE` | `calendar d`
+
+|*Change GUI theme*|`theme THEME_NAME` | `theme dark`
+
+|*Import TeachConnect File*|`import` | `import ./data/samplefile.xml`
+
+|*Export*|`export n/NAME r/RANGE t/TAG p/PATH te/TYPE` | `export n/samplefile.xml r/all t/friends p/.data te/excel`
+
+|*Set Shortcut*|`shortcut [command word] [shortcut word]` | `shortcut list l`
+
+|*Delete Shortcut*|`delete_shortcut [command word] [shortcut word]` | `delete_shortcut list l`
+
+|*History*|`history`|`history`
+
+|*Undo*|`undo`|`undo`
+
+|*Redo*|`redo`|`redo`|
+
+|=======================================================================
+
+ Table 1: TeachConnect's command list

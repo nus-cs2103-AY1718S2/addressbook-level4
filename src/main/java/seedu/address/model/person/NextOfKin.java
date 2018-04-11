@@ -53,7 +53,7 @@ public class NextOfKin {
     /**
      * Returns a string of Next of Kin's name, email and phone
      */
-    public String printNOK() {
+    public String printNok() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
                 .append(" ")

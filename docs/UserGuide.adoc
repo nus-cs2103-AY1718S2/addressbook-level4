@@ -99,6 +99,7 @@ Abbreviation Format: `l`
 
 *_return to <<toc,Table of Contents>>_*
 
+// tag::sort[]
 === Sorting all students : `sort` [since v1.2]
 
 Sorts the list of all students in _EduBuddy_ according to the given parameter +
@@ -113,8 +114,10 @@ Examples:
 Sorts the list of students by name in alphabetical order (case insensitive).
 * `sort tag` +
 Sorts the list of students by tag in alphabetical and numerical order (case insensitive)
+// end::sort[]
 
 *_return to <<toc,Table of Contents>>_*
+
 
 === Editing a student : `edit` or `e`
 Edits an existing student in _EduBuddy_.The existing fields will then be updated accordingly. +
@@ -189,6 +192,7 @@ Deletes the 1st student in the results of the `find` command.
 
 *_return to <<toc,Table of Contents>>_*
 
+// tag::tags[]
 === Deleting a tag : `tagdelete` or `td` [since v1.1]
 
 When you have added the wrong `Class tag`,
@@ -234,11 +238,12 @@ Examples:
 Replaces the 'Class 1A' tag from every student in _EduBuddy_ with 'Class 2A'.
 
 image::TagReplaceCommand.png[width="650"]
+// end::tags[]
 
 *_return to <<toc,Table of Contents>>_*
 
-
-=== Adding a remark : `addremark` [Since v1.4]
+// tag::remarks[]
+=== Adding a remark : `addremark` [since v1.4]
 
 Adds a remark to a specified student in EduBuddy.
 Format: `addremark INDEX r/REMARK`
@@ -257,7 +262,7 @@ Adds a remark, Class Monitor, to the 2nd student in EduBuddy.
 
 image::AddRemarkCommand.png[width="650"]
 
-=== Deleting a remark : `deleteremark` [Since v1.4]
+=== Deleting a remark : `deleteremark` [since v1.4]
 
 Delete a remark to a specified student in EduBuddy.
 Format: `deleteremark INDEX r/REMARK`
@@ -275,7 +280,9 @@ Examples:
 Deletes the remark, Class Monitor, from the 2nd student in EduBuddy.
 
 image::DeleteRemarkCommand.png[width="650"]
+// end::remarks[]
 
+// tag::select[]
 === Selecting a person : `select` or `s`
 
 When you want to view a student's personal details like academic grades, cca grades etc, you can view it by selecting the student.
@@ -302,6 +309,7 @@ Selects the 4th student in _EduBuddy_.
 * `find Johnny` +
 `s 1` +
 Selects the 1st student in the results of the `find` command.
+// end::select[]
 
 *_return to <<toc,Table of Contents>>_*
 
@@ -374,6 +382,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 *_return to <<toc,Table of Contents>>_*
 
+// tag::appointment[]
 === Creating an appointment: `appointment` or `appt` [since v1.4]
 
 Creates an appointment (e.g. setting a consultation time slot with students)
@@ -398,9 +407,10 @@ Examples:
 Creates an appointment with the 1st student on 1st Feb 2018 from 3p.m. to 4p.m.
 * `appt 3 d/20042018 s/0930 e/1100` +
 Creates an appointment with the 3rd student on 20th Apr 2018 from 9:30a.m. to 11a.m.
-
+// end::appointment[]
 *_return to <<toc,Table of Contents>>_*
 
+// tag::stream[]
 === Viewing streaming score: `stream` [since v1.5]
 
 If you want to know if the student is qualified to enter the next education level, Junior College or Polytechnic, you can view the respective streaming score using this command.
@@ -433,14 +443,17 @@ Examples:
 Returns the L1R5 score obtained by the student based on his/her grades.
 * `stream 1 2` +
 Returns the L1B4-A score obtained by the student based on his/her grades.
+// end::stream[]
 
 *_return to <<toc,Table of Contents>>_*
 
+// tag::cca[]
 === Adding a CCA to a student : `addcca` [since v1.5]
 Adds a CCA to the student records in _EduBuddy_. +
 Format: `addcca 1 cca/CCA pos/POSITION` +
 You will be able to see the success message, `CCA added: CCA: POSITION` +
 `Person: NAME`
+// end::cca[]
 
 === Clearing all entries : `clear` or `c`
 

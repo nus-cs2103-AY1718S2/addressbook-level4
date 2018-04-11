@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import seedu.address.model.account.Account;
 import seedu.address.model.account.Credential;
 import seedu.address.model.account.MatricNumber;
 import seedu.address.model.account.Name;
@@ -17,16 +18,16 @@ public class AccountBuilder {
     public static final String DEFAULT_CREDENTIAL = null;
 
     private Name name;
-    private MatricNumber matricNumber;
     private Credential credential;
+    private MatricNumber matricNumber;
     private PrivilegeLevel privilegeLevel;
     private Username username;
     private Password password;
 
     public AccountBuilder() {
         name = new Name(DEFAULT_NAME);
-        matricNumber = new MatricNumber(DEFAULT_MATRIC_NUMBER);
         credential = new Credential(DEFAULT_USERNAME, DEFAULT_PASSWORD);
+        matricNumber = new MatricNumber(DEFAULT_MATRIC_NUMBER);
         privilegeLevel = new PrivilegeLevel(Integer.parseInt(DEFAULT_PRIVILEGE_LEVEL));
     }
 
@@ -35,12 +36,22 @@ public class AccountBuilder {
         return this;
     }
 
+    public AccountBuilder withCredential(String username, String password) {
+        this.credential = new Credential(username, password);
+        return this;
+    }
+
     public AccountBuilder withMatricNumber(String matricNumber) {
         this.matricNumber = new MatricNumber(matricNumber);
         return this;
     }
 
-    public AccountBuilder withCredential(String credential) {
-        this.credential = new
+    public AccountBuilder withPrivilegeLevel (String privilegeLevel) {
+        this.privilegeLevel = new PrivilegeLevel(Integer.parseInt(privilegeLevel));
+        return this;
+    }
+
+    public Account build() {
+        return new Account(name, credential, matricNumber, privilegeLevel);
     }
 }

@@ -6,6 +6,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.account.PrivilegeLevel;
+import seedu.address.model.account.UniqueAccountList;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 
 /**
@@ -18,6 +19,7 @@ public abstract class Command {
     protected Model model;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
+    protected UniqueAccountList uniqueAccountList;
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of books.
@@ -45,6 +47,10 @@ public abstract class Command {
      */
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
+    }
+
+    public void setData(UniqueAccountList uniqueAccountList, CommandHistory history, UndoRedoStack undoRedoStack) {
+        this.uniqueAccountList = uniqueAccountList;
     }
 
     public PrivilegeLevel getPrivilegeLevel() {

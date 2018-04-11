@@ -19,6 +19,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Catalogue;
 import seedu.address.model.Model;
+import seedu.address.model.account.UniqueAccountList;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.TitleContainsKeywordsPredicate;
 import seedu.address.model.book.exceptions.BookNotFoundException;
@@ -83,6 +84,17 @@ public class CommandTestUtil {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(expectedModel, actualModel);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+
+    public static void assertCommandSuccess(Command command, UniqueAccountList actualUAL, String expectedMessage,
+                                            UniqueAccountList expectedUAL) {
+        try {
+            CommandResult result = command.execute();
+            assertEquals(expectedMessage, result.feedbackToUser);
+            assertEquals(expectedUAL, actualUAL);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
         }

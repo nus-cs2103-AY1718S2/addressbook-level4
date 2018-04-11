@@ -1,0 +1,62 @@
+= Ke Xiaowen - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: HR+
+
+---
+
+== Overview
+
+HR+ is a recruiting and talent management desktop application targeting University Talent Acquisition Specialists. It is built to help them manage a significant number of student contacts and find the best-fitting candidates. University Talent Acquisition Specialists interact with HR+ using a Command Line Interface(CLI). HR+ has a Graphical User Interface(GUI) created with JavaFX and it is written in Java with approximately kLOC.
+
+
+== Summary of contributions
+
+* *Major enhancement*: added *commands for users to manage ratings of a student after an interview*
+** What it does: The `rate` command allows the user to evaluate a student's performance after an interview by assigning rating scores based on technical skills, communication skills, problem-solving skills and experience. It can also be used to edit the ratings of a student. The `rating-delete` command enables the user to delete the ratings assigned to a student.
+** Justification: This feature is critical as it helps University Talent Acquisition Specialists track students' performance in interviews and decide whether or not to hire them.
+** Highlights: This enhancement involves adding new commands to HR+. It requires a thorough understanding of the `Logic`, `Model` and `Storage` components and thus is challenging to implement.
+
+* *Minor enhancement*: added a `sort` command that allows the user to sort the current list of students in HR+ based on GPA, name or overall rating score in either ascending or descending order.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/functional/kexiaowen.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/test/kexiaowen.md[Test code]]
+
+* *Other contributions*:
+
+** Enhancements to existing features:
+*** Enhanced the `add` and `edit` command to include a new field `university` and wrote relevant tests(Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/67[#67])
+*** Enhanced the `add` and `edit` command to include a new field `job applied` and wrote relevant tests(Pull request https://github.com/CS2103JAN2018-W14-B3/main/pull/58[#58])
+** Documentation:
+*** Updated feature contribution, user stories, use cases and glossary sections in the Developer Guide (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/14[#14], https://github.com/CS2103JAN2018-W14-B3/main/pull/28[#28])
+*** Added features coming in v2.0 in the User Guide (Pull request https://github.com/CS2103JAN2018-W14-B3/main/pull/28[#28])
+*** Updated Features section in the User Guide by including explanation of `rate`, `rating-delete` and `sort` commands (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/18[#18], https://github.com/CS2103JAN2018-W14-B3/main/pull/32[#32], https://github.com/CS2103JAN2018-W14-B3/main/pull/64[#64], https://github.com/CS2103JAN2018-W14-B3/main/pull/71[#71])
+*** Wrote implementation of `rate` and `sort` commands in the Developer Guide (Pull request https://github.com/CS2103JAN2018-W14-B3/main/pull/48[#48])
+
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W14-B3/main/pull/16[#16], https://github.com/CS2103JAN2018-W14-B3/main/pull/21[#21], https://github.com/CS2103JAN2018-W14-B3/main/pull/24[#24], https://github.com/CS2103JAN2018-W14-B3/main/pull/53[#53]
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-W11-B2/main/issues/135[1], https://github.com/CS2103JAN2018-W11-B2/main/issues/140[2], https://github.com/CS2103JAN2018-W11-B2/main/issues/141[3], https://github.com/CS2103JAN2018-W11-B2/main/issues/136[4], https://github.com/CS2103JAN2018-W11-B2/main/issues/137[5], https://github.com/CS2103JAN2018-W11-B2/main/issues/145[6])
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=rate]
+
+include::../UserGuide.adoc[tag=ratingdelete]
+
+include::../UserGuide.adoc[tag=sort]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=rate]
+
+include::../DeveloperGuide.adoc[tag=sort]

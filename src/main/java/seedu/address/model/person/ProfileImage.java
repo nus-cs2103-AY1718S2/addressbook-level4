@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Objects;
 import javax.imageio.ImageIO;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -30,6 +29,8 @@ public class ProfileImage {
     private static final int CROP_DIMENSION = 100;
 
     public final String value;
+    public final String userInput;
+    private boolean isHashed;
     private final Image image;
 
     /**
@@ -38,12 +39,29 @@ public class ProfileImage {
      * @param fileName A valid fileName.
      */
     public ProfileImage(String fileName) {
+        isHashed = false;
         if (isNull(fileName)) {
             this.value = null;
+            this.userInput = null;
             this.image = null;
         } else {
             checkArgument(isValidFile(fileName), MESSAGE_IMAGE_CONSTRAINTS);
             this.value = fileName;
+            this.userInput = fileName;
+            this.image = loadImage();
+        }
+    }
+
+    public ProfileImage(String storageFileName, String userFileName) {
+        isHashed = true;
+        if (isNull(storageFileName)) {
+            this.value = null;
+            this.userInput = null;
+            this.image = null;
+        } else {
+            checkArgument(isValidFile(storageFileName), MESSAGE_IMAGE_CONSTRAINTS);
+            this.value = storageFileName;
+            this.userInput = userFileName;
             this.image = loadImage();
         }
     }
@@ -151,16 +169,34 @@ public class ProfileImage {
         }
     }
 
+    public boolean isHashed() {
+        return isHashed;
+    }
+
     @Override
     public String toString() {
-        return value;
+        return userInput;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // Short circuit if same object
                 || (other instanceof ProfileImage // instanceof handles nulls
-                && Objects.equals(this.value, ((ProfileImage) other).value)); // State check
+                && ((this.value == null && ((ProfileImage) other).value == null) //both value are null
+                || (isHashed && ((ProfileImage) other).isHashed) ? isHashEqual(this.value, ((ProfileImage) other).value)
+                : this.userInput.equals(((ProfileImage) other).userInput))); // state check
+    }
+    /**
+     * Checks whether the hash of two resume are the same
+     * @param first resume
+     * @param second resume
+     * @return same as true or false otherwise
+     */
+    private boolean isHashEqual(String first, String second) {
+        assert(first.split("_").length == 2);
+        String firstHash = first.split("_")[1];
+        String secondHash = second.split("_")[1];
+        return firstHash.equals(secondHash);
     }
 
     @Override

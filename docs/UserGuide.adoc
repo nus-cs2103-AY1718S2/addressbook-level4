@@ -124,7 +124,7 @@ Schedule the interview of the 2nd person to be 14 March at 2pm.
 
 === Locating persons by exact keyword search: `find` `[since v1.2]`
 
-Finds persons whose fields contain any of the given keywords. +
+Finds persons whose fields contain any of the given **exact** keywords. +
 
 Option 1: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -170,11 +170,11 @@ Option 1: `find KEYWORD [MORE_KEYWORDS]`
 Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case insensitive.
+* The order of the keywords does not matter.
 * All fields are searched if no prefix is supplied.
 * Different keywords should be **comma separated**, if not it will be treated as one keyword
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
 * Wildcard `"example"` searches for field that **contains** keyword `example`
 * Wildcard `*example` searches for field that **ends** with keyword `example`
 * Wildcard `example*` searches for field that **starts** with keyword `example`
@@ -192,9 +192,9 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 * `find ir&ast; &ast;li n/"example"` - displays a list of people with **any** of their fields that matches the following:
    1. Start with keyword `ir`
    2. End with keyword `li`
-   3. Start with keyword `n/*example` (Prefix is ignored in this case similar to <<Locating persons by exact keyword search: `find` [Since v1.2]>>
+   3. Contains keyword `n/"example"` (Prefix is ignored in this case similar to <<Locating persons by exact keyword search: `find` [Since v1.2]>>
 
-* `find n/alex &ast;bern&ast; e/&ast;example.com p/&ast;8&ast; m/Computer&ast;` - displays a list of people matching:
+* `find n/alex "bern"; e/&ast;example.com p/"8" m/Computer&ast;` - displays a list of people matching:
    1. Name field containing exact keyword `alex` **OR** name field that contains keyword `bern` **AND**
    2. Email field that ends with keyword `example.com` **AND**
    3. Phone field that contains keyword `8` **AND**
@@ -210,15 +210,13 @@ Option 2: `find prefix/KEYWORD [MORE KEYWORDS] prefix/...`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * All fields are searched if no prefix is supplied
 * Different keywords should be **comma separated**, if not it will be treated as one keyword
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Persons matching at least one keyword will be returned
 * If the first keyword is not a prefix, this command would assume a global search for **all** fields.
 * A global search does an **OR** search between keywords
 * A prefix search does an **OR** search between keywords in the same prefix and an **AND** search between different prefixes.
-* The fuzzy matching algorithm is based on the Levenshtein distance (LD), which is a measure of the similarity between two strings. The threshold is set to `2` in HR+.
+* The fuzzy matching algorithm is based on the `Levenshtein distance (LD)`, which is a measure of the similarity between two strings. The threshold is set to `2` in HR+.
 ****
 
 Examples:
@@ -307,6 +305,7 @@ Wildcard search matches:
 
 ****
 
+// tag::filter[]
 === Filter persons by multiple fields: `filter` `[since v1.3]`
 
 Filters persons whose keyword is within the specified range.
@@ -327,6 +326,7 @@ Returns all persons whose graduation year between 2019 and 2021, and whose ratin
 
 Since v1.4, filter command supports filtering by cGPA and interview date. It now takes the format:
 `Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE] [g/CGPA_RANGE] [d/INTERVIEW_DATE_RANGE]`
+// end::filter[]
 
 === Deleting a person : `delete`
 
@@ -368,6 +368,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::rate[]
 === Rating a student : `rate` `[since v1.1]`
 
 Rates the student identified by the index number used in the last person listing based on technical, communication, problem solving skills and experience. +
@@ -389,10 +390,12 @@ Examples:
 Rates the 1st person to have technical skills score of 4.5, communication skills score of 3, problem solving skills of 4, experience score of 3.5. The overall rating is computed to be 3.75.
 * `rate 2 t/3 c/5 p/3.5 e/2` +
 Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2. The overall rating is computed to be 3.38.
+// end::rate[]
 
+// tag::sort[]
 === Sorting the list of students based on different fields : `sort` `[since v1.3]`
 
-Sorts the current list of students in HR+ based on gpa, name or overall rating in descending or ascending order. +
+Sorts the current list of students in HR+ based on GPA, name or overall rating in descending or ascending order. +
 Format: `sort FIELD o/SORT ORDER`
 
 ****
@@ -408,7 +411,9 @@ Examples:
 Sorts the current list of students according to their overall rating in ascending order.
 * `sort gpa o/desc` +
 Sorts the current list of students according to their grade point average in descending order.
+// end::sort[]
 
+// tag::ratingdelete[]
 === Deleting the rating given to an applicant : `rating-delete` `[since v1.2]`
 
 Deletes the rating given to the student identified by the index number used in the last person listing. +
@@ -424,7 +429,9 @@ Examples:
 
 * `rating-delete 1` +
 Deletes the rating of the first applicant in HR+.
+// end::ratingdelete[]
 
+// tag::status[]
 === Update applicant's status: `status` [Since v1.3]
 Updates the status of an applicant. +
 Format: `status INDEX STATUS_INDEX`
@@ -442,6 +449,7 @@ Format: `status INDEX STATUS_INDEX`
 7. Accepted
 8. Withdrawn
 ****
+// end::status[]
 
 === Listing entered commands : `history`
 

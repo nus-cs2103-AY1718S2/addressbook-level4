@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import java.io.File;
+import java.util.HashSet;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -72,5 +74,33 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    /**
+     * Deletes unreferenced resume files for disk space optimisation
+     */
+    public void cleanUnusedResumeAndProfilePic(String addressBookXmlFilePath) {
+        HashSet<String> usedFiles = new HashSet<String>();
+        for (Person p: model.getFilteredPersonList()) {
+            if (p.getResume().value != null) {
+                usedFiles.add(p.getResume().value.substring(5)); //"data\..."
+            }
+        }
+        for (Person p: model.getFilteredPersonList()) {
+            if (p.getProfileImage().value != null) {
+                usedFiles.add(p.getProfileImage().value.substring(5)); //"data\..."
+            }
+        }
+        String userDir = System.getProperty("user.dir");
+        File dataDir = new File(userDir + File.separator + "data");
+        File[] dataDirList = dataDir.listFiles();
+        if (dataDirList == null) {
+            return;
+        }
+        for (File child : dataDirList) {
+            if (child.getName().lastIndexOf(".") == -1 && !usedFiles.contains(child.getName())) {
+                child.delete();
+            }
+        }
     }
 }

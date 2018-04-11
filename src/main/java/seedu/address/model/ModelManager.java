@@ -50,6 +50,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Appointment> filteredAppointments;
 
 
     /**
@@ -63,6 +64,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredAppointments = new FilteredList<>(this.addressBook.getAppointmentList());
     }
 
     public ModelManager() {
@@ -204,12 +206,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author kengsengg
-    public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+    /** Adds the given appointment */
+    public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         addressBook.addAppointment(appointment);
+        updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        indicateAddressBookChanged();
     }
     //@@author
-
-    //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
@@ -226,10 +229,21 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    @Override
+    public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
+        requireNonNull(predicate);
+        filteredAppointments.setPredicate(predicate);
+    }
+
     //@@author kengsengg
     @Override
     public void sortPersonList(String parameter) {
         addressBook.sort(parameter);
+    }
+
+    @Override
+    public ObservableList<Appointment> getFilteredAppointmentList() {
+        return FXCollections.unmodifiableObservableList(filteredAppointments);
     }
 
     //@@author TeyXinHui

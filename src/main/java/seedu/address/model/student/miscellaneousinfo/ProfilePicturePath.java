@@ -49,10 +49,16 @@ public class ProfilePicturePath {
      */
     public static boolean isValidPath(String test) {
         File testFile = new File(test);
-        if (!testFile.exists()) {
+        if (!testFile.exists() && !validDefaultPictureExists()) {
             return false;
         }
         return ProfilePicturePath.checkPictureExtension(testFile.getPath());
+    }
+
+    private static boolean validDefaultPictureExists() {
+        File validDefaultPicture = new File("src/main/resources/"
+                + DEFAULT_PROFILE_PICTURE.substring(4));
+        return validDefaultPicture.exists();
     }
 
     public Path getProfilePicturePath() {

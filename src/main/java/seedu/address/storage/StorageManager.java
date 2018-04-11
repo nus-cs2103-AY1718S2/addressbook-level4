@@ -1,7 +1,14 @@
 package seedu.address.storage;
 
+import static seedu.address.ui.BrowserPanel.STUDENT_INFO_PAGE_STYLESHEET;
+import static seedu.address.ui.BrowserPanel.STUDENT_MISC_INFO_PAGE;
+import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
+
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,6 +17,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -18,6 +26,7 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.storage.ProfilePictureChangeEvent;
 import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.UserPrefs;
@@ -113,6 +122,55 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     //@@author samuelloh
+
+    @Override
+    public void setupViewFiles() throws IOException {
+        FileUtil.createIfMissing(new File(xmlRequiredIndexStorage.getFilePath()));
+        FileUtil.createIfMissing(new File("data/view/" + STUDENT_MISC_INFO_PAGE));
+        FileUtil.createIfMissing(new File("data/view/" + STUDENT_INFO_PAGE_STYLESHEET));
+        FileUtil.createIfMissing(new File("data/view/profile_photo_placeholder.png"));
+
+        exportResource("data/view/" + STUDENT_MISC_INFO_PAGE);
+        exportResource("data/view/" + STUDENT_INFO_PAGE_STYLESHEET);
+        exportResource("data/view/" + "profile_photo_placeholder.png");
+    }
+
+    /**
+     * Exports the resources from the jar file to the directory of the contact data
+     */
+    private static void exportResource(String resourceName) throws IOException {
+        InputStream stream = null;
+        OutputStream resStreamOut = null;
+        String jarFolder;
+        String resourcePage = resourceName.substring(10);
+        try {
+            stream = MainApp.class.getResourceAsStream(FXML_FILE_FOLDER + resourcePage);
+            if (stream == null) {
+                throw new Exception("Cannot get resource \"" + resourceName + "\" from Jar file.");
+            }
+
+            int readBytes;
+            byte[] buffer = new byte[4096];
+            jarFolder = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation()
+                    .toURI().getPath()).getParentFile().getPath().replace('\\', '/');
+
+            String destinationOfFile = jarFolder + "/" + resourceName;
+            File testIfExist = new File(destinationOfFile);
+            if (!testIfExist.exists()) {
+                destinationOfFile = resourceName;
+            }
+            resStreamOut = new FileOutputStream(destinationOfFile);
+            while ((readBytes = stream.read(buffer)) > 0) {
+                resStreamOut.write(buffer, 0, readBytes);
+            }
+        } catch (Exception e) {
+            throw new IOException(e.getMessage());
+        } finally {
+            stream.close();
+            resStreamOut.close();
+        }
+
+    }
 
     /**
      * Saves the required index of the {@code Student}

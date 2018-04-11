@@ -61,13 +61,13 @@ public class ParserUtil {
      * @throws IllegalValueException if the specified sort field is invalid (not gpa, name or rating).
      */
     public static SortCommand.SortField parseSortField(String sortField) throws IllegalValueException {
-        String trimmedSortField = sortField.trim();
-        if (!SortCommand.isValidSortField(trimmedSortField)) {
+        String trimmedLowercaseSortField = sortField.trim().toLowerCase();
+        if (!SortCommand.isValidSortField(trimmedLowercaseSortField)) {
             throw new IllegalValueException(SortCommand.MESSAGE_INVALID_SORT_FIELD);
         }
-        if (trimmedSortField.equals(SortCommand.SORT_FIELD_GPA)) {
+        if (trimmedLowercaseSortField.equals(SortCommand.SORT_FIELD_GPA)) {
             return SortCommand.SortField.GPA;
-        } else if (trimmedSortField.equals(SortCommand.SORT_FIELD_RATING)) {
+        } else if (trimmedLowercaseSortField.equals(SortCommand.SORT_FIELD_RATING)) {
             return SortCommand.SortField.RATING;
         } else {
             return SortCommand.SortField.NAME;

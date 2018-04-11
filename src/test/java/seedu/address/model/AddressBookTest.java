@@ -68,6 +68,7 @@ public class AddressBookTest {
         addressBook.resetData(newData);
     }
 
+    //@@author kexiaowen
     @Test
     public void sortDesc_sortByRating_sortSuccessful() {
         AddressBook newData = getTypicalAddressBook();
@@ -128,6 +129,7 @@ public class AddressBookTest {
         assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
     }
 
+    //@@author
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);

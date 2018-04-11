@@ -162,158 +162,239 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void commandBox_autocompleteCommandWord() {
         //add command
-        testAutocompleteForUserInput(" ", "a", 1, " add ");
-        testAutocompleteForUserInput("a", "d", 1, "add ");
+        testAutocompleteForUserInput(" ", -1, "a", 1, " add ");
+        testAutocompleteForUserInput("a", -1, "d", 1, "add ");
 
         //clear command
-        testAutocompleteForUserInput("cl", "e", 1, "clear ");
+        testAutocompleteForUserInput("cl", -1, "e", 1, "clear ");
 
         //delete command
-        testAutocompleteForUserInput(" ", "d", 1, " delete ");
+        testAutocompleteForUserInput(" ", -1, "d", 1, " delete ");
 
         //edit command
-        testAutocompleteForUserInput(" ", "e", 1, " edit ");
-        testAutocompleteForUserInput("e", "d", 1, "edit ");
+        testAutocompleteForUserInput(" ", -1, "e", 1, " edit ");
+        testAutocompleteForUserInput("e", -1, "d", 1, "edit ");
 
         //exit command
-        testAutocompleteForUserInput(" ", "e", 2, " exit ");
-        testAutocompleteForUserInput("e", "x", 1, "exit ");
+        testAutocompleteForUserInput(" ", -1, "e", 2, " exit ");
+        testAutocompleteForUserInput("e", -1, "x", 1, "exit ");
 
         //help command
-        testAutocompleteForUserInput("", "he", 1, "help ");
-        testAutocompleteForUserInput("h", "e", 1, "help ");
-        testAutocompleteForUserInput("he", "l", 1, "help ");
+        testAutocompleteForUserInput("", -1, "he", 1, "help ");
+        testAutocompleteForUserInput("h", -1, "e", 1, "help ");
+        testAutocompleteForUserInput("he", -1, "l", 1, "help ");
 
         //history command
-        testAutocompleteForUserInput(" ", "h", 2, " history ");
-        testAutocompleteForUserInput("h", "i", 1, "history ");
-        testAutocompleteForUserInput("hi", "s", 1, "history ");
+        testAutocompleteForUserInput(" ", -1, "h", 2, " history ");
+        testAutocompleteForUserInput("h", -1, "i", 1, "history ");
+        testAutocompleteForUserInput("hi", -1, "s", 1, "history ");
 
         //list command
-        testAutocompleteForUserInput(" ", "l", 1, " list ");
+        testAutocompleteForUserInput(" ", -1, "l", 1, " list ");
 
         //theme command
-        testAutocompleteForUserInput("t", "h", 1, "theme ");
+        testAutocompleteForUserInput("t", -1, "h", 1, "theme ");
 
         //undo
-        testAutocompleteForUserInput("u", "n", 1, "undo ");
+        testAutocompleteForUserInput("u", -1, "n", 1, "undo ");
 
         //redo
-        testAutocompleteForUserInput("r", "e", 1, "redo ");
+        testAutocompleteForUserInput("r", -1, "e", 1, "redo ");
     }
 
     @Test
     public void commandBox_autocompleteOption() {
-        testAutocompleteForUserInput("delete ", "-", 3, "delete -fa ");
-        testAutocompleteForUserInput("delete ", "-", 4, "delete -fo ");
-        testAutocompleteForUserInput("delete ", "-", 5, "delete -fp ");
-        testAutocompleteForUserInput("add ", "-", 1, "add -a ");
-        testAutocompleteForUserInput("find ", "-", 7, "find -o ");
-        testAutocompleteForUserInput("find ", "-", 8, "find -p ");
+        testAutocompleteForUserInput("delete ", -1, "-", 3, "delete -fa ");
+        testAutocompleteForUserInput("delete ", -1, "-", 4, "delete -fo ");
+        testAutocompleteForUserInput("delete ", -1, "-", 5, "delete -fp ");
+        testAutocompleteForUserInput("add ", -1, "-", 1, "add -a ");
+        testAutocompleteForUserInput("find ", -1, "-", 7, "find -o ");
+        testAutocompleteForUserInput("find ", -1, "-", 8, "find -p ");
     }
 
     @Test
     public void commandBox_autocompletePrefix() {
         // prefix a/
-        testAutocompleteForUserInput("add -o ", "a", 1, "add -o a/ ");
-        testAutocompleteForUserInput("add -o", " ", 1, "add -o a/ ");
+        testAutocompleteForUserInput("add -o ", -1, "a", 1, "add -o a/ ");
+        testAutocompleteForUserInput("add -o", -1, " ", 1, "add -o a/ ");
 
         // prefix b/
-        testAutocompleteForUserInput("find -p ", "b", 1, "find -p b/ ");
+        testAutocompleteForUserInput("find -p ", -1, "b", 1,
+                "find -p b/ ");
 
         // prefix bt/
-        testAutocompleteForUserInput("add -p ", "b", 2, "add -p bt/ ");
+        testAutocompleteForUserInput("add -p ", -1, "b", 2,
+                "add -p bt/ ");
 
         // prefix c/
-        testAutocompleteForUserInput("add -p ", "c", 1, "add -p c/ ");
+        testAutocompleteForUserInput("add -p ", -1, "c", 1,
+                "add -p c/ ");
 
         // prefix d/
-        testAutocompleteForUserInput("add -a ", "d", 1, "add -a d/ ");
+        testAutocompleteForUserInput("add -a ", -1, "d", 1,
+                "add -a d/ ");
 
         // prefix n/
-        testAutocompleteForUserInput("add -o ", "n", 1, "add -o n/ ");
+        testAutocompleteForUserInput("add -o ", -1, "n", 1,
+                "add -o n/ ");
 
         // prefix nr/
-        testAutocompleteForUserInput("add -o ", "n", 2, "add -o nr/ ");
-        testAutocompleteForUserInput("add -o ", "nr", 1, "add -o nr/ ");
+        testAutocompleteForUserInput("add -o ", -1, "n", 2,
+                "add -o nr/ ");
+        testAutocompleteForUserInput("add -o ", -1, "nr", 1,
+                "add -o nr/ ");
 
         // prefix r/
-        testAutocompleteForUserInput("add -a ", "r", 1, "add -a r/ ");
+        testAutocompleteForUserInput("add -a ", -1, "r", 1,
+                "add -a r/ ");
 
         // prefix s/
-        testAutocompleteForUserInput("find -p ", "s", 1, "find -p s/ ");
+        testAutocompleteForUserInput("find -p ", -1, "s", 1,
+                "find -p s/ ");
 
-        // prefix s/
-        testAutocompleteForUserInput("find -o ", "t", 1, "find -o t/ ");
+        // prefix t/
+        testAutocompleteForUserInput("find -o ", -1, "t", 1,
+                "find -o t/ ");
     }
 
     @Test
     public void commandBox_autocompleteNric() {
         // autocomplete suggestions for nric for add command that follows "-o nr/"
-        testAutocompleteForUserInput("add -o ", "nr/", 1,
+        testAutocompleteForUserInput("add -o ", -1, "nr/", 1,
                 "add -o nr/F0184556R ");
-        testAutocompleteForUserInput("add -o ", "nr/F018", 1,
+        testAutocompleteForUserInput("add -o ", -1, "nr/F018", 1,
                 "add -o nr/F0184556R ");
-        testAutocompleteForUserInput("add -o ", "nr/", 2,
+        testAutocompleteForUserInput("add -o ", -1, "nr/", 2,
                 "add -o nr/F2345678U ");
-        testAutocompleteForUserInput("add -o ", "nr/S", 1,
+        testAutocompleteForUserInput("add -o ", -1, "nr/S", 1,
                 "add -o nr/S0123456Q ");
 
         // no nric autocomplete suggestion if add command does not have "-o nr/"
-        testAutocompleteForUserInput("add -p ", "nr/S", 1, "add -p nr/S");
-        testAutocompleteForUserInput("add -a ", "nr/F", 1, "add -a nr/F");
+        testAutocompleteForUserInput("add -p ", -1, "nr/S", 1,
+                "add -p nr/S");
+        testAutocompleteForUserInput("add -a ", -1, "nr/F", 1,
+                "add -a nr/F");
 
         // autocomplete suggestions for nric for "edit -p" command
-        testAutocompleteForUserInput("edit -p ", "nr/", 1,
+        testAutocompleteForUserInput("edit -p ", -1, "nr/", 1,
                 "edit -p nr/F0184556R ");
-        testAutocompleteForUserInput("edit -p ", "nr/F018", 1,
+        testAutocompleteForUserInput("edit -p ", -1, "nr/F018", 1,
                 "edit -p nr/F0184556R ");
-        testAutocompleteForUserInput("edit -p ", "nr/", 2,
+        testAutocompleteForUserInput("edit -p ", -1, "nr/", 2,
                 "edit -p nr/F2345678U ");
-        testAutocompleteForUserInput("edit -p ", "nr/S", 1,
+        testAutocompleteForUserInput("edit -p ", -1, "nr/S", 1,
                 "edit -p nr/S0123456Q ");
 
         // no nric autocomplete suggestion if edit command does not start with "edit -p"
-        testAutocompleteForUserInput("edit -o ", "nr/", 1, "edit -o nr/");
-        testAutocompleteForUserInput("edit -o ", "nr/S", 1, "edit -o nr/S");
+        testAutocompleteForUserInput("edit -o ", -1, "nr/", 1, "edit -o nr/");
+        testAutocompleteForUserInput("edit -o ", -1, "nr/S", 1, "edit -o nr/S");
 
         // autocomplete suggestions for nric for "find -o" command
-        testAutocompleteForUserInput("find -o ", "nr/", 1,
+        testAutocompleteForUserInput("find -o ", -1, "nr/", 1,
                 "find -o nr/F0184556R ");
-        testAutocompleteForUserInput("find -o ", "nr/", 3,
+        testAutocompleteForUserInput("find -o ", -1, "nr/", 3,
                 "find -o nr/G1111111B ");
-        testAutocompleteForUserInput("find -o ", "nr/T", 3,
+        testAutocompleteForUserInput("find -o ", -1, "nr/T", 3,
                 "find -o nr/T0120956W ");
-        testAutocompleteForUserInput("find -o ", "nr/T0", 2,
+        testAutocompleteForUserInput("find -o ", -1, "nr/T0", 2,
                 "find -o nr/T0123456L ");
 
         // no nric autocomplete suggestion if edit command does not start with "find -o"
-        testAutocompleteForUserInput("find -p ", "nr/T0", 2,
+        testAutocompleteForUserInput("find -p ", -1, "nr/T0", 2,
                 "find -p nr/T0");
-        testAutocompleteForUserInput("find -a ", "nr/S", 2,
+        testAutocompleteForUserInput("find -a ", -1, "nr/S", 2,
                 "find -a nr/S");
     }
 
     @Test
+    public void commandBox_autocompletePetPatientName() {
+        testAutocompleteForUserInput("edit -p", -1, " n/", 1,
+                "edit -p n/Jenn ");
+        testAutocompleteForUserInput("find -p", -1, " n/", 2,
+                "find -p n/Jewel ");
+        testAutocompleteForUserInput("add -p", -1, " n/", 3,
+                "add -p n/Joker ");
+    }
+
+    @Test
+    public void commandBox_autocompleteSpecies() {
+        testAutocompleteForUserInput("add -p ", -1, "s/C", 1,
+                "add -p s/Cat ");
+        testAutocompleteForUserInput("add -p ", -1, "s/d", 1,
+                "add -p s/Dog ");
+    }
+
+    @Test
+    public void commandBox_autocompleteBreed() {
+        testAutocompleteForUserInput("add -p ", -1, "b/P", 1,
+                "add -p b/Persian Ragdoll ");
+        testAutocompleteForUserInput("find -p ", -1, "b/G", 1,
+                "find -p b/Golden Retriever ");
+    }
+
+    @Test
+    public void commandBox_autocompleteColour() {
+        testAutocompleteForUserInput("find -p ", -1, "c/c", 1,
+                "find -p c/Calico ");
+        testAutocompleteForUserInput("find -p ", -1, "c/g", 1,
+                "find -p c/Golden ");
+    }
+
+    @Test
+    public void commandBox_autocompleteBloodType() {
+        testAutocompleteForUserInput("find -p ", -1, "bt/", 1,
+                "find -p bt/A ");
+        testAutocompleteForUserInput("find -p ", -1, "bt/D", 1,
+                "find -p bt/DEA 4+ ");
+    }
+
+    @Test
     public void commandBox_autocompleteTag() {
-        /** testAutocompleteForUserInput("add -o ", "t/",2,
+        // person tags
+        testAutocompleteForUserInput("add -o ", -1, "t/", 2,
                 "add -o t/owesMoney ");
-        testAutocompleteForUserInput("add -o ", "t/F", 1,
+        testAutocompleteForUserInput("add -o ", -1, "t/F", 1,
                 "add -o t/friends ");
-        testAutocompleteForUserInput("add -o ", "t/fri",1,
-                "add -o t/friends ");
-        testAutocompleteForUserInput("add -o ", "t/ow",2,
-                "add -o t/owesMoney "); */
+
+        // pet patient tags
+        testAutocompleteForUserInput("add -p ", -1, "t/d", 1,
+                "add -p t/Depression ");
+        testAutocompleteForUserInput("add -p ", -1, "t/", 1,
+                "add -p t/3Legged ");
+
+        // appointment tags
+        testAutocompleteForUserInput("add -a ", -1, "t/", 1,
+                "add -a t/checkup ");
+        testAutocompleteForUserInput("add -a ", -1, "t/", 2,
+                "add -a t/vaccination ");
+    }
+
+    @Test
+    public void commandBox_autocompleteMiddleOfText() {
+        testAutocompleteForUserInput("add -o t/", 6, " nr/G1", 1,
+                "add -o nr/G1111111B  t/");
+        testAutocompleteForUserInput("add -p t/", 6, " n/Jo", 1,
+                "add -p n/Joker  t/");
+        testAutocompleteForUserInput("add -p n/joker s/cat b/persian c/brown bt/AB -o nr/S9600666G",
+                38, " t/D", 1,
+                "add -p n/joker s/cat b/persian c/brown t/Depression  bt/AB -o nr/S9600666G");
     }
 
     /**
-     * Checks that {@code userInput} with the {@code numOfTabs} to select an option on autocomplete's context menu
-     * will result in {@code actualCommand}.
+     * Sets commandbox text to {@code userInput}.
+     * Sets caret position to {@code index} if {@code index} > 0.
+     * Inserts {@code userInput2} to commandbox.
+     *
+     * Checks that {@code userInput1} + {@code userInput2} with the {@code numOfTabs} to select an option
+     * on autocomplete's context menu will result in {@code actualCommand}.
      */
-    private void testAutocompleteForUserInput(String userInput1, String userInput2, int numOfTabs,
+    private void testAutocompleteForUserInput(String userInput1, int index, String userInput2, int numOfTabs,
                                               String actualCommand) {
-
         commandBoxHandle.setText(userInput1);
+
+        if (index > 0) {
+            commandBoxHandle.setCaretPosition(index);
+        }
 
         for (int i = 0; i < userInput2.length(); i++) {
             char c = userInput2.charAt(i);
@@ -324,8 +405,8 @@ public class CommandBoxTest extends GuiUnitTest {
             guiRobot.push(KeyCode.TAB);
             numOfTabs--;
         }
-        guiRobot.push(KeyCode.ENTER);
 
+        guiRobot.push(KeyCode.ENTER);
         assertEquals(actualCommand, commandBoxHandle.getInput());
     }
 }

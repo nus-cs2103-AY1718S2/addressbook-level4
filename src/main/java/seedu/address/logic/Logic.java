@@ -35,14 +35,14 @@ public interface Logic {
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 
-    /** Processes data of all pet patients in model. */
-    void processPetPatientsData();
+    /** Processes and sets attributes for pet patients objects. */
+    void setAttributesForPetPatientObjects();
 
-    /** Processes data of all persons in model. */
-    void processPersonsData();
+    /** Processes and sets attributes for person objects. */
+    void setAttributesForPersonObjects();
 
-    /** Processes data of all appointments in model. */
-    void processAppointmentsData();
+    /** Processes and sets attributes for appointment. */
+    void setAttributesForAppointmentObjects();
 
     /** Returns a set of all command words. */
     Set<String> getAllCommandWords();
@@ -59,7 +59,7 @@ public interface Logic {
     /** Returns a set of all pet patient names found in model. */
     Set<String> getAllPetPatientNames();
 
-    /** Returns a set of all pet patient speices found in model. */
+    /** Returns a set of all pet patient species found in model. */
     Set<String> getAllPetPatientSpecies();
 
     /** Returns a set of all pet patient breeds found in model. */

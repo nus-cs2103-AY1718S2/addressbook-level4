@@ -161,7 +161,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public void processPersonsData() {
+    public void setAttributesForPersonObjects() {
         nricInModel = new HashSet<>();
         phoneNumbersInModel = new HashSet<>();
         personTagsInModel = new HashSet<>();
@@ -174,7 +174,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public void processPetPatientsData() {
+    public void setAttributesForPetPatientObjects() {
         petPatientNamesInModel = new HashSet<>();
         speciesInModel = new HashSet<>();
         breedsInModel = new HashSet<>();
@@ -193,7 +193,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public void processAppointmentsData() {
+    public void setAttributesForAppointmentObjects() {
         appointmentTagsInModel = new HashSet<>();
         for (Appointment a : model.getAddressBook().getAppointmentList()) {
             appointmentTagsInModel.addAll(a.getTag());

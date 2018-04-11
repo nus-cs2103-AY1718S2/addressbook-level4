@@ -286,14 +286,14 @@ public class MainWindow extends UiPart<Region> {
     private  void handleChangeThemeEvent(ChangeThemeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switch (event.getTheme()) {
-            case "day":
-                handleDayTheme();
-                break;
-            case "night":
-                handleNightTheme();
-                break;
-            default:
-                handleDayTheme();
+        case "day":
+            handleDayTheme();
+            break;
+        case "night":
+            handleNightTheme();
+            break;
+        default:
+            handleDayTheme();
         }
     }
 

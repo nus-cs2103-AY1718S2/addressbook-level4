@@ -1,3 +1,5 @@
+//@@author ifalluphill
+
 = Jason Manson-Hing - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
@@ -67,7 +69,7 @@ having to look around their computer to locate the actual error log file. This w
 managing multiple contacts and events must be a seamless process, and so in the off chance that an error is encountered,
 it was essential to provide an easy way to generate the error log on demand to help simplify the troubleshooting process.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/functional/ifalluphill.md[Functional code]] [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/test/ifalluphill.md[Test code] | https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/test/ifalluphill-reused.md[Test code - Reused]] _{give links to collated code files}_
 
 * *Other contributions*:
 
@@ -77,11 +79,11 @@ it was essential to provide an easy way to generate the error log on demand to h
 *** Updated the menu to include option to open standalone calendar instance as well as view the error log (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/1[#1], https://github.com/CS2103JAN2018-T15-B3/main/pull/21[#21])
 *** Set up issue labels, created milestones each week, wrote detailed issues every week, and ensured that housekeeping was performed weekly (i.e. closing issues and milestones, creating releases, etc.) in accordance to their deadlines
 ** Documentation:
-*** : Wrote most of the user stories in the Developer Guide https://github.com[#14]
-*** : Added 6 use cases to the Developer Guide https://github.com[#14]
-*** : Defined most of the NFRs for the Developer Guide https://github.com[#14]
+*** : Contributed several user stories to the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]
+*** : Added 6 use cases to the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]
+*** : Defined most of the NFRs for the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]
 ** Community:
-*** Reported bugs and suggestions for other teams in the class (examples:  )
+*** Reported bugs and suggestions for team F09-B1 (examples: https://github.com/CS2103JAN2018-F09-B1/main/issues/88[#88] https://github.com/CS2103JAN2018-F09-B1/main/issues/94[#94] https://github.com/CS2103JAN2018-F09-B1/main/issues/72[#72] https://github.com/CS2103JAN2018-F09-B1/main/issues/78[#78] https://github.com/CS2103JAN2018-F09-B1/main/issues/75[#75] https://github.com/CS2103JAN2018-F09-B1/main/issues/74[#74] https://github.com/CS2103JAN2018-F09-B1/main/issues/73[#73] https://github.com/CS2103JAN2018-F09-B1/main/issues/67[#67])
 ** Tools:
 *** Integrated a third party library http://natty.joestelmach.com/[Natty] to the project for natural langauge date parsing (https://github.com/CS2103JAN2018-T15-B3/main/pull/58[#58])
 *** Integrated a Google OAuth 2.0 and https://developers.google.com/calendar/[Google Calendar APIs] to the project for to enable seamless command line interaction with Google Calendar (https://github.com/CS2103JAN2018-T15-B3/main/pull/46[#46])
@@ -107,3 +109,5 @@ include::../UserGuide.adoc[tag=errorlog]
 |===
 
 include::../DeveloperGuide.adoc[tag=calendarview]
+
+//@@author

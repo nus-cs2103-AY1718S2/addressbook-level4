@@ -1056,7 +1056,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
-
+//@@author ifalluphill
 |`* * *` |user |add calendar events |keep track of my interactions with my contacts
 
 |`* * *` |user |view calendar events |quickly check my schedule
@@ -1090,7 +1090,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |view the address of my contacts on a map |visually see where they live
 
 |`* *` |user |edit/delete the address of my contacts |keep contacts up to date
-
+//@@author
 |`*` |advanced user |export my entire address book as a CSV or JSON |for use in other applications
 
 |`* * *` |user |favourite contacts |keep track of particularly important contacts

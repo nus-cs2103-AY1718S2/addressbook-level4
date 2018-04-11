@@ -342,7 +342,7 @@ Deletes the 2nd to-do in the address book.
 === List Tag Members: `listTagMembers`
 
 List out all persons with the given keywords(group tags). +
-Alias: `ltm` +
+Alias: `lTM` +
 Format: `listTagMembers INPUT`
 
 ****
@@ -358,7 +358,7 @@ Refer to Figure 4 for example.
 
 image:lgmExample.png[width="500"] +
 
-Figure 4. Example of ListTagMembers
+Figure 4. Example of ListTagMembers +
 // end::listTag[]
 
 // tag::addGroup[]
@@ -375,11 +375,11 @@ Keyword cannot be an empty input.
 
 Examples:
 
-* `addGroups CS2101 Oral Presentation` +
+* `addGroup CS2101 Oral Presentation` +
 New Group `CS2101 Oral Presentation` added, refer to Figure 5. +
 image:addGroupExample.png[width ="500"] +
 Figure 5. Example of add Group
-// end:AddGroup[]
+
 
 === Add Member To Group: `addGroupMember`
 
@@ -422,12 +422,15 @@ INPUT must be the exact name of the person and it must be case-sensitive.
 Examples:
 
 * `listGroupMembers CS2101 Oral Presentation`  +
+List members of group CS2101 Oral Presentation seen in Figure 8.
+image:listGroupMembersExample.png[width = "800"] +
+Figure 8. Example of ListGroupMembers. +
 [NOTE]
 ====
 `CS2101 Oral Presentation` is already stored in Fastis.
 ====
 Lists out all members belonging to group `CS2010` in the left panel.
-// end:listGroupMembers[]
+
 
 === Delete Group : `deleteGroup`
 Deltes the group, that already exist in Fastis, named by user `INPUT`.+
@@ -443,12 +446,17 @@ INPUT must be the exact name of the group and it must be case-sensitive.
 Examples:
 
 * `deleteGroup CS3243`  +
+
+Deletes group `CS3243`  refer to Figure 9. +
+image:dGExample.png[width ="800"] +
+Figure 9. Example of deleteGroup +
 [NOTE]
 ====
 `CS3243` is already stored in Fastis.
 ====
-Deletes the group `CS3243`.
-// end:addGroup[]
+Deletes the group `CS3243`. +
+
+//end::addGroup[]
 
 === Display Calendar : `display` `[coming in v2.0]`
 

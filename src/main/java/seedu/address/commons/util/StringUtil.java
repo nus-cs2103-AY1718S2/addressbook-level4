@@ -46,18 +46,19 @@ public class StringUtil {
 
     //@@author Isaaaca
     /**
-     * Returns true if the {@code sentence} contains the {@code word}.
-     * Ignores case, but a full word match is required.
+     * Returns the partial ratio bewteen the {@code sentence} and the {@code word}.
+     * Ignores case.
      * <br>examples:<pre>
-     *       containsWordIgnoreCase("ABc def", "abc") == true
-     *       containsWordIgnoreCase("ABc def", "DEF") == true
-     *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "abc") == 100
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "DEF") == 100
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "AB") == 100
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "ABcD") == 75
      *       </pre>
      *
      * @param sentence cannot be null
      * @param word     cannot be null, cannot be empty, must be a single word
      */
-    public static int containsWordFuzzyIgnoreCase(String sentence, String word) {
+    public static int getPartialRatioFuzzyIgnoreCase(String sentence, String word) {
         requireNonNull(sentence);
         requireNonNull(word);
 

@@ -20,7 +20,7 @@ Responsibilites: Logic, Model
 
 === Ang Yee Chin
 image::Ang-YC.png[width="150", align="left"]
-{empty}[http://github.com/Ang-YC[github]] [<<#angyeechin, portfolio>>]
+{empty}[http://github.com/Ang-YC[github]] [<<angyeechin#, portfolio>>]
 
 Role: Team Lead, Integration +
 Responsibilities: Ui, Storage

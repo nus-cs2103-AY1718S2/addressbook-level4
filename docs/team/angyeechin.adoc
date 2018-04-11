@@ -1,6 +1,3 @@
-
-
-
 = Ang Yee Chin - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets

@@ -1,5 +1,9 @@
 package seedu.address;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -18,6 +22,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.HideDetailPanelEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -76,11 +81,49 @@ public class MainApp extends Application {
 
         initEventsCenter();
 
+        //@@author crizyli
+        File dataDir = new File("data/");
+        FileUtil.createDirs(dataDir);
+
+        File photoDir = new File("data/personphoto");
+        if (!photoDir.exists()) {
+            photoDir.mkdir();
+            copyDefaultPhoto();
+        }
+
         //@@author emer7
         model.updateFilteredPersonList(new HideAllPersonPredicate());
         EventsCenter.getInstance().post(new HideDetailPanelEvent());
         //@@author
     }
+
+    //@@author crizyli
+    /**
+     *  copy the default photo from resources to data folder.
+     */
+    private void copyDefaultPhoto() {
+
+        String dest = "data/personphoto/DefaultPerson.png";
+
+        byte[] buffer = new byte[1024];
+        try {
+            BufferedInputStream bis = new BufferedInputStream(this.getClass().getClassLoader()
+                    .getResourceAsStream("images/DefaultPerson.png"));
+
+            FileOutputStream fos = new FileOutputStream(dest);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            int len;
+            while ((len = bis.read(buffer)) > 0) {
+                bos.write(buffer, 0, len);
+            }
+
+            bis.close();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //@@author
 
     private void initNotifications() {
         model.findAllSavedNotifications();

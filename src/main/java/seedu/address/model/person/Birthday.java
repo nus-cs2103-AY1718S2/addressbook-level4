@@ -3,6 +3,9 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
@@ -30,7 +33,20 @@ public class Birthday {
      * Returns true if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+        if (!test.matches(BIRTHDAY_VALIDATION_REGEX)) {
+            return false;
+        }
+        if (test == null) {
+            return false;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        sdf.setLenient(false);
+        try {
+            sdf.parse(test);
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
     }
 
     @Override

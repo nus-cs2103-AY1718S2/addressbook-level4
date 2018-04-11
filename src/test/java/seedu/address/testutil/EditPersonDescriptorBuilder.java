@@ -10,6 +10,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -92,6 +93,15 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withAppointment(String appointment) {
         descriptor.setAppointment(new Appointment(appointment));
+        return this;
+    }
+
+
+    /**
+     * Sets the {@code Group} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withGroup(String group) {
+        descriptor.setGroup(new Group(group));
         return this;
     }
 

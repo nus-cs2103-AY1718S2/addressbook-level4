@@ -1,4 +1,4 @@
-// author kush1509
+//@@author kush1509
 package seedu.address.logic.parser.job;
 
 import static java.util.Objects.requireNonNull;

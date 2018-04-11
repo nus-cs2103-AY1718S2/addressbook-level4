@@ -1,5 +1,5 @@
 # KevinCJH-reused
-###### \java\seedu\address\logic\GoogleAuthentication.java
+###### /java/seedu/address/logic/GoogleAuthentication.java
 ``` java
             validToken = checkTokenIndex(url.indexOf("token="));
             if (validToken) {

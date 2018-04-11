@@ -1,200 +1,5 @@
 # KevinCJH
-
-###### \java\seedu\address\commons\events\ui\LoadGoogleLoginEvent.java
-``` java
-
-/**
- * Loads the url of google authentication
- */
-public class LoadGoogleLoginEvent extends BaseEvent {
-
-    private final String authenticationUrl;
-
-    public LoadGoogleLoginEvent(String authenticationUrl) {
-        this.authenticationUrl = authenticationUrl;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-    public String getAuthenticationUrl() {
-        return authenticationUrl;
-    }
-}
-```
-###### \java\seedu\address\commons\events\ui\LoadGoogleLoginRedirectEvent.java
-``` java
-
-/**
- * Loads the redirected url of google login authentication
- */
-public class LoadGoogleLoginRedirectEvent extends BaseEvent {
-
-    private String redirectUrl;
-
-    public LoadGoogleLoginRedirectEvent() {
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-    public void setRedirectUrl(String redirectUrl) {
-        this.redirectUrl = redirectUrl;
-    }
-
-    public String getRedirectUrl() {
-        return redirectUrl;
-    }
-}
-```
-###### \java\seedu\address\logic\commands\EmailCommand.java
-
-``` java
-/**
- * Creates an email message containing contents to be sent via gmail
- */
-public class GmailMessage {
-
-    private static Gmail service;
-    private static MimeMessage emailContent;
-    private static String subject;
-    private static String bodyText;
-    private static String receiver;
-
-    public GmailMessage(String receiver, String subject, String bodyText) {
-        GmailClient client = GmailClient.getInstance();
-        service = client.getGmailService();
-
-        this.receiver = receiver;
-        this.subject = subject;
-        this.bodyText = bodyText;
-
-        try {
-            emailContent = createEmailContent(receiver, getSenderEmail(), subject, bodyText);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * Create a MimeMessage using the parameters provided.
-     *
-     * @param to email address of the receiver
-     * @param from email address of the sender
-     * @param subject subject of the email
-     * @param bodyText body text of the email
-     * @return the MimeMessage to be used to send email
-     * @throws MessagingException
-     */
-    public static MimeMessage createEmailContent(String to,
-                                          String from,
-                                          String subject,
-                                          String bodyText)
-            throws MessagingException {
-        Properties props = new Properties();
-        Session session = Session.getDefaultInstance(props, null);
-
-        MimeMessage emailContent = new MimeMessage(session);
-
-        emailContent.setFrom(new InternetAddress(from));
-        emailContent.addRecipient(javax.mail.Message.RecipientType.TO,
-                new InternetAddress(to));
-        emailContent.setSubject(subject);
-        emailContent.setContent(bodyText, "text/html; charset=utf-8");
-        return emailContent;
-    }
-
-    /**
-     * Get the email address of the authenticated user.
-     * @return String of the email address
-     * @throws IOException
-     */
-    private static String getSenderEmail() throws IOException {
-        return service.users().getProfile("me").execute().getEmailAddress();
-    }
-
-    public static MimeMessage getEmailContent() {
-        return emailContent;
-    }
-
-    public static String getSubject() {
-        return subject;
-    }
-
-    public static String getBodyText() {
-        return bodyText;
-    }
-
-        EventsCenter.getInstance().post(new SwitchTabRequestEvent(TAB_ID_EMAIL));
-        EventsCenter.getInstance().post(new JumpToPersonListRequestEvent(targetIndex));
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the EmailCommand
-     * and returns an EmailCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public EmailCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new EmailCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
-        }
-    }
-}
-```
-###### /java/seedu/address/logic/parser/person/FindCommandParser.java
-``` java
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_SKILL);
-
-        if (!(arePrefixesPresent(argMultimap, PREFIX_NAME)
-                || arePrefixesPresent(argMultimap, PREFIX_SKILL))
-                || (arePrefixesPresent(argMultimap, PREFIX_NAME) && arePrefixesPresent(argMultimap, PREFIX_SKILL))
-                || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-
-
-
-        if (arePrefixesPresent(argMultimap, PREFIX_NAME)) {
-            List<String> testnovalue = argMultimap.getAllValues(PREFIX_NAME);
-            if (testnovalue.contains("")) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-            }
-            String[] nameKeywords = argMultimap.getValue(PREFIX_NAME).get().split("\\W+");
-            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
-        } else if (arePrefixesPresent(argMultimap, PREFIX_SKILL)) {
-            List<String> testnovalue = argMultimap.getAllValues(PREFIX_SKILL);
-            if (testnovalue.contains("")) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-            }
-            String[] tagKeywords = argMultimap.getValue(PREFIX_SKILL).get().split("\\W+");
-            return new FindCommand(new PersonSkillContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-}
-```
-###### \java\seedu\address\logic\commands\exceptions\GoogleAuthenticationException.java
+###### /java/seedu/address/logic/commands/exceptions/GoogleAuthenticationException.java
 ``` java
 
 /**
@@ -206,7 +11,78 @@ public class GoogleAuthenticationException extends Exception {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\GoogleLoginCommand.java
+###### /java/seedu/address/logic/commands/person/FindCommand.java
+``` java
+    public static final String COMMAND_SYNTAX = COMMAND_WORD + " " + PREFIX_NAME;
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose"
+            + " NAME or SKILL "
+            + "contains any of the specified keywords (case-insensitive) "
+            + "and displays them as a list with index numbers.\n"
+            + "Parameters: n/NAME_KEYWORDS [MORE_NAME_KEYWORDS] or s/SKILL_KEYWORDS [MORE_SKILL_KEYWORDS]\n"
+            + "Example: " + COMMAND_WORD + " n/Alice Bob\n"
+            + "Example: " + COMMAND_WORD + " s/accountant manager";
+
+    private final Predicate<Person> predicate;
+
+    public FindCommand(Predicate<Person> predicate) {
+        this.predicate = predicate;
+    }
+```
+###### /java/seedu/address/logic/commands/EmailCommand.java
+``` java
+/**
+ * Send an email to the person identified using it's last displayed index from the address book.
+ */
+public class EmailCommand extends Command {
+
+    public static final String COMMAND_WORD = "email";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Send an email to the person identified by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final int TAB_ID_EMAIL = 3;
+
+    public static final String MESSAGE_EMAIL_PERSON_SUCCESS = "Drafting email to: %1$s";
+
+    private final Index targetIndex;
+
+    private Person personToEmail;
+
+    public EmailCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        personToEmail = lastShownList.get(targetIndex.getZeroBased());
+
+        EventsCenter.getInstance().post(new SwitchTabRequestEvent(TAB_ID_EMAIL));
+        EventsCenter.getInstance().post(new JumpToPersonListRequestEvent(targetIndex));
+
+        return new CommandResult(String.format(MESSAGE_EMAIL_PERSON_SUCCESS, personToEmail.getEmail()));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailCommand // instanceof handles nulls
+                && this.targetIndex.equals(((EmailCommand) other).targetIndex) // state check
+                && Objects.equals(this.personToEmail, ((EmailCommand) other).personToEmail));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/GoogleLoginCommand.java
 ``` java
 
 /**
@@ -236,25 +112,7 @@ public class GoogleLoginCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\person\FindCommand.java
-``` java
-    public static final String COMMAND_SYNTAX = COMMAND_WORD + " " + PREFIX_NAME;
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose"
-            + " NAME or SKILL "
-            + "contains any of the specified keywords (case-insensitive) "
-            + "and displays them as a list with index numbers.\n"
-            + "Parameters: n/NAME_KEYWORDS [MORE_NAME_KEYWORDS] or s/SKILL_KEYWORDS [MORE_SKILL_KEYWORDS]\n"
-            + "Example: " + COMMAND_WORD + " n/Alice Bob\n"
-            + "Example: " + COMMAND_WORD + " s/accountant manager";
-
-    private final Predicate<Person> predicate;
-
-    public FindCommand(Predicate<Person> predicate) {
-        this.predicate = predicate;
-    }
-```
-###### \java\seedu\address\logic\GmailClient.java
+###### /java/seedu/address/logic/GmailClient.java
 ``` java
 /**
  * Creates an authorized Gmail client for all services that uses Gmail API.
@@ -338,8 +196,7 @@ public class GmailClient {
 }
 
 ```
-
-###### \java\seedu\address\logic\GoogleAuthentication.java
+###### /java/seedu/address/logic/GoogleAuthentication.java
 ``` java
 
 /**
@@ -386,7 +243,7 @@ public class GoogleAuthentication {
             EventsCenter.getInstance().post(event);
             String url = event.getRedirectUrl();
 ```
-###### \java\seedu\address\logic\GoogleAuthentication.java
+###### /java/seedu/address/logic/GoogleAuthentication.java
 ``` java
         } catch (Exception e) {
             throw new GoogleAuthenticationException("Google login has failed. Please try again.");
@@ -432,30 +289,7 @@ public class GoogleAuthentication {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\EmailCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new EmailCommand object
- */
-public class EmailCommandParser implements Parser<EmailCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the EmailCommand
-     * and returns an EmailCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public EmailCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new EmailCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
-        }
-    }
-}
-```
-###### \java\seedu\address\logic\parser\person\FindCommandParser.java
+###### /java/seedu/address/logic/parser/person/FindCommandParser.java
 ``` java
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_SKILL);
@@ -488,26 +322,51 @@ public class EmailCommandParser implements Parser<EmailCommand> {
         }
     }
 
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose"
-            + " NAME or SKILL "
-            + "contains any of the specified keywords (case-insensitive) "
-            + "and displays them as a list with index numbers.\n"
-            + "Parameters: n/NAME_KEYWORDS [MORE_NAME_KEYWORDS] or s/SKILL_KEYWORDS [MORE_SKILL_KEYWORDS]\n"
-            + "Example: " + COMMAND_WORD + " n/Alice Bob\n"
-            + "Example: " + COMMAND_WORD + " s/accountant manager";
-
+    /**
+     * Returns true if none of the prefixes contains empty values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 
 }
 ```
-###### \java\seedu\address\model\GmailMessage.java
-
+###### /java/seedu/address/logic/parser/EmailCommandParser.java
 ``` java
 /**
- * Send an email to the person identified using it's last displayed index from the address book.
+ * Parses input arguments and creates a new EmailCommand object
  */
-public class EmailCommand extends Command {
+public class EmailCommandParser implements Parser<EmailCommand> {
 
+    /**
+     * Parses the given {@code String} of arguments in the context of the EmailCommand
+     * and returns an EmailCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public EmailCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new EmailCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### /java/seedu/address/model/GmailMessage.java
+``` java
+/**
+ * Creates an email message containing contents to be sent via gmail
+ */
+public class GmailMessage {
+
+    private static Gmail service;
+    private static MimeMessage emailContent;
+    private static String subject;
+    private static String bodyText;
+    private static String receiver;
 
     private static final String SENDER_EMAIL = "me"; //unique identifier recognized by Google
 
@@ -515,11 +374,9 @@ public class EmailCommand extends Command {
         GmailClient client = GmailClient.getInstance();
         service = client.getGmailService();
 
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Send an email to the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+        this.receiver = receiver;
+        this.subject = subject;
+        this.bodyText = bodyText;
 
         try {
             emailContent = createEmailContent(receiver, SENDER_EMAIL, subject, bodyText);
@@ -527,34 +384,55 @@ public class EmailCommand extends Command {
             e.printStackTrace();
         }
 
-
-    public static final String MESSAGE_EMAIL_PERSON_SUCCESS = "Drafting email to: %1$s";
-
-    private final Index targetIndex;
-
-    private Person personToEmail;
-
-    public EmailCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
     }
 
+    /**
+     * Create a MimeMessage using the parameters provided.
+     *
+     * @param to email address of the receiver
+     * @param from email address of the sender
+     * @param subject subject of the email
+     * @param bodyText body text of the email
+     * @return the MimeMessage to be used to send email
+     * @throws MessagingException
+     */
+    public static MimeMessage createEmailContent(String to,
+                                          String from,
+                                          String subject,
+                                          String bodyText)
+            throws MessagingException {
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+
+        MimeMessage emailContent = new MimeMessage(session);
+
+        emailContent.setFrom(new InternetAddress(from));
+        emailContent.addRecipient(javax.mail.Message.RecipientType.TO,
+                new InternetAddress(to));
+        emailContent.setSubject(subject);
+        emailContent.setContent(bodyText, "text/html; charset=utf-8");
+        return emailContent;
+    }
 
     public static MimeMessage getEmailContent() {
         return emailContent;
     }
 
+    public static String getSubject() {
+        return subject;
+    }
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+    public static String getBodyText() {
+        return bodyText;
+    }
 
-        personToEmail = lastShownList.get(targetIndex.getZeroBased());
-
-        EventsCenter.getInstance().post(new SwitchTabRequestEvent(TAB_ID_EMAIL));
-        EventsCenter.getInstance().post(new JumpToPersonListRequestEvent(targetIndex));
+    public static String getReceiverEmail() {
+        return receiver;
+    }
+}
 
 ```
-###### \java\seedu\address\model\skill\PersonSkillContainsKeywordsPredicate.java
+###### /java/seedu/address/model/skill/PersonSkillContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code Person}'s {@code Skill} matches any of the keywords given.
@@ -566,43 +444,139 @@ public class PersonSkillContainsKeywordsPredicate implements Predicate<Person> {
         this.keywords = keywords;
     }
 
-
+    @Override
+    public boolean test(Person person) {
+        Iterator tagsIterator = person.getSkills().iterator();
+        StringBuilder sb = new StringBuilder();
+        sb.append(tagsIterator.next());
+        while (tagsIterator.hasNext()) {
+            sb.append(" " + tagsIterator.next());
+        }
+        String tagLists = sb.toString()
+                .replace("[", "")
+                .replace("]", "");
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tagLists, keyword));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-
                 || (other instanceof PersonSkillContainsKeywordsPredicate // instanceof handles nulls
                 && this.keywords.equals(((PersonSkillContainsKeywordsPredicate) other).keywords)); // state check
-
     }
 
-    public static JsonFactory getJsonFactory() {
-        return JSON_FACTORY;
+}
+```
+###### /java/seedu/address/commons/events/ui/LoadGoogleLoginRedirectEvent.java
+``` java
+
+/**
+ * Loads the redirected url of google login authentication
+ */
+public class LoadGoogleLoginRedirectEvent extends BaseEvent {
+
+    private String redirectUrl;
+
+    public LoadGoogleLoginRedirectEvent() {
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
     }
 }
 ```
-###### \java\seedu\address\ui\DetailsPanel.java
+###### /java/seedu/address/commons/events/ui/LoadGoogleLoginEvent.java
 ``` java
-    /**
-     * Adds the EmailPanel to the DetailsPanel
-     */
-    public void addEmailPanel() {
-        emailPanel = new EmailPanel();
-        email.setContent(emailPanel.getRoot());
+
+/**
+ * Loads the url of google authentication
+ */
+public class LoadGoogleLoginEvent extends BaseEvent {
+
+    private final String authenticationUrl;
+
+    public LoadGoogleLoginEvent(String authenticationUrl) {
+        this.authenticationUrl = authenticationUrl;
     }
 
-    /**
-     * Adds the GoogleLoginPanel to the DetailsPanel
-     */
-    public void addGoogleLoginPanel() {
-        googleLoginPanel = new GoogleLoginPanel();
-        googlelogin.setContent(googleLoginPanel.getRoot());
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 
+    public String getAuthenticationUrl() {
+        return authenticationUrl;
+    }
+}
 ```
-###### \java\seedu\address\ui\EmailPanel.java
+###### /java/seedu/address/ui/GoogleLoginPanel.java
+``` java
+
+/**
+ * The Google Login Panel of the App.
+ */
+public class GoogleLoginPanel extends UiPart<Region> {
+
+    public static final String DEFAULT_PAGE = "https://www.google.com/";
+
+    private static final String FXML = "GoogleLoginPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private WebView loginbrowser;
+
+    public GoogleLoginPanel() {
+        super(FXML);
+
+        // To prevent triggering events for typing inside the loaded Web page.
+        getRoot().setOnKeyPressed(Event::consume);
+
+        loadDefaultPage();
+        registerAsAnEventHandler(this);
+    }
+
+    public void loadPage(String url) {
+        Platform.runLater(() -> loginbrowser.getEngine().load(url));
+    }
+
+    /**
+     * Loads a default HTML file with a background that matches the general theme.
+     */
+    private void loadDefaultPage() {
+        loadPage(DEFAULT_PAGE);
+    }
+
+    /**
+     * Frees resources allocated to the browser.
+     */
+    public void freeResources() {
+        loginbrowser = null;
+    }
+
+    @Subscribe
+    private void loadLoginUrl(LoadGoogleLoginEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPage(event.getAuthenticationUrl());
+    }
+
+    @Subscribe
+    private void getRedirectUrlEvent (LoadGoogleLoginRedirectEvent event) {
+        logger.info((LogsCenter.getEventHandlingLogMessage(event)));
+        event.setRedirectUrl(loginbrowser.getEngine().getLocation());
+    }
+}
+```
+###### /java/seedu/address/ui/EmailPanel.java
 ``` java
 /**
  * Shows the email drafting tab
@@ -707,82 +681,43 @@ public class EmailPanel extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\GoogleLoginPanel.java
+###### /java/seedu/address/ui/DetailsPanel.java
 ``` java
-
-/**
- * The Google Login Panel of the App.
- */
-public class GoogleLoginPanel extends UiPart<Region> {
-
-    public static final String DEFAULT_PAGE = "https://www.google.com/";
-
-    private static final String FXML = "GoogleLoginPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
-    @FXML
-    private WebView loginbrowser;
-
-    public GoogleLoginPanel() {
-        super(FXML);
-
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
-
-        loadDefaultPage();
-        registerAsAnEventHandler(this);
-    }
-
-    public void loadPage(String url) {
-        Platform.runLater(() -> loginbrowser.getEngine().load(url));
+    /**
+     * Adds the EmailPanel to the DetailsPanel
+     */
+    public void addEmailPanel() {
+        emailPanel = new EmailPanel();
+        email.setContent(emailPanel.getRoot());
     }
 
     /**
-     * Loads a default HTML file with a background that matches the general theme.
+     * Adds the GoogleLoginPanel to the DetailsPanel
      */
-    private void loadDefaultPage() {
-        loadPage(DEFAULT_PAGE);
+    public void addGoogleLoginPanel() {
+        googleLoginPanel = new GoogleLoginPanel();
+        googlelogin.setContent(googleLoginPanel.getRoot());
     }
 
-    /**
-     * Frees resources allocated to the browser.
-     */
-    public void freeResources() {
-        loginbrowser = null;
-    }
-
-    @Subscribe
-    private void loadLoginUrl(LoadGoogleLoginEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPage(event.getAuthenticationUrl());
-    }
-
-    @Subscribe
-    private void getRedirectUrlEvent (LoadGoogleLoginRedirectEvent event) {
-        logger.info((LogsCenter.getEventHandlingLogMessage(event)));
-        event.setRedirectUrl(loginbrowser.getEngine().getLocation());
-    }
-}
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private static final String[] SKILL_COLOR_STYLES =
         { "teal", "red", "green", "blue", "orange", "brown",
             "yellow", "pink", "lightgreen", "grey", "purple" };
     private static final String DEFAULT_IMAGE = "/images/default.png";
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
         initSkills(person);
     }
 
     private Image getImage(String imagePath) {
         return new Image(MainApp.class.getResourceAsStream(imagePath));
-
     }
 
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     /**
      * Returns the color style for {@code skillName}'s label.
@@ -791,11 +726,10 @@ public class GoogleLoginPanel extends UiPart<Region> {
         // we use the hash code of the skill name to generate a random color, so that the color remain consistent
         // between different runs of the program while still making it random enough between skills.
         return SKILL_COLOR_STYLES[Math.abs(skillName.hashCode()) % SKILL_COLOR_STYLES.length];
-
     }
 
 ```
-###### \resources\view\DarkTheme.css
+###### /resources/view/DarkTheme.css
 ``` css
 #skills .teal {
     -fx-text-fill: white;
@@ -852,7 +786,7 @@ public class GoogleLoginPanel extends UiPart<Region> {
     -fx-background-color: purple;
 }
 ```
-###### \resources\view\EmailPanel.fxml
+###### /resources/view/EmailPanel.fxml
 ``` fxml
 <AnchorPane prefHeight="478.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>

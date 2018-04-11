@@ -60,7 +60,7 @@ public class ListAppointmentCommand extends Command {
 
 
     private CommandResult getYearView() throws NoAppointmentInYearException {
-        if (year.isBefore(Year.now())){
+        if (year.isBefore(Year.now())) {
             if (!checkPastAppointment(year.getValue())) {
                 throw new NoAppointmentInYearException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
             }

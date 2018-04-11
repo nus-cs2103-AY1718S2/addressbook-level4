@@ -13,8 +13,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
-import seedu.address.model.appointment.exceptions.PastAppointmentException;
+
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -44,7 +43,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * @throws DataConversionException if the file is not in the correct format.
      */
     public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException,
-                                                                                 FileNotFoundException {
+        FileNotFoundException {
         requireNonNull(filePath);
 
         File addressBookFile = new File(filePath);
@@ -60,10 +59,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);
-        } catch (ConcurrentAppointmentException cae) {
-            throw new AssertionError("AddressBook should not add appointments to on-going appointment slots");
-        } catch (PastAppointmentException pae) {
-            throw new AssertionError("AddressBook should not add appointments with past DateTime");
         }
     }
 

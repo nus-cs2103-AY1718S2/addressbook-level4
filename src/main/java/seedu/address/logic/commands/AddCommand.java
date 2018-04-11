@@ -189,8 +189,7 @@ public class AddCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException,
-        ConcurrentAppointmentException, PastAppointmentException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
             switch (type) {
@@ -211,6 +210,10 @@ public class AddCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         } catch (DuplicateDateTimeException e) {
             throw new CommandException(MESSAGE_DUPLICATE_DATETIME);
+        } catch (ConcurrentAppointmentException e) {
+            throw new AssertionError("Concurrent appointment.");
+        } catch (PastAppointmentException e) {
+            throw new AssertionError("Past-date appointment.");
         }
     }
 

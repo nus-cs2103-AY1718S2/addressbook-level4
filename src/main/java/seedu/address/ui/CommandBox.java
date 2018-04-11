@@ -19,8 +19,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
-import seedu.address.model.appointment.exceptions.PastAppointmentException;
+
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -137,10 +136,6 @@ public class CommandBox extends UiPart<Region> {
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
-        } catch (ConcurrentAppointmentException cae) {
-            throw new AssertionError("AddressBook should not add appointments to on-going appointment slots");
-        } catch (PastAppointmentException pae) {
-            throw new AssertionError("AddressBook should not add appointments with past DateTime");
         }
     }
 

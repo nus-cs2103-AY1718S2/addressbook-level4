@@ -10,7 +10,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Chew Xing Kai
 image::cxingkai.jpg[width="150", align="left"]
-{empty} [https://github.com/cxingkai[github]] [<<johndoe#, portfolio>>]
+{empty} [https://github.com/cxingkai[github]] [<<cxingkai#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model
@@ -19,7 +19,7 @@ Responsibilities: Model
 
 === Kai Yong
 image::Kyholmes.png[width="150", align="left"]
-{empty}[http://github.com/[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/[github]] [<<kyholmes#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI
@@ -28,7 +28,7 @@ Responsibilities: UI
 
 === Ng Hung Siang
 image::nhs.jpg[width="150", align="left"]
-{empty}[http://github.com/nhs-work[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/nhs-work[github]] [<<HungSiang#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic
@@ -37,7 +37,7 @@ Responsibilities: Logic
 
 === Kelvin Ting
 image::ktingit.png[width="150", align="left"]
-{empty}[http://github.com/ktingit[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/ktingit[github]] [<<ktingit#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage

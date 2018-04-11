@@ -574,13 +574,13 @@ html file called by the function.
 
 *_return to <<toc,Table of Contents>>_*
 
-// tag::Remark Feature[]
+// tag::remark[]
 === Remark Feature
 ==== Current Implementation
 
 A new remark component is added to the person model.
 
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagramWithRemark.png[width="800"]
 
 This remark feature allows the user to add remarks to the student profile of the specified student.
 
@@ -595,7 +595,7 @@ Figure 15. Sequence Diagram of AddRemarkCommand
 ** Cons: The remark attached to the student in our student profile would not be able to exceed one line.
 
 *_return to <<toc,Table of Contents>>_*
-// end::Remark Feature[]
+// end::remark[]
 
 === Logging
 

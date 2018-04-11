@@ -49,6 +49,19 @@ public class Subject {
                                                   "HArt", "DnT", "Comp", "FnN", "PoA", "Econs", "Drama", "PE",
                                                   "Biz", "Biotech", "Design"};
 
+    // Use for the calculation of the L1B4 subjects (A, B, C, D)
+    public static final String[] R1A_SUBJECT = {"Art", "Biz", "ComHum", "Econs", "Geog", "HArt", "HMusic", "Hist",
+                                                "ELit", "CLit", "MLit", "TLit", "Music"};
+    public static final String[] R1BCD_SUBJECT = {"EMath", "AMath"};
+    public static final String[] R2A_SUBJECT = {"AMath", "Art", "Biz", "Chinese", "ComHum", "DnT", "Design", "Econs",
+                                                "EMath", "FnN", "Geog", "HArt", "HChi", "HMalay", "HTamil", "Hist",
+                                                "ELit", "CLit", "MLit", "TLit", "Malay", "Music", "PoA", "Tamil"};
+    public static final String[] R2B_SUBJECT = {"Art", "Biz", "ComHum", "Econs", "Geog", "HArt", "HMusic", "Hist",
+                                                "ELit", "CLit", "TLit", "MLit", "Music", "PoA"};
+    public static final String[] R2C_SUBJECT = {"Bio", "Biotech", "Chem", "Sci", "DnT", "FnN", "Phy", "Comp"};
+    public static final String[] R2D_SUBJECT = {"Art", "Bio", "Biotech", "Chem", "Sci", "Comp", "DnT", "Design", "FnN",
+                                                "HArt", "Phy", "Sci"};
+    public static final String[] R3_R4_SUBJECT = R4_R5_SUBJECT;
 
     public final String subjectName;
     public final String subjectGrade;
@@ -118,9 +131,6 @@ public class Subject {
 
     @Override
     public boolean equals(Object other) {
-        //return other == this // short circuit if same object
-        //        || (other instanceof Subject // instanceof handles nulls
-        //        && this.subjectName.equals(((Subject) other).subjectName)); // state check
         if (other == null) {
             return false;
         }
@@ -131,12 +141,11 @@ public class Subject {
             return false;
         }
         Subject object = (Subject) other;
-        return this.subjectName == object.subjectName && this.subjectGrade == object.subjectGrade;
+        return (this.subjectName == object.subjectName && this.subjectGrade == object.subjectGrade);
     }
 
     @Override
     public int hashCode() {
-        //return subjectName.hashCode() && subjectGrade.hashCode();
         int hash = 17;
         hash = 37 * hash + subjectName.hashCode();
         hash = 37 * hash + subjectGrade.hashCode();

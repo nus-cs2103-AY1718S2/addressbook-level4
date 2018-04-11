@@ -9,7 +9,10 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Cca;
+import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NameOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -33,6 +36,14 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedSubject> subjects = new ArrayList<>();
     @XmlElement(required = true)
     private String remark;
+    @XmlElement
+    private String cca;
+    @XmlElement
+    private String pos;
+    @XmlElement
+    private String injuriesHistory;
+    @XmlElement
+    private String nameOfKin;
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -44,7 +55,7 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects,
-                            String remark) {
+                            String remark, String cca, String injuriesHistory, String nameOfKin) {
         this.name = name;
         this.nric = nric;
         this.remark = remark;
@@ -54,6 +65,9 @@ public class XmlAdaptedPerson {
         if (subjects != null) {
             this.subjects = new ArrayList<>(subjects);
         }
+        this.cca = cca;
+        this.injuriesHistory = injuriesHistory;
+        this.nameOfKin = nameOfKin;
     }
 
     /**
@@ -73,6 +87,10 @@ public class XmlAdaptedPerson {
             subjects.add(new XmlAdaptedSubject(subject));
         }
         remark = source.getRemark().value;
+        cca = source.getCca().value;
+        pos = source.getCca().pos;
+        injuriesHistory = source.getInjuriesHistory().value;
+        nameOfKin = source.getNameOfKin().fullName;
     }
 
     /**
@@ -110,11 +128,31 @@ public class XmlAdaptedPerson {
         final Set<Subject> subjects = new HashSet<>(personSubjects);
 
         if (this.remark == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));
         }
         final Remark remark = new Remark(this.remark);
 
-        return new Person(name, nric, tags, subjects, remark);
+        if (this.cca == null || this.pos == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Cca.class.getSimpleName()));
+        }
+
+        final Cca cca = new Cca(this.cca, this.pos);
+
+        if (this.injuriesHistory == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    InjuriesHistory.class.getSimpleName()));
+        }
+
+        final InjuriesHistory injuriesHistory = new InjuriesHistory(this.injuriesHistory);
+
+        if (this.nameOfKin == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    NameOfKin.class.getSimpleName()));
+        }
+
+        final NameOfKin nameOfKin = new NameOfKin(this.nameOfKin);
+
+        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
     }
 
     @Override
@@ -132,6 +170,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(nric, otherPerson.nric)
                 && tagged.equals(otherPerson.tagged)
                 && subjects.equals(otherPerson.subjects)
-                && remark.equals(otherPerson.remark);
+                && remark.equals(otherPerson.remark)
+                && cca.equals(otherPerson.cca);
     }
 }

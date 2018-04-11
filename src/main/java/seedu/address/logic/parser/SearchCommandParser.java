@@ -21,14 +21,14 @@ public class SearchCommandParser {
         String[] splitArgs = args.split(", ");
         if (splitArgs.length == 1) {
             String platform = "all";
-            try{
+            try {
                 String inputName = ParserUtil.parseSearchName(splitArgs[0]);
                 return new SearchCommand(platform, inputName);
             } catch (IllegalValueException ive) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
             }
-        } else if (splitArgs.length == 2){
+        } else if (splitArgs.length == 2) {
             try {
                 String platform = ParserUtil.parsePlatformToSearch(splitArgs[0]);
                 String inputName = ParserUtil.parseSearchName(splitArgs[1]);

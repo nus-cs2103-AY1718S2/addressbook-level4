@@ -92,7 +92,8 @@ public class AddAppointmentCommandTest {
         }
 
         @Override
-        public void editAppointment(String searchText, AppointmentEntry reference) throws EditAppointmentFailException {
+        public void editAppointment(String searchText, AppointmentEntry reference, AppointmentEntry original)
+                throws EditAppointmentFailException {
             fail("This method should not be called.");
         }
 
@@ -206,7 +207,7 @@ public class EditAppointmentCommandTest {
         String expectedMessage = String.format(EditAppointmentCommand.MESSAGE_SUCCESS, updatedEntry);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.editAppointment(validSearchText, updatedEntry);
+        expectedModel.editAppointment(validSearchText, updatedEntry, MEET_JOHN);
 
         assertCommandSuccess(editAppointmentCommand, model, expectedMessage, expectedModel);
     }
@@ -226,7 +227,7 @@ public class EditAppointmentCommandTest {
         String expectedMessage = String.format(EditAppointmentCommand.MESSAGE_SUCCESS, updatedEntry);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.editAppointment(validSearchText, updatedEntry);
+        expectedModel.editAppointment(validSearchText, updatedEntry, MEET_JOHN);
 
         assertCommandSuccess(editAppointmentCommand, model, expectedMessage, expectedModel);
     }
@@ -413,7 +414,7 @@ public class AppointmentUtil {
      * Returns the part of command string for the given {@code entry}'s details.
      */
     public static String geEntryDetails(AppointmentEntry entry) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_VALIDATION);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_TIME_VALIDATION);
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + entry.getGivenTitle() + " ");
         sb.append(PREFIX_START_INTERVAL + entry.getStartDateTime().format(formatter) + " ");

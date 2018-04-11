@@ -1,0 +1,60 @@
+= Lin Yuxiang - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Smart Insurance Collection
+
+---
+
+== Overview
+
+ASmart Insurance Collection(SIC) is for insurance agents who *prefer to use a desktop app for managing contacts and appointments*. More importantly, SIC is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+== Summary of contributions
+
+* *Major enhancement*: added *Calendar with appointment related features*
+** What it does: allows the user to add/remove/edit appointments and reflect these appointments on a calendar GUI
+** Justification: These feature improves the product significantly because a user can now manage both contacts and appointments related to these contacts on the app
+** Highlights: This enhancement touches on all components of the app and create a calendar and task model to enable future implementation of related enhancements. The additions to the components were written in such a way that the previous architecture is largely preserved.
+** Credits: This enhancement depends heavily on the https://github.com/dlemmermann/CalendarFX[CalendarFx] third party library
+
+* *Minor enhancement*: added look and back feature switch between day view and month view of the calendar GUI
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/functional/yuxiangSg.md] [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/test/yuxiangSg.md}_
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.4` (releases) on GitHub
+*** Managed main branch build errors as a result of initial inexperience among teammates over code merging(https://github.com/CS2103JAN2018-T15-B2/main/commit/0178bd8694812c36b63b9a569d04921c2dce0ba4[#1])
+** Enhancements to existing features:
+*** Redesigned the javaFX layout of the application to support changes in the app features (https://github.com/CS2103JAN2018-T15-B2/main/commit/a76203c2e50aa8c0764f9017330cb74bcd4cf1fb[#2])
+** Documentation:
+*** Updated screenshot to the User Guide
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T11-B1/main/issues/121[1], https://github.com/CS2103JAN2018-T11-B1/main/issues/119[2], https://github.com/CS2103JAN2018-T11-B1/main/issues/117[3])
+** Tools:
+*** Integrated a third party library (JFoenix) to the project (https://github.com/CS2103JAN2018-T15-B2/main/commit/8329dde253bea67d61f60fe3ae378c81017bc93c[#42])
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=appointment]
+
+include::../UserGuide.adoc[tag=task]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=add_appointment]
+include::../DeveloperGuide.adoc[tag=model]
+include::../DeveloperGuide.adoc[ui=model]
+

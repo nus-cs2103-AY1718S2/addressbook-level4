@@ -40,7 +40,8 @@ public interface Model {
     void removeAppointment(String searchText) throws AppointmentNotFoundException;
 
     /** edit appointment associated with the given searchText */
-    void editAppointment(String searchText, AppointmentEntry reference) throws EditAppointmentFailException;
+    void editAppointment(String searchText, AppointmentEntry reference, AppointmentEntry original)
+            throws EditAppointmentFailException;
 
     /** find an appointment associated with the given searchText */
     AppointmentEntry findAppointment(String searchText) throws AppointmentNotFoundException;

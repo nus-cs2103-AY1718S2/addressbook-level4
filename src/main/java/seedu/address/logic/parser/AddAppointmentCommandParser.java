@@ -41,8 +41,12 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             String appointmentTitle = ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).get();
             LocalDateTime startDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_START_INTERVAL)).get();
             LocalDateTime endDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_END_INTERVAL)).get();
-            Interval interval = new Interval(startDateTime, endDateTime);
 
+            if (!AppointmentEntry.isValidInterval(startDateTime, endDateTime)) {
+                throw new IllegalValueException(AppointmentEntry.MESSAGE_INTERVAL_CONSTRAINTS);
+            }
+
+            Interval interval = new Interval(startDateTime, endDateTime);
 
             AppointmentEntry appointmentEntry = new AppointmentEntry(appointmentTitle, interval);
 

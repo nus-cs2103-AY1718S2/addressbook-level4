@@ -156,8 +156,9 @@ The sections below give more details of each component.
 === UI component
 
 .Structure of the UI Component
-image::UiClassDiagramUpdated.png[width="800"]
-
+// tag::ui[]
+image::UiClassDiagram.png[width="800"]
+// end::ui[]
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `CalendarPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
@@ -197,8 +198,9 @@ image::DeletePersonSdForLogic.png[width="800"]
 === Model component
 
 .Structure of the Model Component
+// tag::model[]
 image::ModelClassDiagramUpdated.png[width="800"]
-
+// end::model[]
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
@@ -366,38 +368,45 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::add_appointment[]
-=== Add Appointment feature
+=== Add/Remove/Edit Appointment feature
 ==== Current Implementation
-The Add appointment feature is facilitated by all the components of the application. It supports adding of entry to the calendar through the command lines.
+These three appointment related features are facilitated by all the components of the application. It supports the adding,removing and editing of entry to the calendar through the command lines.
 
-After the `commandBox` in UI passed the text field input with add_appointment command word to the `LogicManger`, `AddressBookParser` will identify the command word and
-call `AddAppointmentCommandParser` which will parse the input text to create a new `AppointmentEntry` object and return a new `AddAppointmentCommand` object. The `LogicManger` will
+After the `commandBox` in UI passed the text field input with the specific command word to the `LogicManger`, `AddressBookParser` will identify the command word and
+call the respective CommandParser which will parse the input text and return a new Command object. The `LogicManger` will
 then execute this command.
 
-The `AddAppointmentCommand` calls `ModelManager` to add an appointment to calendar, `ModelManager` then call `AddressBook' to add appointment and raise a `AddressBookChangedEvent`, finally `AddressBook` calls its `InsuranceCalendar` object to
-add an appointment and raise a .
+This sequence flow is the same as the other commands, an example of the remove appointment logic interactions is shown below
+image::RemoveAppointmentSequenceDiagram.png[width="800"]
 
-Within `InsuranceCalendar`, the code is as follows:
+The `ModelManager` then carry out the actual operations to calendar, `ModelManager` call `AddressBook' and raise a `AddressBookChangedEvent`, finally `AddressBook` calls its `InsuranceCalendar` object to
+add/remove/edit an appointment.
+
+Within `InsuranceCalendar`, example of adding an appointment entry is as follows:
 [source,java]
 ----
- public void addAppointment(AppointmentEntry entry)throws DuplicateAppointmentException {
+public void addAppointment(AppointmentEntry entry) throws DuplicateAppointmentException {
         if (contains(entry)) {
             throw new DuplicateAppointmentException();
         }
-        calendar.addEntry(entry.getAppointmentEntry());
+
+        calendar.addEntry(new AppointmentEntry(entry).getAppointmentEntry());
         appointmentEntries.add(entry);
     }
 ----
-
+[NOTE]
 Both the `Calendar` class from the CalendarFx Lib and the `AppointmentEntry` list that the `InsuranceCalendar` class maintains are
-updated with the addition of the new appointment. Addition od entry to the `Calendar` object automatically reflects the change on the
-`CalendarView` GUI
+updated with the addition of the new appointment. Addition of entry to the `Calendar` object automatically reflects the change on the
+`CalendarView` GUI as well as the `AgendaView` GUI
 
 On the other hand, as a `AddressBookChangedEvent` is raised, the `EventCenter` calls the `Storage Manager` to handle this event and the
 added appointment is saved to persistent data
+
+
+image::AppointmentActivityDiagram.png[width="650"]
 ==== Design Considerations
 
-===== Aspect: Implementation of `Add_Appointment command`
+===== Aspect: Implementation of `Appointment commands`
 
 * **Alternative 1 (current choice):** create a InsuranceCalendar class in Model that maintain a list of appointment entries`
 ** Pros: Preserve existing Architecture with little alternation to architecture design
@@ -407,13 +416,30 @@ added appointment is saved to persistent data
 ** Cons: Drastic alteration to existing Structure, original Storage functions will not work.
 ===== Aspect: How to add_appointment
 
-* **Alternative 1 (current choice):** Ask the user to specify title, start date and end date.
+* **Alternative 1 (current choice):** Ask the user to specify title, start date time and end date time.
 ** Pros: Easy to implement.
 ** Cons: user may find it tedious to type in the date and time also cannot be specified
 * **Alternative 2:** user click on the calendar UI to specify date, specify time in command box.
 ** Pros: more flexible and user friendly interface
 ** Cons: more elaborate parser and calendar UI event listener need to be in place to support
 
+===== Aspect: How to remove_appointment
+
+* **Alternative 1 (current choice):** Ask the user to specify title.
+** Pros: Easy to implement, only one field is required.
+** Cons: title of every appointment must be kept unique
+* **Alternative 2:** as the user to specify title and interval
+** Pros: more flexible title constrains
+** Cons: user may find it tedious to specify all required fields
+
+===== Aspect: How to edit_appointment
+
+* **Alternative 1 (current choice):** Ask the user to specify title, and specify at least one field to change.
+** Pros: Easy to implement, only one field is required.
+** Cons: title of every appointment must be kept unique
+* **Alternative 2:** as the user to specify title and interval as searchText
+** Pros: more flexible title constrains
+** Cons: user may find it tedious to specify all required fields
 
 ===== Aspect: Type of appointment supported
 
@@ -424,7 +450,7 @@ added appointment is saved to persistent data
 ** Pros: Might be more intuitive for the user.
 ** Cons: require elaborate event listener for Person list panel
 
-===== Aspect: Data structure to support the undo/redo commands
+===== Aspect: Data structure to support the appoinment commands
 
 * **Alternative 1 (current choice):Array list to maintain the list of the appointments;
 ** Pros: Easy to understand and implement.
@@ -434,7 +460,7 @@ added appointment is saved to persistent data
 ** Cons: breaks the layering of the current architecture
 // end::add_appointment[]
 
-// tag::add_appointment[]
+
 === Age Field feature (V1.2)
 ==== Current implementation
 
@@ -504,6 +530,63 @@ Imaging a form of Ax=b where A is a matrix and x is a vector of weights
 and b is the expected outcome. The name of the game is to find the
 weights that minimises the loss of the objective function A.
 The numerical solver used here is Stochastic Gradient Descent.
+
+// tag::policy[]
+=== Policy Feature
+
+The `Policy` field is an optional field attached to a person. It contains all the data
+about an insurance contract that a person applied to (if any).
+A policy is defined by 4 fields : a beginning date, an expiration date, a price and a list of issues
+covered. Each of these fields must be individually valid during the creation of a Policy, and the beginning
+date needs to be prior to the expiration date.
+
+==== Policy Date
+A `Date` inside of the Policy contains 3 fields : the day, the month and the year.
+The month is represented using the `Month` enumeration. The day and the year are just Integers.
+Each time a Date is created, its correctness is checked.
+The Policy that a Person applied to (if any) is displayed at the end of the card of a Person
+(see `PersonListCard.fxml`).
+
+==== Policy Price
+A `Price` inside of the Policy is just a positive or zero Integer. Each time a Price is created,
+its correctness is checked.
+
+==== Policy Coverage
+The list of issues covered by a Policy comes in the form of the `Coverage` object. It contains a `List<Issue>`.
+`Issue` is an enumeration that tries to cover the main issues that an insurance could possibly cover. This enumeration
+should be frequently updated to make sure that the insurance agent working with our app does not face a case where
+the desired issue does not exist.
+A Coverage can be empty, meaning that the Policy won't cover any issue. This possibility should be used with the
+intention to edit the policy later, and add some issues to its Coverage.
+
+==== Implementation in Person
+Since it is optional for a person in the address book to apply to a contract, the Policy field comes in the form
+of `Optional<Policy>`. This is technically breaking a java convention, because Optional
+should not be used for class fields, but it was a very easy and logical way to implement
+this. Optional fields should be avoided in the first place, but when it is too cumbersome
+to do so, the `Optional<T>` type is very handy. The Policy field is persistent. It is stored via `XmlElement` in
+`XmlAdaptedPerson`.
+
+==== Adding a Policy
+In order to add a Policy to a Person in the address book, it is required to use the `add_policy` command. This command
+asks the user to specify the index of the target user, the dates, the price and the issues covered by the Policy.
+The command is detected in the `AddressBookParser`, then its arguments are sent to the `AddPolicyCommandParser`,
+which detects them using some parsing methods from `ParseUtil` that can retrieve the Dates, the Price and the potential
+Issues. An `AddPolicyCommand` is then created and executed to add the policy to the person in the address book.
+
+==== Editing a Policy
+If the user wants to edit a Policy, he must use the `edit_policy` command. He has to enter the index of the target user,
+and at least one field to edit.
+The parsing of this command works the same as for `add_policy`, but using `EditPolicyCommandParser` and creating an
+`EditPolicyCommand`. Also inside of the `EditPolicyCommand` there is a nested class `EditPolicyDescriptor` which was
+inspired from the `EditPersonDescriptor` of the `EditCommand`. It works in the same manner, but with fields adapted to
+`Policy` and not to `Person`. To summarize, it describes what fields should be edited in the `Policy`, and how.
+
+==== Removing a Policy
+To remove a Policy, the user should use the `remove_policy` command. He then only has to enter the index of the target
+user. The parsing of this command is pretty straightforward since it only has the index parameter, and it is done in
+`RemovePolicyCommandParser`. The command created is of type `RemovePolicyCommand`.
+// end::policy[]
 
 == Documentation
 

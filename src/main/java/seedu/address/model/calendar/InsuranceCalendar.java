@@ -68,6 +68,17 @@ public class InsuranceCalendar {
     }
 
     /**
+     * Adds back an deleted appointment to the calendar.
+     *
+     */
+    public void addBackAppointment(AppointmentEntry entry) {
+
+        calendar.addEntry(new AppointmentEntry(entry).getAppointmentEntry());
+        appointmentEntries.add(entry);
+
+    }
+
+    /**
      * Remove appointments found with the given keywords in the calendar.
      *
      * @throws AppointmentNotFoundException if the appointment to remove does not exist.
@@ -104,7 +115,7 @@ public class InsuranceCalendar {
      *
      * @throws EditAppointmentFailException if the appointment to remove does not exist or duplicate appointment to add.
      */
-    public void editAppointmentEntry(String searchText, AppointmentEntry referenceEntry)
+    public void editAppointmentEntry(String searchText, AppointmentEntry referenceEntry, AppointmentEntry originalEntry)
             throws EditAppointmentFailException {
 
         try {
@@ -116,6 +127,7 @@ public class InsuranceCalendar {
         try {
             addAppointment(referenceEntry);
         } catch (DuplicateAppointmentException e) {
+            addBackAppointment(originalEntry);
             throw new EditAppointmentFailException();
         }
     }

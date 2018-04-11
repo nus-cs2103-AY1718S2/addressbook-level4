@@ -3,13 +3,16 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.photo.Photo;
+import seedu.address.ui.NotificationCard;
+import seedu.address.ui.NotificationCenter;
 
 /**
  * The API of the Model component.
@@ -35,7 +38,7 @@ public interface Model {
 
     //@@author IzHoBX
     /** Deletes a timetable entry given its id. */
-    void deleteNotification(String id) throws TimetableEntryNotFoundException;
+    void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws NotificationNotFoundException;
 
     /** Adds the given person */
     void addNotification(Notification e) throws DuplicateTimetableEntryException;
@@ -76,4 +79,10 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     void findAllSavedNotifications();
+
+    void setNotificationCenter(NotificationCenter notificationCenter);
+
+    NotificationCenter getNotificationCenter();
+
+    NotificationCard deleteNotificationByIndex(Index targetIndex) throws NotificationNotFoundException;
 }

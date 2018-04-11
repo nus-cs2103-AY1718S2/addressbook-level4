@@ -118,6 +118,11 @@ public class AddressBookTest {
         public String getPassword() {
             return null;
         }
+
+        @Override
+        public Person findPersonById(int id) {
+            return null;
+        }
     }
 
 }

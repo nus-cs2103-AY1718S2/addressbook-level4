@@ -42,7 +42,7 @@ public class Authentication {
 
     /** Global instance of the scopes required by this quickstart.
      *
-     * If modifying these scopes, delete your previously saved credentials
+     * If modifying these scopes, deleteNotification your previously saved credentials
      * at ~/.credentials/calendar-java-quickstart
      */
     private static final List<String> SCOPES =

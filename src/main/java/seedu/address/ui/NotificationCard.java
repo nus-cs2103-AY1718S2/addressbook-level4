@@ -44,16 +44,18 @@ public class NotificationCard extends UiPart<Region> {
     private String ownerId;
     private boolean isFirstStage;
     private boolean isForCenter;
+    private String id;
 
 
     public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId,
-                            boolean isFirstStage) {
+                            boolean isFirstStage, String id) {
         super(FXML);
         this.index.setText(displayedIndex + ". ");
         this.title.setText(title);
         this.ownerName.setText(ownerName);
         this.endTime.setText(endTime);
         this.ownerId = ownerId;
+        this.id = id;
 
         xOffset.setMaxWidth(NOTIFICATION_CARD_X_OFFSET);
         yOffset.setMaxWidth(NOTIFICATION_CARD_Y_OFFSET);
@@ -63,13 +65,14 @@ public class NotificationCard extends UiPart<Region> {
     }
 
     public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId,
-                            boolean isFirstStage, boolean isForCenter) {
+                            boolean isFirstStage, boolean isForCenter, String id) {
         super(FXML);
-        this.index.setText(displayedIndex + ". ");
+        this.index.setText(displayedIndex);
         this.title.setText(title);
         this.ownerName.setText(ownerName);
         this.endTime.setText(endTime);
         this.ownerId = ownerId;
+        this.id = id;
 
         xOffset.setMaxWidth(NOTIFICATION_CARD_X_OFFSET);
         yOffset.setMaxWidth(NOTIFICATION_CARD_Y_OFFSET);
@@ -137,6 +140,30 @@ public class NotificationCard extends UiPart<Region> {
 
     public NotificationCard getCopyForCenter() {
         return new NotificationCard(this.getTitle(), this.getIndex(), this.getOwnerName(), this.getEndTime(), this
-                .getOwnerId(), isFirstStage, true);
+                .getOwnerId(), isFirstStage, true, id);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title.getText() + " Owner: " + ownerName.getText();
+    }
+
+    /**
+     * Decreases the index displayed on notification card.
+     */
+    public void decreaseIndex(int i) {
+        String currIndex = this.index.getText();
+        int j;
+        for (j = 0; j < currIndex.length(); j++) {
+            if (currIndex.charAt(j) == '.') {
+                break;
+            }
+        }
+        int currIndexNumeric = Integer.parseInt(currIndex.substring(0, j));
+        this.index.setText((currIndexNumeric - i) + ". ");
     }
 }

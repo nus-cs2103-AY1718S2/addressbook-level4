@@ -130,6 +130,7 @@ public class MainWindow extends UiPart<Stage> {
         //@@author IzHoBX
         shownNotificationCards = new LinkedList<>();
         notificationCenter = new NotificationCenter(notificationCardsBox, notificationCenterPlaceHolder);
+        logic.setNotificationCenter(notificationCenter);
         mainStage.getChildren().remove(notificationCenterPlaceHolder);
         notificationCenterStatus = HIDE;
         semaphore = new Semaphore(1);
@@ -325,7 +326,7 @@ public class MainWindow extends UiPart<Stage> {
                 notificationCenter.getTotalUndismmissedNotificationCards() + "",
                 event.getOwnerName(),
                 event.getNotification().getEndDateDisplay(),
-                event.getNotification().getOwnerId(), event.isFirstSatge());
+                event.getNotification().getOwnerId(), event.isFirstSatge(), event.getNotification().getId());
         Region notificationCard = x.getRoot();
         notificationCard.setMaxHeight(NOTIFICATION_CARD_HEIGHT);
         notificationCard.setMaxWidth(NOTIFICATION_CARD_WIDTH);
@@ -424,6 +425,10 @@ public class MainWindow extends UiPart<Stage> {
             notificationCenterStatus = SHOW;
         }
     }
+
+    public void deleteNotificationCard(String id) {
+        notificationCenter.deleteNotification(id);
+    }
     //@@author
 
     //@@author emer7
@@ -473,5 +478,6 @@ public class MainWindow extends UiPart<Stage> {
             raise(new SetPasswordEnteredEvent("incomplete"));
         }
     }
+
     //@@author
 }

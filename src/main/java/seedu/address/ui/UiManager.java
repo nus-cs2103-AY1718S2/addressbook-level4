@@ -186,7 +186,6 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Subscribe
     private void handleToggleNotificationEvent(ToggleNotificationCenterEvent event) {
-        System.out.println("Handling");
         if (!LogicManager.isLocked()) {
             mainWindow.toggleNotificationCenter();
         }
@@ -202,8 +201,8 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     private void showDelayedNotifications() {
-        for (ShowNotificationEvent e: delayedNotifications) {
-            showNotificationInApp(e);
+        while (!delayedNotifications.isEmpty()) {
+            showNotificationInApp(delayedNotifications.poll());
         }
     }
 

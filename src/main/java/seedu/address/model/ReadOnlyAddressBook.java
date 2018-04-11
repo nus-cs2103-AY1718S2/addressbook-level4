@@ -44,5 +44,5 @@ public interface ReadOnlyAddressBook {
 
     String getPassword();
 
-
+    Person findPersonById(int id);
 }

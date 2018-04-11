@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -23,12 +24,14 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
-import seedu.address.model.notification.exceptions.TimetableEntryNotFoundException;
+import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.photo.Photo;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.NotificationCard;
+import seedu.address.ui.NotificationCenter;
 
 public class AddCommandTest {
 
@@ -117,11 +120,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteNotification(String id) throws TimetableEntryNotFoundException {
-
-        }
-
-        @Override
         public void addNotification(Notification e) throws DuplicateTimetableEntryException {
 
         }
@@ -179,6 +177,26 @@ public class AddCommandTest {
 
         @Override
         public void findAllSavedNotifications() {
+        }
+
+        @Override
+        public void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws NotificationNotFoundException {
+
+        }
+
+        @Override
+        public void setNotificationCenter(NotificationCenter notificationCenter) {
+
+        }
+
+        @Override
+        public NotificationCenter getNotificationCenter() {
+            return null;
+        }
+
+        @Override
+        public NotificationCard deleteNotificationByIndex(Index targetIndex) throws NotificationNotFoundException {
+            return null;
         }
     }
 

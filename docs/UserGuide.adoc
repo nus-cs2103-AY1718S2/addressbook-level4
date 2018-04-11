@@ -303,6 +303,7 @@ Gives the 1^st^ employee in the last employees listing a 5-stars rating.
 `rate 2 2` +
 Gives the 2^nd^ employee in the list of Alex(s) a 2-stars rating.
 
+// tag::emer7[]
 === Reviewing an employee : `review`
 
 Assigns a review to an existing employee in Employees Tracker. +
@@ -361,6 +362,7 @@ e.g. `John | Friends, Colleagues | 3`
 * `find n/John t/Friends t/Colleagues` +
 Returns all employees having both names `John` and either tags `Friends` or `Colleagues` +
 e.g. `John Doe | Friends`, `John Dick| Colleagues`, `John | Friends, Colleagues`, and `John Dare | Friends, Colleagues, OweMoneys`
+// end::emer7[]
 
 === Deleting an employee : `delete`
 
@@ -476,7 +478,6 @@ Reapplies the `delete 1` command. +
 `redo` +
 Reapplies the `clear` command.
 // end::undoredo[]
-
 
 === Locking Employees Tracker: `lock`
 

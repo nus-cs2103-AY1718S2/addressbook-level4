@@ -25,6 +25,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.calendar.GoogleCalendar;
+import seedu.address.model.calendar.GoogleCalendarInit;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -40,7 +42,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -92,14 +94,24 @@ public class MainApp extends Application {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
+                initGoogleCalendar();
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initGoogleCalendar();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initGoogleCalendar();
+        }
+        GoogleCalendar googleCalendar = new GoogleCalendar();
+        try {
+            googleCalendar.getCalendarId();
+        } catch (IOException e) {
+            logger.warning("Problem while reading Id from the file. Will be creating new google calendar");
+            initGoogleCalendar();
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -179,6 +191,25 @@ public class MainApp extends Application {
 
     private void initEventsCenter() {
         EventsCenter.getInstance().registerHandler(this);
+    }
+
+    //@@author cambioforma
+    /**
+     * Initialises Google Calendar Settings for {@code BrowserPanel}
+     */
+    private void initGoogleCalendar() {
+        GoogleCalendar calendar = new GoogleCalendar();
+        try {
+            calendar.getCalendarId();
+            calendar.resetCalendar();
+            logger.info("Reinitialised a new Google Calendar");
+        } catch (IOException e) {
+            try {
+                GoogleCalendarInit.init();
+            } catch (IOException ex) {
+                logger.severe("Failed to initialise Google Calendar");
+            }
+        }
     }
 
     @Override

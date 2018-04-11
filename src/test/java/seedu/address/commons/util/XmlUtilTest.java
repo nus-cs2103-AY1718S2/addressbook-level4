@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.AddressBook;
+import seedu.address.storage.XmlAdaptedInsurance;
 import seedu.address.storage.XmlAdaptedPerson;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableAddressBook;
@@ -39,7 +40,15 @@ public class XmlUtilTest {
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
-    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    private static final String VALID_BIRTHDATE = "09-12-1994";
+    private static final String VALID_APPOINTMENT = "09-12-1994";
+    private static final String VALID_GROUP = "PRIORITY";
+
+    private static final List<XmlAdaptedTag> VALID_TAGS =
+        Collections.singletonList(new XmlAdaptedTag("friends"));
+
+    private static final List<XmlAdaptedInsurance> VALID_INSURANCE = Collections.singletonList
+        (new XmlAdaptedInsurance("Health"));
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -80,7 +89,8 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, VALID_BIRTHDATE, VALID_APPOINTMENT,
+            VALID_GROUP, VALID_INSURANCE);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -89,7 +99,8 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, VALID_BIRTHDATE, VALID_APPOINTMENT,
+            VALID_GROUP, VALID_INSURANCE);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -98,7 +109,8 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, VALID_BIRTHDATE, VALID_APPOINTMENT,
+            VALID_GROUP, VALID_INSURANCE);
         assertEquals(expectedPerson, actualPerson);
     }
 

@@ -218,6 +218,11 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public Schedule getSchedule() {
+            return new Schedule();
+        }
     }
 
     /**
@@ -235,6 +240,11 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public Schedule getSchedule() {
+            return new Schedule();
         }
     }
 

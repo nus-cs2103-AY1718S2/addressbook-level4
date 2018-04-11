@@ -1,10 +1,14 @@
 package seedu.address.ui;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.events.ui.PersonCardDoubleClick;
 import seedu.address.model.person.Person;
 
 /**
@@ -56,6 +60,7 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
+        registerAsAnEventHandler(this);
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
@@ -85,6 +90,22 @@ public class PersonCard extends UiPart<Region> {
         }
         //@author
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        setDoubleClickEvent();
+    }
+
+    //@author jstarw
+    private void setDoubleClickEvent() {
+        cardPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                    if (mouseEvent.getClickCount() == 2) {
+                        raise(new PersonCardDoubleClick(person));
+                    }
+                }
+            }
+        });
     }
 
     @Override

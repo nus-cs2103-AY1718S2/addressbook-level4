@@ -63,6 +63,7 @@ public class PersonCard extends UiPart<Region> {
         year.setText(person.getYear().value);
         email.setText(person.getEmail().value);
         username.setText(person.getUsername().username);
+        //@@author iNekox3
         person.getTags().forEach(tag -> {
             Label label = new Label(tag.tagName);
             label.getStyleClass().add(getTagColor(tag.tagName));
@@ -110,6 +111,7 @@ public class PersonCard extends UiPart<Region> {
         return sum;
     }
 
+    //@@author iNekox3
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

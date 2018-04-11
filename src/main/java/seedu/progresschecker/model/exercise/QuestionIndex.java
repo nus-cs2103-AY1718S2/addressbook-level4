@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
  */
 public class QuestionIndex {
 
-    public static final int QUESTION_NUMBER_INDEX = 2;
+    public static final int WEEK_NUMBER_INDEX = 0;
 
     public static final String MESSAGE_INDEX_CONSTRAINTS =
             "Indices can only contain numbers, and should be in the format of "
@@ -40,8 +40,8 @@ public class QuestionIndex {
     /**
      * Returns the question number in the whole question index.
      */
-    public int getQuestionNumber() {
-        return Integer.parseInt(value.split(Pattern.quote("."))[QUESTION_NUMBER_INDEX]);
+    public int getWeekNumber() {
+        return Integer.parseInt(value.split(Pattern.quote("."))[WEEK_NUMBER_INDEX]);
     }
 
     @Override

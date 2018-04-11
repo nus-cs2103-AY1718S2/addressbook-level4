@@ -100,7 +100,7 @@ You can type a command and press `Tab` to auto bring out all the command paramet
 
 * *`exit`* : you can exit the app.
 
-Refer to <<Default,below>> for details of each command.
+Refer to <<General,below>> for details of each command.
 ====
 *Notes:*
 
@@ -127,20 +127,24 @@ You may want to refer to the User Guide when you have a question. You can read i
 // tag::view[]
 ==== Viewing a different tab : `view` OR `v`
 
-You can change the tab view to show either profiles, tasks, or exercises window. +
+You can change the tab view to show either `Profile`, `Task`, or `Exercise`. +
 *Format:* `view TYPE` OR `v TYPE`
+
+By default, the exercise tab shows exercises from the latest available school week. You can view the exercises in other weeks as well. +
+*Format:* `view exercise WEEK_NUMBER` OR `v exercise WEEK_NUMBER`
 
 ====
 *Notes:*
 
-* You can change the tab view to specified `TYPE`.
-* The type refers to the tab name.
-* The tab name must be `profile`, `task`, or `exercise`.
+* `TYPE` refers to the tab names you see in the GUI: `profile`, `task` or `exercise`.
+* `WEEK_NUMBER` refers to the school week number and *must be a positive integer* in the *range of 2 to 11* `2, 3, ..., 11`
 ====
 
 *Examples:*
 
+* `view task`
 * `view exercise`
+* `view exercise 5`
 // end::view[]
 
 ==== Toggling theme : `theme` OR `t`
@@ -162,7 +166,7 @@ You may type some commands wrongly, or some unexpected changes happen. You can r
 ====
 *Notes:*
 
-* Undoable commands: those commands that modify the ProgressChecker's content (`add`, `delete`, `edit` and `clear`).
+* Undoable commands: those commands that modify the ProgressChecker's content (`add`, `answer`, `delete`, `edit` and `clear`).
 ====
 
 *Examples:*
@@ -249,17 +253,20 @@ You can exits the program when you are done with the work. +
 === Exercise
 
 // tag::answer[]
-==== Answering and saving an exercise : `answer` `[since v1.4r]`
+==== Answering an exercise : `answer` `[since v1.4r]`
 
-You can answer an exercise based off the given question number with your answer and save the answer. +
+You can answer an exercise based on the question index. Your answer will be saved automatically upon answering. +
 *Format:* `answer INDEX ANSWER`
+
+[TIP]
+If you accidentally overwrite your answer to an exercise, you can undo the change as this is an undoable command! Check out the <<undoing-previous-command-code-undo-code-or-code-u-code,undo>> and <<redoing-the-previously-undone-command-code-redo-code-or-code-r-code,redo>> commands on how you can achieve this.
 
 ====
 *Notes:*
 
-* You can answer an exercise at the specified `INDEX`.
-* The index refers to the question number.
-* The index must be of format `section number`.`question number`, 2.1.1, 3.2.5, 6.1.7
+* `INDEX` refers to the question index shown in the GUI and it must be of the format `WEEK_NUMBER`.`SECTION_NUMBER`.`QUESTION_NUMBER`, e.g. 2.1.1, 3.2.5, 6.1.7
+[NOTE]
+An exercise's `SECTION_NUMBER` is directly adopted from https://nus-cs2103-ay1718s2.github.io/website/index.html[CS2103/T's website].
 ====
 
 *Examples:*
@@ -679,8 +686,10 @@ ri 1
 |
 
 |*View tab*
-|`view TYPE` OR `v TYPE`
-|view exercise
+|`view TYPE` OR `v TYPE` OR `view exercise WEEK_NUMBER`
+|view task +
+view exercise +
+view exercise 5
 
 |*View task*
 |`viewtask OR vt`

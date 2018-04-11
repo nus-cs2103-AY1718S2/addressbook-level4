@@ -2,6 +2,7 @@ package seedu.progresschecker.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.progresschecker.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.progresschecker.logic.commands.ViewCommand.MAX_WEEK_NUMBER;
 
 import java.io.IOException;
 import java.util.function.Predicate;
@@ -48,6 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.progressChecker = new ProgressChecker(progressChecker);
         filteredPersons = new FilteredList<>(this.progressChecker.getPersonList());
         filteredExercises = new FilteredList<>(this.progressChecker.getExerciseList());
+        updateFilteredExerciseList(exercise -> exercise.getQuestionIndex().getWeekNumber() == MAX_WEEK_NUMBER);
         filteredIssues = new FilteredList<>(this.progressChecker.getIssueList());
     }
 

@@ -24,6 +24,8 @@ public class ExerciseCard extends UiPart<Region> {
     @FXML
     private Label studentAnswer;
     @FXML
+    private Label modelAnswerHeader;
+    @FXML
     private Label modelAnswer;
 
     public ExerciseCard(Exercise exercise) {
@@ -32,6 +34,12 @@ public class ExerciseCard extends UiPart<Region> {
         questionIndex.setText(exercise.getQuestionIndex().value);
         question.setText(exercise.getQuestion().value);
         studentAnswer.setText(exercise.getStudentAnswer().value);
-        modelAnswer.setText(exercise.getModelAnswer().value);
+        modelAnswer.setText("");
+
+        if (!exercise.getStudentAnswer().value.equals("")) {
+            questionIndex.getStyleClass().add("answered");
+            modelAnswerHeader.setText("Suggested Answer: ");
+            modelAnswer.setText(exercise.getModelAnswer().value);
+        }
     }
 }

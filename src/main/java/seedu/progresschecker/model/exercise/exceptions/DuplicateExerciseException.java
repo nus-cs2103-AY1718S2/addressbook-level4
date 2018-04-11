@@ -2,6 +2,7 @@ package seedu.progresschecker.model.exercise.exceptions;
 
 import seedu.progresschecker.commons.exceptions.DuplicateDataException;
 
+//@@author iNekox3
 /**
  * Signals that the operation will result in duplicate Exercise objects.
  */

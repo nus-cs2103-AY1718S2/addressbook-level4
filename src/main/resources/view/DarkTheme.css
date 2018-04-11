@@ -446,30 +446,23 @@
     -fx-background-color: #8064a7;
 }
 
-.exercises-panel {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: white;
-    -fx-border: none;
-}
-
-.exercises-panel .content {
-    -fx-background-color: derive(#1d1d1d, 20%);
-}
-
-.exercises-panel:focused .content {
-    -fx-background-color: derive(#1d1d1d, 20%);
-}
-
-.exercises-panel .label {
-    -fx-text-fill: white !important;
-}
-
 .exercise .label {
     -fx-text-fill: white;
 }
 
-.hide-text {
-    -fx-opacity: 0;
+.exercise .question-number {
+    -fx-text-fill: white;
+    -fx-background-color: #fc6d5f;
+    -fx-padding: 0 6 0 6;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 16;
+}
+
+.exercise .answered {
+    -fx-background-color: #31b282;
+}
+
+.exercise .suggested-answer {
+    -fx-text-fill: #0099C7;
 }

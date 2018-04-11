@@ -26,9 +26,6 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Issue> PREDICATE_SHOW_ALL_ISSUES = unused -> true;
 
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Exercise> PREDICATE_SHOW_ALL_EXERCISES = unused -> true;
-
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyProgressChecker newData);
 

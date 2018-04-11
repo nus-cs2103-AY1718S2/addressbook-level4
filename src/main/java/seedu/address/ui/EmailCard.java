@@ -39,7 +39,7 @@ public class EmailCard extends UiPart<Region> {
             this.msg = message;
             //check if it is multipart
             if (message.getContent() instanceof String) {
-                preview.setText(((String) message.getContent()).substring(0, 20));
+                preview.setText(((String) message.getContent()).substring(0, 1));
             } else {
                 Multipart multipart = (Multipart) message.getContent();
                 if (multipart.getCount() > 0) {

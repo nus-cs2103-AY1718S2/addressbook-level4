@@ -162,6 +162,12 @@ public class MainWindow extends UiPart<Stage> {
         } catch (MessagingException e) {
             System.out.println("Caught MessagingException @ Main");
         }
+
+        if (this.theme.equals(DARK_THEME)) {
+            calendarPanel.switchDarkTheme();
+        } else {
+            calendarPanel.switchLightTheme();
+        }
     }
 
     void hide() {
@@ -223,8 +229,10 @@ public class MainWindow extends UiPart<Stage> {
 
         if (this.theme.equals(LIGHT_THEME)) {
             this.theme = DARK_THEME;
+            calendarPanel.switchDarkTheme();
         } else {
             this.theme = LIGHT_THEME;
+            calendarPanel.switchLightTheme();
         }
 
         fullPath = getClass().getResource(this.theme).toExternalForm();

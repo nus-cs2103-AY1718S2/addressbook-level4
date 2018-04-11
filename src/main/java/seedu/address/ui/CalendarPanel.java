@@ -12,7 +12,11 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.appointment.Appointment;
@@ -38,7 +42,13 @@ public class CalendarPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
 
         calendarView.setShowAddCalendarButton(false);
+        calendarView.setShowPrintButton(false);
         calendarView.showMonthPage();
+
+        // Set CSS
+        String fullPath = getClass().getResource("/view/calendar.css").toExternalForm();
+        calendarView.getStylesheets().removeAll();
+        calendarView.getStylesheets().add(fullPath);
 
         calendar = new Calendar("Appointments");
         calendar.setReadOnly(true);
@@ -56,6 +66,23 @@ public class CalendarPanel extends UiPart<Region> {
      */
     public void freeResources() {
         calendarView = null;
+    }
+
+    /**
+     * Switch to dark theme
+     */
+    public void switchDarkTheme() {
+        Blend blendEffect = new Blend(BlendMode.DIFFERENCE);
+        ColorInput colorInput = new ColorInput(0, 0, 2000, 2000, Color.gray(1.0));
+        blendEffect.setTopInput(colorInput);
+        calendarView.setEffect(blendEffect);
+    }
+
+    /**
+     * Switch to light theme
+     */
+    public void switchLightTheme() {
+        calendarView.setEffect(null);
     }
 
     /**

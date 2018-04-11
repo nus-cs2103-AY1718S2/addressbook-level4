@@ -14,7 +14,7 @@ import com.google.api.services.calendar.model.EventReminder;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
 
-//@@author cambioforma
+//@@author cambioforma-unused
 /**
  * Indicates when a person's birthday has been changed
  */

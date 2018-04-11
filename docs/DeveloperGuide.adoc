@@ -492,17 +492,20 @@ image::OauthModelDiagram.png[width="800"]
 
 // end::calendarview[]
 
-// tag::mapview[]
-=== Map View feature
+// tag::mapComponents[]
+=== Map Components
 ==== Current Implementation
 
-The map view feature is implemented using `GMapsFX`, an imported library created by https://github.com/rterp/GMapsFX[rterp]. The library contains basic integration of Google Maps APIs into FMXL files. There feature supports the display and retrieval of `Person` addresses as a marker on Google Maps.
+The map view feature is implemented using `GMapsFX`, an imported library created by https://github.com/rterp/GMapsFX[rterp]. The library contains basic integration of Google Maps APIs into FMXL files.
+The feature supports the display and retrieval of addresses as a marker and of directions on the various Google Map components implemented across the application. There are two main instances of Map: in `Details` Feature and `Daily Scheduler` Feature.
 
-`GeocodeUtil` residing in `Commons`, in the `Util` folder, facilitates the retrieval of geocode from specified address. Selecting other persons will pan the displayed map to the appropriate location.
+Each map is loaded a separately as independent `MapPanels` with their own `MapManager`, located in `logic` folder managing them. Switching out of feature will unload the respective `MapPanel`, required due to limitations of API used.
+
+The feature can create markers to pin beneficiary location on map and also display suggested navigation routes between event locations.
 
 TODO: INSERT FINALISED DIAGRAM HERE
 
-The Map View feature will involve the UI component as while as the Model component, to retrieve the respective address of selected person.
+The Map View feature will involve the UI component as while as the Model component.
 
 TODO: SECTION INCOMPLETE
 
@@ -512,23 +515,43 @@ TODO: SECTION INCOMPLETE
 
 * **Alternative 1 (current choice):** `GMapsFX`
 ** Pros: Intuitive to use. Collated various Google Map APIs to be compatible with JavaFX. Sufficient for displaying and controlling simple usage of Google Maps. Once loaded, the map does not require further initialisation calls to load different address.
-** Cons: Unclear documentation. Several methods are designed as lambda expressions but not specified in documentation. Limited flexibility.
-* **Alternative 2:** Use WebView component and load HTML file containing simple embeded Google Maps
-** Pros: Very easy to implement.
-** Cons: Requires re-loading for each call to view different person. Lacking in control. Application cannot communicate efficiently to loaded pages.
+** Cons: Documentation is at times unclear. Several methods are designed as lambda expressions but not specified in documentation. Limited flexibility. Can only load one map at a time.
+* **Alternative 2:** Use WebView component and load HTML file containing simple embedded Google Maps
+** Pros: Easy to implement.
+** Cons: Requires re-loading for each call to view different person. Lacking in control. Application cannot communicate efficiently to loaded pages. Easy to break. Inflexible.
 * **Alternative 3:** Integrate Google Maps APIs directly
 ** Pros: Well-documented. Full-access to Google Maps APIs allows for great flexibility.
-** Cons: Too complicated. Not built/compatible for JavaFX.
+** Cons: Too complicated. Not built/compatible for JavaFX. Cannot load more than one map at a time.
 
-===== Aspect: Retrieving Geocode
+===== Aspect: Logic
 
-* **Alternative 1 (current choice):** Use implement `GeocodeUtil` in `Commons`.
-** Pros: Abstracted the calling of geocode request. Accessible across all components.
-** Cons: May have issues with retrieving correct data.
-* **Alternative 2:** Individual calls for `GeocodingService` in each UI controller using GMapsFX.
-** Pros: Easier to implement.
-** Cons: Bad SE practice. Violates proposed architecture.
-// end::mapview[]
+* **Alternative 1 (current choice):** Maintain a non-static `MapManager` in `logic` to handle manipulation of Map.
+** Pros: Cleaner code. Each `MapPanel` maintains their own logic controller. Avoids asynchronous event/callback errors.
+** Cons: May have issues with retrieving correct data. Have to instantiate new `MapManager` for every instance of Map.
+* **Alternative 2:** Use a static Map logic manager that is called only when required.
+** Pros: Not all map instances require a dedicated MapManager to handle requests.
+** Cons: GMapsFX has limitations in using static class, attributes has to be reset for each Map.
+// end::mapComponents[]
+
+// tag::dailyScheduler[]
+=== Daily Scheduler
+==== Current Implementation
+
+Feature includes a list of scheduled events for the specified day in addition to the aforementioned maps implemented using `GMapsFX`, an imported library created by https://github.com/rterp/GMapsFX[rterp].
+
+`Daily Scheduler` feature involves two separate sections,`Events List Display` and `Navigation`. The display portion focuses on retrieving events of the specified date whereas the navigation portion seeks to retrieve suggested routes between those events.
+
+TODO: INSERT FINALISED DIAGRAM HERE
+
+The `Daily Scheduler` feature will involve the UI component as while as the Model component, and makes use of `OAuthManager` to get required events.
+
+TODO: SECTION INCOMPLETE
+
+==== Design Considerations
+
+TODO: SECTION INCOMPLETE
+
+// end::dailyScheduler[]
 
 === Logging
 
@@ -982,9 +1005,7 @@ This calendar will be seperate from their personal calendar so as to keep busine
 Additionally, this calendar will integrate with the daily scheduler function to help optimize their time in a day.
 
 `Minor Feature:` Daily Scheduler (Events)
-* Collates the user's list of calendar events for the day into an easily consumable view.
-* Allows the user to plan the most optimal route of travel for their beneficiary visits for the day and creates the
-optimal schedule for them.
+
 
 `Minor Feature:` View Error Log in App
 * Allows the user to view the application's error from within the application itself.
@@ -994,18 +1015,24 @@ optimal schedule for them.
 
 **Chan Jin Jia**
 
-`Major Feature:` Map Location and Main UI
+`Major Feature:` Map Location and Daily Scheduler
 
 * As our application aims to better the day-to-day operations of a social worker, integrating maps into our application
 greatly aids their visitation process. This integration aims to make the locating of beneficiaries much more convenient.
+* A vital feature to any social worker will be that of a daily scheduler that lists their scheduled events for the day.
+Not only does the daily scheduler collates the user's list of calendar events for the day into an easily consumable view,
+the daily scheduler feature of our app will also display the suggested route between event locations or beneficiary addresses to facilitate ease of movement.
+* Allows the social worker to plan the most optimal route of travel for their beneficiary visits for the day and creates the
+optimal schedule for them.
+
+`Minor Feature:` Main GUI and CSS
+
 * In addition, a cleaner Main UI will be required to better display our Session Logger and Planner (SLAP) for
 Social Worker application as it will contain several major features (beneficiary details, calendar, and daily
 scheduler).
-
-`Minor Feature:` Daily Scheduler (Navigation)
-
-* Rather than just seeing where the beneficiary is located, the daily scheduler feature of our app will display the
-route between addresses of the beneficiaries on the daily agenda to facilitate ease of movement.
+* On the details feature, map is loaded to display address of beneficiary and a panel of previous session logs are loaded
+to remind social worker of previous sessions with the beneficiary.
+* The scheduler feature contains indicators on the right of the map to provide visual cues of the number of journeys required for the day.
 
 **Kaiser Tan**
 
@@ -1288,9 +1315,9 @@ Use case ends.
 ** 1a1. AddressBook notifies user that there is no error log.
 +
 Use case ends.
-
 //@@author
 
+// tag::jaronUseCases[]
 [discrete]
 === Use case: Switch Views of Features
 
@@ -1331,6 +1358,8 @@ Use case ends.
 ** 2a1. AddressBook notifies user that there are no events.
 +
 Use case ends.
+
+// end::jaronUseCases[]
 
 [discrete]
 === Use case: User Login

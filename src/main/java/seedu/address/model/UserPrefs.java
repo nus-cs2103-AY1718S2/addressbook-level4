@@ -14,6 +14,7 @@ public class UserPrefs {
     private String addressBookName = "reInsurance";
     private String exportPortfolioFilePath = "data/portfolio.csv";
     private String calendarIdFilePath = "data/calendarId.txt";
+    private String passwordFilePath = "data/password.txt";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -54,6 +55,7 @@ public class UserPrefs {
     public void setExportPortfolioFilePath(String exportPortfolioFilePath) {
         this.exportPortfolioFilePath = exportPortfolioFilePath;
     }
+
     public String getCalendarIdFilePath() {
         return calendarIdFilePath;
     }
@@ -61,6 +63,15 @@ public class UserPrefs {
     public void setCalendarIdFilePath(String calendarIdFilePath) {
         this.calendarIdFilePath = calendarIdFilePath;
     }
+
+    public String getPasswordFilePath() {
+        return passwordFilePath;
+    }
+
+    public void setPasswordFilePath(String passwordFilePath) {
+        this.passwordFilePath = passwordFilePath;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

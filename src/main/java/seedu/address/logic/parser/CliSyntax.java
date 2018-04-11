@@ -68,6 +68,8 @@ public class CliSyntax {
             OPTION_WEEK, OPTION_DAY)
             .collect(Collectors.toSet());
 
+    public static final int MAX_SYNTAX_SIZE = Math.max(commandWords.size(), Math.max(prefixes.size(), options.size()));
+
     public static CliSyntax getInstance() {
         if (instance == null) {
             instance = new CliSyntax();

@@ -1,0 +1,62 @@
+= Aditya Agarwal - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: ProgressChecker
+
+---
+
+== Overview
+
+ProgressChecker is a desktop ProgressChecker application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+This portfolio is to collect and combine my contribution towards the development of ProgressChecker. This portfolio gives a glimpse of the software programming knowledge I have imbibed during the course of CS2103T. In this portfolio I have described few enhancements I have made to the application with the skills learnt in this software engineering course.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to track issues on github*
+** What it does: allows the teammates in a project to track issues on the team repository on github from the ProgressChecker application.
+** Justification: This feature improves the teammate's efficiency to manage issues on github by giving him the ability to create, edit, close issues with minimal effort and concentrate on bigger problems. This way users can easily manage issues on github with a few key strokes, and without having to go through the complications of using a GUI.
+** Highlights: This enhancement makes use of the complete software architecture by touching upon all the four design components. This enhancement needed addition of many new commands, some which are : `gitlogin`, `createissue`, `editissue`, `closeissue`.
+** Credits: Development of this feature made of use of the http://github-api.kohsuke.org/[Github Java API](org.eclipse.egit.github.core).
+
+* *Minor enhancement*: Added a dynamic search feature which dynamically filters the contact list of a user without the user having to press enter every time.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T09-B3/main/blob/master/collated/functional/adityaa1998.md[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** Features
+*** Auto-complete: added functionality for the commands to be autocompleted on `TAB` press. (Pull request https://github.com/CS2103JAN2018-T09-B3/main/pull/108[#108]).
+** Project management:
+*** Managed releases `v1.2` - `v1.5rc` (3 releases) on GitHub
+*** Managed milestones `v1.1` - `v1.5rc` (5 releases) on GitHub
+** Enhancements to existing features:
+*** Added alias to the command (Pull request https://github.com/CS2103JAN2018-T09-B3/main/pull/8[#8])
+** Documentation:
+*** Made the user guide more user friendly and updated it with the all the relevant features. (Pull requests https://github.com/CS2103JAN2018-T09-B3/main/pull/41[#41], https://github.com/CS2103JAN2018-T09-B3/main/pull/158[#158], https://github.com/CS2103JAN2018-T09-B3/main/pull/176[#176]).
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F14-B4/issues/142[#142], https://github.com/CS2103JAN2018-F14-B4/issues/144[#144], https://github.com/CS2103JAN2018-F14-B4/issues/147[#147])
+** Tools:
+*** Integrated a http://github-api.kohsuke.org/[Github Java API](org.eclipse.egit.github.core) to the project https://github.com/CS2103JAN2018-T09-B3/main[ProgressChecker].
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=issues]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=search]
+

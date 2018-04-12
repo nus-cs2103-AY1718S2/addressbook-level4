@@ -16,7 +16,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
- * Finds and groups all persons in Fastis whose name contains any of the argument keywords to a specific group.
+ * Finds a person by index  add him to a specific group in Fastis .
  * Keyword matching is case sensitive.
  */
 public class AddMembersToGroupCommand extends UndoableCommand {

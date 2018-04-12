@@ -16,7 +16,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Finds and groups all persons in Fastis whose name contains any of the argument keywords to a specific group.
+ * Finds by index and delete person in a group that exist in  Fastis .
  * Keyword matching is case sensitive.
  */
 public class DeleteMembersFromGroupCommand extends UndoableCommand {

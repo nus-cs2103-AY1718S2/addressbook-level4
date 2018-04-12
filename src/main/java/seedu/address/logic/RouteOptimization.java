@@ -112,7 +112,6 @@ public class RouteOptimization {
     }
 
     //@@author meerakanani10
-
     /**
      * Recursive function to get the distance between addresses
      * @param filteredAddresses - list of addresses
@@ -145,7 +144,6 @@ public class RouteOptimization {
     }
     //@@author meerakanani10
     /**
-     *
      * @param origin - starting point
      * @param destination - ending point
      * @return
@@ -158,7 +156,6 @@ public class RouteOptimization {
 
     //@@author meerakanani10
     /**
-     *
      * @param combinedAddresses - the key from the hashmaps
      * @return the addresses split, in an array.
      */
@@ -169,7 +166,6 @@ public class RouteOptimization {
 
     //@@author meerakanani10
     /**
-     *
      * @param address address to be edited
      * @return
      */

@@ -734,6 +734,7 @@ An example of a `[PATH TO IMAGE]` would be C:\Users\Desktop\Image.jpg for Window
 If this is empty, the application will default to using the default profile picture
 which is stored in `src/resources/images/displayPic` as `default.png`.
 If a valid path to an image is provided, the image will be processed and copied over to the `data` folder where the
+
 `addressbook.xml` is stored as well.
 
 The image copied over will be stored with a SHA-256 hash name. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.

@@ -32,16 +32,16 @@ public class CommandBoxTest extends GuiUnitTest {
             + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
     private static final String ADD_COMMAND = "add";
     private static final String SECOND_FIELD_OF_ADD_COMMAND = "cooking_time/";
-    public static final Prefix PREFIX_NAME = new Prefix("name/");
+    public static final Prefix PREFIX_CALORIES = new Prefix("calories/");
+    public static final Prefix PREFIX_COOKING_TIME = new Prefix("cooking_time/");
+    public static final Prefix PREFIX_IMG = new Prefix("img/");
     public static final Prefix PREFIX_INGREDIENT = new Prefix("ingredient/");
     public static final Prefix PREFIX_INSTRUCTION = new Prefix("instruction/");
-    public static final Prefix PREFIX_COOKING_TIME = new Prefix("cooking_time/");
+    public static final Prefix PREFIX_NAME = new Prefix("name/");
     public static final Prefix PREFIX_PREPARATION_TIME = new Prefix("preparation_time/");
-    public static final Prefix PREFIX_CALORIES = new Prefix("calories/");
     public static final Prefix PREFIX_SERVINGS = new Prefix("servings/");
     public static final Prefix PREFIX_TAG = new Prefix("tag/");
     public static final Prefix PREFIX_URL = new Prefix("url/");
-    public static final Prefix PREFIX_IMG = new Prefix("img/");
     private static final String RECIPE_NAME = "Chicken rice";
     private static final String ADD_COMMAND_WITH_PREFIX_NAME = ADD_COMMAND + WHITESPACE + PREFIX_NAME;
     private static final String AUTO_COMPLETION_FOR_ADD_COMMAND = ADD_COMMAND + WHITESPACE + LF + PREFIX_NAME
@@ -241,6 +241,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     //@@author kokonguyen191
+
     /**
      * Checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
      */

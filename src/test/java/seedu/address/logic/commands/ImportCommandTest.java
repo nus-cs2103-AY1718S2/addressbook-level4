@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.ASSIGNMENT3_DEMO1_FILE_PATH;
@@ -21,10 +22,13 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.FilePath;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyDeskBoard;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.XmlDeskBoardStorage;
 
 //@@author karenfrilya97
 public class ImportCommandTest {
@@ -97,13 +101,19 @@ public class ImportCommandTest {
         expectedModel.addActivity(ASSIGNMENT3);
         expectedModel.addActivity(DEMO1);
 
-        Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
-        ImportCommand importCommand = getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, actualModel);
+        Model model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+        // ImportCommand importCommand = getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, actualModel);
 
         try {
-            assertCommandSuccess(importCommand, actualModel, expectedMessage, expectedModel);
-        } catch (AssertionError ae) {
-            throw ae.getCause().getCause();
+            ReadOnlyDeskBoard toImport = new XmlDeskBoardStorage(DUPLICATE_ACTIVITY_FILE_PATH).readDeskBoard()
+                    .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, DUPLICATE_ACTIVITY_FILE_PATH)));
+
+            model.addActivities(toImport);
+            CommandResult result = new CommandResult(String.format(ImportCommand.MESSAGE_SUCCESS, DUPLICATE_ACTIVITY_FILE_PATH));
+            assertEquals(expectedMessage, result.feedbackToUser);
+            assertEquals(expectedModel, model);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
         }
     }
 

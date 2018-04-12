@@ -5,13 +5,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.EXISTING_FILE_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.EXPORT_FILE_PATH;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.ExportCommand.MESSAGE_FILE_EXISTS;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_FILE_NOT_FOUND;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.junit.Rule;
 import org.junit.Test;

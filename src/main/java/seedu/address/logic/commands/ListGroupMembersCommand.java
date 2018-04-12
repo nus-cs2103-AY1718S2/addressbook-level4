@@ -35,8 +35,14 @@ public class ListGroupMembersCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         List<Group> groupList = model.getFilteredGroupList();
-        if (!groupList.contains(groupToList)) {
-            throw new CommandException(MESSAGE_NO_SUCH_GROUP);
+        boolean contains = new Boolean(Boolean.FALSE);
+        for(Group g : groupList) {
+            if (g.getInformation().equals(groupToList.getInformation())) {
+                contains = true;
+            }
+        }
+        if(contains == false) {
+                throw new CommandException(MESSAGE_NO_SUCH_GROUP);
         } else {
             for (Group group : groupList) {
                 if (groupToList.getInformation().equals(group.getInformation())) {

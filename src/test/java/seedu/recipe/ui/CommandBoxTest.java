@@ -42,6 +42,7 @@ public class CommandBoxTest extends GuiUnitTest {
     private static final String PREFIX_TAG = "tag/";
     private static final String PREFIX_URL = "url/";
     private static final String RECIPE_NAME = "Chicken rice";
+    private static final String TAG = "Best";
     private static final String ADD_COMMAND_WITH_PREFIX_NAME = ADD_COMMAND + WHITESPACE + PREFIX_NAME;
     private static final String AUTO_COMPLETION_FOR_ADD_COMMAND = ADD_COMMAND + WHITESPACE + LF + PREFIX_NAME
             + WHITESPACE + LF + PREFIX_INGREDIENT + WHITESPACE + LF + PREFIX_INSTRUCTION + WHITESPACE + LF
@@ -53,6 +54,11 @@ public class CommandBoxTest extends GuiUnitTest {
             + WHITESPACE + LF + PREFIX_COOKING_TIME + WHITESPACE + LF + PREFIX_PREPARATION_TIME + WHITESPACE + LF
             + PREFIX_CALORIES + WHITESPACE + LF + PREFIX_SERVINGS + WHITESPACE + LF + PREFIX_URL + WHITESPACE + LF
             + PREFIX_IMG + WHITESPACE + LF + PREFIX_TAG;
+    private static final String AUTO_COMPLETION_FOR_ADD_COMMAND_WITH_RECIPE_NAME_AND_TAG = ADD_COMMAND + WHITESPACE + LF
+            + PREFIX_NAME + RECIPE_NAME + WHITESPACE + LF + PREFIX_INGREDIENT + WHITESPACE + LF + PREFIX_INSTRUCTION
+            + WHITESPACE + LF + PREFIX_COOKING_TIME + WHITESPACE + LF + PREFIX_PREPARATION_TIME + WHITESPACE + LF
+            + PREFIX_CALORIES + WHITESPACE + LF + PREFIX_SERVINGS + WHITESPACE + LF + PREFIX_URL + WHITESPACE + LF
+            + PREFIX_IMG + WHITESPACE + LF + PREFIX_TAG + TAG;
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -142,6 +148,11 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyboardShortcutsMapping.NEXT_FIELD);
         commandBoxHandle.insertText(RECIPE_NAME);
         assertInput(AUTO_COMPLETION_FOR_ADD_COMMAND_WITH_RECIPE_NAME);
+
+        guiRobot.push(KeyboardShortcutsMapping.PREV_FIELD);
+        guiRobot.push(KeyboardShortcutsMapping.PREV_FIELD);
+        commandBoxHandle.insertText(TAG);
+        assertInput(AUTO_COMPLETION_FOR_ADD_COMMAND_WITH_RECIPE_NAME_AND_TAG);
     }
 
     //@@author

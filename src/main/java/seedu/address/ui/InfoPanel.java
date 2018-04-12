@@ -54,9 +54,7 @@ public class InfoPanel extends UiPart<Region> {
         CalendarPanel calendarPanel = new CalendarPanel(new Schedule(), new AddressBook());
         calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
 
-        dashboardPanelPlaceholder.setVisible(false);
-        browserPanelPlaceholder.setVisible(false);
-        calendarPlaceholder.toFront();
+        showBrowserPanel();
 
         registerAsAnEventHandler(this);
     }

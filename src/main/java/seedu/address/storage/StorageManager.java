@@ -122,17 +122,28 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     //@@author samuelloh
-
     @Override
     public void setupViewFiles() throws IOException {
-        FileUtil.createIfMissing(new File(xmlRequiredIndexStorage.getFilePath()));
-        FileUtil.createIfMissing(new File("data/view/" + STUDENT_MISC_INFO_PAGE));
-        FileUtil.createIfMissing(new File("data/view/" + STUDENT_INFO_PAGE_STYLESHEET));
-        FileUtil.createIfMissing(new File("data/view/profile_photo_placeholder.png"));
 
-        exportResource("data/view/" + STUDENT_MISC_INFO_PAGE);
-        exportResource("data/view/" + STUDENT_INFO_PAGE_STYLESHEET);
-        exportResource("data/view/" + "profile_photo_placeholder.png");
+        String miscInfoPage = "data/view/" + STUDENT_MISC_INFO_PAGE;
+        String infoPageStylesheet = "data/view/" + STUDENT_INFO_PAGE_STYLESHEET;
+        String defaultPhoto = "data/view/profile_photo_placeholder.png";
+
+        FileUtil.createIfMissing(new File(xmlRequiredIndexStorage.getFilePath()));
+        if (FileUtil.isFileExists(new File(miscInfoPage))) {
+            FileUtil.createFile(new File(miscInfoPage));
+            exportResource("data/view/" + STUDENT_MISC_INFO_PAGE);
+        }
+
+        if (FileUtil.isFileExists(new File(infoPageStylesheet))) {
+            FileUtil.createFile((new File(infoPageStylesheet)));
+            exportResource("data/view/" + STUDENT_INFO_PAGE_STYLESHEET);
+        }
+
+        if (FileUtil.isFileExists((new File(defaultPhoto)))) {
+            FileUtil.createFile(new File(defaultPhoto));
+            exportResource("data/view/" + "profile_photo_placeholder.png");
+        }
     }
 
     /**

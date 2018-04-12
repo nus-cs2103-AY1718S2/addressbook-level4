@@ -358,13 +358,6 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -1237,7 +1230,7 @@ _{More to be added}_
 Personal information refers to the personal particulars of a customer, including his/her name, contact number, address and email address.
 
 
-[[meal-order]] : Meal order information::
+[[meal-order]] Meal order information::
 Meal order information refers to which dishes are ordered, what time it is ordered, what time it should be delivered, the total money of the dishes
 
 

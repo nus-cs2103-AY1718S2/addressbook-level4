@@ -54,12 +54,9 @@ public class ExportCommandTest {
 
         assertEquals(String.format(ExportCommand.MESSAGE_SUCCESS, EXPORT_FILE_PATH), commandResult.feedbackToUser);
         assertEquals(getTypicalDeskBoard(), actualDeskBoard);
-        new File(EXPORT_FILE_PATH).deleteOnExit(); // so that the test will not fail when run the second time onwards
+        new File(EXPORT_FILE_PATH).deleteOnExit();
     }
 
-    /**
-     * Test
-     */
     @Test
     public void execute_existingFile_throwsCommandException() throws Throwable {
         String expectedMessage = String.format(MESSAGE_FILE_EXISTS, EXISTING_FILE_PATH);

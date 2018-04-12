@@ -43,9 +43,6 @@ public class ImportCommandTest {
         new ImportCommand(null);
     }
 
-    /**
-     * Test
-     */
     @Test
     public void execute_validFilePath_success() throws Throwable {
         String expectedMessage = String.format(ImportCommand.MESSAGE_SUCCESS, ASSIGNMENT3_DEMO1_FILE_PATH);
@@ -73,7 +70,6 @@ public class ImportCommandTest {
     /**
      * Test
      */
-    @Test
     public void execute_illegalValuesInFile_throwsCommandException() throws Throwable {
         String expectedMessage = String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, ILLEGAL_VALUES_FILE_PATH);
 

@@ -60,7 +60,7 @@ public class AddMemberToGroupCommandTest {
         thrown.expect(NullPointerException.class);
         new AddMemberToGroupCommand(null, null);
     }
-    
+
     @Test
     public void execute_groupAcceptedByModel_addSuccessful() throws Exception {
         AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded modelStub = new

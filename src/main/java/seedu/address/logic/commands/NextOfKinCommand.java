@@ -42,7 +42,7 @@ public class NextOfKinCommand extends UndoableCommand {
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_REMARK + "REMARK\n"
+            + PREFIX_REMARK + "RELATIONSHIP\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "John "
             + PREFIX_PHONE + "96784213 "

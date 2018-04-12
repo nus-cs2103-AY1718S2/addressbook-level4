@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
@@ -27,22 +26,19 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_NRIC + "NRIC "
             + "[" + PREFIX_TAG + "TAG] "
             + "[" + PREFIX_REMARK + "REMARK] "
-            + "[" + PREFIX_SUBJECT + "SUBJECT_NAME SUBJECT_GRADE] "
-            + PREFIX_NOK + "NEXT_OF_KIN\n"
+            + "[" + PREFIX_SUBJECT + "SUBJECT_NAME SUBJECT_GRADE]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_NRIC + "S9876543H "
             + PREFIX_TAG + "3A "
             + PREFIX_REMARK + "English Rep "
-            + PREFIX_SUBJECT + "English A2 Tamil A2 AMath B3 Phy A1 EMath A2 Hist A2 "
-            + PREFIX_NOK + "Jonathan Doe\n"
+            + PREFIX_SUBJECT + "English A2 Tamil A2 AMath B3 Phy A1 EMath A2 Hist A2\n"
             + "Example: " + COMMAND_ALIAS + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_NRIC + "S9876543H "
             + PREFIX_TAG + "3A "
             + PREFIX_REMARK + "English Rep "
-            + PREFIX_SUBJECT + "English A2 Tamil A2 AMath B3 Phy A1 EMath A2 Hist A2 "
-            + PREFIX_NOK + "Jonathan Doe";
+            + PREFIX_SUBJECT + "English A2 Tamil A2 AMath B3 Phy A1 EMath A2 Hist A2";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

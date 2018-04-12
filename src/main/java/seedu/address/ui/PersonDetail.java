@@ -38,22 +38,44 @@ public class PersonDetail extends UiPart<Stage> {
     private Label expectedSpending;
     @FXML
     private Label age;
+    @FXML
+    private Label isNewClient;
+    @FXML
+    private Label policy;
 
     public PersonDetail(Person person, int displayedIndex) {
         super("PersonDetail.fxml", new Stage());
         this.person = person;
-        this.id.setText(displayedIndex + ". ");
-        this.name.setText(person.getName().fullName);
-        this.phone.setText(person.getPhone().value);
-        this.address.setText(person.getAddress().value);
-        this.income.setText(person.getIncome().toString());
-        this.age.setText("Age: " + person.getAge().toString());
-        this.email.setText(person.getEmail().value);
-        this.actualSpending.setText("Actual Spending: " + person.getActualSpending().toString());
-        this.expectedSpending.setText("Expected Spending: " + person.getExpectedSpending().toString());
-        person.getTags().forEach((tag) -> {
-            this.tags.getChildren().add(new Label(tag.tagName));
-        });
+        registerAsAnEventHandler(this);
+        id.setText(displayedIndex + ". ");
+        name.setText(person.getName().fullName);
+        phone.setText(person.getPhone().value);
+        address.setText(person.getAddress().value);
+        //@author SoilChang
+        income.setText("Income: " + person.getIncome().toString());
+        age.setText("Age: " + person.getAge().toString() + " years old");
+        email.setText(person.getEmail().value);
+        actualSpending.setText("Actual Spending: " + person.getActualSpending().toString());
+        expectedSpending.setText("Predicted Spending: " + person.getExpectedSpending().toString());
+        isNewClient.setText("New Client");
+        if (person.getPolicy().isPresent()) {
+            policy.setText("Policy: " + person.getPolicy().get().toString());
+        } else {
+            policy.setText("Has not applied to any policy");
+        }
+
+        if (person.getActualSpending().value != 0.0) {
+            // the client has actual income
+            actualSpending.setVisible(true);
+            isNewClient.setVisible(false);
+            expectedSpending.setVisible(false);
+        } else {
+            actualSpending.setVisible(false);
+            isNewClient.setVisible(true);
+            expectedSpending.setVisible(true);
+        }
+        //@author
+        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
     /**

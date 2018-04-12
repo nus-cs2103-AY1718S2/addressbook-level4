@@ -41,6 +41,8 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
     private ContextMenu suggestionBox;
+
+    private boolean isAutocompleting;
     private Autocomplete autocompleteLogic = Autocomplete.getInstance();
 
     private List<String> suggestions;
@@ -68,6 +70,7 @@ public class CommandBox extends UiPart<Region> {
             }
         };
         commandTextField.textProperty().addListener(autocompleteListener);
+        isAutocompleting = true;
         //@@author
     }
 
@@ -87,6 +90,15 @@ public class CommandBox extends UiPart<Region> {
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            break;
+        case F2:
+            if (isAutocompleting) {
+                commandTextField.textProperty().removeListener(getAutocompleteListener());
+                isAutocompleting = false;
+            } else {
+                commandTextField.textProperty().addListener(getAutocompleteListener());
+                isAutocompleting = true;
+            }
             break;
         default:
             if (suggestionBox.isShowing()) {

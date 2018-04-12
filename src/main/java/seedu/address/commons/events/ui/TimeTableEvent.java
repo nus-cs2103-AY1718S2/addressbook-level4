@@ -23,6 +23,6 @@ public class TimeTableEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return null;
+        return "TimeTableEvent";
     }
 }

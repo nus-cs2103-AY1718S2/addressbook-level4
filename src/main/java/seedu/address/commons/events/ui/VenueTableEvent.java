@@ -23,6 +23,6 @@ public class VenueTableEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return null;
+        return "VenueTableEvent";
     }
 }

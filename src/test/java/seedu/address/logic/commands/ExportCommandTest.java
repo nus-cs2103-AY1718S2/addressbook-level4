@@ -26,7 +26,7 @@ public class ExportCommandTest {
                 userPrefs.getExportPortfolioFilePath());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.export(exportType);
+        expectedModel.exportPortfolio(userPrefs.getExportPortfolioFilePath());
 
         assertCommandSuccess(exportCommand, model, expectedMessage, expectedModel);
     }

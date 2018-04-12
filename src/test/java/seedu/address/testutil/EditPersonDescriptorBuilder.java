@@ -80,6 +80,17 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author Sebry9
+    /**
+     * Sets the {@code Insurance} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withInsurance(String... insurances) {
+        Set<Insurance> insuranceSet = Stream.of(insurances).map(Insurance::new).collect(Collectors.toSet());
+        descriptor.setInsurances(insuranceSet);
+        return this;
+    }
+
+
     /**
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */

@@ -23,6 +23,7 @@ public class XmlAdaptedPersonTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_INSURANCE = "!Health";
 
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
@@ -109,6 +110,18 @@ public class XmlAdaptedPersonTest {
             VALID_BIRTHDAY, VALID_APPOINTMENT, VALID_GROUP, VALID_INSURANCE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+
+    //@@author Sebry9
+    @Test
+    public void toModelType_invalidInsurances_throwsIllegalValueException() {
+        List<XmlAdaptedInsurance> invalidInsurances = new ArrayList<>(VALID_INSURANCE);
+        invalidInsurances.add(new XmlAdaptedInsurance(INVALID_INSURANCE));
+        XmlAdaptedPerson person =
+            new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, VALID_BIRTHDAY,
+                VALID_APPOINTMENT, VALID_GROUP, invalidInsurances);
+        Assert.assertThrows(IllegalValueException.class, person::toModelType);
     }
 
     @Test

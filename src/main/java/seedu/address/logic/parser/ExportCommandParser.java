@@ -21,7 +21,12 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     public ExportCommand parse(String args) throws ParseException {
         try {
             ExportType typeToExport = ParserUtil.parseExportType(args);
-            return new ExportCommand(typeToExport);
+            if (typeToExport.equals(ExportType.PORTFOLIO)) {
+                String filePath = ParserUtil.parseExportFilePath(args);
+                return new ExportCommand(typeToExport, filePath);
+            } else {
+                return new ExportCommand(typeToExport);
+            }
         } catch (IncorrectExportTypeException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));

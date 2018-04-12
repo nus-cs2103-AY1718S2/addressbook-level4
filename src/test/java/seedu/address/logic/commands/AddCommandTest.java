@@ -21,7 +21,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.export.ExportType;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -136,8 +135,13 @@ public class AddCommandTest {
         }
 
         @Override
-        public void export(ExportType typeToExport) {
+        public void exportCalendar() {
+            fail("This method should not be called.");
+        }
 
+        @Override
+        public void exportPortfolio(String filePath) {
+            fail("This method should not be called.");
         }
 
         @Override

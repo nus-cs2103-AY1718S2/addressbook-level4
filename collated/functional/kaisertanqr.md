@@ -7,7 +7,7 @@
 public class LoginStatusBar extends UiPart<Region> {
 
     public static final String LOGIN_STATUS_PREFIX = "Status: ";
-    public static final String LOGIN_STATUS_TRUE = "Logged In";
+    public static final String LOGIN_STATUS_TRUE = "Logged in as ";
     public static final String LOGIN_STATUS_FALSE = "Not Logged In";
 
     private static final String FXML = "LoginStatusBar.fxml";
@@ -17,7 +17,7 @@ public class LoginStatusBar extends UiPart<Region> {
 
     public LoginStatusBar() {
         super(FXML);
-        updateLoginStatus(false);
+        updateLoginStatus(false, null);
         registerAsAnEventHandler(this);
     }
 
@@ -25,9 +25,11 @@ public class LoginStatusBar extends UiPart<Region> {
      * Updates the UI with the login status, {@code status}.
      * @param status
      */
-    public void updateLoginStatus(boolean status) {
+    public void updateLoginStatus(boolean status, User user) {
         if (status) {
-            Platform.runLater(() -> this.loginStatus.setText(LOGIN_STATUS_PREFIX + LOGIN_STATUS_TRUE));
+```
+###### /java/seedu/address/ui/LoginStatusBar.java
+``` java
             loginStatus.setStyle("-fx-background-color: rgb(0, 77, 26, 0.5)");
         } else {
             Platform.runLater(() -> this.loginStatus.setText(LOGIN_STATUS_PREFIX + LOGIN_STATUS_FALSE));
@@ -45,27 +47,29 @@ public class LoginStatusBar extends UiPart<Region> {
     /**
      * Hides browser and person list panel.
      */
-    void hideBeforeLogin() {
-        loginStatusBar.updateLoginStatus(false);
+    public void hideBeforeLogin() {
+        loginStatusBar.updateLoginStatus(false, null);
         featuresTabPane.setVisible(false);
         personDetailsPlaceholder.setVisible(false);
         calendarPlaceholder.setVisible(false);
         dailySchedulerPlaceholder.setVisible(false);
         personListPanelPlaceholder.setVisible(false);
+        logger.fine("Hiding panels before login.");
     }
 
     /**
      * Unhide browser and person list panel.
      */
     public void showAfterLogin() {
-        loginStatusBar.updateLoginStatus(true);
+        loginStatusBar.updateLoginStatus(true, logic.getLoggedInUser());
         featuresTabPane.setVisible(true);
         personDetailsPlaceholder.setVisible(true);
         calendarPlaceholder.setVisible(true);
         dailySchedulerPlaceholder.setVisible(true);
         personListPanelPlaceholder.setVisible(true);
-    }
+        logger.fine("Displaying panels after login.");
 
+    }
 ```
 ###### /java/seedu/address/commons/events/model/UserDatabaseChangedEvent.java
 ``` java
@@ -101,6 +105,189 @@ public class UserDeletedEvent extends BaseEvent {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/CreateUserCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new CreateUserCommand object
+ */
+public class CreateUserCommandParser implements Parser<CreateUserCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the CreateUserCommand
+     * and returns an CreateUserCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public CreateUserCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_USERNAME, PREFIX_PASSWORD);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_USERNAME, PREFIX_PASSWORD)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateUserCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Username username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
+            Password password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD)).get();
+
+            User user = new User(username, password);
+            return new CreateUserCommand(user);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/AddSessionLogCommandParser.java
+``` java
+
+/**
+ * Parses input arguments and creates a new AddSessionLogCommand object
+ */
+public class AddSessionLogCommandParser implements Parser<AddSessionLogCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddSessionLogCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_LOG);
+
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddSessionLogCommand.MESSAGE_USAGE));
+        }
+
+        String sessionLogsToAdd = argMultimap.getValue(PREFIX_LOG).get();
+
+
+        return new AddSessionLogCommand(index, sessionLogsToAdd);
+    }
+
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+
+
+
+}
+```
+###### /java/seedu/address/logic/parser/ChangeUserPasswordCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new DeleteUserCommand object
+ */
+public class ChangeUserPasswordCommandParser implements Parser<ChangeUserPasswordCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ChangeUserPasswordCommand
+     * and returns an ChangeUserPasswordCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ChangeUserPasswordCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_USERNAME, PREFIX_PASSWORD, PREFIX_NEW_PASSWORD);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_USERNAME, PREFIX_PASSWORD, PREFIX_NEW_PASSWORD)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ChangeUserPasswordCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Username username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
+            Password password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD)).get();
+            Password newPassword = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_NEW_PASSWORD)).get();
+
+            return new ChangeUserPasswordCommand(username, password, newPassword);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+
+    /**
+     * Parses a {@code String username} into an {@code Username}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code username} is invalid.
+     */
+    public static Username parseUsername(String username) throws IllegalValueException {
+        requireNonNull(username);
+        String trimmedUsername = username.trim();
+        if (!Username.isValidUsername(trimmedUsername)) {
+            throw new IllegalValueException(Username.MESSAGE_USERNAME_CONSTRAINTS);
+        }
+        return new Username(trimmedUsername);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Username>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Username> parseUsername(Optional<String> username) throws IllegalValueException {
+        requireNonNull(username);
+        return username.isPresent() ? Optional.of(parseUsername(username.get().toLowerCase())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String password} into an {@code Password}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code password} is invalid.
+     */
+    public static Password parsePassword(String password) throws IllegalValueException {
+        requireNonNull(password);
+        String trimmedPassword = password.trim();
+        if (!Password.isValidPassword(trimmedPassword)) {
+            throw new IllegalValueException(Password.MESSAGE_PASSWORD_CONSTRAINTS);
+        }
+        return new Password(trimmedPassword);
+    }
+
+    /**
+     * Parses a {@code Optional<String> password} into an {@code Optional<Password>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Password> parsePassword(Optional<String> password) throws IllegalValueException {
+        requireNonNull(password);
+        return password.isPresent() ? Optional.of(parsePassword(password.get())) : Optional.empty();
+    }
+}
+```
 ###### /java/seedu/address/logic/parser/LoginCommandParser.java
 ``` java
 /**
@@ -127,6 +314,47 @@ public class LoginCommandParser implements Parser<LoginCommand> {
             Password password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD)).get();
 
             return new LoginCommand(username, password);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/DeleteUserCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new DeleteUserCommand object
+ */
+public class DeleteUserCommandParser implements Parser<DeleteUserCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteUserCommand
+     * and returns an DeleteUserCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteUserCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_USERNAME, PREFIX_PASSWORD);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_USERNAME, PREFIX_PASSWORD)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteUserCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Username username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
+            Password password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD)).get();
+
+            return new DeleteUserCommand(username, password);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -188,6 +416,273 @@ public class LoginCommand extends Command {
                 && this.username.equals(((LoginCommand) other).username)
                 && this.password.equals(((LoginCommand) other).password)); // state check
     }
+}
+```
+###### /java/seedu/address/logic/commands/ChangeUserPasswordCommand.java
+``` java
+/**
+ * Change the password of an existing user in the user database.
+ */
+public class ChangeUserPasswordCommand extends Command {
+    public static final String COMMAND_WORD = "change-user-password";
+
+    public static final String MESSAGE_USAGE = "Changes the user password."
+            + "with the parameters: u/USERNAME p/PASSWORD newp/NEWPASSWORD"
+            + "\nEXAMPLE: change-user-password u/slap p/123456 newp/543210";
+
+    public static final String MESSAGE_SUCCESS = "Password updated for %1$s";
+    public static final String MESSAGE_UPDATE_FAILURE = "Password update failed. Username or password is incorrect.";
+    public static final String MESSAGE_NOT_LOGGED_OUT = "You are not logged out.Please logout to execute this command.";
+
+    private final Username username;
+    private final Password password;
+    private final Password newPassword;
+
+    public ChangeUserPasswordCommand(Username username, Password password, Password newPassword) {
+        this.username = username;
+        this.password = password;
+        this.newPassword = newPassword;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+        try {
+            if (model.checkCredentials(username, password)) {
+                User target = new User(username, password);
+                User userWithNewPassword = new User(username, newPassword);
+                model.updateUserPassword(target, userWithNewPassword);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, username));
+            } else {
+                return new CommandResult(MESSAGE_UPDATE_FAILURE);
+            }
+        } catch (AlreadyLoggedInException e) {
+            throw new CommandException(MESSAGE_NOT_LOGGED_OUT);
+        } catch (UserNotFoundException pnfe) {
+            throw new CommandException(MESSAGE_UPDATE_FAILURE);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ChangeUserPasswordCommand // instanceof handles nulls
+                && this.username.equals(((ChangeUserPasswordCommand) other).username)
+                && this.password.equals(((ChangeUserPasswordCommand) other).password))
+                && this.newPassword.equals(((ChangeUserPasswordCommand) other).newPassword); // state check
+    }
+}
+```
+###### /java/seedu/address/logic/commands/AddSessionLogCommand.java
+``` java
+/**
+ * Adds a session log to an existing person in the address book.
+ */
+public class AddSessionLogCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "add-log";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an additional to person's session log"
+            + "by the index number used in the last person listing. "
+            + "Parameters: INDEX (must be a positive integer) "
+            +  PREFIX_LOG + "LOG "
+            + "Example: " + COMMAND_WORD
+            + " 1 "
+            + PREFIX_LOG + "The patient report that he has been feeling down lately. She has a flat affect and "
+            + "speaks in a quiet tone of voice...";
+
+    public static final String MESSAGE_ADD_SESSION_LOG_SUCCESS = "Added new log to %1$s";
+
+    public static final String SESSION_LOG_DIVIDER = "\n\n=============================================";
+    public static final String SESSION_LOG_DATE_PREFIX = "\nSession log date added: ";
+
+
+    private final Index index;
+    private final String sessionLogsToAdd;
+
+    private Person personToReplace;
+    private Person editedPerson;
+
+    /**
+     * @param index of the person in the filtered person list to add session logs to.
+     * @param sessionLogsToAdd details to add to the person.
+     */
+    public AddSessionLogCommand(Index index, String sessionLogsToAdd) {
+        requireNonNull(index);
+        requireNonNull(sessionLogsToAdd);
+
+        this.index = index;
+        this.sessionLogsToAdd = sessionLogsToAdd;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        try {
+            model.addLogToPerson(personToReplace, editedPerson);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        EventsCenter.getInstance().post(new ShowUpdatedSessionLogEvent(editedPerson));
+        return new CommandResult(String.format(MESSAGE_ADD_SESSION_LOG_SUCCESS, editedPerson));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        personToReplace = lastShownList.get(index.getZeroBased());
+        editedPerson = createNewPerson(personToReplace, sessionLogsToAdd);
+    }
+
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToReplace}
+     * which contains the new session logs.
+     */
+    private static Person createNewPerson(Person personToReplace, String sessionLogsToAdd) {
+        assert personToReplace != null;
+
+        Name name = personToReplace.getName();
+        Phone phone = personToReplace.getPhone();
+        Email email = personToReplace.getEmail();
+        Address address = personToReplace.getAddress();
+        Set<Tag> tags = personToReplace.getTags();
+        SessionLogs sessionLogs = new SessionLogs(personToReplace.getSessionLogs().toString()
+                + formatNewSessionLog(sessionLogsToAdd));
+
+        return new Person(name, phone, email, address, tags, sessionLogs);
+    }
+
+    /**
+     * Creates and returns a {@code String} with the formatted session logs
+     * @param sessionLogsToAdd
+     */
+    private static String formatNewSessionLog(String sessionLogsToAdd) {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        return SESSION_LOG_DIVIDER + SESSION_LOG_DATE_PREFIX + dateFormat.format(date) + "\n\n"
+                + sessionLogsToAdd + SESSION_LOG_DIVIDER;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // state check
+        AddSessionLogCommand e = (AddSessionLogCommand) other;
+        return index.equals(e.index)
+                && Objects.equals(personToReplace, e.personToReplace);
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/DeleteUserCommand.java
+``` java
+/**
+ * Deletes an existing user from the user database.
+ */
+public class DeleteUserCommand extends Command {
+
+    public static final String COMMAND_WORD = "delete-user";
+
+    public static final String MESSAGE_USAGE = "Delete the user with the parameters: u/USERNAME p/PASSWORD"
+            + "\nEXAMPLE: delete-user u/user p/123456"
+            + "\nNote: You must be logged out before executing this command and username and password must be valid";
+
+    public static final String MESSAGE_SUCCESS = "User successfully deleted: %1$s";
+    public static final String MESSAGE_DELETE_FAILURE = "Delete failed. " + "Username or password is incorrect.";
+    public static final String MESSAGE_NOT_LOGGED_OUT = "You are not logged out. Please logout to execute this command";
+
+    private final Username username;
+    private final Password password;
+
+    public DeleteUserCommand(Username username, Password password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+        try {
+            if (model.checkCredentials(this.username, this.password) && !model.hasLoggedIn()) {
+                User toDelete = new User(username, password);
+                model.deleteUser(toDelete);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, toDelete.getUsername().toString()));
+            } else {
+                return new CommandResult(MESSAGE_DELETE_FAILURE);
+            }
+        } catch (AlreadyLoggedInException e) {
+            throw new CommandException(MESSAGE_NOT_LOGGED_OUT);
+        } catch (UserNotFoundException pnfe) {
+            throw new CommandException(MESSAGE_DELETE_FAILURE);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteUserCommand // instanceof handles nulls
+                && this.username.equals(((DeleteUserCommand) other).username)
+                && this.password.equals(((DeleteUserCommand) other).password)); // state check
+    }
+}
+```
+###### /java/seedu/address/logic/commands/CreateUserCommand.java
+``` java
+/**
+ * Creates a new user and adds to the user database
+ */
+public class CreateUserCommand extends Command {
+
+    public static final String COMMAND_WORD = "create-user";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": creates a new user and adds to the user database. "
+            + "Parameters: "
+            + PREFIX_USERNAME + "USERNAME "
+            + PREFIX_PASSWORD + "PASSWORD ";
+
+
+    public static final String MESSAGE_SUCCESS = "New user created: %1$s";
+    public static final String MESSAGE_DUPLICATE_USER = "This username has already been taken.";
+
+    private final User toCreate;
+
+    /**
+     * Creates an CreateUserCommand to add the specified {@code User}
+     */
+    public CreateUserCommand(User user) {
+        requireNonNull(user);
+        toCreate = user;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addUser(toCreate);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toCreate.getUsername().toString()));
+        } catch (DuplicateUserException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_USER);
+        }
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CreateUserCommand // instanceof handles nulls
+                && toCreate.equals(((CreateUserCommand) other).toCreate));
+    }
+
 }
 ```
 ###### /java/seedu/address/logic/LogicManager.java
@@ -382,6 +877,20 @@ public class XmlAdaptedUser {
 
 }
 ```
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
+``` java
+    /**
+     * Similar to {@link #deleteAddressBook(User)}
+     * @param user location of the data. Cannot be null
+     */
+    public void deleteAddressBook(User user) {
+        requireNonNull(filePath);
+
+        File file = new File(user.getAddressBookFilePath());
+        file.delete();
+    }
+}
+```
 ###### /java/seedu/address/storage/XmlSerializableUserDatabase.java
 ``` java
 /**
@@ -519,11 +1028,53 @@ public class SampleUsersUtil {
         try {
             UserDatabase sampleUd = new UserDatabase();
             sampleUd.addUser(new User(new Username("user"), new Password("pass"), "data/addressbook-user.xml"));
-            sampleUd.addUser(new User(new Username("u"), new Password("p"), "data/addressbook-hello.xml"));
+            sampleUd.addUser(new User(new Username("u"), new Password("p"), "data/addressbook-u.xml"));
             return sampleUd;
         } catch (DuplicateUserException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         }
+    }
+
+}
+```
+###### /java/seedu/address/model/person/SessionLogs.java
+``` java
+
+/**
+ * Represents a Person's SessionLog in the address book.
+ * Guarantees: field values are validated, immutable.
+ */
+public class SessionLogs {
+
+    public final StringBuilder value;
+
+    /**
+     * Constructs an {@code SessionLogs}.
+     *
+     * @param log A valid SessionLogs.
+     */
+    public SessionLogs(String log) {
+        requireNonNull(log);
+        this.value = new StringBuilder();
+        this.value.append(log);
+    }
+
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SessionLogs // instanceof handles nulls
+                && this.value.equals(((SessionLogs) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 
 }
@@ -535,9 +1086,11 @@ public class SampleUsersUtil {
  */
 public class UserDatabase implements ReadOnlyUserDatabase {
 
+    private static final Logger logger = LogsCenter.getLogger(UserDatabase.class);
+
     private static final String AB_FILEPATH_PREFIX = "data/addressbook-";
     private static final String AB_FILEPATH_POSTFIX = ".xml";
-    private final UniqueUserList users;
+    private UniqueUserList users;
 
     private boolean hasLoggedIn;
     private User loggedInUser;
@@ -581,13 +1134,9 @@ public class UserDatabase implements ReadOnlyUserDatabase {
 
     /// login authentication operations
 
-    /**
-     * Returns the User who is logged in.
-     */
-    public User getLoggedInUser() {
-        return loggedInUser;
-    }
-
+```
+###### /java/seedu/address/model/UserDatabase.java
+``` java
     /**
      * Returns the login status of the user.
      */
@@ -603,6 +1152,12 @@ public class UserDatabase implements ReadOnlyUserDatabase {
         hasLoggedIn = status;
     }
 
+    /**
+     * Sets the unique users list to {@code uniqueUserList}
+     */
+    public void setUniqueUserList(UniqueUserList uniqueUserList) {
+        users = uniqueUserList;
+    }
 
     /**
      * Checks the login credentials whether it matches any user in UserDatabase.
@@ -614,14 +1169,17 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
         User toCheck = new User(username, password,
                 AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX);
+        logger.fine("Attempting to check credentials for login");
 
         if (hasLoggedIn) {
             throw new AlreadyLoggedInException();
         } else if (!users.contains(toCheck)) {
+            logger.fine("Login credentials match failed. Login failed.");
             return hasLoggedIn;
         } else {
             hasLoggedIn = true;
             loggedInUser = toCheck;
+            logger.fine("Login credentials match. Login successful.");
             return hasLoggedIn;
         }
     }
@@ -637,6 +1195,7 @@ public class UserDatabase implements ReadOnlyUserDatabase {
     public boolean checkCredentials(Username username, Password password) throws AlreadyLoggedInException {
         User toCheck = new User(username, password,
                 AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX);
+        logger.fine("Attempting to check credentials for permissions.");
         if (!hasLoggedIn) {
             return users.contains(toCheck);
         } else {
@@ -737,6 +1296,14 @@ public interface ReadOnlyUserDatabase {
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
 
+    @Override
+    public void addLogToPerson(Person target, Person editedPersonWithNewLog)
+            throws PersonNotFoundException {
+        requireAllNonNull(target, editedPersonWithNewLog);
+        addressBook.addLogToPerson(target, editedPersonWithNewLog);
+        indicateAddressBookChanged();
+    }
+
     /**
      * Reloads and updates the addressBook and its storage path using the {@code username} provided.
      * @param username
@@ -829,6 +1396,11 @@ public interface ReadOnlyUserDatabase {
     @Override
     public void setLoginStatus(boolean status) {
         userDatabase.setLoginStatus(status);
+    }
+
+    @Override
+    public void setUsersList(UniqueUserList uniqueUserList) {
+        userDatabase.setUniqueUserList(uniqueUserList);
     }
 
 ```
@@ -1154,6 +1726,11 @@ public class Password {
 ```
 ###### /java/seedu/address/model/Model.java
 ``` java
+
+    /**
+     * Sets the unique users list to {@code uniqueUserList} in the UserDatabase.
+     */
+    void setUsersList(UniqueUserList uniqueUserList);
 
     /** Returns the UserDatabase */
     ReadOnlyAddressBook getUserDatabase();

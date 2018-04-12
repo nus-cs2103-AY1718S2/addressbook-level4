@@ -8,7 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.login.User;
 import seedu.address.model.login.exceptions.DuplicateUserException;
 
-
+//@@author kaisertanqr
 /**
  * Creates a new user and adds to the user database
  */

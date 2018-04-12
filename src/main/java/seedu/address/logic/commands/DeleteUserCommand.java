@@ -9,6 +9,7 @@ import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.login.exceptions.UserNotFoundException;
 
+//@@author kaisertanqr
 /**
  * Deletes an existing user from the user database.
  */

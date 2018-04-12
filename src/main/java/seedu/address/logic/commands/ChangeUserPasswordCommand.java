@@ -9,6 +9,7 @@ import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 import seedu.address.model.login.exceptions.UserNotFoundException;
 
+//@@author kaisertanqr
 /**
  * Change the password of an existing user in the user database.
  */

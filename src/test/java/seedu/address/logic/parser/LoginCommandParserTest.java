@@ -18,7 +18,7 @@ import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
 
-
+//@@author kaisertanqr
 public class LoginCommandParserTest {
 
     private LoginCommandParser parser = new LoginCommandParser();

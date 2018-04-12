@@ -153,6 +153,13 @@ public class CalendarWindow extends UiPart<Stage> {
         Platform.runLater(() -> browser.getEngine().load(CALENDAR_URL));
     }
 
+    /**
+     * Frees resources allocated to the browser.
+     */
+    public void freeResources() {
+        browser = null;
+    }
+}
 ```
 ###### /java/seedu/address/ui/ErrorsWindow.java
 ``` java
@@ -269,6 +276,11 @@ public class ErrorsWindow extends UiPart<Stage> {
 }
 
 ```
+###### /java/seedu/address/ui/LoginStatusBar.java
+``` java
+            Platform.runLater(() ->
+                    this.loginStatus.setText(LOGIN_STATUS_PREFIX + LOGIN_STATUS_TRUE + user.getUsername()));
+```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
@@ -340,6 +352,97 @@ public class ShowErrorsRequestEvent extends BaseEvent {
 }
 
 ```
+###### /java/seedu/address/logic/parser/DeleteCommandParser.java
+``` java
+
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new DeleteCommand object
+ */
+public class DeleteCommandParser implements Parser<DeleteCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new DeleteCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+
+```
+###### /java/seedu/address/logic/parser/CalendarDeleteCommandParser.java
+``` java
+
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX;
+
+import com.google.api.services.calendar.model.Event;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.OAuthManager;
+import seedu.address.logic.commands.CalendarDeleteCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new CalendarDeleteCommand object
+ */
+public class CalendarDeleteCommandParser implements Parser<CalendarDeleteCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the CalendarDeleteCommand
+     * and returns an CalendarDeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public CalendarDeleteCommand parse(String args) throws ParseException {
+        try {
+            int index = ParserUtil.parseCalendarDeleteIndex(args);
+
+            Event eventToDelete = OAuthManager.getEventByIndexFromLastList(index);
+
+            return new CalendarDeleteCommand(eventToDelete);
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, CalendarDeleteCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Int} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static int parseCalendarDeleteIndex(String oneBasedIndex) throws IllegalValueException {
+        String trimmedIndex = oneBasedIndex.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
+            throw new IllegalValueException(MESSAGE_INVALID_EVENT_INDEX);
+        }
+        return Integer.parseInt(trimmedIndex);
+    }
+```
 ###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
@@ -376,6 +479,41 @@ public class ShowErrorsRequestEvent extends BaseEvent {
     }
 
 ```
+###### /java/seedu/address/logic/parser/NavigateCommandParser.java
+``` java
+
+package seedu.address.logic.parser;
+
+import java.util.List;
+
+import com.google.api.services.calendar.model.Event;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.exceptions.InvalidCalendarEventCountException;
+import seedu.address.logic.OAuthManager;
+import seedu.address.logic.commands.NavigateCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+
+/**
+ * Parses input arguments and creates a new DeleteCommand object
+ */
+public class NavigateCommandParser implements Parser<NavigateCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public NavigateCommand parse(String args) throws ParseException {
+        try {
+            int index = ParserUtil.parseCalendarDeleteIndex(args);
+
+            List<Event> eventPair = OAuthManager.getEventByIndexPairFromDailyList(index);
+
+            return new NavigateCommand(eventPair);
+
+```
 ###### /java/seedu/address/logic/parser/CliSyntax.java
 ``` java
     public static final Prefix PREFIX_CAL_EVENT_NAME = new Prefix("title/");
@@ -383,6 +521,8 @@ public class ShowErrorsRequestEvent extends BaseEvent {
     public static final Prefix PREFIX_CAL_END_DATE_TIME = new Prefix("end/");
     public static final Prefix PREFIX_CAL_LOCATION = new Prefix("loc/");
     public static final Prefix PREFIX_CAL_LINK_PERSON = new Prefix("lp/");
+
+    public static final Prefix PREFIX_SCHEDULE_DATE = new Prefix("d/");
 ```
 ###### /java/seedu/address/logic/parser/CalendarAddCommandParser.java
 ``` java
@@ -414,8 +554,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class CalendarAddCommandParser implements Parser<CalendarAddCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the CalendarAddCommand
+     * and returns an CalendarAddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public CalendarAddCommand parse(String args) throws ParseException {
@@ -476,21 +616,100 @@ public class CalendarAddCommandParser implements Parser<CalendarAddCommand> {
 }
 
 ```
+###### /java/seedu/address/logic/parser/ShowScheduleCommandParser.java
+``` java
+
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Stream;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.ShowScheduleCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new ShowScheduleCommand object
+ */
+public class ShowScheduleCommandParser implements Parser<ShowScheduleCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddCommand
+     * and returns an AddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ShowScheduleCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_SCHEDULE_DATE);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_SCHEDULE_DATE)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowScheduleCommand.MESSAGE_USAGE));
+        }
+
+
+        try {
+            String selectedDateAsString = ParserUtil.parseDateTime(
+                    argMultimap.getValue(PREFIX_SCHEDULE_DATE).orElse(""));
+            LocalDate selectedDate = convertFriendlyDateTimeToDateTime(selectedDateAsString);
+
+            return new ShowScheduleCommand(selectedDate);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Converts a human-readable date time string into a usable date time string
+     */
+    private LocalDate convertFriendlyDateTimeToDateTime(String datetime) {
+        List<Date> dates = new com.joestelmach.natty.Parser().parse(datetime).get(0).getDates();
+        Date inputDate = dates.get(0);
+        Instant instant = inputDate.toInstant();
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+
+        return localDate;
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}
+
+```
 ###### /java/seedu/address/logic/OAuthManager.java
 ``` java
 // Adapted from https://developers.google.com/calendar/quickstart/java
 
 package seedu.address.logic;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -510,6 +729,9 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.exceptions.InvalidCalendarEventCountException;
+import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.model.login.User;
 
 /**
@@ -518,7 +740,7 @@ import seedu.address.model.login.User;
 public class OAuthManager {
     /** Application name. */
     private static final String APPLICATION_NAME =
-        "Google Calendar API Java Quickstart";
+        "Session Logger and Planner (SLAP) for Social Workers";
 
     /** Directory base path to store user credentials. */
     private static final String CREDENTIAL_PATH = ".credentials/slap-app-calendar/";
@@ -545,6 +767,15 @@ public class OAuthManager {
     private static final List<String> SCOPES =
         Arrays.asList(CalendarScopes.CALENDAR);
 
+    /** Most recent list of retrieved events */
+    private static List<Event> mostRecentEventList = new ArrayList<>();
+
+    /** List of events for the specified day */
+    private static List<Event> dailyEventsList = new ArrayList<>();
+
+    /** Dat specified in dailyEventsList */
+    private static LocalDate dailyEventsListDate = null;
+
     static {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -570,8 +801,23 @@ public class OAuthManager {
         }
     }
 
+
+    /**
+     * Deletes the current Oauth certificate for the logged in user.
+     * @param user
+     * @throws IOException
+     */
+    public static void deleteOauthCert(User user) throws IOException {
+        Path dirPath = Paths.get(DATA_STORE_DIR.getAbsolutePath());
+        Files.walk(dirPath)
+                .map(Path::toFile)
+                .sorted(Comparator.comparing(File::isDirectory))
+                .forEach(File::delete);
+    }
+
     /**
      * Creates an authorized Credential object.
+     * @param user
      * @return an authorized Credential object.
      * @throws IOException
      */
@@ -616,7 +862,7 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<Event> getUpcomingEvents(User user) throws IOException {
-        List<Event> upcomingEvents = getNextXEvents(user, 10);
+        List<Event> upcomingEvents = getNextXEvents(user, 250);
         int numberOfEventsRetrieved = upcomingEvents.size();
 
         if (numberOfEventsRetrieved == 0) {
@@ -624,6 +870,8 @@ public class OAuthManager {
         } else {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s).");
         }
+
+        mostRecentEventList = upcomingEvents;
 
         return upcomingEvents;
     }
@@ -633,7 +881,7 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<String> getUpcomingEventsAsStringList(User user) throws IOException {
-        List<Event> upcomingEvents = getNextXEvents(user, 10);
+        List<Event> upcomingEvents = getUpcomingEvents(user);
         int numberOfEventsRetrieved = upcomingEvents.size();
         List<String> eventListAsString = new ArrayList<>();
 
@@ -641,11 +889,62 @@ public class OAuthManager {
             System.out.println("No upcoming events found.");
         } else {
             System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
+            int eventIndex = 1;
             for (Event event : upcomingEvents) {
                 String eventAsString = formatEventDetailsAsString(event);
-                eventListAsString.add(eventAsString);
+                eventListAsString.add(String.valueOf(eventIndex++) + ". " + eventAsString);
             }
         }
+
+        mostRecentEventList = upcomingEvents;
+
+        return eventListAsString;
+    }
+
+    /**
+     * Get a list of events for the day as a list of event objects.
+     * @throws IOException
+     */
+    public static List<Event> getDailyEvents(User user, LocalDate localDate) throws IOException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String inputDate = localDate.format(formatter);
+        List<Event> dailyEvents = getEventsByDay(user, inputDate);
+        int numberOfEventsRetrieved = dailyEvents.size();
+
+        if (numberOfEventsRetrieved == 0) {
+            System.out.println("No events found.");
+        } else {
+            System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s).");
+        }
+
+        dailyEventsListDate = localDate;
+        dailyEventsList = dailyEvents;
+
+        return dailyEvents;
+    }
+
+    /**
+     * Get a list of events for the day as a list of strings.
+     * @throws IOException
+     */
+    public static List<String> getDailyEventsAsStringList(User user, LocalDate localDate) throws IOException {
+        List<Event> dailyEvents = getDailyEvents(user, localDate);
+        int numberOfEventsRetrieved = dailyEvents.size();
+        List<String> eventListAsString = new ArrayList<>();
+
+        if (numberOfEventsRetrieved == 0) {
+            System.out.println("No events found.");
+        } else {
+            System.out.println("Retrieved " + String.valueOf(numberOfEventsRetrieved) + " event(s): ");
+            int eventIndex = 1;
+            for (Event event : dailyEvents) {
+                String eventAsString = formatEventDetailsAsString(event);
+                eventListAsString.add(String.valueOf(eventIndex++) + ". " + eventAsString);
+            }
+        }
+
+        dailyEventsListDate = localDate;
+        dailyEventsList = dailyEvents;
 
         return eventListAsString;
     }
@@ -653,12 +952,12 @@ public class OAuthManager {
     /**
      * Formats an event object as a human-readable string.
      */
-    private static String formatEventDetailsAsString(Event event) {
+    public static String formatEventDetailsAsString(Event event) {
         String title = event.getSummary();
         DateTime startAsDateTime = event.getStart().getDateTime();
         DateTime endAsDateTime = event.getEnd().getDateTime();
         String location = event.getLocation();
-        String personUniqueId = event.getDescription();
+        //String personUniqueId = event.getDescription();
 
         String start = getDateTimeAsHumanReadable(startAsDateTime);
         String end = getDateTimeAsHumanReadable(endAsDateTime);
@@ -672,11 +971,11 @@ public class OAuthManager {
         if (location == null) {
             location = "No Location Specified";
         }
-        if (personUniqueId == null) {
-            personUniqueId = "No Person Specified";
-        }
+        //if (personUniqueId == null) {
+        //      personUniqueId = "No Person Specified";
+        //}
         String eventAsString = title + " From: " + start + " To: " + end + " @ "
-                + location + " [" + personUniqueId + "]";
+                + location; // + " [" + personUniqueId + "]";
         System.out.printf(eventAsString);
 
         return eventAsString;
@@ -685,7 +984,7 @@ public class OAuthManager {
     /**
      * Formats date-time string as a human-readable string.
      */
-    private static String getDateTimeAsHumanReadable(DateTime inputDateTime) {
+    public static String getDateTimeAsHumanReadable(DateTime inputDateTime) {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         System.out.println(inputDateTime.toString());
         LocalDateTime dateTime = LocalDateTime.parse(inputDateTime.toString(), inputFormatter);
@@ -719,7 +1018,7 @@ public class OAuthManager {
 
     /**
      * Gets a list of events for a particular date from Google Calendar
-     * @param date must in RFC 3339 format
+     * @param date must in yyyy-MM-dd format
      * @throws IOException
      */
     public static List<Event> getEventsByDay(User user, String date) throws IOException {
@@ -742,6 +1041,9 @@ public class OAuthManager {
                 .setOrderBy("startTime")
                 .setSingleEvents(true)
                 .execute();
+
+
+
         List<Event> upcomingEvents = events.getItems();
 
         return upcomingEvents;
@@ -752,7 +1054,7 @@ public class OAuthManager {
      * Used as part of the oauth verification process.
      * @throws IOException
      */
-    public static void addEvent(User user) throws IOException {
+    public static void addEventTest(User user) throws IOException {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -834,7 +1136,70 @@ public class OAuthManager {
         return apiResponse;
     }
 
+    /**
+     * Gets the most recent event list shown to the user.
+     * @return List
+     */
+    public static List<Event> getMostRecentEventList() {
+        return mostRecentEventList;
+    }
+
+    /**
+     * Gets the specified event by index (offset by 1 due to array indexing) according to a user's input.
+     * @param index
+     * @return Event
+     */
+    public static Event getEventByIndexFromLastList(int index) {
+        return mostRecentEventList.get(index - 1);
+    }
+```
+###### /java/seedu/address/logic/OAuthManager.java
+``` java
+
+    /**
+     * Gets the most recent daily event list shown to the user.
+     * @return List
+     */
+    public static List<Event> getMostRecentDailyEventList() {
+        return dailyEventsList;
+    }
+
+    /**
+     * Gets the date of the most recent daily event list shown to the user.
+     * @return List
+     */
+    public static LocalDate getMostRecentDailyEventListDate() {
+        return dailyEventsListDate;
+    }
+
+
+    /**
+     * A wrapper of the Google Calendar Event: delete API endpoint to remove a calendar event
+     * from a user's Google Calendar.
+     * @throws IOException
+     */
+    public static void deleteEvent(User user, Event event) throws IOException {
+        // Build a new authorized API client service.
+        // Note: Do not confuse this class with the
+        //   com.google.api.services.calendar.model.Calendar class.
+
+        com.google.api.services.calendar.Calendar service =
+                getCalendarService(user);
+        String calendarId = "primary";
+        try {
+            service.events().delete(calendarId, event.getId()).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+```
+###### /java/seedu/address/logic/commands/NavigateCommand.java
+``` java
+    public NavigateCommand(List<Event> eventPair) {
+        this.eventPair = eventPair;
+    }
 
 ```
 ###### /java/seedu/address/logic/commands/OAuthTestCommand.java
@@ -857,21 +1222,90 @@ public class OAuthTestCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tests OAuth certificate.\n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_TEST_OAUTH = "Tested OAuth certificate.";
+    public static final String MESSAGE_TEST_OAUTH = "Renewed OAuth certificate.";
 
     @Override
     public CommandResult execute() {
         User user = model.getLoggedInUser();
 
         try {
+            OAuthManager.deleteOauthCert(user);
             OAuthManager.authorize(user);
-            OAuthManager.addEvent(user);
+            OAuthManager.addEventTest(user);
         } catch (IOException e) {
             // Do nothing for now
         }
 
         return new CommandResult(MESSAGE_TEST_OAUTH);
     }
+}
+
+```
+###### /java/seedu/address/logic/commands/ShowScheduleCommand.java
+``` java
+
+package seedu.address.logic.commands;
+
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+
+import com.google.api.services.calendar.model.Event;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.DailyScheduleShownChangedEvent;
+import seedu.address.commons.events.ui.ResetDirectionsEvent;
+import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
+import seedu.address.logic.OAuthManager;
+import seedu.address.model.login.User;
+
+
+/**
+* Shows the user the events for the current day
+*/
+public class ShowScheduleCommand extends Command {
+
+    public static final String COMMAND_WORD = "show-schedule";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": List all events for a specified day. \n"
+            + "Parameters: "
+            + PREFIX_SCHEDULE_DATE + "DATE \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_SCHEDULE_DATE + "Tomorrow ";
+
+    public static final String MESSAGE_NO_EVENTS = "No events found.";
+    public static final String MESSAGE_ERROR = "Unable to retrieve events. Please try again later.";
+    private final LocalDate localDate;
+
+
+    public ShowScheduleCommand(LocalDate localDate) {
+        this.localDate = localDate;
+    };
+
+
+    @Override
+    public CommandResult execute() {
+        User user = model.getLoggedInUser();
+
+        try {
+            List<String> dailyEvents = OAuthManager.getDailyEventsAsStringList(user, localDate);
+            String dailyEventsAsString = String.join("\n", dailyEvents);
+
+            if (dailyEventsAsString.length() == 0) {
+                dailyEventsAsString = MESSAGE_NO_EVENTS;
+            }
+
+```
+###### /java/seedu/address/logic/commands/ShowScheduleCommand.java
+``` java
+            return new CommandResult(dailyEventsAsString);
+        } catch (IOException e) {
+            return new CommandResult(MESSAGE_ERROR);
+        }
+
+    }
+
 }
 
 ```
@@ -914,13 +1348,14 @@ import seedu.address.logic.OAuthManager;
 import seedu.address.model.login.User;
 
 /**
-* Lists up to the next 10 calendar events from their Google Calendar to the user.
+* Lists up to the next 250 calendar events from their Google Calendar to the user.
 */
 public class CalendarListCommand extends Command {
 
     public static final String COMMAND_WORD = "calendar-list";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": List up to the next 10 calendar events.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": List up to the next 250 calendar events.";
 
+    public static final String MESSAGE_NO_EVENTS = "No upcoming events found.";
     public static final String MESSAGE_ERROR = "Unable to retrieve calendar events. Please try again later.";
 
     @Override
@@ -930,6 +1365,10 @@ public class CalendarListCommand extends Command {
         try {
             List<String> upcomingEvents = OAuthManager.getUpcomingEventsAsStringList(user);
             String upcomingEventsAsString = String.join("\n", upcomingEvents);
+
+            if (upcomingEventsAsString.length() == 0) {
+                upcomingEventsAsString = MESSAGE_NO_EVENTS;
+            }
 
             return new CommandResult(upcomingEventsAsString);
         } catch (IOException e) {
@@ -1025,5 +1464,71 @@ public class CalendarCommand extends Command {
         return new CommandResult(MESSAGE_SHOWING_CALENDAR);
     }
 }
+
+```
+###### /java/seedu/address/logic/commands/CalendarDeleteCommand.java
+``` java
+
+package seedu.address.logic.commands;
+
+import java.io.IOException;
+
+import com.google.api.services.calendar.model.Event;
+
+import seedu.address.logic.OAuthManager;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.login.User;
+
+/**
+* Deletes a calendar event using it's last displayed index from the command result box.
+*/
+public class CalendarDeleteCommand extends Command {
+
+    public static final String COMMAND_WORD = "calendar-delete";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes the event identified by the index number used in the last event listing.\n"
+            + "This command CANNOT be undone once executed.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_SUCCESS = "Successfully deleted event:\n%s, ";
+    public static final String MESSAGE_ERROR = "Unable to delete selected event. Please try again later.";
+    private final Event event;
+
+    public CalendarDeleteCommand(Event event) {
+        this.event = event;
+    };
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        User user = model.getLoggedInUser();
+
+        try {
+            String eventAsString = OAuthManager.formatEventDetailsAsString(event);
+            String commandResultMessage = MESSAGE_ERROR;
+
+            if (event != null) {
+                OAuthManager.deleteEvent(user, event);
+                commandResultMessage = String.format(MESSAGE_SUCCESS, eventAsString);
+            }
+
+            return new CommandResult(commandResultMessage);
+
+        } catch (IOException e) {
+            return new CommandResult(MESSAGE_ERROR);
+        }
+    }
+
+}
+
+```
+###### /java/seedu/address/model/UserDatabase.java
+``` java
+    /**
+     * Returns the User who is logged in.
+     */
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
 
 ```

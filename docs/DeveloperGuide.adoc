@@ -771,7 +771,6 @@ their names (e.g. easier than searching for a common name such as Daniel).
 * *Major*: Login feature
 
 ** Implements new User package
-** [Not confirmed] Encryption of data files containing usernames and passwords
 
 This allows multiple tutors to store their data in separate accounts, which can only be accessed by them.
 

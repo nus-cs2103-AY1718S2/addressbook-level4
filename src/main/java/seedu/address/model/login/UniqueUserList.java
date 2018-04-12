@@ -39,8 +39,8 @@ public class UniqueUserList implements Iterable<User> {
      */
     public void add(User toAdd) throws DuplicateUserException {
         requireNonNull(toAdd);
-        for(User user : internalList){
-            if (user.getUsername().equals(toAdd.getUsername())){
+        for (User user : internalList) {
+            if (user.getUsername().equals(toAdd.getUsername())) {
                 throw new DuplicateUserException();
             }
         }
@@ -95,7 +95,7 @@ public class UniqueUserList implements Iterable<User> {
     public void setUsers(List<User> users) throws DuplicateUserException {
         requireAllNonNull(users);
         final UniqueUserList replacement = new UniqueUserList();
-        for (final User user : users) {
+        for (User user : users) {
             replacement.add(user);
         }
         setUsers(replacement);

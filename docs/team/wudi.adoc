@@ -1,46 +1,42 @@
-= John Doe - Project Portfolio
+= Wu Di - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: AddressBook - Level 4
+== PROJECT: Your TA
 
 ---
 
 == Overview
 
-Your TA is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Your TA is a desktop application designed to meet the needs of university tutors. It helps them to keep track of their students and schedule their tasks that they have to do.
+Your TA uses a graphical user interface built using JavaFX and the user interacts with the application mostly through a command line interface.
+Your TA is written in Java and has about 10 kLoC.
+Your TA is build upon https://github.com/se-edu/addressbook-level4[AddressBook - Level 4].
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+* *Major enhancement*: Added Todo List that displays tasks in a list view in the application.
+** What it does: It allows users to schedule tasks that they need to do and take a glance of what they need to do in the application.
 
-* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
+** Justification: This feature provides the tutor with a visual stimulus on how many tasks they had in hand. This way, the tutors would be able to do their time management in a easier way.
+*** Additionally, it can also assist the teaching of tutors to arrange help with the more needy students.
+** Highlights: This enhancement fully supports the implemented undo and redo feature.
+The existing commands were also updated to support the adding, deleting and editing tasks.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Minor enhancement*: added a import command that enhances the mobility of users' data. Thus, with the data along it can be used anywhere with the application downloaded.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/functional/Wu.md[Functional code]][https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/test/Wu.md[Test code]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
-** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Managed releases `v1.1` - `v1.2` (2 releases) on GitHub
+*** Manage and set up the organization repo, assigned issues and mange Pull Requests.
+*** Set up Coverall for the organization repo.
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Updated the screenshots used in the User Guide: https://github.com/CS2103JAN2018-F09-B1/main/pull/57[#57]
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
-
-_{you can add/remove categories in the list above}_
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F12-B2/main/issues/83[1], https://github.com/CS2103JAN2018-F12-B2/main/issues/80[2], https://github.com/CS2103JAN2018-F12-B2/main/issues/76[3])
 
 == Contributions to the User Guide
 

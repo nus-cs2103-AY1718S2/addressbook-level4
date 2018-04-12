@@ -30,15 +30,14 @@ The existing commands were also updated to support the adding and changing of di
 
 * *Minor enhancement*: Added a `Participation` attribute to `Person` to keep track of a student's participation level. It supports the addition of marks to the `Person` object.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/functional/Alaru.md[Functional code]] [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/functional/Alaru-reused.md[Functional(re-used) code]] [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/test/Alaru.md[Test code]] [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/unused/Alaru-unused.md[Unused code]]
+* *Code contributed*: [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/functional/Wu.md[Functional code]][https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/test/Wu.md[Test code]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
-*** Manage and set up the Issue Tracker, assigned issues and added labels to the issues.
-*** Set up Travis for the organization repo.
-*** Help update README (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/66[#66])
+*** Managed releases `v1.1` - `v1.2` (2 releases) on GitHub
+*** Manage and set up the organization repo, assigned issues and mange Pull Requests.
+*** Set up Coverall for the organization repo.
 ** Documentation:
 *** Updated the screenshots used in the User Guide: https://github.com/CS2103JAN2018-F09-B1/main/pull/57[#57]
 ** Community:

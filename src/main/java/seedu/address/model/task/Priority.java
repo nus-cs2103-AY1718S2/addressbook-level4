@@ -3,6 +3,7 @@ package seedu.address.model.task;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author JoonKai1995
 /**
  * Represents a Task's priority in the todo list and calendar.
  * Guarantees: immutable; is valid as declared in {@link #isValidPriority(String)}
@@ -11,7 +12,7 @@ public class Priority {
 
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
-            "Priority value input can only be a value from 1 to 3. 1 being highest priority and 3 being lowest.";
+            "Priority value input can only be a value from 1 to 3. 1 being lowest priority and 3 being highest.";
     public static final String PRIORITY_VALIDATION_REGEX = "[1-3]{1}";
     public final String priority;
     public final int value;

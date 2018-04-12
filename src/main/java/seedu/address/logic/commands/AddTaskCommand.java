@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.Task;
 
+//@@author JoonKai1995
 /**
  * Adds a task to the To-do list and calendar.
  */
@@ -22,7 +23,7 @@ public class AddTaskCommand extends UndoableCommand {
             + PREFIX_TITLE + "TITLE "
             + PREFIX_TASK_DESC + "TASK "
             + PREFIX_DEADLINE + "DEADLINE "
-            + PREFIX_PRIORITY + "PRIORITY LEVEL(from 0 - 50, 0 being lowest priority, 50 being highest priority) \n"
+            + PREFIX_PRIORITY + "PRIORITY LEVEL\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TITLE + "Dance "
             + PREFIX_TASK_DESC + "Dance till I drop "

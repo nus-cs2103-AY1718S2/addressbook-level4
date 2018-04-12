@@ -16,6 +16,7 @@ The user is mostly required to interact with the application through a Command L
 
 * *Major feature*: Implemented a *login* system
 
+
 ** What it does: Requires users to log in to their accounts (and create accounts for first-time users) with a username and password to access their personal data.
 
 ** Justification: This feature makes the software much more accessible to multiple users as it ensures that each user only has access to their own personal information, and not those of other users.
@@ -40,6 +41,12 @@ The user is mostly required to interact with the application through a Command L
 _Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 *****
 
+=== Sorting all entries : `sort`
+
+Sorts all entries from the address book in alphabetical order based on name. +
+Alias: `s` +
+Format: `sort`
+
 == Login Feature
 
 Before you are able to access the application, login is required.
@@ -62,7 +69,6 @@ Then, click on the `Login` button.
 *****
 _Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 *****
-
 The `User` Class:
 
 * Stores the information of a specific user (TA/Lecturer/Professor) in the application.
@@ -171,3 +177,4 @@ If the user is a new (username does not exist), they should simply enter their d
 ** Pros: Increases security of software, less prone to be used for malicious purposes.
 ** Cons: Large amount of coding and implementation required, prerequisites also include knowledge of security issues and safeguards.
 // end::login[]
+

@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import guitests.GuiRobot;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.SearchCommand;
@@ -83,6 +84,11 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         /* ------------------------------- Perform invalid add operations ----------------------------------- */
 
+        /* Case: close keyword -> corrected */
+        executeCommand("adds 1");
+        assertApplicationDisplaysExpected("",
+                String.format(Messages.MESSAGE_CORRECTED_COMMAND, "add 1"), getModel());
+
         /* Case: add a duplicate book -> rejected */
         model = getModel();
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOK);
@@ -107,11 +113,8 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         assertCommandFailure(AddCommand.COMMAND_WORD + " 1 2",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: invalid keyword -> rejected */
-        assertCommandFailure("adds 1", MESSAGE_UNKNOWN_COMMAND);
-
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("Add 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("AdD 1", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid active list type */
         executeCommand("list");

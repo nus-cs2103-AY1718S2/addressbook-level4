@@ -9,6 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ARTEMIS;
 import org.junit.Test;
 
 import guitests.GuiRobot;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -23,6 +24,11 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
     public void search() throws Exception {
         /* ----------------------------------- Perform invalid search operations ------------------------------------ */
 
+        /* Case: close command word -> corrected */
+        executeCommand("searchh hello");
+        assertApplicationDisplaysExpected("",
+                String.format(Messages.MESSAGE_CORRECTED_COMMAND, "search hello"), getModel());
+
         /* Case: no key words or named parameters -> rejected */
         assertCommandFailure(SearchCommand.COMMAND_WORD, SearchCommand.MESSAGE_EMPTY_QUERY);
 
@@ -33,7 +39,7 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
         assertCommandFailure("SeaRcH hello", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: misspelled command word -> rejected */
-        assertCommandFailure("searchh hello", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("saerch hello", MESSAGE_UNKNOWN_COMMAND);
 
         /* ----------------------------------- Perform valid search operations -------------------------------------- */
 

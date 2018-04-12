@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -31,6 +32,8 @@ public class LogicManager extends ComponentManager implements Logic {
     private final BookShelfParser bookShelfParser;
     private final UndoStack undoStack;
 
+    private String correctedCommand;
+
     public LogicManager(Model model, Network network) {
         this.model = model;
         this.network = network;
@@ -45,14 +48,50 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + processedText + "]");
 
         try {
-            Command command = bookShelfParser.parseCommand(processedText);
+            Command command = getCommand(processedText);
             command.setData(model, network, history, undoStack);
             CommandResult result = command.execute();
             undoStack.push(command);
             return result;
+        } catch (ParseException e) {
+            return attemptCommandAutoCorrection(processedText, e);
         } finally {
             history.add(commandText);
         }
+    }
+
+    /**
+     * Attempts command auto-correction if {@code e} is a {@code ParseException} due to the user input
+     * being unable to be matched to any valid command word.
+     * @param processedText The command as entered by the user, after accounting for aliases.
+     * @param e The exception thrown by {@link BookShelfParser}.
+     * @return message asking user whether he meant the corrected command.
+     * @throws ParseException If auto correction failed to find any closely related command.
+     */
+    private CommandResult attemptCommandAutoCorrection(String processedText, ParseException e) throws ParseException {
+        if (!e.getMessage().equals(Messages.MESSAGE_UNKNOWN_COMMAND)) {
+            throw e;
+        }
+        correctedCommand = bookShelfParser.attemptCommandAutoCorrection(processedText);
+        return new CommandResult(String.format(Messages.MESSAGE_CORRECTED_COMMAND, correctedCommand));
+    }
+
+    /**
+     * Obtains the command represented by {@code processedText}. If user enters "y" following a
+     * command correction, that corrected command will be returned.
+     * @param processedText The command as entered by the user, after accounting for aliases.
+     * @return the command obtained.
+     * @throws ParseException If {@code processedText} cannot be parsed.
+     */
+    private Command getCommand(String processedText) throws ParseException {
+        Command command;
+        if (correctedCommand != null && processedText.equalsIgnoreCase("y")) {
+            command = bookShelfParser.parseCommand(correctedCommand);
+        } else {
+            command = bookShelfParser.parseCommand(processedText);
+        }
+        correctedCommand = null;
+        return command;
     }
 
     @Override

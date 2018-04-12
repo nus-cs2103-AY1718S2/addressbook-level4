@@ -12,6 +12,7 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -223,8 +224,9 @@ public abstract class AddressBookSystemTest {
         String selectedBrowserLink = "";
         Map<String, SocialMediaPlatform> selectedPersonSmpMap = getModel().getFilteredPersonList().get(
                 expectedSelectedCardIndex.getZeroBased()).getSocialMediaPlatformMap();
-        for (String key : selectedPersonSmpMap.keySet()) {
-            selectedBrowserLink = selectedPersonSmpMap.get(key).getLink().value;
+        List<String> keyList = new ArrayList<>(selectedPersonSmpMap.keySet());
+        if (!keyList.isEmpty()) {
+            selectedBrowserLink = selectedPersonSmpMap.get(keyList.get(0)).getLink().value;
         }
 
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();

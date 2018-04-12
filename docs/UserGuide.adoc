@@ -175,6 +175,13 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the IMDB. +
 Format: `clear` or `c`
 
+// tag::logout[]
+==== Logout : `logout`
+
+Logs the user out of the IMDB. +
+Format: `logout`
+// end::logout[]
+
 ==== Exiting the program : `exit` or `x`
 
 Exits the program. This also logs the user out of the IMDB. +

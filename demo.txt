@@ -1,0 +1,33 @@
+Yuxuang
+
+add_appointment n/meet Alex S/14/04/2018 12:00 E/14/04/2018 13:00
+add_appointment n/meet Bernice S/14/04/2018 14:00 E/14/04/2018 15:00
+add_appointment n/meet Charlotte S/16/04/2018 14:00 E/16/04/2018 15:00
+undo
+redo
+look DF/14/04/2018
+back
+add_appointment n/meet David S/17/04/2018 14:00 E/16/04/2018 15:00
+add_appointment n/meet David S/55/04/2018 14:00 E/16/04/2018 15:00
+add_appointment n/meet David S/17/04/2018 18:00 E/17/04/2018 24:00
+add_appointment n/meet David S/10/04/2018 18:00 E/10/04/2018 23:59
+remove_appointment ST/meet Alex
+undo
+redo
+remove_appointment ST/meet Ale
+edit_appointment ST/meet Charlotte n/meet John
+undo
+redo
+edit_appointment ST/meet John S/15/04/2018 12:00
+edit_appointment ST/meet John E/15/04/2018 13:00
+
+
+Charles
+
+add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/30000 as/1500 age/20
+add n/John Two p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20
+add n/John Three p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/10000 age/20
+
+
+add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/12345678000 as/150 age/20
+add n/John Two p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20

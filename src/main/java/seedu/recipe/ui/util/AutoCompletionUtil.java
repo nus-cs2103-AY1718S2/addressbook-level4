@@ -19,7 +19,7 @@ public class AutoCompletionUtil {
             CliSyntax.PREFIX_INSTRUCTION.toString(), CliSyntax.PREFIX_PREPARATION_TIME.toString(),
             CliSyntax.PREFIX_TAG.toString(), CliSyntax.PREFIX_URL.toString(), CliSyntax.PREFIX_INDEX.toString(),
             CliSyntax.PREFIX_GROUP_NAME.toString()));
-    public static final int MAX_SUGGESTIONS = 8;
+    public static final int MAX_SUGGESTIONS = 4;
     public static final char LF = '\n';
     public static final char WHITESPACE = ' ';
     public static final char END_FIELD = '/';

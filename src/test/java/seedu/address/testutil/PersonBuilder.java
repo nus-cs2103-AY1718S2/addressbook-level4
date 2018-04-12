@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Cca;
-import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
@@ -39,7 +38,6 @@ public class PersonBuilder {
     private Cca cca;
     private InjuriesHistory injuriesHistory;
     private NameOfKin nameOfKin;
-    private CcaPosition ccaPosition;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -50,7 +48,6 @@ public class PersonBuilder {
         cca = new Cca(DEFAULT_CCA, DEFAULT_CCA_POSITION);
         injuriesHistory = new InjuriesHistory(DEFAULT_INJURIES_HISTORY);
         nameOfKin = new NameOfKin(DEFAULT_NAME_OF_KIN);
-        ccaPosition = new CcaPosition(DEFAULT_CCA_POSITION);
     }
 
     /**
@@ -65,7 +62,6 @@ public class PersonBuilder {
         cca = personToCopy.getCca();
         injuriesHistory = personToCopy.getInjuriesHistory();
         nameOfKin = personToCopy.getNameOfKin();
-        ccaPosition = personToCopy.getCcaPosition();
     }
 
     /**
@@ -132,20 +128,12 @@ public class PersonBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code CcaPosition} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withCcaPosition(String ccaPosition) {
-        this.ccaPosition = new CcaPosition(ccaPosition);
-        return this;
-    }
 
     /**
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
     public Person build() {
-        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin,
-                    ccaPosition);
+        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
     }
 
 }

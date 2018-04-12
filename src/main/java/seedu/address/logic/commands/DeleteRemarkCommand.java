@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.ParserUtil.parseRemark;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -13,7 +14,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Cca;
-import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
@@ -61,9 +61,11 @@ public class DeleteRemarkCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException, IOException {
         try {
             model.updatePerson(personToEdit, editedPerson);
+            model.deletePage(personToEdit);
+            model.addPage(editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -101,8 +103,6 @@ public class DeleteRemarkCommand extends UndoableCommand {
         String[] remarkArray = personToEdit.getRemark().toString().split("\n");
         String updateRemark = "";
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
-        CcaPosition updatedCcaPosition = editPersonDescriptor.getCcaPosition()
-                .orElse(personToEdit.getCcaPosition());
         boolean remarkIsFound = false;
         for (String remark: remarkArray) {
             if (!remark.contains(editPersonDescriptor.getRemark().get().toString())) {
@@ -119,7 +119,7 @@ public class DeleteRemarkCommand extends UndoableCommand {
                     .orElse(personToEdit.getInjuriesHistory());
 
             return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                    updatedInjuriesHistory, updatedNameOfKin, updatedCcaPosition);
+                    updatedInjuriesHistory, updatedNameOfKin);
         } else {
             throw new CommandException("The target remark cannot be missing.");
         }

@@ -16,7 +16,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Cca;
-import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
@@ -75,7 +74,8 @@ public class EditCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException, IOException {
         try {
             model.updatePerson(personToEdit, editedPerson);
-            model.updatePage(editedPerson);
+            model.deletePage(personToEdit);
+            model.addPage(editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -110,13 +110,11 @@ public class EditCommand extends UndoableCommand {
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
-        CcaPosition updatedCcaPosition = editPersonDescriptor.getCcaPosition()
-                .orElse(personToEdit.getCcaPosition());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                 .orElse(personToEdit.getInjuriesHistory());
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                            updatedInjuriesHistory, updatedNameOfKin, updatedCcaPosition);
+                updatedInjuriesHistory, updatedNameOfKin);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-//import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
@@ -15,7 +14,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Cca;
-import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
@@ -59,9 +57,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             }
-            CcaPosition ccaPosition = ParserUtil.parseCcaPosition(" ");
-            Person person = new Person(name, nric, tagList, subjectList, remark, cca, injuriesHistory, nameOfKin,
-                    ccaPosition);
+            Person person = new Person(name, nric, tagList, subjectList, remark, cca, injuriesHistory, nameOfKin);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

@@ -21,6 +21,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
@@ -40,6 +41,7 @@ public class AddressBookTest {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
         assertEquals(Collections.emptyList(), addressBook.getSubjectList());
+        assertEquals(Collections.emptyList(), addressBook.getAppointmentList());
     }
 
     @Test
@@ -85,6 +87,12 @@ public class AddressBookTest {
         addressBook.getSubjectList().remove(0);
     }
 
+    @Test
+    public void getAppointmentList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getAppointmentList().remove(0);
+    }
+
     //@@author TeyXinHui
     @Test
     public void removeTag_tagNotFound_throwsTagNotFoundException() {
@@ -120,6 +128,7 @@ public class AddressBookTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Subject> subjects = FXCollections.observableArrayList();
+        private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
                         Collection<? extends Subject> subjects) {
@@ -141,6 +150,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Subject> getSubjectList() {
             return subjects;
+        }
+
+        @Override
+        public ObservableList<Appointment> getAppointmentList() {
+            return appointments;
         }
     }
 

@@ -13,6 +13,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version '1.2.3'
     id 'org.asciidoctor.convert' version '1.5.6'
     id 'application'
+
 }
 
 // Specifies the entry point of the application
@@ -46,7 +47,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.7.4'
     compile group: 'com.google.guava', name: 'guava', version: '19.0'
-    // https://mvnrepository.com/artifact/commons-io/commons-io
+    //https://mvnrepository.com/artifact/commons-io/commons-io
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
@@ -64,7 +65,7 @@ dependencies {
 shadowJar {
     archiveName = "EduBuddy.jar"
 
-    destinationDir = file("${buildDir}/jar/")
+    destinationDir = file("${buildDir}")
 }
 
 task wrapper(type: Wrapper) {
@@ -198,12 +199,13 @@ task deployOfflineDocs(type: Copy) {
         include 'stylesheets/*'
         include 'images/*'
         include 'UserGuide.html'
+        include 'StudentPage/*'
     }
 }
 
 task copyDummySearchPage(type: Copy) {
-    from '/docs/template.html'
-    into "${buildDir}/docs/StudentPage"
+    from '/StudentPage/template.html'
+    into "${buildDir}"
 }
 
 deployOfflineDocs.dependsOn asciidoctor

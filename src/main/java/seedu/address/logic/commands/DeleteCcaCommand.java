@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
-import static seedu.address.logic.parser.ParserUtil.parseCcaPosition;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -13,7 +12,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Cca;
-import seedu.address.model.person.CcaPosition;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameOfKin;
@@ -105,9 +103,8 @@ public class DeleteCcaCommand extends UndoableCommand {
                 .orElse(personToEdit.getInjuriesHistory());
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
-        CcaPosition updatedCcaPosition = parseCcaPosition(" ");
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                    updatedInjuriesHistory, updatedNameOfKin, updatedCcaPosition);
+                updatedInjuriesHistory, updatedNameOfKin);
     }
 
     @Override

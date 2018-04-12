@@ -178,6 +178,10 @@ The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `Re
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
+The UI Browser window uses HTML's w3.css framework. The layout of the Browser Panel is defined from `src/main/resources/StudentPage/template.html`.
+
+The UI Browser window then reflects the user profile's respective HTML file when a user is selected, found in {user.home}/StudentPage.
+
 The `UI` component,
 
 * Executes user commands using the `Logic` component.
@@ -559,22 +563,20 @@ The browser panel can be controlled from the CLI interface, which manipulates th
 The browser will be invoked by the selection of a student from ui/BrowserPanel. loadPersonPage() invokes the html file
 of the student selected stored in resources/StudentPage.
 
-*To Be implemented*
 Creation of a html StudentPage file:
 
 After add command is called successfully, a template file from StudentPage will be duplicated as a backup,
 and renamed as the name that is called from the add command.
 
-*To Be implemented*
 Editing StudentPage file:
-After edit command is called, list of new string will be stored into a javascript file and parsed into the
-html file called by the function.
+After any command that changes the data in the BrowserPanel is called, the HTML file will be stored as a string and edited accordingly.
+The file is then output to {user.home}/StudentPage.
 
 // end::browserpanel[]
 
 *_return to <<toc,Table of Contents>>_*
 
-// tag::Remark Feature[]
+// tag::remark[]
 === Remark Feature
 ==== Current Implementation
 
@@ -595,7 +597,7 @@ Figure 15. Sequence Diagram of AddRemarkCommand
 ** Cons: The remark attached to the student in our student profile would not be able to exceed one line.
 
 *_return to <<toc,Table of Contents>>_*
-// end::Remark Feature[]
+// end::remark[]
 
 === Logging
 

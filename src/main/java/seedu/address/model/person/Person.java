@@ -80,6 +80,13 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
+    public List<Tag> getTagArray () {
+        Set<Tag> tagSet = getTags();
+        List<Tag> listTag = new ArrayList<>();
+        listTag.addAll(tagSet);
+        return listTag;
+    }
+
     public Set<Subject> getSubjects() {
         return Collections.unmodifiableSet(subjects.toSet());
     }

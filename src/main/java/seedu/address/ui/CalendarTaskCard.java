@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.model.task.Task;
 
+//@@author JoonKai1995
 /**
  * A UI component that displays compressed information of a {@code Task} on the calendar.
  */

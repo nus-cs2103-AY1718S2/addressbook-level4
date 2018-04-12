@@ -318,6 +318,21 @@ Deadline should not be dates of the past and should only be in the format dd-mm-
 [NOTE]
 Priority should only be a value from 1 to 3, 1 being the lowest and 3 being the highest.
 
+The `Task` Class:
+
+* Stores the information of a specific Task in Your TA.
+* Information includes: Title, Description, Deadline, Priority.
+* Implements `UniqueTaskList` that enforces uniqueness of its elements and disallows nulls.
+* `Title` & `TaskDescription`: Object that stores the title and description of the `Task` Object.
+[NOTE]
+Tasks title and description should only contain alphanumeric characters, and should not be null.
+* `Deadline`: Object that stores the deadline of the `Task` Object.
+[NOTE]
+Deadline should be a valid date that exists and in the format dd-mm-yyyy. Tasks cannot be scheduled in the past. And can only be scheduled at most 6 months in advance. (Based on months: tasks cannot be scheduled on 1st August 2018 if the current date is 31st January 2018).
+* `Priority`: Object that stores the priority of the `Task` Object.
+[NOTE]
+Priority value input can only be a value from 1 to 3. 1 being lowest priority and 3 being highest.
+
 [[Design-Storage]]
 === Storage component
 

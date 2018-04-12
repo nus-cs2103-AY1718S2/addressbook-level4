@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author JoonKai1995
 /**
  * Represents a Person's matriculation number in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidMatricNumber(String)}

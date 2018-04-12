@@ -1,5 +1,5 @@
 # Alaru
-###### \java\seedu\address\logic\commands\EmailCommandTest.java
+###### /java/seedu/address/logic/commands/EmailCommandTest.java
 ``` java
 public class EmailCommandTest {
 

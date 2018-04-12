@@ -3,6 +3,7 @@ package seedu.address.model.task;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author JoonKai1995
 /**
  * Represents a Task's priority in the todo list and calendar.
  * Guarantees: immutable; is valid as declared in {@link #isValidPriority(String)}

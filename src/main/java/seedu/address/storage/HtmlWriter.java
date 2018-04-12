@@ -20,6 +20,8 @@ public class HtmlWriter {
 
     private final String name;
     private final String phone;
+    private final String email;
+    private final String address;
     private final String amountOwed;
     private final String dueDate;
     private final String runnerAssigned;
@@ -29,6 +31,8 @@ public class HtmlWriter {
     public HtmlWriter() {
         this.name = null;
         this.phone = null;
+        this.email = null;
+        this.address = null;
         this.amountOwed = null;
         this.dueDate = null;
         this.runnerAssigned = null;
@@ -42,6 +46,8 @@ public class HtmlWriter {
     public HtmlWriter(Customer customer) {
         this.name = customer.getName().fullName;
         this.phone = customer.getPhone().value;
+        this.email = customer.getEmail().value;
+        this.address = customer.getAddress().value;
         this.amountOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
         this.dueDate = customer.getOweDueDate().toString();
         this.runnerAssigned = customer.getRunner().getName().fullName;
@@ -55,9 +61,11 @@ public class HtmlWriter {
     public HtmlWriter(Runner runner) {
         this.name = runner.getName().fullName;
         this.phone = runner.getPhone().value;
-        this.amountOwed = "test";
-        this.dueDate = "test";
-        this.runnerAssigned = "test";
+        this.email = runner.getEmail().value;
+        this.address = runner.getAddress().value;
+        this.amountOwed = "";
+        this.dueDate = "";
+        this.runnerAssigned = "";
         this.customerList = runner.getCustomers();
     }
 
@@ -103,8 +111,8 @@ public class HtmlWriter {
             printWriter.println("<table>");
             printWriter.println("<tr><th align=\"left\" colspan=\"2\">" + name + "</th></tr>");
             printWriter.println("<tr><td style=\"width: 120px;\">phone: </td><td>" + phone + "</td></tr>");
-            printWriter.println("<tr><td>email: </td><td>" + "ee" + "</td></tr>");
-            printWriter.println("<tr><td>address: </td><td>" + "house" + "</td></tr>");
+            printWriter.println("<tr><td>email: </td><td>" + email + "</td></tr>");
+            printWriter.println("<tr><td>address: </td><td>" + address + "</td></tr>");
             printWriter.println("</table>");
             printWriter.println("<br><br>");
             printWriter.println("<table>");

@@ -126,19 +126,17 @@ public class Task implements Comparable<Task> {
     public int compareTo(Task other) {
         if (this.getPriority() < other.getPriority()) {
             return 1;
-        }
-        else if (this.getPriority() > other.getPriority()) {
+        } else if (this.getPriority() > other.getPriority()) {
             return -1;
-        }
-        else{
+        } else {
             return 0;
         }
     }
 
     private int getPriority() {
-        int Price = this.getPrice().toInt();
-        int Distance = this.getDistance().toInt();
         int Count = this.getCount().toInt();
+        int Distance = this.getDistance().toInt();
+        int Price = this.getPrice().toInt();
         return calculatePriority(Price, Distance, Count);
     }
 

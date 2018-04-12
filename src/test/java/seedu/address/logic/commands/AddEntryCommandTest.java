@@ -53,7 +53,7 @@ public class AddEntryCommandTest {
 
     @Test
     public void execute_calendarEventAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingCalendarEventAdded modelStub = new ModelStubAcceptingCalendarEventAdded();
+        ModelStubAcceptingCalendarEntryAdded modelStub = new ModelStubAcceptingCalendarEntryAdded();
         CalendarEntry validEvent = new CalendarEntryBuilder().build();
 
         CommandResult commandResult = getAddEntryCommandForCalendarEvent(validEvent, modelStub).execute();
@@ -260,7 +260,7 @@ public class AddEntryCommandTest {
     /**
      * A Model stub that always accepts the calendarEvent being added.
      */
-    private class ModelStubAcceptingCalendarEventAdded extends ModelStub {
+    private class ModelStubAcceptingCalendarEntryAdded extends ModelStub {
         final ArrayList<CalendarEntry> calendarEventsAdded = new ArrayList<>();
 
         @Override
@@ -268,12 +268,6 @@ public class AddEntryCommandTest {
                 throws DuplicateCalendarEntryException {
             requireNonNull(calendarEntry);
             calendarEventsAdded.add(calendarEntry);
-        }
-
-        /* To fix later on */
-        @Override
-        public ObservableList<CalendarEntry> getFilteredCalendarEntryList() {
-            return null;
         }
 
         @Override

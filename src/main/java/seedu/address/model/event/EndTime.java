@@ -31,7 +31,7 @@ public class EndTime {
             this.endTime = convertStringToTime(endTime);
             this.endTimeString = endTime;
         } catch (DateTimeParseException dtpe) {
-            throw new AssertionError("Given start time should be valid for conversion.");
+            throw new AssertionError("Given End time should be valid for conversion.");
         }
     }
 

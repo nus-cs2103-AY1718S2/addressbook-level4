@@ -2,10 +2,8 @@ package seedu.address.logic.commands;
 //@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 
-import java.util.Optional;
-
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -49,9 +47,7 @@ public class ViewCalendarCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(view);
-        Optional<String> selectedView = Optional.of(view); //Guaranteed that view cannot be null
-
-        EventsCenter.getInstance().post(new DisplayCalendarRequestEvent(selectedView));
+        EventsCenter.getInstance().post(new ChangeCalendarViewRequestEvent(view));
         return new CommandResult(String.format(MESSAGE_SHOW_CALENDAR_SUCCESS, view));
     }
 

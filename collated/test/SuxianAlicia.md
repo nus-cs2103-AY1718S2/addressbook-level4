@@ -1294,7 +1294,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
 
-import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.testutil.EventsCollectorRule;
 

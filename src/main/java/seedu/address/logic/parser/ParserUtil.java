@@ -1,7 +1,10 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATE_FORMAT;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -487,5 +490,27 @@ public class ParserUtil {
         return endTime.isPresent()
                 ? Optional.of(parseEndTime(endTime.get()))
                 : Optional.empty();
+    }
+
+    /**
+     * Parses {@code date} into an {@code LocalDate} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static LocalDate parseTargetDate(String date) throws IllegalValueException {
+        String trimmedDate = date.trim();
+        if (!DateUtil.isValidDate(trimmedDate)) {
+            throw new IllegalValueException(MESSAGE_INVALID_DATE_FORMAT);
+        }
+
+        LocalDate localDate;
+
+        try {
+            localDate = DateUtil.convertStringToDate(trimmedDate);
+        } catch (DateTimeParseException dtpe) {
+            throw new AssertionError("Given date should be valid for conversion.");
+        }
+
+        return localDate;
     }
 }

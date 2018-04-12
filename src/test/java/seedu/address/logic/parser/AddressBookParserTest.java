@@ -5,11 +5,14 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET_DATE;
 import static seedu.address.model.theme.Theme.LIGHT_THEME_KEYWORD;
 import static seedu.address.testutil.TypicalGroups.FRIENDS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ENTRY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalLocalDates.NORMAL_DATE;
+import static seedu.address.testutil.TypicalLocalDates.NORMAL_DATE_STRING;
 import static seedu.address.testutil.TypicalPreferences.COMPUTERS;
 
 import java.util.Arrays;
@@ -23,6 +26,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEntryCommand;
 import seedu.address.logic.commands.AddOrderCommand;
+import seedu.address.logic.commands.CalendarJumpCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -119,6 +123,22 @@ public class AddressBookParserTest {
                 + " " + CalendarEntryUtil.getCalendarEntryDetails(calendarEntry));
 
         assertEquals(new AddEntryCommand(calendarEntry), command);
+    }
+
+    @Test
+    public void parseCommand_calendarJump() throws Exception {
+        CalendarJumpCommand command = (CalendarJumpCommand) parser.parseCommand(
+                CalendarJumpCommand.COMMAND_WORD + " " + PREFIX_TARGET_DATE + "06-06-1990");
+
+        assertEquals(new CalendarJumpCommand(NORMAL_DATE, NORMAL_DATE_STRING), command);
+    }
+
+    @Test
+    public void parseCommand_calendarJumpAlias() throws Exception {
+        CalendarJumpCommand command = (CalendarJumpCommand) parser.parseCommand(
+                CalendarJumpCommand.COMMAND_ALIAS + " " + PREFIX_TARGET_DATE + "06-06-1990");
+
+        assertEquals(new CalendarJumpCommand(NORMAL_DATE, NORMAL_DATE_STRING), command);
     }
 
     @Test

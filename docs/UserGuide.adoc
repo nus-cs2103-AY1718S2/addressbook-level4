@@ -461,6 +461,19 @@ Command Alias: `caltoday`
 * If calendar is displaying in month-view, command displays current month of today in month-view.
 ****
 
+==== Display given date in the calendar : `calendarjump` `since v1.5`
+
+Displays given date in Calendar. +
+Format: `calendarjump td/TARGET_DATE` +
+Command Alias: `caljump`
+
+****
+* TARGET_DATE must follow the format: DD-MM-YYYY (E.g. 04-04-2020 represents 4 April 2020)
+* If calendar is displaying in day-view, command displays TARGET_DATE in day-view.
+* If calendar is displaying in week-view, command displays the week of TARGET_DATE in week-view.
+* If calendar is displaying in month-view, command displays the month of TARGET_DATE in month-view.
+****
+
 === Managing Calendar Entries
 
 This section describes commands you can use to manage calendar entries in ContactSails.
@@ -469,7 +482,7 @@ These entries will be displayed in the calendar.
 
 ==== Adding entries to calendar entry list : `entryadd` `since v1.3`
 
-Adds an entry to the Calendar entry list. +
+Adds an entry to the Calendar entry list and displays it in the calendar. +
 Format: `entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
 Command Alias: `ea` +
 
@@ -479,6 +492,7 @@ Command Alias: `ea` +
 * TITLE is alphanumeric and accepts white space. TITLE accepts maximum of 40 characters.
 * START_DATE and END_DATE must follow the format: DD-MM-YYYY (E.g. 04-04-2020 represents 4 April 2020)
 * START_TIME and END_TIME must follow the 24-Hour format: HH:MM (E.g. 23:59)
+*
 ****
 
 Examples:
@@ -494,7 +508,7 @@ Entry starting from 1 Jan 2019 1000 and ending at 10 Jan 2019 1800 appears at th
 
 ==== Editing entries in calendar entry list : `entryedit` `since v1.5rc`
 
-Edits an existing entry in the Calendar entry List. +
+Edits an existing entry in the Calendar entry list and displays the edited entry in the calendar. +
 Format: `entryedit ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
 Command Alias: `ee` +
 

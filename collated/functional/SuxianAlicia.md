@@ -294,7 +294,7 @@ import java.util.Optional;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
-import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.CalendarEntry;
 import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
@@ -700,7 +700,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Optional;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -2685,7 +2685,7 @@ import javafx.scene.layout.StackPane;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
-import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
 import seedu.address.ui.util.CalendarFxUtil;
 
 /**
@@ -2803,7 +2803,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
-import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ResetPersonPanelRequestEvent;
 import seedu.address.model.event.CalendarEntry;

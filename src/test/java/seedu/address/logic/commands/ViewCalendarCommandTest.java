@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
 
-import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -62,7 +62,7 @@ public class ViewCalendarCommandTest {
 
     /**
      * Executes a {@code ViewCalendarCommand} with the given {@code view},
-     * and checks that {@code DisplayCalendarRequestEvent} is raised with the day view.
+     * and checks that {@code ChangeCalendarViewRequestEvent} is raised with the day view.
      */
     private void assertShowDayViewSuccess(String view) {
         ViewCalendarCommand viewCalendarCommand = new ViewCalendarCommand(view);
@@ -75,14 +75,14 @@ public class ViewCalendarCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        DisplayCalendarRequestEvent lastEvent = (DisplayCalendarRequestEvent) eventsCollectorRule.eventsCollector
+        ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
         assertEquals(ViewCalendarCommand.DAY_VIEW, lastEvent.getView());
     }
 
     /**
      * Executes a {@code ViewCalendarCommand} with the given {@code view},
-     * and checks that {@code DisplayCalendarRequestEvent} is raised with the week view.
+     * and checks that {@code ChangeCalendarViewRequestEvent} is raised with the week view.
      */
     private void assertShowWeekViewSuccess(String view) {
         ViewCalendarCommand viewCalendarCommand = new ViewCalendarCommand(view);
@@ -95,14 +95,14 @@ public class ViewCalendarCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        DisplayCalendarRequestEvent lastEvent = (DisplayCalendarRequestEvent) eventsCollectorRule.eventsCollector
+        ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
         assertEquals(ViewCalendarCommand.WEEK_VIEW, lastEvent.getView());
     }
 
     /**
      * Executes a {@code ViewCalendarCommand} with the given {@code view},
-     * and checks that {@code DisplayCalendarRequestEvent} is raised with the month view.
+     * and checks that {@code ChangeCalendarViewRequestEvent} is raised with the month view.
      */
     private void assertShowMonthViewSuccess(String view) {
         ViewCalendarCommand viewCalendarCommand = new ViewCalendarCommand(view);
@@ -115,7 +115,7 @@ public class ViewCalendarCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        DisplayCalendarRequestEvent lastEvent = (DisplayCalendarRequestEvent) eventsCollectorRule.eventsCollector
+        ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
         assertEquals(ViewCalendarCommand.MONTH_VIEW, lastEvent.getView());
     }

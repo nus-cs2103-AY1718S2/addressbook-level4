@@ -22,5 +22,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_END_DATE = new Prefix("ed/");
     public static final Prefix PREFIX_START_TIME = new Prefix("st/");
     public static final Prefix PREFIX_END_TIME = new Prefix("et/");
-
+    public static final Prefix PREFIX_TARGET_DATE = new Prefix("td/");
 }

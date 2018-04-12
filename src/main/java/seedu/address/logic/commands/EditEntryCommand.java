@@ -13,8 +13,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ChangeCalendarDateRequestEvent;
+import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -87,6 +90,10 @@ public class EditEntryCommand extends UndoableCommand {
             throw new AssertionError("The target calendar entry cannot be missing.");
         }
         model.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+
+        EventsCenter.getInstance().post(new ChangeCalendarDateRequestEvent(editedEntry.getDateToDisplay()));
+        EventsCenter.getInstance().post(new DisplayCalendarEntryListEvent());
+
         return new CommandResult(String.format(MESSAGE_EDIT_ENTRY_SUCCESS, editedEntry));
     }
 

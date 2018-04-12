@@ -7,11 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ENTRY_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
-import java.util.Optional;
-
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ChangeCalendarDateRequestEvent;
 import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
-import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.CalendarEntry;
 import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
@@ -62,7 +60,7 @@ public class AddEntryCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addCalendarEntry(calEntryToAdd);
-            EventsCenter.getInstance().post(new DisplayCalendarRequestEvent(Optional.empty()));
+            EventsCenter.getInstance().post(new ChangeCalendarDateRequestEvent(calEntryToAdd.getDateToDisplay()));
             EventsCenter.getInstance().post(new DisplayCalendarEntryListEvent());
             return new CommandResult(String.format(MESSAGE_ADD_ENTRY_SUCCESS, calEntryToAdd));
         } catch (DuplicateCalendarEntryException dcee) {

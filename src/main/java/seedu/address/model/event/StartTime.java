@@ -32,7 +32,7 @@ public class StartTime {
             this.startTime = convertStringToTime(startTime);
             this.startTimeString = startTime;
         } catch (DateTimeParseException dtpe) {
-            throw new AssertionError("Given start time should be valid for conversion.");
+            throw new AssertionError("Given Start time should be valid for conversion.");
         }
     }
 

@@ -2,6 +2,7 @@ package seedu.address.model.event;
 //@@author SuxianAlicia
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -49,6 +50,10 @@ public class CalendarEntry {
 
     public EndTime getEndTime() {
         return endTime;
+    }
+
+    public LocalDate getDateToDisplay() {
+        return startDate.getLocalDate();
     }
 
     @Override

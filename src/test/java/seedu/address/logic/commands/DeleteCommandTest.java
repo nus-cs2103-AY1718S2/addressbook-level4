@@ -3,6 +3,9 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_CHARLIE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CHARLIE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_CHARLIE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -12,18 +15,22 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatient;
+import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalAppointments;
 import seedu.address.testutil.TypicalPetPatients;
 
@@ -32,6 +39,9 @@ import seedu.address.testutil.TypicalPetPatients;
  * {@code DeleteCommand}.
  */
 public class DeleteCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -47,6 +57,25 @@ public class DeleteCommandTest {
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
+
+    //@@author wynonaK
+    @Test
+    public void executeDeleteOwnerWithTiedPet_validIndexUnfilteredList_failure() throws Exception {
+        model.addPetPatient(TypicalPetPatients.JEWEL);
+        DeleteCommand deleteCommand = prepareDeleteOwnerCommand(INDEX_FIRST_PERSON);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_DEPENDENCIES_EXIST);
+    }
+
+    @Test
+    public void executeDeleteOwnerWithTiedPetWithTiedAppt_validIndexUnfilteredList_failure() throws Exception {
+        model.addPetPatient(TypicalPetPatients.JEWEL);
+        model.addAppointment(TypicalAppointments.ALICE_APP);
+        DeleteCommand deleteCommand = prepareDeleteOwnerCommand(INDEX_FIRST_PERSON);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_DEPENDENCIES_EXIST);
+    }
+
     //@@author wynonaK
     @Test
     public void executeDeleteForceOwner_validIndexUnfilteredList_success() throws Exception {
@@ -80,6 +109,30 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void executeDeleteForceOwnerWithTiedPetAndAppt_validIndexUnfilteredList_success() throws Exception {
+        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        PetPatient petPatientDependent = TypicalPetPatients.JEWEL;
+        model.addPetPatient(petPatientDependent);
+        Appointment appointmentDependent = TypicalAppointments.ALICE_APP;
+        model.addAppointment(appointmentDependent);
+        DeleteCommand deleteCommand = prepareDeleteForceOwnerCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete)
+                + "\n"
+                + String.format(DeleteCommand.MESSAGE_DELETE_PET_PATIENT_SUCCESS, petPatientDependent)
+                + "\n"
+                + String.format(DeleteCommand.MESSAGE_DELETE_APPOINTMENT_SUCCESS, appointmentDependent);
+
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteAppointment(appointmentDependent);
+        expectedModel.deletePetPatient(petPatientDependent);
+        expectedModel.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void executeDeletePetPatient_validIndexUnfilteredList_success() throws Exception {
         model.addPetPatient(TypicalPetPatients.JEWEL);
         model.addPetPatient(TypicalPetPatients.JOKER);
@@ -92,6 +145,15 @@ public class DeleteCommandTest {
         expectedModel.deletePetPatient(petPatientToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeDeletePetPatientWithTiedApppointment_validIndexUnfilteredList_failure() throws Exception {
+        model.addPetPatient(TypicalPetPatients.JOKER);
+        model.addAppointment(TypicalAppointments.BENSON_APP);
+        DeleteCommand deleteCommand = prepareDeletePetPatientCommand(INDEX_FIRST_PERSON);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_DEPENDENCIES_EXIST);
     }
 
     @Test
@@ -143,6 +205,19 @@ public class DeleteCommandTest {
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
+
+    @Test
+    public void executeDeleteExecuteInvalidIndex_throwsException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        new DeleteCommand(6, null).executeUndoableCommand();
+    }
+
+    @Test
+    public void executeDeletePreProcessInvalidIndex_throwsException() throws Exception {
+        thrown.expect(CommandException.class);
+        new DeleteCommand(6, null).preprocessUndoableCommand();
+    }
+
     //@@author
     @Test
     public void executeDeleteOwner_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
@@ -184,6 +259,7 @@ public class DeleteCommandTest {
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
+
     //@@author
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {

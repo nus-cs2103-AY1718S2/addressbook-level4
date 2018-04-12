@@ -249,7 +249,7 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     public void handleGameEvent(GameEvent event) {
 
-        URL gamePath = MainApp.class.getResource("/games/Snake.html");
+        URL gamePath = MainApp.class.getResource("/unused/games/Snake.html");
         loadPage(gamePath.toExternalForm());
         additionalInfo.setText("+ Additional information will be displayed here.");
     }

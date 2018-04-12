@@ -4,6 +4,8 @@ package seedu.address.commons.util;
 
 import static org.asynchttpclient.Dsl.asyncHttpClient;
 
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -14,6 +16,7 @@ import org.asynchttpclient.HttpResponseBodyPart;
 import org.asynchttpclient.HttpResponseStatus;
 import org.asynchttpclient.Response;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -100,5 +103,18 @@ public class FetchUtil {
         jsonObject = jsonElement.getAsJsonObject();
 
         return jsonObject;
+    }
+
+    /**
+     * Parses a file at {@code filepath} as an array of JsonObjects
+     * @param fw cannot be null
+     * @return JsonArray that is contained in the file at {@code filepath}
+     */
+    public static JsonArray parseFileToJsonObj(InputStreamReader fw) throws FileNotFoundException {
+        JsonObject jsonObject;
+
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(fw);
+        return jsonElement.getAsJsonArray();
     }
 }

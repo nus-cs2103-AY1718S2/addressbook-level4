@@ -3,8 +3,10 @@ package seedu.address.testutil;
 import java.io.File;
 import java.io.IOException;
 
+import seedu.address.commons.core.CoinSubredditList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.Token;
 import seedu.address.logic.parser.TokenType;
 import seedu.address.model.Model;
@@ -130,5 +132,13 @@ public class TestUtil {
      */
     public static Coin getCoin(Model model, Index index) {
         return model.getCoinBook().getCoinList().get(index.getZeroBased());
+    }
+
+    /**
+     * Generates a new {@code successMessage} based on the {@code coin}.
+     */
+    public static String getAddCommandSuccessMessage(Coin coin) {
+        return String.format(AddCommand.MESSAGE_SUCCESS
+                + (CoinSubredditList.isRecognized(coin) ? "" : AddCommand.MESSAGE_COIN_CODE_NOT_REGISTERED), coin);
     }
 }

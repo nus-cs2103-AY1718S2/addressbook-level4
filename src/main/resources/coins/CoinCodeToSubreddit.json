@@ -1,0 +1,6099 @@
+[
+  {
+    "code": "BTC",
+    "subreddit": "bitcoin"
+  },
+  {
+    "code": "ETH",
+    "subreddit": "ethereum"
+  },
+  {
+    "code": "XRP",
+    "subreddit": "ripple"
+  },
+  {
+    "code": "BCH",
+    "subreddit": "bitcoincash"
+  },
+  {
+    "code": "LTC",
+    "subreddit": "litecoin"
+  },
+  {
+    "code": "EOS",
+    "subreddit": "eos"
+  },
+  {
+    "code": "ADA",
+    "subreddit": "cardano"
+  },
+  {
+    "code": "XLM",
+    "subreddit": "stellar"
+  },
+  {
+    "code": "NEO",
+    "subreddit": "neo"
+  },
+  {
+    "code": "MIOTA",
+    "subreddit": "iota"
+  },
+  {
+    "code": "XMR",
+    "subreddit": "monero"
+  },
+  {
+    "code": "TRX",
+    "subreddit": "tronix"
+  },
+  {
+    "code": "DASH",
+    "subreddit": "dashpay"
+  },
+  {
+    "code": "USDT",
+    "subreddit": "tether"
+  },
+  {
+    "code": "XEM",
+    "subreddit": "nem"
+  },
+  {
+    "code": "VEN",
+    "subreddit": "vechain"
+  },
+  {
+    "code": "BNB",
+    "subreddit": "binanceexchange"
+  },
+  {
+    "code": "ETC",
+    "subreddit": "ethereumclassic"
+  },
+  {
+    "code": "QTUM",
+    "subreddit": "qtum"
+  },
+  {
+    "code": "XVG",
+    "subreddit": "vergecurrency"
+  },
+  {
+    "code": "ONT",
+    "subreddit": null
+  },
+  {
+    "code": "OMG",
+    "subreddit": "omisego"
+  },
+  {
+    "code": "LSK",
+    "subreddit": "lisk"
+  },
+  {
+    "code": "ICX",
+    "subreddit": "helloicon"
+  },
+  {
+    "code": "BTG",
+    "subreddit": null
+  },
+  {
+    "code": "ZEC",
+    "subreddit": "zec"
+  },
+  {
+    "code": "NANO",
+    "subreddit": "nanocurrency"
+  },
+  {
+    "code": "BTM",
+    "subreddit": null
+  },
+  {
+    "code": "WAN",
+    "subreddit": null
+  },
+  {
+    "code": "STEEM",
+    "subreddit": "steemit"
+  },
+  {
+    "code": "BCN",
+    "subreddit": "BytecoinBCN"
+  },
+  {
+    "code": "PPT",
+    "subreddit": "populous_platform"
+  },
+  {
+    "code": "DGD",
+    "subreddit": "digix"
+  },
+  {
+    "code": "SC",
+    "subreddit": "siacoin"
+  },
+  {
+    "code": "STRAT",
+    "subreddit": "stratisplatform"
+  },
+  {
+    "code": "RHOC",
+    "subreddit": "rchain"
+  },
+  {
+    "code": "BTS",
+    "subreddit": null
+  },
+  {
+    "code": "BCD",
+    "subreddit": null
+  },
+  {
+    "code": "WAVES",
+    "subreddit": "wavesplatform"
+  },
+  {
+    "code": "DCR",
+    "subreddit": "decred"
+  },
+  {
+    "code": "MKR",
+    "subreddit": "makerdao"
+  },
+  {
+    "code": "DOGE",
+    "subreddit": "dogecoin"
+  },
+  {
+    "code": "AE",
+    "subreddit": "aeternity"
+  },
+  {
+    "code": "SNT",
+    "subreddit": "status_token"
+  },
+  {
+    "code": "ZRX",
+    "subreddit": "0xproject"
+  },
+  {
+    "code": "ZIL",
+    "subreddit": "zilliqa"
+  },
+  {
+    "code": "KMD",
+    "subreddit": "komodoplatform"
+  },
+  {
+    "code": "REP",
+    "subreddit": "augur"
+  },
+  {
+    "code": "ARDR",
+    "subreddit": "ardor"
+  },
+  {
+    "code": "IOST",
+    "subreddit": "iostoken"
+  },
+  {
+    "code": "LRC",
+    "subreddit": "loopringorg"
+  },
+  {
+    "code": "AION",
+    "subreddit": "AionNetwork"
+  },
+  {
+    "code": "KCS",
+    "subreddit": "kucoin"
+  },
+  {
+    "code": "GNT",
+    "subreddit": "golemproject"
+  },
+  {
+    "code": "ARK",
+    "subreddit": "arkecosystem"
+  },
+  {
+    "code": "HSR",
+    "subreddit": "hcash"
+  },
+  {
+    "code": "PIVX",
+    "subreddit": "pivx"
+  },
+  {
+    "code": "WTC",
+    "subreddit": "waltonchain"
+  },
+  {
+    "code": "CNX",
+    "subreddit": null
+  },
+  {
+    "code": "ELF",
+    "subreddit": "aelfofficial"
+  },
+  {
+    "code": "DGB",
+    "subreddit": "digibyte"
+  },
+  {
+    "code": "BAT",
+    "subreddit": null
+  },
+  {
+    "code": "MONA",
+    "subreddit": "monacoin"
+  },
+  {
+    "code": "CENNZ",
+    "subreddit": null
+  },
+  {
+    "code": "VERI",
+    "subreddit": null
+  },
+  {
+    "code": "QASH",
+    "subreddit": null
+  },
+  {
+    "code": "FCT",
+    "subreddit": "factom"
+  },
+  {
+    "code": "DRGN",
+    "subreddit": "dragonchain"
+  },
+  {
+    "code": "ELA",
+    "subreddit": null
+  },
+  {
+    "code": "NAS",
+    "subreddit": "nebulas"
+  },
+  {
+    "code": "GAS",
+    "subreddit": null
+  },
+  {
+    "code": "SUB",
+    "subreddit": "SubstratumNetwork"
+  },
+  {
+    "code": "ETHOS",
+    "subreddit": "ethos_io"
+  },
+  {
+    "code": "SYS",
+    "subreddit": "syscoin"
+  },
+  {
+    "code": "GXS",
+    "subreddit": null
+  },
+  {
+    "code": "RDD",
+    "subreddit": "reddcoin"
+  },
+  {
+    "code": "XIN",
+    "subreddit": null
+  },
+  {
+    "code": "KNC",
+    "subreddit": null
+  },
+  {
+    "code": "R",
+    "subreddit": "revain_org"
+  },
+  {
+    "code": "ETN",
+    "subreddit": "electroneum"
+  },
+  {
+    "code": "FUN",
+    "subreddit": "funfairtech"
+  },
+  {
+    "code": "SKY",
+    "subreddit": "SkycoinProject"
+  },
+  {
+    "code": "XZC",
+    "subreddit": "zcoin"
+  },
+  {
+    "code": "NXT",
+    "subreddit": "nxt"
+  },
+  {
+    "code": "LINK",
+    "subreddit": "LINKTrader"
+  },
+  {
+    "code": "GBYTE",
+    "subreddit": "byteball"
+  },
+  {
+    "code": "SALT",
+    "subreddit": "SaltCoin"
+  },
+  {
+    "code": "MAID",
+    "subreddit": "maidsafe"
+  },
+  {
+    "code": "NCASH",
+    "subreddit": null
+  },
+  {
+    "code": "STORM",
+    "subreddit": "stormtoken"
+  },
+  {
+    "code": "POWR",
+    "subreddit": "PowerLedger"
+  },
+  {
+    "code": "BNT",
+    "subreddit": "bancor"
+  },
+  {
+    "code": "PART",
+    "subreddit": "particl"
+  },
+  {
+    "code": "ENG",
+    "subreddit": "enigmacatalyst"
+  },
+  {
+    "code": "WAX",
+    "subreddit": "WAX_io"
+  },
+  {
+    "code": "REQ",
+    "subreddit": "RequestNetwork"
+  },
+  {
+    "code": "DENT",
+    "subreddit": "dentcoin"
+  },
+  {
+    "code": "NEBL",
+    "subreddit": "Neblio"
+  },
+  {
+    "code": "DCN",
+    "subreddit": "dentacoin"
+  },
+  {
+    "code": "STORJ",
+    "subreddit": "storj"
+  },
+  {
+    "code": "POA",
+    "subreddit": null
+  },
+  {
+    "code": "FSN",
+    "subreddit": null
+  },
+  {
+    "code": "PAY",
+    "subreddit": "tenx"
+  },
+  {
+    "code": "CND",
+    "subreddit": "cindicator"
+  },
+  {
+    "code": "HPB",
+    "subreddit": "hpbcoin"
+  },
+  {
+    "code": "EMC",
+    "subreddit": "emercoin"
+  },
+  {
+    "code": "ICN",
+    "subreddit": null
+  },
+  {
+    "code": "GNX",
+    "subreddit": null
+  },
+  {
+    "code": "NXS",
+    "subreddit": "nexusearth"
+  },
+  {
+    "code": "ZEN",
+    "subreddit": "zensys"
+  },
+  {
+    "code": "VTC",
+    "subreddit": "vertcoin"
+  },
+  {
+    "code": "KIN",
+    "subreddit": "KinFoundation"
+  },
+  {
+    "code": "POLY",
+    "subreddit": "PolymathNetwork"
+  },
+  {
+    "code": "ACT",
+    "subreddit": "AchainACT"
+  },
+  {
+    "code": "BOS",
+    "subreddit": null
+  },
+  {
+    "code": "CVC",
+    "subreddit": "civicplatform"
+  },
+  {
+    "code": "MAN",
+    "subreddit": null
+  },
+  {
+    "code": "QSP",
+    "subreddit": "quantstamp"
+  },
+  {
+    "code": "MANA",
+    "subreddit": "decentraland"
+  },
+  {
+    "code": "GAME",
+    "subreddit": "gamecreditscrypto"
+  },
+  {
+    "code": "NULS",
+    "subreddit": "nulsservice"
+  },
+  {
+    "code": "DROP",
+    "subreddit": null
+  },
+  {
+    "code": "RLC",
+    "subreddit": "iexec"
+  },
+  {
+    "code": "BLOCK",
+    "subreddit": "theblocknet"
+  },
+  {
+    "code": "SMART",
+    "subreddit": "smartcash"
+  },
+  {
+    "code": "MTL",
+    "subreddit": "metalpay"
+  },
+  {
+    "code": "ENJ",
+    "subreddit": "EnjinCoin"
+  },
+  {
+    "code": "GNO",
+    "subreddit": "gnosisPM"
+  },
+  {
+    "code": "MCO",
+    "subreddit": "monacocard"
+  },
+  {
+    "code": "UBQ",
+    "subreddit": "ubiq"
+  },
+  {
+    "code": "MNX",
+    "subreddit": "minexcoin"
+  },
+  {
+    "code": "CS",
+    "subreddit": null
+  },
+  {
+    "code": "SRN",
+    "subreddit": "SirinLabs"
+  },
+  {
+    "code": "TNB",
+    "subreddit": "TimeNewBank"
+  },
+  {
+    "code": "AGI",
+    "subreddit": "SingularityNet"
+  },
+  {
+    "code": "SNGLS",
+    "subreddit": "singulardtv"
+  },
+  {
+    "code": "RDN",
+    "subreddit": "raidennetwork"
+  },
+  {
+    "code": "POE",
+    "subreddit": "poetproject"
+  },
+  {
+    "code": "BTX",
+    "subreddit": "bitcore_btx"
+  },
+  {
+    "code": "ANT",
+    "subreddit": "aragonproject"
+  },
+  {
+    "code": "DTR",
+    "subreddit": null
+  },
+  {
+    "code": "GVT",
+    "subreddit": "genesisvision"
+  },
+  {
+    "code": "PRL",
+    "subreddit": "Oyster"
+  },
+  {
+    "code": "AUTO",
+    "subreddit": null
+  },
+  {
+    "code": "THETA",
+    "subreddit": "thetatoken"
+  },
+  {
+    "code": "IGNIS",
+    "subreddit": "ignis"
+  },
+  {
+    "code": "BLZ",
+    "subreddit": null
+  },
+  {
+    "code": "ABT",
+    "subreddit": null
+  },
+  {
+    "code": "SAN",
+    "subreddit": "santiment"
+  },
+  {
+    "code": "DBC",
+    "subreddit": "DeepBrainChain"
+  },
+  {
+    "code": "XDN",
+    "subreddit": "digitalnote"
+  },
+  {
+    "code": "MITH",
+    "subreddit": null
+  },
+  {
+    "code": "BTCD",
+    "subreddit": "bitcoindark"
+  },
+  {
+    "code": "PLR",
+    "subreddit": "pillarproject"
+  },
+  {
+    "code": "NAV",
+    "subreddit": "NavCoin"
+  },
+  {
+    "code": "PAYX",
+    "subreddit": null
+  },
+  {
+    "code": "SMT",
+    "subreddit": null
+  },
+  {
+    "code": "RUFF",
+    "subreddit": null
+  },
+  {
+    "code": "LOOM",
+    "subreddit": null
+  },
+  {
+    "code": "CMT",
+    "subreddit": null
+  },
+  {
+    "code": "TKY",
+    "subreddit": null
+  },
+  {
+    "code": "VEE",
+    "subreddit": "blockv"
+  },
+  {
+    "code": "PPP",
+    "subreddit": "PayPie"
+  },
+  {
+    "code": "ITC",
+    "subreddit": "itcofficial"
+  },
+  {
+    "code": "DATA",
+    "subreddit": "streamr"
+  },
+  {
+    "code": "SLS",
+    "subreddit": "salus"
+  },
+  {
+    "code": "GTO",
+    "subreddit": "GIFTO"
+  },
+  {
+    "code": "RCN",
+    "subreddit": null
+  },
+  {
+    "code": "DDD",
+    "subreddit": null
+  },
+  {
+    "code": "ION",
+    "subreddit": "ioncoin"
+  },
+  {
+    "code": "EVN",
+    "subreddit": null
+  },
+  {
+    "code": "OST",
+    "subreddit": null
+  },
+  {
+    "code": "EDG",
+    "subreddit": "edgeless"
+  },
+  {
+    "code": "MED",
+    "subreddit": "MediBloc"
+  },
+  {
+    "code": "DEW",
+    "subreddit": null
+  },
+  {
+    "code": "LEND",
+    "subreddit": "ethlend"
+  },
+  {
+    "code": "XP",
+    "subreddit": "ExperiencePoints"
+  },
+  {
+    "code": "BIX",
+    "subreddit": "Bibox"
+  },
+  {
+    "code": "ADX",
+    "subreddit": "AdEx"
+  },
+  {
+    "code": "TEL",
+    "subreddit": "telcoin"
+  },
+  {
+    "code": "QRL",
+    "subreddit": "QRL"
+  },
+  {
+    "code": "EDO",
+    "subreddit": "eidoo"
+  },
+  {
+    "code": "GRS",
+    "subreddit": "groestlcoin"
+  },
+  {
+    "code": "BAY",
+    "subreddit": "BitBay"
+  },
+  {
+    "code": "VIA",
+    "subreddit": "viacoin"
+  },
+  {
+    "code": "PURA",
+    "subreddit": null
+  },
+  {
+    "code": "XAS",
+    "subreddit": "Asch_Platform"
+  },
+  {
+    "code": "DTA",
+    "subreddit": "Datacoin"
+  },
+  {
+    "code": "SNM",
+    "subreddit": "sonm"
+  },
+  {
+    "code": "BCO",
+    "subreddit": "bridgecoin"
+  },
+  {
+    "code": "RPX",
+    "subreddit": "RedPulseToken"
+  },
+  {
+    "code": "C20",
+    "subreddit": "cryptotwenty"
+  },
+  {
+    "code": "FTC",
+    "subreddit": "feathercoin"
+  },
+  {
+    "code": "AST",
+    "subreddit": "AirSwap"
+  },
+  {
+    "code": "PPC",
+    "subreddit": "peercoin"
+  },
+  {
+    "code": "AMB",
+    "subreddit": null
+  },
+  {
+    "code": "SPHTX",
+    "subreddit": "SophiaTXproject"
+  },
+  {
+    "code": "SPANK",
+    "subreddit": "spankchain"
+  },
+  {
+    "code": "EMC2",
+    "subreddit": "einsteinium"
+  },
+  {
+    "code": "MDS",
+    "subreddit": null
+  },
+  {
+    "code": "WINGS",
+    "subreddit": "wingsdao"
+  },
+  {
+    "code": "UTK",
+    "subreddit": "uTrustPlatform"
+  },
+  {
+    "code": "CLOAK",
+    "subreddit": "cloak_coin"
+  },
+  {
+    "code": "MGO",
+    "subreddit": "mobilego"
+  },
+  {
+    "code": "DNT",
+    "subreddit": "district0x"
+  },
+  {
+    "code": "NPXS",
+    "subreddit": null
+  },
+  {
+    "code": "CRPT",
+    "subreddit": null
+  },
+  {
+    "code": "WPR",
+    "subreddit": "WePowerNetwork"
+  },
+  {
+    "code": "APPC",
+    "subreddit": "AppcoinsProtocol"
+  },
+  {
+    "code": "PRE",
+    "subreddit": "presearch"
+  },
+  {
+    "code": "UTNP",
+    "subreddit": null
+  },
+  {
+    "code": "ORME",
+    "subreddit": null
+  },
+  {
+    "code": "WABI",
+    "subreddit": "WabiToken"
+  },
+  {
+    "code": "TAAS",
+    "subreddit": "taasfund"
+  },
+  {
+    "code": "NGC",
+    "subreddit": "nagacoin"
+  },
+  {
+    "code": "NLG",
+    "subreddit": "guldencommunity"
+  },
+  {
+    "code": "TRAC",
+    "subreddit": "OriginTrail"
+  },
+  {
+    "code": "XBY",
+    "subreddit": "XtraBYtes"
+  },
+  {
+    "code": "MOD",
+    "subreddit": "modum_io"
+  },
+  {
+    "code": "BRD",
+    "subreddit": "breadwallet"
+  },
+  {
+    "code": "VIBE",
+    "subreddit": "VibeHub"
+  },
+  {
+    "code": "KICK",
+    "subreddit": null
+  },
+  {
+    "code": "INS",
+    "subreddit": "INS_Ecosystem"
+  },
+  {
+    "code": "CSC",
+    "subreddit": null
+  },
+  {
+    "code": "RVN",
+    "subreddit": null
+  },
+  {
+    "code": "RKT",
+    "subreddit": null
+  },
+  {
+    "code": "LBC",
+    "subreddit": "lbry"
+  },
+  {
+    "code": "TNC",
+    "subreddit": "TrinityNetworkCredit"
+  },
+  {
+    "code": "ECC",
+    "subreddit": "ecc"
+  },
+  {
+    "code": "XCP",
+    "subreddit": "counterparty"
+  },
+  {
+    "code": "TNT",
+    "subreddit": "tierion"
+  },
+  {
+    "code": "QLC",
+    "subreddit": "qlink"
+  },
+  {
+    "code": "BURST",
+    "subreddit": "burstcoin"
+  },
+  {
+    "code": "FUEL",
+    "subreddit": "etherparty"
+  },
+  {
+    "code": "MLN",
+    "subreddit": "melonproject"
+  },
+  {
+    "code": "BCA",
+    "subreddit": null
+  },
+  {
+    "code": "SOAR",
+    "subreddit": null
+  },
+  {
+    "code": "JNT",
+    "subreddit": "JibrelNetwork"
+  },
+  {
+    "code": "SXDT",
+    "subreddit": null
+  },
+  {
+    "code": "IHT",
+    "subreddit": null
+  },
+  {
+    "code": "BCPT",
+    "subreddit": "blockmason"
+  },
+  {
+    "code": "HTML",
+    "subreddit": null
+  },
+  {
+    "code": "BTO",
+    "subreddit": "Bottos"
+  },
+  {
+    "code": "DCT",
+    "subreddit": "decentplatform"
+  },
+  {
+    "code": "BITCNY",
+    "subreddit": "BitShares"
+  },
+  {
+    "code": "DPY",
+    "subreddit": "DelphiSystems"
+  },
+  {
+    "code": "WGR",
+    "subreddit": "wagerr"
+  },
+  {
+    "code": "INK",
+    "subreddit": "InkLabsFoundation"
+  },
+  {
+    "code": "AEON",
+    "subreddit": "aeon"
+  },
+  {
+    "code": "POT",
+    "subreddit": "potcoin"
+  },
+  {
+    "code": "GTC",
+    "subreddit": null
+  },
+  {
+    "code": "VIB",
+    "subreddit": "viberate"
+  },
+  {
+    "code": "TRIG",
+    "subreddit": null
+  },
+  {
+    "code": "LEO",
+    "subreddit": "leocoinorg"
+  },
+  {
+    "code": "ETP",
+    "subreddit": "Metaverse_Blockchain"
+  },
+  {
+    "code": "CDT",
+    "subreddit": null
+  },
+  {
+    "code": "UNO",
+    "subreddit": null
+  },
+  {
+    "code": "ERA",
+    "subreddit": null
+  },
+  {
+    "code": "TOMO",
+    "subreddit": null
+  },
+  {
+    "code": "LET",
+    "subreddit": null
+  },
+  {
+    "code": "XEL",
+    "subreddit": "xel"
+  },
+  {
+    "code": "COB",
+    "subreddit": "cobinhood"
+  },
+  {
+    "code": "TKN",
+    "subreddit": "tokencard"
+  },
+  {
+    "code": "FAIR",
+    "subreddit": null
+  },
+  {
+    "code": "MOBI",
+    "subreddit": null
+  },
+  {
+    "code": "SBD",
+    "subreddit": "steem"
+  },
+  {
+    "code": "YOYOW",
+    "subreddit": null
+  },
+  {
+    "code": "NMC",
+    "subreddit": "namecoin"
+  },
+  {
+    "code": "AMP",
+    "subreddit": "synereo"
+  },
+  {
+    "code": "CFI",
+    "subreddit": null
+  },
+  {
+    "code": "HAV",
+    "subreddit": null
+  },
+  {
+    "code": "HMQ",
+    "subreddit": "humaniq"
+  },
+  {
+    "code": "LKK",
+    "subreddit": "lykke"
+  },
+  {
+    "code": "NET",
+    "subreddit": null
+  },
+  {
+    "code": "SHIFT",
+    "subreddit": "shiftnrg"
+  },
+  {
+    "code": "UKG",
+    "subreddit": "unikoingold"
+  },
+  {
+    "code": "DAI",
+    "subreddit": null
+  },
+  {
+    "code": "LGO",
+    "subreddit": null
+  },
+  {
+    "code": "EDR",
+    "subreddit": null
+  },
+  {
+    "code": "CRW",
+    "subreddit": "Crowncoin"
+  },
+  {
+    "code": "SNC",
+    "subreddit": "suncontract"
+  },
+  {
+    "code": "ONION",
+    "subreddit": "DeepOnion"
+  },
+  {
+    "code": "CPC",
+    "subreddit": null
+  },
+  {
+    "code": "ADT",
+    "subreddit": "adchain"
+  },
+  {
+    "code": "$PAC",
+    "subreddit": "paccoin"
+  },
+  {
+    "code": "GRID",
+    "subreddit": null
+  },
+  {
+    "code": "EKT",
+    "subreddit": null
+  },
+  {
+    "code": "LUN",
+    "subreddit": "lunyr"
+  },
+  {
+    "code": "FLASH",
+    "subreddit": null
+  },
+  {
+    "code": "SAFEX",
+    "subreddit": "safex"
+  },
+  {
+    "code": "BITB",
+    "subreddit": "BitBean"
+  },
+  {
+    "code": "SPC",
+    "subreddit": null
+  },
+  {
+    "code": "IDH",
+    "subreddit": "indahash"
+  },
+  {
+    "code": "INT",
+    "subreddit": "INT_Chain"
+  },
+  {
+    "code": "COSS",
+    "subreddit": "coss"
+  },
+  {
+    "code": "FOTA",
+    "subreddit": null
+  },
+  {
+    "code": "MER",
+    "subreddit": "MercuryAltCoin"
+  },
+  {
+    "code": "PPY",
+    "subreddit": null
+  },
+  {
+    "code": "DAT",
+    "subreddit": "datumnetwork"
+  },
+  {
+    "code": "ECA",
+    "subreddit": null
+  },
+  {
+    "code": "OCN",
+    "subreddit": null
+  },
+  {
+    "code": "BKX",
+    "subreddit": null
+  },
+  {
+    "code": "DMT",
+    "subreddit": null
+  },
+  {
+    "code": "UP",
+    "subreddit": null
+  },
+  {
+    "code": "NMR",
+    "subreddit": "nmrtrader"
+  },
+  {
+    "code": "IOC",
+    "subreddit": "iodigitalcurrency"
+  },
+  {
+    "code": "DMD",
+    "subreddit": null
+  },
+  {
+    "code": "QUN",
+    "subreddit": null
+  },
+  {
+    "code": "ZOI",
+    "subreddit": null
+  },
+  {
+    "code": "BLK",
+    "subreddit": "blackcoin"
+  },
+  {
+    "code": "MTH",
+    "subreddit": null
+  },
+  {
+    "code": "PEPECASH",
+    "subreddit": null
+  },
+  {
+    "code": "XTO",
+    "subreddit": null
+  },
+  {
+    "code": "EVX",
+    "subreddit": "everex"
+  },
+  {
+    "code": "REN",
+    "subreddit": null
+  },
+  {
+    "code": "TRST",
+    "subreddit": null
+  },
+  {
+    "code": "UQC",
+    "subreddit": null
+  },
+  {
+    "code": "BLT",
+    "subreddit": null
+  },
+  {
+    "code": "RFR",
+    "subreddit": null
+  },
+  {
+    "code": "ZPT",
+    "subreddit": null
+  },
+  {
+    "code": "MSP",
+    "subreddit": null
+  },
+  {
+    "code": "MTN",
+    "subreddit": null
+  },
+  {
+    "code": "ZSC",
+    "subreddit": null
+  },
+  {
+    "code": "PZM",
+    "subreddit": null
+  },
+  {
+    "code": "ELEC",
+    "subreddit": null
+  },
+  {
+    "code": "HVN",
+    "subreddit": "HiveProject_net"
+  },
+  {
+    "code": "SIB",
+    "subreddit": "sibcoin"
+  },
+  {
+    "code": "TIO",
+    "subreddit": null
+  },
+  {
+    "code": "CHSB",
+    "subreddit": null
+  },
+  {
+    "code": "STQ",
+    "subreddit": null
+  },
+  {
+    "code": "THC",
+    "subreddit": null
+  },
+  {
+    "code": "XWC",
+    "subreddit": "whitecoin"
+  },
+  {
+    "code": "RADS",
+    "subreddit": null
+  },
+  {
+    "code": "AIDOC",
+    "subreddit": null
+  },
+  {
+    "code": "ZCL",
+    "subreddit": "zclassic"
+  },
+  {
+    "code": "VRC",
+    "subreddit": "vericoin"
+  },
+  {
+    "code": "GUP",
+    "subreddit": null
+  },
+  {
+    "code": "CAS",
+    "subreddit": null
+  },
+  {
+    "code": "STK",
+    "subreddit": "STKToken"
+  },
+  {
+    "code": "ACAT",
+    "subreddit": null
+  },
+  {
+    "code": "RVR",
+    "subreddit": null
+  },
+  {
+    "code": "YEE",
+    "subreddit": null
+  },
+  {
+    "code": "PRO",
+    "subreddit": null
+  },
+  {
+    "code": "XPM",
+    "subreddit": "primecoin"
+  },
+  {
+    "code": "PRG",
+    "subreddit": null
+  },
+  {
+    "code": "KEY",
+    "subreddit": null
+  },
+  {
+    "code": "GRC",
+    "subreddit": "gridcoin"
+  },
+  {
+    "code": "SWFTC",
+    "subreddit": null
+  },
+  {
+    "code": "PARETO",
+    "subreddit": null
+  },
+  {
+    "code": "HST",
+    "subreddit": null
+  },
+  {
+    "code": "MDA",
+    "subreddit": null
+  },
+  {
+    "code": "TIX",
+    "subreddit": null
+  },
+  {
+    "code": "INCNT",
+    "subreddit": null
+  },
+  {
+    "code": "ATM",
+    "subreddit": "ATMChain"
+  },
+  {
+    "code": "BPT",
+    "subreddit": null
+  },
+  {
+    "code": "BITUSD",
+    "subreddit": "bitusd"
+  },
+  {
+    "code": "DLT",
+    "subreddit": null
+  },
+  {
+    "code": "MOON",
+    "subreddit": "mooncoin"
+  },
+  {
+    "code": "MUE",
+    "subreddit": "muecoin"
+  },
+  {
+    "code": "1ST",
+    "subreddit": "firstbloodcoin"
+  },
+  {
+    "code": "BBN",
+    "subreddit": null
+  },
+  {
+    "code": "SHIP",
+    "subreddit": null
+  },
+  {
+    "code": "ARN",
+    "subreddit": "AeronAero"
+  },
+  {
+    "code": "TSL",
+    "subreddit": null
+  },
+  {
+    "code": "EKO",
+    "subreddit": null
+  },
+  {
+    "code": "CAPP",
+    "subreddit": "cappasity"
+  },
+  {
+    "code": "XSH",
+    "subreddit": null
+  },
+  {
+    "code": "BANCA",
+    "subreddit": null
+  },
+  {
+    "code": "DADI",
+    "subreddit": null
+  },
+  {
+    "code": "OAX",
+    "subreddit": null
+  },
+  {
+    "code": "DNA",
+    "subreddit": null
+  },
+  {
+    "code": "SWM",
+    "subreddit": null
+  },
+  {
+    "code": "OMNI",
+    "subreddit": "omni"
+  },
+  {
+    "code": "CAT",
+    "subreddit": null
+  },
+  {
+    "code": "EXP",
+    "subreddit": "expanseofficial"
+  },
+  {
+    "code": "ICOS",
+    "subreddit": null
+  },
+  {
+    "code": "PASC",
+    "subreddit": null
+  },
+  {
+    "code": "BCC",
+    "subreddit": "bitconnect"
+  },
+  {
+    "code": "DIME",
+    "subreddit": null
+  },
+  {
+    "code": "SOC",
+    "subreddit": null
+  },
+  {
+    "code": "MTX",
+    "subreddit": null
+  },
+  {
+    "code": "SLR",
+    "subreddit": null
+  },
+  {
+    "code": "BIS",
+    "subreddit": null
+  },
+  {
+    "code": "POSW",
+    "subreddit": null
+  },
+  {
+    "code": "CV",
+    "subreddit": null
+  },
+  {
+    "code": "MEE",
+    "subreddit": null
+  },
+  {
+    "code": "BOT",
+    "subreddit": null
+  },
+  {
+    "code": "DXT",
+    "subreddit": null
+  },
+  {
+    "code": "QBT",
+    "subreddit": null
+  },
+  {
+    "code": "LA",
+    "subreddit": null
+  },
+  {
+    "code": "EVR",
+    "subreddit": null
+  },
+  {
+    "code": "TAU",
+    "subreddit": null
+  },
+  {
+    "code": "NLC2",
+    "subreddit": "nolimitcoin"
+  },
+  {
+    "code": "XUC",
+    "subreddit": null
+  },
+  {
+    "code": "OCT",
+    "subreddit": null
+  },
+  {
+    "code": "XPA",
+    "subreddit": null
+  },
+  {
+    "code": "NEU",
+    "subreddit": null
+  },
+  {
+    "code": "BDG",
+    "subreddit": null
+  },
+  {
+    "code": "SENC",
+    "subreddit": null
+  },
+  {
+    "code": "IXT",
+    "subreddit": null
+  },
+  {
+    "code": "RISE",
+    "subreddit": "risevision"
+  },
+  {
+    "code": "LYM",
+    "subreddit": null
+  },
+  {
+    "code": "COV",
+    "subreddit": null
+  },
+  {
+    "code": "MWAT",
+    "subreddit": null
+  },
+  {
+    "code": "DIVX",
+    "subreddit": null
+  },
+  {
+    "code": "PRA",
+    "subreddit": null
+  },
+  {
+    "code": "LMC",
+    "subreddit": "lomocoin"
+  },
+  {
+    "code": "ALIS",
+    "subreddit": null
+  },
+  {
+    "code": "BMC",
+    "subreddit": null
+  },
+  {
+    "code": "BSD",
+    "subreddit": null
+  },
+  {
+    "code": "XAUR",
+    "subreddit": "xaurum"
+  },
+  {
+    "code": "RMT",
+    "subreddit": null
+  },
+  {
+    "code": "STX",
+    "subreddit": "stox"
+  },
+  {
+    "code": "TGT",
+    "subreddit": null
+  },
+  {
+    "code": "MOT",
+    "subreddit": null
+  },
+  {
+    "code": "PLBT",
+    "subreddit": null
+  },
+  {
+    "code": "SWT",
+    "subreddit": null
+  },
+  {
+    "code": "XRL",
+    "subreddit": "rialtoai"
+  },
+  {
+    "code": "RBY",
+    "subreddit": null
+  },
+  {
+    "code": "PHR",
+    "subreddit": null
+  },
+  {
+    "code": "TUSD",
+    "subreddit": null
+  },
+  {
+    "code": "HAC",
+    "subreddit": null
+  },
+  {
+    "code": "CLAM",
+    "subreddit": "clamcoin"
+  },
+  {
+    "code": "PTOY",
+    "subreddit": "ptoy"
+  },
+  {
+    "code": "NYC",
+    "subreddit": null
+  },
+  {
+    "code": "LINDA",
+    "subreddit": null
+  },
+  {
+    "code": "DRT",
+    "subreddit": null
+  },
+  {
+    "code": "TFD",
+    "subreddit": null
+  },
+  {
+    "code": "BITG",
+    "subreddit": null
+  },
+  {
+    "code": "OK",
+    "subreddit": null
+  },
+  {
+    "code": "ALQO",
+    "subreddit": null
+  },
+  {
+    "code": "SNOV",
+    "subreddit": null
+  },
+  {
+    "code": "DTB",
+    "subreddit": null
+  },
+  {
+    "code": "TX",
+    "subreddit": "transfercoin"
+  },
+  {
+    "code": "OTN",
+    "subreddit": null
+  },
+  {
+    "code": "DBET",
+    "subreddit": null
+  },
+  {
+    "code": "XMY",
+    "subreddit": "myriadcoin"
+  },
+  {
+    "code": "AIT",
+    "subreddit": null
+  },
+  {
+    "code": "MDT",
+    "subreddit": null
+  },
+  {
+    "code": "LDC",
+    "subreddit": null
+  },
+  {
+    "code": "CHP",
+    "subreddit": null
+  },
+  {
+    "code": "TCT",
+    "subreddit": null
+  },
+  {
+    "code": "PLU",
+    "subreddit": null
+  },
+  {
+    "code": "WCT",
+    "subreddit": null
+  },
+  {
+    "code": "RMC",
+    "subreddit": null
+  },
+  {
+    "code": "BAX",
+    "subreddit": null
+  },
+  {
+    "code": "UNIT",
+    "subreddit": null
+  },
+  {
+    "code": "KRM",
+    "subreddit": null
+  },
+  {
+    "code": "IPL",
+    "subreddit": null
+  },
+  {
+    "code": "RNT",
+    "subreddit": null
+  },
+  {
+    "code": "TOA",
+    "subreddit": null
+  },
+  {
+    "code": "DEB",
+    "subreddit": null
+  },
+  {
+    "code": "MINT",
+    "subreddit": null
+  },
+  {
+    "code": "NVST",
+    "subreddit": null
+  },
+  {
+    "code": "REM",
+    "subreddit": null
+  },
+  {
+    "code": "ZAP",
+    "subreddit": null
+  },
+  {
+    "code": "OXY",
+    "subreddit": null
+  },
+  {
+    "code": "NEOS",
+    "subreddit": "neoscoin"
+  },
+  {
+    "code": "FLO",
+    "subreddit": "florincoin"
+  },
+  {
+    "code": "AUR",
+    "subreddit": null
+  },
+  {
+    "code": "GAM",
+    "subreddit": null
+  },
+  {
+    "code": "NXC",
+    "subreddit": null
+  },
+  {
+    "code": "TIME",
+    "subreddit": "chronobank"
+  },
+  {
+    "code": "BBR",
+    "subreddit": "boolberry"
+  },
+  {
+    "code": "CAN",
+    "subreddit": null
+  },
+  {
+    "code": "DICE",
+    "subreddit": "etheroll"
+  },
+  {
+    "code": "UCASH",
+    "subreddit": "ucash"
+  },
+  {
+    "code": "HGT",
+    "subreddit": null
+  },
+  {
+    "code": "ENRG",
+    "subreddit": "energycoin"
+  },
+  {
+    "code": "FDX",
+    "subreddit": null
+  },
+  {
+    "code": "GOLOS",
+    "subreddit": null
+  },
+  {
+    "code": "RVT",
+    "subreddit": null
+  },
+  {
+    "code": "HMC",
+    "subreddit": null
+  },
+  {
+    "code": "LOC",
+    "subreddit": null
+  },
+  {
+    "code": "BLUE",
+    "subreddit": null
+  },
+  {
+    "code": "LUX",
+    "subreddit": null
+  },
+  {
+    "code": "CREDO",
+    "subreddit": null
+  },
+  {
+    "code": "MUSIC",
+    "subreddit": "musicoin"
+  },
+  {
+    "code": "ARY",
+    "subreddit": null
+  },
+  {
+    "code": "FLDC",
+    "subreddit": "foldingcoin"
+  },
+  {
+    "code": "DIM",
+    "subreddit": null
+  },
+  {
+    "code": "AURA",
+    "subreddit": null
+  },
+  {
+    "code": "TCC",
+    "subreddit": null
+  },
+  {
+    "code": "PST",
+    "subreddit": null
+  },
+  {
+    "code": "ATB",
+    "subreddit": null
+  },
+  {
+    "code": "DYN",
+    "subreddit": null
+  },
+  {
+    "code": "TRUE",
+    "subreddit": null
+  },
+  {
+    "code": "IFT",
+    "subreddit": null
+  },
+  {
+    "code": "HKN",
+    "subreddit": null
+  },
+  {
+    "code": "HBT",
+    "subreddit": null
+  },
+  {
+    "code": "B2B",
+    "subreddit": null
+  },
+  {
+    "code": "AXP",
+    "subreddit": null
+  },
+  {
+    "code": "DBIX",
+    "subreddit": null
+  },
+  {
+    "code": "BQ",
+    "subreddit": null
+  },
+  {
+    "code": "ATN",
+    "subreddit": null
+  },
+  {
+    "code": "CXO",
+    "subreddit": null
+  },
+  {
+    "code": "CVCOIN",
+    "subreddit": null
+  },
+  {
+    "code": "SEQ",
+    "subreddit": null
+  },
+  {
+    "code": "CLR",
+    "subreddit": null
+  },
+  {
+    "code": "HEAT",
+    "subreddit": null
+  },
+  {
+    "code": "SPF",
+    "subreddit": null
+  },
+  {
+    "code": "MYST",
+    "subreddit": null
+  },
+  {
+    "code": "ERO",
+    "subreddit": null
+  },
+  {
+    "code": "GBX",
+    "subreddit": null
+  },
+  {
+    "code": "AIR",
+    "subreddit": null
+  },
+  {
+    "code": "BNTY",
+    "subreddit": null
+  },
+  {
+    "code": "QAU",
+    "subreddit": null
+  },
+  {
+    "code": "BWK",
+    "subreddit": null
+  },
+  {
+    "code": "SYNX",
+    "subreddit": "synclub"
+  },
+  {
+    "code": "COFI",
+    "subreddit": null
+  },
+  {
+    "code": "PKT",
+    "subreddit": null
+  },
+  {
+    "code": "XLR",
+    "subreddit": null
+  },
+  {
+    "code": "PND",
+    "subreddit": null
+  },
+  {
+    "code": "POLIS",
+    "subreddit": null
+  },
+  {
+    "code": "SPHR",
+    "subreddit": null
+  },
+  {
+    "code": "TKS",
+    "subreddit": null
+  },
+  {
+    "code": "LALA",
+    "subreddit": null
+  },
+  {
+    "code": "CSNO",
+    "subreddit": null
+  },
+  {
+    "code": "NVC",
+    "subreddit": null
+  },
+  {
+    "code": "MYB",
+    "subreddit": null
+  },
+  {
+    "code": "DOPE",
+    "subreddit": null
+  },
+  {
+    "code": "XNK",
+    "subreddit": null
+  },
+  {
+    "code": "MEDIC",
+    "subreddit": null
+  },
+  {
+    "code": "PUT",
+    "subreddit": null
+  },
+  {
+    "code": "PINK",
+    "subreddit": "pinkcoin"
+  },
+  {
+    "code": "COVAL",
+    "subreddit": null
+  },
+  {
+    "code": "WRC",
+    "subreddit": null
+  },
+  {
+    "code": "EZT",
+    "subreddit": null
+  },
+  {
+    "code": "CHIPS",
+    "subreddit": null
+  },
+  {
+    "code": "MAX",
+    "subreddit": "maxcoin"
+  },
+  {
+    "code": "COLX",
+    "subreddit": null
+  },
+  {
+    "code": "MONK",
+    "subreddit": null
+  },
+  {
+    "code": "ELIX",
+    "subreddit": null
+  },
+  {
+    "code": "HOT",
+    "subreddit": null
+  },
+  {
+    "code": "FRD",
+    "subreddit": null
+  },
+  {
+    "code": "ESP",
+    "subreddit": null
+  },
+  {
+    "code": "CURE",
+    "subreddit": null
+  },
+  {
+    "code": "BCY",
+    "subreddit": "bitcrystals"
+  },
+  {
+    "code": "AID",
+    "subreddit": null
+  },
+  {
+    "code": "DOT",
+    "subreddit": null
+  },
+  {
+    "code": "HORSE",
+    "subreddit": null
+  },
+  {
+    "code": "TRF",
+    "subreddit": null
+  },
+  {
+    "code": "IOP",
+    "subreddit": null
+  },
+  {
+    "code": "ZLA",
+    "subreddit": null
+  },
+  {
+    "code": "TIE",
+    "subreddit": null
+  },
+  {
+    "code": "FLIXX",
+    "subreddit": null
+  },
+  {
+    "code": "EVE",
+    "subreddit": null
+  },
+  {
+    "code": "CAG",
+    "subreddit": null
+  },
+  {
+    "code": "PIRL",
+    "subreddit": null
+  },
+  {
+    "code": "XSPEC",
+    "subreddit": null
+  },
+  {
+    "code": "XST",
+    "subreddit": "stealthcoin"
+  },
+  {
+    "code": "IPBC",
+    "subreddit": null
+  },
+  {
+    "code": "KORE",
+    "subreddit": null
+  },
+  {
+    "code": "GETX",
+    "subreddit": null
+  },
+  {
+    "code": "AVT",
+    "subreddit": null
+  },
+  {
+    "code": "MNTP",
+    "subreddit": null
+  },
+  {
+    "code": "OPT",
+    "subreddit": null
+  },
+  {
+    "code": "SXUT",
+    "subreddit": null
+  },
+  {
+    "code": "GEO",
+    "subreddit": null
+  },
+  {
+    "code": "USNBT",
+    "subreddit": "nubits"
+  },
+  {
+    "code": "PFR",
+    "subreddit": null
+  },
+  {
+    "code": "ATMS",
+    "subreddit": null
+  },
+  {
+    "code": "POLL",
+    "subreddit": null
+  },
+  {
+    "code": "ABY",
+    "subreddit": "artbyte"
+  },
+  {
+    "code": "GET",
+    "subreddit": null
+  },
+  {
+    "code": "SLT",
+    "subreddit": null
+  },
+  {
+    "code": "REBL",
+    "subreddit": null
+  },
+  {
+    "code": "INSTAR",
+    "subreddit": null
+  },
+  {
+    "code": "OBITS",
+    "subreddit": null
+  },
+  {
+    "code": "TFL",
+    "subreddit": null
+  },
+  {
+    "code": "HXX",
+    "subreddit": null
+  },
+  {
+    "code": "APX",
+    "subreddit": null
+  },
+  {
+    "code": "MEME",
+    "subreddit": null
+  },
+  {
+    "code": "ASTRO",
+    "subreddit": null
+  },
+  {
+    "code": "ZEIT",
+    "subreddit": null
+  },
+  {
+    "code": "DOVU",
+    "subreddit": null
+  },
+  {
+    "code": "DRP",
+    "subreddit": null
+  },
+  {
+    "code": "BIO",
+    "subreddit": null
+  },
+  {
+    "code": "FRST",
+    "subreddit": null
+  },
+  {
+    "code": "VIU",
+    "subreddit": null
+  },
+  {
+    "code": "LEDU",
+    "subreddit": null
+  },
+  {
+    "code": "SPRTS",
+    "subreddit": null
+  },
+  {
+    "code": "ADST",
+    "subreddit": null
+  },
+  {
+    "code": "EXCL",
+    "subreddit": null
+  },
+  {
+    "code": "SNRG",
+    "subreddit": null
+  },
+  {
+    "code": "QWARK",
+    "subreddit": null
+  },
+  {
+    "code": "PTC",
+    "subreddit": null
+  },
+  {
+    "code": "PBT",
+    "subreddit": null
+  },
+  {
+    "code": "VOISE",
+    "subreddit": null
+  },
+  {
+    "code": "BRX",
+    "subreddit": null
+  },
+  {
+    "code": "GAT",
+    "subreddit": null
+  },
+  {
+    "code": "EMV",
+    "subreddit": null
+  },
+  {
+    "code": "ING",
+    "subreddit": null
+  },
+  {
+    "code": "BTCZ",
+    "subreddit": null
+  },
+  {
+    "code": "IPSX",
+    "subreddit": null
+  },
+  {
+    "code": "EVC",
+    "subreddit": null
+  },
+  {
+    "code": "PBL",
+    "subreddit": null
+  },
+  {
+    "code": "LIFE",
+    "subreddit": null
+  },
+  {
+    "code": "NTRN",
+    "subreddit": null
+  },
+  {
+    "code": "PIPL",
+    "subreddit": null
+  },
+  {
+    "code": "LEV",
+    "subreddit": null
+  },
+  {
+    "code": "SETH",
+    "subreddit": null
+  },
+  {
+    "code": "PLAY",
+    "subreddit": null
+  },
+  {
+    "code": "TRCT",
+    "subreddit": null
+  },
+  {
+    "code": "INXT",
+    "subreddit": null
+  },
+  {
+    "code": "ERC",
+    "subreddit": null
+  },
+  {
+    "code": "LOCI",
+    "subreddit": null
+  },
+  {
+    "code": "PING",
+    "subreddit": null
+  },
+  {
+    "code": "CANN",
+    "subreddit": null
+  },
+  {
+    "code": "ZRC",
+    "subreddit": null
+  },
+  {
+    "code": "UFO",
+    "subreddit": null
+  },
+  {
+    "code": "CMPCO",
+    "subreddit": null
+  },
+  {
+    "code": "TIPS",
+    "subreddit": null
+  },
+  {
+    "code": "STAR",
+    "subreddit": null
+  },
+  {
+    "code": "VTR",
+    "subreddit": null
+  },
+  {
+    "code": "SEND",
+    "subreddit": null
+  },
+  {
+    "code": "EBTC",
+    "subreddit": null
+  },
+  {
+    "code": "HUSH",
+    "subreddit": null
+  },
+  {
+    "code": "GLD",
+    "subreddit": null
+  },
+  {
+    "code": "XBC",
+    "subreddit": null
+  },
+  {
+    "code": "HYP",
+    "subreddit": null
+  },
+  {
+    "code": "BTDX",
+    "subreddit": null
+  },
+  {
+    "code": "SUMO",
+    "subreddit": null
+  },
+  {
+    "code": "BUN",
+    "subreddit": null
+  },
+  {
+    "code": "CPAY",
+    "subreddit": null
+  },
+  {
+    "code": "GCR",
+    "subreddit": null
+  },
+  {
+    "code": "PIX",
+    "subreddit": null
+  },
+  {
+    "code": "HAT",
+    "subreddit": null
+  },
+  {
+    "code": "SHP",
+    "subreddit": null
+  },
+  {
+    "code": "SEXC",
+    "subreddit": null
+  },
+  {
+    "code": "BPL",
+    "subreddit": null
+  },
+  {
+    "code": "VRM",
+    "subreddit": null
+  },
+  {
+    "code": "BEZ",
+    "subreddit": null
+  },
+  {
+    "code": "JIYO",
+    "subreddit": null
+  },
+  {
+    "code": "EBST",
+    "subreddit": null
+  },
+  {
+    "code": "DGPT",
+    "subreddit": null
+  },
+  {
+    "code": "TBX",
+    "subreddit": null
+  },
+  {
+    "code": "VSL",
+    "subreddit": null
+  },
+  {
+    "code": "STA",
+    "subreddit": null
+  },
+  {
+    "code": "HWC",
+    "subreddit": null
+  },
+  {
+    "code": "2GIVE",
+    "subreddit": null
+  },
+  {
+    "code": "NIO",
+    "subreddit": null
+  },
+  {
+    "code": "RIC",
+    "subreddit": "riecoin"
+  },
+  {
+    "code": "TRC",
+    "subreddit": null
+  },
+  {
+    "code": "GRFT",
+    "subreddit": null
+  },
+  {
+    "code": "CRB",
+    "subreddit": "creditbit"
+  },
+  {
+    "code": "GMT",
+    "subreddit": null
+  },
+  {
+    "code": "XMCC",
+    "subreddit": null
+  },
+  {
+    "code": "NKC",
+    "subreddit": null
+  },
+  {
+    "code": "DNR",
+    "subreddit": null
+  },
+  {
+    "code": "REF",
+    "subreddit": null
+  },
+  {
+    "code": "EXY",
+    "subreddit": null
+  },
+  {
+    "code": "BON",
+    "subreddit": null
+  },
+  {
+    "code": "NOTE",
+    "subreddit": null
+  },
+  {
+    "code": "1WO",
+    "subreddit": null
+  },
+  {
+    "code": "ADC",
+    "subreddit": null
+  },
+  {
+    "code": "BRK",
+    "subreddit": null
+  },
+  {
+    "code": "EXRN",
+    "subreddit": null
+  },
+  {
+    "code": "SSS",
+    "subreddit": null
+  },
+  {
+    "code": "MVC",
+    "subreddit": null
+  },
+  {
+    "code": "KRB",
+    "subreddit": null
+  },
+  {
+    "code": "CPY",
+    "subreddit": null
+  },
+  {
+    "code": "DTH",
+    "subreddit": null
+  },
+  {
+    "code": "BLITZ",
+    "subreddit": null
+  },
+  {
+    "code": "UFR",
+    "subreddit": null
+  },
+  {
+    "code": "J8T",
+    "subreddit": null
+  },
+  {
+    "code": "ZEPH",
+    "subreddit": null
+  },
+  {
+    "code": "KZC",
+    "subreddit": null
+  },
+  {
+    "code": "CBX",
+    "subreddit": null
+  },
+  {
+    "code": "DAR",
+    "subreddit": "darcrus"
+  },
+  {
+    "code": "AIX",
+    "subreddit": null
+  },
+  {
+    "code": "CRED",
+    "subreddit": null
+  },
+  {
+    "code": "REAL",
+    "subreddit": null
+  },
+  {
+    "code": "VZT",
+    "subreddit": null
+  },
+  {
+    "code": "JC",
+    "subreddit": null
+  },
+  {
+    "code": "SCL",
+    "subreddit": null
+  },
+  {
+    "code": "CL",
+    "subreddit": null
+  },
+  {
+    "code": "ODN",
+    "subreddit": null
+  },
+  {
+    "code": "QRK",
+    "subreddit": null
+  },
+  {
+    "code": "VSX",
+    "subreddit": null
+  },
+  {
+    "code": "SPR",
+    "subreddit": null
+  },
+  {
+    "code": "CRAVE",
+    "subreddit": null
+  },
+  {
+    "code": "SWIFT",
+    "subreddit": "bitswift"
+  },
+  {
+    "code": "XGOX",
+    "subreddit": null
+  },
+  {
+    "code": "CHC",
+    "subreddit": null
+  },
+  {
+    "code": "EGC",
+    "subreddit": "evergreencoin"
+  },
+  {
+    "code": "TRUST",
+    "subreddit": null
+  },
+  {
+    "code": "ALT",
+    "subreddit": null
+  },
+  {
+    "code": "ZNY",
+    "subreddit": null
+  },
+  {
+    "code": "MCAP",
+    "subreddit": null
+  },
+  {
+    "code": "RUPX",
+    "subreddit": null
+  },
+  {
+    "code": "LATX",
+    "subreddit": null
+  },
+  {
+    "code": "HUC",
+    "subreddit": null
+  },
+  {
+    "code": "ATL",
+    "subreddit": null
+  },
+  {
+    "code": "EFL",
+    "subreddit": null
+  },
+  {
+    "code": "YOC",
+    "subreddit": null
+  },
+  {
+    "code": "STAC",
+    "subreddit": null
+  },
+  {
+    "code": "MTNC",
+    "subreddit": null
+  },
+  {
+    "code": "GCC",
+    "subreddit": null
+  },
+  {
+    "code": "WISH",
+    "subreddit": null
+  },
+  {
+    "code": "EQT",
+    "subreddit": null
+  },
+  {
+    "code": "TZC",
+    "subreddit": null
+  },
+  {
+    "code": "EFYT",
+    "subreddit": null
+  },
+  {
+    "code": "SXC",
+    "subreddit": null
+  },
+  {
+    "code": "QVT",
+    "subreddit": null
+  },
+  {
+    "code": "AMM",
+    "subreddit": null
+  },
+  {
+    "code": "XMG",
+    "subreddit": "coinmagi"
+  },
+  {
+    "code": "PRIX",
+    "subreddit": null
+  },
+  {
+    "code": "MXT",
+    "subreddit": null
+  },
+  {
+    "code": "BTW",
+    "subreddit": null
+  },
+  {
+    "code": "CREA",
+    "subreddit": null
+  },
+  {
+    "code": "BLU",
+    "subreddit": null
+  },
+  {
+    "code": "BELA",
+    "subreddit": "belacoin"
+  },
+  {
+    "code": "GCN",
+    "subreddit": null
+  },
+  {
+    "code": "FOR",
+    "subreddit": null
+  },
+  {
+    "code": "KEK",
+    "subreddit": null
+  },
+  {
+    "code": "SPD",
+    "subreddit": null
+  },
+  {
+    "code": "LNC",
+    "subreddit": null
+  },
+  {
+    "code": "PURE",
+    "subreddit": null
+  },
+  {
+    "code": "LINX",
+    "subreddit": null
+  },
+  {
+    "code": "RUP",
+    "subreddit": null
+  },
+  {
+    "code": "DAY",
+    "subreddit": null
+  },
+  {
+    "code": "REC",
+    "subreddit": null
+  },
+  {
+    "code": "FLIK",
+    "subreddit": null
+  },
+  {
+    "code": "BUZZ",
+    "subreddit": null
+  },
+  {
+    "code": "UNB",
+    "subreddit": null
+  },
+  {
+    "code": "PYLNT",
+    "subreddit": null
+  },
+  {
+    "code": "TDX",
+    "subreddit": null
+  },
+  {
+    "code": "BBP",
+    "subreddit": null
+  },
+  {
+    "code": "IND",
+    "subreddit": null
+  },
+  {
+    "code": "ONG",
+    "subreddit": null
+  },
+  {
+    "code": "IC",
+    "subreddit": null
+  },
+  {
+    "code": "PROC",
+    "subreddit": null
+  },
+  {
+    "code": "INN",
+    "subreddit": null
+  },
+  {
+    "code": "MAG",
+    "subreddit": null
+  },
+  {
+    "code": "ANC",
+    "subreddit": null
+  },
+  {
+    "code": "GRE",
+    "subreddit": null
+  },
+  {
+    "code": "NOBL",
+    "subreddit": null
+  },
+  {
+    "code": "RAIN",
+    "subreddit": null
+  },
+  {
+    "code": "SENSE",
+    "subreddit": null
+  },
+  {
+    "code": "ITNS",
+    "subreddit": null
+  },
+  {
+    "code": "ELLA",
+    "subreddit": null
+  },
+  {
+    "code": "SKIN",
+    "subreddit": null
+  },
+  {
+    "code": "MZC",
+    "subreddit": null
+  },
+  {
+    "code": "FYN",
+    "subreddit": null
+  },
+  {
+    "code": "ELTCOIN",
+    "subreddit": null
+  },
+  {
+    "code": "NDC",
+    "subreddit": null
+  },
+  {
+    "code": "ADZ",
+    "subreddit": null
+  },
+  {
+    "code": "OCL",
+    "subreddit": null
+  },
+  {
+    "code": "DP",
+    "subreddit": null
+  },
+  {
+    "code": "LDOGE",
+    "subreddit": null
+  },
+  {
+    "code": "DRPU",
+    "subreddit": null
+  },
+  {
+    "code": "OCC",
+    "subreddit": null
+  },
+  {
+    "code": "MRT",
+    "subreddit": null
+  },
+  {
+    "code": "ZER",
+    "subreddit": null
+  },
+  {
+    "code": "HOLD",
+    "subreddit": null
+  },
+  {
+    "code": "CRM",
+    "subreddit": null
+  },
+  {
+    "code": "ARG",
+    "subreddit": null
+  },
+  {
+    "code": "ZET",
+    "subreddit": "zetacoin"
+  },
+  {
+    "code": "CNT",
+    "subreddit": null
+  },
+  {
+    "code": "LOG",
+    "subreddit": null
+  },
+  {
+    "code": "WDC",
+    "subreddit": "worldcoinglobal"
+  },
+  {
+    "code": "UIS",
+    "subreddit": "unitus"
+  },
+  {
+    "code": "ARC",
+    "subreddit": null
+  },
+  {
+    "code": "SAGA",
+    "subreddit": null
+  },
+  {
+    "code": "WAND",
+    "subreddit": null
+  },
+  {
+    "code": "NETKO",
+    "subreddit": null
+  },
+  {
+    "code": "MAGE",
+    "subreddit": null
+  },
+  {
+    "code": "BIGUP",
+    "subreddit": null
+  },
+  {
+    "code": "MOIN",
+    "subreddit": null
+  },
+  {
+    "code": "DEM",
+    "subreddit": null
+  },
+  {
+    "code": "CTR",
+    "subreddit": "CentraTech"
+  },
+  {
+    "code": "VIVO",
+    "subreddit": null
+  },
+  {
+    "code": "STU",
+    "subreddit": null
+  },
+  {
+    "code": "BYC",
+    "subreddit": "bytecent"
+  },
+  {
+    "code": "KLN",
+    "subreddit": null
+  },
+  {
+    "code": "XPTX",
+    "subreddit": null
+  },
+  {
+    "code": "WILD",
+    "subreddit": null
+  },
+  {
+    "code": "CDX",
+    "subreddit": null
+  },
+  {
+    "code": "PLC",
+    "subreddit": null
+  },
+  {
+    "code": "ATS",
+    "subreddit": null
+  },
+  {
+    "code": "MBRS",
+    "subreddit": null
+  },
+  {
+    "code": "STAK",
+    "subreddit": null
+  },
+  {
+    "code": "INSN",
+    "subreddit": null
+  },
+  {
+    "code": "CDN",
+    "subreddit": null
+  },
+  {
+    "code": "DFT",
+    "subreddit": null
+  },
+  {
+    "code": "LGD",
+    "subreddit": null
+  },
+  {
+    "code": "ACE",
+    "subreddit": null
+  },
+  {
+    "code": "XPD",
+    "subreddit": null
+  },
+  {
+    "code": "ZENI",
+    "subreddit": null
+  },
+  {
+    "code": "UNIFY",
+    "subreddit": null
+  },
+  {
+    "code": "POP",
+    "subreddit": null
+  },
+  {
+    "code": "CCRB",
+    "subreddit": null
+  },
+  {
+    "code": "DFS",
+    "subreddit": null
+  },
+  {
+    "code": "DCY",
+    "subreddit": null
+  },
+  {
+    "code": "FJC",
+    "subreddit": null
+  },
+  {
+    "code": "JEW",
+    "subreddit": null
+  },
+  {
+    "code": "HVCO",
+    "subreddit": null
+  },
+  {
+    "code": "ESZ",
+    "subreddit": null
+  },
+  {
+    "code": "IETH",
+    "subreddit": null
+  },
+  {
+    "code": "SCT",
+    "subreddit": null
+  },
+  {
+    "code": "TIG",
+    "subreddit": null
+  },
+  {
+    "code": "ITT",
+    "subreddit": null
+  },
+  {
+    "code": "CRC",
+    "subreddit": null
+  },
+  {
+    "code": "PCN",
+    "subreddit": null
+  },
+  {
+    "code": "START",
+    "subreddit": null
+  },
+  {
+    "code": "DGC",
+    "subreddit": null
+  },
+  {
+    "code": "ARCT",
+    "subreddit": null
+  },
+  {
+    "code": "SUR",
+    "subreddit": null
+  },
+  {
+    "code": "MEC",
+    "subreddit": "megacoin"
+  },
+  {
+    "code": "HPC",
+    "subreddit": null
+  },
+  {
+    "code": "ECASH",
+    "subreddit": null
+  },
+  {
+    "code": "SUPER",
+    "subreddit": null
+  },
+  {
+    "code": "PHO",
+    "subreddit": null
+  },
+  {
+    "code": "EQL",
+    "subreddit": null
+  },
+  {
+    "code": "KBR",
+    "subreddit": null
+  },
+  {
+    "code": "BRO",
+    "subreddit": null
+  },
+  {
+    "code": "GUN",
+    "subreddit": null
+  },
+  {
+    "code": "BTA",
+    "subreddit": null
+  },
+  {
+    "code": "RLT",
+    "subreddit": null
+  },
+  {
+    "code": "OPC",
+    "subreddit": null
+  },
+  {
+    "code": "XBL",
+    "subreddit": null
+  },
+  {
+    "code": "BUCKS",
+    "subreddit": null
+  },
+  {
+    "code": "TTC",
+    "subreddit": null
+  },
+  {
+    "code": "ELE",
+    "subreddit": null
+  },
+  {
+    "code": "GB",
+    "subreddit": null
+  },
+  {
+    "code": "XCPO",
+    "subreddit": null
+  },
+  {
+    "code": "FST",
+    "subreddit": null
+  },
+  {
+    "code": "NSR",
+    "subreddit": null
+  },
+  {
+    "code": "DRXNE",
+    "subreddit": null
+  },
+  {
+    "code": "EL",
+    "subreddit": null
+  },
+  {
+    "code": "XCN",
+    "subreddit": "cryptonite"
+  },
+  {
+    "code": "BTCA",
+    "subreddit": null
+  },
+  {
+    "code": "LANA",
+    "subreddit": null
+  },
+  {
+    "code": "USC",
+    "subreddit": null
+  },
+  {
+    "code": "PXC",
+    "subreddit": null
+  },
+  {
+    "code": "BTCS",
+    "subreddit": null
+  },
+  {
+    "code": "ERC20",
+    "subreddit": null
+  },
+  {
+    "code": "Q2C",
+    "subreddit": null
+  },
+  {
+    "code": "TRUMP",
+    "subreddit": null
+  },
+  {
+    "code": "BDL",
+    "subreddit": null
+  },
+  {
+    "code": "KURT",
+    "subreddit": null
+  },
+  {
+    "code": "XLC",
+    "subreddit": null
+  },
+  {
+    "code": "LCP",
+    "subreddit": null
+  },
+  {
+    "code": "MNE",
+    "subreddit": null
+  },
+  {
+    "code": "RBT",
+    "subreddit": null
+  },
+  {
+    "code": "EVIL",
+    "subreddit": null
+  },
+  {
+    "code": "MOTO",
+    "subreddit": null
+  },
+  {
+    "code": "STN",
+    "subreddit": null
+  },
+  {
+    "code": "UTC",
+    "subreddit": null
+  },
+  {
+    "code": "GLS",
+    "subreddit": null
+  },
+  {
+    "code": "WHL",
+    "subreddit": null
+  },
+  {
+    "code": "DAXX",
+    "subreddit": null
+  },
+  {
+    "code": "GRLC",
+    "subreddit": null
+  },
+  {
+    "code": "CJ",
+    "subreddit": null
+  },
+  {
+    "code": "ARCO",
+    "subreddit": null
+  },
+  {
+    "code": "VIDZ",
+    "subreddit": null
+  },
+  {
+    "code": "CASH",
+    "subreddit": null
+  },
+  {
+    "code": "BTCRED",
+    "subreddit": null
+  },
+  {
+    "code": "MOJO",
+    "subreddit": null
+  },
+  {
+    "code": "ORE",
+    "subreddit": null
+  },
+  {
+    "code": "ETG",
+    "subreddit": null
+  },
+  {
+    "code": "CTX",
+    "subreddit": null
+  },
+  {
+    "code": "QBIC",
+    "subreddit": null
+  },
+  {
+    "code": "NEVA",
+    "subreddit": null
+  },
+  {
+    "code": "SGR",
+    "subreddit": null
+  },
+  {
+    "code": "CCT",
+    "subreddit": null
+  },
+  {
+    "code": "ONX",
+    "subreddit": null
+  },
+  {
+    "code": "TRK",
+    "subreddit": null
+  },
+  {
+    "code": "POST",
+    "subreddit": null
+  },
+  {
+    "code": "BLC",
+    "subreddit": null
+  },
+  {
+    "code": "C2",
+    "subreddit": null
+  },
+  {
+    "code": "CRX",
+    "subreddit": null
+  },
+  {
+    "code": "MNM",
+    "subreddit": null
+  },
+  {
+    "code": "QBC",
+    "subreddit": null
+  },
+  {
+    "code": "NTO",
+    "subreddit": null
+  },
+  {
+    "code": "SCS",
+    "subreddit": null
+  },
+  {
+    "code": "NUKO",
+    "subreddit": null
+  },
+  {
+    "code": "TKR",
+    "subreddit": null
+  },
+  {
+    "code": "ACC",
+    "subreddit": null
+  },
+  {
+    "code": "GPU",
+    "subreddit": null
+  },
+  {
+    "code": "XHI",
+    "subreddit": null
+  },
+  {
+    "code": "SLG",
+    "subreddit": null
+  },
+  {
+    "code": "ZCG",
+    "subreddit": null
+  },
+  {
+    "code": "KED",
+    "subreddit": null
+  },
+  {
+    "code": "PNX",
+    "subreddit": null
+  },
+  {
+    "code": "AERM",
+    "subreddit": null
+  },
+  {
+    "code": "GOLF",
+    "subreddit": null
+  },
+  {
+    "code": "LEA",
+    "subreddit": null
+  },
+  {
+    "code": "ECO",
+    "subreddit": null
+  },
+  {
+    "code": "SDRN",
+    "subreddit": null
+  },
+  {
+    "code": "TOK",
+    "subreddit": null
+  },
+  {
+    "code": "BITEUR",
+    "subreddit": null
+  },
+  {
+    "code": "NEWB",
+    "subreddit": null
+  },
+  {
+    "code": "PKB",
+    "subreddit": null
+  },
+  {
+    "code": "XCT",
+    "subreddit": null
+  },
+  {
+    "code": "ETHD",
+    "subreddit": null
+  },
+  {
+    "code": "KAYI",
+    "subreddit": null
+  },
+  {
+    "code": "SWING",
+    "subreddit": null
+  },
+  {
+    "code": "SHND",
+    "subreddit": null
+  },
+  {
+    "code": "PXI",
+    "subreddit": null
+  },
+  {
+    "code": "DSR",
+    "subreddit": null
+  },
+  {
+    "code": "HONEY",
+    "subreddit": null
+  },
+  {
+    "code": "PCOIN",
+    "subreddit": null
+  },
+  {
+    "code": "BSTY",
+    "subreddit": null
+  },
+  {
+    "code": "LBTC",
+    "subreddit": null
+  },
+  {
+    "code": "SOIL",
+    "subreddit": null
+  },
+  {
+    "code": "VPRC",
+    "subreddit": null
+  },
+  {
+    "code": "VUC",
+    "subreddit": null
+  },
+  {
+    "code": "TRDT",
+    "subreddit": null
+  },
+  {
+    "code": "CAB",
+    "subreddit": null
+  },
+  {
+    "code": "NRO",
+    "subreddit": null
+  },
+  {
+    "code": "ALL",
+    "subreddit": null
+  },
+  {
+    "code": "HBC",
+    "subreddit": null
+  },
+  {
+    "code": "ADCN",
+    "subreddit": null
+  },
+  {
+    "code": "BIP",
+    "subreddit": null
+  },
+  {
+    "code": "CXT",
+    "subreddit": null
+  },
+  {
+    "code": "ERY",
+    "subreddit": null
+  },
+  {
+    "code": "MAR",
+    "subreddit": null
+  },
+  {
+    "code": "MSCN",
+    "subreddit": null
+  },
+  {
+    "code": "SONG",
+    "subreddit": null
+  },
+  {
+    "code": "WARP",
+    "subreddit": null
+  },
+  {
+    "code": "LUNA",
+    "subreddit": null
+  },
+  {
+    "code": "RKC",
+    "subreddit": null
+  },
+  {
+    "code": "VEC2",
+    "subreddit": null
+  },
+  {
+    "code": "XVP",
+    "subreddit": null
+  },
+  {
+    "code": "LTCU",
+    "subreddit": null
+  },
+  {
+    "code": "VRS",
+    "subreddit": null
+  },
+  {
+    "code": "GBC",
+    "subreddit": null
+  },
+  {
+    "code": "PRC",
+    "subreddit": null
+  },
+  {
+    "code": "WOMEN",
+    "subreddit": null
+  },
+  {
+    "code": "COUPE",
+    "subreddit": null
+  },
+  {
+    "code": "MDC",
+    "subreddit": null
+  },
+  {
+    "code": "NANOX",
+    "subreddit": null
+  },
+  {
+    "code": "CTIC2",
+    "subreddit": null
+  },
+  {
+    "code": "TSTR",
+    "subreddit": null
+  },
+  {
+    "code": "CALC",
+    "subreddit": null
+  },
+  {
+    "code": "DMB",
+    "subreddit": null
+  },
+  {
+    "code": "AI",
+    "subreddit": null
+  },
+  {
+    "code": "ART",
+    "subreddit": null
+  },
+  {
+    "code": "MUSE",
+    "subreddit": null
+  },
+  {
+    "code": "EAC",
+    "subreddit": "earthcoin"
+  },
+  {
+    "code": "KLC",
+    "subreddit": null
+  },
+  {
+    "code": "ECOB",
+    "subreddit": null
+  },
+  {
+    "code": "HDG",
+    "subreddit": null
+  },
+  {
+    "code": "AC",
+    "subreddit": null
+  },
+  {
+    "code": "ECN",
+    "subreddit": null
+  },
+  {
+    "code": "XVC",
+    "subreddit": null
+  },
+  {
+    "code": "BET",
+    "subreddit": null
+  },
+  {
+    "code": "ETT",
+    "subreddit": null
+  },
+  {
+    "code": "XNN",
+    "subreddit": null
+  },
+  {
+    "code": "BASH",
+    "subreddit": null
+  },
+  {
+    "code": "CARBON",
+    "subreddit": null
+  },
+  {
+    "code": "RC",
+    "subreddit": null
+  },
+  {
+    "code": "YASH",
+    "subreddit": null
+  },
+  {
+    "code": "IXC",
+    "subreddit": null
+  },
+  {
+    "code": "WTT",
+    "subreddit": null
+  },
+  {
+    "code": "GOOD",
+    "subreddit": null
+  },
+  {
+    "code": "AHT",
+    "subreddit": null
+  },
+  {
+    "code": "TES",
+    "subreddit": null
+  },
+  {
+    "code": "FYP",
+    "subreddit": null
+  },
+  {
+    "code": "BBT",
+    "subreddit": null
+  },
+  {
+    "code": "ETBS",
+    "subreddit": null
+  },
+  {
+    "code": "REX",
+    "subreddit": null
+  },
+  {
+    "code": "SMS",
+    "subreddit": null
+  },
+  {
+    "code": "SMLY",
+    "subreddit": null
+  },
+  {
+    "code": "LEAF",
+    "subreddit": null
+  },
+  {
+    "code": "TRIA",
+    "subreddit": null
+  },
+  {
+    "code": "INPAY",
+    "subreddit": null
+  },
+  {
+    "code": "AU",
+    "subreddit": null
+  },
+  {
+    "code": "NKA",
+    "subreddit": null
+  },
+  {
+    "code": "GJC",
+    "subreddit": null
+  },
+  {
+    "code": "ORB",
+    "subreddit": null
+  },
+  {
+    "code": "GRWI",
+    "subreddit": null
+  },
+  {
+    "code": "XFT",
+    "subreddit": null
+  },
+  {
+    "code": "FLT",
+    "subreddit": null
+  },
+  {
+    "code": "IFLT",
+    "subreddit": null
+  },
+  {
+    "code": "STRC",
+    "subreddit": null
+  },
+  {
+    "code": "V",
+    "subreddit": null
+  },
+  {
+    "code": "UNI",
+    "subreddit": null
+  },
+  {
+    "code": "HERO",
+    "subreddit": null
+  },
+  {
+    "code": "SHORTY",
+    "subreddit": null
+  },
+  {
+    "code": "METAL",
+    "subreddit": null
+  },
+  {
+    "code": "FCN",
+    "subreddit": null
+  },
+  {
+    "code": "BXT",
+    "subreddit": null
+  },
+  {
+    "code": "ICOO",
+    "subreddit": null
+  },
+  {
+    "code": "DEUS",
+    "subreddit": null
+  },
+  {
+    "code": "BRIT",
+    "subreddit": null
+  },
+  {
+    "code": "RIYA",
+    "subreddit": null
+  },
+  {
+    "code": "UNIC",
+    "subreddit": null
+  },
+  {
+    "code": "HTC",
+    "subreddit": null
+  },
+  {
+    "code": "RNS",
+    "subreddit": null
+  },
+  {
+    "code": "HBN",
+    "subreddit": null
+  },
+  {
+    "code": "BPC",
+    "subreddit": null
+  },
+  {
+    "code": "FUNK",
+    "subreddit": null
+  },
+  {
+    "code": "EPY",
+    "subreddit": null
+  },
+  {
+    "code": "SDC",
+    "subreddit": null
+  },
+  {
+    "code": "MRJA",
+    "subreddit": null
+  },
+  {
+    "code": "KOBO",
+    "subreddit": null
+  },
+  {
+    "code": "BTWTY",
+    "subreddit": null
+  },
+  {
+    "code": "I0C",
+    "subreddit": null
+  },
+  {
+    "code": "SKC",
+    "subreddit": null
+  },
+  {
+    "code": "MBI",
+    "subreddit": null
+  },
+  {
+    "code": "PIGGY",
+    "subreddit": null
+  },
+  {
+    "code": "BTB",
+    "subreddit": null
+  },
+  {
+    "code": "TROLL",
+    "subreddit": null
+  },
+  {
+    "code": "JET",
+    "subreddit": null
+  },
+  {
+    "code": "EBET",
+    "subreddit": null
+  },
+  {
+    "code": "TRI",
+    "subreddit": null
+  },
+  {
+    "code": "BITS",
+    "subreddit": null
+  },
+  {
+    "code": "BITSILVER",
+    "subreddit": null
+  },
+  {
+    "code": "MAC",
+    "subreddit": null
+  },
+  {
+    "code": "GAIA",
+    "subreddit": null
+  },
+  {
+    "code": "TALK",
+    "subreddit": null
+  },
+  {
+    "code": "MANNA",
+    "subreddit": null
+  },
+  {
+    "code": "DSH",
+    "subreddit": null
+  },
+  {
+    "code": "VAL",
+    "subreddit": null
+  },
+  {
+    "code": "HODL",
+    "subreddit": null
+  },
+  {
+    "code": "NYAN",
+    "subreddit": null
+  },
+  {
+    "code": "OPAL",
+    "subreddit": null
+  },
+  {
+    "code": "DTC",
+    "subreddit": null
+  },
+  {
+    "code": "EBCH",
+    "subreddit": null
+  },
+  {
+    "code": "BITBTC",
+    "subreddit": null
+  },
+  {
+    "code": "SMC",
+    "subreddit": null
+  },
+  {
+    "code": "FUCK",
+    "subreddit": null
+  },
+  {
+    "code": "AMBER",
+    "subreddit": null
+  },
+  {
+    "code": "TSE",
+    "subreddit": null
+  },
+  {
+    "code": "MCRN",
+    "subreddit": null
+  },
+  {
+    "code": "FLY",
+    "subreddit": null
+  },
+  {
+    "code": "KUSH",
+    "subreddit": null
+  },
+  {
+    "code": "XJO",
+    "subreddit": null
+  },
+  {
+    "code": "ARI",
+    "subreddit": null
+  },
+  {
+    "code": "XPY",
+    "subreddit": null
+  },
+  {
+    "code": "MAO",
+    "subreddit": null
+  },
+  {
+    "code": "ITI",
+    "subreddit": null
+  },
+  {
+    "code": "HAL",
+    "subreddit": null
+  },
+  {
+    "code": "BTCR",
+    "subreddit": null
+  },
+  {
+    "code": "SCORE",
+    "subreddit": null
+  },
+  {
+    "code": "DDF",
+    "subreddit": null
+  },
+  {
+    "code": "8BIT",
+    "subreddit": null
+  },
+  {
+    "code": "NXX",
+    "subreddit": null
+  },
+  {
+    "code": "CNO",
+    "subreddit": null
+  },
+  {
+    "code": "WGO",
+    "subreddit": null
+  },
+  {
+    "code": "TAG",
+    "subreddit": null
+  },
+  {
+    "code": "TEK",
+    "subreddit": null
+  },
+  {
+    "code": "GRIM",
+    "subreddit": null
+  },
+  {
+    "code": "MAD",
+    "subreddit": null
+  },
+  {
+    "code": "BITGOLD",
+    "subreddit": null
+  },
+  {
+    "code": "BCF",
+    "subreddit": null
+  },
+  {
+    "code": "CHESS",
+    "subreddit": null
+  },
+  {
+    "code": "SIGT",
+    "subreddit": "signatum"
+  },
+  {
+    "code": "CYP",
+    "subreddit": null
+  },
+  {
+    "code": "VISIO",
+    "subreddit": null
+  },
+  {
+    "code": "ENT",
+    "subreddit": null
+  },
+  {
+    "code": "CCN",
+    "subreddit": null
+  },
+  {
+    "code": "BRIA",
+    "subreddit": null
+  },
+  {
+    "code": "XCXT",
+    "subreddit": null
+  },
+  {
+    "code": "SRC",
+    "subreddit": null
+  },
+  {
+    "code": "PHS",
+    "subreddit": null
+  },
+  {
+    "code": "HNC",
+    "subreddit": null
+  },
+  {
+    "code": "PX",
+    "subreddit": null
+  },
+  {
+    "code": "BLOCKPAY",
+    "subreddit": null
+  },
+  {
+    "code": "BITZ",
+    "subreddit": null
+  },
+  {
+    "code": "PAK",
+    "subreddit": null
+  },
+  {
+    "code": "TOKC",
+    "subreddit": null
+  },
+  {
+    "code": "TIT",
+    "subreddit": null
+  },
+  {
+    "code": "FRC",
+    "subreddit": null
+  },
+  {
+    "code": "PR",
+    "subreddit": null
+  },
+  {
+    "code": "OTX",
+    "subreddit": null
+  },
+  {
+    "code": "TGC",
+    "subreddit": null
+  },
+  {
+    "code": "GAP",
+    "subreddit": null
+  },
+  {
+    "code": "DIX",
+    "subreddit": null
+  },
+  {
+    "code": "GLT",
+    "subreddit": null
+  },
+  {
+    "code": "UNITS",
+    "subreddit": null
+  },
+  {
+    "code": "SPEX",
+    "subreddit": null
+  },
+  {
+    "code": "EMD",
+    "subreddit": null
+  },
+  {
+    "code": "MARS",
+    "subreddit": null
+  },
+  {
+    "code": "BOLI",
+    "subreddit": null
+  },
+  {
+    "code": "XRE",
+    "subreddit": null
+  },
+  {
+    "code": "RPC",
+    "subreddit": null
+  },
+  {
+    "code": "ATOM",
+    "subreddit": null
+  },
+  {
+    "code": "AMMO",
+    "subreddit": null
+  },
+  {
+    "code": "SHDW",
+    "subreddit": null
+  },
+  {
+    "code": "BERN",
+    "subreddit": null
+  },
+  {
+    "code": "GLC",
+    "subreddit": null
+  },
+  {
+    "code": "LCT",
+    "subreddit": null
+  },
+  {
+    "code": "CUBE",
+    "subreddit": null
+  },
+  {
+    "code": "LTB",
+    "subreddit": null
+  },
+  {
+    "code": "IMX",
+    "subreddit": null
+  },
+  {
+    "code": "XIOS",
+    "subreddit": null
+  },
+  {
+    "code": "IRL",
+    "subreddit": null
+  },
+  {
+    "code": "RBIES",
+    "subreddit": null
+  },
+  {
+    "code": "ISL",
+    "subreddit": null
+  },
+  {
+    "code": "XRA",
+    "subreddit": null
+  },
+  {
+    "code": "VTA",
+    "subreddit": null
+  },
+  {
+    "code": "MAY",
+    "subreddit": null
+  },
+  {
+    "code": "AMS",
+    "subreddit": null
+  },
+  {
+    "code": "SPACE",
+    "subreddit": null
+  },
+  {
+    "code": "BUMBA",
+    "subreddit": null
+  },
+  {
+    "code": "INFX",
+    "subreddit": null
+  },
+  {
+    "code": "VOT",
+    "subreddit": null
+  },
+  {
+    "code": "MST",
+    "subreddit": null
+  },
+  {
+    "code": "ZUR",
+    "subreddit": null
+  },
+  {
+    "code": "ZZC",
+    "subreddit": null
+  },
+  {
+    "code": "VC",
+    "subreddit": null
+  },
+  {
+    "code": "ABJ",
+    "subreddit": null
+  },
+  {
+    "code": "RED",
+    "subreddit": null
+  },
+  {
+    "code": "QTL",
+    "subreddit": null
+  },
+  {
+    "code": "CFD",
+    "subreddit": null
+  },
+  {
+    "code": "BRAT",
+    "subreddit": null
+  },
+  {
+    "code": "YAC",
+    "subreddit": null
+  },
+  {
+    "code": "IMS",
+    "subreddit": null
+  },
+  {
+    "code": "AIB",
+    "subreddit": null
+  },
+  {
+    "code": "DUO",
+    "subreddit": null
+  },
+  {
+    "code": "STV",
+    "subreddit": null
+  },
+  {
+    "code": "CCO",
+    "subreddit": null
+  },
+  {
+    "code": "CON",
+    "subreddit": null
+  },
+  {
+    "code": "FIRE",
+    "subreddit": null
+  },
+  {
+    "code": "PASL",
+    "subreddit": null
+  },
+  {
+    "code": "DALC",
+    "subreddit": null
+  },
+  {
+    "code": "SCRT",
+    "subreddit": null
+  },
+  {
+    "code": "ICOB",
+    "subreddit": null
+  },
+  {
+    "code": "POS",
+    "subreddit": null
+  },
+  {
+    "code": "JIN",
+    "subreddit": null
+  },
+  {
+    "code": "DLC",
+    "subreddit": null
+  },
+  {
+    "code": "XNG",
+    "subreddit": null
+  },
+  {
+    "code": "TAJ",
+    "subreddit": null
+  },
+  {
+    "code": "DRS",
+    "subreddit": null
+  },
+  {
+    "code": "CHAN",
+    "subreddit": null
+  },
+  {
+    "code": "EVO",
+    "subreddit": null
+  },
+  {
+    "code": "ELC",
+    "subreddit": null
+  },
+  {
+    "code": "REE",
+    "subreddit": null
+  },
+  {
+    "code": "COAL",
+    "subreddit": null
+  },
+  {
+    "code": "EUC",
+    "subreddit": null
+  },
+  {
+    "code": "BOST",
+    "subreddit": null
+  },
+  {
+    "code": "FUNC",
+    "subreddit": null
+  },
+  {
+    "code": "HMP",
+    "subreddit": null
+  },
+  {
+    "code": "NTWK",
+    "subreddit": null
+  },
+  {
+    "code": "XBTC21",
+    "subreddit": null
+  },
+  {
+    "code": "YTN",
+    "subreddit": null
+  },
+  {
+    "code": "ACOIN",
+    "subreddit": null
+  },
+  {
+    "code": "J",
+    "subreddit": null
+  },
+  {
+    "code": "SOON",
+    "subreddit": null
+  },
+  {
+    "code": "VLT",
+    "subreddit": null
+  },
+  {
+    "code": "BTQ",
+    "subreddit": null
+  },
+  {
+    "code": "XCRE",
+    "subreddit": null
+  },
+  {
+    "code": "BNX",
+    "subreddit": null
+  },
+  {
+    "code": "CF",
+    "subreddit": null
+  },
+  {
+    "code": "BAS",
+    "subreddit": null
+  },
+  {
+    "code": "MTLMC3",
+    "subreddit": null
+  },
+  {
+    "code": "MNC",
+    "subreddit": null
+  },
+  {
+    "code": "DBTC",
+    "subreddit": null
+  },
+  {
+    "code": "GP",
+    "subreddit": null
+  },
+  {
+    "code": "ROOFS",
+    "subreddit": null
+  },
+  {
+    "code": "ICE",
+    "subreddit": null
+  },
+  {
+    "code": "EXN",
+    "subreddit": null
+  },
+  {
+    "code": "GUESS",
+    "subreddit": null
+  },
+  {
+    "code": "CNNC",
+    "subreddit": null
+  },
+  {
+    "code": "CPN",
+    "subreddit": null
+  },
+  {
+    "code": "ASAFE2",
+    "subreddit": null
+  },
+  {
+    "code": "BENJI",
+    "subreddit": null
+  },
+  {
+    "code": "CACH",
+    "subreddit": null
+  },
+  {
+    "code": "SOJ",
+    "subreddit": null
+  },
+  {
+    "code": "BTPL",
+    "subreddit": null
+  },
+  {
+    "code": "BLRY",
+    "subreddit": null
+  },
+  {
+    "code": "FLAX",
+    "subreddit": null
+  },
+  {
+    "code": "BLN",
+    "subreddit": null
+  },
+  {
+    "code": "CESC",
+    "subreddit": null
+  },
+  {
+    "code": "SPT",
+    "subreddit": null
+  },
+  {
+    "code": "FNC",
+    "subreddit": null
+  },
+  {
+    "code": "XCO",
+    "subreddit": null
+  },
+  {
+    "code": "DLISK",
+    "subreddit": null
+  },
+  {
+    "code": "GPL",
+    "subreddit": null
+  },
+  {
+    "code": "SH",
+    "subreddit": null
+  },
+  {
+    "code": "UET",
+    "subreddit": null
+  },
+  {
+    "code": "KRONE",
+    "subreddit": null
+  },
+  {
+    "code": "URO",
+    "subreddit": null
+  },
+  {
+    "code": "SFC",
+    "subreddit": null
+  },
+  {
+    "code": "RIDE",
+    "subreddit": null
+  },
+  {
+    "code": "STARS",
+    "subreddit": null
+  },
+  {
+    "code": "RBX",
+    "subreddit": null
+  },
+  {
+    "code": "QCN",
+    "subreddit": null
+  },
+  {
+    "code": "WORM",
+    "subreddit": null
+  },
+  {
+    "code": "ITZ",
+    "subreddit": null
+  },
+  {
+    "code": "VIP",
+    "subreddit": null
+  },
+  {
+    "code": "FUZZ",
+    "subreddit": null
+  },
+  {
+    "code": "PRX",
+    "subreddit": null
+  },
+  {
+    "code": "BXC",
+    "subreddit": null
+  },
+  {
+    "code": "ZYD",
+    "subreddit": null
+  },
+  {
+    "code": "LTCR",
+    "subreddit": null
+  },
+  {
+    "code": "MND",
+    "subreddit": null
+  },
+  {
+    "code": "XBTS",
+    "subreddit": null
+  },
+  {
+    "code": "BSTAR",
+    "subreddit": null
+  },
+  {
+    "code": "SLEVIN",
+    "subreddit": null
+  },
+  {
+    "code": "ICON",
+    "subreddit": null
+  },
+  {
+    "code": "EAGLE",
+    "subreddit": null
+  },
+  {
+    "code": "PONZI",
+    "subreddit": null
+  },
+  {
+    "code": "ZMC",
+    "subreddit": null
+  },
+  {
+    "code": "CTO",
+    "subreddit": null
+  },
+  {
+    "code": "JWL",
+    "subreddit": null
+  },
+  {
+    "code": "ATX",
+    "subreddit": null
+  },
+  {
+    "code": "PULSE",
+    "subreddit": null
+  },
+  {
+    "code": "BSC",
+    "subreddit": null
+  },
+  {
+    "code": "JS",
+    "subreddit": null
+  },
+  {
+    "code": "ARB",
+    "subreddit": null
+  },
+  {
+    "code": "COXST",
+    "subreddit": null
+  },
+  {
+    "code": "MILO",
+    "subreddit": null
+  },
+  {
+    "code": "BIOS",
+    "subreddit": null
+  },
+  {
+    "code": "CWXT",
+    "subreddit": null
+  },
+  {
+    "code": "GEERT",
+    "subreddit": null
+  },
+  {
+    "code": "STEPS",
+    "subreddit": null
+  },
+  {
+    "code": "DOLLAR",
+    "subreddit": null
+  },
+  {
+    "code": "DRM",
+    "subreddit": null
+  },
+  {
+    "code": "TAGR",
+    "subreddit": null
+  },
+  {
+    "code": "PIE",
+    "subreddit": null
+  },
+  {
+    "code": "LIR",
+    "subreddit": null
+  },
+  {
+    "code": "IMPS",
+    "subreddit": null
+  },
+  {
+    "code": "BOAT",
+    "subreddit": null
+  },
+  {
+    "code": "PLACO",
+    "subreddit": null
+  },
+  {
+    "code": "ZNE",
+    "subreddit": null
+  },
+  {
+    "code": "CRT",
+    "subreddit": null
+  },
+  {
+    "code": "OFF",
+    "subreddit": null
+  },
+  {
+    "code": "CRDNC",
+    "subreddit": null
+  },
+  {
+    "code": "DES",
+    "subreddit": null
+  },
+  {
+    "code": "PLNC",
+    "subreddit": null
+  },
+  {
+    "code": "OS76",
+    "subreddit": null
+  },
+  {
+    "code": "JOBS",
+    "subreddit": null
+  },
+  {
+    "code": "TOR",
+    "subreddit": null
+  },
+  {
+    "code": "SANDG",
+    "subreddit": null
+  },
+  {
+    "code": "SDP",
+    "subreddit": null
+  },
+  {
+    "code": "RSGP",
+    "subreddit": null
+  },
+  {
+    "code": "ALTCOM",
+    "subreddit": null
+  },
+  {
+    "code": "WBB",
+    "subreddit": null
+  },
+  {
+    "code": "ACP",
+    "subreddit": null
+  },
+  {
+    "code": "PEX",
+    "subreddit": null
+  },
+  {
+    "code": "VOLT",
+    "subreddit": null
+  },
+  {
+    "code": "IBANK",
+    "subreddit": null
+  },
+  {
+    "code": "XRC",
+    "subreddit": null
+  },
+  {
+    "code": "ARGUS",
+    "subreddit": null
+  },
+  {
+    "code": "BIOB",
+    "subreddit": null
+  },
+  {
+    "code": "ELS",
+    "subreddit": null
+  },
+  {
+    "code": "SOCC",
+    "subreddit": null
+  },
+  {
+    "code": "NODC",
+    "subreddit": null
+  },
+  {
+    "code": "P7C",
+    "subreddit": null
+  },
+  {
+    "code": "CREVA",
+    "subreddit": null
+  },
+  {
+    "code": "CTIC3",
+    "subreddit": null
+  },
+  {
+    "code": "SLFI",
+    "subreddit": null
+  },
+  {
+    "code": "CONX",
+    "subreddit": null
+  },
+  {
+    "code": "GSR",
+    "subreddit": null
+  },
+  {
+    "code": "MGM",
+    "subreddit": null
+  },
+  {
+    "code": "VLTC",
+    "subreddit": null
+  },
+  {
+    "code": "ULA",
+    "subreddit": null
+  },
+  {
+    "code": "LVPS",
+    "subreddit": null
+  },
+  {
+    "code": "DGCS",
+    "subreddit": null
+  },
+  {
+    "code": "FXE",
+    "subreddit": null
+  },
+  {
+    "code": "PIZZA",
+    "subreddit": null
+  },
+  {
+    "code": "CCM100",
+    "subreddit": null
+  },
+  {
+    "code": "EBT",
+    "subreddit": null
+  },
+  {
+    "code": "HT",
+    "subreddit": null
+  },
+  {
+    "code": "ATMC",
+    "subreddit": null
+  },
+  {
+    "code": "CKUSD",
+    "subreddit": null
+  },
+  {
+    "code": "WIC",
+    "subreddit": null
+  },
+  {
+    "code": "DRG",
+    "subreddit": null
+  },
+  {
+    "code": "TOPC",
+    "subreddit": null
+  },
+  {
+    "code": "NANJ",
+    "subreddit": null
+  },
+  {
+    "code": "CHAT",
+    "subreddit": null
+  },
+  {
+    "code": "FRGC",
+    "subreddit": null
+  },
+  {
+    "code": "AAC",
+    "subreddit": null
+  },
+  {
+    "code": "BSTN",
+    "subreddit": null
+  },
+  {
+    "code": "NOAH",
+    "subreddit": null
+  },
+  {
+    "code": "EPC",
+    "subreddit": null
+  },
+  {
+    "code": "AMLT",
+    "subreddit": null
+  },
+  {
+    "code": "WC",
+    "subreddit": null
+  },
+  {
+    "code": "OF",
+    "subreddit": null
+  },
+  {
+    "code": "OC",
+    "subreddit": null
+  },
+  {
+    "code": "RCT",
+    "subreddit": null
+  },
+  {
+    "code": "MOF",
+    "subreddit": null
+  },
+  {
+    "code": "SHOW",
+    "subreddit": null
+  },
+  {
+    "code": "BFT",
+    "subreddit": null
+  },
+  {
+    "code": "XTZ",
+    "subreddit": null
+  },
+  {
+    "code": "STC",
+    "subreddit": null
+  },
+  {
+    "code": "NTK",
+    "subreddit": null
+  },
+  {
+    "code": "KCASH",
+    "subreddit": null
+  },
+  {
+    "code": "SSC",
+    "subreddit": null
+  },
+  {
+    "code": "AWR",
+    "subreddit": null
+  },
+  {
+    "code": "GEM",
+    "subreddit": null
+  },
+  {
+    "code": "BCDN",
+    "subreddit": null
+  },
+  {
+    "code": "SCC",
+    "subreddit": null
+  },
+  {
+    "code": "UGC",
+    "subreddit": null
+  },
+  {
+    "code": "W3C",
+    "subreddit": null
+  },
+  {
+    "code": "IQT",
+    "subreddit": null
+  },
+  {
+    "code": "RNTB",
+    "subreddit": null
+  },
+  {
+    "code": "LIGHT",
+    "subreddit": null
+  },
+  {
+    "code": "UGT",
+    "subreddit": null
+  },
+  {
+    "code": "QUBE",
+    "subreddit": null
+  },
+  {
+    "code": "FIL",
+    "subreddit": null
+  },
+  {
+    "code": "BTCP",
+    "subreddit": null
+  },
+  {
+    "code": "AVH",
+    "subreddit": null
+  },
+  {
+    "code": "VLC",
+    "subreddit": null
+  },
+  {
+    "code": "UBTC",
+    "subreddit": null
+  },
+  {
+    "code": "SWH",
+    "subreddit": null
+  },
+  {
+    "code": "TURBO",
+    "subreddit": null
+  },
+  {
+    "code": "SBTC",
+    "subreddit": null
+  },
+  {
+    "code": "ADK",
+    "subreddit": null
+  },
+  {
+    "code": "PRS",
+    "subreddit": null
+  },
+  {
+    "code": "TPAY",
+    "subreddit": null
+  },
+  {
+    "code": "BERRY",
+    "subreddit": null
+  },
+  {
+    "code": "TEN",
+    "subreddit": null
+  },
+  {
+    "code": "BCX",
+    "subreddit": null
+  },
+  {
+    "code": "TBAR",
+    "subreddit": null
+  },
+  {
+    "code": "SHA",
+    "subreddit": null
+  },
+  {
+    "code": "MOAC",
+    "subreddit": null
+  },
+  {
+    "code": "HPY",
+    "subreddit": null
+  },
+  {
+    "code": "LCC",
+    "subreddit": null
+  },
+  {
+    "code": "ECH",
+    "subreddit": null
+  },
+  {
+    "code": "HQX",
+    "subreddit": null
+  },
+  {
+    "code": "SBC",
+    "subreddit": null
+  },
+  {
+    "code": "CMS",
+    "subreddit": null
+  },
+  {
+    "code": "INDIA",
+    "subreddit": null
+  },
+  {
+    "code": "BIG",
+    "subreddit": null
+  },
+  {
+    "code": "XTL",
+    "subreddit": null
+  },
+  {
+    "code": "STEX",
+    "subreddit": null
+  },
+  {
+    "code": "BEE",
+    "subreddit": null
+  },
+  {
+    "code": "SWTC",
+    "subreddit": null
+  },
+  {
+    "code": "EAG",
+    "subreddit": null
+  },
+  {
+    "code": "BUB",
+    "subreddit": null
+  },
+  {
+    "code": "GLA",
+    "subreddit": null
+  },
+  {
+    "code": "IPC",
+    "subreddit": null
+  },
+  {
+    "code": "XID",
+    "subreddit": null
+  },
+  {
+    "code": "UIP",
+    "subreddit": null
+  },
+  {
+    "code": "FDZ",
+    "subreddit": null
+  },
+  {
+    "code": "WETH",
+    "subreddit": null
+  },
+  {
+    "code": "NCT",
+    "subreddit": null
+  },
+  {
+    "code": "HIRE",
+    "subreddit": null
+  },
+  {
+    "code": "HLC",
+    "subreddit": null
+  },
+  {
+    "code": "B2X",
+    "subreddit": null
+  },
+  {
+    "code": "FLUZ",
+    "subreddit": null
+  },
+  {
+    "code": "SEN",
+    "subreddit": null
+  },
+  {
+    "code": "MLM",
+    "subreddit": null
+  },
+  {
+    "code": "HDLB",
+    "subreddit": null
+  },
+  {
+    "code": "ODE",
+    "subreddit": null
+  },
+  {
+    "code": "SIC",
+    "subreddit": null
+  },
+  {
+    "code": "IDT",
+    "subreddit": null
+  },
+  {
+    "code": "MSD",
+    "subreddit": null
+  },
+  {
+    "code": "BSR",
+    "subreddit": null
+  },
+  {
+    "code": "GMX",
+    "subreddit": null
+  },
+  {
+    "code": "THS",
+    "subreddit": null
+  },
+  {
+    "code": "NPX",
+    "subreddit": null
+  },
+  {
+    "code": "DATX",
+    "subreddit": null
+  },
+  {
+    "code": "ANI",
+    "subreddit": null
+  },
+  {
+    "code": "READ",
+    "subreddit": null
+  },
+  {
+    "code": "TER",
+    "subreddit": "terranova"
+  },
+  {
+    "code": "LST",
+    "subreddit": null
+  },
+  {
+    "code": "EMB",
+    "subreddit": null
+  },
+  {
+    "code": "CEFS",
+    "subreddit": null
+  },
+  {
+    "code": "ZENGOLD",
+    "subreddit": null
+  },
+  {
+    "code": "VULC",
+    "subreddit": null
+  },
+  {
+    "code": "CANDY",
+    "subreddit": null
+  },
+  {
+    "code": "CFUN",
+    "subreddit": null
+  },
+  {
+    "code": "ANTX",
+    "subreddit": null
+  },
+  {
+    "code": "SIG",
+    "subreddit": null
+  },
+  {
+    "code": "GBG",
+    "subreddit": null
+  },
+  {
+    "code": "AGLC",
+    "subreddit": null
+  },
+  {
+    "code": "NOX",
+    "subreddit": null
+  },
+  {
+    "code": "AV",
+    "subreddit": null
+  },
+  {
+    "code": "XBP",
+    "subreddit": null
+  },
+  {
+    "code": "VIT",
+    "subreddit": null
+  },
+  {
+    "code": "BSN",
+    "subreddit": null
+  },
+  {
+    "code": "EDT",
+    "subreddit": null
+  },
+  {
+    "code": "NUMUS",
+    "subreddit": null
+  },
+  {
+    "code": "MINEX",
+    "subreddit": null
+  },
+  {
+    "code": "IDXM",
+    "subreddit": null
+  },
+  {
+    "code": "PCL",
+    "subreddit": null
+  },
+  {
+    "code": "GCS",
+    "subreddit": null
+  },
+  {
+    "code": "GOD",
+    "subreddit": null
+  },
+  {
+    "code": "BAR",
+    "subreddit": null
+  },
+  {
+    "code": "FLAP",
+    "subreddit": null
+  },
+  {
+    "code": "WA",
+    "subreddit": null
+  },
+  {
+    "code": "TLE",
+    "subreddit": null
+  },
+  {
+    "code": "PRES",
+    "subreddit": null
+  },
+  {
+    "code": "OX",
+    "subreddit": null
+  },
+  {
+    "code": "SFE",
+    "subreddit": null
+  },
+  {
+    "code": "MCR",
+    "subreddit": null
+  },
+  {
+    "code": "TESLA",
+    "subreddit": null
+  },
+  {
+    "code": "SJW",
+    "subreddit": null
+  },
+  {
+    "code": "XTD",
+    "subreddit": null
+  },
+  {
+    "code": "ABC",
+    "subreddit": null
+  },
+  {
+    "code": "UTT",
+    "subreddit": null
+  },
+  {
+    "code": "PLX",
+    "subreddit": null
+  },
+  {
+    "code": "NMS",
+    "subreddit": null
+  },
+  {
+    "code": "HC",
+    "subreddit": null
+  },
+  {
+    "code": "FRN",
+    "subreddit": null
+  },
+  {
+    "code": "SIGMA",
+    "subreddit": null
+  },
+  {
+    "code": "CYDER",
+    "subreddit": null
+  },
+  {
+    "code": "ELITE",
+    "subreddit": null
+  },
+  {
+    "code": "TCOIN",
+    "subreddit": null
+  },
+  {
+    "code": "XOT",
+    "subreddit": null
+  },
+  {
+    "code": "BITCF",
+    "subreddit": null
+  },
+  {
+    "code": "GARY",
+    "subreddit": null
+  },
+  {
+    "code": "SUP",
+    "subreddit": null
+  },
+  {
+    "code": "NAMO",
+    "subreddit": null
+  },
+  {
+    "code": "XRY",
+    "subreddit": null
+  },
+  {
+    "code": "GRX",
+    "subreddit": null
+  },
+  {
+    "code": "SLOTH",
+    "subreddit": null
+  },
+  {
+    "code": "BTBc",
+    "subreddit": null
+  },
+  {
+    "code": "INDI",
+    "subreddit": null
+  },
+  {
+    "code": "DAV",
+    "subreddit": null
+  },
+  {
+    "code": "ESC",
+    "subreddit": null
+  },
+  {
+    "code": "EDRC",
+    "subreddit": null
+  },
+  {
+    "code": "HALLO",
+    "subreddit": null
+  },
+  {
+    "code": "GDC",
+    "subreddit": null
+  },
+  {
+    "code": "SJCX",
+    "subreddit": null
+  },
+  {
+    "code": "SPK",
+    "subreddit": null
+  },
+  {
+    "code": "GAIN",
+    "subreddit": null
+  },
+  {
+    "code": "MARX",
+    "subreddit": null
+  },
+  {
+    "code": "ZBC",
+    "subreddit": null
+  },
+  {
+    "code": "BTCM",
+    "subreddit": null
+  },
+  {
+    "code": "FONZ",
+    "subreddit": null
+  },
+  {
+    "code": "ACES",
+    "subreddit": null
+  },
+  {
+    "code": "BLAZR",
+    "subreddit": null
+  },
+  {
+    "code": "RBBT",
+    "subreddit": null
+  },
+  {
+    "code": "CLUB",
+    "subreddit": null
+  },
+  {
+    "code": "DMC",
+    "subreddit": "dynamiccoin"
+  },
+  {
+    "code": "UR",
+    "subreddit": null
+  },
+  {
+    "code": "BEST",
+    "subreddit": null
+  },
+  {
+    "code": "CRYPT",
+    "subreddit": null
+  },
+  {
+    "code": "SAK",
+    "subreddit": null
+  },
+  {
+    "code": "SKR",
+    "subreddit": null
+  },
+  {
+    "code": "TELL",
+    "subreddit": null
+  },
+  {
+    "code": "CLD",
+    "subreddit": null
+  },
+  {
+    "code": "WSX",
+    "subreddit": null
+  },
+  {
+    "code": "DUTCH",
+    "subreddit": null
+  },
+  {
+    "code": "QORA",
+    "subreddit": null
+  },
+  {
+    "code": "REGA",
+    "subreddit": null
+  },
+  {
+    "code": "BT2",
+    "subreddit": null
+  },
+  {
+    "code": "FID",
+    "subreddit": null
+  },
+  {
+    "code": "ZSE",
+    "subreddit": null
+  },
+  {
+    "code": "MONETA",
+    "subreddit": null
+  },
+  {
+    "code": "SHELL",
+    "subreddit": null
+  },
+  {
+    "code": "HYPER",
+    "subreddit": null
+  },
+  {
+    "code": "LEVO",
+    "subreddit": null
+  },
+  {
+    "code": "CME",
+    "subreddit": null
+  },
+  {
+    "code": "WINK",
+    "subreddit": null
+  },
+  {
+    "code": "TODAY",
+    "subreddit": null
+  },
+  {
+    "code": "PRN",
+    "subreddit": null
+  },
+  {
+    "code": "HIGH",
+    "subreddit": null
+  },
+  {
+    "code": "AKY",
+    "subreddit": null
+  },
+  {
+    "code": "BIT",
+    "subreddit": null
+  },
+  {
+    "code": "APC",
+    "subreddit": null
+  },
+  {
+    "code": "LAZ",
+    "subreddit": null
+  },
+  {
+    "code": "BIRDS",
+    "subreddit": null
+  },
+  {
+    "code": "BTE",
+    "subreddit": null
+  },
+  {
+    "code": "FAP",
+    "subreddit": null
+  },
+  {
+    "code": "MAGN",
+    "subreddit": null
+  },
+  {
+    "code": "FAZZ",
+    "subreddit": null
+  },
+  {
+    "code": "XSTC",
+    "subreddit": null
+  },
+  {
+    "code": "PCS",
+    "subreddit": null
+  },
+  {
+    "code": "GAY",
+    "subreddit": null
+  },
+  {
+    "code": "TOPAZ",
+    "subreddit": null
+  },
+  {
+    "code": "XQN",
+    "subreddit": null
+  },
+  {
+    "code": "TOP",
+    "subreddit": null
+  },
+  {
+    "code": "DON",
+    "subreddit": null
+  },
+  {
+    "code": "RUNNERS",
+    "subreddit": null
+  },
+  {
+    "code": "SPORT",
+    "subreddit": null
+  },
+  {
+    "code": "PAYP",
+    "subreddit": null
+  },
+  {
+    "code": "FUTC",
+    "subreddit": null
+  },
+  {
+    "code": "SNAKE",
+    "subreddit": null
+  },
+  {
+    "code": "UNC",
+    "subreddit": null
+  },
+  {
+    "code": "SISA",
+    "subreddit": null
+  },
+  {
+    "code": "LKC",
+    "subreddit": null
+  },
+  {
+    "code": "NBIT",
+    "subreddit": null
+  },
+  {
+    "code": "MBL",
+    "subreddit": null
+  },
+  {
+    "code": "ACN",
+    "subreddit": null
+  },
+  {
+    "code": "PRM",
+    "subreddit": null
+  },
+  {
+    "code": "OMC",
+    "subreddit": null
+  },
+  {
+    "code": "RHFC",
+    "subreddit": null
+  },
+  {
+    "code": "DASHS",
+    "subreddit": null
+  },
+  {
+    "code": "OPES",
+    "subreddit": null
+  },
+  {
+    "code": "OP",
+    "subreddit": null
+  },
+  {
+    "code": "CC",
+    "subreddit": null
+  },
+  {
+    "code": "LEPEN",
+    "subreddit": null
+  },
+  {
+    "code": "DCRE",
+    "subreddit": null
+  },
+  {
+    "code": "UNRC",
+    "subreddit": null
+  },
+  {
+    "code": "CFC",
+    "subreddit": null
+  },
+  {
+    "code": "MCI",
+    "subreddit": null
+  },
+  {
+    "code": "LDCN",
+    "subreddit": null
+  },
+  {
+    "code": "RICHX",
+    "subreddit": null
+  },
+  {
+    "code": "RUBIT",
+    "subreddit": null
+  },
+  {
+    "code": "AXIOM",
+    "subreddit": null
+  },
+  {
+    "code": "DBG",
+    "subreddit": null
+  },
+  {
+    "code": "PRIMU",
+    "subreddit": null
+  },
+  {
+    "code": "FRWC",
+    "subreddit": null
+  },
+  {
+    "code": "EGG",
+    "subreddit": null
+  },
+  {
+    "code": "BITOK",
+    "subreddit": null
+  },
+  {
+    "code": "SMOKE",
+    "subreddit": null
+  },
+  {
+    "code": "ROYAL",
+    "subreddit": null
+  },
+  {
+    "code": "ASN",
+    "subreddit": null
+  },
+  {
+    "code": "TRICK",
+    "subreddit": null
+  },
+  {
+    "code": "KASHH",
+    "subreddit": null
+  },
+  {
+    "code": "NEOG",
+    "subreddit": null
+  },
+  {
+    "code": "SND",
+    "subreddit": null
+  },
+  {
+    "code": "KARMA",
+    "subreddit": null
+  },
+  {
+    "code": "HCC",
+    "subreddit": null
+  },
+  {
+    "code": "SKULL",
+    "subreddit": null
+  },
+  {
+    "code": "UNITY",
+    "subreddit": "supernet"
+  },
+  {
+    "code": "DISK",
+    "subreddit": null
+  },
+  {
+    "code": "KDC",
+    "subreddit": null
+  },
+  {
+    "code": "GRN",
+    "subreddit": null
+  },
+  {
+    "code": "CHEAP",
+    "subreddit": null
+  },
+  {
+    "code": "CMP",
+    "subreddit": null
+  },
+  {
+    "code": "LLT",
+    "subreddit": null
+  },
+  {
+    "code": "COR",
+    "subreddit": null
+  },
+  {
+    "code": "RYZ",
+    "subreddit": null
+  },
+  {
+    "code": "FRCT",
+    "subreddit": null
+  },
+  {
+    "code": "TMC",
+    "subreddit": null
+  },
+  {
+    "code": "IFC",
+    "subreddit": "infinitecoin"
+  },
+  {
+    "code": "GML",
+    "subreddit": null
+  },
+  {
+    "code": "VASH",
+    "subreddit": "vpncoin"
+  },
+  {
+    "code": "CYC",
+    "subreddit": null
+  },
+  {
+    "code": "X2",
+    "subreddit": null
+  },
+  {
+    "code": "PSY",
+    "subreddit": null
+  },
+  {
+    "code": "TCR",
+    "subreddit": null
+  },
+  {
+    "code": "POKE",
+    "subreddit": null
+  },
+  {
+    "code": "MGC",
+    "subreddit": null
+  }
+
+]

@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TestUtil.getAddCommandSuccessMessage;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 
 import org.junit.Before;
@@ -35,7 +36,7 @@ public class AddCommandIntegrationTest {
         expectedModel.addCoin(validCoin);
 
         assertCommandSuccess(prepareCommand(validCoin, model), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, validCoin), expectedModel);
+                getAddCommandSuccessMessage(validCoin), expectedModel);
     }
 
     @Test

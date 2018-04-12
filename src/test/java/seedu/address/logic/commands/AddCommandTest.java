@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TestUtil.getAddCommandSuccessMessage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +42,7 @@ public class AddCommandTest {
 
         CommandResult commandResult = getAddCommandForCoin(validCoin, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validCoin), commandResult.feedbackToUser);
+        assertEquals(getAddCommandSuccessMessage(validCoin), commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validCoin), modelStub.coinsAdded);
     }
 

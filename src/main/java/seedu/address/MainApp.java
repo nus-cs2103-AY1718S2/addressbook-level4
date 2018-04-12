@@ -10,6 +10,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import seedu.address.commons.core.CoinSubredditList;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -68,7 +69,6 @@ public class MainApp extends Application {
         CoinBookStorage coinBookStorage = new XmlCoinBookStorage(userPrefs.getCoinBookFilePath());
         RuleBookStorage ruleBookStorage = new XmlRuleBookStorage(userPrefs.getRuleBookFilePath());
         storage = new StorageManager(coinBookStorage, ruleBookStorage, userPrefsStorage);
-
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
@@ -78,6 +78,8 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+
+        CoinSubredditList.initialize();
     }
 
     private String getApplicationParameter(String parameterName) {

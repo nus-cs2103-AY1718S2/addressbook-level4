@@ -10,6 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
+import static seedu.address.testutil.TestUtil.getAddCommandSuccessMessage;
 import static seedu.address.testutil.TypicalCoins.ALICE;
 import static seedu.address.testutil.TypicalCoins.AMY;
 import static seedu.address.testutil.TypicalCoins.BOB;
@@ -144,7 +145,7 @@ public class AddCommandSystemTest extends CoinBookSystemTest {
         } catch (DuplicateCoinException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
-        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
+        String expectedResultMessage = getAddCommandSuccessMessage(toAdd);
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }

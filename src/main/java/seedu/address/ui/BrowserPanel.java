@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
+import seedu.address.commons.core.CoinSubredditList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CoinPanelSelectionChangedEvent;
 import seedu.address.model.coin.Coin;
@@ -21,8 +22,9 @@ import seedu.address.model.coin.Coin;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+    public static final String SUBREDDIT_NOT_FOUND = "SubredditNotFound.html";
+    public static final String USER_AGENT_STRING = "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) "
+            + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -36,13 +38,24 @@ public class BrowserPanel extends UiPart<Region> {
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
-
         loadDefaultPage();
         registerAsAnEventHandler(this);
+
+        browser.getEngine().setUserAgent(USER_AGENT_STRING);
     }
 
+    /**
+     * Loads the respective {@code coin} subreddit page. Loads a default page if there is not one
+     * @param coin specifies the subreddit page to load
+     */
     private void loadCoinPage(Coin coin) {
-        loadPage(SEARCH_PAGE_URL + coin.getCode().fullName);
+        String url;
+        if (CoinSubredditList.isRecognized(coin)) {
+            url = CoinSubredditList.getRedditUrl(coin);
+        } else {
+            url = MainApp.class.getResource(FXML_FILE_FOLDER + SUBREDDIT_NOT_FOUND).toExternalForm();
+        }
+        loadPage(url);
     }
 
     public void loadPage(String url) {

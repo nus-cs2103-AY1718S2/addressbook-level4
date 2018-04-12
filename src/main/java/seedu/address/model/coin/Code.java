@@ -3,6 +3,8 @@ package seedu.address.model.coin;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import seedu.address.commons.core.CoinSubredditList;
+
 /**
  * Represents a Coin's currency code in the book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
@@ -36,6 +38,10 @@ public class Code {
      */
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
+    }
+
+    public static boolean isRecognizedName(Coin test) {
+        return CoinSubredditList.isRecognized(test);
     }
 
     public boolean contains(String substring) {

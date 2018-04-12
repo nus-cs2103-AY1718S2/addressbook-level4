@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author khiayi -->
 <book>
-    <title>Hans Muster</title>
-    <author>Muster Hans</author>
-    <isbn>9482424</isbn>
+    <title>Animal Farm</title>
+    <author>George Orwell</author>
+    <isbn>9780736692427</isbn>
     <avail>Borrowed</avail>
-    <tagged>friends</tagged>
+    <tagged>political</tagged>
 </book>

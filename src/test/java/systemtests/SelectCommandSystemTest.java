@@ -5,7 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_BOOK_DISPLAYED
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_BOOK_SUCCESS;
-import static seedu.address.testutil.TypicalBooks.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalBooks.KEYWORD_MATCHING_GIRL;
 import static seedu.address.testutil.TypicalBooks.getTypicalBooks;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
@@ -57,7 +57,7 @@ public class SelectCommandSystemTest extends CatalogueSystemTest {
         /* Case: filtered book list, select index within bounds of catalogue but out of bounds of book list
          * -> rejected
          */
-        showBooksWithName(KEYWORD_MATCHING_MEIER);
+        showBooksWithTitle(KEYWORD_MATCHING_GIRL);
         int invalidIndex = getModel().getCatalogue().getBookList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 

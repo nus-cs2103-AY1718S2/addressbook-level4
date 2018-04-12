@@ -1,3 +1,4 @@
+//@@author QiuHaohao
 package seedu.address.model.account;
 
 import static java.util.Objects.requireNonNull;
@@ -30,11 +31,11 @@ public class UniqueAccountList implements Serializable, Iterable<Account> {
     /**
      * Adds a account to the list.
      *
-     * @throws DuplicateAccountException if the account to add is a duplicate of an existing account in the list.
+     * @throws DuplicateAccountException if the account to add is an account with the same username in the list.
      */
     public void add(Account toAdd) throws DuplicateAccountException {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
+        if (containsUsername(toAdd)) {
             throw new DuplicateAccountException();
         }
         internalList.add(toAdd);
@@ -55,7 +56,7 @@ public class UniqueAccountList implements Serializable, Iterable<Account> {
             throw new AccountNotFoundException();
         }
 
-        if (!target.equals(editedAccount) && internalList.contains(editedAccount)) {
+        if (!target.usernameMatches(editedAccount) && this.containsUsername(target)) {
             throw new DuplicateAccountException();
         }
 
@@ -91,6 +92,59 @@ public class UniqueAccountList implements Serializable, Iterable<Account> {
         }
         return null;
     }
+
+    /**
+     * Returns true if there is an account with the username provided
+     *
+     * @param u
+     * @return
+     */
+    public boolean containsUsername(Username u) {
+        for (Account a : internalList) {
+            if (a.usernameMatches(u)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if there is an account with an username that is the
+     * same as that of the credential provided
+     *
+     * @param c
+     * @return
+     */
+    public boolean containsUsername(Credential c) {
+        return containsUsername(c.getUsername());
+    }
+
+    /**
+     * Returns true if there is an account with an username that is the
+     * same as that of the account provided
+     *
+     * @param a
+     * @return
+     */
+    public boolean containsUsername(Account a) {
+        return containsUsername(a.getCredential());
+    }
+
+    /**
+     * Returns the account if there is an account with the username provided
+     *
+     * @param u
+     * @return
+     */
+    public Account searchByUsername(Username u) {
+        for (Account a : internalList) {
+            if (a.usernameMatches(u)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
 
     public int size() {
         return internalList.size();

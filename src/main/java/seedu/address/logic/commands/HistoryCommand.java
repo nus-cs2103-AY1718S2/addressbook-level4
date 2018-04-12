@@ -38,6 +38,7 @@ public class HistoryCommand extends Command {
         this.history = history;
     }
 
+    //@@author QiuHaohao
     @Override
     public PrivilegeLevel getPrivilegeLevel() {
         return PRIVILEGE_LEVEL;

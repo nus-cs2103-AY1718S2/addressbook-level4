@@ -22,7 +22,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-        "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+        "https://www.goodreads.com/search?utf8=%E2%9C%93&query=";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -39,10 +39,12 @@ public class BrowserPanel extends UiPart<Region> {
 
         loadDefaultPage();
         registerAsAnEventHandler(this);
+        browser.getEngine().setUserAgent("Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) "
+            + "AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A5297c Safari/602.1");
     }
 
     private void loadBookPage(Book book) {
-        loadPage(SEARCH_PAGE_URL + book.getTitle().fullTitle);
+        loadPage(SEARCH_PAGE_URL + book.getIsbn().toString());
     }
 
     public void loadPage(String url) {

@@ -25,6 +25,7 @@ public class HelpCommand extends Command {
         return new CommandResult(SHOWING_HELP_MESSAGE);
     }
 
+    //@@author QiuHaohao
     @Override
     public PrivilegeLevel getPrivilegeLevel() {
         return PRIVILEGE_LEVEL;

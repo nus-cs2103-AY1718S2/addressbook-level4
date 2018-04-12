@@ -101,6 +101,7 @@ public class MainApp extends Application {
         Optional<UniqueAccountList> accountListOptional;
         ReadOnlyCatalogue initialData;
         UniqueAccountList initlaAccountList;
+        //@@author QiuHaohao
         try {
             catalogueOptional = storage.readCatalogue();
             if (!catalogueOptional.isPresent()) {
@@ -142,6 +143,7 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
         return new ModelManager(initialData, initlaAccountList, userPrefs);
+        //@@author
     }
 
     private void initLogging(Config config) {

@@ -1,52 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Catalogue save file which contains the same Book values as in
 {@code TypicalBooks#getTypicalCatalogue()}-->
+<!-- @@author khiayi -->
 <catalogue>
     <books>
-        <title>Alice Pauline</title>
-        <author>Pauline Alice</author>
-        <isbn>85355255</isbn>
+        <title>Animal Farm</title>
+        <author>George Orwell</author>
+        <isbn>9780736692427</isbn>
         <avail>Available</avail>
-        <tagged>friends</tagged>
+        <tagged>political</tagged>
+        <tagged>satire</tagged>
     </books>
     <books>
-        <title>Benson Meier</title>
-        <author>Meier Benson</author>
-        <isbn>98765432</isbn>
+        <title>Breaking Dawn</title>
+        <author>Stephenie Meyer</author>
+        <isbn>9780316067928</isbn>
         <avail>Available</avail>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <tagged>fiction</tagged>
     </books>
     <books>
-        <title>Carl Kurz</title>
-        <author>Kurz Carl</author>
-        <isbn>95352563</isbn>
+        <title>California Girl</title>
+        <author>Jefferson Parker</author>
+        <isbn>9780060562373</isbn>
         <avail>Available</avail>
+        <tagged>unlabelled</tagged>
     </books>
     <books>
-        <title>Daniel Meier</title>
-        <author>Meier Daniel</author>
-        <isbn>87652533</isbn>
-        <avail>Available</avail>
-    </books>
-    <books>
-        <title>Elle Meyer</title>
-        <author>Meyer Elle</author>
-        <isbn>9482224</isbn>
+        <title>Delirium</title>
+        <author>Lauren Oliver</author>
+        <isbn>9780061726835</isbn>
         <avail>Available</avail>
     </books>
     <books>
-        <title>Fiona Kunz</title>
-        <author>Kunz Fiona</author>
-        <isbn>9482427</isbn>
+        <title>Emma</title>
+        <author>Jane Austen</author>
+        <isbn>9780141439587</isbn>
         <avail>Available</avail>
     </books>
     <books>
-        <title>George Best</title>
-        <author>Best George</author>
-        <isbn>9482442</isbn>
+        <title>Fateful</title>
+        <author>Claudia Gray</author>
+        <isbn>9780062006202</isbn>
         <avail>Available</avail>
     </books>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
+    <books>
+        <title>Gone Girl</title>
+        <author>Gillian Flynn</author>
+        <isbn>9780753827666</isbn>
+        <avail>Available</avail>
+    </books>
+    <tagged>political</tagged>
+    <tagged>satire</tagged>
+    <tagged>fiction</tagged>
+    <tagged>unlabelled</tagged>
 </catalogue>

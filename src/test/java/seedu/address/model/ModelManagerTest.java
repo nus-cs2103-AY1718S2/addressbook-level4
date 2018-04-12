@@ -3,8 +3,8 @@ package seedu.address.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BOOKS;
-import static seedu.address.testutil.TypicalBooks.ALICE;
-import static seedu.address.testutil.TypicalBooks.BENSON;
+import static seedu.address.testutil.TypicalBooks.ANIMAL;
+import static seedu.address.testutil.TypicalBooks.BREAKING;
 
 import java.util.Arrays;
 
@@ -28,7 +28,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        Catalogue catalogue = new CatalogueBuilder().withBook(ALICE).withBook(BENSON).build();
+        Catalogue catalogue = new CatalogueBuilder().withBook(ANIMAL).withBook(BREAKING).build();
         Catalogue differentCatalogue = new Catalogue();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -50,7 +50,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentCatalogue, userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getTitle().fullTitle.split("\\s+");
+        String[] keywords = ANIMAL.getTitle().fullTitle.split("\\s+");
         modelManager.updateFilteredBookList(new TitleContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(catalogue, userPrefs)));
 

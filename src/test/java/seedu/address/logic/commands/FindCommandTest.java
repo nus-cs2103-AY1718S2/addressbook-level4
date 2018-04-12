@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_BOOKS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalBooks.CARL;
-import static seedu.address.testutil.TypicalBooks.ELLE;
-import static seedu.address.testutil.TypicalBooks.FIONA;
+import static seedu.address.testutil.TypicalBooks.CALIFORNIA;
+import static seedu.address.testutil.TypicalBooks.EMMA;
+import static seedu.address.testutil.TypicalBooks.FATEFUL;
 import static seedu.address.testutil.TypicalBooks.getTypicalCatalogue;
 
 import java.util.Arrays;
@@ -68,8 +68,8 @@ public class FindCommandTest {
     @Test
     public void execute_multipleKeywords_multipleBooksFound() {
         String expectedMessage = String.format(MESSAGE_BOOKS_LISTED_OVERVIEW, 3);
-        FindCommand command = prepareCommand("Kurz Elle Kunz");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+        FindCommand command = prepareCommand("California Emma Fateful");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CALIFORNIA, EMMA, FATEFUL));
     }
 
     /**

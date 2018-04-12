@@ -2,6 +2,7 @@ package seedu.address.model.book;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+//@@author khiayi
 
 /**
  * Represents a Book's availability in the catalogue.
@@ -39,7 +40,7 @@ public class Avail {
             || test.equals(BORROWED)
             || test.equals(RESERVED) || test.equals(BORROWED_AND_RESERVED);
     }
-
+    //@@author
     @Override
     public String toString() {
         return value;

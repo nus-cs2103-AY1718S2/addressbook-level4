@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author khiayi -->
 <!-- Book with an invalid isbn field -->
 <book>
-    <title>Hans Muster</title>
-    <author>Muster Hans</author>
+    <title>Animal Farm</title>
+    <author>George Orwell</author>
     <isbn>9482asf424</isbn>
     <avail>Borrowed</avail>
-    <tagged>friends</tagged>
+    <tagged>political</tagged>
 </book>

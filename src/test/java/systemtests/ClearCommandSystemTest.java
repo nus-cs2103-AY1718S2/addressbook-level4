@@ -1,7 +1,7 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalBooks.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalBooks.KEYWORD_MATCHING_GIRL;
 
 import org.junit.Test;
 
@@ -47,7 +47,7 @@ public class ClearCommandSystemTest extends CatalogueSystemTest {
 
         /* Case: filters the book list before clearing -> entire catalogue cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original catalogue
-        showBooksWithName(KEYWORD_MATCHING_MEIER);
+        showBooksWithTitle(KEYWORD_MATCHING_GIRL);
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 

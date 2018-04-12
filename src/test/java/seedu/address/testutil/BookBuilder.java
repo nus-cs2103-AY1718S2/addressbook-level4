@@ -16,11 +16,11 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class BookBuilder {
 
-    public static final String DEFAULT_TITLE = "Alice Pauline";
-    public static final String DEFAULT_AUTHOR = "Pauline Alice";
-    public static final String DEFAULT_ISBN = "85355255";
+    public static final String DEFAULT_TITLE = "Animal Farm";
+    public static final String DEFAULT_AUTHOR = "George Orwell";
+    public static final String DEFAULT_ISBN = "9780736692428";
     public static final String DEFAULT_AVAIL = "Borrowed";
-    public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_TAGS = "unlabelled";
 
     private Title title;
     private Isbn isbn;

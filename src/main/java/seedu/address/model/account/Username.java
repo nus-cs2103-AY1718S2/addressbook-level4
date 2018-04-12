@@ -1,3 +1,4 @@
+//@@author QiuHaohao
 package seedu.address.model.account;
 
 import static java.util.Objects.requireNonNull;
@@ -58,8 +59,6 @@ public class Username implements Serializable {
 
     @Override
     public String toString() {
-        return "Username{"
-            + "username='" + username + '\''
-            + '}';
+        return username;
     }
 }

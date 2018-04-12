@@ -1,3 +1,4 @@
+//@@author QiuHaohao
 package seedu.address.model.account;
 
 import static org.junit.Assert.assertFalse;
@@ -47,4 +48,17 @@ public class AccountTest {
         assertFalse(studentAccount.equals(0));
     }
 
+    @Test
+    public void usernameMatches() {
+        Name name = new Name("Ryan");
+        Credential credential = new Credential("student", "student2");
+        MatricNumber matricNumber = new MatricNumber("A0123256X");
+        PrivilegeLevel privilegeLevel = new PrivilegeLevel(1);
+        Account student2 = new Account(name, credential, matricNumber, privilegeLevel);
+        Account student = Account.createDefaultStudentAccount();
+        Account admin = Account.createDefaultAdminAccount();
+
+        assertTrue(student2.usernameMatches(student));
+        assertFalse(student2.usernameMatches(admin));
+    }
 }

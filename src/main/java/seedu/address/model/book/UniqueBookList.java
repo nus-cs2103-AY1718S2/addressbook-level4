@@ -33,17 +33,45 @@ public class UniqueBookList implements Iterable<Book> {
     }
 
     /**
+     * Returns true if there is a book with the same isbn provided
+     *
+     * @param p
+     * @return
+     */
+    public boolean containsIsbn(Isbn p) {
+        for (Book b : internalList) {
+            if (b.isbnMatches(p)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if there is a book with a isbn that is the
+     * same as that of the book provided
+     *
+     * @param toCheck
+     * @return
+     */
+    public boolean containsSameIsbn(Book toCheck) {
+        requireNonNull(toCheck);
+        return containsIsbn(toCheck.getIsbn());
+    }
+
+    /**
      * Adds a book to the list.
      *
      * @throws DuplicateBookException if the book to add is a duplicate of an existing book in the list.
      */
     public void add(Book toAdd) throws DuplicateBookException {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
+        if (contains(toAdd) || containsSameIsbn(toAdd)) {
             throw new DuplicateBookException();
         }
         internalList.add(toAdd);
     }
+
 
     /**
      * Replaces the book {@code target} in the list with {@code editedBook}.

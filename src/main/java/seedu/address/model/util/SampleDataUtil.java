@@ -19,21 +19,21 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Book[] getSampleBooks() {
         return new Book[] {
-            new Book(new Title("Alex Yeoh"), new Author("Yeoh Alex"), new Isbn("87438807"), new Avail("Available"),
-                getTagSet("friends")),
-            new Book(new Title("Bernice Yu"), new Author("Yu Bernice"), new Isbn("99272758"), new Avail("Available"),
-                getTagSet("colleagues", "friends")),
-            new Book(new Title("Charlotte Oliveiro"), new Author("Oliveiro Charlotte"), new Isbn("93210283"),
+            new Book(new Title("Animal Farm"), new Author("George Orwell"), new Isbn("9780736692427"),
+                new Avail("Available"), getTagSet("political", "satire")),
+            new Book(new Title("Breaking Dawn"), new Author("Stephenie Meyer"), new Isbn("9780316067928"),
+                new Avail("Available"), getTagSet("fiction")),
+            new Book(new Title("California Girl"), new Author("Jefferson Parker"), new Isbn("9780060562373"),
                 new Avail("Borrowed"),
-                getTagSet("neighbours")),
-            new Book(new Title("David Li"), new Author("Li David"), new Isbn("91031282"), new Avail("Borrowed"),
-                getTagSet("family")),
-            new Book(new Title("Irfan Ibrahim"), new Author("Ibrahim Irfan"), new Isbn("92492021"),
+                getTagSet("fiction", "mystery")),
+            new Book(new Title("Delirium"), new Author("Lauren Oliver"), new Isbn("9780061726835"),
+                new Avail("Borrowed"), getTagSet("dystopian", "fiction")),
+            new Book(new Title("Invisible Man"), new Author("Ralph Ellison"), new Isbn("9780140023350"),
                 new Avail("Borrowed"),
-                getTagSet("classmates")),
-            new Book(new Title("Roy Balakrishnan"), new Author("Balakrishnan Roy"), new Isbn("92624417"),
+                getTagSet("fiction")),
+            new Book(new Title("Romeo and Juliet"), new Author("William Shakespeare"), new Isbn("9780743477116"),
                 new Avail("Borrowed"),
-                getTagSet("colleagues"))
+                getTagSet("classics", "romance"))
         };
     }
 

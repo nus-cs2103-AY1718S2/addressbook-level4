@@ -94,6 +94,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    //@@author QiuHaohao
     @Override
     @Subscribe
     public void handleAccountListChangedEvent(AccountListChangedEvent event) {

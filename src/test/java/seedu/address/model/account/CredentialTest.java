@@ -1,3 +1,4 @@
+//@@author QiuHaohao
 package seedu.address.model.account;
 
 import static org.junit.Assert.assertEquals;
@@ -7,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
+
+//import javax.jws.soap.SOAPBinding;
 
 public class CredentialTest {
 
@@ -55,5 +58,21 @@ public class CredentialTest {
 
         //not equal with same type with different state
         assertFalse(c1.equals(c2));
+    }
+
+    @Test
+    public void usernameEquals() {
+        String u1 = "username1";
+        String u2 = "username2";
+        String p1 = "password1";
+        Credential u1p1 = new Credential(u1, p1);
+        Credential u1p2 = new Credential(u1, p1);
+        Credential u2p1 = new Credential(u2, p1);
+        Username username1 = u1p1.getUsername();
+        Username username2 = u2p1.getUsername();
+
+        assertTrue(u1p1.usernameEquals(username1));
+        assertTrue(u1p2.usernameEquals(username1));
+        assertFalse(u1p1.usernameEquals(username2));
     }
 }

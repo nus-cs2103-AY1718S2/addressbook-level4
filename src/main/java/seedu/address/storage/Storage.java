@@ -38,6 +38,7 @@ public interface Storage extends CatalogueStorage, UserPrefsStorage, AccountList
      */
     void handleCatalogueChangedEvent(CatalogueChangedEvent abce);
 
+    //@@author QiuHaohao
     String getAccountListFilePath();
 
     Optional<UniqueAccountList> readAccountList() throws DataConversionException, IOException;

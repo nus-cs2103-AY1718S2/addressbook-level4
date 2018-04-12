@@ -47,7 +47,7 @@ public class EditCommand extends UndoableCommand {
         + "[" + PREFIX_AVAIL + "AVAIL] "
         + "[" + PREFIX_TAG + "TAG]...\n"
         + "Example: " + COMMAND_WORD + " 1 "
-        + PREFIX_ISBN + "91234567 "
+        + PREFIX_ISBN + "9780736692426 "
         + PREFIX_AVAIL + "Borrowed";
 
     public static final String MESSAGE_EDIT_BOOK_SUCCESS = "Edited Book: %1$s";
@@ -134,10 +134,12 @@ public class EditCommand extends UndoableCommand {
             && Objects.equals(bookToEdit, e.bookToEdit);
     }
 
+    //@@author QiuHaohao
     @Override
     public PrivilegeLevel getPrivilegeLevel() {
         return PRIVILEGE_LEVEL;
     }
+    //@@author
 
     /**
      * Stores the details to edit the book with. Each non-empty field value will replace the
@@ -242,7 +244,5 @@ public class EditCommand extends UndoableCommand {
                 && getAvail().equals(e.getAvail())
                 && getTags().equals(e.getTags());
         }
-
-
     }
 }

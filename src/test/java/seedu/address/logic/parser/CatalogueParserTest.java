@@ -37,7 +37,6 @@ import seedu.address.testutil.EditBookDescriptorBuilder;
 
 
 public class CatalogueParserTest {
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 

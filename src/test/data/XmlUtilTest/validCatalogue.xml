@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author khiayi -->
 <catalogue>
     <books>
-        <title>Hans Muster</title>
-        <author isPrivate="false">Muster Hans</author>
-        <isbn isPrivate="false">9482424</isbn>
+        <title>Animal Farm</title>
+        <author isPrivate="false">George Orwell</author>
+        <isbn isPrivate="false">9780736692427</isbn>
         <avail isPrivate="false">Available</avail>
     </books>
     <books>
-        <title>Ruth Mueller</title>
-        <author isPrivate="false">Mueller Ruth</author>
-        <isbn isPrivate="false">87249245</isbn>
+        <title>Breaking Dawn</title>
+        <author isPrivate="false">Stephenie Meyer</author>
+        <isbn isPrivate="false">9780316067928</isbn>
         <avail isPrivate="false">Available</avail>
     </books>
     <books>
-        <title>Heinz Kurz</title>
-        <author isPrivate="false">Kurz Heinz</author>
-        <isbn isPrivate="false">95352563</isbn>
-        <avail isPrivate="false">Borrowed</avail>
+        <title>California Girl</title>
+        <author isPrivate="false">Jefferson Parker</author>
+        <isbn isPrivate="false">9780060562373</isbn>
+        <avail isPrivate="false">Available</avail>
     </books>
     <books>
-        <title>Cornelia Meier</title>
-        <author isPrivate="false">Meier Cornerlia</author>
-        <isbn isPrivate="false">87652533</isbn>
-        <avail isPrivate="false">Borrowed</avail>
+        <title>Delirium</title>
+        <author isPrivate="false">Lauren Oliver</author>
+        <isbn isPrivate="false">9780061726835</isbn>
+        <avail isPrivate="false">Available</avail>
     </books>
     <books>
-        <title>Werner Meyer</title>
-        <author isPrivate="false">Meyer Werner</author>
-        <isbn isPrivate="false">9482224</isbn>
-        <avail isPrivate="false">Reserved</avail>
+        <title>Emma</title>
+        <author isPrivate="false">Jane Austen</author>
+        <isbn isPrivate="false">9780141439587</isbn>
+        <avail isPrivate="false">Available</avail>
     </books>
     <books>
-        <title>Lydia Kunz</title>
-        <author isPrivate="false">Kunz Lydia</author>
-        <isbn isPrivate="false">9482427</isbn>
-        <avail isPrivate="false">Reserved</avail>
+        <title>Fateful</title>
+        <author isPrivate="false">Claudia Gray</author>
+        <isbn isPrivate="false">9780062006202</isbn>
+        <avail isPrivate="false">Available</avail>
 
     </books>
     <books>
-        <title>Anna Best</title>
-        <author isPrivate="false">Best Anna</author>
-        <isbn isPrivate="false">9482442</isbn>
-        <avail isPrivate="false">Reserved</avail>
+        <title>Gone Girl</title>
+        <author isPrivate="false">Gillian Flynn</author>
+        <isbn isPrivate="false">9780753827666</isbn>
+        <avail isPrivate="false">Available</avail>
     </books>
     <books>
-        <title>Stefan Meier</title>
-        <author isPrivate="false">Stefan Meier</author>
-        <isbn isPrivate="false">8482424</isbn>
-        <avail isPrivate="false">Borrowed and Reserved</avail>
+        <title>Holes</title>
+        <author isPrivate="false">Louis Sachar</author>
+        <isbn isPrivate="false">9780439244190</isbn>
+        <avail isPrivate="false">Available</avail>
     </books>
     <books>
-        <title>Martin Mueller</title>
-        <author isPrivate="false">chicago ave</author>
-        <isbn isPrivate="false">8482131</isbn>
-        <avail isPrivate="false">Borrowed and Reserved</avail>
+        <title>Invisible Man</title>
+        <author isPrivate="false">Ralph Ellison</author>
+        <isbn isPrivate="false">9780140023350</isbn>
+        <avail isPrivate="false">Available</avail>
     </books>
 </catalogue>

@@ -14,7 +14,7 @@ public class ExitCommand extends Command {
 
     public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Catalogue as requested ...";
 
-    public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
+    public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_GUEST;
 
     @Override
     public CommandResult execute() {
@@ -22,6 +22,7 @@ public class ExitCommand extends Command {
         return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT);
     }
 
+    //@@author QiuHaohao
     @Override
     public PrivilegeLevel getPrivilegeLevel() {
         return PRIVILEGE_LEVEL;

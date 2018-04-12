@@ -1,3 +1,4 @@
+//@@author QiuHaohao
 package seedu.address.model.account;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ public class Credential implements Serializable {
 
     private Username username;
     private Password password;
+
     /**
      * Constructs a {@code Credential}
      *
@@ -33,6 +35,16 @@ public class Credential implements Serializable {
      */
     public Password getPassword() {
         return password;
+    }
+
+    /**
+     * Returns true if the username provided equals to this.username
+     *
+     * @param username
+     * @return
+     */
+    public boolean usernameEquals(Username username) {
+        return this.username.equals(username);
     }
 
     @Override

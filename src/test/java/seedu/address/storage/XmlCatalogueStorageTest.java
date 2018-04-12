@@ -2,9 +2,9 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalBooks.ALICE;
-import static seedu.address.testutil.TypicalBooks.HOON;
-import static seedu.address.testutil.TypicalBooks.IDA;
+import static seedu.address.testutil.TypicalBooks.ANIMAL;
+import static seedu.address.testutil.TypicalBooks.HOLES;
+import static seedu.address.testutil.TypicalBooks.INVISIBLE;
 import static seedu.address.testutil.TypicalBooks.getTypicalCatalogue;
 
 import java.io.IOException;
@@ -84,14 +84,14 @@ public class XmlCatalogueStorageTest {
         assertEquals(original, new Catalogue(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addBook(HOON);
-        original.removeBook(ALICE);
+        original.addBook(HOLES);
+        original.removeBook(ANIMAL);
         xmlCatalogueStorage.saveCatalogue(original, filePath);
         readBack = xmlCatalogueStorage.readCatalogue(filePath).get();
         assertEquals(original, new Catalogue(readBack));
 
         //Save and read without specifying file path
-        original.addBook(IDA);
+        original.addBook(INVISIBLE);
         xmlCatalogueStorage.saveCatalogue(original); //file path not specified
         readBack = xmlCatalogueStorage.readCatalogue().get(); //file path not specified
         assertEquals(original, new Catalogue(readBack));

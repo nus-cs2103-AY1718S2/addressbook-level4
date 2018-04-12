@@ -43,35 +43,35 @@ public class TitleContainsKeywordsPredicateTest {
     public void test_nameContainsKeywords_returnsTrue() {
         // One keyword
         TitleContainsKeywordsPredicate predicate;
-        predicate = new TitleContainsKeywordsPredicate(Collections.singletonList("Alice"));
-        assertTrue(predicate.test(new BookBuilder().withTitle("Alice Bob").build()));
+        predicate = new TitleContainsKeywordsPredicate(Collections.singletonList("Animal"));
+        assertTrue(predicate.test(new BookBuilder().withTitle("Animal Breaking").build()));
 
         // Multiple keywords
-        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
-        assertTrue(predicate.test(new BookBuilder().withTitle("Alice Bob").build()));
+        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("Animal", "Breaking"));
+        assertTrue(predicate.test(new BookBuilder().withTitle("Animal Breaking").build()));
 
         // Only one matching keyword
-        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
-        assertTrue(predicate.test(new BookBuilder().withTitle("Alice Carol").build()));
+        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("Breaking", "Carol"));
+        assertTrue(predicate.test(new BookBuilder().withTitle("Animal Carol").build()));
 
         // Mixed-case keywords
-        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
-        assertTrue(predicate.test(new BookBuilder().withTitle("Alice Bob").build()));
+        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("aNimal", "bREAKING"));
+        assertTrue(predicate.test(new BookBuilder().withTitle("Animal Breaking").build()));
     }
 
     @Test
     public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         TitleContainsKeywordsPredicate predicate = new TitleContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new BookBuilder().withTitle("Alice").build()));
+        assertFalse(predicate.test(new BookBuilder().withTitle("Animal").build()));
 
         // Non-matching keyword
         predicate = new TitleContainsKeywordsPredicate(Arrays.asList("Carol"));
-        assertFalse(predicate.test(new BookBuilder().withTitle("Alice Bob").build()));
+        assertFalse(predicate.test(new BookBuilder().withTitle("Animal Breaking").build()));
 
         // Keywords match isbn, avail and address, but does not match name
-        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("12345", "Borrowed", "Main", "Street"));
-        assertFalse(predicate.test(new BookBuilder().withTitle("Alice").withIsbn("12345")
+        predicate = new TitleContainsKeywordsPredicate(Arrays.asList("9780736692427", "Borrowed", "Main", "Street"));
+        assertFalse(predicate.test(new BookBuilder().withTitle("Animal").withIsbn("9780736692427")
             .withAvail("Borrowed").withAuthor("Main Street").build()));
     }
 }

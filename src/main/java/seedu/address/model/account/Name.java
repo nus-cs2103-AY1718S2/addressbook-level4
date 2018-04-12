@@ -6,7 +6,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.Serializable;
 
 /**
- * Represents a Person's name in the address book.
+ * Represents a Person's name in the account.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name implements Serializable {
@@ -15,7 +15,7 @@ public class Name implements Serializable {
         "Person names should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";

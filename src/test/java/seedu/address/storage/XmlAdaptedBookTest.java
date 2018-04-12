@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.storage.XmlAdaptedBook.MISSING_FIELD_MESSAGE_FORMAT;
-import static seedu.address.testutil.TypicalBooks.BENSON;
+import static seedu.address.testutil.TypicalBooks.BREAKING;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +24,18 @@ public class XmlAdaptedBookTest {
     private static final String INVALID_AVAIL = "not sure";
     private static final String INVALID_TAG = "#friend";
 
-    private static final String VALID_TITLE = BENSON.getTitle().toString();
-    private static final String VALID_AUTHOR = BENSON.getAuthor().toString();
-    private static final String VALID_ISBN = BENSON.getIsbn().toString();
-    private static final String VALID_AVAIL = BENSON.getAvail().toString();
-    private static final List<XmlAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
+    private static final String VALID_TITLE = BREAKING.getTitle().toString();
+    private static final String VALID_AUTHOR = BREAKING.getAuthor().toString();
+    private static final String VALID_ISBN = BREAKING.getIsbn().toString();
+    private static final String VALID_AVAIL = BREAKING.getAvail().toString();
+    private static final List<XmlAdaptedTag> VALID_TAGS = BREAKING.getTags().stream()
         .map(XmlAdaptedTag::new)
         .collect(Collectors.toList());
 
     @Test
     public void toModelType_validBookDetails_returnsBook() throws Exception {
-        XmlAdaptedBook book = new XmlAdaptedBook(BENSON);
-        assertEquals(BENSON, book.toModelType());
+        XmlAdaptedBook book = new XmlAdaptedBook(BREAKING);
+        assertEquals(BREAKING, book.toModelType());
     }
 
     @Test

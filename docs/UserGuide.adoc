@@ -42,7 +42,7 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
+* *`list`* : lists all contacts and aliases
 * **`add`**`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/http://modsn.us/oNZLY` : adds a contact named `John Doe` to StardyTogether.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
@@ -84,10 +84,12 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/http://modsn.us/oNZLY`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/28021997 tt/http://modsn.us/ojGeu t/criminal`
 
-==== Listing all persons : `list`
+// tag::list[]
+==== Listing all persons and aliases: `list`
 
-Shows a list of all persons in StardyTogether. +
+Shows a list of all persons and a table of created aliases in StardyTogether. +
 Format: `list`
+// end::list[]
 
 ==== Editing a person : `edit`
 
@@ -273,11 +275,6 @@ Examples:
 * `alias history hist`
 * `alias find f`
 * `alias alias al`
-
-==== Listing all aliases: `alias list` (since v1.4)
-
-Lists all created aliases. +
-Format: `alias list`
 
 ==== Removing a currently existing alias: `unalias` (since v1.3)
 
@@ -488,7 +485,6 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 |Command |Usage |Example
 |Add| add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`| `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/010195 t/friend t/colleague
 |Alias| alias COMMAND ALIAS|alias history hist
-|Alias List|alias list |
 |Birthday List|birthdays [todays]| birthdays todays
 |Clear| clear|
 |Delete| delete INDEX | delete 3

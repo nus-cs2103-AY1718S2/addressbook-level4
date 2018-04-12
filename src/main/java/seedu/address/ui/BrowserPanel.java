@@ -153,6 +153,9 @@ public class BrowserPanel extends UiPart<Region> {
         return url;
     }
 
+    /**
+     * Loads the Facebook profile page for the browser on the Facebook tab if it exists.
+     */
     private void loadBrowserProfilePage(Person person) {
         if (person.getSocialMediaPlatformMap().containsKey(Link.FACEBOOK_LINK_TYPE)) {
             updateBrowserTabs(FUNCTION_ADD, FACEBOOK_TAB_ID);
@@ -163,6 +166,10 @@ public class BrowserPanel extends UiPart<Region> {
             loadBrowserPage(FACEBOOK_PROFILE_PAGE_URL + person.getName().fullName);
         }
     }
+
+    /**
+     * Loads the Twitter profile page for the browser on the Twitter tab if it exists.
+     */
     private void loadBrowser1ProfilePage(Person person) {
         if (person.getSocialMediaPlatformMap().containsKey(Link.TWITTER_LINK_TYPE)) {
             updateBrowserTabs(FUNCTION_ADD, TWITTER_TAB_ID);

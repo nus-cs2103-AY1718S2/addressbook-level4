@@ -15,7 +15,7 @@ import seedu.address.model.person.runner.Runner;
  */
 public class HtmlWriter {
     public static final String OPENING_LINE = "<!DOCTYPE html><html><head>\n"
-            + "<title>LoanSharkManager</title></head>\n"
+            + "<link rel=\"stylesheet\" href=\"DarkTheme.css\"></head>\n"
             + "<body style=\"background-color:#383838;\"\n>"
             + "<font face=\"Segoe UI Semibold\" size=\"5\" color=\"white\">\n";
 

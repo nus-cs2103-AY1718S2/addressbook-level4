@@ -26,7 +26,6 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlDeskBoardStorage;
-import seedu.address.testutil.Assert;
 
 //@@author karenfrilya97
 public class ExportCommandTest {

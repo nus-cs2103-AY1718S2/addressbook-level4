@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
@@ -72,7 +73,7 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Loads the details of the patient.
      */
-    private void loadPersonPage(Patient patient) {
+    public void loadPersonPage(Patient patient) {
         this.patient = patient;
         name.setText(patient.getName().fullName);
         nric.setText("NRIC: " + patient.getNric().value);
@@ -104,12 +105,6 @@ public class BrowserPanel extends UiPart<Region> {
      */
     public void freeResources() {
         browser = null;
-    }
-
-    @Subscribe
-    private void handlePatientPanelSelectionChangedEvent(PatientPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().patient);
     }
 
     /**

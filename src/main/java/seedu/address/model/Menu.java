@@ -1,14 +1,11 @@
 //@@author ZacZequn
 package seedu.address.model;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import seedu.address.model.dish.Dish;
 import seedu.address.model.dish.Name;
+import seedu.address.model.dish.Price;
 
 
 /**
@@ -26,23 +23,28 @@ public class Menu implements ReadOnlyMenu {
      *   among constructors.
      */
     {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            Dish dish = mapper.readValue(new File("data/menu.xml"), Dish.class);
-            Name name = dish.getName();
-            dishes.put(name.toString(), dish);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        dishes = new HashMap<>();
+        //only used for testing
+        dishes.put("Chicken Rice", new Dish(new Name("Chicken Rice"), new Price("3")));
     }
 
     public Menu() {}
 
+    public void setMenu(HashMap<String, Dish> theDishes) {
+
+        dishes = theDishes;
+    }
+
+    public void setMenu(Menu theMenu) {
+        dishes = theMenu.getDishes();
+    }
     /**
      * Returns the dish in Menu if available.
      * Otherwise return null.
      */
-    public Dish get(String dish) { return dishes.get(dish); }
+    public Dish get(String dish) {
+        return dishes.get(dish);
+    }
 
     /**
      * Returns a copy of the data in Menu.
@@ -50,4 +52,14 @@ public class Menu implements ReadOnlyMenu {
      */
     @Override
     public HashMap<String, Dish> getDishes() { return new HashMap<>(dishes); }
+
+    @Override
+    public String toString() {
+        String menu = "";
+        for (String name : dishes.keySet()) {
+            menu += (name + " ");
+        }
+        menu = menu.trim();
+        return menu;
+    }
 }

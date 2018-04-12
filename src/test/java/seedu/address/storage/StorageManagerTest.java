@@ -36,7 +36,8 @@ public class StorageManagerTest {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         XmlCustomerStatsStorage customerStatsStorage = new XmlCustomerStatsStorage(getTempFilePath("cs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage, customerStatsStorage);
+        MenuStorage menuStorage = new XmlMenuStorage(getTempFilePath("menu"));
+        storageManager = new StorageManager(addressBookStorage, userPrefsStorage, customerStatsStorage, menuStorage);
     }
 
     private String getTempFilePath(String fileName) {
@@ -80,7 +81,8 @@ public class StorageManagerTest {
     public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
-                                             new JsonUserPrefsStorage("dummy"), new XmlCustomerStatsStorage("dummy"));
+                new JsonUserPrefsStorage("dummy"), new XmlCustomerStatsStorage("dummy"),
+                new XmlMenuStorage("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
@@ -95,7 +97,9 @@ public class StorageManagerTest {
     public void handleCustomerStatsChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorage("dummy"),
-                new JsonUserPrefsStorage("dummy"), new XmlCustomerStatsStorageExceptionThrowingStub("dummy"));
+                new JsonUserPrefsStorage("dummy"),
+                new XmlCustomerStatsStorageExceptionThrowingStub("dummy"),
+                new XmlMenuStorage("dummy"));
         storage.handleCustomerStatsChangedEvent(new CustomerStatsChangedEvent(new CustomerStats()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }

@@ -12,8 +12,8 @@ public class Price {
 
 
     public static final String MESSAGE_PRICE_CONSTRAINTS =
-            "Price numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PRICE_VALIDATION_REGEX = "\\d{3,}";
+            "Price numbers can only contain numbers";
+    public static final String PRICE_VALIDATION_REGEX = "\\d{1,}";
     public final String value;
 
     /**

@@ -14,6 +14,7 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyCustomerStats;
+import seedu.address.model.ReadOnlyMenu;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -25,15 +26,18 @@ public class StorageManager extends ComponentManager implements Storage {
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
     private CustomerStatsStorage customerStatsStorage;
+    private MenuStorage menuStorage;
 
 
     public StorageManager(AddressBookStorage addressBookStorage,
                           UserPrefsStorage userPrefsStorage,
-                          CustomerStatsStorage customerStatsStorage) {
+                          CustomerStatsStorage customerStatsStorage,
+                          MenuStorage menuStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
         this.customerStatsStorage = customerStatsStorage;
+        this.menuStorage = menuStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -140,4 +144,36 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+    //@@author
+
+    //@@author ZacZequn
+    // ================ Menu methods ==============================
+
+    @Override
+    public String getMenuFilePath() {
+        return menuStorage.getMenuFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyMenu> readMenu() throws DataConversionException, IOException {
+        return readMenu(menuStorage.getMenuFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyMenu> readMenu(String filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return menuStorage.readMenu(filePath);
+    }
+
+    @Override
+    public void saveMenu(ReadOnlyMenu menu) throws IOException {
+        saveMenu(menu, menuStorage.getMenuFilePath());
+    }
+
+    @Override
+    public void saveMenu(ReadOnlyMenu menu, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        menuStorage.saveMenu(menu, filePath);
+    }
+
 }

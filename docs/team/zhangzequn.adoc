@@ -59,7 +59,6 @@ include::../UserGuide.adoc[tag=identify]
 
 include::../DeveloperGuide.adoc[tag=count]
 
-include::../DeveloperGuide.adoc[tag=identify]
 
 
 

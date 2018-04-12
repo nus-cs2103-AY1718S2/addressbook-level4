@@ -46,6 +46,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.7.4'
     compile group: 'com.google.guava', name: 'guava', version: '24.1-android'
+    compile group: 'com.calendarfx', name: 'view', version: '8.4.2'
     compile 'com.google.apis:google-api-services-language:v1-rev419-1.23.0'
     compile 'com.google.cloud:google-cloud-language:1.14.0'
     compile 'com.google.api-client:google-api-client:1.23.0'

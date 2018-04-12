@@ -27,13 +27,13 @@ public interface Model {
     Predicate<Student> PREDICATE_SHOW_FAVOURITE_STUDENTS = Student::isFavourite;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyAddressBook newData, ReadOnlySchedule schedule);
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
     /** Deletes the given student. */
-    void deleteStudent(Student target) throws StudentNotFoundException;
+    void deleteStudent(Student target) throws StudentNotFoundException, LessonNotFoundException;
 
     /** Adds the given student */
     void addStudent(Student student) throws DuplicateStudentException;
@@ -65,9 +65,7 @@ public interface Model {
 
     void deleteLesson(Lesson target) throws LessonNotFoundException;
 
-    Schedule getSchedule();
-
-    String printSchedule();
+    ReadOnlySchedule getSchedule();
 
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 

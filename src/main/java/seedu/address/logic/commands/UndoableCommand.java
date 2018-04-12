@@ -7,12 +7,15 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySchedule;
+import seedu.address.model.Schedule;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private ReadOnlySchedule previousSchedule;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -22,6 +25,7 @@ public abstract class UndoableCommand extends Command {
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
         this.previousAddressBook = new AddressBook(model.getAddressBook());
+        this.previousSchedule = new Schedule(model.getSchedule());
     }
 
     /**
@@ -36,8 +40,8 @@ public abstract class UndoableCommand extends Command {
      * show all students.
      */
     protected final void undo() {
-        requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook);
+        requireAllNonNull(model, previousAddressBook, previousSchedule);
+        model.resetData(previousAddressBook, previousSchedule);
         model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
     }
 

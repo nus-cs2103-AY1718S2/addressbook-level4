@@ -2,7 +2,7 @@ package seedu.address.model.programminglanguage;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
-
+//@@author samuelloh
 /**
  * Represents a Student's programming language in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidProgrammingLanguage(String)}
@@ -50,3 +50,4 @@ public class ProgrammingLanguage {
 
 
 }
+//@@author

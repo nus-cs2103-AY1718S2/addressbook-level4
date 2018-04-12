@@ -6,4 +6,5 @@
 <StackPane fx:id="infoPanel" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
       <StackPane fx:id="browserPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" />
       <StackPane fx:id="dashboardPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white;" />
+      <StackPane fx:id="calendarPlaceholder" prefHeight="150.0" prefWidth="200.0" />
 </StackPane>

@@ -27,6 +27,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.Schedule;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
@@ -117,7 +118,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newData, ReadOnlySchedule schedule) {
             fail("This method should not be called.");
         }
 
@@ -128,7 +129,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteStudent(Student target) throws StudentNotFoundException {
+        public void deleteStudent(Student target) throws StudentNotFoundException, LessonNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -182,13 +183,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public String printSchedule() {
-            fail("This method should not be called");
-            return null;
-        }
-
-
-        @Override
         public void loginGoogleAccount() throws CredentialsException {
             fail("This method should not be called");
         }
@@ -217,6 +211,11 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public Schedule getSchedule() {
+            return new Schedule();
+        }
     }
 
     /**
@@ -234,6 +233,11 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public Schedule getSchedule() {
+            return new Schedule();
         }
     }
 

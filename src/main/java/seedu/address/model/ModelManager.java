@@ -6,6 +6,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -281,5 +283,16 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    //@@author LeonidAgarth
+    @Subscribe
+    private void handleCalendarChangedEvent(CalendarChangedEvent event) {
+        inCalendarView = true;
+    }
+
+    @Subscribe
+    private void handleTimetableChangedEvent(TimetableChangedEvent event) {
+        inCalendarView = false;
     }
 }

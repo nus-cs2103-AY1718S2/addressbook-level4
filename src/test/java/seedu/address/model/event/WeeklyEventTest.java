@@ -27,6 +27,8 @@ public class WeeklyEventTest {
     private WeeklyEvent event1 = new WeeklyEvent("CS2101", "COM1", "1500", "1600", "WEDNESDAY");
     private WeeklyEvent event2 = new WeeklyEvent(new Module("CS2103", "Software Engineer"), new Schedule());
     private WeeklyEvent event3 = new WeeklyEvent(new Module("CS2103", "Software Engineer"), new Schedule());
+    private WeeklyEvent event4 = new WeeklyEvent("CS2103T", "I3", "1500", "1700", "WEDNESDAY");
+    private WeeklyEvent event5 = new WeeklyEvent("CS2102", "COM2", "2000", "2100", "WEDNESDAY");
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -65,11 +67,21 @@ public class WeeklyEventTest {
     }
 
     @Test
-    public void equals() {
+    public void equals_test() {
         assertTrue(event1.equals(event1));
         assertTrue(event2.equals(event3));
         assertFalse(event1.equals(1));
         assertFalse(event1.equals(event2));
+    }
+
+    @Test
+    public void clash() {
+        assertTrue(event1.clash(event1));
+        assertTrue(event1.clash(event4));
+        assertTrue(event2.clash(event3));
+        assertFalse(event1.clash(event2));
+        assertFalse(event1.clash(event5));
+        assertFalse(event3.clash(event5));
     }
 
     @Test

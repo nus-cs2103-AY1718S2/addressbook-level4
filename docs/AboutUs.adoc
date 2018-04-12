@@ -19,7 +19,7 @@ Responsibilities: Logic, UI, Storage
 
 === Ryan Ang
 image::ryanangjy.jpeg[width="144", align="left"]
-{empty}https://github.com/RyanAngJY[github] | https://ryanangjy.herokuapp.com/[portfolio]
+{empty}https://github.com/RyanAngJY[github] | <<RyanAng#,portfolio>>
 
 Role: FS Dev, UX Designer +
 Responsibilities: Logic, UX, Storage, Model
@@ -37,7 +37,7 @@ Responsibilities: Logic, UI, Model
 
 === Nicholas Ang
 image::nicholasangcx.jpeg[width="144", align="left"]
-{empty}https://github.com/nicholasangcx[github] | <<johndoe#, portfolio>>
+{empty}https://github.com/nicholasangcx[github] | <<NicholasAng#, portfolio>>
 
 Role: FS Dev, Releases, Documentation +
 Responsibilities: Logic, UI, Storage

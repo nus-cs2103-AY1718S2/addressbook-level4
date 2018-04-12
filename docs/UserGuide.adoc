@@ -23,7 +23,7 @@ endif::[]
 == Introduction
 
 // tag::applicationDescription[]
-*<<ReciRecipe,ReciRecipé>>* is *a recipe management desktop app with a built-in web browser*. ReciRecipé is *optimized for those who prefer to work with a Command Line Interface* (<<CLI,CLI>>) while still having the benefits of a Graphical User Interface (<<GUI, GUI>>). +
+*<<ReciRecipe,ReciRecipé>>* is *a recipe management desktop app with a built-in web browser*. ReciRecipé is optimized for those who prefer to work with keyboard while still having the benefits of an intuitive user interface. +
 // end::applicationDescription[]
 So if you are a home cook or are just interested in being exposed to more interesting recipes out there, this app is just for you. It provides an easy way to save old recipes, craft new ones, or just pull the many variations already available online! There are even ways to organise, manage and search through your saved recipes for easy retrieval. +
 This user guide will systematically take you through all the functions available in ReciRecipé and teach you how to use them efficiently. Interested? Jump to <<Quick start>> to get started. Enjoy!
@@ -86,6 +86,16 @@ Words in upper case are the parameters to be supplied by the user. For example:
 * You can split a command into multiple lines for ease of input.
 // end::command-format[]
 
+// tag::app-navigation[]
+[[Navigation]]
+*Navigation*
+
+* Press kbd:[Enter] while holding down kbd:[Shift] to add a new line to your input.
+* Press kbd:[Enter] to submit a command.
+* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] will display the previous and next input respectively in the command box.
+* Press kbd:[Ctrl]+kbd:[Tab]/kbd:[Tab] to quickly move the caret to previous/next field.
+// end::app-navigation[]
+
 // tag::auto-completion[]
 [[Auto-completion]]
 *Auto-completion*
@@ -103,16 +113,6 @@ Words in upper case are the parameters to be supplied by the user. For example:
 ** If you choose a field prefix, it will replace the word right before the caret (i.e, the word used to find suggestion).
 
 // end::auto-completion[]
-
-// tag::app-navigation[]
-[[Navigation]]
-*Navigation*
-
-* Press kbd:[Enter] while holding down kbd:[Shift] to add a new line to your input.
-* Press kbd:[Enter] to submit a command.
-* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] will display the previous and next input respectively in the command box.
-* Press kbd:[Ctrl]+kbd:[Tab]/kbd:[Tab] to quickly move the caret to previous/next field.
-// end::app-navigation[]
 
 === *`add`* : Adding a recipe
 
@@ -317,8 +317,8 @@ Gets a recipe from a website loaded in the browser panel.
 
 Format: `parse`
 
-To use this command, you do a `search` first (See <<Search>>) then select a recipe. +
-Suppose you have that done and you are at this step (see <<fig-InternetSearchResult0>>) +
+To use this command, you do a `search` first (see <<Search>>) then select a recipe. +
+Suppose you have that done and you are at this step (see <<fig-InternetSearchResult0>>). +
 {nbsp} +
 
 [[fig-InternetSearchResult0]]
@@ -493,7 +493,7 @@ You can change theme from the menu bar or by pressing F2 too!
 
 Takes in the code given during the user's authorization of our app in Dropbox and coverts it into an access token that can be used to upload files to that specific Dropbox account.
 
-Format: `token authorizationCode`
+Format: `token AUTHORIZATION_CODE`
 
 See <<fig-AuthorizationCode>> for more information. +
 {nbsp}

@@ -23,7 +23,7 @@ endif::[]
 *<<ReciRecipe,ReciRecipé>>* is a desktop recipe storage application for users who prefer using the keyboard instead of a mouse for efficient management. It is useful for tech-savvy cooks that want all their recipes stored in one place.
 
 This *Developer Guide* will take you through the design and implementation of *ReciRecipé*. It takes a top-down approach in explaining the design, beginning from the architecture of the entire application before moving into the specifics of how some functions are implemented.
-If you are new to development, you can choose a component in the architecture that you are more comfortable with and start there first.
+If you are a new developer, you can choose a component in the architecture that you are more comfortable with and start from there.
 
 == Setting up
 
@@ -119,6 +119,8 @@ When you are ready to start coding:
 [[Design-Architecture]]
 === Architecture
 
+ReciRecipé, as a product based on AddressBook, implements an events-driven architecture.
+
 The architecture diagram given below (<<fig-ArchitectureDiagram>>) explains the high-level design of the App with 6 components.
 
 [[fig-ArchitectureDiagram]]
@@ -143,10 +145,10 @@ Each of the four components <<Design-Ui,*`UI`*>>, <<Design-Logic,*`Logic`*>>, <<
 * Defines its <<API,API>> in an interface with the same name as the component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the <<Design-Logic,*`Logic`*>> component (see the class diagram given below) defines its <<API,API>> in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
-
 [discrete]
-==== Events-Driven nature of the design
+==== Events-driven architecture
+
+For example, the <<Design-Logic,*`Logic`*>> component (see the class diagram given below) defines its <<API,API>> in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 In general, the components are designed in such a way that their interactions are being driven by events. And we will now give an example of what happens when a command is being executed.
 
@@ -171,10 +173,10 @@ The sections below give more details of each component.
 
 [[Design-Main]]
 === Main component
-<<Design-Main,*`Main`*>> has only one class called link:{repoURL}/src/main/java/seedu/recipe/MainApp.java[`MainApp`].
+<<Design-Main,*`Main`*>> has only one class called link:{repoURL}/src/main/java/seedu/recipe/MainApp.java[`MainApp`]. This class:
 
-* At app launch: Initializes all the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* Initializes all the components in the correct sequence, and connects them up with each other at app launch.
+* Shuts down the components and invokes cleanup method where necessary when the app shuts down..
 
 [[Design-Commons]]
 === Commons component
@@ -186,9 +188,7 @@ The sections below give more details of each component.
 [[Design-Ui]]
 === UI component
 
-*API*: link:{repoURL}/src/main/java/seedu/recipe/ui/Ui.java[`Ui.java`]
-
-The UI consists of a `_MainWindow_` that is made up of smaller parts, for example, `_CommandBox_`, `_ResultDisplay_`, `_RecipeListPanel_`, `_StatusBarFooter_`, `_BrowserPanel_`, etc. All these, including the `_MainWindow_`, inherit from the abstract `_UiPart_` class (See <<fig-UiClassDiagram>>).
+The UI consists of a `_MainWindow_` that is made up of smaller parts, for example, `_CommandBox_`, `_ResultDisplay_`, `_RecipeListPanel_`, `_StatusBarFooter_`, `_BrowserPanel_`, etc. All these, including the `_MainWindow_`, inherit from the abstract `_UiPart_` class (see <<fig-UiClassDiagram>>).
 
 [[fig-UiClassDiagram]]
 .Structure of the `UI` component
@@ -205,8 +205,6 @@ The <<Design-Ui,*`UI`*>> component:
 
 [[Design-Logic]]
 === Logic component
-
-*API*: link:{repoURL}/src/main/java/seedu/recipe/logic/Logic.java[`Logic.java`]
 
 <<Design-Logic,*`Logic`*>> contains all commands and this is how <<Design-Logic,*`Logic`*>> reacts when the user submits a command:
 
@@ -240,8 +238,6 @@ image::DeleteRecipeSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model component
 
-*API*: link:{repoURL}/src/main/java/seedu/recipe/model/Model.java[`Model.java`]
-
 The <<Design-Model,*`Model`*>>,
 
 * stores a `_UserPref_` object that represents the user's preferences.
@@ -249,7 +245,7 @@ The <<Design-Model,*`Model`*>>,
 * exposes an unmodifiable `_ObservableList<Recipe>_` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-Refer to diagram below <<fig-ModelClassDiagram>>.
+Refer to diagram below <<fig-ModelClassDiagram>> for the interaction between the `Model` component classes.
 
 [[fig-ModelClassDiagram]]
 .Structure of the `Model` component
@@ -259,14 +255,12 @@ image::ModelClassDiagram.png[width="800"]
 [[Design-Storage]]
 === Storage component
 
-*API*: link:{repoURL}/src/main/java/seedu/recipe/storage/Storage.java[`Storage.java`]
-
 The <<Design-Storage,*`Storage`*>> component,
 
 * can save `_UserPref_` objects in JSON format and read it back.
 * can save the Recipe Book data in XML format and read it back.
 
-Refer to diagram below <<fig-StorageClassDiagram>>.
+Refer to diagram below <<fig-StorageClassDiagram>> for the interaction between the `Storage` component classes.
 
 [[fig-StorageClassDiagram]]
 .Structure of the `Storage` component
@@ -291,7 +285,7 @@ Key combination kbd:[Shift]+kbd:[Tab] is used to show suggestion pop-up. For oth
 ----
 private void handleKeyPress(KeyEvent keyEvent) {
     suggestionsPopUp.hideSuggestions();
-    if (SHOW_SUGGESTIONS_COMMAND.match(keyEvent)) {
+    if width="750"HOW_SUGGESTIONS_COMMAND.match(keyEvent)) {
         keyEvent.consume();
         suggestionsPopUp.showSuggestions();
     }
@@ -305,7 +299,7 @@ Suggestion list is built with a given list as a dictionary and last word in user
 
 [source,java]
 ----
-for (String suggestion : dictionary) {
+for width="750"tring suggestion : dictionary) {
     if (suggestion.startsWith(prefix)) {
         addSuggestion(suggestion);
     }
@@ -480,7 +474,7 @@ private static final String FILENAME_VALIDATION_REGEX = "[^\\Q<>:/|.?\"\\*\\E\\s
 /**
  * Returns true if a given string is a valid filename.
  */
-public static boolean isValidFilename(String test) {
+public static boolean isValidFilenamewidth="750"tring test) {
     return test.matches(FILENAME_VALIDATION_REGEX);
 }
 ----
@@ -490,7 +484,7 @@ The code will then be converted into a unique access token that will be stored i
 
 [source,java]
 ----
-public static void processAuthorizationCode(String code) {
+public static void processAuthorizationCodewidth="750"tring code) {
     // Converts authorization code to access token
     DbxAppInfo appInfo = new DbxAppInfo(APP_KEY, APP_SECRET);
     DbxWebAuth webAuth = new DbxWebAuth(config, appInfo);
@@ -555,7 +549,7 @@ Below is the implementation of this method:
 
 [.not-print,source,java]
 ----
-public static boolean isValidImageUrl(String testUrl) {
+public static boolean isValidImageUrlwidth="750"tring testUrl) {
     URL imageUrl;
     try {
         imageUrl = new URL(testUrl);
@@ -591,7 +585,7 @@ Below is the implementation of `downloadImage()`:
 
 [.not-print, source,java]
 ----
-public static String downloadImage(String imageUrlString) {
+public static String downloadImagewidth="750"tring imageUrlString) {
     assert isValidImageUrl(imageUrlString);
 
     try {
@@ -641,7 +635,7 @@ As seen below, the URL is not a required parameter during the checking of prefix
 ----
 if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_INSTRUCTION, PREFIX_PREPARATION_TIME,
     PREFIX_INGREDIENT) || !argMultimap.getPreamble().isEmpty()) {
-    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+    throw new ParseExceptionwidth="750"tring.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 }
 ----
 
@@ -696,7 +690,7 @@ The method for copying a string to the clipboard is implemented in the `_UiUtil_
 
 [source,java]
 ----
-public static void copyToClipboard(String string) {
+public static void copyToClipboardwidth="750"tring string) {
     Toolkit toolkit = Toolkit.getDefaultToolkit();
     Clipboard clipboard = toolkit.getSystemClipboard();
     StringSelection stringSelection = new StringSelection(string);
@@ -767,7 +761,7 @@ public static void saveAllImageFiles(ReadOnlyRecipeBook recipeBook, String fileP
     }
 }
 
-public static void saveImageFile(String imagePath, String imageFolderPath) {
+public static void saveImageFilewidth="750"tring imagePath, String imageFolderPath) {
     try {
         File imageToSave = new File(imagePath);
         File pathToNewImage = new File(imageFolderPath + imageToSave.getName());
@@ -848,7 +842,7 @@ As seen from above, all key combinations implemented consume the default effect 
 
 We are using `java.util.logging` package for logging. The `_LogsCenter_` class is used to manage the logging levels and logging destinations.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
+* The logging level can be controlled using the `logLevel` setting in the configuration file width="750"ee <<Implementation-Configuration>>)
 * The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
 * Currently log messages are output through the console and to a *.log* file.
 

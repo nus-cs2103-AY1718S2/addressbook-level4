@@ -15,7 +15,8 @@ public class MembersInGroupPredicateTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    Group groupTest = TypicalGroups.GROUP_F;
+    
+    private Group groupTest = TypicalGroups.GROUP_F;
 
     @Test
     public void test_groupContainsMember_returnsTrue() {

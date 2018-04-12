@@ -14,7 +14,19 @@ It is a simple Java application intended for social workers to help them plan th
 == Summary of contributions
 
 * *Major enhancement*: integrated *Map APIs* and added *Daily Scheduler*
-** What it does: *TO UPDATE*
+** *Added the following UI controllers and FXML files*:
+```
+DailySchedulerPanel.fxml
+MapPanel.fxml
+PersonDetailsPanel.fxml
+ScheduledEventCard.fxml
+```
+** *Added the following commands*:
+```
+switch [args..]
+naivgate [args..]
+```
+** What it does: The enhancement adds the functionality of maps to display relevant location markers and a compiled daily schedule page that helps for route planning and task listing for the convenience of the social worker.
 ** Justification: *TO UPDATE*
 ** Highlights: *TO UPDATE*
 ** Credits: GMapsFX by https://github.com/rterp/GMapsFX[rterp]

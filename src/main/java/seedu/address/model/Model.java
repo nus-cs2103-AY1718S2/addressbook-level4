@@ -7,6 +7,8 @@ import seedu.address.model.dish.exceptions.DishNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
  * The API of the Model component.
@@ -14,6 +16,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Task> PREDICATE_SHOW_ALL_TASKS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -52,5 +55,17 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /** Returns an unmodifiable view of the filtered task list */
+    ObservableList<Task> getFilteredTaskList();
+
+    /** Adds the given task */
+    void addTask(Task task) throws DuplicateTaskException;
+
+    /**
+     * Updates the filter of the filtered task list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredTaskList(Predicate<Task> predicate);
 
 }

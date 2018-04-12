@@ -18,6 +18,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Task;
+
 
 public class AddressBookTest {
 
@@ -50,7 +52,8 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Task> newTasks = new ArrayList<>();
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newTasks);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -74,10 +77,13 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<Task> tasks = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
+                        Collection<Task> tasks) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.tasks.setAll(tasks);
         }
 
         @Override
@@ -88,6 +94,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public ObservableList<Task> getTaskList() {
+            return tasks;
         }
     }
 

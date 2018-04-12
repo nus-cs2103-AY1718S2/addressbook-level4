@@ -8,40 +8,34 @@
 
 == Overview
 
-Media Socializer is a desktop address book application used to help social media users to keep track of all the social media platforms they are using. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Media Socializer is a desktop address book application used to help social media users to keep track of all the social media platforms their contacts are using. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands PLACEHOLDER*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention the social media libraries used here}_
+* *Major enhancement*: Added *the ability to manage the social media platforms of each person*
+** What it does: Allows the user to add the associated social media platforms to the specified person by typing in the links to the relevant profile pages or remove them by entering the names of the platforms.
+** Justification: This feature improves the product significantly because a user can have the application keep track of all the social media profiles of their contacts.
+** Highlights: This enhancement affects the overall feel of the product, since it is a core feature of the application. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required touching upon multiple components to properly realise such a feature.
 
-* *Minor enhancement*: added a sort command that allows the user to alphabetically sort the people in the list.
+* *Minor enhancement*: Added a sort command that allows the user to alphabetically sort the people in the list.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-F12-B3/main/blob/master/collated/functional/Nethergale.md[Functional code]] [https://github.com/CS2103JAN2018-F12-B3/main/blob/master/collated/test/Nethergale.md[Test code]]
 
-* *Other contributions*:
+* *Other contributions*: Assisted team members in fulfilling certain requirements for the milestones (Pull requests https://github.com/CS2103JAN2018-F12-B3/main/pull/70[#70], https://github.com/CS2103JAN2018-F12-B3/main/pull/99[#99])
 
 ** Project management:
 *** Managed releases `v1.0` - `v1.5rc` (6 releases) on GitHub
 *** Identified the deliverables for each release to keep track of
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+*** Updated the GUI to show social media icons for each person (Pull request https://github.com/CS2103JAN2018-F12-B3/main/pull/85[#85])
 *** Wrote additional tests for existing features to increase coverage from 91% to 92% (Pull requests https://github.com/CS2103JAN2018-F12-B3/main/pull/87[#87])
 ** Documentation:
 *** Updated appendix of the Developer Guide to match the goals of the application: https://github.com/CS2103JAN2018-F12-B3/main/pull/45[#45]
 *** Added tags to the User Guide and Developer Guide to link portfolios to their associated sections: https://github.com/CS2103JAN2018-F12-B3/main/pull/69[#69]
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-
-_{you can add/remove categories in the list above}_
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-F12-B3/main/pull/56[#56], https://github.com/CS2103JAN2018-F12-B3/main/pull/32[#32]
+*** Bug reports followed up with testers (examples:  https://github.com/CS2103JAN2018-F12-B3/main/issues/108[1], https://github.com/CS2103JAN2018-F12-B3/main/issues/110[2])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W15-B3/main/issues/128[1], https://github.com/CS2103JAN2018-W15-B3/main/issues/123[2])
 
 == Contributions to the User Guide
 
@@ -67,9 +61,3 @@ include::../DeveloperGuide.adoc[tag=product-scope]
 include::../DeveloperGuide.adoc[tag=user-stories]
 
 include::../DeveloperGuide.adoc[tag=sort]
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

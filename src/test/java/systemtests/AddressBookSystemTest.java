@@ -330,7 +330,7 @@ public abstract class AddressBookSystemTest {
             return new URL("https://" + url);
         }
 
-        return new URL(BrowserPanel.FACEBOOK_SEARCH_PAGE_URL + personName.replaceAll(" ", "%20"));
+        return new URL(BrowserPanel.FACEBOOK_PROFILE_PAGE_URL + personName.replaceAll(" ", "%20"));
     }
 
     //@@author

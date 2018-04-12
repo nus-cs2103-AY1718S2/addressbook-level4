@@ -17,8 +17,12 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.SearchPersonEvent;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Person;
+import seedu.address.model.smplatform.Facebook;
 import seedu.address.model.smplatform.Link;
+import seedu.address.model.smplatform.Twitter;
 
 /**
  * The Browser Panel of the App.
@@ -26,9 +30,15 @@ import seedu.address.model.smplatform.Link;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+    public static final String FACEBOOK_PROFILE_PAGE_URL =
+            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+    public static final String TWITTER_PROFILE_PAGE_URL =
+            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     public static final String FACEBOOK_SEARCH_PAGE_URL =
+            //"https://www.facebook.com/search/people?q=";
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     public static final String TWITTER_SEARCH_PAGE_URL =
+            //"https://twitter.com/search?f=users&vertical=news&q=";
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
     private static final String FXML = "BrowserPanel.fxml";
@@ -128,27 +138,33 @@ public class BrowserPanel extends UiPart<Region> {
         return url;
     }
 
-    private void loadBrowserPersonPage(Person person) {
+    private void loadBrowserProfilePage(Person person) {
         if (person.getSocialMediaPlatformMap().containsKey(Link.FACEBOOK_LINK_TYPE)) {
             updateBrowserTabs(FUNCTION_ADD, FACEBOOK_TAB_ID);
             String url = person.getSocialMediaPlatformMap().get(Link.FACEBOOK_LINK_TYPE).getLink().value;
             loadBrowserPage(parseUrl(url));
         } else {
             updateBrowserTabs(FUNCTION_REMOVE, FACEBOOK_TAB_ID);
-            loadBrowserPage(FACEBOOK_SEARCH_PAGE_URL + person.getName().fullName);
+            loadBrowserPage(FACEBOOK_PROFILE_PAGE_URL + person.getName().fullName);
         }
     }
 
-    private void loadBrowser1PersonPage(Person person) {
+    private void loadBrowser1ProfilePage(Person person) {
         if (person.getSocialMediaPlatformMap().containsKey(Link.TWITTER_LINK_TYPE)) {
             updateBrowserTabs(FUNCTION_ADD, TWITTER_TAB_ID);
             String url = person.getSocialMediaPlatformMap().get(Link.TWITTER_LINK_TYPE).getLink().value;
             loadBrowser1Page(parseUrl(url));
-            System.out.println("Link: " + browser1.getEngine().getLocation());
         } else {
             updateBrowserTabs(FUNCTION_REMOVE, TWITTER_TAB_ID);
-            loadBrowser1Page(TWITTER_SEARCH_PAGE_URL + person.getName().fullName);
+            loadBrowser1Page(TWITTER_PROFILE_PAGE_URL + person.getName().fullName);
         }
+    }
+
+    private void loadBrowserSearchPage(String searchName) {
+        loadBrowserPage(FACEBOOK_SEARCH_PAGE_URL + searchName);
+    }
+    private void loadBrowser1SearchPage(String searchName) {
+        loadBrowser1Page(TWITTER_SEARCH_PAGE_URL + searchName);
     }
 
     public void loadBrowserPage(String url) {
@@ -178,7 +194,29 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadBrowserPersonPage(event.getNewSelection().person);
-        loadBrowser1PersonPage(event.getNewSelection().person);
+        loadBrowserProfilePage(event.getNewSelection().person);
+        loadBrowser1ProfilePage(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleSearchPersonEvent(SearchPersonEvent event) {
+
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        String platformToSearch = event.getPlatform();
+        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+
+        if (StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_KEYWORD)
+                || StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_ALIAS)) {
+            loadBrowserSearchPage(event.getSearchName());
+            loadBrowser1Page(defaultPage.toExternalForm());
+        } else if (StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_KEYWORD)
+                || StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_ALIAS)) {
+            loadBrowserPage(defaultPage.toExternalForm());
+            loadBrowser1SearchPage(event.getSearchName());
+        } else {
+            loadBrowserSearchPage(event.getSearchName());
+            loadBrowser1SearchPage(event.getSearchName());
+        }
     }
 }

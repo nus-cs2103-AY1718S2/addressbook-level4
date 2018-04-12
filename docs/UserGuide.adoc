@@ -17,7 +17,7 @@ By: `Team F12-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Media Socializer (MeSo) is for those who *prefer to use a desktop app for managing contacts*. More importantly, MeSo is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, MeSo can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -31,14 +31,14 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::MockUi.png[width="790"]
+image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Media Socializer.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -60,9 +60,23 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+=== Logging in : `login` `[Since v1.5]`
+
+Logs into a social media platform using the user's account information. +
+Format: `login SOCIALMEDIA`
+
+****
+* A login window will pop up upon entering the command.
+****
+
+Examples:
+
+* `login facebook` +
+Open the login window to facebook where the user can input his account and password.
+
 === Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to the address book. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
@@ -118,7 +132,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by tag: `findtag` `[Coming in v2.0]`
+=== Locating persons by tag: `findtag` `[Since v1.2]`
 
 Finds persons whose tags contain any of the given keywords. +
 Format: `findtag KEYWORD [MORE_KEYWORDS]`
@@ -229,6 +243,54 @@ Removes the Twitter platform from the 2nd person.
 Sorts all persons in the address book alphabetically and then displays the current list in sorted order. +
 Format: `sort`
 // end::sort[]
+
+=== Search for profile : `searchall` `[Since v1.4]`
+
+Search for the specified profiles on all social media platform linkable with the application. +
+Format: `searchall KEYWORD`
+
+****
+* The KEYWORD is the name to be searched for.
+* Make use of the search function of the respective social media platform.
+* Dummy SearchPage is used currently, actual link to search result will come in v1.5.
+****
+
+Examples:
+
+* `searchall john`
+Search with keyword "john" on all the social media linked with the application and display the search result in the browser window under the respective tabs.
+
+=== Search for profile on Facebook : `searchfb` `[Since v1.4]`
+
+Search for the specified profiles on Facebook. +
+Format: `searchfb KEYWORD`
+
+****
+* The KEYWORD is the name to be searched on Facebook.
+* Make use of the search engine of Facebook.
+* Dummy SearchPage is used currently, actual link to search result will come in v1.5.
+****
+
+Examples:
+
+* `searchfb tom` +
+Search with keyword "tom" on Facebook and display the search result in the browser window under the Facebook tab.
+
+=== Search for profile on Twitter : `searchtwitter` `[Since v1.4]`
+
+Search for the specified profiles on Twitter. +
+Format: `searchtwitter KEYWORD`
+
+****
+* The KEYWORD is the name to be searched on Twitter.
+* Make use of the search engine of Twitter.
+* Dummy SearchPage is used currently, actual link to search result will come in v1.5.
+****
+
+Examples:
+
+* `searchtwitter tom` +
+Search with keyword "tom" on Twitter and display the search result in the browser window under the Twitter tab.
 
 === Selecting a person : `select`
 
@@ -347,22 +409,6 @@ Encrypts the 3rd person in the address book.
 Encrypts the 1st person in the results of the `find` command.
 // end::dataencryption[]
 
-=== Login : `login` `[Coming in v2.0]`
-
-Allow user to login to the social media specified. +
-Format: `loging SOCIALMEDIA`
-
-****
-* A login window will pop up upon entering the command.
-* The user can tick the option of remain logged in.
-****
-
-Examples:
-
-* `login facebook` +
-Open the login window to facebook where the user can input his account and password.
-
-
 === Make a post : `post` `[Coming in v2.0]`
 
 Publish a post on the specified social media. +
@@ -376,36 +422,6 @@ Format: `post SOCIALMEDIA/MESSAGE`
 Examples:
 
 * `post facebook/Sample post.`
-
-=== Search for profile : `search` `[Coming in v2.0]`
-
-Search for the specified profiles on all social media platform linkable with the application. +
-Format: `search KEYWORD`
-
-****
-* The KEYWORD can either be the user name or email.
-* Make use of the search function of the respective social media platform.
-****
-
-Examples:
-
-* `search John`
-Search with keyword "John" on all the social media linked with the application and display the search result in the browser window under the respective tabs.
-
-=== Search for profile on specific platform : `searchon` `[Coming in v2.0]`
-
-Search for the specified profiles on the social media platform specified. +
-Format: `search SOCIALMEDIA KEYWORD`
-
-****
-* The KEYWORD can either be the user name or email.
-* Make use of the search function of the specified social media platform.
-****
-
-Examples:
-
-* `searchon facebook John` +
-Search with keyword "John" on facebook and display the search result in the browser window under the respective tabs.
 
 === Logout from all the linked platform : `logoutall` `[Coming in v2.0]`
 
@@ -431,7 +447,8 @@ Search with keyword "John" on facebook and display the search result in the brow
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Login* : `login facebook`
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
@@ -440,6 +457,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find with Tag* : `findtag KEYWORD [MORE_KEYWORDS]` +
+e.g. `findtag friends neighbour`
 * *List* : `list`
 * *Sort* : `sort`
 * *Help* : `help`

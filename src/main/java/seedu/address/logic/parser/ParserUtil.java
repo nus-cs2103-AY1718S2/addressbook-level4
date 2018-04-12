@@ -19,6 +19,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.smplatform.Link;
+import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -94,6 +95,34 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Checks for the validation of {@code inputPlatform} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified name is invalid (not following the name regex).
+     */
+    public static String parsePlatformToSearch(String inputPlatform) throws IllegalValueException {
+        requireNonNull(inputPlatform);
+        String trimmedInputPlatform = inputPlatform.trim();
+        if (!SocialMediaPlatform.isValidPlatform(trimmedInputPlatform)) {
+            throw new IllegalValueException(SocialMediaPlatform.MESSAGE_PLATFORM_CONSTRAINTS);
+        }
+        return trimmedInputPlatform;
+    }
+
+    /**
+     * Checks for the validation of {@code inputName} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified name is invalid (not following the name regex).
+     */
+    public static String parseSearchName(String inputName) throws IllegalValueException {
+        requireNonNull(inputName);
+        String trimmedInputName = inputName.trim();
+        if (!trimmedInputName.matches(SocialMediaPlatform.USERNAME_VALIDATION_REGEX)) {
+            throw new IllegalValueException(SocialMediaPlatform.MESSAGE_USERNAME_CONSTRAINTS);
+        }
+        return trimmedInputName;
     }
 
     /**

@@ -98,7 +98,7 @@
                 <Insets bottom="10" left="5" right="10" />
               </padding>
               <children>
-                <Label text="Session Reports">
+                <Label text="Session Reports:">
                   <padding>
                     <Insets bottom="10.0" left="5.0" />
                   </padding>

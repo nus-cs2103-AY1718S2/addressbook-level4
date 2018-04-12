@@ -63,16 +63,16 @@
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
           <VBox fx:id="mainVBox" minWidth="560" prefWidth="560">
-            <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+            <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder">
               <padding>
-                <Insets top="5" right="10" bottom="5" left="10"/>
+                <Insets top="5" right="15" bottom="5" left="15"/>
               </padding>
             </StackPane>
 
-            <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                       minHeight="100" prefHeight="100" maxHeight="100">
+            <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder"
+                       minHeight="120" prefHeight="120" maxHeight="120">
               <padding>
-                <Insets top="5" right="10" bottom="5" left="10"/>
+                <Insets top="5" right="15" bottom="15" left="15"/>
               </padding>
             </StackPane>
 
@@ -91,7 +91,7 @@
                   <content>
                     <StackPane fx:id="calendarPlaceholder" prefWidth="340">
                       <padding>
-                        <Insets top="10" right="10" bottom="10" left="10"/>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
                       </padding>
                     </StackPane>
                   </content>

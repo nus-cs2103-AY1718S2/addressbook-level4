@@ -52,17 +52,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Some example commands you can try:
 
-* *`task`* `n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/Enhance major component`: Adds Software Engineering task to the desk board in CLIndar
-* *`event`* `n/Software Project s/01/05/2018 8:00 e/01/08/2018 8:00 l/School of Computing`: Adds Software Project event to the desk board
-* *`ls task`* : list all uncompleted tasks
-* *`exit`* : exits the app
+* *`task`* `n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/Enhance major component`: adds Software Engineering task to Desk Board.
+* *`event`* `n/Software Project s/01/05/2018 8:00 e/01/08/2018 8:00 l/School of Computing`: adds Software Project event to Desk Board.
+* *`ls task`* : lists all uncompleted tasks.
+* *`exit`* : exits the app.
 
-Refer to <<Features>> for details of each command.
+Refer to <<Features>> for details of commands in CLIndar.
 
 [[Features]]
 == Features
 
-The following describes the command format in CLIndar.
+The following describes the command format in CLIndar:
 
 * *Words in `UPPER_CASE` are the parameters to be supplied by the user.* +
 For example, in the following format `task n/NAME`,
@@ -92,7 +92,7 @@ Shows the help menu for all of the commands or only the `COMMAND_WORD` requested
 
 === Adding a task: `task` `[As of  v1.2]`
 
-Adds a task to the desk board.
+Adds a task to Desk Board.
 
 *Format:* `task n/NAME d/DUE_DATE_TIME [r/REMARK] [t/TAGS]`
 
@@ -106,7 +106,7 @@ DUE_DATE_TIME parameter can be in d/m/y h:m or dd/mm/yy hh:mm
 
 === Adding an event: `event` `[As of  v1.3]`
 
-Adds an event to the desk board. +
+Adds an event to Desk Board. +
 
 *Format:* `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]`
 
@@ -122,7 +122,7 @@ or dd/mm/yy hh:mm
 
 === Listing uncompleted tasks and upcoming events: `ls` `[As of  v1.4]`
 
-Shows one or two lists of tasks and events in the desk board as described below.
+Shows one or two lists of tasks and events in Desk Board as described below.
 
 *Format:*
 
@@ -132,7 +132,7 @@ Shows one or two lists of tasks and events in the desk board as described below.
 
 === Removing a task or event: `rm` `[As of  v1.4]`
 
-Removes a task or event from the desk board according to the following conditions.
+Removes a task or event from Desk Board according to the following conditions:
 
 * Removes the task or event at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
@@ -147,7 +147,7 @@ Removes a task or event from the desk board according to the following condition
 
 * `ls task` +
 `rm task 2` +
-Removes the 2nd task in the desk board.
+Removes the 2nd task in Desk Board.
 
 === Completing a task: `complete task` or `com task` `[Coming Soon in  v1.5]`
 
@@ -159,15 +159,15 @@ Completes the task at the specified `INDEX` based on the most recent listing.
 
 * `ls task` +
 `complete task 3` +
-Completes the 3rd task in the desk board.
+Completes the 3rd task in Desk Board.
 
 * `ls task` +
 `com task 2` +
-Completes the 2nd task in the desk board.
+Completes the 2nd task in Desk Board.
 
 === Listing all completed tasks: `ls complete task` or `ls com task` `[Coming Soon in  v1.5]`
 
-Shows a list of all completed tasks in the desk board. +
+Shows a list of all completed tasks in Desk Board. +
 
 *Format:* `ls complete task` or `ls com task`
 
@@ -180,17 +180,17 @@ Shows a list of all tasks and/or event which contains given keyword in its name.
 *Examples:*
 
 * `find task CS2101` +
-Find all tasks with name contains CS2101
+Finds all tasks with name containing "CS2101".
 
 * `find event exam` +
-Find all events wiih name contains exam
+Finds all events with name containing "exam".
 
 * 'find CS2101` +
-Find all tasks and event with name contains CS2101
+Finds all tasks and event with name containing "CS2101".
 
 [NOTE]
 ====
-Use `list` command to retrieve the full list of event and task after this command
+Use `list` command to retrieve the full list of event and task after this command.
 ====
 // end::find[]
 
@@ -214,14 +214,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores Desk Board to the state before the previous _undoable_ command was executed. +
 
 *Format:* `undo` or `u`
 
 [NOTE]
 ====
-Undoable commands are commands that modify the desk board's content (e.g. `task`, `rm task`).
-
+Undoable commands are commands that modify Desk Board's content (e.g. `task`, `rm task`).
 ====
 
 *Examples:*
@@ -261,22 +260,31 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear` or `c` `[Coming Soon in  v1.5]`
 
-Clears all entries from the desk board.
+Clears all entries from Desk Board.
 
 *Format:* `clear` or `c`
 
-// tag::import[]
-=== Importing data : `import` `[As of v1.4.1]`
+// tag::exportimport[]
+=== Exporting data : `export` `[As of v1.5]`
 
-Import all entries from another desk board file in the specified file path.
+Exports Desk Board data into an xml file in the specified directory.
+
+*Format:* `export f/FILE_PATH`
+
+*Example:*
+
+* `export f/C:\data\deskBoard.xml`
+
+=== Importing data : `import` `[As of v1.5rc]`
+
+Imports all entries from another Desk Board file in the specified file path.
 
 *Format:* `import f/FILE_PATH`
 
 *Example:*
 
-* `import f/C:\data\deskboard.xml`
-
-// end::import[]
+* `import f/C:\data\deskBoard.xml`
+// end::exportimport[]
 
 === Exiting the program : `exit` `[As of v1.4.1]`
 
@@ -302,53 +310,27 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add task*: `task n/NAME d/DUE_DATE_TIME [r/REMARK] [t/TAGS]` +
-e.g. `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
-
-* *Add event*: `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]` +
-e.g. `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
-
-* *List uncompleted tasks and upcoming events*: `list` or `ls` +
-e.g. `list` or `ls` or `list task` or `ls event`
-
-* *Remove task or event*: `rm` +
-e.g. `rm task 1` or `rm event 2`
-
-* *Complete a task*: `complete task` or `com task` +
-e.g. `complete task 1` or `com task 2`
-
-* *List completed tasks*: `ls complete task` or `ls com task` +
-e.g. `ls complete task` or `ls com task`
-
-* *Find task and/or event with name contains given keyword*: `find` or `find task` or `find event` +
-eg. `find CS2101` or `find event exam` or `find task CS2103`
-
-* *Show overdue tasks*: `overdue` +
-eg. `overdue`
-
-* *List entered commands*: `history` +
-e.g. `history`
-
-* *Undo previous command*: `undo` or `u` +
-e.g. `undo` or `u`
-
-* *Redo previously undone command*: `redo` or `r` +
-e.g. `redo` or `r`
-
-* *Clear all entries*: `clear` or `c` +
-e.g. `clear` or `c`
-
-* *Import data*: `import f\FILE_PATH` +
-e.g. `import f/C:\data\deskboard.xml`
-
-* *Exit the program*: `exit` +
-e.g. `exit`
-
-* *Edit a task*: `edit task` +
-e.g. `edit task 1`
-
-* *Locate a task by name*: `find task` +
-e.g. `find task CS2106 Assignment`
-
-* *List all past events*: `ls past event` +
-e.g. `ls past event`
+[cols="10%,<10%,<25%,<25%,<30%",options="header",]
+|=======================================================================
+|Command Word   |Alias      |Format                 |Example            |Function
+|`clear`        |`c`        |`clear`                |[[empty]]          |Clears all entries
+|`complete task`|`com task` |`complete task INDEX`  |`complete task 1`  |Completes task at index 1
+|`event`        |[[empty]]  |`event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]`|`event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`|Adds an event to Desk Board
+|`exit`         |[[empty]]  |`exit`                 |[[empty]]          |Exits the program
+|`export`       |[[empty]]  |`export f/FILE_PATH`   |`export f/C:\data\deskBoard.xml`      |Exports Desk Board data into an xml file in specified directory
+|`find`         |[[empty]]  |`find KEYWORD`         |`find CS2101`      |Finds events and tasks with name containing the given keyword
+|`find event`   |[[empty]]  |`find event KEYWORD`   |`find event cS2101`|Finds events with name containing the given keyword
+|`find task`    |[[empty]]  |`find task KEYWORD`    |`find task cS2101` |Finds tasks with name containing the given keyword
+|`history`      |[[empty]]  |`history`              |[[empty]]          |Lists all entered commands
+|`import`       |[[empty]]  |`import f/FILE_PATH`   |`import f/C:\data\deskBoard.xml`      |Imports Desk Board data from specified xml file
+|`list`         |`ls`       |`list`                 |[[empty]]          |Lists all uncompleted tasks and upcoming events
+|`list event`   |`ls event` |`list event`           |[[empty]]          |Lists all upcoming events only
+|`list task`    |`ls task`  |`list task`            |[[empty]]          |Lists all uncompleted tasks only
+|`ls complete task`|`ls com task`|`ls complete task`|[[empty]]          |Lists all completed tasks
+|`ls past event`|[[empty]]  |`ls past event`        |[[empty]]          |Lists all past events
+|`overdue`      |[[empty]]  |`overdue`              |[[empty]]          |Lists all overdue tasks
+|`redo`         |`r`        |`redo`                 |[[empty]]          |Reverses the most recent `undo` command
+|`remove event` |`rm event` |`remove event INDEX`   |`remove event 1`   |Removes event at index 1
+|`remove task`  |`rm task`  |`remove task INDEX`    |`remove task 1`    |Removes task at index 1
+|`task`         |[[empty]]  |`task n/NAME d/DUE_DATE_TIME [r/REMARK] [t/TAGS]`|`task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`|Adds a task to Desk Board
+|`undo`         |`u`        |`undo`                 |[[empty]]          |Reverses the most recent undoable command

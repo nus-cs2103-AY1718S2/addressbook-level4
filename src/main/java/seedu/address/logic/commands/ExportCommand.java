@@ -19,11 +19,11 @@ public class ExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Exports desk board data into an xml file in desired directory. "
+            + ": Exports desk board data into an xml file in the specified directory. "
             + "Parameters: "
             + PREFIX_FILE_PATH + "FILE_PATH\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_FILE_PATH + "C:\\Users\\Karen\\Desktop\\deskboard.xml";
+            + PREFIX_FILE_PATH + "C:\\data\\deskBoard.xml";
 
     public static final String MESSAGE_SUCCESS = "Data exported to: %1$s";
     public static final String MESSAGE_FILE_EXISTS = "File %s already exists";

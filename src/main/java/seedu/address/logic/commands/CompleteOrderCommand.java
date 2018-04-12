@@ -27,7 +27,7 @@ public class CompleteOrderCommand extends Command {
     private final Index targetIndex;
     private final Index numberOfTimes;
 
-    public CompleteOrderCommand(Index targetIndex,Index numberOfTimes) {
+    public CompleteOrderCommand(Index targetIndex, Index numberOfTimes) {
         this.targetIndex = targetIndex;
         this.numberOfTimes = numberOfTimes;
     }
@@ -37,13 +37,13 @@ public class CompleteOrderCommand extends Command {
         int number = numberOfTimes.getOneBased();
         while (number-- != 0) {
 
-        List<Task> lastShownList = model.getFilteredTaskList();
+            List<Task> lastShownList = model.getFilteredTaskList();
 
-        if (number >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        }
+            if (number >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+            }
 
-        Task taskToDelete = lastShownList.get(targetIndex.getZeroBased());
+            Task taskToDelete = lastShownList.get(targetIndex.getZeroBased());
 
             try {
                 model.deleteTask(taskToDelete);

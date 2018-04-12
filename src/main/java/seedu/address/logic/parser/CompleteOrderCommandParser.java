@@ -13,7 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class CompleteOrderCommandParser implements Parser<CompleteOrderCommand> {
 
-    private static String FRONT_OF_QUEUE = "1";
+    private static String NUMBER_FRONT_OF_QUEUE = "1";
 
     /**
      * Parses the given {@code String} of arguments in the context of the CompleteOrderCommand
@@ -23,8 +23,8 @@ public class CompleteOrderCommandParser implements Parser<CompleteOrderCommand> 
     public CompleteOrderCommand parse(String args) throws ParseException {
         try {
             Index numberOfTimes = ParserUtil.parseIndex(args);
-            Index index = ParserUtil.parseIndex(FRONT_OF_QUEUE);
-            return new CompleteOrderCommand(index,numberOfTimes);
+            Index index = ParserUtil.parseIndex(NUMBER_FRONT_OF_QUEUE);
+            return new CompleteOrderCommand(index, numberOfTimes);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompleteOrderCommand.MESSAGE_USAGE));

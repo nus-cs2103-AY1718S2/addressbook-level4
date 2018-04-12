@@ -134,10 +134,10 @@ public class Task implements Comparable<Task> {
     }
 
     private int getPriority() {
-        int Count = this.getCount().toInt();
-        int Distance = this.getDistance().toInt();
-        int Price = this.getPrice().toInt();
-        return calculatePriority(Price, Distance, Count);
+        int count = this.getCount().toInt();
+        int distance = this.getDistance().toInt();
+        int price = this.getPrice().toInt();
+        return calculatePriority(price, distance, count);
     }
 
     private int calculatePriority(int price, int distance, int count) {

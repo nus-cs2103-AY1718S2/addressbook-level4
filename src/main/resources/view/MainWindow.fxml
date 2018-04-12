@@ -54,7 +54,6 @@
           </VBox>
                <VBox>
                   <children>
-      
                 <!-- @@author kush1509 -->
                 <StackPane fx:id="detailsPlaceholder">
                   <padding>

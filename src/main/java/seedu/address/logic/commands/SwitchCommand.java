@@ -17,11 +17,9 @@ public class SwitchCommand extends Command {
     public CommandResult execute() {
         if (model.calendarIsViewed()) {
             model.indicateTimetableChanged();
-            model.switchView();
             return new CommandResult(MESSAGE_SUCCESS_TIMETABLE);
         }
         model.indicateCalendarChanged();
-        model.switchView();
         return new CommandResult(MESSAGE_SUCCESS_CALENDAR);
     }
 }

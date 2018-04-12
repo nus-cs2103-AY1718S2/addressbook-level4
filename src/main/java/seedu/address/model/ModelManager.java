@@ -86,11 +86,17 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void indicateCalendarChanged() {
         raise(new CalendarChangedEvent());
+        if (!inCalendarView) {
+            inCalendarView = true;
+        }
     }
 
     @Override
     public void indicateTimetableChanged() {
         raise(new TimetableChangedEvent());
+        if (inCalendarView) {
+            inCalendarView = false;
+        }
     }
 
     //@@author

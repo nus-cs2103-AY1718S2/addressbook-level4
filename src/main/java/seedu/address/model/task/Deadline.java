@@ -13,7 +13,7 @@ public class Deadline {
 
 
     public static final String MESSAGE_DEADLINE_CONSTRAINTS =
-            "Deadline should be a valid date in the format dd-mm-yyyy. Tasks cannot be scheduled in the past."
+            "Deadline should be a valid date that exists and in the format dd-mm-yyyy. Tasks cannot be scheduled in the past."
                     + "And can only be scheduled at most 6 months in advance. (Based on months: tasks cannot be"
                     + " scheduled on 1st August 2018 if the current date is 31st January 2018).";
     public final String dateString;

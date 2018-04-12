@@ -235,7 +235,6 @@ Returns Betsy as a result. Followed by: +
 `email 1` +
 Emails the 1st person in the results of the `find` command, in this case, Betsy.
 
-=======
 === Adding Participation Marks : `markPart`
 
 Adds to the participation marks of a person. The maximum limit for participation marks is 100
@@ -331,6 +330,52 @@ The 1st person in the results of the `find` command is selected, in this case, J
 .1st Person from `find` Command Selected. +
 image::SecondSelect.png[width="800"]
 
+== Task, To-do list and Calendar Features
+
+To see how the task scheduling feature works on the `Todo List` and `Calendar`, select the `Todo Lit` tab located right beside the `Person List` tab.
+
+=== Adding a task: `addTask`
+
+Adds a task to the address book. +
+Format: `addTask title/TITLE desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY`
+
+New tasks will be added into the *To-do list* and *Calendar*.
+
+Examples:
+
+Current date: 03-04-2018 +
+The application initially starts with no tasks as displayed in Figure 2:
+
+Command entered: +
+`addTask title/Grade Exams desc/Grade mid-terms by/04-04-2018 priority/2`: +
+This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure ).
+
+Command entered: +
+`addTask title/Submit Attendance desc/Submit tutorial attendance by/05-04-2018 priority/3`: +
+This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application (Figure ).
+
+=== Editing a task: `editTask`
+
+Edits a task to the address book. +
+Format: `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
+
+The specified tasks will be edited in the *To-do list* and *Calendar*.
+
+****
+* The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+=== Removing a task: `deleteTask`
+
+Deletes a task in the address book. +
+Format: `deleteTask INDEX`
+
+The specified tasks will be deleted from the *To-do list* and *Calendar*.
+
+== Miscellaneous Commands
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -415,6 +460,9 @@ It will be updated to work in v1.5rc
 Alias: `c` +
 Format: `clear`
 
+[NOTE]
+This command clears ALL the data from the application (both people and tasks). +
+
 === Importing data from another file : `import`
 
 Extracting data from an xml formatted file and
@@ -437,58 +485,16 @@ Format: `sort`
 Exits the program. +
 Format: `exit`
 
-== Task, To-do list and Calendar Features
-
-=== Adding a task: `addTask`
-
-Adds a task to the address book. +
-Format: `addTask desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY`
-
-New tasks will be added into the *To-do list* and *Calendar*.
-
-Examples:
-
-Current date: 03-04-2018 +
-The application initially starts with no tasks as displayed in Figure 2:
-
-Command entered: +
-`addTask desc/Grade mid-terms by/04-04-2018 priority/2`: +
-This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure ).
-
-Command entered: +
-`addTask desc/Submit tutorial attendance by/05-04-2018 priority/3`: +
-This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application (Figure ).
-
-=== Editing a task: `editTask`
-
-Edits a task to the address book. +
-Format: `editTask INDEX title [/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY`]
-
-The specified tasks will be edited in the *To-do list* and *Calendar*.
-
-****
-* The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-****
-
-=== Removing a task: `deleteTask`
-
-Deletes a task in the address book. +
-Format: `deleteTask INDEX
-
-The specified tasks will be deleted from the *To-do list* and *Calendar*.
-
-=== Saving the data
+== Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== Additional Information on Contact Features
+== Additional Information on Features
 
 This section goes more in depth for some of the features mentioned in the above chapter.
 
-=== Add Command
+=== Add command
 
 The `add` command adds a person into the application. +
 This command have specific compulsory (must-have) and non-compulsory fields. +
@@ -511,7 +517,7 @@ e.g the NAME field must only contain letters.
 
 If the wrong format is detected, the application will prompt you of the correct input format in the results display panel right underneath the command input line.
 
-=== Undo Command
+=== Undo command
 
 As stated in chapter 3.10, certain commands (not all) can be undone.
 
@@ -519,6 +525,20 @@ Commands that cannot be undone:
 
 * `list`
 * `find`
+
+== Toggling between themes
+
+Your TA starts off with a default `Dark Theme`. However, it can be toggled to become a `Light Theme`.
+
+On the top left side of the app, there are some menus.
+
+Click on the menu labeled `Switch Theme`.
+
+A drop-down menu will appear and click on the `toggle` option to switch to the theme that is not currently in use.
+
+[NOTE]
+As of version 1.5, the app only supports 2 themes, `Dark Theme` and `Light Theme`.
+
 
 == FAQ
 
@@ -550,11 +570,14 @@ e.g.`select 2`
 
 === Tasks, To-do list and Calendar commands
 
-*Add Task* `addTask desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY`
-*Edit Task*
-*Remove Task*
+*Add Task* `addTask desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY` +
+e.g. `addTask title/Grade Exams desc/Grade mid-terms by/04-04-2018 priority/2`
+*Delete Task* `deleteTask INDEX` +
+e.g. `deleteTask 1`
+*Edit Task* `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
+e.g. `editTask 1 title/Eat Dinner`
 
-=== Miscellaneous Tasks
+=== Miscellaneous Commands
 
 * *Help* : `help`
 * *History* : `history`

@@ -505,6 +505,54 @@ call the Java `Desktop` class to launch the user's default mail application.
 ** Pros: Higher level of compatibility, means it can be used with a wider range of operating systems.
 ** Cons: Clunky as users may use different web mail services. The API would also differ based on the email they use as well.
 
+=== Toggling Between Themes: Light and Dark (Since v1.5)
+
+This feature allows the user to toggle between 2 preset themes, light and dark.
+
+==== Current implementation
+
+The user will click on the drop-down menu tab labeled `Switch Theme`, and select the `toggle` button to toggle to the other theme that is not currently in use.
+
+==== Design Considerations
+
+===== Aspect: How much freedom is given to the user in terms of customisation
+
+* **Alternative 1 (current choice):** Use 2 preset css files, `LightTheme.css` and `DarkTheme.css`, restrict toggling between these 2 presets only. Change the controller class `MainWindow.java` between 2 fxml files, `DarkMainWindow.fxml` and `LightMainWindow.fxml`.
+** Pros: Simple to implement and user friendly. User can switch to a different theme with a click of a button.
+** Cons: User cannot customize the themes at all, only have 2 choices, light or dark.
+* **Alternative 2:** Allow user to customise and pick a colour for each aspect. e.g. background colour, text colour etc.
+** Pros: User have full ability to customise the colours of different aspects the app.
+** Cons: Heavy on programming (need to add a lot more cases into the css file(s)). User can create hideous themes.
+
+==== Future enhancements (Coming in v2.0)
+
+Add more themes that can be chosen from the theme drop-down box so that the user has more choices.
+
+=== Tasks on Calendar View (Since v1.5)
+
+This feature allows the user to see the calendar on the UI and see the scheduled `Task` deadlines on the calendar.
+
+==== Current implementation
+
+The user will enter a command `addTask title/TITLE desc/DESCRIPTION by/DEADLINE priority/PRIORITY` to the application. The application will then rely on `AddressBookparser` and
+parse the argument. The argument will be passed into the AddTaskCommand to be executed. From there, it will create a new `Task` object that will be
+added to the `calendarList` of the `UniqueTaskList` which in turn will be displayed on the date of the deadline, on the calendar.
+
+==== Design Considerations
+
+===== Aspect: How to link specific tasks to the correct calendar nodes
+
+* **Alternative 1 (current choice):** Use a 7 by 32, 2D `Array` to store the tasks to be added into the calendar.
+** Pros: Separate from the Task list (less prone to bugs). Faster run time (does not need to iterate through all tasks).
+** Cons: Higher memory usage constraint, can only schedule tasks up to 6 months in advance to prevent high memory usage that will affect the speed and performance of the app.
+* **Alternative 2:** Use the task list itself to be displayed in the calendar.
+** Pros: Easier to program and less memory usage (only 1 task list is used without another 2D array for the calendar), tasks can be scheduled as far ahead as desired.
+** Cons: Needs to iterate through the entire task list for every calendar node when loading the calendar view (slows performance when dealing with tasks).
+
+==== Future enhancements (Coming in v2.0)
+
+Link specific key-press or select actions to the todo list such that a click on either side will display the selected task on the other.
+
 === Participation Marks (Since v1.4)
 
 This feature allows the user to add marks to the `Participation` atttribute of a `Person`.
@@ -765,6 +813,12 @@ This helps the tutor to keep track of what needs to be done and which task to fo
 
 This helps the tutor to easily search for a certain student by their unique matriculation number instead of just
 their names (e.g. easier than searching for a common name such as Daniel).
+
+* *Minor*: Toggle between dark and light theme
+
+** The app can now be toggled between 2 different themes.
+
+This allows the tutor to customise their GUI so that they do not have to be restricted to 1 set layout throughout the entire time they use the app.
 
 *Pearlissa*
 

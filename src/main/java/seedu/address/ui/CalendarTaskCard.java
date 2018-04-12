@@ -20,7 +20,12 @@ public class CalendarTaskCard extends UiPart<Region> {
     public CalendarTaskCard(Task task) {
         super(FXML);
         this.task = task;
-        desc.setText(task.getTaskDesc().shortDesc);
+        if (task.getTitle().toString().length() <= 20) {
+            desc.setText(task.getTitle().toString());
+        } else {
+            String text = task.getTitle().toString().substring(0, 20) + "...";
+            desc.setText(text);
+        }
         if (task.getPriority().value == 1) {
             desc.getStyleClass().clear();
             desc.getStyleClass().add("label-small-green");

@@ -45,8 +45,8 @@ public class TodoCard extends UiPart<Region> {
         this.task = task;
         id.setText(displayedIndex + ". ");
         title.setText(task.getTitle().value);
-        priority.setText(task.getPriority().toString());
-        deadline.setText(task.getDeadline().dateString);
+        priority.setText("Priority: " + task.getPriority().toString());
+        deadline.setText("Deadline: " + task.getDeadline().dateString);
         description.setText(task.getTaskDesc().value);
     }
 

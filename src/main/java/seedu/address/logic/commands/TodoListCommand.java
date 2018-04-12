@@ -21,8 +21,7 @@ public class TodoListCommand extends Command {
     public static final String COMMAND_WORD = "todoList";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Show the To Do List in a seperate window."
-            + "\n"
+            + ": Displays the To Do List in a separate window.\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "To do list window is loaded.";

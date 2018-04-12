@@ -14,6 +14,9 @@ public class AuthenCommand extends Command {
     public static final String MESSAGE_FAILURE = "You haven't authorized ET successfully,"
             + " please try it again later";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Exports employees from Employees Tracker.\n"
+            + "Example: " + COMMAND_WORD;
 
     @Override
     public CommandResult execute() {

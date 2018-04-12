@@ -12,7 +12,9 @@ public class ClearCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "clear";
     public static final String MESSAGE_SUCCESS = "Employees Tracker has been cleared!";
 
-    public static final String MESSAGE_USAGE = "clear all employees from Employees Tracker. (undoable)";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Clears all employees from Employees Tracker.\n"
+            + "Example: " + COMMAND_WORD;
 
     @Override
     public CommandResult executeUndoableCommand() {

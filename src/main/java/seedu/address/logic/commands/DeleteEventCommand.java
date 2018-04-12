@@ -21,8 +21,8 @@ public class DeleteEventCommand extends Command {
     public static final String COMMAND_WORD = "deleteEvent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Delete an event specified by title of the person identified by the index number used "
-            + "in the last person listing.\n"
+            + ": Deletes an event specified by title of the employee identified by the index number used "
+            + "in the last employees listing.\n"
             + "Parameters: INDEX (must be a positive integer)"
             + " TITLE (event title)\n"
             + "Example: " + COMMAND_WORD + " 1 Weekly Meeting";

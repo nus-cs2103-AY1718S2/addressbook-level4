@@ -12,9 +12,9 @@ SellIt is a desktop addressbook and calendar application built for salesmen. It 
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to add and edit appointments*
+* *Major enhancement*: added *the ability to add and edit appointments* and to see them in a calendar
 ** What it does: allows the user to add an appointment. Existing appointments can be edited.
-** Justification: This feature improves the product significantly because a salesperson may have many appointments with his clients that he wants to keep track of
+** Justification: This feature improves the product significantly because a salesperson may have many appointments with his clients that he wants to keep track of.
 ** Highlights: This enhancement's implementation is challenging as it involves many different modules of the code, such as the storage, model and logic modules.
 
 * *Minor enhancement*: An archival feature for clients that the salesperson is no longer in contact with so that they do not clutter up the interface as the salesperson has to manage a lot of clients.

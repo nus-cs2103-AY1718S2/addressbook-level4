@@ -55,7 +55,6 @@ public class EmailCard extends UiPart<Region> {
                     if (multipart.getCount() > 0) {
                         String msg = multipart.getBodyPart(0).getContent().toString();
                         preview.setText(msg);
-                    }
                 }
             } catch (MessagingException e) {
                 System.out.println("Messaging Exception");

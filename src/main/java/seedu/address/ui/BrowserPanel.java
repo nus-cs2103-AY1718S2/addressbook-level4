@@ -176,7 +176,6 @@ public class BrowserPanel extends UiPart<Region> {
         if (person.getSocialMediaPlatformMap().containsKey(Link.TWITTER_LINK_TYPE)) {
             updateBrowserTabs(FUNCTION_ADD, TWITTER_TAB_ID);
             String url = person.getSocialMediaPlatformMap().get(Link.TWITTER_LINK_TYPE).getLink().value;
-            loadTwitterBrowserPage();
             loadTwitterBrowserPage(parseUrl(url));
         } else {
             updateBrowserTabs(FUNCTION_REMOVE, TWITTER_TAB_ID);

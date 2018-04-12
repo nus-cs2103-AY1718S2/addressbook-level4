@@ -19,7 +19,6 @@ public abstract class Command {
     protected Model model;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
-    protected UniqueAccountList uniqueAccountList;
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of books.
@@ -49,9 +48,6 @@ public abstract class Command {
         this.model = model;
     }
 
-    public void setData(UniqueAccountList uniqueAccountList, CommandHistory history, UndoRedoStack undoRedoStack) {
-        this.uniqueAccountList = uniqueAccountList;
-    }
 
     public PrivilegeLevel getPrivilegeLevel() {
         return Model.PRIVILEGE_LEVEL_GUEST;

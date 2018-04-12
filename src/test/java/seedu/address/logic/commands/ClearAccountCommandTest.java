@@ -21,22 +21,21 @@ public class ClearAccountCommandTest {
 
     @Test
     public void execute_empty_accountList() throws DuplicateAccountException {
-        UniqueAccountList uniqueAccountList = new UniqueAccountList();
-        assertCommandSuccess(prepareCommand(uniqueAccountList), uniqueAccountList, ClearAccountCommand.MESSAGE_SUCCESS,
-                uniqueAccountList);
+        Model model = new ModelManager();
+        assertCommandSuccess(prepareCommand(model), model, ClearAccountCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
     public void execute_nonEmptyAccountList_success() throws DuplicateAccountException {
-        UniqueAccountList uniqueAccountList = new UniqueAccountList();
-        uniqueAccountList = getTypicalAccountList();
-        assertCommandSuccess(prepareCommand(uniqueAccountList), uniqueAccountList, ClearAccountCommand.MESSAGE_SUCCESS, uniqueAccountList);
+        Model model = new ModelManager();
+        model = getTypicalAccountList();
+        assertCommandSuccess(prepareCommand(model), model, ClearAccountCommand.MESSAGE_SUCCESS,
+                model);
     }
 
-    private ClearAccountCommand prepareCommand (UniqueAccountList uniqueAccountList) throws DuplicateAccountException {
+    private ClearAccountCommand prepareCommand(Model model) throws DuplicateAccountException {
         ClearAccountCommand command = new ClearAccountCommand();
-        command.setData(uniqueAccountList, new CommandHistory(), new UndoRedoStack());
-        uniqueAccountList.add(Account.createDefaultAdminAccount());
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 }

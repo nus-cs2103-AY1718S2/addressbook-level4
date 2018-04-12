@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.ParserUtil.parseRemark;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;

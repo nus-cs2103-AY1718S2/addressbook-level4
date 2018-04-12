@@ -130,7 +130,7 @@ public class EmailCommandTest {
 
 
         command.setData(model, null, null);
-        assertCommandFailure(command, EmailCommand.MESSAGE_ERROR);
+        assertCommandFailure(command, "No address has be found, email not sent!");
     }
 
     @Test

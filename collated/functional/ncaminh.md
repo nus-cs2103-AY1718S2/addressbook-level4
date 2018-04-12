@@ -31,6 +31,25 @@ public class ShowMultiLocationFromHeadQuarterEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\ShowRouteFromHeadQuarterToOneEvent.java
+``` java
+/**
+ * Show Google map route from HQ to many locations
+ */
+public class ShowRouteFromHeadQuarterToOneEvent extends BaseEvent {
+
+    public final String destination;
+
+    public ShowRouteFromHeadQuarterToOneEvent(String destination) {
+        this.destination = destination;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\ShowRouteFromOneToAnotherEvent.java
 ``` java
 /**
@@ -68,7 +87,9 @@ public class DistanceCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1\n"
             + "Example: " + COMMAND_WORD + " 1 2";
 
-    public static final String MESSAGE_DISTANCE_FROM_HQ_SUCCESS = "Distance from Head quarter to this Person: %1$s km";
+    public static final String MESSAGE_DISTANCE_FROM_HQ_FAILURE = "Unable to find %1$s's address";
+    public static final String MESSAGE_DISTANCE_FROM_HQ_SUCCESS = "Distance from Head quarter to %1$s: %2$s km";
+    public static final String MESSAGE_DISTANCE_FROM_PERSON_FAILURE = "Unable to find at least one person's address";
     public static final String MESSAGE_DISTANCE_FROM_PERSON_SUCCESS = "Distance from %1$s to %2$s: %3$s km";
 
     private Index targetIndexOrigin = null;
@@ -109,8 +130,26 @@ public class DistanceCommand extends Command {
 
             int indexZeroBasedDestination = targetIndexDestination.getZeroBased();
             Person person = lastShownList.get(indexZeroBasedDestination);
+            String personName = person.getName().toString();
             origin = "Kent Ridge MRT";
             destination = person.getAddress().toString();
+
+            //Trim address
+            destination = trimAddress(destination);
+
+            GetDistance route = new GetDistance();
+            Double distance = route.getDistance(origin, destination);
+
+            EventsCenter.getInstance().post(new ShowRouteFromHeadQuarterToOneEvent(destination));
+
+            if (distance == -1) {
+                return new CommandResult(String.format(MESSAGE_DISTANCE_FROM_HQ_FAILURE,
+                        personName));
+            }
+
+            return new CommandResult(String.format
+                    (MESSAGE_DISTANCE_FROM_HQ_SUCCESS, personName, distance));
+
         } else {
             //case 2: get distance from a person address to another person address
             if (targetIndexOrigin.getZeroBased() >= lastShownList.size()
@@ -124,32 +163,40 @@ public class DistanceCommand extends Command {
             Person personDestination = lastShownList.get(indexZeroBasedDestination);
             origin = personOrigin.getAddress().toString();
             destination = personDestination.getAddress().toString();
+
+            //Trim addresses
+            origin = trimAddress(origin);
+
+            destination = trimAddress(destination);
+
             personNameOrigin = personOrigin.getName().toString();
             personNameDestination = personDestination.getName().toString();
 
-        }
-
-        try {
             GetDistance route = new GetDistance();
             Double distance = route.getDistance(origin, destination);
 
-            //case 1: get distance from HQ to a person address
-            if (targetIndexOrigin == null) {
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndexDestination));
-                return new CommandResult(String.format
-                        (MESSAGE_DISTANCE_FROM_HQ_SUCCESS, distance));
-            } else {
-                //case 2: get distance from a person address to another person address
-                List<String> addressesList = new ArrayList<>();
-                addressesList.add(origin);
-                addressesList.add(destination);
-                EventsCenter.getInstance().post(new ShowRouteFromOneToAnotherEvent(addressesList));
-                return new CommandResult(String.format(
-                        MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personNameOrigin, personNameDestination, distance));
+            List<String> addressesList = new ArrayList<>();
+            addressesList.add(origin);
+            addressesList.add(destination);
+            EventsCenter.getInstance().post(new ShowRouteFromOneToAnotherEvent(addressesList));
+
+            if (distance == -1) {
+                return new CommandResult(String.format(MESSAGE_DISTANCE_FROM_PERSON_FAILURE));
             }
-        } catch (Exception e) {
-            throw new CommandException(Messages.MESSAGE_PERSON_ADDRESS_CANNOT_FIND);
+
+            return new CommandResult(String.format(
+                    MESSAGE_DISTANCE_FROM_PERSON_SUCCESS, personNameOrigin, personNameDestination, distance));
+
         }
+    }
+
+    private String trimAddress(String address) {
+        if (address.indexOf('#') > 2) {
+            int stringCutIndex;
+            stringCutIndex = address.indexOf('#') - 2;
+            address = address.substring(0, stringCutIndex);
+        }
+        return address;
     }
 
     @Override
@@ -180,18 +227,21 @@ public class DistanceCommand extends Command {
             return new CommandResult(shown);
         }
 
-        EventsCenter.getInstance().post(new ShowMultiLocationFromHeadQuarterEvent(optimizedRoute));
         //some addresses are invalid
         if (optimizedRoute.size() < numberOfPersonsListed) {
             String shown = getMessageForPersonListShownSummary(numberOfPersonsListed)
                     + "\nAt least one address on "
                     + model.getFilteredPersonList().get(0).getDate().toString()
                     + " cannot be found.";
+            EventsCenter.getInstance().post(new ShowMultiLocationFromHeadQuarterEvent(optimizedRoute));
             return new CommandResult(shown);
         }
 
         //all addresses can be found
+        EventsCenter.getInstance().post(new ShowMultiLocationFromHeadQuarterEvent(optimizedRoute));
         return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsListed));
+    }
+
 ```
 ###### \java\seedu\address\logic\GetDistance.java
 ``` java
@@ -288,10 +338,65 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
      */
     private void readWelcomeMessage() {
         try {
-            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\Welcome.vbs");
-            //Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\");
-        } catch (IOException e) {
-            System.out.println("Unable to load welcome message.");
+            readWelcomeScriptForMac();
+        } catch (IOException notMac){
+            try {
+                createFolderIfNeeded();
+                createScriptIfNeeded();
+                readWelcomeScript();
+            } catch (IOException e) {
+                logger.warning("Unable to read Welcome script");
+            }
+        }
+    }
+
+    /**
+     * Read welcome script for Mac
+     */
+    private void readWelcomeScriptForMac() throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+        String[] argument = { "osascript", "-e", "say \"Welcome user\" using \"Alex\" "
+                + "speaking rate 180 pitch 42 modulation 60" };
+
+        Process process = runtime.exec(argument);
+        logger.info("Running welcome script on Mac");
+    }
+
+    /**
+     * Read welcome script for Window
+     */
+    private void readWelcomeScript() throws IOException {
+        Runtime.getRuntime().exec("wscript.exe script\\Welcome.vbs");
+        logger.info("Running welcome script on Window");
+    }
+
+    /**
+     * create script file if not exist
+     */
+    private void createScriptIfNeeded() throws IOException {
+        File f = new File("script\\Welcome.vbs");
+        if (!f.exists()) {
+            File file1 = new File("script\\Welcome.txt");
+            logger.info("Creating script Welcome.txt");
+            file1.createNewFile();
+            logger.info("Writing to Welcome.txt");
+            PrintWriter writer = new PrintWriter("script\\Welcome.txt", "UTF-8");
+            writer.println("CreateObject(\"sapi.spvoice\").Speak \"Welcome back user\"");
+            writer.close();
+            logger.info("Converting Welcome.txt to Welcome.vbs");
+            File file2 = new File("script\\Welcome.vbs");
+            file1.renameTo(file2);
+        }
+    }
+
+    /**
+     * create script folder if not exist
+     */
+    private void createFolderIfNeeded() {
+        File dir = new File("script");
+        if (!dir.exists()) {
+            logger.info("Creating script directory");
+            boolean successful = dir.mkdirs();
         }
     }
 ```
@@ -313,7 +418,7 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
         }
 
         readPersonName(person);
-        loadPage(SEARCH_PAGE_URL + addressWithoutUnit + "?dg=dbrw&newdg=1");
+        loadPage(SEARCH_PAGE_URL + addressWithoutUnit.replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
     }
 
     /**
@@ -322,12 +427,70 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
      */
     private void readPersonName(Person person) {
         try {
-            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\ClickOnNameCard.vbs"
-                    + " " + person.getName().fullName);
-            //Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\ClickOnNameCard.vbs"
-            //                    + " " + person.getName().fullName);
-        } catch (IOException e) {
-            System.out.println("Unable to read person name");
+            readPersonNameScriptForMac(person);
+        } catch (IOException notMac) {
+            try {
+                createFolderIfNeeded();
+                createScriptIfNeeded();
+                readPersonNameScript(person);
+            } catch (IOException e) {
+                logger.warning("Unable to read person name script");
+            }
+        }
+    }
+
+    /**
+     * Read script for Mac
+     */
+    private void readPersonNameScriptForMac(Person person) throws IOException {
+        String personName = person.getName().toString();
+        String script = "say \"" + personName + "\" using \"Alex\" speaking rate 150 pitch 42 modulation 60";
+
+        Runtime runtime = Runtime.getRuntime();
+        String[] argument = { "osascript", "-e", script };
+
+        Process process = runtime.exec(argument);
+        logger.info("Running read person name script on Mac");
+    }
+
+    /**
+     * Read script for Window
+     */
+    private void readPersonNameScript(Person person) throws IOException {
+        logger.info("Running read person name script on Window");
+        Runtime.getRuntime().exec("wscript.exe script\\ReadPersonName.vbs"
+                + " " + person.getName().fullName);
+    }
+
+    /**
+     * create script file if not exist
+     */
+    private void createScriptIfNeeded() throws IOException {
+        File f = new File("script\\ReadPersonName.vbs");
+        if (!f.exists()) {
+            File file1 = new File("script\\ReadPersonName.txt");
+            logger.info("Creating script ReadPersonName.txt");
+            file1.createNewFile();
+            logger.info("Writing to ReadPersonName.txt");
+            PrintWriter writer = new PrintWriter("script\\ReadPersonName.txt", "UTF-8");
+            writer.println("name = WScript.Arguments(0)");
+            writer.println("speaks=\"This is \" + name");
+            writer.println("CreateObject(\"sapi.spvoice\").Speak speaks");
+            writer.close();
+            logger.info("Converting ReadPersonName.txt to ReadPersonName.vbs");
+            File file2 = new File("script\\ReadPersonName.vbs");
+            file1.renameTo(file2);
+        }
+    }
+
+    /**
+     * create script folder if not exist
+     */
+    private void createFolderIfNeeded() {
+        File dir = new File("script");
+        if (!dir.exists()) {
+            logger.info("Creating script directory");
+            boolean successful = dir.mkdirs();
         }
     }
 ```
@@ -346,13 +509,21 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
         temp.add(0, HQ_ADDRESS);
         additionalInfo.setText("Estimated Required Time for Deliveries: "
                 + FilterCommand.getDuration(event.sortedList));
-        loadPage(url.toString());
+        loadPage(url.toString().replaceAll(" ", "%20"));
     }
 
     @Subscribe
     public void handleShowDefaultPageEvent(ShowDefaultPageEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadDefaultPage();
+    }
+
+    @Subscribe
+    public void handleShowFromHeadQuaterToOneEvent(ShowRouteFromHeadQuarterToOneEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        StringBuilder url = new StringBuilder(SEARCH_PAGE_URL);
+        url.append(event.destination);
+        loadPage(url.toString().replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
     }
 
     @Subscribe
@@ -363,11 +534,70 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
             url.append(address);
             url.append("/");
         }
+        url.deleteCharAt(url.length() - 1);
         additionalInfo.setText("Estimated Required Time for Deliveries: "
                 + FilterCommand.getDuration(event.sortedList));
-        loadPage(url.toString());
+        loadPage(url.toString().replaceAll(" ", "%20") + "?dg=dbrw&newdg=1");
+    }
+
+    @Subscribe
+    public void handleGameEvent(GameEvent event) {
+
+        URL gamePath = MainApp.class.getResource("/unused/games/Snake.html");
+        loadPage(gamePath.toExternalForm());
+        additionalInfo.setText("+ Additional information will be displayed here.");
     }
 }
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     * Set the label for the tag
+     * @param p
+     */
+    private void labelTag(Person p) {
+
+        p.getTags().forEach(tag -> {
+            Label showLabel = new Label(tag.tagName);
+            showLabel.getStyleClass().add(fromTagNameToColor(tag.tagName));
+            //Zoom effect on the label when the mouse is on the label
+            labelZoomEffect(showLabel);
+            tags.getChildren().add(showLabel);
+        });
+    }
+
+    /**
+     * Zoom effect on the label when the mouse is on the label
+     * @param label
+     */
+    private void labelZoomEffect(Label label) {
+        label.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                label.setScaleX(1.5);
+                label.setScaleY(1.5);
+            }
+        });
+
+        label.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                label.setScaleX(1);
+                label.setScaleY(1);
+            }
+        });
+    }
+
+    /**
+     *
+     * @param tagName
+     * @return the color for the label.
+     */
+    private String fromTagNameToColor(String tagName) {
+        // use hashCode to hash the tagName into an integer
+        // this help keeping the label colors consistency through every run
+        return TAG_COLOR[Math.abs(tagName.toLowerCase().hashCode()) % TAG_COLOR.length];
+    }
 ```
 ###### \resources\view\DarkTheme.css
 ``` css

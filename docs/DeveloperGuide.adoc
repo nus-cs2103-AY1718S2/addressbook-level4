@@ -488,8 +488,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::distance[]
 === Retrieving distance from a person address to another person address
-==== Current Implementation
 
 Like other commands, distance command uses the `AddressBookParser` class to parse the user command. The result of the command execution is encapsulated as a CommandResult object which is passed back to the Ui.
 
@@ -500,6 +500,8 @@ However, the result is depend on the `GetDistance` class which will using the `G
 The following sequence diagram shows how the `distance` command works:
 
 image::getDistanceOfPersonSdForLogic.png[width="800"]
+
+// end::distance[]
 
 == Documentation
 

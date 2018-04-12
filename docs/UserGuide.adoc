@@ -101,6 +101,7 @@ Displays all event information of a specified date including map proposed naviga
 Opens a new user guide window. +
 Format: `help`
 
+// tag::authentication[]
 === Multi-user and Authentication
 
 ==== Create new user : `create-user`
@@ -163,7 +164,9 @@ You will need to be logged out to use this Command.
 
 User have to use another form of authentication to log in (most probably a one-time password).
 
-// end::switchCommand[]
+// end::authentication[]
+
+// tag::switchCommand[]
 === Application Navigation
 
 ==== Switching between feature interfaces : `switch`
@@ -305,7 +308,7 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-
+// tag::sessionlog[]
 === Session Reports and Logs
 
 ==== Adding a new session report: `add-log`
@@ -320,10 +323,12 @@ Example: `add-log 2 log\Today the patient reported he was feeling unwell ... ...
 ****
 
 ==== Delete a existing session report: `delete-log` [Coming in v2.0]
-Deletes a particular report/log from a person
+Deletes a particular report/log from a person.
 
 ==== Edit a new session report: `delete-log` [Coming in v2.0]
-Edits report/log entries from a person
+Edits particular report/log entries from a person.
+
+// end::sessionlog[]
 
 // tag::navigateCommand[]
 

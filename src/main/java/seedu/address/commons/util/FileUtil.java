@@ -141,7 +141,7 @@ public class FileUtil {
     /**
      * Copies a file over. The new file will be binary equivalent to the original.
      */
-    public static void copyFile(String origFile, File outputFile) throws  IOException {
+    public static void copyFile(String origFile, File outputFile) throws IOException {
         byte[] buffer = new byte[4096];
         createIfMissing(outputFile);
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(origFile));

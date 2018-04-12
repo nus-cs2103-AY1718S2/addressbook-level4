@@ -479,7 +479,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::participation[]
-=== Participation Marks (Since v1.4)
+=== Participation Marks
 
 This feature allows the user to add marks to the `Participation` atttribute of a `Person`.
 
@@ -488,6 +488,9 @@ This feature allows the user to add marks to the `Participation` atttribute of a
 The user will enter a command `markPart INDEX marks/DIGITS` to the application. The application will then rely on `AddressBookparser` and `MarkCommandParser` to
 parse the argument. The argument will be passed into the MarkCommand to be executed. From there, it will create a new `Person` object with the updated
 `Participation` object attribute.
+
+.MarkCommand Sequence Diagram
+image::MarkCommandSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
@@ -508,34 +511,90 @@ Support for setting a threshold and easily seeing how many students made the cut
 
 // tag::display[]
 
-=== Display Picture (Since v1.2)
+=== Display Picture
 
-This feature allows the user to enter a path to their selected image file and copies the image into the `images\displayPic` folder. This image
-will be shown in the application next to the details of the person. This uses the `add` command with the addition of a `dp/` parameter.
+Users are able to add a display picture for any person within the application. The user can utilise 3 different commands (`add`, `edit` and `updateDP`) to create and specify a display image for the person.
+It fully supports the `undo` and `redo` commands as well.
+
+This feature allows the user to enter a path to their selected image file when entering any of the above 3 commands and copies the image into the `images/displayPic` folder.
+
+It utilises the `DisplayPicStorage` class to handle all image storage related operations.
+
+This image will be shown in the application next to the details of the person as seen in figure 14 below.
+
+.Display Picture example
+image::displaypic_personcard.png[width="350"]
 
 ==== Current implementation
 
-The application will take in the argument through `dp/ [PATH TO IMAGE]`.
+===== Adding a Display Picture
+
+An additional class, `DisplayPic`, is added to the `Person` class. This class contains the filepath to the stored image file.
+It uses validation checks to ensure that the image meets the following requirements.
+
+** It is a file that exists and has a file extension.
+** It is a valid image file that can be opened as an image.
+
+If it passes the checks, then a new `DisplayPic` object will be created with the filepath to the image stored as its value.
+
 [NOTE]
-An example of a `[PATH TO IMAGE]` would be C:\Users\Desktop\Image.jpg
+When the `DisplayPic` object is first created, it stores the _original_ filepath of the image file provided by the user. This will later be updated by the 3 commands to the duplicated image filepath.
 
-If this is empty, the application will default to using the default profile picture
-which is in `src\resources\images\displayPic`. If an valid path to an image is provided, the image will be processed and copied over to the `data` folder where the
-`addressbook.xml` is stored as well.
-
-The image copied over will be stored with a SHA-256 hash name. This hash is calculated over the `Person` object's details to ensure a unique filename.
-The `DisplayPic` object will store the relative filepath to this new duplicated image. If there is no image or a valid filepath, the `DisplayPic` object will contain the
-relative filepath to the default display picture.
+For persons that were not specified a `dp/` during the `add` command, the `DisplayPic` object associated to them would contain the value of the default display picture.
 
 ===== Editing a Display Picture
 
-The image can be edited by using the `edit` command with the additional parameter of `dp/`.
+The display picture can also be changed by using the `edit` or `updateDP` commands.
+
+
 The application will read in the new image to edit and use the `filepath` of the original image to generate a new unique hash name. This is to prevent the overwriting
 of image files such as to facilitate the `undo` command.
 
 ===== Deleting a Display Picture
 
 The current delete uses Java's `deleteOnExit` method. It will be updated later on in v1.4 to ensure that files are only deleted when they will definitely not be used.
+
+===== Storing the image file for the Display Picture
+The application will take in an argument for the 3 commands mentioned above through `dp/ [PATH TO IMAGE]`. The `[PATH TO IMAGE]` can be the absolute or relative path to the image file.
+[NOTE]
+An example of a `[PATH TO IMAGE]` would be C:\Users\Desktop\Image.jpg for Windows.
+
+If this is empty, the application will default to using the default profile picture
+which is stored in `src/resources/images/displayPic` as `default.png`.
+If a valid path to an image is provided, the image will be processed and copied over to the `data` folder where the
+`addressbook.xml` is stored as well.
+
+The code utilised to duplicate the image file copies the file byte for byte, ensuring that they are binary equivalent. The code used is implemented as follows:
+[source, java]
+----
+    public static void copyFile(String origFile, File outputFile) throws IOException {
+            //initialize buffer
+            //open bis/bos as the buffered input and output streams respectively
+
+            int fileBytes = bis.read(buffer);
+            while (fileBytes != -1) {
+                bos.write(buffer, 0, fileBytes);
+                fileBytes = bis.read(buffer);
+            }
+            //close IO streams
+    }
+----
+
+The image copied over will be stored with a SHA-256 hash name. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.
+The following activity diagram in Figure 15 shows how the files are saved:
+
+.Activity diagram for storing image files
+image::StoreDisplayPictureActivityDiagram.png[width="800"]
+
+Due to the possibility that display pictures for a `Person` can be updated, this could lead to clashing of the same file names. In order to prevent overwriting of files, the new image filename
+will be the SHA-256 hash of the previous image filename.
+Finally, the `DisplayPic` object will then be updated to store the relative filepath to this new duplicated image.
+
+===== Fetching the image file to display
+The following activity diagram shows the flow of how an image file is retrieved to be displayed.
+
+.Activity diagram for fetching image files
+image::FetchDisplayPictureActivityDiagram.png[width="800"]
 
 ==== Design Considerations
 ===== Aspect: Filepath to the image

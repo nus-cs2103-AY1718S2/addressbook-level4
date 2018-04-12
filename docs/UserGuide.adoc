@@ -60,6 +60,9 @@ Referring to Figure 1 above:
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 
+[WARNING]
+This product needs Internet access the first time it runs.
+
 [[Features]]
 == Features
 

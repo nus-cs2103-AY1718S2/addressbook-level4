@@ -105,7 +105,7 @@ public class TimeTablePanel extends UiPart<Region> {
                 columns.get(i).setMinWidth(75);
                 columns.get(i).setMaxWidth(200);
             }
-
+            columns.get(i).setSortable(false);
         }
     }
 

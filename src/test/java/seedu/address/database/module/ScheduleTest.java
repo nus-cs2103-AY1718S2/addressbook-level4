@@ -5,13 +5,13 @@ import org.junit.Test;
 
 //@@author Isaaaca
 public class ScheduleTest {
-    private static final String DEFAULT_CLASSNO = "1";
-    private static final String DEFAULT_LESSON_TYPE = "Lecture";
+    private static final String DEFAULT_CLASSNO = "9";
+    private static final String DEFAULT_LESSON_TYPE = "Tutorial";
     private static final String DEFAULT_WEEK_TEXT = "EVERY WEEK";
-    private static final String DEFAULT_DAY_TEXT = "MONDAY";
-    private static final String DEFAULT_START_TIME = "0000";
-    private static final String DEFAULT_END_TIME = "2359";
-    private static final String DEFAULT_VENUE = "LT17";
+    private static final String DEFAULT_DAY_TEXT = "WEDNESDAY";
+    private static final String DEFAULT_START_TIME = "1500";
+    private static final String DEFAULT_END_TIME = "1600";
+    private static final String DEFAULT_VENUE = "COM1 B1-04";
 
 
     private Schedule testBlank = new Schedule();
@@ -20,44 +20,44 @@ public class ScheduleTest {
 
     @Test
     public void getClassNo() {
-        Assert.assertEquals("", testBlank.getClassNo());
-        Assert.assertEquals("1", test.getClassNo());
+        Assert.assertEquals("0000", testBlank.getClassNo());
+        Assert.assertEquals(DEFAULT_CLASSNO, test.getClassNo());
     }
 
     @Test
     public void getLessonType() {
-        Assert.assertEquals("", testBlank.getLessonType());
-        Assert.assertEquals("Lecture", test.getLessonType());
+        Assert.assertEquals("Lecture", testBlank.getLessonType());
+        Assert.assertEquals(DEFAULT_LESSON_TYPE, test.getLessonType());
     }
 
     @Test
     public void getWeekText() {
-        Assert.assertEquals("", testBlank.getWeekText());
-        Assert.assertEquals("EVERY WEEK", test.getWeekText());
+        Assert.assertEquals("1", testBlank.getWeekText());
+        Assert.assertEquals(DEFAULT_WEEK_TEXT, test.getWeekText());
     }
 
     @Test
     public void getDayText() {
-        Assert.assertEquals("", testBlank.getDayText());
-        Assert.assertEquals("MONDAY", test.getDayText());
+        Assert.assertEquals("Monday", testBlank.getDayText());
+        Assert.assertEquals(DEFAULT_DAY_TEXT, test.getDayText());
     }
 
     @Test
     public void getStartTime() {
-        Assert.assertEquals("", testBlank.getStartTime());
-        Assert.assertEquals("0000", test.getStartTime());
+        Assert.assertEquals("0000", testBlank.getStartTime());
+        Assert.assertEquals(DEFAULT_START_TIME, test.getStartTime());
     }
 
     @Test
     public void getEndTime() {
-        Assert.assertEquals("", testBlank.getEndTime());
-        Assert.assertEquals("2359", test.getEndTime());
+        Assert.assertEquals("2359", testBlank.getEndTime());
+        Assert.assertEquals(DEFAULT_END_TIME, test.getEndTime());
     }
 
     @Test
     public void getVenue() {
-        Assert.assertEquals("", testBlank.getVenue());
-        Assert.assertEquals("LT17", test.getVenue());
+        Assert.assertEquals("COM1 01-01", testBlank.getVenue());
+        Assert.assertEquals(DEFAULT_VENUE, test.getVenue());
     }
 
     @Test

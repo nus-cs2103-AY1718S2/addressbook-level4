@@ -4,9 +4,7 @@
     public static final String BROWSER_PANEL_ID = "#detailPanel";
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
-```
-###### \java\guitests\guihandles\DetailPanelHandle.java
-``` java
+
     private final Label nameLabel;
     private final Label addressLabel;
 
@@ -663,6 +661,93 @@ public class RatingContainsKeyphrasesPredicateTest {
     }
 }
 ```
+###### \java\seedu\address\model\person\TagContainsKeyphrasesPredicateTest.java
+``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
+
+public class TagContainsKeyphrasesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeyphraseList = Collections.singletonList("first");
+        List<String> secondPredicateKeyphraseList = Arrays.asList("first", "second");
+
+        TagContainsKeyphrasesPredicate firstPredicate = new TagContainsKeyphrasesPredicate(
+                firstPredicateKeyphraseList);
+        TagContainsKeyphrasesPredicate secondPredicate = new TagContainsKeyphrasesPredicate(
+                secondPredicateKeyphraseList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        TagContainsKeyphrasesPredicate firstPredicateCopy = new TagContainsKeyphrasesPredicate(
+                firstPredicateKeyphraseList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_tagContainsKeyphrases_returnsTrue() {
+        // Zero keyphrase
+        TagContainsKeyphrasesPredicate predicate = new TagContainsKeyphrasesPredicate(Collections.emptyList());
+        assertTrue(predicate.test(new PersonBuilder().withTags("Friends").build()));
+
+        // One keyphrase
+        predicate = new TagContainsKeyphrasesPredicate(Collections.singletonList("Friends"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Friends", "Family").build()));
+        predicate = new TagContainsKeyphrasesPredicate(Collections.singletonList("Friends Family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Friends", "Family").build()));
+
+        // Multiple keyphrases
+        predicate = new TagContainsKeyphrasesPredicate(Arrays.asList("Friends", "Colleagues"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Friends").build()));
+
+        // Mixed-case keyphrase
+        predicate = new TagContainsKeyphrasesPredicate(Arrays.asList("fRiends"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Friends").build()));
+    }
+
+    @Test
+    public void test_tagDoesNotContainKeyphrases_returnsFalse() {
+        // Non-matching keyphrase
+        TagContainsKeyphrasesPredicate predicate = new TagContainsKeyphrasesPredicate(
+                Collections.singletonList("Friends"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Enemy", "Nemesis").build()));
+
+        // Keyphrase match name, phone, email, and address, but does not match tag
+        predicate = new TagContainsKeyphrasesPredicate(
+                Arrays.asList("Alice 12345 alice@email.com Main Street 3"));
+        assertFalse(predicate.test(new PersonBuilder()
+                .withName("Alice")
+                .withPhone("12345")
+                .withEmail("alice@email.com")
+                .withAddress("Main Street")
+                .withTags("Friends")
+                .withRating("3")
+                .build()));
+    }
+}
+```
 ###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
@@ -684,9 +769,12 @@ public class RatingContainsKeyphrasesPredicateTest {
         this.reviews = SampleDataUtil.getReviewSet(reviews);
         return this;
     }
-```
-###### \java\seedu\address\testutil\PersonBuilder.java
-``` java
+
+    /**
+     * Build a person with the determined details
+     * @return person to be built
+     */
+    public Person build() {
         Person toReturn = new Person(name, phone, email, address, tags, calendarId);
         toReturn.setRating(rating);
         toReturn.setReviews(reviews);
@@ -705,6 +793,7 @@ public class RatingContainsKeyphrasesPredicateTest {
     private void assertPanelDisplay(PersonCardHandle expectedPersonCard, DetailPanelHandle detailPanelHandle) {
         guiRobot.pauseForHuman();
         assertPanelDisplaysPerson(expectedPersonCard, detailPanelHandle);
+    }
 ```
 ###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
@@ -713,6 +802,49 @@ public class RatingContainsKeyphrasesPredicateTest {
      */
     public static void assertPanelDisplaysPerson(PersonCardHandle expectedPersonCard, DetailPanelHandle actualPanel) {
         assertEquals(expectedPersonCard.getName(), actualPanel.getName());
+    }
+```
+###### \java\systemtests\AddressBookSystemTest.java
+``` java
+    /**
+     * Asserts that detailPanel is empty and the previously selected card is now deselected.
+     * @see DetailPanelHandle#isFieldsEmpty()
+     * @see PersonListPanelHandle#isAnyCardSelected()
+     */
+    protected void assertSelectedCardDeselectedDetailEmpty() {
+        assertTrue(getDetailPanel().isFieldsEmpty());
+        assertFalse(getPersonListPanel().isAnyCardSelected());
+    }
+
+```
+###### \java\systemtests\EditCommandSystemTest.java
+``` java
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays an empty string.<br>
+     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
+     * 4. Asserts that the browser url and selected card update accordingly depending on the card.<br>
+     * 5. Asserts that the status bar's sync status changes.<br>
+     * 6. Asserts that the command box has the default style class.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     * @see AddressBookSystemTest#assertSelectedCardDeselectedDetailEmpty()
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
+                                      String undoOrRedo) {
+        executeCommand(command);
+        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertCommandBoxAndResultDisplayShowsDefaultStyle();
+        if (undoOrRedo.equals("redo")) {
+            assertSelectedCardChanged(null);
+        } else {
+            assertSelectedCardDeselectedDetailEmpty();
+        }
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 ```
 ###### \java\systemtests\ReviewCommandSystemTest.java
@@ -765,4 +897,12 @@ public class ReviewCommandSystemTest extends AddressBookSystemTest {
         getMainWindowHandle().focus();
     }
 }
+```
+###### \java\systemtests\SampleDataTest.java
+``` java
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setTestMode();
+        testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
+        testUnlockCommand.execute();
+        showAllPersons();
 ```

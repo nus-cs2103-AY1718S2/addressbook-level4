@@ -41,14 +41,15 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a person edited change
  */
 public class PersonEditedEvent extends BaseEvent {
 
-
+    private final int index;
     private final Person newPerson;
 
-    public PersonEditedEvent(Person newPerson) {
+    public PersonEditedEvent(int index, Person newPerson) {
+        this.index = index;
         this.newPerson = newPerson;
     }
 
@@ -59,6 +60,10 @@ public class PersonEditedEvent extends BaseEvent {
 
     public Person getNewPerson() {
         return newPerson;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
 ```
@@ -85,9 +90,10 @@ public class ShowReviewDialogEvent extends BaseEvent {
         String preppedWords = words.trim();
         String[] wordsInPreppedWords = preppedWords.split("\\s+");
         checkArgument(!preppedWords.isEmpty(), "Word parameter cannot be empty");
-```
-###### \java\seedu\address\commons\util\StringUtil.java
-``` java
+
+        String preppedSentence = sentence;
+        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+
         int howManyMatches = 0;
 
         for (String wordInWords: wordsInPreppedWords) {
@@ -152,10 +158,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -169,16 +173,16 @@ public class ReviewCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "review";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Review the person identified "
-            + "by the index number used in the last person listing. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Reviews the employee identified "
+            + "by the index number used in the last employees listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1\n"
             + "A separate pop-up dialog will appear to request for the review.";
 
-    public static final String MESSAGE_REVIEW_PERSON_SUCCESS = "Reviewed Person: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "Both INDEX and REVIEW must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_REVIEW_PERSON_SUCCESS = "Reviewed employee: %1$s";
+    public static final String MESSAGE_NOT_EDITED = "INDEX, REVIEWER, and REVIEW must be provided.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This employee already exists in Employees Tracker.";
 
     private final Index index;
     private final EditCommand.EditPersonDescriptor editPersonDescriptor;
@@ -205,7 +209,7 @@ public class ReviewCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target employee cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_REVIEW_PERSON_SUCCESS, editedPerson));
@@ -221,7 +225,6 @@ public class ReviewCommand extends UndoableCommand {
 
         personToEdit = lastShownList.get(index.getZeroBased());
         editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-        EventsCenter.getInstance().post(new PersonEditedEvent(editedPerson));
     }
 
     /**
@@ -291,12 +294,17 @@ public class ReviewCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\parser\FindCommandParser.java
 ``` java
+    public FindCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_RATING);
+
+        if (!(arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || arePrefixesPresent(argMultimap, PREFIX_TAG)
                 || arePrefixesPresent(argMultimap, PREFIX_RATING))
                 || !argMultimap.getPreamble().isEmpty()) {
-```
-###### \java\seedu\address\logic\parser\FindCommandParser.java
-``` java
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
         List<String> nameKeyphrases = argMultimap.getAllValues(PREFIX_NAME);
         List<String> tagKeyphrases = argMultimap.getAllValues(PREFIX_TAG);
         List<String> ratingKeyphrases = argMultimap.getAllValues(PREFIX_RATING);
@@ -306,6 +314,15 @@ public class ReviewCommand extends UndoableCommand {
         }
 
         return new FindCommand(new FieldContainKeyphrasesPredicate(nameKeyphrases, tagKeyphrases, ratingKeyphrases));
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 ```
 ###### \java\seedu\address\logic\parser\ReviewCommandParser.java
 ``` java
@@ -581,7 +598,7 @@ import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
  */
 public class Review {
     public static final String MESSAGE_REVIEW_CONSTRAINTS =
-            "Person reviewer and review can take any values, and they should not be blank.";
+            "Employee reviewer and review can take any values, and they should not be blank.";
     private static final String DEFAULT_REVIEWER = "-";
     private static final String DEFAULT_REVIEW = "-";
 
@@ -686,7 +703,7 @@ public class UniqueReviewList implements Iterable<Review> {
     }
 
     /**
-     * Returns all reviews in this list as a Set.
+     * Returns all Reviews in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */
     public Set<Review> toSet() {
@@ -695,7 +712,7 @@ public class UniqueReviewList implements Iterable<Review> {
     }
 
     /**
-     * Replaces the Reviews in this list with those in the argument review list.
+     * Replaces the Reviews in this list with those in the argument reviews list.
      */
     public void setReviews(Set<Review> reviews) {
         requireAllNonNull(reviews);
@@ -910,24 +927,31 @@ public class XmlAdaptedReview {
 ``` java
     @Subscribe
     public void handlePersonEditedEvent(PersonEditedEvent event) {
-        /*logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person newPerson = event.getNewPerson();
         name.setText(newPerson.getName().fullName);
         address.setText(newPerson.getAddress().value);
         reviews.getChildren().clear();
         newPerson.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
-        loadPersonPage(event.getNewPerson());*/
+        loadPersonPage(event.getNewPerson());
     }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
-    private void showDialogPane(ShowReviewDialogEvent event) {
+    private void showReviewDialog(ShowReviewDialogEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         ReviewDialog reviewDialog = new ReviewDialog();
         reviewDialog.show();
     }
 
+```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    @Subscribe
+    public void handlePersonEditedEvent(PersonEditedEvent event) {
+        scrollTo(event.getIndex());
+    }
 ```
 ###### \java\seedu\address\ui\ReviewDialog.java
 ``` java
@@ -1026,8 +1050,6 @@ public class ReviewDialog {
 ```
 ###### \resources\view\DetailPanel.fxml
 ``` fxml
-
-<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>

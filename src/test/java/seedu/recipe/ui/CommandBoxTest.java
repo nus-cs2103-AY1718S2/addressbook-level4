@@ -15,7 +15,6 @@ import javafx.scene.input.KeyCodeCombination;
 import seedu.recipe.logic.Logic;
 import seedu.recipe.logic.LogicManager;
 import seedu.recipe.logic.commands.ListCommand;
-import seedu.recipe.logic.parser.Prefix;
 import seedu.recipe.model.Model;
 import seedu.recipe.model.ModelManager;
 import seedu.recipe.ui.util.KeyboardShortcutsMapping;
@@ -32,16 +31,16 @@ public class CommandBoxTest extends GuiUnitTest {
             + SECOND_LINE_OF_COMMAND_THAT_HAS_MULTIPLE_LINES;
     private static final String ADD_COMMAND = "add";
     private static final String SECOND_FIELD_OF_ADD_COMMAND = "cooking_time/";
-    public static final Prefix PREFIX_CALORIES = new Prefix("calories/");
-    public static final Prefix PREFIX_COOKING_TIME = new Prefix("cooking_time/");
-    public static final Prefix PREFIX_IMG = new Prefix("img/");
-    public static final Prefix PREFIX_INGREDIENT = new Prefix("ingredient/");
-    public static final Prefix PREFIX_INSTRUCTION = new Prefix("instruction/");
-    public static final Prefix PREFIX_NAME = new Prefix("name/");
-    public static final Prefix PREFIX_PREPARATION_TIME = new Prefix("preparation_time/");
-    public static final Prefix PREFIX_SERVINGS = new Prefix("servings/");
-    public static final Prefix PREFIX_TAG = new Prefix("tag/");
-    public static final Prefix PREFIX_URL = new Prefix("url/");
+    private static final String PREFIX_CALORIES = "calories/";
+    private static final String PREFIX_COOKING_TIME = "cooking_time/";
+    private static final String PREFIX_IMG = "img/";
+    private static final String PREFIX_INGREDIENT = "ingredient/";
+    private static final String PREFIX_INSTRUCTION = "instruction/";
+    private static final String PREFIX_NAME = "name/";
+    private static final String PREFIX_PREPARATION_TIME = "preparation_time/";
+    private static final String PREFIX_SERVINGS = "servings/";
+    private static final String PREFIX_TAG = "tag/";
+    private static final String PREFIX_URL = "url/";
     private static final String RECIPE_NAME = "Chicken rice";
     private static final String ADD_COMMAND_WITH_PREFIX_NAME = ADD_COMMAND + WHITESPACE + PREFIX_NAME;
     private static final String AUTO_COMPLETION_FOR_ADD_COMMAND = ADD_COMMAND + WHITESPACE + LF + PREFIX_NAME
@@ -119,7 +118,7 @@ public class CommandBoxTest extends GuiUnitTest {
     public void commandBox_handleShowingSuggestions() {
         commandBoxHandle.insertText(ADD_COMMAND);
         commandBoxHandle.insertText(WHITESPACE);
-        commandBoxHandle.insertText(String.valueOf(PREFIX_NAME.toString().charAt(0)));
+        commandBoxHandle.insertText(String.valueOf(PREFIX_NAME.charAt(0)));
         guiRobot.push(KeyboardShortcutsMapping.SHOW_SUGGESTIONS_COMMAND);
         guiRobot.push(KeyCode.DOWN);
         guiRobot.push(KeyCode.ENTER);

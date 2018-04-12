@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -38,6 +39,8 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.smplatform.Link;
+import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
@@ -209,6 +212,7 @@ public abstract class AddressBookSystemTest {
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
+    //@@author Nethergale
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
@@ -216,19 +220,29 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
+        String selectedBrowserLink = "";
+        Map<String, SocialMediaPlatform> selectedPersonSmpMap = getModel().getFilteredPersonList().get(
+                expectedSelectedCardIndex.getZeroBased()).getSocialMediaPlatformMap();
+        for (String key : selectedPersonSmpMap.keySet()) {
+            selectedBrowserLink = selectedPersonSmpMap.get(key).getLink().value;
+        }
+
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
+        URL actualUrl;
+
         try {
-            expectedUrl = new URL(BrowserPanel.FACEBOOK_SEARCH_PAGE_URL
-                    + selectedCardName.replaceAll(" ", "%20"));
+            expectedUrl = getExpectedUrl(selectedBrowserLink, selectedCardName);
+            actualUrl = getBrowserPanel().getLoadedUrl(Link.getLinkType(selectedBrowserLink));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
+        assertEquals(expectedUrl, actualUrl);
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
+    //@@author
     /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()
@@ -304,6 +318,22 @@ public abstract class AddressBookSystemTest {
         }
     }
 
+    //@@author Nethergale
+    /**
+     * Returns the expected URL in the correct format when provided with a String type {@code url}.
+     * {@code personName} is utilised when no URLs of the available platforms can be constructed.
+     */
+    protected URL getExpectedUrl(String url, String personName) throws MalformedURLException {
+        if (Link.getLinkType(url).equals(Link.FACEBOOK_LINK_TYPE)) {
+            return new URL("https://m." + url.substring(url.indexOf(Link.FACEBOOK_LINK_TYPE)));
+        } else if (Link.getLinkType(url).equals(Link.TWITTER_LINK_TYPE)) {
+            return new URL("https://" + url);
+        }
+
+        return new URL(BrowserPanel.FACEBOOK_SEARCH_PAGE_URL + personName.replaceAll(" ", "%20"));
+    }
+
+    //@@author
     /**
      * Returns a defensive copy of the current model.
      */

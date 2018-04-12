@@ -112,6 +112,11 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized HashMap<String, String> getAliasList() {
         return addressBook.getAliasMapping();
     }
+
+    @Override
+    public synchronized ArrayList<ArrayList<String>> getUIFormattedAliasList() {
+        return addressBook.getUIFormattedAliasList();
+    }
     //@@author
 
     @Override

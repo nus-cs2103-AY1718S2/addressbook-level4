@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -308,9 +309,15 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public HashMap<String, String> getAliasMapping() {
-        return aliases.getHashList();
+    public ArrayList<ArrayList<String>> getUIFormattedAliasList() {
+        return aliases.extractAliasMapping();
     }
+
+    @Override
+    public HashMap<String, String> getAliasMapping() {
+        return aliases.getAliasCommandMappings();
+    }
+
 
     @Override
     public void resetAliasList() {

@@ -52,6 +52,9 @@ public interface Model {
 
     /** Returns a hashmap of command mapped to alias */
     HashMap<String, String> getAliasList();
+
+    /** Returns an arraylist of arraylist of alias strings formatted for the UI */
+    ArrayList<ArrayList<String>> getUIFormattedAliasList();
     //@@author
 
     /**

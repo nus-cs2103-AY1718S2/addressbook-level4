@@ -86,12 +86,17 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void updateBrowserTabs(String function, String tabId) {
         switch (function) {
-            case FUNCTION_ADD:
-                addBrowserTab(tabId);
-                break;
-            case FUNCTION_REMOVE:
-                removeBrowserTab(tabId);
-                break;
+
+        case FUNCTION_ADD:
+            addBrowserTab(tabId);
+            break;
+
+        case FUNCTION_REMOVE:
+            removeBrowserTab(tabId);
+            break;
+
+        default:
+            // Do nothing
         }
     }
 
@@ -102,12 +107,17 @@ public class BrowserPanel extends UiPart<Region> {
         if (!openTabIdSet.contains(tabId)) {
             openTabIdSet.add(tabId);
             switch (tabId) {
-                case FACEBOOK_TAB_ID:
-                    tabPane.getTabs().add(0, facebookTab);
-                    break;
-                case TWITTER_TAB_ID:
-                    tabPane.getTabs().add(twitterTab);
-                    break;
+
+            case FACEBOOK_TAB_ID:
+                tabPane.getTabs().add(0, facebookTab);
+                break;
+
+            case TWITTER_TAB_ID:
+                tabPane.getTabs().add(twitterTab);
+                break;
+
+            default:
+                // Do nothing
             }
         }
     }
@@ -118,12 +128,17 @@ public class BrowserPanel extends UiPart<Region> {
     private void removeBrowserTab(String tabId) {
         openTabIdSet.remove(tabId);
         switch (tabId) {
-            case FACEBOOK_TAB_ID:
-                tabPane.getTabs().remove(facebookTab);
-                break;
-            case TWITTER_TAB_ID:
-                tabPane.getTabs().remove(twitterTab);
-                break;
+
+        case FACEBOOK_TAB_ID:
+            tabPane.getTabs().remove(facebookTab);
+            break;
+
+        case TWITTER_TAB_ID:
+            tabPane.getTabs().remove(twitterTab);
+            break;
+
+        default:
+            //Do nothing
         }
     }
 

@@ -76,9 +76,8 @@ public class RouteOptimization {
         Map<String, Double> startingRoute = new LinkedHashMap<>();
         GetDistance distance = new GetDistance();
         SortAddresses sort = new SortAddresses();
-        Map<String, Double> dummy = new LinkedHashMap<>();
+        Map<String, Double> dummy;
         String first;
-
 
         for (int i = 0; i < filteredAddresses.size(); i++) {
             String destination = filteredAddresses.get(i);
@@ -86,12 +85,10 @@ public class RouteOptimization {
             startingRoute.put(labelRoutes(origin, destination), distance.getDistance(origin, destination));
         }
         dummy = sort.cleanSorted(sort.sortByComparator(startingRoute));
-        //sort.printMap(dummy);
         Map.Entry<String, Double> entry = dummy.entrySet().iterator().next();
         first = entry.getKey().split("_")[1];
         optimizedRoute.add(first);
         return optimizedRoute;
-
     }
 
     //@@author meerakanani10
@@ -139,7 +136,6 @@ public class RouteOptimization {
                 optimizedRoute = getDistances(filteredAddresses, next, optimizedRoute);
             }
         }
-
         return optimizedRoute;
     }
     //@@author meerakanani10

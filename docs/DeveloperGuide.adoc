@@ -276,19 +276,31 @@ In the RouteOptimization class the sorting function will be responsible to deter
 
 To getDistance - google API is required to get the geocodes for the locations. Once the geocode for each address is obtained
 the distance between the two points is calculated and a matrix is returned with a distance property.
-The distance property gives the distance in kilometers from the origin to destination.
+The distance property gives the distance in kilometers from the origin to destination. The function operates recursively determining the shortest
+distances from the starting point onwards and then from the next point onwards. This recursive nature ensures that the driver is following a seamless route.
+
+For example:
+
+* Start at A (first address in the list of addresses)
+* Find all the distances from point A to the rest of the destinations
+* Choose the shortest distance from the bunch (ex. A-B is the shortest)
+* Add B to the list of addresses for the optimized route
+* Now repeat using B as the starting point and calculating the distance to all remaining destinations (omitting A)
 
 The optimized route will the be fed into a mapping function to display the route and get the directions for the driver.
+
 // end::optimize[]
 
 // tag::sort[]
 ==== Sorting addresses
-Once the distances have been found for all combinations of addresses on that filtered day they get stored in a Map with key: "address1_address2" and
-value: Double distance (in km). This hashmap gets sorted in order of distances and any irrelevant or duplicate calculations are removed.
-This sorted Hashmap now contains the key with the orign and destination address as well as the distance between the two.
+Once the distances have been found for all combinations of addresses on that filtered day they get stored in a Map with key: "String address1_address2" and
+value: "Double distance (in km)". This hashmap gets sorted in order of distances and any irrelevant or duplicate calculations are removed. For example if the distance from
+A to B is stored and B to A is stored, the second stored duplicate will be removed
+This sorted Hashmap now contains the key with the orign and destination address as well as the distance between the two. The sortByComparator function is
+constantly used to make sure the addresses are sorted by distances as the distances are being calculated. It is important that the distances are not only
+sorted by distance but also in an optimal route. If the shortest distance is from A to B the next part of the route has to be starting from B. Therefore,
+the distances are measured recursively from the new starting point, sorted by distance and then added to the final route.
 
-Coming soon - If the first key is A_B then the second key must be B_X where X is the address closest to B (not including A). Based on this logic a list of addresses
-will be created as the optimum delivery route.
 // end::sort[]
 
 // tag::loginFeature[]

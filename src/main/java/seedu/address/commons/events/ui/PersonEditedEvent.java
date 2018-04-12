@@ -9,10 +9,11 @@ import seedu.address.model.person.Person;
  */
 public class PersonEditedEvent extends BaseEvent {
 
-
+    private final int index;
     private final Person newPerson;
 
-    public PersonEditedEvent(Person newPerson) {
+    public PersonEditedEvent(int index, Person newPerson) {
+        this.index = index;
         this.newPerson = newPerson;
     }
 
@@ -23,5 +24,9 @@ public class PersonEditedEvent extends BaseEvent {
 
     public Person getNewPerson() {
         return newPerson;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

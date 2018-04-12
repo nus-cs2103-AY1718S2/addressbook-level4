@@ -1,6 +1,5 @@
 package seedu.address.model.smplatform;
 
-//@@author Nethergale
 /**
  * Represents a social media platform, which can take many forms.
  */
@@ -17,12 +16,14 @@ public abstract class SocialMediaPlatform {
                     + "1) " + Facebook.PLATFORM_KEYWORD + " (alias: " + Facebook.PLATFORM_ALIAS + ")\n"
                     + "2) " + Twitter.PLATFORM_KEYWORD + " (alias: " + Twitter.PLATFORM_ALIAS + ")\n";
 
+    //@@author Nethergale
     protected Link link;
 
     public Link getLink() {
         return link;
     }
 
+    //@@author KevinChuangCH
     /**
      * Returns true if a given string is a valid social platform name.
      */

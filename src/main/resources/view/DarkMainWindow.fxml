@@ -21,7 +21,7 @@
   <scene>
     <Scene>
       <stylesheets>
-        <URL value="@NewTheme.css" />
+        <URL value="@DarkTheme.css" />
         <URL value="@Extensions.css" />
       </stylesheets>
 
@@ -32,6 +32,9 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+          </Menu>
+          <Menu mnemonicParsing="false" text="Switch Theme">
+            <MenuItem fx:id="switchThemeMenuItem" mnemonicParsing="false" onAction="#switchTheme" text="toggle"/>
           </Menu>
         </MenuBar>
 

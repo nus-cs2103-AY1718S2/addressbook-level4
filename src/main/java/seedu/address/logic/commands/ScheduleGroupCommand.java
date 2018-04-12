@@ -64,6 +64,9 @@ public class ScheduleGroupCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, groupToShow.getInformation()));
     }
 
+    /**
+     * Populate the {@code occupied} list to include all modules from all members from {@code groupToShow}
+     */
     private void fillTimeSlots(Group groupToShow) {
         for (Person member : groupToShow.getPersonList()) {
             ArrayList<WeeklyEvent> moduleList = DatabaseManager.getInstance().parseEvents(member.getTimeTableLink());
@@ -71,6 +74,9 @@ public class ScheduleGroupCommand extends Command {
         }
     }
 
+    /**
+     * Generate all common free time slots according to the {@code occupied} list and store it in {@code free}
+     */
     private void generateFreeTimeSlots() {
         String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
         for (String day : daysOfWeek) {
@@ -85,6 +91,9 @@ public class ScheduleGroupCommand extends Command {
         }
     }
 
+    /**
+     * @return true if the {@code timeSlot} clashes with any mod in {@code occupied}
+     */
     private boolean moduleClash(WeeklyEvent timeSlot) {
         for (WeeklyEvent mod : occupied) {
             if (mod.clash(timeSlot)) {

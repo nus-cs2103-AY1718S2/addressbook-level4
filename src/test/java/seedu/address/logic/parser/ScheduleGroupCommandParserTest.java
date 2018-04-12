@@ -14,8 +14,7 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
 
 /**
- * Test scope: similar to {@code DeleteCommandParserTest}.
- * @see DeleteCommandParserTest
+ * Tests for the parsing of input arguments and creating a new ScheduleGroupCommand object
  */
 public class ScheduleGroupCommandParserTest {
 

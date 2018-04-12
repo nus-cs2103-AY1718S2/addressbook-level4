@@ -1,8 +1,8 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_COIN;
 import static seedu.address.testutil.TypicalRules.getTypicalRules;
+import static seedu.address.testutil.TypicalTargets.INDEX_SECOND_COIN;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysRule;
 
 import org.junit.Before;

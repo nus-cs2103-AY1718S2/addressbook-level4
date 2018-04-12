@@ -6,7 +6,8 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.TokenType.PREFIX_AMOUNT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.TARGET_FIRST_COIN;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -73,10 +74,10 @@ public class CoinBookParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_COIN.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_COIN), command);
+        assertEquals(new DeleteCommand(TARGET_FIRST_COIN), command);
         DeleteCommand aliasedCommand = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_COIN.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_COIN), aliasedCommand);
+        assertEquals(new DeleteCommand(TARGET_FIRST_COIN), aliasedCommand);
     }
 
     @Test
@@ -147,10 +148,10 @@ public class CoinBookParserTest {
     public void parseCommand_select() throws Exception {
         ViewCommand command = (ViewCommand) parser.parseCommand(
                 ViewCommand.COMMAND_WORD + " " + INDEX_FIRST_COIN.getOneBased());
-        assertEquals(new ViewCommand(INDEX_FIRST_COIN), command);
+        assertEquals(new ViewCommand(TARGET_FIRST_COIN), command);
         ViewCommand aliasedCommand = (ViewCommand) parser.parseCommand(
                 ViewCommand.COMMAND_ALIAS + " " + INDEX_FIRST_COIN.getOneBased());
-        assertEquals(new ViewCommand(INDEX_FIRST_COIN), aliasedCommand);
+        assertEquals(new ViewCommand(TARGET_FIRST_COIN), aliasedCommand);
     }
 
     @Test

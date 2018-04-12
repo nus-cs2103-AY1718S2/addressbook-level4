@@ -12,7 +12,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
 import static seedu.address.testutil.TypicalCoins.ALIS;
 import static seedu.address.testutil.TypicalCoins.BOS;
 import static seedu.address.testutil.TypicalCoins.KEYWORD_MATCHING_BTC;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_FIRST_COIN;
 
 import org.junit.Test;
 

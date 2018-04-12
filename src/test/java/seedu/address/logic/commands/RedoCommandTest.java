@@ -5,8 +5,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstCoin;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_COIN;
+import static seedu.address.testutil.TypicalTargets.TARGET_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.TARGET_SECOND_COIN;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,8 +25,8 @@ public class RedoCommandTest {
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalCoinBook(), new UserPrefs());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_COIN);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_SECOND_COIN);
+    private final DeleteCommand deleteCommandOne = new DeleteCommand(TARGET_FIRST_COIN);
+    private final DeleteCommand deleteCommandTwo = new DeleteCommand(TARGET_SECOND_COIN);
 
     @Before
     public void setUp() throws Exception {

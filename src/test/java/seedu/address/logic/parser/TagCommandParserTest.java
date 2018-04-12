@@ -11,8 +11,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HOT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_COIN;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_SECOND_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_THIRD_COIN;
 
 import org.junit.Test;
 

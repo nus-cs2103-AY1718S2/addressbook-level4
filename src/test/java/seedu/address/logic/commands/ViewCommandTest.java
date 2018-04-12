@@ -6,9 +6,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showCoinAtIndex;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_COIN;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_SECOND_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_THIRD_COIN;
+import static seedu.address.testutil.TypicalTargets.TARGET_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.TARGET_SECOND_COIN;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -75,14 +77,14 @@ public class ViewCommandTest {
 
     @Test
     public void equals() {
-        ViewCommand selectFirstCommand = new ViewCommand(INDEX_FIRST_COIN);
-        ViewCommand selectSecondCommand = new ViewCommand(INDEX_SECOND_COIN);
+        ViewCommand selectFirstCommand = new ViewCommand(TARGET_FIRST_COIN);
+        ViewCommand selectSecondCommand = new ViewCommand(TARGET_SECOND_COIN);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        ViewCommand selectFirstCommandCopy = new ViewCommand(INDEX_FIRST_COIN);
+        ViewCommand selectFirstCommandCopy = new ViewCommand(TARGET_FIRST_COIN);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false
@@ -134,7 +136,7 @@ public class ViewCommandTest {
      * Returns a {@code ViewCommand} with parameters {@code index}.
      */
     private ViewCommand prepareCommand(Index index) {
-        ViewCommand viewCommand = new ViewCommand(index);
+        ViewCommand viewCommand = new ViewCommand(new CommandTarget(index));
         viewCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return viewCommand;
     }

@@ -7,7 +7,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.ViewCommand.MESSAGE_SELECT_COIN_SUCCESS;
 import static seedu.address.testutil.TypicalCoins.KEYWORD_MATCHING_BTC;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoins;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_FIRST_COIN;
 
 import org.junit.Test;
 
@@ -80,8 +80,8 @@ public class ViewCommandSystemTest extends CoinBookSystemTest {
         invalidIndex = getModel().getFilteredCoinList().size() + 1;
         assertCommandFailure(ViewCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_COMMAND_TARGET);
 
-        /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(ViewCommand.COMMAND_WORD + " abc",
+        /* Case: invalid arguments (symbols) -> rejected */
+        assertCommandFailure(ViewCommand.COMMAND_WORD + " -#abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
 
         /* Case: invalid arguments (extra argument) -> rejected */

@@ -26,12 +26,12 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String MESSAGE_DELETE_COIN_SUCCESS = "Deleted Coin: %1$s";
 
-    private final Index targetIndex;
+    private final CommandTarget target;
 
     private Coin coinToDelete;
 
-    public DeleteCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public DeleteCommand(CommandTarget target) {
+        this.target = target;
     }
 
 
@@ -51,18 +51,19 @@ public class DeleteCommand extends UndoableCommand {
     protected void preprocessUndoableCommand() throws CommandException {
         List<Coin> lastShownList = model.getFilteredCoinList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        try {
+            Index index = target.toIndex(model.getFilteredCoinList());
+            coinToDelete = lastShownList.get(index.getZeroBased());
+        } catch (IndexOutOfBoundsException e) {
             throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_TARGET);
         }
-
-        coinToDelete = lastShownList.get(targetIndex.getZeroBased());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteCommand) other).targetIndex) // state check
+                && this.target.equals(((DeleteCommand) other).target) // state check
                 && Objects.equals(this.coinToDelete, ((DeleteCommand) other).coinToDelete));
     }
 }

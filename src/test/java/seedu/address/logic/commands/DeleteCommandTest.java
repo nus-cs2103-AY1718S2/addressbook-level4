@@ -9,8 +9,8 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showCoinAtIndex;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_SECOND_COIN;
 
 import org.junit.Test;
 
@@ -178,7 +178,7 @@ public class DeleteCommandTest {
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
     private DeleteCommand prepareCommand(Index index) {
-        DeleteCommand deleteCommand = new DeleteCommand(index);
+        DeleteCommand deleteCommand = new DeleteCommand(new CommandTarget(index));
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }

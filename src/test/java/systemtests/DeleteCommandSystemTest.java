@@ -6,7 +6,7 @@ import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_COIN_SUC
 import static seedu.address.testutil.TestUtil.getCoin;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_FIRST_COIN;
 
 import org.junit.Test;
 
@@ -84,8 +84,8 @@ public class DeleteCommandSystemTest extends CoinBookSystemTest {
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
         assertCommandFailure(command, MESSAGE_INVALID_COMMAND_TARGET);
 
-        /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        /* Case: invalid arguments (symbols) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -#abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);

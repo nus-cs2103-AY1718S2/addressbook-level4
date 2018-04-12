@@ -3,7 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoins;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_SECOND_COIN;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysCoin;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 

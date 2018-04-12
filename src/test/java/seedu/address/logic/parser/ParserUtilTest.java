@@ -23,7 +23,7 @@ import static seedu.address.testutil.TestUtil.RIGHT_PAREN_TOKEN;
 import static seedu.address.testutil.TestUtil.STRING_ONE_TOKEN;
 import static seedu.address.testutil.TestUtil.STRING_THREE_TOKEN;
 import static seedu.address.testutil.TestUtil.STRING_TWO_TOKEN;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_FIRST_COIN;
 
 import java.util.ArrayList;
 import java.util.Arrays;

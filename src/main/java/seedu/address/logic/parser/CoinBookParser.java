@@ -71,7 +71,7 @@ public class CoinBookParser {
 
         case ViewCommand.COMMAND_WORD:
         case ViewCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
+            return new ViewCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:

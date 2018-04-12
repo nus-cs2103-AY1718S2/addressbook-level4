@@ -335,11 +335,14 @@ Examples:
 `borrow 2` +
 Borrow the 2nd book in the catalogue.
 
-=== Clearing all accounts : `cleara`[TO BE IMPLEMENTED]
+=== Clearing all accounts : `cleara`
 
 Clears all accounts from AccountList. +
 Format: `clear` +
 Privilege Level: 2(Librarian)
+
+[NOTE]
+When an librarian clears the list of accounts, it is automatically logged out.
 
 === Return a book : `return`[TO BE IMPLEMENTED]
 
@@ -453,7 +456,7 @@ e.g. `borrow 1`
 e.g. `return 2`
 * *reserve* : `reserve INDEX` +
 e.g. `reserve 2`
-* *addaAccount* : `adda n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
+* *addaAccount* : `addAccount n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
 e.g. `addAccount n/Jack Morgan m/A0123456J u/jack p/jack123 l/1`
 * *deletea* : `delete USERNAME` +
 e.g. `delete A0123456M`

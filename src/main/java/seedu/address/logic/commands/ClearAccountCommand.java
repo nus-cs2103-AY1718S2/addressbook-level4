@@ -12,7 +12,7 @@ import seedu.address.model.account.exceptions.DuplicateAccountException;
 public class ClearAccountCommand extends UndoableCommand{
 
     public static final String COMMAND_WORD = "cleara";
-    public static final String MESSAGE_SUCCESS = "AccountList has been cleared!";
+    public static final String MESSAGE_SUCCESS = "AccountList has been cleared, and you are logged out!";
     public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
 
     @Override
@@ -24,6 +24,7 @@ public class ClearAccountCommand extends UndoableCommand{
             e.printStackTrace();
         }
         model.resetAccount(blankList);
+        model.logout();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

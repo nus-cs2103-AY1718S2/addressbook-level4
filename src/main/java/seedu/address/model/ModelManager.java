@@ -139,6 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetAccount(UniqueAccountList newData) {
         this.accountList = newData;
+        indicateAccountListChanged();
     }
 
     @Override

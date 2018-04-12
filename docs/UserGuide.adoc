@@ -175,7 +175,7 @@ entered and is due to return the full amount on 5 May 2018._
 ====
 
 ====
- add ty: c  p: 88888888 n: Xiao Ming e: xiao@ming.com s: today a: W Hotel d: 5 May 2018 m: 31415926535897 i: 9.71 t: richxiaoming
+ add ty: c  p: 88888888 n: Xiao Ming e: xiao@ming.com s: today a: W Hotel d: 5 May 2018 m: 314159265 i: 9.71 t: richxiaoming
 
 _Adds the same `Customer` as above, just with values specified in a different order._
 ====

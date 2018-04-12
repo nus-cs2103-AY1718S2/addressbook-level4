@@ -251,8 +251,6 @@ _Deletes the first person in the results of the `find` command._
 ** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* Only fields common to both Customer and Runner can be edited (NAME, PHONE, EMAIL, ADDRESS)
-* Functionality to edit Customer-specific fields, such as MONEY_OWED, INTEREST_RATE, etc..., will come in v2.0
 * When editing tags, the existing tags of the person will be replaced i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t:` without specifying any tags after it.
 ====

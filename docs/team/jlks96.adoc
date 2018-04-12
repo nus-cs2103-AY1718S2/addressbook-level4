@@ -159,7 +159,11 @@ include::../UserGuide.adoc[tag=scheduling]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
+include::../DeveloperGuide.adoc[tag=modelComponent]
+
 include::../DeveloperGuide.adoc[tag=deletebefore]
 
 include::../DeveloperGuide.adoc[tag=scheduling]
+
+include::../DeveloperGuide.adoc[tag=jlksusecases]
 

@@ -1,4 +1,5 @@
 = Codeducator - User Guide
+
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -17,11 +18,14 @@ endif::[]
 
 By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
+image::CodeducatorTitle.png[width:100px]
+
 == Introduction
 
 Codeducator is a desktop address book and scheduling application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. +
 
 You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. +
+
 Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start

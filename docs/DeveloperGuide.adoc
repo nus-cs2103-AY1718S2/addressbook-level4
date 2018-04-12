@@ -1,4 +1,4 @@
-= LoanShark Tycoon v1.5rc - Developer Guide
+= HuatAh! v1.5rc - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -1237,7 +1237,7 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*LoanShark Tycoon*
+*HuatAh!*
 
 Author:
 

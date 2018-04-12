@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.LessonList;
+import seedu.address.model.lesson.Time;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
@@ -111,13 +112,41 @@ public class Schedule implements ReadOnlySchedule {
 
     }
 
+    /**
+     * Finds the latest EndTime in the Schedule
+     * @return
+     */
+    @Override
+    public Time getLatestEndTime() {
+        Time latest = new Time("00:00");
+        for (Lesson l : lessons) {
+            if (l.getEndTime().compareTo(latest) > 0) {
+                latest = l.getEndTime();
+            }
+        }
+        return latest;
+    }
+
+    /**
+     * Finds the earliest StartTime in the Schedule
+     * @return
+     */
+    @Override
+    public Time getEarliestStartTime() {
+        Time earliest = new Time("23:59");
+
+        for (Lesson l : lessons) {
+            if (l.getStartTime().compareTo(earliest) < 0) {
+                earliest = l.getStartTime();
+            }
+        }
+        return earliest;
+    }
 
     //// util methods
-
     @Override
     public String toString() {
         return lessons.asObservableList().size() + " lessons";
-        // TODO: refine later
     }
 
     @Override

@@ -39,6 +39,8 @@ public class CalendarPanel extends UiPart<CalendarView> {
 
     private static final Time TIME_DEFAULT_START = new Time("07:00");
     private static final Time TIME_DEFAULT_END = new Time("22:00");
+    private static final LocalTime TEMPORAL_TIME_DEFAULT_START = LocalTime.of(00, 30);
+    private static final LocalTime TEMPORAL_TIME_DEFAULT_END = LocalTime.of(23, 59);
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -108,14 +110,10 @@ public class CalendarPanel extends UiPart<CalendarView> {
         calendarView.getWeekPage().setShowDate(false);
         calendarView.weekFieldsProperty().setValue(WeekFields.of(Locale.FRANCE)); // Start week from Monday
 
-
         DetailedWeekView detailedWeekView = calendarView.getWeekPage().getDetailedWeekView();
         detailedWeekView.setEarlyLateHoursStrategy(DayViewBase.EarlyLateHoursStrategy.HIDE);
         detailedWeekView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_COUNT);
-        reSizeCalendar(detailedWeekView, schedule);
-
-        //detailedWeekView.setVisibleHours((int) ChronoUnit.HOURS.between(startTime, endTime));
-        detailedWeekView.setShowScrollBar(false);
+        resizeCalendar(calendarView, schedule);
     }
 
     /**
@@ -126,41 +124,26 @@ public class CalendarPanel extends UiPart<CalendarView> {
         this.addressBook = addressBook;
         this.schedule = readOnlySchedule;
         readOnlySchedule.getSchedule().stream().forEach(this::loadEntry);
-        reSizeCalendar(calendarView.getWeekPage().getDetailedWeekView(), readOnlySchedule);
-    }
-    private Time latestTime(ReadOnlySchedule readOnlySchedule) {
-        Time latest = new Time("00:00");
-        for (Lesson l : readOnlySchedule.getSchedule()) {
-            if (l.getEndTime().compareTo(latest) > 0) {
-                latest = l.getEndTime();
-            }
-        }
-        return latest;
-    }
-    private Time earliestTime(ReadOnlySchedule readOnlySchedule) {
-        Time earliest = new Time("23:59");
-
-        for (Lesson l : readOnlySchedule.getSchedule()) {
-            if (l.getStartTime().compareTo(earliest) < 0) {
-                earliest = l.getEndTime();
-            }
-        }
-        return earliest;
+        resizeCalendar(calendarView, readOnlySchedule);
     }
 
-    private void reSizeCalendar(DetailedWeekView detailedWeekView, ReadOnlySchedule schedule) {
-        Time start = TIME_DEFAULT_START.compareTo(earliestTime(schedule)) < 0
-                ? TIME_DEFAULT_START : earliestTime(schedule);
-        Time end = TIME_DEFAULT_END.compareTo(latestTime(schedule)) > 0
-                ? TIME_DEFAULT_END : latestTime(schedule);
+    /**
+     * Resizes the calendar view if any time slots are outside of the default time range
+     * @param calendarView
+     * @param schedule
+     */
+    private void resizeCalendar(CalendarView calendarView, ReadOnlySchedule schedule) {
+        DetailedWeekView detailedWeekView = calendarView.getWeekPage().getDetailedWeekView();
+        Time start = TIME_DEFAULT_START.compareTo(schedule.getEarliestStartTime()) < 0
+                ? TIME_DEFAULT_START : schedule.getEarliestStartTime();
+        Time end = TIME_DEFAULT_END.compareTo(schedule.getLatestEndTime()) > 0
+                ? TIME_DEFAULT_END : schedule.getLatestEndTime();
         LocalTime startTime = LocalTime.parse(start.toString());
         LocalTime endTime = LocalTime.parse(end.toString());
 
-        System.out.println("Start: " + startTime.toString() + " End: " + endTime.toString());
-        //detailedWeekView.setVisibleHours((int) ChronoUnit.HOURS.between(startTime, endTime));
-//        calendarView.setStartTime(startTime);
-//        calendarView.setEndTime(endTime);
-
+        detailedWeekView.setVisibleHours((int) ChronoUnit.HOURS.between(startTime, endTime));
+        calendarView.setStartTime(startTime);
+        calendarView.setEndTime(endTime);
     }
     /**
      * Creates an entry with the {@code lesson} details and loads it into the calendar

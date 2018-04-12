@@ -42,11 +42,13 @@ public class GroupBuilder {
     /**
      * Sets the {@code Information} of the {@code Group} that we are building.
      */
-    public GroupBuilder withPerson(String information, Person personToAdd) {
+    public GroupBuilder withPerson(String information, Person... personsToAdd) {
         this.information = new Information(information);
         personList = new UniquePersonList();
         try {
-            personList.add(personToAdd);
+            for(Person person : personsToAdd) {
+                personList.add(person);
+            }
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
         }

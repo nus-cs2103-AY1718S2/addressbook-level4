@@ -21,6 +21,8 @@ public class TypicalGroups {
             TypicalPersons.ALICE).build();
     public static final Group GROUP_G = new GroupBuilder().withPerson("Group G",
             TypicalPersons.BENSON).build();
+    public static final Group GROUP_H = new GroupBuilder().withPerson("Group H", TypicalPersons.ALICE,
+            TypicalPersons.BENSON).build();
 
 
     public static List<Group> getTypicalGroups() {

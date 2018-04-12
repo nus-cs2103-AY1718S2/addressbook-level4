@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.web.WebView?>
 
-<StackPane xmlns = "http://javafx.com/javafx/">
+<StackPane id="calendarPane" fx:id="calendarPane" xmlns = "http://javafx.com/javafx/">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="200.0" />
     </children>

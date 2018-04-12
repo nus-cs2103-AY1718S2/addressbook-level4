@@ -24,9 +24,9 @@ endif::[]
 * *Contacting the Devs:*
 ** <<AboutUs#, More about us>>
 ** <<ContactUs#, Contact details>>
-* Contributing:
+* *Contributing*:
 ** Visit our https://github.com/CS2103JAN2018-F12-B4/main/issues[issue tracker]!
-** Submit a https://github.com/CS2103JAN2018-F12-B4/main/pulls[Pull Request]!
+** Submit a https://github.com/CS2103JAN2018-F12-B4/main/pulls[pull request]!
 
 == Acknowledgements
 

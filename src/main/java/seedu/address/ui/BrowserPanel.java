@@ -84,7 +84,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     * Run script that read person name
+     * Run script that read person's name
      * @param person
      */
     private void readPersonName(Person person) {

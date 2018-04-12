@@ -200,11 +200,14 @@ The sections below give more details of each component.
 .Interactions for Login Component
 image::Login.png[width="800"]
 
-Upon launching the app, the Login component takes in two inputs from the user: `Username` and `Password`, then stores the user's login credentials into a `.xml` file.
+Upon launching the app, the Login component takes in two inputs from the user: `Username` and `Password`, creates an account, then stores the user's login credentials into a `.xml` file. +
+If that `.xml` file already exists (`Username` entered is existing `Username`), it authenticates the User then loads in data previously saved by that User. +
 [Optional] `.xml` file is encrypted.
 
 * The login credentials are therefore immutable (cannot be changed).
 * The same username and password have to be used every time the user wishes to access the app.
+[NOTE]
+`Username` and `Password` are case-sensitive.
 * Only upon successful authentication will the app load data from the `Storage` Component.
 
 [[Design-Ui]]
@@ -329,7 +332,8 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component:
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the user data in xml format and read it back.
+* can save list of `User` objects for login authentication.
 
 [[Design-Commons]]
 === Common classes
@@ -339,6 +343,98 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::login[]
+=== Login feature
+==== Current Implementation
+
+The login feature is initialized upon startup of the application, through `LoginStorage` and `LoginManager` and is facilitated by the `LoginUi`. +
+It supports multiple accounts whereby one user cannot access the application content of another user by creating multiple `.xml` storage files. +
+
+image::LoginDiagram.png[width="800"]
+
+As seen from the diagram, upon opening the application, the user is prompted to enter their `Username` and `Password`. The `LoginManager` fetches the data of existing `User` objects, before putting them into a Hashmap<Username, User> as shown below. +
+
+[source,java]
+----
+    public synchronized void addUser(String username, String password) throws DuplicateUserException {
+        if (!userList.getUserList().containsKey(username)) {
+            Username addUsername = new Username(username);
+            Password addPassword = new Password(password);
+            User toAdd = new User(addUsername, addPassword);
+            userList.add(toAdd);
+        }
+    }
+----
+[NOTE]
+`Username` and `Password` are case-sensitive.
+
+The credentials entered by the user are then checked against the HashMap to authenticate the account. Upon successful login, the user's file is retrieved from the `Storage` component and is loaded up with the application. +
+
+[source, java]
+----
+@Override
+    public void authenticate(String username, String password) throws DuplicateUserException {
+
+        logger.fine("Authenticating user: " + username);
+        String filepath = username + ".xml";
+        if (userList.getUserList().containsKey(username)) {
+            if (userList.getUserList().get(username).getPassword().getPassword().equals(password)) {
+                loginUser(filepath);
+            } else {
+                throw new DuplicateUserException();
+            }
+        } else {
+            addUser(username, password);
+            try {
+                File file = new File("data/login/" + filepath);
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new DuplicateUserException();
+            }
+            loginUser(filepath);
+        }
+
+    }
+----
+
+[NOTE]
+If the user is a new (username does not exist), they should simply enter their desired `Username` and `Password` into the respective fields, and the account will be created with the default data of the application.
+
+==== Design Considerations
+
+===== Aspect: Implementing new `User`
+* **Alternative 1 (current choice)**: Using same login window, create new `User` if `Username` entered does not exist
+** Pros: Use of only 1 window, no need to implement additional UI functionalities.
+** Cons: Not the most user-friendly or the most conventional way a login works.
+* **Alternative 2**: Create a registration button, which brings the user to a registration UI for the creation of `User` object
+** Pros: More user-friendly, able to implement a username field, along with a password field and, especially a field for password confirmation.
+** Cons: Need to further add onto UI.
+
+===== Aspect: `User` identification
+* **Alternative 1 (current choice)**: `Username` is case-sensitive
+** Pros: "Johndoe" and "johndoe" are different usernames and different accounts with the same name can be created.
+** Cons: If a user makes a typo in the `Username` field, another account is created instead of correctly logging on to their account.
+* **Alternative 2**: `Username` to be made case-insensitive
+** Pros: Users will not have to worry about whether they signed up with a different `Username`.
+** Cons: Less usernames are available.
+
+===== Aspect: `Username` and `Password` Representation
+* **Alternative 1 (current choice)**: `Username` and `Password` only allow alphanumeric characters
+** Pros: Easy authentication, no need to worry about corner cases.
+** Cons: Less room for different usernames and passwords, not as secure.
+* **Alternative 2**: Include special characters in `Username` and `Password` Regex
+** Pros: More secure, less prone to security issues.
+** Cons: Need for more rigorous testing to ensure no corner cases are left out.
+
+===== Aspect: Salting Passwords/Encryption of Files
+* **Alternative 1 (current choice)**: No encryption/salting implemented
+** Pros: Ease of editing information by administrator.
+** Cons: Security issues, easy to find data path and retrieve files.
+* **Alternative 2**: Encrypt files and salt passwords before encryption
+** Pros: Increases security of software, less prone to be used for malicious purposes.
+** Cons: Large amount of coding and implementation required, prerequisites also include knowledge of security issues and safeguards.
+// end::login[]
 
 === Help feature
 ==== Current Implementation
@@ -474,13 +570,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption (Coming in v2.0)
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
+// tag::email[]
 === Email (Since v1.1)
 
 This feature allows the user to call their desktop mail application from the application itself, with the mailTo: field already populated with the user input.
@@ -504,7 +594,9 @@ call the Java `Desktop` class to launch the user's default mail application.
 * **Alternative 2:** Use the in-built browser
 ** Pros: Higher level of compatibility, means it can be used with a wider range of operating systems.
 ** Cons: Clunky as users may use different web mail services. The API would also differ based on the email they use as well.
+// end::email[]
 
+// tag::participationmarks[]
 === Participation Marks (Since v1.4)
 
 This feature allows the user to add marks to the `Participation` atttribute of a `Person`.
@@ -525,6 +617,7 @@ parse the argument. The argument will be passed into the MarkCommand to be execu
 * **Alternative 2:** Make `Participation` editable
 ** Pros: Easier to update the data.
 ** Cons: Does not follow the scheme of the application.
+// end::participationmarks[]
 
 ==== Future enhancements (Coming in v2.0)
 

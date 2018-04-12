@@ -49,6 +49,24 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window for the 
 .  Refer to <<Features>> for details of each command.
 
 [[Features]]
+== Login Feature
+
+Before you are able to access the application, login is required.
+====
+* Enter your `Username` and `Password` in the respective fields. +
+* Click on the `login` button.
+* If you have entered either of those incorrectly, the text "Wrong username or password entered" will be displayed. You have an unlimited number of tries to log in. +
+* Upon successful login, the application will load with your previously saved data.
+====
+
+[NOTE]
+Both `Username` and `Password` fields are case-sensitive.
+
+[TIP]
+If you are a first-time user, create an account by entering your desired `Username` and `Password` in the username and password text fields respectively. +
+Then, click on the `Login` button.
+
+
 == Contact Features
 
 ====

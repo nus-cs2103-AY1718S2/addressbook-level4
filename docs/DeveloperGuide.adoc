@@ -620,6 +620,8 @@ The code snippet below shows how the `studentToEdit` is created when the `editMi
 				programmingLanguage, tags, isFavourite, dashboard, profilePicturePath, miscellaneousInfo);
 }
 
+----
+
 After that, the student will be updated with the new details for his/her miscellaneous information.
 
 For the command `editPicture`, the student's index will have to be provided by the user again. The next parameter for this is the required file path of the picture file.

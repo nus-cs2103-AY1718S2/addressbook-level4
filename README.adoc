@@ -19,11 +19,11 @@ endif::[]
 == Site Map
 
 * *Documentation:*
-** For users: <<UserGuide#, User Guide>>
-** For developers: <<DeveloperGuide#, Developer Guide>>!
+** <<UserGuide#, User Guide>>
+** <<DeveloperGuide#, Developer Guide>>
 * *Contacting the Devs:*
-** <<AboutUs#, More about us>>
-** <<ContactUs#, Contact details>>
+** <<AboutUs#, About Us>>
+** <<ContactUs#, Contact Us>>
 * *Contributing*:
 ** Visit our https://github.com/CS2103JAN2018-F12-B4/main/issues[issue tracker]!
 ** Submit a https://github.com/CS2103JAN2018-F12-B4/main/pulls[pull request]!

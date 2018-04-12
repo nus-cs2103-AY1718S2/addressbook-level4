@@ -5,7 +5,7 @@ import seedu.address.logic.commands.PopulatableCommand;
 
 //@@author jonleeyz
 /**
- * Indicates that a new result is available.
+ * Indicates that a new request to populate the CommandBox is available.
  */
 public class PopulatePrefixesRequestEvent extends BaseEvent {
 

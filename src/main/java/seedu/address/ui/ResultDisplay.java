@@ -73,7 +73,7 @@ public class ResultDisplay extends UiPart<Region> {
     private void handleHomeRequestEvent(HomeRequestEvent event) {
         setStyleToIndicateCommandSuccess();
         Platform.runLater(() -> {
-            displayed.setValue("");
+            displayed.setValue(event.MESSAGE_HOME);
         });
     }
     //@@author

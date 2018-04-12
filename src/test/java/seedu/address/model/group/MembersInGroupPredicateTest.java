@@ -15,8 +15,7 @@ import seedu.address.testutil.TypicalPersons;
 
 public class MembersInGroupPredicateTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+   
     private Group groupTest = TypicalGroups.GROUP_F;
 
     @Test

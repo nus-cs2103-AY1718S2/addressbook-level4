@@ -4,11 +4,17 @@ import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_PET_PATIENTS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.NRIC_KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPersons.OWES_MONEY_TAG;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +27,9 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
+import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.TypicalPetPatients;
 
 public class FindCommandSystemTest extends AddressBookSystemTest {
 
@@ -150,6 +158,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         command = "FiNd -o n/Meier";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
+
     //@@author wynonaK
     @Test
     public void findNric() {
@@ -213,6 +222,212 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
     }
+
+    @Test
+    public void findPersonTag() {
+        /* Case: find persons with owemoney tag in address book, command with leading spaces and trailing spaces
+         * -> 1 person found
+         */
+        String command = "   " + FindCommand.COMMAND_WORD + " -o t/" + OWES_MONEY_TAG + "   ";
+        Model expectedModel = getModel();
+        ModelHelper.setFilteredPersonList(expectedModel, BENSON);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous find command where person list is displaying the persons we are finding
+         * -> 1 persons found
+         */
+
+        command = FindCommand.COMMAND_WORD + " -o t/" + OWES_MONEY_TAG;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person where person list changes*/
+        command = FindCommand.COMMAND_WORD + " -o t/friends";
+        ModelHelper.setFilteredPersonList(expectedModel, ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book, 2 keywords -> 7 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/friends owesMoney";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book, 2 keywords in reversed order -> 7 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/owesMoney friends";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book, 2 keywords with 1 repeat -> 7 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/owesMoney friends owesMoney";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book, 2 matching keywords and 1 non-matching keyword
+         * -> 2 persons found
+         */
+        command = FindCommand.COMMAND_WORD + " -o t/owesMoney friends NonMatchingKeyWord";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person in address book, keyword is same as name but of different case -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " -o t/OwEsMoNey fRiEnDs";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: undo previous find command -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous find command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: find person in address book, keyword is substring of tag -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/OWE";
+        ModelHelper.setFilteredPersonList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person in address book, tag is substring of keyword -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/owesmoneys";
+        ModelHelper.setFilteredPersonList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person not in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/Chicken";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find phone number of person in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/" + DANIEL.getPhone().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address of person in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/" + DANIEL.getAddress().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person in empty address book -> 0 persons found */
+        deleteAllPersons();
+        command = FindCommand.COMMAND_WORD + " -o t/friends";
+        expectedModel = getModel();
+        ModelHelper.setFilteredPersonList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: mixed case command word -> rejected */
+        command = "FiNd -o t/friends";
+        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    @Test
+    public void findPet() throws DuplicatePetPatientException {
+        /* Case: find pet name with  tag in address book, command with leading spaces and trailing spaces
+         * -> 1 person found
+         */
+        String command = "   " + FindCommand.COMMAND_WORD + " -p n/" + OWES_MONEY_TAG + "   ";
+        Model expectedModel = getModel();
+        expectedModel.addPetPatient(TypicalPetPatients.JOKER);
+        ModelHelper.setFilteredPersonList(expectedModel, BENSON);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous find command where person list is displaying the persons we are finding
+         * -> 1 persons found
+         */
+
+        command = FindCommand.COMMAND_WORD + " -o t/" + OWES_MONEY_TAG;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person where person list changes*/
+        command = FindCommand.COMMAND_WORD + " -o t/friends";
+        ModelHelper.setFilteredPersonList(expectedModel, ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book, 2 keywords -> 7 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/friends owesMoney";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book, 2 keywords in reversed order -> 7 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/owesMoney friends";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book, 2 keywords with 1 repeat -> 7 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/owesMoney friends owesMoney";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book, 2 matching keywords and 1 non-matching keyword
+         * -> 2 persons found
+         */
+        command = FindCommand.COMMAND_WORD + " -o t/owesMoney friends NonMatchingKeyWord";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person in address book, keyword is same as name but of different case -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " -o t/OwEsMoNey fRiEnDs";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: undo previous find command -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous find command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: find person in address book, keyword is substring of tag -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/OWE";
+        ModelHelper.setFilteredPersonList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person in address book, tag is substring of keyword -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/owesmoneys";
+        ModelHelper.setFilteredPersonList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person not in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/Chicken";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find phone number of person in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/" + DANIEL.getPhone().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address of person in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -o t/" + DANIEL.getAddress().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person in empty address book -> 0 persons found */
+        deleteAllPersons();
+        command = FindCommand.COMMAND_WORD + " -o t/friends";
+        expectedModel = getModel();
+        ModelHelper.setFilteredPersonList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: mixed case command word -> rejected */
+        command = "FiNd -o t/friends";
+        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
+    }
+
     //@@author
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display

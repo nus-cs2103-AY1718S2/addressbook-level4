@@ -479,18 +479,26 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::participation[]
-=== Participation Marks
+=== Participation
 
-This feature allows the user to add marks to the `Participation` atttribute of a `Person`.
+This feature allows the user to keep track of participation marks of a `Person`. A new class, `Participation`, is created and is associated to the `Person` class.
 
 ==== Current implementation
 
-The user will enter a command `markPart INDEX marks/DIGITS` to the application. The application will then rely on `AddressBookparser` and `MarkCommandParser` to
-parse the argument. The argument will be passed into the MarkCommand to be executed. From there, it will create a new `Person` object with the updated
-`Participation` object attribute.
+The user uses this feature by inputting a command, `markPart INDEX marks/DIGITS`, to the application.
+
+The following figure 13 and paragraph below shows the sequence of how the `MarkCommand` command functions:
 
 .MarkCommand Sequence Diagram
 image::MarkCommandSequenceDiagram.png[width="800"]
+
+
+. The user will enter the command `markPart INDEX marks/DIGITS` to the application.
+. The application will then pass the arguments to `AddressBookParser` which in turns passes it to  `MarkCommandParser` to parse the argument.
+. The `MarkCommandParser` would then create a `MarkCommand` with the data from the arguments.
+. The `LogicManager` will then execute the `preprocessUndoableCommand()` in `MarkCommand`.
+. The `preprocessUndoableCommand()` will then execute the `createUpdatedPerson()` to create a new `Person` object with a new `Participation` object containing the new total marks.
+. Finally, this new `Person` object created in step 3 will replace the original `Person` object with the old `Participation` object stored in the `Model` through the `updatePerson()` method.
 
 ==== Design Considerations
 
@@ -498,14 +506,14 @@ image::MarkCommandSequenceDiagram.png[width="800"]
 
 * **Alternative 1 (current choice):** Create an entire new `Person` object
 ** Pros: It is similar to the rest of the `Logic` commands.
-** Cons: Longer number of steps.
-* **Alternative 2:** Make `Participation` editable
-** Pros: Easier to update the data.
-** Cons: Does not follow the scheme of the application.
+** Cons: This uses more memory when executing.
+* **Alternative 2:** Make the `value` in the `Participation` class editable
+** Pros: It uses less memory, and only the value has to be updated.
+** Cons: This will involve writing more methods, and the existing methods can be easily used for the implementation.
 
 ==== Future enhancements (Coming in v2.0)
 
-Support for setting a threshold and easily seeing how many students made the cut over the threshold.
+** Support for setting a threshold and easily seeing how many students made the cut over the threshold.
 
 // end::participation[]
 
@@ -527,8 +535,6 @@ image::displaypic_personcard.png[width="350"]
 
 ==== Current implementation
 
-===== Adding a Display Picture
-
 An additional class, `DisplayPic`, is added to the `Person` class. This class contains the filepath to the stored image file.
 It uses validation checks to ensure that the image meets the following requirements.
 
@@ -538,11 +544,15 @@ It uses validation checks to ensure that the image meets the following requireme
 If it passes the checks, then a new `DisplayPic` object will be created with the filepath to the image stored as its value.
 
 [NOTE]
-When the `DisplayPic` object is first created, it stores the _original_ filepath of the image file provided by the user. This will later be updated by the 3 commands to the duplicated image filepath.
+When the `DisplayPic` object is first created, it stores the _original_ filepath of the image file provided by the user. This will later be updated by the 3 commands mentioned earlier to the duplicated image filepath.
+
+===== Adding a display picture when creating a new person
+
+The `add` command supports a new field `dp/`, where the user will provide the filepath of the image and the newly created `Person` will have that specified image as the display picture.
 
 For persons that were not specified a `dp/` during the `add` command, the `DisplayPic` object associated to them would contain the value of the default display picture.
 
-===== Editing a Display Picture
+===== Editing a display picture
 
 The display picture can also be changed by using the `edit` or `updateDP` commands.
 The implementation of the UpdateDisplayCommand (`updateDP`) command closely follows the `edit` command, hence we will only showcase the implementation of the `UpdateDP` command.
@@ -557,7 +567,7 @@ image::UpdateDisplayCommandSequenceDiagram.png[width="800"]
 . The `preprocessUndoableCommand()` will execute the `createUpdatedPerson()` to create a new `Person` object with the updated `DisplayPicture` object which contains the new filepath.
 . Finally, this new `Person` object created in step 3 will replace the original `Person` object with the old `DisplayPic` object stored in the `Model` through the `updatePerson()` method.
 
-===== Deleting a Display Picture
+===== Deleting a display picture
 
 To fully support the `undo` and `redo` commands, image files cannot be immediately deleted when it is not in use by the `UI`.
 
@@ -592,7 +602,7 @@ public static void clearImageFiles(List<String> itemsToDelete, ObservableList<Pe
 
 The list is then cleared for the next usage of the application.
 
-===== Storing the image file for the Display Picture
+===== Storing the image file for the display picture
 The application will take in an argument for the 3 commands mentioned above through `dp/ [PATH TO IMAGE]`. The `[PATH TO IMAGE]` can be the absolute or relative path to the image file.
 [NOTE]
 An example of a `[PATH TO IMAGE]` would be C:\Users\Desktop\Image.jpg for Windows.
@@ -662,7 +672,7 @@ The image file will then be utilized by JavaFX and displayed on the UI. The drop
 ** Pros: Image files can be easily identified separately and easy to implement.
 ** Cons: This could lead to potential image files overwriting each other without additional checks.
 
-===== Aspect: Deleting of the image
+===== Aspect: Deletion of the image
 * **Alternative 1 (current choice):** Store the filepath in the `AddressBook` and delete it afterwards.
 ** Pros: Fully supports `undo` and `redo` even if the user moves or deletes the original image file.
 ** Cons: It is difficult to manually check which `Person` the image file belongs to.
@@ -670,9 +680,9 @@ The image file will then be utilized by JavaFX and displayed on the UI. The drop
 ** Pros: This allows a simple implementation of immediately deleting the image file.
 ** Cons: The image file could be lost forever if the user moves or deletes the original image file, thus causing `undo` and `redo` to malfunction.
 
-==== Future enhancements
+==== Future enhancements (Coming in v2.0)
 
-* Support for online URLs to download images (Coming in v2.0)
+* Support for online URLs to download images
 
 // end::display[]
 

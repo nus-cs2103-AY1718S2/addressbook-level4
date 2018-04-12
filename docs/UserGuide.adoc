@@ -210,7 +210,7 @@ It also updated her display picture. +
 .Name changed to "Betsy Crower" and All Tags Cleared. +
 image::SecondEdit.png[width="800"]
 
-=== Emailing a person : `email`
+=== Updating the display picture : `update`
 
 Email a person in the address book. This uses your default mail app to email. +
 Format: `email INDEX`
@@ -235,7 +235,7 @@ Returns Betsy as a result. Followed by: +
 `email 1` +
 Emails the 1st person in the results of the `find` command, in this case, Betsy.
 
-=======
+
 === Adding Participation Marks : `markPart`
 
 Adds to the participation marks of a person. The maximum limit for participation marks is 100

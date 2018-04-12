@@ -1,0 +1,58 @@
+= Ellery - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Your TA
+
+---
+
+== Overview
+
+Your TA is an application designed to fulfill the needs of a university tutor. It helps them to manage their students and tasks that they have to do.
+Your TA uses a graphical user interface built using JavaFX and the user interacts with the application mostly through a command line interface.
+Your TA is written in Java and has about 10 kLoC.
+
+Your TA is build upon https://github.com/se-edu/addressbook-level4[AddressBook - Level 4].
+
+== Summary of contributions
+
+* *Major enhancement*: added a display picture/status to all persons in the application.
+** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
+** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+** Credits: https://stackoverflow.com/users/2970947/elliott-frisch[Elliott Frisch] from stackoverflow on the SHA-256 hash algorithm used to generate the name of the image file.
+
+* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/functional/Alaru.md[Functional code]] [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/functional/Alaru-reused.md[Functional(re-used) code]] [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/test/Alaru.md[Test code]] [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/unused/Alaru-unused.md[Unused code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Documentation:
+*** Updated the screenshots used in the User Guide: https://github.com[#14]
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F12-B2/main/issues/83[1], https://github.com/CS2103JAN2018-F12-B2/main/issues/80[2], https://github.com/CS2103JAN2018-F12-B2/main/issues/76[3])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=participation]
+
+include::../UserGuide.adoc[tag=display]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=participation]
+
+include::../DeveloperGuide.adoc[tag=display]
+

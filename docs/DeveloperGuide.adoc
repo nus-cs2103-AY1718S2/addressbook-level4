@@ -478,41 +478,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption (Coming in v2.0)
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
-=== Email (Since v1.1)
-
-This feature allows the user to call their desktop mail application from the application itself, with the mailTo: field already populated with the user input.
-
-==== Current implementation
-
-image::EmailComponentFlow.png[width="800"]
-pass:[<div align="center"><b>Figure 3.3.1: Email Implementation</b></div>]
-
-The user will enter a command `email 1` to the application where the application displays a list of the students entered.
-The value `1` represents the first person in the list, `2` would be the second person and so on. It will then send the student's email address
-which is stored inside the application to the default mail application such as to populate the mailTo: field.
-
-The application will then rely on `AddressBookparser` and `EmailCommandParser` to
-parse the argument. The argument will be passed into the EmailCommand when it will be checked on whether the argument is valid. From there, it will
-call the Java `Desktop` class to launch the user's default mail application.
-
-==== Design Considerations
-
-===== Aspect: How the email is sent
-
-* **Alternative 1 (current choice):** Use the Java `Desktop` class to open the default mail app
-** Pros: It is fast and works with supported Desktop and OS.
-** Cons: Does not work on systems wihtout a default Desktop mail application.
-* **Alternative 2:** Use the in-built browser
-** Pros: Higher level of compatibility, means it can be used with a wider range of operating systems.
-** Cons: Clunky as users may use different web mail services. The API would also differ based on the email they use as well.
-
+// tag::participation[]
 === Participation Marks (Since v1.4)
 
 This feature allows the user to add marks to the `Participation` atttribute of a `Person`.
@@ -537,6 +503,10 @@ parse the argument. The argument will be passed into the MarkCommand to be execu
 ==== Future enhancements (Coming in v2.0)
 
 Support for setting a threshold and easily seeing how many students made the cut over the threshold.
+
+// end::participation[]
+
+// tag::display[]
 
 === Display Picture (Since v1.2)
 
@@ -589,6 +559,8 @@ The current delete uses Java's `deleteOnExit` method. It will be updated later o
 * Support for photo frames and undo for delete (Coming in v1.4)
 * Support for frame color to highlight student status (Coming in v1.5)
 
+// end::display[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -608,6 +580,13 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::dataencryption[]
+=== Data Encryption (Coming in v2.0)
+
+_{Explain here how the data encryption feature will be implemented}_
+
+// end::dataencryption[]
 
 == Documentation
 

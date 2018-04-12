@@ -25,6 +25,7 @@ import seedu.address.model.person.SessionLogs;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author kaisertanqr
 /**
  * Adds a session log to an existing person in the address book.
  */

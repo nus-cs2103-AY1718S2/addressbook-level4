@@ -13,6 +13,8 @@ import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
 
+//@@author kaisertanqr
+
 public class LoginCommandSystemTest extends AddressBookSystemTestWithLogin {
 
     @Test

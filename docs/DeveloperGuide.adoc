@@ -231,16 +231,73 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::multiuser[]
 === Multi-User Feature
 
-==== Current Implementation
+.Structure of the Model Component (UserDatabase Emphasis)
+image::ModelClassDiagramUD.png[width="800"]
 
 To implement the multi-user feature, where each user has his/her own Address Book, we have added a `userDatabase` in Model
 to store all the available users in the application. The `userDatabase` is the same architectural level as the `addressBook`.
 A similar storing system used in `addressBook` is also used for `userDatabase` where the all the user data is stored in a
 single XML file.
 
+==== Design Considerations for Database
 
+A big design consideration is the architecture in implementing the retrieval and storage of multiple users.
+
+*A Possible Design* +
+A possible design was to store users and persons under the same data folder which means encapsulating AddressBook
+in a User. In the XML data storage, the Addressbook will be an element of a User; the User Database will then be the root. +
+
+
+Example:
+
+    <userdatabase>
+        <user>
+            <username> user </username>
+            <password> pass </password>
+            <addressbook>
+                <persons>
+                    <name>John Doe</name>
+                    <phone>98765432</phone>
+                    <email>johnd@example.com</email>
+                    <address>311, Clementi Ave 2, #02-25</address>
+                    <sessionlogs></sessionlogs>
+                    <tags>ADHD</tags>
+                </persons>
+            </addressbook>
+        </user>
+    </userdatabase>
+
+
+However, this may over-complicate and over populate the data storage file very fast
+which can grow quite large with many users. Transportation of the data file may be an issue if the file size becomes too big.
+
+*Current Implementation* +
+
+.Structure of the Storage Component (UserDatabase Emphasis)
+image::StorageClassDiagramUD.png[width="800"]
+
+Currently, the User Database mimics the AddressBook classes and instances in the Model and Storage Components.
+
+In terms of storage, the User Database of all users is now collectively stored in one XML data file. (eg. users.xml).
+The addressbook of each user is now stored in separate XML files. Each addressbook data file is identified in the following
+format:
+
+`addressbook-[USERNAME].xml` where [USERNAME] refers to the username of the user
+
+While this can be argued to be bad as there is strong coupling between the user and the addressbook data file, such is
+fixed as in the absence of the addressbook data file, a sample data file will be created.
+
+==== Deleting User
+One thing to highlight about the deleting of user, it also deletes the AddressBook XML data file, hence it cannot be
+retrieved again. It also prevents users from accessing the file again by creating a user with the same username as the one
+being deleted.
+
+// end::multiuser[]
+
+// tag::authentication[]
 === Authentication
 
 ==== Current Implementation
@@ -267,8 +324,6 @@ image::LoginFeatureUIComponent.png[width="800"]
 When the user is not logged in, commands that manipulate data in the application will be disabled. To avoid editing
 every single command, the invalidity of the command is handled in `LogicManager`.
 
-TODO: Add in design considerations
-
 ===== User Logout
 
 The logout feature similarly involves the UI, Logic and Model components. It allows the user to
@@ -279,6 +334,28 @@ of commands when the user is logged out.
 
 Similarly, some of the UI panels will be hidden when the user logs out.
 
+
+===== User Login Status
+
+To identify the login status of the application and know its the correct user, a login status bar on
+the top of the window has been implemented. Its shows the status and the user that is logged in.
+
+Example:
+
+.Login Status Bar (Logged Out)
+image::LoginStatusBarLoggedOut.png[width="800"]
+
+.Login Status Bar (Logged In)
+image::LoginStatusBarLoggedIn.png[width="800"]
+
+==== Possible enhancements
+
+1. Login UI Box can be implemented before launching the main window
+2. Encryption of user file [coming in v2.0]
+3. Salting of passwords so that it is not deterministic when hashing/encrypting
+4. 2-Factor Authentication for login
+
+// end::authentication[]
 
 
 // tag::undoredo[]
@@ -412,7 +489,8 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
+Data encryption can be implemented a few ways, however with knowledge of the current architecture, the easiest way to
+TODO: ADD details.
 
 // end::dataencryption[]
 
@@ -1040,16 +1118,16 @@ to remind social worker of previous sessions with the beneficiary.
 
 * The application will support multiple users and each having their own addressbook.
 * User can login and logout safely, preventing external users from accessing the SLAP without authorisation
-* As a social worker, I want to secure my SLAP and only ensure that it is only accessible to me, hence a login function
+* As a social worker, he/she should be able to secure SLAP and only ensure that it is only accessible to him/her, hence a login function
 is needed to maintain the C-I-A security framework.
 
-`Minor feature:` Export function with Secure Encryption
+`Minor feature:` Adding Session Reports/Logs
 
-* The storage file of our application will always be encrypted when logged out. User can also export and transfer the
- storage file securely.
-* The social worker will have many sensitive data which needs to be kept confidential, hence a external user should not
-be able to see and read the storage file easily, especially when the user is logged out.
-
+* This feature allows the social worker to add logs to the SLAP.
+* The session reports/logs feature is a crucial feature for our target audience of social workers.
+* A social worker should be able to add their reports for their patient for each session, so that he/she have a consolidated
+view of all their reports specific to the patient. This allows for convenience and easy tracking on the progress of
+their patients.
 
 **Clarissa Yong**
 

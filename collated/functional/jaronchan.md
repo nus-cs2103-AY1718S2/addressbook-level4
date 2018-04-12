@@ -4,7 +4,7 @@
           <TabPane fx:id="featuresTabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1"
                    xmlns="http://javafx.com/javafx/9.0.4">
             <tabs>
-              <Tab fx:id="detailsTab" text="Details">
+              <Tab id="details" fx:id="detailsTab" text="Details">
                 <content>
                   <StackPane fx:id="personDetailsPlaceholder" prefWidth="340">
                     <padding>
@@ -13,7 +13,7 @@
                   </StackPane>
                 </content>
               </Tab>
-              <Tab fx:id="calendarTab" text="Calendar">
+              <Tab id="calendar" fx:id="calendarTab" text="Calendar">
                 <content>
                   <StackPane fx:id="calendarPlaceholder" prefWidth="340">
                     <padding>
@@ -22,7 +22,7 @@
                   </StackPane>
                 </content>
               </Tab>
-              <Tab fx:id="dailySchedulerTab" text="Daily Scheduler">
+              <Tab id="scheduler" fx:id="dailySchedulerTab" text="Daily Scheduler">
                 <content>
                   <StackPane fx:id="dailySchedulerPlaceholder" prefWidth="340">
                     <padding>
@@ -37,8 +37,14 @@
 ###### /resources/view/DailySchedulerPanel.fxml
 ``` fxml
 
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.Tab?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
 <StackPane xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <SplitPane dividerPositions="0.5">
@@ -50,15 +56,19 @@
           <children>
             <VBox prefHeight="-1.0" prefWidth="-1.0">
               <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
               </padding>
               <children>
                 <Label text="Scheduled Session for DATE">
                   <padding>
-                    <Insets bottom="5" left="5"/>
+                    <Insets bottom="5" left="5" />
                   </padding>
                 </Label>
-                <ListView prefHeight="-1.0" prefWidth="-1.0" />
+                  <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+                    <content>
+                      <VBox fx:id="eventsListStack" prefHeight="-1.0" prefWidth="-1.0" />
+                    </content>
+                  </ScrollPane>
               </children>
             </VBox>
           </children>
@@ -68,23 +78,19 @@
             <Insets left="5.0" />
           </padding>
           <children>
-            <TabPane prefHeight="200.0" prefWidth="200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="  ">
-                  <content>
-                    <StackPane prefHeight="-1.0" prefWidth="-1.0">
-                      <children>
-                        <StackPane fx:id="directionPanelPlaceholder" prefWidth="-1.0">
-                          <padding>
-                            <Insets right="10" left="10"/>
-                          </padding>
-                        </StackPane>
-                      </children>
-                    </StackPane>
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
+            <HBox>
+              <children>
+                <StackPane fx:id="directionPanelPlaceholder" prefWidth="-1.0">
+                  <HBox.margin>
+                    <Insets bottom="10.0" left="10.0" top="10.0" />
+                  </HBox.margin>
+                </StackPane>
+                <VBox fx:id="buttonStack" minWidth="50.0" spacing="10.0">
+                  <HBox.margin>
+                    <Insets left="10.0" right="5.0" top="10.0" />
+                  </HBox.margin></VBox>
+              </children>
+            </HBox>
           </children>
         </StackPane>
       </items>
@@ -94,6 +100,13 @@
 ```
 ###### /resources/view/MapPanel.fxml
 ``` fxml
+<?import com.lynden.gmapsfx.GoogleMapView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <StackPane xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
   <children>
@@ -121,6 +134,18 @@
 ###### /resources/view/PersonDetailsPanel.fxml
 ``` fxml
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
 <StackPane xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <SplitPane dividerPositions="0.5">
@@ -129,12 +154,12 @@
           <children>
             <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
               <items>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox prefHeight="200.0" prefWidth="100.0" styleClass="v-box">
                   <children>
-                    <GridPane gridLinesVisible="true">
+                    <GridPane gridLinesVisible="false" styleClass="grid-pane">
                       <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="250.0" />
                       </columnConstraints>
                       <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -148,18 +173,30 @@
                         <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
                       </padding>
                       <children>
-                        <Label text="Name" />
-                        <Label text="Phone Number" GridPane.rowIndex="1" />
-                        <Label text="Email" GridPane.rowIndex="2" />
-                        <Label text="Label" GridPane.columnIndex="1" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Address" GridPane.rowIndex="3" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="Condition" GridPane.rowIndex="4" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="Priority" GridPane.rowIndex="5" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Name" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" GridPane.columnIndex="1" />
+                        <Label fx:id="nameLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.rowIndex="1" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Phone Number" GridPane.rowIndex="1" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="phoneNumberLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" GridPane.rowIndex="2" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Email" GridPane.rowIndex="2" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="emailLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.rowIndex="3" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Address" GridPane.rowIndex="3" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="addressLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" GridPane.rowIndex="4" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Condition" GridPane.rowIndex="4" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="conditionLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.rowIndex="5" />
+                        <Label styleClass="label-bright" stylesheets="@DarkTheme.css" text="Priority" GridPane.rowIndex="5" />
+                        <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-even" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="priorityLabel" styleClass="label-bright" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                       </children>
                     </GridPane>
                   </children>
@@ -168,7 +205,7 @@
                   <children>
                     <StackPane fx:id="mapPanelPlaceholder" prefWidth="-1.0">
                       <padding>
-                        <Insets right="10" left="10"/>
+                        <Insets left="10" right="10" />
                       </padding>
                     </StackPane>
                   </children>
@@ -180,23 +217,23 @@
             <Insets right="5.0" />
           </padding>
         </StackPane>
-        <StackPane prefHeight="150.0" prefWidth="200.0">
+        <StackPane prefHeight="-1.0" prefWidth="-1.0">
           <padding>
             <Insets left="5.0" />
           </padding>
           <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox prefHeight="-1.0" prefWidth="-1.0">
               <children>
                 <Label text="Session Reports">
                   <padding>
                     <Insets bottom="5.0" left="5.0" top="5.0" />
                   </padding>
                 </Label>
-                <ListView prefHeight="200.0" prefWidth="200.0">
-                  <VBox.margin>
-                    <Insets bottom="5.0" right="5.0" />
-                  </VBox.margin>
-                </ListView>
+                <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+                  <content>
+                    <TextArea fx:id="sessionLogPanel" editable="false" prefHeight="600" maxWidth="400" wrapText="true" />
+                  </content>
+                </ScrollPane>
               </children>
             </VBox>
           </children>
@@ -214,6 +251,100 @@
 </StackPane>
 
 ```
+###### /resources/view/ScheduledEventCard.fxml
+``` fxml
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea fx:id="eventInfo" editable="false" minHeight="215" prefWidth="350" />
+   </children>
+</StackPane>
+```
+###### /java/seedu/address/ui/ScheduledEventCard.java
+``` java
+package seedu.address.ui;
+
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.model.Event;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.Region;
+import seedu.address.logic.OAuthManager;
+
+/**
+ * An UI component that displays information of a {@code Event}.
+ */
+
+public class ScheduledEventCard extends UiPart<Region> {
+
+    private static final String FXML = "ScheduledEventCard.fxml";
+    private static final String EVENT_NUM_HEADER = "EVENT NUM: ";
+    private static final String EVENT_TITLE_HEADER = "TITLE: ";
+    private static final String EVENT_TIMING_HEADER = "TIME: ";
+    private static final String EVENT_LOCATION_HEADER = "LOCATION: ";
+    private static final String EVENT_PERSON_HEADER = "NAME: ";
+    private static final String EVENT_CONDITION_HEADER = "CONDITION: ";
+    private static final String EVENT_MOBILE_HEADER = "MOBILE: ";
+    private static final String FUTURE_IMPLEMENTATION = "TO BE IMPLEMENTED IN 2.0";
+    private static final String EVENT_DIVIDER = "================================ \n";
+
+    public final Event event;
+
+    private String formattedScheduledEvent;
+
+    @FXML
+    private TextArea eventInfo;
+
+
+    public ScheduledEventCard(Event event, int eventIndex) {
+        super(FXML);
+        this.event = event;
+
+        formattedScheduledEvent = scheduledEventFormatter(this.event, eventIndex);
+        eventInfo.setWrapText(true);
+        eventInfo.setText(formattedScheduledEvent);
+    }
+
+    /**
+     * A method to format the scheduled event information of a {@code Event}.
+     */
+    private String scheduledEventFormatter(Event event, int eventIndex) {
+        String title = event.getSummary();
+        DateTime startAsDateTime = event.getStart().getDateTime();
+        DateTime endAsDateTime = event.getEnd().getDateTime();
+        String location = event.getLocation();
+
+        String start = OAuthManager.getDateTimeAsHumanReadable(startAsDateTime);
+        String end = OAuthManager.getDateTimeAsHumanReadable(endAsDateTime);
+
+        if (start == null) {
+            start = "Unable to retrieve start time";
+        }
+        if (end == null) {
+            end = "Unable to retrieve end time";
+        }
+        if (location == null) {
+            location = "No Location Specified";
+        }
+        String eventAsString = EVENT_NUM_HEADER + eventIndex + "\n"
+                + EVENT_TITLE_HEADER + title + "\n"
+                + EVENT_TIMING_HEADER + start + " - " + end + "\n"
+                + EVENT_DIVIDER
+                + EVENT_LOCATION_HEADER + location + "\n"
+                + EVENT_PERSON_HEADER + FUTURE_IMPLEMENTATION + "\n"
+                + EVENT_MOBILE_HEADER + FUTURE_IMPLEMENTATION + "\n"
+                + EVENT_CONDITION_HEADER + FUTURE_IMPLEMENTATION + "\n"
+                + EVENT_DIVIDER + EVENT_DIVIDER;
+        System.out.printf(eventAsString);
+
+        return eventAsString;
+    }
+}
+```
 ###### /java/seedu/address/ui/PersonDetailsPanel.java
 ``` java
 package seedu.address.ui;
@@ -222,8 +353,9 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
@@ -231,6 +363,8 @@ import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
+import seedu.address.commons.events.ui.ShowUpdatedSessionLogEvent;
+import seedu.address.model.person.Person;
 
 /**
  * The UI component that handles the display of beneficiary details, location on map
@@ -247,15 +381,61 @@ public class PersonDetailsPanel extends UiPart<Region> {
     @FXML
     private StackPane mapPanelPlaceholder;
 
+    @FXML
+    private TextArea sessionLogPanel;
+
+    @FXML
+    private Label nameLabel;
+
+    @FXML
+    private Label phoneNumberLabel;
+
+    @FXML
+    private Label emailLabel;
+
+    @FXML
+    private Label addressLabel;
+
+    @FXML
+    private Label conditionLabel;
+
+    @FXML
+    private Label priorityLabel;
 
     public PersonDetailsPanel() {
         super(FXML);
-
-        // To prevent triggering events for typing inside the loaded Web page.
-
-        getRoot().setOnKeyPressed(Event::consume);
         registerAsAnEventHandler(this);
+        showSelectedPersonDetails(null);
         loadMapPanel();
+    }
+
+    /**
+     * Fills all text fields to show details about the person.
+     * If the specified person is null, all text fields are cleared.
+     *
+     * @param person the person or null
+     */
+    private void showSelectedPersonDetails(Person person) {
+        if (person != null) {
+            // Fill the labels with info from the person object.
+            nameLabel.setText(person.getName().toString());
+            phoneNumberLabel.setText(person.getPhone().toString());
+            emailLabel.setText(person.getEmail().toString());
+            addressLabel.setText(person.getAddress().toString());
+            conditionLabel.setText("TO BE IMPLEMENTED IN 2.0");
+            priorityLabel.setText("TO BE IMPLEMENTED IN 2.0");
+            String sessionLogToDisplay = person.getSessionLogs().toString();
+            loadSessionLogs(sessionLogToDisplay);
+        } else {
+            // Person is null, remove all the text.
+            nameLabel.setText("");
+            phoneNumberLabel.setText("");
+            emailLabel.setText("");
+            addressLabel.setText("");
+            conditionLabel.setText("");
+            priorityLabel.setText("");
+            sessionLogPanel.setText("Select a Person to display content.");
+        }
     }
 
     /**
@@ -281,6 +461,19 @@ public class PersonDetailsPanel extends UiPart<Region> {
     }
 
     /**
+     * Loads the session logs stored to {@code Person}.
+     */
+    private void loadSessionLogs(String sessionLogToDisplay) {
+        if (sessionLogToDisplay.equals("")) {
+            sessionLogPanel.setText("No session logs has been added to this person yet!");
+        } else {
+            sessionLogPanel.setText(sessionLogToDisplay);
+        }
+    }
+
+
+
+    /**
      * Frees resources allocated to the map panel if map panel is not empty.
      */
     public void freeResources() {
@@ -292,7 +485,16 @@ public class PersonDetailsPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mapPanel.loadAddress(event.getNewSelection().person.getAddress().toString());
+        if (mapPanel != null && mapPanelPlaceholder.getChildren().contains(mapPanel.getRoot())) {
+            mapPanel.loadAddress(event.getNewSelection().person.getAddress().toString());
+        }
+        showSelectedPersonDetails(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleShowUpdatedSessionLogEvent(ShowUpdatedSessionLogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadSessionLogs(event.getTargetPerson().getSessionLogs().toString());
     }
 
     @Subscribe
@@ -326,9 +528,6 @@ public class PersonDetailsPanel extends UiPart<Region> {
  */
 public class CalendarPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "default.html";
-    public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     public static final String CALENDAR_URL = "https://calendar.google.com/calendar/r";
 
     private static final String FXML = "CalendarPanel.fxml";
@@ -347,32 +546,6 @@ public class CalendarPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
-
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
-    }
-
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
-```
-###### /java/seedu/address/ui/CalendarPanel.java
-``` java
-
-    /**
-     * Frees resources allocated to the browser.
-     */
-    public void freeResources() {
-        browser = null;
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
-    }
-}
 
 ```
 ###### /java/seedu/address/ui/MainWindow.java
@@ -401,6 +574,23 @@ public class CalendarPanel extends UiPart<Region> {
 ```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
+    /**
+     * Disables the selection of tabs and persons cards by mouse click.
+     */
+
+    private void disableSelection() {
+        featuresTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+                EventsCenter.getInstance().post(new RemoveMapPanelEvent(newValue.getId().toLowerCase()));
+                EventsCenter.getInstance().post(new LoadMapPanelEvent(newValue.getId().toLowerCase()));
+            }
+        });
+    }
+
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
 
     /**
      * Handle event of feature tab switching.
@@ -425,49 +615,29 @@ public class CalendarPanel extends UiPart<Region> {
             break;
         }
     }
-
-    /**
-     * Closes the application.
-     */
-    @FXML
-    private void handleExit() {
-        raise(new ExitAppRequestEvent());
-    }
-
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
-    }
-
-    void releaseResources() {
-        personDetailsPanel.freeResources();
-        calendarPanel.freeResources();
-        dailySchedulerPanel.freeResources();
-    }
-
-    @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleHelp();
-    }
-
 ```
 ###### /java/seedu/address/ui/DailySchedulerPanel.java
 ``` java
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
+import com.google.api.services.calendar.model.Event;
 import com.google.common.eventbus.Subscribe;
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DailyScheduleShownChangedEvent;
 import seedu.address.commons.events.ui.LoadDirectionsEvent;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
+import seedu.address.commons.events.ui.ResetDirectionsEvent;
+import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
 
 /**
  * The UI component that handles the display of daily schedules and directions between locations.
@@ -481,16 +651,58 @@ public class DailySchedulerPanel extends UiPart<Region> {
     private MapPanel directionPanel;
 
     @FXML
+    private VBox eventsListStack;
+
+    @FXML
     private StackPane directionPanelPlaceholder;
 
+    @FXML
+    private VBox buttonStack;
 
+    @FXML
+    private ToggleButton button;
 
     public DailySchedulerPanel() {
         super(FXML);
-
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Fills schedule panel to with scheduled events for the specified date.
+     * If the day has no events, a placeholder text will be shown.
+     *
+     */
+    private void showPlannedEvents(List<Event> dailyEventsList) {
+
+        int numOfEvents = dailyEventsList.size();
+        if (numOfEvents != 0) {
+            for (int i = 0; i < numOfEvents; i++) {
+                ScheduledEventCard card = new ScheduledEventCard(dailyEventsList.get(i), i + 1);
+                eventsListStack.getChildren().add(card.getRoot());
+            }
+        }
+    }
+
+    /**
+     * Resets schedule panel.
+     */
+    private void removePlannedEvents() {
+        eventsListStack.getChildren().clear();
+    }
+
+    /**
+     * Buttons depending on how many trips to be made.
+     */
+    public void addButtons(int numOfInstances) {
+        for (int i = 0; i < numOfInstances; i++) {
+            buttonStack.getChildren().add(new ToggleButton(" "));
+        }
+    }
+    /**
+     * Removes existing buttons.
+     */
+    public void removeButtons() {
+        buttonStack.getChildren().clear();
     }
 
     /**
@@ -515,13 +727,21 @@ public class DailySchedulerPanel extends UiPart<Region> {
         }
     }
 
-
     /**
      * Updates the directions on the map.
      */
     public void updateDirections(String addressOrigin, String addressDestination) {
         if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
             directionPanel.loadDirections(addressOrigin, addressDestination);
+        }
+    }
+
+    /**
+     * Resets the directions on the map.
+     */
+    public void resetDirections() {
+        if (directionPanel != null && directionPanelPlaceholder.getChildren().contains(directionPanel.getRoot())) {
+            directionPanel.resetDirections();
         }
     }
 
@@ -535,8 +755,11 @@ public class DailySchedulerPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleDailyScheduleShownChangedEvent(DailyScheduleShownChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        removePlannedEvents();
+        showPlannedEvents(event.getDailyEventsList());
+
     }
 
     @Subscribe
@@ -558,7 +781,20 @@ public class DailySchedulerPanel extends UiPart<Region> {
     @Subscribe
     private void handleLoadDirectionsEvent(LoadDirectionsEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        updateDirections("Blk 138, Potong Pasir Ave 3", "342 Pasir Panjang");
+        updateDirections(event.getAddressOrigin(), event.getGetAddressDestination());
+    }
+
+    @Subscribe
+    private void handleResetDirectionsEvent(ResetDirectionsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        resetDirections();
+    }
+
+    @Subscribe
+    private void handleUpdateNumberOfButtonsEvent(UpdateNumberOfButtonsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        removeButtons();
+        addButtons(event.getNumOfInstances());
     }
 }
 ```
@@ -582,7 +818,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.MapManager;
+import seedu.address.logic.map.MapManager;
 
 /**
  * The UI component that handles the display of maps.
@@ -592,6 +828,8 @@ public class MapPanel extends UiPart<Region>
 
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private MapManager mapManager;
 
     @FXML
     private GoogleMapView mapView;
@@ -630,6 +868,7 @@ public class MapPanel extends UiPart<Region>
                 .zoom(10);
 
         map = mapView.createMap(mapOptions);
+        mapManager = new MapManager(map, mapView.getDirec());
         invalidAddressOverlay.setVisible(false);
 
     }
@@ -646,13 +885,25 @@ public class MapPanel extends UiPart<Region>
         }
     }
     public void loadAddress(String address) {
-        MapManager.GeocodeUtil.setMapMarkerFromAddress(map, address);
+        mapManager.setMapMarkerFromAddress(map, address);
     }
     public void showInvalidAddressOverlay(Boolean show) {
         invalidAddressOverlay.setVisible(show);
     }
+
+    /**
+     * Load the directions to display.
+     */
     public void loadDirections(String addressOrigin, String addressDestination) {
-        MapManager.DirectionsUtil.setDirectionsOnMap(map, mapView.getDirec(), addressOrigin, addressDestination);
+        mapManager.setDirectionsOnMap(addressOrigin, addressDestination);
+    }
+
+    /**
+     * Resets the map to remove pre-existing directions from previous schedule.
+     */
+    public void resetDirections() {
+        mapManager.resetDirectionsMap();
+        resetMap();
     }
     public void freeResources() {
         map = null;
@@ -686,6 +937,96 @@ public class LoadMapPanelEvent extends BaseEvent {
         return featureTarget;
     }
 
+}
+```
+###### /java/seedu/address/commons/events/ui/UpdateNumberOfButtonsEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * An event that updates the number of Scheduler Map Buttons to display.
+ */
+public class UpdateNumberOfButtonsEvent extends BaseEvent {
+
+    private final int numOfInstances;
+
+    public UpdateNumberOfButtonsEvent(int numOfInstances) {
+        this.numOfInstances = numOfInstances;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public int getNumOfInstances() {
+        if (numOfInstances < 1) {
+            return 0;
+        }
+        return numOfInstances;
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/DailyScheduleShownChangedEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import java.util.List;
+
+import com.google.api.services.calendar.model.Event;
+
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Represents a selection change in the Scheduled Events shown.
+ */
+public class DailyScheduleShownChangedEvent extends BaseEvent {
+
+
+    private final List<Event> dailyEventsList;
+
+    public DailyScheduleShownChangedEvent(List<Event> dailyEventsList) {
+        this.dailyEventsList = dailyEventsList;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public List<Event> getDailyEventsList() {
+        return dailyEventsList;
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/ShowUpdatedSessionLogEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.person.Person;
+
+/**
+ * Signals an updated session log that needs to be reloaded.
+ */
+
+public class ShowUpdatedSessionLogEvent extends BaseEvent {
+
+    private final Person targetPerson;
+    public ShowUpdatedSessionLogEvent(Person targetPerson) {
+        this.targetPerson = targetPerson;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public Person getTargetPerson() {
+        return targetPerson;
+    }
 }
 ```
 ###### /java/seedu/address/commons/events/ui/RemoveMapPanelEvent.java
@@ -774,6 +1115,58 @@ public class ShowInvalidAddressOverlayEvent extends BaseEvent {
 
 }
 ```
+###### /java/seedu/address/commons/events/ui/LoadDirectionsEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * An event requesting to load the direction between two addresses.
+ */
+public class LoadDirectionsEvent extends BaseEvent {
+
+    private final String addressOrigin;
+
+    private final String addressDestination;
+
+    public LoadDirectionsEvent(String addressOrigin, String addressDestination) {
+        this.addressOrigin = addressOrigin;
+        this.addressDestination = addressDestination;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getAddressOrigin() {
+        return addressOrigin;
+    }
+
+    public String getGetAddressDestination() {
+        return addressDestination;
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/ResetDirectionsEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Signals a reset of direction map.
+ */
+
+public class ResetDirectionsEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
@@ -793,52 +1186,17 @@ public class ShowInvalidAddressOverlayEvent extends BaseEvent {
         return trimmedFeature;
     }
 
-    /**
-     * Parses a {@code String username} into an {@code Username}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code username} is invalid.
-     */
-    public static Username parseUsername(String username) throws IllegalValueException {
-        requireNonNull(username);
-        String trimmedUsername = username.trim();
-        if (!Username.isValidUsername(trimmedUsername)) {
-            throw new IllegalValueException(Username.MESSAGE_USERNAME_CONSTRAINTS);
+```
+###### /java/seedu/address/logic/parser/NavigateCommandParser.java
+``` java
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(ive.getMessage()));
+        } catch (InvalidCalendarEventCountException e) {
+            throw new ParseException(
+                    String.format(NavigateCommand.MESSAGE_NO_EVENT));
         }
-        return new Username(trimmedUsername);
-    }
-
-    /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<Username>} if {@code name} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Username> parseUsername(Optional<String> username) throws IllegalValueException {
-        requireNonNull(username);
-        return username.isPresent() ? Optional.of(parseUsername(username.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code String password} into an {@code Password}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code password} is invalid.
-     */
-    public static Password parsePassword(String password) throws IllegalValueException {
-        requireNonNull(password);
-        String trimmedPassword = password.trim();
-        if (!Password.isValidPassword(trimmedPassword)) {
-            throw new IllegalValueException(Password.MESSAGE_PASSWORD_CONSTRAINTS);
-        }
-        return new Password(trimmedPassword);
-    }
-
-    /**
-     * Parses a {@code Optional<String> password} into an {@code Optional<Password>} if {@code name} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Password> parsePassword(Optional<String> password) throws IllegalValueException {
-        requireNonNull(password);
-        return password.isPresent() ? Optional.of(parsePassword(password.get())) : Optional.empty();
     }
 }
 ```
@@ -873,120 +1231,163 @@ public class SwitchCommandParser implements Parser<SwitchCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/MapManager.java
+###### /java/seedu/address/logic/OAuthManager.java
 ``` java
-package seedu.address.logic;
+    /**
+     * Gets the specified event pair by index (offset by 1 due to array indexing) according to a user's input.
+     * @param index
+     * @return List
+     */
+    public static List<Event> getEventByIndexPairFromDailyList(int index)
+            throws InvalidCalendarEventCountException, IllegalValueException {
+        List<Event> eventPair = new ArrayList<>();
+        if (index < 1 || index > dailyEventsList.size() - 1) {
+            throw new IllegalValueException(NavigateCommand.MESSAGE_INVALID_RANGE);
+        } else if (dailyEventsList.isEmpty() && dailyEventsList.size() < 2) {
+            throw new InvalidCalendarEventCountException();
+        } else {
+            eventPair.add(dailyEventsList.get(index - 1));
+            eventPair.add(dailyEventsList.get(index));
+        }
 
-import com.lynden.gmapsfx.javascript.object.DirectionsPane;
+        return eventPair;
+    }
+```
+###### /java/seedu/address/logic/map/MyDirectionsServiceCallback.java
+``` java
+package seedu.address.logic.map;
+
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.service.directions.DirectionStatus;
+import com.lynden.gmapsfx.service.directions.DirectionsResult;
+import com.lynden.gmapsfx.service.directions.DirectionsServiceCallback;
+
+/**
+ *  Creates the required DirectionsServiceCallback by passing specified {@GoogleMap map}.
+ */
+
+public class MyDirectionsServiceCallback implements DirectionsServiceCallback {
+    private GoogleMap map;
+    public MyDirectionsServiceCallback(GoogleMap map) {
+        this.map = map;
+    }
+    @Override
+    public void directionsReceived(DirectionsResult results, DirectionStatus status) {
+    }
+}
+```
+###### /java/seedu/address/logic/map/MyGeocodingServiceCallback.java
+``` java
+package seedu.address.logic.map;
+
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
-import com.lynden.gmapsfx.service.directions.DirectionStatus;
-import com.lynden.gmapsfx.service.directions.DirectionsRenderer;
-import com.lynden.gmapsfx.service.directions.DirectionsRequest;
-import com.lynden.gmapsfx.service.directions.DirectionsResult;
-import com.lynden.gmapsfx.service.directions.DirectionsService;
-import com.lynden.gmapsfx.service.directions.DirectionsServiceCallback;
-import com.lynden.gmapsfx.service.directions.TravelModes;
 import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
-import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
 
-//import seedu.address.commons.core.EventsCenter;
-//import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
+/**
+ *  Retrieves geocode of specified person address and updates map accordingly.
+ */
+
+public class MyGeocodingServiceCallback implements GeocodingServiceCallback {
+    private GoogleMap map;
+    public MyGeocodingServiceCallback(GoogleMap map) {
+        this.map = map;
+    }
+    @Override
+    public void geocodedResultsReceived(GeocodingResult[] results, GeocoderStatus status) {
+        LatLong geocode;
+        if (status == GeocoderStatus.ZERO_RESULTS) {
+            EventsCenter.getInstance().post(new ShowInvalidAddressOverlayEvent(true));
+            geocode = null;
+
+        } else if (results.length > 1) {
+            EventsCenter.getInstance().post(new ShowInvalidAddressOverlayEvent(false));
+            geocode = new LatLong(results[0].getGeometry().getLocation().getLatitude(),
+                    results[0].getGeometry().getLocation().getLongitude());
+        } else {
+            EventsCenter.getInstance().post(new ShowInvalidAddressOverlayEvent(false));
+            geocode = new LatLong(results[0].getGeometry().getLocation().getLatitude(),
+                    results[0].getGeometry().getLocation().getLongitude());
+        }
+
+        if (geocode != null) {
+            map.setZoom(17);
+            map.setCenter(geocode);
+
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(geocode);
+
+            Marker marker = new Marker(markerOptions);
+            map.addMarker(marker);
+        } else {
+            map.setZoom(10);
+            map.setCenter(new LatLong(1.3521, 103.8198));
+            map.clearMarkers();
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/map/MapManager.java
+``` java
+package seedu.address.logic.map;
+
+import com.lynden.gmapsfx.javascript.object.DirectionsPane;
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.service.directions.DirectionsRenderer;
+import com.lynden.gmapsfx.service.directions.DirectionsRequest;
+import com.lynden.gmapsfx.service.directions.DirectionsService;
+import com.lynden.gmapsfx.service.directions.TravelModes;
+import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 
 /**
  * Handles changes to any Map user interfaces.
  */
 
 public class MapManager {
-    /**
-     * Helps with retrieving the geocode from given address.
-     */
-    public static class GeocodeUtil {
 
-        private static GeocodingService geocodingService = new GeocodingService();
+    private GoogleMap map;
+    private GeocodingService geocodingService;
 
-        /**
-         *  Retrieves geocode of specified person address and updates map accordingly.
-         */
-        public static class MyGeocodingServiceCallback implements GeocodingServiceCallback {
-            private GoogleMap map;
-            public MyGeocodingServiceCallback(GoogleMap map) {
-                this.map = map;
-            }
-            @Override
-            public void geocodedResultsReceived(GeocodingResult[] results, GeocoderStatus status) {
-                LatLong geocode;
-                if (status == GeocoderStatus.ZERO_RESULTS) {
-                    EventsCenter.getInstance().post(new ShowInvalidAddressOverlayEvent(true));
-                    geocode = null;
+    private DirectionsService directionsService;
+    private DirectionsRequest directionsRequest;
+    private DirectionsRenderer directionsRenderer;
+    private DirectionsPane directionsPane;
 
-                } else if (results.length > 1) {
-                    EventsCenter.getInstance().post(new ShowInvalidAddressOverlayEvent(false));
-                    geocode = new LatLong(results[0].getGeometry().getLocation().getLatitude(),
-                            results[0].getGeometry().getLocation().getLongitude());
-                } else {
-                    EventsCenter.getInstance().post(new ShowInvalidAddressOverlayEvent(false));
-                    geocode = new LatLong(results[0].getGeometry().getLocation().getLatitude(),
-                            results[0].getGeometry().getLocation().getLongitude());
-                }
-
-                if (geocode != null) {
-                    map.setZoom(17);
-                    map.setCenter(geocode);
-
-                    MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(geocode);
-
-                    Marker marker = new Marker(markerOptions);
-                    map.addMarker(marker);
-                } else {
-                    map.setZoom(10);
-                    map.setCenter(new LatLong(1.3521, 103.8198));
-                    map.clearMarkers();
-                }
-            }
-        }
-
-        /**
-         *  Calls on geocodingService to update geocode and set map maker of specified person.
-         */
-        public static void setMapMarkerFromAddress(GoogleMap map, String address) {
-            geocodingService.geocode(address, new MyGeocodingServiceCallback(map));
-        }
+    public MapManager(GoogleMap map, DirectionsPane directionsPane) {
+        this.map = map;
+        geocodingService = new GeocodingService();
+        directionsService = new DirectionsService();
+        this.directionsPane = directionsPane;
+        directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
     }
+
     /**
-     * Helps with retrieving the directions between two given addresses.
+     *  Calls on geocodingService to update geocode and set map maker of specified person.
      */
-    public static class DirectionsUtil {
-        /**
-         *  Creates the required DirectionsServiceCallback by passing specified {@GoogleMap map}.
-         */
-        public static class MyDirectionsServiceCallback implements DirectionsServiceCallback {
-            private GoogleMap map;
-            public MyDirectionsServiceCallback(GoogleMap map) {
-                this.map = map;
-            }
-            @Override
-            public void directionsReceived(DirectionsResult results, DirectionStatus status) {
-            }
-        }
-        /**
-         *  Sets the directions between addresses on the map.
-         */
-        public static void setDirectionsOnMap(GoogleMap map, DirectionsPane directionsPane,
-                String addressOrigin, String addressDestination) {
-            DirectionsService directionsService = new DirectionsService();
-            DirectionsRequest request = new DirectionsRequest(addressOrigin, addressDestination, TravelModes.DRIVING);
-            DirectionsRenderer directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
-            directionsService.getRoute(request, new MyDirectionsServiceCallback(map), directionsRenderer);
-        }
+
+    public void setMapMarkerFromAddress(GoogleMap map, String address) {
+        geocodingService.geocode(address, new MyGeocodingServiceCallback(map));
+    }
+
+    /**
+     *  Sets the directions between addresses on the map.
+     */
+    public void setDirectionsOnMap(String addressOrigin, String addressDestination) {
+        directionsRenderer.clearDirections();
+        directionsRequest = new DirectionsRequest(addressOrigin, addressDestination, TravelModes.DRIVING);
+        directionsRenderer = new DirectionsRenderer(true, map, directionsPane);
+        directionsService.getRoute(directionsRequest, new MyDirectionsServiceCallback(map), directionsRenderer);
+    }
+
+    public void resetDirectionsMap() {
+        directionsRenderer.clearDirections();
     }
 }
 
@@ -999,6 +1400,10 @@ public class MapManager {
 ###### /java/seedu/address/logic/commands/NavigateCommand.java
 ``` java
 package seedu.address.logic.commands;
+
+import java.util.List;
+
+import com.google.api.services.calendar.model.Event;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.LoadDirectionsEvent;
@@ -1016,20 +1421,36 @@ public class NavigateCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Displaying directions between...";
+    public static final String MESSAGE_INVALID_RANGE = "The INDEX provided is invalid.\n"
+            + "INDEX must more than ZERO and less than the number of planned events for the day.";
+    public static final String MESSAGE_NO_EVENT = "There is either zero or one event planned for the day.\n"
+            + "No directions will be listed.";
+    private final List<Event> eventPair;
 
+```
+###### /java/seedu/address/logic/commands/NavigateCommand.java
+``` java
     @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new LoadDirectionsEvent());
+
+        EventsCenter.getInstance().post(
+            new LoadDirectionsEvent(
+                this.eventPair.get(0).getLocation(),
+                this.eventPair.get(1).getLocation()
+            )
+        );
         return new CommandResult(String.format(MESSAGE_SUCCESS));
     }
-
-    //    @Override
-    //    public boolean equals(Object other) {
-    //        return other == this // short circuit if same object
-    //                || (other instanceof SwitchCommand // instanceof handles nulls
-    //                && this.featureTarget.equals(((SwitchCommand) other).featureTarget)); // state check
-    //    }
 }
+```
+###### /java/seedu/address/logic/commands/ShowScheduleCommand.java
+``` java
+
+            List<Event> dailyEventsList = OAuthManager.getDailyEvents(user, localDate);
+            EventsCenter.getInstance().post(new DailyScheduleShownChangedEvent(dailyEventsList));
+            EventsCenter.getInstance().post(new ResetDirectionsEvent());
+            EventsCenter.getInstance().post(new UpdateNumberOfButtonsEvent(dailyEvents.size() - 1));
+
 ```
 ###### /java/seedu/address/logic/commands/SwitchCommand.java
 ``` java

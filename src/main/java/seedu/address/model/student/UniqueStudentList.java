@@ -105,6 +105,7 @@ public class UniqueStudentList implements Iterable<Student> {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
+    //@@author demitycho
     /**
      * Finds a unique key not in the {@code internalList}
      * @return A Unique length 6 hexadecimal string
@@ -118,7 +119,7 @@ public class UniqueStudentList implements Iterable<Student> {
     }
 
     /**
-     * Tests if the input key is unique in the list
+     * Tests if the input {@code UniqueKey} is unique in the list
      * @return true if unique, false if not unique
      */
     private boolean isUnique(UniqueKey test) {
@@ -131,8 +132,7 @@ public class UniqueStudentList implements Iterable<Student> {
     }
 
     /**
-     * Finds a student identified by UniqueKey
-     * TODO Do properly
+     * Finds a student identified by UniqueKey, or throws a StudentNotFoundException
      * @return Student
      * @throws StudentNotFoundException
      */
@@ -140,9 +140,7 @@ public class UniqueStudentList implements Iterable<Student> {
         boolean found = false;
         Student foundStudent = null;
         for (Student student : internalList) {
-
             if (key.equals(student.getUniqueKey())) {
-                found = true;
                 return student;
             }
         }
@@ -151,6 +149,7 @@ public class UniqueStudentList implements Iterable<Student> {
         }
         return foundStudent;
     }
+    //@@author
 
     @Override
     public Iterator<Student> iterator() {

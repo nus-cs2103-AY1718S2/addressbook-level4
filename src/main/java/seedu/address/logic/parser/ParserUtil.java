@@ -225,7 +225,7 @@ public class ParserUtil {
      */
     public static Day parseDay(String day) throws IllegalValueException {
         requireNonNull(day);
-        String trimmedDay = day.trim();
+        String trimmedDay = day.trim().toLowerCase();
         if (!Day.isValidDay(trimmedDay)) {
             throw new IllegalValueException(Day.MESSAGE_DAY_CONSTRAINTS);
         }

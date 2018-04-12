@@ -65,9 +65,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyAddressBook newData, ReadOnlySchedule newSchedule) {
         addressBook.resetData(newData);
+        schedule.resetData(newSchedule);
         indicateAddressBookChanged();
+        indicateScheduleChanged();
     }
 
     @Override
@@ -81,7 +83,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteStudent(Student target) throws StudentNotFoundException {
+    public synchronized void deleteStudent(Student target)
+            throws StudentNotFoundException, LessonNotFoundException {
+        schedule.removeStudentLessons(target);
+        indicateScheduleChanged();
         addressBook.removeStudent(target);
         indicateAddressBookChanged();
     }
@@ -94,7 +99,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-
     @Override
     public void updateStudent(Student target, Student editedStudent)
             throws DuplicateStudentException, StudentNotFoundException {
@@ -103,6 +107,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateStudent(target, editedStudent);
         indicateAddressBookChanged();
         indicateStudentInfoChanged();
+        indicateScheduleChanged();
     }
 
 
@@ -122,7 +127,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private void indicateScheduleChanged() {
-        raise(new ScheduleChangedEvent(schedule));
+        raise(new ScheduleChangedEvent(schedule, addressBook));
     }
 
     /**
@@ -135,7 +140,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Schedule getSchedule() {
+    public ReadOnlySchedule getSchedule() {
         return schedule;
     }
 
@@ -166,7 +171,6 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new RequiredStudentIndexChangeEvent(studentIndex));
     }
 
-
     @Override
     public void updateProfilePicture (Student target, Student editedStudent, Student finalEditedStudent)
             throws DuplicateStudentException, StudentNotFoundException {
@@ -185,13 +189,6 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ProfilePictureChangeEvent(target));
     }
     //@@author
-
-    @Override
-    public String printSchedule() {
-        return schedule.print(addressBook);
-    }
-
-
 
     //=========== Filtered Student List Accessors =============================================================
 

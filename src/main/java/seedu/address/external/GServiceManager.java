@@ -17,9 +17,13 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 
+import com.google.gdata.util.ServiceException;
+
 import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
+
+//@@author demitycho
 
 /**
  * Manages the two Google Services, Google Contacts as well as Google Calendar
@@ -34,7 +38,7 @@ public class GServiceManager {
     /** OAuth 2.0 scopes. */
     public static final List<String> SCOPES = Arrays.asList(SCOPES_ARRAY);
 
-    public static final String APPLICATION_NAME = "codeducator/v1.4";
+    public static final String APPLICATION_NAME = "codeducator/v1.5";
 
     private static final String CLIENT_ID = "126472549776-8cd9bk56sfubm9rkacjivecikppte982.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "nyBpzm1OjnKNZOd0-kT1uo7W";
@@ -115,19 +119,15 @@ public class GServiceManager {
      * @param addressBook
      * @param schedule
      */
-    public void synchronize(ReadOnlyAddressBook addressBook, ReadOnlySchedule schedule) {
-        try {
-            GContactsService gContactsService = new GContactsService(credential);
-            gContactsService.synchronize(addressBook);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            GCalendarService gCalendarService = new GCalendarService(
-                    credential, httpTransport, JSON_FACTORY);
-            gCalendarService.synchronize(schedule, addressBook);
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
-        }
+    public void synchronize(ReadOnlyAddressBook addressBook, ReadOnlySchedule schedule)
+            throws IOException, ServiceException {
+        GContactsService gContactsService = new GContactsService(credential);
+        gContactsService.synchronize(addressBook);
+
+
+        GCalendarService gCalendarService = new GCalendarService(
+                credential, httpTransport, JSON_FACTORY);
+        gCalendarService.synchronize(schedule, addressBook);
+
     }
 }

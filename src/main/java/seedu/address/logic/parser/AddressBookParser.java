@@ -45,9 +45,6 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-//import seedu.address.logic.commands.CommandResult;
-//import seedu.address.ui.ResultDisplay;
-
 /**
  * Parses user input.
  */
@@ -78,16 +75,16 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
-
+        //@@author demitycho
         case AddLessonCommand.COMMAND_WORD:
             return new AddLessonCommandParser().parse(arguments);
-
+        //@@author yapni
         case AddMilestoneCommand.COMMAND_WORD:
             return new AddMilestoneCommandParser().parse(arguments);
 
         case AddTaskCommand.COMMAND_WORD:
             return new AddTaskCommandParser().parse(arguments);
-
+        //@@author
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
@@ -96,16 +93,16 @@ public class AddressBookParser {
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
-
+        //@@author demitycho
         case DeleteLessonCommand.COMMAND_WORD:
             return new DeleteLessonCommandParser().parse(arguments);
-
+        //@@author yapni
         case DeleteMilestoneCommand.COMMAND_WORD:
             return new DeleteMilestoneCommandParser().parse(arguments);
 
         case DeleteTaskCommand.COMMAND_WORD:
             return new DeleteTaskCommandParser().parse(arguments);
-
+        //@@author
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
@@ -114,19 +111,19 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
-
+        //@@author demitycho
         case FindTagCommand.COMMAND_WORD:
             return new FindTagCommandParser().parse(arguments);
-
+        //@@author
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
-
+        //@@author demitycho
         case LoginCommand.COMMAND_WORD:
             return new LoginCommand();
 
         case LogoutCommand.COMMAND_WORD:
             return new LogoutCommand();
-
+        //@author
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
@@ -141,13 +138,13 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
-
+        //@@author demitycho
         case ScheduleCommand.COMMAND_WORD:
             return new ScheduleCommand();
 
         case SyncCommand.COMMAND_WORD:
             return new SyncCommand();
-
+        //@@author
         case UnfavouriteCommand.COMMAND_WORD:
             return new UnfavouriteCommandParser().parse(arguments);
 
@@ -156,20 +153,21 @@ public class AddressBookParser {
             return new EditPictureCommandParser().parse(arguments);
 
 
+        //@@author samuelloh
         case MoreInfoCommand.COMMAND_WORD:
             return new MoreInfoCommandParser().parse(arguments);
 
+        //@@author smauelloh
         case EditMiscCommand.COMMAND_WORD:
             return new EditMiscCommandParser().parse(arguments);
-        //@@author
+        //@@author yapni
         case ShowDashboardCommand.COMMAND_WORD:
             return new ShowDashboardCommandParser().parse(arguments);
-
         case CheckTaskCommand.COMMAND_WORD:
             return new CheckTaskCommandParser().parse(arguments);
-
+        //@@author
         default:
-            //@@chweeee
+            //@@author chweeee
             /**
              * aims to decipher user intention and returns the command required
              */
@@ -185,14 +183,19 @@ public class AddressBookParser {
             response = ConversationCommand.getMessageResponse(userInput);
             intents = response.getIntents();
             entities = response.getEntities();
-            //System.out.println("list of entities: " + entities);
+            System.out.println("list of entities: " + entities);
 
             for (int i = 0; i < intents.size(); i++) {
                 intention = intents.get(i).getIntent();
-                //entity = entities.get(i).getValue();
             }
             System.out.println("this is the intention of the user: " + intention);
-            //System.out.println("this is the value of the entity " + entity);
+
+            if (entities.size() != 0) {
+                for (int i = 0; i < intents.size(); i++) {
+                    entity = entities.get(i).getValue();
+                }
+            }
+            System.out.println("this is the value of the entity " + entity);
 
             switch (intention) {
             case "Clear":
@@ -219,10 +222,16 @@ public class AddressBookParser {
             case "Schedule":
                 return new ScheduleCommand();
 
+            case "Delete":
+                return new FindAndDeleteCommandParser().parse(entity);
+
+            case "Select":
+                return new FindAndSelectCommandParser().parse(entity);
+
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
-            //@@
+            //@@author
         }
     }
 }

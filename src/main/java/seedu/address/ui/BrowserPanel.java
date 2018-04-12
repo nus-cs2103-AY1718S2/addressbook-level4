@@ -148,6 +148,9 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private String parseUrl(String url) {
         if (!url.contains("://")) {
+            if (!url.contains("www")) {
+                return "https://www." + url;
+            }
             return "https://" + url;
         }
 

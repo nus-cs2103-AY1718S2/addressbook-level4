@@ -26,6 +26,7 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlDeskBoardStorage;
+import seedu.address.testutil.Assert;
 
 //@@author karenfrilya97
 public class ExportCommandTest {
@@ -60,11 +61,15 @@ public class ExportCommandTest {
      * Test
      */
     @Test
-    public void execute_existingFile_throwsCommandException() throws CommandException {
+    public void execute_existingFile_throwsCommandException() throws Throwable {
         String expectedMessage = String.format(MESSAGE_FILE_EXISTS, EXISTING_FILE_PATH);
         ExportCommand exportCommand = getExportCommandForGivenFilePath(EXISTING_FILE_PATH, model, storage);
 
-        assertCommandFailure(exportCommand, expectedMessage);
+        try {
+            assertCommandFailure(exportCommand, expectedMessage);
+        } catch (AssertionError ae) {
+            throw ae.getCause().getCause();
+        }
     }
 
     /**

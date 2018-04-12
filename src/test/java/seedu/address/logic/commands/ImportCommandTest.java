@@ -15,12 +15,16 @@ import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
 import static seedu.address.testutil.TypicalActivities.DEMO1;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
+import java.io.IOException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.FilePath;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -45,7 +49,7 @@ public class ImportCommandTest {
      * Test
      */
     @Test
-    public void execute_validFilePath_success() throws DuplicateActivityException {
+    public void execute_validFilePath_success() throws Throwable {
         String expectedMessage = String.format(ImportCommand.MESSAGE_SUCCESS, ASSIGNMENT3_DEMO1_FILE_PATH);
 
         ModelManager expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
@@ -54,7 +58,11 @@ public class ImportCommandTest {
 
         ImportCommand importCommand = getImportCommandForGivenFilePath(ASSIGNMENT3_DEMO1_FILE_PATH, model);
 
-        assertCommandSuccess(importCommand, model, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(importCommand, model, expectedMessage, expectedModel);
+        } catch (AssertionError ae) {
+            throw ae.getCause().getCause();
+        }
     }
 
     @Test
@@ -69,14 +77,15 @@ public class ImportCommandTest {
      * Test
      */
     @Test
-    public void execute_illegalValuesInFile_throwsCommandException() {
-        String expectedMessage = String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, "javax.xml.bind.UnmarshalException\n"
-                + " - with linked exception:\n[org.xml.sax.SAXParseException; systemId: "
-                + "file:/C:/Users/Karen/IdeaProjects/main/src/test/data/ImportCommandTest/illegalValues.xml; "
-                + "lineNumber: 1; columnNumber: 1; Content is not allowed in prolog.]");
+    public void execute_illegalValuesInFile_throwsCommandException() throws Throwable{
+        String expectedMessage = String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, ILLEGAL_VALUES_FILE_PATH);
         ImportCommand importCommand = getImportCommandForGivenFilePath(ILLEGAL_VALUES_FILE_PATH, model);
 
-        assertCommandFailure(importCommand, expectedMessage);
+        try {
+            assertCommandFailure(importCommand, expectedMessage);
+        } catch (AssertionError ae) {
+            throw ae.getCause().getCause();
+        }
     }
 
     /**
@@ -85,7 +94,7 @@ public class ImportCommandTest {
      * the existing activities are ignored.
      */
     @Test
-    public void execute_fileContainsExistingActivity_ignoresDuplicateActivity() throws DuplicateActivityException {
+    public void execute_fileContainsExistingActivity_ignoresDuplicateActivity() throws Throwable {
         String expectedMessage = String.format(ImportCommand.MESSAGE_SUCCESS, DUPLICATE_ACTIVITY_FILE_PATH);
         Model expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
         expectedModel.addActivity(ASSIGNMENT3);
@@ -94,7 +103,11 @@ public class ImportCommandTest {
 
         ImportCommand importCommand = getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, model);
 
-        assertCommandSuccess(importCommand, model, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(importCommand, model, expectedMessage, expectedModel);
+        } catch (AssertionError ae) {
+            throw ae.getCause().getCause();
+        }
     }
 
     @Test

@@ -51,7 +51,7 @@ public class ImportCommand extends UndoableCommand {
         } catch (IOException ioe) {
             throw new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePath));
         } catch (DataConversionException dce) {
-            throw new CommandException(String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, dce.getMessage()));
+            throw new CommandException(String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, filePath.value));
         }
     }
 

@@ -531,7 +531,7 @@ It utilises the `DisplayPicStorage` class to handle all image storage related op
 It also makes use of the `Participation` feature to display a colored shadow around the display picture. This image will be shown in the application next to the details of the person as seen in figure 14 below.
 
 .Display Picture example
-image::displaypic_personcard.png[width="350"]
+image::displaypic_personcard.PNG[width="350"]
 
 ==== Current implementation
 

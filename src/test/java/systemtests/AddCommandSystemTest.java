@@ -211,19 +211,19 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a pet patient with all fields same as another pet patient in the address book except species
         -> added */
-        toAddPet = new PetPatientBuilder().withName(VALID_NAME_NERO).withSpecies("dog").withBreed(VALID_BREED_NERO)
+        toAddPet = new PetPatientBuilder().withName(VALID_NAME_NERO).withSpecies("Dog").withBreed(VALID_BREED_NERO)
                 .withColour(VALID_COLOUR_NERO).withBloodType(VALID_BLOODTYPE_NERO).withTags()
                 .withOwnerNric(bobNric.toString()).build();
-        command = AddCommand.COMMAND_WORD + OPTION_PET + NAME_DESC_NERO + " s/dog" + BREED_DESC_NERO
+        command = AddCommand.COMMAND_WORD + OPTION_PET + NAME_DESC_NERO + " s/Dog" + BREED_DESC_NERO
                 + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
         assertCommandSuccess(command, toAddPet, bobNric);
 
         /* Case: add a pet patient with all fields same as another pet patient in the address book except breed
         -> added */
         toAddPet = new PetPatientBuilder().withName(VALID_NAME_NERO).withSpecies(VALID_SPECIES_NERO)
-                .withBreed("maltese").withColour(VALID_COLOUR_NERO).withBloodType(VALID_BLOODTYPE_NERO).withTags()
+                .withBreed("Maltese").withColour(VALID_COLOUR_NERO).withBloodType(VALID_BLOODTYPE_NERO).withTags()
                 .withOwnerNric(bobNric.toString()).build();
-        command = AddCommand.COMMAND_WORD + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO + " b/maltese"
+        command = AddCommand.COMMAND_WORD + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO + " b/Maltese"
                 + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
         assertCommandSuccess(command, toAddPet, bobNric);
 

@@ -185,6 +185,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized Patient removePatientFromQueue() throws PatientNotFoundException {
         int patientIndexToRemove = imdb.removePatientFromQueue();
         indicateQueueChanged();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return filteredPatients.get(patientIndexToRemove);
     }
 

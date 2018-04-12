@@ -7,11 +7,13 @@ import seedu.address.model.account.PrivilegeLevel;
 import seedu.address.model.account.UniqueAccountList;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 
-
+/**
+ * Checks if user is a librarian. If yes, it clears the list of accounts and logs out the current account.
+ */
 public class ClearAccountCommand extends UndoableCommand {
 
     /**
-     * Checks if user is a librarian. If yes, it clears the list of accounts and logs out the current account.
+     *
      */
     public static final String COMMAND_WORD = "cleara";
     public static final String MESSAGE_SUCCESS = "AccountList has been cleared, and you are logged out!";

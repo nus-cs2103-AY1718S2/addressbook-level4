@@ -19,18 +19,18 @@
 #owner-pane {
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-base: derive(white, 20%);
+    -fx-base: null;
     -fx-border-color: null;
     -fx-text-fill: white;
-
+    -fx-background-color: derive(white, 20%);
 }
 
 #petPatient-pane {
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-base: white;
+    -fx-base: null;
     -fx-border-color: white;
-    -fx-background-color: white;
+    -fx-background-color: derive(white, 20%);
 }
 
 .label {

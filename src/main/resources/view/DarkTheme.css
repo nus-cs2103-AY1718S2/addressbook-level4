@@ -11,27 +11,29 @@
 
 #owner-Tab {
     -fx-background-color: #A52A2A;
+    -fx-text-base-color: white;
 }
 
 #petPatient-Tab {
     -fx-background-color: #3e7b91;
+    -fx-text-base-color: white;
 }
 
 #owner-pane {
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-base: transparent;
+    -fx-base: null;
     -fx-border-color: null;
-    -fx-background-color: transparent;
+    -fx-background-color: derive(#1d1d1d, 20%);
 
 }
 
 #petPatient-pane {
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-base: transparent;
+    -fx-base: null;
     -fx-border-color: null;
-    -fx-background-color: transparent;
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 //@@author
@@ -63,7 +65,7 @@
 }
 
 .tab-pane {
-    -fx-padding: 0 0 0 1;
+    -fx-padding: 0 0 0 10;
 }
 
 .tab-pane .tab-header-area {
@@ -120,6 +122,7 @@
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .list-cell {
@@ -129,11 +132,11 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: white;
+    -fx-background-color: transparent;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: white;
+    -fx-background-color: #515658;
 }
 
 .list-cell:filled:selected {

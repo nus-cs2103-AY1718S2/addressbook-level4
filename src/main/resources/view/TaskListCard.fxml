@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -10,8 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.ListView?>
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
@@ -27,8 +27,8 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
-            <Label fx:id="status" layoutX="15.0" layoutY="10.0" styleClass="cell_big_label" text="\$status" />
+        <Label fx:id="name" styleClass="cell_big_label" text="\$first" wrapText="true" />
+            <Label fx:id="status" layoutX="15.0" layoutY="10.0" styleClass="cell_small_label" text="\$status" wrapText="true" />
       </HBox>
       <FlowPane fx:id="tags" />
       <Label fx:id="priority" styleClass="cell_small_label" text="\$priority" />
@@ -37,7 +37,7 @@
       <Label fx:id="dateadded" styleClass="cell_small_label" text="\$dateadded" />
       <Label fx:id="datecompleted" styleClass="cell_small_label" text="\$datecompleted" />
       <Label fx:id="subtaskHeader" styleClass="cell_small_label" text="Subtask: " />
-      <ListView fx:id="subtasks" VBox.vgrow="SOMETIMES" prefHeight="100"/>
+      <ListView fx:id="subtasks" prefHeight="100" styleClass="subtaskListViewStyle" VBox.vgrow="SOMETIMES" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

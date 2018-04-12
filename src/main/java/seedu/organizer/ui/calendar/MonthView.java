@@ -22,6 +22,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import seedu.organizer.logic.commands.CurrentMonthCommand;
 import seedu.organizer.logic.commands.NextMonthCommand;
@@ -286,6 +287,7 @@ public class MonthView extends UiPart<Region> {
         taskCalendar.setHalignment(dateToPrint, HPos.LEFT);
         taskCalendar.setValignment(dateToPrint, VPos.TOP);
         dateToPrint.setId("date" + String.valueOf(dateCount));
+        dateToPrint.setFill(Color.WHITE);
     }
 
     /**
@@ -369,6 +371,7 @@ public class MonthView extends UiPart<Region> {
      */
     private void addEntryListView(ObservableList<EntryCard> toAddObservableList, int row, int column) {
         ListView<EntryCard> entries = new ListView<>();
+        entries.getStyleClass().add("entryListView");
         entries.setId("entry" + String.valueOf(row) + String.valueOf(column));
         entries.setItems(toAddObservableList);
         entries.setCellFactory(listView -> new EntryListViewCell());

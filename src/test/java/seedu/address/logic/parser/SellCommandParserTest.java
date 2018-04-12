@@ -14,23 +14,23 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.BuyCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandTarget;
+import seedu.address.logic.commands.SellCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author Eldon-Chung
-public class BuyCommandParserTest {
+public class SellCommandParserTest {
     private static final String INDEX_AS_STRING = "1";
     private static final String INVALID_INDEX_STRING = "0";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private BuyCommandParser parser = new BuyCommandParser();
+    private SellCommandParser parser = new SellCommandParser();
 
-    private BuyCommand constructBuyCommand(String indexAsString, String valueAsString) throws IllegalValueException {
-        return new BuyCommand(new CommandTarget(ParserUtil.parseIndex(indexAsString)),
+    private SellCommand constructSellCommand(String indexAsString, String valueAsString) throws IllegalValueException {
+        return new SellCommand(new CommandTarget(ParserUtil.parseIndex(indexAsString)),
                 ParserUtil.parseAmount(valueAsString));
     }
 
@@ -48,18 +48,18 @@ public class BuyCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() throws Exception {
         String commandString = buildCommandString(INDEX_AS_STRING, PREFIX_AMOUNT.toString(), NUM_STRING);
-        Command command = constructBuyCommand(INDEX_AS_STRING, NUM_STRING);
+        Command command = constructSellCommand(INDEX_AS_STRING, NUM_STRING);
         System.out.println(parser.parse(commandString));
         System.out.println(command);
         assertParseSuccess(parser, commandString, command);
         commandString = buildCommandString(INDEX_AS_STRING, PREFIX_AMOUNT.toString(), DECIMAL_STRING);
-        command = constructBuyCommand(INDEX_AS_STRING, DECIMAL_STRING);
+        command = constructSellCommand(INDEX_AS_STRING, DECIMAL_STRING);
         assertParseSuccess(parser, commandString, command);
     }
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, BuyCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SellCommand.MESSAGE_USAGE);
 
         //missing amount prefix
         String commandString = buildCommandString(INDEX_AS_STRING, NUM_STRING);
@@ -72,7 +72,7 @@ public class BuyCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, BuyCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SellCommand.MESSAGE_USAGE);
 
         // invalid prefix
         String commandString = buildCommandString(INDEX_AS_STRING, PREFIX_NAME.toString(), INDEX_AS_STRING);

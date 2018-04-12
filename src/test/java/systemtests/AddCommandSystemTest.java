@@ -16,6 +16,8 @@ import static seedu.address.testutil.TypicalCoins.AMB;
 import static seedu.address.testutil.TypicalCoins.BOS;
 import static seedu.address.testutil.TypicalCoins.CAS;
 import static seedu.address.testutil.TypicalCoins.HORSE;
+import static seedu.address.testutil.TypicalCoins.IDT;
+import static seedu.address.testutil.TypicalCoins.KEYWORD_MATCHING_BTC;
 
 import org.junit.Test;
 
@@ -48,12 +50,12 @@ public class AddCommandSystemTest extends CoinBookSystemTest {
                 + "   " + TAG_DESC_FAV + " ";
         assertCommandSuccess(command, toAdd);
 
-        /* Case: undo adding Amy to the list -> Amy deleted */
+        /* Case: undo adding AMB to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo adding Amy to the list -> Amy added again */
+        /* Case: redo adding AMB to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
         model.addCoin(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
@@ -78,6 +80,13 @@ public class AddCommandSystemTest extends CoinBookSystemTest {
 
         /* Case: add a coin, missing tags -> added */
         assertCommandSuccess(HORSE);
+
+        /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
+
+        /* Case: filters the person list before adding -> added */
+        showCoinsWithName(KEYWORD_MATCHING_BTC);
+        assertCommandSuccess(IDT);
+
 
         /* ------------------------ Perform add operation while a coin card is selected --------------------------- */
 

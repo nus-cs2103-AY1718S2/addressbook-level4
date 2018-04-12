@@ -144,7 +144,7 @@ public abstract class CoinBookSystemTest {
     }
 
     /**
-     * Displays all coins in the address book.
+     * Displays all coins in the coin book.
      */
     protected void showAllCoins() {
         executeCommand(ListCommand.COMMAND_WORD);
@@ -168,7 +168,7 @@ public abstract class CoinBookSystemTest {
     }
 
     /**
-     * Deletes all coins in the address book.
+     * Deletes all coins in the coin book.
      */
     protected void deleteAllCoins() {
         executeCommand(ClearCommand.COMMAND_WORD);

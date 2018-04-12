@@ -1,11 +1,13 @@
 package systemtests;
 
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_TARGET;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_COIN_SUCCESS;
 import static seedu.address.testutil.TestUtil.getCoin;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
+import static seedu.address.testutil.TypicalCoins.KEYWORD_MATCHING_BTC;
 import static seedu.address.testutil.TypicalTargets.INDEX_FIRST_COIN;
 
 import org.junit.Test;
@@ -54,6 +56,22 @@ public class DeleteCommandSystemTest extends CoinBookSystemTest {
         /* Case: delete the middle coin in the list -> deleted */
         Index middleCoinIndex = getMidIndex(getModel());
         assertCommandSuccess(middleCoinIndex);
+
+        /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
+
+        /* Case: filtered person list, delete index within bounds of coin book and person list -> deleted */
+        showCoinsWithName(KEYWORD_MATCHING_BTC);
+        Index index = INDEX_FIRST_COIN;
+        assertTrue(index.getZeroBased() < getModel().getFilteredCoinList().size());
+        assertCommandSuccess(index);
+
+        /* Case: filtered person list, delete index within bounds of coin book but out of bounds of person list
+         * -> rejected
+         */
+        showCoinsWithName(KEYWORD_MATCHING_BTC);
+        int invalidIndex = getModel().getCoinBook().getCoinList().size();
+        command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
+        assertCommandFailure(command, MESSAGE_INVALID_COMMAND_TARGET);
 
         /* --------------------- Performing delete operation while a coin card is selected ------------------------ */
 

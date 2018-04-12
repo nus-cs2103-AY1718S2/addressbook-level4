@@ -102,7 +102,7 @@ public class SellCommand extends UndoableCommand {
         // state check
         SellCommand e = (SellCommand) other;
         return target.equals(e.target)
-                && amountToSell == e.amountToSell
+                && amountToSell.equals(e.amountToSell)
                 && Objects.equals(coinToEdit, e.coinToEdit);
     }
 }

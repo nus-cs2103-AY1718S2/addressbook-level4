@@ -16,18 +16,10 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Coin[] getSampleCoins() {
         return new Coin[] {
-            new Coin(new Code("Alex Yeoh"),
-                getTagSet("friends")),
-            new Coin(new Code("Bernice Yu"),
-                getTagSet("colleagues", "friends")),
-            new Coin(new Code("Charlotte Oliveiro"),
-                getTagSet("neighbours")),
-            new Coin(new Code("David Li"),
-                getTagSet("family")),
-            new Coin(new Code("Irfan Ibrahim"),
-                getTagSet("classmates")),
-            new Coin(new Code("Roy Balakrishnan"),
-                getTagSet("colleagues"))
+            new Coin(new Code("BTC"),
+                getTagSet("fav")),
+            new Coin(new Code("ETH"),
+                getTagSet("fav", "popular")),
         };
     }
 

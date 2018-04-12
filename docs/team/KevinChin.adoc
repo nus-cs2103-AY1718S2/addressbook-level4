@@ -39,9 +39,11 @@ It required the ability to read and understand codes written by others and also 
 ** Project management:
 *** Reach all the milestones `v1.1` - `v1.5rc` on GitHub.
 *** Created issues and milestones for the team.
+*** Help to merge and review team member's PR
 ** Enhancements to existing features:
 *** Minor enhancements to the GUI: (Pull requests
 https://github.com/CS2103JAN2018-W09-B2/main/pull/34[#34])
+*** Enhancement to the Find command: https://github.com/CS2103JAN2018-W09-B2/main/pull/50[#50]
 ** Documentation:
 *** Did cosmetic tweaks and updates to existing contents of the User Guide: https://github.com/CS2103JAN2018-W09-B2/main/pull/55/files[#55], https://github.com/CS2103JAN2018-W09-B2/main/pull/89[#89]
 *** Did cosmetic tweaks to the README file: https://github.com/CS2103JAN2018-W09-B2/main/pull/60[#60]

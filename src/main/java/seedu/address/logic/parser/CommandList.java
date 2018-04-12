@@ -112,6 +112,9 @@ public class CommandList {
         case AddAppointmentCommand.COMMAND_WORD:
             return AddAppointmentCommand.COMMAND_SYNTAX;
 
+        case EmailCommand.COMMAND_WORD:
+            return EmailCommand.COMMAND_SYNTAX;
+
         default:
             return matchedCommandWord;
         }

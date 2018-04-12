@@ -1,5 +1,47 @@
 # KevinCJH
-###### /java/seedu/address/logic/commands/EmailCommandTest.java
+###### \java\guitests\guihandles\EmailPanelHandle.java
+``` java
+/**
+ * A handle to the {@code EmailPanel} in the GUI.
+ */
+public class EmailPanelHandle extends NodeHandle<Node> {
+
+    private static final String RECIPIENT_ID = "#toTxtField";
+    private static final String BODY_ID = "#bodyTxtField";
+
+    private final TextField to;
+    private final HTMLEditor body;
+
+    public EmailPanelHandle(Node emailPanelNode) {
+        super(emailPanelNode);
+
+        this.to = getChildNode(RECIPIENT_ID);
+        this.body = getChildNode(BODY_ID);
+    }
+
+    public String getRecipient() {
+        return to.getText();
+    }
+
+    public String getBody() {
+        return body.getHtmlText().replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
+    }
+
+}
+```
+###### \java\guitests\guihandles\PersonCardHandle.java
+``` java
+    public List<String> getSkillStyleClasses(String tag) {
+        return tagLabels
+                .stream()
+                .filter(label -> label.getText().equals(tag))
+                .map(Label::getStyleClass)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such skill."));
+    }
+}
+```
+###### \java\seedu\address\logic\commands\EmailCommandTest.java
 ``` java
 public class EmailCommandTest {
 
@@ -17,23 +59,23 @@ public class EmailCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
-        assertExecutionSuccess(INDEX_FIRST);
-        assertExecutionSuccess(INDEX_THIRD);
-        assertExecutionSuccess(lastPersonIndex);
+        assertExecutionSuccess(INDEX_FIRST, VALID_EMAIL_SUBJECT);
+        assertExecutionSuccess(INDEX_THIRD, VALID_EMAIL_SUBJECT);
+        assertExecutionSuccess(lastPersonIndex, VALID_EMAIL_SUBJECT);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, VALID_EMAIL_SUBJECT, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validIndexFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST);
 
-        assertExecutionSuccess(INDEX_FIRST);
+        assertExecutionSuccess(INDEX_FIRST, VALID_EMAIL_SUBJECT);
     }
 
     @Test
@@ -44,14 +86,14 @@ public class EmailCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, VALID_EMAIL_SUBJECT, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**
      * Executes a {@code EmailCommand} with the given {@code index} and check that email address is shown correctly.
      */
-    private void assertExecutionSuccess(Index index) {
-        EmailCommand emailCommand = prepareCommand(index);
+    private void assertExecutionSuccess(Index index, String emailSubject) {
+        EmailCommand emailCommand = prepareCommand(index, emailSubject);
 
         List<Person> lastShownList = model.getFilteredPersonList();
         Person personToEmail = lastShownList.get(index.getZeroBased());
@@ -74,8 +116,8 @@ public class EmailCommandTest {
      * Executes a {@code EmailCommand} with the given {@code index}, and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
-    private void assertExecutionFailure(Index index, String expectedMessage) {
-        EmailCommand emailCommand = prepareCommand(index);
+    private void assertExecutionFailure(Index index, String emailSubject, String expectedMessage) {
+        EmailCommand emailCommand = prepareCommand(index, emailSubject);
 
         try {
             emailCommand.execute();
@@ -88,14 +130,14 @@ public class EmailCommandTest {
 
     @Test
     public void equals() {
-        EmailCommand emailFirstCommand = new EmailCommand(INDEX_FIRST);
-        EmailCommand emailSecondCommand = new EmailCommand(INDEX_SECOND);
+        EmailCommand emailFirstCommand = new EmailCommand(INDEX_FIRST, VALID_EMAIL_SUBJECT);
+        EmailCommand emailSecondCommand = new EmailCommand(INDEX_SECOND, VALID_EMAIL_SUBJECT);
 
         // same object -> returns true
         assertTrue(emailFirstCommand.equals(emailFirstCommand));
 
         // same values -> returns true
-        EmailCommand emailFirstCommandCopy = new EmailCommand(INDEX_FIRST);
+        EmailCommand emailFirstCommandCopy = new EmailCommand(INDEX_FIRST, VALID_EMAIL_SUBJECT);
         assertTrue(emailFirstCommand.equals(emailFirstCommandCopy));
 
         // different types -> returns false
@@ -111,14 +153,28 @@ public class EmailCommandTest {
     /**
      * Returns a {@code EmailCommand} with parameters {@code index}.
      */
-    private EmailCommand prepareCommand(Index index) {
-        EmailCommand emailCommand = new EmailCommand(index);
+    private EmailCommand prepareCommand(Index index, String emailSubject) {
+        EmailCommand emailCommand = new EmailCommand(index, emailSubject);
         emailCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return emailCommand;
     }
 }
 ```
-###### /java/seedu/address/logic/GoogleAuthenticationTest.java
+###### \java\seedu\address\logic\GmailClientTest.java
+``` java
+public class GmailClientTest {
+
+    @Test
+    public void equals() {
+        GmailClient client1 = GmailClient.getInstance();
+        GmailClient client2 = GmailClient.getInstance();
+
+        assertTrue(client1.equals(client2));
+    }
+
+}
+```
+###### \java\seedu\address\logic\GoogleAuthenticationTest.java
 ``` java
 
 public class GoogleAuthenticationTest {
@@ -148,21 +204,16 @@ public class GoogleAuthenticationTest {
 
 }
 ```
-###### /java/seedu/address/logic/GmailClientTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
-public class GmailClientTest {
-
     @Test
-    public void equals() {
-        GmailClient client1 = GmailClient.getInstance();
-        GmailClient client2 = GmailClient.getInstance();
-
-        assertTrue(client1.equals(client2));
+    public void parseCommand_email() throws Exception {
+        EmailCommand command = (EmailCommand) parser.parseCommand(
+                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new EmailCommand(INDEX_FIRST, ""), command);
     }
-
-}
 ```
-###### /java/seedu/address/logic/parser/EmailCommandParserTest.java
+###### \java\seedu\address\logic\parser\EmailCommandParserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -177,16 +228,19 @@ public class EmailCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsEmailCommand() {
-        assertParseSuccess(parser, "1", new EmailCommand(INDEX_FIRST));
+        assertParseSuccess(parser, "1", new EmailCommand(INDEX_FIRST, ""));
+        assertParseSuccess(parser, "1 " + VALID_EMAIL_SUBJECT_DESC, new EmailCommand(INDEX_FIRST, VALID_EMAIL_SUBJECT));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1 " + INVALID_EMAIL_DESC,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindCommandParserTest.java
 ``` java
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -227,21 +281,7 @@ public class EmailCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_email() throws Exception {
-        EmailCommand command = (EmailCommand) parser.parseCommand(
-                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
-        assertEquals(new EmailCommand(INDEX_FIRST), command);
-    }
-```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
-``` java
-        expectedCard.getSkills().forEach(tag ->
-            assertEquals(expectedCard.getSkillStyleClasses(tag), actualCard.getSkillStyleClasses(tag)));
-```
-###### /java/seedu/address/ui/EmailPanelTest.java
+###### \java\seedu\address\ui\EmailPanelTest.java
 ``` java
 public class EmailPanelTest extends GuiUnitTest {
 
@@ -270,45 +310,8 @@ public class EmailPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/guitests/guihandles/EmailPanelHandle.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
-/**
- * A handle to the {@code EmailPanel} in the GUI.
- */
-public class EmailPanelHandle extends NodeHandle<Node> {
-
-    private static final String RECIPIENT_ID = "#toTxtField";
-    private static final String BODY_ID = "#bodyTxtField";
-
-    private final TextField to;
-    private final HTMLEditor body;
-
-    public EmailPanelHandle(Node emailPanelNode) {
-        super(emailPanelNode);
-
-        this.to = getChildNode(RECIPIENT_ID);
-        this.body = getChildNode(BODY_ID);
-    }
-
-    public String getRecipient() {
-        return to.getText();
-    }
-
-    public String getBody() {
-        return body.getHtmlText().replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", " ");
-    }
-
-}
-```
-###### /java/guitests/guihandles/PersonCardHandle.java
-``` java
-    public List<String> getSkillStyleClasses(String tag) {
-        return tagLabels
-                .stream()
-                .filter(label -> label.getText().equals(tag))
-                .map(Label::getStyleClass)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No such skill."));
-    }
-}
+        expectedCard.getSkills().forEach(tag ->
+            assertEquals(expectedCard.getSkillStyleClasses(tag), actualCard.getSkillStyleClasses(tag)));
 ```

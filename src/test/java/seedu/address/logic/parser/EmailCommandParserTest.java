@@ -1,6 +1,9 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT_DESC;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
@@ -22,11 +25,14 @@ public class EmailCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsEmailCommand() {
-        assertParseSuccess(parser, "1", new EmailCommand(INDEX_FIRST));
+        assertParseSuccess(parser, "1", new EmailCommand(INDEX_FIRST, ""));
+        assertParseSuccess(parser, "1 " + VALID_EMAIL_SUBJECT_DESC, new EmailCommand(INDEX_FIRST, VALID_EMAIL_SUBJECT));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1 " + INVALID_EMAIL_DESC,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
     }
 }

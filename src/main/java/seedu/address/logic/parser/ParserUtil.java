@@ -577,6 +577,16 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> emailSubject} into an {@code Optional<String>}
+     * if {@code emailSubject} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseEmailSubject(Optional<String> emailSubject) throws IllegalValueException {
+        requireNonNull(emailSubject);
+        return emailSubject.isPresent() ? Optional.of(new String(emailSubject.get())) : Optional.empty();
+    }
+
+    /**
      * Check valid date
      */
     private static boolean checkValidDate(int year, int month, int day) {

@@ -551,13 +551,14 @@ Now that you have logged in, you are ready to use the `Email` feature to send ou
 ==== Emailing your contact : `email`
 
 You can send email to any person you have saved in contactHeRo using the following format. +
-Format: `email INDEX`
+Format: `email INDEX [sub/EMAIL_SUBJECT]`
 
 ****
 * Opens up the Draft Email tab. This is an User Interface for you to draft your emails.
 * Collects the information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* The email subject title is optional.
 * The collected information will be used to help you fill up details in the draft like the person's email address.
 ****
 
@@ -566,11 +567,19 @@ Examples:
 * `list` +
 `email 2` +
 This will open up the Draft Email tab and then
-collect the information of the 2nd person in the list. On running the above command, you should see the following success message: +
+collect the information of the 2nd person in the list.
+* `list` +
+`email 2 sub/Interview on 13 May 2018` +
+This will open up the Draft Email tab and then
+collect the information of the 2nd person in the list.
+It will also set the email subject title to "Interview on 13 May 2018".
+
+On running the above commands, you should see similar message like the following: +
 
  Drafting email to: berniceyu@example.com
-+
-The collected information will be used automatically to fill up details as shown below in figure 5	.
+
+The collected information will be used automatically to fill up details as shown below in figure 5.
+If you have also used `sub/Interview on 13 May 2018` in the command, the Subject textbox will also be fill with "Interview on 13 May 2018".
 
 .The User Interface to draft your email
 image::emailSS1.PNG[width="790", align="center"]

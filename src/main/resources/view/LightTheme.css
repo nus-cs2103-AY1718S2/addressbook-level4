@@ -8,12 +8,12 @@
 }
 
 #owner-Tab {
-    -fx-background-color: #66CDAA;
+    -fx-background-color: #dce2f7;
     -fx-text-fill: white;
 }
 
 #petPatient-Tab {
-    -fx-background-color: FFA500;
+    -fx-background-color: #dce2f7;
 }
 
 #owner-pane {

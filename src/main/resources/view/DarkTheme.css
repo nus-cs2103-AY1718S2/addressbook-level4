@@ -10,13 +10,13 @@
 }
 
 #owner-Tab {
-    -fx-background-color: #A52A2A;
-    -fx-text-base-color: white;
+    -fx-background-color: A9A9A9;
+    -fx-text-base-color: black;
 }
 
 #petPatient-Tab {
-    -fx-background-color: #3e7b91;
-    -fx-text-base-color: white;
+    -fx-background-color: A9A9A9;
+    -fx-text-base-color: black;
 }
 
 #owner-pane {

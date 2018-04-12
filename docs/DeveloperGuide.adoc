@@ -532,7 +532,7 @@ Users will also be able to edit the miscellaneous information of a student as we
 [NOTE]
 The picture file to be changed to must be a valid and existing file with extensions of `.png` or `.jpg`
 
-The following diagram shows the student model including the primary attributes as well as the miscalleneous information attributes.
+The following diagram shows the student model including the primary attributes as well as the miscellaneous information attributes.
 
 image::StudentWithMiscInfoDiagram.png[width="800"]
 
@@ -547,27 +547,130 @@ This feature revolves mainly around 3 commands:
 * `editMisc` : Edits the miscellaneous information of a student.
 * `editPicture` : Edits the profile picture of a student with a valid picture file(refer to note above). The user will have to provide the filepath to this file. 
 
-For the command `moreInfo`, the model manager 
+For the command `moreInfo`, the model manager calls upon the 
 
 [NOTE]	
 The `moreInfo` command *cannot* function if there is no real existing XML data of students. Thus, the sample student data provided at the initial start up will not work with this command. A warning will be mentioned if the command is called without existing data.
 
-The code below hows how 
+The code below shows how the the method is called with the parameter of the required `Student` functions:
 
 [source, java]
 ----
-	private static Student createEditedStudent(Student studentToEdit, EditStudentDescriptor editStudentDescriptor) {
-        assert studentToEdit != null;
 
-        // ...Set other attributes of the prospective newly edited student...
-
-        ProgrammingLanguage updatedProgrammingLanguage = editStudentDescriptor.getProgrammingLanguage();
-
-        return new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedProgrammingLanguage,
-                updatedTags);
+	public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException,
+            StorageFileMissingException {
+        addressBook.checkForStudentInAdressBook(target);
+        checkIfStorageFileExists();
+        indicateRequiredStudentIndexChange(filteredStudents.indexOf(target));
+        indicateBrowserPanelToDisplayStudent(target);
     }
+
+----
+The method `checkIfStorageFileExists()` checks if there is any real XML data of students at the moment. If none exists, then an exception is thrown and the command will not perform (as mentioned in the note above).
+
+The method `indicateRequiredStudentIndexChange(Index indexOfStudent)` calls the modifying of XML data of which student is needed to display his/her profile page. This is because the HTML files
+can only read data from XML files and hence, an external XML file containing the index of the student whose profile page is required to be shown is needed. The code snippet to update the file is as shown:
+
+[source, java]
+----
+	public static void updateData(int newIndex, String filePath) throws IOException {
+		File file = new File(filePath);
+		RequiredStudentIndex ris = new RequiredStudentIndex(newIndex);
+		try {
+			XmlUtil.saveDataToFile(file, ris);
+		} catch (JAXBException e) {
+			throw new AssertionError("Unexpected exception " + e.getMessage());
+		}
+
 ----
 
+Lastly, indicating the browser panel to display a student will raise a `StudentInfoDisplayEvent` which is handled in the `BrowserPanel` with the following code:
+
+[source, java]
+----
+	private void handleStudentInfoDisplayEvent(StudentInfoDisplayEvent event) {
+		//... logging process...
+		loadStudentInfoPage();
+		raise(new ShowStudentProfileEvent());
+	}
+----
+
+For the command `editMisc`, this is similar to the edit function, except it takes on different optional parameters. These are [ALLERGIES], [NEXTOFKINNAME], [NEXTOFKINPHONE], [REMARKS].
+The code snippet below shows how the `studentToEdit` is created when the `editMisc command` is called.
+
+[source, java]
+----
+	private static Student createEditedStudent(Student studentToEdit, EditMiscDescriptor editMiscDescriptor) {
+		assert studentToEdit != null;
+
+		//... main information of the student is copied over...
+
+		Allergies allergies = editMiscDescriptor.getAllergies()
+				.orElse(studentToEdit.getMiscellaneousInfo().getAllergies());
+		NextOfKinName nextOfKinName = editMiscDescriptor.getNextOfKinName()
+				.orElse(studentToEdit.getMiscellaneousInfo().getNextOfKinName());
+		NextOfKinPhone nextOfKinPhone = editMiscDescriptor.getNextOfKinPhone()
+				.orElse(studentToEdit.getMiscellaneousInfo().getNextOfKinPhone());
+		Remarks remarks = editMiscDescriptor.getRemarks()
+				.orElse(studentToEdit.getMiscellaneousInfo().getRemarks());
+
+		MiscellaneousInfo miscellaneousInfo = new MiscellaneousInfo(allergies, nextOfKinName, nextOfKinPhone, remarks);
+
+		return new Student(uniqueKey, name, phone, email, address,
+				programmingLanguage, tags, isFavourite, dashboard, profilePicturePath, miscellaneousInfo);
+}
+
+After that, the student will be updated with the new details for his/her miscellaneous information.
+
+For the command `editPicture`, the student's index will have to be provided by the user again. The next parameter for this is the required file path of the picture file.
+This can be in the form of an absolute file path (starting from a hardrive like `C:/Users/.../picture.png`) or relative to the folder that the jar application is in.
+
+
+This command uses the similar method of the `edit` command and the `editMisc` command where a new `Student` with the edited details is created to overwrite the current existing student.
+In this case, the `ProfilePicturePath` of the student is edited. When this command is called, a `ProfilePictureChangeEvent` will be raised and the Storage Manager will call a method to save the data of the profile picture from its original location to a location in the jar folder.
+
+The code below shows how the saving of the file is done
+
+[source, java]
+----
+
+	public void saveProfilePicture(ProfilePicturePath pathToChangeTo, Student student) throws IOException {
+		//... ensuring that the picture's filepath exists
+
+		//... getting the extension of the provided filepath of the picture
+
+		deleteExistingProfilePicture(studentPictureFilePath);
+		Path studentPictureFilePathWithExtension = Paths.get(studentPictureFilePath.toString() + extension);
+		logger.fine("Attempting to write to data file: data/" + student.getUniqueKey().toString());
+
+
+		Files.copy(newPath, studentPictureFilePathWithExtension);
+
+    }
+
+----
+
+Thus, the HTML file for displaying the student's profile page will be able to show the new image, which is copied to the local jar folder.
+
+==== Design Considerations
+
+===== Aspect: Displaying and styling the profile page of a student
+
+* **Alternative 1 (current choice):** Have it as a JavaScript function in the HTML file of the student's profile page.
+** Pros: Able to directly read the XML data of students from the file.
+** Cons: Have to export the required files and folder out of the jar file as the JavaScript is unable to retrieve files outside of the Jar folder.
+* **Alternative 2:** Have it as a JavaFX file.
+** Pros: Able to read the student's data from the UniqueStudentList.
+** Cons: Might be more difficult and messy to implement in code.
+
+===== Aspect: Editing the profile picture.
+
+* **Alternative 1 (current choice):** Copy the picture file into the local jar directory.
+** Pros: Ensures that the picture can still be loaded even when the original picture file is deleted.
+** Cons: Requires more code to copy the files over and ensure their validity.
+* **Alternative 2:** Read from the direct location of the original picture file.
+** Pros: Less code of copying is required and any modifications to the original photo is immediately updated.
+** Cons: If the picture is deleted or corrupted, the profile picture would not be able to display.
 
 //end::profilePage[]
 
@@ -918,7 +1021,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 |`* * *` |user |be able to add/change a profile picture for my students |
 
-|`* * *` |user | be able to edit the miscalleneous information of a student |have the most updated version of a student's information
+|`* * *` |user | be able to edit the miscellaneous information of a student |have the most updated version of a student's information
 
 |`* * *` |user |have a remarks column included in the misc info for each student |add specific remarks for each particular student that may be important to note
 

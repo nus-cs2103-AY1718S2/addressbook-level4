@@ -72,7 +72,8 @@ public class BrowserPanel extends UiPart<Region> {
      * running the app in IDE instead of the Jar file.
      */
     private String testIfFileExists(String testPath) {
-        if (!(new File(testPath).exists())) {
+        File toTest = new File(testPath.substring(6).replace("%20", " "));
+        if (!toTest.exists()) {
             String resourceFile = MainApp.class.getResource(FXML_FILE_FOLDER).toExternalForm();
             String mainFile =  resourceFile.substring(0, resourceFile.lastIndexOf("out"));
             return new String(mainFile + "data/view/" + STUDENT_MISC_INFO_PAGE);

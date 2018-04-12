@@ -471,11 +471,13 @@ The search feature is able to perform search on either the input platform or all
 
 image::SearchFunction.png[width="1000"]
 
-Similar to most of the other feature in the application, the command keyword is case sensitive while the search name is not. As for platform declaration, only predefined inputs are allowed. These predefined inputs are the names of the platform as well as the aliases. (e.g. facebook, fb, twitter...) An invalid command format prompt will be shown if the input platform is not one of the predefined inputs.
+Similar to most of the other feature in the application, the command keyword is case sensitive while the search name is not. As for platform declaration, only predefined inputs are allowed. These predefined inputs are the names of the platform as well as the aliases. (e.g. facebook, fb, twitter...) An invalid command format prompt will be shown if the input platform is not one of the predefined inputs, or has a different case size.
 
-image::SearchFunction.png[width="1000"]
+image::InvalidPlatformCases.png[width="1000"]
 
 Upon execution of the search feature with the keyword "search", the validation of input arguments are first checked by the parser, then a SearchPersonEvent will be posted to the event bus. This event is handled by the handleSearchPersonEvent method, which determine the platform to perform the search on and choose the tabs to display.
+
+image::SearchPersonEvent.png[width="800"]
 
 ==== Design Considerations
 

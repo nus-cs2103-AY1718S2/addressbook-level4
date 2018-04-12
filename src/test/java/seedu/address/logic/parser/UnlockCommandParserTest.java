@@ -17,11 +17,6 @@ public class UnlockCommandParserTest {
     private UnlockCommandParser parser = new UnlockCommandParser();
 
     @Test
-    public void parse_invalidArgs() {
-        assertParseFailure(parser, " 2", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
-    }
-
-    @Test
     public void parse_validArgs_returnsLockCommand() {
         assertParseSuccess(parser, "   ", new UnlockCommand());
     }

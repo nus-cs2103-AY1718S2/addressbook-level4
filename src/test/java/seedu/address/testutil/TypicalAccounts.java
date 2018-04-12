@@ -7,11 +7,7 @@ import java.util.List;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.account.Account;
-import seedu.address.model.account.UniqueAccountList;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.account.UniqueAccountList;
-import seedu.address.model.account.Account;
 
 public class TypicalAccounts {
 

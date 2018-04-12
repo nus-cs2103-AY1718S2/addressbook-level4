@@ -36,7 +36,7 @@ The existing commands were also updated to support the adding and changing of di
 
 ** Project management:
 *** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
-*** Manage and set up the Issue Tracker.
+*** Manage and set up the Issue Tracker, assigned issues and added labels to the issues.
 *** Set up Travis for the organization repo.
 *** Help update README (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/66[#66])
 ** Documentation:

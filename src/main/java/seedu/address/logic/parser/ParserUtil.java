@@ -78,7 +78,7 @@ public class ParserUtil {
         StringBuilder formattedName = new StringBuilder();
         for (String n : wordsInName) {
             formattedName = formattedName.append(n.substring(0, 1).toUpperCase())
-                    .append(n.substring(1).toUpperCase());
+                    .append(n.substring(1).toLowerCase()).append(" ");
         }
         return new Name(formattedName.toString().trim());
     }
@@ -428,7 +428,7 @@ public class ParserUtil {
         StringBuilder formattedName = new StringBuilder();
         for (String n : wordsInName) {
             formattedName = formattedName.append(n.substring(0, 1).toUpperCase())
-                    .append(n.substring(1).toUpperCase());
+                    .append(n.substring(1).toLowerCase()).append(" ");
         }
         return new PetPatientName(formattedName.toString().trim());
     }

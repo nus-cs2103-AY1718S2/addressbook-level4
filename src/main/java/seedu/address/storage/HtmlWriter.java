@@ -15,11 +15,11 @@ import seedu.address.model.person.runner.Runner;
  */
 public class HtmlWriter {
     public static final String OPENING_LINE = "<!DOCTYPE html><html><head>\n"
-            + "<link rel=\"stylesheet\" href=\"DarkTheme.css\"></head>\n"
             + "<body style=\"background-color:#383838;\"\n>"
             + "<font face=\"Segoe UI Semibold\" size=\"5\" color=\"white\">\n";
 
     private final String name;
+    private final String phone;
     private final String amountOwed;
     private final String dueDate;
     private final String runnerAssigned;
@@ -28,6 +28,7 @@ public class HtmlWriter {
 
     public HtmlWriter() {
         this.name = null;
+        this.phone = null;
         this.amountOwed = null;
         this.dueDate = null;
         this.runnerAssigned = null;
@@ -40,6 +41,7 @@ public class HtmlWriter {
      */
     public HtmlWriter(Customer customer) {
         this.name = customer.getName().fullName;
+        this.phone = customer.getPhone().value;
         this.amountOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
         this.dueDate = customer.getOweDueDate().toString();
         this.runnerAssigned = customer.getRunner().getName().fullName;
@@ -52,6 +54,7 @@ public class HtmlWriter {
      */
     public HtmlWriter(Runner runner) {
         this.name = runner.getName().fullName;
+        this.phone = runner.getPhone().value;
         this.amountOwed = "test";
         this.dueDate = "test";
         this.runnerAssigned = "test";
@@ -92,15 +95,29 @@ public class HtmlWriter {
         String filepath = System.getProperty("user.dir") + File.separator + "PersonPage.html";
         String absoluteFilepath;
         File file = new File(filepath);
+        int index = 1;
         try {
             PrintWriter printWriter = new PrintWriter(file);
             printWriter.print(OPENING_LINE);
-            printWriter.println("<p>Name: " + name + "</p>");
-            printWriter.println("<br><hr>");
-            printWriter.println("<p>Customers Assigned:</p>");
+            printWriter.println("<font face=\"Segoe UI\" size=\"5\" color=\"white\">");
+            printWriter.println("<table>");
+            printWriter.println("<tr><th align=\"left\" colspan=\"2\">" + name + "</th></tr>");
+            printWriter.println("<tr><td style=\"width: 120px;\">phone: </td><td>" + phone + "</td></tr>");
+            printWriter.println("<tr><td>email: </td><td>" + "ee" + "</td></tr>");
+            printWriter.println("<tr><td>address: </td><td>" + "house" + "</td></tr>");
+            printWriter.println("</table>");
+            printWriter.println("<br><br>");
+            printWriter.println("<table>");
+            printWriter.println("<tr><th align=\"left\">");
+            printWriter.println("Customers Assigned");
+            printWriter.println("</th></tr>");
             for (Person eachCustomer: customerList) {
-                printWriter.println("<p>- " + eachCustomer.getName().fullName + "</p>");
+                printWriter.println("<tr><td>");
+                printWriter.println(index + ". " + eachCustomer.getName().fullName);
+                printWriter.println("</td></tr>");
+                index++;
             }
+            printWriter.println("</table>");
             printWriter.println("</body></html>");
             printWriter.close();
         } catch (FileNotFoundException e) {

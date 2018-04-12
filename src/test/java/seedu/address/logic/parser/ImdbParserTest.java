@@ -29,6 +29,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.PrintCommand;
 import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -418,6 +419,13 @@ public class ImdbParserTest {
         PrintCommand command = (PrintCommand) parser.parseCommand(
                 PrintCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new PrintCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_logoutCommand() throws Exception {
+        LoginManager.authenticate("alice", "password123");
+        LogoutCommand command = (LogoutCommand) parser.parseCommand(LogoutCommand.COMMAND_WORD);
+        assertEquals(new LogoutCommand(), command);
     }
 
     @Test

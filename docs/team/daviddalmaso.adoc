@@ -1,0 +1,65 @@
+= David Dalmaso - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: AddressBook - Level 4
+
+---
+
+== Overview
+
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to export data from the reInsurance application*
+** What it does: allows the user to export the data from the application to an outside source. The two major pieces of data to export are the calendar events and the portfolio of clients.
+** Justification: This feature is crucial to the application since it allows for the reInsurance users to access data from the application when they are unable to use the application (i.e. when using a mobile phone or computer with reInsurance application).
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands. The enhancement also allows for more robust features of exporting.
+** Credits: _https://developers.google.com/calendar/[Google Calendar API]_
+
+* *Minor enhancement*: added a count command to see the total number of persons in the reInsurance application.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/daviddalmaso.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/test/daviddalmaso.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed release `v1.4 - v1.5rc` on GitHub
+*** Created jar for release `v1.4` on Github
+*** Set up Travis CI for team repository to check for build errors.
+*** Set up auto publishing of docs for team repository.
+*** Set up Coveralls for team repository to check for code coverage.
+** Enhancements to existing features:
+*** Added a clear button on the UI in the `File` section of the navigation bar
+** Documentation:
+*** Continually updated UserGuide and DeveloperGuide to stay up to date with changes made at every release.
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-T11-B3/main/pull/22, https://github.com/CS2103JAN2018-T11-B3/main/pull/21
+*** PRs approved of: https://github.com/CS2103JAN2018-T11-B3/main/pull/17
+** Tools:
+*** Integrated Google Calendar API to the project https://github.com/CS2103JAN2018-T11-B3/main/pull/152[#152]
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=export]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=export]
+
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_

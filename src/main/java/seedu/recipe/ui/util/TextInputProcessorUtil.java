@@ -16,11 +16,9 @@ public class TextInputProcessorUtil {
 
     private String content;
     private Font font;
-    private Text text;
 
     public TextInputProcessorUtil() {
         content = new String();
-        text = new Text();
     }
 
     /**
@@ -53,7 +51,7 @@ public class TextInputProcessorUtil {
     }
 
     /**
-     * Gets last word from {@code content}
+     * Gets last word (character(s) between the last whitespace and end of string) from {@code content}
      */
     public String getLastWord() {
         String lastWord = EMPTY_STRING;
@@ -143,8 +141,6 @@ public class TextInputProcessorUtil {
      */
     public void setContent(String inputText) {
         content = inputText;
-        text.setText(inputText);
-        text.setFont(font);
     }
 
     /**

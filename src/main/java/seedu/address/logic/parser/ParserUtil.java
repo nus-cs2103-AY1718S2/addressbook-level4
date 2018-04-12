@@ -7,7 +7,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -33,7 +35,9 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_NUMBER = "Argument is not a valid number.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
     public static final String MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX = "%s structure of the argument is invalid:"
-            + " Expected %s but instead I got %s.";
+            + " Expected %s but instead got %s.";
+
+    private static Logger logger = LogsCenter.getLogger(ParserUtil.class);
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -133,7 +137,7 @@ public class ParserUtil {
 
     //@@author Eldon-Chung
     /**
-     * Parses a {@code String condition} represented by a {@TokenStack} into a {@code Predicate<Coin>}.
+     * Parses a {@code String condition} represented by a {@code TokenStack} into a {@code Predicate<Coin>}.
      * @param argumentTokenStack a {@code TokenStack} representing the tokenized argument.
      * @return a predicate representing the argument
      * @throws IllegalValueException if the given tag names or numbers as parameters are invalid
@@ -149,16 +153,18 @@ public class ParserUtil {
         if (!conditionSyntaxParser.parse()) {
             expectedTokenType = conditionSyntaxParser.getExpectedType();
             actualTokenType = conditionSyntaxParser.getActualType();
-            throw new ParseException(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Syntactic",
+            logger.warning(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Syntactic",
                     expectedTokenType.description, actualTokenType.description));
+            throw new ParseException("command arguments invalid.");
         }
 
         ConditionSemanticParser conditionSemanticParser = new ConditionSemanticParser(argumentTokenStack);
         if (!conditionSemanticParser.parse()) {
             expectedTokenType = conditionSemanticParser.getExpectedType();
             actualTokenType = conditionSemanticParser.getActualType();
-            throw new ParseException(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Semantic",
+            logger.warning(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Semantic",
                     expectedTokenType.description, actualTokenType.description));
+            throw new ParseException("command arguments invalid.");
         }
 
         ConditionGenerator conditionGenerator = new ConditionGenerator(argumentTokenStack);

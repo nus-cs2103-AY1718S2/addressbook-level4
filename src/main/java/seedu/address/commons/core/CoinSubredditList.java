@@ -20,6 +20,9 @@ import seedu.address.model.coin.Coin;
  * Represents a list of existing coin codes that have a Subreddit.
  */
 //@@author Eldon-Chung
+//Citation included here because .json files cannot be commented on.
+//the list of subreddits CoinCodeToSubreddit.json was partially
+//obtained from https://github.com/kendricktan/cryptoshitposting/blob/master/data/subreddits.json
 public class CoinSubredditList {
 
     private static final Map<String, String> COIN_CODE_TO_SUBREDDIT_MAP = new HashMap<>();

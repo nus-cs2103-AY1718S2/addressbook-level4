@@ -1,3 +1,60 @@
+LO[W2.1]&#9733;&#9733;&#9733;&#9733;
+Can explain pros and cons of software engineering: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.2]&#9733;
+Can use basic features of an IDE (2.2a, 2.2b, 2.2c): checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.2a]&#9733;
+Can explain IDEs: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.2b][Submission]&#9733;
+Can setup a project in an IDE: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.2c][Submission]&#9733;&#9733;
+Can navigate code effectively using IDE features: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.3][Submission]&#9733;&#9733;
+Can use Java Collections: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.4][Submission]&#9733;&#9733;&#9733;
+Can use Java varargs feature: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.5]&#9733;&#9733;
+Can automate simple regression testing of text UIs (2.5a, 2.5b, 2.5c, 2.5d): checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.5a]&#9733;&#9733;
+Can explain testing: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.5b]&#9733;&#9733;
+Can explain regression testing: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.5c]&#9733;&#9733;
+Can explain test automation: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.5d][Submission]&#9733;&#9733;
+Can semi-automate testing of CLIs: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.6]&#9733;
+Can use Git to save history (2.6a, 2.6b, 2.6c, 2.6d, 2.6e, 2.6f): checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.6a]&#9733;
+Can explain revision control: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.6b]&#9733;
+Can explain repositories: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.6c]&#9733;
+Can create a local Git repo: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.6d]&#9733;
+Can explain saving history: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.6e][Submission]&#9733;
+Can commit using Git: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
+LO[W2.6f][Submission]&#9733;&#9733;
+Can set Git to ignore files: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week2/outcomes.html
+01/25/2018 23:59
 LO[W3.10][Compulsory][Submission]&#9733;
 Work with a 1KLoC code base: checkurlhttps://nus-cs2103-ay1718s2.github.io/website/schedule/week3/outcomes.html
 02/01/2018 23:59

@@ -34,6 +34,8 @@ This app will not work with earlier versions of Java 8.
 .  Download the latest `EduBuddy.jar` link:https://github.com/CS2103JAN2018-T09-B1/main/releases[here].
 .  Copy the file to the folder you want to use as the home folder for _EduBuddy_.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  A EduBuddy folder will be created in your operating system's home directory to facilitate debugging for advanced users.
+
 +
 image::Ui.png[width="800"]
 +

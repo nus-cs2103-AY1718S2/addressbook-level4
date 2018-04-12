@@ -18,6 +18,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.score.Score;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
@@ -28,58 +29,57 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Nric("S8743880X"), getTagSet("3A"),
-                getSubjectSet("English A2"), new Remark("Class Rep"), new Cca("BasketBall", "Member"),
-                    new InjuriesHistory(""), new NameOfKin("James Yeoh")),
+                    getSubjectSet("English A2"),  getScoreSet("0", "0", "0", "0", "0"),
+                    new Remark("Class Rep"), new Cca("BasketBall", "Member"), new InjuriesHistory(""),
+                    new NameOfKin("James Yeoh")),
 
-            new Person(new Name("Bernice Yu"), new Nric("S9927275Z"),
-                getTagSet("3A"), getSubjectSet("EMath A1"), new Remark("Math Rep"),
-                    new Cca("BasketBall", "Member"),
-                    new InjuriesHistory(" "), new NameOfKin("James Yu")),
+            new Person(new Name("Bernice Yu"), new Nric("S9927275Z"), getTagSet("3A"),
+                    getSubjectSet("EMath A1"), getScoreSet("0", "0", "0", "0", "0"),
+                    new Remark("Math Rep"), new Cca("BasketBall", "Member"), new InjuriesHistory(" "),
+                    new NameOfKin("James Yu")),
 
 
-            new Person(new Name("Charlotte Oliveiro"), new Nric("S9321028H"),
-                getTagSet("3G"), getSubjectSet("Chem B3"), new Remark("Chemistry Rep"),
-                    new Cca("BasketBall", "Member"),
-                    new InjuriesHistory(""), new NameOfKin("James Oliveiro")),
+            new Person(new Name("Charlotte Oliveiro"), new Nric("S9321028H"), getTagSet("3G"),
+                    getSubjectSet("Chem B3"), getScoreSet("0", "0", "0", "0", "0"),
+                    new Remark("Chemistry Rep"), new Cca("BasketBall", "Member"), new InjuriesHistory(""),
+                    new NameOfKin("James Oliveiro")),
 
-            new Person(new Name("David Li"), new Nric("S9103128J"),
-                getTagSet("4D"), getSubjectSet("Phy B3"), new Remark("Physics Rep"),
-                    new Cca("BasketBall", "Member"),
-                    new InjuriesHistory(" "), new NameOfKin("James Li")),
+            new Person(new Name("David Li"), new Nric("S9103128J"), getTagSet("4D"),
+                    getSubjectSet("Phy B3"), getScoreSet("0", "0", "0", "0", "0"),
+                    new Remark("Physics Rep"), new Cca("BasketBall", "Member"), new InjuriesHistory(" "),
+                    new NameOfKin("James Li")),
 
-            new Person(new Name("Irfan Ibrahim"), new Nric("S9249202K"),
-                getTagSet("3G"), getSubjectSet("Geog B4"), new Remark("Geography Rep"),
-                    new Cca("BasketBall", "Member"),
-                    new InjuriesHistory(" "), new NameOfKin("James Ibrahim")),
+            new Person(new Name("Irfan Ibrahim"), new Nric("S9249202K"), getTagSet("3G"),
+                    getSubjectSet("Geog B4"), getScoreSet("0", "0", "0", "0", "0"),
+                    new Remark("Geography Rep"), new Cca("BasketBall", "Member"), new InjuriesHistory(" "),
+                    new NameOfKin("James Ibrahim")),
 
-            new Person(new Name("Roy Balakrishnan"), new Nric("S9262441U"),
-                getTagSet("4G"), getSubjectSet("Chinese C5"), new Remark("Chinese Rep"),
-                    new Cca("BasketBall", "Member"),
-                    new InjuriesHistory(" "), new NameOfKin("James Balakrishnan")),
+            new Person(new Name("Roy Balakrishnan"), new Nric("S9262441U"), getTagSet("4G"),
+                    getSubjectSet("Chinese C5"), getScoreSet("0", "0", "0", "0", "0"),
+                    new Remark("Chinese Rep"), new Cca("BasketBall", "Member"), new InjuriesHistory(" "),
+                    new NameOfKin("James Balakrishnan")),
 
-            new Person(new Name("John"), new Nric("S9123123A"),
-                getTagSet("4G"), getSubjectSet("ELit C5"), new Remark(""),
-                    new Cca("BasketBall", "Member"),
-                    new InjuriesHistory(" "), new NameOfKin("James")),
+            new Person(new Name("John"), new Nric("S9123123A"), getTagSet("4G"),
+                    getSubjectSet("ELit C5"),  getScoreSet("0", "0", "0", "0", "0"), new Remark(""),
+                    new Cca("BasketBall", "Member"), new InjuriesHistory(" "), new NameOfKin("James")),
 
-            new Person(new Name("Ben"), new Nric("S9456456B"),
-                getTagSet("3G"), getSubjectSet("Econs A1"), new Remark("Econs Rep"),
-                    new Cca("BasketBall", "Member"),
-                    new InjuriesHistory(" "), new NameOfKin("Jon")),
+            new Person(new Name("Ben"), new Nric("S9456456B"), getTagSet("3G"),
+                    getSubjectSet("Econs A1"), getScoreSet("0", "0", "0", "0", "0"),
+                    new Remark("Econs Rep"), new Cca("BasketBall", "Member"), new InjuriesHistory(" "),
+                    new NameOfKin("Jon")),
 
-            new Person(new Name("Jill"), new Nric("S9321321C"),
-                getTagSet("4G"), getSubjectSet("German C5"), new Remark(""),
-                    new Cca("BasketBall", "Member"),
-                    new InjuriesHistory(" "), new NameOfKin("Jack")),
+            new Person(new Name("Jill"), new Nric("S9321321C"), getTagSet("4G"),
+                    getSubjectSet("German C5"), getScoreSet("0", "0", "0", "0", "0"), new Remark(""),
+                    new Cca("BasketBall", "Member"), new InjuriesHistory(" "), new NameOfKin("Jack")),
 
-            new Person(new Name("Tom"), new Nric("S9789789A"),
-                getTagSet("3A"), getSubjectSet("Bio A2"), new Remark(""),
-                    new Cca("BasketBall", "Member"),
-                    new InjuriesHistory(" "), new NameOfKin("Tim")),
+            new Person(new Name("Tom"), new Nric("S9789789A"), getTagSet("3A"),
+                    getSubjectSet("Bio A2"), getScoreSet("0", "0", "0", "0", "0"), new Remark(""),
+                    new Cca("BasketBall", "Member"), new InjuriesHistory(" "), new NameOfKin("Tim")),
 
-            new Person(new Name("Mary"), new Nric("S9654654B"),
-                getTagSet("5D"), getSubjectSet("HChi A1"), new Remark("Higher Chinese Rep"),
-                    new Cca("BasketBall", "Member"), new InjuriesHistory(" "), new NameOfKin("Martha"))
+            new Person(new Name("Mary"), new Nric("S9654654B"), getTagSet("5D"),
+                    getSubjectSet("HChi A1"), getScoreSet("0", "0", "0", "0", "0"),
+                    new Remark("Higher Chinese Rep"), new Cca("BasketBall", "Member"), new InjuriesHistory(" "),
+                    new NameOfKin("Martha"))
         };
     }
 
@@ -142,6 +142,17 @@ public class SampleDataUtil {
         }
 
         return subjects;
+    }
+    /**
+     * Returns a score set containing the list of strings given.
+     */
+    public static Set<Score> getScoreSet(String... strings) {
+        HashSet<Score> scores = new HashSet<>();
+        for (String s : strings) {
+            scores.add(new Score(s));
+        }
+
+        return scores;
     }
     //@@author
 }

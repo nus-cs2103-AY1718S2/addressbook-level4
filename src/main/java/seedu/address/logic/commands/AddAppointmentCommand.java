@@ -21,10 +21,10 @@ import seedu.address.ui.CalendarDisplay;
 /**
  * Creates an appointment for the student at the specified index.
  */
-public class AppointmentCommand extends Command {
+public class AddAppointmentCommand extends Command {
 
-    public static final String COMMAND_WORD = "appointment";
-    public static final String COMMAND_ALIAS = "appt";
+    public static final String COMMAND_WORD = "addappointment";
+    public static final String COMMAND_ALIAS = "addappt";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates an appointment for the student "
             + "at the specified index.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -56,7 +56,7 @@ public class AppointmentCommand extends Command {
     /**
      * Creates an AppointmentCommand to add the specified {@code Appointment}
      */
-    public AppointmentCommand(Index index, Appointment appointment) {
+    public AddAppointmentCommand(Index index, Appointment appointment) {
         requireNonNull(index);
         requireNonNull(appointment);
 
@@ -96,8 +96,8 @@ public class AppointmentCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AppointmentCommand // instanceof handles nulls
-                && toAdd.equals(((AppointmentCommand) other).toAdd));
+                || (other instanceof AddAppointmentCommand // instanceof handles nulls
+                && toAdd.equals(((AddAppointmentCommand) other).toAdd));
     }
 }
 //@@author

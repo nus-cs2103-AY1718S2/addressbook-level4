@@ -29,6 +29,14 @@ public class Cca {
         return value + ": " + pos;
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public String getPos() {
+        return pos;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

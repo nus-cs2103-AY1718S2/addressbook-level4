@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AppointmentCommand;
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 
@@ -19,14 +19,14 @@ import seedu.address.model.appointment.Appointment;
 /**
  * Parses input arguments and creates a new AppointmentCommand object
  */
-public class AppointmentCommandParser implements Parser<AppointmentCommand> {
+public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AppointmentCommand
      * and returns an AppointmentCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public AppointmentCommand parse(String args) throws ParseException {
+    public AddAppointmentCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_INFO, PREFIX_DATE, PREFIX_START_TIME, PREFIX_END_TIME);
@@ -35,7 +35,8 @@ public class AppointmentCommandParser implements Parser<AppointmentCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AppointmentCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -45,7 +46,7 @@ public class AppointmentCommandParser implements Parser<AppointmentCommand> {
             String endTime = ParserUtil.parseEndTime(argMultimap.getValue(PREFIX_END_TIME)).get();
             Appointment appointment = new Appointment(info, date, startTime, endTime);
 
-            return new AppointmentCommand(index, appointment);
+            return new AddAppointmentCommand(index, appointment);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

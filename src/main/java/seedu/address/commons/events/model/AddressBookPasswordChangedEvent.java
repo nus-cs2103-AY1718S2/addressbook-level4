@@ -18,6 +18,6 @@ public class AddressBookPasswordChangedEvent extends BaseEvent {
     }
 
     public String toString() {
-        return "number of persons " + data.getPersonList().size() + ", number of tags " + data.getTagList().size();
+        return "number of employees " + data.getPersonList().size() + ", number of tags " + data.getTagList().size();
     }
 }

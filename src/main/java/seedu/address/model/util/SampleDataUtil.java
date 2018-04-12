@@ -49,7 +49,7 @@ public class SampleDataUtil {
             }
             return sampleAb;
         } catch (DuplicatePersonException e) {
-            throw new AssertionError("sample data cannot contain duplicate persons", e);
+            throw new AssertionError("sample data cannot contain duplicate employees", e);
         }
     }
 

@@ -10,7 +10,6 @@ import seedu.address.model.person.NameOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
-import seedu.address.model.score.Score;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -25,7 +24,6 @@ public class PersonBuilder {
     public static final String DEFAULT_TAGS = "friends";
     public static final String[] DEFAULT_SUBJECTS = {"English A1",  "EMath A1", "Hist A1", "HTamil A1",
                                                      "Chem A1", "Phy A1"};
-    public static final String[] DEFAULT_SCORES = {"6", "5", "5", "5", "5"};
     public static final String DEFAULT_REMARK = " ";
     public static final String DEFAULT_CCA = " ";
     public static final String DEFAULT_INJURIES_HISTORY = " ";
@@ -36,7 +34,6 @@ public class PersonBuilder {
     private Nric nric;
     private Set<Tag> tags;
     private Set<Subject> subjects;
-    private Set<Score> scores;
     private Remark remark;
     private Cca cca;
     private InjuriesHistory injuriesHistory;
@@ -47,7 +44,6 @@ public class PersonBuilder {
         nric = new Nric(DEFAULT_NRIC);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
         subjects = SampleDataUtil.getSubjectSet(DEFAULT_SUBJECTS);
-        scores = SampleDataUtil.getScoreSet(DEFAULT_SCORES);
         remark = new Remark(DEFAULT_REMARK);
         cca = new Cca(DEFAULT_CCA, DEFAULT_CCA_POSITION);
         injuriesHistory = new InjuriesHistory(DEFAULT_INJURIES_HISTORY);
@@ -62,7 +58,6 @@ public class PersonBuilder {
         nric = personToCopy.getNric();
         tags = new HashSet<>(personToCopy.getTags());
         subjects = new HashSet<>(personToCopy.getSubjects());
-        scores = new HashSet<>(personToCopy.getScores());
         remark = personToCopy.getRemark();
         cca = personToCopy.getCca();
         injuriesHistory = personToCopy.getInjuriesHistory();
@@ -138,7 +133,7 @@ public class PersonBuilder {
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
     public Person build() {
-        return new Person(name, nric, tags, subjects, scores, remark, cca, injuriesHistory, nameOfKin);
+        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
     }
 
 }

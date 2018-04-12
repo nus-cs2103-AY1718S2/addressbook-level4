@@ -104,8 +104,8 @@ public class DeleteCcaCommand extends UndoableCommand {
                 .orElse(personToEdit.getInjuriesHistory());
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(), updatedRemark,
-                updatedCca, updatedInjuriesHistory, updatedNameOfKin);
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+                updatedInjuriesHistory, updatedNameOfKin);
     }
 
     @Override

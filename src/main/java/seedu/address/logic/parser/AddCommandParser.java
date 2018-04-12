@@ -59,8 +59,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             }
-            Person person = new Person(name, nric, tagList, subjectList, Collections.emptySet(), remark, cca,
-                    injuriesHistory, nameOfKin);
+            Person person = new Person(name, nric, tagList, subjectList, remark, cca, injuriesHistory, nameOfKin);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

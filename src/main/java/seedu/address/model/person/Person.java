@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.score.Score;
-import seedu.address.model.score.UniqueScoreList;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.subject.UniqueSubjectList;
 import seedu.address.model.tag.Tag;
@@ -28,7 +26,6 @@ public class Person {
 
     private final UniqueTagList tags;
     private final UniqueSubjectList subjects;
-    private final UniqueScoreList scores;
     private final Remark remark;
     private final Cca cca;
     private final InjuriesHistory injuriesHistory;
@@ -37,7 +34,7 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Set<Score> scores, Remark remark, Cca cca,
+    public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Remark remark, Cca cca,
                   InjuriesHistory injuriesHistory, NameOfKin nameOfKin) {
         requireAllNonNull(name, nric, tags, subjects, cca);
         this.name = name;
@@ -45,8 +42,6 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.subjects = new UniqueSubjectList(subjects);
-        this.scores = new UniqueScoreList(scores);
-        updateScores();
         this.remark = remark;
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
@@ -96,27 +91,11 @@ public class Person {
         return Collections.unmodifiableSet(subjects.toSet());
     }
 
-    public Set<Score> getScores() {
-        return Collections.unmodifiableSet(scores.toSet());
-    }
-
     public List<Subject> getSubjectArray () {
         Set<Subject> set = getSubjects();
         List<Subject> list = new ArrayList<>();
         list.addAll(set);
         return list;
-    }
-
-    /**
-     * Updates {@code UniqueScoreList scores} of the person with the scores calculated from
-     * the current {@code UniqueSubjectList subjects}
-     */
-    public void updateScores() {
-        this.scores.add(new Score(String.valueOf(calculateL1R5())));
-        this.scores.add(new Score(String.valueOf(calculateL1B4A())));
-        this.scores.add(new Score(String.valueOf(calculateL1B4B())));
-        this.scores.add(new Score(String.valueOf(calculateL1B4C())));
-        this.scores.add(new Score(String.valueOf(calculateL1B4D())));
     }
 
     //@@author TeyXinHui
@@ -421,7 +400,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, tags, subjects, scores, remark, cca, injuriesHistory, nameOfKin);
+        return Objects.hash(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
     }
 
     @Override
@@ -434,8 +413,6 @@ public class Person {
         getTags().forEach(builder::append);
         builder.append(" Subjects: ");
         getSubjects().forEach(builder::append);
-        builder.append(" Score: ");
-        getScores().forEach(builder::append);
         builder.append(" Remarks: ")
                .append(getRemark());
         builder.append(" Cca: ").append(getCca());

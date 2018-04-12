@@ -119,8 +119,8 @@ public class DeleteRemarkCommand extends UndoableCommand {
             InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                     .orElse(personToEdit.getInjuriesHistory());
 
-            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(),
-                    updatedRemark, updatedCca, updatedInjuriesHistory, updatedNameOfKin);
+            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+                    updatedInjuriesHistory, updatedNameOfKin);
         } else {
             throw new CommandException("The target remark cannot be missing.");
         }

@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURIES_HISTORY;
 import static seedu.address.logic.parser.ParserUtil.parseInjuriesHistory;
+import static seedu.address.logic.parser.ParserUtil.parseInjuriesHistory;
+import static seedu.address.logic.parser.ParserUtil.parseInjuriesHistory;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
@@ -120,8 +122,8 @@ public class DeleteInjuriesHistoryCommand extends UndoableCommand {
         }
         if (injuriesHistoryIsFound) {
             InjuriesHistory updatedInjuriesHistory = parseInjuriesHistory(updateInjuriesHistory);
-            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(),
-                    updatedRemark, updatedCca, updatedInjuriesHistory, updatedNameOfKin);
+            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+                    updatedInjuriesHistory, updatedNameOfKin);
         } else {
             throw new CommandException("The target injuriesHistory cannot be missing.");
         }

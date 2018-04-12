@@ -108,8 +108,8 @@ public class AddRemarkCommand extends UndoableCommand {
                                                 .orElse(personToEdit.getInjuriesHistory());
         NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
 
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(),
-                updatedRemark, updatedCca, updatedInjuriesHistory, updatedNameOfKin);
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+                updatedInjuriesHistory, updatedNameOfKin);
     }
 
     @Override

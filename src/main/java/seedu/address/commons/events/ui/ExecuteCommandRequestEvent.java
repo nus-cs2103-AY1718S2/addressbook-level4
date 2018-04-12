@@ -5,7 +5,7 @@ import seedu.address.logic.commands.ImmediatelyExecutableCommand;
 
 //@@author jonleeyz
 /**
- * Indicates that a new result is available.
+ * Indicates that a new request to execute a Command is available.
  */
 public class ExecuteCommandRequestEvent extends BaseEvent {
     public final String commandWord;

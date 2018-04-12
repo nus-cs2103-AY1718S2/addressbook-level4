@@ -87,10 +87,28 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
+//@@author Robert-Peng
+
+#personListView {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: white;
+}
+
+#personListView .list-cell:filled:odd {
+    -fx-background-color: #515658;
+}
+
+#petPatientListView {
     -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+#petPatientListView .list-cell:filled:odd {
+    -fx-background-color: #515658
 }
 
 .list-cell {
@@ -104,8 +122,9 @@
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: transparent;
 }
+//@@author
 
 .list-cell:empty {
     /* Empty cells will not have alternating colours */

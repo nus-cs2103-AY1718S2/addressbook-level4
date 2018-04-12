@@ -11,7 +11,7 @@ The initial source code of this project was based on the AddressBook-Level4 proj
 
 === Wu Hao
 image::wuhao-ooo.png[width="150", align="left"]
-{empty}[https://github.com/Wuhao-ooo[github]]
+{empty}[https://github.com/Wuhao-ooo[github]][https://github.com/CS2103JAN2018-F11-B4/main/blob/master/docs/team/wuhao.adoc[portfolio]]
 
 Roles: +
 - Team lead +

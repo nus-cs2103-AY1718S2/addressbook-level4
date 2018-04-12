@@ -19,13 +19,13 @@ public class Schedule {
     private String venue;
 
     public Schedule() {
-        this.classNo = "";
-        this.lessonType = "";
-        this.weekText = "";
-        this.dayText = "";
-        this.startTime = "";
-        this.endTime = "";
-        this.venue = "";
+        this.classNo = "1";
+        this.lessonType = "Lecture";
+        this.weekText = "1";
+        this.dayText = "Monday";
+        this.startTime = "0000";
+        this.endTime = "2359";
+        this.venue = "COM1 01-01";
     }
 
     public Schedule(String classNo, String lessonType, String weekText, String dayText,

@@ -33,10 +33,10 @@ public class SwitchCommandSystemTest extends AddressBookSystemTest {
     }
 
     private void assertViewChanged(Model model, Model expectedModel) {
-        Assert.assertNotEquals(model.calendarIsViewed(), expectedModel.calendarIsViewed());
+        Assert.assertEquals(model.calendarIsViewed(), expectedModel.calendarIsViewed());
     }
 
     private void assertViewDidNotChange(Model model, Model expectedModel) {
-        Assert.assertEquals(model.calendarIsViewed(), expectedModel.calendarIsViewed());
+        Assert.assertNotEquals(model.calendarIsViewed(), expectedModel.calendarIsViewed());
     }
 }

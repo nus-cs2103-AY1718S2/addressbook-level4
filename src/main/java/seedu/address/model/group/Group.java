@@ -84,7 +84,16 @@ public class Group {
         }
 
         Group otherGroup = (Group) other;
-        return otherGroup.getInformation().equals(this.getInformation());
+        if (otherGroup.getInformation().equals(this.getInformation())
+            && otherGroup.getPersonList().asObservableList().size() == this.getPersonList().asObservableList().size()) {
+            for (Person p : personList) {
+                if (!otherGroup.getPersonList().contains(p)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override

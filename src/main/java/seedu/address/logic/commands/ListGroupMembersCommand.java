@@ -22,7 +22,6 @@ public class ListGroupMembersCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Listed all persons under group %1$s";
     public static final String MESSAGE_NO_SUCH_GROUP = "No such group exist.";
 
-
     private final MembersInGroupPredicate predicate;
     private Group groupToList;
     private Group groupToBeListed;

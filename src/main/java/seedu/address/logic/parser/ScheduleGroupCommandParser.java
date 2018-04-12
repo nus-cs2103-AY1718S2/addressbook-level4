@@ -13,7 +13,7 @@ import seedu.address.model.group.Information;
 /**
  * Parses input arguments and creates a new ScheduleGroupCommand object
  */
-public class ScheduleGroupCommandParser {
+public class ScheduleGroupCommandParser implements Parser<ScheduleGroupCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the ScheduleGroupCommand

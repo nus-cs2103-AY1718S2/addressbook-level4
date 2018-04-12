@@ -35,12 +35,6 @@ public class OrderQueuePanel extends UiPart<Region> {
     private void setConnections(ObservableList<Task> taskList) {
         ObservableList<OrderCard> mappedList = EasyBind.map(
                 taskList, (task) -> new OrderCard(task, taskList.indexOf(task) + 1));
-        if (mappedList == null){
-            logger.info("MappedList is null");
-        }
-        if (orderListView == null){
-            logger.info("OrderListView is  not null");
-        }
         orderListView.setItems(mappedList);
         orderListView.setCellFactory(listView -> new OrderQueueViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -84,5 +78,4 @@ public class OrderQueuePanel extends UiPart<Region> {
             }
         }
     }
-
 }

@@ -9,8 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DISTANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 
-
-
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;

@@ -99,11 +99,11 @@ public class Task {
 
         // state check
         Task t = (Task) other;
-        return order.equals(t.order) &&
-                address.equals(t.address) &&
-                price.equals(t.price) &&
-                distance.equals(t.distance) &&
-                count.equals(t.count);
+        return order.equals(t.order)
+                && address.equals(t.address)
+                && price.equals(t.price)
+                && distance.equals(t.distance)
+                && count.equals(t.count);
     }
 
     @Override

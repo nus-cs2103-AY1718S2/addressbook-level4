@@ -9,8 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DISTANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;

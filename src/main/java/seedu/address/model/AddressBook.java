@@ -17,9 +17,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.Task;
 import seedu.address.model.queue.TaskList;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
  * Wraps all data at the address-book level
@@ -44,7 +44,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks = new TaskList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -192,7 +193,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<Task> getTaskList() { return tasks.asObservableList(); }
+    public ObservableList<Task> getTaskList() {
+        return tasks.asObservableList();
+    }
 
     @Override
     public boolean equals(Object other) {

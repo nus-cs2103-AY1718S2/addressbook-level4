@@ -26,16 +26,19 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Stage> {
 
-    private static final String FXML = "MainWindow.fxml";
+    private static final String DARK_FXML = "DarkMainWindow.fxml";
+    private static final String LIGHT_FXML = "LightMainWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
     private Logic logic;
+    private boolean isDark;
 
     // Independent Ui parts residing in this Ui container
     private CalendarView calender;
     private PersonListPanel personListPanel;
+    private TodoListPanel todoListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -52,19 +55,23 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane todoListPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
-        super(FXML, primaryStage);
+        super(DARK_FXML, primaryStage);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+        this.isDark = true;
 
         // Configure the UI
         setTitle(config.getAppTitle());
@@ -116,8 +123,12 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
         calender = new CalendarView(logic.getCalendarTaskLists());
         calendarPlaceholder.getChildren().add(calender.getRoot());
+
+        todoListPanel = new TodoListPanel(logic.getFilteredTaskList());
+        todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -167,6 +178,29 @@ public class MainWindow extends UiPart<Stage> {
     public void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+
+    /**
+     * toggles between light and dark themes.
+     */
+    @FXML
+    public void switchTheme() {
+
+        if (isDark) {
+            super.loadFxmlFile(getFxmlFileUrl(LIGHT_FXML), primaryStage);
+            setTitle(config.getAppTitle());
+            setWindowDefaultSize(prefs);
+            setAccelerators();
+            fillInnerParts();
+            isDark = false;
+        } else {
+            super.loadFxmlFile(getFxmlFileUrl(DARK_FXML), primaryStage);
+            setTitle(config.getAppTitle());
+            setWindowDefaultSize(prefs);
+            setAccelerators();
+            fillInnerParts();
+            isDark = true;
+        }
     }
 
     void show() {

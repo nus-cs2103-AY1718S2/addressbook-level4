@@ -79,7 +79,6 @@ public class DisplayPic {
         } catch (IllegalValueException ive) {
             assert false;
         }
-
     }
 
     public boolean isDefault() {

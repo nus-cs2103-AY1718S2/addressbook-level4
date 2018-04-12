@@ -130,14 +130,12 @@ public class EditCommand extends UndoableCommand {
                         + updatedEmail.toString());
                 updatedDisplay.updateDisplay(updatedName.toString() + updatedPhone.toString()
                         + updatedEmail.toString());
-
             } catch (IllegalValueException ive) {
                 updatedDisplay.updateToDefault();
             }
         }
         Participation updatedPart = editPersonDescriptor.getParticipation().orElse(personToEdit.getParticipation());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-
         return new Person(updatedName, updatedMatricNumber, updatedPhone, updatedEmail, updatedAddress, updatedDisplay,
                 updatedPart, updatedTags);
     }

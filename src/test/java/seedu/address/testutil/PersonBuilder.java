@@ -127,7 +127,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Participation} of the {@code Person} that we are building.
+     * Sets the {@code Particitpation} of the {@code Person} that we are building to null.
      */
     public PersonBuilder withParticipation(String participation) {
         this.participation = new Participation(participation);
@@ -142,5 +142,4 @@ public class PersonBuilder {
         return new Person(name, matricNumber, phone, email, address, displayPic,
                 participation, tags);
     }
-
 }

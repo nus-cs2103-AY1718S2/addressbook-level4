@@ -2,6 +2,7 @@ package seedu.address.model.task;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author JoonKai1995
 /**
  * Represents a short description of a todo task
  */

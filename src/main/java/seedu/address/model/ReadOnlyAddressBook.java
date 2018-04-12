@@ -38,5 +38,4 @@ public interface ReadOnlyAddressBook {
      * Returns an unmodifiable list of filepaths which are strings.
      */
     List<String> getItemList();
-
 }

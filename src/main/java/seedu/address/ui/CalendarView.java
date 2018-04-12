@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.task.Task;
 
+//@@author JoonKai1995
 /**
  * The Calendar of the app.
  */
@@ -137,4 +138,3 @@ public class CalendarView extends UiPart<Region> {
         this.allCalendarDays = allCalendarDays;
     }
 }
-

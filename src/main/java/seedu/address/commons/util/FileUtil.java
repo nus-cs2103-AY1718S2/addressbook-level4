@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author Alaru
 /**
  * Writes and reads files
  */
@@ -96,7 +97,6 @@ public class FileUtil {
         return pathWithForwardSlash.replace("/", File.separator);
     }
 
-    //@@author Alaru
     public static String getFileType(String filePath) throws IllegalValueException {
         requireNonNull(filePath);
         String trimmedFilePath = filePath.trim();

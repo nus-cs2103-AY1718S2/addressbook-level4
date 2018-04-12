@@ -1,8 +1,11 @@
 //@@author cxingkai
 package seedu.address.logic;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -24,7 +27,7 @@ import seedu.address.model.patient.RecordList;
 public class PrintFormatter {
     private static Document document;
     private static String filePath;
-    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 20,
             Font.BOLD);
     private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
             Font.BOLD);
@@ -40,6 +43,7 @@ public class PrintFormatter {
         writePatientInfo(patient);
         writeRecords(patient);
         document.close();
+        openPdf();
     }
 
     /**
@@ -114,7 +118,10 @@ public class PrintFormatter {
             paragraph.add(Chunk.NEWLINE);
 
             Record record = recordList.getRecord(recordIndex);
-            paragraph.add(new Chunk("Record #" + (recordIndex + 1), subFont));
+            Chunk recordNumberChunk = new Chunk("Record #" + (recordIndex + 1));
+            recordNumberChunk.setUnderline(0.1f, -2f);
+            recordNumberChunk.setFont(subFont);
+            paragraph.add(recordNumberChunk);
             paragraph.add(Chunk.NEWLINE);
 
             paragraph.add(new Chunk("Date recorded: ", smallBold));
@@ -142,6 +149,21 @@ public class PrintFormatter {
             document.add(paragraph);
         } catch (DocumentException de) {
             de.printStackTrace();
+        }
+    }
+
+    /**
+     * Opens Pdf that was created
+     */
+    private void openPdf() {
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File(filePath);
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+                ex.printStackTrace();
+            }
         }
     }
 }

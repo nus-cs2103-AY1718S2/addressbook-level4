@@ -194,6 +194,13 @@ Please proceed with caution.
 [TIP]
 If you have accidentally entered this command, you can revert IMDB back to its previous state with the undo command.
 
+// tag::logout[]
+==== Logout : `logout`
+
+Logs the user out of the IMDB. +
+Format: `logout`
+// end::logout[]
+
 ==== Exiting the program : `exit` or `x`
 
 Exits the program. This also logs the user out of the IMDB. +

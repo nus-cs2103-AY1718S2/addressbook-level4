@@ -576,7 +576,7 @@ The file is then output to {user.home}/StudentPage.
 
 *_return to <<toc,Table of Contents>>_*
 
-// tag::Remark Feature[]
+// tag::remark[]
 === Remark Feature
 ==== Current Implementation
 
@@ -597,7 +597,7 @@ Figure 15. Sequence Diagram of AddRemarkCommand
 ** Cons: The remark attached to the student in our student profile would not be able to exceed one line.
 
 *_return to <<toc,Table of Contents>>_*
-// end::Remark Feature[]
+// end::remark[]
 
 === Logging
 

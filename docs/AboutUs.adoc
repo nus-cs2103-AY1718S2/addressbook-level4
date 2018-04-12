@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Chua Kun Hong
 image::chuakunhong.png[width="150", align="left"]
-{empty}[https://github.com/chuakunhong[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/chuakunhong[GitHub]] [<<chuakunhong#, Portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic component
@@ -20,7 +20,7 @@ Responsibilities: Logic component
 
 === Goh Keng Seng
 image::kengsengg.png[width="150", align="left"]
-{empty}[https://github.com/kengsengg[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/kengsengg[GitHub]] [<<gohkengseng#, Portfolio>>]
 
 Role: Developer +
 Responsibilities: UI component
@@ -29,7 +29,7 @@ Responsibilities: UI component
 
 === Johnny Chan Jun Xun
 image::johnnychanjx.png[width="150", align="left"]
-{empty}[http://github.com/johnnychanjx[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/johnnychanjx[GitHub]] [<<johnnychan#, Portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage component
@@ -38,7 +38,7 @@ Responsibilities: Storage component
 
 === Tey Xin Hui
 image::TeyXinHui.png[width="150", align="left"]
-{empty}[http://github.com/TeyXinHui[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/TeyXinHui[GitHub]] [<<teyxinhui#, Portfolio>>]
 
 Role: Developer +
 Responsibilities: Model component

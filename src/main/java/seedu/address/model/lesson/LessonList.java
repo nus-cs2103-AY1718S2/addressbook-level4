@@ -12,12 +12,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 
-import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
+import seedu.address.model.student.Student;
 
+//@@author demitycho
 /**
- * @@author demitycho
- * A list of lessons that enforces uniqueness between its elements and does not allow nulls.
+ * A list of lessons that enforces non clashes int timings between its elements and does not allow nulls.
  *
  * Supports a minimal set of list operations.
  *
@@ -37,8 +37,7 @@ public class LessonList implements Iterable<Lesson> {
     }
 
     /**
-     * Adds a student to the list.
-     * TODO: throw exception
+     * Adds a lesson to the list.
      */
     public void add(Lesson toAdd) {
         requireNonNull(toAdd);
@@ -72,7 +71,7 @@ public class LessonList implements Iterable<Lesson> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setLessons(List<Lesson> lessons) throws DuplicateLessonException {
+    public void setLessons(List<Lesson> lessons) {
         requireAllNonNull(lessons);
         final LessonList replacement = new LessonList();
         for (final Lesson lesson : lessons) {
@@ -81,6 +80,20 @@ public class LessonList implements Iterable<Lesson> {
         setLessons(replacement);
     }
 
+    /**
+     * Reconstructs a new {@code LessonList} replacement based on Lessons not associated with {@code Student}
+     * {@code internalList} will setLessons of replacement
+     * @param target
+     */
+    public void removeStudentLessons(Student target) {
+        final LessonList replacement = new LessonList();
+        for (Lesson lesson : internalList) {
+            if (!target.getUniqueKey().equals(lesson.getUniqueKey())) {
+                replacement.add(lesson);
+            }
+        }
+        setLessons(replacement);
+    }
     @Override
     public Iterator<Lesson> iterator() {
         return internalList.iterator();

@@ -22,8 +22,8 @@ import com.google.gdata.util.ServiceException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.student.Student;
 
+//@@author demitycho
 /**
- * @@author demitycho
  * Constructs a new GContactsService object to communicate with Google's APIs
  */
 public class GContactsService {
@@ -92,11 +92,11 @@ public class GContactsService {
         ContactsService myService = new ContactsService(GServiceManager.APPLICATION_NAME);
         myService.setOAuth2Credentials(credential);
         URL postUrl = new URL("https://www.google.com/m8/feeds/contacts/default/full");
-        System.out.println("here1");
+
         clearAllOldContacts(myService);
-        System.out.println("here2");
+
         ContactGroupEntry studentGroupEntry = createStudentGroupEntry(myService);
-        System.out.println("here3");
+
         for (Student student : addressBook.getStudentList()) {
             ContactEntry toBeInserted = studentToContactEntry(student);
 
@@ -105,7 +105,7 @@ public class GContactsService {
 
             myService.insert(postUrl, toBeInserted);
         }
-        System.out.println("here4");
+
     }
 
     /**
@@ -117,7 +117,7 @@ public class GContactsService {
      * @throws IOException
      */
     public static ContactGroupEntry getStudentGroupEntry(ContactsService myService)
-            throws ServiceException, IOException {
+            throws ServiceException, IOException, NullPointerException {
         // Request the feed
         URL feedUrl = new URL("https://www.google.com/m8/feeds/groups/default/full");
         ContactGroupFeed resultFeed = myService.getFeed(feedUrl, ContactGroupFeed.class);

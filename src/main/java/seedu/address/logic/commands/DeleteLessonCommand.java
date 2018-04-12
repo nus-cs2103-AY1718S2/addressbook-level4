@@ -11,8 +11,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 
+//@@author demitycho
 /**
- * @@author demitycho
  * Deletes a lesson identified using it's last displayed index from the address book.
  */
 public class DeleteLessonCommand extends UndoableCommand {

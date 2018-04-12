@@ -11,6 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.Schedule;
 
+//@@author demitycho
 /**
  * An Immutable Schedule that is serializable to XML format
  */

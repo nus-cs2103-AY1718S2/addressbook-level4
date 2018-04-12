@@ -14,25 +14,45 @@ endif::[]
 
 By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
+== Introduction
+
+=== About Codeducator
+
+Codeducator is an open source Command Line Interface (CLI) address book and scheduling desktop application.
+We aim to provide a solution for private programming tutors to better manage their student contacts, tutoring schedule and track their students' learning progress.
+
+=== How to Contribute
+
+There are lots of ways to contribute to Codeducator: coding, testing or improving our build process and tools. This developer's guide provides information that will help you get started as a Codeducator contributor. Even if you are an experienced Codeducator developer, you will still find this guide to be useful to refer to. +
+
+If you are ready to contribute, simply create a Pull Request (PR) on our main repository.
+
+If you have found any bugs or have ideas to improve Codeducator, create an issue https://github.com/CS2103JAN2018-W09-B3/main/issues[here] or https://github.com/CS2103JAN2018-W09-B3/main/blob/master/docs/ContactUs.adoc[contact us] directly.
+
 == Setting up
 
 === Prerequisites
+To contribute to Codeducator, you will need the following software:
 
-. *JDK `1.8.0_60`* or later
+* *JDK `1.8.0_60`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
+You can download the latest Java version https://java.com/en/download/[here].
 
-. *IntelliJ* IDE
+* *IntelliJ* IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
++
+You can download the latest Intellij IDE https://www.jetbrains.com/idea/download[here].
 
 
 === Setting up the project in your computer
+To set up the project in your computer, follow the steps below:
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -47,11 +67,15 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
+You will need to verify if your environment is set up correctly before you can start working on Codeducator. +
+
+In Intellij,
 
 . Run the `seedu.address.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
+You will need to configure and set up some tools we use before you can start making meaningful contributions to Codeducator.
 
 ==== Configuring the coding style
 
@@ -96,10 +120,10 @@ When you are ready to start coding,
 [[Design-Architecture]]
 === Architecture
 
+The *_Architecture Diagram_* given below explains the high-level design of the App. Given below is also a quick overview of each component.
+
 .Architecture Diagram
 image::Architecture.png[width="600"]
-
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
@@ -370,6 +394,9 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // tag::favourites[]
 === Favourites feature
+
+The favourites feature allows users to remember/mark a student by adding them to favourites.
+
 ==== Current Implementation
 
 To facilitate the favourite/unfavourite feature, an association with a new `Favourite` class is added to the `Student` class:
@@ -580,6 +607,9 @@ To sync with Google Contacts and Google Calendar, a `GServiceManager` class is i
 
 // tag::dashboard[]
 === Dashboard feature
+
+The dashboard feature aims to help users keep track of their students' learning progress.
+
 ==== Current Implementation
 
 To have a dashboard for each student, an association with a new `Dashboard` class is added to the `Student` class. We have also created new classes associated with the `Dashboard` class to facilitate the different capabilities of the dashboard.
@@ -587,8 +617,8 @@ The following diagram shows the structure of the classes that facilitate the das
 
 image::ModelComponentDashboardClassDiagram.png[width="500"]
 
-`UniqueMilestoneList` and `UniqueTaskList` are associated to `ObservableList<Milestone>` and `ObservableList<Task>` respectively that can be 'observed'.
-This means that the UI can be bound to both of the lists so that the UI automatically updates when the data in both lists change.
+Both `UniqueMilestoneList` and `UniqueTaskList` contain an attribute called "internalList" which are `ObservableList<Milestone>` and `ObservableList<Task>` respectively.
+This means that the UI can be bound to both of the lists so that it can automatically update when the data in any of the lists change.
 
 A new `Dashboard` object is created every time a new `Student` is being created. The `Dashboard` object will contain an empty milestone list until the user adds new milestones to the dashboard.
 This enforces 1-to-1 association between `Student` and `Dashboard`, as well as between `Dashboard` and `UniqueMilestoneList`.
@@ -1125,7 +1155,7 @@ E.g. emergency contact and an optional profile picture
 * *(Major)* Add a functionality that enables tutor to use free-form english to execute commands instead of conforming to the specific syntax
 ** This makes the app more user-friendly without the need to memorise the syntax of respective commands and able to execute them more intuitively.
 
-*Yap ni:*
+*Yap Ni:*
 
 * *(Minor)* Favourites feature where tutors can add or remove students from favourites and list students that are in their favourites
 ** This helps the tutor to remember or view the list of prominent students they want to take note of easily.

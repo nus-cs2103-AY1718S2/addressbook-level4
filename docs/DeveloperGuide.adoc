@@ -484,51 +484,42 @@ In the Storage component, there is an additional CustomerStatsStorage interface 
 // end::menu[]
 
 // tag::PriorityQueue[]
-=== PriorityAdd feature
+=== PriorityQueue feature
 ==== Current Implementation
-Each order has a priority level. When adding an order, the user could use count feature on the current customer to see whether the customer has ordered before. If so, user could decide to assign a higher priority to this customer's order.
+Each order has a priority level. When adding an order to the order queue, the priority of the order is
+determined by three things, total price of the order, distance to the address and order's customer's past order count.
 
-User might look at other things and decide to give priority to the current order.
+There is no need for user to manually give priority to the order.
 
-Orders are added to a priority queue, implemented using Java PriorityQueue class. Orders are queued inside the queue based on their priority level.
+Orders are added to a priority queue, implemented using Java ArrayList class with comparator. Orders are queued inside the queue based on their priority level.
 
-As you can see from the diagram below, these are the interactions among the components during an “add” command. The Model component raises an AddressBookChangedEvent to update the content of the AddressBook.
+Current equation to calculate priority is that priority(integer) = 10 * price - 25 * distance + 5 * count.
+
+As you can see from the diagram below, these are the interactions among the components during an “addOrder” command. The Model component raises an AddressBookChangedEvent to update the content of the AddressBook.
 
 image::figure3.5.1a.png[width="800"]
-(To be updated)
-
-The diagram below shows how EventsCenter reacts to the event.
-
-image::figure3.5.1b.png[width="800"]
-(To be updated)
-
-To implement this feature, there are some modifications to the existing Model component and Storage component to support the additional data structure.
-
-image::figure3.5.1c.png[width="800"]
-(To be updated)
-
-image::figure3.5.1d.png[width="800"]
 (To be updated)
 
 ==== Design Considerations
 
 ===== Aspect: Determination of priority level
 
-* **Alternative 1 (current choice):** Determined based on the customers' past order count.
+* **Alternative 1:** Determined based on the customers' past order count.
 ** Pros: Easy to implement.
 ** Cons: It is difficult to decide which number should be the benchmark for a customer to given priority.
-* **Alternative 2:** Determined based different things such as past order count, distance, price of the order.
+* **Alternative 2(current choice)::** Determined based different things such as past order count, distance, price of the order.
 ** Pros: It would be a fairer system to decide priority.
 ** Cons: It might requires additional judging system to decide priority level. Difficult to implement.
 
 ===== Aspect: Data structure to store data for orders
 
-* **Alternative 1 (current choice):** Use Java PriorityQueue
-** Pros: Efficient to add an order.
-** Cons: Might make edit order command difficult due to abstraction of queue.
-* **Alternative 2:** Use an ArrayList of Order objects and manually maintain their order.
-** Pros: Easy to access and edit orders.
-** Cons: It defeats the purposes of having a queue and add command might be difficult as we need to manually find correct position of insertion.
+* **Alternative 1:** Use Java PriorityQueue
+** Pros: Efficient to add an order, complexity is lower than alternative 2.
+** Cons: Difficult to implement.
+* **Alternative 2:** Use an ArrayList of Order objects and comparable interface.
+** Pros: Easy to implement, quick to access and edit orders.
+** Cons: When number of orders gets larger, the time taken would be slower as internally the priority queue is maintained
+by sorting (MergeSort).
 // end::PriorityQueue[]
 
 // tag::Path[]

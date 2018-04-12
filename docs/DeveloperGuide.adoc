@@ -358,13 +358,6 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -394,23 +387,17 @@ The data file consists of CustomerStats. It can be implemented using a HashMap s
 
 As you can see from the diagram below, these are the interactions among the components during an “add” command. After the Model component raises an AddressBookChangedEvent to update the content of the AddressBook, it raises another CustomerStatsChangedEvent to update the current customer’s order count.
 
-image::figure3.5.1a.png[width="800"]
-(To be updated)
+image::3.5.1.a.png[width="800"]
 
-The diagram below shows how EventsCenter reacts to the event. It finds the customer in the database using the phoneNumber provided and add 1 to the corresponding numOfOrders value.
-
-image::figure3.5.1b.png[width="800"]
-(To be updated)
+Then the EventsCenter reacts to the event. It finds the customer in the Customer Stats database using the phone number provided and add 1 to the corresponding numOfOrders value.
 
 To implement this feature, there are some modifications to the existing Model component and Storage component to support the additional data structure.
 
-image::figure3.5.1c.png[width="800"]
-(To be updated)
+image::3.5.1.b.png[width="800"]
 
-As the diagram shown above, besides AddressBook and UserPref, now ModelManager has an additional CustomerStats class. It consists a Data field which has many Phone numbers and numOfOrders counters. Phone numbers and the numOfOrders counters are 1-1 mapped and each pair represent one customer that has placed at least one order before.
+As the diagram shown above, besides AddressBook and UserPref, now ModelManager has an additional CustomerStats class. It consists an ordersCount field which is a HashMap and has many Phone numbers and numOfOrders counters. Phone numbers and the numOfOrders counters are 1-1 mapped and each pair represent one customer that has placed at least one order before.
 
-image::figure3.5.1d.png[width="800"]
-(To be updated)
+image::3.5.1.c.png[width="800"]
 
 In the Storage component, there is an additional CustomerStatsStorage interface and it is implemented by a XmlCustomerStatsStorage class to read and write the XML file on local machine.
 
@@ -1243,7 +1230,7 @@ _{More to be added}_
 Personal information refers to the personal particulars of a customer, including his/her name, contact number, address and email address.
 
 
-[[meal-order]] : Meal order information::
+[[meal-order]] Meal order information::
 Meal order information refers to which dishes are ordered, what time it is ordered, what time it should be delivered, the total money of the dishes
 
 

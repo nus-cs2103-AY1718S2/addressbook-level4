@@ -307,16 +307,18 @@ Format: `exit`
 Customers' data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Saving Customers' Stats `[coming in v1.5rc]`
-The statistics of customers will be stored in the hard disk.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+// tag::count[]
+=== Count the number of orders a customer has placed in the past
+The statistics of customers will be stored in the hard disk as an XML file.
+When a customer places an order, it accumulates to the number of his/her past orders.
+// end::count[]
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
-
-=== Count the number of orders a customer has placed in the past `[coming in v2.0]`
+// tag::identify[]
+=== Identify loyal customer by past orders count and give discounts `Coming in v2.0`
+When a customer's past orders count has been accumulated to 3/5/7/9 (numbers determined by restaurants). +
+Messages will be shown to remind restaurants to give the customer discount on the current order.
+// end::identify[]
 
 // tag::menu[]
 === Menu feature

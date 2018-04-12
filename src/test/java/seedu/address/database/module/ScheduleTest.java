@@ -20,7 +20,7 @@ public class ScheduleTest {
 
     @Test
     public void getClassNo() {
-        Assert.assertEquals("0000", testBlank.getClassNo());
+        Assert.assertEquals("1", testBlank.getClassNo());
         Assert.assertEquals(DEFAULT_CLASSNO, test.getClassNo());
     }
 
@@ -69,13 +69,13 @@ public class ScheduleTest {
                 + "\nStartTime: " + DEFAULT_START_TIME
                 + "\nEndTime: " + DEFAULT_END_TIME
                 + "\nVenue: " + DEFAULT_VENUE + "\n";
-        String expectedBlank = "ClassNo: "
-                + "\nLessonType: "
-                + "\nWeekText: "
-                + "\nDayText: "
-                + "\nStartTime: "
-                + "\nEndTime: "
-                + "\nVenue: " + "\n";
+        String expectedBlank = "ClassNo: 1"
+                + "\nLessonType: Lecture"
+                + "\nWeekText: 1"
+                + "\nDayText: Monday"
+                + "\nStartTime: 0000"
+                + "\nEndTime: 2359"
+                + "\nVenue: COM1 01-01" + "\n";
         Assert.assertEquals(expected, test.toString());
         Assert.assertEquals(expectedBlank, testBlank.toString());
     }

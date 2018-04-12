@@ -2,6 +2,7 @@
 package seedu.address.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
@@ -130,6 +131,7 @@ public class Timetable extends UiPart<Region> {
      * Show all events in eventList onto Timetable
      */
     private void showSlots() {
+        HashMap<Integer, String> usedColor = new HashMap<>();
         for (WeeklyEvent mod : events) {
             String day = mod.getDay();
             int startTime = Integer.parseInt(mod.getStartTime());
@@ -140,16 +142,42 @@ public class Timetable extends UiPart<Region> {
             }
             if (endTime - startTime <= 100) {
                 TimetableSlot node = getSlotNode(day, startTime);
-                node.setModule("module1hr", mod);
+                int color = setUnusedColor(usedColor, node, mod, "module1hr");
             } else {
-                TimetableSlot node = getSlotNode(day, startTime);
-                node.setModule("module2hrtop", mod);
                 WeeklyEvent blank = new WeeklyEvent(mod.getName(), "", "", "", "", "");
+                TimetableSlot node = getSlotNode(day, startTime);
+                int color = setUnusedColor(usedColor, node, blank, "module2hrtop");
+
                 node = getSlotNode(day, startTime + 100);
-                node.setModule("module2hrbottom", blank);
+                node.setModule("module2hrbottom", mod);
                 node.getModule().setText("");
+                node.setColor(color);
             }
         }
+    }
+
+    /**
+     * Ensure that every {@code mod} displayed on the timetable has a unique color
+     *
+     * @param used usedColor HashMap to determine which color has been used
+     * @param node the node on the timetable to display the mod on
+     * @param modStyle the style of the mod
+     * @return
+     */
+    private int setUnusedColor(HashMap<Integer, String> used, TimetableSlot node, WeeklyEvent mod, String modStyle) {
+        int color = node.setModule(modStyle, mod);
+        if (!used.containsKey(color)) {
+            used.put(color, mod.getName());
+            return color;
+        }
+        String module = used.get(color);
+        if (mod.getName().equals(module)) {
+            return color;
+        }
+        while (used.containsKey(color)) {
+            color = node.randomizeColor(modStyle);
+        }
+        return color;
     }
 
     /**

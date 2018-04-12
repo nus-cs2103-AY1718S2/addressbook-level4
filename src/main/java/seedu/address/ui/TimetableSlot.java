@@ -70,14 +70,41 @@ public class TimetableSlot extends UiPart<Region> {
         return module;
     }
 
-    public void setModule(String style, WeeklyEvent mod) {
-        setStyleClass(style, AVAILABLE_COLORS[Math.abs(mod.getName().hashCode()) % AVAILABLE_COLORS.length]);
+    /**
+     * Set the node to contain the {@code mod}
+     * with a specified {@code style} and a random color
+     *
+     * @return index of the color chosen
+     */
+    public int setModule(String style, WeeklyEvent mod) {
+        int colorIndex = Math.abs(mod.getName().hashCode()) % AVAILABLE_COLORS.length;
+        setStyleClass(style, AVAILABLE_COLORS[colorIndex]);
         module.setText(mod.getName());
         if (!mod.getDetails().isEmpty() && mod.getDetails().size() >= 2) {
             lectureType.setText(mod.getDetails().get(0));
         }
         venue.setText(mod.getVenue());
+        return colorIndex;
     }
+
+    /**
+     * Randomly change the color of the node while keeping the {@code style}
+     *
+     * @return index of the color randomized
+     */
+    public int randomizeColor(String style) {
+        int randomColor = (int) Math.floor(Math.random() * AVAILABLE_COLORS.length);
+        setStyleClass(style, AVAILABLE_COLORS[randomColor]);
+        return randomColor;
+    }
+
+    /**
+     * Set the node to have a color specified at {@code colorIndex}
+     */
+    public void setColor(int colorIndex) {
+        node.getStyleClass().set(1, AVAILABLE_COLORS[colorIndex]);
+    }
+
 
     public void setText(String text) {
         setStyleClass("time");

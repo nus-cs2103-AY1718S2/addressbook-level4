@@ -563,18 +563,21 @@
     -fx-border-radius: 6;
     -fx-border-width: 0 0 3px 0;
     -fx-background-radius: 10;
+    -fx-padding: 0 0 0 5;
 }
 
 #calendarPlaceholder .module2hrtop {
     -fx-border-radius: 6 6 0 0;
     -fx-border-width: 0;
     -fx-background-radius: 10 10 0 0;
+    -fx-padding: 50 0 0 5;
 }
 
 #calendarPlaceholder .module2hrbottom {
     -fx-border-radius: 0 0 6 6;
     -fx-border-width: 0 0 3px 0;
     -fx-background-radius: 0 0 10 10;
+    -fx-padding: -50 0 0 5;
 }
 
 #calendarPlaceholder .red {

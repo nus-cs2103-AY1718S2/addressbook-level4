@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddOrderCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -49,86 +50,89 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+            case AddCommand.COMMAND_WORD:
+                return new AddCommandParser().parse(arguments);
 
-        case AddCommand.COMMAND_ALIAS:
-            return new AddCommandParser().parse(arguments);
+            case AddCommand.COMMAND_ALIAS:
+                return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+            case AddOrderCommand.COMMAND_WORD:
+                return new AddOrderCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_ALIAS:
-            return new EditCommandParser().parse(arguments);
+            case EditCommand.COMMAND_WORD:
+                return new EditCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
-            return new SelectCommandParser().parse(arguments);
+            case EditCommand.COMMAND_ALIAS:
+                return new EditCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
+            case SelectCommand.COMMAND_WORD:
+                return new SelectCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+            case SelectCommand.COMMAND_ALIAS:
+                return new SelectCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_ALIAS:
-            return new DeleteCommandParser().parse(arguments);
+            case DeleteCommand.COMMAND_WORD:
+                return new DeleteCommandParser().parse(arguments);
 
-        case PathCommand.COMMAND_WORD:
-            return new PathCommandParser().parse(arguments);
+            case DeleteCommand.COMMAND_ALIAS:
+                return new DeleteCommandParser().parse(arguments);
 
-        case PathCommand.COMMAND_ALIAS:
-            return new PathCommandParser().parse(arguments);
+            case PathCommand.COMMAND_WORD:
+                return new PathCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+            case PathCommand.COMMAND_ALIAS:
+                return new PathCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_ALIAS:
-            return new ClearCommand();
+            case ClearCommand.COMMAND_WORD:
+                return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+            case ClearCommand.COMMAND_ALIAS:
+                return new ClearCommand();
 
-        case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
+            case FindCommand.COMMAND_WORD:
+                return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+            case FindCommand.COMMAND_ALIAS:
+                return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
+            case ListCommand.COMMAND_WORD:
+                return new ListCommand();
 
-        case HistoryCommand.COMMAND_WORD:
-            return new HistoryCommand();
+            case ListCommand.COMMAND_ALIAS:
+                return new ListCommand();
 
-        case HistoryCommand.COMMAND_ALIAS:
-            return new HistoryCommand();
+            case HistoryCommand.COMMAND_WORD:
+                return new HistoryCommand();
 
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
+            case HistoryCommand.COMMAND_ALIAS:
+                return new HistoryCommand();
 
-        case ExitCommand.COMMAND_ALIAS:
-            return new ExitCommand();
+            case ExitCommand.COMMAND_WORD:
+                return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
+            case ExitCommand.COMMAND_ALIAS:
+                return new ExitCommand();
 
-        case HelpCommand.COMMAND_ALIAS:
-            return new HelpCommand();
+            case HelpCommand.COMMAND_WORD:
+                return new HelpCommand();
 
-        case UndoCommand.COMMAND_WORD:
-            return new UndoCommand();
+            case HelpCommand.COMMAND_ALIAS:
+                return new HelpCommand();
 
-        case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
+            case UndoCommand.COMMAND_WORD:
+                return new UndoCommand();
 
-        case RedoCommand.COMMAND_WORD:
-            return new RedoCommand();
+            case UndoCommand.COMMAND_ALIAS:
+                return new UndoCommand();
 
-        case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
+            case RedoCommand.COMMAND_WORD:
+                return new RedoCommand();
 
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            case RedoCommand.COMMAND_ALIAS:
+                return new RedoCommand();
+
+            default:
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 

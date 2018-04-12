@@ -14,5 +14,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_HALAL = new Prefix("h/");
     public static final Prefix PREFIX_VEGETARIAN = new Prefix("v/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+    public static final Prefix PREFIX_PRICE = new Prefix("$/");
+    public static final Prefix PREFIX_COUNT = new Prefix("c/");
+    public static final Prefix PREFIX_DISTANCE = new Prefix("dis/");
+    public static final Prefix PREFIX_DESCRIPTION = new Prefix("des/");
 
 }

@@ -45,8 +45,8 @@
           </Menu>
         </MenuBar>
 
+        <!-- @@author jaronchan -->
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-
           <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
               <Insets right="10" bottom="10" left="10"/>
@@ -82,7 +82,7 @@
                   <content>
                     <StackPane fx:id="personDetailsPlaceholder" prefWidth="340">
                       <padding>
-                        <Insets right="10" left="10"/>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
                       </padding>
                     </StackPane>
                   </content>
@@ -109,7 +109,7 @@
             </TabPane>
           </VBox>
         </SplitPane>
-
+        <!-- @@author -->
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
       </VBox>
     </Scene>

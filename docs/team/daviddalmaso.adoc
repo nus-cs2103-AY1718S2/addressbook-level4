@@ -25,6 +25,7 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 * *Other contributions*:
 
 ** Project management:
+*** Set up initial team organization and repository.
 *** Managed release `v1.4 - v1.5rc` on GitHub
 *** Created jar for release `v1.4` on Github
 *** Set up Travis CI for team repository to check for build errors.

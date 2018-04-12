@@ -72,25 +72,22 @@ public class GServiceManager {
      * Login method for user to login to their Google account
      * @throws CredentialsException
      */
-    public void login() throws CredentialsException {
+    public void login() throws CredentialsException, IOException {
         if (credential != null) {
             throw new CredentialsException("You are already logged in.");
         }
         // Build flow and trigger user authorization request.
-        try {
-            GoogleAuthorizationCodeFlow flow =
-                    new GoogleAuthorizationCodeFlow.Builder(
-                            httpTransport, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPES)
-                            .setDataStoreFactory(dataStoreFactory)
-                            .setAccessType("offline")
-                            .build();
 
-            credential = new AuthorizationCodeInstalledApp(
-                    flow, new LocalServerReceiver()).authorize("user");
-        } catch (Exception e) {
-            System.out.println("Exception: " + e);
-        }
+        GoogleAuthorizationCodeFlow flow =
+                new GoogleAuthorizationCodeFlow.Builder(
+                        httpTransport, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPES)
+                        .setDataStoreFactory(dataStoreFactory)
+                        .setAccessType("offline")
+                        .build();
 
+        credential = new AuthorizationCodeInstalledApp(
+                flow, new LocalServerReceiver()).authorize("user");
+        
     }
 
     /**

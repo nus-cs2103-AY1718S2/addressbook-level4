@@ -89,13 +89,12 @@ Format: `help`
 [big]#Steps Taken#
 
 . Type help into the command box, and press Enter to execute it. +
-
++
 .Typing help into command box +
 image::helpStep1.png[width="790"]
-
-[start=2]
++
 . The help window will appear as shown. +
-
++
 .Help box as shown.
 image::helpResult.png[width="790"]
 
@@ -376,11 +375,12 @@ The Lesson is displayed with +
 ==== Viewing your schedule : `schedule`
 
 Need a quick refresh of what lessons you have in the week? Coming from another panel? You can easily view your Schedule with a simple command. +
-Format: `schedule`
+
+===== Format: `schedule`
 
 [large]*Steps Taken* +
 
-. Enter `schedule` into the command box.
+. Type `schedule` into the command box. Press kbd:[enter] to execute.
 
 .Executing the `schedule` command +
 image::scheduleResult.png[width="790"]
@@ -393,7 +393,8 @@ image::scheduleResult.png[width="790"]
 
 Your Student needs extra lessons? Got new Students that want lessons? Codeducator will allow you to add Lessons to your schedule.
 
-Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]`
+===== Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]` +
+Adds a lesson for the Student identified by their `INDEX`, for a certain `DAY`, starting at `START_TIME` and ending at `END_TIME` +
 
 * Adds a lesson for the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
 * The day for the input is the abbreviated first three letters (_non-case sensitive_) of the name of day, i.e. `mon` for Monday, `fri` for Friday.
@@ -419,33 +420,80 @@ Adds a lesson for the 1st student of the `list` command. Lesson will be held on 
 `addLesson 1 d/tue st/12:00 et/13:30` +
 Adds a lesson for the 1st student of the `find Betsy` command. Lesson will be held on the day of `tue` and starting time will be `12:00` and ending time will be `13:30`.
 
-[
+[large]*Steps Taken* +
+
+Let's say that you may want to add a Lesson for Bernice (`index 2`). The lesson time slot would be Sunday, 10:00am to 12:00pm.
+
+. Type `schedule` into the command box. Press kbd:[enter] to execute.
++
+.Executing the `schedule` command +
+image::addLessonStep1.png[width="790"]
++
+. Visually find a free time slot. Sunday, 10:00 to 12:00 looks free!
+. Type `addLesson 2 d/sun st/10:00 et/12:00`. Press kbd:[enter] to execute the command
++
+.Type out the command as shown
+image::addLessonStep2.png[width="790"]
++
+. The lesson will be added to your Schedule!
++
+.Result of the `addLesson` command
+image::addLessonResult.png[width="790"]
 
 ==== Deleting a lesson in your schedule: `deleteLesson`
 
-Deletes an existing lesson in your schedule identified by the index number in the last schedule listing. of day, i.e. `mon` for Monday, `fri` for Friday.
+Need to remove lessons because Students drop out? Let's use Codeducator's `deleteLesson` command to do that for you.
 
-Format: `deleteLesson INDEX`
+===== Format: `deleteLesson INDEX` +
+Deletes an existing lesson in your schedule identified by the index number in the last schedule listing. of day, i.e. `mon` for Monday, `fri` for Friday.
 
 ****
 * Deletes a lesson for the student at the specified `INDEX`.
-* The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
+* The index refers to the displayed Lesson Index shown in the title. The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-Examples:
+===== Examples:
 
-* `schedule` +
-`deleteLesson 2` +
+* `deleteLesson 2` +
 Deletes the 2nd lesson listing in the schedule
 
-==== Syncing with your Google Account
+===== Steps Taken
 
-Syncs your Schedule and AddressBook and uploads them to your Google Account.
-AddressBook is synced with Google Contacts: link:{contactsURL}[`contacts.google.com`].
-Schedule is synced with Google Calendar: link:{calendarURL}[`calendar.google.com`]
+Let's say you want to delete Charlotte's Lesson, on Tuesday, 10:00am-12:00pm
 
-===== Logging in to your Google Account
+. Type `schedule` into the command box. Press kbd:[enter] to execute.
++
+.After executing the `schedule` command. The Lesson is identified by `INDEX:2` +
+image::deleteLessonStep1.png[width="790"]
++
+. Type `deleteLesson` into the command box. Press kbd:[enter] to execute the command
++
+.Type out the command as shown
+image::deleteLessonStep2.png[width="790"]
++
+. The lesson will be removed from your schedule!
++
+.Result of executing the `deleteLesson` command
+image::deleteLessonResult.png[width="790"]
 
+
+=== Syncing with your Google Account
+
+You probably want to view your contacts and schedule across your devices. With today's pervasive use of cloud services, Codeducator takes advantage of Google's Contacts and Calendar.
+Outside of Codeducator, you may view your contacts and schedule data in Google's mobile and web applications.
+
+Codeducator uploads both contact list and schedule data to your Google Account.
+Your contact list is synced with Google Contacts: link:{contactsURL}[contacts.google.com].
+Your schedule is synced with Google Calendar: link:{calendarURL}[calendar.google.com]
+
+==== Logging in to your Google Account
+
+Associate your Google account with Codeducator and authorise Codeducator to upload data to your account's cloud services
+
+[NOTE]
+Ensure you have a Google account! Take advantage of Google's cloud services
+
+===== Format: `login`
 Logs in to your Google Account. Authorizes your Google Account to communicate with our app and gives
 Codeducator permission to modify your data. +
 Opens a new window in your default browser to the Oauth2 screen +
@@ -453,17 +501,46 @@ Opens a new window in your default browser to the Oauth2 screen +
 [NOTE]
 You must first be logged out to log in
 
-Format: `login`
+===== Steps Taken
 
-===== Logging out of your Google Account
+. Type `login` in the command box. We will use the `schedule` screen, but it will work from any screen.
++
+.Type `login` into the command box
+image::loginStep1.png[width="790"]
++
+. Execute the command using kbd:[enter].
+. Your default browser will redirect to Google's login screen. Follow the OAuth2 procedure by typing your Google username and password into the login screen.
++
+.Google's login screen
+image::loginStep3.png[width="790"]
++
+. After logging in, you will see this window. Authorise Codeducator by clicking "Allow"
++
+.Google's OAuth/authentication window
+image::loginStep4.png[width="790"]
++
+. If you have successfully logged in. Your browser will display this message as a sign of login success.
++
+.Google's login success message
+image::loginStep5.png[width="790"]
++
+. Open the Codeducator window again. You will see that the message displays that you are logged in
++
+.Codeducator's login success message
+image::loginStep6.png[width="790"]
++
 
-Logs out of your Google Account. Securely deletes the OAuth2 credential stored in the App. +
+You are now ready to sync your account! +
+
 [NOTE]
-You must first be logged in to log out
+====
+. There is a *45 second timeout* for the login process. If you do not login successfully (due to closing the window unexpectedly or poor network connection), the login process will timeout.
+. Authorising Codeducator is important! Denying access will stop Codeducator for accessing your account.
+. If you have already logged in before without logging out, you may skip the login process by just typing in `login`
+. If you do not successfully login , do not fret! Just repeat the steps to login again.
+====
 
-Format: `logout`
-
-===== Syncing data with your Google Account
+==== Syncing data with your Google Account
 
 Updates both Google Contacts and Google Calendar with Addressbook and Schedule. Deletes the old data that Codeducator
 has written before, and uploads the new updated copy, correct as of time of entering the `sync` command.+
@@ -472,6 +549,14 @@ has written before, and uploads the new updated copy, correct as of time of ente
 You must first be logged in to sync your data
 
 Format: `sync`
+
+==== Logging out of your Google Account
+
+Logs out of your Google Account. Securely deletes the OAuth2 credential stored in the App. +
+[NOTE]
+You must first be logged in to log out
+
+Format: `logout`
 
 === Dashboard
 // tag::dashboard[]

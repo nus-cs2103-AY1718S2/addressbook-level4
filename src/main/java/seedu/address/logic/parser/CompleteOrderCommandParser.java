@@ -13,7 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class CompleteOrderCommandParser implements Parser<CompleteOrderCommand> {
 
-    private static String NUMBER_FRONT_OF_QUEUE = "1";
+    private static final String NUMBER_FRONT_OF_QUEUE = "1";
 
     /**
      * Parses the given {@code String} of arguments in the context of the CompleteOrderCommand

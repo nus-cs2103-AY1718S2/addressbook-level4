@@ -5,8 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.model.item.UniqueItemList;
-import seedu.address.model.person.UniquePersonList;
+
 
 //@@author Alaru
 public class UniqueItemListTest {

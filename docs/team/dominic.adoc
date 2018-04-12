@@ -57,13 +57,9 @@ PrioriTask used https://github.com/nus-cs2103-AY1718S2/addressbook-level4[Addres
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-User Features.
+include::../UserGuide.adoc[tag=user]
 
-Priority Description
-
-include::../UserGuide.adoc[tag=undoredo]
-
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=priority]
 
 == Contributions to the Developer Guide
 
@@ -71,8 +67,4 @@ include::../UserGuide.adoc[tag=dataencryption]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-Priority autoupdating
-
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-include::../DeveloperGuide.adoc[tag=dataencryption]
+include::../DeveloperGuide.adoc[tag=taskpriority]

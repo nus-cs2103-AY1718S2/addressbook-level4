@@ -151,6 +151,7 @@ In the following sections, you will be introduced to several commands and their 
 * Parameters can be in any order.
 ** E.g. If the command specifies `n/NAME p/PRIORITY_LEVEL`, `p/PRIORITY_LEVEL n/NAME` is also acceptable.
 
+// tag::user[]
 == User Features
 
 _This section explains the commands specific to command inquiry and *User* account management._
@@ -287,6 +288,8 @@ Exit the program. +
 [format-title]#Format:# `exit`
 ====
 
+// end::user[]
+
 == Task Management Features
 
 _This section explains what a *Task* is, and the commands to manage them._
@@ -301,6 +304,7 @@ _This section explains what a *Task* is, and the commands to manage them._
 * [parameters]#`STATUS`#
 ** A state can only be one of two values : *Done* or *Not Done*.
 ** By *default*, every new task is marked as *Not Done*.
+// tag::priority[]
 * [parameters]#`PRIORITY LEVEL`#
 ** A priority level can range from *0* (lowest) to *9* (highest).
 ** It is *optional* to set a priority level. If the user does not specify a priority level, PrioriTask will automatically set it to its *default level* : *0*.
@@ -311,7 +315,7 @@ _This section explains what a *Task* is, and the commands to manage them._
 **** The priority level is set to its *maximum level : 9*.
 *** If the current date is before the deadline and not equal to the date added.
 **** The priority level is set based on how close the current date is to the deadline, and the time span between the date added and the deadline.
-
+// end::priority[]
 * [parameters]#`DESCRIPTION`#
 ** A description can be of any value (i.e. alphabet, numbers, special symbols).
 ** It is *optional* to have a description.

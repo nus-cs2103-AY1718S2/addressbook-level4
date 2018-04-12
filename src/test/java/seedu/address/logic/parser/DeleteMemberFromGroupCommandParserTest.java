@@ -11,16 +11,16 @@ import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.AddMembersToGroupCommand;
+import seedu.address.logic.commands.DeleteMemberFromGroupCommand;
 import seedu.address.model.group.Information;
 
 
-public class AddMembersToGroupCommandParserTest {
+public class DeleteMemberFromGroupCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMembersToGroupCommand.MESSAGE_USAGE);
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMemberFromGroupCommand.MESSAGE_USAGE);
 
-    private AddMembersToGroupCommandParser parser = new AddMembersToGroupCommandParser();
+    private DeleteMemberFromGroupCommandParser parser = new DeleteMemberFromGroupCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
@@ -35,7 +35,7 @@ public class AddMembersToGroupCommandParserTest {
 
     @Test
     public void parse_compulsoryInvalidGroupField_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMembersToGroupCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMemberFromGroupCommand.MESSAGE_USAGE);
 
         //missing group prefix
         assertParseFailure(parser, INVALID_ADDGROUPMEMBER_NO_GROUP, expectedMessage);

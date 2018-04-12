@@ -13,7 +13,7 @@ import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddGroupCommand;
-import seedu.address.logic.commands.AddMembersToGroupCommand;
+import seedu.address.logic.commands.AddMemberToGroupCommand;
 import seedu.address.logic.commands.AddToDoCommand;
 import seedu.address.logic.commands.ChangeTagColorCommand;
 import seedu.address.logic.commands.CheckToDoCommand;
@@ -21,7 +21,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteGroupCommand;
-import seedu.address.logic.commands.DeleteMembersFromGroupCommand;
+import seedu.address.logic.commands.DeleteMemberFromGroupCommand;
 import seedu.address.logic.commands.DeleteToDoCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditToDoCommand;
@@ -53,7 +53,7 @@ public class    AddressBookParser {
     private static final List<String> COMMAND_WORDS = Arrays.asList(AddCommand.COMMAND_WORD,
             AddEventCommand.COMMAND_WORD,
             AddGroupCommand.COMMAND_WORD,
-            AddMembersToGroupCommand.COMMAND_WORD,
+            AddMemberToGroupCommand.COMMAND_WORD,
             AddToDoCommand.COMMAND_WORD,
             ChangeTagColorCommand.COMMAND_WORD,
             CheckToDoCommand.COMMAND_WORD,
@@ -104,9 +104,9 @@ public class    AddressBookParser {
         case AddGroupCommand.COMMAND_ALIAS:
             return new AddGroupCommandParser().parse(arguments);
 
-        case AddMembersToGroupCommand.COMMAND_WORD:
-        case AddMembersToGroupCommand.COMMAND_ALIAS:
-            return new AddMembersToGroupCommandParser().parse(arguments);
+        case AddMemberToGroupCommand.COMMAND_WORD:
+        case AddMemberToGroupCommand.COMMAND_ALIAS:
+            return new AddMemberToGroupCommandParser().parse(arguments);
         //@@author
 
         case AddToDoCommand.COMMAND_WORD:
@@ -144,9 +144,9 @@ public class    AddressBookParser {
         case DeleteGroupCommand.COMMAND_ALIAS:
             return new DeleteGroupCommandParser().parse(arguments);
 
-        case DeleteMembersFromGroupCommand.COMMAND_WORD:
-        case DeleteMembersFromGroupCommand.COMMAND_ALIAS:
-            return new DeleteMembersFromGroupCommandParser().parse(arguments);
+        case DeleteMemberFromGroupCommand.COMMAND_WORD:
+        case DeleteMemberFromGroupCommand.COMMAND_ALIAS:
+            return new DeleteMemberFromGroupCommandParser().parse(arguments);
         //@@author
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:

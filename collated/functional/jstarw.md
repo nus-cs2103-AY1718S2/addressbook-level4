@@ -13,6 +13,7 @@
 <?import javafx.scene.Scene?>
 
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
     <scene>
@@ -42,15 +43,26 @@
                         </HBox>
                         <FlowPane fx:id="tags" />
                         <Label styleClass="cell_small_label" >Phone: </Label>
-                        <TextField fx:id="phone" text="/$phone"></TextField>
-                        <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-                        <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-                        <Label fx:id="age" styleClass="cell_small_label" text="\$age" />
-                        <Label fx:id="income" styleClass="cell_small_label" text="\$income" />
-                        <Label fx:id="actualSpending" styleClass="cell_small_label" text="\$actualSpending" />
-                        <Label fx:id="isNewClient" styleClass="cell_small_label" text="\$isNewClient" />
-                        <Label fx:id="expectedSpending" styleClass="cell_small_label" text="\$expectedSpending" />
-                        <Label fx:id="policy" styleClass="cell_small_label" text="\$policy" />
+                        <TextField fx:id="phone" styleClass="cell_small_label" text="/$phone"></TextField>
+                        <Label styleClass="cell_small_label" >Address: </Label>
+                        <TextField fx:id="address" styleClass="cell_small_label" text="\$address" />
+                        <Label styleClass="cell_small_label" >Email: </Label>
+                        <TextField fx:id="email" styleClass="cell_small_label" text="\$email" />
+                        <Label styleClass="cell_small_label" >Age: </Label>
+                        <TextField fx:id="age" styleClass="cell_small_label" text="\$age" />
+                        <Label styleClass="cell_small_label" >Income: </Label>
+                        <TextField fx:id="income" styleClass="cell_small_label" text="\$income" />
+                        <Label styleClass="cell_small_label" >Actual Spending: </Label>
+                        <TextField fx:id="actualSpending" styleClass="cell_small_label"
+                                   text="\$actualSpending" disable="true" />
+                        <Label styleClass="cell_small_label" >Is a new client: </Label>
+                        <TextField fx:id="isNewClient" styleClass="cell_small_label" text="\$isNewClient" />
+                        <Label styleClass="cell_small_label" >Expected Spending: </Label>
+                        <TextField fx:id="expectedSpending" styleClass="cell_small_label"
+                                   text="\$expectedSpending" disable="true" />
+                        <Label styleClass="cell_small_label" >Policy: </Label>
+                        <TextField fx:id="policy" styleClass="cell_small_label" text="\$policy" disable="true" />
+                        <Button fx:id="submit" styleClass="cell_small_label" text="submit" />
                     </VBox>
                 </GridPane>
             </HBox>
@@ -62,8 +74,8 @@
 ```
 ###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
-    private void loadPersonDetail(Person person) {
-        PersonDetail personDetail = new PersonDetail(person, 1);
+    private void loadPersonDetail(Person person, Integer index) {
+        PersonDetail personDetail = new PersonDetail(person, index);
         personDetail.show();
     }
     private void loadPersonPage(Person person) {
@@ -100,7 +112,8 @@
 ``` java
     @Subscribe
     private void handlePersonCardDoubleClick(PersonCardDoubleClick event) {
-        loadPersonDetail(event.getNewSelection());
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonDetail(event.getNewSelection(), event.getIndex());
     }
 }
 ```
@@ -112,6 +125,7 @@
 public class PersonDetail extends UiPart<Stage> {
     private static final String FXML = "PersonDetail.fxml";
     public final Person person;
+    private int index;
     @FXML
     private Label name;
     @FXML
@@ -119,43 +133,46 @@ public class PersonDetail extends UiPart<Stage> {
     @FXML
     private TextField phone;
     @FXML
-    private Label address;
+    private TextField address;
     @FXML
-    private Label email;
+    private TextField email;
     @FXML
     private FlowPane tags;
     @FXML
-    private Label income;
+    private TextField income;
     @FXML
-    private Label actualSpending;
+    private TextField actualSpending;
     @FXML
-    private Label expectedSpending;
+    private TextField expectedSpending;
     @FXML
-    private Label age;
+    private TextField age;
     @FXML
-    private Label isNewClient;
+    private TextField isNewClient;
     @FXML
-    private Label policy;
+    private TextField policy;
+    @FXML
+    private Button submit;
 
     public PersonDetail(Person person, int displayedIndex) {
         super("PersonDetail.fxml", new Stage());
         this.person = person;
+        index = displayedIndex;
         registerAsAnEventHandler(this);
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         //@author SoilChang
-        income.setText("Income: " + person.getIncome().toString());
-        age.setText("Age: " + person.getAge().toString() + " years old");
+        income.setText(person.getIncome().toString());
+        age.setText(person.getAge().toString());
         email.setText(person.getEmail().value);
-        actualSpending.setText("Actual Spending: " + person.getActualSpending().toString());
-        expectedSpending.setText("Predicted Spending: " + person.getExpectedSpending().toString());
+        actualSpending.setText(person.getActualSpending().toString());
+        expectedSpending.setText(person.getExpectedSpending().toString());
         isNewClient.setText("New Client");
         if (person.getPolicy().isPresent()) {
-            policy.setText("Policy: " + person.getPolicy().get().toString());
+            policy.setText(person.getPolicy().get().toString());
         } else {
-            policy.setText("Has not applied to any policy");
+            policy.setText("");
         }
 
         if (person.getActualSpending().value != 0.0) {
@@ -170,6 +187,7 @@ public class PersonDetail extends UiPart<Stage> {
         }
         //@author
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        setSubmitListener();
     }
 
     /**
@@ -207,6 +225,36 @@ public class PersonDetail extends UiPart<Stage> {
     public void show() {
         getRoot().show();
     }
+
+    private void setSubmitListener() {
+        submit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                String args = index + " " + PREFIX_PHONE + phone.getText() + " "
+                        + PREFIX_EMAIL + email.getText() + " " + PREFIX_ADDRESS + address.getText() + " "
+                        + PREFIX_INCOME + income.getText().replaceAll("[^\\d.]+", "") + " "
+                        + PREFIX_AGE + age.getText();
+                raise(new PersonEditEvent(args));
+            }
+        });
+    }
+}
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    @Subscribe
+    private void handleSubmitEvent(PersonEditEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        try {
+
+            EditCommandParser editCommandParser = new EditCommandParser();
+            EditCommand editCommand = editCommandParser.parse(event.getArgs());
+            editCommand.setData(model, null, null);
+            editCommand.execute();
+        } catch (Exception exc) {
+            exc.printStackTrace();
+
+        }
+    }
 }
 ```
 ###### /java/seedu/address/ui/PersonCard.java
@@ -217,7 +265,7 @@ public class PersonDetail extends UiPart<Stage> {
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
-                        raise(new PersonCardDoubleClick(person));
+                        raise(new PersonCardDoubleClick(person, index));
                     }
                 }
             }
@@ -243,6 +291,29 @@ public class PersonDetail extends UiPart<Stage> {
     }
 }
 ```
+###### /java/seedu/address/commons/events/ui/PersonEditEvent.java
+``` java
+/**
+ * Represents a edit event of the person detail page
+ */
+public class PersonEditEvent extends BaseEvent {
+
+    private final String args;
+
+    public PersonEditEvent(String args) {
+        this.args = args;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getArgs() {
+        return args;
+    }
+}
+```
 ###### /java/seedu/address/commons/events/ui/PersonCardDoubleClick.java
 ``` java
 /**
@@ -251,9 +322,11 @@ public class PersonDetail extends UiPart<Stage> {
 public class PersonCardDoubleClick extends BaseEvent {
 
     private final Person newSelection;
+    private final Integer index;
 
-    public PersonCardDoubleClick(Person newSelection) {
+    public PersonCardDoubleClick(Person newSelection, Integer index) {
         this.newSelection = newSelection;
+        this.index = index;
     }
 
     @Override
@@ -263,6 +336,10 @@ public class PersonCardDoubleClick extends BaseEvent {
 
     public Person getNewSelection() {
         return newSelection;
+    }
+
+    public Integer getIndex() {
+        return index;
     }
 }
 ```

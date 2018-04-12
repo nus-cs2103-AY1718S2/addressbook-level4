@@ -213,6 +213,7 @@ public class MainWindow extends UiPart<Stage> {
         handleHelp();
     }
 
+    //@@author jstarw
     @Subscribe
     private void handleSubmitEvent(PersonEditEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

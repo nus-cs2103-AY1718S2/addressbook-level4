@@ -169,6 +169,37 @@ List only all student that you added to favourites
 * `list` +
 List all students
 
+*Steps taken to view all students in the address book*: +
+
+*Step 1*: Type `list` into the command box and press kbd:[Enter] to execute it.
+
+.Entering the `list` command
+image::list1_screenshot.jpg[width="800"]
+
+*Step 2*: The result box will display "Listed all students".
+
+*Step 3*: You will see at the left panel a list of every student contact in your address book. You can scroll down to view more contacts in the list.
+
+.The left panel shows a list of every student contact
+image::list2_screenshot.jpg[width="800"]
+
+*Steps taken to view all students in favourites*: +
+
+*Step 1*: Type `list -f` into the command box and press kbd:[Enter] to execute it.
+
+.Entering the `list -f` command to view the list of students in favourites
+image::list3_screenshot.jpg[width="800"]
+
+*Step 2*: The result box will display "Listed all favourite students".
+
+*Step 3*: You will see at the left panel a list of student contacts that are in your favourites. You can scroll down to view more contacts in this favourite list.
+
+.The left panel shows a list of student contacts in favourites
+image::list4_screenshot.jpg[width="800"]
+
+
+
+
 ==== Editing a student : `edit`
 
 Edits an existing student in the address book. +
@@ -239,41 +270,81 @@ Returns any student having tags `friends`, `owesMoney`, i.e. `John Doe` and `Bet
 // tag::favUnfav[]
 ==== Adding a student to favourites : `fav`
 
-Adds an existing student in the address book to your favourites. +
+If you wish to access a student quickly, you can simply add the student as "favourite" using the `fav` command.
+
 Format: `fav INDEX`
 
 ****
-* Add the student at the specified `INDEX` to your favourites.
-* The index refers to the index number in the most recent listing.
+* `INDEX` refers to the index number of the student in the most recent listing.
+* `INDEX` *must be a positive integer* 1, 2, 3, ...
 ****
 
-Examples:
+[NOTE]
+You can view the list of your favourite students using the command `list -f` (see <<Listing all students : `list`>>
+
+Example:
 
 * `list` +
-`fav 2` +
-Adds the 2nd student in the address book to favourites.
-* `find Betsey` +
 `fav 1` +
-Adds the 1st student in the results of the `find` command to favourites
+Adds the 1st student in the address book to favourites.
+
+*Steps taken*: +
+
+*Step 1*: First, find the student you wish to add to favourites using the `list` command (See <<Listing all students : `list`>>).
+
+*Step 2*: Once you have found the student you want to add to your favourites, type `fav` into the command box, followed by the `INDEX` of the student in the list. Press kbd:[Enter] to execute it.
+
+.Entering the `fav` command followed by the `INDEX` of the student to add to favourites
+image::fav1_screenshot.jpg[width="800"]
+
+*Step 3*: You have succeeded in adding the student as favourite when you see "Student added to favourites: [STUDENT'S NAME]" in the result box and the student's name being highlighted in orange.
+
+.Success in adding student "Alex Yeoh" at index 1 to favourites
+image::fav2_screenshot.jpg[width="800"]
+
+[WARNING]
+The student `INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when an invalid student index is entered
+image::fav3_screenshot.jpg[width="800"]
 
 ==== Remove a student from favourites : `unfav`
 
-Removes an existing student in the address book from your favourites. +
+If you want to remove a student from favourites, you can simply use the `unfav` command. +
+
 Format: `unfav INDEX`
 
 ****
-* Removes the student at specified `INDEX` from your favourites.
-* The index refers to the index number in the most recent listing.
+* `INDEX` refers to the index number of the student in the most recent listing.
+* `INDEX` *must be a positive integer* 1, 2, 3, ...
 ****
 
-Examples:
+Example:
 
 * `list` +
-`unfav 2` +
-Removes the 2nd student in the address book from favourites.
-* `find Betsey` +
 `unfav 1` +
-Removes the 1st student in the results of the `find` command from favourites
+Removes the 1st student in the address book from favourites.
+
+*Steps taken*: +
+
+*Step 1*: First, find the student you wish to remove from your favourites using the `list -f` command (See <<Listing all students : `list`>>).
+
+*Step 2*: Once you have found the student you want to remove from your favourites, type `unfav` into the command box, followed by the `INDEX` of the student in the list. Press kbd:[Enter] to execute it.
+
+.Entering the `unfav` command followed by the `INDEX` of the student to remove from favourites.
+image::unfav1_screenshot.jpg[width="800"]
+
+*Step 3*: You have succeeded in removing the student from favourites when you see "Student removed from favourites: [STUDENT'S NAME]" in the result box.
+
+.Success in removing student "Alex Yeoh" from favourites
+image::unfav2_screenshot.jpg[width="800"]
+
+[WARNING]
+The student `INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when an invalid student index is entered
+image::unfav3_screenshot.jpg[width="800"]
+
 // end::favUnfav[]
 
 ==== Clearing all entries : `clear`
@@ -412,134 +483,242 @@ You must first be logged in to sync your data
 
 Format: `sync`
 
-=== Dashboard
 // tag::dashboard[]
+=== Dashboard
+
+In Codeducator, you can *track the learning progress* of your students easily by utilising our Dashboard feature.
+Each of your student in your contact list will have a dashboard which you can view and manage easily. +
+
+*What's in a dashboard?*
+
+* Milestones: +
+Each dashboard will have a list of milestones. A milestone signifies a major step in the learning progress of your student.
+Codeducator allows you to create and add milestones in your students' dashboards so that you can keep track of learning objectives you have set for them.
+
+* Tasks: +
+Each milestone can contain a list of tasks. A task signifies a piece of work to be done to meet the milestone's objective.
+Codeducator also allows you to create and add tasks to each milestone so that you can keep track of what has already been done and what still needs to be done to reach the milestone.
+
 ==== Show the dashboard of a student: `showDB`
 
-Shows the dashboard of an existing student in the address book. +
-Format: `showDB INDEX`
+You can view the dashboard of a student by using the `showDB` command. +
+
+Format: `showDB STUDENT_INDEX`
 
 ****
-* Shows the dashboard of the student at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `STUDENT_INDEX` *must be a positive integer* 1, 2, 3, ...
 ****
 
-[TIP]
-A dashboard provides an at-a-glance view of your student's progress. Each dashboard contains a list of milestones and tasks that you can set for your student.
-
-Examples:
+Example:
 
 * `list` +
-`showDB 2` +
-Shows the dashboard of the 2nd student in the address book.
-* `list -f` +
 `showDB 1` +
-Shows the dashboard of the 1st student the favourites list.
+Shows the dashboard of the 1st student in the address book.
+
+*Steps taken*: +
+
+*Step 1*: First, find the student whose dashboard you wish to view using the `list` command (See <<Listing all students : `list`>>).
+
+*Step 2*: Once you have found the student, type `showDB` into the command box, followed by the `STUDENT_INDEX` of the student in the list. Press kbd:[Enter] to execute it.
+
+.Entering the `showDB` command followed by the `STUDENT_INDEX` of the student whose dashboard you wish to view
+image::showDB1_screenshot.jpg[width="800"]
+
+*Step 3*: You have succeeded in viewing the student's dashboard if you see the message "Selected Dashboard of Student: `STUDENT_INDEX` " in the result box, with the dashboard containing the student's name appearing on the right panel.
+
+.Success in showing the dashboard of Alex Yeoh who has the index 1 on the students list
+image::showDB2_screenshot.jpg[width="800"]
+
+[WARNING]
+The student `INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when an invalid student index is entered
+image::showDB3_screenshot.jpg[width="800"]
+
 
 ==== Add a milestone to a student's dashboard: `addMS`
 
-Adds a milestone to the dashboard of an existing student in the address book. +
+If you want to keep track of a learning objective you want your student to fulfil, you can add a milestone to your student's dashboard using the `addMS` command. +
+
 Format: `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE`
 
 ****
-* Adds a milestone to the dashboard of a student at the specified `STUDENT_INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* The milestone due date must be in this format: *DD/MM/YYYY hh:mm* where DD/MM/YYYY is the calendar date and hh:mm is the time in 24-hour notation
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `STUDENT_INDEX` *must be a positive integer* 1, 2, 3, ...
+* `MILESTONE_DUE_DATE` must be in this format: *DD/MM/YYYY hh:mm* where DD/MM/YYYY is the calendar date and hh:mm is the time in 24-hour notation
 ****
 
-[TIP]
-A milestone signifies a *major step in the learning progress* of your student. Hence, you may want to create the milestones carefully such that completing every milestone signifies the completion of your tutoring objective with your student.
-
-Examples:
+Example:
 
 * `list` +
-`addMS i/1 d/18/08/2018 23:59 o/Learn Arrays` +
-Adds a milestone to the dashboard of the 1st student in the address book. The milestone is due on 18/08/2018 23:59 and the objective is "Learn Arrays".
-* `find Betsey` +
-`addMS i/2 d/03/04/2019 10:30 o/Learn Recursion` +
-Adds a milestone to the dashboard of the 2nd person in the results of the `find` command. The milestone is due on 03/04/2019 10:30 and the objective is "Learn Recursion".
+`showDB 1` +
+`addMS i/1 d/23/05/2018 23:59 o/Learn Arrays` +
+Adds a milestone to the dashboard of the 1st student in the address book. The milestone is due on 23/05/2018 23:59 and the objective is "Learn Arrays".
+
+*Steps taken*:
+
+*Step 1*: First, view the dashboard of the student where you want to add the milestone to (See <<Show the dashboard of a student: `showDB`>>).
+
+*Step 2*: Once you can view the student's dashboard, type `addMS` in the command box, followed by the `STUDENT_INDEX`, `MILESTONE_DUE_DATE` and `DESCRIPTION_OF_MILESTONE`. Press kbd:[Enter] to execute it.
+
+.Entering the `addMS` command, followed by the `STUDENT_INDEX`, `MILESTONE_DUE_DATE` and `DESCRIPTION_OF_MILESTONE`
+image::addMS1_screenshot.jpg[width="800"]
+
+*Step 3*: You have succeeded in adding the milestone to the student's dashboard if you see the message "Milestone added to Student's Dashboard:" followed by the description of the milestone you have added in the result box.
+The new milestone will also appear on the student's dashboard.
+
+.Success in adding the milestone with the description "Learn Arrays" which is due on "23/05/2018 23:59" to the dashboard of Alex Yeoh. Alex Yeoh has the index 1 on the students list.
+image::addMS2_screenshot.jpg[width="800"]
+
+[WARNING]
+The `STUDENT_INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when an invalid `STUDENT_INDEX` is entered
+image::addMS3_screenshot.jpg[width="800"]
+
+[WARNING]
+The `MILESTONE_DUE_DATE` provided must have a valid calendar date and follows the specified format. Otherwise, an error message shown in the figure below will be displayed in the result box at *Step 3*. +
+
+.Error message displayed when an invalid `MILESTONE_DUE_DATE` is entered
+image::addMS4_screenshot.jpg[width="800"]
+
 
 ==== Delete a milestone from a student's dashboard: `deleteMS`
 
-Deletes a milestone from the dashboard of an existing student in the address book. +
+If you wish to remove a milestone you no longer need from a student's dashboard, you can use the `deleteMS` command. +
+
 Format: `deleteMS i/STUDENT_INDEX m/MILESTONE_INDEX`
 
 ****
-* Deletes the milestone at the specified `MILESTONE_INDEX`
 * The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
-* Both indexes refer to the index number shown in the most recent listing.
-* Both indexes *must be a positive integer* 1, 2, 3, ...
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `MILESTONE_INDEX` refers to the index number of the milestone in the dashboard shown in the most recent listing.
+* Both `STUDENT_INDEX` and `MILESTONE_INDEX` *must be positive integers* 1, 2, 3, ...
 ****
 
 Examples:
 
 * `list` +
-`deleteMS i/1 m/2` +
-Deletes the 2nd milestone from the dashboard of the 1st student in the address book.
-* `find Betsey` +
-`deleteMS i/3 m/4` +
-Deletes the 4th milestone from the dashboard of the 3rd student in the results of the `find` command.
+`showDB 1` +
+`deleteMS i/1 m/1` +
+Deletes the 1st milestone from the dashboard of the 1st student in the address book.
+
+*Steps taken*:
+
+*Step 1*: First, view the dashboard of the student where you want to remove the milestone from (See <<Show the dashboard of a student: `showDB`>>).
+
+*Step 2*: Once you can view the student's dashboard, type `deleteMS` in the command box, followed by the `STUDENT_INDEX` and `MILESTONE_INDEX`. Press kbd:[Enter] to execute it.
+
+.Entering the `deleteMS` command, followed by the `STUDENT_INDEX` and `MILESTONE_INDEX`
+image::deleteMS1_screenshot.jpg[width="800"]
+
+*Step 3*: You have succeeded in deleting the milestone if you see the message "Deleted milestone:" followed by the description of the milestone in the result box. The milestone will also no longer be on the dashboard of the student.
+
+.Success in deleting the milestone of index 1 in the dashboard of Alex Yeoh. Alex Yeoh has the index 1 on the students list.
+image::deleteMS2_screenshot.jpg[width="800"]
+
+[WARNING]
+The `STUDENT_INDEX` and `MILESTONE_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when invalid `STUDENT_INDEX` and `MILESTONE_INDEX` are entered
+image::deleteMS3_screenshot.jpg[width="800"]
 
 ==== Add a task to a milestone: `addTask`
 
-Adds a task to an existing milestone in a dashboard. +
+If you wish to keep track of a piece of work that needs to be done to complete a milestone's objective, you can add a task to the milestone in the student's dashboard using the `addTask` command. +
+
 Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_OF_TASK`
 
 ****
-* Adds a task to the milestone at the specified `MILESTONE_INDEX`
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `MILESTONE_INDEX` refers to the index number of the milestone in the dashboard shown in the most recent listing.
 * The milestone is in the dashboard of the student at the specified `STUDENT_INDEX`
-* Both indexes refer to the index number shown in the most recent listing.
-* Both indexes *must be a positive integer* 1, 2, 3, ...
+* `STUDENT_INDEX` and `MILESTONE_INDEX` *must be positive integers* 1, 2, 3, ...
 ****
-
-[TIP]
-A task signifies a *piece of work to be done to meet the milestone's objective*. Hence, a milestone's objective should be met when all its tasks are completed.
 
 Examples:
 
 * `list` +
-`addTask i/1 m/3 n/Learn Array Syntax o/Student to refer to the textbook` +
-Adds a task to the 3rd milestone in the dashboard of the 1st student in the address book. The name of the task is "Learn Array Syntax" and the description is "Student to refer to the textbook".
-* `find Betsey` +
-`addTask i/2 m/1 n/Practice Recursion Exercises o/Refer to problem set` +
-Adds a task to the 1st milestone in the dashboard of the 2nd student in the results of the `find` command. The name of the task is "Practice Recursion Exercises" and the description is "Refer to problem set".
+`showDB 1` +
+`addTask i/1 m/1 n/Learn Array Syntax o/Student to refer to the textbook` +
+Adds a task to the 1st milestone in the dashboard of the 1st student in the address book. The name of the task is "Learn Array Syntax" and the description is "Student to refer to the textbook".
+
+*Steps taken*:
+
+*Step 1*: First, view the dashboard of the student where you want to add the task to (See <<Show the dashboard of a student: `showDB`>>).
+
+*Step 2*: Once you can view the student's dashboard, type `addTask` in the command box, followed by `STUDENT_INDEX`, `MILESTONE_INDEX`, `NAME_OF_TASK` and `DESCRIPTION_OF_TASK`. Press kbd:[Enter] to execute it.
+
+.Entering the command `addTask`, followed by the `STUDENT_INDEX`, `MILESTONE_INDEX`, `NAME_OF_TASK` and `DESCRIPTION_OF_TASK`
+image::addTask1_screenshot.jpg[width="800"]
+
+*Step 3*: You have succeeded in adding the task to the milestone if you see the message "New task added:" followed by the description of the task you have added in the result box. The new task will also appear in the task list of the milestone.
+
+.Success in adding a task with the name "Learn Array Syntax" and description "Student to refer to the textbook" to the 1st milestone in the dashboard of Alex Yeoh. Alex Yeoh has the index 1 on the students list.
+image::addTask2_screenshot.jpg[width="800"]
+
+[WARNING]
+The `STUDENT_INDEX` and `MILESTONE_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when invalid `STUDENT_INDEX` and `MILESTONE_INDEX` are entered
+image::addTask3_screenshot.jpg[width="800"]
 
 ==== Delete a task from a milestone: `deleteTask`
 
-Deletes a task from an existing milestone in a dashboard. +
+If you wish to remove a task you no longer need in a milestone of a dashboard, you can use the `deleteTask` command. +
+
 Format: `deleteTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
 
 ****
-* Deletes the task at the specified `TASK_INDEX`
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `MILESTONE_INDEX` refers to the index number of the milestone in the dashboard shown in the most recent listing.
+* `TASK_INDEX` refer to the index number of the task in the milestone shown in the most recent listing.
 * The task is in the milestone at the specified `MILESTONE_INDEX`
 * The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
-* All indexes refer to the index number shown in the most recent listing.
-* Both indexes *must be a positive integer* 1, 2, 3, ...
+* `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX` *must be positive integers* 1, 2, 3, ...
 ****
 
 Examples:
 
 * `list` +
-`deleteTask i/1 m/2 tk/3` +
-Deletes the 3rd task in the 2nd milestone. The milestone is in the dashboard of the 1st student in the address book.
-* `find Betsey` +
-`deleteTask i/2 m/3 tk/1` +
-Deletes the 1st task in the 3rd milestone. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
+`showDB 1` +
+`deleteTask i/1 m/1 tk/1` +
+Deletes the 1st task in the 1st milestone. The milestone is in the dashboard of the 1st student in the address book.
 
+*Steps taken*:
+
+*Step 1*: First, view the dashboard of the student where you want to delete the task from (See <<Show the dashboard of a student: `showDB`>>).
+
+*Step 2*: Once you can view the student's dashboard, type `deleteTask` in the command box, followed by `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX`. Press kbd:[Enter] to execute it.
+
+.Entering the command `deleteTask`, followed by the `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX`
+image::deleteTask1_screenshot.jpg[width="800"]
+
+*Step 3*: You have succeeded in deleting the task from the milestone if you see the message: "Deleted task:" followed by the description of the task you deleted in the result box. The task will also no longer be in the task list of the milestone.
+
+.Success in deleting the task of index 1 from the 1st milestone in the dashboard of Alex Yeow. Alex Yeow has the index 1 on the students list.
+image::deleteTask2_screenshot.jpg[width="800"]
+
+[WARNING]
+The `STUDENT_INDEX`, `MILESTONE_INDEX`, and `TASK_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when invalid `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX` are entered
+image::deleteTask3_screenshot.jpg[width="800"]
 
 ==== Mark a task as completed: `checkTask`
 
-Marks a task in an existing milestone as completed. +
+If your student has completed a task and you wish to mark it as completed, you can use the `checkTask` command. +
+
 Format: `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
 
 ****
-* Marks the task at the specified `TASK_INDEX` as completed
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `MILESTONE_INDEX` refers to the index number of the milestone in the dashboard shown in the most recent listing.
+* `TASK_INDEX` refer to the index number of the task in the milestone shown in the most recent listing.
 * The task is in the milestone at the specified `MILESTONE_INDEX`
 * The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
-* All indexes refer to the index number shown in the most recent listing.
-* All indexes *must be a positive integer* 1, 2, 3, ...
+* `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX` *must be positive integers* 1, 2, 3, ...
 ****
 
 [TIP]
@@ -548,11 +727,37 @@ Marking a task as completed updates the progress of the milestone.
 Examples:
 
 * `list` +
-`checkTask i/1 m/2 tk/3` +
-Marks the 3rd task in the 2nd milestone as completed. The milestone is in the dashboard of the 1st student in the address book.
-* `find Betsey` +
-`checkTask i/2 m/3 tk/4` +
-Marks the 4th task in the 3rd milestone as completed. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
+`showDB 1` +
+`checkTask i/1 m/1 tk/1` +
+Marks the 1st task in the 1st milestone as completed. The milestone is in the dashboard of the 1st student in the address book.
+
+*Steps taken*:
+
+*Step 1*: First, view the dashboard of the student where the task is (See <<Show the dashboard of a student: `showDB`>>).
+
+*Step 2*: Once you can view the student's dashboard, type `checkTask` in the command box, followed by `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX`. Press kbd:[Enter] to execute it.
+
+.Entering the command `checkTask`, followed by the `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX`
+image::checkTask1_screenshot.jpg[width="800"]
+
+*Step 3*: You have succeeded in marking the task as completed if you see the message "Task `TASK_INDEX` marked as completed in milestone `MILESTONE_INDEX` ".
+The task's "Completed" field will become "Yes" and the progress of the milestone will be updated.
+
+.Success in marking the task of index 1 from the 1st milestone in the dashboard of Alex Yeow as completed. Alex Yeoh has the index 1 on the students list. The task's "Completed" field is now "Yes" and the milestone's progress is updated to 100%.
+image::checkTask2_screenshot.jpg[width="800"]
+
+[WARNING]
+Marking an already completed task as complete will cause an error message "Task is already marked as completed" to be displayed in the result box at *Step 3*.
+
+.Error message displayed when specified task is already marked as completed
+image::checkTask4_screenshot.jpg[width="800"]
+
+[WARNING]
+The `STUDENT_INDEX`, `MILESTONE_INDEX`, and `TASK_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when invalid `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX` are entered
+image::checkTask3_screenshot.jpg[width="800"]
+
 // end::dashboard[]
 
 === Student Profile Picture

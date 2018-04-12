@@ -12,9 +12,15 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
+import seedu.address.model.order.exceptions.OrderNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.product.Product;
+import seedu.address.model.product.exceptions.DuplicateProductException;
+import seedu.address.model.product.exceptions.ProductNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +31,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Product> filteredProducts;
+    private FilteredList<Order> filteredOrders;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +45,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredProducts = new FilteredList<>(this.addressBook.getProductList());
+        filteredOrders = new FilteredList<>(this.addressBook.getOrderList());
     }
 
     public ModelManager() {
@@ -73,6 +83,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void deleteProduct(Product target) throws ProductNotFoundException {
+        addressBook.removeProduct(target);
+        indicateAddressBookChanged();
+    }
+
+
+    @Override
+    public synchronized void addProduct(Product product) throws DuplicateProductException {
+        addressBook.addProduct(product);
+        updateFilteredProductList(PREDICATE_SHOW_ALL_PRODUCTS);
+        indicateAddressBookChanged();
+    }
+
+
+    @Override
     public void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
@@ -81,8 +106,18 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    @Override
+    public synchronized void addOrder(Order order) throws DuplicateOrderException {
+        addressBook.addOrder(order);
+        indicateAddressBookChanged();
+    }
 
+    @Override
+    public synchronized void deleteOrder(Order target) throws OrderNotFoundException {
+        addressBook.removeOrder(target);
+        indicateAddressBookChanged();
+    }
+    //=========== Filtered Person, product and Order List Accessors =============================================================
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
      * {@code addressBook}
@@ -96,6 +131,38 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Products} backed by the internal list of
+     * {@code addressBook}
+     */
+
+    @Override
+    public ObservableList<Product> getFilteredProductList() {
+        return FXCollections.unmodifiableObservableList(filteredProducts);
+    }
+
+    @Override
+    public void updateFilteredProductList(Predicate<Product> predicate) {
+        requireNonNull(predicate);
+        filteredProducts.setPredicate(predicate);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Orders} backed by the internal list of
+     * {@code addressBook}
+     */
+
+    @Override
+    public ObservableList<Order> getFilteredOrderList() {
+        return FXCollections.unmodifiableObservableList(filteredOrders);
+    }
+
+    @Override
+    public void updateFilteredOrderList(Predicate<Order> predicate) {
+        requireNonNull(predicate);
+        filteredOrders.setPredicate(predicate);
     }
 
     @Override

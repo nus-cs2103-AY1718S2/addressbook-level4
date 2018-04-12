@@ -1,56 +1,33 @@
 # ZhangYijiong
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\commons\events\ui\OrderPanelSelectionChangedEvent.java
 ``` java
-    private void loadGoogleMapAddressPage(Person person) {
-        loadPage(GOOGLE_MAP_SEARCH_PAGE + person.getAddress().getGoogleMapSearchForm());
-    }
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    private void loadGoogleMapPathPage(Person person) {
-        loadPage(GOOGLE_MAP_PATH_SEARCH_PAGE + Address.ADDRESS_USER_OWN
-                + "/" + person.getAddress().getGoogleMapSearchForm());
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.ui.OrderCard;
+
+/**
+ * Gets an event the panel change selection
+ */
+public class OrderPanelSelectionChangedEvent extends BaseEvent {
+
+    private final OrderCard newSelection;
+
+    public OrderPanelSelectionChangedEvent(OrderCard newSelection) {
+        this.newSelection = newSelection;
     }
 
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 
-    /**
-     * Loads a default HTML file with a background that matches the general theme.
-     */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
-    }
-
-    /**
-     * Frees resources allocated to the browser.
-     */
-    public void freeResources() {
-        browser = null;
-    }
-
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadGoogleMapAddressPage(event.getNewSelection().person);
-    }
-
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    @Subscribe
-    private void handlePersonPanelPathChangedEvent(PersonPanelPathChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadGoogleMapPathPage(event.getNewSelection().person);
+    public OrderCard getNewSelection() {
+        return newSelection;
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/PersonPanelPathChangedEvent.java
+###### \java\seedu\address\commons\events\ui\PersonPanelPathChangedEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -79,39 +56,206 @@ public class PersonPanelPathChangedEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/PathCommandParser.java
+###### \java\seedu\address\logic\commands\AddOrderCommand.java
 ``` java
-package seedu.address.logic.parser;
+package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COUNT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DISTANCE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.PathCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
- * Parses input arguments and creates a new SelectCommand object
+ * Add an order to the application's order queue
  */
-public class PathCommandParser implements Parser<PathCommand> {
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the PathCommand
-     * and returns an PathCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public PathCommand parse(String args) throws ParseException {
+public class AddOrderCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "addOrder";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an order to the processing queue. \n"
+            + "Parameters: "
+            + PREFIX_ORDER + "ORDER "
+            + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_PRICE + "PRICE (of the order) "
+            + PREFIX_DISTANCE + "DISTANCE (to the address) "
+            + PREFIX_COUNT + "COUNT (past order count) "
+            + PREFIX_DESCRIPTION + "[" + "DESCRIPTION]\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_ORDER + "CHICKEN RICE "
+            + PREFIX_ADDRESS + "NUS "
+            + PREFIX_PRICE + "3 "
+            + PREFIX_DISTANCE + "5 "
+            + PREFIX_COUNT + "1 "
+            + PREFIX_DESCRIPTION + "CHILI SAUCE REQUIRED";
+
+    public static final String MESSAGE_SUCCESS = "New Order added: %1$s";
+    public static final String MESSAGE_DUPLICATE_TASK = "This order already exists in the address book";
+
+    private final Task toAdd;
+
+    public AddOrderCommand(Task task) {
+        requireNonNull(task);
+        toAdd = task;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new PathCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PathCommand.MESSAGE_USAGE));
+            model.addTask(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateTaskException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddOrderCommand // instanceof handles nulls
+                && toAdd.equals(((AddOrderCommand) other).toAdd));
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\CompleteOrderCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
+
+/**
+ * Implementation follows {@code DeleteCommand}
+ * Deletes n orders at the front of the queue, n is the user input.
+ */
+public class CompleteOrderCommand extends Command {
+
+    public static final String COMMAND_WORD = "completeOrder";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Complete n orders in the current queue, n be the user input.\n"
+            + "Parameters: Number (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 2";
+
+    public static final String MESSAGE_COMPLETE_TASK_SUCCESS = " Order(s) Completed";
+
+    private final Index targetIndex;
+    private final Index numberOfTimes;
+
+    public CompleteOrderCommand(Index targetIndex, Index numberOfTimes) {
+        this.targetIndex = targetIndex;
+        this.numberOfTimes = numberOfTimes;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        int number = numberOfTimes.getOneBased();
+        while (number-- != 0) {
+
+            List<Task> lastShownList = model.getFilteredTaskList();
+
+            if (number >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+            }
+
+            Task taskToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+            try {
+                model.deleteTask(taskToDelete);
+            } catch (TaskNotFoundException tnfe) {
+                assert false : "The target task cannot be missing";
+            }
+        }
+        return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_SUCCESS));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CompleteOrderCommand // instanceof handles nulls
+                && this.targetIndex.equals(((CompleteOrderCommand) other).targetIndex)
+                && this.numberOfTimes.equals(((CompleteOrderCommand) other).numberOfTimes)); // state check
+    }
+}
+
+```
+###### \java\seedu\address\logic\commands\DeleteOrderCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
+
+/**
+ * Implementation follows {@code DeleteCommand}
+ * Deletes an order identified using it's last displayed index from the address book.
+ */
+public class DeleteOrderCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "deleteOrder";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes the order identified by the index number in queue.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 3";
+
+    public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Order: %1$s";
+
+    private final Index targetIndex;
+
+    public DeleteOrderCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<Task> lastShownList = model.getFilteredTaskList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+
+        Task taskToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        try {
+            model.deleteTask(taskToDelete);
+        } catch (TaskNotFoundException enfe) {
+            assert false : "The target task cannot be missing";
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteOrderCommand // instanceof handles nulls
+                && this.targetIndex.equals(((DeleteOrderCommand) other).targetIndex)); // state check
     }
 }
 ```
-###### /java/seedu/address/logic/commands/PathCommand.java
+###### \java\seedu\address\logic\commands\PathCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -171,4 +315,506 @@ public class PathCommand extends Command {
     }
 }
 
+```
+###### \java\seedu\address\logic\parser\AddOrderCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COUNT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DISTANCE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+
+import java.util.stream.Stream;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddOrderCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.dish.Price;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Order;
+import seedu.address.model.task.Count;
+import seedu.address.model.task.Distance;
+import seedu.address.model.task.Task;
+
+/**
+ * Parses input arguments and creates a new AddEventCommand object
+ */
+public class AddOrderCommandParser implements Parser<AddOrderCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddOrderCommand
+     * and returns an AddOrderCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddOrderCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_ORDER, PREFIX_ADDRESS, PREFIX_PRICE,
+                        PREFIX_DISTANCE, PREFIX_COUNT, PREFIX_DESCRIPTION);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_ORDER, PREFIX_ADDRESS, PREFIX_PRICE,
+                PREFIX_DISTANCE, PREFIX_COUNT, PREFIX_DESCRIPTION)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrderCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Order order = ParserUtil.parseOrder(argMultimap.getValue(PREFIX_ORDER)).get();
+            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            Price price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE)).get();
+            Distance distance = ParserUtil.parseDistance(argMultimap.getValue(PREFIX_DISTANCE)).get();
+            Count count = ParserUtil.parseCount(argMultimap.getValue(PREFIX_COUNT)).get();
+            String description = argMultimap.getValue(PREFIX_DESCRIPTION).orElse("");
+
+            Task task = new Task(order, address, price, distance, count, description);
+
+            return new AddOrderCommand(task);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\CompleteOrderCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.CompleteOrderCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new CompleteOrderCommand object
+ */
+public class CompleteOrderCommandParser implements Parser<CompleteOrderCommand> {
+
+    private static final String NUMBER_FRONT_OF_QUEUE = "1";
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the CompleteOrderCommand
+     * and returns an CompleteOrderCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public CompleteOrderCommand parse(String args) throws ParseException {
+        try {
+            Index numberOfTimes = ParserUtil.parseIndex(args);
+            Index index = ParserUtil.parseIndex(NUMBER_FRONT_OF_QUEUE);
+            return new CompleteOrderCommand(index, numberOfTimes);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompleteOrderCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+
+
+```
+###### \java\seedu\address\logic\parser\DeleteOrderCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.DeleteOrderCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new DeleteOrderCommand object
+ */
+public class DeleteOrderCommandParser implements Parser<DeleteOrderCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteOrderCommand
+     * and returns an DeleteOrderCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteOrderCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new DeleteOrderCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteOrderCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+
+```
+###### \java\seedu\address\logic\parser\PathCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.PathCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new SelectCommand object
+ */
+public class PathCommandParser implements Parser<PathCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the PathCommand
+     * and returns an PathCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public PathCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new PathCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PathCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\model\task\Count.java
+``` java
+package seedu.address.model.task;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+/**
+ * Implementation follows {@code Price}
+ * Represents an Task's past order count number
+ * Guarantees: immutable; is valid as declared in {@link #isValidCount(String)}
+ */
+public class Count {
+
+
+    public static final String MESSAGE_COUNT_CONSTRAINTS =
+            "Count numbers can only be positive integers";
+    public static final String COUNT_VALIDATION_REGEX = "\\d{1,}";
+    public final String value;
+
+    /**
+     * Constructs a {@code Count}.
+     *
+     * @param count A valid count number.
+     */
+    public Count(String count) {
+        requireNonNull(count);
+        checkArgument(isValidCount(count), MESSAGE_COUNT_CONSTRAINTS);
+        this.value = count;
+    }
+
+    /**
+     * Returns true if a given string is a valid task count number.
+     */
+    public static boolean isValidCount(String test) {
+        return test.matches(COUNT_VALIDATION_REGEX);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Count // instanceof handles nulls
+                && this.value.equals(((Count) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    /**
+     *  Returns count in integer form to be able used by {@code compareTo} in Task
+     */
+    public int toInt() {
+        return Integer.parseInt(value);
+    }
+}
+```
+###### \java\seedu\address\model\task\Distance.java
+``` java
+package seedu.address.model.task;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+/**
+ * Implementation follows {@code Count}
+ * Represents an Task's distance
+ * Guarantees: immutable; is valid as declared in {@link #isValidDistance(String)}
+ */
+public class Distance {
+
+
+    public static final String MESSAGE_DISTANCE_CONSTRAINTS =
+            "Distance numbers can only be positive integers, in terms of km";
+    public static final String DISTANCE_VALIDATION_REGEX = "\\d{1,}";
+    public final String value;
+
+    /**
+     * Constructs a {@code Distance}.
+     *
+     * @param distance A valid distance number.
+     */
+    public Distance(String distance) {
+        requireNonNull(distance);
+        checkArgument(isValidDistance(distance), MESSAGE_DISTANCE_CONSTRAINTS);
+        this.value = distance;
+    }
+
+    /**
+     * Returns true if a given string is a valid task distance number.
+     */
+    public static boolean isValidDistance(String test) {
+        return test.matches(DISTANCE_VALIDATION_REGEX);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Distance // instanceof handles nulls
+                && this.value.equals(((Distance) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    /**
+     *  Returns distance in integer form to be able used by {@code compareTo} in Task
+     */
+    public int toInt() {
+        return Integer.parseInt(value);
+    }
+}
+
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    private void loadGoogleMapAddressPage(Person person) {
+        loadPage(GOOGLE_MAP_SEARCH_PAGE + person.getAddress().getGoogleMapSearchForm());
+    }
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    private void loadGoogleMapPathPage(Person person) {
+        loadPage(GOOGLE_MAP_PATH_SEARCH_PAGE + Address.ADDRESS_USER_OWN
+                + "/" + person.getAddress().getGoogleMapSearchForm());
+    }
+
+    public void loadPage(String url) {
+        Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    /**
+     * Loads a default HTML file with a background that matches the general theme.
+     */
+    private void loadDefaultPage() {
+        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        loadPage(defaultPage.toExternalForm());
+    }
+
+    /**
+     * Frees resources allocated to the browser.
+     */
+    public void freeResources() {
+        browser = null;
+    }
+
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadGoogleMapAddressPage(event.getNewSelection().person);
+    }
+
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    @Subscribe
+    private void handlePersonPanelPathChangedEvent(PersonPanelPathChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadGoogleMapPathPage(event.getNewSelection().person);
+    }
+}
+```
+###### \java\seedu\address\ui\OrderCard.java
+``` java
+package seedu.address.ui;
+
+import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import seedu.address.model.task.Task;
+
+/**
+ * An UI component that displays information of a {@code Event}.
+ */
+public class OrderCard extends UiPart<Region> {
+    private static final String FXML = "OrderCard.fxml";
+
+    public final Task task;
+
+    @FXML
+    private HBox cardPane;
+    @FXML
+    private Label order;
+    @FXML
+    private Label id;
+    @FXML
+    private Label address;
+    @FXML
+    private Label description;
+
+    public OrderCard(Task task, int displayedIndex) {
+        super(FXML);
+        this.task = task;
+        id.setText(displayedIndex + ". ");
+        bindListeners(task);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Task} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(Task task) {
+        order.textProperty().bind(Bindings.convert(task.orderObjectProperty()));
+        address.textProperty().bind(Bindings.convert(task.addressObjectProperty()));
+        description.textProperty().bind(Bindings.convert(task.descriptionObjectProperty()));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof OrderCard)) {
+            return false;
+        }
+
+        // state check
+        OrderCard card = (OrderCard) other;
+        return id.getText().equals(card.id.getText())
+                && task.equals(card.task);
+    }
+}
+```
+###### \java\seedu\address\ui\OrderQueuePanel.java
+``` java
+package seedu.address.ui;
+
+import java.util.logging.Logger;
+
+import org.fxmisc.easybind.EasyBind;
+
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.OrderPanelSelectionChangedEvent;
+import seedu.address.model.task.Task;
+
+/**
+ * Implementation follows {@code PersonListPanel}
+ * Panel containing the queue of orders.
+ */
+public class OrderQueuePanel extends UiPart<Region> {
+    private static final String FXML = "OrderQueuePanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(OrderQueuePanel.class);
+
+    @FXML
+    private ListView<OrderCard> orderListView;
+
+    public OrderQueuePanel(ObservableList<Task> taskList) {
+        super(FXML);
+        setConnections(taskList);
+        registerAsAnEventHandler(this);
+    }
+
+    private void setConnections(ObservableList<Task> taskList) {
+        ObservableList<OrderCard> mappedList = EasyBind.map(
+                taskList, (task) -> new OrderCard(task, taskList.indexOf(task) + 1));
+        orderListView.setItems(mappedList);
+        orderListView.setCellFactory(listView -> new OrderQueueViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        orderListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in order list panel changed to : '" + newValue + "'");
+                        raise(new OrderPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
+    /**
+     * Scrolls to the {@code OrderCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            orderListView.scrollTo(index);
+            orderListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code OrderCard}.
+     */
+    class OrderQueueViewCell extends ListCell<OrderCard> {
+
+        @Override
+        protected void updateItem(OrderCard order, boolean empty) {
+            super.updateItem(order, empty);
+
+            if (empty || order == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(order.getRoot());
+            }
+        }
+    }
+}
 ```

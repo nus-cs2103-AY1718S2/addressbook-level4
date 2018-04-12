@@ -299,6 +299,18 @@ Matriculation number should start with either 'A' or 'U', followed by 7 digits a
 [NOTE]
 Email address should be of the format _local-part@domain_.
 
+The `User` Class:
+
+* Stores the information of a specific user (TA/Lecturer/Professor) in the application.
+* Information includes: Username and Password.
+* Implements `UniqueUserList` that enforces uniqueness of its elements and disallows nulls.
+* `Username`: Object that stores the username of the `User` Object and contains the regex requirements for a valid username.
+[NOTE]
+User's username should only contain alphanumeric characters, be between 3 and 15 characters long and should not be null.
+* `Password`: Object that stores the password of the `User` Object and contains the regex requirements for a valid password.
+[NOTE]
+User's password should only contain alphanumeric characters, be between 8 and 30 characters long and should not be null.
+
 The `Tag` Class,
 
 * An immutable object that has to be valid.
@@ -864,7 +876,6 @@ their names (e.g. easier than searching for a common name such as Daniel).
 * *Major*: Login feature
 
 ** Implements new User package
-** [Not confirmed] Encryption of data files containing usernames and passwords
 
 This allows multiple tutors to store their data in separate accounts, which can only be accessed by them.
 

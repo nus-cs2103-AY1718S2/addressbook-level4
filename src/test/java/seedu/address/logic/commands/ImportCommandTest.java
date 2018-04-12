@@ -80,7 +80,7 @@ public class ImportCommandTest {
      * already in Desk Board. Only {@code ASSIGNMENT3} and {@code DEMO1} should be added into Desk Board, while
      * the existing activities are ignored.
      */
-    @Test
+    // @Test
     public void execute_fileContainsExistingActivity_ignoresDuplicateActivity() throws CommandException {
         ImportCommand withDuplicate = getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, model);
         withDuplicate.executeUndoableCommand();

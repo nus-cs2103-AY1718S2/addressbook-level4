@@ -32,7 +32,6 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_newPerson_success() throws Exception {
         Person validPerson = new PersonBuilder().build();
-        System.out.println("person is " + validPerson);
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(),
                 new CustomerStats(), new Menu());
         expectedModel.addPerson(validPerson);

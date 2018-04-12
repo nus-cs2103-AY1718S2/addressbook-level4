@@ -30,6 +30,8 @@ import seedu.address.model.smplatform.Twitter;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+    public static final String LOADING_PAGE_URL =
+            "https://cs2103jan2018-f12-b3.github.io/main/LoadingPage.html";
     public static final String FACEBOOK_SEARCH_PAGE_URL =
             //"https://www.facebook.com/search/people?q=";
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
@@ -146,12 +148,17 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Returns the given {@code url} with a protocol if unspecified.
      */
-    private String parseUrl(String url) {
+    public static String parseUrl(String url) {
         if (!url.contains("://")) {
             if (!url.contains("www")) {
                 return "https://www." + url;
             }
             return "https://" + url;
+        } else {
+            if (!url.contains("www")) {
+                String[] splitUrl = url.split("//");
+                return "https://www." + splitUrl[1];
+            }
         }
 
         return url;

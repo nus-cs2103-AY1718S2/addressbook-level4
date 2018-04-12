@@ -4,6 +4,36 @@
     background-color: white; /* Used in the default.html file */
 }
 
+.tab-pane .tab-header-area .tab-background{
+-fx-opacity: 0;
+}
+
+#owner-Tab {
+    -fx-background-color: #dce2f7;
+    -fx-text-fill: white;
+}
+
+#petPatient-Tab {
+    -fx-background-color: #dce2f7;
+}
+
+#owner-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: null;
+    -fx-border-color: null;
+    -fx-text-fill: white;
+    -fx-background-color: derive(white, 20%);
+}
+
+#petPatient-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: null;
+    -fx-border-color: white;
+    -fx-background-color: derive(white, 20%);
+}
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -88,11 +118,39 @@
     -fx-background-color: derive(white, 20%);
 }
 
+//@@author Robert-Peng
+
+#personListView {
+    -fx-background-color: derive(white, 20%);
+}
+
+
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: white;
+}
+
+#personListView .list-cell:filled:odd {
+    -fx-background-color: white;
+}
+
+#personListView .list-cell:filled:even {
+    -fx-background-color: #f7f1dc;
+}
+
+#petPatientListView {
     -fx-background-color: derive(white, 20%);
 }
+
+#petPatientListView .list-cell:filled:odd {
+    -fx-background-color: white;
+}
+
+#petPatientListView .list-cell:filled:even {
+    -fx-background-color: #f7f1dc;
+}
+
 
 .list-cell {
     -fx-label-padding: 0 0 0 0;
@@ -101,12 +159,14 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #f7f1dc;
+    -fx-background-color: white;
 }
 
 .list-cell:filled:odd {
     -fx-background-color: white;
 }
+
+//@@author
 
 .list-cell:empty {
     /* Empty cells will not have alternating colours */

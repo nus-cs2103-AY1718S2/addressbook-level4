@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
@@ -63,6 +64,26 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         internalList.add(toAdd);
 
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    public void setAppointments(UniqueAppointmentList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+        requireAllNonNull(appointments);
+        final UniqueAppointmentList replacement = new UniqueAppointmentList();
+        for (final Appointment appointment : appointments) {
+            replacement.add(appointment);
+        }
+        setAppointments(replacement);
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Appointment> asObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
     }
 }
 //@@author

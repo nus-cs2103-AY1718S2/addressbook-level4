@@ -1,0 +1,56 @@
+= Goh Keng Seng - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: EduBuddy
+
+---
+
+== Overview
+
+EduBuddy is a desktop application designed for secondary school teachers to manage student information better.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement: Added the ability to create appointments and display it on the UI*
+** What it does: allows the user to manage and keep track of their appointments easily
+** Justification: This feature improves the product significantly because nowadays, secondary
+school teachers tend to have a rather hectic lifestyle due to added on responsibilities, so this
+feature will help to keep track of any appointments with students in a more organized manner.
+** Credits: External libraries from https://developers.google.com/calendar/v3/reference/[Google Calendar API] was used.
+
+* *Minor enhancement: added a sort command that allows the user to sort the list of students
+based on different parameters*
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T09-B1/main/blob/master/collated/functional/kengsengg.md[Functional code]] [https://github.com/CS2103JAN2018-T09-B1/main/blob/master/collated/test/kengsengg.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases on GitHub and code integration
+** Enhancements to existing features:
+
+** Documentation:
+
+** Community:
+
+** Tools:
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag = sort]
+
+include::../UserGuide.adoc[tag = appointment]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag = Sorting]

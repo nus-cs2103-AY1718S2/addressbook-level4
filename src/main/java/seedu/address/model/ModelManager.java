@@ -25,7 +25,6 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.person.Cca;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
@@ -50,6 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Appointment> filteredAppointments;
 
 
     /**
@@ -63,6 +63,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredAppointments = new FilteredList<>(this.addressBook.getAppointmentList());
     }
 
     public ModelManager() {
@@ -79,12 +80,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     public void addPage(Person person) throws IOException {
 
-        /*
-        String path = new File("src/main/resources/StudentPage/template.html").getAbsolutePath();
-        File htmlTemplateFile = new File(path);
-        String htmlString = FileUtils.readFileToString(htmlTemplateFile);
-        */
-
         String userHome = System.getProperty("user.home") + File.separator + "StudentPage";
         String locatie = userHome;
         File folder = new File(locatie);
@@ -96,7 +91,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         String htmlString = Resources.toString(personPage, Charsets.UTF_8);
 
-        File f = new File(System.getProperty("user.home") + "/StudentPage/" + person.getName() + ".html");
+        File f = new File(System.getProperty("user.home") + File.separator + "StudentPage"
+                + File.separator + person.getName() + ".html");
         if (!f.exists()) {
             f.createNewFile();
         }
@@ -112,10 +108,9 @@ public class ModelManager extends ComponentManager implements Model {
         List<Tag> tagList = person.getTagArray();
         int taglistSize = tagList.size();
         if (taglistSize != 0) {
-            htmlString = htmlString.replace("Class not Included", tagList.get(0).tagForBrowser());
+            htmlString = htmlString.replace("Class Not Specified", tagList.get(0).tagForBrowser());
         }
 
-        //ADD L1R5
 
         List<Subject> subjectList = person.getSubjectArray();
         int listSize = subjectList.size();
@@ -129,10 +124,25 @@ public class ModelManager extends ComponentManager implements Model {
             i++;
         }
 
+        // ADD L1R5
+
+        int score = person.calculateL1R5();
+        String scoreString = "-";
+        if (score == 0) {
+            scoreString = "-";
+        }
+
+        else { scoreString = Integer.toString(score); }
+        htmlString = htmlString.replace("STUDENTS SCORE", scoreString);
+
         // ADD CCA
-        Cca ccaList = person.getCca();
-        String ccaString = ccaList.toString();
+        String ccaString = person.getCca().getValue();
         htmlString = htmlString.replace("CCA", ccaString);
+
+        //ADD CCA Rank
+
+        String ccaRank = person.getCca().getPos();
+        htmlString = htmlString.replace("STUDENT RANK", ccaRank);
 
         // ADD REMARK
 
@@ -143,11 +153,23 @@ public class ModelManager extends ComponentManager implements Model {
         String injury = person.getInjuriesHistory().toString();
         htmlString = htmlString.replace("Insert injury history here", injury);
 
+        // NOK Details
+
+        String nokName = person.getNameOfKin().toString();
+        htmlString = htmlString.replace("NOK Name", nokName);
+        /*
+        String nokEmail = person.getNextOfKin().getEmail().toString();
+        htmlString = htmlString.replace("NOK Email", nokEmail);
+
+        String nokPhone = person.getNextOfKin().getPhone().toString();
+        htmlString = htmlString.replace("NOK Phone", nokPhone);
+        */
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write(htmlString);
         bw.close();
 
     }
+
 
     /**
      * @@author Johnny chan
@@ -155,7 +177,8 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void deletePage(Person person) {
 
-        File f = new File(System.getProperty("user.home") + "/StudentPage/" + person.getName() + ".html");
+        File f = new File(System.getProperty("user.home") + File.separator + "StudentPage"
+                + File.separator + person.getName() + ".html");
         boolean bool = f.delete();
     }
 
@@ -204,12 +227,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author kengsengg
-    public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+    /** Adds the given appointment */
+    public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         addressBook.addAppointment(appointment);
+        updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        indicateAddressBookChanged();
     }
     //@@author
-
-    //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
@@ -226,10 +250,21 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    @Override
+    public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
+        requireNonNull(predicate);
+        filteredAppointments.setPredicate(predicate);
+    }
+
     //@@author kengsengg
     @Override
     public void sortPersonList(String parameter) {
         addressBook.sort(parameter);
+    }
+
+    @Override
+    public ObservableList<Appointment> getFilteredAppointmentList() {
+        return FXCollections.unmodifiableObservableList(filteredAppointments);
     }
 
     //@@author TeyXinHui

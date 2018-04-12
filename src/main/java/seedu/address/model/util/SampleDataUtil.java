@@ -5,6 +5,8 @@ import java.util.Set;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InjuriesHistory;
@@ -88,18 +90,32 @@ public class SampleDataUtil {
         };
     }
 
+    public static Appointment[] getSampleAppointments() {
+        return new Appointment[] {
+            new Appointment("Consultation", "04042018", "1200", "1300"),
+            new Appointment("Remedial", "05052018", "1400", "1600")
+        };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
             for (Person samplePerson : getSamplePersons()) {
                 sampleAb.addPerson(samplePerson);
             }
+
+            for (Appointment sampleAppointment : getSampleAppointments()) {
+                sampleAb.addAppointment(sampleAppointment);
+            }
+
             for (NextOfKin sampleNextOfKin : getSampleNextOfKin()) {
                 sampleAb.addNextOfKin(sampleNextOfKin);
             }
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
+        } catch (DuplicateAppointmentException e) {
+            throw new AssertionError("sample data cannot contain duplicate appointments", e);
         }
     }
 

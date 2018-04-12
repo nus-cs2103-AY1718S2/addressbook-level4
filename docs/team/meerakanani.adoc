@@ -50,9 +50,50 @@ could be referenced by other team members and would be usable for the UI.
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=filter]
+=== Filtering person by date: `filter`
 
-include::../UserGuide.adoc[tag=testing]
+Filers the list of people by date (only one date)
+Format: `filter DATE`
+
+****
+* Recommended date format is YYYY-MM-DD
+****
+
+When you filter by date the back end of the program will create an optimized route
+for all the people on that date and display the route on the map.
+****
+* The search can only look for one date
+* Persons with the delivery date matching the argument will be returned
+* This filter can be used to obtain a delivery route for a day
+****
+
+== User Testing
+
+When testing and using our system for the first time, here are some commands you can try to get the full experience.
+Feel free to try other commands outlined above when you get the feel of our program as well.
+
+*1.* add n/John Doa a/321 Clementi Ave p/67340028 e/pigeonscs2103@gmail.com d/2018-03-24
+****
+* John Doa should be added to the list of addressees.
+****
+
+*2.* filter 2018-03-24
+****
+* All addressees with 2018-03-24 in their delivery date should be listed.
+* Additionally, a map routing all the shown addressees should be generated.
+****
+
+*3.* find John
+****
+* All addressees with John in their name should be listed.
+****
+
+*4.* delete 1
+****
+* John, which we added at the start, should be removed.
+* 1-index numbering system (i.e. the first addressee has index 1)
+****
+
 
 == Contributions to the Developer Guide
 
@@ -60,10 +101,40 @@ include::../UserGuide.adoc[tag=testing]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=filter]
+=== Filter Command
+To add to the many commands necessary for users, filtering by date will be essential when trying to optimize the route per day.
+The filter command was added similar to how the find command has been implemented.
+When the user enters filter by a date in the UI the model with the list of data is updated using the date predicate.
+This updated model is then executed via the CommandResult class and output on the UI. It is stores as a readonly list in the model.
 
-include::../DeveloperGuide.adoc[tag=optimize]
+=== Route Optimization feature
+Since this program is meant for deliveries the route for the daily delivery must be optimized for the user.
+The RouteOptimization class will get the distance (getDistance function in GetDistance class) between all the addresses for the day.
 
-include::../DeveloperGuide.adoc[tag=sort]
+The addresses will then be sorted based on optimal sortest route.
+Example:
+3 deliveries for a day at Point A, B, C
+
+Point A --> Point B = 14km (12min)
+Point A --> Point C = 13km (13min)
+Point C --> Point B = 12km (10min)
+
+Optimal Route = Point A --> Point C --> Point B (based on least about of km travelled)
+
+In the RouteOptimization class the sorting function will be responsible to determine the optimal route once the distances are obtained
+
+To getDistance - google API is required to get the geocodes for the locations. Once the geocode for each address is obtained
+the distance between the two points is calculated and a matrix is returned with a distance property.
+The distance property gives the distance in kilometers from the origin to destination.
+
+The optimized route will the be fed into a mapping function to display the route and get the directions for the driver.
+
+==== Sorting addresses
+Once the distances have been found for all combinations of addresses on that filtered day they get stored in a Map with key: "address1_address2" and
+value: Double distance (in km). This hashmap gets sorted in order of distances and any irrelevant or duplicate calculations are removed.
+This sorted Hashmap now contains the key with the orign and destination address as well as the distance between the two.
+
+Coming soon - If the first key is A_B then the second key must be B_X where X is the address closest to B (not including A). Based on this logic a list of addresses
+will be created as the optimum delivery route.
 
 

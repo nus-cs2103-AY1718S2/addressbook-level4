@@ -95,4 +95,33 @@ public class AutoCompletionUtil {
 
         return nextFieldCaretPosition;
     }
+
+    /**
+     * Finds position of previous field.
+     * Returns current position of caret if no field is found
+     */
+    public int getPrevFieldPosition(String inputText, int currentCaretPosition) {
+        int prevFieldCaretPosition = currentCaretPosition;
+
+        // skips current field (if any)
+        for (int i = 2; i < inputText.length(); i++) {
+            int wrapAroundPosition = currentCaretPosition - i;
+            if (wrapAroundPosition < 0) {
+                wrapAroundPosition += inputText.length();
+            }
+            wrapAroundPosition %= inputText.length();
+
+            if (inputText.charAt(wrapAroundPosition) == END_FIELD) {
+                TextInputProcessorUtil textInputProcessor = new TextInputProcessorUtil();
+                textInputProcessor.setContent(inputText.substring(0, wrapAroundPosition + 1));
+
+                if (APPLICATION_KEYWORDS.contains(textInputProcessor.getLastWord())) {
+                    prevFieldCaretPosition = wrapAroundPosition + 1;
+                    break;
+                }
+            }
+        }
+
+        return prevFieldCaretPosition;
+    }
 }

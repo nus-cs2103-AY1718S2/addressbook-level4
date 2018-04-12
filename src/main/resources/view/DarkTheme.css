@@ -400,4 +400,15 @@
      -fx-text-fill: black;
      -fx-background-color: grey;
  }
- //@@author
+
+//@@author Der-Erlkonig
+ th {
+     background-color: ;
+     border-bottom: 1px solid white;
+     padding: 5px;
+     text-align: left;
+ }
+
+ td {
+     height: 28px;
+ }

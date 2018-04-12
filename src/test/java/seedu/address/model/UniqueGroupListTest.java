@@ -39,7 +39,7 @@ public class UniqueGroupListTest {
     }
 
     @Test
-    public void set_sameGroup_Success() throws Exception {
+    public void set_sameGroup_success() throws Exception {
         UniqueGroupList uniqueGroupList1 = new UniqueGroupList();
         UniqueGroupList uniqueGroupList2 = new UniqueGroupList();
         Group group1 = new GroupBuilder().withInformation("Group A").build();

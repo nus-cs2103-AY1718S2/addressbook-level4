@@ -38,7 +38,13 @@ public class DeleteGroupCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         groupToDelete = new Group(groupName);
         List<Group> groupList = model.getFilteredGroupList();
-        if (!groupList.contains(groupToDelete)) {
+        boolean contains = new Boolean(Boolean.FALSE);
+        for (Group g : groupList) {
+            if (g.getInformation().equals(groupToDelete.getInformation())) {
+                contains = true;
+            }
+        }
+        if (contains == false) {
             throw new CommandException(MESSAGE_NO_SUCH_GROUP);
         } else {
             for (Group group : groupList) {

@@ -39,7 +39,7 @@ public class DeleteMemberFromGroupCommand extends UndoableCommand {
     private Index index;
     private Person personToDelete;
     private Group groupToDelete;
-    private Group groupAdded;
+    private Group groupInvolved;
     private List<Group> groupList;
 
     public DeleteMemberFromGroupCommand(Index index, Group groupToDelete) {
@@ -56,9 +56,9 @@ public class DeleteMemberFromGroupCommand extends UndoableCommand {
         for (Group group : groupList) {
             if (groupToDelete.getInformation().equals(group.getInformation())) {
                 try {
-                    groupAdded = new Group(group.getInformation(), group.getPersonList());
-                    groupAdded.removePerson(personToDelete);
-                    model.updateGroup(group, groupAdded);
+                    groupInvolved = new Group(group.getInformation(), group.getPersonList());
+                    groupInvolved.removePerson(personToDelete);
+                    model.updateGroup(group, groupInvolved);
                 } catch (DuplicateGroupException e) {
                     throw new CommandException(MESSAGE_DUPLICATE_GROUP);
                 } catch (GroupNotFoundException e) {
@@ -79,10 +79,17 @@ public class DeleteMemberFromGroupCommand extends UndoableCommand {
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        if (!groupList.contains(groupToDelete)) {
-            throw new CommandException(MESSAGE_NO_SUCH_GROUP);
+        boolean contains = new Boolean(Boolean.FALSE);
+        for (Group g : groupList) {
+            if (g.getInformation().equals(groupToDelete.getInformation())) {
+                contains = true;
+            }
         }
-        personToDelete = lastShownList.get(index.getZeroBased());
+        if (contains == false) {
+            throw new CommandException(MESSAGE_NO_SUCH_GROUP);
+        } else {
+            personToDelete = lastShownList.get(index.getZeroBased());
+        }
 
     }
 
@@ -91,8 +98,8 @@ public class DeleteMemberFromGroupCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof seedu.address.logic.commands
                 .DeleteMemberFromGroupCommand // instanceof handles nulls
-                && personToDelete.equals(((seedu.address.logic.commands
-                .DeleteMemberFromGroupCommand) other).personToDelete));
+                && groupToDelete.equals(((seedu.address.logic.commands
+                .DeleteMemberFromGroupCommand) other).groupToDelete));
     }
 
 

@@ -79,11 +79,17 @@ public class AddMemberToGroupCommand extends UndoableCommand {
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        if (!groupList.contains(groupToAdd)) {
-            throw new CommandException(MESSAGE_NO_SUCH_GROUP);
+        boolean contains = new Boolean(Boolean.FALSE);
+        for (Group g : groupList) {
+            if (g.getInformation().equals(groupToAdd.getInformation())) {
+                contains = true;
+            }
         }
-        personToAdd = lastShownList.get(index.getZeroBased());
-
+        if (contains == false) {
+            throw new CommandException(MESSAGE_NO_SUCH_GROUP);
+        } else {
+            personToAdd = lastShownList.get(index.getZeroBased());
+        }
     }
 
     @Override

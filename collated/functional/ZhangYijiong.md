@@ -1,5 +1,56 @@
 # ZhangYijiong
-###### \java\seedu\address\commons\events\ui\PersonPanelPathChangedEvent.java
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    private void loadGoogleMapAddressPage(Person person) {
+        loadPage(GOOGLE_MAP_SEARCH_PAGE + person.getAddress().getGoogleMapSearchForm());
+    }
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    private void loadGoogleMapPathPage(Person person) {
+        loadPage(GOOGLE_MAP_PATH_SEARCH_PAGE + Address.ADDRESS_USER_OWN
+                + "/" + person.getAddress().getGoogleMapSearchForm());
+    }
+
+    public void loadPage(String url) {
+        Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    /**
+     * Loads a default HTML file with a background that matches the general theme.
+     */
+    private void loadDefaultPage() {
+        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        loadPage(defaultPage.toExternalForm());
+    }
+
+    /**
+     * Frees resources allocated to the browser.
+     */
+    public void freeResources() {
+        browser = null;
+    }
+
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadGoogleMapAddressPage(event.getNewSelection().person);
+    }
+
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    @Subscribe
+    private void handlePersonPanelPathChangedEvent(PersonPanelPathChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadGoogleMapPathPage(event.getNewSelection().person);
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/PersonPanelPathChangedEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -28,7 +79,39 @@ public class PersonPanelPathChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\PathCommand.java
+###### /java/seedu/address/logic/parser/PathCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.PathCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new SelectCommand object
+ */
+public class PathCommandParser implements Parser<PathCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the PathCommand
+     * and returns an PathCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public PathCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new PathCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PathCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/commands/PathCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -88,87 +171,4 @@ public class PathCommand extends Command {
     }
 }
 
-```
-###### \java\seedu\address\logic\parser\PathCommandParser.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.PathCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-/**
- * Parses input arguments and creates a new SelectCommand object
- */
-public class PathCommandParser implements Parser<PathCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the PathCommand
-     * and returns an PathCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public PathCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new PathCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PathCommand.MESSAGE_USAGE));
-        }
-    }
-}
-```
-###### \java\seedu\address\ui\BrowserPanel.java
-``` java
-    private void loadGoogleMapAddressPage(Person person) {
-        loadPage(GOOGLE_MAP_SEARCH_PAGE + person.getAddress().getGoogleMapSearchForm());
-    }
-```
-###### \java\seedu\address\ui\BrowserPanel.java
-``` java
-    private void loadGoogleMapPathPage(Person person) {
-        loadPage(GOOGLE_MAP_PATH_SEARCH_PAGE + Address.ADDRESS_USER_OWN
-                + "/" + person.getAddress().getGoogleMapSearchForm());
-    }
-
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
-    /**
-     * Loads a default HTML file with a background that matches the general theme.
-     */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
-    }
-
-    /**
-     * Frees resources allocated to the browser.
-     */
-    public void freeResources() {
-        browser = null;
-    }
-
-```
-###### \java\seedu\address\ui\BrowserPanel.java
-``` java
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadGoogleMapAddressPage(event.getNewSelection().person);
-    }
-
-```
-###### \java\seedu\address\ui\BrowserPanel.java
-``` java
-    @Subscribe
-    private void handlePersonPanelPathChangedEvent(PersonPanelPathChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadGoogleMapPathPage(event.getNewSelection().person);
-    }
-}
 ```

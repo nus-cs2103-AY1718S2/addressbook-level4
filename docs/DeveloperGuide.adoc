@@ -1239,6 +1239,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+//tag::productscope[]
 [appendix]
 == Product Scope
 *Target user*:
@@ -1259,6 +1260,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *Value proposition*:
 
 * A comprehensive, reliable and convenient address book for insurance agents built on a simple belief -- efficiency and elegance.
+//end::productscope[]
 
 === Feature Contribution
 
@@ -1409,6 +1411,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+//tag::jlksusecases[]
 [discrete]
 === Use case: Undo action
 
@@ -1431,27 +1434,59 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to find person and enters any keywords in the name of the person.
-2.  AddressBook returns the person requested.
+1.  User requests to find a person and enters any keywords in the details of the person.
+2.  AddressBook returns all persons matching the input details.
 +
 Use case ends.
 
 
 *Extensions*
 [none]
-* 2a.  The list of people is empty.
+* 2a.  The list of persons is empty.
 +
 [none]
-** 2a1.  AddressBook shows an error message.
+** 2a1.  AddressBook does not show any matched persons.
 +
 Use case ends.
 
 * 2b.  The person is not in the list.
 +
 [none]
-** 2b1.  AddressBook returns error message.
+** 2b1.  AddressBook does not show any matched persons.
 +
 Use case ends.
+
+[discrete]
+=== Use case: Delete dated persons
+
+*MSS*
+
+1.  User requests to delete dated persons and enters the cut off date and tags.
+2.  AddressBook deletes all persons created before the cut off date matching the tags.
+3.  AddressBook shows success message.
++
+Use case ends.
+
+
+*Extensions*
+[none]
+* 2a.  If user inputs an invalid cut off date.
++
+[none]
+** 2a1.  AddressBook prompts user for valid cut off date input.
+** 2a2.  User enters cut off date.
++
+Steps 2a1 - 2a2 are repeated until cut off date entered is correct.
++
+Use case resumes from step 3.
+
+* 3a.  If there is no matched persons added before the cut off date
++
+[none]
+** 3a1.  AddressBook shows error message
++
+Use case ends.
+//end::jlksusecases[]
 
 [discrete]
 === Use case: Email contacts
@@ -1476,37 +1511,6 @@ Use case ends.
 +
 [none]
 ** 2b1.  AddressBook returns error message.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Delete dated persons
-
-*MSS*
-
-1.  User requests to delete dated persons and enters the cut of date and tags.
-2.  AddressBook deletes all persons created before the cut off date.
-3.  AddressBook shows success message.
-+
-Use case ends.
-
-
-*Extensions*
-[none]
-* 2a.  If user input invalid date.
-+
-[none]
-** 2a1.  AddressBook prompts user for valid cut off date input.
-** 2a2.  User enters cut off date.
-+
-Steps 2a1 - 2a2 are repeated until date entered is correct.
-+
-Use case resumes from step 3.
-
-* 3a.  If there is no matched persons added before the cut off date
-+
-[none]
-** 3a1.  AddressBook shows error message
 +
 Use case ends.
 
@@ -1562,8 +1566,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed
@@ -1576,12 +1578,8 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
-
 === Saving data
 
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_

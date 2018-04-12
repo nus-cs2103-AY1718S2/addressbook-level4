@@ -43,8 +43,8 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     //@@author jstarw
-    private void loadPersonDetail(Person person) {
-        PersonDetail personDetail = new PersonDetail(person, 1);
+    private void loadPersonDetail(Person person, Integer index) {
+        PersonDetail personDetail = new PersonDetail(person, index);
         personDetail.show();
     }
     private void loadPersonPage(Person person) {
@@ -79,6 +79,7 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author jstarw
     @Subscribe
     private void handlePersonCardDoubleClick(PersonCardDoubleClick event) {
-        loadPersonDetail(event.getNewSelection());
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonDetail(event.getNewSelection(), event.getIndex());
     }
 }

@@ -1182,7 +1182,7 @@ These instructions only provide a starting point for testers to work on; testers
 . Dealing with missing/corrupted data files
 
 .. Start the App so that it is ready to run some commands.
-.. Navigate to the location of the data file, `data/addressbook.xml`, and rename or delete it. +
+.. Navigate to the location of the data file, `data/coinbook.xml`, and rename or delete it. +
 Expected:
 
 . Transferring data files to another computer

@@ -40,7 +40,7 @@ public class AddCommandSystemTest extends CoinBookSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add a coin without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a coin without tags to a non-empty coin book, command with leading spaces and trailing spaces
          * -> added
          */
         Coin toAdd = AMB;
@@ -59,14 +59,14 @@ public class AddCommandSystemTest extends CoinBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add a coin with all fields same as another coin in the address book except name -> added */
+        /* Case: add a coin with all fields same as another coin in the coin book except name -> added */
         toAdd = new CoinBuilder().withName(VALID_NAME_BOS)
                 .withTags(VALID_TAG_FAV).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOS
                 + TAG_DESC_FAV;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add to empty address book -> added */
+        /* Case: add to empty coin book -> added */
         deleteAllCoins();
         assertCommandSuccess(ALIS);
 

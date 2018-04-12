@@ -47,10 +47,10 @@ public class XmlRuleBookStorage implements RuleBookStorage {
                                                                                  FileNotFoundException {
         requireNonNull(filePath);
 
-        File addressBookFile = new File(filePath);
+        File coinBookFile = new File(filePath);
 
-        if (!addressBookFile.exists()) {
-            logger.info("RuleBook file "  + addressBookFile + " not found");
+        if (!coinBookFile.exists()) {
+            logger.info("RuleBook file "  + coinBookFile + " not found");
             return Optional.empty();
         }
 
@@ -59,14 +59,14 @@ public class XmlRuleBookStorage implements RuleBookStorage {
         try {
             return Optional.of(xmlCoinBook.toModelType());
         } catch (IllegalValueException ive) {
-            logger.info("Illegal values found in " + addressBookFile + ": " + ive.getMessage());
+            logger.info("Illegal values found in " + coinBookFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);
         }
     }
 
     @Override
-    public void saveRuleBook(ReadOnlyRuleBook addressBook) throws IOException {
-        saveRuleBook(addressBook, filePath);
+    public void saveRuleBook(ReadOnlyRuleBook coinBook) throws IOException {
+        saveRuleBook(coinBook, filePath);
     }
 
     /**
@@ -83,8 +83,8 @@ public class XmlRuleBookStorage implements RuleBookStorage {
     }
 
     @Override
-    public void backupRuleBook(ReadOnlyRuleBook addressBook) throws IOException {
-        saveRuleBook(addressBook, backupFilePath);
+    public void backupRuleBook(ReadOnlyRuleBook coinBook) throws IOException {
+        saveRuleBook(coinBook, backupFilePath);
     }
 
 }

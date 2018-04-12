@@ -95,7 +95,7 @@ public class DeleteCommandSystemTest extends CoinBookSystemTest {
     }
 
     /**
-     * Removes the {@code Coin} at the specified {@code index} in {@code model}'s address book.
+     * Removes the {@code Coin} at the specified {@code index} in {@code model}'s coin book.
      * @return the removed coin
      */
     private Coin removeCoin(Model model, Index index) {

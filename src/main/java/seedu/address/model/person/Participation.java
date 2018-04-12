@@ -48,6 +48,11 @@ public class Participation {
         return (value >= threshold);
     }
 
+    /**
+     * Validates the participation mark
+     * @param value
+     * @return true if it is valid
+     */
     public static boolean isValidParticipation(String value) {
         requireNonNull(value);
         try {

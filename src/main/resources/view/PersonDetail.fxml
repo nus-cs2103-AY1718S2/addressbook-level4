@@ -52,13 +52,15 @@
                         <Label styleClass="cell_small_label" >Income: </Label>
                         <TextField fx:id="income" styleClass="cell_small_label" text="\$income" />
                         <Label styleClass="cell_small_label" >Actual Spending: </Label>
-                        <TextField fx:id="actualSpending" styleClass="cell_small_label" text="\$actualSpending" />
+                        <TextField fx:id="actualSpending" styleClass="cell_small_label"
+                                   text="\$actualSpending" disable="true" />
                         <Label styleClass="cell_small_label" >Is a new client: </Label>
                         <TextField fx:id="isNewClient" styleClass="cell_small_label" text="\$isNewClient" />
                         <Label styleClass="cell_small_label" >Expected Spending: </Label>
-                        <TextField fx:id="expectedSpending" styleClass="cell_small_label" text="\$expectedSpending" />
+                        <TextField fx:id="expectedSpending" styleClass="cell_small_label"
+                                   text="\$expectedSpending" disable="true" />
                         <Label styleClass="cell_small_label" >Policy: </Label>
-                        <TextField fx:id="policy" styleClass="cell_small_label" text="\$policy" />
+                        <TextField fx:id="policy" styleClass="cell_small_label" text="\$policy" disable="true" />
                         <Button fx:id="submit" styleClass="cell_small_label" text="submit" />
                     </VBox>
                 </GridPane>

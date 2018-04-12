@@ -48,7 +48,6 @@ public class ExportCommand extends Command {
         }
 
         try {
-
             storage.exportDeskBoard(model.getDeskBoard(), filePath.value);
             return new CommandResult(String.format(MESSAGE_SUCCESS, filePath.value));
         } catch (IOException ioe) {

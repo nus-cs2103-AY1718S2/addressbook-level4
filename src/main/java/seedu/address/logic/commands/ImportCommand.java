@@ -47,9 +47,6 @@ public class ImportCommand extends UndoableCommand {
             ReadOnlyDeskBoard toImport = new XmlDeskBoardStorage(filePath.value).readDeskBoard()
                     .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePath)));
 
-            if (model == null) {
-                model = new ModelManager();
-            }
             model.addActivities(toImport);
             return new CommandResult(String.format(MESSAGE_SUCCESS, filePath));
         } catch (IOException ioe) {

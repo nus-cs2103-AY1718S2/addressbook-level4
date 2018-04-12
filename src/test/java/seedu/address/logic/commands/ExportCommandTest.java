@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.EXISTING_FILE_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.EXPORT_FILE_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -9,11 +11,13 @@ import static seedu.address.logic.commands.ImportCommand.MESSAGE_FILE_NOT_FOUND;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -68,9 +72,22 @@ public class ExportCommandTest {
         ExportCommand exportCommand = getExportCommandForGivenFilePath(EXISTING_FILE_PATH, model, storage);
 
         try {
-            assertCommandFailure(exportCommand, expectedMessage);
-        } catch (AssertionError ae) {
-            throw ae.getCause().getCause();
+            // assertCommandSuccess
+
+            // exportCommand.execute
+            requireNonNull(model);
+            requireNonNull(storage);
+
+            if (FileUtil.isFileExists(new File(EXISTING_FILE_PATH))) {
+                throw new CommandException(String.format(MESSAGE_FILE_EXISTS, EXISTING_FILE_PATH));
+            }
+            storage.exportDeskBoard(
+                    model.getDeskBoard(), EXISTING_FILE_PATH);
+            new CommandResult(String.format(ExportCommand.MESSAGE_SUCCESS, EXISTING_FILE_PATH));
+
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            assertEquals(expectedMessage, e.getMessage());
         }
     }
 

@@ -237,7 +237,7 @@ Finds the vacancy status of study rooms in COM1 building.
 ==== Google maps display : `map` (since v1.4)
 
 Launches Google Maps with the specified location(s).
-Format: `map LOCATION` or `map LOCATION/LOCATION/...`
+Format: `map LOCATION` or `map LOCATION/LOCATION/...` or `map current location`
 
 image::map.png[width="790"]
 
@@ -251,6 +251,8 @@ image::map.png[width="790"]
 
 Examples:
 
+* `map current location` +
+Displays your current location on the map.
 * `map BIZ1` +
 Displays the location of BIZ1 (which is an NUS building name).
 * `map Tampines Mall/COM1` +

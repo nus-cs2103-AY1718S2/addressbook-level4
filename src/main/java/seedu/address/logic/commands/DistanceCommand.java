@@ -132,6 +132,11 @@ public class DistanceCommand extends Command {
         }
     }
 
+    /**
+     * Trim address
+     * @param address
+     * @return
+     */
     private String trimAddress(String address) {
         if (address.indexOf('#') > 2) {
             int stringCutIndex;

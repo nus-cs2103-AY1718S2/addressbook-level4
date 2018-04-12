@@ -237,7 +237,7 @@ public class MainApp extends Application {
     private void readWelcomeMessage() {
         try {
             readWelcomeScriptForMac();
-        } catch (IOException notMac){
+        } catch (IOException notMac) {
             try {
                 createFolderIfNeeded();
                 createScriptIfNeeded();

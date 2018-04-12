@@ -364,6 +364,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `delete 1` command) +
 
 [[recent-command]]
+// tag::recent[]
 === Listing recently viewed books : `recent` _(since v1.2)_
 
 You recently selected a book in one of your searches but did not add it into your
@@ -399,6 +400,8 @@ You can then enter `add 4` to add the book into your book shelf.
 
 NOTE: If you don't see the intended book in the list, then too many book selections have been performed after
 that book.
+// end::recent[]
+
 
 [[reviews-command]]
 === Viewing book reviews : `reviews` _(since v1.3)_
@@ -434,6 +437,7 @@ Other examples:
 Shows online reviews of 1st book in the search results.
 
 [[library-command]]
+// tag::library[]
 === Finding a book in the library : `library` _(since v1.5)_
 
 If you want to know whether a book is available in the library, use `library`. +
@@ -464,6 +468,7 @@ image::LibraryCommandAfter.png[width="700"]
 
 NOTE: If Bibliotek shows `Failed to retrieve information from online.`,
 it means your search request has timed out. You should try again after some time.
+// end::library[]
 
 [[history-command]]
 === Listing entered commands : `history`

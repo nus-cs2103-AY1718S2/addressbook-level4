@@ -43,11 +43,11 @@ Medeina is a desktop application designed for veterinarians and their assistants
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=autocomplete[]]
+include::../UserGuide.adoc[tag=autocompleteUG]
 
-include::../UserGuide.adoc[tag=addcommand[]]
+include::../UserGuide.adoc[tag=addcommandUG]
 
-include::../UserGuide.adoc[tag=changetheme[]]
+include::../UserGuide.adoc[tag=changethemeUG]
 
 == Contributions to the Developer Guide
 
@@ -55,5 +55,5 @@ include::../UserGuide.adoc[tag=changetheme[]]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=autocomplete[]]
-include::../DeveloperGuide.adoc[tag=addcommand[]]
+include::../DeveloperGuide.adoc[tag=autocompleteDG]
+include::../DeveloperGuide.adoc[tag=addcommandDG]

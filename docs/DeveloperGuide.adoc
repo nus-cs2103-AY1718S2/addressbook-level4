@@ -379,7 +379,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::addcommand[]
+// tag::addcommandDG[]
 === Add Command
 
 ==== Current Implementation
@@ -396,7 +396,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 Keeping to one main command is simpler and more user-friendly as compared to having variations of the same type of command. To reduce the amount of typing required, command syntax should be kept as compact as possible. Instead of having separate `add` commands for each of the 3 classes, combine them into a one-liner command to reduce typing redundant information from dependencies.
 
-// end::addcommand[]
+// end::addcommandDG[]
 
 // tag::addPetPatient[]
 === Adding a Pet Patient
@@ -490,7 +490,7 @@ After the appointment class being finished, we'll be able to implement `setAppoi
 
 We may also make enhancements to the Medeina's UI such as changing theme colour to match the UI colour of CalendarFX.
 
-// tag::autocomplete[]
+// tag::autocompleteDG[]
 === Autocomplete
 ==== Current Implementation
 
@@ -561,7 +561,7 @@ image::autocomplete.png[width="500"]
 ** Press kbd:[Enter] to select the suggestion in the ContextMenu and the command box will be updated.
 ** Provide experienced users with the option of toggling autocomplete off in the event that they find the context menu distracting.
 
-// end::autocomplete[]
+// end::autocompleteDG[]
 
 // tag::addappointment[]
 === Adding & Storing Appointments

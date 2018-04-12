@@ -9,11 +9,16 @@ import static seedu.address.logic.commands.CommandTestUtil.IMPORT_TEST_DATA_FOLD
 import static seedu.address.logic.commands.CommandTestUtil.MISSING_FILE_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.createXmlFile;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_FILE_NOT_FOUND;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_ILLEGAL_VALUES_IN_FILE;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT1;
 import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
+import static seedu.address.testutil.TypicalActivities.CIP;
 import static seedu.address.testutil.TypicalActivities.DEMO1;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
+
+import java.util.Arrays;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,11 +49,11 @@ public class ImportCommandTest {
     @Test
     public void execute_validFilePath_success() throws Throwable {
         String expectedMessage = String.format(ImportCommand.MESSAGE_SUCCESS, ASSIGNMENT3_DEMO1_FILE_PATH);
-
-        ModelManager expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
         expectedModel.addActivity(ASSIGNMENT3);
         expectedModel.addActivity(DEMO1);
 
+        createXmlFile(Arrays.asList(ASSIGNMENT3, DEMO1), ASSIGNMENT3_DEMO1_FILE_PATH);
         Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
         ImportCommand importCommand = getImportCommandForGivenFilePath(ASSIGNMENT3_DEMO1_FILE_PATH, actualModel);
 
@@ -58,6 +63,7 @@ public class ImportCommandTest {
     @Test
     public void execute_nonexistentFilePath_throwsCommandException() {
         String expectedMessage = String.format(MESSAGE_FILE_NOT_FOUND, MISSING_FILE_PATH);
+
         Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
         ImportCommand importCommand = getImportCommandForGivenFilePath(MISSING_FILE_PATH, actualModel);
 
@@ -89,6 +95,7 @@ public class ImportCommandTest {
         expectedModel.addActivity(ASSIGNMENT3);
         expectedModel.addActivity(DEMO1);
 
+        createXmlFile(Arrays.asList(ASSIGNMENT3, DEMO1, ASSIGNMENT1, CIP), DUPLICATE_ACTIVITY_FILE_PATH);
         Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
         ImportCommand importCommand = getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, actualModel);
 

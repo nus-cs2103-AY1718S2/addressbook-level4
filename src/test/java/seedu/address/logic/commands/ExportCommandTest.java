@@ -4,11 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.EXISTING_FILE_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.EXPORT_FILE_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.createXmlFile;
 import static seedu.address.logic.commands.ExportCommand.MESSAGE_FILE_EXISTS;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_FILE_NOT_FOUND;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.io.File;
+import java.util.Collections;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,7 +54,7 @@ public class ExportCommandTest {
 
         assertEquals(String.format(ExportCommand.MESSAGE_SUCCESS, EXPORT_FILE_PATH), commandResult.feedbackToUser);
         assertEquals(getTypicalDeskBoard(), actualDeskBoard);
-        new File(EXPORT_FILE_PATH).delete(); // so that the test will not fail when run the second time onwards
+        new File(EXPORT_FILE_PATH).deleteOnExit(); // so that the test will not fail when run the second time onwards
     }
 
     /**
@@ -62,9 +64,9 @@ public class ExportCommandTest {
     public void execute_existingFile_throwsCommandException() throws Throwable {
         String expectedMessage = String.format(MESSAGE_FILE_EXISTS, EXISTING_FILE_PATH);
 
+        createXmlFile(Collections.emptyList(), EXISTING_FILE_PATH);
         Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
-        Storage storage = new StorageManager(new XmlDeskBoardStorage("main\\data\\deskBoard.xml"),
-                new JsonUserPrefsStorage("main\\preferences.json"));
+        Storage storage = new StorageManager(new XmlDeskBoardStorage(""), new JsonUserPrefsStorage(""));
         ExportCommand exportCommand = getExportCommandForGivenFilePath(EXISTING_FILE_PATH, actualModel, storage);
 
         assertCommandFailure(exportCommand, actualModel, expectedMessage);

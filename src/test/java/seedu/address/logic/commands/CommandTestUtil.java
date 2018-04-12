@@ -9,6 +9,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +24,10 @@ import seedu.address.model.Model;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.NameContainsKeywordsPredicate;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
+import seedu.address.storage.XmlDeskBoardStorage;
 import seedu.address.testutil.EditActivityDescriptorBuilder;
 
 /**
@@ -219,5 +225,23 @@ public class CommandTestUtil {
         RedoCommand redoCommand = new RedoCommand();
         redoCommand.setData(model, new CommandHistory(), undoRedoStack);
         return redoCommand;
+    }
+
+    //@@author karenfrilya97
+    /**
+     * Generates file to be imported containing activities in the {@code activityList}
+     * and in the directory {@code filePath}.
+     */
+    public static void createXmlFile(List<Activity> activityList, String filePath) throws IOException {
+        if (new File(filePath).exists()) {
+            new File(filePath).delete();
+        }
+
+        DeskBoard deskBoard = new DeskBoard();
+        deskBoard.addActivities(activityList);
+
+        Storage storage = new StorageManager(new XmlDeskBoardStorage(""),
+                new JsonUserPrefsStorage(""));
+        storage.exportDeskBoard(deskBoard, filePath);
     }
 }

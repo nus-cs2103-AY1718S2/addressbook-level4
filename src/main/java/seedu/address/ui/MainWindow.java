@@ -44,6 +44,7 @@ public class MainWindow extends UiPart<Stage> {
     private Timetable timetable;
     private PersonListPanel personListPanel;
     private ToDoListPanel todoListPanel;
+    private GroupListPanel groupListPanel;
     private ProgressIndicator progressIndicator;
     private Label progressIndicatorLabel;
     private Config config;
@@ -66,6 +67,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane todoListPanelPlaceholder;
+
+    @FXML
+    private StackPane groupListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -142,6 +146,9 @@ public class MainWindow extends UiPart<Stage> {
 
         todoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
         todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
+
+        groupListPanel = new GroupListPanel(logic.getFilteredGroupList());
+        groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         progressIndicatorLabel = new Label("To-dos Completion");
         progressIndicator = new ProgressIndicator(0);

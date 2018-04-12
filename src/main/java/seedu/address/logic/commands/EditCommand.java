@@ -153,10 +153,21 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
             Person runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
                     .getRunner());
 
+            if (oweDueDate.compareTo(oweStartDate) < 0) {
+                throw new CommandException("OWE_DUE_DATE cannot be before OWE_START_DATE");
+            }
+
             return new Customer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, moneyBorrowed,
                     oweStartDate, oweDueDate, standardInterest, lateInterest, runner);
 
         } else if (personToEdit instanceof Runner) {
+
+            if (editPersonDescriptor.getStandardInterest().isPresent()
+                    || editPersonDescriptor.getMoneyBorrowed().isPresent()
+                    || editPersonDescriptor.getOweStartDate().isPresent()
+                    || editPersonDescriptor.getOweDueDate().isPresent()) {
+                throw new CommandException("Cannot edit Runner using Customer-only fields");
+            }
 
             List<Person> customers = editPersonDescriptor.getCustomers().orElse(((Runner) personToEdit)
                     .getCustomers());
@@ -164,7 +175,6 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
             return new Runner(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, customers);
 
         } else {
-
             throw new CommandException("Error: Invalid Person");
         }
     }

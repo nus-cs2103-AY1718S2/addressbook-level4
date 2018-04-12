@@ -12,7 +12,11 @@ import seedu.address.model.person.Order;
 /** The word "Task" is used to avoid confusion between order object in the queue and order of a person
  *
  */
-public class Task {
+public class Task implements Comparable<Task> {
+
+    private static final int MULTIPLICATION_FACTOR_PRICE = 10;
+    private static final int MULTIPLICATION_FACTOR_DISTANCE = 25;
+    private static final int MULTIPLICATION_FACTOR_COUNT = 5;
 
     private ObjectProperty<Order> order;
     private ObjectProperty<Address> address;
@@ -116,6 +120,32 @@ public class Task {
                 .append(" Description: ")
                 .append(getDescription());
         return builder.toString();
+    }
+
+    @Override
+    public int compareTo(Task other) {
+        if (this.getPriority() < other.getPriority()) {
+            return 1;
+        }
+        else if (this.getPriority() > other.getPriority()) {
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    private int getPriority() {
+        int Price = this.getPrice().toInt();
+        int Distance = this.getDistance().toInt();
+        int Count = this.getCount().toInt();
+        return calculatePriority(Price, Distance, Count);
+    }
+
+    private int calculatePriority(int price, int distance, int count) {
+        return MULTIPLICATION_FACTOR_PRICE * price
+                - MULTIPLICATION_FACTOR_DISTANCE * distance
+                + MULTIPLICATION_FACTOR_COUNT * count;
     }
 }
 

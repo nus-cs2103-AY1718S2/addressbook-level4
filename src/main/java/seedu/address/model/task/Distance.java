@@ -52,5 +52,11 @@ public class Distance {
         return value.hashCode();
     }
 
+    /**
+     *  Returns distance in integer form to be able used by {@code compareTo} in Task
+     */
+    public int toInt() {
+        return Integer.parseInt(value);
+    }
 }
 

@@ -13,9 +13,10 @@ public class LockCommand extends Command {
 
     public static final String COMMAND_WORD = "lock";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lock the address book. ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Locks Employees Tracker.\n"
+            + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_SUCCESS = "Address book has been locked!";
+    public static final String MESSAGE_SUCCESS = "Employees Tracker has been locked!";
 
     private final HideAllPersonPredicate predicate = new HideAllPersonPredicate();
 

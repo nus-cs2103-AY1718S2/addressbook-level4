@@ -14,7 +14,8 @@ public class EmailAllCommand extends Command {
     public static final String COMMAND_WORD = "emailall";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Email to remind about all notification cards.";
+            + ": Emails to remind about all notification cards.\n"
+            + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Directing to email app...";
     public static final String MESSAGE_ERROR = "Error occurred. Please try again later.";

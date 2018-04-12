@@ -21,11 +21,11 @@ public class DeleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
+            + ": Deletes the employee identified by the index number used in the last employees listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted employee: %1$s";
 
     private final Index targetIndex;
 
@@ -45,7 +45,7 @@ public class DeleteCommand extends UndoableCommand {
                 DeleteCalendar.execute(personToDelete.getCalendarId());
             }
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target employee cannot be missing");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

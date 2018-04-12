@@ -133,20 +133,10 @@ public class PersonDetail extends UiPart<Stage> {
     private void setSubmitListener() {
         submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                String args = index + " " + PREFIX_PHONE + phone.getText() + " " +
-                        PREFIX_EMAIL + email.getText() + " " + PREFIX_ADDRESS + address.getText() + " " +
-                        PREFIX_INCOME + income.getText().replaceAll("[^\\d.]+", "") + " " +
-                        PREFIX_AGE + age.getText();
-
-//                Phone newPhone = new Phone(phone.getText());
-//                Email newEmail = new Email(email.getText());
-//                Address newAddress = new Address(address.getText());
-//                Income newIncome = new Income(Double.parseDouble(income.getText()));
-//                Age newAge = new Age(Integer.parseInt(age.getText()));
-//
-//                Person newPerson = new Person(person.getName(), newPhone, newEmail, newAddress, person.getTags(),
-//                        newIncome, person.getActualSpending(), person.getExpectedSpending(), newAge,
-//                        person.getPolicy());
+                String args = index + " " + PREFIX_PHONE + phone.getText() + " "
+                        + PREFIX_EMAIL + email.getText() + " " + PREFIX_ADDRESS + address.getText() + " "
+                        + PREFIX_INCOME + income.getText().replaceAll("[^\\d.]+", "") + " "
+                        + PREFIX_AGE + age.getText();
                 raise(new PersonEditEvent(args));
             }
         });

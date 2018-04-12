@@ -290,6 +290,10 @@ format:
 While this can be argued to be bad as there is strong coupling between the user and the addressbook data file, such is
 fixed as in the absence of the addressbook data file, a sample data file will be created.
 
+*Other Alternative Designs*
+
+Other alternative designs involves external third-party database systems such as SQL or no-SQL databases such as MongoDB.
+
 ==== Deleting User
 One thing to highlight about the deleting of user, it also deletes the AddressBook XML data file, hence it cannot be
 retrieved again. It also prevents users from accessing the file again by creating a user with the same username as the one
@@ -489,8 +493,20 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
-Data encryption can be implemented a few ways, however with knowledge of the current architecture, the easiest way to
-TODO: ADD details.
+*Proposed Implementation* +
+Basing on the current storage architecture, we could implement a FileEncryption class to handle both the encryption and
+decryption when storing and retrieving the data files.
+
+** For User Database +
+Information in the user database that needs to be encrypted is the username and password. Hashing is a good encryption scheme to use,
+ a two-way encryption scheme is not needed here because we only need to check the validity of the username and password.
+
+
+** For Address Book +
+AddressBook data files require a two-way encryption scheme as the information needs to be read when the application
+initialises. A symmetric key encryption scheme is more suitable here than public key encryption scheme because less information
+needs to be stored. Also, it is easy when we can use the username as the symmetric key in the encryption scheme. Some
+possible schemes are AES or CBC.
 
 // end::dataencryption[]
 

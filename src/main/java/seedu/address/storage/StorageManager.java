@@ -144,6 +144,7 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+    //@@author
 
     //@@author ZacZequn
     // ================ Menu methods ==============================
@@ -175,14 +176,4 @@ public class StorageManager extends ComponentManager implements Storage {
         menuStorage.saveMenu(menu, filePath);
     }
 
-    /*@Override
-    @Subscribe
-    public void handleMenuChangedEvent(MenuChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
-        try {
-            saveMenu(event.data);
-        } catch (IOException e) {
-            raise(new DataSavingExceptionEvent(e));
-        }
-    }*/
 }

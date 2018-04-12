@@ -31,6 +31,7 @@ public class Menu implements ReadOnlyMenu {
     public Menu() {}
 
     public void setMenu(HashMap<String, Dish> theDishes) {
+
         dishes = theDishes;
     }
 
@@ -41,7 +42,9 @@ public class Menu implements ReadOnlyMenu {
      * Returns the dish in Menu if available.
      * Otherwise return null.
      */
-    public Dish get(String dish) { return dishes.get(dish); }
+    public Dish get(String dish) {
+        return dishes.get(dish);
+    }
 
     /**
      * Returns a copy of the data in Menu.
@@ -53,7 +56,7 @@ public class Menu implements ReadOnlyMenu {
     @Override
     public String toString() {
         String menu = "";
-        for(String name : dishes.keySet()){
+        for (String name : dishes.keySet()) {
             menu += (name + " ");
         }
         menu = menu.trim();

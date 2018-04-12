@@ -7,8 +7,6 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import com.google.common.eventbus.Subscribe;
@@ -17,7 +15,6 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.logic.FileChoosedEvent;
-import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.commons.events.ui.ResetPersonCardsEvent;
 import seedu.address.commons.events.ui.ShowFileChooserEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -33,12 +30,14 @@ public class AddPhotoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addPhoto";
 
-    public static final String IMAGE_FOLDER_WINDOWS = "\\src\\main\\resources\\images\\personphoto\\";
+    public static final String IMAGE_FOLDER_WINDOWS = "src\\main\\resources\\images\\personphoto\\";
 
-    public static final String IMAGE_FOLDER_OTHER = "/src/main/resources/images/personphoto/";
+    public static final String IMAGE_FOLDER_OTHER = "src/main/resources/images/personphoto/";
+
+    public static final String IMAGE_FOLDER = "data/personphoto/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a photo to an employee.\n"
-            + "Choose a photo in the file chooser. Acceptable photo file type are jpg, jprg, png, bmp."
+            + "Choose a photo in the file chooser. Acceptable photo file type are jpg, jprg, png, bmp.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
@@ -79,7 +78,7 @@ public class AddPhotoCommand extends UndoableCommand {
             EventsCenter.getInstance().post(new ShowFileChooserEvent());
         } else {
             String currentDir = System.getProperty("user.dir");
-            path = currentDir + "\\src\\main\\java\\resources\\images\\personphoto\\DefaultPerson.png";
+            path = currentDir + "/src/main/java/resources/images/personphoto/DefaultPerson.png";
         }
 
         //check if the photo is chosen.
@@ -133,7 +132,6 @@ public class AddPhotoCommand extends UndoableCommand {
 
         targetPerson = lastShownList.get(targetIndex.getZeroBased());
         editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);
-        EventsCenter.getInstance().post(new PersonEditedEvent(editedPerson));
     }
 
     /**
@@ -147,6 +145,9 @@ public class AddPhotoCommand extends UndoableCommand {
         targetPerson.setPhotoName(newPhoto.getName());
         Person editedPerson = new Person(targetPerson.getName(), targetPerson.getPhone(), targetPerson.getEmail(),
                 targetPerson.getAddress(), targetPerson.getTags(), targetPerson.getCalendarId());
+        editedPerson.setRating(targetPerson.getRating());
+        editedPerson.setId(targetPerson.getId());
+        editedPerson.setReviews(targetPerson.getReviews());
         editedPerson.setPhotoName(newPhoto.getName());
         return editedPerson;
     }
@@ -156,15 +157,13 @@ public class AddPhotoCommand extends UndoableCommand {
      * @param photoNameWithExtension
      */
     private void copyPhotoFileToStorage(String photoNameWithExtension) {
-        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
 
         String src = path;
         String dest;
         if (osType == 1) {
-            dest = s + IMAGE_FOLDER_WINDOWS + photoNameWithExtension;
+            dest = IMAGE_FOLDER + photoNameWithExtension;
         } else {
-            dest = s + IMAGE_FOLDER_OTHER + photoNameWithExtension;
+            dest = IMAGE_FOLDER + photoNameWithExtension;
         }
 
         byte[] buffer = new byte[1024];

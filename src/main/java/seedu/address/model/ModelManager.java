@@ -20,7 +20,6 @@ import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AddressBookPasswordChangedEvent;
 import seedu.address.commons.events.model.NotificationAddedEvent;
-import seedu.address.commons.events.model.NotificationDeletedEvent;
 import seedu.address.commons.events.model.ReturnedEmployeesEvent;
 import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
@@ -50,7 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with Employees Tracker: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
@@ -97,7 +96,7 @@ public class ModelManager extends ComponentManager implements Model {
             try {
                 notificationCenter.deleteNotification(id);
             } catch (NullPointerException e) {
-                logger.info("NullPointerException encountered when deleting notification for deleted person");
+                logger.info("NullPointerException encountered when deleting notification for deleted employee");
             }
         }
         indicateAddressBookChanged();

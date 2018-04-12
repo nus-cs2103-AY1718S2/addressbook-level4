@@ -157,7 +157,7 @@ public class CommandTestUtil {
         try {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+            throw new AssertionError("Employee in filtered list must exist in model.", pnfe);
         }
     }
 

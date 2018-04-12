@@ -7,10 +7,8 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.List;
 import java.util.Objects;
 
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Rating;
@@ -24,16 +22,16 @@ public class RateCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "rate";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Rate the person identified "
-            + "by the index number used in the last person listing. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Rates the employee identified "
+            + "by the index number used in the last employees listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX must be positive integer "
             + "RATING (must be 1, 2, 3, 4, or 5) \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + "5";
 
-    public static final String MESSAGE_RATE_PERSON_SUCCESS = "Rated Person: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_RATE_PERSON_SUCCESS = "Rated employee: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This employee already exists in Employees Tracker.";
 
     private final Index index;
     private final EditCommand.EditPersonDescriptor editPersonDescriptor;
@@ -60,7 +58,7 @@ public class RateCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target employee cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_RATE_PERSON_SUCCESS, editedPerson));
@@ -76,7 +74,6 @@ public class RateCommand extends UndoableCommand {
 
         personToEdit = lastShownList.get(index.getZeroBased());
         editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-        EventsCenter.getInstance().post(new PersonEditedEvent(editedPerson));
     }
 
     /**

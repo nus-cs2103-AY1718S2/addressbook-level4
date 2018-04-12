@@ -11,7 +11,7 @@ import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
  */
 public class Review {
     public static final String MESSAGE_REVIEW_CONSTRAINTS =
-            "Person reviewer and review can take any values, and they should not be blank.";
+            "Employee reviewer and review can take any values, and they should not be blank.";
     private static final String DEFAULT_REVIEWER = "-";
     private static final String DEFAULT_REVIEW = "-";
 

@@ -33,14 +33,14 @@ public class TestAddEventCommand extends Command {
     public static final String COMMAND_WORD = "addEvent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Add an event to the person identified by the index number used in the last person listing.\n"
+            + ": Adds an event to the employee identified by the index number used in the last employees listing.\n"
             + "Parameters: INDEX (must be a positive integer)"
             + PREFIX_TITLE + "TITLE "
             + PREFIX_LOCATION + "LOCATION "
             + PREFIX_STARTTIME + "STARTTIME (must follow given format) "
             + PREFIX_ENDTIME + "ENDTIME (must follow given format)\n"
             + "Example: " + COMMAND_WORD + " 1 title/Project Meeting loca/NUS, Singapore stime/2017-03-19T08:00:00"
-            + " etime/2017-03-19T10:00:00 descrip/discuss about v1.4 milestone";
+            + " etime/2017-03-19T10:00:00 descrip/Discuss about product launch";
 
     public static final String MESSAGE_SUCCESS = "Event added!";
     public static final String MESSAGE_FAILURE = "Unable to add event, please try again later.";
@@ -149,10 +149,10 @@ public class TestAddEventCommand extends Command {
             try {
                 model.updatePerson(personToAddEvent, newWithCalendar);
             } catch (PersonNotFoundException e) {
-                logger.info("Unable to find original person in model manager");
+                logger.info("Unable to find original employee in model manager");
                 return new CommandResult(MESSAGE_FAILURE);
             } catch (DuplicatePersonException e) {
-                logger.info("newly created person (with calendarId) is same as original person");
+                logger.info("newly created employee (with calendarId) is same as original employee");
                 return new CommandResult(MESSAGE_FAILURE);
             }
         }

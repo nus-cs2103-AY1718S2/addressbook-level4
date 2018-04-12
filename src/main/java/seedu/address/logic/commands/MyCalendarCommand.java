@@ -10,7 +10,8 @@ public class MyCalendarCommand extends Command {
 
     public static final String COMMAND_WORD = "myCalendar";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": show my own calendar. ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays my own calendar.\n"
+            + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Your calendar is loaded.";
 

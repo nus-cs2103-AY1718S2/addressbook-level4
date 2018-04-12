@@ -10,10 +10,10 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Li Yufei
 image::crizyli.png[width="150", align="left"]
-{empty} [https://github.com/crizyli[github]]
+{empty} [https://github.com/crizyli[github]][<<crizyli#, portfolio>>]
 
 Role: - +
-Responsibilities: Add lock & unlock command, import Google API
+Responsibilities: Lock & unlock system, manage commands relating to events with google calendar api, add photo feature, export data
 
 '''
 

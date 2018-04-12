@@ -18,7 +18,8 @@ public class EmailCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "email";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Email to remind the corresponding person about the notification card identified by the index number "
+            + ": Emails to remind the corresponding employee "
+            + "about the notification card identified by the index number "
             + "used in Notification Center.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";

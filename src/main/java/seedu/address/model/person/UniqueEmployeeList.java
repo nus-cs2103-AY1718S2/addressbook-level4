@@ -11,6 +11,8 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -66,6 +68,7 @@ public class UniqueEmployeeList implements Iterable<Person> {
         }
 
         internalList.set(index, editedPerson);
+        EventsCenter.getInstance().post(new PersonEditedEvent(index, editedPerson));
     }
 
     /**

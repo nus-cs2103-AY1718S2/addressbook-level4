@@ -105,7 +105,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
-            throw new AssertionError("AddressBooks should not have duplicate persons");
+            throw new AssertionError("Employees Tracker should not have duplicate employees");
         }
     }
 
@@ -286,7 +286,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
+        return persons.asObservableList().size() + " employees, " + tags.asObservableList().size() +  " tags, "
                 + notifications.size() + " notifications" + photos.asObservableList().size() + " photos.";
     }
 

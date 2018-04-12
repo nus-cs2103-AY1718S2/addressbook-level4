@@ -14,8 +14,9 @@ public class SetPasswordCommand extends Command {
 
     public static final String COMMAND_WORD = "setPassword";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set new application password, and old "
-            + "password required. \n";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets new application password. "
+            + "Old password required.\n"
+            + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "New password has been set!";
 

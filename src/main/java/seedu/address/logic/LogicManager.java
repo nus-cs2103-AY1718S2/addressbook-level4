@@ -87,7 +87,7 @@ public class LogicManager extends ComponentManager implements Logic {
                     UnlockCommand unlockCommand = (UnlockCommand) command;
                     result = unlockCommand.execute();
                 } else {
-                    result = new CommandResult("Addressbook has been locked, please unlock it first!");
+                    result = new CommandResult("Employees Tracker has been locked, please unlock it first!");
                 }
             } else {
                 command.setData(model, history, undoRedoStack);
@@ -156,7 +156,7 @@ public class LogicManager extends ComponentManager implements Logic {
                     ownerName = ((ModelManager) model).getNameById(notification.getOwnerId());
                     raise(new ShowNotificationEvent(ownerName, notification));
                 } catch (NullPointerException e) {
-                    logger.info("Corresponding person is deleted. Ignoring this notification");
+                    logger.info("Corresponding employee is deleted. Ignoring this notification");
                     raise(new RequestToDeleteNotificationEvent(notification.getId(), true));
                 }
             }

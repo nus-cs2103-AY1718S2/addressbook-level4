@@ -12,13 +12,13 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose:\n"
-            + "name and/or tags "
-            + "contains any of the specified keyphrases (case-insensitive) "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all employees whose:\n"
+            + "name, tags, and/or rating "
+            + "contain any of the specified keyphrases (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
             + "Parameters: find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE) "
             + "[n/NAME_KEYPHRASE]... [t/TAG_KEYPHRASE]... [r/RATING_KEYPHRASE]...\n"
-            + "Example: " + COMMAND_WORD + " n/Alice Bob n/Charlie t/Friends t/OwesMoney";
+            + "Example: " + COMMAND_WORD + " n/Jane Doe n/Tan t/developer t/Marketing Senior";
 
     private final Predicate<Person> predicate;
 

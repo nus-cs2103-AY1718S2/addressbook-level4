@@ -7,7 +7,7 @@ package seedu.address.model.photo;
  */
 public class Photo {
 
-    public static final String DEFAULT_PHOTO_FOLDER = "/images/personphoto/";
+    public static final String DEFAULT_PHOTO_FOLDER = "/data/personphoto/";
 
     public static final String MESSAGE_PHOTO_CONSTRAINTS = "only accepts jpg, jpeg, png and bmp.";
 

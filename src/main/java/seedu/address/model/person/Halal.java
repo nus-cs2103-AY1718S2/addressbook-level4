@@ -33,7 +33,7 @@ public class Halal {
      */
     public static boolean isValidHalal(String test) {
         requireNonNull(test);
-        if (test.equals("Halal") || (test.equals("Non-halal"))) {
+        if (test.equalsIgnoreCase("Halal") || (test.equalsIgnoreCase("Non-halal"))) {
             return true;
         }
         return false;

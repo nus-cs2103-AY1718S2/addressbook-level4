@@ -1,0 +1,58 @@
+= Matthieu Buot de l'Epine - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:experimental:
+
+== PROJECT: Pigeons
+
+---
+
+== Overview
+
+Pigeons is a desktop level application created for delivery companies to better assign and
+organize deliveries for the delivery people.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to send automatic emails to customers and drivers.*
+** What it does: allow the user to send an automatic recap email to the driver with all the deliveries scheduled on a specific day. And at the same time a reminder email to each customers which indicates the day on which their delivery is coming.
+** Justification: This feature improves the product significantly because a user can communicate with both the drivers and the customers in an effective manner.
+** Highlights: This enhancement is very dependent on the other commands and features as the `filter` command has to be ran before the `email` and as it is supposed to send an itinerary which is computed by another component. It required an in-depth analysis of the communication ways between drivers and customers and a good understanding of the whole application purpose.
+** Credits: The JavaMail API (optional package from the Java SE platform) is used to send the emails through a Gmail account,
+
+* *Minor enhancement*: added an autocompletion functionality which is able to complete many possible inputs in the CLI interface by pressing the kbd:[tab] key
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/collated/functional/mattbuot.md[Functional code]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/collated/test/mattbuot.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` - `v1.4.1` (4 releases) on GitHub
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-T16-B2/main/pull/3[#3], https://github.com/CS2103JAN2018-T16-B2/main/pull/8[#8], https://github.com/CS2103JAN2018-T16-B2/main/pull/106[#106], https://github.com/CS2103JAN2018-T16-B2/main/pull/120[#120]
+** Community:
+*** Contributed to forum discussions (https://github.com/nus-cs2103-AY1718S2/forum/issues/25#issuecomment-374913188[1])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T15-B3/main/issues/88[1])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=email]
+
+include::../UserGuide.adoc[tag=shortcuts]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=mailer]
+
+include::../DeveloperGuide.adoc[tag=autocompletion]
+
+include::../DeveloperGuide.adoc[tag=usecases]

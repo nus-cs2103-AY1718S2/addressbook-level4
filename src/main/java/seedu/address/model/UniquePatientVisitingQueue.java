@@ -120,6 +120,7 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
      */
     public void setVisitingQueue(Set<Integer> queueNos) {
         requireAllNonNull(queueNos);
+        visitingQueue.clear();
         visitingQueue.addAll(queueNos);
         assert CollectionUtil.elementsAreUnique(visitingQueue);
     }

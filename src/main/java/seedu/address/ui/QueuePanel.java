@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.commons.events.model.QueueChangedEvent;
 import seedu.address.model.patient.Patient;
 
@@ -39,6 +40,11 @@ public class QueuePanel extends UiPart<Region> {
 
         queueCardListView.setItems(mappedList);
         queueCardListView.setCellFactory(listView -> new QueueListViewCell());
+    }
+
+    @Subscribe
+    public void handleImdbChangedEvent(ImdbChangedEvent ice) {
+        setConnections(ice.data.getUniquePatientQueue(), ice.data.getUniquePatientQueueNo());
     }
 
     @Subscribe

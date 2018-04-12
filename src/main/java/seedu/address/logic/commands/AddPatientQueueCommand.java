@@ -15,7 +15,7 @@ import seedu.address.model.patient.exceptions.PatientNotFoundException;
 /**
  * Add patient to visiting queue (registration)
  */
-public class AddPatientQueueCommand extends Command {
+public class AddPatientQueueCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addq";
     public static final String COMMAND_ALIAS = "aq";
@@ -40,13 +40,7 @@ public class AddPatientQueueCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-
-        List<Patient> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+    public CommandResult executeUndoableCommand() throws CommandException {
 
         Patient toQueue;
 
@@ -59,6 +53,15 @@ public class AddPatientQueueCommand extends Command {
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, toQueue.getName().fullName));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Patient> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
     }
 
     @Override

@@ -18,6 +18,8 @@ import seedu.address.model.dish.exceptions.DishNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -29,6 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CustomerStats customerStats;
+    private final FilteredList<Task> filteredTasks;
     private final Menu menu;
 
     /**
@@ -46,6 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         this.customerStats = new CustomerStats();
+        filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
         this.menu = new Menu();
     }
 
@@ -110,13 +114,31 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void addTask(Task task) throws DuplicateTaskException {
+        addressBook.addTask(task);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public ObservableList<Task> getFilteredTaskList() {
+        return FXCollections.unmodifiableObservableList(filteredTasks);
+    }
+
+    @Override
+    public void updateFilteredTaskList(Predicate<Task> predicate) {
+        requireNonNull(predicate);
+        filteredTasks.setPredicate(predicate);
+    }
+
+    @Override
     public void checkOrder(Person target)  throws DishNotFoundException {
         if (menu.get(target.getOrder().toString()) == null) {
             throw new DishNotFoundException("Dish not available");
         }
     }
-    //=========== Filtered Person List Accessors =============================================================
 
+    //=========== Filtered Person List Accessors =============================================================
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
      * {@code addressBook}
@@ -149,5 +171,4 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
 }

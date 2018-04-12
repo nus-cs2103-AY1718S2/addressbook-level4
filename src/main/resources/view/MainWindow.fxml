@@ -59,6 +59,15 @@
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
           </StackPane>
+
+          <VBox fx:id="eventList" alignment="TOP_RIGHT" minWidth="340" prefWidth="340">
+            <padding>
+              <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <children>
+              <StackPane fx:id="orderQueuePanelPlaceholder" VBox.vgrow="ALWAYS" />
+            </children>
+          </VBox>
         </SplitPane>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

@@ -51,4 +51,10 @@ public class Price {
         return value.hashCode();
     }
 
+    /**
+     *  Returns price in integer form to be able used by {@code compareTo} in Task
+     */
+    public int toInt() {
+        return Integer.parseInt(value);
+    }
 }

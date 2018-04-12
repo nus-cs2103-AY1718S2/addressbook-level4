@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -90,8 +91,8 @@ public class ParserUtil {
     static LocalDateTime parseDateTime(String input) throws  IllegalValueException {
         requireNonNull(input);
         String trimmedInput = input.trim();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_VALIDATION);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_TIME_VALIDATION)
+                .withResolverStyle(ResolverStyle.STRICT);
 
         try {
 
@@ -124,8 +125,8 @@ public class ParserUtil {
     static LocalDate parseDate(String input) throws  IllegalValueException {
         requireNonNull(input);
         String trimmedInput = input.trim();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(LookDateCommand.DATE_VALIDATION);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(LookDateCommand.DATE_VALIDATION)
+                .withResolverStyle(ResolverStyle.STRICT);
 
         try {
 

@@ -46,6 +46,8 @@ public class AddPolicyCommand extends UndoableCommand {
 
     public static final String MESSAGE_POLICY_ADDED_SUCCESS = "Added policy";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_ALREADY_ENROLLED = "This person already applied to a policy "
+            + "(use edit_policy instead).";
 
     private final Index index;
     private final Policy policy;
@@ -87,6 +89,11 @@ public class AddPolicyCommand extends UndoableCommand {
         }
 
         personToEnroll = lastShownList.get(index.getZeroBased());
+
+        if (personToEnroll.getPolicy().isPresent()) {
+            throw new CommandException(MESSAGE_ALREADY_ENROLLED);
+        }
+
         editedPerson = createPersonWithPolicy(personToEnroll, policy);
     }
 
@@ -101,7 +108,9 @@ public class AddPolicyCommand extends UndoableCommand {
                 personToEdit.getEmail(),
                 personToEdit.getAddress(),
                 personToEdit.getTags(),
+                //@author SoilChang
                 personToEdit.getIncome(),
+                //@author
                 personToEdit.getActualSpending(),
                 personToEdit.getExpectedSpending(),
                 personToEdit.getAge(),
@@ -143,9 +152,9 @@ import java.util.Optional;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -223,8 +232,14 @@ public class EditPolicyCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_PERSON_NOT_ENROLLED);
         }
 
+        Policy editedPolicy;
+
         Policy policyToEdit = personToEnroll.getPolicy().get();
-        Policy editedPolicy = createEditedPolicy(policyToEdit, editPolicyDescriptor);
+        try {
+            editedPolicy = createEditedPolicy(policyToEdit, editPolicyDescriptor);
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
+        }
         editedPerson = createPersonWithPolicy(personToEnroll, editedPolicy);
     }
 
@@ -232,13 +247,18 @@ public class EditPolicyCommand extends UndoableCommand {
      * Creates and returns a {@code Policy} with the details of {@code policyToEdit}
      * edited with {@code editPolicyDescriptor}.
      */
-    private static Policy createEditedPolicy(Policy policyToEdit, EditPolicyDescriptor editPolicyDescriptor) {
+    private static Policy createEditedPolicy(Policy policyToEdit, EditPolicyDescriptor editPolicyDescriptor)
+        throws IllegalValueException {
         assert policyToEdit != null;
 
         Date updatedBeginning = editPolicyDescriptor.getBeginning().orElse(policyToEdit.getBeginning());
         Date updatedExpiration = editPolicyDescriptor.getExpiration().orElse(policyToEdit.getExpiration());
         Price updatedPrice = editPolicyDescriptor.getPrice().orElse(policyToEdit.getPrice());
         Coverage updatedCoverage = editPolicyDescriptor.getCoverage().orElse(policyToEdit.getCoverage());
+
+        if (!Policy.isValidDuration(updatedBeginning, updatedExpiration)) {
+            throw new IllegalValueException(Policy.DURATION_CONSTRAINTS);
+        }
 
         return new Policy(updatedPrice, updatedCoverage, updatedBeginning, updatedExpiration);
     }
@@ -455,7 +475,6 @@ import seedu.address.logic.commands.EditPolicyCommand.EditPolicyDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.policy.Coverage;
 import seedu.address.model.policy.Issue;
-import seedu.address.model.policy.Policy;
 
 /**
  * Parses input arguments and creates a new EditPolicyCommand object
@@ -698,12 +717,22 @@ public class Date implements Comparable<Date> {
      */
     @Override
     public int compareTo(Date otherDate) {
-        if (year > otherDate.year) { return 1; }
-        if (year < otherDate.year) { return -1; }
+        if (year > otherDate.year) {
+            return 1;
+        }
+        if (year < otherDate.year) {
+            return -1;
+        }
         int monthCmp = month.compareTo(otherDate.month);
-        if (monthCmp != 0) { return monthCmp; }
-        if (day > otherDate.day) { return 1; }
-        if (day < otherDate.day) { return -1; }
+        if (monthCmp != 0) {
+            return monthCmp;
+        }
+        if (day > otherDate.day) {
+            return 1;
+        }
+        if (day < otherDate.day) {
+            return -1;
+        }
         return 0;
     }
 
@@ -762,7 +791,8 @@ package seedu.address.model.policy;
  * Note that this list is not complete and has to be extended.
  */
 public enum Issue {
-    THEFT, CAR_DAMAGE, HOUSE_DAMAGE, ILLNESS, CAR_ACCIDENT;
+    CAR_ACCIDENT, CAR_THEFT, CAR_DAMAGE, CAR_MALFUNCTION, ILLNESS,
+    DISABILITY, LIFE, HOUSE_DAMAGE, HOUSE_FIRE, HOUSE_BURGLARY, THEFT;
 
     public static final String ISSUE_CONSTRAINTS = buildIssueConstraint();
 

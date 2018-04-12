@@ -14,7 +14,7 @@ import seedu.address.commons.events.ui.CalendarFocusEvent;
 public class LookDateCommand extends Command {
     public static final String COMMAND_WORD = "look";
 
-    public static final String DATE_VALIDATION = "d/MM/yyyy";
+    public static final String DATE_VALIDATION = "d/MM/uuuu";
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
             "Date should be in the format of dd/MM/yyyy";

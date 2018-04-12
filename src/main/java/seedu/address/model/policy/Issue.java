@@ -7,7 +7,8 @@ package seedu.address.model.policy;
  * Note that this list is not complete and has to be extended.
  */
 public enum Issue {
-    THEFT, CAR_DAMAGE, HOUSE_DAMAGE, ILLNESS, CAR_ACCIDENT;
+    CAR_ACCIDENT, CAR_THEFT, CAR_DAMAGE, CAR_MALFUNCTION, ILLNESS,
+    DISABILITY, LIFE, HOUSE_DAMAGE, HOUSE_FIRE, HOUSE_BURGLARY, THEFT;
 
     public static final String ISSUE_CONSTRAINTS = buildIssueConstraint();
 

@@ -119,9 +119,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws EditAppointmentFailException if an equivalent appointment already exists.
      */
-    public void editAppointment(String searchText, AppointmentEntry referenceEntry)
+    public void editAppointment(String searchText, AppointmentEntry referenceEntry, AppointmentEntry original)
             throws EditAppointmentFailException {
-        calendar.editAppointmentEntry(searchText, referenceEntry);
+        calendar.editAppointmentEntry(searchText, referenceEntry, original);
     }
 
     /**

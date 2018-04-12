@@ -24,7 +24,7 @@ public class AppointmentUtil {
      * Returns the part of command string for the given {@code entry}'s details.
      */
     public static String geEntryDetails(AppointmentEntry entry) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_VALIDATION);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_TIME_VALIDATION);
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + entry.getGivenTitle() + " ");
         sb.append(PREFIX_START_INTERVAL + entry.getStartDateTime().format(formatter) + " ");

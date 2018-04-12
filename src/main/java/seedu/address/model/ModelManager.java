@@ -99,8 +99,9 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
     }
 
     @Override
-    public void editAppointment(String searchText, AppointmentEntry reference) throws EditAppointmentFailException {
-        addressBook.editAppointment(searchText, reference);
+    public void editAppointment(String searchText, AppointmentEntry reference, AppointmentEntry original)
+            throws EditAppointmentFailException {
+        addressBook.editAppointment(searchText, reference, original);
         indicateAddressBookChanged();
 
     }

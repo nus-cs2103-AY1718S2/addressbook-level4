@@ -107,7 +107,11 @@ public class GradientDescent {
         //update results
         try {
             this.model.updatePredictionResult(this.getWeights());
-            return new CommandResult(String.format(MESSAGE_PREDICTION_SUCCESS));
+            return new CommandResult(String.format(MESSAGE_PREDICTION_SUCCESS)
+                    + ", with Confidence Rate "
+                    + String.format("%.2f", confidence * 100)
+                    + "%"
+            );
         } catch (CommandException e) {
             return new CommandResult(String.format(MESSAGE_PREDICTION_FAIL));
         }
@@ -121,10 +125,11 @@ public class GradientDescent {
     private Double validate(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets) {
         Double average = 0.0;
         for (int i = 0; i < matrix.size(); i++) {
-            //loop thorugh each row
+
+            //loop through each row
 
             Double outcome = this.predict(matrix.get(i));
-            Double percentError = Math.abs((outcome - targets.get(i)) / targets.get(i));
+            Double percentError = Math.abs((outcome - targets.get(i) / normalizationConstant.get(0)) / targets.get(i));
             average += percentError;
         }
 

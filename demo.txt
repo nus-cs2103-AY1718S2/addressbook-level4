@@ -28,6 +28,31 @@ add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/fr
 add n/John Two p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20
 add n/John Three p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/10000 age/20
 
+add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/30000 as/1000 age/20
+add n/John Two p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/6000 as/300 age/20
+add n/John Three p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/20000 age/20
 
-add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/12345678000 as/150 age/20
-add n/John Two p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20
+
+edit 1 i/12345678000
+
+
+
+Jonathan
+
+
+
+
+Valerian
+
+add_policy 1 beg/01/01/2018 exp/01/01/2019 pr/120 is/car_damage is/car_theft
+edit_policy 1 beg/01/02/2018 pr/100
+remove_policy 1
+add_policy 2 beg/10/10/2018 exp/11/10/2019 pr/190 is/
+edit_policy 2 is/house_damage is/house_fire
+
+
+
+
+
+
+

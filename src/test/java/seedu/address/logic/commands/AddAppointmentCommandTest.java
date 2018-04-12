@@ -123,7 +123,8 @@ public class AddAppointmentCommandTest {
         }
 
         @Override
-        public void editAppointment(String searchText, AppointmentEntry reference) throws EditAppointmentFailException {
+        public void editAppointment(String searchText, AppointmentEntry reference, AppointmentEntry original)
+                throws EditAppointmentFailException {
             fail("This method should not be called.");
         }
 

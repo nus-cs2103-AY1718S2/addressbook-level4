@@ -15,15 +15,20 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop loanshark manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java application intended for 21st century loanshark managers to streamline their syndicate operations.
+* This is a desktop loan shark manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* It is a Java application intended for 21st century loan shark bosses to streamline their syndicate operations.
 
 == Site Map
 
-* <<UserGuide#, User Guide>>
-* <<DeveloperGuide#, Developer Guide>>
-* <<AboutUs#, About Us>>
-* <<ContactUs#, Contact Us>>
+* *Documentation:*
+** For users: <<UserGuide#, User Guide>>
+** For developers: <<DeveloperGuide#, Developer Guide>>!
+* *Contacting the Devs:*
+** <<AboutUs#, More about us>>
+** <<ContactUs#, Contact details>>
+* Contributing:
+** Visit our https://github.com/CS2103JAN2018-F12-B4/main/issues[issue tracker]!
+** Submit a https://github.com/CS2103JAN2018-F12-B4/main/pulls[Pull Request]!
 
 == Acknowledgements
 

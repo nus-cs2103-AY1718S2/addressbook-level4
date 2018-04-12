@@ -26,6 +26,6 @@ public class TypicalGroups {
 
 
     public static List<Group> getTypicalGroups() {
-        return new ArrayList<>(Arrays.asList(GROUP_A, GROUP_B, GROUP_C, GROUP_F));
+        return new ArrayList<>(Arrays.asList(GROUP_A, GROUP_B, GROUP_F, GROUP_H));
     }
 }

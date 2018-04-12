@@ -104,7 +104,7 @@ public class DeleteGroupCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_GROUP_SUCCESS,
                 deletedGroup.getInformation().toString());
         assertCommandSuccess(DeleteGroupCommand.COMMAND_WORD + " "
-                        + "Group F", expectedModel, expectedResultMessage);
+                        + "Group H", expectedModel, expectedResultMessage);
     }
 
     /**
@@ -120,7 +120,6 @@ public class DeleteGroupCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-
         assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
     }
 

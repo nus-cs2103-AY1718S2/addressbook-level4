@@ -83,8 +83,13 @@ public class AutoCompletionUtil {
             int wrapAroundPosition = (i + currentCaretPosition) % inputText.length();
 
             if (inputText.charAt(wrapAroundPosition) == END_FIELD) {
-                nextFieldCaretPosition = wrapAroundPosition + 1;
-                break;
+                TextInputProcessorUtil textInputProcessor = new TextInputProcessorUtil();
+                textInputProcessor.setContent(inputText.substring(0, wrapAroundPosition + 1));
+
+                if (APPLICATION_KEYWORDS.contains(textInputProcessor.getLastWord())) {
+                    nextFieldCaretPosition = wrapAroundPosition + 1;
+                    break;
+                }
             }
         }
 

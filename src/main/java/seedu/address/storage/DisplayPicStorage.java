@@ -66,6 +66,18 @@ public class DisplayPicStorage {
     }
 
     /**
+     * Returns true if a given string points to a valid file that has an extension.
+     */
+    public static boolean hasValidExtension(String test) {
+        try {
+            FileUtil.getFileType(test);
+            return true;
+        } catch (IllegalValueException ive) {
+            return false;
+        }
+    }
+
+    /**
      * Tries to save a copy of the image provided by the user into a default location.
      * @param name the name of the new image file
      * @param filePath the location of the current image file
@@ -77,14 +89,14 @@ public class DisplayPicStorage {
             boolean sameFile = false;
             File input = new File(filePath);
             String uniqueFileName = HashUtil.generateUniqueName(name);
-            File toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType);
+            File toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
             while (FileUtil.isFileExists(toSave)) {
                 if (FileUtil.isSameFile(input, toSave)) {
                     sameFile = true;
                     break;
                 }
                 uniqueFileName = HashUtil.generateUniqueName(uniqueFileName);
-                toSave = new File(DisplayPic.DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType);
+                toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
             }
             if (!sameFile) {
                 FileUtil.copyImage(filePath, toSave);

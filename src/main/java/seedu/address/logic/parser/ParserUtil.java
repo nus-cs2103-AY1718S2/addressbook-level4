@@ -171,7 +171,7 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
-
+    //@@author Alaru
     /**
      * Parses a {@code String displayPic} into an {@code DisplayPic}.
      * Leading and trailing whitespaces will be trimmed.
@@ -236,7 +236,7 @@ public class ParserUtil {
         requireNonNull(marks);
         return marks.isPresent() ? Optional.of(parseMarks(marks.get())) : Optional.empty();
     }
-
+    //@@author
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.

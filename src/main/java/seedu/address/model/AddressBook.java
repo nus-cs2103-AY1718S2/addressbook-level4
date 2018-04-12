@@ -158,6 +158,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.setTask(target, editedTask);
     }
 
+    //@@author Alaru
     /**
      * Adds an item to be scheduled to be deleted to the address book.
      */
@@ -171,6 +172,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void clearItems() {
         itemList.clear();
     }
+    //@@author
 
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
@@ -263,10 +265,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author Alaru
     @Override
     public List<String> getItemList() {
         return itemList.getItemList();
     }
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

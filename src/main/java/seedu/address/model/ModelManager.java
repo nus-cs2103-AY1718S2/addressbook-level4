@@ -101,11 +101,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Alaru
     @Override
     public synchronized void clearDeleteItems() {
         addressBook.clearItems();
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void updatePerson(Person target, Person editedPerson)

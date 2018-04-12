@@ -113,6 +113,7 @@ public class PersonCard extends UiPart<Region> {
     /**
      * Initializes the display picture for (@code person)
      */
+    //@@author Alaru
     private void initDisplay() {
         Image image = DisplayPicStorage.fetchDisplay(person.getDisplayPic());
         displayPic.setFill(new ImagePattern(image));
@@ -122,6 +123,7 @@ public class PersonCard extends UiPart<Region> {
             displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.MAROON));
         }
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

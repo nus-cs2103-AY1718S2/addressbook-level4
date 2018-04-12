@@ -8,7 +8,6 @@ lib/*
 *.log
 *.log.*
 *.csv
-*.bat
 config.json
 src/test/data/sandbox/
 preferences.json

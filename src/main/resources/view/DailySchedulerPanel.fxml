@@ -3,6 +3,7 @@
 <!-- @@author jaronchan -->
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
@@ -29,11 +30,11 @@
                     <Insets bottom="5" left="5" />
                   </padding>
                 </Label>
-                  <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
-                    <content>
-                      <VBox fx:id="eventsListStack" prefHeight="-1.0" prefWidth="-1.0" />
-                    </content>
-                  </ScrollPane>
+                <ScrollPane prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+                  <content>
+                    <VBox fx:id="eventsListStack" prefHeight="-1.0" prefWidth="-1.0" />
+                  </content>
+                </ScrollPane>
               </children>
             </VBox>
           </children>
@@ -53,7 +54,19 @@
                 <VBox fx:id="buttonStack" minWidth="50.0" spacing="10.0">
                   <HBox.margin>
                     <Insets left="10.0" right="5.0" top="10.0" />
-                  </HBox.margin></VBox>
+                  </HBox.margin>
+                </VBox>
+                <StackPane HBox.hgrow="ALWAYS">
+                  <children>
+                    <Group StackPane.alignment="CENTER">
+                      <children>
+                        <Label layoutX="17.0" rotate="90.0"
+                               text="Available Navigation Options (only if >= 2 events)"
+                               textOverrun="ELLIPSIS" />
+                      </children>
+                    </Group>
+                  </children>
+                </StackPane>
               </children>
             </HBox>
           </children>

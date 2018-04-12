@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import java.io.IOException;
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
@@ -32,7 +33,7 @@ public class SelectCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() throws CommandException, IOException {
 
         List<Person> lastShownList = model.getFilteredPersonList();
 
@@ -41,6 +42,8 @@ public class SelectCommand extends Command {
         }
 
         Person selectedPerson = lastShownList.get(targetIndex.getZeroBased());
+        model.deletePage(selectedPerson);
+        model.addPage(selectedPerson);
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
 
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, selectedPerson.getName()));

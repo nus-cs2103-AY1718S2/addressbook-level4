@@ -1,6 +1,7 @@
 # Alaru-unused
 ###### \EmailCommand.java
 ``` java
+//Code not used as EmailCommand was removed
 public class EmailCommand extends Command {
 
     public static final String COMMAND_WORD = "email";
@@ -52,6 +53,7 @@ public class EmailCommand extends Command {
 ```
 ###### \EmailCommandParser.java
 ``` java
+//Code not used as EmailCommand was removed
 public class EmailCommandParser implements Parser<EmailCommand> {
 
     /**
@@ -73,6 +75,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
 ```
 ###### \EmailCommandParserTest.java
 ``` java
+//Code not used as EmailCommand was removed
 public class EmailCommandParserTest {
 
     private EmailCommandParser parser = new EmailCommandParser();
@@ -90,6 +93,7 @@ public class EmailCommandParserTest {
 ```
 ###### \EmailCommandTest.java
 ``` java
+//Code not used as EmailCommand was removed
 public class EmailCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

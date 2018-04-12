@@ -26,6 +26,7 @@ import seedu.address.model.person.Person;
  * {@code EmailCommand}.
  */
 //@@author Alaru-unused
+//Code not used as EmailCommand was removed
 public class EmailCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

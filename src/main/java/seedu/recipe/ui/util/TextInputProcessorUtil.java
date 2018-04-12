@@ -12,6 +12,7 @@ public class TextInputProcessorUtil {
     private static final String EMPTY_STRING = "";
     private static final char LF = '\n';
     private static final char SPACE = ' ';
+    private static final int LINE_HEIGHT = 26;
 
     private String content;
     private Font font;
@@ -35,7 +36,20 @@ public class TextInputProcessorUtil {
      * Gets Y-coordinate of caret
      */
     public double getCaretPositionY() {
-        return text.prefHeight(-1);
+        return getRow() * LINE_HEIGHT;
+    }
+
+    /**
+     * Gets row index (1-indexed) of caret
+     */
+    public int getRow() {
+        int row = 1;
+        for (int i = 0; i < content.length(); i++) {
+            if (content.charAt(i) == LF) {
+                row++;
+            }
+        }
+        return row;
     }
 
     /**

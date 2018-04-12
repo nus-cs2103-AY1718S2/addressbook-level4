@@ -20,6 +20,8 @@ import seedu.recipe.ui.util.TextInputProcessorUtil;
  */
 public class SuggestionsPopUp extends ContextMenu {
 
+    private static final int MARGIN = 5;
+
     private CommandBox commandBox;
     private TextArea commandTextArea;
     private TextInputProcessorUtil textInputProcessor;
@@ -92,7 +94,8 @@ public class SuggestionsPopUp extends ContextMenu {
      */
     double findDisplayPositionY(double caretPositionY) {
         return Math.min(-commandTextArea.getHeight() + commandTextArea.getInsets().getTop()
-                + commandTextArea.getInsets().getBottom() + caretPositionY, -commandTextArea.getInsets().getBottom());
+                + commandTextArea.getInsets().getBottom() + caretPositionY, -commandTextArea.getInsets().getBottom())
+                + MARGIN;
     }
 
     /**

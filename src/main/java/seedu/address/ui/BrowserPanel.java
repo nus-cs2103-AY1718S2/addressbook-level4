@@ -30,6 +30,7 @@ import seedu.address.model.smplatform.Twitter;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+    public static final String LOADING_PAGE_URL = "https://cs2103jan2018-f12-b3.github.io/main/LoadingPage.html";
     public static final String DUMMY_PROFILE_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     public static final String FACEBOOK_SEARCH_PAGE_URL =
@@ -175,6 +176,7 @@ public class BrowserPanel extends UiPart<Region> {
         if (person.getSocialMediaPlatformMap().containsKey(Link.TWITTER_LINK_TYPE)) {
             updateBrowserTabs(FUNCTION_ADD, TWITTER_TAB_ID);
             String url = person.getSocialMediaPlatformMap().get(Link.TWITTER_LINK_TYPE).getLink().value;
+            loadTwitterBrowserPage();
             loadTwitterBrowserPage(parseUrl(url));
         } else {
             updateBrowserTabs(FUNCTION_REMOVE, TWITTER_TAB_ID);

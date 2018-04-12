@@ -71,9 +71,9 @@ public class ImportCommandTest {
     @Test
     public void execute_illegalValuesInFile_throwsCommandException() {
         String expectedMessage = String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, "javax.xml.bind.UnmarshalException\n"
-                + " - with linked exception:\n[org.xml.sax.SAXParseException; systemId: " +
-                "file:/C:/Users/Karen/IdeaProjects/main/src/test/data/ImportCommandTest/illegalValues.xml; " +
-                "lineNumber: 1; columnNumber: 1; Content is not allowed in prolog.]");
+                + " - with linked exception:\n[org.xml.sax.SAXParseException; systemId: "
+                + "file:/C:/Users/Karen/IdeaProjects/main/src/test/data/ImportCommandTest/illegalValues.xml; "
+                + "lineNumber: 1; columnNumber: 1; Content is not allowed in prolog.]");
         ImportCommand importCommand = getImportCommandForGivenFilePath(ILLEGAL_VALUES_FILE_PATH, model);
 
         assertCommandFailure(importCommand, expectedMessage);

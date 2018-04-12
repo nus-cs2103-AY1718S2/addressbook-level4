@@ -1,7 +1,7 @@
 //@@author cxingkai
 package seedu.address.logic;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,7 +16,6 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 
-import seedu.address.logic.login.LoginManager;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Record;
 import seedu.address.model.patient.RecordList;
@@ -153,6 +152,9 @@ public class PrintFormatter {
         }
     }
 
+    /**
+     * Opens Pdf that was created
+     */
     private void openPdf() {
         if (Desktop.isDesktopSupported()) {
             try {

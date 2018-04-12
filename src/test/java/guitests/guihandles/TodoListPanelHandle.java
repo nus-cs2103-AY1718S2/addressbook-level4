@@ -58,7 +58,7 @@ public class TodoListPanelHandle extends NodeHandle<ListView<TodoCard>> {
     /**
      * Navigates the listview to display and select the task.
      */
-    public void navigateToCard(Task task) {
+    public void navigateTodoCard(Task task) {
         List<TodoCard> cards = getRootNode().getItems();
         Optional<TodoCard> matchingCard = cards.stream().filter(card -> card.task.equals(task)).findFirst();
 
@@ -99,9 +99,9 @@ public class TodoListPanelHandle extends NodeHandle<ListView<TodoCard>> {
     }
 
     /**
-     * Remembers the selected {@code PersonCard} in the list.
+     * Remembers the selected {@code TodoCard} in the list.
      */
-    public void rememberSelectedPersonCard() {
+    public void rememberSelectedTodoCard() {
         List<TodoCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
@@ -112,10 +112,10 @@ public class TodoListPanelHandle extends NodeHandle<ListView<TodoCard>> {
     }
 
     /**
-     * Returns true if the selected {@code PersonCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedPersonCard()} call.
+     * Returns true if the selected {@code TodoCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedTodoCard()} call.
      */
-    public boolean isSelectedPersonCardChanged() {
+    public boolean isSelectedTodoCardChanged() {
         List<TodoCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {

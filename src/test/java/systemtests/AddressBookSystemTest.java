@@ -105,10 +105,6 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public CalendarViewHandle getCalendarView() {
-        return mainWindowHandle.getCalendarView();
-    }
-
     public StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();
     }
@@ -174,6 +170,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+        assertListMatching(getTodoListPanel(), expectedModel.getFilteredTaskList());
     }
 
     /**
@@ -185,6 +182,7 @@ public abstract class AddressBookSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
+        getTodoListPanel().rememberSelectedTodoCard();
     }
 
     /**

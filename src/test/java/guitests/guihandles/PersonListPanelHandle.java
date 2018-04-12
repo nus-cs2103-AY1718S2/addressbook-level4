@@ -6,6 +6,7 @@ import java.util.Optional;
 import javafx.scene.control.ListView;
 import seedu.address.model.person.Person;
 import seedu.address.ui.PersonCard;
+import seedu.address.ui.TodoCard;
 
 /**
  * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.

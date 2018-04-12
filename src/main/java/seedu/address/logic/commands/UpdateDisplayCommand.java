@@ -55,7 +55,7 @@ public class UpdateDisplayCommand extends UndoableCommand {
     public UpdateDisplayCommand(Index index, DisplayPic dp) {
         requireNonNull(index);
         requireNonNull(dp);
-        this.targetIndex = index;
+        targetIndex = index;
         this.dp = dp;
     }
 

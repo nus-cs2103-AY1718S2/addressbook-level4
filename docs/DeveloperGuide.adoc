@@ -514,13 +514,13 @@ Support for setting a threshold and easily seeing how many students made the cut
 === Display Picture
 
 Users are able to add a display picture for any person within the application. The user can utilise 3 different commands (`add`, `edit` and `updateDP`) to create and specify a display image for the person.
-It fully supports the `undo` and `redo` commands as well.
+It fully supports the `undo` and `redo` commands as well. It adds a drop shadow around the frame to indicate the level of participation (see above section 5.3) of the person.
 
 This feature allows the user to enter a path to their selected image file when entering any of the above 3 commands and copies the image into the `images/displayPic` folder.
 
 It utilises the `DisplayPicStorage` class to handle all image storage related operations.
 
-This image will be shown in the application next to the details of the person as seen in figure 14 below.
+It also makes use of the `Participation` feature to display a colored shadow around the display picture. This image will be shown in the application next to the details of the person as seen in figure 14 below.
 
 .Display Picture example
 image::displaypic_personcard.png[width="350"]
@@ -545,14 +545,52 @@ For persons that were not specified a `dp/` during the `add` command, the `Displ
 ===== Editing a Display Picture
 
 The display picture can also be changed by using the `edit` or `updateDP` commands.
+The implementation of the UpdateDisplayCommand (`updateDP`) command closely follows the `edit` command, hence we will only showcase the implementation of the `UpdateDP` command.
 
+The following figure 15 is the sequence diagram of the `updateDP` command to show how it functions:
 
-The application will read in the new image to edit and use the `filepath` of the original image to generate a new unique hash name. This is to prevent the overwriting
-of image files such as to facilitate the `undo` command.
+.UpdateDisplayCommand Sequence Diagram
+image::UpdateDisplayCommandSequenceDiagram.png[width="800"]
+
+. The user input will be passed in and parsed by the `AddressBookParser` and `UpdateDisplayCommandParser`.
+. The `UpdateDisplayCommandParser` then creates a new `UpdateDisplayCommand` where the `LogicManager` executes the `preprocessUndoableCommand()`.
+. The `preprocessUndoableCommand()` will execute the `createUpdatedPerson()` to create a new `Person` object with the updated `DisplayPicture` object which contains the new filepath.
+. Finally, this new `Person` object created in step 3 will replace the original `Person` object with the old `DisplayPic` object stored in the `Model` through the `updatePerson()` method.
 
 ===== Deleting a Display Picture
 
-The current delete uses Java's `deleteOnExit` method. It will be updated later on in v1.4 to ensure that files are only deleted when they will definitely not be used.
+To fully support the `undo` and `redo` commands, image files cannot be immediately deleted when it is not in use by the `UI`.
+
+To work around this, a new class `UniqueItemList` was added to the model of the `AddressBook` as seen below in Figure 16.
+
+.AddressBook Class Diagram
+image::AddressBookClass.png[width="600"]
+
+The `UniqueItemList` consists of an `ArrayList` of `String` objects. These `String` objects represent the filepaths of all images that have been added to application during its runtime.
+
+Upon every launch of the application, during the initialization of the `LogicManager` class, it will run through the `UniqueItemList` and delete
+any unused image files from the `data` folder. It does this by looping through the `UniquePersonList` as well and checks if the image file is used. If it is not used, it will be deleted.
+The following code fragment shows the deletion process:
+
+[source, java]
+----
+public static void clearImageFiles(List<String> itemsToDelete, ObservableList<Person> persons) {
+    for (String item : itemsToDelete) {
+        boolean notUsed = true;
+        for (Person p : persons) {
+            if (p.getDisplayPic().toString().equals(item) || p.getDisplayPic().isDefault()) {
+                notUsed = false;
+                break;
+            }
+        }
+        if (notUsed) {
+            deleteFile(item);
+        }
+    }
+}
+----
+
+The list is then cleared for the next usage of the application.
 
 ===== Storing the image file for the Display Picture
 The application will take in an argument for the 3 commands mentioned above through `dp/ [PATH TO IMAGE]`. The `[PATH TO IMAGE]` can be the absolute or relative path to the image file.
@@ -564,22 +602,6 @@ which is stored in `src/resources/images/displayPic` as `default.png`.
 If a valid path to an image is provided, the image will be processed and copied over to the `data` folder where the
 `addressbook.xml` is stored as well.
 
-The code utilised to duplicate the image file copies the file byte for byte, ensuring that they are binary equivalent. The code used is implemented as follows:
-[source, java]
-----
-    public static void copyFile(String origFile, File outputFile) throws IOException {
-            //initialize buffer
-            //open bis/bos as the buffered input and output streams respectively
-
-            int fileBytes = bis.read(buffer);
-            while (fileBytes != -1) {
-                bos.write(buffer, 0, fileBytes);
-                fileBytes = bis.read(buffer);
-            }
-            //close IO streams
-    }
-----
-
 The image copied over will be stored with a SHA-256 hash name. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.
 The following activity diagram in Figure 15 shows how the files are saved:
 
@@ -588,22 +610,49 @@ image::StoreDisplayPictureActivityDiagram.png[width="800"]
 
 Due to the possibility that display pictures for a `Person` can be updated, this could lead to clashing of the same file names. In order to prevent overwriting of files, the new image filename
 will be the SHA-256 hash of the previous image filename.
-Finally, the `DisplayPic` object will then be updated to store the relative filepath to this new duplicated image.
 
-===== Fetching the image file to display
+The code utilised to duplicate the image file copies the file byte for byte, ensuring that they are binary equivalent. The code used is implemented as follows:
+[source, java]
+----
+public static void copyFile(String origFile, File outputFile) throws IOException {
+        //initialize buffer
+        //open bis/bos as the buffered input and output streams respectively
+
+        int fileBytes = bis.read(buffer);
+        while (fileBytes != -1) {
+            bos.write(buffer, 0, fileBytes);
+            fileBytes = bis.read(buffer);
+        }
+        //close IO streams
+}
+----
+Finally, the `DisplayPic` object will then be updated to store the relative filepath to this new duplicated image. The following code fragment shows how the filename of the image is returned and stored as the new value.
+
+[source, java]
+----
+public void saveDisplay(String personDetails) throws IllegalValueException {
+    //declaring and initializing variables
+    String uniqueFileName = DisplayPicStorage.saveDisplayPic(personDetails, value, fileType);
+    this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
+}
+----
+
+===== Fetching and displaying the image file
 The following activity diagram shows the flow of how an image file is retrieved to be displayed.
 
 .Activity diagram for fetching image files
 image::FetchDisplayPictureActivityDiagram.png[width="800"]
 
+The image file will then be utilized by JavaFX and displayed on the UI. The drop shadow of the image is determined by the `Participation` of the `Person`.
+
 ==== Design Considerations
 ===== Aspect: Filepath to the image
-* **Alternative 1 (current choice):** Copy the image file over to a designated location
+* **Alternative 1 (current choice):** Copy the image file over to a designated location.
 ** Pros: The user does not need to maintain the image file, as the application does so itself.
 ** Cons: User has to delete the original file if not there will be 2 of the same files on the user's storage.
-* **Alternative 2:** Use the location of the file the user put in
-** Pros: Potentially less space utilized.
-** Cons: User needs to ensure the file is not moved or deleted.
+* **Alternative 2:** Use the location of the file the user enters into the application.
+** Pros: This would mean that there would always be only one copy of the image, hence less space used.
+** Cons: The user needs to ensure the original image file is not moved or deleted.
 
 ===== Aspect: Filename of the image
 * **Alternative 1 (current choice):** Use a hashing algorithm to name the file.
@@ -611,12 +660,19 @@ image::FetchDisplayPictureActivityDiagram.png[width="800"]
 ** Cons: It is difficult to manually check which `Person` the image file belongs to.
 * **Alternative 2:** Use the name of the `Person` to name the file.
 ** Pros: Image files can be easily identified separately and easy to implement.
-** Cons: Could lead to potential image files overwriting each other without additional checks.
+** Cons: This could lead to potential image files overwriting each other without additional checks.
+
+===== Aspect: Deleting of the image
+* **Alternative 1 (current choice):** Store the filepath in the `AddressBook` and delete it afterwards.
+** Pros: Fully supports `undo` and `redo` even if the user moves or deletes the original image file.
+** Cons: It is difficult to manually check which `Person` the image file belongs to.
+* **Alternative 2:** Delete the image file immediately when the associated `Person` is removed
+** Pros: This allows a simple implementation of immediately deleting the image file.
+** Cons: The image file could be lost forever if the user moves or deletes the original image file, thus causing `undo` and `redo` to malfunction.
 
 ==== Future enhancements
 
-* Support for photo frames and undo for delete (Coming in v1.4)
-* Support for frame color to highlight student status (Coming in v1.5)
+* Support for online URLs to download images (Coming in v2.0)
 
 // end::display[]
 
@@ -837,15 +893,16 @@ This allows tutors to be better able to go through their lists of students.
 * *Major*: Display picture for all students entered
 
 ** Support adding, editing and deleting of picture
+** Also shows a quick glance on student's participation (related to minor)
 ** Also works with the redo/undo function
 
 This helps the tutor keep track of his students, and be able to easily remember them better.
 
-* *Minor*: Email feature to email students
+* *Minor*: Participation marks to keep track of student participation
 
-** Email multiple students quickly
+** Add and keep track of participation marks for the student
 
-This helps the tutor to quickly bring up an email client to send an email to a student.
+This helps the tutor to keep track of the student's participation.
 
 [appendix]
 == User Stories

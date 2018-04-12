@@ -95,14 +95,14 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
+        //@@author zhangriqi
         case LocateCommand.COMMAND_WORD:
         case LocateCommand.COMMAND_ALIAS:
             return new LocateCommandParser().parse(arguments);
-        //@@author zhangriqi
+        //@@author
         case AssignCommand.COMMAND_WORD:
         case AssignCommand.COMMAND_ALIAS:
             return new AssignCommandParser().parse(arguments);
-        //@@author
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

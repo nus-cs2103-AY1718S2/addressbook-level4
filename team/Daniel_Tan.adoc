@@ -38,7 +38,9 @@ Your TA is a desktop contact and task manager application used to manage the man
 
 *** Wrote additional test cases for the new task features.
 
-** Did cosmetic tweaks to the user guide.
+** Documentation:
+
+*** Did cosmetic tweaks to the user guide.
 
 *** Added graphical images to provide a visual aid to the user reading the user guide.
 

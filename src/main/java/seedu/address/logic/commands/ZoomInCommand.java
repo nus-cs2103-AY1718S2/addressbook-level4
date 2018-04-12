@@ -15,6 +15,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * Zooms in the calendar view to show a more detailed view
  */
 public class ZoomInCommand extends Command {
+
     public static final String COMMAND_WORD = "zoomin";
     public static final String COMMAND_ALIAS = "zi";
 

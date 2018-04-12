@@ -14,6 +14,7 @@ import java.util.Objects;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Appointment {
+
     public static final String MESSAGE_TIMES_CONSTRAINTS = "Start time must be before end time";
 
     private final PersonName personName;
@@ -56,8 +57,8 @@ public class Appointment {
 
     /**
      * Checks if a given {@code startTime} is before a given {@code endTime}.
-     * @param startTime A startTime to check.
-     * @param endTime An endTime to check.
+     * @param startTime A start time to check.
+     * @param endTime An end time to check.
      * @return {@code true} if a given start time is before a given end time.
      */
     public static boolean areValidTimes(StartTime startTime, EndTime endTime) {

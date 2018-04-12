@@ -7,10 +7,11 @@ import seedu.address.model.person.Person;
 
 //@@author jlks96
 /**
- * Tests that a {@code Person}'s {@code UniqueTagList} matches all of the input tags.
+ * Tests if a {@code Person}'s {@code UniqueTagList} matches all of the input tags.
  */
 
 public class UniqueTagListContainsTagsPredicate  implements Predicate<Person> {
+
     private final Set<Tag> inputTags;
 
     public UniqueTagListContainsTagsPredicate(Set<Tag> inputTags) {
@@ -20,8 +21,7 @@ public class UniqueTagListContainsTagsPredicate  implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         UniqueTagList personTags = new UniqueTagList(person.getTags());
-        return inputTags.stream()
-                .allMatch(personTags::contains);
+        return inputTags.stream().allMatch(personTags::contains);
     }
 
     @Override

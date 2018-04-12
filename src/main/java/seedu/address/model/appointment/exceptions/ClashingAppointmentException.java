@@ -4,4 +4,5 @@ package seedu.address.model.appointment.exceptions;
 /**
  * Signals that the operation will result in clashing Appointment objects.
  */
-public class ClashingAppointmentException extends IllegalArgumentException {}
+public class ClashingAppointmentException extends IllegalArgumentException {
+}

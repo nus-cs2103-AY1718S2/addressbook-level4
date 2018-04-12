@@ -23,4 +23,5 @@ public class NewAppointmentAddedEvent extends BaseEvent {
     public Appointment getAppointmentAdded() {
         return appointmentAdded;
     }
+
 }

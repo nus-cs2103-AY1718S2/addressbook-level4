@@ -60,7 +60,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
     //@@author jlks96
     /**
-     * Creates and returns a {@code DateAdded} with the dateAdded attribute representing the current date
+     * Creates and returns a {@code DateAdded} representing the current date
      * @return current date in the following format: dd/MM/yyyy
      */
     public DateAdded createDate() {

@@ -6,6 +6,7 @@ package seedu.address.model.appointment;
  * Guarantees: immutable; is valid as declared in {@link #isValidTime(String)}
  */
 public class EndTime extends Time {
+
     /**
      * Constructs a {@code EndTime}.
      *

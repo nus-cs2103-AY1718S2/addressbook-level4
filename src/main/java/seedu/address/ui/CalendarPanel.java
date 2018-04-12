@@ -222,10 +222,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
             @Override
             public void run() {
                 while (true) {
-                    Platform.runLater(() -> {
-                        calendarView.setToday(LocalDate.now());
-                        calendarView.setTime(LocalTime.now());
-                    });
+                    Platform.runLater(() -> setNow());
 
                     try {
                         // update every 10 seconds
@@ -240,5 +237,13 @@ public class CalendarPanel extends UiPart<CalendarView> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
+    }
+
+    /**
+     * Sets calendar view to the current date and time
+     */
+    private void setNow() {
+        calendarView.setToday(LocalDate.now());
+        calendarView.setTime(LocalTime.now());
     }
 }

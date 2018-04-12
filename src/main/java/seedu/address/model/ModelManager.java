@@ -84,6 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AppointmentDeletedEvent(appointments));
     }
     //@@author
+
     //@@author ng95junwei
     /** Raises an event to indicate a template has been deleted */
     private void indicateTemplateDeleted(String purpose) {
@@ -93,8 +94,6 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateTemplateAdded(Template template) {
         //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
     }
-
-
 
     //@@author
 
@@ -130,8 +129,9 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //=========== Appointment Mutators =============================================================
     //@@author jlks96
+    //=========== Appointment Mutators =============================================================
+
     @Override
     public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
         addressBook.removeAppointment(target);
@@ -149,6 +149,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
     //@@author
+
     //========== Template Mutators ==================================================================
     //@@author ng95junwei
     @Override
@@ -210,8 +211,10 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredTemplates);
     }
     //@@author
-    //=========== Filtered Appointment List Accessors =============================================================
+
     //@@author jlks96
+    //=========== Filtered Appointment List Accessors =============================================================
+
     /**
      * Returns an unmodifiable view of the list of {@code Appointment} backed by the internal list of
      * {@code addressBook}

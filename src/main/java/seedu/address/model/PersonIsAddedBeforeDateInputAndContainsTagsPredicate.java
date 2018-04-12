@@ -10,8 +10,8 @@ import seedu.address.model.tag.UniqueTagListContainsTagsPredicate;
 
 //@@author jlks96
 /**
- * Tests that a {@code Person}'s {@code UniqueTagList} matches all of the input tags and
- * {@code DateAdded} is before the date input.
+ * Tests if a {@code Person}'s {@code UniqueTagList} matches all of the input tags and
+ * {@code DateAdded} is before the input date.
  */
 public class PersonIsAddedBeforeDateInputAndContainsTagsPredicate implements Predicate<Person> {
 

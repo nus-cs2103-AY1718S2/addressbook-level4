@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
  * Guarantees: immutable; is valid as declared in {@link #isValidTime(String)}
  */
 public class Time {
+
     public static final String MESSAGE_TIME_CONSTRAINTS =
             "Time input should be in the format: HH:mm (24 hour format)";
     /*

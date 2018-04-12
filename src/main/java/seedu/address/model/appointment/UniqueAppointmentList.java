@@ -79,9 +79,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     /**
      * Adds a appointment to the list.
      *
-     * @throws DuplicateAppointmentException if the appointment to add is a duplicate of an existing appointment
+     * @throws DuplicateAppointmentException if the appointment to be added is a duplicate of an existing appointment
      * in the list.
-     * @throws ClashingAppointmentException if the appointment to add clashes with an existing appointment
+     * @throws ClashingAppointmentException if the appointment to be added clashes with an existing appointment
      * in the list.
      */
     public void add(Appointment toAdd) throws DuplicateAppointmentException, ClashingAppointmentException {

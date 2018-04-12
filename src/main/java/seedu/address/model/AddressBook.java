@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -260,16 +259,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Removes all notifications associated with a person id.
      */
-    private void removeNotificationsWithOwnerId(Integer id) {
-       LinkedList<Notification> toDelete = new LinkedList<>();
-       for (Notification n: notifications) {
-           if (n.getOwnerId().equals(id + "")) {
-               toDelete.add(n);
-           }
-       }
-       for (Notification n: toDelete) {
-           notifications.remove(n);
-       }
+    private void removeNotificationsWithOwnerId (Integer id) {
+        LinkedList<Notification> toDelete = new LinkedList<>();
+        for (Notification n: notifications) {
+            if (n.getOwnerId().equals(id + "")) {
+                toDelete.add(n);
+            }
+        }
+        for (Notification n: toDelete) {
+            notifications.remove(n);
+        }
     }
     //@@author
 

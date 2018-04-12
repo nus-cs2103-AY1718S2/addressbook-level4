@@ -18,7 +18,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 // tag::introduction[]
 == Introduction
 
-AddSurance is targeted at insurance agents who *prefer to use a desktop app for managing contacts with current or potential clients*.
+*AddSurance* is an address book application targeted at insurance agents who *prefer to use a desktop application for managing contacts with current or potential clients*.
 It allows insurance agents to manage a huge list of contacts in batches, as well as keep track of appointments with clients.
 More importantly, AddSurance is *optimized for insurance agents who prefer to work with a Command Line Interface* (CLI) while still having
 the benefits of a Graphical User Interface (GUI). If you can type fast, AddSurance can get your contact management tasks done faster
@@ -137,11 +137,6 @@ Format: `history` or `hist`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-==== Clearing all entries : `clear` or `c`
-
-Clears all entries from the address book. +
-Format: `clear` or `c`
-
 ==== Exiting the program : `exit` or `ex`
 
 Exits the program. +
@@ -235,24 +230,24 @@ Deletes the 1st person in the results of the `find` command
 // tag::deletebefore[]
 ==== Deleting dated persons  : `deletebefore` or `db`
 
-Deletes all persons added before a specified date with specified tags. +
+Deletes all persons added before a specified date matching all specified tags. +
 Format: `deletebefore d/DATE t/TAG...` or `db d/DATE t/TAG...`
 
 ****
-* Persons deleted must have tags that matches all the specified `TAG` s.
-* The specified tags can be in any order.
-* *At least one tag* must be provided.
+* Persons deleted must have all the specified `TAG` s.
+* The specified `TAG` s can be in any order.
+* *At least one* `TAG` must be provided.
 * The input `DATE` *must be in the following format: dd/MM/yyyy*.
 ****
 
 TIP: You are encouraged to *attach tags to persons* representing different groups.
-This way, you can delete persons of a particular group that is added before a date.
-_For example, to delete contacts relating to non-clients in batch, you can attach *"non-client"* tag to these persons and
+This way, you can delete persons of a particular group who were added before a date.
+_For example, to delete contacts relating to non-clients in batch, you can attach a *"nonclient"* tag to these persons and
 use the `deletebefore` command._
 
 Examples:
 
-* `deletebefore d/12/12/2017 t/non-clients` +
+* `deletebefore d/12/12/2017 t/nonclients` +
 Deletes all non-clients added before 12/12/2017 in the address book.
 // end::deletebefore[]
 
@@ -275,7 +270,7 @@ Format: `email KEYWORD TEMPLATE`
 
 // tag::templating[]
 
-==== Creating a new Template : `addTemplate` or `at`
+==== Creating a new template : `addTemplate` or `at`
 
 Creates a new template based on the specified purpose, subject and message.
 Format: `addTemplate pu/PURPOSE s/SUBJECT m/MESSAGE`
@@ -287,7 +282,7 @@ Examples:
 * `addTemplate pu/greeting s/Hello There m/Luke I am your father`
 * `addTemplate pu/holiday s/Merry Christmas m/Santa Claus is coming to town!`
 
-==== Deleting a Template : `deleteTemplate` or `dt`
+==== Deleting a template : `deleteTemplate` or `dt`
 
 Deletes a template in the address book. +
 Format: `deleteTemplate PURPOSE`
@@ -346,7 +341,7 @@ For example `import_contacts ~/PATH/examplefile.csv` will import the contacts co
 
 An example of a suitable import file format is shown below.
 
-image::import_file_example.png[width="900"]
+image::import_file_example.png[width="700"]
 //end::import[]
 
 //tag:export[]
@@ -354,7 +349,7 @@ image::import_file_example.png[width="900"]
 
 Export all contacts to a .csv file.
 
-Format: `ec f/PATH`
+Format: `ec PATH`
 
 [NOTE]
 It is not necessary to include a file path after the command. If no file path is included, `ec` will create and write to a new .csv file, _data/exportToExisting.csv_. This is necessary for testing purposes, so we encourage the user to specify a file path.
@@ -367,6 +362,11 @@ It is not necessary to include a file path after the command. If no file path is
 * You may also give the path to a file name that doesn't yet exist. For example, you may call `ec data/newFileExample.csv` where `data/newFileExample.csv` does not yet exist. In this case, a new .csv file will be automatically created and written to.
 ****
 //end::export[]
+
+==== Clearing all contacts : `clear` or `c`
+
+Clears all contacts from the address book. +
+Format: `clear` or `c`
 
 // tag::select[]
 ==== Selecting a person : `select` or `s` `[Coming in v2.0]`
@@ -394,6 +394,11 @@ Selects the 1st person in the results of the `find` command and shows the profil
 // tag::scheduling[]
 === Scheduling Features
 
+TIP: The calendar view is optimized for fullscreen mode.
+
+NOTE: Currently, there is a glitch in the scaling of the calendar Year Page. We are working with the
+third party provider to resolve this issue.
+
 ==== Adding an appointment : `addappointment` or `aa`
 
 Adds an appointment to the address book that will be shown in the calendar panel. +
@@ -402,12 +407,12 @@ Format: `addappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` or `aa
 ****
 * Adds an appointment with the person named `NAME`, with the specified `DATE`, `STARTTIME`, `ENDTIME` and `LOCATION` respectively
 * The input *`STARTTIME` must precede `ENDTIME`*
-* The input date *must be in the following format: dd/MM/yyyy*.
-* The input time *must be in the following format: HH:mm (24hr format)*.
+* The input `DATE` *must be in the following format: dd/MM/yyyy*.
+* The input `STARTTIME` and `ENDTIME` *must be in the following format: HH:mm (24hr format)*.
 * The calendar panel will be updated accordingly.
 ****
 
-NOTE: The appointment added *need not relate to any person existing in the address book*. This gives you the flexibility
+NOTE: The appointment added *need not be related to any person existing in the address book*. This gives you the flexibility
 to keep track of appointments with anyone, without having to add that person into the address book.
 
 CAUTION: You are *not allowed to add appointments that clash in time.*
@@ -425,8 +430,8 @@ Format: `deleteappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` or 
 
 ****
 * Deletes an appointment that matches all the input `NAME`, `DATE`, `STARTTIME`, `ENDTIME` and `LOCATION`.
-* The input date *must be in the following format: dd/MM/yyyy*.
-* The input time *must be in the following format: HH:mm (24hr format)*.
+* The input `DATE` *must be in the following format: dd/MM/yyyy*.
+* The input `STARTTIME` and `ENDTIME` *must be in the following format: HH:mm (24hr format)*.
 * The calendar panel will be updated accordingly.
 ****
 
@@ -469,7 +474,7 @@ image::zoScreenshot.png[width="800"]
 * `zo` +
 If the calendar panel is previously showing the Day View, it will now be showing the Week View.
 
-==== Going back on calendar view : `gobackward` or `gb`
+==== Going backward on calendar view : `gobackward` or `gb`
 
 Makes the calendar view go backward in time from the currently displaying date. +
 Format: `gobackward` or `gb`
@@ -498,8 +503,8 @@ Format: `findappointment KEYWORD...` or `fa KEYWORD...`
 
 ****
 * Keywords are words that are part of any fields of an appointment, i.e. `NAME`, `DATE`, `STARTTIME`, `ENDTIME` and `LOCATION`
-* The search is case insensitive. e.g `gold park` will match `Gold Park`
-* All the details will be searched.
+* The search is case insensitive. e.g. `gold park` will match `Gold Park`
+* All the details of an appointment will be searched.
 * Partial words will be matched e.g. `gol` will match `gold park`
 ****
 
@@ -517,12 +522,12 @@ Format: `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/
 or `ea INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]`
 
 ****
-* Edits an appointment at the specified INDEX.
+* Edits an appointment at the specified `INDEX`.
 The index refers to the index number shown in the last appointment listing. The index must be a positive integer 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* The input date *must be in the following format: dd/MM/yyyy*.
-* The input time *must be in the following format: HH:mm (24hr format)*.
+* The input `DATE` *must be in the following format: dd/MM/yyyy*.
+* The input `STARTTIME` and `ENDTIME` *must be in the following format: HH:mm (24hr format)*.
 * The calendar panel will be updated accordingly.
 ****
 
@@ -539,7 +544,7 @@ Deletes the specified appointment in the address book. +
 Format: `deleteappointment INDEX` or `da INDEX`
 
 ****
-* Deletes the appointment ar the specified `INDEX`.
+* Deletes the appointment at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The calendar panel will be updated accordingly.
@@ -573,10 +578,12 @@ Set the calendar theme to the predefined `STYLE_2`.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Add Appointment* : `addappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
 e.g. `addappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
+* *Add Template* : `addTemplate pu/PURPOSE s/SUBJECT m/MESSAGE` +
+e.g. `addTemplate pu/holiday s/Merry Christmas m/Santa Claus is coming to town!`
 * *Calendar Go Back* : `gobackward`
 * *Calendar Go Forward* : `goforward`
 * *Clear* : `clear`
@@ -590,22 +597,30 @@ e.g. `deleteappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estat
 e.g. `deleteappointment 3`
 * *Delete Before* : `deletebefore d/DATE [t/TAG]...` +
 e.g. `deletebefore d/12/12/2017 t/friends`
+* *Delete Template* : `deleteTemplate PURPOSE` +
+e.g. `deleteTemplate greeting`
 * *Email* : `email KEYWORD TEMPLATE` +
 e.g. `email James followup`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Edit Appointment `[Coming in v2.0]`*: `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]` +
+* *Edit Appointment `[Coming in v2.0]`* : `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]` +
 e.g. `editappointment 1 d/25/12/2017 l/Parkway Parade`
+* *Export Contacts* : `export_contacts PATH`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *Find Appointment `[Coming in v2.0]`*: `findappointment KEYWORD...` +
+* *Find Appointment `[Coming in v2.0]`* : `findappointment KEYWORD...` +
 e.g. `findappointment 12/12/2018`
+* *Go Backward* : `gobackward`
+* *Go Forward* : `goforward`
 * *Help* : `help`
 * *History* : `history`
+* *Import Contacts* : `import_contacts PATH.csv` +
+e.g. `import_contacts ~/PATH/examplefile.csv`
 * *List* : `list`
 * *Redo* : `redo`
 * *Select `[Coming in v2.0]`* : `select INDEX` +
 e.g.`select 2`
+* *Sort* : `sort`
 * *Undo* : `undo`
 * *Zoom In* : `zoomin`
 * *Zoom Out* : `zoomout`

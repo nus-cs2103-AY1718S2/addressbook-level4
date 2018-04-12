@@ -67,16 +67,7 @@ public class SortAddresses {
                 sortedMap.remove(entry.getKey());
             }
         }
-        for (Entry<String, Double> entry : sortedMap.entrySet()) {
 
-
-
-            /*TODO: WANT TO PUT SOME LOGIC HERE SO THAT THE DISTANCES ARE RANKED IN ORDER OF SHORTEST DISTANCE BUT ALSO
-             * THE ADDRESSES MAKE SENSE SO IF SHORTEST IS A - B THE NEXT SHOULD BE THE SHORTEST DISTANCE FROM B - X
-             * WHERE X IS UNKNOWN
-             */
-
-        }
         return sortedMap;
     }
 }

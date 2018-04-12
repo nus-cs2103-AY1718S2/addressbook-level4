@@ -344,6 +344,9 @@ Users may be able to encrypt/decrypt their Pigeons addressbook files from v2.0 o
 Users may be able to load in large amounts of addressees into their Pigeons addressbook files from v2.0 onwards.
 // end::centralisedLoading[]
 
+=== Drivers can edit the route to match their needs `[coming in v2.0]`
+
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

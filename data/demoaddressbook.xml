@@ -11,7 +11,7 @@
         <name>Ben Candler</name>
         <phone>32144321</phone>
         <email>ben@gmail.com</email>
-        <address>35 Temple St</address>
+        <address>35 Temple St, Singapore</address>
         <date>2018-05-01</date>
     </persons>
     <persons>
@@ -49,13 +49,6 @@
         <phone>54322345</phone>
         <email>gary@gmail.com</email>
         <address>10 Bayfront Avenue</address>
-        <date>2018-05-02</date>
-    </persons>
-    <persons>
-        <name>Homer Ingle</name>
-        <phone>09877890</phone>
-        <email>homer@gmail.com</email>
-        <address>1 Chinese Gardens Rd</address>
         <date>2018-05-02</date>
     </persons>
     <persons>

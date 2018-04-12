@@ -84,6 +84,7 @@ public class FilterCommand extends Command {
                 && this.predicate.equals(((FilterCommand) other).predicate)); // state check
     }
 
+    //@@author meerakanani10
     public static String getDuration(List<String> route) {
         Double duration;
         GetDistance distance = new GetDistance();

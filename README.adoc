@@ -32,6 +32,8 @@ endif::[]
 * This application was adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-level4[AddressBook Level-4]
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
+* Application icon made by http://www.freepik.com[Freepik] from https://www.flaticon.com[Flaticon].
+* Default display picture made by https://www.flaticon.com/authors/iconnice[Iconnice] from https://www.flaticon.com[Flaticon].
 * Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4]
 
 == Licence : link:LICENSE[MIT]

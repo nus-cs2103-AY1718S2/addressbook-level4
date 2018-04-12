@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.TodoListPanelHandle;
 import seedu.address.model.person.Person;
 import seedu.address.ui.PersonCard;
 
@@ -108,6 +109,14 @@ public class GuiTestAssert {
     public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
         int numberOfPeople = personListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
+    }
+
+    /**
+     * Asserts the size of the list in {@code todoListPanelHandle} equals to {@code size}.
+     */
+    public static void assertListSize(TodoListPanelHandle todoListPanelHandle, int size) {
+        int numberOfTask = todoListPanelHandle.getListSize();
+        assertEquals(size, numberOfTask);
     }
 
     /**

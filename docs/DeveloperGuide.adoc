@@ -1,4 +1,4 @@
-= LoanShark Tycoon v1.5rc - Developer Guide
+= HuatAh! v1.5rc - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -653,7 +653,7 @@ This is a limitation of the BrowserPanel UI element.
 //@@author
 === BrowserPanel Enhancement
 In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows some more important details of the runner or customer.
-These are important fields for a loanshark manager to get a quick grasp of a customer's details, as well as who the runners are in charge of.
+These are important fields for a loan shark manager to get a quick grasp of a customer's details, as well as who the runners are in charge of.
 
 ==== Enhancement
 Depending on whether the selected Person is a Runner or Customer, the respective HTML file with the desired fields are generated.
@@ -661,14 +661,14 @@ Upon selection of the PersonCard, or select command from the CommandBox, a HtmlW
 Fields for the Customer are: name, amount owed, due date, status, and runner assigned.
 Fields for the Runner are: name, and a list of customers assigned to the specified runner.
 The BrowserPanel then displays this HTML file.
-The background and font colors are matched to the LoanSharkTycoon application.
+The background and font colors are matched to the HuatAh! application.
 
 image::BrowserPanelMockup.PNG[width="800"]
 
 ==== Rationale
-A customer's amount owed and due dates are very important variables which directly affect the PnL of the LoanShark's enterprise.
+A customer's amount owed and due dates are very important variables which directly affect the PnL of the loan shark boss' enterprise.
 Being able to view a runner's list of assigned customers is important for managing human resource.
-Therefore, this feature is suitable, and definitely desirable from the perspective of a LoanShark manager.
+Therefore, this feature is suitable, and definitely desirable from the perspective of a loan shark boss.
 
 == Documentation
 
@@ -1237,7 +1237,7 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*LoanShark Tycoon*
+*HuatAh!*
 
 Author:
 

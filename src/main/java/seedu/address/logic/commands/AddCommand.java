@@ -55,7 +55,7 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
             + PREFIX_ADDRESS + " W Hotel "
             + PREFIX_OWESTARTDATE + " today "
             + PREFIX_OWEDUEDATE + " 5 May 2018 "
-            + PREFIX_MONEYOWED + " 31415926535897 "
+            + PREFIX_MONEYOWED + " 314159265 "
             + PREFIX_INTEREST + " 9.71 "
             + PREFIX_TAG + " richxiaoming";
 

@@ -1,4 +1,4 @@
-= LoanShark Tycoon v1.5rc - User Guide
+= HuatAh! v1.5rc - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -24,7 +24,7 @@ If you:
 * prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI),
 * can type fast and prefer a keyboard as your main input method,
 
-LoanShark Tycoon can get your operations management tasks done faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get
+HuatAh! can get your operations management tasks done faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get
 started. Enjoy!
 
 == Quick Start
@@ -35,7 +35,7 @@ started. Enjoy!
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `LoanSharkTycoon.jar` link:{repoURL}/releases[here].
+.  Download the latest `HuatAh.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -87,7 +87,7 @@ is specified when adding a customer.
 |kbd:[F1]
 |
 
-|list (`l`)
+|list
 |kbd:[F2]
 |`list`
 
@@ -119,7 +119,7 @@ is specified when adding a customer.
 |kbd:[Ctrl+F]
 |`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
-|locate (`lo`)
+|locate (`l`)
 |kbd:[Ctrl+L]
 |`locate INDEX` +
 `locate [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
@@ -175,7 +175,7 @@ entered and is due to return the full amount on 5 May 2018._
 ====
 
 ====
- add ty: c  p: 88888888 n: Xiao Ming e: xiao@ming.com s: today a: W Hotel d: 5 May 2018 m: 31415926535897 i: 9.71 t: richxiaoming
+ add ty: c  p: 88888888 n: Xiao Ming e: xiao@ming.com s: today a: W Hotel d: 5 May 2018 m: 314159265 i: 9.71 t: richxiaoming
 
 _Adds the same `Customer` as above, just with values specified in a different order._
 ====
@@ -198,6 +198,7 @@ and `CUSTOMER-INDICES`.
 ** Each `INDEX` refers to the index number shown in the last person listing.
 ** Each `INDEX` must be a *positive integer*: 1, 2, 3, ...
 * The `RUNNER-INDEX` must always be specified and at least one `CUSTOMER-INDEX` must be specified as well.
+
 ====
 
 *Usage examples:*
@@ -250,8 +251,9 @@ _Deletes the first person in the results of the `find` command._
 ** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* Only fields common to both Customer and Runner can be edited
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* Only fields common to both Customer and Runner can be edited (NAME, PHONE, EMAIL, ADDRESS)
+* Functionality to edit Customer-specific fields, such as MONEY_OWED, INTEREST_RATE, etc..., will come in v2.0
+* When editing tags, the existing tags of the person will be replaced i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t:` without specifying any tags after it.
 ====
 

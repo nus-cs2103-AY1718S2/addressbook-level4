@@ -63,13 +63,18 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Help Guide
 
+==== Viewing help : `help`
+
+Opens a new user guide window. +
 Format: `help`
 
-=== Create new user : `create-user`
+=== Multi-user and Authentication
 
-Creates a new user account in the application.
+==== Create new user : `create-user`
+
+Creates a new user account in the application. +
 Format: `create-user u/USERNAME p/PASSWORD`
 
 ****
@@ -77,43 +82,78 @@ Format: `create-user u/USERNAME p/PASSWORD`
 * Multiple entries of username and password can be included, however only the last entry will be considered.
 ****
 
-=== Delete existing user : `delete-user`
 
-Deletes an existing user account in the application.
+==== Delete existing user : `delete-user`
+
+Deletes an existing user account in the application. +
 Format: `delete-user u/USERNAME p/PASSWORD`
+
+[NOTE]
+====
+You will need to be logged out to use this Command.
+====
 
 ****
 * You will need to enter both the correct username and password for the target user account that you wish to delete.
-* You will also need to be logged out to use this Command.
 * Multiple entries of username and password can be included, however only the last entry will be considered.
 ****
 
-=== Login : `login`
+==== Login : `login`
 
-Logs the user into the application.
+Logs the user into the application. +
 Format: `login u/USERNAME p/PASSWORD`
 
 ****
 * Multiple entries of username and password can be included, however only the last entry will be considered.
 ****
 
-=== Logout: `logout`
+==== Logout: `logout`
 
 Logs the user out of the application.
 Format: `logout`
 
-=== Change user password: `change-user-password`
+==== Change user password: `change-user-password`
 
-Change the password of an existing user in the application.
+Change the password of an existing user in the application. +
 Format: `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
+
+[NOTE]
+====
+You will need to be logged out to use this Command.
+====
 
 ****
 * You will need to enter both the correct username and password for the target user account that you wish to change password for.
-* You will also need to be logged out to use this Command.
+* You will need to enter both the correct username and password for the target user account that you wish to change password for
 * Multiple entries of username and password can be included, however only the last entry will be considered.
 ****
 
-=== Adding a person: `add`
+==== 2-Factor Authentication [Coming in v2.0]
+
+User have to use another form of authentication to log in (most probably a one-time password).
+
+=== Application Navigation
+
+==== Switching between feature interfaces : `switch`
+
+Switches to the user interface feature identified by the user. +
+Format: `switch FEATURE`
+
+****
+* Switches to the specified `FEATURE`
+* `FEATURE` must be either "details", "calendar" or "scheduler".
+****
+
+Examples:
+
+* `switch calendar` +
+Switches to `calendar` tab and displays contents
+* `switch details` +
+Switches to `details` tab and displays contents
+
+=== Contacts Manipulation
+
+==== Adding a person: `add`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -126,12 +166,12 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+==== Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
-=== Editing a person : `edit`
+==== Editing a person : `edit`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -151,7 +191,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+==== Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -171,7 +211,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Filtering contacts by tag: `filter`
+==== Filtering contacts by tag: `filter`
 
 Filters persons whose contact contains the given tag. +
 Format: `filter TAG`
@@ -185,7 +225,7 @@ Examples:
 * `filter friends` +
 Returns any person that has the tag `friends`
 
-=== Deleting a person : `delete`
+==== Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -205,7 +245,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+==== Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
@@ -225,7 +265,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+==== Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -235,24 +275,28 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Switching between feature interfaces : `switch`
+=== Session Reports and Logs
 
-Switches to the user interface feature identified by the user. +
-Format: `switch FEATURE`
+==== Adding a new session report: `add-log`
+
+Adds a new session report/log to the person identified by the index number used in the last person listing. +
+Format: `add-log INDEX log\LOG` +
+Example: `add-log 2 log\Today the patient reported he was feeling unwell ... ...`
 
 ****
-* Switches to the specified `FEATURE`
-* `FEATURE` must be either "details", "calendar" or "scheduler".
+* Adds the session log the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* The date and time will automatically be included. It will store the date and time at the moment you execute the command.
 ****
 
-Examples:
+==== Delete a existing session report: `delete-log` [Coming in v2.0]
+Deletes a particular report/log from a person
 
-* `switch calendar` +
-Switches to `calendar` tab and displays contents
-* `switch details` +
-Switches to `details` tab and displays contents
+==== Edit a new session report: `delete-log` [Coming in v2.0]
+Edits report/log entries from a person
 
-=== Navigate between scheduled events : `navigate`
+=== Map Tools
+
+==== Navigate between scheduled events : `navigate`
 
 Displays the directions between planned locations on the daily scheduler map. +
 Format: `navigate INDEX`
@@ -277,7 +321,9 @@ Retrieves events for specified day
 * `navigate 1` +
 Displays directions between the first and the second event of the day.
 
-=== Opening a calendar : `calendar-launch`
+=== Calendar Tools
+
+==== Opening a calendar : `calendar-launch`
 
 Opens a calendar in a webview.
 Format: `calendar-launch`
@@ -292,7 +338,7 @@ the calendar in the build-in scene switcher.
 Logging in to the calendar interface DOES NOT perform the Oauth authentication process.
 ====
 
-=== Adding and event to the calendar : `calendar-add`
+==== Adding and event to the calendar : `calendar-add`
 
 Allows a user to add an event directly to their calendar.
 
@@ -308,7 +354,7 @@ app will launch their system default browser (i.e. not a WebView) and ask them t
 to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
 ====
 
-=== List upcoming events in the command line: `calendar-list`
+==== List upcoming events in the command line: `calendar-list`
 
 Allows a user to view their upcoming calendar events.
 
@@ -322,7 +368,7 @@ app will launch their system default browser (i.e. not a WebView) and ask them t
 to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
 ====
 
-=== Deleting an event from the calendar : `calendar-delete`
+==== Deleting an event from the calendar : `calendar-delete`
 
 Allows the user to delete an event based on the index listed from the `calendar-list` command.
 
@@ -336,13 +382,13 @@ app will launch their system default browser (i.e. not a WebView) and ask them t
 to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
 ====
 
-=== Editing an event in the calendar : `calendar-edit` [coming in v2.0]
+==== Editing an event in the calendar : `calendar-edit` [coming in v2.0]
 
 Displays a list of upcoming events to the user and lets them select one to edit.
 
 Format: `calendar-edit`
 
-=== Reauthenticate Google Oauth : `reauthenticate`
+==== Reauthenticate Google Oauth : `reauthenticate`
 
 Allows a user to manually reauthenticate their Google Oauth credentials/permissions for SLAP.
 
@@ -356,7 +402,7 @@ browser (i.e. not a WebView) and ask them to select the account that they wish t
 edit. Failure authenticate will cause the program to freeze and crash.
 ====
 
-=== List upcoming events in the command line: `show-schedule`
+==== List upcoming events in the command line: `show-schedule`
 
 Allows a user to view their calendar events for the current day.
 
@@ -372,7 +418,9 @@ app will launch their system default browser (i.e. not a WebView) and ask them t
 to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
 ====
 
-=== Opening the Error Log : `errorlog`
+=== Other Tools
+
+==== Opening the Error Log : `errorlog`
 
 Opens the error log in a new window.
 
@@ -384,7 +432,7 @@ The user can also open the error log by pressing `View > Show Error Log`
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -410,7 +458,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -433,31 +481,34 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+==== Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+==== Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+// tag::dataencryption[]
+
+=== Exporting
+
+==== Export SLAP : `export-patients` `[coming in v2.0]`
+
+Exports your SLAP into a file so that it can be transported across operating systems or devices.
+
+=== Storage Features
+
+==== Saving the data
 
 SLAP data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
+==== Encrypting data files `[coming in v2.0]`
 
-
-=== Encrypting data files `[coming in v2.0]`
-
-Encryption is done automatically when SLAP is logged out or is exited.
-
-=== Export SLAP `[coming in v2.0]`
-
-Exports your SLAP into a file so that it can be transported across systems.
+Encryption should be done automatically when SLAP is logged out or is exited.
 
 == FAQ
 
@@ -466,6 +517,12 @@ Exports your SLAP into a file so that it can be transported across systems.
 
 == Command Summary
 
+* *Help Guide* : `help`
+* *Create New User* : `create-user u/USERNAME p/PASSWORD`
+* *Delete Existing User* : `delete-user u/USERNAME p/PASSWORD`
+* *Change Password of Existing User* : `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
+* *Login* : `login u/USERNAME p/PASSWORD`
+* *Logout* : `logout`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
@@ -476,7 +533,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
-* *Help* : `help`
+* *Add Session Reports/Logs* : `add-log INDEX log/LOGCONTENT`
 * *Calendar Launch* : `calendar-launch` `[Since v1.1] [Updated v1.4]`
 * *Calendar List* : `calendar-list` `[Since v1.2]`
 * *Calendar Add* : `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)` `[Since v1.3] [Updated v1.4]`
@@ -492,8 +549,3 @@ e.g.`switch scheduler`
 e.g.`navigate 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Create New User* : `create-user u/USERNAME p/PASSWORD`
-* *Delete Existing User* : `delete-user u/USERNAME p/PASSWORD`
-* *Change Password of Existing User* : `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
-* *Login* : `login u/USERNAME p/PASSWORD`
-* *Logout* : `logout`

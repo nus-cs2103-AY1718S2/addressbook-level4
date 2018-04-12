@@ -14,8 +14,8 @@ image::chan-jin-jia-photo.jpg[width="150", align="left"]
 
 {empty}[https://github.com/jaronchan[github]]
 
-+Role:
-+Responsibilities: Main UI, Map and Daily Scheduler
+Role: Project Developer +
+Responsibilities: Main UI, Map and Daily Scheduler
 
 '''
 
@@ -23,8 +23,8 @@ image::chan-jin-jia-photo.jpg[width="150", align="left"]
 image::Profilepic_Kaiser.jpg[width="150", align="left"]
 {empty}[https://github.com/kaisertanqr[github]]
 
-+Role: Project Developer
-+Responsibilities: Authentication, security and User Storage
+Role: Project Developer +
+Responsibilities: Authentication and Security, Multi-user features and User Storage
 
 '''
 
@@ -32,8 +32,8 @@ image::Profilepic_Kaiser.jpg[width="150", align="left"]
 image::ifalluphill.jpg[width="150", align="left"]
 {empty}[https://github.com/ifalluphill[github]]
 
-+Role: Developer
-+Responsibilities: Calendar and Todolist
+Role: Project Developer +
+Responsibilities: Calendar and Todolist
 
 '''
 
@@ -41,8 +41,8 @@ image::ifalluphill.jpg[width="150", align="left"]
 image::Clarissa_profilepic.jpg[width="150", align="left"]
 {empty}[https://github.com/clarissayong[github]]
 
-+Role: Project Developer
-+Responsibilities:
+Role: Project Developer +
+Responsibilities: Session Reports and Logging
 
 '''
 

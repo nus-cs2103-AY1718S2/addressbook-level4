@@ -235,10 +235,15 @@ This section describes some noteworthy details on how certain features are imple
 
 ==== Current Implementation
 
+.Structure of the Storage Component
+image::ModelClassDiagramUD.png[width="800"]
+
 To implement the multi-user feature, where each user has his/her own Address Book, we have added a `userDatabase` in Model
 to store all the available users in the application. The `userDatabase` is the same architectural level as the `addressBook`.
 A similar storing system used in `addressBook` is also used for `userDatabase` where the all the user data is stored in a
 single XML file.
+
+
 
 
 === Authentication
@@ -267,8 +272,6 @@ image::LoginFeatureUIComponent.png[width="800"]
 When the user is not logged in, commands that manipulate data in the application will be disabled. To avoid editing
 every single command, the invalidity of the command is handled in `LogicManager`.
 
-TODO: Add in design considerations
-
 ===== User Logout
 
 The logout feature similarly involves the UI, Logic and Model components. It allows the user to
@@ -278,6 +281,9 @@ The user cannot logout when he/she is not even logged in initially. This is alre
 of commands when the user is logged out.
 
 Similarly, some of the UI panels will be hidden when the user logs out.
+
+*Design Considerations* +
+A big design consideration is to
 
 
 

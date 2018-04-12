@@ -53,7 +53,7 @@ public class MarkCommand extends UndoableCommand {
         try {
             model.updatePerson(personToMark, updatedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new AssertionError("There cannot be a duplicate when adding participation");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
@@ -76,8 +76,8 @@ public class MarkCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Person} with the details of {@code personToMark}
+     * edited with the new marks.
      */
     private Person createUpdatedPerson(Person personToMark) {
         assert personToMark != null;

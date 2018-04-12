@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -58,7 +60,8 @@ public class XmlSerializableAddressBook {
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
      * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
      */
-    public AddressBook toModelType() throws IllegalValueException {
+    public AddressBook toModelType() throws IllegalValueException,
+        ConcurrentAppointmentException, PastAppointmentException {
         AddressBook addressBook = new AddressBook();
         for (XmlAdaptedTag t : tags) {
             addressBook.addTag(t.toModelType());

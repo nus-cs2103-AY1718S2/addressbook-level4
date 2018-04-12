@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!-- @@author Robert-Peng -->
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <TabPane id="petPatient-pane" prefHeight="42.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="NEVER">
+        <tabs>
+            <Tab id="petPatient-Tab" text=" PetPatients " >
+                <content>
+                    <AnchorPane  minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="200.0" />
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
     <ListView fx:id="petPatientListView" VBox.vgrow="ALWAYS" />
 </VBox>

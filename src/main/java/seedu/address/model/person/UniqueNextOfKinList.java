@@ -21,14 +21,14 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * @see Person#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniqueNextOfKinList implements Iterable<NextOfKin> {
+public class UniqueNextOfKinList implements Iterable<Test> {
 
-    private final ObservableList<NextOfKin> internalList = FXCollections.observableArrayList();
+    private final ObservableList<Test> internalList = FXCollections.observableArrayList();
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
      */
-    public boolean contains(NextOfKin toCheck) {
+    public boolean contains(Test toCheck) {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
@@ -38,7 +38,7 @@ public class UniqueNextOfKinList implements Iterable<NextOfKin> {
      *
      * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
      */
-    public void add(NextOfKin toAdd) throws DuplicatePersonException {
+    public void add(Test toAdd) throws DuplicatePersonException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicatePersonException();
@@ -52,7 +52,7 @@ public class UniqueNextOfKinList implements Iterable<NextOfKin> {
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
-    public void setPerson(NextOfKin target, NextOfKin editedPerson)
+    public void setPerson(Test target, Test editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
@@ -73,7 +73,7 @@ public class UniqueNextOfKinList implements Iterable<NextOfKin> {
      *
      * @throws PersonNotFoundException if no such person could be found in the list.
      */
-    public boolean remove(NextOfKin toRemove) throws PersonNotFoundException {
+    public boolean remove(Test toRemove) throws PersonNotFoundException {
         requireNonNull(toRemove);
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
         if (!personFoundAndDeleted) {
@@ -86,23 +86,23 @@ public class UniqueNextOfKinList implements Iterable<NextOfKin> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setPersons(List<NextOfKin> nextOfKins) throws DuplicatePersonException {
-        requireAllNonNull(nextOfKins);
+    public void setPersons(List<Test> tests) throws DuplicatePersonException {
+        requireAllNonNull(tests);
         final UniqueNextOfKinList replacement = new UniqueNextOfKinList();
-        for (final NextOfKin nextOfKin : nextOfKins) {
-            replacement.add(nextOfKin);
+        for (final Test test : tests) {
+            replacement.add(test);
         }
         setPersons(replacement);
     }
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<NextOfKin> asObservableList() {
+    public ObservableList<Test> asObservableList() {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
     @Override
-    public Iterator<NextOfKin> iterator() {
+    public Iterator<Test> iterator() {
         return internalList.iterator();
     }
 

@@ -7,7 +7,7 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Fan Muster</nameOfKin>
+        <nextOfKin>Fan Muster</nextOfKin>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -16,7 +16,7 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Jan Mueller</nameOfKin>
+        <nextOfKin>Jan Mueller</nextOfKin>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -25,7 +25,7 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Dan Kurz</nameOfKin>
+        <nextOfKin>Dan Kurz</nextOfKin>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -34,7 +34,7 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Tan Meier</nameOfKin>
+        <nextOfKin>Tan Meier</nextOfKin>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -43,7 +43,7 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Ran Meyer</nameOfKin>
+        <nextOfKin>Ran Meyer</nextOfKin>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -52,7 +52,7 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Lan Kunz</nameOfKin>
+        <nextOfKin>Lan Kunz</nextOfKin>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -61,7 +61,7 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Ban Best</nameOfKin>
+        <nextOfKin>Ban Best</nextOfKin>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -70,7 +70,7 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Van Meier</nameOfKin>
+        <nextOfKin>Van Meier</nextOfKin>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -79,6 +79,6 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Zan Mueller</nameOfKin>
+        <nextOfKin>Zan Mueller</nextOfKin>
     </persons>
 </addressbook>

@@ -29,13 +29,13 @@ public class Person {
     private final Remark remark;
     private final Cca cca;
     private final InjuriesHistory injuriesHistory;
-    private final NameOfKin nameOfKin;
+    private final NextOfKin nextOfKin;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Nric nric, Set<Tag> tags, Set<Subject> subjects, Remark remark, Cca cca,
-                  InjuriesHistory injuriesHistory, NameOfKin nameOfKin) {
+                  InjuriesHistory injuriesHistory, NextOfKin nextOfKin) {
         requireAllNonNull(name, nric, tags, subjects, cca);
         this.name = name;
         this.nric = nric;
@@ -45,7 +45,7 @@ public class Person {
         this.remark = remark;
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
-        this.nameOfKin = nameOfKin;
+        this.nextOfKin = nextOfKin;
     }
 
     public Name getName() {
@@ -68,8 +68,8 @@ public class Person {
         return injuriesHistory;
     }
 
-    public NameOfKin getNameOfKin() {
-        return nameOfKin;
+    public NextOfKin getNextOfKin() {
+        return nextOfKin;
     }
 
     /**
@@ -393,7 +393,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
+        return Objects.hash(name, nric, tags, subjects, remark, cca, injuriesHistory, nextOfKin);
     }
 
     @Override
@@ -410,7 +410,7 @@ public class Person {
                .append(getRemark());
         builder.append(" Cca: ").append(getCca());
         builder.append(" InjuriesHistory: ").append(getInjuriesHistory());
-        builder.append("  NextOfKin: ").append(getNameOfKin());
+        builder.append("  Test: ").append(getNextOfKin());
         return builder.toString();
     }
 

@@ -34,7 +34,7 @@ public class PersonUtil {
         person.getSubjects().stream().forEach(
             s -> sb.append(PREFIX_SUBJECT + s.subjectName + " " + s.subjectGrade + " ")
         );
-        sb.append(PREFIX_NOK + person.getNameOfKin().fullName + " ");
+        sb.append(PREFIX_NOK + person.getNextOfKin().fullName + " ");
         return sb.toString();
     }
 }

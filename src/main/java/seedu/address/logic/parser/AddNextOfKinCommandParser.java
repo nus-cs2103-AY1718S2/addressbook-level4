@@ -12,10 +12,11 @@ import seedu.address.logic.commands.AddNextOfKinCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NextOfKin;
+import seedu.address.model.person.Test;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
+
 /**
  * Parses input arguments and creates a new AddCommand object
  */
@@ -47,9 +48,9 @@ public class AddNextOfKinCommandParser implements Parser<AddNextOfKinCommand> {
             } else {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             }
-            NextOfKin nextOfKin = new NextOfKin(name, nric, phone, email, remark);
+            Test test = new Test(name, nric, phone, email, remark);
 
-            return new AddNextOfKinCommand(nextOfKin);
+            return new AddNextOfKinCommand(test);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

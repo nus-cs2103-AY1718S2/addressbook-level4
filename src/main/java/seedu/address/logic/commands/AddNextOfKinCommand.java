@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import java.io.IOException;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.NextOfKin;
+import seedu.address.model.person.Test;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
@@ -27,17 +27,17 @@ public class AddNextOfKinCommand extends UndoableCommand {
             + PREFIX_NRIC + "S9876543H "
             + PREFIX_REMARK + "Father ";
 
-    public static final String MESSAGE_SUCCESS = "New NextOfKin added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New Test added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private final NextOfKin toAdd;
+    private final Test toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
-    public AddNextOfKinCommand(NextOfKin nextOfKin) {
-        requireNonNull(nextOfKin);
-        toAdd = nextOfKin;
+    public AddNextOfKinCommand(Test test) {
+        requireNonNull(test);
+        toAdd = test;
     }
 
     @Override

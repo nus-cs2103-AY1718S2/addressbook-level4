@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
@@ -24,7 +23,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.person.NextOfKin;
+import seedu.address.model.person.Test;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -37,13 +36,13 @@ public class AddCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @Test
+    @org.junit.Test
     public void constructor_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
     }
 
-    @Test
+    @org.junit.Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
         Person validPerson = new PersonBuilder().build();
@@ -54,7 +53,7 @@ public class AddCommandTest {
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }
 
-    @Test
+    @org.junit.Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
         Person validPerson = new PersonBuilder().build();
@@ -65,7 +64,7 @@ public class AddCommandTest {
         getAddCommandForPerson(validPerson, modelStub).execute();
     }
 
-    @Test
+    @org.junit.Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
@@ -114,7 +113,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addNextOfKin(NextOfKin nextOfKin) {
+        public void addNextOfKin(Test test) {
 
         }
 

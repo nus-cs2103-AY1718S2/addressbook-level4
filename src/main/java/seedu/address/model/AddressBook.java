@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.person.NextOfKin;
+import seedu.address.model.person.Test;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniqueNextOfKinList;
 import seedu.address.model.person.UniquePersonList;
@@ -120,7 +120,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
-    public void addNextOfKin(NextOfKin p) throws DuplicatePersonException {
+    public void addNextOfKin(Test p) throws DuplicatePersonException {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
@@ -196,7 +196,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         personSubjects.forEach(subject -> correctSubjectReferences.add(masterSubjectObjects.get(subject)));
         return new Person(
                 person.getName(), person.getNric(), correctTagReferences, correctSubjectReferences, person.getRemark(),
-                person.getCca(), person.getInjuriesHistory(), person.getNameOfKin());
+                person.getCca(), person.getInjuriesHistory(), person.getNextOfKin());
     }
 
     /**
@@ -281,7 +281,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (tagList.remove(tag)) {
             Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
                                         person.getRemark(), person.getCca(), person.getInjuriesHistory(),
-                                        person.getNameOfKin());
+                                        person.getNextOfKin());
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {
@@ -306,7 +306,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             tagList.add(tagToBePlaced);
             Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
                                         person.getRemark(), person.getCca(), person.getInjuriesHistory(),
-                                        person.getNameOfKin());
+                                        person.getNextOfKin());
 
             try {
                 updatePerson(person, newPerson);

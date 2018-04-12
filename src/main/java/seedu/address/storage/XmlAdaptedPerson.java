@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -44,6 +44,12 @@ public class XmlAdaptedPerson {
     private String injuriesHistory;
     @XmlElement
     private String nameOfKin;
+    @XmlElement
+    private String phone;
+    @XmlElement
+    private String email;
+    @XmlElement
+    private String remarkOfKin;
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -55,7 +61,8 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects,
-                            String remark, String cca, String injuriesHistory, String nameOfKin) {
+                            String remark, String cca, String injuriesHistory, String nameOfKin, String phone,
+                            String email, String remarkOfKin) {
         this.name = name;
         this.nric = nric;
         this.remark = remark;
@@ -68,6 +75,9 @@ public class XmlAdaptedPerson {
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
         this.nameOfKin = nameOfKin;
+        this.phone = phone;
+        this.email = email;
+        this.remarkOfKin = remarkOfKin;
     }
 
     /**
@@ -90,7 +100,10 @@ public class XmlAdaptedPerson {
         cca = source.getCca().value;
         pos = source.getCca().pos;
         injuriesHistory = source.getInjuriesHistory().value;
-        nameOfKin = source.getNameOfKin().fullName;
+        nameOfKin = source.getNextOfKin().fullName;
+        phone = source.getNextOfKin().phone;
+        email = source.getNextOfKin().email;
+        remarkOfKin = source.getNextOfKin().remark;
     }
 
     /**
@@ -145,14 +158,14 @@ public class XmlAdaptedPerson {
 
         final InjuriesHistory injuriesHistory = new InjuriesHistory(this.injuriesHistory);
 
-        if (this.nameOfKin == null) {
+        if (this.nameOfKin == null || this.phone == null || this.email == null || this.remarkOfKin == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    NameOfKin.class.getSimpleName()));
+                    NextOfKin.class.getSimpleName()));
         }
 
-        final NameOfKin nameOfKin = new NameOfKin(this.nameOfKin);
+        final NextOfKin nextOfKin = new NextOfKin(this.nameOfKin, this.phone, this.email, this.remarkOfKin);
 
-        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
+        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nextOfKin);
     }
 
     @Override

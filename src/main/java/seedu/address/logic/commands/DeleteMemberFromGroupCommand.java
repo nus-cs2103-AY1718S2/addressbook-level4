@@ -89,10 +89,10 @@ public class DeleteMemberFromGroupCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof seedu.address.logic.commands.
-                DeleteMemberFromGroupCommand // instanceof handles nulls
-                && personToDelete.equals(((seedu.address.logic.commands.
-                DeleteMemberFromGroupCommand) other).personToDelete));
+                || (other instanceof seedu.address.logic.commands
+                .DeleteMemberFromGroupCommand // instanceof handles nulls
+                && personToDelete.equals(((seedu.address.logic.commands
+                .DeleteMemberFromGroupCommand) other).personToDelete));
     }
 
 

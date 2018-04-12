@@ -499,7 +499,6 @@ image::SearchPersonEvent.png[width="800"]
 ** Pros: May consume less resources.
 ** Cons: May have to program the UI to display the search result.
 
-
 // end::search[]
 
 // tag::dataencryption[]

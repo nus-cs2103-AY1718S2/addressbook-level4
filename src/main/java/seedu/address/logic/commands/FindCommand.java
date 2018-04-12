@@ -39,8 +39,7 @@ public class FindCommand extends Command {
                 || hashMap.containsKey("ownerNric")
                 || hashMap.containsKey("ownerTag")) {
             type = 1;
-        }
-        else if (hashMap.containsKey("petName")
+        } else if (hashMap.containsKey("petName")
                 || hashMap.containsKey("petSpecies")
                 || hashMap.containsKey("petBreed")
                 || hashMap.containsKey("petColour")

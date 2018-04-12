@@ -3,9 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_CHARLIE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CHARLIE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_CHARLIE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -30,7 +27,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatient;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalAppointments;
 import seedu.address.testutil.TypicalPetPatients;
 

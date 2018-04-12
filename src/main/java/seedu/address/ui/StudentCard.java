@@ -51,7 +51,7 @@ public class StudentCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(student.getName().fullName);
         if (student.isFavourite()) {
-            name.setStyle("-fx-text-fill: #f4b342");
+            name.setStyle("-fx-font-family: Segoe UI Semibold; -fx-font-size: 19pt; -fx-text-fill: #e56b00;");
         }
         phone.setText(student.getPhone().value);
         address.setText(student.getAddress().value);

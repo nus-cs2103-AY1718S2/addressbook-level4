@@ -48,13 +48,16 @@ public class BrowserPanel extends UiPart<Region> {
             + "AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A5297c Safari/602.1");
     }
 
+    /**
+     * Loads the GoodReads page for a book
+     * @param book
+     */
     private void loadBookPage(Book book) {
-    if(pingHost(GOOD_READS_URL, 80 , 3000)) {
-        loadPage(SEARCH_PAGE_URL + book.getIsbn().toString());
-    } else {
-        loadNoInternetPage();
+        if (pingHost(GOOD_READS_URL, 80 , 3000)) {
+            loadPage(SEARCH_PAGE_URL + book.getIsbn().toString());
+        } else {
+            loadNoInternetPage();
         }
-
     }
 
     public void loadPage(String url) {
@@ -90,6 +93,13 @@ public class BrowserPanel extends UiPart<Region> {
         loadBookPage(event.getNewSelection().book);
     }
 
+    /**
+     * Connects to a host and returns a boolean indicating whether the connection is successful
+     * @param host
+     * @param port
+     * @param timeout
+     * @return
+     */
     public static boolean pingHost(String host, int port, int timeout) {
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(host, port), timeout);

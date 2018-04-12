@@ -1,5 +1,5 @@
 # Wuhao-ooo
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_clearAlias() throws Exception {
@@ -8,7 +8,7 @@
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_deleteAlias() throws Exception {
@@ -18,7 +18,7 @@
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_editAlias() throws Exception {
@@ -30,7 +30,7 @@
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_findAlias() throws Exception {
@@ -41,7 +41,7 @@
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_helpAlias() throws Exception {
@@ -50,7 +50,7 @@
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_historyAlias() throws Exception {
@@ -66,7 +66,7 @@
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_listAlias() throws Exception {
@@ -75,7 +75,7 @@
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_selectAlias() throws Exception {
@@ -85,7 +85,7 @@
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommandAlias() throws Exception {
@@ -94,7 +94,7 @@
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_undoCommandWord_returnsUndoCommandAlias() throws Exception {
@@ -103,28 +103,7 @@
     }
 
 ```
-###### \java\seedu\address\model\CustomerStatsTest.java
-``` java
-package seedu.address.model;
-
-import static org.junit.Assert.assertEquals;
-
-import java.util.HashMap;
-
-import org.junit.Test;
-
-public class CustomerStatsTest {
-
-    private final CustomerStats customerStats = new CustomerStats();
-
-    @Test
-    public void constructor() {
-        assertEquals(new HashMap<String, Integer>(), customerStats.getOrdersCount());
-    }
-
-}
-```
-###### \java\seedu\address\storage\StorageManagerTest.java
+###### /java/seedu/address/storage/StorageManagerTest.java
 ``` java
     @Test
     public void getCustomerStatsFilePath() {
@@ -155,4 +134,25 @@ public class CustomerStatsTest {
         }
     }
 
+```
+###### /java/seedu/address/model/CustomerStatsTest.java
+``` java
+package seedu.address.model;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
+import org.junit.Test;
+
+public class CustomerStatsTest {
+
+    private final CustomerStats customerStats = new CustomerStats();
+
+    @Test
+    public void constructor() {
+        assertEquals(new HashMap<String, Integer>(), customerStats.getOrdersCount());
+    }
+
+}
 ```

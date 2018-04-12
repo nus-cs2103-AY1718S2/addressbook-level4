@@ -11,9 +11,12 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* A desktop Employees Tracker application. Has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* A Java application that helps manager manage his or her employees
-* Easy to use and can improve the productivity of the manager.
+* Welcome to Employees Tracker (E.T.)! E.T. is a *Human Resource Manager* desktop application
+that helps managers to manage their subordinates. Its has 2 main functionalities: providing information about employees,
+as well as helping in tracking the tasks assigned to each employee. Its User Interface (UI) is a hybrid of Command Line
+Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). That said, ET will suit you better
+if you can type fast and are familiar with CLI.
+* Do not hesitate, let's see what ET can do!
 
 == Site Map
 

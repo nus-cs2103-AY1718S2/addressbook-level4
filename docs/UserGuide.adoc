@@ -42,10 +42,10 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds, as shown in _Figure 1_.
 +
 .Graphical User Interface (GUI)
-image::Ui.png[width="790"]
+image::Ui_locked.png[width="790"]
 +
 . To use ET, you have to unlock it with the default password "admin". Type command `unlock`, enter the password in the pop-up dialog and press kbd:[Enter] on keyboard.
-. If it is your first time to use ET, you are supposed to authorize ET to access your Google Calendar. Type command `authenET`, a web page will be opened in your default browser,
+. If it is your first time to use ET, you are supposed to authorize ET to access your Google Calendar. Type this command `authenET`, a web page will be opened in your default browser,
 and you need to log in with your working google account and give the permission. Refer to Figure 2 below.
 +
 .Authorizing ET
@@ -180,7 +180,6 @@ Format: `unlock`
 
 [NOTE]
 ====
-* Employees Tracker is locked when Employees Tracker is opened.
 * You need to enter the password in a pop-up dialog and it must match the application's unlock password.
 * The initial default unlock password is 'admin', refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> if you want to change your password.
 ====
@@ -216,14 +215,16 @@ Adds John Doe with the information given into Employees Tracker.
 Adds Betsy Crowe with the information given into Employees Tracker.
 
 // tag::addphoto[]
-=== Adding an profile photo to an employee: `addPhoto`
+=== Adding a profile photo to an employee: `addPhoto`
 
-Adds a profile photo to an existing employee in Employees Tracker by selecting a photo file in a file chooser. +
+Adds a profile photo to an existing employee in E.T.. +
 Format: `addPhoto INDEX`
 
 ****
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* You will need to select a photo in a pop-up file chooser.
+* The acceptable photo types are .jpg, .jpeg, .png and .bmp.
 ****
 
 Examples:
@@ -234,14 +235,15 @@ Adds a photo to the 1st employee in the last employees listing.
 
 [NOTE]
 ====
-This command will automatically copy the file you chosed to the application's resource folder if it does not exist. Once
+This command will automatically copy the file you chosed to the application's data folder if it does not exist. Once
 the photo is copied, you should not delete it from that folder manually.
 ====
 // end::addphoto[]
 
 === Authorizes Employees Tracker : `authenET`
 
-Get the permission to allow Employees Tracker to access your google calendar. +
+Get the permission to allow E.T. to access your google calendar. +
+
 Format: `authenET`
 
 === Listing all employees : `list`
@@ -285,7 +287,7 @@ Exports current employees in ET to a csv(Excel) file named "employees.csv" insid
 Format: `export`
 
 ****
-* Make sure that the employees.csv is not open in your computer before excute `export`.
+* Make sure that the employees.csv is not open in your computer before execute `export`.
 ****
 
 Examples:
@@ -424,7 +426,7 @@ Selects the 2^nd^ employee in Employees Tracker.
 Selects the 1^st^ employee in the results of the `find` command.
 
 [NOTE]
-If `Calendar` in `Employee's Profile Panel` looks something similar to _Figure 8_, it means you will have to sign in to your *Google work account* from there. This is because for security purposes, you will be required to sign in once for every time you close Employees Tracker and open it again,
+If `Calendar` in `Employee's Profile Panel` looks something similar to _Figure 8_, it means you will have to sign in to your *Google work account* from there. This is for security purposes, you will be required to sign in once for every time you close Employees Tracker and open it again,
 
 .Signing in to Google account at the Calendar row
 image::sign_in.png[width="790"][height="200"]
@@ -531,7 +533,7 @@ Format: `myCalendar`
 Examples:
 
 * `myCalendar` +
-Views my own calendar in a pop-up window.
+Your calendar will be displayed on a pop-up window.
 
 === Viewing my to-do-list: `todoList`
 
@@ -544,24 +546,24 @@ Examples:
 Shows the to-do-list in a pop-up window. Refer to _Figure 14_ below.
 
 .To-do list window.
-image::todolist.png[width="300"][height="400"]
+image::todoList.png[width="300"][height="400"]
 // end::ct[]
 
 === Setting the application unlock password: `setPassword`
 
-Sets Employees Tracker's unlock password. +
+Sets E.T.'s unlock password. +
 Format: `setPassword`
 
 [NOTE]
 ====
-* You need to enter both old and new password in a pop-up dialog, and old password must match the application's unlock password.
+* You need to enter both old and new password in a pop-up dialog, and old password must match current application's unlock password.
 * The new password can contain any character EXCEPT comma(,).
 ====
 
 Examples:
 
 * `setPassword` +
-A dialog will pop up like below in _Figure 15_. Fill in the input boxes with matched old password and new password to set it as new password.
+A dialog will pop up like below in _Figure 15_. Fill in the input boxes with matched old password and new password.
 
 .Pop-up set password dialog
 image::setPassword_dialog.png[width="790"][height="200"]
@@ -594,7 +596,7 @@ Adds an event to the employee identified by the index number used in the last em
 Format: `addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION`
 
 ****
-* `STARTTIME` and `ENDTIME` *must be in the format `YYYY-MM-DDTHH-MM-SS`*.
+* `STARTTIME` and `ENDTIME` *must be in the format `YYYY-MM-DDTHH-MM-SS`*, which corresponds to year, month, day, hour, minute and second.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer 1, 2, 3,* …​
 ****
@@ -603,16 +605,8 @@ Examples:
 
 * `list` +
 `addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event` +
-Adds the event to 2^nd^ employee's timetable in the list.
+Adds the event to 2^nd^ employee's calendar in the list.
 
-[NOTE]
-If you are using Employees Tracker (ET) for the first time, you will be directed to a web page that requires you to sign in to Google account. Please sign in to your *Google work account*. Then, you will be directed to a web page similar to _Figure 9_. Please click `allow`. You can return to ET once you see a message as shown in _Figure 10_.
-
-.Process of signing in to Google account for the first time
-image::login_prompt.png[width="790"][height="200"]
-
-.Done signing in
-image::login_done.png[width="790"][height="200"]
 // end::addevent[]
 
 // tag::deleteevent[]
@@ -630,8 +624,8 @@ Format: `deleteEvent INDEX TITLE`
 Examples:
 
 * `list` +
-`deleteEvent 2 some event` +
-Deletes the event with title "some event" in 2^nd^ employee's timetable.
+`deleteEvent 2 Test Event` +
+Deletes the event with title "Test Event" in 2^nd^ employee's timetable.
 // end::deleteevent[]
 
 === Changing the theme of Employees Tracker: `changeTheme`
@@ -722,11 +716,13 @@ This section summarizes the usage of all Employees Tracker's commands.
 |*Command* |*Format* |*Example*
 |*Add* |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` |`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 |*AddEvent* |`addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION` |`addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event`
+|*AddPhoto* |`addPhoto INDEX` |
 |*Authentication* |`authenET` |
 |*Clear* |`clear` |
 |*Delete* |`delete INDEX` |`delete 3`
 |*DeleteEvent* |`deleteEvent INDEX TITLE` |`deleteEvent 1 event title`
 |*Edit* |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
+|*Export* |`export` |
 |*Find* |`find (n/NAME_KEYPHRASE \| t/TAG_KEYPHRASE \| r/RATING_KEYPHRASE) [n/NAME_KEYPHRASE]…​ [t/TAG_KEYPHRASE]…​ [r/RATING_KEYPHRASE]…` |`find n/James n/Jake Black t/Sales t/Marketing Senior r/3`
 |*Help* |`help` |
 |*History* |`history` |

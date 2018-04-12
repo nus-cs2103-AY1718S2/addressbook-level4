@@ -54,10 +54,6 @@ The various menu items have keyboard shortcuts that can be used to speed up your
 
 //@@author melvintzw
 == Known Issues
-* Deleting a customer will not update any Runner whose customer list contains that customer
-[functionality not yet implemented - coming in v1.5].
-* Deleting a runner will not update any Customer whose Runner field contains that runner
-[functionality not yet implemented - coming in v1.5].
 * Default date is January 1, 1970 (default Java Date value), when no start date or due date
 is specified when adding a customer.
 //@@author

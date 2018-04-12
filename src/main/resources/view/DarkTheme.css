@@ -336,7 +336,7 @@
 }
 
 #cardPane {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: transparent;
     -fx-border-width: 0;
 }
 

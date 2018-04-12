@@ -16,6 +16,7 @@ import static seedu.address.testutil.TypicalPersons.GEORGE;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -41,19 +42,21 @@ public class FindCommandTest {
 
     @Test
     public void equals() {
-        Predicate<Person> firstPredicate = forPerson -> Collections.singletonList("first")
-                .stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPerson.getName().fullName, keyword));
-        Predicate<Person> secondPredicate = forPerson -> Collections.singletonList("second")
-                .stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPerson.getName().fullName, keyword));
+        HashMap<String, String[]> first = new HashMap<>();
+        String[] firstKeyword = {""};
+        first.put("", firstKeyword);
+        HashMap<String, String[]> second = new HashMap<>();
+        String[] secondKeyword = {""};
+        second.put("", secondKeyword);
 
-        FindCommand findFirstCommand = new FindCommand(firstPredicate);
-        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+        FindCommand findFirstCommand = new FindCommand(first);
+        FindCommand findSecondCommand = new FindCommand(second);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        FindCommand findFirstCommandCopy = new FindCommand(first);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -322,10 +325,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand preparePersonNameCommand(String userInput) {
-        Predicate<Person> predicate = forPerson -> Arrays.asList(userInput.split("\\s+"))
-                .stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPerson.getName().fullName, keyword));
-        FindCommand command =
-                new FindCommand(predicate);
+        String[] split = userInput.split("\\s+");
+        HashMap<String, String[]> hashMap = new HashMap<>();
+        hashMap.put("ownerName", split);
+        FindCommand command = new FindCommand(hashMap);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -334,11 +337,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand preparePersonNricCommand(String userInput) {
-        Predicate<Person> predicate = forPerson -> Arrays.asList(userInput.split("\\s+"))
-                .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPerson.getNric().toString(), keyword));
-        FindCommand command =
-                new FindCommand(predicate);
+        String[] split = userInput.split("\\s+");
+        HashMap<String, String[]> hashMap = new HashMap<>();
+        hashMap.put("ownerNric", split);
+        FindCommand command = new FindCommand(hashMap);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -347,11 +349,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand preparePersonTagCommand(String userInput) {
-        Predicate<Person> predicate = forPerson -> Arrays.asList(userInput.split("\\s+"))
-                .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPerson.getTagString(), keyword));
-        FindCommand command =
-                new FindCommand(predicate);
+        String[] split = userInput.split("\\s+");
+        HashMap<String, String[]> hashMap = new HashMap<>();
+        hashMap.put("ownerTag", split);
+        FindCommand command = new FindCommand(hashMap);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -360,11 +361,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand preparePetNameCommand(String userInput) {
-        Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
-                .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getName().fullName, keyword));
-        FindCommand command =
-                new FindCommand(predicate, 2);
+        String[] split = userInput.split("\\s+");
+        HashMap<String, String[]> hashMap = new HashMap<>();
+        hashMap.put("petName", split);
+        FindCommand command = new FindCommand(hashMap);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -373,11 +373,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand preparePetSpeciesCommand(String userInput) {
-        Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
-                .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getSpecies().species, keyword));
-        FindCommand command =
-                new FindCommand(predicate, 2);
+        String[] split = userInput.split("\\s+");
+        HashMap<String, String[]> hashMap = new HashMap<>();
+        hashMap.put("petSpecies", split);
+        FindCommand command = new FindCommand(hashMap);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -386,11 +385,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand preparePetBreedCommand(String userInput) {
-        Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
-                .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getBreed().breed, keyword));
-        FindCommand command =
-                new FindCommand(predicate, 2);
+        String[] split = userInput.split("\\s+");
+        HashMap<String, String[]> hashMap = new HashMap<>();
+        hashMap.put("petBreed", split);
+        FindCommand command = new FindCommand(hashMap);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -399,11 +397,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand preparePetColorCommand(String userInput) {
-        Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
-                .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getColour().colour, keyword));
-        FindCommand command =
-                new FindCommand(predicate, 2);
+        String[] split = userInput.split("\\s+");
+        HashMap<String, String[]> hashMap = new HashMap<>();
+        hashMap.put("petColour", split);
+        FindCommand command = new FindCommand(hashMap);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -412,12 +409,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand preparePetBloodTypeCommand(String userInput) {
-        Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
-                .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
-                        forPetPatient.getBloodType().bloodType, keyword));
-        FindCommand command =
-                new FindCommand(predicate, 2);
+        String[] split = userInput.split("\\s+");
+        HashMap<String, String[]> hashMap = new HashMap<>();
+        hashMap.put("petBloodType", split);
+        FindCommand command = new FindCommand(hashMap);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -426,11 +421,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand preparePetTagCommand(String userInput) {
-        Predicate<PetPatient> predicate = forPetPatient -> Arrays.asList(userInput.split("\\s+"))
-                .stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(forPetPatient.getTagString(), keyword));
-        FindCommand command =
-                new FindCommand(predicate, 2);
+        String[] split = userInput.split("\\s+");
+        HashMap<String, String[]> hashMap = new HashMap<>();
+        hashMap.put("petTag", split);
+        FindCommand command = new FindCommand(hashMap);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

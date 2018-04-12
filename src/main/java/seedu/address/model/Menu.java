@@ -1,11 +1,7 @@
 //@@author ZacZequn
 package seedu.address.model;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import seedu.address.model.dish.Dish;
 import seedu.address.model.dish.Name;
@@ -29,18 +25,10 @@ public class Menu implements ReadOnlyMenu {
     {
         dishes = new HashMap<>();
         //only used for testing
-        dishes.put("Chicken Rice",new Dish(new Name("Chicken Rice"), new Price("3")));
+        dishes.put("Chicken Rice", new Dish(new Name("Chicken Rice"), new Price("3")));
     }
 
     public Menu() {}
-
-    /**
-     * Only used for testing purpose
-     * @param dish
-     */
-    public Menu(String dish){
-        dishes.put(dish, new Dish(new Name(dish)));
-    }
 
     public void setMenu(HashMap<String, Dish> theDishes) {
         dishes = theDishes;

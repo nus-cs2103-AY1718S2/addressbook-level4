@@ -110,8 +110,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void checkOrder(Person target)  throws DishNotFoundException{
-        if(menu.get(target.getOrder().toString()) == null){
+    public void checkOrder(Person target)  throws DishNotFoundException {
+        if (menu.get(target.getOrder().toString()) == null) {
             throw new DishNotFoundException("Dish not available");
         }
     }

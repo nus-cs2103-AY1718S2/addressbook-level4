@@ -1,9 +1,6 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,7 +17,7 @@ import seedu.address.model.dish.Dish;
 public class XmlSerializableMenu {
 
     @XmlElement
-    private HashMap<String,Dish> dishes;
+    private HashMap<String, Dish> dishes;
 
     /**
      * Creates an empty XmlSerializableMenu.

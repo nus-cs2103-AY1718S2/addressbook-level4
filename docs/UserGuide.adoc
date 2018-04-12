@@ -20,7 +20,8 @@ By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 // tag::applicationDescription[]
 *<<ReciRecipe,ReciRecipé>>* is for those who *prefer to use a desktop app for managing recipes*. More importantly, ReciRecipé is *optimized for those who prefer to work with a Command Line Interface* (<<CLI,CLI>>) while still having the benefits of a Graphical User Interface (<<GUI, GUI>>).
 // end::applicationDescription[]
-If you can type fast, ReciRecipé can get your recipe management done faster than traditional GUI apps. Interested? Jump to <<Quick start>> to get started. Enjoy!
+So if you are a home cook or are just interested in being exposed to more interesting recipes out there, this app is just for you. It provides an easy way to save old recipes, craft new ones, or just pull the many variations already available online! There are even ways to organise, manage and search through your saved recipes for easy retrieval.
+This user guide will systematically take you through all the functions available in ReciRecipé and teach you how to use them efficiently. Interested? Jump to <<Quick start>> to get started. Enjoy!
 
 == Quick start
 
@@ -40,8 +41,13 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds (refer to Figure 1).
 +
 .GUI for ReciRecipe
-image::Ui.png[width="790"]
+image::Ui_Layout.png[width="790"]
 {nbsp} +
+Referring to Figure 1 above:
+.. On the left section, we have the display page that gives more details about a specific recipe selected.
+.. On the upper-half of the center section, we have the command box where commands are entered.
+.. On the bottom-half of the center section, we have the response box where the application will provide feedback on the commands you have executed.
+.. On the right section, we have the list of recipes which will display a brief summary of the first few recipes saved in ReciRecipé.
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 
@@ -52,7 +58,12 @@ E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 [[CommandFormat]]
 *Command Format*
 
-* Words in upper case are the parameters to be supplied by the user. For example, in `add name/NAME calories/CALORIES`, *_NAME_* and *_CALORIES_* are parameters which can be substituted in this manner *`add name/Chicken rice calories/500`*.
+Words in upper case are the parameters to be supplied by the user. For example:
+
+* `add name/NAME calories/CALORIES`, *_NAME_* and *_CALORIES_* are parameters which can be substituted in this manner *`add name/Chicken rice calories/500`*.
+* `add name/NAME ingredient/INGREDIENT instruction/INSTRUCTION`,*_NAME_*, *_INGREDIENT_* and *_INSTRUCTION_* are parameters which can be substituted in this manner *`add name/Chicken rice ingredient/chicken, rice instruction/cut chicken into strips before cooking`*.
+* Below is a list of the remaining parameters with examples of their acceptable formats:
+
 ** *_INGREDIENT_* is a list of ingredients, delimited by commas. E.g. `chicken,fish,rice` and `chicken, fish, rice` are valid.
 ** *_INSTRUCTION_* can receive multiple lines as its value.
 ** *_PREPARATION_TIME_* and *_COOKING_TIME_* fields accept a number of formats: `1h20m`, `1h20min`, `1 hour 20 minutes`, `80m`, `80min`, `80 mins`, etc. However, sticking to the most simple format `80m` is recommended.
@@ -99,7 +110,7 @@ Examples:
 You can split the command into multiple lines as shown in the figure below. In case you forgot how to add a new line, it's kbd:[Shift]+kbd:[Enter].
 +
 .Add a recipe with multiple lines
-image::AddCommandEg2.png[width="750"]
+image::Ui_MultipleLine.png[width="750"]
 
 {nbsp} +
 If you follow the instructions correctly, the result box will inform you and your recipe will be added to the book (<<fig-AddRecipeResult>>).
@@ -108,7 +119,7 @@ If you follow the instructions correctly, the result box will inform you and you
 
 [[fig-AddRecipeResult]]
 .After adding a recipe
-image::AddCommandResultEg.png[width="750"]
+image::Ui_AddCommand.png[width="750"]
 {nbsp} +
 
 [TIP]
@@ -128,11 +139,15 @@ Clears all entries from the recipe book.
 
 Format: `clear`
 
+[WARNING]
+This command clears all data in the application.
+Use it cautiously.
+
 See figure below for the expected behavior of this command. +
 {nbsp}
 
 .Effect of the clear command
-image::ClearCommand.png[width="750"]
+image::Ui_Clear.png[width="750"]
 {nbsp} +
 [TIP]
 If you clear your recipe book by mistake, you can reverse the command with an `undo`.
@@ -282,14 +297,14 @@ Suppose you have that done and you are at this step (see <<fig-InternetSearchRes
 
 [[fig-InternetSearchResult0]]
 .After you click on a result
-image::InternetSearchResult.png[width="750"]
+image::Parse_Click.png[width="750"]
 
 {nbsp} +
 Type in *`parse`*, press kbd:[Enter] and you have <<fig-ParseCommand>>. +
 {nbsp} +
 [[fig-ParseCommand]]
 .Parsed result
-image::ParsedResult.png[width="750"]
+image::Parse_Success.png[width="750"]
 [TIP]
 After that, you can add more fields if you want, or you can just press kbd:[Enter] to submit an `add` command!
 
@@ -307,9 +322,9 @@ Examples:
 
 * *`delete 1`* +
 *`undo`* +
-Reverses the *`delete 1`* command +
+Reverses the *`delete 1`* command. +
 *`redo`* +
-Reapplies the *`delete 1`* command +
+Reapplies the *`delete 1`* command. +
 
 * *`delete 1`* +
 *`redo`* +
@@ -318,18 +333,13 @@ The *`redo`* command fails as there are no *`undo`* commands executed previously
 * *`delete 1`* +
 *`clear`* +
 *`undo`* +
-Reverses the *`clear`* command +
+Reverses the *`clear`* command. +
 *`undo`* +
-Reverses the *`delete 1`* command +
+Reverses the *`delete 1`* command. +
 *`redo`* +
-Reapplies the *`delete 1`* command +
+Reapplies the *`delete 1`* command. +
 *`redo`* +
-Reapplies the *`clear`* command +
-
-=== Saving the data
-
-ReciRecipé saves data in the hard disk automatically after any command that changes the data (`add`, `edit`, `clear`, ...). +
-There is no need to save manually.
+Reapplies the *`clear`* command. +
 
 //tag::internet-search[]
 [[Search]]
@@ -339,22 +349,22 @@ Searches for your recipe on the Internet.
 
 Format: `search RECIPE_NAME`
 
-See <<fig-InternetSearchCommand>> for more information. +
+See <<fig-InternetSearchCommand>> for more information on what will be displayed after you search for a specific food. +
 {nbsp}
 
 [[fig-InternetSearchCommand]]
 .Searching for your recipe on the Internet directly from ReciRecipé
-image::InternetSearchCommand.png[width="750"]
+image::Search_Result.png[width="750"]
 {nbsp} +
 Examples:
 
 * *`search chicken rice`* +
-You will be brought to the result page and from there, you can select any recipes that you want. See <<fig-InternetSearchResult>>. +
+You will be brought to the result page and from there, you can select any recipes that you want. See <<fig-InternetSearchResult>> to see what will be displayed after you select a specific recipe for chicken rice. +
 {nbsp} +
 +
 [[fig-InternetSearchResult]]
 .After you click on a result
-image::InternetSearchResult.png[width="750"]
+image::Parse_Click.png[width="750"]
 //end::internet-search[]
 
 === *`select`* : Selecting a recipe
@@ -440,7 +450,7 @@ See <<fig-ChangeThemeCommand>> for more information. +
 
 [[fig-ChangeThemeCommand]]
 .Two themes provided for ReciRecipé
-image::ChangeThemeCommand.png[width="750"]
+image::ChangeTheme2.png[width="750"]
 {nbsp} +
 [TIP]
 You can change theme from the menu bar or by pressing F2 too!
@@ -461,6 +471,11 @@ See <<fig-AuthorizationCode>> for more information. +
 image::AuthorizationCode.PNG[width="750"]
 {nbsp} +
 
+****
+* This command only accepts valid authorization codes.
+* If the authorization code is invalid, an error will be thrown indicating that the application was unable to upload the file.
+****
+
 === *`undo`* : Undoing previous command
 
 Restores the recipe book to the state before the previous _undoable_ command was executed.
@@ -476,7 +491,8 @@ Examples:
 
 * *`delete 1`* +
 *`list`* +
-*`undo`* (reverses the `delete 1` command) +
+*`undo`* +
+Reverses the `delete 1` command. +
 
 * *`select 1`* +
 *`list`* +
@@ -485,8 +501,10 @@ The *`undo`* command fails as there are no undoable commands executed previously
 
 * *`delete 1`* +
 *`clear`* +
-*`undo`* (reverses the *`clear`* command) +
-*`undo`* (reverses the *`delete 1`* command) +
+*`undo`* +
+Reverses the *`clear`* command. +
+*`undo`* +
+Reverses the *`delete 1`* command. +
 
 === *`upload`* : Uploading all recipes
 
@@ -508,12 +526,12 @@ If it is the first time the user is using the `upload` command, you will be prom
 An authorization code will then be given to you which you should copy and paste into this app. See <<token>> for details.
 ====
 
-Examples:
+Example:
 
 * *`upload RecipeBook`* +
-Data file will be uploaded to Dropbox with the name RecipeBook.xml.
-* Perform any *`add`*, *`delete`* or *`edit`* commands.
-* *`upload RecipeBook`* +
+Data file will be uploaded to Dropbox with the name RecipeBook.xml. +
+*`add`*, *`delete`* or *`edit`*. +
+*`upload RecipeBook`* +
 Updated data file will be uploaded to Dropbox with the name RecipeBook(1).xml.
 
 === *`view_group`* : Viewing groups of recipes
@@ -526,6 +544,11 @@ Examples:
 
 * *`view_group My best`* +
 Lists all recipes inside `_My best_` group.
+
+=== Saving the data
+
+No specific command is required to save data in this application. ReciRecipé saves data in the hard disk automatically after any command that changes the data (`add`, `edit`, `clear`, ...). +
+There is no need to save manually.
 
 == Upcoming features
 

@@ -8,6 +8,9 @@ import seedu.address.model.account.Password;
 import seedu.address.model.account.PrivilegeLevel;
 import seedu.address.model.account.Username;
 
+/**
+ * A utility class to help with building Account objects.
+ */
 public class AccountBuilder {
 
     public static final String DEFAULT_NAME = "Victor Tardieu";
@@ -24,6 +27,9 @@ public class AccountBuilder {
     private Username username;
     private Password password;
 
+    /**
+     *  Constructor for account with default values
+     */
     public AccountBuilder() {
         name = new Name(DEFAULT_NAME);
         credential = new Credential(DEFAULT_USERNAME, DEFAULT_PASSWORD);
@@ -31,26 +37,51 @@ public class AccountBuilder {
         privilegeLevel = new PrivilegeLevel(Integer.parseInt(DEFAULT_PRIVILEGE_LEVEL));
     }
 
+    /**
+     * Sets the {@code Name} of the {@code Account} that we are building.
+     * @param name
+     * @return
+     */
     public AccountBuilder withName(String name) {
         this.name = new Name(name);
         return this;
     }
 
+    /**
+     * Sets the {@code Credential} of the {@code Account} that we are building.
+     * @param username
+     * @param password
+     * @return
+     */
     public AccountBuilder withCredential(String username, String password) {
         this.credential = new Credential(username, password);
         return this;
     }
 
+    /**
+     * Sets the {@code MatricNumber} of the {@code Account} that we are building.
+     * @param matricNumber
+     * @return
+     */
     public AccountBuilder withMatricNumber(String matricNumber) {
         this.matricNumber = new MatricNumber(matricNumber);
         return this;
     }
 
+    /**
+     * Sets the {@code PrivilegeLevel} of the {@code Account} that we are building.
+     * @param privilegeLevel
+     * @return
+     */
     public AccountBuilder withPrivilegeLevel (String privilegeLevel) {
         this.privilegeLevel = new PrivilegeLevel(Integer.parseInt(privilegeLevel));
         return this;
     }
 
+    /**
+     * Create an account
+     * @return
+     */
     public Account build() {
         return new Account(name, credential, matricNumber, privilegeLevel);
     }

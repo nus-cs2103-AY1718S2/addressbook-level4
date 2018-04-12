@@ -9,6 +9,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.account.Account;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 
+/**
+ * A utility class containing a list of {@code Account} objects to be used in tests.
+ */
 public class TypicalAccounts {
 
     public static final Account HARRY = new AccountBuilder()

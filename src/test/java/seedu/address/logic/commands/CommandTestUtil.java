@@ -90,12 +90,19 @@ public class CommandTestUtil {
         }
     }
 
-    public static void assertCommandSuccess(Command command, UniqueAccountList actualUAL, String expectedMessage,
-                                            UniqueAccountList expectedUAL) {
+    /**
+     *
+     * @param command
+     * @param actualList
+     * @param expectedMessage
+     * @param expectedList
+     */
+    public static void assertCommandSuccess(Command command, UniqueAccountList actualList, String expectedMessage,
+                                            UniqueAccountList expectedList) {
         try {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);
-            assertEquals(expectedUAL, actualUAL);
+            assertEquals(expectedList, actualList);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
         }

@@ -4,7 +4,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javafx.collections.FXCollections;
 import seedu.address.commons.core.EventsCenter;
@@ -16,7 +15,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.WeeklyEvent;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
 
 /**
  * Display the common free time slots of members in a group

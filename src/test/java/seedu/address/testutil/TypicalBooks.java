@@ -1,15 +1,15 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_DYSTOPIA;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FICTION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_YOU;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +23,7 @@ import seedu.address.model.book.exceptions.DuplicateBookException;
  * A utility class containing a list of {@code Book} objects to be used in tests.
  */
 public class TypicalBooks {
-
+    //@@author khiayi
     public static final Book ANIMAL = new BookBuilder().withTitle("Animal Farm")
         .withAuthor("George Orwell")
         .withAvail("Available")
@@ -67,21 +67,21 @@ public class TypicalBooks {
         .withAvail("Available").build();
 
     // Manually added - Book's details found in {@code CommandTestUtil}
-    public static final Book AMY = new BookBuilder().withTitle(VALID_TITLE_AMY)
-        .withAuthor(VALID_AUTHOR_AMY)
-        .withIsbn(VALID_ISBN_AMY)
-        .withAvail(VALID_AVAIL_AMY)
-        .withTags(VALID_TAG_FRIEND).build();
-    public static final Book BOB = new BookBuilder().withTitle(VALID_TITLE_BOB)
-        .withAuthor(VALID_AUTHOR_BOB)
-        .withIsbn(VALID_ISBN_BOB)
-        .withAvail(VALID_AVAIL_BOB)
-        .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+    public static final Book XVI = new BookBuilder().withTitle(VALID_TITLE_XVI)
+        .withAuthor(VALID_AUTHOR_XVI)
+        .withIsbn(VALID_ISBN_XVI)
+        .withAvail(VALID_AVAIL_XVI)
+        .withTags(VALID_TAG_DYSTOPIA).build();
+    public static final Book YOU = new BookBuilder().withTitle(VALID_TITLE_YOU)
+        .withAuthor(VALID_AUTHOR_YOU)
+        .withIsbn(VALID_ISBN_YOU)
+        .withAvail(VALID_AVAIL_YOU)
+        .withTags(VALID_TAG_FICTION)
         .build();
 
     public static final String KEYWORD_MATCHING_GIRL = "Girl"; // A keyword that matches GIRL
     public static final String KEYWORD_MATCHING_BREAKING = "Breaking"; // A keyword that matches BREAKING
-
+    //@@author
     private TypicalBooks() {
     } // prevents instantiation
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- Catalogue save file which contains the same Book values as in
 {@code TypicalBooks#getTypicalCatalogue()}-->
+<!-- @@author khiayi -->
 <catalogue>
     <books>
         <title>Animal Farm</title>

@@ -1,38 +1,39 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.AVAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.AVAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.AVAIL_DESC_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.AVAIL_DESC_YOU;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_AUTHOR_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_AVAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ISBN_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.ISBN_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ISBN_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.ISBN_DESC_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.ISBN_DESC_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_DYSTOPIA;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FICTION;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_DYSTOPIA;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_YOU;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ISBN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.testutil.TypicalBooks.AMY;
 import static seedu.address.testutil.TypicalBooks.ANIMAL;
-import static seedu.address.testutil.TypicalBooks.BOB;
 import static seedu.address.testutil.TypicalBooks.CALIFORNIA;
 import static seedu.address.testutil.TypicalBooks.HOLES;
 import static seedu.address.testutil.TypicalBooks.INVISIBLE;
 import static seedu.address.testutil.TypicalBooks.KEYWORD_MATCHING_GIRL;
+import static seedu.address.testutil.TypicalBooks.XVI;
+import static seedu.address.testutil.TypicalBooks.YOU;
 
 import org.junit.Test;
 
@@ -69,63 +70,93 @@ public class AddCommandSystemTest extends CatalogueSystemTest {
         /* Case: add a book without tags to a non-empty catalogue, command with leading spaces and trailing spaces
          * -> added
          */
-        Book toAdd = AMY;
-        String command = "   " + AddCommand.COMMAND_WORD + "  " + TITLE_DESC_AMY + "  " + "   " + AUTHOR_DESC_AMY
-            + ISBN_DESC_AMY + " "
-            + AVAIL_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
+        Book toAdd = XVI;
+        String command = "   " + AddCommand.COMMAND_WORD + "  " + TITLE_DESC_XVI + "  " + "   " + AUTHOR_DESC_XVI
+            + " " + ISBN_DESC_XVI + " "
+            + AVAIL_DESC_XVI + "   " + TAG_DESC_DYSTOPIA + " ";
         assertCommandSuccess(command, toAdd);
 
-        /* Case: undo adding Amy to the list -> Amy deleted */
+        /* Case: undo adding XVI to the list -> XVI deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo adding Amy to the list -> Amy added again */
+        /* Case: redo adding XVI to the list -> XVI added again */
         command = RedoCommand.COMMAND_WORD;
         model.addBook(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add a book with all fields same as another book in the catalogue except name -> added */
-        toAdd = new BookBuilder().withTitle(VALID_TITLE_BOB).withAuthor(VALID_AUTHOR_AMY)
-            .withIsbn(VALID_ISBN_AMY).withAvail(VALID_AVAIL_AMY)
-            .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_BOB + AUTHOR_DESC_AMY + ISBN_DESC_AMY + AVAIL_DESC_AMY
-            + TAG_DESC_FRIEND;
+        /* Case: add a book with all fields same as another book in the catalogue except name -> not added */
+        toAdd = new BookBuilder().withTitle(VALID_TITLE_YOU).withAuthor(VALID_AUTHOR_XVI)
+            .withIsbn(VALID_ISBN_XVI).withAvail(VALID_AVAIL_XVI)
+            .withTags(VALID_TAG_DYSTOPIA).build();
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_YOU + AUTHOR_DESC_XVI + ISBN_DESC_XVI + AVAIL_DESC_XVI
+            + TAG_DESC_DYSTOPIA;
         assertCommandFailure(command, toAdd);
 
         /* Case: add a book with all fields same as another book in the catalogue except isbn -> added */
-        toAdd = new BookBuilder().withTitle(VALID_TITLE_AMY).withAuthor(VALID_AUTHOR_AMY)
-            .withIsbn(VALID_ISBN_BOB).withAvail(VALID_AVAIL_AMY)
-            .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + AUTHOR_DESC_AMY + ISBN_DESC_BOB + AVAIL_DESC_AMY
-            + TAG_DESC_FRIEND;
+        toAdd = new BookBuilder().withTitle(VALID_TITLE_XVI).withAuthor(VALID_AUTHOR_XVI)
+            .withIsbn(VALID_ISBN_YOU).withAvail(VALID_AVAIL_XVI)
+            .withTags(VALID_TAG_DYSTOPIA).build();
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + AUTHOR_DESC_XVI + ISBN_DESC_YOU + AVAIL_DESC_XVI
+            + TAG_DESC_DYSTOPIA;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a book with all fields same as another book in the catalogue except avail -> added */
-        toAdd = new BookBuilder().withTitle(VALID_TITLE_AMY).withAuthor(VALID_AUTHOR_AMY)
-            .withIsbn(VALID_ISBN_AMY).withAvail(VALID_AVAIL_BOB)
-            .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + AUTHOR_DESC_AMY + ISBN_DESC_AMY + AVAIL_DESC_BOB
-            + TAG_DESC_FRIEND;
+        //@@author khiayi
+        /* Case: add a book with all fields same as another book in the catalogue except name and ISBN -> added */
+        toAdd = new BookBuilder().withTitle(VALID_TITLE_YOU).withAuthor(VALID_AUTHOR_XVI)
+            .withIsbn("1111111111111").withAvail(VALID_AVAIL_XVI)
+            .withTags(VALID_TAG_DYSTOPIA).build();
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_YOU + AUTHOR_DESC_XVI + " " + PREFIX_ISBN + "1111111111111"
+            + AVAIL_DESC_XVI + TAG_DESC_DYSTOPIA;
+        assertCommandSuccess(command, toAdd);
+        //@@author
+
+        /* Case: add a book with all fields same as another book in the catalogue except avail -> not added */
+        toAdd = new BookBuilder().withTitle(VALID_TITLE_XVI).withAuthor(VALID_AUTHOR_XVI)
+            .withIsbn(VALID_ISBN_XVI).withAvail(VALID_AVAIL_YOU)
+            .withTags(VALID_TAG_DYSTOPIA).build();
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + AUTHOR_DESC_XVI + ISBN_DESC_XVI + AVAIL_DESC_YOU
+            + TAG_DESC_DYSTOPIA;
         assertCommandFailure(command, toAdd);
 
-        /* Case: add a book with all fields same as another book in the catalogue except address -> added */
-        toAdd = new BookBuilder().withTitle(VALID_TITLE_AMY).withAuthor(VALID_AUTHOR_BOB)
-            .withIsbn(VALID_ISBN_AMY).withAvail(VALID_AVAIL_AMY)
-            .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + AUTHOR_DESC_BOB + ISBN_DESC_AMY + AVAIL_DESC_AMY
-            + TAG_DESC_FRIEND;
+        //@@author khiayi
+        /* Case: add a book with all fields same as another book in the catalogue except avail and ISBN -> added */
+        toAdd = new BookBuilder().withTitle(VALID_TITLE_XVI).withAuthor(VALID_AUTHOR_XVI)
+            .withIsbn("2222222222222").withAvail(VALID_AVAIL_YOU)
+            .withTags(VALID_TAG_DYSTOPIA).build();
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + AUTHOR_DESC_XVI + " " + PREFIX_ISBN + "2222222222222"
+            + AVAIL_DESC_YOU + TAG_DESC_DYSTOPIA;
+        assertCommandSuccess(command, toAdd);
+        //@@author
+
+        /* Case: add a book with all fields same as another book in the catalogue except author -> added */
+        toAdd = new BookBuilder().withTitle(VALID_TITLE_XVI).withAuthor(VALID_AUTHOR_YOU)
+            .withIsbn(VALID_ISBN_XVI).withAvail(VALID_AVAIL_XVI)
+            .withTags(VALID_TAG_DYSTOPIA).build();
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + AUTHOR_DESC_YOU + ISBN_DESC_XVI + AVAIL_DESC_XVI
+            + TAG_DESC_DYSTOPIA;
         assertCommandFailure(command, toAdd);
+
+        //@@author khiayi
+        /* Case: add a book with all fields same as another book in the catalogue except author and ISBN -> added */
+        toAdd = new BookBuilder().withTitle(VALID_TITLE_XVI).withAuthor(VALID_AUTHOR_YOU)
+            .withIsbn("3333333333333").withAvail(VALID_AVAIL_XVI)
+            .withTags(VALID_TAG_DYSTOPIA).build();
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + AUTHOR_DESC_YOU + " " + PREFIX_ISBN + "3333333333333"
+            + AVAIL_DESC_XVI + TAG_DESC_DYSTOPIA;
+        assertCommandSuccess(command, toAdd);
+        //@@author
 
         /* Case: add to empty catalogue -> added */
         deleteAllBooks();
         assertCommandSuccess(ANIMAL);
 
         /* Case: add a book with tags, command with parameters in random order -> added */
-        toAdd = BOB;
-        command = AddCommand.COMMAND_WORD + AUTHOR_DESC_BOB + TAG_DESC_FRIEND + ISBN_DESC_BOB + TITLE_DESC_BOB
-            + TAG_DESC_HUSBAND + AVAIL_DESC_BOB;
+        toAdd = YOU;
+        command = AddCommand.COMMAND_WORD + AUTHOR_DESC_YOU + ISBN_DESC_YOU + TITLE_DESC_YOU
+            + TAG_DESC_FICTION + AVAIL_DESC_YOU;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a book, missing tags -> added */
@@ -157,19 +188,19 @@ public class AddCommandSystemTest extends CatalogueSystemTest {
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOK);
 
         /* Case: missing name -> rejected */
-        command = AddCommand.COMMAND_WORD + AUTHOR_DESC_AMY + ISBN_DESC_AMY + AVAIL_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + AUTHOR_DESC_XVI + ISBN_DESC_XVI + AVAIL_DESC_XVI;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing isbn -> rejected */
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + AUTHOR_DESC_AMY + AVAIL_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + AUTHOR_DESC_XVI + AVAIL_DESC_XVI;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing avail -> rejected */
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + AUTHOR_DESC_AMY + ISBN_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + AUTHOR_DESC_XVI + ISBN_DESC_XVI;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing author -> rejected */
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + ISBN_DESC_AMY + AVAIL_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + ISBN_DESC_XVI + AVAIL_DESC_XVI;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
@@ -177,23 +208,23 @@ public class AddCommandSystemTest extends CatalogueSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
-        command = AddCommand.COMMAND_WORD + INVALID_TITLE_DESC + AUTHOR_DESC_AMY + ISBN_DESC_AMY + AVAIL_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + INVALID_TITLE_DESC + AUTHOR_DESC_XVI + ISBN_DESC_XVI + AVAIL_DESC_XVI;
         assertCommandFailure(command, Title.MESSAGE_TITLE_CONSTRAINTS);
 
         /* Case: invalid isbn -> rejected */
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + AUTHOR_DESC_AMY + INVALID_ISBN_DESC + AVAIL_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + AUTHOR_DESC_XVI + INVALID_ISBN_DESC + AVAIL_DESC_XVI;
         assertCommandFailure(command, Isbn.MESSAGE_ISBN_CONSTRAINTS);
 
         /* Case: invalid avail -> rejected */
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + AUTHOR_DESC_AMY + ISBN_DESC_AMY + INVALID_AVAIL_DESC;
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + AUTHOR_DESC_XVI + ISBN_DESC_XVI + INVALID_AVAIL_DESC;
         assertCommandFailure(command, Avail.MESSAGE_AVAIL_CONSTRAINTS);
 
         /* Case: invalid author -> rejected */
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + INVALID_AUTHOR_DESC + ISBN_DESC_AMY + AVAIL_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + INVALID_AUTHOR_DESC + ISBN_DESC_XVI + AVAIL_DESC_XVI;
         assertCommandFailure(command, Author.MESSAGE_AUTHOR_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + AUTHOR_DESC_AMY + ISBN_DESC_AMY + AVAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_XVI + AUTHOR_DESC_XVI + ISBN_DESC_XVI + AVAIL_DESC_XVI
             + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
 

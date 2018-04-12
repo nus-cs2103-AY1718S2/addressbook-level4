@@ -59,8 +59,6 @@ public class Username implements Serializable {
 
     @Override
     public String toString() {
-        return "Username{"
-            + "username='" + username + '\''
-            + '}';
+        return username;
     }
 }

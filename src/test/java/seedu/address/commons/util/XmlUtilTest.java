@@ -35,11 +35,11 @@ public class XmlUtilTest {
 
     private static final String INVALID_ISBN = "9482asf424";
 
-    private static final String VALID_NAME = "Hans Muster";
-    private static final String VALID_ISBN = "9482424";
+    private static final String VALID_NAME = "Animal Farm";
+    private static final String VALID_ISBN = "9780736692427";
     private static final String VALID_AVAIL = "Borrowed";
-    private static final String VALID_AUTHOR = "Muster Hans";
-    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    private static final String VALID_AUTHOR = "George Orwell";
+    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("political"));
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

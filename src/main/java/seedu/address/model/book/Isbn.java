@@ -9,10 +9,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Isbn {
 
-
+    //@@author khiayi
     public static final String MESSAGE_ISBN_CONSTRAINTS =
-        "Isbn numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String ISBN_VALIDATION_REGEX = "\\d{3,}";
+        "Isbn numbers can only contain numbers, and should be at 13 digits long";
+    public static final String ISBN_VALIDATION_REGEX = "\\d{13}";
     public final String value;
 
     /**
@@ -25,7 +25,7 @@ public class Isbn {
         checkArgument(isValidIsbn(isbn), MESSAGE_ISBN_CONSTRAINTS);
         this.value = isbn;
     }
-
+    //@@author
     /**
      * Returns true if a given string is a valid book isbn number.
      */

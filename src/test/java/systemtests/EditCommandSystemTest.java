@@ -2,32 +2,32 @@ package systemtests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.AVAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.AVAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.AVAIL_DESC_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.AVAIL_DESC_YOU;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_AUTHOR_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_AVAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ISBN_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.ISBN_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ISBN_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.ISBN_DESC_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.ISBN_DESC_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_DYSTOPIA;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FICTION;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_XVI;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_YOU;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_DYSTOPIA;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FICTION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_YOU;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BOOKS;
-import static seedu.address.testutil.TypicalBooks.AMY;
-import static seedu.address.testutil.TypicalBooks.BOB;
 import static seedu.address.testutil.TypicalBooks.KEYWORD_MATCHING_GIRL;
+import static seedu.address.testutil.TypicalBooks.XVI;
+import static seedu.address.testutil.TypicalBooks.YOU;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
 import org.junit.Test;
@@ -63,10 +63,10 @@ public class EditCommandSystemTest extends CatalogueSystemTest {
          * -> edited
          */
         Index index = INDEX_FIRST_BOOK;
-        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + TITLE_DESC_BOB + "  "
-            + ISBN_DESC_BOB + " " + AVAIL_DESC_BOB + "  " + AUTHOR_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
-        Book editedBook = new BookBuilder().withTitle(VALID_TITLE_BOB).withIsbn(VALID_ISBN_BOB)
-            .withAvail(VALID_AVAIL_BOB).withAuthor(VALID_AUTHOR_BOB).withTags(VALID_TAG_HUSBAND).build();
+        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + TITLE_DESC_YOU + "  "
+            + ISBN_DESC_YOU + " " + AVAIL_DESC_YOU + "  " + AUTHOR_DESC_YOU + " " + TAG_DESC_FICTION + " ";
+        Book editedBook = new BookBuilder().withTitle(VALID_TITLE_YOU).withIsbn(VALID_ISBN_YOU)
+            .withAvail(VALID_AVAIL_YOU).withAuthor(VALID_AUTHOR_YOU).withTags(VALID_TAG_FICTION).build();
         assertCommandSuccess(command, index, editedBook);
 
         /* Case: undo editing the last book in the list -> last book restored */
@@ -82,15 +82,16 @@ public class EditCommandSystemTest extends CatalogueSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a book with new values same as existing values -> edited */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + ISBN_DESC_BOB
-            + AVAIL_DESC_BOB + AUTHOR_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, index, BOB);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_YOU + ISBN_DESC_YOU
+            + AVAIL_DESC_YOU + AUTHOR_DESC_YOU + TAG_DESC_FICTION;
+        assertCommandSuccess(command, index, YOU);
+
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_BOOK;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_DYSTOPIA;
         Book bookToEdit = getModel().getFilteredBookList().get(index.getZeroBased());
-        editedBook = new BookBuilder(bookToEdit).withTags(VALID_TAG_FRIEND).build();
+        editedBook = new BookBuilder(bookToEdit).withTags(VALID_TAG_DYSTOPIA).build();
         assertCommandSuccess(command, index, editedBook);
 
         /* Case: clear tags -> cleared */
@@ -100,14 +101,14 @@ public class EditCommandSystemTest extends CatalogueSystemTest {
         assertCommandSuccess(command, index, editedBook);
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
-
+        //@@author khiayi
         /* Case: filtered book list, edit index within bounds of catalogue and book list -> edited */
         showBooksWithTitle(KEYWORD_MATCHING_GIRL);
         index = INDEX_FIRST_BOOK;
         assertTrue(index.getZeroBased() < getModel().getFilteredBookList().size());
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + TITLE_DESC_BOB;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + TITLE_DESC_YOU;
         bookToEdit = getModel().getFilteredBookList().get(index.getZeroBased());
-        editedBook = new BookBuilder(bookToEdit).withTitle(VALID_TITLE_BOB).build();
+        editedBook = new BookBuilder(bookToEdit).withTitle(VALID_TITLE_YOU).build();
         assertCommandSuccess(command, index, editedBook);
 
         /* Case: filtered book list, edit index within bounds of catalogue but out of bounds of book list
@@ -115,7 +116,7 @@ public class EditCommandSystemTest extends CatalogueSystemTest {
          */
         showBooksWithTitle(KEYWORD_MATCHING_GIRL);
         int invalidIndex = getModel().getCatalogue().getBookList().size();
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_YOU,
             Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
         /* --------------------- Performing edit operation while a book card is selected -------------------------- */
@@ -126,29 +127,29 @@ public class EditCommandSystemTest extends CatalogueSystemTest {
         showAllBooks();
         index = INDEX_FIRST_BOOK;
         selectBook(index);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_AMY + ISBN_DESC_AMY
-            + AVAIL_DESC_AMY + AUTHOR_DESC_AMY + TAG_DESC_FRIEND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_XVI + ISBN_DESC_XVI
+            + AVAIL_DESC_XVI + AUTHOR_DESC_XVI + TAG_DESC_DYSTOPIA;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new book's name
-        assertCommandSuccess(command, index, AMY, index);
-
+        assertCommandSuccess(command, index, XVI, index);
+        //@@author
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + TITLE_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + TITLE_DESC_YOU,
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " -1" + TITLE_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " -1" + TITLE_DESC_YOU,
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
         invalidIndex = getModel().getFilteredBookList().size() + 1;
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_YOU,
             Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
         /* Case: missing index -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + TITLE_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + TITLE_DESC_YOU,
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: missing all fields -> rejected */
@@ -176,17 +177,17 @@ public class EditCommandSystemTest extends CatalogueSystemTest {
             Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a book with new values same as another book's values -> rejected */
-        executeCommand(BookUtil.getAddCommand(BOB));
-        assertTrue(getModel().getCatalogue().getBookList().contains(BOB));
+        executeCommand(BookUtil.getAddCommand(YOU));
+        assertTrue(getModel().getCatalogue().getBookList().contains(YOU));
         index = INDEX_FIRST_BOOK;
-        assertFalse(getModel().getFilteredBookList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + ISBN_DESC_BOB
-            + AVAIL_DESC_BOB + AUTHOR_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        assertFalse(getModel().getFilteredBookList().get(index.getZeroBased()).equals(YOU));
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_YOU + ISBN_DESC_YOU
+            + AVAIL_DESC_YOU + AUTHOR_DESC_YOU + TAG_DESC_DYSTOPIA + TAG_DESC_FICTION;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_BOOK);
 
         /* Case: edit a book with new values same as another book's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + ISBN_DESC_BOB
-            + AVAIL_DESC_BOB + AUTHOR_DESC_BOB + TAG_DESC_HUSBAND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_YOU + ISBN_DESC_YOU
+            + AVAIL_DESC_YOU + AUTHOR_DESC_YOU + TAG_DESC_FICTION;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_BOOK);
     }
 

@@ -171,4 +171,9 @@ public class Account implements Serializable {
     public int hashCode() {
         return Objects.hash(name, credential, matricNumber, privilegeLevel);
     }
+
+    @Override
+    public String toString() {
+        return this.credential.getUsername().toString();
+    }
 }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author khiayi -->
 <!-- Book with missing title field -->
 <book>
-    <isbn>9482424</isbn>
-    <author>Muster Hans</author>
+    <isbn>9780736692427</isbn>
+    <author>George Orwell</author>
     <avail>Borrowed</avail>
-    <tagged>friends</tagged>
+    <tagged>political</tagged>
 </book>

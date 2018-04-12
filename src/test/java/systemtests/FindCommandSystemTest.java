@@ -25,8 +25,9 @@ public class FindCommandSystemTest extends CatalogueSystemTest {
 
     @Test
     public void find() {
-
+        //@@author QiuHaohao
         executeCommand("login admin admin");
+        //@@author khiayi
         /* Case: find multiple books in catalogue, command with leading spaces and trailing spaces
          * -> 2 books found
          */
@@ -71,7 +72,7 @@ public class FindCommandSystemTest extends CatalogueSystemTest {
         command = FindCommand.COMMAND_WORD + " Gone California NonMatchingKeyWord";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-
+        //@@author
         /* Case: undo previous find command -> rejected */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
@@ -81,7 +82,7 @@ public class FindCommandSystemTest extends CatalogueSystemTest {
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
-
+        //@@author khiayi
         /* Case: find same books in catalogue after deleting 1 of them -> 1 book found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
         assertFalse(getModel().getCatalogue().getBookList().contains(CALIFORNIA));
@@ -167,7 +168,7 @@ public class FindCommandSystemTest extends CatalogueSystemTest {
         command = "FiNd Delirium";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
-
+    //@@author
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays {@code Messages#MESSAGE_BOOKS_LISTED_OVERVIEW} with the number of people in the filtered list,

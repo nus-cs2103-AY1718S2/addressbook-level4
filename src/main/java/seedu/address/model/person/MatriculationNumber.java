@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author JoonKai1995
 /**
  * Represents a Person's matriculation number in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidMatricNumber(String)}
@@ -11,7 +12,8 @@ public class MatriculationNumber {
 
 
     public static final String MESSAGE_MATRIC_NUMBER_CONSTRAINTS =
-            "Matric numbers can only contain capital letters and numbers, and should contain 9 characters";
+            "The first character of the matriculation number should be either an 'A' or 'U',"
+                + " followed by 7 digits and end with a capital letter.";
     public static final String MATRIC_NUMBER_VALIDATION_REGEX_FIRST = "[AU]{1}";
     public static final String MATRIC_NUMBER_VALIDATION_REGEX_SECOND = "\\d{7}";
     public static final String MATRIC_NUMBER_VALIDATION_REGEX_LAST = "[A-Z]{1}";

@@ -91,14 +91,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@@author
+    //@@author JoonKai1995
     @Override
     public synchronized void addTask(Task task) {
         addressBook.addTask(task);
         updateFilteredTaskList(PREDICATE_SHOW_ALL_CURRENT_TASKS);
         indicateAddressBookChanged();
     }
-
+    //@@author JoonKai1995
     @Override
     public synchronized void addDeleteItem(String filepath) {
         addressBook.addDeleteItem(filepath);

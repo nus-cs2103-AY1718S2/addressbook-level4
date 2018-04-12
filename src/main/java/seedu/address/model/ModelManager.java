@@ -137,8 +137,8 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
         filteredPersons.setPredicate(predicate);
     }
 
-    //@@author jstarw
     @Override
+    //@@author jstarw
     public Person findOnePerson(Predicate<Person> predicate) throws PersonNotFoundException {
         requireNonNull(predicate);
         ObservableList<Person> persons = addressBook.getPersonList();
@@ -149,6 +149,7 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
         }
         throw new PersonNotFoundException();
     }
+    //@@author
 
     @Override
     public CalendarSource getCalendar() {
@@ -173,7 +174,7 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
                 && filteredPersons.equals(other.filteredPersons);
     }
 
-    //@author SoilChang
+    //@@author SoilChang
     @Override
     public void preparePredictionData(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets,
                                       ArrayList<Double> normalizationConstant) {
@@ -197,7 +198,7 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
         }
     }
 
-    //@author SoilChang
+    //@@author SoilChang
     @Override
     public void updatePredictionResult(ArrayList<Double> trueWeights) throws CommandException {
         ObservableList<Person> personList = this.addressBook.getPersonList();

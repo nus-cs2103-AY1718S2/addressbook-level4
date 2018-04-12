@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -30,7 +31,7 @@ import seedu.recipe.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Stage> {
 
-    public static final String DARK_THEME_CSS = "DarkTheme.css";
+    public static final String GIRL_THEME_CSS = "GirlTheme.css";
     public static final String LIGHT_THEME_CSS = "LightTheme.css";
     public static final String EXTENSIONS_CSS = "Extensions.css";
 
@@ -99,6 +100,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -120,7 +122,8 @@ public class MainWindow extends UiPart<Stage> {
          * in CommandBox or ResultDisplay.
          */
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+            if ((event.getTarget() instanceof TextInputControl || event.getTarget() instanceof ListView)
+                    && keyCombination.match(event)) {
                 menuItem.getOnAction().handle(new ActionEvent());
                 event.consume();
             }
@@ -219,6 +222,7 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.show();
     }
 
+    //@@author kokonguyen191
     /**
      * Toggles the main window theme
      */
@@ -226,7 +230,7 @@ public class MainWindow extends UiPart<Stage> {
         Scene scene = primaryStage.getScene();
         scene.getStylesheets().clear();
         if (darkTheme) {
-            scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + DARK_THEME_CSS).toExternalForm());
+            scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + GIRL_THEME_CSS).toExternalForm());
         } else {
             scene.getStylesheets().add(MainApp.class.getResource(FXML_FILE_FOLDER + LIGHT_THEME_CSS).toExternalForm());
         }
@@ -234,6 +238,7 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    //@@author
 
     /**
      * Closes the application.

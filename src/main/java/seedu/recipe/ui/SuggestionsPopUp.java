@@ -2,8 +2,8 @@
 package seedu.recipe.ui;
 
 import static seedu.recipe.ui.util.AutoCompletionUtil.APPLICATION_COMMANDS;
-import static seedu.recipe.ui.util.AutoCompletionUtil.APPLICATION_KEYWORDS;
 import static seedu.recipe.ui.util.AutoCompletionUtil.MAX_SUGGESTIONS;
+import static seedu.recipe.ui.util.AutoCompletionUtil.getPrefixesForCommand;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,8 +51,14 @@ public class SuggestionsPopUp extends ContextMenu {
         textInputProcessor.setFont(commandTextArea.getFont());
         String lastWord = textInputProcessor.getLastWord();
         // finds suggestions and displays
-        ArrayList<String> suggestionList = new ArrayList<>(APPLICATION_KEYWORDS);
-        suggestionList.addAll(APPLICATION_COMMANDS);
+        ArrayList<String> suggestionList = new ArrayList<>();
+
+        String firstWord = textInputProcessor.getFirstWord();
+        if (APPLICATION_COMMANDS.contains(firstWord)) {
+            suggestionList.addAll(getPrefixesForCommand().get(firstWord));
+        } else {
+            suggestionList.addAll(APPLICATION_COMMANDS);
+        }
 
         findSuggestions(lastWord, suggestionList);
 

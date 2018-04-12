@@ -26,7 +26,7 @@ public class AutoCompletionUtil {
     public static final char WHITESPACE = ' ';
     public static final char END_FIELD = '/';
 
-    private HashMap<String, ArrayList<String>> prefixesForCommand;
+    private static HashMap<String, ArrayList<String>> prefixesForCommand;
 
     public AutoCompletionUtil() {
         initializePrefixesForCommandsOffline();
@@ -132,5 +132,9 @@ public class AutoCompletionUtil {
         }
 
         return prevFieldCaretPosition;
+    }
+
+    public static HashMap<String, ArrayList<String>> getPrefixesForCommand() {
+        return (HashMap<String, ArrayList<String>>) prefixesForCommand.clone();
     }
 }

@@ -69,6 +69,23 @@ public class TextInputProcessorUtil {
     }
 
     /**
+     * Gets first word from {@code content}
+     */
+    public String getFirstWord() {
+        String firstWord = EMPTY_STRING;
+
+        String trimmedContent = content.trim();
+        for (int i = 0; i < trimmedContent.length(); i++) {
+            if (isWordSeparator(trimmedContent.charAt(i))) {
+                break;
+            }
+            firstWord = firstWord + trimmedContent.charAt(i);
+        }
+
+        return firstWord;
+    }
+
+    /**
      * Checks whether {@code inputChar} is a word separator
      */
     private boolean isWordSeparator(char inputChar) {

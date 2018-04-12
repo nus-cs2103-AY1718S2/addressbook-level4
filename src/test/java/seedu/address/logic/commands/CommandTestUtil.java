@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE_DESC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BREED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COLOUR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
@@ -178,10 +177,10 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_NRIC = "&2345678M"; // '&' not allowed in NRIC
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "&2345678M"; // '&' not allowed in NRIC
-    public static final String INVALID_SPECIES_DESC = " " + PREFIX_SPECIES + ""; // blank
+    public static final String INVALID_SPECIES_DESC = " " + PREFIX_SPECIES + "c@+";
     public static final String INVALID_BREED_DESC = " " + PREFIX_BREED + "p3rsi4n";
     public static final String INVALID_COLOUR_DESC = " " + PREFIX_COLOUR + "siv3r";
-    public static final String INVALID_BLOODTYPE_DESC = " " + PREFIX_BLOODTYPE_DESC + ""; // blank
+    public static final String INVALID_BLOODTYPE_DESC = " " + PREFIX_BLOODTYPE + "\\x00";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_OWNER_DESC = " " + PREFIX_NRIC + "S000000000T"; // invalid Nric
     public static final String INVALID_REMARK_DESC = " " + PREFIX_REMARK; //empty string not allowed for remark

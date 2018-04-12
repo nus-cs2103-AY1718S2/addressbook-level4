@@ -8,7 +8,7 @@
 
 == Overview
 
-Your TA is a desktop contact and task manager application used to manage the many students and dealines that a university teaching assistant (TA) has. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 15 kLoC.
+Your TA is a desktop contact and task manager application used to manage the many students and deadlines that a university teaching assistant (TA) has. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 15 kLoC.
 
 == Summary of Contributions
 
@@ -32,7 +32,19 @@ Your TA is a desktop contact and task manager application used to manage the man
 
 * *Code contributed*: link:{repoURL}/collated/functional/JoonKai1995.md[functional], link:{repoURL}/collated/test/JoonKai1995.md[test].
 
-* *Other contributions*: _TO BE FILLED IN_
+* *Other contributions*:
+
+** Enhancements to existing features:
+
+*** Wrote additional test cases for the new task features.
+
+** Did cosmetic tweaks to the user guide.
+
+*** Added graphical images to provide a visual aid to the user reading the user guide.
+
+** Community:
+
+*** Helped fix repo bugs due to bad merge conflict resolution between v1.4 and 1.5rc.
 
 <<<
 

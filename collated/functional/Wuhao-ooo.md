@@ -437,7 +437,6 @@ public class CustomerStatsChangedEvent extends BaseEvent {
             raise(new DataSavingExceptionEvent(e));
         }
     }
-}
 ```
 ###### /java/seedu/address/storage/XmlSerializableCustomerStats.java
 ``` java
@@ -515,8 +514,6 @@ public class XmlSerializableCustomerStats {
             throw new DataConversionException(e);
         }
     }
-
-}
 ```
 ###### /java/seedu/address/storage/CustomerStatsStorage.java
 ``` java
@@ -658,10 +655,6 @@ public class XmlCustomerStatsStorage implements CustomerStatsStorage {
             logger.warning("Problem while reading from the customer stats file. Will be starting with an empty file");
             initialCustomerStats = new CustomerStats();
         }
-
-        return new ModelManager(initialData, userPrefs, initialCustomerStats);
-    }
-
 ```
 ###### /java/seedu/address/model/ReadOnlyCustomerStats.java
 ``` java

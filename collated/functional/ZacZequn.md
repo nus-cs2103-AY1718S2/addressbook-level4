@@ -71,6 +71,32 @@
         });
     }
 ```
+###### /java/seedu/address/commons/events/model/MenuChangedEvent.java
+``` java
+package seedu.address.commons.events.model;
+
+import java.util.HashMap;
+
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.ReadOnlyMenu;
+import seedu.address.model.dish.Dish;
+
+/** Indicates the Menu in the model has changed*/
+public class MenuChangedEvent extends BaseEvent {
+
+    public final ReadOnlyMenu data;
+
+    public MenuChangedEvent(ReadOnlyMenu data) {
+        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        HashMap<String, Dish> theMenu = data.getDishes();
+        return theMenu.toString();
+    }
+}
+```
 ###### /java/seedu/address/logic/parser/AddCommandParser.java
 ``` java
             Optional<Halal> halalOptional = ParserUtil.parseHalal(argMultimap.getValue(PREFIX_HALAL));
@@ -184,6 +210,224 @@
             return Optional.ofNullable(vegetarian);
         }
 ```
+###### /java/seedu/address/storage/StorageManager.java
+``` java
+    // ================ Menu methods ==============================
+
+    @Override
+    public String getMenuFilePath() {
+        return menuStorage.getMenuFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyMenu> readMenu() throws DataConversionException, IOException {
+        return readMenu(menuStorage.getMenuFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyMenu> readMenu(String filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return menuStorage.readMenu(filePath);
+    }
+
+    @Override
+    public void saveMenu(ReadOnlyMenu menu) throws IOException {
+        saveMenu(menu, menuStorage.getMenuFilePath());
+    }
+
+    @Override
+    public void saveMenu(ReadOnlyMenu menu, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        menuStorage.saveMenu(menu, filePath);
+    }
+
+}
+```
+###### /java/seedu/address/storage/XmlMenuStorage.java
+``` java
+package seedu.address.storage;
+
+import static java.util.Objects.requireNonNull;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.FileUtil;
+import seedu.address.model.ReadOnlyMenu;
+
+/**
+ * A class to access Menu data stored as an xml file on the hard disk.
+ */
+public class XmlMenuStorage implements MenuStorage {
+
+    private static final Logger logger = LogsCenter.getLogger(XmlMenuStorage.class);
+
+    private String filePath;
+
+    public XmlMenuStorage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getMenuFilePath() {
+        return filePath;
+    }
+
+    @Override
+    public Optional<ReadOnlyMenu> readMenu() throws DataConversionException, IOException {
+        return readMenu(filePath);
+    }
+
+    /**
+     * Similar to {@link #readMenu()}
+     * @param filePath location of the data. Cannot be null
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    public Optional<ReadOnlyMenu> readMenu(String filePath) throws DataConversionException,
+            FileNotFoundException {
+        requireNonNull(filePath);
+
+        File menuFile = new File(filePath);
+
+        if (!menuFile.exists()) {
+            logger.info("Menu file "  + menuFile + " not found");
+            return Optional.empty();
+        }
+
+        XmlSerializableMenu xmlMenu = XmlFileStorage.loadMenuDataFromSaveFile(new File(filePath));
+        try {
+            return Optional.of(xmlMenu.toModelType());
+        } catch (IllegalValueException ive) {
+            logger.info("Illegal values found in " + menuFile + ": " + ive.getMessage());
+            throw new DataConversionException(ive);
+        }
+    }
+
+    @Override
+    public void saveMenu(ReadOnlyMenu menu) throws IOException {
+        saveMenu(menu, filePath);
+    }
+
+    /**
+     * Similar to {@link #saveMenu(ReadOnlyMenu)}
+     * @param filePath location of the data. Cannot be null
+     */
+    public void saveMenu(ReadOnlyMenu menu, String filePath) throws IOException {
+        requireNonNull(menu);
+        requireNonNull(filePath);
+
+        File file = new File(filePath);
+        FileUtil.createIfMissing(file);
+        XmlFileStorage.saveMenuDataToFile(file, new XmlSerializableMenu(menu));
+    }
+
+}
+```
+###### /java/seedu/address/storage/MenuStorage.java
+``` java
+package seedu.address.storage;
+
+import java.io.IOException;
+import java.util.Optional;
+
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.ReadOnlyMenu;
+
+/**
+ * Represents a storage for menu.
+ */
+public interface MenuStorage {
+
+    /**
+     * Returns the file path of the data file.
+     */
+    String getMenuFilePath();
+
+    /**
+     * Returns Menu data as a {@link ReadOnlyMenu}.
+     * Returns {@code Optional.empty()} if storage file is not found.
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException if there was any problem when reading from the storage.
+     */
+    Optional<ReadOnlyMenu> readMenu() throws DataConversionException, IOException;
+
+    /**
+     * @see #getMenuFilePath()
+     */
+    Optional<ReadOnlyMenu> readMenu(String filePath) throws DataConversionException, IOException;
+
+    /**
+     * Saves the given {@link ReadOnlyMenu} to the storage.
+     * @param menu cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
+    void saveMenu(ReadOnlyMenu menu) throws IOException;
+
+    /**
+     * @see #saveMenu(ReadOnlyMenu)
+     */
+    void saveMenu(ReadOnlyMenu menu, String filePath) throws IOException;
+
+}
+```
+###### /java/seedu/address/storage/XmlSerializableMenu.java
+``` java
+package seedu.address.storage;
+
+import java.util.HashMap;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.Menu;
+import seedu.address.model.ReadOnlyMenu;
+import seedu.address.model.dish.Dish;
+
+/**
+ * An Immutable Menu that is serializable to XML format
+ */
+@XmlRootElement(name = "menu")
+public class XmlSerializableMenu {
+
+    @XmlElement
+    private HashMap<String, Dish> dishes;
+
+    /**
+     * Creates an empty XmlSerializableMenu.
+     * This empty constructor is required for marshalling.
+     */
+    public XmlSerializableMenu() {
+        dishes = new HashMap<>();
+    }
+
+    /**
+     * Conversion
+     */
+    public XmlSerializableMenu(ReadOnlyMenu src) {
+        this();
+        dishes = src.getDishes();
+    }
+
+    /**
+     * Converts this menu into the model's {@code Menu} object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated or duplicates in the
+     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     */
+    public Menu toModelType() throws IllegalValueException {
+        Menu menu = new Menu();
+        menu.setMenu(dishes);
+        return menu;
+    }
+
+}
+```
 ###### /java/seedu/address/storage/XmlAdaptedPerson.java
 ``` java
         if (this.order == null) {
@@ -213,6 +457,48 @@
         }
         final Vegetarian vegetarian = new Vegetarian(this.vegetarian);
 ```
+###### /java/seedu/address/storage/XmlFileStorage.java
+``` java
+    /**
+     * Saves the given menu data to the specified file.
+     */
+    public static void saveMenuDataToFile(File file, XmlSerializableMenu menu)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, menu);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage());
+        }
+    }
+
+    /**
+     * Returns menu stats in the file or an empty address book
+     */
+    public static XmlSerializableMenu loadMenuDataFromSaveFile(File file) throws DataConversionException,
+            FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableMenu.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
+```
+###### /java/seedu/address/MainApp.java
+``` java
+        try {
+            menuOptional = storage.readMenu();
+            if (!menuOptional.isPresent()) {
+                logger.info("Data file for menu not found. Will be starting with an empty file");
+            }
+            initialMenu = new Menu();
+        } catch (DataConversionException e) {
+            logger.warning("Data file for menu in wrong format. Will be starting with an empty file");
+            initialMenu = new Menu();
+        }  catch (IOException e) {
+            logger.warning("Problem while reading from the menu file. Will be starting with an empty file");
+            initialMenu = new Menu();
+        }
+```
 ###### /java/seedu/address/model/dish/Price.java
 ``` java
 package seedu.address.model.dish;
@@ -228,8 +514,8 @@ public class Price {
 
 
     public static final String MESSAGE_PRICE_CONSTRAINTS =
-            "Price numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PRICE_VALIDATION_REGEX = "\\d{3,}";
+            "Price numbers can only contain numbers";
+    public static final String PRICE_VALIDATION_REGEX = "\\d{1,}";
     public final String value;
 
     /**
@@ -267,6 +553,12 @@ public class Price {
         return value.hashCode();
     }
 
+    /**
+     *  Returns price in integer form to be able used by {@code compareTo} in Task
+     */
+    public int toInt() {
+        return Integer.parseInt(value);
+    }
 }
 ```
 ###### /java/seedu/address/model/dish/exceptions/DishNotFoundException.java
@@ -277,6 +569,9 @@ package seedu.address.model.dish.exceptions;
  * Signals that the operation is unable to find the specified dish.
  */
 public class DishNotFoundException extends Exception {
+    public DishNotFoundException(String message) {
+        super(message);
+    }
 }
 ```
 ###### /java/seedu/address/model/dish/Name.java
@@ -362,12 +657,21 @@ public class Dish {
 
 
     /**
-     * Every field must be present and not null.
+     * If we know the name and price.
      */
     public Dish(Name name, Price price) {
         requireAllNonNull(name, price);
         this.name = name;
         this.price = price;
+    }
+
+    /**
+     * If we only know the name. Only used for testing purpose
+     */
+    public Dish(Name name) {
+        requireAllNonNull(name);
+        this.name = name;
+        this.price = new Price("3");
     }
 
     public Name getName() {
@@ -417,7 +721,6 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import seedu.address.model.Menu;
 
 /**
  * Represents a Person's order in the address book.
@@ -427,15 +730,12 @@ public class Order {
 
     public static final String MESSAGE_ORDER_CONSTRAINTS =
             "Invalid order";
-    public static final String MESSAGE_ORDER_NOT_AVAILABLE =
-            "Dish not available";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ORDER_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
-    public static final Menu MENU = new Menu();
 
     public final String fullOrder;
 
@@ -447,7 +747,6 @@ public class Order {
     public Order(String order) {
         requireNonNull(order);
         checkArgument(isValidOrder(order), MESSAGE_ORDER_CONSTRAINTS);
-        checkArgument(isInsideMenu(order), MESSAGE_ORDER_NOT_AVAILABLE);
         this.fullOrder = order.toString();
     }
 
@@ -458,18 +757,24 @@ public class Order {
         return test.matches(ORDER_VALIDATION_REGEX);
     }
 
-```
-###### /java/seedu/address/model/person/Order.java
-``` java
-    /**
-     * Returns true if a given string is a valid person order.
-     */
-    public static boolean isInsideMenu(String test) {
-        //if(MENU.get(test) == null){
-        //   return false;
-        //}
-        return true;
+    @Override
+    public String toString() {
+        return fullOrder.toString();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Order // instanceof handles nulls
+                && this.fullOrder.equals(((Order) other).fullOrder)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return fullOrder.hashCode();
+    }
+
+}
 ```
 ###### /java/seedu/address/model/person/Vegetarian.java
 ``` java
@@ -611,14 +916,11 @@ public class Halal {
 ``` java
 package seedu.address.model;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import seedu.address.model.dish.Dish;
 import seedu.address.model.dish.Name;
+import seedu.address.model.dish.Price;
 
 
 /**
@@ -636,31 +938,73 @@ public class Menu implements ReadOnlyMenu {
      *   among constructors.
      */
     {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            Dish dish = mapper.readValue(new File("data/menu.xml"), Dish.class);
-            Name name = dish.getName();
-            dishes.put(name.toString(), dish);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        dishes = new HashMap<>();
+        //only used for testing
+        dishes.put("Chicken Rice", new Dish(new Name("Chicken Rice"), new Price("3")));
     }
 
     public Menu() {}
+
+    public void setMenu(HashMap<String, Dish> theDishes) {
+
+        dishes = theDishes;
+    }
+
+    public void setMenu(Menu theMenu) {
+        dishes = theMenu.getDishes();
+    }
 
     /**
      * Returns the dish in Menu if available.
      * Otherwise return null.
      */
-    public Dish get(String dish) { return dishes.get(dish); }
+    public Dish get(String dish) {
+        return dishes.get(dish);
+    }
 
     /**
      * Returns a copy of the data in Menu.
      * Modifications on this copy will not affect the original Menu data
      */
     @Override
-    public HashMap<String, Dish> getDishes() { return new HashMap<>(dishes); }
+    public HashMap<String, Dish> getDishes() {
+        return new HashMap<>(dishes);
+    }
+
+    @Override
+    public String toString() {
+        String menu = "";
+        for (String name : dishes.keySet()) {
+            menu += (name + " ");
+        }
+        menu = menu.trim();
+        return menu;
+    }
 }
+```
+###### /java/seedu/address/model/UserPrefs.java
+``` java
+    public String getMenuFilePath() {
+        return customerStatsFilePath;
+    }
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /** Raises an event to indicate customer stats has changed */
+    private void indicateMenuChanged() {
+        raise(new MenuChangedEvent(menu));
+    }
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void checkOrder(Person target)  throws DishNotFoundException {
+        if (menu.get(target.getOrder().toString()) == null) {
+            throw new DishNotFoundException("Dish not available");
+        }
+    }
 ```
 ###### /java/seedu/address/model/ReadOnlyMenu.java
 ``` java

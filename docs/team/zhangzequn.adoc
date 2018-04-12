@@ -32,15 +32,13 @@ Delivery is a desktop application designed for restaurants who want to maintain 
 *** Managed releases `v1.3` (1 releases) on GitHub
 ** Enhancements to existing features:
 *** Add colours to different tags (Pull requests https://github.com/CS2103JAN2018-F11-B4/main/commit/69a6fb5ceccc27452f8f3c698aa2671fb9a61c02[#4])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Wrote additional tests for added features e.g. Halal and Vegetarian features (Pull requests https://github.com/CS2103JAN2018-F11-B4/main/commit/03012e1ab2bcd39acf06190b2ff3f6b4a7267863[#29])
 ** Documentation:
 *** Update relevant parts for User Guide and Developer Guide
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
 *** Contributed to forum discussions (examples:  https://nus-cs2103-ay1718s2.slack.com/archives/D9M8Y20Q2/p1520616066000038[1])
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T16-B1/main/issues/87[1], https://github.com/CS2103JAN2018-T16-B1/main/issues/80[2], https://github.com/CS2103JAN2018-T16-B1/main/issues/73[3])_{These issues were created by me, but it shows that my team mate created them on gitHub. I think this could because that I was re-assigned to this group during the mock PE.}_
 
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 

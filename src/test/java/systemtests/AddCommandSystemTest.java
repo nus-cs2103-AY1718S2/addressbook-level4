@@ -45,6 +45,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
+import seedu.address.model.dish.exceptions.DishNotFoundException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -223,6 +224,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
             expectedModel.addPerson(toAdd);
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
+        } catch (DishNotFoundException dfe) {
+            throw new IllegalArgumentException("dish not found in the menu");
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
 

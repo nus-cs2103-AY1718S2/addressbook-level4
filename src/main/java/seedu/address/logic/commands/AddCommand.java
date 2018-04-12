@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VEGETARIAN;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.dish.exceptions.DishNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -45,6 +46,7 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_UNAVAILABLE_DISH = "This dish is not available in our menu";
 
     private final Person toAdd;
 
@@ -64,6 +66,8 @@ public class AddCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (DishNotFoundException e) {
+            throw new CommandException(MESSAGE_UNAVAILABLE_DISH);
         }
 
     }

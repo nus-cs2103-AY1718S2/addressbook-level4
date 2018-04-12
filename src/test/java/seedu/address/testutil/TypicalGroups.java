@@ -17,9 +17,13 @@ public class TypicalGroups {
     public static final Group GROUP_C = new GroupBuilder().withInformation("Group C").build();
     public static final Group GROUP_D = new GroupBuilder().withInformation("Group D").build();
     public static final Group GROUP_E = new GroupBuilder().withInformation("Group E").build();
+    public static final Group GROUP_F = new GroupBuilder().withPerson("Group F",
+            TypicalPersons.ALICE).build();
+    public static final Group GROUP_G = new GroupBuilder().withPerson("Group G",
+            TypicalPersons.BENSON).build();
 
 
     public static List<Group> getTypicalGroups() {
-        return new ArrayList<>(Arrays.asList(GROUP_A, GROUP_B, GROUP_C));
+        return new ArrayList<>(Arrays.asList(GROUP_A, GROUP_B, GROUP_C, GROUP_F));
     }
 }

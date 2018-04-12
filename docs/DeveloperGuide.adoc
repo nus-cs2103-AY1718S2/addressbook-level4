@@ -1325,6 +1325,57 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate stack, and can just reuse what is already in the codebase.
 ** Cons: This requires dealing with commands that have already been undone, meaning we must remember to skip these commands. It violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 
+=== Unique Tag Colors
+// tag::unique-tag-colors[]
+==== Current implementation
+The `_RecipeCard_` class calls the `_UiUtil_` class to convert the hashcode of a tag name into a valid hexadecimal color code. This ensures that all tags with the same name will have the same tag color.
+
+[source,java]
+----
+private String getTagColorStyleFor(String tagName) {
+    String hexadecimalHashCode = UiUtil.convertIntToHexadecimalString(tagName.hashCode());
+    String hexadecimalColorCode = UiUtil.convertStringToValidColorCode(hexadecimalHashCode);
+    return hexadecimalColorCode;
+}
+----
+
+In order to find a suitable text color for a given tag color, we must first find out if the given tag color is dark or light. Consequently, we set the text color to black if the tag color is light, and vice versa.
+
+A given tag color is passed through a `isColorDark()` method. This method works by summing up the intensity of the red, green and blue color hue in the given hexadecimal color. A smaller sum would mean a darker color, while a larger sum would mean a lighter color.
+
+[source,java]
+----
+public static boolean isColorDark(String color) {
+    color = removeAllWhitespaceInString(color);
+    color = isValidHexColorCode(color) ? color : HEX_COLOR_WHITE;
+
+    int lightnessCount = 0;
+
+    for (int i = 1; i < 6; i = i + 2) {
+        String colorDensity = color.substring(i, i + 2);
+        lightnessCount += Integer.parseInt(colorDensity, 16);
+    }
+
+    if (lightnessCount >= NEUTRAL_COLOR_DENSITY) {
+        return false;
+    }
+
+    return true;
+}
+----
+
+==== Design considerations
+
+===== Aspect: Generating colors
+
+* **Alternative 1:** Use a random color generator for each separate tag.
+** Pros: The implementation is simple.
+** Cons: Tags with the same names may not have the same tag color. The tag colors are different each time the application is run.
+* **Alternative 2 (current choice):** Use a color generator based on the tag name's hashcode.
+** Pros: Tag colors will remain consistent as they are dependant on the tag name. Tags with same names will have the same tag color.
+** Cons: The implementation is slightly more complicated.
+// end::unique-tag-colors[]
+
 == Documentation
 
 We use asciidoc for writing documentation.

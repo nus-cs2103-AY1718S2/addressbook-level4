@@ -390,6 +390,7 @@ Selects the 2nd recipe in the recipe book.
 *`select 1`* +
 Selects the 1st recipe in the results of the *`find`* command.
 
+//tag::share-command[]
 === *`share`*: Sharing a recipe on Facebook
 
 Initiates the sharing of a recipe to Facebook, identified by the index number used in the last recipe listing.
@@ -420,6 +421,7 @@ The contents in the recipe would have been copied to the clipboard for the User 
 image::FacebookFeedDialog.jpg[width="600"]
 {nbsp} +
 The User will be redirected back to his/her Facebook feed once the post has been made.
+//end::share-command[]
 
 === *`tag`* : Locating recipes by tags
 

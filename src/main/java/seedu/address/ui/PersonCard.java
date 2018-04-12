@@ -55,7 +55,7 @@ public class PersonCard extends UiPart<Region> {
         date.setText(person.getDate().value);
         labelTag(person);
     }
-
+    //@@author ncaminh
     /**
      * Set the label for the tag
      * @param p
@@ -103,7 +103,7 @@ public class PersonCard extends UiPart<Region> {
         // this help keeping the label colors consistency through every run
         return TAG_COLOR[Math.abs(tagName.toLowerCase().hashCode()) % TAG_COLOR.length];
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

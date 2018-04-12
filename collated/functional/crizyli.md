@@ -110,7 +110,7 @@ public class AddressBookPasswordChangedEvent extends BaseEvent {
     }
 
     public String toString() {
-        return "number of persons " + data.getPersonList().size() + ", number of tags " + data.getTagList().size();
+        return "number of employees " + data.getPersonList().size() + ", number of tags " + data.getTagList().size();
     }
 }
 ```
@@ -334,7 +334,7 @@ public class Authentication {
 
     /** Global instance of the scopes required by this quickstart.
      *
-     * If modifying these scopes, delete your previously saved credentials
+     * If modifying these scopes, deleteNotification your previously saved credentials
      * at ~/.credentials/calendar-java-quickstart
      */
     private static final List<String> SCOPES =
@@ -420,8 +420,6 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import com.google.common.eventbus.Subscribe;
@@ -430,7 +428,6 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.logic.FileChoosedEvent;
-import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.commons.events.ui.ResetPersonCardsEvent;
 import seedu.address.commons.events.ui.ShowFileChooserEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -446,12 +443,14 @@ public class AddPhotoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addPhoto";
 
-    public static final String IMAGE_FOLDER_WINDOWS = "\\src\\main\\resources\\images\\personphoto\\";
+    public static final String IMAGE_FOLDER_WINDOWS = "src\\main\\resources\\images\\personphoto\\";
 
-    public static final String IMAGE_FOLDER_OTHER = "/src/main/resources/images/personphoto/";
+    public static final String IMAGE_FOLDER_OTHER = "src/main/resources/images/personphoto/";
+
+    public static final String IMAGE_FOLDER = "data/personphoto/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a photo to an employee.\n"
-            + "Choose a photo in the file chooser. Acceptable photo file type are jpg, jprg, png, bmp."
+            + "Choose a photo in the file chooser. Acceptable photo file type are jpg, jprg, png, bmp.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
@@ -492,7 +491,7 @@ public class AddPhotoCommand extends UndoableCommand {
             EventsCenter.getInstance().post(new ShowFileChooserEvent());
         } else {
             String currentDir = System.getProperty("user.dir");
-            path = currentDir + "\\src\\main\\java\\resources\\images\\personphoto\\DefaultPerson.png";
+            path = currentDir + "/src/main/java/resources/images/personphoto/DefaultPerson.png";
         }
 
         //check if the photo is chosen.
@@ -546,7 +545,6 @@ public class AddPhotoCommand extends UndoableCommand {
 
         targetPerson = lastShownList.get(targetIndex.getZeroBased());
         editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);
-        EventsCenter.getInstance().post(new PersonEditedEvent(editedPerson));
     }
 
     /**
@@ -560,6 +558,9 @@ public class AddPhotoCommand extends UndoableCommand {
         targetPerson.setPhotoName(newPhoto.getName());
         Person editedPerson = new Person(targetPerson.getName(), targetPerson.getPhone(), targetPerson.getEmail(),
                 targetPerson.getAddress(), targetPerson.getTags(), targetPerson.getCalendarId());
+        editedPerson.setRating(targetPerson.getRating());
+        editedPerson.setId(targetPerson.getId());
+        editedPerson.setReviews(targetPerson.getReviews());
         editedPerson.setPhotoName(newPhoto.getName());
         return editedPerson;
     }
@@ -569,15 +570,13 @@ public class AddPhotoCommand extends UndoableCommand {
      * @param photoNameWithExtension
      */
     private void copyPhotoFileToStorage(String photoNameWithExtension) {
-        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
 
         String src = path;
         String dest;
         if (osType == 1) {
-            dest = s + IMAGE_FOLDER_WINDOWS + photoNameWithExtension;
+            dest = IMAGE_FOLDER + photoNameWithExtension;
         } else {
-            dest = s + IMAGE_FOLDER_OTHER + photoNameWithExtension;
+            dest = IMAGE_FOLDER + photoNameWithExtension;
         }
 
         byte[] buffer = new byte[1024];
@@ -633,11 +632,16 @@ public class AuthenCommand extends Command {
 
     public static final String COMMAND_WORD = "authenET";
 
+    public static final String COMMAND_USAGE = "Authorize ET with your google calendar.";
+
     public static final String MESSAGE_SUCCESS = "You have authorized ET!";
 
     public static final String MESSAGE_FAILURE = "You haven't authorized ET successfully,"
             + " please try it again later";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Exports employees from Employees Tracker.\n"
+            + "Example: " + COMMAND_WORD;
 
     @Override
     public CommandResult execute() {
@@ -660,7 +664,9 @@ import java.util.List;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.logic.Authentication;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -673,15 +679,15 @@ public class DeleteEventCommand extends Command {
     public static final String COMMAND_WORD = "deleteEvent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Delete an event specified by title of the person identified by the index number used "
-            + "in the last person listing.\n"
+            + ": Deletes an event specified by title of the employee identified by the index number used "
+            + "in the last employees listing.\n"
             + "Parameters: INDEX (must be a positive integer)"
             + " TITLE (event title)\n"
             + "Example: " + COMMAND_WORD + " 1 Weekly Meeting";
 
     public static final String MESSAGE_SUCCESS = "Event deleted!";
     public static final String MESSAGE_NO_SUCH_EVENT = "There is no such event!";
-    public static final String MESSAGE_FAILURE = "Unable to delete event, please try again later.";
+    public static final String MESSAGE_FAILURE = "Unable to deleteNotification event, please try again later.";
 
 
     private final Index targetIndex;
@@ -732,6 +738,7 @@ public class DeleteEventCommand extends Command {
         if (eventId != null) {
             try {
                 service.events().delete(calendarId, eventId).execute();
+                EventsCenter.getInstance().post(new RequestToDeleteNotificationEvent(eventId, false));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -781,7 +788,7 @@ public class ExportEmployeesCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Export current employees to a csv file.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports current employees to a csv file.\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "All Employees Exported to employees.csv!";
@@ -867,9 +874,10 @@ public class LockCommand extends Command {
 
     public static final String COMMAND_WORD = "lock";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lock the address book. ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Locks Employees Tracker.\n"
+            + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_SUCCESS = "Address book has been locked!";
+    public static final String MESSAGE_SUCCESS = "Employees Tracker has been locked!";
 
     private final HideAllPersonPredicate predicate = new HideAllPersonPredicate();
 
@@ -901,7 +909,8 @@ public class MyCalendarCommand extends Command {
 
     public static final String COMMAND_WORD = "myCalendar";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": show my own calendar. ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays my own calendar.\n"
+            + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Your calendar is loaded.";
 
@@ -930,8 +939,9 @@ public class SetPasswordCommand extends Command {
 
     public static final String COMMAND_WORD = "setPassword";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set new application password, and old "
-            + "password required. \n";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets new application password. "
+            + "Old password required.\n"
+            + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "New password has been set!";
 
@@ -1046,14 +1056,14 @@ public class TestAddEventCommand extends Command {
     public static final String COMMAND_WORD = "addEvent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Add an event to the person identified by the index number used in the last person listing.\n"
+            + ": Adds an event to the employee identified by the index number used in the last employees listing.\n"
             + "Parameters: INDEX (must be a positive integer)"
             + PREFIX_TITLE + "TITLE "
             + PREFIX_LOCATION + "LOCATION "
             + PREFIX_STARTTIME + "STARTTIME (must follow given format) "
             + PREFIX_ENDTIME + "ENDTIME (must follow given format)\n"
             + "Example: " + COMMAND_WORD + " 1 title/Project Meeting loca/NUS, Singapore stime/2017-03-19T08:00:00"
-            + " etime/2017-03-19T10:00:00 descrip/discuss about v1.4 milestone";
+            + " etime/2017-03-19T10:00:00 descrip/Discuss about product launch";
 
     public static final String MESSAGE_SUCCESS = "Event added!";
     public static final String MESSAGE_FAILURE = "Unable to add event, please try again later.";
@@ -1195,8 +1205,7 @@ public class TodoListCommand extends Command {
     public static final String COMMAND_WORD = "todoList";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Show the To Do List in a seperate window."
-            + "\n"
+            + ": Displays the To Do List in a separate window.\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "To do list window is loaded.";
@@ -1264,9 +1273,10 @@ public class UnlockCommand extends Command {
 
     public static final String COMMAND_WORD = "unlock";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlock the address book. ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlocks Employees Tracker.\n"
+            + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_SUCCESS = "Address book has been unlocked!";
+    public static final String MESSAGE_SUCCESS = "Employees Tracker has been unlocked!";
 
     public static final String MESSAGE_INCORRECT_PASSWORD = "Incorrect unlock password!";
 
@@ -1437,7 +1447,7 @@ public class DeleteCalendar {
                     UnlockCommand unlockCommand = (UnlockCommand) command;
                     result = unlockCommand.execute();
                 } else {
-                    result = new CommandResult("Addressbook has been locked, please unlock it first!");
+                    result = new CommandResult("Employees Tracker has been locked, please unlock it first!");
                 }
             } else {
                 command.setData(model, history, undoRedoStack);
@@ -1763,7 +1773,6 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
 ```
 ###### \java\seedu\address\logic\parser\UnlockCommandParser.java
 ``` java
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -1779,13 +1788,50 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UnlockCommand parse(String args) throws ParseException {
-        if (!args.trim().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
-        }
 
         return new UnlockCommand();
     }
 }
+```
+###### \java\seedu\address\MainApp.java
+``` java
+        File dataDir = new File("data/");
+        FileUtil.createDirs(dataDir);
+
+        File photoDir = new File("data/personphoto");
+        if (!photoDir.exists()) {
+            photoDir.mkdir();
+            copyDefaultPhoto();
+        }
+
+```
+###### \java\seedu\address\MainApp.java
+``` java
+    /**
+     *  copy the default photo from resources to data folder.
+     */
+    private void copyDefaultPhoto() {
+
+        String dest = "data/personphoto/DefaultPerson.png";
+
+        byte[] buffer = new byte[1024];
+        try {
+            BufferedInputStream bis = new BufferedInputStream(this.getClass().getClassLoader()
+                    .getResourceAsStream("images/DefaultPerson.png"));
+
+            FileOutputStream fos = new FileOutputStream(dest);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            int len;
+            while ((len = bis.read(buffer)) > 0) {
+                bos.write(buffer, 0, len);
+            }
+
+            bis.close();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -1933,7 +1979,7 @@ public class ListEvent {
  */
 public class Photo {
 
-    public static final String DEFAULT_PHOTO_FOLDER = "/images/personphoto/";
+    public static final String DEFAULT_PHOTO_FOLDER = "/data/personphoto/";
 
     public static final String MESSAGE_PHOTO_CONSTRAINTS = "only accepts jpg, jpeg, png and bmp.";
 
@@ -2328,6 +2374,7 @@ class CalendarBrowser extends Region {
             raise(new SetPasswordEnteredEvent("incomplete"));
         }
     }
+
 ```
 ###### \java\seedu\address\ui\MyCalendarView.java
 ``` java
@@ -2409,11 +2456,10 @@ public class PasswordDialog extends Dialog<String> {
 ``` java
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        File file = new File(s + AddPhotoCommand.IMAGE_FOLDER_OTHER + person.getPhotoName());
+        File file = new File("data/personphoto/" + person.getPhotoName());
         Image image = null;
         try {
-            image = new Image(file.toURI().toURL().toExternalForm(),
-                    88, 88, false, false);
+            image = new Image(file.toURI().toURL().toExternalForm(), 88, 88, false, false);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

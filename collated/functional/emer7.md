@@ -45,10 +45,11 @@ import seedu.address.model.person.Person;
  */
 public class PersonEditedEvent extends BaseEvent {
 
-
+    private final int index;
     private final Person newPerson;
 
-    public PersonEditedEvent(Person newPerson) {
+    public PersonEditedEvent(int index, Person newPerson) {
+        this.index = index;
         this.newPerson = newPerson;
     }
 
@@ -59,6 +60,10 @@ public class PersonEditedEvent extends BaseEvent {
 
     public Person getNewPerson() {
         return newPerson;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
 ```
@@ -152,10 +157,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -169,16 +172,16 @@ public class ReviewCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "review";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Review the person identified "
-            + "by the index number used in the last person listing. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Reviews the employee identified "
+            + "by the index number used in the last employees listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1\n"
             + "A separate pop-up dialog will appear to request for the review.";
 
-    public static final String MESSAGE_REVIEW_PERSON_SUCCESS = "Reviewed Person: %1$s";
+    public static final String MESSAGE_REVIEW_PERSON_SUCCESS = "Reviewed employee: %1$s";
     public static final String MESSAGE_NOT_EDITED = "Both INDEX and REVIEW must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This employee already exists in Employees Tracker.";
 
     private final Index index;
     private final EditCommand.EditPersonDescriptor editPersonDescriptor;
@@ -205,7 +208,7 @@ public class ReviewCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target employee cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_REVIEW_PERSON_SUCCESS, editedPerson));
@@ -221,7 +224,6 @@ public class ReviewCommand extends UndoableCommand {
 
         personToEdit = lastShownList.get(index.getZeroBased());
         editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-        EventsCenter.getInstance().post(new PersonEditedEvent(editedPerson));
     }
 
     /**
@@ -581,7 +583,7 @@ import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
  */
 public class Review {
     public static final String MESSAGE_REVIEW_CONSTRAINTS =
-            "Person reviewer and review can take any values, and they should not be blank.";
+            "Employee reviewer and review can take any values, and they should not be blank.";
     private static final String DEFAULT_REVIEWER = "-";
     private static final String DEFAULT_REVIEW = "-";
 
@@ -910,13 +912,13 @@ public class XmlAdaptedReview {
 ``` java
     @Subscribe
     public void handlePersonEditedEvent(PersonEditedEvent event) {
-        /*logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Person newPerson = event.getNewPerson();
         name.setText(newPerson.getName().fullName);
         address.setText(newPerson.getAddress().value);
         reviews.getChildren().clear();
         newPerson.getReviews().forEach(review -> reviews.getChildren().add(new Label(review.toString())));
-        loadPersonPage(event.getNewPerson());*/
+        loadPersonPage(event.getNewPerson());
     }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
@@ -928,6 +930,13 @@ public class XmlAdaptedReview {
         reviewDialog.show();
     }
 
+```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    @Subscribe
+    public void handlePersonEditedEvent(PersonEditedEvent event) {
+        scrollTo(event.getIndex());
+    }
 ```
 ###### \java\seedu\address\ui\ReviewDialog.java
 ``` java
@@ -1027,7 +1036,9 @@ public class ReviewDialog {
 ###### \resources\view\DetailPanel.fxml
 ``` fxml
 
-<?xml version="1.0" encoding="UTF-8"?>
+```
+###### \resources\view\DetailPanel.fxml
+``` fxml
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>

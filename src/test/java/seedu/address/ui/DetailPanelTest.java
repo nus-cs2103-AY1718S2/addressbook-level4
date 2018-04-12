@@ -62,6 +62,6 @@ public class DetailPanelTest extends GuiUnitTest {
     private void assertPanelDisplay(PersonCardHandle expectedPersonCard, DetailPanelHandle detailPanelHandle) {
         guiRobot.pauseForHuman();
         assertPanelDisplaysPerson(expectedPersonCard, detailPanelHandle);
-        //@@author
     }
+    //@@author
 }

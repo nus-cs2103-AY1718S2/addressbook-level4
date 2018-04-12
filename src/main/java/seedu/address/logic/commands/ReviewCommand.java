@@ -33,7 +33,7 @@ public class ReviewCommand extends UndoableCommand {
             + "A separate pop-up dialog will appear to request for the review.";
 
     public static final String MESSAGE_REVIEW_PERSON_SUCCESS = "Reviewed employee: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "Both INDEX and REVIEW must be provided.";
+    public static final String MESSAGE_NOT_EDITED = "INDEX, REVIEWER, and REVIEW must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This employee already exists in Employees Tracker.";
 
     private final Index index;

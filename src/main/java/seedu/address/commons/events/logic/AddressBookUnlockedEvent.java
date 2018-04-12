@@ -13,6 +13,6 @@ public class AddressBookUnlockedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "AddressBook unlocked!";
+        return "Employees Tracker unlocked!";
     }
 }

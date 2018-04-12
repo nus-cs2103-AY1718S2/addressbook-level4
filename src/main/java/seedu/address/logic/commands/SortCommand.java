@@ -14,7 +14,7 @@ public class SortCommand extends UndoableCommand {
 
     public static final String[] SORT_FIELD_LIST = {"name", "phone", "email", "address", "tag", "rate"};
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the list of employees by a specific field  "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the list of employees by a specific field.\n"
             + "Parameters: FIELD\n"
             + "Example: " + COMMAND_WORD + " name";
 

@@ -78,6 +78,18 @@ Format: `add n/NAME p/PHONE_NUMBER a/ADDRESS o/FOOD_ORDER [h/HALAL] [v/VEGETARIA
 [TIP]
 A person can have any number of tags (including 0)
 
+[TIP]
+First letter for every word of FOOD_ORDER must be capitalised
+
+[TIP]
+Current Menu:
+Chicken Rice
+Curry Chicken
+Chicken Chop
+Ban Mian
+Ice Milo
+Coffee
+
 Examples:
 
 * `add n/John Doe p/98765432  a/John street, block 123, #01-01 o/Chicken rice h/HALAL v/VEGETARIAN`
@@ -96,6 +108,9 @@ Format: `list`
 Edits an existing order in the queue. +
 Alias: `e` +
 Format: `edit INDEX [n/NAME] [p/PHONE] [a/ADDRESS] [t/FOOD_ORDER] [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
+
+[TIP]
+First letter for every word of FOOD_ORDER must be capitalised
 
 ****
 * Edits the order at the specified `INDEX`. The index refers to the index number shown in the last order listing. The index *must be a positive integer* 1, 2, 3, ...

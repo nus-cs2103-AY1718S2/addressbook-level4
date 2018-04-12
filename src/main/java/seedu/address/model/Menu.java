@@ -1,7 +1,10 @@
 //@@author ZacZequn
 package seedu.address.model;
 
+//import java.io.File;
+//import java.io.FileNotFoundException;
 import java.util.HashMap;
+//import java.util.Scanner;
 
 import seedu.address.model.dish.Dish;
 import seedu.address.model.dish.Name;
@@ -24,8 +27,19 @@ public class Menu implements ReadOnlyMenu {
      */
     {
         dishes = new HashMap<>();
-        //only used for testing
+        //only for testing
         dishes.put("Chicken Rice", new Dish(new Name("Chicken Rice"), new Price("3")));
+        /*File file = new File("data/menu.txt");
+        try {
+            Scanner sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+                String name = sc.nextLine();
+                String price = sc.nextLine();
+                dishes.put(name, new Dish(new Name(name), new Price(price)));
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }*/
     }
 
     public Menu() {}

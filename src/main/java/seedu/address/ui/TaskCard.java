@@ -35,9 +35,13 @@ public class TaskCard extends UiPart<Region> {
         super(FXML);
         this.task = task;
 
-        index.setText("Task " + displayedIndex);
+        index.setText(displayedIndex + ")");
         name.setText(task.getName());
         description.setText(task.getDescription());
-        isCompleted.setText(String.valueOf(task.isCompleted()));
+        if (task.isCompleted()) {
+            isCompleted.setText("Yes");
+        } else {
+            isCompleted.setText("No");
+        }
     }
 }

@@ -86,6 +86,24 @@ Words in upper case are the parameters to be supplied by the user. For example:
 * You can split a command into multiple lines for ease of input.
 // end::command-format[]
 
+// tag::auto-completion[]
+[[Auto-completion]]
+*Auto-completion*
+
+* Press kbd:[Tab] while holding down kbd:[Shift] to display a list of suggestions for your input. The list will contain application keywords (i.e, commands, field prefixes in commands) that match your current input. If there are words matching your input, they will be shown in alphabetical order. If there is no word found, the list will not be displayed.
+** If you did not type anything, the list will suggest the first commands.
+** If you are typing the first word, the list will suggest some commands that match your current input. For example, if you are typing *`a`*, some commands starting with *`a`* will be displayed.
+** If you are typing not the first word, there are two possible cases:
+*** The first word you typed is not a command keyword, then the list will suggest some commands that match your last word (can be empty string if you have a whitespace at the end of your input).
+*** The first word you typed is a command keyword, then the list will suggest some possible field prefixes of that command. If the command has no field prefix, the list will not be displayed.
+* Press kbd:[&uarr;] and kbd:[&darr;] to choose a suggestion you want.
+* Press kbd:[Enter] to choose the suggestion.
+* The suggestion will be added to your input automatically.
+** If you choose a command keyword, it will replace your current input with the command and possible field prefixes (may be none, some or all possible field prefixes, depending on command).
+** If you choose a field prefix, it will replace the word right before the caret (i.e, the word used to find suggestion).
+
+// end::auto-completion[]
+
 // tag::app-navigation[]
 [[Navigation]]
 *Navigation*
@@ -93,6 +111,7 @@ Words in upper case are the parameters to be supplied by the user. For example:
 * Press kbd:[Enter] while holding down kbd:[Shift] to add a new line to your input.
 * Press kbd:[Enter] to submit a command.
 * Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] will display the previous and next input respectively in the command box.
+* Press kbd:[Ctrl]+kbd:[Tab]/kbd:[Tab] to quickly move the caret to previous/next field.
 // end::app-navigation[]
 
 === *`add`* : Adding a recipe
@@ -134,11 +153,8 @@ You can use kbd:[Shift]+kbd:[Tab] for command auto-completion. After choosing au
 
 
 .Auto-completion for command
-image::AutoCompletion.PNG[width="750"]
+image::AutoCompletion.png[width="750"]
 {nbsp} +
-
-[TIP]
-You can use kbd:[Tab] to quickly move the caret to next field.
 
 === *`clear`* : Clearing all entries
 
@@ -229,6 +245,7 @@ Returns `_Chicken rice_` and `_Chicken pizza_`.
 * *`find chicken fish pasta`* +
 Returns any recipe having substrings `_chicken_`, `_fish_`, or `_pasta_`.
 
+// tag::group-command[]
 === *`group`* : Creating a custom group of recipes
 
 Creates a group of one or multiple recipes by the index or indices used in the last recipe listing.
@@ -248,6 +265,7 @@ Examples:
 * *`list`* +
 *`group group_name/ My best index/ 1 index/ 3`* +
 Creates a group that contains 1st recipe and 3rd recipe and names the group as `_My best_`.
+// end::group-command[]
 
 === *`help`* : Viewing help
 
@@ -548,6 +566,7 @@ Data file will be uploaded to Dropbox with the name RecipeBook.xml. +
 *`upload RecipeBook`* +
 Updated data file will be uploaded to Dropbox with the name RecipeBook(1).xml.
 
+// tag::view-group-command[]
 === *`view_group`* : Viewing groups of recipes
 
 Views recipes inside a group.
@@ -558,6 +577,7 @@ Examples:
 
 * *`view_group My best`* +
 Lists all recipes inside `_My best_` group.
+// end::view-group-command[]
 
 === Saving the data
 
@@ -670,6 +690,7 @@ Uploads the 6th recipe in the recipe book to the server.
 | kbd:[Ctrl] + kbd:[&darr;] |   Next command
 | kbd:[Shift] + kbd:[Enter] |   New line in command
 | kbd:[Shift] + kbd:[Tab]   |   Show command suggestions
+| kbd:[Ctrl] + kbd:[Tab]    |   Previous field in command
 | kbd:[Tab]                 |   Next field in command
 |===
 

@@ -20,7 +20,6 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.LoadingEvent;
-import seedu.address.commons.events.ui.NewsCardClickedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowNotifManRequestEvent;
 import seedu.address.logic.Logic;
@@ -191,16 +190,6 @@ public class MainWindow extends UiPart<Stage> {
     public void handleHelp() {
         BrowserWindow helpWindow = new BrowserWindow(BrowserWindow.USERGUIDE_FILE_PATH);
         helpWindow.show();
-    }
-
-    /**
-     * Opens the browser window.
-     */
-    @Subscribe
-    private void handleNewsCardClickedEvent(NewsCardClickedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        BrowserWindow browserWindow = new BrowserWindow(event.url);
-        browserWindow.show();
     }
 
     void show() {

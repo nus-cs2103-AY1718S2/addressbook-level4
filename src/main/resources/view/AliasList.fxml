@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.StackPane?>
+
+<!-- @@author jingyinno -->
+<StackPane fx:id="aliasListPlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <TableView fx:id="aliasListTable" stylesheets="@DarkTheme.css">
+            <TableColumn fx:id="addCommand" prefWidth="100.0" text="add" />
+            <TableColumn fx:id="editCommand" prefWidth="60.0" text="0800" />
+            <TableColumn fx:id="selectCommand" prefWidth="60.0" text="0900" />
+            <TableColumn fx:id="deleteComamnd" prefWidth="60.0" text="1000" />
+            <TableColumn fx:id="clearCommand" prefWidth="60.0" text="1100" />
+            <TableColumn fx:id="findCommand" prefWidth="60.0" text="1200" />
+            <TableColumn fx:id="listCommand" prefWidth="60.0" text="1300" />
+            <TableColumn fx:id="historyCommand" prefWidth="60.0" text="1400" />
+            <TableColumn fx:id="exitCommand" prefWidth="60.0" text="1500" />
+            <TableColumn fx:id="helpCommand" prefWidth="60.0" text="1600" />
+            <TableColumn fx:id="undoCommand" prefWidth="60.0" text="1700" />
+            <TableColumn fx:id="redoCommand" prefWidth="60.0" text="1800" />
+            <TableColumn fx:id="aliasCommand" prefWidth="60.0" text="1900" />
+            <TableColumn fx:id="importCommand" prefWidth="60.0" text="2000" />
+            <TableColumn fx:id="passwordCommand" prefWidth="60.0" text="1300" />
+            <TableColumn fx:id="birthdaysCommand" prefWidth="60.0" text="1400" />
+            <TableColumn fx:id="exportCommand" prefWidth="60.0" text="1500" />
+            <TableColumn fx:id="mapCommand" prefWidth="60.0" text="1600" />
+            <TableColumn fx:id="removePasswordCommand" prefWidth="60.0" text="1700" />
+            <TableColumn fx:id="unaliasCommand" prefWidth="60.0" text="1800" />
+            <TableColumn fx:id="vacantCommand" prefWidth="60.0" text="1900" />
+        </TableView>
+    </children>
+</StackPane>

@@ -87,4 +87,9 @@ public class GroupTest {
         thrown.expect(PersonNotFoundException.class);
         groupA.removePerson(BENSON);
     }
+
+    @Test
+    public void compare_notEqualGroups() throws Exception {
+        assertNotEquals(groupA,groupB);
+    }
 }

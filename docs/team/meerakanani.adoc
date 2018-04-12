@@ -26,8 +26,7 @@ could be referenced by other team members and would be usable for the UI.
 
 * *Minor enhancement*: added a getTime function that gets the time of the entire journey for the delivery man and can be displayed on the UI.
 
-//TODO add links for collation
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/collated/functional/meerakanani10.md[Functional code]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/collated/test/meerakanani10.md[Test code]]
 
 * *Other contributions*:
 

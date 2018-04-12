@@ -96,6 +96,8 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERY_DATE [t/TAG]...`
 [TIP]
 A person can have any number of tags (including 0)
 [TIP]
+Tags are used to categorize the different deliveries, some are already used by default like `repeat` which corresponds to a delivery that wasn't completed earlier and has been rescheduled
+[TIP]
 The date must be in the format "YYYY-MM-DD"
 
 Examples:
@@ -300,6 +302,7 @@ Return the distance from the headquarter to the 1st person name Betsy in the add
 === Setting the HeadQuarters `[coming in v2.0]`
 User is able to set the address of the headquarters with `sethq` command
 
+// tag::email[]
 === Emailing the customers : `email`
 
 Sends an email to the filtered list of customers to remind them when their delivery is coming
@@ -311,6 +314,7 @@ This command will email every user listed on the UI screen when the email comman
 
 [NOTE]
 Remind to first filter the customers by date.
+// end::email[]
 
 === Exiting the program : `exit`
 
@@ -396,8 +400,10 @@ e.g.`distance 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
+// tag::shortcuts[]
 == Shortcuts
 
 * kbd:[tab] : autocomplete a command or a field
 * kbd:[&uarr;] : previous input
 * kbd:[&darr;] : next input
+// end::shortcuts[]

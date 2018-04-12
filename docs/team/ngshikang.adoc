@@ -20,7 +20,6 @@ organize deliveries for the delivery people.
 
 * *Minor enhancement*: Enhanced user interface for application overall by adding useful labels in the main application and instructions to the login screen.
 
-//TODO add links for collation
 * *Code contributed*: [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/collated/functional/ngshikang.md[Functional code]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/collated/test/ngshikang.md[Test code]]
 
 * *Other contributions*:

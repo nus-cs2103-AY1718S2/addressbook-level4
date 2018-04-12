@@ -55,7 +55,11 @@ public class SuggestionsPopUp extends ContextMenu {
 
         String firstWord = textInputProcessor.getFirstWord();
         if (APPLICATION_COMMANDS.contains(firstWord)) {
-            suggestionList.addAll(getPrefixesForCommand().get(firstWord));
+            if (firstWord.equals(lastWord)) {
+                suggestionList.add(firstWord);
+            } else {
+                suggestionList.addAll(getPrefixesForCommand().get(firstWord));
+            }
         } else {
             suggestionList.addAll(APPLICATION_COMMANDS);
         }

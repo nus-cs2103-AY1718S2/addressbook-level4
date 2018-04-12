@@ -651,7 +651,7 @@ Fastis adds a person from the existing contact list to an existing group.
 
 ==== Current Implementation
 
-The add members to groups mechanism is facilitated by `AddMembersToGroupCommand`, which resides inside `Logic` component.
+The add member to groups mechanism is facilitated by `AddMemberToGroupCommand`, which resides inside `Logic` component.
 It supports adding a member to Group objects to the address book.
 
 The list of members in the group list are facilitated by `Group` class. Each `Group` object have a `UniquePersonList` object, representing the list of persons in the group.
@@ -662,8 +662,8 @@ image:aGMSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-===== Aspect: Implementation of `AddMembersToGroupCommand`
-* **Alternative 1 (current choice):** Add a new command method `AddMembersToGroupCommand()`
+===== Aspect: Implementation of `AddMemberToGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `AddMemberToGroupCommand()`
 ** Pros: It is easy for developers to modify method to suit what they want
 
 === List Group Members Feature

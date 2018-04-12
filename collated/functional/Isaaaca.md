@@ -418,7 +418,7 @@ public class Schedule {
     private static final List<String> COMMAND_WORDS = Arrays.asList(AddCommand.COMMAND_WORD,
             AddEventCommand.COMMAND_WORD,
             AddGroupCommand.COMMAND_WORD,
-            AddMembersToGroupCommand.COMMAND_WORD,
+            AddMemberToGroupCommand.COMMAND_WORD,
             AddToDoCommand.COMMAND_WORD,
             ChangeTagColorCommand.COMMAND_WORD,
             CheckToDoCommand.COMMAND_WORD,

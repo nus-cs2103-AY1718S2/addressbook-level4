@@ -60,6 +60,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author aquarinte
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
@@ -74,13 +75,14 @@ public class ParserUtil {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
         String[] wordsInName = trimmedName.split(" ");
-        String formattedName = "";
+        StringBuilder formattedName = new StringBuilder();
         for (String n : wordsInName) {
-            formattedName += n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase() + " ";
+            formattedName = formattedName.append(n.substring(0,1).toUpperCase())
+                    .append(n.substring(1).toUpperCase());
         }
-        return new Name(formattedName.trim());
+        return new Name(formattedName.toString().trim());
     }
-
+    //@@author
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -408,6 +410,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author aquarinte
     /**
      * Parses a {@code String name} into a {@code PetPatientName}.
      * Leading and trailing whitespaces will be trimmed.
@@ -422,11 +425,12 @@ public class ParserUtil {
             throw new IllegalValueException(PetPatientName.MESSAGE_PET_NAME_CONSTRAINTS);
         }
         String[] wordsInName = trimmedName.split(" ");
-        String formattedName = "";
+        StringBuilder formattedName = new StringBuilder();
         for (String n : wordsInName) {
-            formattedName += n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase() + " ";
+            formattedName = formattedName.append(n.substring(0,1).toUpperCase())
+                    .append(n.substring(1).toUpperCase());
         }
-        return new PetPatientName(formattedName.trim());
+        return new PetPatientName(formattedName.toString().trim());
     }
 
     //@@author chialejing

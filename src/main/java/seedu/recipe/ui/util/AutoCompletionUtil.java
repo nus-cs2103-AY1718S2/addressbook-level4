@@ -12,13 +12,15 @@ import seedu.recipe.logic.parser.CliSyntax;
  */
 public class AutoCompletionUtil {
     public static final ArrayList<String> APPLICATION_COMMANDS = new ArrayList<>(Arrays.asList("add", "clear", "delete",
-            "edit", "exit", "find", "group", "help", "history", "list", "redo", "select", "share", "tag", "undo",
-            "upload", "view_group"));
+            "edit", "exit", "find", "group", "help", "history", "ingredient", "list", "parse", "redo", "search",
+            "select", "share", "tag", "theme", "toke", "undo", "upload", "view_group"));
     public static final ArrayList<String> APPLICATION_KEYWORDS = new ArrayList<>(Arrays.asList(
             CliSyntax.PREFIX_NAME.toString(), CliSyntax.PREFIX_INGREDIENT.toString(),
-            CliSyntax.PREFIX_INSTRUCTION.toString(), CliSyntax.PREFIX_PREPARATION_TIME.toString(),
-            CliSyntax.PREFIX_TAG.toString(), CliSyntax.PREFIX_URL.toString(), CliSyntax.PREFIX_INDEX.toString(),
-            CliSyntax.PREFIX_GROUP_NAME.toString()));
+            CliSyntax.PREFIX_INSTRUCTION.toString(), CliSyntax.PREFIX_COOKING_TIME.toString(),
+            CliSyntax.PREFIX_PREPARATION_TIME.toString(), CliSyntax.PREFIX_CALORIES.toString(),
+            CliSyntax.PREFIX_SERVINGS.toString(), CliSyntax.PREFIX_TAG.toString(), CliSyntax.PREFIX_URL.toString(),
+            CliSyntax.PREFIX_IMG.toString(), CliSyntax.PREFIX_GROUP_NAME.toString(),
+            CliSyntax.PREFIX_INDEX.toString()));
     public static final int MAX_SUGGESTIONS = 4;
     public static final char LF = '\n';
     public static final char WHITESPACE = ' ';
@@ -27,18 +29,25 @@ public class AutoCompletionUtil {
     private HashMap<String, ArrayList<String>> prefixesForCommand;
 
     public AutoCompletionUtil() {
+        initializePrefixesForCommandsOffline();
+    }
+
+    /**
+     * Creates a list of all prefixes associated with each command
+     */
+    private void initializePrefixesForCommandsOffline() {
         prefixesForCommand = new HashMap<>();
 
         ArrayList<String> addPrefixes = new ArrayList<>(Arrays.asList(CliSyntax.PREFIX_NAME.toString(),
                 CliSyntax.PREFIX_INGREDIENT.toString(), CliSyntax.PREFIX_INSTRUCTION.toString(),
-                CliSyntax.PREFIX_PREPARATION_TIME.toString(), CliSyntax.PREFIX_TAG.toString(),
-                CliSyntax.PREFIX_URL.toString()));
+                CliSyntax.PREFIX_COOKING_TIME.toString(), CliSyntax.PREFIX_PREPARATION_TIME.toString(),
+                CliSyntax.PREFIX_CALORIES.toString(), CliSyntax.PREFIX_SERVINGS.toString(),
+                CliSyntax.PREFIX_URL.toString(), CliSyntax.PREFIX_IMG.toString(), CliSyntax.PREFIX_TAG.toString()));
         prefixesForCommand.put("add", addPrefixes);
 
         ArrayList<String> editPrefixes = new ArrayList<>(Arrays.asList(CliSyntax.PREFIX_NAME.toString(),
                 CliSyntax.PREFIX_INGREDIENT.toString(), CliSyntax.PREFIX_INSTRUCTION.toString(),
-                CliSyntax.PREFIX_PREPARATION_TIME.toString(), CliSyntax.PREFIX_TAG.toString(),
-                CliSyntax.PREFIX_URL.toString()));
+                CliSyntax.PREFIX_TAG.toString(), CliSyntax.PREFIX_URL.toString()));
         prefixesForCommand.put("edit", editPrefixes);
 
         ArrayList<String> groupPrefixes = new ArrayList<>(Arrays.asList(CliSyntax.PREFIX_GROUP_NAME.toString(),

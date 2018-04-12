@@ -137,6 +137,19 @@ public class ModelManager extends ComponentManager implements Model, PredictionM
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author jstarw
+    @Override
+    public Person findOnePerson(Predicate<Person> predicate) throws PersonNotFoundException {
+        requireNonNull(predicate);
+        ObservableList<Person> persons = addressBook.getPersonList();
+        for (Person person : persons) {
+            if (predicate.test(person)) {
+                return person;
+            }
+        }
+        throw new PersonNotFoundException();
+    }
+
     @Override
     public CalendarSource getCalendar() {
         return addressBook.getCalendar();

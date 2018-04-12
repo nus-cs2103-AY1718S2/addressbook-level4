@@ -166,7 +166,7 @@ public class EditCommand extends UndoableCommand {
         private Income income;
         private Expenditure actualSpending;
         private Expenditure expectedSpending;
-        //@author
+        //@@author jstarw
         private Age age;
 
         public EditPersonDescriptor() {
@@ -256,12 +256,11 @@ public class EditCommand extends UndoableCommand {
         public Optional<Expenditure> getExpectedSpending() {
             return Optional.ofNullable(expectedSpending);
         }
-        //@author
-
+        //@@author jstarw
         public void setAge(Age age) {
             this.age = age;
         }
-
+        // @@author jstarw
         public Optional<Age> getAge() {
             return Optional.ofNullable(age);
         }

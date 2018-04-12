@@ -33,7 +33,12 @@ Medeina, your all-in-one solution to curb your data nightmare.
 
 === Using this Guide
 
-This document provides detailed information pertaining to Medeina's set-up and usage instructions for the various features it offers. The user guide can be accessed any time through the `help` command in Medeina.
+This document provides detailed information pertaining to Medeina's set-up and usage instructions for the various features it offers. The user guide can be accessed any time through the `help` command in Medeina. +
+Do take note of the following colours and their representation, as they will be used to better illustrate Medeina's commands in <<CLI>>.
+
+* Blue -> information related to a contact
+* Green -> information related to a pet patient
+* Magenta -> information related to an appointment
 
 
 == Quick Start
@@ -43,54 +48,48 @@ To successsfully install and run Medeina, you need to:
 .  Ensure that you have Java version `1.8.0_60` or later installed on your Computer.
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8. +
+Having any Java 8 version is not enough. This app will not work with earlier versions of Java 8. +
 You can download the latest version of Java link:https://java.com/en/download//[here].
 +
 .  Download the latest `medeina.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for Medeina.
 .  Double-click the file to start the app. You should see the GUI (Graphical User Interface) in a few seconds.
 +
+.Medeina's GUI
 image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
 
-* *`list`* : lists all persons and pet patients
-* **`add -o`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 nr/S1234567G` : adds a contact named `John Doe` to Medeina
-* **`delete -o`**`3` : deletes the 3rd person shown in the current list
-* *`exit`* : exits the application
+{empty} +
 
-.  Refer to <<Features>> for details of each command.
+[[CLI]]
+== Command Line Interface (CLI)
 
-[[Features]]
-== Features
-
-====
-*Command format used in Medeina :*
+=== Command format used in Medeina
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add **-o** n/NAME`, `NAME` is a parameter which can be used as `add **-o** n/John Doe`.
 * Characters in **bold** are options to be specified by the user to execute variants of a command e.g. in `add **-p** n/NAME`, **-p** denotes to add a pet patient.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-* Shorthand equivalent alias is available for all commands to simplify execution of commands e.g. `a` is the alias for `add`.
-====
-====
-*Command autocomplete in Medeina :* `[Since v1.3]`
+* Shorthand equivalent alias, or better known as short-form, is available for all commands to simplify execution of commands e.g. `a` is the alias for `add`.
 
+{empty} +
+
+=== Autocomplete `[Since v1.3]`
+
+.Medeina's autocomplete
 image::autocomplete.png[width="500"]
 
-* Medeina supports autocomplete for command words, options, prefixes, NRICs, pet patient names and tags.
+* Medeina supports autocomplete for command words, options, prefixes, and parameters.
 * You will be shown a list of suggested NRICs when when you need to reference an existing person in Medeina e.g. adding a pet patient / appointment, editing a pet patient to change ownership.
 * You will also be shown a list of suggested pet patients names when you need to reference them in `*-p* n/PET_PATIENT_NAME`.
 * Autocomplete matching is case-insensitive e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
 * You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the pop-up context menu.
 * Press kbd:[Enter] to select an autocomplete suggestion on the pop-up context menu.
-====
 
 {empty} +
+
+[[Commands]]
+== Medeina's Commands
 
 === Viewing help : `help` or `h`
 
@@ -100,7 +99,8 @@ If you are feeling lost, enter `help` or `h` in Medeina's command box, or press 
 
 === Adding a contact, pet patient or appointment : `add` or `a` `[Since v1.2]`
 
-You can use `add` or `a` to do the following :
+If you want to add contact, pet patient, and/or appointment to Medeina, simply use the `add` or `a` command.
+You can learn more about this command in the following table:
 
 [width="100%", cols="15%,<45%a,<40%", options="header"]
 |=====
@@ -141,13 +141,13 @@ image::add_examples.PNG[width="800"]
 ----
 add -o n/Viktor Nikiforov p/91237890 e/v_nikiforov@gmail.com a/27 Skating Place nr/F0012345Z
 
-add n/Makkachin s/dog b/poodle c/brown bt/DEA-1.1 -o nr/F0012345Z
+add -p n/Makkachin s/dog b/poodle c/brown bt/DEA-1.1 -o nr/F0012345Z
 
 add -a d/2018-05-27 14:30 r/had poor appetite the last 3 days t/vaccination t/checkup -o nr/F0012345Z
 -p n/Makkachin
 
 add -o n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/S1234567G -p n/jewel
-s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/surgery t/sterilization
+ s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/surgery t/sterilization
 ----
 
 {empty} +
@@ -478,7 +478,6 @@ image::Theme_Dark.PNG[width:800]
 
 .Light theme
 image::Theme_Light.PNG[width:800]
-{empty} +
 
 {empty} +
 
@@ -488,7 +487,7 @@ You can easily exit Medeina without any mouse click by entering `exit` or `q` in
 
 {empty} +
 
-=== Data saving
+== Data saving
 
 The data in Medeina is automatically saved to the hard disk after any command that may result in a change in the storage. +
 Commands that may result in a change in the storage are:
@@ -505,6 +504,9 @@ You do not need to manually save the data.
 {empty} +
 
 // tag::dataencryption[]
+
+== Future enhancements
+
 === Encrypting data files `[coming in v2.0]`
 
 Coming v2.0, the data you have will be automatically encrypted after commands that may change the storage, so that you do not have to worry about it being stolen. +
@@ -516,15 +518,13 @@ You do not need to manually encrypt your data files.
 
 === Creating other user profiles `[coming in v2.0]`
 
-Coming v2.0, Medeina will have user accounts, so that veterinarians and their assistants can collaborate on the same computer, but at the same time keep their information private to themselves. +
-
-This command will be added when it is released.
+Coming v2.0, Medeina will have user accounts, so that veterinarians and their assistants can collaborate on the same computer, but at the same time keep their information private to themselves.
 
 {empty} +
 
 === Setting user permissions `[coming in v2.0]`
 
-Coming v2.0, Medeina will have user permissions, to ensure that protected information is not easily changed by other staff. There will be an administrator role to gain total access in the application. +
+Coming v2.0, Medeina will have user permissions, to ensure that protected information is not easily changed by other staff. There will be an administrator role to gain total access in the application.
 
 Information that vet assistants should not change:
 
@@ -536,15 +536,11 @@ Information that vets should not change:
 
 * You should not change information belonging to other vets in the application without permission.
 
-The command will be added when it is released.
-
 {empty} +
 
 === Supporting multiple users `[coming in v2.0]`
 
-Coming v2.0, Medeina can be used concurrently on different systems. The data will be synced over an internet connection. This allow Veterinarians and their assistants to access Medeina simultaneously in different rooms, making it easier to collaborate with others. +
-
-The command will be added when it is released.
+Coming v2.0, Medeina can be used concurrently on different systems. The data will be synced over an internet connection. This allow Veterinarians and their assistants to access Medeina simultaneously in different rooms, making it easier to collaborate with others.
 
 {empty} +
 
@@ -562,22 +558,11 @@ The command will be added when it is released.
 *Q*: What if my questions are not answered through this user guide? +
 *A*: Post an issue in our github link:{repoURL}/issues[here]. Alternatively, email us at help@medeina.com. We will address your question as soon as possible.
 
+{empty} +
+
 == Command Summary
 
-The following is a summary of all commands available in Medeina:
-
-* *Add* `add` or `a` with options **-o**, **-p** and **-a**
-* *Clear* : `clear` or `cls`
-* *Delete* : `delete INDEX` or `d INDEX`
-* *Edit* : `edit INDEX [PREFIX/ INFO]` or `e INDEX [PREFIX/ INFO]` with options **-o**, **-p** and **-a**
-* *Exit* : `exit` or `q`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
-* *List* : `list` or `ls`
-* *Help* : `help` or `h`
-* *History* : `history` or `his`
-* *Undo* : `undo` or `ud`
-* *Redo* : `redo` or `rd`
-* *Change Theme* : `theme THEME_NAME` or `t THEME_NAME`
+You can find a summary of all commands available in Medeina in the following sections.
 
 === Person-related Commands
 
@@ -670,6 +655,21 @@ The following is a summary of all commands available in Medeina:
 | Delete an appointment in Medeina
 |=====
 
+=== Personalisation Commands
+
+[width="100%", cols="20%, 10%, 40%, 30%", options="header"]
+|=====
+| Command
+| Alias
+| Command Syntax
+| Description
+
+.^a|`theme`
+| `t`
+| `theme THEME_NAME`
+| Change Medeina's current theme to THEME_NAME
+|=====
+
 === System-related Commands
 
 [cols="20, 10, 50", options="header"]
@@ -705,3 +705,4 @@ The following is a summary of all commands available in Medeina:
 .^a|`exit`
 | `q`
 | Exits the program
+|=====

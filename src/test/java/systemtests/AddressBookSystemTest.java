@@ -160,7 +160,17 @@ public abstract class AddressBookSystemTest {
      */
     protected void showPersonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " -o n/" + keyword);
-        assertTrue(getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size());
+        assertTrue(getModel().getFilteredPersonList().size()
+                < getModel().getAddressBook().getPersonList().size());
+    }
+
+    /**
+     * Displays all petpatients with any parts of their names matching {@code keyword} (case-insensitive).
+     */
+    protected void showPetPatientsWithName(String keyword) {
+        executeCommand(FindCommand.COMMAND_WORD + " -p n/" + keyword);
+        assertTrue(getModel().getFilteredPetPatientList().size()
+                < getModel().getAddressBook().getPetPatientList().size());
     }
 
     /**
@@ -191,7 +201,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
-        //assertListMatching(getPetPatientListPanel(), expectedModel.getFilteredPetPatientList());
+        assertListMatching(getPetPatientListPanel(), expectedModel.getFilteredPetPatientList());
     }
 
     /**

@@ -155,6 +155,15 @@ public class GuiTestAssert {
     //@@author
 
     /**
+     * Asserts that the list in {@code petPatientListPanelHandle} displays the details of {@code pet patients}
+     * correctly and in the correct order.
+     */
+    public static void assertListMatching(PetPatientListPanelHandle petPatientListPanelHandle,
+                                          List<PetPatient> petPatients) {
+        assertListMatching(petPatientListPanelHandle, petPatients.toArray(new PetPatient[0]));
+    }
+
+    /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
      */

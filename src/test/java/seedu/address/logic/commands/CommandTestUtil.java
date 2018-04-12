@@ -36,20 +36,20 @@ import seedu.address.testutil.EditCoinDescriptorBuilder;
  */
 public class CommandTestUtil {
 
-    public static final String VALID_NAME_AMY = "Amy Bee";
-    public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_NAME_JOE = "JOE";
-    public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_NAME_AMB = "AMB";
+    public static final String VALID_NAME_BOS = "BOS";
+    public static final String VALID_NAME_JOBS = "JOBS";
+    public static final String VALID_TAG_HOT = "hot";
+    public static final String VALID_TAG_FAV = "fav";
 
-    public static final String NAME_DESC_AMY = " " + PREFIX_CODE + VALID_NAME_AMY;
-    public static final String NAME_DESC_BOB = " " + PREFIX_CODE + VALID_NAME_BOB;
-    public static final String NAME_DESC_JOE = " " + PREFIX_CODE + VALID_NAME_JOE;
-    public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
-    public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String NAME_DESC_AMB = " " + PREFIX_CODE + VALID_NAME_AMB;
+    public static final String NAME_DESC_BOS = " " + PREFIX_CODE + VALID_NAME_BOS;
+    public static final String NAME_DESC_JOBS = " " + PREFIX_CODE + VALID_NAME_JOBS;
+    public static final String TAG_DESC_FAV = " " + PREFIX_TAG + VALID_TAG_FAV;
+    public static final String TAG_DESC_HOT = " " + PREFIX_TAG + VALID_TAG_HOT;
 
-    public static final String INVALID_NAME_DESC = " " + PREFIX_CODE + "James&"; // '&' not allowed in names
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_NAME_DESC = " " + PREFIX_CODE + "BTC&"; // '&' not allowed in names
+    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hot*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -58,10 +58,10 @@ public class CommandTestUtil {
     public static final TagCommand.EditCoinDescriptor DESC_BOB;
 
     static {
-        DESC_AMY = new EditCoinDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditCoinDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_AMY = new EditCoinDescriptorBuilder().withName(VALID_NAME_AMB)
+                .withTags(VALID_TAG_FAV).build();
+        DESC_BOB = new EditCoinDescriptorBuilder().withName(VALID_NAME_BOS)
+                .withTags(VALID_TAG_HOT, VALID_TAG_FAV).build();
     }
 
     /**

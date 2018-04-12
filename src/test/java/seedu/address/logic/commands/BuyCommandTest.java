@@ -56,7 +56,7 @@ public class BuyCommandTest {
     @Test
     public void equals() {
         Coin alice = new CoinBuilder().withName("ALC").build();
-        Coin bob = new CoinBuilder().withName("BOB").build();
+        Coin bob = new CoinBuilder().withName("BOS").build();
         BuyCommand buyAliceCommand = new BuyCommand(new CommandTarget(alice.getCode()), VALID_AMOUNT);
         BuyCommand buyBobCommand = new BuyCommand(new CommandTarget(bob.getCode()), VALID_AMOUNT);
 

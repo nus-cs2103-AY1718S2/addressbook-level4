@@ -3,8 +3,8 @@ package seedu.address.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
-import static seedu.address.testutil.TypicalCoins.ALICE;
-import static seedu.address.testutil.TypicalCoins.BENSON;
+import static seedu.address.testutil.TypicalCoins.ALIS;
+import static seedu.address.testutil.TypicalCoins.BTCZ;
 
 import java.util.Arrays;
 
@@ -28,7 +28,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        CoinBook addressBook = new CoinBookBuilder().withCoin(ALICE).withCoin(BENSON).build();
+        CoinBook addressBook = new CoinBookBuilder().withCoin(ALIS).withCoin(BTCZ).build();
         CoinBook differentCoinBook = new CoinBook();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -50,7 +50,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentCoinBook, userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getCode().fullName.split("\\s+");
+        String[] keywords = ALIS.getCode().fullName.split("\\s+");
         modelManager.updateFilteredCoinList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 

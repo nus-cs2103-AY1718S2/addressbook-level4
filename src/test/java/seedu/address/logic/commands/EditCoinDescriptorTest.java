@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HOT;
 
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class EditCoinDescriptorTest {
         assertFalse(DESC_AMY.equals(DESC_BOB));
 
         // different tags -> returns false
-        EditCoinDescriptor editedAmy = new EditCoinDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
+        EditCoinDescriptor editedAmy = new EditCoinDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HOT).build();
         assertFalse(DESC_AMY.equals(editedAmy));
     }
 }

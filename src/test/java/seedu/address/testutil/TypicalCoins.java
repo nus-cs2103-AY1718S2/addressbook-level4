@@ -1,9 +1,9 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FAV;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HOT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,28 +18,28 @@ import seedu.address.model.coin.exceptions.DuplicateCoinException;
  */
 public class TypicalCoins {
 
-    public static final Coin ALICE = new CoinBuilder().withName("Alice Pauline")
-            .withTags("friends").build();
-    public static final Coin BENSON = new CoinBuilder().withName("Benson Meier")
-            .withTags("owesMoney", "friends").build();
-    public static final Coin CARL = new CoinBuilder().withName("Carl Kurz").build();
-    public static final Coin DANIEL = new CoinBuilder().withName("Daniel Meier").build();
-    public static final Coin ELLE = new CoinBuilder().withName("Elle Meyer").build();
-    public static final Coin FIONA = new CoinBuilder().withName("Fiona Kunz").build();
-    public static final Coin GEORGE = new CoinBuilder().withName("George Best").build();
+    public static final Coin ALIS = new CoinBuilder().withName("ALIS")
+            .withTags("favs").build();
+    public static final Coin BTCZ = new CoinBuilder().withName("BTCZ")
+            .withTags("common", "fav").build();
+    public static final Coin CAS = new CoinBuilder().withName("CAS").build();
+    public static final Coin DADI = new CoinBuilder().withName("DADI").build();
+    public static final Coin ELIX = new CoinBuilder().withName("ELIX").build();
+    public static final Coin FIRE = new CoinBuilder().withName("FIRE").build();
+    public static final Coin GEO = new CoinBuilder().withName("GEO").build();
 
     // Manually added
-    public static final Coin HOON = new CoinBuilder().withName("Hoon Meier").build();
-    public static final Coin IDA = new CoinBuilder().withName("Ida Mueller").build();
+    public static final Coin HORSE = new CoinBuilder().withName("HORSE").build();
+    public static final Coin IDT = new CoinBuilder().withName("IDT").build();
 
     // Manually added - Coin's details found in {@code CommandTestUtil}
-    public static final Coin AMY = new CoinBuilder().withName(VALID_NAME_AMY)
-            .withTags(VALID_TAG_FRIEND).build();
-    public static final Coin BOB = new CoinBuilder().withName(VALID_NAME_BOB)
-            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+    public static final Coin AMB = new CoinBuilder().withName(VALID_NAME_AMB)
+            .withTags(VALID_TAG_FAV).build();
+    public static final Coin BOS = new CoinBuilder().withName(VALID_NAME_BOS)
+            .withTags(VALID_TAG_HOT, VALID_TAG_FAV)
             .build();
 
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_BTC = "BT"; // A keyword that matches MEIER
 
     private TypicalCoins() {} // prevents instantiation
 
@@ -59,6 +59,6 @@ public class TypicalCoins {
     }
 
     public static List<Coin> getTypicalCoins() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALIS, BTCZ, CAS, DADI, ELIX, FIRE, GEO));
     }
 }

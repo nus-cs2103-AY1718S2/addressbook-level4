@@ -25,6 +25,6 @@ public class CodeCondition implements Predicate<Coin> {
 
     @Override
     public boolean test(Coin coin) {
-        return coin.getCode().contains(substring);
+        return coin.getCode().toString().toUpperCase().contains(substring.toUpperCase());
     }
 }

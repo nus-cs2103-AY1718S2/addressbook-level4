@@ -2,14 +2,11 @@
 <coinbook>
     <coins>
         <id>1</id>
-        <firstName>John</firstName>
-        <lastName>Doe</lastName>
-        <githubUsername></githubUsername>
-        <street></street>
-        <postalCode></postalCode>
+        <code>ALIS</code>
+        <tagged>favs</tagged>
         <city></city>
     </coins>
     <tags>
-        <code>Friends</code>
+        <code>favs</code>
     </tags>
 </coinbook>

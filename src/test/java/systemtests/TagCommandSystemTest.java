@@ -3,14 +3,15 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FAV;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HOT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FAV;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HOT;
 import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
-import static seedu.address.testutil.TypicalCoins.ALICE;
-import static seedu.address.testutil.TypicalCoins.BOB;
+import static seedu.address.testutil.TypicalCoins.ALIS;
+import static seedu.address.testutil.TypicalCoins.BOS;
+import static seedu.address.testutil.TypicalCoins.KEYWORD_MATCHING_BTC;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
 
 import org.junit.Test;
@@ -41,10 +42,10 @@ public class TagCommandSystemTest extends CoinBookSystemTest {
          */
         Index index = INDEX_FIRST_COIN;
         String command = " " + TagCommand.COMMAND_WORD + "  " + index.getOneBased() + "  "
-                + TAG_DESC_HUSBAND + " ";
+                + TAG_DESC_HOT + " ";
         Coin editedCoin = new CoinBuilder()
                 .withName(model.getFilteredCoinList().get(index.getZeroBased()).getCode().toString())
-                .withTags(VALID_TAG_HUSBAND).build();
+                .withTags(VALID_TAG_HOT).build();
         assertCommandSuccess(command, index, editedCoin);
 
         /* Case: undo editing the last coin in the list -> last coin restored */
@@ -61,9 +62,9 @@ public class TagCommandSystemTest extends CoinBookSystemTest {
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_COIN;
-        command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND + "s";
+        command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FAV + "s";
         Coin coinToEdit = getModel().getFilteredCoinList().get(index.getZeroBased());
-        editedCoin = new CoinBuilder(coinToEdit).withTags(VALID_TAG_FRIEND + "s").build();
+        editedCoin = new CoinBuilder(coinToEdit).withTags(VALID_TAG_FAV + "s").build();
         assertCommandSuccess(command, index, editedCoin);
 
         /* Case: clear tags -> cleared */
@@ -72,23 +73,24 @@ public class TagCommandSystemTest extends CoinBookSystemTest {
         editedCoin = new CoinBuilder(coinToEdit).withTags().build();
         assertCommandSuccess(command, index, editedCoin);
 
-        /* ------------------ Performing edit operation while a filtered list is being shown ------------------------
+        /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered coin list, edit index within bounds of address book and coin list -> edited
-        showCoinsWithName(KEYWORD_MATCHING_MEIER);
+        /* Case: filtered coin list, edit index within bounds of coin book and coin list -> edited */
+        showCoinsWithName(KEYWORD_MATCHING_BTC);
         index = INDEX_FIRST_COIN;
         assertTrue(index.getZeroBased() < getModel().getFilteredCoinList().size());
-        command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + " " + TAG_DESC_FRIEND;
+        command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + " " + TAG_DESC_FAV;
         coinToEdit = getModel().getFilteredCoinList().get(index.getZeroBased());
-        editedCoin = new CoinBuilder(coinToEdit).withTags(VALID_TAG_FRIEND).build();
+        editedCoin = new CoinBuilder(coinToEdit).withTags(VALID_TAG_FAV).build();
         assertCommandSuccess(command, index, editedCoin);
 
-        /* Case: filtered coin list, edit index within bounds of address book but out of bounds of coin list
+        /* Case: filtered coin list, edit index within bounds of coin book but out of bounds of coin list
          * -> rejected
+         */
 
-        showCoinsWithName(KEYWORD_MATCHING_MEIER);
+        showCoinsWithName(KEYWORD_MATCHING_BTC);
         int invalidIndex = getModel().getCoinBook().getCoinList().size();
-        assertCommandFailure(TagCommand.COMMAND_WORD + " " + invalidIndex + TAG_DESC_FRIEND,
+        assertCommandFailure(TagCommand.COMMAND_WORD + " " + invalidIndex + TAG_DESC_FAV,
                 Messages.MESSAGE_INVALID_COMMAND_TARGET);
 
         /* --------------------- Performing edit operation while a coin card is selected -------------------------- */
@@ -99,28 +101,28 @@ public class TagCommandSystemTest extends CoinBookSystemTest {
         showAllCoins();
         index = INDEX_FIRST_COIN;
         selectCoin(index);
-        command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND + "s";
+        command = TagCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FAV + "s";
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new coin's name
-        assertCommandSuccess(command, index, ALICE, index);
+        assertCommandSuccess(command, index, ALIS, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(TagCommand.COMMAND_WORD + " 0" + TAG_DESC_FRIEND,
+        assertCommandFailure(TagCommand.COMMAND_WORD + " 0" + TAG_DESC_FAV,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(TagCommand.COMMAND_WORD + " -1" + TAG_DESC_FRIEND,
+        assertCommandFailure(TagCommand.COMMAND_WORD + " -1" + TAG_DESC_FAV,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        int invalidIndex = getModel().getFilteredCoinList().size() + 1;
-        assertCommandFailure(TagCommand.COMMAND_WORD + " " + invalidIndex + TAG_DESC_FRIEND,
+        invalidIndex = getModel().getFilteredCoinList().size() + 1;
+        assertCommandFailure(TagCommand.COMMAND_WORD + " " + invalidIndex + TAG_DESC_FAV,
                 Messages.MESSAGE_INVALID_COMMAND_TARGET);
 
         /* Case: missing index -> rejected */
-        assertCommandFailure(TagCommand.COMMAND_WORD + TAG_DESC_FRIEND,
+        assertCommandFailure(TagCommand.COMMAND_WORD + TAG_DESC_FAV,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
 
         /* Case: missing all fields -> rejected */
@@ -132,10 +134,10 @@ public class TagCommandSystemTest extends CoinBookSystemTest {
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a coin with new values same as another coin's values -> rejected */
-        executeCommand(CoinUtil.getAddCommand(BOB));
-        assertTrue(getModel().getCoinBook().getCoinList().contains(BOB));
+        executeCommand(CoinUtil.getAddCommand(BOS));
+        assertTrue(getModel().getCoinBook().getCoinList().contains(BOS));
         index = INDEX_FIRST_COIN;
-        assertFalse(getModel().getFilteredCoinList().get(index.getZeroBased()).equals(BOB));
+        assertFalse(getModel().getFilteredCoinList().get(index.getZeroBased()).equals(BOS));
     }
 
     /**

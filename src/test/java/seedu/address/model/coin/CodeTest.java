@@ -29,11 +29,11 @@ public class CodeTest {
         assertFalse(Code.isValidName("")); // empty string
         assertFalse(Code.isValidName(" ")); // spaces only
         assertFalse(Code.isValidName("^")); // only non-alphanumeric characters
-        assertFalse(Code.isValidName("peter*")); // contains non-alphanumeric characters
+        assertFalse(Code.isValidName("btc*")); // contains non-alphanumeric characters
 
         // valid name
-        assertTrue(Code.isValidName("peter jack")); // alphabets only
-        assertTrue(Code.isValidName("Capital Tan")); // with capital letters
-        assertTrue(Code.isValidName("David Roger Jackson Ray Jr")); // long names
+        assertTrue(Code.isValidName("btc")); // alphabets only
+        assertTrue(Code.isValidName("BTC")); // with capital letters
+        assertTrue(Code.isValidName("some random coin name or misc account")); // long names
     }
 }

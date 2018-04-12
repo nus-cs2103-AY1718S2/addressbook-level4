@@ -16,7 +16,7 @@ import seedu.address.model.util.SampleDataUtil;
 public class CoinBuilder {
 
     public static final String DEFAULT_NAME = "XTC";
-    public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_TAGS = "favs";
     public static final Price DEFAULT_PRICE = new Price();
     public static final Amount DEFAULT_AMOUNT_SOLD = new Amount();
     public static final Amount DEFAULT_AMOUNT_BOUGHT = new Amount();

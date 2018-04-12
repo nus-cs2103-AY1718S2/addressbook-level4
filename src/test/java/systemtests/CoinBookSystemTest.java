@@ -4,6 +4,7 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.parser.TokenType.PREFIX_CODE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.SUBREDDIT_NOT_FOUND;
 import static seedu.address.ui.StatusBarFooter.ITEM_COUNT_STATUS;
@@ -151,10 +152,10 @@ public abstract class CoinBookSystemTest {
     }
 
     /**
-     * Displays all coins with any parts of their names matching {@code keyword} (case-insensitive).
+     * Displays all coins with any parts of their codes matching {@code keyword} (case-insensitive).
      */
     protected void showCoinsWithName(String keyword) {
-        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
+        executeCommand(FindCommand.COMMAND_WORD + " " + PREFIX_CODE + keyword);
         assertTrue(getModel().getFilteredCoinList().size() < getModel().getCoinBook().getCoinList().size());
     }
 

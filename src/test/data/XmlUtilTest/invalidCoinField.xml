@@ -2,5 +2,5 @@
 <!-- Coin with an invalid code field -->
 <coin>
     <code>9482asf424</code>
-    <tagged>friends</tagged>
+    <tagged>favs</tagged>
 </coin>

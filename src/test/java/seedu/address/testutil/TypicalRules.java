@@ -13,17 +13,17 @@ import seedu.address.model.rule.exceptions.DuplicateRuleException;
  */
 public class TypicalRules {
 
-    public static final Rule ALICE = new NotificationRuleBuilder().withValue("c/AAA").build();
-    public static final Rule BENSON = new NotificationRuleBuilder().withValue("c/BBB").build();
-    public static final Rule CARL = new NotificationRuleBuilder().withValue("c/CCC").build();
-    public static final Rule DANIEL = new NotificationRuleBuilder().withValue("c/DDD").build();
-    public static final Rule ELLE = new NotificationRuleBuilder().withValue("c/EEE").build();
-    public static final Rule FIONA = new NotificationRuleBuilder().withValue("c/FFF").build();
-    public static final Rule GEORGE = new NotificationRuleBuilder().withValue("c/GGG").build();
+    public static final Rule ALIS = new NotificationRuleBuilder().withValue("c/ALIS").build();
+    public static final Rule BTC = new NotificationRuleBuilder().withValue("c/BTC").build();
+    public static final Rule CAS = new NotificationRuleBuilder().withValue("c/CAS").build();
+    public static final Rule DADI = new NotificationRuleBuilder().withValue("c/DADI").build();
+    public static final Rule ELIX = new NotificationRuleBuilder().withValue("c/ELIX").build();
+    public static final Rule FIRE = new NotificationRuleBuilder().withValue("c/FIRE").build();
+    public static final Rule GEO = new NotificationRuleBuilder().withValue("c/GEO").build();
 
     // Manually added
-    public static final Rule HOON = new NotificationRuleBuilder().withValue("c/HHH").build();
-    public static final Rule IDA = new NotificationRuleBuilder().withValue("c/III").build();
+    public static final Rule HORSE = new NotificationRuleBuilder().withValue("c/HORSE").build();
+    public static final Rule IDT = new NotificationRuleBuilder().withValue("c/IDT").build();
 
     private TypicalRules() {} // prevents instantiation
 
@@ -43,6 +43,6 @@ public class TypicalRules {
     }
 
     public static List<Rule> getTypicalRules() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALIS, BTC, CAS, DADI, ELIX, FIRE, GEO));
     }
 }

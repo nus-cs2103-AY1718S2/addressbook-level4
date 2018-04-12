@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -83,7 +83,7 @@ public class TagCommandTest {
     @Test
     public void execute_invalidCoinIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCoinList().size() + 1);
-        EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder().withName(VALID_NAME_BOS).build();
         TagCommand tagCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_COMMAND_TARGET);
@@ -101,7 +101,7 @@ public class TagCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getCoinBook().getCoinList().size());
 
         TagCommand tagCommand = prepareCommand(outOfBoundIndex,
-                new EditCoinDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditCoinDescriptorBuilder().withName(VALID_NAME_BOS).build());
 
         assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_COMMAND_TARGET);
     }
@@ -135,7 +135,7 @@ public class TagCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCoinList().size() + 1);
-        EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder().withName(VALID_NAME_BOS).build();
         TagCommand tagCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         // execution failed -> editCommand not pushed into undoRedoStack

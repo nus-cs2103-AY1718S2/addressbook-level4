@@ -3,19 +3,19 @@ package systemtests;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMB;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOS;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FAV;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HOT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FAV;
 import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
 import static seedu.address.testutil.TestUtil.getAddCommandSuccessMessage;
-import static seedu.address.testutil.TypicalCoins.ALICE;
-import static seedu.address.testutil.TypicalCoins.AMY;
-import static seedu.address.testutil.TypicalCoins.BOB;
-import static seedu.address.testutil.TypicalCoins.CARL;
-import static seedu.address.testutil.TypicalCoins.HOON;
+import static seedu.address.testutil.TypicalCoins.ALIS;
+import static seedu.address.testutil.TypicalCoins.AMB;
+import static seedu.address.testutil.TypicalCoins.BOS;
+import static seedu.address.testutil.TypicalCoins.CAS;
+import static seedu.address.testutil.TypicalCoins.HORSE;
 
 import org.junit.Test;
 
@@ -43,9 +43,9 @@ public class AddCommandSystemTest extends CoinBookSystemTest {
         /* Case: add a coin without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        Coin toAdd = AMY;
-        String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  "
-                + "   " + TAG_DESC_FRIEND + " ";
+        Coin toAdd = AMB;
+        String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMB + "  "
+                + "   " + TAG_DESC_FAV + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -60,42 +60,42 @@ public class AddCommandSystemTest extends CoinBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a coin with all fields same as another coin in the address book except name -> added */
-        toAdd = new CoinBuilder().withName(VALID_NAME_BOB)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB
-                + TAG_DESC_FRIEND;
+        toAdd = new CoinBuilder().withName(VALID_NAME_BOS)
+                .withTags(VALID_TAG_FAV).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOS
+                + TAG_DESC_FAV;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
         deleteAllCoins();
-        assertCommandSuccess(ALICE);
+        assertCommandSuccess(ALIS);
 
         /* Case: add a coin with tags, command with parameters in random order -> added */
-        toAdd = BOB;
-        command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + NAME_DESC_BOB
-                + TAG_DESC_HUSBAND;
+        toAdd = BOS;
+        command = AddCommand.COMMAND_WORD + TAG_DESC_FAV + NAME_DESC_BOS
+                + TAG_DESC_HOT;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a coin, missing tags -> added */
-        assertCommandSuccess(HOON);
+        assertCommandSuccess(HORSE);
 
         /* ------------------------ Perform add operation while a coin card is selected --------------------------- */
 
         /* Case: selects first card in the coin list, add a coin -> added, card selection remains unchanged */
         selectCoin(Index.fromOneBased(1));
-        assertCommandSuccess(CARL);
+        assertCommandSuccess(CAS);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate coin -> rejected */
-        command = CoinUtil.getAddCommand(HOON);
+        command = CoinUtil.getAddCommand(HORSE);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_COIN);
 
         /* Case: add a duplicate coin except with different tags -> rejected */
-        // "friends" is an existing tag used in the default model, see TypicalCoins#ALICE
+        // "friends" is an existing tag used in the default model, see TypicalCoins#ALIS
         // This test will fail if a new tag that is not in the model is used, see the bug documented in
         // CoinBook#addCoin(Coin)
-        command = CoinUtil.getAddCommand(HOON) + " " + PREFIX_TAG + "friends";
+        command = CoinUtil.getAddCommand(HORSE) + " " + PREFIX_TAG + "fav";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_COIN);
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD;
@@ -110,7 +110,7 @@ public class AddCommandSystemTest extends CoinBookSystemTest {
         assertCommandFailure(command, Code.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMB
                 + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }

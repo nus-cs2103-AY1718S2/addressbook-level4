@@ -45,12 +45,12 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
 
 public class ParserUtilTest {
-    private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_NAME = "B@TC";
+    private static final String INVALID_TAG = "#fav";
 
-    private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_TAG_1 = "friend";
-    private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_NAME = "BTC";
+    private static final String VALID_TAG_1 = "fav";
+    private static final String VALID_TAG_2 = "hot";
 
     private static final String WHITESPACE = " \t\r\n";
 

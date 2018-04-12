@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalCoins.ALICE;
+import static seedu.address.testutil.TypicalCoins.ALIS;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
@@ -22,7 +22,7 @@ public class BrowserPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new CoinPanelSelectionChangedEvent(new CoinCard(ALICE, 0));
+        selectionChangedEventStub = new CoinPanelSelectionChangedEvent(new CoinCard(ALIS, 0));
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -40,7 +40,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         /*
         postNow(selectionChangedEventStub);
         URL expectedCoinUrl = new URL(BrowserPanel.SUBREDDIT_NOT_FOUND
-        + ALICE.getCode().fullName.replaceAll(" ", "%20"));
+        + ALIS.getCode().fullName.replaceAll(" ", "%20"));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedCoinUrl, browserPanelHandle.getLoadedUrl());

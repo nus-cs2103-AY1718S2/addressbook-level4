@@ -2,9 +2,9 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalCoins.ALICE;
-import static seedu.address.testutil.TypicalCoins.HOON;
-import static seedu.address.testutil.TypicalCoins.IDA;
+import static seedu.address.testutil.TypicalCoins.ALIS;
+import static seedu.address.testutil.TypicalCoins.HORSE;
+import static seedu.address.testutil.TypicalCoins.IDT;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 
 import java.io.IOException;
@@ -84,14 +84,14 @@ public class XmlCoinBookStorageTest {
         assertEquals(original, new CoinBook(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addCoin(HOON);
-        original.removeCoin(ALICE);
+        original.addCoin(HORSE);
+        original.removeCoin(ALIS);
         xmlCoinBookStorage.saveCoinBook(original, filePath);
         readBack = xmlCoinBookStorage.readCoinBook(filePath).get();
         assertEquals(original, new CoinBook(readBack));
 
         //Save and read without specifying file path
-        original.addCoin(IDA);
+        original.addCoin(IDT);
         xmlCoinBookStorage.saveCoinBook(original); //file path not specified
         readBack = xmlCoinBookStorage.readCoinBook().get(); //file path not specified
         assertEquals(original, new CoinBook(readBack));

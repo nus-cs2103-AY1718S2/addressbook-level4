@@ -1,7 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalCoins.ALICE;
+import static seedu.address.testutil.TypicalCoins.ALIS;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 
 import java.util.ArrayList;
@@ -48,9 +48,9 @@ public class CoinBookTest {
 
     @Test
     public void resetData_withDuplicateCoins_throwsAssertionError() {
-        // Repeat ALICE twice
-        List<Coin> newCoins = Arrays.asList(ALICE, ALICE);
-        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        // Repeat ALIS twice
+        List<Coin> newCoins = Arrays.asList(ALIS, ALIS);
+        List<Tag> newTags = new ArrayList<>(ALIS.getTags());
         CoinBookStub newData = new CoinBookStub(newCoins, newTags);
 
         thrown.expect(AssertionError.class);

@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_JOE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_JOBS;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_COIN;
 
@@ -29,9 +29,9 @@ public class CommandTargetTest {
     @Test
     public void equals() {
         // same values -> returns true
-        Code validCode = new Code(VALID_NAME_JOE);
+        Code validCode = new Code(VALID_NAME_JOBS);
         CommandTarget testTarget = new CommandTarget(validCode);
-        assertTrue(testTarget.equals(new CommandTarget(new Code(VALID_NAME_JOE))));
+        assertTrue(testTarget.equals(new CommandTarget(new Code(VALID_NAME_JOBS))));
 
         // same object -> returns true
         assertTrue(testTarget.equals(testTarget));
@@ -47,7 +47,7 @@ public class CommandTargetTest {
         assertFalse(testTarget.equals(otherTarget));
 
         // same mode but different values -> returns false
-        otherTarget = new CommandTarget(TypicalCoins.BOB.getCode());
+        otherTarget = new CommandTarget(TypicalCoins.BOS.getCode());
         assertFalse(testTarget.equals(otherTarget));
     }
 

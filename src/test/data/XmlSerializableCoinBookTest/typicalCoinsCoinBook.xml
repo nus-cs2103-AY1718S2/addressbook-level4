@@ -3,29 +3,34 @@
 {@code TypicalCoins#getTypicalCoinBook()}-->
 <coinbook>
     <coins>
-        <code>Alice Pauline</code>
-        <tagged>friends</tagged>
+        <code>ALIS</code>
+        <tagged>favs</tagged>
     </coins>
     <coins>
-        <code>Benson Meier</code>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <code>BTCZ</code>
+        <tagged>common</tagged>
+        <tagged>fav</tagged>
     </coins>
     <coins>
-        <code>Carl Kurz</code>
+        <code>CAS</code>
+        <tagged>favs</tagged>
     </coins>
     <coins>
-        <code>Daniel Meier</code>
+        <code>DADI</code>
+        <tagged>favs</tagged>
     </coins>
     <coins>
-        <code>Elle Meyer</code>
+        <code>ELIX</code>
+        <tagged>favs</tagged>
     </coins>
     <coins>
-        <code>Fiona Kunz</code>
+        <code>FIRE</code>
+        <tagged>favs</tagged>
     </coins>
     <coins>
-        <code>George Best</code>
+        <code>GEO</code>
+        <tagged>favs</tagged>
     </coins>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
+    <tags>common</tags>
+    <tags>favs</tags>
 </coinbook>

@@ -2,12 +2,12 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMB;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FAV;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HOT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FAV;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HOT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
@@ -35,7 +35,7 @@ public class TagCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, VALID_NAME_AMY, TagCommand.MESSAGE_NOT_EDITED);
+        assertParseFailure(parser, VALID_NAME_AMB, TagCommand.MESSAGE_NOT_EDITED);
 
         // no field specified
         assertParseFailure(parser, "1", TagCommand.MESSAGE_NOT_EDITED);
@@ -47,10 +47,10 @@ public class TagCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + NAME_DESC_AMB, MESSAGE_INVALID_FORMAT);
 
         // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + NAME_DESC_AMB, MESSAGE_INVALID_FORMAT);
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
@@ -65,22 +65,22 @@ public class TagCommandParserTest {
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Coin} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, "1" + TAG_DESC_FAV + TAG_DESC_HOT + TAG_EMPTY, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, "1" + TAG_DESC_FAV + TAG_EMPTY + TAG_DESC_HOT, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FAV + TAG_DESC_HOT, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_TAG_DESC + INVALID_TAG_DESC + VALID_TAG_FRIEND,
+        assertParseFailure(parser, "1" + INVALID_TAG_DESC + INVALID_TAG_DESC + VALID_TAG_FAV,
                 Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_COIN;
-        String userInput = targetIndex.getOneBased() + TAG_DESC_HUSBAND + TAG_DESC_FRIEND;
+        String userInput = targetIndex.getOneBased() + TAG_DESC_HOT + TAG_DESC_FAV;
 
         EditCoinDescriptor descriptor = new EditCoinDescriptorBuilder()
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withTags(VALID_TAG_HOT, VALID_TAG_FAV).build();
         TagCommand expectedCommand = new TagCommand(new CommandTarget(targetIndex), descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

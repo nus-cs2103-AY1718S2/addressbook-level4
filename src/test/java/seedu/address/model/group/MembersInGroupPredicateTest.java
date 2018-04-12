@@ -18,17 +18,17 @@ public class MembersInGroupPredicateTest {
     private Group groupTest = TypicalGroups.GROUP_F;
 
     @Test
-    public void test_groupContainsMember_returnsTrue() {
-        // One keyword
+    public void test_groupDoesNotContainsMember_returnsFalse() {
+        // Test Carl exist in group F
         MembersInGroupPredicate predicate = new MembersInGroupPredicate(groupTest);
-        assertTrue(predicate.test(TypicalPersons.ALICE));
+        assertFalse(predicate.test(TypicalPersons.CARL));
     }
 
     @Test
-    public void test_groupDoesNotContainsMember_returnsFalse() {
-        // One keyword
+    public void test_groupContainsMember_returnsTrue() {
+        // Test Alice exist
         MembersInGroupPredicate predicate = new MembersInGroupPredicate(groupTest);
-        assertFalse(predicate.test(TypicalPersons.CARL));
+        assertTrue(predicate.test(TypicalPersons.ALICE));
     }
 
 }

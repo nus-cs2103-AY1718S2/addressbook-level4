@@ -35,7 +35,8 @@ public class DeleteMemberFromGroupCommandParserTest {
 
     @Test
     public void parse_compulsoryInvalidGroupField_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMemberFromGroupCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteMemberFromGroupCommand.MESSAGE_USAGE);
 
         //missing group prefix
         assertParseFailure(parser, INVALID_ADDGROUPMEMBER_NO_GROUP, expectedMessage);

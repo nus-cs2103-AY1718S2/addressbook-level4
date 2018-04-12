@@ -1,8 +1,10 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.exceptions.StorageFileMissingException.STORAGE_FILE_MISSING;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -20,6 +22,8 @@ import seedu.address.commons.events.model.StudentInfoChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.storage.ProfilePictureChangeEvent;
 import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
+import seedu.address.commons.exceptions.StorageFileMissingException;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.external.GServiceManager;
 import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.lesson.Day;
@@ -68,6 +72,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetData(ReadOnlyAddressBook newData, ReadOnlySchedule newSchedule) {
         addressBook.resetData(newData);
         schedule.resetData(newSchedule);
+        indicateStudentInfoChanged();
         indicateAddressBookChanged();
         indicateScheduleChanged();
     }
@@ -150,11 +155,27 @@ public class ModelManager extends ComponentManager implements Model {
      * @param target
      * @throws StudentNotFoundException
      */
-    public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
+    public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException,
+            StorageFileMissingException {
         addressBook.checkForStudentInAdressBook(target);
+        checkIfStorageFileExists();
         indicateRequiredStudentIndexChange(filteredStudents.indexOf(target));
         indicateBrowserPanelToDisplayStudent(target);
     }
+
+    /**
+     * Checks if the xml file containing student's data exists.
+     * @throws StorageFileMissingException
+     */
+    private void checkIfStorageFileExists() throws StorageFileMissingException {
+        if (FileUtil.isFileExists(new File("data/addressBook.xml"))) {
+            return;
+        }
+        throw new StorageFileMissingException(STORAGE_FILE_MISSING);
+
+    }
+
+    /** Raises an event to indicate that real xml data is required for moreInfo to function */
 
     /** Raises an event to indicate Browser Panel display changed to display student's information */
     private void indicateBrowserPanelToDisplayStudent(Student target) {

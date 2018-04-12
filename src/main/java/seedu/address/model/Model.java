@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import com.google.gdata.util.ServiceException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.StorageFileMissingException;
 import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Lesson;
@@ -67,7 +68,8 @@ public interface Model {
 
     ReadOnlySchedule getSchedule();
 
-    void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
+    void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException,
+            StorageFileMissingException;
 
     void updateProfilePicture(Student target, Student editedStudent, Student finalEditedStudent)
         throws DuplicateStudentException, StudentNotFoundException;

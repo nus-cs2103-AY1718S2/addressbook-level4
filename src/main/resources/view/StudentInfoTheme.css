@@ -1,6 +1,9 @@
+/**
+*@@author samuelloh
+*/
+
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #9C9C9C;
+    background-color: white;
 }
 
 #name {
@@ -44,3 +47,6 @@
 	font-family: Arial;
 	line-height: 20px;
 }
+/**
+*@@author
+*/

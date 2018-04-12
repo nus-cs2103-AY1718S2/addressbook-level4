@@ -63,11 +63,11 @@ public class ToDoListPanel extends UiPart<Region> {
                 return;
             }
 
-            this.getStyleClass().clear();
+            this.getStylesheets().clear();
             if (todo.isDone()) {
-                this.getStyleClass().add("todoDone");
+                this.getStylesheets().add("view/ToDoDone.css");
             } else {
-                this.getStyleClass().add("todoUndone");
+                this.getStylesheets().add("view/ToDoUnDone.css");
             }
             setGraphic(todo.getRoot());
         }

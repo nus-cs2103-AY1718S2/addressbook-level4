@@ -29,7 +29,13 @@ public class Menu implements ReadOnlyMenu {
         dishes = new HashMap<>();
         //only for testing
         dishes.put("Chicken Rice", new Dish(new Name("Chicken Rice"), new Price("3")));
-        /*File file = new File("data/menu.txt");
+        dishes.put("Curry Chicken", new Dish(new Name("Curry Chicken"), new Price("4")));
+        dishes.put("Chicken Chop", new Dish(new Name("Chicken Chop"), new Price("5")));
+        dishes.put("Ban Mian", new Dish(new Name("Ban Mian"), new Price("4")));
+        dishes.put("Ice Milo", new Dish(new Name("Ice Milo"), new Price("2")));
+        dishes.put("Coffee", new Dish(new Name("Coffee"), new Price("2")));
+        /*String path = System.getProperty("user.dir") + "/" + "data/menu.txt";
+        File file = new File(path);
         try {
             Scanner sc = new Scanner(file);
             while (sc.hasNextLine()) {

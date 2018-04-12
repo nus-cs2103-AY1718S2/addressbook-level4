@@ -9,7 +9,9 @@ import seedu.address.commons.events.BaseEvent;
 public class LoginEvent extends BaseEvent {
     public final boolean isLogin;
 
-    public LoginEvent(boolean value) { this.isLogin = value; }
+    public LoginEvent(boolean value) {
+        this.isLogin = value;
+    }
 
     @Override
     public String toString() {

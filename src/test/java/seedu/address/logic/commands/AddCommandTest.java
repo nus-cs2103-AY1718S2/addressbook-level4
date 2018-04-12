@@ -27,7 +27,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
-import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -157,7 +156,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateFilteredTaskList(Predicate<Task> predicate ) {
+        public void updateFilteredTaskList(Predicate<Task> predicate) {
             fail("This method should not be called");
         }
         //@@author

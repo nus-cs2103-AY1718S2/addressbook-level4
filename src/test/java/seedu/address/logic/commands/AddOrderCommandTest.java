@@ -144,7 +144,7 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public void checkOrder(Person target) throws DishNotFoundException{
+        public void checkOrder(Person target) throws DishNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -165,7 +165,7 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public void updateFilteredTaskList(Predicate<Task> predicate ) {
+        public void updateFilteredTaskList(Predicate<Task> predicate) {
             fail("This method should not be called");
         }
         //@@author

@@ -97,6 +97,9 @@ public class TaskBuilder {
         return this;
     }
 
+    /**
+     * build task
+     */
     public Task build() {
         return new Task(defaultOrder, defaultAddress, defaultPrice,
                 defaultDistance, defaultCount, defaultDescription);

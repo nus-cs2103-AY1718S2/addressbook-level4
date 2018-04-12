@@ -130,7 +130,9 @@ public class ModelManager extends ComponentManager implements Model {
         String scoreString = "-";
         if (score == 0) {
             scoreString = "-";
-        } else { scoreString = Integer.toString(score); }
+        } else {
+            scoreString = Integer.toString(score);
+        }
         htmlString = htmlString.replace("STUDENTS SCORE", scoreString);
 
         // ADD CCA

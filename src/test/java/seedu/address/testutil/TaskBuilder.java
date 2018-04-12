@@ -2,7 +2,6 @@ package seedu.address.testutil;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Priority;

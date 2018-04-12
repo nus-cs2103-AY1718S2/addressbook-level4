@@ -499,7 +499,7 @@ Attach a change listener to command box to detect user input.
 ----
 public CommandBox() {
 	// ...logic for CommandBox...
-	
+
 	autocompleteListener = new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -510,7 +510,7 @@ public CommandBox() {
             });
         }
     };
-		
+
 	commandTextField.textProperty().addListener(autocompleteListener);
 }
 ----
@@ -520,7 +520,7 @@ How descriptions in the autocomplete suggestions are handled:
 ----
 private void triggerAutocomplete(String newValue) {
 	// ...logic for context menu "suggestionBox"...
-	
+
 	for (String s : suggestions) {
         MenuItem m = new MenuItem(s);
         String autocompleteValue = StringUtil.removeDescription(s);

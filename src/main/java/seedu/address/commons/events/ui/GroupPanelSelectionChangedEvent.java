@@ -16,10 +16,6 @@ public class GroupPanelSelectionChangedEvent extends BaseEvent {
         this.newSelection = newSelection;
     }
 
-    public GroupCard getNewSelection() {
-        return newSelection;
-    }
-
     @Override
     public String toString() {
         return this.getClass().getSimpleName();

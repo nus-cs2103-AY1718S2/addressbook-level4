@@ -15,7 +15,6 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.logic.FileChoosedEvent;
-import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.commons.events.ui.ResetPersonCardsEvent;
 import seedu.address.commons.events.ui.ShowFileChooserEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -133,7 +132,6 @@ public class AddPhotoCommand extends UndoableCommand {
 
         targetPerson = lastShownList.get(targetIndex.getZeroBased());
         editedPerson = createEditedPerson(targetPerson, photoNameWithExtension);
-        EventsCenter.getInstance().post(new PersonEditedEvent(editedPerson));
     }
 
     /**

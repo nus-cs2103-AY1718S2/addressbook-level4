@@ -39,13 +39,13 @@ public class BrowserPanel extends UiPart<Region> {
             //"https://twitter.com/search?f=users&vertical=news&q=";
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
-    private URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + "default.html");
-
     private static final String FXML = "BrowserPanel.fxml";
     private static final String FACEBOOK_TAB_ID = "facebookTab";
     private static final String TWITTER_TAB_ID = "twitterTab";
     private static final String FUNCTION_ADD = "add";
     private static final String FUNCTION_REMOVE = "remove";
+    
+    private URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + "default.html");
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 

@@ -132,6 +132,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::findtag[]
 === Locating persons by tag: `findtag` `[Since v1.2]`
 
 Finds persons whose tags contain any of the given keywords. +
@@ -244,6 +245,7 @@ Sorts all persons in the address book alphabetically and then displays the curre
 Format: `sort`
 // end::sort[]
 
+// tag::search[]
 === Search for profile : `search` `[Since v1.5]`
 
 Search for the specified profiles on available social media platform within the application. +

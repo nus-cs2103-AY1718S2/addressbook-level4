@@ -87,7 +87,6 @@ public class AddMemberToGroupCommandTest {
 
         getAddMemberToGroupCommandForGroup(INDEX_FIRST_PERSON, groupAlreadyAdded,
                 modelStub).execute();
-        
     }
 
 

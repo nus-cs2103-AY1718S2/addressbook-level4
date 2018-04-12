@@ -33,7 +33,7 @@ public class Vegetarian {
      */
     public static boolean isValidVegetarian(String test) {
         requireNonNull(test);
-        if (test.equals("Vegetarian") || (test.equals("Non-vegetarian"))) {
+        if (test.equalsIgnoreCase("Vegetarian") || (test.equalsIgnoreCase("Non-vegetarian"))) {
             return true;
         }
         return false;

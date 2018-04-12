@@ -33,11 +33,9 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String LOADING_PAGE_URL =
             "https://cs2103jan2018-f12-b3.github.io/main/LoadingPage.html";
     public static final String FACEBOOK_SEARCH_PAGE_URL =
-            //"https://www.facebook.com/search/people?q=";
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://www.facebook.com/search/people?q=";
     public static final String TWITTER_SEARCH_PAGE_URL =
-            //"https://twitter.com/search?f=users&vertical=news&q=";
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://twitter.com/search?f=users&vertical=news&q=";
 
     private static final String FXML = "BrowserPanel.fxml";
     private static final String FACEBOOK_TAB_ID = "facebookTab";

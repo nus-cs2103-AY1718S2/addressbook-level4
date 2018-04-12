@@ -80,6 +80,9 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private Tab dailySchedulerTab;
 
+    @FXML
+    private StackPane beneficiariesPane;
+
     //@@author
 
     @FXML
@@ -206,6 +209,7 @@ public class MainWindow extends UiPart<Stage> {
     public void hideBeforeLogin() {
         loginStatusBar.updateLoginStatus(false, null);
         featuresTabPane.setVisible(false);
+        beneficiariesPane.setVisible(false);
         personDetailsPlaceholder.setVisible(false);
         calendarPlaceholder.setVisible(false);
         dailySchedulerPlaceholder.setVisible(false);
@@ -219,6 +223,7 @@ public class MainWindow extends UiPart<Stage> {
     public void showAfterLogin() {
         loginStatusBar.updateLoginStatus(true, logic.getLoggedInUser());
         featuresTabPane.setVisible(true);
+        beneficiariesPane.setVisible(true);
         personDetailsPlaceholder.setVisible(true);
         calendarPlaceholder.setVisible(true);
         dailySchedulerPlaceholder.setVisible(true);

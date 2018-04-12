@@ -15,7 +15,7 @@ public class UserPrefs {
     private String addressBookName = "SLAP for Social Workers";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(1200, 750, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {

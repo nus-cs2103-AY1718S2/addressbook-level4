@@ -122,7 +122,7 @@ is specified when adding a customer.
 |locate (`lo`)
 |kbd:[Ctrl+L]
 |`locate INDEX` +
-`locate name/email/phone/address/tags`
+`locate [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
 |redo (`r`)
 |kbd:[Ctrl+Y]

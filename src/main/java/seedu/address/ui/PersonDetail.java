@@ -5,10 +5,21 @@
 
 package seedu.address.ui;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import seedu.address.commons.events.ui.PersonEditEvent;
 import seedu.address.model.person.Person;
 
 //@@author jstarw
@@ -18,50 +29,54 @@ import seedu.address.model.person.Person;
 public class PersonDetail extends UiPart<Stage> {
     private static final String FXML = "PersonDetail.fxml";
     public final Person person;
+    private int index;
     @FXML
     private Label name;
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private TextField phone;
     @FXML
-    private Label address;
+    private TextField address;
     @FXML
-    private Label email;
+    private TextField email;
     @FXML
     private FlowPane tags;
     @FXML
-    private Label income;
+    private TextField income;
     @FXML
-    private Label actualSpending;
+    private TextField actualSpending;
     @FXML
-    private Label expectedSpending;
+    private TextField expectedSpending;
     @FXML
-    private Label age;
+    private TextField age;
     @FXML
-    private Label isNewClient;
+    private TextField isNewClient;
     @FXML
-    private Label policy;
+    private TextField policy;
+    @FXML
+    private Button submit;
 
     public PersonDetail(Person person, int displayedIndex) {
         super("PersonDetail.fxml", new Stage());
         this.person = person;
+        index = displayedIndex;
         registerAsAnEventHandler(this);
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         //@author SoilChang
-        income.setText("Income: " + person.getIncome().toString());
-        age.setText("Age: " + person.getAge().toString() + " years old");
+        income.setText(person.getIncome().toString());
+        age.setText(person.getAge().toString());
         email.setText(person.getEmail().value);
-        actualSpending.setText("Actual Spending: " + person.getActualSpending().toString());
-        expectedSpending.setText("Predicted Spending: " + person.getExpectedSpending().toString());
+        actualSpending.setText(person.getActualSpending().toString());
+        expectedSpending.setText(person.getExpectedSpending().toString());
         isNewClient.setText("New Client");
         if (person.getPolicy().isPresent()) {
-            policy.setText("Policy: " + person.getPolicy().get().toString());
+            policy.setText(person.getPolicy().get().toString());
         } else {
-            policy.setText("Has not applied to any policy");
+            policy.setText("");
         }
 
         if (person.getActualSpending().value != 0.0) {
@@ -76,6 +91,7 @@ public class PersonDetail extends UiPart<Stage> {
         }
         //@author
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        setSubmitListener();
     }
 
     /**
@@ -112,5 +128,27 @@ public class PersonDetail extends UiPart<Stage> {
      */
     public void show() {
         getRoot().show();
+    }
+
+    private void setSubmitListener() {
+        submit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                String args = index + " " + PREFIX_PHONE + phone.getText() + " " +
+                        PREFIX_EMAIL + email.getText() + " " + PREFIX_ADDRESS + address.getText() + " " +
+                        PREFIX_INCOME + income.getText().replaceAll("[^\\d.]+", "") + " " +
+                        PREFIX_AGE + age.getText();
+
+//                Phone newPhone = new Phone(phone.getText());
+//                Email newEmail = new Email(email.getText());
+//                Address newAddress = new Address(address.getText());
+//                Income newIncome = new Income(Double.parseDouble(income.getText()));
+//                Age newAge = new Age(Integer.parseInt(age.getText()));
+//
+//                Person newPerson = new Person(person.getName(), newPhone, newEmail, newAddress, person.getTags(),
+//                        newIncome, person.getActualSpending(), person.getExpectedSpending(), newAge,
+//                        person.getPolicy());
+                raise(new PersonEditEvent(args));
+            }
+        });
     }
 }

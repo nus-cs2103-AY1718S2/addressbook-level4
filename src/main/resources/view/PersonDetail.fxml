@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.Scene?>
 
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
     <scene>
@@ -39,15 +41,25 @@
                             <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
                         </HBox>
                         <FlowPane fx:id="tags" />
-                        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-                        <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-                        <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-                        <Label fx:id="age" styleClass="cell_small_label" text="\$age" />
-                        <Label fx:id="income" styleClass="cell_small_label" text="\$income" />
-                        <Label fx:id="actualSpending" styleClass="cell_small_label" text="\$actualSpending" />
-                        <Label fx:id="isNewClient" styleClass="cell_small_label" text="\$isNewClient" />
-                        <Label fx:id="expectedSpending" styleClass="cell_small_label" text="\$expectedSpending" />
-                        <Label fx:id="policy" styleClass="cell_small_label" text="\$policy" />
+                        <Label styleClass="cell_small_label" >Phone: </Label>
+                        <TextField fx:id="phone" styleClass="cell_small_label" text="/$phone"></TextField>
+                        <Label styleClass="cell_small_label" >Address: </Label>
+                        <TextField fx:id="address" styleClass="cell_small_label" text="\$address" />
+                        <Label styleClass="cell_small_label" >Email: </Label>
+                        <TextField fx:id="email" styleClass="cell_small_label" text="\$email" />
+                        <Label styleClass="cell_small_label" >Age: </Label>
+                        <TextField fx:id="age" styleClass="cell_small_label" text="\$age" />
+                        <Label styleClass="cell_small_label" >Income: </Label>
+                        <TextField fx:id="income" styleClass="cell_small_label" text="\$income" />
+                        <Label styleClass="cell_small_label" >Actual Spending: </Label>
+                        <TextField fx:id="actualSpending" styleClass="cell_small_label" text="\$actualSpending" />
+                        <Label styleClass="cell_small_label" >Is a new client: </Label>
+                        <TextField fx:id="isNewClient" styleClass="cell_small_label" text="\$isNewClient" />
+                        <Label styleClass="cell_small_label" >Expected Spending: </Label>
+                        <TextField fx:id="expectedSpending" styleClass="cell_small_label" text="\$expectedSpending" />
+                        <Label styleClass="cell_small_label" >Policy: </Label>
+                        <TextField fx:id="policy" styleClass="cell_small_label" text="\$policy" />
+                        <Button fx:id="submit" styleClass="cell_small_label" text="submit" />
                     </VBox>
                 </GridPane>
             </HBox>

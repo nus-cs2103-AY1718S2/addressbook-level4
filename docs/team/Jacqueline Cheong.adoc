@@ -32,7 +32,7 @@ Medeina is a desktop application designed for veterinarians and their assistants
 *** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-F14-B2/main/pull/214[#214]
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Reported bugs and suggestions for other teams (examples:  https://github.com/CS2103JAN2018-F11-B1/main/issues/170[170], https://github.com/CS2103JAN2018-F11-B1/main/issues/179[179])
+*** Reported bugs and suggestions for other teams (examples:  https://github.com/CS2103JAN2018-F11-B1/main/issues/170[#170], https://github.com/CS2103JAN2018-F11-B1/main/issues/179[#179])
 ** Tools:
 *** Integrated a new Github plugin (CircleCI) to the team repo https://github.com/CS2103JAN2018-F14-B2/main/pull/207[#207]
 

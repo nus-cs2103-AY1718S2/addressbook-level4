@@ -6,33 +6,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.SecretKey;
-
-import javax.crypto.spec.SecretKeySpec;
-
+import javax.crypto.*;
 import seedu.address.commons.core.LogsCenter;
 
 /**
  * A Class that encrypts and decrypts XML files stored on the hard disk.
  *
  */
-//@@author raymond511
+//@@author raymond511 - reused from my own CS2105 assignment
 public class EncryptionUtil {
     /**
-     *The standard version of the JRE/JDK are under export restrictions.
-     *That also includes that some cryptographic algorithms are not allowed to be shipped in the standard version.
-     *Replace files in library with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 8
+     * The standard version of the JRE/JDK are under export restrictions.
+     * That also includes that some cryptographic algorithms are not allowed to be shipped in the standard version.
+     * Replace files in library with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 8
      */
 
-    private static final String password = "CS210321CS210321";
     private static final Logger logger = LogsCenter.getLogger(EncryptionUtil.class);
 
     /**
@@ -41,19 +32,18 @@ public class EncryptionUtil {
      * @param file path of the file to be encrypted
      * @throws IOException if file could not be found
      */
-    public static void encrypt(File file) throws IOException {
-
+    public void encrypt(File file) throws IOException {
+        SecretKey encryptKey = null;
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            SecretKey secretKey = generateKey();
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            encryptKey = initSessionKey();
+            cipher.init(Cipher.ENCRYPT_MODE, encryptKey);
             fileToBytes(cipher, file);
         } catch (GeneralSecurityException gse) {
             logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
         } catch (UnsupportedEncodingException use) {
             logger.info("Encoding Unsupported " + use.getMessage());
         }
-
     }
 
     /**
@@ -62,12 +52,11 @@ public class EncryptionUtil {
      * @param file path of the file to be decrypted
      * @throws IOException if file could not be found
      */
-    public static void decrypt(File file) throws IOException {
-
+    public void decrypt(File file) throws IOException {
         try {
+            SecretKey readKey = initSessionKey();
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            SecretKey secretKey = generateKey();
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            cipher.init(Cipher.DECRYPT_MODE, readKey);
             fileToBytes(cipher, file);
         } catch (GeneralSecurityException gse) {
             logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
@@ -80,7 +69,7 @@ public class EncryptionUtil {
      * Processes the given file using the given cipher
      *
      * @param cipher cipher used for encryption or decryption
-     * @param file path of the file to be encrypted or decrypted
+     * @param file   path of the file to be encrypted or decrypted
      * @throws IOException if file could not be found
      */
 
@@ -120,20 +109,15 @@ public class EncryptionUtil {
      *
      * @return SecretKey generated using AES encryption
      */
-    public static SecretKey generateKey() {
-
-        SecretKeySpec secretKeySpec = null;
+    public SecretKey initSessionKey() {
+        SecretKey sessionKey = null;
         try {
-            MessageDigest digester = MessageDigest.getInstance("SHA-256");
-            digester.update(password.getBytes("UTF-8"));
-            byte[] key = digester.digest();
-            secretKeySpec = new SecretKeySpec(key , 0 , 16 ,  "AES");
-        } catch (NoSuchAlgorithmException nae) {
-            logger.info("Algorithm Unsupported " + nae.getMessage());
-        } catch (UnsupportedEncodingException use) {
-            logger.info("Encoding Unsupported " + use.getMessage());
+            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+            keyGenerator.init(128);
+            sessionKey = keyGenerator.generateKey();
+        } catch (NoSuchAlgorithmException e) {
+            logger.info("Error: params is inappropriate for this key generator");
         }
-
-        return secretKeySpec;
+        return sessionKey;
     }
 }

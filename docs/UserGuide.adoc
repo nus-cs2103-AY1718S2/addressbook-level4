@@ -554,7 +554,8 @@ Marks the 3rd task in the 2nd milestone as completed. The milestone is in the da
 Marks the 4th task in the 3rd milestone as completed. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
 // end::dashboard[]
 
-=== Student Profile Picture
+// tag:profilePage[]
+=== Student Profile Page
 ==== Full information page for each student : `moreInfo`
 
 Displays the full information of a student on the browser panel. This includes his/her profile picture if one exists. +
@@ -608,9 +609,13 @@ Examples:
 * `editMisc 1 al/Nuts r/Fast learner` +
 Edits the allergies information and remarks information of the 1st student to be `Nuts` and `Fast learner` respectively.
 
+//end:profilePage[]
+
 
 === Coming in v2.0
 ==== Track student's homework in the dashboard `[coming in v2.0]`
+
+==== Find student's by their miscellaneous information `[coming in v2.0]`
 
 == Interacting using free-form English
 

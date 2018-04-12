@@ -124,6 +124,10 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleStudentInfoChangedEvent(StudentInfoChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        reloadPage();
+        String location = browser.getEngine().getLocation();
+        if (location.contains(STUDENT_MISC_INFO_PAGE)) {
+            reloadPage();
+        }
+
     }
 }

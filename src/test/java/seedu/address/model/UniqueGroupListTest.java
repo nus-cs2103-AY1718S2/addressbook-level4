@@ -25,6 +25,13 @@ public class UniqueGroupListTest {
         UniqueGroupList uniqueGroupList1 = new UniqueGroupList();
         UniqueGroupList uniqueGroupList2 = new UniqueGroupList();
         assertEquals(uniqueGroupList1.hashCode(), uniqueGroupList2.hashCode());
+    }
+
+    @Test
+    public void equal_sameList_sameResult() throws Exception {
+        UniqueGroupList uniqueGroupList1 = new UniqueGroupList();
+        UniqueGroupList uniqueGroupList2 = new UniqueGroupList();
+        assertEquals(uniqueGroupList1, uniqueGroupList2);
 
     }
 }

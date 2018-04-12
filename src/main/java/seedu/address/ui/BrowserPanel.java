@@ -163,7 +163,6 @@ public class BrowserPanel extends UiPart<Region> {
             loadBrowserPage(FACEBOOK_PROFILE_PAGE_URL + person.getName().fullName);
         }
     }
-
     private void loadBrowser1ProfilePage(Person person) {
         if (person.getSocialMediaPlatformMap().containsKey(Link.TWITTER_LINK_TYPE)) {
             updateBrowserTabs(FUNCTION_ADD, TWITTER_TAB_ID);

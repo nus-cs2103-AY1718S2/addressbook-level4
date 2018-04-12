@@ -16,8 +16,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.FieldsChangedEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -44,27 +47,27 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
 
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + " | Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
-            + "Only fields common to both Customer and Runner can be edited."
-            + "\n\t"
-            + "Existing values will be overwritten by the input values. "
-            + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
+                    + "by the index number used in the last person listing. "
+                    + "Only fields common to both Customer and Runner can be edited."
+                    + "\n\t"
+                    + "Existing values will be overwritten by the input values. "
+                    + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
 
-            + "\n\t"
-            + "Parameters:\t"
-            + COMMAND_WORD + " "
-            + "INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + " NAME] "
-            + "[" + PREFIX_PHONE + " PHONE] "
-            + "[" + PREFIX_EMAIL + " EMAIL] "
-            + "[" + PREFIX_ADDRESS + " ADDRESS] "
-            + "[" + PREFIX_TAG + " TAG] ..."
+                    + "\n\t"
+                    + "Parameters:\t"
+                    + COMMAND_WORD + " "
+                    + "INDEX (must be a positive integer) "
+                    + "[" + PREFIX_NAME + " NAME] "
+                    + "[" + PREFIX_PHONE + " PHONE] "
+                    + "[" + PREFIX_EMAIL + " EMAIL] "
+                    + "[" + PREFIX_ADDRESS + " ADDRESS] "
+                    + "[" + PREFIX_TAG + " TAG] ..."
 
-            + "\n\t"
-            + "Example:\t\t"
-            + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + " 999 "
-            + PREFIX_EMAIL + " ahlong@houseofhuat.com";
+                    + "\n\t"
+                    + "Example:\t\t"
+                    + COMMAND_WORD + " 1 "
+                    + PREFIX_PHONE + " 999 "
+                    + PREFIX_EMAIL + " ahlong@houseofhuat.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person!\n\n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -77,7 +80,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
     private Person editedPerson;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -101,6 +104,8 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.updatePerson(personToEdit, editedPerson);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+            EventsCenter.getInstance().post(new FieldsChangedEvent(editedPerson));
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -221,6 +226,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
     //@@author
 
     //@@author melvintzw-reused
+
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
@@ -243,7 +249,8 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         //Runner fields
         private List<Person> customers;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         /**
          * Copy constructor.
@@ -278,6 +285,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setName(Name name) {
             this.name = name;
         }
+
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
         }
@@ -285,6 +293,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setPhone(Phone phone) {
             this.phone = phone;
         }
+
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
         }
@@ -292,6 +301,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setEmail(Email email) {
             this.email = email;
         }
+
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
         }
@@ -299,6 +309,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setAddress(Address address) {
             this.address = address;
         }
+
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
@@ -306,6 +317,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setMoneyBorrowed(MoneyBorrowed moneyBorrowed) {
             this.moneyBorrowed = moneyBorrowed;
         }
+
         public Optional<MoneyBorrowed> getMoneyBorrowed() {
             return Optional.ofNullable(moneyBorrowed);
         }
@@ -313,6 +325,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setOweStartDate(Date oweStartDate) {
             this.oweStartDate = oweStartDate;
         }
+
         public Optional<Date> getOweStartDate() {
             return Optional.ofNullable(oweStartDate);
         }
@@ -320,6 +333,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setOweDueDate(Date oweDueDate) {
             this.oweDueDate = oweDueDate;
         }
+
         public Optional<Date> getOweDueDate() {
             return Optional.ofNullable(oweDueDate);
         }
@@ -327,6 +341,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setStandardInterest(StandardInterest standardInterest) {
             this.standardInterest = standardInterest;
         }
+
         public Optional<StandardInterest> getStandardInterest() {
             return Optional.ofNullable(standardInterest);
         }
@@ -334,6 +349,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setLateInterest(LateInterest lateInterest) {
             this.lateInterest = lateInterest;
         }
+
         public Optional<LateInterest> getLateInterest() {
             return Optional.ofNullable(lateInterest);
         }
@@ -341,6 +357,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setRunner(Person runner) {
             this.runner = runner;
         }
+
         public Optional<Person> getRunner() {
             return Optional.ofNullable(runner);
         }
@@ -348,6 +365,7 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
         public void setCustomers(List<Person> customers) {
             this.customers = customers;
         }
+
         public Optional<List<Person>> getCustomers() {
             return Optional.ofNullable(customers);
         }

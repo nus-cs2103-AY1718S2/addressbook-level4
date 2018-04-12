@@ -87,7 +87,7 @@ is specified when adding a customer.
 |kbd:[F1]
 |
 
-|list (`l`)
+|list
 |kbd:[F2]
 |`list`
 

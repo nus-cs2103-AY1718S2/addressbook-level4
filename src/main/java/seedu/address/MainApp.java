@@ -1,6 +1,8 @@
 package seedu.address;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -234,16 +236,65 @@ public class MainApp extends Application {
      */
     private void readWelcomeMessage() {
         try {
-            Runtime.getRuntime().exec("wscript src\\main\\resources\\scripts\\Welcome.vbs");
-        } catch (IOException e) {
+            readWelcomeScriptForMac();
+        } catch (IOException notMac) {
             try {
-                //Runtime.getRuntime().exec("osascript src\\main\\resources\\scripts\\WelcomeMac.scpt");
-                String[] args = {"osascript ", "say \"Welcome user\" using \"Alex\" speaking rate 140 "
-                        + "pitch 42 modulation 60"};
-                Runtime.getRuntime().exec(args);
-            } catch (IOException e1) {
-                logger.warning("Unable to load welcome message.");
+                createFolderIfNeeded();
+                createScriptIfNeeded();
+                readWelcomeScript();
+            } catch (IOException e) {
+                logger.warning("Unable to read Welcome script");
             }
+        }
+    }
+
+    /**
+     * Read welcome script for Mac
+     */
+    private void readWelcomeScriptForMac() throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+        String[] argument = { "osascript", "-e", "say \"Welcome user\" using \"Alex\" "
+                + "speaking rate 180 pitch 42 modulation 60" };
+
+        Process process = runtime.exec(argument);
+        logger.info("Running welcome script on Mac");
+    }
+
+    /**
+     * Read welcome script for Window
+     */
+    private void readWelcomeScript() throws IOException {
+        Runtime.getRuntime().exec("wscript.exe script\\Welcome.vbs");
+        logger.info("Running welcome script on Window");
+    }
+
+    /**
+     * create script file if not exist
+     */
+    private void createScriptIfNeeded() throws IOException {
+        File f = new File("script\\Welcome.vbs");
+        if (!f.exists()) {
+            File file1 = new File("script\\Welcome.txt");
+            logger.info("Creating script Welcome.txt");
+            file1.createNewFile();
+            logger.info("Writing to Welcome.txt");
+            PrintWriter writer = new PrintWriter("script\\Welcome.txt", "UTF-8");
+            writer.println("CreateObject(\"sapi.spvoice\").Speak \"Welcome back user\"");
+            writer.close();
+            logger.info("Converting Welcome.txt to Welcome.vbs");
+            File file2 = new File("script\\Welcome.vbs");
+            file1.renameTo(file2);
+        }
+    }
+
+    /**
+     * create script folder if not exist
+     */
+    private void createFolderIfNeeded() {
+        File dir = new File("script");
+        if (!dir.exists()) {
+            logger.info("Creating script directory");
+            boolean successful = dir.mkdirs();
         }
     }
     //@@author

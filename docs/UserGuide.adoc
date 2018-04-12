@@ -275,6 +275,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+// tag::distance[]
 === Finding distance : `distance`
 
 Finds the distance from the headquarter to the person address. +
@@ -295,6 +296,8 @@ Return the distance from the 2nd person to the 3rd person in the address book.
 * `find Betsy` +
 `distance 1` +
 Return the distance from the headquarter to the 1st person name Betsy in the address book.
+
+// end::distance[]
 
 === Setting the HeadQuarters `[coming in v2.0]`
 User is able to set the address of the headquarters with `sethq` command

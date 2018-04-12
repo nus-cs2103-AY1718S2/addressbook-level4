@@ -19,9 +19,9 @@ public class GroupTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    Group groupA = new GroupBuilder().withInformation("Group A").build();
-    Group groupA2 = new GroupBuilder().withInformation("Group A").build();
-    Group groupB = new GroupBuilder().withInformation("Group B").build();
+    private Group groupA = new GroupBuilder().withInformation("Group A").build();
+    private Group groupA2 = new GroupBuilder().withInformation("Group A").build();
+    private Group groupB = new GroupBuilder().withInformation("Group B").build();
 
     @Test
     public void hashCodeAndString_test() {
@@ -35,7 +35,7 @@ public class GroupTest {
     }
 
     @Test
-    public void addPerson() throws Exception{
+    public void addPerson() throws Exception {
         groupA.addPerson(ALICE);
         assertNotEquals(groupA, groupA2);
         groupA2.addPerson(ALICE);
@@ -50,7 +50,7 @@ public class GroupTest {
     }
 
     @Test
-    public void addPerson_duplicatePerson_throwsException() throws Exception{
+    public void addPerson_duplicatePerson_throwsException() throws Exception {
         groupA.addPerson(ALICE);
         groupA.addPerson(BENSON);
         groupA.addPerson(CARL);
@@ -59,7 +59,7 @@ public class GroupTest {
     }
 
     @Test
-    public void removePerson() throws Exception{
+    public void removePerson() throws Exception {
         groupA.addPerson(ALICE);
         groupA.addPerson(BENSON);
         groupA.addPerson(CARL);
@@ -81,7 +81,7 @@ public class GroupTest {
     }
 
     @Test
-    public void removePerson_personNotFound_throwsException() throws Exception{
+    public void removePerson_personNotFound_throwsException() throws Exception {
         groupA.addPerson(ALICE);
         groupA.addPerson(CARL);
         thrown.expect(PersonNotFoundException.class);

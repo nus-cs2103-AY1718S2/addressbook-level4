@@ -75,10 +75,15 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /**
+     * Deletes all records of a Person, including Notification related to it
+     */
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         int targetId = target.getId();
         addressBook.removePerson(target);
-        notificationCenter.removeNotificationForPerson(targetId);
+        if (notificationCenter != null) {
+            notificationCenter.removeNotificationForPerson(targetId);
+        }
         indicateAddressBookChanged();
     }
 

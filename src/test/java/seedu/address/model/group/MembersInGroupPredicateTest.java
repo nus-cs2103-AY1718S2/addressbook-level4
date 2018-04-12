@@ -14,8 +14,7 @@ import seedu.address.testutil.TypicalGroups;
 import seedu.address.testutil.TypicalPersons;
 
 public class MembersInGroupPredicateTest {
-
-   
+    
     private Group groupTest = TypicalGroups.GROUP_F;
 
     @Test

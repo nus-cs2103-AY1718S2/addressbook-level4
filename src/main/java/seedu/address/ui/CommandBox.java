@@ -74,6 +74,7 @@ public class CommandBox extends UiPart<Region> {
         NotiCommand.COMMAND_WORD, DismissCommand.COMMAND_WORD, AuthenCommand.COMMAND_WORD, AddPhotoCommand.COMMAND_WORD,
         EmailCommand.COMMAND_WORD, EmailAllCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD,
         ExportEmployeesCommand.COMMAND_WORD};
+
     private static final String[] allCommandsUsage = {AddCommand.MESSAGE_USAGE, EditCommand.MESSAGE_USAGE,
         RateCommand.MESSAGE_USAGE, ReviewCommand.MESSAGE_USAGE, SelectCommand.MESSAGE_USAGE,
         DeleteCommand.MESSAGE_USAGE, FindCommand.MESSAGE_USAGE, TestAddEventCommand.MESSAGE_USAGE,

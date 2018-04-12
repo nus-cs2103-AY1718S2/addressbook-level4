@@ -31,7 +31,7 @@ public class TypicalGroups {
         return new ArrayList<>(Arrays.asList(GROUP_A, GROUP_B, GROUP_F, GROUP_H));
     }
 
-     public static UniqueGroupList getTypicalGroupsList() {
+    public static UniqueGroupList getTypicalGroupsList() {
         UniqueGroupList groupList = new UniqueGroupList();
         try {
             groupList.add(GROUP_A);
@@ -42,5 +42,5 @@ public class TypicalGroups {
             throw new IllegalArgumentException("group is expected to be unique.");
         }
         return groupList;
-     }
+    }
 }

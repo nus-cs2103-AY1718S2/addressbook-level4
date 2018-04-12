@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.ParserUtil.parseRemark;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -17,7 +16,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -103,7 +102,7 @@ public class DeleteRemarkCommand extends UndoableCommand {
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
         String[] remarkArray = personToEdit.getRemark().toString().split("\n");
         String updateRemark = "";
-        NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
+        NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
         boolean remarkIsFound = false;
         for (String remark: remarkArray) {
             if (!remark.contains(editPersonDescriptor.getRemark().get().toString())) {
@@ -119,8 +118,8 @@ public class DeleteRemarkCommand extends UndoableCommand {
             InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                     .orElse(personToEdit.getInjuriesHistory());
 
-            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(),
-                    updatedRemark, updatedCca, updatedInjuriesHistory, updatedNameOfKin);
+            return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+                    updatedInjuriesHistory, updatedNextOfKin);
         } else {
             throw new CommandException("The target remark cannot be missing.");
         }

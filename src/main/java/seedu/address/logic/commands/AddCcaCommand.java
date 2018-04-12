@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA_POSITION;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -17,7 +16,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -104,17 +103,14 @@ public class AddCcaCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
-        //String[] editCca = personToEdit.getCca().toString().split(":");
-        //String[] cca = editPersonDescriptor.getCca().toString().split(":");
-        //Cca updatedCca = ParserUtil.parseCca(editCca[0] + "\n" + cca[0], editCca[1] + "\n" + cca[1]);
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                 .orElse(personToEdit.getInjuriesHistory());
-        NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin()
-                .orElse(personToEdit.getNameOfKin());
+        NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin()
+                .orElse(personToEdit.getNextOfKin());
 
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(),
-                updatedRemark, updatedCca, updatedInjuriesHistory, updatedNameOfKin);
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+                updatedInjuriesHistory, updatedNextOfKin);
     }
 
     @Override

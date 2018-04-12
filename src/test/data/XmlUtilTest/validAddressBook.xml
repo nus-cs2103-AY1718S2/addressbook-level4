@@ -7,7 +7,10 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Fan Muster</nameOfKin>
+        <nameOfKin>Han</nameOfKin>
+        <phone>999</phone>
+        <email>han@gmail.com</email>
+        <remarkOfKin>Father</remarkOfKin>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -16,7 +19,10 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Jan Mueller</nameOfKin>
+        <nameOfKin>Han</nameOfKin>
+        <phone>999</phone>
+        <email>han@gmail.com</email>
+        <remarkOfKin>Father</remarkOfKin>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -25,7 +31,10 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Dan Kurz</nameOfKin>
+        <nameOfKin>Han</nameOfKin>
+        <phone>999</phone>
+        <email>han@gmail.com</email>
+        <remarkOfKin>Father</remarkOfKin>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -34,7 +43,10 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Tan Meier</nameOfKin>
+        <nameOfKin>Han</nameOfKin>
+        <phone>999</phone>
+        <email>han@gmail.com</email>
+        <remarkOfKin>Father</remarkOfKin>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -43,7 +55,10 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Ran Meyer</nameOfKin>
+        <nameOfKin>Han</nameOfKin>
+        <phone>999</phone>
+        <email>han@gmail.com</email>
+        <remarkOfKin>Father</remarkOfKin>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -52,7 +67,10 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Lan Kunz</nameOfKin>
+        <nameOfKin>Han</nameOfKin>
+        <phone>999</phone>
+        <email>han@gmail.com</email>
+        <remarkOfKin>Father</remarkOfKin>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -61,7 +79,10 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Ban Best</nameOfKin>
+        <nameOfKin>Han</nameOfKin>
+        <phone>999</phone>
+        <email>han@gmail.com</email>
+        <remarkOfKin>Father</remarkOfKin>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -70,7 +91,10 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Van Meier</nameOfKin>
+        <nameOfKin>Han</nameOfKin>
+        <phone>999</phone>
+        <email>han@gmail.com</email>
+        <remarkOfKin>Father</remarkOfKin>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -79,6 +103,9 @@
         <cca>Basketball</cca>
         <pos>Member</pos>
         <injuriesHistory>" "</injuriesHistory>
-        <nameOfKin>Zan Mueller</nameOfKin>
+        <nameOfKin>Han</nameOfKin>
+        <phone>999</phone>
+        <email>han@gmail.com</email>
+        <remarkOfKin>Father</remarkOfKin>
     </persons>
 </addressbook>

@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURIES_HISTORY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -17,7 +16,7 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -106,10 +105,10 @@ public class AddInjuriesHistoryCommand extends UndoableCommand {
         Cca updatedCca = personToEdit.getCca();
         InjuriesHistory updatedInjuriesHistory = ParserUtil.parseInjuriesHistory(editPersonDescriptor
                 .getInjuriesHistory().get().toString() + "\n" + personToEdit.getInjuriesHistory());
-        NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
+        NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
 
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(), updatedRemark,
-                          updatedCca, updatedInjuriesHistory, updatedNameOfKin);
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+                        updatedInjuriesHistory, updatedNextOfKin);
     }
 
     @Override

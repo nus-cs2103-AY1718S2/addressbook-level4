@@ -12,6 +12,7 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.todo.ToDo;
 
@@ -60,6 +61,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public double getToDoListCompleteRatio() {
         return model.getAddressBook().getToDoListCompleteRatio();
+    }
+
+    @Override
+    public ObservableList<Group> getFilteredGroupList() {
+        return model.getFilteredGroupList();
     }
 
     @Override

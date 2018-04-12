@@ -90,7 +90,7 @@ public class AddMemberToGroupCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddMemberToGroupCommand // instanceof handles nulls
-                && personToAdd.equals(((AddMemberToGroupCommand) other).personToAdd));
+                && groupToAdd.equals(((AddMemberToGroupCommand) other).groupToAdd));
     }
 
 

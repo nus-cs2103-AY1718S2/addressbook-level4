@@ -319,8 +319,17 @@ _Returns all persons with phone number "91234567"._
 
 [NOTE]
 ====
-* This command identifies a person by name, email, phone or tags and displays their address using Google Maps.
-* For details on the specifiers and parameters, refer to the <<Searching for relevant persons : `find` [since v1.1], find command section>>.
+* This command searches for relevant persons with the specified information.
+* Name, phone, email, address and tags are searched by default (no `SPECIFIER` or `-all` `SPECIFIERS`)
+* `Customer` and `Runner` specific fields cannot be searched.
+* Only one `SPECIFIER` can be used at a time.
+* If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
+* Description of `SPECIFIERS`:
+** `-n` to search only names.
+** `-p` to search only phones.
+** `-e` to search only emails.
+** `-a` to search only addresses.
+** `-t` to search only tags.
 * Alternatively, this command displays the given address and displays the person associated with that address in the PersonListPanel.
 ====
 
@@ -329,13 +338,25 @@ _Returns all persons with phone number "91234567"._
 ====
  locate David
 
-_Locates the person with name "David" and displays his address on Google Maps._
+_Locates any persons with name, address or tag "David" and displays the address associated with the first result on Google Maps._
 ====
 
 ====
- locate Blk 30
+ locate -n David
+
+_Locates any persons with name "David" and displays the address associated with the first result on Google Maps._
+====
+
+====
+ locate -a Blk 30
 
 _Locates the address "Blk 30" on Google Maps and displays the person with that address in the PersonListPanel._
+====
+
+====
+ locate -p 91234567
+
+_Locates any persons with phone number "91234567" and displays the address associated with the first result on Google Maps._
 ====
 ***
 === Redoing the previously undone command : `redo`

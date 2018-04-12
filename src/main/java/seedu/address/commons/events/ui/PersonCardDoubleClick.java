@@ -10,9 +10,11 @@ import seedu.address.model.person.Person;
 public class PersonCardDoubleClick extends BaseEvent {
 
     private final Person newSelection;
+    private final Integer index;
 
-    public PersonCardDoubleClick(Person newSelection) {
+    public PersonCardDoubleClick(Person newSelection, Integer index) {
         this.newSelection = newSelection;
+        this.index = index;
     }
 
     @Override
@@ -22,5 +24,9 @@ public class PersonCardDoubleClick extends BaseEvent {
 
     public Person getNewSelection() {
         return newSelection;
+    }
+
+    public Integer getIndex() {
+        return index;
     }
 }

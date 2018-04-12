@@ -29,6 +29,8 @@ public class PersonCard extends UiPart<Region> {
 
     public final Person person;
 
+    private final Integer index;
+
     @FXML
     private HBox cardPane;
     @FXML
@@ -61,6 +63,7 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
+        index = displayedIndex;
         registerAsAnEventHandler(this);
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
@@ -108,7 +111,7 @@ public class PersonCard extends UiPart<Region> {
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
-                        raise(new PersonCardDoubleClick(person));
+                        raise(new PersonCardDoubleClick(person, index));
                     }
                 }
             }

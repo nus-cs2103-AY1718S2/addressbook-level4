@@ -110,7 +110,7 @@ public class AddCcaCommand extends UndoableCommand {
                 .orElse(personToEdit.getNextOfKin());
 
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                            updatedInjuriesHistory, updatedNextOfKin);
+                updatedInjuriesHistory, updatedNextOfKin);
     }
 
     @Override

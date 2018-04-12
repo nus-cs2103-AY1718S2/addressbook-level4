@@ -94,6 +94,19 @@ public class NextOfKin {
         return (fullName + " Phone: " + phone + " Email:" + email + " Remark:" + remark);
     }
 
+    /**
+     * Returns a string of Next of Kin's name, email and phone
+     */
+    public String printNok() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(fullName)
+                .append(" ")
+                .append(email)
+                .append(" ")
+                .append(phone);
+        return builder.toString();
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

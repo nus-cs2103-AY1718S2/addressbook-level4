@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Logger;
@@ -46,8 +47,9 @@ public class BrowserPanel extends UiPart<Region> {
     * To load person page according to person name
     */
     public void loadPersonPage(Person person) throws IOException {
-        URL personPage = MainApp.class.getResource("/StudentPage/template.html");
-        loadPage("file:" + System.getProperty("user.home") + "/StudentPage/" + person.getName() + ".html");
+        URL personPage = MainApp.class.getResource(File.separator + "StudentPage" + File.separator + "template.html");
+        loadPage("file:" + System.getProperty("user.home") + File.separator + "StudentPage"
+                + File.separator + person.getName() + ".html");
     }
 
     public void loadPage(String url) {

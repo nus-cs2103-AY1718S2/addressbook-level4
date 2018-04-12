@@ -147,7 +147,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return error message
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                score = 0;
+                return 0;
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }
@@ -199,7 +199,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return error message
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                score = 0;
+                return 0;
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }
@@ -250,7 +250,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return error message
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                score = 0;
+                return 0;
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }
@@ -301,7 +301,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return 0
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                score = 0;
+                return 0;
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }
@@ -352,7 +352,7 @@ public class Person {
             }
             // Check that if the student has at least one subject in each L1R5 category, else return error message
             if (checkLowest(subjectsToCheck, subjects) == 10) {
-                score = 0;
+                return 0;
             } else {
                 score += checkLowest(subjectsToCheck, subjects);
             }

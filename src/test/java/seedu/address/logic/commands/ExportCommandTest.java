@@ -33,10 +33,6 @@ public class ExportCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Model model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
-    private Storage storage = new StorageManager(new XmlDeskBoardStorage("main\\data\\deskBoard.xml"),
-            new JsonUserPrefsStorage("main\\preferences.json"));
-
     @Test
     public void constructor_nullFilePath_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
@@ -45,6 +41,9 @@ public class ExportCommandTest {
 
     @Test
     public void execute_validFilePath_success() throws Exception {
+        Model model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+        Storage storage = new StorageManager(new XmlDeskBoardStorage("main\\data\\deskBoard.xml"),
+                new JsonUserPrefsStorage("main\\preferences.json"));
         ExportCommand exportCommand = getExportCommandForGivenFilePath(EXPORT_FILE_PATH, model, storage);
 
         CommandResult commandResult = exportCommand.execute();
@@ -62,6 +61,10 @@ public class ExportCommandTest {
     @Test
     public void execute_existingFile_throwsCommandException() throws Throwable {
         String expectedMessage = String.format(MESSAGE_FILE_EXISTS, EXISTING_FILE_PATH);
+
+        Model model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+        Storage storage = new StorageManager(new XmlDeskBoardStorage("main\\data\\deskBoard.xml"),
+                new JsonUserPrefsStorage("main\\preferences.json"));
         ExportCommand exportCommand = getExportCommandForGivenFilePath(EXISTING_FILE_PATH, model, storage);
 
         try {

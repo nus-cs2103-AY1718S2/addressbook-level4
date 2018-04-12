@@ -21,6 +21,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.ModelStub;
 import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.alias.Alias;
@@ -97,101 +98,6 @@ public class AddCommandTest {
         AddCommand command = new AddCommand(person);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
-    }
-
-    /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Person> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void deleteTag(Tag tag) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addAlias(Alias alias) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public HashMap<String, String> getAliasList() {
-            return new HashMap<String, String>();
-        }
-
-        @Override
-        public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
-                throws BuildingNotFoundException {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updatePassword(byte[] password)  {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void removeAlias(String toRemove) throws AliasNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void importAddressBook(String filepath, byte[] password) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void exportAddressBook(String filepath, Password password) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void uploadAddressBook(String filepath, Password password) {
-            fail("This method should not be called.");
-        }
     }
 
     /**

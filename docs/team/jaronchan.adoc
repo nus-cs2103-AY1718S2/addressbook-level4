@@ -1,0 +1,64 @@
+= Jaron Chan Jin Jia - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Session Logger and Planner (SLAP) for Social Workers
+
+---
+
+== Overview
+
+Session Logger and Planner (SLAP) for Social Workers is for those who *prefer to use a desktop app for managing their schedule and contacts*. More importantly, SLAP is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, SLAP can get your daily scheduling and contact management tasks done faster than traditional GUI apps.
+It is a simple Java application intended for social workers to help them plan their day and keep track of their beneficiaries. Some key features of this application include secure sign-in, an address book, a calendar, a daily schedule display, user session logs and maps. Written in Java, it has about 15 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: integrated *Map APIs* and added *Daily Scheduler*
+** What it does: *TO UPDATE*
+** Justification: *TO UPDATE*
+** Highlights: *TO UPDATE*
+** Credits: GMapsFX by https://github.com/rterp/GMapsFX[rterp]
+
+* *Minor enhancement*: Main GUI and CSS added a history command that allows the user to navigate to previous commands using up/down keys.
+
+* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** UI Design:
+*** Created and added UI mock-up on behalf of team (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/26[#26])
+** Enhancements to existing features:
+*** *TO UPDATE*
+** Documentation:
+*** *TO UPDATE*
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-F09-B4/main/issues/195[1], https://github.com/CS2103JAN2018-F09-B4/main/issues/175[2], https://github.com/CS2103JAN2018-F09-B4/main/issues/211[3])
+** Tools:
+*** Integrated a third party library (GMapsFX) to the project (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/35[#35])
+
+_{you can add/remove categories in the list above}_
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=userInterfaceWalkthrough]
+
+include::../UserGuide.adoc[tag=switchCommand]
+
+include::../UserGuide.adoc[tag=navigateCommand]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=mapComponents]
+
+include::../DeveloperGuide.adoc[tag=dailyScheduler]
+
+include::../DeveloperGuide.adoc[tag=jaronUseCases]

@@ -11,7 +11,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T15-B3/main
 
 By: `CS2103-T15-B3`      Since: `FEB 2018`      Licence: `MIT`
 
@@ -30,14 +30,15 @@ contact management tasks done faster than traditional GUI apps. Interested? Jump
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `slap-app.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Session Logger and Planner (SLAP) for Social Workers app.
 .  Double-click the file to start the app. The application main window should appear in a few seconds.
 .  You firstly need to create a user account with a unique username and password. (See `create-user` command in <<Features>>)
 .  If you do not wish to create a new user, there is a default user account available. The username is "user" and the password is "pass".
 .  Login into your account using the `login` command (See <<Features>>) and using your username and password.
 .  If login is successful, the GUI below should appear.
 +
+.SLAP application UI mock-up.
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -50,6 +51,36 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
+
+// tag::userInterfaceWalkthrough[]
+== User Interface
+
+The figures below show the various interfaces of SLAP. This section will help you understand
+the different sections of SLAP.
+
+.Main UI of SLAP program.
+TODO: ADD IMAGE
+
+*Sections of the interface:* +
+
+. *Beneficiary List Panel:* +
+Displays all beneficiaries existing in the program.
+. *Command Box:* +
+Takes in the input by the user.
+. *Command Box Notification:* +
+Notifies the command feedback to the user.
+. *Features Tab:* +
+Indicates current feature being viewed scheduled in the program.
+. *Details Panel:* +
+TODO: ADD IMAGE
+Displays all information of a specified beneficiary including map location and previously logged session reports.
+. *Calendar Panel:* +
+TODO: ADD IMAGE
+In-app view of Google Calendar paired. Must be logged in and given permission for calendar functions to work.
+. *Daily Scheduler Panel:* +
+TODO: ADD IMAGE
+Displays all event information of a specified date including map proposed navigation routes between events.
+// end::userInterfaceWalkthrough[]
 
 [[Features]]
 == Features
@@ -132,17 +163,15 @@ You will need to be logged out to use this Command.
 
 User have to use another form of authentication to log in (most probably a one-time password).
 
+// end::switchCommand[]
 === Application Navigation
 
 ==== Switching between feature interfaces : `switch`
 
-Switches to the user interface feature identified by the user. +
-Format: `switch FEATURE`
-
-****
-* Switches to the specified `FEATURE`
-* `FEATURE` must be either "details", "calendar" or "scheduler".
-****
+[NOTE]
+====
+All `switch` commands of valid input will be valid on current feature tabs even when target feature is the current view.
+====
 
 Examples:
 
@@ -150,6 +179,7 @@ Examples:
 Switches to `calendar` tab and displays contents
 * `switch details` +
 Switches to `details` tab and displays contents
+// end::switchCommand[]
 
 === Contacts Manipulation
 
@@ -275,6 +305,7 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+
 === Session Reports and Logs
 
 ==== Adding a new session report: `add-log`
@@ -294,17 +325,20 @@ Deletes a particular report/log from a person
 ==== Edit a new session report: `delete-log` [Coming in v2.0]
 Edits report/log entries from a person
 
+// tag::navigateCommand[]
+
 === Map Tools
 
 ==== Navigate between scheduled events : `navigate`
-
 Displays the directions between planned locations on the daily scheduler map. +
 Format: `navigate INDEX`
 
-[NOTE]
+[WARNING]
 ====
 Must be on `scheduler` view first for command to work, else nothing happens.
-`show-schedule` has to be called BEFORE `navigate` can work properly.
+`show-schedule DATE` has to be called BEFORE `navigate` can work properly.
+To test function it is recommended to add sufficient number of events, i.e. 2 or more, to the particular date.
+It is assumed that every event location used is valid.
 ====
 
 ****
@@ -312,16 +346,28 @@ Must be on `scheduler` view first for command to work, else nothing happens.
 * `INDEX` must be more then `1`, but less than total events for the day minus ONE or `NUM_OF_EVENTS - 1`.
 ****
 
+[TIP]
+Number of buttons on the right of the scheduler panel map indicates how many navigation options are available.
+
 Examples:
 
 * `switch scheduler` +
 Switches to `calendar` tab and displays contents
-* `show-schedule` +
-Retrieves events for specified day
+* `show-schedule d/5 May` +
+Retrieves events on the 5th of May.
 * `navigate 1` +
 Displays directions between the first and the second event of the day.
 
+// end::navigateCommand[]
+
+// tag::calendar[]
 === Calendar Tools
+
+==== Opening a calendar : `calendar-launch`
+[NOTE]
+====
+Calling new `show-schedule DATE` will return different set of events which will update available navigation options.
+====
 
 ==== Opening a calendar : `calendar-launch`
 
@@ -342,16 +388,24 @@ Logging in to the calendar interface DOES NOT perform the Oauth authentication p
 
 Allows a user to add an event directly to their calendar.
 
-Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)`
+Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location>`
 
 [NOTE]
 ====
-Dates can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+Start/End times can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+
+The expected behaviour is such that if no time is provided with the date, the program will assume that the the desired
+time is the current time. For example, if current time is 12am and the user does not specify a start or end time for the
+two dates that they provide, then the application will use 12am as both the start and end time for their input dates.
+
+Similarly, if no date is provided with the time, the program will assume that the desired day was the current day.
+For example, if the current time is 4am, and the start date is 12am and the end date is 6am, the created event will
+start on the current day at 12am and end at 6am on the same day.
 
 `calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
 ====
 
 ==== List upcoming events in the command line: `calendar-list`
@@ -365,7 +419,7 @@ Format: `calendar-list`
 `calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
 ====
 
 ==== Deleting an event from the calendar : `calendar-delete`
@@ -379,7 +433,7 @@ Format: `calendar-delete INDEX`
 `calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
 ====
 
 ==== Editing an event in the calendar : `calendar-edit` [coming in v2.0]
@@ -399,7 +453,7 @@ Format: `reauthenticate`
 ====
 This command is used to manually reauthenticate the Oauth certificate. The SLAP app will launch the system default
 browser (i.e. not a WebView) and ask them to select the account that they wish to grant the SLAP app permission to
-edit. Failure authenticate will cause the program to freeze and crash.
+edit. Failure to authenticate will cause the program to freeze and crash.
 ====
 
 ==== List upcoming events in the command line: `show-schedule`
@@ -415,11 +469,13 @@ Date can be written in natural language (e.g. Today, This Friday, May 4, etc.)
 This command relies on Google Oauth to access the calendar. Whenever a Google Calendar-related command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
 ====
+// end::calendar[]
 
 === Other Tools
 
+// tag::errorlog[]
 ==== Opening the Error Log : `errorlog`
 
 Opens the error log in a new window.
@@ -430,6 +486,7 @@ Format: `errorlog`
 ====
 The user can also open the error log by pressing `View > Show Error Log`
 ====
+// end::errorlog[]
 
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
@@ -456,6 +513,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
 `undo` (reverses the `delete 1` command) +
 
 ==== Redoing the previously undone command : `redo`

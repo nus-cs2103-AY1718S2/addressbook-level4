@@ -1,4 +1,177 @@
 # Wu
+###### \java\guitests\guihandles\TodoCardHandle.java
+``` java
+public class TodoCardHandle extends NodeHandle<Node> {
+    private static final String ID_FIELD_ID = "#id";
+    private static final String TITLE_FIELD_ID = "#title";
+    private static final String DESC_FIELD_ID = "#description";
+    private static final String DEADLINE_FIELD_ID = "#deadline";
+    private static final String PRIORITY_FIELD_ID = "#priority";
+
+    private final Label idLabel;
+    private final Label titleLabel;
+    private final Label descriptionLabel;
+    private final Label deadlineLabel;
+    private final Label priorityLabel;
+
+    public TodoCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.idLabel = getChildNode(ID_FIELD_ID);
+        this.titleLabel = getChildNode(TITLE_FIELD_ID);
+        this.descriptionLabel = getChildNode(DESC_FIELD_ID);
+        this.deadlineLabel = getChildNode(DEADLINE_FIELD_ID);
+        this.priorityLabel = getChildNode(PRIORITY_FIELD_ID);
+
+    }
+
+    public String getId() {
+        return idLabel.getText();
+    }
+
+    public String getTitle() {
+        return titleLabel.getText();
+    }
+
+    public String getDescription() {
+        return descriptionLabel.getText();
+    }
+
+    public String getDeadline() {
+        return deadlineLabel.getText();
+    }
+
+    public String getPriority() {
+        return priorityLabel.getText();
+    }
+
+}
+```
+###### \java\guitests\guihandles\TodoListPanelHandle.java
+``` java
+public class TodoListPanelHandle extends NodeHandle<ListView<TodoCard>> {
+    public static final String TODO_LIST_VIEW_ID = "#todoListView";
+
+    private Optional<TodoCard> lastRememberedSelectedTodoCard;
+
+    public TodoListPanelHandle(ListView<TodoCard> todoListPanelNode) {
+        super(todoListPanelNode);
+    }
+
+    /**
+     * Returns a handle to the selected {@code TodoCardHandle}.
+     * A maximum of 1 item can be selected at any time.
+     * @throws AssertionError if no card is selected, or more than 1 card is selected.
+     */
+    public TodoCardHandle getHandleToSelectedCard() {
+        List<TodoCard> taskList = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (taskList.size() != 1) {
+            throw new AssertionError("Person list size expected 1.");
+        }
+
+        return new TodoCardHandle(taskList.get(0).getRoot());
+    }
+
+    /**
+     * Returns the index of the selected card.
+     */
+    public int getSelectedCardIndex() {
+        return getRootNode().getSelectionModel().getSelectedIndex();
+    }
+
+    /**
+     * Returns true if a card is currently selected.
+     */
+    public boolean isAnyCardSelected() {
+        List<TodoCard> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedCardsList.size() > 1) {
+            throw new AssertionError("Card list size expected 0 or 1.");
+        }
+
+        return !selectedCardsList.isEmpty();
+    }
+
+    /**
+     * Navigates the listview to display and select the task.
+     */
+    public void navigateTodoCard(Task task) {
+        List<TodoCard> cards = getRootNode().getItems();
+        Optional<TodoCard> matchingCard = cards.stream().filter(card -> card.task.equals(task)).findFirst();
+
+        if (!matchingCard.isPresent()) {
+            throw new IllegalArgumentException("Person does not exist.");
+        }
+
+        guiRobot.interact(() -> {
+            getRootNode().scrollTo(matchingCard.get());
+            getRootNode().getSelectionModel().select(matchingCard.get());
+        });
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Returns the Todocard handle of a task associated with the {@code index} in the list.
+     */
+    public TodoCardHandle getTodoCardHandle(int index) {
+        return getTodoCardHandle(getRootNode().getItems().get(index).task);
+    }
+
+    /**
+     * Returns the {@code TodoCardHandle} of the specified {@code task} in the list.
+     */
+    public TodoCardHandle getTodoCardHandle(Task task) {
+        Optional<TodoCardHandle> handle = getRootNode().getItems().stream()
+                .filter(card -> card.task.equals(task))
+                .map(card -> new TodoCardHandle(card.getRoot()))
+                .findFirst();
+        return handle.orElseThrow(() -> new IllegalArgumentException("Task does not exist."));
+    }
+
+    /**
+     * Selects the {@code TodoCard} at {@code index} in the list.
+     */
+    public void select(int index) {
+        getRootNode().getSelectionModel().select(index);
+    }
+
+    /**
+     * Remembers the selected {@code TodoCard} in the list.
+     */
+    public void rememberSelectedTodoCard() {
+        List<TodoCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedItems.size() == 0) {
+            lastRememberedSelectedTodoCard = Optional.empty();
+        } else {
+            lastRememberedSelectedTodoCard = Optional.of(selectedItems.get(0));
+        }
+    }
+
+    /**
+     * Returns true if the selected {@code TodoCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedTodoCard()} call.
+     */
+    public boolean isSelectedTodoCardChanged() {
+        List<TodoCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedItems.size() == 0) {
+            return lastRememberedSelectedTodoCard.isPresent();
+        } else {
+            return !lastRememberedSelectedTodoCard.isPresent()
+                    || !lastRememberedSelectedTodoCard.get().equals(selectedItems.get(0));
+        }
+    }
+
+    /**
+     * Returns the size of the list.
+     */
+    public int getListSize() {
+        return getRootNode().getItems().size();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AddTaskCommandTest.java
 ``` java
 public class AddTaskCommandTest {

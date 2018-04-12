@@ -63,6 +63,7 @@ public class TypicalPersons {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
     public static final String NRIC_KEYWORD_MATCHING_MEIER = "T0123456L" + " " + "S0123456Q";
+    public static final String OWES_MONEY_TAG = "owesMoney";
 
     private TypicalPersons() {} // prevents instantiation
 

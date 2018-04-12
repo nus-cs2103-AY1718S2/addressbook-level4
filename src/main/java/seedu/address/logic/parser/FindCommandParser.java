@@ -9,23 +9,19 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.Arrays;
-import java.util.function.Predicate;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
-import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.BloodType;
 import seedu.address.model.petpatient.Breed;
 import seedu.address.model.petpatient.Colour;
-import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
 import seedu.address.model.petpatient.Species;
 import seedu.address.model.tag.Tag;
@@ -86,38 +82,24 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        Predicate<Person> finalPredicate = null;
+        HashMap<String, String[]> finalHashMap = new HashMap<>();
 
         if ((arePrefixesPresent(argMultimapOwner, PREFIX_NAME))) {
             String[] nameKeywords = getNameKeyword(argMultimapOwner);
-            Predicate<Person> namePredicate =  person -> Arrays.stream(nameKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
-            finalPredicate = namePredicate;
+            finalHashMap.put("ownerName", nameKeywords);
         }
 
         if ((arePrefixesPresent(argMultimapOwner, PREFIX_NRIC))) {
             String[] nricKeywords = getNricKeyword(argMultimapOwner);
-            Predicate<Person>  nricPredicate = person -> Arrays.stream(nricKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), keyword));
-            if (finalPredicate == null) {
-                finalPredicate = nricPredicate;
-            } else {
-                finalPredicate = finalPredicate.and(nricPredicate);
-            }
+            finalHashMap.put("ownerNric", nricKeywords);
         }
 
         if ((arePrefixesPresent(argMultimapOwner, PREFIX_TAG))) {
             String[] tagKeywords = getTagKeyword(argMultimapOwner);
-            Predicate<Person> tagPredicate = person -> Arrays.stream(tagKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagString(), keyword));
-            if (finalPredicate == null) {
-                finalPredicate = tagPredicate;
-            } else {
-                finalPredicate = finalPredicate.and(tagPredicate);
-            }
+            finalHashMap.put("ownerTag", tagKeywords);
         }
 
-        return new FindCommand(finalPredicate);
+        return new FindCommand(finalHashMap);
     }
 
     /**
@@ -282,71 +264,38 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        Predicate<PetPatient> finalPredicate = null;
+        HashMap<String, String[]> finalHashMap = new HashMap<>();
 
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_NAME))) {
             String[] nameKeywords = getPetPatientNameKeyword(argMultimapPetPatient);
-            Predicate<PetPatient> namePredicate =  petPatient -> Arrays.stream(nameKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getName().fullName, keyword));
-            finalPredicate = namePredicate;
+            finalHashMap.put("petName", nameKeywords);
         }
 
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_SPECIES))) {
-            String[] stringKeywords = getSpeciesKeyword(argMultimapPetPatient);
-            Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getSpecies().species, keyword));
-            if (finalPredicate == null) {
-                finalPredicate = stringPredicate;
-            } else {
-                finalPredicate = finalPredicate.and(stringPredicate);
-            }
+            String[] speciesKeywords = getSpeciesKeyword(argMultimapPetPatient);
+            finalHashMap.put("petSpecies", speciesKeywords);
         }
 
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_BREED))) {
-            String[] stringKeywords = getBreedKeyword(argMultimapPetPatient);
-            Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getBreed().breed, keyword));
-            if (finalPredicate == null) {
-                finalPredicate = stringPredicate;
-            } else {
-                finalPredicate = finalPredicate.and(stringPredicate);
-            }
+            String[] breedKeywords = getBreedKeyword(argMultimapPetPatient);
+            finalHashMap.put("petBreed", breedKeywords);
         }
 
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_COLOUR))) {
-            String[] stringKeywords = getColourKeyword(argMultimapPetPatient);
-            Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getColour().colour, keyword));
-            if (finalPredicate == null) {
-                finalPredicate = stringPredicate;
-            } else {
-                finalPredicate = finalPredicate.and(stringPredicate);
-            }
+            String[] colourKeywords = getColourKeyword(argMultimapPetPatient);
+            finalHashMap.put("petColour", colourKeywords);
         }
 
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_BLOODTYPE))) {
-            String[] stringKeywords = getBloodTypeKeyword(argMultimapPetPatient);
-            Predicate<PetPatient> stringPredicate =  petPatient -> Arrays.stream(stringKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
-                            petPatient.getBloodType().bloodType, keyword));
-            if (finalPredicate == null) {
-                finalPredicate = stringPredicate;
-            } else {
-                finalPredicate = finalPredicate.and(stringPredicate);
-            }
+            String[] bloodTypeKeywords = getBloodTypeKeyword(argMultimapPetPatient);
+            finalHashMap.put("petBloodType", bloodTypeKeywords);
         }
 
         if ((arePrefixesPresent(argMultimapPetPatient, PREFIX_TAG))) {
             String[] tagKeywords = getTagKeyword(argMultimapPetPatient);
-            Predicate<PetPatient> tagPredicate = petPatient -> Arrays.stream(tagKeywords)
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getTagString(), keyword));
-            if (finalPredicate == null) {
-                finalPredicate = tagPredicate;
-            } else {
-                finalPredicate = finalPredicate.and(tagPredicate);
-            }
+            finalHashMap.put("petTag", tagKeywords);
         }
 
-        return new FindCommand(finalPredicate, 2); //because of JVM problem
+        return new FindCommand(finalHashMap);
     }
 }

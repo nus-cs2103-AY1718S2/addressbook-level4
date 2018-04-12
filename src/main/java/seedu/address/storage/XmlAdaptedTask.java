@@ -69,6 +69,12 @@ public class XmlAdaptedTask {
             throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
         }
         final Title title = new Title(this.title);
+
+        if (this.taskDescription == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    TaskDescription.class.getSimpleName()));
+        }
+
         if (!TaskDescription.isValidDescription(this.taskDescription)) {
             throw new IllegalValueException(TaskDescription.MESSAGE_DESCRIPTION_CONSTRAINTS);
         }

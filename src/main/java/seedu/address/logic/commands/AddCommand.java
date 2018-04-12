@@ -3,7 +3,11 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEYOWED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWEDUEDATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWESTARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
@@ -20,23 +24,45 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
     public static final String COMMAND_WORD = "add";
     public static final String COMMAND_ALIAS = "a";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
-            + "Parameters: "
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + " | Adds a Customer or Runner with the specified details. "
+            + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
+            + "\n\t"
+            + "Parameters:\t"
+            + COMMAND_WORD + " "
             + PREFIX_TYPE + " r(or c) "
             + PREFIX_NAME + " NAME "
             + "[" + PREFIX_PHONE + " PHONE] "
             + "[" + PREFIX_EMAIL + " EMAIL] "
             + "[" + PREFIX_ADDRESS + " ADDRESS] "
-            + "[" + PREFIX_TAG + " TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_TYPE + " c "
-            + PREFIX_NAME + " John Doe "
-            + PREFIX_PHONE + " 98765432 "
-            + PREFIX_EMAIL + " johnd@example.com "
-            + PREFIX_ADDRESS + " 311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + " owesMoney";
+            + "[" + PREFIX_OWESTARTDATE + " OWE_START_DATE] "
+            + "[" + PREFIX_OWEDUEDATE + " OWE_DUE_DATE] "
+            + "[" + PREFIX_MONEYOWED + " MONEY_OWED] "
+            + "[" + PREFIX_INTEREST + " INTEREST_RATE] "
+            + "[" + PREFIX_TAG + " TAG] ..."
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+            + "\n\t\t"
+            + "1. The start and due dates can be specified in natural language (eg. \"today\", \"this Friday\", etc)."
+            + "\n\t\t"
+            + "2. Interest will be compounded weekly."
+
+            + "\n\t"
+            + "Example:\t\t" + COMMAND_WORD + " "
+            + PREFIX_TYPE + " c "
+            + PREFIX_NAME + " Xiao Ming "
+            + PREFIX_PHONE + " 88888888 "
+            + PREFIX_EMAIL + " xiao@ming.com "
+            + PREFIX_ADDRESS + " W Hotel "
+            + PREFIX_OWESTARTDATE + " today "
+            + PREFIX_OWEDUEDATE + " 5 May 2018 "
+            + PREFIX_MONEYOWED + " 31415926535897 "
+            + PREFIX_INTEREST + " 9.71 "
+            + PREFIX_TAG + " richxiaoming";
+
+    public static final String MESSAGE_INVALID_PREFIX = "You have entered a prefix applicable only to Customers"
+            + " (ty: c)";
+
+    public static final String MESSAGE_SUCCESS = "New person added!\n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private final Person toAdd;
@@ -75,6 +101,7 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
@@ -84,7 +111,8 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
     public String getTemplate() {
         return COMMAND_WORD + " " + PREFIX_TYPE + "  " + PREFIX_NAME + "  "
                 + PREFIX_PHONE + "  " + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  "
-                + PREFIX_TAG + " ";
+                + PREFIX_OWESTARTDATE + "  " + PREFIX_OWEDUEDATE + "  "
+                + PREFIX_MONEYOWED + "  " + PREFIX_INTEREST + "  " + PREFIX_TAG + " ";
     }
 
     @Override
@@ -96,4 +124,5 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
     public String getUsageMessage() {
         return MESSAGE_USAGE;
     }
+    //@@author
 }

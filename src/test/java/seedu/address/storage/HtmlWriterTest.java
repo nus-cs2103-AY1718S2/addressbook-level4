@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+//@@author Der-Erlkonig
 public class HtmlWriterTest {
     private HtmlWriter htmlWriter;
 

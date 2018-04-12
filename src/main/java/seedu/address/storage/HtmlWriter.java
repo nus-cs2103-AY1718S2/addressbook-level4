@@ -9,6 +9,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.customer.Customer;
 import seedu.address.model.person.runner.Runner;
 
+//@@author Der-Erlkonig
 /**
  * Writes Person Data to a HTML file
  */
@@ -95,9 +96,10 @@ public class HtmlWriter {
             PrintWriter printWriter = new PrintWriter(file);
             printWriter.print(OPENING_LINE);
             printWriter.println("<p>Name: " + name + "</p>");
-            printWriter.println("<p>Customers Assigned: dummy list </p>");
+            printWriter.println("<br><hr>");
+            printWriter.println("<p>Customers Assigned:</p>");
             for (Person eachCustomer: customerList) {
-                printWriter.println("<p>Customers Assigned: " + eachCustomer.getName().fullName + " </p>");
+                printWriter.println("<p>- " + eachCustomer.getName().fullName + "</p>");
             }
             printWriter.println("</body></html>");
             printWriter.close();

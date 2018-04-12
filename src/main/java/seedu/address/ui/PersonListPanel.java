@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.HomeRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.LocateRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -65,24 +66,35 @@ public class PersonListPanel extends UiPart<Region> {
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and display the location on Google Map.
      */
-
+    //@@author zhangriqi
     private void locate(int index) {
         Platform.runLater(()-> {
             personListView.scrollTo(index);
         });
     }
+    //@@author
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
-
+    //@@author zhangriqi
     @Subscribe
     private void handleLocateRequestEvent(LocateRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         locate(event.target);
     }
-
+    //@@author
+    //@@author jonleeyz
+    /**
+     * Handles the event where the Esc key is pressed or "home" is input to the CommandBox.
+     * {@code HomeRequestEvent}.
+     */
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        //@TODO to be implemented
+    }
+    //@@author
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */

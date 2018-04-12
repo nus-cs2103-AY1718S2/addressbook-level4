@@ -3,6 +3,7 @@ package seedu.address.model.person.customer;
 //import static java.util.Objects.requireNonNull;
 //import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author melvintzw
 /**
  * Represents a customer's standard interest rate.
  * Guarantees: immutable;

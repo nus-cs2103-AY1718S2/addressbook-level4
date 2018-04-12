@@ -9,7 +9,7 @@ public class ListCommand extends Command implements ImmediatelyExecutableCommand
 
     public static final String COMMAND_WORD = "list";
     public static final String COMMAND_ALIAS = "l";
-    public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_SUCCESS = "Listed all persons.";
 
 
     @Override
@@ -18,8 +18,10 @@ public class ListCommand extends Command implements ImmediatelyExecutableCommand
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    //@@author jonleeyz
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
     }
+    //@@author
 }

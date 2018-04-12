@@ -17,10 +17,12 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExecuteCommandRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.HomeRequestEvent;
 import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -59,6 +61,11 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane commandBoxPlaceholder;
 
+    //@@author jonleeyz
+
+    @FXML
+    private MenuItem homeMenuItem;
+
     @FXML
     private MenuItem exitMenuItem;
 
@@ -94,6 +101,10 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private MenuItem selectMenuItem;
+    //@@author
+
+    @FXML
+    private MenuItem assignMenuItem;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -128,25 +139,29 @@ public class MainWindow extends UiPart<Stage> {
         return primaryStage;
     }
 
+    //@@author jonleeyz
     private void setAccelerators() {
+        setAccelerator(homeMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(exitMenuItem, KeyCombination.valueOf("Alt + Q"));
 
         setAccelerator(undoMenuItem, KeyCombination.valueOf("Ctrl + Z"));
         setAccelerator(redoMenuItem, KeyCombination.valueOf("Ctrl + Y"));
         setAccelerator(clearMenuItem, KeyCombination.valueOf("Ctrl + Shift + C"));
 
-        setAccelerator(historyMenuItem, KeyCombination.valueOf("Ctrl + H"));
+        setAccelerator(historyMenuItem, KeyCombination.valueOf("F3"));
         setAccelerator(listMenuItem, KeyCombination.valueOf("F2"));
         setAccelerator(findMenuItem, KeyCombination.valueOf("Ctrl + F"));
 
-        setAccelerator(addMenuItem, KeyCombination.valueOf("Ctrl + Space"));
+        setAccelerator(addMenuItem, KeyCombination.valueOf("Ctrl + I"));
         setAccelerator(deleteMenuItem, KeyCombination.valueOf("Ctrl + D"));
         setAccelerator(editMenuItem, KeyCombination.valueOf("Ctrl + E"));
         setAccelerator(locateMenuItem, KeyCombination.valueOf("Ctrl + L"));
         setAccelerator(selectMenuItem, KeyCombination.valueOf("Ctrl + S"));
+        setAccelerator(assignMenuItem, KeyCombination.valueOf("Ctrl + Shift + A"));
 
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(helpMenuItem, KeyCombination.valueOf("F12"));
     }
+    //@@author
 
     /**
      * Sets the accelerator of a MenuItem.
@@ -233,6 +248,15 @@ public class MainWindow extends UiPart<Stage> {
     private void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+
+    //@@author jonleeyz
+    /**
+     * Executes the {@code home} operation
+     */
+    @FXML
+    private void handleHome() {
+        raise(new HomeRequestEvent());
     }
 
     /**
@@ -322,6 +346,16 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSelect() {
         raise(new PopulatePrefixesRequestEvent(new SelectCommand()));
     }
+    //@@author
+
+    /**
+     * Populates the {@code CommandBox} with the {@code AssignCommand} prefixes.
+     */
+    @FXML
+    private void handleAssign() {
+        raise(new PopulatePrefixesRequestEvent(new AssignCommand()));
+    }
+
 
     void show() {
         primaryStage.show();
@@ -348,7 +382,7 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
-
+    //@@author zhangriqi
     public static void loadUrl(String url) {
         browserPanel.loadPage(url);
     }

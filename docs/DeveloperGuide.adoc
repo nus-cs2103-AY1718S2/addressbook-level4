@@ -1,4 +1,4 @@
-= LoanSharkTycoon - Developer Guide
+= LoanShark Tycoon v1.5rc - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,9 +12,10 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `CS2103JAN2018-F12-B4`      Since: `Jan 2018`      Licence: `LoansharkTycoon.co`
+By: `Huat Ah Finance Ptd Ltd`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
+
 
 === Prerequisites
 
@@ -542,6 +543,7 @@ The rationale for implementing the `locate` command is that there's actual need 
 
 It was important to make sure that the `locate` command would use parameters other than the Index, as relevant information may be more easily to be obtained.
 
+//@@author jonleeyz
 === Tag Colours Enhancement
 
 In the original AddressBook, all tags were of the same colour, irrespective of the `Person` they were tagged to or the content of the tag. Users were able to visually identify the tags a `Person` is associated with by the textual content of each tag. The current implementation enables colours for tags and tags with the same textual content will consistently bear the same colour. This is substantially more useful than the previous application as users are able to visually identify multiple `Person` objects with the same tag with much more ease. Also, users can now more easily compare and contrast the tags that two distinct `Person` objects are associated with.
@@ -590,9 +592,6 @@ The rationale for adding tag colours stems from two facts: firstly, that in the 
 As a result, implementing tag colours utilises these two facts in tandom to make it significantly easier for the User to group different `Persons` and in combination with our newly implement `find` command, which enables wide sweeping, flexible search and filtering functionality, these tag colours add much value to the searching and filtering user experience.
 
 These tag colours will be significantly more useful with the further enhancement mentioned above and hence, this basic enhancement is the first step towards the finished product.
-
-=== BrowserPanel Enhancement
-In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows the customer's name, amount owed, due date, status, and runner assigned. These are important fields for a loanshark manager to get a quick grasp of a customer.
 
 === Keyboard shortcuts
 
@@ -651,14 +650,25 @@ This would have posed problems when implementing the keyboard shortcuts that pop
 
 Limitation: when the focus is on the BrowserPanel UI element, the implemented keyboard shortcuts do not work as a user would expect them to.
 This is a limitation of the BrowserPanel UI element.
+//@@author
+=== BrowserPanel Enhancement
+In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows some more important details of the runner or customer.
+These are important fields for a loanshark manager to get a quick grasp of a customer's details, as well as who the runners are in charge of.
 
 ==== Enhancement
-A HTML file with a customer's fields, as outlined above, in that order, is created each time a PersonCard is selected. The BrowserPanel then displays this HTML file. The background and font colors are matched to the LoanSharkTycoon application.
+Depending on whether the selected Person is a Runner or Customer, the respective HTML file with the desired fields are generated.
+Upon selection of the PersonCard, or select command from the CommandBox, a HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
+Fields for the Customer are: name, amount owed, due date, status, and runner assigned.
+Fields for the Runner are: name, and a list of customers assigned to the specified runner.
+The BrowserPanel then displays this HTML file.
+The background and font colors are matched to the LoanSharkTycoon application.
 
-image::BrowserPanelMockup.png[width="800"]
+image::BrowserPanelMockup.PNG[width="800"]
 
 ==== Rationale
-A customer's amount owed and due dates are very important variables which directly affect the PnL of the LoanShark's enterprise. Therefore, this feature is suitable, and definitely desirable from the perspective of a LoanShark manager.
+A customer's amount owed and due dates are very important variables which directly affect the PnL of the LoanShark's enterprise.
+Being able to view a runner's list of assigned customers is important for managing human resource.
+Therefore, this feature is suitable, and definitely desirable from the perspective of a LoanShark manager.
 
 == Documentation
 
@@ -1076,24 +1086,24 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 Major: Implementation of `Locate` command to bring up address of target on Google Maps.
 
-Minor: Addition of command aliases to improve speed of using CLI
+Minor: Addition of command aliases to improve speed of using CLI.
 
 
 ~Melvin Tan~
 
-Major: Integration with Google Calendar
+Major: Implementation of model and related components to support new subclasses, ensure basic functions work with the new model, and to enable new target user-specific functions, such as assigning customers to a runner.
 
-Minor: Enhancement to `Find` command to improve searching
+Minor: Enhancement to `Find` command to improve searching.
 
 ~Jonathan Lee~
 
 Major: Speed up User workflow using keyboard shortcuts and other input enhancements.
 
-Minor: UI update - colours, styles and menu elements
+Minor: UI update - colours, styles and menu elements.
 
 ~Choi Wi Su~
 
-Major: Import and export function to update contacts and export information to other formats
+Major: Implement new UI option for displaying relevant information of selected persons.
 
 Minor: Addition of remarks field for each contact
 

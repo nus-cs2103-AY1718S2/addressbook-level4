@@ -1,7 +1,6 @@
 package systemtests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
@@ -121,7 +120,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         getBrowserPanel().click();
         populateSelectCommandUsingAccelerator();
-        assertPopulationFailure();
+        assertPopulationSuccess();
 
         //use menu button
         populateSelectCommandUsingMenu();
@@ -201,22 +200,6 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Asserts that population of the {@code CommandBox} with the AddCommand
-     * template was unsuccessful.
-     */
-    private void assertPopulationFailure() {
-        SelectCommand selectCommand = new SelectCommand();
-        assertNotEquals(selectCommand.getTemplate(), getCommandBox().getInput());
-        assertNotEquals(selectCommand.getUsageMessage(), getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-
-        executeCommand("invalid command");
-        assertTrue(getCommandBox().clear());
-        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-    }
-
-    /**
      * Populates the {@code CommandBox} with the SelectCommand template
      * using the associated accelerator in {@code MainWindow}.
      */
@@ -231,5 +214,21 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
     private void populateSelectCommandUsingMenu() {
         populateUsingMenu("Actions", "Select a Person...");
     }
+    //@@author
+
+    //@@author jonleeyz-unused
+    /* Redundant, kept for legacy purposes
+    private void assertPopulationFailure() {
+        SelectCommand selectCommand = new SelectCommand();
+        assertNotEquals(selectCommand.getTemplate(), getCommandBox().getInput());
+        assertNotEquals(selectCommand.getUsageMessage(), getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+
+        executeCommand("invalid command");
+        assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+    }
+    */
     //@@author
 }

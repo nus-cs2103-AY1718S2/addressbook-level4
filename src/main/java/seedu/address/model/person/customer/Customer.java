@@ -1,5 +1,6 @@
 package seedu.address.model.person.customer;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.runner.Runner;
 import seedu.address.model.tag.Tag;
 
+//@@author melvintzw
 /**
  * Represents a customer in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -22,7 +24,7 @@ public class Customer extends Person {
     private final Date oweDueDate;
     private final StandardInterest standardInterest; //in percent
     private final LateInterest lateInterest; //in percent
-    private final Runner runner;
+    private final Person runner;
 
     /**
      * customer constructor
@@ -40,7 +42,7 @@ public class Customer extends Person {
 
     public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
                     MoneyBorrowed moneyBorrowed, Date oweStartDate, Date oweDueDate, StandardInterest
-                            standardInterest, LateInterest lateInterest, Runner runner) {
+                            standardInterest, LateInterest lateInterest, Person runner) {
         super(name, phone, email, address, tags);
         this.setType(PersonType.CUSTOMER);
         this.moneyBorrowed = moneyBorrowed;
@@ -71,7 +73,7 @@ public class Customer extends Person {
         return lateInterest;
     }
 
-    public Runner getRunner() {
+    public Person getRunner() {
         return runner;
     }
 
@@ -84,6 +86,9 @@ public class Customer extends Person {
 
         Date currentDate = new Date();
         long elapsedTime = currentDate.getTime() - oweStartDate.getTime();
+        if (elapsedTime < 0) {
+            return moneyBorrowed.value;
+        }
         long elapsedWeeks = elapsedTime / numOfMsPerWeek;
         return moneyBorrowed.value * Math.pow(1 + standardInterest.value / 100, (double) elapsedWeeks);
     }
@@ -109,25 +114,30 @@ public class Customer extends Person {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Name: ")
-                .append(getName())
+                .append(getName() + ";")
                 .append(" Phone: ")
-                .append(getPhone())
+                .append(getPhone() + ";")
                 .append(" Email: ")
-                .append(getEmail())
+                .append(getEmail() + ";")
                 .append(" Address: ")
-                .append(getAddress())
-                .append(" Money Owed: ")
-                .append(getMoneyCurrentlyOwed())
-                .append(" Standard Interest Rate: ")
-                .append(getStandardInterest())
-                .append(" Start Date: ")
-                .append(getOweStartDate())
-                .append(" Due Date: ")
-                .append(getOweDueDate())
-                .append(" runner: ")
-                .append(runner.getName())
+                .append(getAddress() + ";")
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+
+        SimpleDateFormat simpledate = new SimpleDateFormat("EEE, d MMM yyyy");
+        String oweStartDate = simpledate.format(getOweStartDate());
+        String oweDueDate = simpledate.format(getOweDueDate());
+
+        builder.append("\nMoney Owed: ")
+                .append(String.format("$%.2f", getMoneyCurrentlyOwed()))
+                .append(" Weekly Interest Rate: ")
+                .append(getStandardInterest() + "%" + ";")
+                .append(" Start Date: ")
+                .append(oweStartDate + ";")
+                .append(" Due Date: ")
+                .append(oweDueDate)
+                .append("\nRunner Assigned: ")
+                .append(runner.getName());
         return builder.toString();
     }
 }

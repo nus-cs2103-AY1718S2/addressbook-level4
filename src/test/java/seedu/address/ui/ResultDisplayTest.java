@@ -14,6 +14,7 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class ResultDisplayTest extends GuiUnitTest {
 
+    //@@author jonleeyz-reused
     private static final NewResultAvailableEvent NEW_RESULT_SUCCESS_EVENT_STUB =
             new NewResultAvailableEvent("Stub", true);
     private static final NewResultAvailableEvent NEW_RESULT_FAILURE_EVENT_STUB =
@@ -23,6 +24,7 @@ public class ResultDisplayTest extends GuiUnitTest {
     private List<String> errorStyleOfResultDisplay;
 
     private ResultDisplayHandle resultDisplayHandle;
+    //@@author
 
     @Before
     public void setUp() {
@@ -38,6 +40,7 @@ public class ResultDisplayTest extends GuiUnitTest {
         errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
     }
 
+    //@@author jonleeyz-reused
     @Test
     public void display() {
         // default result text
@@ -66,4 +69,5 @@ public class ResultDisplayTest extends GuiUnitTest {
         assertEquals(event.message, resultDisplayHandle.getText());
         assertEquals(expectedStyleClass, resultDisplayHandle.getStyleClass());
     }
+    //@@author
 }

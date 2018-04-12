@@ -106,10 +106,12 @@ public class ImportCommandTest {
 
         try {
             ReadOnlyDeskBoard toImport = new XmlDeskBoardStorage(DUPLICATE_ACTIVITY_FILE_PATH).readDeskBoard()
-                    .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, DUPLICATE_ACTIVITY_FILE_PATH)));
+                    .orElseThrow(() -> new CommandException(
+                            String.format(MESSAGE_FILE_NOT_FOUND, DUPLICATE_ACTIVITY_FILE_PATH)));
 
             model.addActivities(toImport);
-            CommandResult result = new CommandResult(String.format(ImportCommand.MESSAGE_SUCCESS, DUPLICATE_ACTIVITY_FILE_PATH));
+            CommandResult result =
+                    new CommandResult(String.format(ImportCommand.MESSAGE_SUCCESS, DUPLICATE_ACTIVITY_FILE_PATH));
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(expectedModel, model);
         } catch (CommandException ce) {

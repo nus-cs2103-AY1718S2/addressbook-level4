@@ -10,7 +10,8 @@ students doing exchange from around the world.
 
 === Meera Kanani
 image::meerakanani.jpg[width="150", align="left"]
-{empty}[https://github.com/meerakanani[github]]
+{empty}[https://github.com/meerakanani[github]] [<<meerakanani#, portfolio>>]
+{empty}
 
 Role: Route Logic Developer
 
@@ -18,7 +19,7 @@ Role: Route Logic Developer
 
 === Ng Shi Kang
 image::ngshikang.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/lejolly[github]] [<<ngshikang#, portfolio>>]
 
 Role: User Profile Developer
 
@@ -26,7 +27,7 @@ Role: User Profile Developer
 
 === Matthieu Buot de L'Epine
 image::matthieu.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/yijinl[github]] [<<mattbuot#, portfolio>>]
 
 Role: Communication Developer
 
@@ -34,7 +35,7 @@ Role: Communication Developer
 
 === Minh Ngo
 image::minhngo.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/m133225[github]] [<<#, portfolio>>]
 
 Role: Mapping Visualization Developer
 

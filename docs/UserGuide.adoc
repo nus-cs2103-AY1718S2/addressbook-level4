@@ -185,6 +185,7 @@ Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADD
 * Existing values will be updated to the input values.
 * Replaced display pictures will be removed from storage upon the next start up of Your TA.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
@@ -210,32 +211,7 @@ It also updated her display picture. +
 .Name changed to "Betsy Crower" and All Tags Cleared. +
 image::SecondEdit.png[width="800"]
 
-=== Updating the display picture : `update`
-
-Email a person in the address book. This uses your default mail app to email. +
-Format: `email INDEX`
-
-****
-* Emails the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-Command(s) entered: +
-`list` +
-Lists all people in the address book. Followed by: +
-`email 2` +
-Emails the 2nd person in the address book.
-
-Command(s) entered: +
-`find Betsy` +
-Returns Betsy as a result. Followed by: +
-`email 1` +
-Emails the 1st person in the results of the `find` command, in this case, Betsy.
-
-
+// tag::participation[]
 === Adding Participation Marks : `markPart`
 
 Adds to the participation marks of a person. The maximum limit for participation marks is 100
@@ -261,6 +237,38 @@ Command(s) entered: +
 Returns Betsy as a result. Followed by: +
 `markPart 1 marks/70` +
 Adds 70 marks to the 1st person in the results of the `find` command, in this case, Betsy.
+
+// end::participation[]
+
+// tag::display[]
+
+=== Updating the display picture : `updateDP`
+
+Updates a person's display picture in the address book. +
+Format: `updateDP INDEX dp/[IMAGE PATH]`
+
+****
+* Updates the display picture of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
+****
+
+Examples:
+
+Command(s) entered: +
+`list` +
+Lists all people in the address book. Followed by: +
+`updateDP 2 dp/` +
+Deletes the display picture of the 2nd person, turning it back to the default profile picture.
+
+Command(s) entered: +
+`find Betsy` +
+Returns Betsy as a result. Followed by: +
+`updateDP 1 dp/C:\Users\Betsy\Desktop\betsy.jpg` +
+Updates the display picture of the 1st person, in this case Betsy, to the picture specified in the `dp/` field.
+
+// end::display[]
 
 === Deleting a person : `delete`
 

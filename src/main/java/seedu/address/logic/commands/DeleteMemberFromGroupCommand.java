@@ -80,12 +80,12 @@ public class DeleteMemberFromGroupCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         boolean contains = new Boolean(Boolean.FALSE);
-        for(Group g : groupList) {
+        for (Group g : groupList) {
             if (g.getInformation().equals(groupToDelete.getInformation())) {
                 contains = true;
             }
         }
-        if(contains == false) {
+        if (contains == false) {
             throw new CommandException(MESSAGE_NO_SUCH_GROUP);
         } else {
             personToDelete = lastShownList.get(index.getZeroBased());

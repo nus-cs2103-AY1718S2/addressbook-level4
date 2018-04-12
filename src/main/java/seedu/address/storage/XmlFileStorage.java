@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 
 /**
- * Stores addressbook data and customerstats data in an XML file
+ * Stores addressbook data, customerstats data and menu data in an XML file
  */
 public class XmlFileStorage {
     /**
@@ -60,5 +60,32 @@ public class XmlFileStorage {
             throw new DataConversionException(e);
         }
     }
+    //@@author
+
+    //@@author ZacZequn
+    /**
+     * Saves the given menu data to the specified file.
+     */
+    public static void saveMenuDataToFile(File file, XmlSerializableMenu menu)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, menu);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage());
+        }
+    }
+
+    /**
+     * Returns menu stats in the file or an empty address book
+     */
+    public static XmlSerializableMenu loadMenuDataFromSaveFile(File file) throws DataConversionException,
+            FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableMenu.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
+    //@@author
 
 }

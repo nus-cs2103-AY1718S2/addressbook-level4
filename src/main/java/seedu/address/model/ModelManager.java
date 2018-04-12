@@ -13,6 +13,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CustomerStatsChangedEvent;
+import seedu.address.commons.events.model.MenuChangedEvent;
+import seedu.address.model.dish.exceptions.DishNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -31,25 +33,29 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final CustomerStats customerStats;
     private final FilteredList<Task> filteredTasks;
+    private final Menu menu;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlyCustomerStats customerStats) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlyCustomerStats customerStats,
+                        ReadOnlyMenu menu) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook
                 + " and user prefs " + userPrefs
-                + " and customer stats " + customerStats);
+                + " and customer stats " + customerStats
+                + " and menu " + menu);
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         this.customerStats = new CustomerStats();
         filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
+        this.menu = new Menu();
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs(), new CustomerStats());
+        this(new AddressBook(), new UserPrefs(), new CustomerStats(), new Menu());
     }
 
     @Override
@@ -75,6 +81,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author
+    //@@author ZacZequn
+    /** Raises an event to indicate customer stats has changed */
+    private void indicateMenuChanged() {
+        raise(new MenuChangedEvent(menu));
+    }
+
+    //@@author
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -82,7 +95,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addPerson(Person person) throws DuplicatePersonException {
+    public synchronized void addPerson(Person person) throws DuplicatePersonException, DishNotFoundException {
+        indicateMenuChanged();
+        checkOrder(person);
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
@@ -117,8 +132,12 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(predicate);
     }
 
+    public void checkOrder(Person target)  throws DishNotFoundException {
+        if (menu.get(target.getOrder().toString()) == null) {
+            throw new DishNotFoundException("Dish not available");
+        }
+    }
     //=========== Filtered Person List Accessors =============================================================
-
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
      * {@code addressBook}
@@ -151,5 +170,4 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
 }

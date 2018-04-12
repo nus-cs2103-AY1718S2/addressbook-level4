@@ -18,12 +18,21 @@ public class Dish {
 
 
     /**
-     * Every field must be present and not null.
+     * If we know the name and price.
      */
     public Dish(Name name, Price price) {
         requireAllNonNull(name, price);
         this.name = name;
         this.price = price;
+    }
+
+    /**
+     * If we only know the name. Only used for testing purpose
+     */
+    public Dish(Name name) {
+        requireAllNonNull(name);
+        this.name = name;
+        this.price = new Price("3");
     }
 
     public Name getName() {

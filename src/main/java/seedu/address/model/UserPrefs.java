@@ -14,6 +14,8 @@ public class UserPrefs {
     private String addressBookName = "MyAddressBook";
     private String customerStatsFilePath = "data/customerstats.xml";
     private String customerStatsName = "MyCustomerStats";
+    private String menuFilePath = "data/menu.xml";
+    private String menuName = "MyMenu";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -37,6 +39,12 @@ public class UserPrefs {
 
     //@@author Wuhao-ooo
     public String getCustomerStatsFilePath() {
+        return customerStatsFilePath;
+    }
+
+    //@@author
+    //@@author ZacZequn
+    public String getMenuFilePath() {
         return customerStatsFilePath;
     }
 

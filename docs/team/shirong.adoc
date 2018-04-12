@@ -25,6 +25,7 @@ reInsurance is adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-l
 * *Other contributions*:
 
 ** Project management:
+*** Set up initial team organization and repository.
 *** Managed release `v1.3` on GitHub
 *** Updated all test cases for `v1.3` on GitHub
 *** Created Jar file for `v1.3` to `v1.5` (3 releases) on GitHub

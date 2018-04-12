@@ -13,39 +13,39 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Finds and groups all persons in Fastis whose name contains any of the argument keywords to a specific group.
  * Keyword matching is case sensitive.
  */
-public class AddMembersToGroupCommand extends UndoableCommand {
+public class DeleteMembersFromGroupCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addGroupMember";
-    public static final String COMMAND_ALIAS = "aGM";
+    public static final String COMMAND_WORD = "deleteGroupMember";
+    public static final String COMMAND_ALIAS = "dGM";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds person via index on the most recent list "
-            + "and add to group that contain the specified keywords (case-sensitive).\n"
+            + "and delete from group that contain the specified keywords (case-sensitive).\n"
             + "Parameters: INDEX (must be a positive integer) g/GroupName(Must exist) "
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_GROUP + "CS1010";
 
     public static final String MESSAGE_NO_SUCH_GROUP = "No such group exist.";
-    public static final String MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS = "%1$s added to group %2$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "Person already in Group";
+    public static final String MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS = "%1$s deleted from group %2$s";
     public static final String MESSAGE_GROUP_NOT_FOUND = "No such Group in Fastis";
     public static final String MESSAGE_DUPLICATE_GROUP = "Group already in Group";
+    public static final String MESSAGE_PERSON_NOT_FOUND = "No such Person in Group";
 
     private Index index;
-    private Person personToAdd;
-    private Group groupToAdd;
+    private Person personToDelete;
+    private Group groupToDelete;
     private Group groupAdded;
     private List<Group> groupList;
 
-    public AddMembersToGroupCommand(Index index, Group groupToAdd) {
+    public DeleteMembersFromGroupCommand(Index index, Group groupToDelete) {
         requireNonNull(index);
         this.index = index;
-        this.groupToAdd = groupToAdd;
+        this.groupToDelete = groupToDelete;
     }
 
 
@@ -54,22 +54,22 @@ public class AddMembersToGroupCommand extends UndoableCommand {
         requireNonNull(model);
 
         for (Group group : groupList) {
-            if (groupToAdd.getInformation().equals(group.getInformation())) {
+            if (groupToDelete.getInformation().equals(group.getInformation())) {
                 try {
                     groupAdded = new Group(group.getInformation(), group.getPersonList());
-                    groupAdded.addPerson(personToAdd);
+                    groupAdded.removePerson(personToDelete);
                     model.updateGroup(group, groupAdded);
-                } catch (DuplicatePersonException e) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
                 } catch (DuplicateGroupException e) {
                     throw new CommandException(MESSAGE_DUPLICATE_GROUP);
                 } catch (GroupNotFoundException e) {
                     throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
+                } catch (PersonNotFoundException e) {
+                    throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
                 }
             }
         }
-        return new CommandResult(String.format(MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS, personToAdd.getName(),
-                groupToAdd.getInformation().toString()));
+        return new CommandResult(String.format(MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS, personToDelete.getName(),
+                groupToDelete.getInformation().toString()));
     }
 
     @Override
@@ -79,18 +79,18 @@ public class AddMembersToGroupCommand extends UndoableCommand {
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        if (!groupList.contains(groupToAdd)) {
+        if (!groupList.contains(groupToDelete)) {
             throw new CommandException(MESSAGE_NO_SUCH_GROUP);
         }
-        personToAdd = lastShownList.get(index.getZeroBased());
+        personToDelete = lastShownList.get(index.getZeroBased());
 
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddMembersToGroupCommand // instanceof handles nulls
-                && personToAdd.equals(((AddMembersToGroupCommand) other).personToAdd));
+                || (other instanceof seedu.address.logic.commands.DeleteMembersFromGroupCommand // instanceof handles nulls
+                && personToDelete.equals(((seedu.address.logic.commands.DeleteMembersFromGroupCommand) other).personToDelete));
     }
 
 

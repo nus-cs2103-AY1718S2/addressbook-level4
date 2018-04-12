@@ -2,11 +2,14 @@
 package seedu.address.model.group;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.person.Person;
+import seedu.address.testutil.GroupBuilder;
 import seedu.address.testutil.TypicalGroups;
 import seedu.address.testutil.TypicalPersons;
 
@@ -23,4 +26,12 @@ public class MembersInGroupPredicateTest {
         assertFalse(predicate.test(TypicalPersons.CARL));
     }
 
+    @Test
+    public void test_groupContainMember_returnTrue() {
+        Group group = new GroupBuilder().withPerson("Group F",
+                TypicalPersons.ALICE).build();
+        Person personToTest = TypicalPersons.ALICE;
+        MembersInGroupPredicate predicate = new MembersInGroupPredicate(group);
+        assertTrue(predicate.test(personToTest));
+    }
 }

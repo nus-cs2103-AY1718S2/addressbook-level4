@@ -148,3 +148,13 @@
     -fx-background-color: #3E3E3E;
     -fx-background-radius: 0px;
 }
+
+.status-bar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: derive(#1d1d1d, 30%);
+}
+
+#loginBar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+}

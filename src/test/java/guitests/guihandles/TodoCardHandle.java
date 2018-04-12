@@ -47,4 +47,8 @@ public class TodoCardHandle extends NodeHandle<Node> {
         return deadlineLabel.getText();
     }
 
+    public String getPriority() {
+        return priorityLabel.getText();
+    }
+
 }

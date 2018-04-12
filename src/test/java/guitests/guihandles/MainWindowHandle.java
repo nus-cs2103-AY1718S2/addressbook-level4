@@ -47,7 +47,7 @@ public class MainWindowHandle extends StageHandle {
         return mainMenu;
     }
 
-    public TodoListPanelHandle getTodoListView() {
+    public TodoListPanelHandle getTodoListPanel() {
         return todoListPanel;
     }
     public CalendarViewHandle getCalendarView() {

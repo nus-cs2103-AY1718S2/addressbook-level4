@@ -75,21 +75,7 @@ public class AddMemberToGroupCommandTest {
                 person.getName().toString(), validGroup.getInformation().toString()),
                 commandResult.feedbackToUser);
     }
-
-    @Test
-    public void execute_duplicatedMember_fail() throws Exception {
-        AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded modelStub = new
-                AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded();
-        Group groupAlreadyAdded = getTypicalAddressBook().getGroupList().get(3);
-
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(AddMemberToGroupCommand.MESSAGE_DUPLICATE_PERSON);
-
-        getAddMemberToGroupCommandForGroup(INDEX_FIRST_PERSON, groupAlreadyAdded,
-                modelStub).execute();
-    }
-
-
+    
     @Test
     public void equals() {
         Group groupF = new GroupBuilder().withPerson("Group F", TypicalPersons.ALICE).build();

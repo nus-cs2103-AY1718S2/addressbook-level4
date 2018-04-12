@@ -1,9 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-//import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
@@ -51,7 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Remark remark;
             Cca cca = ParserUtil.parseCca("", "");
             InjuriesHistory injuriesHistory = ParserUtil.parseInjuriesHistory(" ");
-            NextOfKin nextOfKin = ParserUtil.parseNextOfKin("NA","","","");
+            NextOfKin nextOfKin = ParserUtil.parseNextOfKin("NA", "NA", "NA", "NA");
             if (!(argMultimap.getValue(PREFIX_REMARK)).isPresent()) {
                 remark = ParserUtil.parseRemark(" ");
             } else {

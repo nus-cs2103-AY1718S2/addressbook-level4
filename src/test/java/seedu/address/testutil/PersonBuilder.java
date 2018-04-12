@@ -25,10 +25,13 @@ public class PersonBuilder {
     public static final String[] DEFAULT_SUBJECTS = {"English A1",  "EMath A1", "Hist A1", "HTamil A1",
                                                      "Chem A1", "Phy A1"};
     public static final String DEFAULT_REMARK = " ";
-    public static final String DEFAULT_CCA = " ";
+    public static final String DEFAULT_CCA = "Basketball";
+    public static final String DEFAULT_CCA_POSITION = "Member";
     public static final String DEFAULT_INJURIES_HISTORY = " ";
     public static final String DEFAULT_NAME_OF_KIN = "Betty";
-    public static final String DEFAULT_CCA_POSITION = "Member";
+    public static final String DEFAULT_PHONE = "98763451";
+    public static final String DEFAULT_EMAIL = "betty@gmail.com";
+    public static final String DEFAULT_RELATIONSHIP = "Mother";
 
     private Name name;
     private Nric nric;
@@ -47,7 +50,7 @@ public class PersonBuilder {
         remark = new Remark(DEFAULT_REMARK);
         cca = new Cca(DEFAULT_CCA, DEFAULT_CCA_POSITION);
         injuriesHistory = new InjuriesHistory(DEFAULT_INJURIES_HISTORY);
-        nextOfKin = new NextOfKin(DEFAULT_NAME_OF_KIN);
+        nextOfKin = new NextOfKin(DEFAULT_NAME_OF_KIN, DEFAULT_PHONE, DEFAULT_EMAIL, DEFAULT_RELATIONSHIP);
     }
 
     /**
@@ -123,8 +126,8 @@ public class PersonBuilder {
     /**
      * Sets the {@code NextOfKin} of the {@code Person} that we are building.
      */
-    public PersonBuilder withNameOfKin(String nameOfKin) {
-        this.nextOfKin = new NextOfKin(nameOfKin);
+    public PersonBuilder withNameOfKin(String nameOfKin, String phone, String email, String remark) {
+        this.nextOfKin = new NextOfKin(nameOfKin, phone, email, remark);
         return this;
     }
 

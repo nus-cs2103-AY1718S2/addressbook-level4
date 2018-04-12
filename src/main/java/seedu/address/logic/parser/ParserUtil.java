@@ -375,7 +375,8 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
-    public static NextOfKin parseNextOfKin(String name, String phone, String email, String remark) throws IllegalValueException {
+    public static NextOfKin parseNextOfKin(String name, String phone, String email, String remark)
+            throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!NextOfKin.isValidName(trimmedName)) {

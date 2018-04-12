@@ -64,7 +64,7 @@ public class StreamCommandTest {
         assertExecutionSuccess(INDEX_FIRST_PERSON, 4);
         assertExecutionSuccess(lastPersonIndex, 5);
     }
-    @Test    
+    @Test
     public void equals() {
         StreamCommand streamFirstCommand = new StreamCommand(INDEX_FIRST_PERSON, 1);
         StreamCommand streamSecondCommand = new StreamCommand(INDEX_SECOND_PERSON, 1);

@@ -1,8 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
@@ -25,23 +27,29 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
-//@@author chuakunhong
-
 /**
  * Edits the details of an existing person in the address book.
  */
-public class AddCcaCommand extends UndoableCommand {
+public class NextOfKinCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addcca";
+    public static final String COMMAND_WORD = "addnok";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the CCA and the position "
-            + "to the student that you want. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the Next of Kin details of the person identified"
+            + " "
+            + "by the index number used in the last person listing. "
+            + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_CCA + "CCA " + PREFIX_CCA_POSITION + "POSITION\n"
+            + PREFIX_NAME + "NAME "
+            + PREFIX_PHONE + "PHONE "
+            + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_REMARK + "REMARK\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_CCA + "Basketball " + PREFIX_CCA_POSITION + "Member\n";
+            + PREFIX_NAME + "John "
+            + PREFIX_PHONE + "96784213 "
+            + PREFIX_EMAIL + "john@gmail.com "
+            + PREFIX_REMARK + "Father";
 
-    public static final String MESSAGE_REMARK_PERSON_SUCCESS = "CCA added: %1$s\nPerson: %2$s";
+    public static final String MESSAGE_ADD_NOK_SUCCESS = "Next of Kin: %1$s\nPerson: %2$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
@@ -55,7 +63,7 @@ public class AddCcaCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public AddCcaCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public NextOfKinCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
@@ -75,8 +83,8 @@ public class AddCcaCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editPersonDescriptor.getCca().get(),
-                personToEdit.getName()));
+        return new CommandResult(String.format(MESSAGE_ADD_NOK_SUCCESS, editedPerson.getNextOfKin(),
+                                                editedPerson.getName()));
     }
 
     @Override
@@ -106,9 +114,7 @@ public class AddCcaCommand extends UndoableCommand {
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                 .orElse(personToEdit.getInjuriesHistory());
-        NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin()
-                .orElse(personToEdit.getNextOfKin());
-
+        NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
                             updatedInjuriesHistory, updatedNextOfKin);
     }
@@ -121,16 +127,14 @@ public class AddCcaCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddCcaCommand)) {
+        if (!(other instanceof NextOfKinCommand)) {
             return false;
         }
 
         // state check
-        AddCcaCommand e = (AddCcaCommand) other;
+        NextOfKinCommand e = (NextOfKinCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);
     }
-
-    //@@author
 }

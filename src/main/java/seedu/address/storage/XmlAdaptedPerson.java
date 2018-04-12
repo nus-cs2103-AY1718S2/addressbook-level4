@@ -43,6 +43,8 @@ public class XmlAdaptedPerson {
     @XmlElement
     private String injuriesHistory;
     @XmlElement
+    private String nextOfKin;
+    @XmlElement
     private String nameOfKin;
     @XmlElement
     private String phone;
@@ -61,8 +63,7 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects,
-                            String remark, String cca, String injuriesHistory, String nameOfKin, String phone,
-                            String email, String remarkOfKin) {
+                            String remark, String cca, String injuriesHistory, String nextOfKin) {
         this.name = name;
         this.nric = nric;
         this.remark = remark;
@@ -74,6 +75,7 @@ public class XmlAdaptedPerson {
         }
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
+        this.nextOfKin = nextOfKin;
         this.nameOfKin = nameOfKin;
         this.phone = phone;
         this.email = email;

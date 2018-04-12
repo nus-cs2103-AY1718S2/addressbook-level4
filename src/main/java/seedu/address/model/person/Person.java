@@ -407,10 +407,10 @@ public class Person {
         builder.append(" Subjects: ");
         getSubjects().forEach(builder::append);
         builder.append(" Remarks: ")
-               .append(getRemark());
+                .append(getRemark());
         builder.append(" Cca: ").append(getCca());
         builder.append(" InjuriesHistory: ").append(getInjuriesHistory());
-        builder.append("  Test: ").append(getNextOfKin());
+        builder.append(" NameOfKin:").append(getNextOfKin());
         return builder.toString();
     }
 

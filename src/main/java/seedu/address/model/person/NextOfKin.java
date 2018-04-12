@@ -91,7 +91,7 @@ public class NextOfKin {
 
     @Override
     public String toString() {
-        return fullName;
+        return (fullName + " Phone: " + phone + " Email:" + email + " Remark:" + remark);
     }
 
     @Override

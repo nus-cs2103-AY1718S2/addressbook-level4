@@ -8,10 +8,9 @@ import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
-
-import com.google.gson.JsonObject;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
@@ -24,6 +23,7 @@ import seedu.address.model.ReadOnlyCoinBook;
 import seedu.address.model.ReadOnlyRuleBook;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.NameContainsKeywordsPredicate;
+import seedu.address.model.coin.Price;
 import seedu.address.model.coin.exceptions.CoinNotFoundException;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
 import seedu.address.model.rule.Rule;
@@ -180,7 +180,7 @@ public class CommandTestUtil {
 
         //@@author laichengyu
         @Override
-        public void syncAll(JsonObject newData)
+        public void syncAll(HashMap<String, Price> newPriceMetrics)
                 throws DuplicateCoinException, CoinNotFoundException {
             fail("This method should not be called.");
         }

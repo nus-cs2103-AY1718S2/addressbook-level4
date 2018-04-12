@@ -9,6 +9,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * The API of the Model component.
@@ -61,6 +62,9 @@ public interface Model {
 
     /** Adds the given task */
     void addTask(Task task) throws DuplicateTaskException;
+
+    /** Deletes the given task */
+    void deleteTask(Task task) throws TaskNotFoundException;
 
     /**
      * Updates the filter of the filtered task list to filter by the given {@code predicate}.

@@ -46,7 +46,6 @@ public class AddOrderCommand extends UndoableCommand {
         toAdd = task;
     }
 
-
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);

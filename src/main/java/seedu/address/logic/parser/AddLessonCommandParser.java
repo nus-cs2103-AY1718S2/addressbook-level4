@@ -16,9 +16,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.lesson.Day;
 import seedu.address.model.lesson.Time;
 
-
+//@@author demitycho
 /**
- * @@author demitycho
  * Parses input arguments and creates a new AddCommandCommand object
  */
 public class AddLessonCommandParser implements Parser<AddLessonCommand> {
@@ -65,7 +64,6 @@ public class AddLessonCommandParser implements Parser<AddLessonCommand> {
      * {@code ArgumentMultimap}.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        System.out.println(argumentMultimap);
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 

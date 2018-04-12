@@ -3,8 +3,8 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowScheduleEvent;
 
+//@@author demitycho
 /**
- * @@author demitycho
  * Displays the user's schedule.
  */
 public class ScheduleCommand extends Command {
@@ -20,9 +20,8 @@ public class ScheduleCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        String printableSchedule = model.printSchedule();
         EventsCenter.getInstance().post(
                 new ShowScheduleEvent(model.getSchedule(), model.getAddressBook()));
-        return new CommandResult(MESSAGE_SUCCESS + printableSchedule);
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }

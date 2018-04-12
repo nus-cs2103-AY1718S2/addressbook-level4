@@ -15,38 +15,60 @@
 .root * {
     base: black;
     light: white;
+    primary: #71b280;
+    secondary: #134e5e;
     -fx-background-color: transparent;
-    -fx-text-fill: light;
+    -fx-text-fill: black;
     -fx-font-size: 13px;
     -fx-font-family: "Montserrat Light", sans-serif;
 }
 
 #details {
-    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%,#020b02, #595200);
+    -fx-background-color: linear-gradient(to right, #134e5e, #71b280);
+}
+#studentListView {
+    -fx-background-color: white;
+
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.9) , 15, 0.0 , 0 , 2 );
 }
 
 #commandBoxPlaceholder {
-    -fx-border-color: transparent transparent light transparent;
+    -fx-border-color: transparent transparent white transparent;
+
 }
 
 #commandTypeLabel {
     -fx-font-size: 20px;
     -fx-text-fill: white;
+
 }
 
+.context-menu {
+    -fx-background-color: derive(secondary, 30%);
+}
+
+.context-menu .label {
+    -fx-text-fill: white;
+}
 #commandTextField {
     -fx-font-family: "ProFontWindows", "Courier New";
     -fx-font-size: 18pt;
     -fx-text-fill: white;
+
 }
 
-#resultDisplay {
+.result-display {
     -fx-font-size: 15pt;
+    -fx-text-fill: white;
 }
 
 /*
  * Student panels
  */
+.list-cell {
+    -fx-border-color: transparent transparent lightgrey transparent;
+    -fx-border-width: 3;
+}
 .list-cell:filled:selected {
     -fx-background-color: rgba(0, 0, 0, 0.6);
 }
@@ -59,12 +81,12 @@
  */
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(darkgrey, 20%);
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-background-insets: 3;
+    -fx-background-color: derive(lightgray, 80%);
+    -fx-background-insets: 1;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
@@ -77,22 +99,46 @@
 }
 
 .scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
+    -fx-padding: 1 4 1 4;
 }
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
+    -fx-padding: 4 1 4 1;
 }
 
+#infoPanel {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.8) , 15, 0.0 , 0 , 2 );
+}
 
+.pane-with-border {
+
+}
 /**
  * Menu Bar
  */
 
-#menuBar * {
+#menuBar {
+    -fx-background-color: linear-gradient(to right, #134e5e, #71b280);
+    -fx-text-fill: white;
+    -fx-border-color: transparent transparent lightgray transparent;
+
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container {
     -fx-background-color: black;
+}
+
+.anchor-pane{
     -fx-text-fill: white;
 }
+
 
 /*For Tags*/
 #tags {
@@ -157,7 +203,7 @@
     -fx-background-color: olive;
 }
 
-.cell_big_label {
-    -fx-font-size: 25pt;
-    -fx-effect: dropshadow(gaussian, base, 10, 0, 0, 2);
+.test {
+    -fx-font-size: 25px !important;
+
 }

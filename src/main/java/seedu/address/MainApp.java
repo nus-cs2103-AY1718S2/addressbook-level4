@@ -69,6 +69,8 @@ public class MainApp extends Application {
         ScheduleStorage scheduleStorage = new XmlScheduleStorage(userPrefs.getScheduleFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage, scheduleStorage);
 
+        storage.setupViewFiles();
+
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);

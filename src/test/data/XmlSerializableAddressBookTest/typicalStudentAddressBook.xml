@@ -10,7 +10,7 @@
         <address>123, Jurong West Ave 6, #08-111</address>
         <tagged>friends</tagged>
 		<programmingLanguage>Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
         <dashboard/>
             <milestoneList/>
@@ -28,7 +28,7 @@
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
 		<programmingLanguage>Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
         <dashboard>
             <milestoneList>
@@ -58,7 +58,7 @@
         <email>heinz@example.com</email>
         <address>wall street</address>
 		<programmingLanguage>Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
         <dashboard/>
             <milestoneList/>
@@ -76,7 +76,7 @@
         <email>cornelia@example.com</email>
         <address>10th street</address>
 		<programmingLanguage>Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
         <dashboard/>
             <milestoneList/>
@@ -94,7 +94,7 @@
         <email>werner@example.com</email>
         <address>michegan ave</address>
 		<programmingLanguage>Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
         <dashboard/>
             <milestoneList/>
@@ -112,7 +112,7 @@
         <email>lydia@example.com</email>
         <address>little tokyo</address>
 		<programmingLanguage>Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
         <dashboard/>
             <milestoneList/>
@@ -130,7 +130,7 @@
         <email>anna@example.com</email>
         <address>4th street</address>
 		<programmingLanguage>Java</programmingLanguage>
-		<profilePicturePath>profile_photo_placeholder.png</profilePicturePath>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
         <dashboard/>
             <milestoneList/>

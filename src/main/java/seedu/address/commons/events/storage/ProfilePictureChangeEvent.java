@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
-
+//@@author samuelloh
 /**
  * Indicates a change in the profile picture of the student.
  */
@@ -37,3 +37,4 @@ public class ProfilePictureChangeEvent extends BaseEvent {
         return "Changing Url of profile picture for student: " + student.toString();
     }
 }
+//@@author

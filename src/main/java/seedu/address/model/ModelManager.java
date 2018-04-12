@@ -85,10 +85,10 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteStudent(Student target)
             throws StudentNotFoundException, LessonNotFoundException {
-        addressBook.removeStudent(target);
-        schedule.removeStudentLesson(target);
-        indicateAddressBookChanged();
+        schedule.removeStudentLessons(target);
         indicateScheduleChanged();
+        addressBook.removeStudent(target);
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -97,7 +97,6 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
         indicateAddressBookChanged();
     }
-
 
 
     @Override
@@ -141,10 +140,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Schedule getSchedule() {
+    public ReadOnlySchedule getSchedule() {
         return schedule;
     }
 
+    //@@author samuelloh
     /**
      * Displays Student details on a browser panel in the UI
      * @param target
@@ -172,11 +172,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public String printSchedule() {
-        return schedule.print(addressBook);
-    }
-
-    @Override
     public void updateProfilePicture (Student target, Student editedStudent, Student finalEditedStudent)
             throws DuplicateStudentException, StudentNotFoundException {
 
@@ -193,6 +188,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateProfilePictureChange(Student target) {
         raise(new ProfilePictureChangeEvent(target));
     }
+    //@@author
 
     //=========== Filtered Student List Accessors =============================================================
 

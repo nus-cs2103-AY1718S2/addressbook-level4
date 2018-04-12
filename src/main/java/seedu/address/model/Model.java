@@ -65,9 +65,7 @@ public interface Model {
 
     void deleteLesson(Lesson target) throws LessonNotFoundException;
 
-    Schedule getSchedule();
-
-    String printSchedule();
+    ReadOnlySchedule getSchedule();
 
     void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException;
 

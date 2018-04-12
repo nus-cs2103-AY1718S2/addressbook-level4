@@ -13,9 +13,8 @@ import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
-
+//@@author demitycho
 /**
- * @@author demitycho
  * Wraps all data at the schedule level
  * Duplicates are not allowed (by .equals comparison)
  */
@@ -39,7 +38,8 @@ public class Schedule implements ReadOnlySchedule {
      * @param lessonToBeAdded
      * @throws InvalidLessonTimeSlotException if invalid
      */
-    public void addLesson(Lesson lessonToBeAdded) throws InvalidLessonTimeSlotException {
+    public void addLesson(Lesson lessonToBeAdded)
+            throws InvalidLessonTimeSlotException, DuplicateLessonException {
         if (!isValidSlot(lessonToBeAdded)) {
             throw new InvalidLessonTimeSlotException();
         }
@@ -72,25 +72,7 @@ public class Schedule implements ReadOnlySchedule {
     }
 
     /**
-     * Prints the schedule as a list
-     */
-    public String print(AddressBook addressBook) {
-        addressBook.printAll();
-        int index = 1;
-        Student student;
-        String finalMessage = "\n" + this.toString();
-        System.out.println(this.toString());
-        printAll();
-        for (Lesson l : lessons) {
-            student = addressBook.findStudentByKey(l.getUniqueKey());
-            String message = index++ + " " + student.getName() +  " " + l.toString();
-            finalMessage = finalMessage + "\n" + message;
-            System.out.println(message);
-        }
-        return finalMessage;
-    }
-    /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code Schedule} with {@code newData}.
      */
     public void resetData(ReadOnlySchedule newData) {
         requireNonNull(newData);
@@ -120,16 +102,13 @@ public class Schedule implements ReadOnlySchedule {
     }
 
     /**
-     * Deletes all Lessons associated with a Student {@code UniqueKey key}
+     * Deletes all Lessons in LessonList associated with a Student {@code UniqueKey key}
      * @param target
      * @throws LessonNotFoundException
      */
-    public void removeStudentLesson(Student target) throws LessonNotFoundException {
-        for (Lesson lesson : lessons) {
-            if (lesson.getUniqueKey().equals(target.getUniqueKey())) {
-                removeLesson(lesson);
-            }
-        }
+    public void removeStudentLessons(Student target) throws LessonNotFoundException {
+        lessons.removeStudentLessons(target);
+
     }
 
 

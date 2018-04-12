@@ -44,7 +44,7 @@ public class BrowserPanel extends UiPart<Region> {
     private static final String TWITTER_TAB_ID = "twitterTab";
     private static final String FUNCTION_ADD = "add";
     private static final String FUNCTION_REMOVE = "remove";
-    
+
     private URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + "default.html");
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());

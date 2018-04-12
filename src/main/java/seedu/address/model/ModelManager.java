@@ -137,7 +137,6 @@ public class ModelManager extends ComponentManager implements Model {
             throw new DishNotFoundException("Dish not available");
         }
     }
-    
     //=========== Filtered Person List Accessors =============================================================
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of

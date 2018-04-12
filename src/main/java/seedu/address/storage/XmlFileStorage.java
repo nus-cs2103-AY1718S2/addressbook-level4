@@ -31,6 +31,7 @@ public class XmlFileStorage {
     public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
             IOException {
         try {
+            EncryptionUtil.initialiseKey();
             EncryptionUtil.decrypt(file);
             return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
         } catch (JAXBException e) {

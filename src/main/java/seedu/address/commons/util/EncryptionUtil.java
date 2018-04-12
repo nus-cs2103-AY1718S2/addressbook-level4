@@ -6,25 +6,53 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
 import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+
 import seedu.address.commons.core.LogsCenter;
 
 /**
  * A Class that encrypts and decrypts XML files stored on the hard disk.
  *
  */
-//@@author raymond511 - reused from my own CS2105 assignment
+//@@author raymond511
 public class EncryptionUtil {
     /**
      * The standard version of the JRE/JDK are under export restrictions.
      * That also includes that some cryptographic algorithms are not allowed to be shipped in the standard version.
      * Replace files in library with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 8
      */
-
     private static final Logger logger = LogsCenter.getLogger(EncryptionUtil.class);
+    private SecretKey key;
+    private final static Cipher ecipher = null;
+    private final static Cipher dcipher = null;
+    private static final String password = "encryptionisimportant";
+
+    /**
+     * Initialises encrypt and decrypt keys using AES encryption
+     */
+    public static void initialiseKey() {
+        SecretKeySpec key = null;
+        try {
+            MessageDigest message = MessageDigest.getInstance("SHA-256");
+            message.update(password.getBytes("UTF-8"));
+            byte[] keynow = message.digest();
+            key = new SecretKeySpec(keynow, 0, 16, "AES");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+            keyGenerator.init(128);
+            ecipher.init(Cipher.ENCRYPT_MODE, key);
+            dcipher.init(Cipher.DECRYPT_MODE, key);
+        } catch (GeneralSecurityException gse) {
+            logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
+        } catch (UnsupportedEncodingException use) {
+            logger.info("Encoding Unsupported " + use.getMessage());
+        }
+    }
 
     /**
      * Encrypts XML file
@@ -32,15 +60,9 @@ public class EncryptionUtil {
      * @param file path of the file to be encrypted
      * @throws IOException if file could not be found
      */
-    public void encrypt(File file) throws IOException {
-        SecretKey encryptKey = null;
+    public static void encrypt(File file) throws IOException {
         try {
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            encryptKey = initSessionKey();
-            cipher.init(Cipher.ENCRYPT_MODE, encryptKey);
-            fileToBytes(cipher, file);
-        } catch (GeneralSecurityException gse) {
-            logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
+            fileToBytes(ecipher, file);
         } catch (UnsupportedEncodingException use) {
             logger.info("Encoding Unsupported " + use.getMessage());
         }
@@ -52,14 +74,9 @@ public class EncryptionUtil {
      * @param file path of the file to be decrypted
      * @throws IOException if file could not be found
      */
-    public void decrypt(File file) throws IOException {
+    public static void decrypt(File file) throws IOException {
         try {
-            SecretKey readKey = initSessionKey();
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, readKey);
-            fileToBytes(cipher, file);
-        } catch (GeneralSecurityException gse) {
-            logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
+            fileToBytes(dcipher, file);
         } catch (UnsupportedEncodingException use) {
             logger.info("Encoding Unsupported " + use.getMessage());
         }
@@ -102,22 +119,5 @@ public class EncryptionUtil {
                 logger.info("File streams could not be closed  " + ioe.getMessage());
             }
         }
-    }
-
-    /**
-     * Method to generate a SecretKey using the password provided
-     *
-     * @return SecretKey generated using AES encryption
-     */
-    public SecretKey initSessionKey() {
-        SecretKey sessionKey = null;
-        try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-            keyGenerator.init(128);
-            sessionKey = keyGenerator.generateKey();
-        } catch (NoSuchAlgorithmException e) {
-            logger.info("Error: params is inappropriate for this key generator");
-        }
-        return sessionKey;
     }
 }

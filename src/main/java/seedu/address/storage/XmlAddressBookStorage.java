@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.EncryptionUtil;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -53,8 +54,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         }
         EncryptionUtil.decrypt(addressBookFile);
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
-        EncryptionUtil.encrypt(addressBookFile);
-
         try {
             return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {
@@ -78,9 +77,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        EncryptionUtil.decrypt(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
-        EncryptionUtil.encrypt(file);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class GroupBuilder {
         this.information = new Information(information);
         personList = new UniquePersonList();
         try {
-            for(Person person : personsToAdd) {
+            for (Person person : personsToAdd) {
                 personList.add(person);
             }
         } catch (DuplicatePersonException dpe) {

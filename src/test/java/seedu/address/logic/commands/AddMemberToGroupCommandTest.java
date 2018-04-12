@@ -45,10 +45,10 @@ import seedu.address.testutil.TypicalPersons;
 
 public class AddMemberToGroupCommandTest {
 
-    private Model model;
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private Model model;
 
     @Before
     public void setUp() {

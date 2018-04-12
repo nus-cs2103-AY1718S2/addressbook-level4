@@ -30,6 +30,7 @@ public class DeleteGroupCommandSystemTest extends AddressBookSystemTest {
     public void deleteGroup() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
+
         /* Case: delete the first group in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
         String command = "  " + DeleteGroupCommand.COMMAND_WORD + "  " + "Group A" + "  ";
@@ -103,7 +104,7 @@ public class DeleteGroupCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_GROUP_SUCCESS,
                 deletedGroup.getInformation().toString());
         assertCommandSuccess(DeleteGroupCommand.COMMAND_WORD + " "
-                        + "Group C", expectedModel, expectedResultMessage);
+                        + "Group F", expectedModel, expectedResultMessage);
     }
 
     /**

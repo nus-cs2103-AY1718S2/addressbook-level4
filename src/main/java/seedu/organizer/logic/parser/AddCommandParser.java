@@ -1,6 +1,7 @@
 package seedu.organizer.logic.parser;
 
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.organizer.commons.core.Messages.MESSAGE_REPEATED_SAME_PREFIXES;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
@@ -42,6 +43,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
+        if (arePrefixesRepeated(argMultimap, PREFIX_NAME, PREFIX_DEADLINE, PREFIX_DESCRIPTION, PREFIX_PRIORITY)) {
+            throw new ParseException(String.format(MESSAGE_REPEATED_SAME_PREFIXES, AddCommand.MESSAGE_USAGE));
+        }
+
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
             //@@author dominickenn
@@ -75,6 +80,14 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    //@author guekling
+    /**
+     * Returns true if any of the prefixes contains multiple values in the given {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesRepeated(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).anyMatch(prefix -> (argumentMultimap.getSize(prefix) > 1));
     }
 
 }

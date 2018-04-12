@@ -1,6 +1,7 @@
 package seedu.organizer.logic.parser;
 
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.organizer.commons.core.Messages.MESSAGE_REPEATED_SAME_PREFIXES;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ANSWER;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_QUESTION;
 import static seedu.organizer.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -25,6 +26,8 @@ public class AddQuestionAnswerCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddQuestionAnswerCommand.MESSAGE_USAGE);
+    private static final String MESSAGE_MULTIPLE_SAME_PREFIXES =
+            String.format(MESSAGE_REPEATED_SAME_PREFIXES, AddQuestionAnswerCommand.MESSAGE_USAGE);
 
     private Model model = new ModelManager();
 
@@ -94,5 +97,18 @@ public class AddQuestionAnswerCommandParserTest {
                 + validQuestion + " " + validAnswer,
                 new AddQuestionAnswerCommand("valid question", "valid answer"));
     }
+
+    //@@author guekling
+    @Test
+    public void parse_multipleSamePrefixes_failure() {
+        // repeated username prefix
+        assertParseFailure(parser, " " + validQuestion + " " + validQuestion + " " + validAnswer,
+            MESSAGE_MULTIPLE_SAME_PREFIXES);
+
+        // repeated password prefix
+        assertParseFailure(parser, " " + validQuestion + " " + validAnswer + " " + validAnswer,
+            MESSAGE_MULTIPLE_SAME_PREFIXES);
+    }
+    //@@author
 }
 

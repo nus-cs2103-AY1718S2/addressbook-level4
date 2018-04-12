@@ -48,6 +48,12 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIENDS = "friends";
     public static final String VALID_TAG_UNUSED = "unused"; // do not use this tag when creating a task
 
+    public static final String VALID_USERNAME_BOBBY = "Bobby";
+    public static final String VALID_USERNAME_JOSHUA = "Joshua";
+    public static final String VALID_PASSWORD_BOBBY = "password";
+    public static final String VALID_PASSWORD_JOSHUA = "1234567";
+    public static final String VALID_ANSWER = "answer";
+
     public static final String NAME_DESC_EXAM = " " + PREFIX_NAME + VALID_NAME_EXAM;
     public static final String NAME_DESC_STUDY = " " + PREFIX_NAME + VALID_NAME_STUDY;
     public static final String NAME_DESC_REVISION = " " + PREFIX_NAME + VALID_NAME_REVISION;

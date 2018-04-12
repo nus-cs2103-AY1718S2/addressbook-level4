@@ -1,6 +1,7 @@
 package seedu.organizer.logic.parser;
 
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.organizer.commons.core.Messages.MESSAGE_REPEATED_SAME_PREFIXES;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_USERNAME;
 
@@ -33,6 +34,10 @@ public class SignUpCommandParser implements Parser<SignUpCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SignUpCommand.MESSAGE_USAGE));
         }
 
+        if (arePrefixesRepeated(argMultimap, PREFIX_USERNAME, PREFIX_PASSWORD)) {
+            throw new ParseException(String.format(MESSAGE_REPEATED_SAME_PREFIXES, SignUpCommand.MESSAGE_USAGE));
+        }
+
         try {
             String username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
             String password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD)).get();
@@ -50,4 +55,13 @@ public class SignUpCommandParser implements Parser<SignUpCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
+
+    //@@author guekling
+    /**
+     * Returns true if any of the prefixes contains multiple values in the given {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesRepeated(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).anyMatch(prefix -> (argumentMultimap.getSize(prefix) > 1));
+    }
+    //@@author
 }

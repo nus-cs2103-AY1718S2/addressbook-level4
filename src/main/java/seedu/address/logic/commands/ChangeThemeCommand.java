@@ -22,9 +22,8 @@ public class ChangeThemeCommand extends UndoableCommand {
 
     public static final String[] THEME_NAMES = {"dark", "bright"};
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Change the theme of the application. "
-            + "Parameters: " + COMMAND_WORD + " "
-            + "[THEME]\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes the theme of the application.\n"
+            + "Parameters: " + "THEME\n"
             + "Example: " + COMMAND_WORD + " dark";
 
     public static final String MESSAGE_INVALID_THEME_NAME = "%1$s theme is not supported. "

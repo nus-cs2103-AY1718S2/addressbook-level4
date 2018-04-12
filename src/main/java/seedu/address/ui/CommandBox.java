@@ -23,12 +23,19 @@ import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPhotoCommand;
+import seedu.address.logic.commands.AuthenCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
+import seedu.address.logic.commands.DismissCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailAllCommand;
+import seedu.address.logic.commands.EmailCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportEmployeesCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -64,7 +71,9 @@ public class CommandBox extends UiPart<Region> {
         ChangeThemeCommand.COMMAND_WORD, DeleteEventCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
         HelpCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD,
         MyCalendarCommand.COMMAND_WORD, TodoListCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD,
-        NotiCommand.COMMAND_WORD};
+        NotiCommand.COMMAND_WORD, DismissCommand.COMMAND_WORD, AuthenCommand.COMMAND_WORD, AddPhotoCommand.COMMAND_WORD,
+        EmailCommand.COMMAND_WORD, EmailAllCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD,
+        ExportEmployeesCommand.COMMAND_WORD};
     private static final String[] allCommandsUsage = {AddCommand.MESSAGE_USAGE, EditCommand.MESSAGE_USAGE,
         RateCommand.MESSAGE_USAGE, ReviewCommand.MESSAGE_USAGE, SelectCommand.MESSAGE_USAGE,
         DeleteCommand.MESSAGE_USAGE, FindCommand.MESSAGE_USAGE, TestAddEventCommand.MESSAGE_USAGE,
@@ -72,7 +81,9 @@ public class CommandBox extends UiPart<Region> {
         SetPasswordCommand.MESSAGE_USAGE, ChangeThemeCommand.MESSAGE_USAGE, DeleteEventCommand.MESSAGE_USAGE,
         ListCommand.MESSAGE_USAGE, HelpCommand.MESSAGE_USAGE, UndoCommand.MESSAGE_USAGE, RedoCommand.MESSAGE_USAGE,
         HistoryCommand.MESSAGE_USAGE, MyCalendarCommand.MESSAGE_USAGE, TodoListCommand.MESSAGE_USAGE,
-        ClearCommand.MESSAGE_USAGE, NotiCommand.MESSAGE_USAGE};
+        ClearCommand.MESSAGE_USAGE, NotiCommand.MESSAGE_USAGE, DismissCommand.MESSAGE_USAGE,
+        AuthenCommand.MESSAGE_USAGE, AddPhotoCommand.MESSAGE_USAGE, EmailCommand.MESSAGE_USAGE,
+        EmailAllCommand.MESSAGE_USAGE, ExitCommand.MESSAGE_USAGE, ExportEmployeesCommand.MESSAGE_USAGE};
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;

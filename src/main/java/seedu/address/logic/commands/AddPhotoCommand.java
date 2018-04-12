@@ -38,7 +38,7 @@ public class AddPhotoCommand extends UndoableCommand {
     public static final String IMAGE_FOLDER = "data/personphoto/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a photo to an employee.\n"
-            + "Choose a photo in the file chooser. Acceptable photo file type are jpg, jprg, png, bmp."
+            + "Choose a photo in the file chooser. Acceptable photo file type are jpg, jprg, png, bmp.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 

@@ -246,9 +246,9 @@ public abstract class AddressBookSystemTest {
 
     //@@author emer7
     /**
-     * Asserts that detailPanel is empty and selected card in the person list changed.
+     * Asserts that detailPanel is empty and the previously selected card is now deselected.
      * @see DetailPanelHandle#isFieldsEmpty()
-     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     * @see PersonListPanelHandle#isAnyCardSelected()
      */
     protected void assertSelectedCardDeselectedDetailEmpty() {
         assertTrue(getDetailPanel().isFieldsEmpty());

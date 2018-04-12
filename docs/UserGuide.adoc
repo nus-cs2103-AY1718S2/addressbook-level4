@@ -335,6 +335,11 @@ Restores _EduBuddy_ to the state before the previous _undoable_ command was exec
 Format: `undo` +
 Abbreviation Format: `u`
 
+[IMPORTANT]
+====
+Use select command after undo command to update Student Profile Page.
+====
+
 [NOTE]
 ====
 Undoable commands: those commands that modify EduBuddy's content (`add`, `delete`, `edit` and `clear`).

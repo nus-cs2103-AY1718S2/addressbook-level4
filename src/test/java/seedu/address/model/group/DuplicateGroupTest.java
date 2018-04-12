@@ -20,6 +20,5 @@ public class DuplicateGroupTest {
         UniqueGroupList groupList = TypicalGroups.getTypicalGroupsList();
         thrown.expect(GroupNotFoundException.class);
         groupList.remove(groupToDelete);
-
     }
 }

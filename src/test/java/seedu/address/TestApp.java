@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.function.Supplier;
 
+import javafx.application.Platform;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
@@ -53,8 +54,7 @@ public class TestApp extends MainApp {
 
     @Override
     public void init() throws Exception {
-        setIsTest(true);
-        super.init();
+        super.runTestInitSequence();
     }
 
 
@@ -109,6 +109,18 @@ public class TestApp extends MainApp {
     @Override
     public void start(Stage primaryStage) {
         ui.start(primaryStage);
+    }
+
+    @Override
+    public void stop() {
+        ui.stop();
+        try {
+            storage.saveUserPrefs(userPrefs);
+        } catch (IOException e) {
+            ;
+        }
+        Platform.exit();
+        System.exit(0);
     }
 
     public static void main(String[] args) {

@@ -19,19 +19,26 @@ By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-Codeducator is a desktop address book and scheduling application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Codeducator is a desktop address book and scheduling application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. +
+
+You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. +
+Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer. You can download the latest Java release https://java.com/en/download/[here].
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `W09-B3-Coeducator.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Codeducator app.
+
+[TIP]
+You may use create a folder called `Codeducator` on your `Desktop`, or in `My Documents` folder
+
+.  Double-click the file to start the app. You should see the application open in a appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
@@ -49,18 +56,45 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [[Features]]
 == Features
 
+Codeducator has many awesome features to help out coding tutors, it may be pretty scary for a first time user. +
+
+Don't fret! This user guide will show you the many simple commands that will help you go from zero to a Codeducator hero! +
+
+The subsequent sections of the user guide provides a step by step walk-through of all the commands that Codeducator has to offer.
+
+
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Words in `UPPER_CASE` are the _parameters_ to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in square brackets are _optional_ e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times. In addition, the item be left out completely. e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend` or `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
+
+Got it? Good! Let's get started on Codeducator! +
+
 === Basic Commands
 ==== Viewing help : `help`
 
+Feeling lost and not sure what to do? Can't remember the usage of the command? +
+You can type the help command and Codeducator will open this user guide in-application for your convenience. Don't be afraid to ask for help!
+
 Format: `help`
+
+[big]#Steps Taken#
+
+. Type help into the command box, and press Enter to execute it. +
+
+.Typing help into command box +
+image::helpStep1.png[width="790"]
+
+[start=2]
+. The help window will appear as shown. +
+
+.Help box as shown.
+image::helpResult.png[width="790"]
+
 
 ==== Listing entered commands : `history`
 

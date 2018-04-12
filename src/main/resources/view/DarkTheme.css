@@ -306,17 +306,8 @@
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }
-/*
-#toDoCardPane {
-    -fx-background-color: #22A86D;
-    -fx-background-radius: 30px;
 
-    -fx-border-radius: 20px;
-    -fx-border-width: 5px;
-    -fx-border-color: #1B6041;
-}*/
-
-.todoundone {
+.todoUndone {
     -fx-background-color: #22A86D;
     -fx-background-radius: 30px;
 
@@ -325,13 +316,13 @@
     -fx-border-color: #1B6041;
 }
 
-.tododone {
-    -fx-background-color: #ddd;
+.todoDone {
+    -fx-background-color: #bbb;
     -fx-background-radius: 30px;
 
     -fx-border-radius: 20px;
     -fx-border-width: 5px;
-    -fx-border-color: #bbb;
+    -fx-border-color: #757575;
 }
 
 #commandTypeLabel {

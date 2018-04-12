@@ -60,17 +60,16 @@ public class ToDoListPanel extends UiPart<Region> {
             if (empty || todo == null) {
                 setGraphic(null);
                 setText(null);
-            } else {
-                this.getStyleClass().clear();
-                if (todo.isDone()) {
-                    this.getStyleClass().add("tododone");
-                } else {
-                    this.getStyleClass().add("todoundone");
-                }
-
-                setGraphic(todo.getRoot());
+                return;
             }
+
+            this.getStyleClass().clear();
+            if (todo.isDone()) {
+                this.getStyleClass().add("todoDone");
+            } else {
+                this.getStyleClass().add("todoUndone");
+            }
+            setGraphic(todo.getRoot());
         }
     }
-
 }

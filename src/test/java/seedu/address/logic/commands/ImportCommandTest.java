@@ -41,6 +41,7 @@ public class ImportCommandTest {
     /**
      * Test
      */
+    @Test
     public void execute_validFilePath_success() throws Throwable {
         String expectedMessage = String.format(ImportCommand.MESSAGE_SUCCESS, ASSIGNMENT3_DEMO1_FILE_PATH);
 
@@ -66,6 +67,7 @@ public class ImportCommandTest {
     /**
      * Test
      */
+    @Test
     public void execute_illegalValuesInFile_throwsCommandException() throws Throwable {
         String expectedMessage = String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, ILLEGAL_VALUES_FILE_PATH);
 
@@ -80,7 +82,7 @@ public class ImportCommandTest {
      * already in Desk Board. Only {@code ASSIGNMENT3} and {@code DEMO1} should be added into Desk Board, while
      * the existing activities are ignored.
      */
-    // @Test
+    @Test
     public void execute_fileContainsExistingActivity_addsAllExceptExistingActivity() throws Throwable {
         String expectedMessage = String.format(ImportCommand.MESSAGE_SUCCESS, DUPLICATE_ACTIVITY_FILE_PATH);
         Model expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());

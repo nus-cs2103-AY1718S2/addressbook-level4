@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PARAMETER_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_JOKER;
@@ -14,13 +15,19 @@ import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_TWO;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BLOODTYPE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BREED_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_COLOUR_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATETIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NRIC_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_OPTION;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_REMARK_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_SPECIES_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_JOKER;
@@ -82,8 +89,12 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.petpatient.BloodType;
+import seedu.address.model.petpatient.Breed;
+import seedu.address.model.petpatient.Colour;
 import seedu.address.model.petpatient.PetPatient;
 import seedu.address.model.petpatient.PetPatientName;
+import seedu.address.model.petpatient.Species;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AppointmentBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -141,7 +152,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_compulsoryPersonFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON);
+        String expectedMessage = String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON);
 
         // missing name prefix
         assertParseFailure(parser, OPTION_OWNER + VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
@@ -202,7 +213,7 @@ public class AddCommandParserTest {
         // non-empty preamble
         assertParseFailure(parser, OPTION_OWNER + PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + NRIC_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON));
+                String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
     }
 
     //@@author aquarinte
@@ -267,9 +278,9 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_compulsoryPetPatientFieldMissing_failure() {
-        String invalidPetPatient = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PETPATIENT);
+        String invalidPetPatient = String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT);
         String invalidAddCommand = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-        String missingNricPrefix = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+        String missingNricPrefix = String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
                 AddCommand.MESSAGE_MISSING_NRIC_PREFIX);
 
         // missing name prefix
@@ -307,10 +318,10 @@ public class AddCommandParserTest {
                 + VALID_BREED_JOKER + VALID_COLOUR_JOKER + VALID_BLOODTYPE_JOKER + OPTION_OWNER
                 + NRIC_DESC_FION, invalidPetPatient);
 
-        // missing all prefixes - only missing nric prefix reported
+        // missing all prefixes
         assertParseFailure(parser, OPTION_PET + VALID_NAME_JOKER + VALID_SPECIES_JOKER
                 + VALID_BREED_JOKER + VALID_COLOUR_JOKER + VALID_BLOODTYPE_JOKER + OPTION_OWNER
-                + VALID_NRIC_FION, missingNricPrefix);
+                + VALID_NRIC_FION, invalidPetPatient);
 
         // missing options
         assertParseFailure(parser, NAME_DESC_JOKER + SPECIES_DESC_JOKER
@@ -329,6 +340,26 @@ public class AddCommandParserTest {
         assertParseFailure(parser, OPTION_PET + NAME_DESC_JOKER + SPECIES_DESC_JOKER
                 + BREED_DESC_JOKER + COLOUR_DESC_JOKER + BLOODTYPE_DESC_JOKER + OPTION_OWNER
                 + INVALID_NRIC_DESC, Nric.MESSAGE_NRIC_CONSTRAINTS);
+
+        // invalid breed
+        assertParseFailure(parser, OPTION_PET + NAME_DESC_JOKER + SPECIES_DESC_JOKER
+                + INVALID_BREED_DESC + COLOUR_DESC_JOKER + BLOODTYPE_DESC_JOKER + OPTION_OWNER
+                + NRIC_DESC_FION, Breed.MESSAGE_PET_BREED_CONSTRAINTS);
+
+        // invalid species
+        assertParseFailure(parser, OPTION_PET + NAME_DESC_JOKER + INVALID_SPECIES_DESC
+                + BREED_DESC_JOKER + COLOUR_DESC_JOKER + BLOODTYPE_DESC_JOKER + OPTION_OWNER
+                + NRIC_DESC_FION, Species.MESSAGE_PET_SPECIES_CONSTRAINTS);
+
+        // invalid colour
+        assertParseFailure(parser, OPTION_PET + NAME_DESC_JOKER + SPECIES_DESC_JOKER
+                + BREED_DESC_JOKER + INVALID_COLOUR_DESC + BLOODTYPE_DESC_JOKER + OPTION_OWNER
+                + NRIC_DESC_FION, Colour.MESSAGE_PET_COLOUR_CONSTRAINTS);
+
+        // invalid blood type
+        assertParseFailure(parser, OPTION_PET + NAME_DESC_JOKER + SPECIES_DESC_JOKER
+                + BREED_DESC_JOKER + COLOUR_DESC_JOKER + INVALID_BLOODTYPE_DESC + OPTION_OWNER
+                + NRIC_DESC_FION, BloodType.MESSAGE_PET_BLOODTYPE_CONSTRAINTS);
     }
 
     @Test
@@ -373,7 +404,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_compulsoryAppointmentFieldMissing_failure() {
-        String invalidAppt = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_APPOINTMENT);
+        String invalidAppt = String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_APPOINTMENT);
         String invalidCommand = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
         // missing date time prefix
@@ -399,9 +430,20 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_invalidAppointmentValue_failure() {
+        String invalidDateMsg = "Please give a valid date based on the format yyyy-MM-dd!";
+        String invalidDateTimeMsg = "Please ensure all fields are valid and follow the format of yyyy-MM-dd HH:mm!";
+
         // invalid remark
         assertParseFailure(parser, OPTION_APPOINTMENT + DATE_DESC_ONE + INVALID_REMARK_DESC + TAG_DESC_CHECKUP
                 + OPTION_OWNER + NRIC_DESC_FION + OPTION_PET + NAME_DESC_JOKER, Remark.MESSAGE_REMARK_CONSTRAINTS);
+
+        // invalid date
+        assertParseFailure(parser, OPTION_APPOINTMENT + INVALID_DATETIME_DESC + REMARK_DESC_ONE + TAG_DESC_CHECKUP
+                + OPTION_OWNER + NRIC_DESC_FION + OPTION_PET + NAME_DESC_JOKER, invalidDateMsg);
+
+        // invalid time
+        assertParseFailure(parser, OPTION_APPOINTMENT + INVALID_TIME_DESC + REMARK_DESC_ONE + TAG_DESC_CHECKUP
+                + OPTION_OWNER + NRIC_DESC_FION + OPTION_PET + NAME_DESC_JOKER, invalidDateTimeMsg);
     }
 
     @Test

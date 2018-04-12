@@ -105,17 +105,17 @@ public class Person {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("\t")
+        builder.append("    ")
                 .append(getName())
-                .append("\tPhone: ")
+                .append("    Phone: ")
                 .append(getPhone())
-                .append("\tEmail: ")
+                .append("    Email: ")
                 .append(getEmail())
-                .append("\tAddress: ")
+                .append("    Address: ")
                 .append(getAddress())
-                .append("\tNRIC: ")
+                .append("    NRIC: ")
                 .append(getNric())
-                .append("\tTags: ");
+                .append("    Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

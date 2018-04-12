@@ -70,7 +70,11 @@
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
             <StackPane fx:id="todoListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-            <FlowPane fx:id="progressIndicatorPlaceholder" VBox.vgrow="ALWAYS"/>
+            <FlowPane fx:id="progressIndicatorPlaceholder" VBox.vgrow="ALWAYS">
+              <padding>
+                <Insets top="20" right="10" bottom="10" left="10" />
+              </padding>
+            </FlowPane>
           </VBox>
         </SplitPane>
 

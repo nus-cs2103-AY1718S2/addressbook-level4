@@ -151,7 +151,9 @@ public class MainWindow extends UiPart<Stage> {
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         progressIndicatorLabel = new Label("To-dos Completion");
+        progressIndicatorLabel.setStyle("-fx-text-fill: white;");
         progressIndicator = new ProgressIndicator(0);
+        progressIndicator.setStyle(" -fx-progress-color: #4DA194;");
         progressIndicator.setPrefSize(150, 150);
         progressIndicator.setProgress(logic.getToDoListCompleteRatio());
         progressIndicatorPlaceholder.getChildren().addAll(progressIndicatorLabel, progressIndicator);

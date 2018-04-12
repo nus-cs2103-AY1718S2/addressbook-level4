@@ -3,7 +3,11 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEYOWED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWEDUEDATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OWESTARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -47,8 +51,10 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
 
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + " | Edits the details of the person identified "
-                    + "by the index number used in the last person listing. "
-                    + "Only fields common to both Customer and Runner can be edited."
+                    + "by the index number used in the last person listing."
+                    + "\n\tEditable fields are NAME, PHONE, EMAIL, ADDRESS, MONEY_BORROWED, WEEKLY_INTEREST, "
+                    + "OWE_START_DATE, "
+                    + "OWE_DUE_DATE."
                     + "\n\t"
                     + "Existing values will be overwritten by the input values. "
                     + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
@@ -61,7 +67,11 @@ public class EditCommand extends UndoableCommand implements PopulatableCommand {
                     + "[" + PREFIX_PHONE + " PHONE] "
                     + "[" + PREFIX_EMAIL + " EMAIL] "
                     + "[" + PREFIX_ADDRESS + " ADDRESS] "
-                    + "[" + PREFIX_TAG + " TAG] ..."
+                    + "[" + PREFIX_TAG + " TAG]"
+                    + "\n\t[" + PREFIX_MONEYOWED + " MONEY_BORROWED] "
+                    + "[" + PREFIX_INTEREST + " WEEKLY_INTEREST] "
+                    + "[" + PREFIX_OWESTARTDATE + " OWE_START_DATE] "
+                    + "[" + PREFIX_OWEDUEDATE + " OWE_DUE_DATE] "
 
                     + "\n\t"
                     + "Example:\t\t"

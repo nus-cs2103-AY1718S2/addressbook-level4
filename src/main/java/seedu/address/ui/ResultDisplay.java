@@ -14,11 +14,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.TimetableChangedEvent;
 import seedu.address.database.DatabaseManager;
+import seedu.address.logic.commands.ListGroupMembersCommand;
 import seedu.address.model.event.WeeklyEvent;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.MembersInGroupPredicate;
 import seedu.address.model.person.Person;
 
 /**

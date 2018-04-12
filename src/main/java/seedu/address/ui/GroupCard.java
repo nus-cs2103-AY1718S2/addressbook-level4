@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.Information;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -29,7 +30,6 @@ public class GroupCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         information.setText(group.getInformation().value);
     }
-
 
     @Override
     public boolean equals(Object other) {

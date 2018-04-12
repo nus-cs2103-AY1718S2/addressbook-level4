@@ -13,17 +13,17 @@ import seedu.address.model.rule.exceptions.DuplicateRuleException;
  */
 public class TypicalRules {
 
-    public static final Rule ALICE = new RuleBuilder().withValue("n/AAA").build();
-    public static final Rule BENSON = new RuleBuilder().withValue("n/BBB").build();
-    public static final Rule CARL = new RuleBuilder().withValue("n/CCC").build();
-    public static final Rule DANIEL = new RuleBuilder().withValue("n/DDD").build();
-    public static final Rule ELLE = new RuleBuilder().withValue("n/EEE").build();
-    public static final Rule FIONA = new RuleBuilder().withValue("n/FFF").build();
-    public static final Rule GEORGE = new RuleBuilder().withValue("n/GGG").build();
+    public static final Rule ALICE = new NotificationRuleBuilder().withValue("c/AAA").build();
+    public static final Rule BENSON = new NotificationRuleBuilder().withValue("c/BBB").build();
+    public static final Rule CARL = new NotificationRuleBuilder().withValue("c/CCC").build();
+    public static final Rule DANIEL = new NotificationRuleBuilder().withValue("c/DDD").build();
+    public static final Rule ELLE = new NotificationRuleBuilder().withValue("c/EEE").build();
+    public static final Rule FIONA = new NotificationRuleBuilder().withValue("c/FFF").build();
+    public static final Rule GEORGE = new NotificationRuleBuilder().withValue("c/GGG").build();
 
     // Manually added
-    public static final Rule HOON = new RuleBuilder().withValue("n/HHH").build();
-    public static final Rule IDA = new RuleBuilder().withValue("n/III").build();
+    public static final Rule HOON = new NotificationRuleBuilder().withValue("c/HHH").build();
+    public static final Rule IDA = new NotificationRuleBuilder().withValue("c/III").build();
 
     private TypicalRules() {} // prevents instantiation
 

@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyCoinBook;
+import seedu.address.model.ReadOnlyRuleBook;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.NameContainsKeywordsPredicate;
 import seedu.address.model.coin.exceptions.CoinNotFoundException;
@@ -215,6 +216,12 @@ public class CommandTestUtil {
         @Override
         public void updateRule(Rule target, Rule editedRule) throws DuplicateRuleException, RuleNotFoundException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyRuleBook getRuleBook() {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override

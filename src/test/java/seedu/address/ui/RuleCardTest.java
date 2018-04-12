@@ -9,13 +9,13 @@ import org.junit.Test;
 
 import guitests.guihandles.RuleCardHandle;
 import seedu.address.model.rule.Rule;
-import seedu.address.testutil.RuleBuilder;
+import seedu.address.testutil.NotificationRuleBuilder;
 
 public class RuleCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        Rule testRule = new RuleBuilder().build();
+        Rule testRule = new NotificationRuleBuilder().build();
         RuleCard ruleCard = new RuleCard(testRule, 1);
         uiPartRule.setUiPart(ruleCard);
         assertCardDisplay(ruleCard, testRule, testRule.toString());
@@ -23,7 +23,7 @@ public class RuleCardTest extends GuiUnitTest {
 
     @Test
     public void equals() {
-        Rule rule = new RuleBuilder().build();
+        Rule rule = new NotificationRuleBuilder().build();
         RuleCard ruleCard = new RuleCard(rule, 0);
 
         // same rule, same index -> returns true
@@ -40,7 +40,7 @@ public class RuleCardTest extends GuiUnitTest {
         assertFalse(ruleCard.equals(0));
 
         // different rule, same index -> returns false
-        Rule differentRule = new RuleBuilder().withValue("Different").build();
+        Rule differentRule = new NotificationRuleBuilder().withValue("h/=101010").build();
         assertFalse(ruleCard.equals(new RuleCard(differentRule, 0)));
     }
 

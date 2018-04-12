@@ -11,11 +11,11 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class Amount implements Comparable<Amount> {
 
-    private static String[] MAGNITUDE_CHAR = { "", "K", "M", "B", "T", "Q", "P", "S", "H" };
-    private static String MESSAGE_TOO_BIG = "This value can't be displayed as it is too big, "
+    private static final String[] MAGNITUDE_CHAR = { "", "K", "M", "B", "T", "Q", "P", "S", "H" };
+    private static final String MESSAGE_TOO_BIG = "This value can't be displayed as it is too big, "
             + "total amount far exceeds circulating supply!\n"
             + "Unfortunately, CoinBook cannot yet handle unorthodox usage [Coming in v2.0]";
-    private static String DISPLAY_TOO_BIG = "Err (see log)";
+    private static final String DISPLAY_TOO_BIG = "Err (see log)";
 
     private BigDecimal value;
 

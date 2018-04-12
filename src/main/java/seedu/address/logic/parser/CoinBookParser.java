@@ -16,6 +16,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListNotifsCommand;
 import seedu.address.logic.commands.NotifyCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SellCommand;
@@ -91,6 +92,10 @@ public class CoinBookParser {
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
+
+        case ListNotifsCommand.COMMAND_WORD:
+        case ListNotifsCommand.COMMAND_ALIAS:
+            return new ListNotifsCommand();
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:

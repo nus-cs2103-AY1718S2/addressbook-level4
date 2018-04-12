@@ -19,8 +19,8 @@ public class DollarsSoldCondition extends AmountCondition  {
     public static final TokenType PREFIX = PREFIX_SOLD;
     public static final TokenType PARAMETER_TYPE = NUM;
 
-    public DollarsSoldCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
-        super(amount, amountComparator);
+    public DollarsSoldCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
+        super(amount, amountComparator, compareMode);
     }
 
     @Override

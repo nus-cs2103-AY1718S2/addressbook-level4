@@ -23,12 +23,14 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final CoinBookParser coinBookParser;
     private final UndoRedoStack undoRedoStack;
+    private final RuleChecker ruleChecker;
 
     public LogicManager(Model model) {
         this.model = model;
         history = new CommandHistory();
         coinBookParser = new CoinBookParser();
         undoRedoStack = new UndoRedoStack();
+        ruleChecker = new RuleChecker(model.getRuleBook());
     }
 
     @Override

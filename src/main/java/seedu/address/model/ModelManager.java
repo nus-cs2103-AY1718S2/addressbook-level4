@@ -145,6 +145,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Rule Book =============================================================
 
+    @Override
+    public ReadOnlyRuleBook getRuleBook() {
+        return ruleBook;
+    }
+
     /** Raises an event to indicate the model has changed */
     private void indicateRuleBookChanged() {
         raise(new RuleBookChangedEvent(ruleBook));

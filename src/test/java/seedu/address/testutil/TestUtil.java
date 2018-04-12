@@ -43,8 +43,6 @@ public class TestUtil {
     public static final Token PREFIX_BOUGHT_TOKEN = new Token(TokenType.PREFIX_BOUGHT, PREFIX_BOUGHT_STRING);
     public static final String PREFIX_CODE_STRING = "c/";
     public static final Token PREFIX_CODE_TOKEN = new Token(TokenType.PREFIX_CODE, PREFIX_CODE_STRING);
-    public static final String PREFIX_EARNED_STRING = "e/";
-    public static final Token PREFIX_EARNED_TOKEN = new Token(TokenType.PREFIX_EARNED, PREFIX_EARNED_STRING);
     public static final String PREFIX_HELD_STRING = "h/";
     public static final Token PREFIX_HELD_TOKEN = new Token(TokenType.PREFIX_HELD, PREFIX_HELD_STRING);
     public static final String PREFIX_MADE_STRING = "m/";

@@ -5,22 +5,41 @@ package seedu.address.logic.parser;
  * Represents the possible types a token can take, along with the regular expression it is specified by.
  */
 public enum TokenType {
-    BINARYBOOL(" OR | AND ", "BINARYBOOL", "a boolean operator, e.g. AND"),
+    /* Boolean Logic Operators */
+    BINARYBOOL(" OR | AND ", "BINARYBOOL", "a boolean operator"),
     UNARYBOOL("NOT ", "UNARYBOOL", "a NOT operator"),
-    LEFTPARENTHESES("\\(", "LEFTPARENTHESES", "a left parentheses, \"(\""),
-    RIGHTPARENTHESES("\\)", "RIGHTPARENTHESES", "a left parentheses, \")\""),
+    LEFTPARENTHESES("\\(", "LEFTPARENTHESES", "a left parentheses"),
+    RIGHTPARENTHESES("\\)", "RIGHTPARENTHESES", "a left parentheses"),
     COMPARATOR(">|=|<", "COMPARATOR", "a comparator, e.g. >"),
-    PREFIX_AMOUNT("a/", "APREFIX", "a prefix, e.g. a/"),
-    PREFIX_BOUGHT("b/", "BPREFIX", "a prefix, e.g. a/"),
-    PREFIX_CODE("c/", "CPREFIX", "a prefix, e.g. a/"),
-    PREFIX_EARNED("e/", "EPREFIX", "a prefix, e.g. a/"),
-    PREFIX_HELD("h/", "HPREFIX", "a prefix, e.g. a/"),
-    PREFIX_MADE("m/", "MPREFIX", "a prefix, e.g. a/"),
-    PREFIX_NAME("n/", "NPREFIX", "a prefix, e.g. a/"),
-    PREFIX_PRICE("p/", "PPREFIX", "a prefix, e.g. a/"),
-    PREFIX_SOLD("s/", "SPREFIX", "a prefix, e.g. a/"),
-    PREFIX_TAG("t/", "TPREFIX", "a prefix, e.g. a/"),
-    PREFIX_WORTH("w/", "WPREFIX", "a prefix, e.g. a/"),
+
+    /* String values */
+    PREFIX_CODE("c/", "CPREFIX", "a prefix"),
+    PREFIX_NAME("n/", "NPREFIX", "a prefix"),
+    PREFIX_TAG("t/", "TPREFIX", "a prefix"),
+
+    /* Numerical values */
+    PREFIX_AMOUNT("a/", "APREFIX", "a prefix"),
+    // Below used for find/notify conditions
+    PREFIX_BOUGHT_RISE("b/\\+", "BRPREFIX", "a prefix"),
+    PREFIX_BOUGHT_FALL("b/\\-", "BFPREFIX", "a prefix"),
+    PREFIX_BOUGHT("b/", "BPREFIX", "a prefix"),
+    PREFIX_HELD_RISE("h/\\+", "HRPREFIX", "a prefix"),
+    PREFIX_HELD_FALL("h/\\-", "HFPREFIX", "a prefix"),
+    PREFIX_HELD("h/", "HPREFIX", "a prefix"),
+    PREFIX_MADE_RISE("m/\\+", "MRPREFIX", "a prefix"),
+    PREFIX_MADE_FALL("m/\\-", "MFPREFIX", "a prefix"),
+    PREFIX_MADE("m/", "MPREFIX", "a prefix"),
+    PREFIX_PRICE_RISE("p/\\+", "PRPREFIX", "a prefix"),
+    PREFIX_PRICE_FALL("p/\\-", "PFPREFIX", "a prefix"),
+    PREFIX_PRICE("p/", "PPREFIX", "a prefix"),
+    PREFIX_SOLD_RISE("s/\\+", "SRPREFIX", "a prefix"),
+    PREFIX_SOLD_FALL("s/\\-", "SFPREFIX", "a prefix"),
+    PREFIX_SOLD("s/", "SPREFIX", "a prefix"),
+    PREFIX_WORTH_RISE("w/\\+", "WRPREFIX", "a prefix"),
+    PREFIX_WORTH_FALL("w/\\-", "WFPREFIX", "a prefix"),
+    PREFIX_WORTH("w/", "WPREFIX", "a prefix"),
+
+    /* Value components */
     DECIMAL("\\-?[0-9]+\\.[0-9]+", "DECIMAL", "a decimal number"),
     NUM("\\-?[0-9]+", "NUM", "an integer"),
     STRING("[A-Za-z\\^\\-\\@\\./]+", "STRING", "a string"),
@@ -52,7 +71,6 @@ public enum TokenType {
         return type == PREFIX_AMOUNT
                 || type == PREFIX_BOUGHT
                 || type == PREFIX_CODE
-                || type == PREFIX_EARNED
                 || type == PREFIX_HELD
                 || type == PREFIX_MADE
                 || type == PREFIX_NAME

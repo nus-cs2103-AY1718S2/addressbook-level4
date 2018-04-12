@@ -79,6 +79,9 @@ public interface Model {
     void updateRule(Rule target, Rule editedRule)
             throws DuplicateRuleException, RuleNotFoundException;
 
+    /** Returns the rule book */
+    ReadOnlyRuleBook getRuleBook();
+
     /** Returns an unmodifiable view of the rule list */
     ObservableList<Rule> getRuleList();
 

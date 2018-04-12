@@ -21,6 +21,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListNotifsCommand;
 import seedu.address.logic.commands.NotifyCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.TagCommand;
@@ -101,7 +102,7 @@ public class CoinBookParserTest {
     @Test
     public void parseCommand_notify() throws Exception {
         assertTrue(parser.parseCommand(
-                NotifyCommand.COMMAND_WORD + " n/TEST AND p/>100") instanceof NotifyCommand);
+                NotifyCommand.COMMAND_WORD + " c/TEST AND p/>100") instanceof NotifyCommand);
     }
 
     @Test
@@ -134,6 +135,12 @@ public class CoinBookParserTest {
 
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_listNotifs() throws Exception {
+        assertTrue(parser.parseCommand(ListNotifsCommand.COMMAND_WORD) instanceof ListNotifsCommand);
+        assertTrue(parser.parseCommand(ListNotifsCommand.COMMAND_ALIAS) instanceof ListNotifsCommand);
     }
 
     @Test

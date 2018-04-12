@@ -43,11 +43,23 @@ public class ConditionSemanticParser {
     private boolean hasCorrectParameterType(TokenType type) {
         switch (type) {
         case PREFIX_HELD:
+        case PREFIX_HELD_RISE:
+        case PREFIX_HELD_FALL:
         case PREFIX_SOLD:
+        case PREFIX_SOLD_RISE:
+        case PREFIX_SOLD_FALL:
         case PREFIX_BOUGHT:
+        case PREFIX_BOUGHT_RISE:
+        case PREFIX_BOUGHT_FALL:
         case PREFIX_MADE:
+        case PREFIX_MADE_RISE:
+        case PREFIX_MADE_FALL:
         case PREFIX_PRICE:
+        case PREFIX_PRICE_RISE:
+        case PREFIX_PRICE_FALL:
         case PREFIX_WORTH:
+        case PREFIX_WORTH_RISE:
+        case PREFIX_WORTH_FALL:
             return hasNumericalParameter();
         case PREFIX_CODE:
         case PREFIX_TAG:

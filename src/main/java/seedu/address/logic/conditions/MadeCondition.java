@@ -19,8 +19,8 @@ public class MadeCondition extends AmountCondition  {
     public static final TokenType PREFIX = PREFIX_MADE;
     public static final TokenType PARAMETER_TYPE = NUM;
 
-    public MadeCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
-        super(amount, amountComparator);
+    public MadeCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
+        super(amount, amountComparator, compareMode);
     }
 
     @Override

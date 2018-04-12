@@ -197,7 +197,7 @@ image::DeleteStudentSdForLogic.png[width="800"]
 === Model component
 
 .Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagram1.png[width="800"]
 
 .Structure of the Dashboard Class. This diagram shows finer details about the Dashboard Class.
 image::ModelComponentDashboardClassDiagram.png[width="400"]
@@ -451,7 +451,7 @@ It stores the name of the programming language currently being taught to each st
 [NOTE]
 The string for `ProgrammingLanguage` must contain visible characters.
 
-image::ModelWithPLFeature.png[width="800"]
+image::StudentWithPLFeature.png[width="800"]
 
 As can be seen from the diagram, the field `ProgrammingLanuage` has been added to the student model.
 

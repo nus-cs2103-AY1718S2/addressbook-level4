@@ -43,6 +43,27 @@ public class WeeklyEvent extends Event {
         return FXCollections.observableArrayList(temp);
     }
 
+    /**
+     * @return true if {@code this} clashes with the {@code mod}, false otherwise
+     */
+    public boolean clash(WeeklyEvent mod) {
+        return clash(mod.getDay(), mod.getStartTime(), mod.getEndTime());
+    }
+
+    /**
+     * @return true if {@code this} is on {@code dayOfWeek},
+     * around the time from {@code start} to {@code end}, false otherwise
+     */
+    public boolean clash(String dayOfWeek, String start, String end) {
+        if (!day.equals(dayOfWeek)) {
+            return false;
+        }
+        if (Integer.parseInt(start) >= Integer.parseInt(endTime)) {
+            return false;
+        }
+        return Integer.parseInt(end) > Integer.parseInt(startTime);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

@@ -32,6 +32,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListGroupMembersCommand;
 import seedu.address.logic.commands.ListTagMembersCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ScheduleGroupCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UnCheckToDoCommand;
@@ -70,6 +71,7 @@ public class    AddressBookParser {
             ListCommand.COMMAND_WORD,
             ListTagMembersCommand.COMMAND_WORD,
             RedoCommand.COMMAND_WORD,
+            ScheduleGroupCommand.COMMAND_WORD,
             SelectCommand.COMMAND_WORD,
             SwitchCommand.COMMAND_WORD,
             UnCheckToDoCommand.COMMAND_WORD,
@@ -193,6 +195,10 @@ public class    AddressBookParser {
         case SwitchCommand.COMMAND_WORD:
         case SwitchCommand.COMMAND_ALIAS:
             return new SwitchCommand();
+
+        case ScheduleGroupCommand.COMMAND_WORD:
+        case ScheduleGroupCommand.COMMAND_ALIAS:
+            return new ScheduleGroupCommandParser().parse(arguments);
         //@@author Isaaaca
         default:
             ExtractedResult guess = FuzzySearch.extractOne(commandWord, COMMAND_WORDS);

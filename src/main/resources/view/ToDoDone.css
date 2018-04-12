@@ -1,17 +1,19 @@
 .list-cell:filled:even {
-    -fx-background-color: #bbb;
-    -fx-background-radius: 30px;
-
+    -fx-background-color: #4DA194;
+    -fx-background-radius: 25px;
     -fx-border-radius: 20px;
-    -fx-border-width: 5px;
-    -fx-border-color: #757575;
+    -fx-border-width: 2px;
+    -fx-border-color: derive(#1d1d1d, 20%);
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #bbb;
-    -fx-background-radius: 30px;
-
+    -fx-background-color: #4DA194;
+    -fx-background-radius: 25px;
     -fx-border-radius: 20px;
-    -fx-border-width: 5px;
-    -fx-border-color: #757575;
+    -fx-border-width: 2px;
+    -fx-border-color: derive(#1d1d1d, 20%);
+}
+
+.list-cell .label {
+    -fx-text-fill: #DEF0EE;
 }

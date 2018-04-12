@@ -23,6 +23,7 @@
              <TableColumn fx:id="sixPm" prefWidth="60.0" text="1800" />
              <TableColumn fx:id="sevenPm" prefWidth="60.0" text="1900" />
              <TableColumn fx:id="eightPm" prefWidth="60.0" text="2000" />
-         </columns></TableView>
+         </columns>
+        </TableView>
     </children>
 </StackPane>

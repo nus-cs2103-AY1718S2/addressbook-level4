@@ -244,52 +244,31 @@ Sorts all persons in the address book alphabetically and then displays the curre
 Format: `sort`
 // end::sort[]
 
-=== Search for profile : `searchall` `[Since v1.4]`
+=== Search for profile : `search` `[Since v1.5]`
 
-Search for the specified profiles on all social media platform linkable with the application. +
-Format: `searchall KEYWORD`
+Search for the specified profiles on available social media platform within the application. +
+Format: `search [PLATFORM,] KEYWORD`
 
 ****
+* The PLATFORM is an optional input. It indicates the social media platform to perform the search on.
+* If no PLATFORM is entered, the search will be performed on all platforms available.
+* To indicate the platform, the user can enter the name of the platform (e.g. facebook) or use the inbuilt alias (e.g. fb)
+* Currently available platform and the respective alias:
+** 1) facebook (alias: fb)
+** 2) twitter (alias: tw).
 * The KEYWORD is the name to be searched for.
 * Make use of the search function of the respective social media platform.
-* Dummy SearchPage is used currently, actual link to search result will come in v1.5.
 ****
 
 Examples:
 
-* `searchall john`
+* `search john`
 Search with keyword "john" on all the social media linked with the application and display the search result in the browser window under the respective tabs.
 
-=== Search for profile on Facebook : `searchfb` `[Since v1.4]`
-
-Search for the specified profiles on Facebook. +
-Format: `searchfb KEYWORD`
-
-****
-* The KEYWORD is the name to be searched on Facebook.
-* Make use of the search engine of Facebook.
-* Dummy SearchPage is used currently, actual link to search result will come in v1.5.
-****
-
-Examples:
-
-* `searchfb tom` +
+* `search fb, tom` +
 Search with keyword "tom" on Facebook and display the search result in the browser window under the Facebook tab.
 
-=== Search for profile on Twitter : `searchtwitter` `[Since v1.4]`
-
-Search for the specified profiles on Twitter. +
-Format: `searchtwitter KEYWORD`
-
-****
-* The KEYWORD is the name to be searched on Twitter.
-* Make use of the search engine of Twitter.
-* Dummy SearchPage is used currently, actual link to search result will come in v1.5.
-****
-
-Examples:
-
-* `searchtwitter tom` +
+* `search twitter, tom` +
 Search with keyword "tom" on Twitter and display the search result in the browser window under the Twitter tab.
 
 === Selecting a person : `select`

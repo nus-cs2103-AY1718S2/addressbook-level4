@@ -90,6 +90,6 @@ public class GroupTest {
 
     @Test
     public void compare_notEqualGroups() throws Exception {
-        assertNotEquals(groupA,groupB);
+        assertNotEquals(groupA, groupB);
     }
 }

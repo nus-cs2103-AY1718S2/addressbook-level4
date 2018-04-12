@@ -17,6 +17,7 @@ import seedu.address.model.appointment.StartTime;
  * JAXB-friendly version of the Appointment.
  */
 public class XmlAdaptedAppointment {
+
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Appointment's %s field is missing!";
 
     @XmlElement(required = true)
@@ -29,7 +30,6 @@ public class XmlAdaptedAppointment {
     private String endTime;
     @XmlElement(required = true)
     private String location;
-
 
     /**
      * Constructs an XmlAdaptedAppointment.
@@ -111,7 +111,6 @@ public class XmlAdaptedAppointment {
             throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
         }
         final Location location = new Location(this.location);
-
 
         return new Appointment(name, date, startTime, endTime, location);
     }

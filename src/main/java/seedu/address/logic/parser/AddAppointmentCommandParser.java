@@ -24,6 +24,7 @@ import seedu.address.model.appointment.StartTime;
  * Parses input arguments and creates a new AddAppointmentCommand object
  */
 public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddAppointmentCommand
      * and returns an AddAppointmentCommand object for execution.

@@ -16,7 +16,7 @@ import seedu.address.model.tag.Tag;
 
 //@@author jlks96
 /**
- * Deletes all persons with specified tags added before the date input by user.
+ * Deletes all persons with the specified tags added before the specified date.
  */
 public class  DeleteBeforeCommand extends UndoableCommand {
 
@@ -30,16 +30,13 @@ public class  DeleteBeforeCommand extends UndoableCommand {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DATE + "01/01/2010 "
-            + PREFIX_TAG + "non-client"
-            + PREFIX_TAG + "cash cow";
+            + PREFIX_TAG + "nonclient";
 
     public static final String MESSAGE_DELETE_PERSONS_SUCCESS = "Deleted %d persons with tags %s added before %s";
 
     private final DateAdded inputDate;
     private final Set<Tag> inputTags;
     private final PersonIsAddedBeforeDateInputAndContainsTagsPredicate predicate;
-
-    private int totalPersonsDeleted;
 
     public DeleteBeforeCommand(DateAdded inputDate, Set<Tag> inputTags) {
         this.inputDate = inputDate;
@@ -52,7 +49,7 @@ public class  DeleteBeforeCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(predicate);
         model.updateFilteredPersonList(predicate);
-        totalPersonsDeleted = model.getFilteredPersonList().size();
+        int totalPersonsDeleted = model.getFilteredPersonList().size();
 
         if (totalPersonsDeleted <= 0) {
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);

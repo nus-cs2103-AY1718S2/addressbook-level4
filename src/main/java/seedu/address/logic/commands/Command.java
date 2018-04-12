@@ -46,8 +46,8 @@ public abstract class Command {
 
     //@@author jlks96
     /**
-     * Raises the event via {@link EventsCenter#post(BaseEvent)}
-     * @param event
+     * Raises the specified event via {@link EventsCenter#post(BaseEvent)}
+     * @param event the event that is being posted
      */
     protected void raise(BaseEvent event) {
         EventsCenter.getInstance().post(event);

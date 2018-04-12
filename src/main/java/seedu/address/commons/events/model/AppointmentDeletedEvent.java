@@ -9,6 +9,7 @@ import seedu.address.model.appointment.Appointment;
  * Indicates that an appointment is deleted.
  */
 public class AppointmentDeletedEvent extends BaseEvent {
+
     private final ObservableList<Appointment> updatedAppointments;
 
     public AppointmentDeletedEvent(ObservableList<Appointment> updatedAppointments) {
@@ -23,4 +24,5 @@ public class AppointmentDeletedEvent extends BaseEvent {
     public ObservableList<Appointment> getUpdatedAppointments() {
         return updatedAppointments;
     }
+
 }

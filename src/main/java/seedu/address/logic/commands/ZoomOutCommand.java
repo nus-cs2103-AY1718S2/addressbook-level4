@@ -15,6 +15,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * Zooms out the calendar view to show a more general view
  */
 public class ZoomOutCommand extends Command {
+
     public static final String COMMAND_WORD = "zoomout";
     public static final String COMMAND_ALIAS = "zo";
 
@@ -49,7 +50,7 @@ public class ZoomOutCommand extends Command {
     }
 
     /**
-     * Handles the event where the calendar is successfully zoomed in
+     * Handles the event where the calendar is successfully zoomed out
      */
     @Subscribe
     private void handleZoomSuccessEvent(ZoomSuccessEvent event) {

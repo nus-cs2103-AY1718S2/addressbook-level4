@@ -85,59 +85,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
-    //// Template related operations
-
     //@@author ng95junwei
-
-    /**
-     * TBD replace with DB seed.
-     * @return a List of template to initialize AddressBook with
-     */
-    private static List<Template> generateTemplates() {
-        List<Template> list = new ArrayList<>();
-        Template template1 = new Template("coldEmail", "Meet up over Coffee",
-                "Hey, I am from Addsurance and would like you ask if you are interested in planning your"
-                        + " finances with us. Would you care to meet over coffee in the next week or so?");
-        Template template2 = new Template("followUpEmail", "Follow up from last week",
-                "Hey, we met last week and I was still hoping if you would like to leave your "
-                        + "finances with us at Addsurance. Would you care to meet over coffee in the next week or so"
-                        + " to discuss further?");
-        list.add(template1);
-        list.add(template2);
-        return list;
-    }
-
-    /**
-     * Adds a template to the unique template list
-     * @param template
-     * @throws DuplicateTemplateException
-     */
-    public void addTemplate(Template template) throws DuplicateTemplateException {
-        templates.add(template);
-    }
-
-    /**
-     * Removes template whose purpose is purpose
-     * @param purpose
-     * @return true if template was removed, throw an exception otherwise
-     * @throws TemplateNotFoundException
-     */
-    public boolean removeTemplate(String purpose) throws TemplateNotFoundException {
-        if (templates.remove(purpose)) {
-            return true;
-        } else {
-            throw new TemplateNotFoundException();
-        }
-    }
-
     public void setTemplates() throws DuplicateTemplateException {
         this.templates.setTemplates(generateTemplates());
     }
-
-    public synchronized UniqueTemplateList getAllTemplates() {
-        return this.templates;
-    }
     //@@author
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -244,6 +197,21 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //@@author luca590
+    /**
+     * This function is intended to be called from ModelManager to protect
+     * the private {@code UniquePersonList persons} variable
+     */
+    public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
+        //persons is UniquePersonList implements Iterable
+        //setPersons(List<Persons> ...)
+        List list = Lists.newArrayList(persons);
+        Collections.sort(list, new PersonCompare());
+        setPersons((List<Person>) list);
+
+    }
+    //@@author
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -277,20 +245,54 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
-    //@@author luca590
-    /**
-     * This function is intended to be called from ModelManager to protect
-     * the private {@code UniquePersonList persons} variable
-     */
-    public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
-        //persons is UniquePersonList implements Iterable
-        //setPersons(List<Persons> ...)
-        List list = Lists.newArrayList(persons);
-        Collections.sort(list, new PersonCompare());
-        setPersons((List<Person>) list);
+    //@@author ng95junwei
+    //// template-level operations
 
+    /**
+     * TBD replace with DB seed.
+     * @return a List of template to initialize AddressBook with
+     */
+    private static List<Template> generateTemplates() {
+        List<Template> list = new ArrayList<>();
+        Template template1 = new Template("coldEmail", "Meet up over Coffee",
+                "Hey, I am from Addsurance and would like you ask if you are interested in planning your"
+                        + " finances with us. Would you care to meet over coffee in the next week or so?");
+        Template template2 = new Template("followUpEmail", "Follow up from last week",
+                "Hey, we met last week and I was still hoping if you would like to leave your "
+                        + "finances with us at Addsurance. Would you care to meet over coffee in the next week or so"
+                        + " to discuss further?");
+        list.add(template1);
+        list.add(template2);
+        return list;
     }
 
+    /**
+     * Adds a template to the unique template list
+     * @param template
+     * @throws DuplicateTemplateException
+     */
+    public void addTemplate(Template template) throws DuplicateTemplateException {
+        templates.add(template);
+    }
+
+    /**
+     * Removes template whose purpose is purpose
+     * @param purpose
+     * @return true if template was removed, throw an exception otherwise
+     * @throws TemplateNotFoundException
+     */
+    public boolean removeTemplate(String purpose) throws TemplateNotFoundException {
+        if (templates.remove(purpose)) {
+            return true;
+        } else {
+            throw new TemplateNotFoundException();
+        }
+    }
+
+
+    public synchronized UniqueTemplateList getAllTemplates() {
+        return this.templates;
+    }
     //@@author
 
     //// util methods

@@ -25,8 +25,8 @@ public class AddAppointmentCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE + "DATE (must be in the format: dd/MM/yyyy) "
-            + PREFIX_STARTTIME + "STARTTIME (must be in the 24 format: HH:mm) "
-            + PREFIX_ENDTIME + "ENDTIME (must be in the 24 format: HH:mm) "
+            + PREFIX_STARTTIME + "STARTTIME (must be in the 24 hr format: HH:mm) "
+            + PREFIX_ENDTIME + "ENDTIME (must be in the 24 hr format: HH:mm) "
             + PREFIX_LOCATION + "LOCATION\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -40,22 +40,22 @@ public class AddAppointmentCommand extends UndoableCommand {
     public static final String MESSAGE_CLASHING_APPOINTMENT =
             "This appointment clashes with another appointment in the address book";
 
-    private final Appointment toAdd;
+    private final Appointment appointmentToAdd;
 
     /**
-     * Creates an AddAppointmentCommand to add the specified {@code Appointment}
+     * Creates an AddAppointmentCommand to add the specified {@code appointment}
      */
     public AddAppointmentCommand(Appointment appointment) {
         requireNonNull(appointment);
-        toAdd = appointment;
+        appointmentToAdd = appointment;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addAppointment(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            model.addAppointment(appointmentToAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, appointmentToAdd));
         } catch (DuplicateAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         } catch (ClashingAppointmentException e) {
@@ -67,6 +67,6 @@ public class AddAppointmentCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddAppointmentCommand // instanceof handles nulls
-                && toAdd.equals(((AddAppointmentCommand) other).toAdd)); // state check
+                && appointmentToAdd.equals(((AddAppointmentCommand) other).appointmentToAdd)); // state check
     }
 }

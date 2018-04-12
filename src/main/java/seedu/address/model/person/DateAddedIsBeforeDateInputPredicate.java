@@ -9,8 +9,8 @@ import java.util.function.Predicate;
 /**
  * Tests that a {@code Person}'s {@code DateAdded} is before the date input.
  */
-
 public class DateAddedIsBeforeDateInputPredicate implements Predicate<Person> {
+
     private final String dateInputString;
 
     public DateAddedIsBeforeDateInputPredicate(String dateInputString) {
@@ -23,11 +23,12 @@ public class DateAddedIsBeforeDateInputPredicate implements Predicate<Person> {
             SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
             String dateAddedString = person.getDateAdded().dateAdded;
             assert DateAdded.isValidDate(dateAddedString);
+
             Date dateAdded = dateFormatter.parse(dateAddedString);
             Date dateInput = dateFormatter.parse(dateInputString);
             return dateAdded.compareTo(dateInput) <= 0;
         } catch (ParseException e) {
-            return false; //need to resolve this part
+            return false;
         }
     }
 

@@ -24,11 +24,4 @@ public class MembersInGroupPredicateTest {
         assertFalse(predicate.test(TypicalPersons.CARL));
     }
 
-    @Test
-    public void test_groupContainsMember_returnsTrue() {
-        // Test Alice exist
-        MembersInGroupPredicate predicate = new MembersInGroupPredicate(groupTest);
-        assertTrue(predicate.test(TypicalPersons.ALICE));
-    }
-
 }

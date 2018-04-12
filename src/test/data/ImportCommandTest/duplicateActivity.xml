@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <deskboard>
     <tasks>
+        <name>CS2101Assignment</name>
+        <dateTime>04/03/2018 23:59</dateTime>
+        <remark> </remark>
+        <isCompleted>false</isCompleted>
+        <tagged>CS2101</tagged>
+    </tasks>
+    <tasks>
         <name>CS2102Assignment</name>
         <dateTime>01/04/2018 20:00</dateTime>
         <remark>nil</remark>
+        <isCompleted>false</isCompleted>
         <tagged>CS2102</tagged>
     </tasks>
-    <tasks>
-        <name>CS2101Assignment</name>
-        <dateTime>04/03/2018 23:59</dateTime>
-        <remark>nil</remark>
-        <tagged>CS2101</tagged>
-    </tasks>
     <events>
-        <name>CCA</name>
-        <dateTime>01/04/2018 20:00</dateTime>
-        <endDateTime>01/04/2018 21:00</endDateTime>
-        <location>Campus</location>
+        <name>CIP</name>
+        <dateTime>02/04/2018 08:00</dateTime>
         <remark>nil</remark>
+        <isCompleted>false</isCompleted>
+        <tagged>CIP</tagged>
+        <endDateTime>02/04/2018 12:00</endDateTime>
+        <location>michegan ave</location>
     </events>
     <events>
         <name>CS2102ProjectDemo</name>
         <dateTime>04/04/2018 09:00</dateTime>
+        <remark>FinalDemo</remark>
+        <isCompleted>false</isCompleted>
+        <tagged>CS2102</tagged>
         <endDateTime>04/04/2018 10:00</endDateTime>
         <location>COM1</location>
-        <remark>FinalDemo</remark>
-        <tagged>CS2102</tagged>
     </events>
-    <tags>CS2101</tags>
+    <tags>CIP</tags>
     <tags>CS2102</tags>
+    <tags>CS2101</tags>
 </deskboard>

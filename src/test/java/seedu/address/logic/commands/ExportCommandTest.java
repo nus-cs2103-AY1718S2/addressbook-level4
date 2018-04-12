@@ -3,8 +3,13 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.EXISTING_FILE_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.EXPORT_FILE_PATH;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.ExportCommand.MESSAGE_FILE_EXISTS;
+import static seedu.address.logic.commands.ExportCommand.MESSAGE_SUCCESS;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_FILE_NOT_FOUND;
+import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
+import static seedu.address.testutil.TypicalActivities.DEMO1;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
 import java.io.File;
@@ -45,11 +50,12 @@ public class ExportCommandTest {
     @Test
     public void execute_validFilePath_success() throws Exception {
         ExportCommand exportCommand = getExportCommandForGivenFilePath(EXPORT_FILE_PATH, model, storage);
-        exportCommand.execute();
 
+        CommandResult commandResult = exportCommand.execute();
         ReadOnlyDeskBoard actualDeskBoard = new XmlDeskBoardStorage(EXPORT_FILE_PATH).readDeskBoard()
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, EXPORT_FILE_PATH)));
 
+        assertEquals(String.format(ExportCommand.MESSAGE_SUCCESS, EXPORT_FILE_PATH), commandResult.feedbackToUser);
         assertEquals(getTypicalDeskBoard(), actualDeskBoard);
         new File(EXPORT_FILE_PATH).delete(); // so that the test will not fail when run the second time onwards
     }
@@ -57,11 +63,12 @@ public class ExportCommandTest {
     /**
      * Test
      */
+    @Test
     public void execute_existingFile_throwsCommandException() throws CommandException {
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(String.format(MESSAGE_FILE_EXISTS, EXISTING_FILE_PATH));
+        String expectedMessage = String.format(MESSAGE_FILE_EXISTS, EXISTING_FILE_PATH);
         ExportCommand exportCommand = getExportCommandForGivenFilePath(EXISTING_FILE_PATH, model, storage);
-        exportCommand.execute();
+
+        assertCommandFailure(exportCommand, expectedMessage);
     }
 
     /**

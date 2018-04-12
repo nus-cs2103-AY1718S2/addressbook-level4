@@ -109,7 +109,7 @@ public class Event extends Activity {
                 .append(getName())
                 .append(" Start Date/Time: ")
                 .append(getDateTime())
-                .append(" End Date/Time")
+                .append(" End Date/Time: ")
                 .append(getEndDateTime())
                 .append(" Location: ")
                 .append(getLocation() == null ? "" : getLocation())

@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.ASSIGNMENT3_DEMO1_FILE_PATH;
@@ -8,6 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.DUPLICATE_ACTIVITY_FI
 import static seedu.address.logic.commands.CommandTestUtil.ILLEGAL_VALUES_FILE_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.IMPORT_TEST_DATA_FOLDER;
 import static seedu.address.logic.commands.CommandTestUtil.MISSING_FILE_PATH;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_FILE_NOT_FOUND;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_ILLEGAL_VALUES_IN_FILE;
 import static seedu.address.testutil.TypicalActivities.ASSIGNMENT3;
@@ -20,8 +21,6 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.DeskBoard;
 import seedu.address.model.FilePath;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -45,34 +44,39 @@ public class ImportCommandTest {
     /**
      * Test
      */
-    public void execute_validFilePath_success() throws CommandException, DuplicateActivityException {
-        DeskBoard expectedDeskBoard = new DeskBoard(getTypicalDeskBoard());
-        expectedDeskBoard.addActivity(ASSIGNMENT3);
-        expectedDeskBoard.addActivity(DEMO1);
+    @Test
+    public void execute_validFilePath_success() throws DuplicateActivityException {
+        String expectedMessage = String.format(ImportCommand.MESSAGE_SUCCESS, ASSIGNMENT3_DEMO1_FILE_PATH);
+
+        ModelManager expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+        expectedModel.addActivity(ASSIGNMENT3);
+        expectedModel.addActivity(DEMO1);
 
         ImportCommand importCommand = getImportCommandForGivenFilePath(ASSIGNMENT3_DEMO1_FILE_PATH, model);
-        importCommand.executeUndoableCommand();
 
-        assertEquals(expectedDeskBoard, importCommand.model.getDeskBoard());
+        assertCommandSuccess(importCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_nonexistentFilePath_throwsCommandException() throws CommandException {
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(String.format(MESSAGE_FILE_NOT_FOUND, MISSING_FILE_PATH));
+    public void execute_nonexistentFilePath_throwsCommandException() {
+        String expectedMessage = String.format(MESSAGE_FILE_NOT_FOUND, MISSING_FILE_PATH);
         ImportCommand importCommand = getImportCommandForGivenFilePath(MISSING_FILE_PATH, model);
-        importCommand.executeUndoableCommand();
+
+        assertCommandFailure(importCommand, expectedMessage);
     }
 
     /**
      * Test
      */
-    public void execute_illegalValuesInFile_throwsCommandException() throws CommandException {
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, "javax.xml.bind.UnmarshalException\n"
-                + " - with linked exception"));
+    @Test
+    public void execute_illegalValuesInFile_throwsCommandException() {
+        String expectedMessage = String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, "javax.xml.bind.UnmarshalException\n"
+                + " - with linked exception:\n[org.xml.sax.SAXParseException; systemId: " +
+                "file:/C:/Users/Karen/IdeaProjects/main/src/test/data/ImportCommandTest/illegalValues.xml; " +
+                "lineNumber: 1; columnNumber: 1; Content is not allowed in prolog.]");
         ImportCommand importCommand = getImportCommandForGivenFilePath(ILLEGAL_VALUES_FILE_PATH, model);
-        importCommand.executeUndoableCommand();
+
+        assertCommandFailure(importCommand, expectedMessage);
     }
 
     /**
@@ -80,13 +84,17 @@ public class ImportCommandTest {
      * already in Desk Board. Only {@code ASSIGNMENT3} and {@code DEMO1} should be added into Desk Board, while
      * the existing activities are ignored.
      */
-    // @Test
-    public void execute_fileContainsExistingActivity_ignoresDuplicateActivity() throws CommandException {
-        ImportCommand withDuplicate = getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, model);
-        withDuplicate.executeUndoableCommand();
-        ImportCommand withoutDuplicate = getImportCommandForGivenFilePath(ASSIGNMENT3_DEMO1_FILE_PATH, model);
-        withoutDuplicate.executeUndoableCommand();
-        assertEquals(withDuplicate.model.getDeskBoard(), withoutDuplicate.model.getDeskBoard());
+    @Test
+    public void execute_fileContainsExistingActivity_ignoresDuplicateActivity() throws DuplicateActivityException {
+        String expectedMessage = String.format(ImportCommand.MESSAGE_SUCCESS, DUPLICATE_ACTIVITY_FILE_PATH);
+        Model expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+        expectedModel.addActivity(ASSIGNMENT3);
+        expectedModel.addActivity(DEMO1);
+        //model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+
+        ImportCommand importCommand = getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, model);
+
+        assertCommandSuccess(importCommand, model, expectedMessage, expectedModel);
     }
 
     @Test

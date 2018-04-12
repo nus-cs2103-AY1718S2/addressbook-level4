@@ -1,16 +1,35 @@
 @startuml
 hide footbox
-participant AddressBookParser
 
-activate AddressBookParser
+skinparam sequence {
+  ActorBackgroundColor #DDDDDD
+  ActorBorderColor black
+  ParticipantFontColor white
+  ParticipantFontSize 16
+  ParticipantFontStyle bold
+  ParticipantBorderThickness 0
+  ParticipantBackgroundColor #0070C0
+  LifeLineBorderColor #0070C0
+  LifeLineBackgroundColor #0070C0
+  defaultFontName Calibri
+}
+
+skinparam shadowing false
+
+participant ":CoinBookParser" as CoinBookParser
+participant ":FindCommandParser" as FindCommandParser
+participant ":ArgumentTokenizer" as ArgumentTokenizer
+participant ":ParserUtil" as ParserUtil
+
+activate CoinBookParser
 
 create FindCommandParser
-AddressBookParser -> FindCommandParser : new FindCommandParser
+CoinBookParser -> FindCommandParser : new FindCommandParser
 activate FindCommandParser
-FindCommandParser -> AddressBookParser
+FindCommandParser -> CoinBookParser
 deactivate
 
-AddressBookParser -> FindCommandParser : parse("<arg string>")
+CoinBookParser -> FindCommandParser : parse("<arg string>")
 activate FindCommandParser
 
 FindCommandParser -> ArgumentTokenizer : tokenizeToTokenList("<arg string>")
@@ -27,7 +46,7 @@ ref over ParserUtil : Parse Sequence
 ParserUtil -> FindCommandParser : Condition
 deactivate ParserUtil
 
-FindCommandParser -> AddressBookParser : Condition
+FindCommandParser -> CoinBookParser : Condition
 deactivate FindCommandParser
 
 destroy FindCommandParser

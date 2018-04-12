@@ -1,0 +1,28 @@
+@startuml
+
+skinparam activityStartColor black
+skinparam activityEndColor black
+skinparam activityBackgroundColor #0070C0
+skinparam activityBorderColor #0070C0
+
+skinparam shadowing false
+
+(*) --> "Parse the tokens syntactically"
+
+if "the argument string is syntactically valid" then
+	--right>[true] "Parse the tokens semantically"
+
+	if "the argument string is semantically valid" then
+		-->[true] "Generate the Condition object on the coin"
+		--> (*)
+	else
+		-->[false] "throw ParseException"
+	endif
+
+else
+	-left->[false] "throw ParseException"
+	--> (*)
+
+@enduml
+
+

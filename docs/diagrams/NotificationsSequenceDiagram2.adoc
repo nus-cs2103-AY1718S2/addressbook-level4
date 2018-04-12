@@ -1,0 +1,60 @@
+.Sequence Diagram for Notifications
+[uml,file="../images/NotificationsSequenceDiagram2.png"]
+--
+
+hide footbox
+
+skinparam shadowing false
+skinparam sequence {
+  ActorBackgroundColor #DDDDDD
+  ActorBorderColor black
+  ArrowColor black
+  ParticipantFontColor white
+  ParticipantFontSize 16
+  ParticipantFontStyle bold
+  ParticipantBorderThickness 0
+  LifeLineBorderColor black
+  defaultFontName Calibri
+}
+
+participant ":LogicManager" as LM #0070C0
+participant "s:SyncCommand" as U #0070C0
+participant ":ModelManager" as M #7030A0
+participant ":EventsCenter" as E #31859C
+participant ":RuleChecker" as N #0070C0
+
+
+[-> LM : execute("sync")
+activate LM #0070C0
+LM -[#0070C0]>] : parseCommand("sync")
+LM <-[#0070C0]-] : s
+
+LM -[#0070C0]> U : execute()
+activate U #0070C0
+U -[#0070C0]>] : fetch data
+U <--] : data
+
+U -[#0070C0]> M : updateAll(data)
+activate M #7030A0
+M -[#7030A0]> E : post(CoinChangedEvent)
+activate E #31859C
+E -[#31859C]> N : handleCoinChangedEvent()
+activate N #0070C0
+N -[#0070C0]> N : Check & trigger\nnotifications
+activate N #0070C0
+N -[#0070C0]-> N
+deactivate N
+E <-[#0070C0]- N
+deactivate N
+M <-[#31859C]- E
+deactivate E
+U <-[#7030A0]- M
+deactivate M
+
+LM <-[#0070C0]- U : result
+deactivate U
+[<-[#0070C0]- LM : result
+deactivate LM
+destroy U
+
+--

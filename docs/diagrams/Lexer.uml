@@ -1,0 +1,39 @@
+@startuml
+
+hide footbox
+
+skinparam sequence {
+    ParticipantFontColor white
+    ParticipantFontSize 16
+    ParticipantFontStyle bold
+    ParticipantBorderThickness 0
+    ParticipantBackgroundColor #0070C0
+    LifeLineBorderColor #0070C0
+    LifeLineBackgroundColor #0070C0
+    defaultFontName Calibri
+}
+
+skinparam shadowing false
+
+Lexer -> TokenStack : new TokenStack()
+activate TokenStack
+TokenStack -> Lexer
+deactivate TokenStack
+
+loop while matcher has match
+    loop on TokenTypes
+        alt the pattern is not WhiteSpace
+            create Token
+            Lexer -> Token : new Token()
+            activate Token
+            Token -> Lexer
+            deactivate Token
+
+            Lexer -> TokenStack : addToken(Token)
+            activate TokenStack
+            TokenStack -> Lexer
+            deactivate TokenStack
+        end
+    end
+end
+@enduml

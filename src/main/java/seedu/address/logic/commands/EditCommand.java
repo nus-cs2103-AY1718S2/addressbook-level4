@@ -42,7 +42,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_NRIC + "NRIC] "
             + "[" + PREFIX_TAG + "TAG]..."
-            + "[" + PREFIX_SUBJECT + "SUBJECT]...\n"
+            + "[" + PREFIX_SUBJECT + "SUBJECT SUBJECT_GRADE...]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NRIC + "S9123457A"
             + "Example: " + COMMAND_ALIAS + " 1 "

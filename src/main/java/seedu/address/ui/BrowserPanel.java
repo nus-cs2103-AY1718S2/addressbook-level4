@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -21,6 +24,8 @@ import seedu.address.model.book.Book;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+    public static final String NO_INTERNET_PAGE = "NoInternet.html";
+    public static final String GOOD_READS_URL = "www.goodreads.com";
     public static final String SEARCH_PAGE_URL =
         "https://www.goodreads.com/search?utf8=%E2%9C%93&query=";
 
@@ -44,7 +49,12 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadBookPage(Book book) {
+    if(pingHost(GOOD_READS_URL, 80 , 3000)) {
         loadPage(SEARCH_PAGE_URL + book.getIsbn().toString());
+    } else {
+        loadNoInternetPage();
+        }
+
     }
 
     public void loadPage(String url) {
@@ -60,6 +70,14 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
+     * Loads a HTML indicating that there is no Internet.
+     */
+    private void loadNoInternetPage() {
+        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + NO_INTERNET_PAGE);
+        loadPage(defaultPage.toExternalForm());
+    }
+
+    /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
@@ -70,5 +88,14 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleBookPanelSelectionChangedEvent(BookPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadBookPage(event.getNewSelection().book);
+    }
+
+    public static boolean pingHost(String host, int port, int timeout) {
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress(host, port), timeout);
+            return true;
+        } catch (IOException e) {
+            return false; // Either timeout or unreachable or failed DNS lookup.
+        }
     }
 }

@@ -6,6 +6,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTaskCommand;
@@ -33,6 +35,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
+    public static final int PERSON_TAB = 0;
     /**
      * Used for initial separation of command word and args.
      */
@@ -97,7 +100,8 @@ public class AddressBookParser {
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
-            return new ListCommand(tabPane);
+            selectPersonTab(tabPane);
+            return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
@@ -132,6 +136,17 @@ public class AddressBookParser {
 
     public void setTabPane(TabPane tabPane) {
         this.tabPane = tabPane;
+    }
+
+    /**
+     * Selects Person List tab before executing list command
+     * @param tabPane
+     */
+    public void selectPersonTab(TabPane tabPane) {
+        if (tabPane != null) {
+            SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+            selectionModel.select(PERSON_TAB);
+        }
     }
 
 }

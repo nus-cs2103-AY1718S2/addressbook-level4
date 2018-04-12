@@ -29,6 +29,8 @@ Head to <<Quick Start>> to get started.
 // tag::quickstart[]
 == Quick Start
 
+If this is your first time running IMDB, follow the following steps to ensure a successful installation of IMDB:
+
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
@@ -53,7 +55,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd patient shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+For more information on the various commands,  refer to <<Features>> for the specific details of each command.
 // end::quickstart[]
 
 
@@ -69,11 +71,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [caption="Figure 2: "]
 image::ui_walkthrough.png[width="990"]
 
-.	Command box: where you can type command in
-.	Command result: where message will be displayed after a command is entered
-.	Multipurpose panel: where patient's details, appointments will be displayed here
-.	Patient list panel: where list of patients in the database is displayed
-.	Visiting queue panel: where list of patients who are waiting for consultation is displayed
+.	Command box: the user types the command here
+.	Command result: the command result message will be displayed here after a command is entered
+.	Multipurpose panel: the patient's details and appointments will be displayed here
+.	Patient list panel: the list of patients in the database is displayed
+.	Visiting queue panel: the list of patients who are currently waiting for consultation is displayed
 
 *Command Format*
 
@@ -85,10 +87,11 @@ image::ui_walkthrough.png[width="990"]
 
 === General Commands
 
-The commands listed in this section are general commands that do not pertain to any specific functionality of IMDB.
+The commands listed in this section are used to enable the management of IMDB.
 
 ==== Viewing help : `help` or `h`
 
+Opens the user guide in a separate window. +
 Format: `help` or `h`
 
 // tag::login[]
@@ -102,12 +105,12 @@ Examples:
 * `login` +
 Username: alice +
 Password: password123 +
-This logs the user in as alice, who is a doctor.
+Logs the user in as alice, who is a doctor.
 
 * `login` +
 Username: bob +
 Password: password456 +
-This logs the user in as bob, who is a medical staff.
+Logs the user in as bob, who is a medical staff.
 // end::login[]
 
 ==== Listing entered commands : `history` or `hi`
@@ -135,7 +138,8 @@ Examples:
 
 * `delete 1` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo` +
+Reverses the `delete 1` command.
 
 * `select 1` +
 `list` +
@@ -144,8 +148,10 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` +
+Reverses the `clear` command. +
+`undo` +
+Reverses the `delete 1` command. +
 
 ==== Redoing the previously undone command : `redo` or `r` or `y`
 
@@ -155,8 +161,10 @@ Format: `redo` or `r`
 Examples:
 
 * `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` +
+Reverses the `delete 1` command. +
+`redo` +
+Reapplies the `delete 1` command. +
 
 * `delete 1` +
 `redo` +
@@ -164,16 +172,27 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`r` (reapplies the `delete 1` command) +
-`r` (reapplies the `clear` command) +
+`undo` +
+Reverses the `clear` command. +
+`undo` +
+Reverses the `delete 1` command. +
+`r` +
+Reapplies the `delete 1` command. +
+`r` +
+Reapplies the `clear` command. +
 // end::undoredo[]
 
 ==== Clearing all entries : `clear` or `c`
 
 Clears all entries from the IMDB. +
 Format: `clear` or `c`
+
+[WARNING]
+This command will clear *all the patient entries* in IMDB. +
+Please proceed with caution.
+
+[TIP]
+If you have accidentally entered this command, you can revert IMDB back to its previous state with the undo command.
 
 ==== Exiting the program : `exit` or `x`
 
@@ -202,7 +221,12 @@ There will be an administrator role which can add a new username and password to
 
 === Patient Commands
 
-The commands listed in this section are commands for managing a patient's details and records.
+The commands listed in this section are used to enable the management of patients’ records/details.
+
+==== Listing all patients : `list` or `ls`
+
+Shows a list of all patients in the IMDB. +
+Format: `list` or `ls`
 
 // tag::add[]
 ==== Adding a patient: `add` or `a`
@@ -212,12 +236,14 @@ Format: `add n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYP
         `a n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...`
 
 [TIP]
-A patient can have any number of conditions (including 0)
+A patient can have any number of conditions (including 0).
 
 Examples:
 
-* `add n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01, dob/01/01/1991 b/A-`
-* `a n/Betsy Crowe ic/NRIC c/peanuts e/betsycrowe@example.com a/Newgate Prison p/1234567 dob/12/12/1992 b/B+ c/aspirin`
+* `add n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01, dob/01/01/1991 b/A-` +
+Adds a new patient named John Doe.
+* `a n/Betsy Crowe ic/NRIC c/peanuts e/betsycrowe@example.com a/Newgate Prison p/1234567 dob/12/12/1992 b/B+ c/aspirin` +
+Adds a new patient named Betsy.
 // end::add[]
 
 ==== Deleting a patient : `delete` or `d` or `rm`
@@ -226,7 +252,6 @@ Deletes the specified patient from the IMDB. +
 Format: `delete INDEX` or `d`
 
 ****
-* Deletes the patient at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -248,7 +273,8 @@ Format: `edit INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB]
         `e INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE] [c/CONDITION]...`
 
 ****
-* Edits the patient at the specified `INDEX`. The index refers to the index number shown in the last patient listing. The index *must be a positive integer* 1, 2, 3, ...
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing conditions, the existing conditions of the patient will be removed i.e adding of conditions is not cumulative.
@@ -266,11 +292,10 @@ Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing c
 // tag::remark[]
 ==== Editing remarks for a patient : `remark` or `rk` [since v1.2]
 
-Edits the remark for a patient specified by the index number used in the last patient listing. +
+Edits the remarks for a patient specified by the index number used in the last patient listing. +
 Format: `remark INDEX r/[REMARK]` or `rk INDEX r/[REMARK]`
 
 ****
-* Selects the patient at the specified `INDEX` and edits the remarks for that patient.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -288,37 +313,32 @@ Removes the remark for the first patient.
 // tag::addc[]
 ==== Adding a condition to an existing patient: `addc` [since v1.3]
 
-Adds a medical condition to an existing patient.
-Format: `addc` or `ac`
+Adds a medical condition to an existing patient. +
+Format: `addc INDEX c/[CONDITION]` or `ac INDEX c/[CONDITION]`
 
 Examples:
 
 * `addc 1 c/aspirin` +
-`aspirin` will be added to the list of conditions that the patient at index `1` has.
+Adds `aspirin` to the list of conditions that the patient at index `1` has.
 
 * `ac 2 c/asthma` +
-`asthma` will be added to the list of conditions that the patient at index `2` has.
+Adds `asthma` to the list of conditions that the patient at index `2` has.
 // end::addc[]
 
 // tag::delc[]
 ==== Removing the condition of an existing patient: `delc` [since v1.4]
 
-Removes a medical condition to an existing patient.
-Format: `delc` or `dc`
+Removes a medical condition to an existing patient. +
+Format: `delc INDEX c/[CONDITION]` or `dc INDEX c/[CONDITION]`
 
 Examples:
 
 * `delc 1 c/aspirin` +
-`aspirin` will be removed from the list of conditions that the patient at index `1` has.
+Removes `aspirin` from the list of conditions that the patient at index `1` has.
 
 * `dc 2 c/asthma` +
-`asthma` will be removed from the list of conditions that the patient at index `2` has.
+Removes `asthma` from the list of conditions that the patient at index `2` has.
 // end::delc[]
-
-==== Listing all patients : `list` or `ls`
-
-Shows a list of all patients in the IMDB. +
-Format: `list` or `ls`
 
 ==== Locating patients by name: `find` or `f`
 
@@ -343,11 +363,10 @@ Returns any patient having names `Betsy`, `Tim`, or `John`
 // tag::select[]
 ==== Selecting a patient : `select` or `s`
 
-Selects the patient identified by the index number used in the last patient listing. +
+Selects the patient identified by the index number used in the last patient listing and loads up that patient's details. +
 Format: `select INDEX` or `s INDEX`
 
 ****
-* Selects the patient and loads up the details of the patient at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -365,15 +384,16 @@ Selects the 1st patient in the results of the `find` command.
 // tag::record[]
 ==== Viewing and editing the medical records for a patient : `record` [since in v1.4]
 
-Views all the medical records for a patient specified by the index number used in the last patient listing. +
+Views the medical record at the specified record index for a patient specified by the index number used in the last patient listing. +
 *This command is only accessible to doctors.* +
 Format: `record INDEX in/[RECORD INDEX]` or `rec INDEX in/[RECORD INDEX]`
 
 ****
-* Selects the person at the specified `INDEX` and displays all the medical records for that patient in a separate window.
+* The medical record for that patient will be opened in a separate window.
 * If the specified index is more than the number of medical records, a new medical record will be created instead.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
+* The date entry of the medical record must be in the following format: DD/MM/YYYY.
 ****
 
 Examples:
@@ -385,11 +405,12 @@ Displays the first medical record for the first person in the result of the list
 ==== Deleting the medical records for a patient : `remover` [since in v1.4]
 
 Deletes the medical record specified by the record index for a patient specified by the index number used in the last patient listing. +
+*This command is only accessible to doctors.* +
 Format: `remover INDEX in/[RECORD INDEX]` or `rr INDEX in/[RECORD INDEX]`
 
 ****
-* Selects the person at the specified `INDEX` and deletes the medical record at `[RECORD INDEX]`, shifting all other medical records up the list.
-* If the deletion of the medical record would leave the list of records empty, a default medical record will be generated.
+* Deleting a medical record will shift all other medical records up the medical record list.
+* If the deletion of the medical record would leave the list of records empty, an empty medical record will be generated.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -404,7 +425,7 @@ Deletes the first medical record for the first person in the result of the list 
 // tag::print[]
 ==== Printing a patient's formatted medical records : `print` or `p` [since v1.4]
 
-Formats and prints a patient's medical records into a pdf. The pdf file is located in the same directory as the IMDB application. +
+Formats and prints a patient's medical records into a pdf file. This pdf file is located in the same directory as the IMDB application. +
 *This command is only accessible to doctors.* +
 Format: `print INDEX` or `p INDEX`
 // end::print[]
@@ -415,13 +436,13 @@ IMDB will be able to attach images(X-ray scans) to a patient and retrieve the im
 
 === Visiting Queue Commands
 
-The commands listed in this section are commands that pertain to the queue.
+The commands listed in this section are used to enable the management of the visiting queue of the clinic.
 
 ==== Adding a patient into the visiting queue with index: `addq` [since v1.2]
 
-Adds patient into visiting queue (registration).
+Adds a patient into the end of the visiting queue (registration). +
 
-*This command is only accessible to medical staffs and is not undoable.* +
+*This command is only accessible to medical staff and is not undoable.* +
 
 Format: `addq INDEX` or `aq INDEX`
 
@@ -429,11 +450,11 @@ Examples:
 
 * `list` +
 `addq 3` +
-Charlotte Oliveiro will be added into the visiting queue.
+Adds the third person in the result of the list command into the visiting queue.
 
 * `find bernice` +
 `aq 2` +
-Bernice Lee will be added into the visiting queue as shown in Figure 3 below.
+Adds Bernice Lee into the visiting queue as shown in Figure 3 below.
 
 .Add patient to queue according to list index
 [caption="Figure 3: "]
@@ -441,47 +462,58 @@ image::addq_duplicate.PNG[width="990"]
 
 ==== Removing a patient from the visiting queue: `removeq` [since v1.2]
 
-Removes the first patient from the visiting queue (check-out).
+Removes the first patient from the visiting queue (check-out). +
 
-*This command is only accessible to medical staffs and is not undoable.* +
+*This command is only accessible to medical staff and is not undoable.* +
 
 Format: `removeq` or `rq`
 
 Examples:
 
 * `removeq` +
-Betsy will be removed if she is the first patient in the queue.
+Removes the first patient in the queue.
 
 * `rq` +
-John will be removed if he is the first patient in the queue.
+Removes the first patient in the queue.
 
 ==== Removing a patient from the visiting queue by index: `removeq` [since v1.5rc]
 
-Removes a specific patient from the visiting queue by index (check-out).
+Removes a patient from the visiting queue specified by the index number used in the last patient listing. (check-out). +
 
-*This command is only accessible to medical staffs and is not undoable.* +
+*This command is only accessible to medical staff and is not undoable.* +
 
-Format: `removeq` or `rq`
+Format: `removeq INDEX` or `rq INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* This command will only remove a patient if they are currently in the visiting queue.
+****
 
 Examples:
 
 * `removeq 4` +
-Bernice will be removed if she is the 4th patient in the patient list and she is in the visiting queue.
+Removes the fourth patient in the patient list from the visiting queue if this patient is in the visiting queue.
 
 * `rq 2` +
-Alex will be removed if he is the 2nd patient in the patient list and he is in the visiting queue.
+Removes the second patient in the patient list from the visiting queue if this patient is in the visiting queue.
 
 === Appointment Commands
 
-The commands listed in this section are commands that pertain to the patient's appointment.
+The commands listed in this section are used to enable the management of patients’ appointments.
 
 ==== Adding a medical appointment with: `addappt` [since v1.4]
 
-Adds a medical appointment with patient name, date, time.
+Adds a medical appointment to a patient specified by their name, with the appointment's date and time.
 
-*This command is only accessible to medical staffs and is not undoable.* +
+*This command is only accessible to medical staff and is not undoable.* +
 
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
+
+****
+* The date of the appointment must be in the following format: DD/MM/YYYY.
+* The time of the appointment must be given in 24 hour clock format: HHMM.
+****
 
 Examples:
 
@@ -493,25 +525,25 @@ Adds a medical appointment for John on 23/3/2018 at 2:30pm.
 
 ==== Viewing medical appointments by patient name: `viewappt` [since v1.3]
 
-Shows a list of medical appointments of the patient.
+Shows the list of medical appointments of a patient specified by their name.
 
-*This command is only accessible to medical staffs.* +
+*This command is only accessible to medical staff.* +
 
 Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
 
 Examples:
 
 * `viewappt Betsy` +
-List of medical appointments made by Betsy.
+Lists the medical appointments made by Betsy.
 
 * `va John` +
-List of medical appointments made by John.
+Lists the medical appointments made by John.
 
 ==== Deleting a medical appointment by patient name and appointment index number: `delappt` [since v1.3]
 
-Deletes a medical appointment of the patient.
+Deletes the medical appointment at the given index of a patient specified by their name.
 
-*This command is only accessible to medical staffs and is not undoable.* +
+*This command is only accessible to medical staff and is not undoable.* +
 
 Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
 
@@ -519,27 +551,27 @@ Examples:
 
 * `viewappt Betsy` +
 `delappt Betsy 2` +
-Delete a medical appointment of Betsy with index number 2.
+Deletes the medical appointment made by Betsy with index number 2.
 
 * `va John` +
 `da John 1` +
-Delete a medical appointment of John with index number 1.
+Deletes the medical appointment made by John with index number 1.
 
 ==== Viewing medical appointments in calendar: `viewappt` [since v1.4]
 
-Shows a list of medical appointments in calendar month view.
+Shows the list of medical appointments in a calendar month view.
 
-*This command is only accessible to medical staffs.* +
+*This command is only accessible to medical staff.* +
 
 Format: `viewappt` or `va`
 
 Examples:
 
 * `viewappt` +
-List of medical appointments on current month. User can also navigate to other months to view medical appointments for the particular month.
+Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month.
 
 * `va` +
-List of medical appointments on current month. User can also navigate to other months to view medical appointments for the particular month.
+Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month.
 
 ==== Viewing the schedule for a patient across all specialists `[coming in v2.0]`
 
@@ -556,43 +588,72 @@ There is no need to save manually.
 
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
+*Q*: How do I transfer my data to another computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous IMDB folder.
 
 == Command Summary
 
 * *Add* `add` or `a n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...` +
 e.g. `add` or `a n/James Ho ic/S1234567A p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 dob/11/11/1991 b/A+ c/peanuts c/aspirin`
-* *Clear* : `clear` or `c`
-* *Delete* : `delete` or `d` or `rm INDEX` +
-e.g. `delete` or `d` or `rm 3`
-* *Edit* : `edit` or `e INDEX [n/NAME] [ic/NRIC] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE] [c/CONDITION]...` +
-e.g. `edit` or `e 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find` or `f KEYWORD [MORE_KEYWORDS]` +
-e.g. `find` or `f James Jake`
-* *List* : `list` or `ls`
-* *Login* : `login` or `lg`
-* *Help* : `help` or `h`
-* *Select* : `select` or `s INDEX` +
-e.g.`select` or `s 2`
-* *Remark* : `remark` or `rk INDEX r/[REMARK]` +
-e.g.`remark` or `rk 1 r/Likes to drink coffee.`
-* *Record* : `record` or `rec INDEX in/[RECORD INDEX]` +
-e.g.`record` or `rec 1 in/2`
-* *Remover* : `remover` or `rr INDEX in/[RECORD INDEX]` +
-e.g.`remover` or `rr 1 in/2`
+
+* *Add condition* : `addc` or `ac`
+e.g.`addc 2 c/CONDITION` or `ac 1 c/CONDITION`
+
 * *Add patient into visiting queue* : `addq` or `aq`
 e.g.`addq 2` or `aq 1`
-* *Remove patient from visiting queue* : `removeq` or `rq`
-* *Remove patient from visiting queue by index* : `removeq` or `rq`
-e.g.`removeq 2` or `rq 1`
-* *View appointments in calendar* : `viewappt` or `va` +
-e.g.`viewappt john` or `viewappt john`
-* *View appointments by patient name* : `viewappt` or `va`
+
 * *Add new appointment* : `addappt` or `aa` +
 e.g.`addappt betsy 19/3/2018 1300` or `aa betsy 19/3/2018 1300`
+
+* *Clear* : `clear` or `c`
+
+* *Delete* : `delete` or `d` or `rm INDEX` +
+e.g. `delete` or `d` or `rm 3`
+
 * *Delete appointment* : `delappt` or `da` +
 e.g.`delappt betsy 2` or `da betsy 2`
+
 * *History* : `history` or `hi`
+
 * *Undo* : `undo` or `u` or `z`
+
+* *Edit* : `edit` or `e INDEX [n/NAME] [ic/NRIC] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE] [c/CONDITION]...` +
+e.g. `edit` or `e 2 n/James Lee e/jameslee@example.com`
+
+* *Find* : `find` or `f KEYWORD [MORE_KEYWORDS]` +
+e.g. `find` or `f James Jake`
+
+* *Help* : `help` or `h`
+
+* *Login* : `login` or `lg`
+
+* *List* : `list` or `ls`
+
+* *Print* : `print` or `p`
+
+* *Record* : `record` or `rec INDEX in/[RECORD INDEX]` +
+e.g.`record` or `rec 1 in/2`
+
 * *Redo* : `redo` or `r` or `y`
+
+* *Remark* : `remark` or `rk INDEX r/[REMARK]` +
+e.g.`remark` or `rk 1 r/Likes to drink coffee.`
+
+* *Remove condition* : `delc` or `dc`
+e.g.`delc 2 c/CONDITION` or `dc 1 c/CONDITION`
+
+* *Remove patient from visiting queue* : `removeq` or `rq`
+
+* *Remove patient from visiting queue by index* : `removeq` or `rq`
+e.g.`removeq 2` or `rq 1`
+
+* *Remover* : `remover` or `rr INDEX in/[RECORD INDEX]` +
+e.g.`remover` or `rr 1 in/2`
+
+* *Select* : `select` or `s INDEX` +
+e.g.`select` or `s 2`
+
+* *View appointments in calendar* : `viewappt` or `va` +
+e.g.`viewappt john` or `viewappt john`
+
+* *View appointments by patient name* : `viewappt` or `va`

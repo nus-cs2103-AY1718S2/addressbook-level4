@@ -361,7 +361,7 @@
 /*@@author AJZ1995*/
 #groups .teal {
     -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+    -fx-background-color: #008080;
 }
 
 #groups .red {
@@ -375,8 +375,8 @@
 }
 
 #groups .blue {
-    -fx-text-fill: white;
-    -fx-background-color: #2980B9;
+    -fx-text-fill: black;
+    -fx-background-color: #2890B9;
 }
 
 #groups .orange {
@@ -409,6 +409,11 @@
     -fx-background-color: #8E44AD;
 }
 
+#preferences .teal {
+    -fx-text-fill: white;
+    -fx-background-color: #008080;
+}
+
 #preferences .red {
     -fx-text-fill: black;
     -fx-background-color: red;
@@ -421,7 +426,7 @@
 
 #preferences .blue {
     -fx-text-fill: white;
-    -fx-background-color: #2980B9;
+    -fx-background-color: #2890B9;
 }
 
 #preferences .orange {
@@ -434,7 +439,7 @@
     -fx-background-color: brown;
 }
 
-#groups .green {
+#preferences .green {
     -fx-text-fill: black;
     -fx-background-color: #27AE60;
 }
@@ -453,7 +458,6 @@
     -fx-text-fill: black;
     -fx-background-color: #8E44AD;
 }
-
 
 #cardPane {
     -fx-background-color: transparent;

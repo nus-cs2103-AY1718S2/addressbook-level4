@@ -29,6 +29,9 @@ public class PersonPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private PersonCard selectedPersonCard;
+    private Person person;
+
     @FXML
     private VBox panel;
 
@@ -71,7 +74,7 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     /**
-     * Loads a blank page when no contact is selected.
+     * Loads up a blank page when no contact is selected.
      */
     private void loadBlankPersonPage() {
         name.setText("");
@@ -165,7 +168,9 @@ public class PersonPanel extends UiPart<Region> {
     public void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         loadBlankPersonPage();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        selectedPersonCard = event.getNewSelection();
+        person = selectedPersonCard.person;
+        loadPersonPage(person);
     }
 
     /**

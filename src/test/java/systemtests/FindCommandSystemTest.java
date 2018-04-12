@@ -4,9 +4,24 @@ import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_PET_PATIENTS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.BREED_DESC_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.COLOUR_DESC_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.OPTION_OWNER;
+import static seedu.address.logic.commands.CommandTestUtil.OPTION_PET;
+import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.SPECIES_DESC_NERO;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FIV;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
@@ -15,6 +30,7 @@ import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.NRIC_KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.OWES_MONEY_TAG;
+import static seedu.address.testutil.TypicalPetPatients.NERO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +38,13 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.TypicalPetPatients;
 
 public class FindCommandSystemTest extends AddressBookSystemTest {
 
@@ -326,107 +341,158 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
     }
 
     @Test
-    public void findPet() throws DuplicatePetPatientException {
+    public void findPet() {
+        String command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + TAG_DESC_FRIEND
+                + PHONE_DESC_BOB + ADDRESS_DESC_BOB
+                + NAME_DESC_BOB + NRIC_DESC_BOB + TAG_DESC_HUSBAND + EMAIL_DESC_BOB;
+        executeCommand(command);
+
+        command = AddCommand.COMMAND_WORD + "  " + OPTION_PET + "  " + NAME_DESC_NERO
+                + "  " +  SPECIES_DESC_NERO + "  " + BREED_DESC_NERO + "  " +  COLOUR_DESC_NERO + "  "
+                + BLOODTYPE_DESC_NERO + "  " + TAG_DESC_FIV + " " + OPTION_OWNER + "  " + NRIC_DESC_BOB + "  ";
+        executeCommand(command);
+
         /* Case: find pet name with  tag in address book, command with leading spaces and trailing spaces
-         * -> 1 person found
+         * -> 1 person found, 1 pet found
          */
-        String command = "   " + FindCommand.COMMAND_WORD + " -p n/" + OWES_MONEY_TAG + "   ";
+        command = "   " + FindCommand.COMMAND_WORD + " -p " + NAME_DESC_NERO + "   ";
         Model expectedModel = getModel();
-        expectedModel.addPetPatient(TypicalPetPatients.JOKER);
-        ModelHelper.setFilteredPersonList(expectedModel, BENSON);
+        ModelHelper.setFilteredPersonList(expectedModel, BOB);
+        ModelHelper.setFilteredPetPatientList(expectedModel, NERO);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: repeat previous find command where person list is displaying the persons we are finding
-         * -> 1 persons found
+         * -> 1 persons found, 1 pet found
          */
-
-        command = FindCommand.COMMAND_WORD + " -o t/" + OWES_MONEY_TAG;
+        command = FindCommand.COMMAND_WORD + " -p " + NAME_DESC_NERO;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person where person list changes*/
-        command = FindCommand.COMMAND_WORD + " -o t/friends";
-        ModelHelper.setFilteredPersonList(expectedModel, ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE);
+        /* Case: find name not in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -p n/NEerrreo";
+        ModelHelper.setFilteredPersonList(expectedModel);
+        ModelHelper.setFilteredPetPatientList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple persons in address book, 2 keywords -> 7 persons found */
-        command = FindCommand.COMMAND_WORD + " -o t/friends owesMoney";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 keywords in reversed order -> 7 persons found */
-        command = FindCommand.COMMAND_WORD + " -o t/owesMoney friends";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 keywords with 1 repeat -> 7 persons found */
-        command = FindCommand.COMMAND_WORD + " -o t/owesMoney friends owesMoney";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 matching keywords and 1 non-matching keyword
-         * -> 2 persons found
+        /* Case: find pet name with  tag in address book, command with leading spaces and trailing spaces
+         * -> 1 person found, 1 pet found
          */
-        command = FindCommand.COMMAND_WORD + " -o t/owesMoney friends NonMatchingKeyWord";
+        command = "   " + FindCommand.COMMAND_WORD + " -p " + SPECIES_DESC_NERO + "   ";
+        ModelHelper.setFilteredPersonList(expectedModel, BOB);
+        ModelHelper.setFilteredPetPatientList(expectedModel, NERO);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person in address book, keyword is same as name but of different case -> 1 person found */
-        command = FindCommand.COMMAND_WORD + " -o t/OwEsMoNey fRiEnDs";
+        /* Case: repeat previous find command where person list is displaying the persons we are finding
+         * -> 1 persons found, 1 pet found
+         */
+        command = FindCommand.COMMAND_WORD + " -p " + SPECIES_DESC_NERO;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: undo previous find command -> rejected */
-        command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
-
-        /* Case: redo previous find command -> rejected */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
-
-        /* Case: find person in address book, keyword is substring of tag -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " -o t/OWE";
+        /* Case: find species not in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -p s/Doggy";
         ModelHelper.setFilteredPersonList(expectedModel);
+        ModelHelper.setFilteredPetPatientList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person in address book, tag is substring of keyword -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " -o t/owesmoneys";
+        /* Case: find pet name with  tag in address book, command with leading spaces and trailing spaces
+         * -> 1 person found, 1 pet found
+         */
+        command = "   " + FindCommand.COMMAND_WORD + " -p " + BREED_DESC_NERO + "   ";
+        ModelHelper.setFilteredPersonList(expectedModel, BOB);
+        ModelHelper.setFilteredPetPatientList(expectedModel, NERO);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous find command where person list is displaying the persons we are finding
+         * -> 1 persons found, 1 pet found
+         */
+        command = FindCommand.COMMAND_WORD + " -p " + BREED_DESC_NERO;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find breed not in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -p b/breedx";
         ModelHelper.setFilteredPersonList(expectedModel);
+        ModelHelper.setFilteredPetPatientList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person not in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " -o t/Chicken";
+        /* Case: find pet name with  tag in address book, command with leading spaces and trailing spaces
+         * -> 1 person found, 1 pet found
+         */
+        command = "   " + FindCommand.COMMAND_WORD + " -p " + COLOUR_DESC_NERO + "   ";
+        ModelHelper.setFilteredPersonList(expectedModel, BOB);
+        ModelHelper.setFilteredPetPatientList(expectedModel, NERO);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find phone number of person in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " -o t/" + DANIEL.getPhone().value;
+        /* Case: repeat previous find command where person list is displaying the persons we are finding
+         * -> 1 persons found, 1 pet found
+         */
+        command = FindCommand.COMMAND_WORD + " -p " + COLOUR_DESC_NERO;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find address of person in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " -o t/" + DANIEL.getAddress().value;
+        /* Case: find colour not in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -p c/Purple";
+        ModelHelper.setFilteredPersonList(expectedModel);
+        ModelHelper.setFilteredPetPatientList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person in empty address book -> 0 persons found */
-        deleteAllPersons();
-        command = FindCommand.COMMAND_WORD + " -o t/friends";
-        expectedModel = getModel();
-        ModelHelper.setFilteredPersonList(expectedModel, DANIEL);
+        /* Case: find pet name with  tag in address book, command with leading spaces and trailing spaces
+         * -> 1 person found, 1 pet found
+         */
+        command = "   " + FindCommand.COMMAND_WORD + " -p " + BLOODTYPE_DESC_NERO + "   ";
+        ModelHelper.setFilteredPersonList(expectedModel, BOB);
+        ModelHelper.setFilteredPetPatientList(expectedModel, NERO);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: mixed case command word -> rejected */
-        command = "FiNd -o t/friends";
-        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
+        /* Case: repeat previous find command where person list is displaying the persons we are finding
+         * -> 1 persons found, 1 pet found
+         */
+        command = FindCommand.COMMAND_WORD + " -p " + BLOODTYPE_DESC_NERO;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find blood type not in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -p bt/O";
+        ModelHelper.setFilteredPersonList(expectedModel);
+        ModelHelper.setFilteredPetPatientList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find pet name with  tag in address book, command with leading spaces and trailing spaces
+         * -> 1 person found, 1 pet found
+         */
+        command = "   " + FindCommand.COMMAND_WORD + " -p " + TAG_DESC_FIV + "   ";
+        ModelHelper.setFilteredPersonList(expectedModel, BOB);
+        ModelHelper.setFilteredPetPatientList(expectedModel, NERO);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous find command where person list is displaying the persons we are finding
+         * -> 1 persons found, 1 pet found
+         */
+        command = FindCommand.COMMAND_WORD + " -p " + TAG_DESC_FIV;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tag not in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " -p t/owner";
+        ModelHelper.setFilteredPersonList(expectedModel);
+        ModelHelper.setFilteredPetPatientList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
     }
+
+
 
     //@@author
     /**

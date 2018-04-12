@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_PET_PATIENTS_LISTED_OVERVIEW;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -16,7 +15,6 @@ import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.GEORGE;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -70,7 +68,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_nameKeyword_tagKeyword_nricKeyword_personFound() throws CommandException {
+    public void execute_allPresent_personFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1)
                 + "\n"
                 + String.format(MESSAGE_PET_PATIENTS_LISTED_OVERVIEW, 0);
@@ -92,7 +90,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_nonExistentNameKeyword_tagKeyword_nricKeyword_personFound() throws CommandException {
+    public void execute_nonExistentNameKeyword_personFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0)
                 + "\n"
                 + String.format(MESSAGE_PET_PATIENTS_LISTED_OVERVIEW, 0);
@@ -114,13 +112,35 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_nameKeyword_tagKeyword_nonExistentNricKeyword_personFound() throws CommandException {
+    public void execute_nonExistentNricKeyword_personFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0)
                 + "\n"
                 + String.format(MESSAGE_PET_PATIENTS_LISTED_OVERVIEW, 0);
 
         String[] name = {"Kurz"};
         String[] nric = {"F2981391U"};
+        String[] tag = {"friends"};
+
+        HashMap<String, String[]> hashMap = new HashMap<>();
+
+        hashMap.put("ownerName", name);
+        hashMap.put("ownerNric", nric);
+        hashMap.put("ownerTag", tag);
+
+        FindCommand command = new FindCommand(hashMap);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_nonExistentTagKeyword_personFound() throws CommandException {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0)
+                + "\n"
+                + String.format(MESSAGE_PET_PATIENTS_LISTED_OVERVIEW, 0);
+
+        String[] name = {"Kurz"};
+        String[] nric = {"F2345678U"};
         String[] tag = {"friendstoo"};
 
         HashMap<String, String[]> hashMap = new HashMap<>();
@@ -299,7 +319,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_petAllFields_noFoundName_empty() throws CommandException {
+    public void executePetAllFields_noFoundName_noPetFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0)
                 + "\n"
                 + String.format(MESSAGE_PET_PATIENTS_LISTED_OVERVIEW, 0);
@@ -327,7 +347,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_petAllFields_noFoundSpecies_empty() throws CommandException {
+    public void executePetAllFields_noFoundSpecies_noPetFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0)
                 + "\n"
                 + String.format(MESSAGE_PET_PATIENTS_LISTED_OVERVIEW, 0);
@@ -355,7 +375,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_petAllFields_noFoundBreed_empty() throws CommandException {
+    public void executePetAllFields_noFoundBreed_noPetFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0)
                 + "\n"
                 + String.format(MESSAGE_PET_PATIENTS_LISTED_OVERVIEW, 0);
@@ -383,7 +403,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_petAllFields_noFoundColour_empty() throws CommandException {
+    public void executePetAllFields_noFoundColour_noPetFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0)
                 + "\n"
                 + String.format(MESSAGE_PET_PATIENTS_LISTED_OVERVIEW, 0);
@@ -411,7 +431,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_petAllFields_noFoundBloodType_empty() throws CommandException {
+    public void executePetAllFields_noFoundBloodType_noPetFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0)
                 + "\n"
                 + String.format(MESSAGE_PET_PATIENTS_LISTED_OVERVIEW, 0);
@@ -439,7 +459,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_petAllFields_noFoundTag_empty() throws CommandException {
+    public void executePetAllFields_noFoundTag_noPetFound() throws CommandException {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0)
                 + "\n"
                 + String.format(MESSAGE_PET_PATIENTS_LISTED_OVERVIEW, 0);

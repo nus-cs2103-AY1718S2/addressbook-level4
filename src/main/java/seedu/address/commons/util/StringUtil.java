@@ -75,7 +75,7 @@ public class StringUtil {
      * e.g. empty string, "3 0" (contains whitespace), "1 a" (contains letters)
      * @throws NullPointerException if {@code s} is null.
      */
-    public static boolean isValidNumber(String s) {
+    public static boolean isValidAmount(String s) {
         requireNonNull(s);
 
         try {

@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.coin.Coin;
+import seedu.address.model.coin.Price;
 import seedu.address.model.coin.UniqueCoinList;
 import seedu.address.model.coin.exceptions.CoinNotFoundException;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
@@ -139,7 +140,7 @@ public class CoinBook implements ReadOnlyCoinBook {
             if (coinData == null) {
                 continue;
             }
-            double newPrice = coinData.getAsJsonObject().get("USD").getAsDouble();
+            Price newPrice = new Price();
             Coin updatedCoin = new Coin(coin, newPrice);
             updateCoin(coin, updatedCoin);
         }

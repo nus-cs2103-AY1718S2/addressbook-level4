@@ -91,37 +91,37 @@ public class ConditionGenerator {
      */
     Predicate<Coin> getPredicateFromPrefix(TokenType type) throws IllegalValueException {
         BiPredicate<Amount, Amount> amountComparator;
-        Double specifiedAmount;
+        Amount specifiedAmount;
         switch (type) {
         case PREFIX_HELD:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
-            specifiedAmount = ParserUtil.parseDouble(tokenStack.popToken().getPattern());
-            return new AmountHeldCondition(new Amount(specifiedAmount), amountComparator);
+            specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
+            return new AmountHeldCondition(specifiedAmount, amountComparator);
 
         case PREFIX_SOLD:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
-            specifiedAmount = ParserUtil.parseDouble(tokenStack.popToken().getPattern());
-            return new DollarsSoldCondition(new Amount(specifiedAmount), amountComparator);
+            specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
+            return new DollarsSoldCondition(specifiedAmount, amountComparator);
 
         case PREFIX_BOUGHT:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
-            specifiedAmount = ParserUtil.parseDouble(tokenStack.popToken().getPattern());
-            return new DollarsBoughtCondition(new Amount(specifiedAmount), amountComparator);
+            specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
+            return new DollarsBoughtCondition(specifiedAmount, amountComparator);
 
         case PREFIX_MADE:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
-            specifiedAmount = ParserUtil.parseDouble(tokenStack.popToken().getPattern());
-            return new MadeCondition(new Amount(specifiedAmount), amountComparator);
+            specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
+            return new MadeCondition(specifiedAmount, amountComparator);
 
         case PREFIX_PRICE:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
-            specifiedAmount = ParserUtil.parseDouble(tokenStack.popToken().getPattern());
-            return new CurrentPriceCondition(new Amount(specifiedAmount), amountComparator);
+            specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
+            return new CurrentPriceCondition(specifiedAmount, amountComparator);
 
         case PREFIX_WORTH:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
-            specifiedAmount = ParserUtil.parseDouble(tokenStack.popToken().getPattern());
-            return new WorthCondition(new Amount(specifiedAmount), amountComparator);
+            specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
+            return new WorthCondition(specifiedAmount, amountComparator);
 
         case PREFIX_CODE:
             return new CodeCondition(tokenStack.popToken().getPattern());
@@ -139,11 +139,11 @@ public class ConditionGenerator {
     private static BiPredicate<Amount, Amount> getAmountComparatorFromToken(Token token) {
         switch (token.getPattern()) {
         case "=":
-            return (amount1, amount2) -> amount1.getValue().equals(amount2.getValue());
+            return (amount1, amount2) -> (amount1.compareTo(amount2) == 0);
         case ">":
-            return (amount1, amount2) -> amount1.getValue() > amount2.getValue();
+            return (amount1, amount2) -> (amount1.compareTo(amount2) > 0);
         case "<":
-            return (amount1, amount2) -> amount1.getValue() < amount2.getValue();
+            return (amount1, amount2) -> (amount1.compareTo(amount2) < 0);
         default:
             return null;
         }

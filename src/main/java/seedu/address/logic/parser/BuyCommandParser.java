@@ -9,6 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.BuyCommand;
 import seedu.address.logic.commands.CommandTarget;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.coin.Amount;
 
 /**
  * Parses input arguments and creates a new BuyCommand object
@@ -32,7 +33,7 @@ public class BuyCommandParser implements Parser<BuyCommand> {
 
         try {
             CommandTarget target = ParserUtil.parseTarget(argMultimap.getPreamble());
-            double amountToAdd = ParserUtil.parseDouble(argMultimap.getValue(PREFIX_AMOUNT).get());
+            Amount amountToAdd = ParserUtil.parseAmount(argMultimap.getValue(PREFIX_AMOUNT).get());
             return new BuyCommand(target, amountToAdd);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BuyCommand.MESSAGE_USAGE));

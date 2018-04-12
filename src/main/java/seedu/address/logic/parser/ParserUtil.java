@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.CommandTarget;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.coin.Amount;
 import seedu.address.model.coin.Code;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.tag.Tag;
@@ -90,17 +91,17 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code value} into a {@code double} and returns it. Leading and trailing whitespaces will be
+     * Parses {@code value} into an {@code Amount} and returns it. Leading and trailing whitespaces will be
      * trimmed.
      *
      * @throws IllegalValueException if the specified index is invalid (not number value).
      */
-    public static double parseDouble(String value) throws IllegalValueException {
+    public static Amount parseAmount(String value) throws IllegalValueException {
         String trimmedValue = value.trim();
-        if (!StringUtil.isValidNumber(trimmedValue)) {
+        if (!StringUtil.isValidAmount(trimmedValue)) {
             throw new IllegalValueException(MESSAGE_INVALID_NUMBER);
         }
-        return Double.parseDouble(trimmedValue);
+        return new Amount(trimmedValue);
     }
 
     /**

@@ -36,6 +36,13 @@ public class CollectionUtil {
     }
 
     /**
+     * Returns true if {@code items} contain any elements that are null.
+     */
+    public static boolean isAnyNull(Object... items) {
+        return items == null || Arrays.stream(items).anyMatch(Objects::isNull);
+    }
+
+    /**
      * Returns true if every element in a collection are unique by {@link Object#equals(Object)}.
      */
     public static boolean elementsAreUnique(Collection<?> items) {

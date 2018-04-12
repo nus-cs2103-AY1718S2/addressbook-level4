@@ -47,7 +47,7 @@ public class CoinCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
 
         code.setText(coin.getCode().fullName);
-        amount.setText(coin.getCurrentAmountHeld().getValue().toString());
+        amount.setText(coin.getCurrentAmountHeld().toString());
         price.setText(coin.getPrice().toString());
         coin.getTags().forEach(tag -> newTag(tag));
     }

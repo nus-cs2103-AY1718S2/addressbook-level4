@@ -5,40 +5,40 @@ package seedu.address.model.coin;
  */
 public class Price {
 
-    private Double value;
+    private Amount currentPrice;
 
     /**
      * Constructs a {@code Price}.
      */
     public Price() {
-        this.value = 1.0;
+        this.currentPrice = new Amount("1.0");
     }
 
     //@@author laichengyu
     /**
      * Constructs a {@code Price} with given value.
      */
-    public Price(double value) {
-        this.value = value;
+    public Price(Price toCopy) {
+        this.currentPrice = toCopy.currentPrice;
     }
     //@@author
 
-    public Double getValue() {
-        return value;
+    public Amount getCurrent() {
+        return currentPrice;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setCurrent(Amount currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Price // instanceof handles nulls
-                && this.value.equals(((Price) other).value)); // state check
+                && this.currentPrice.equals(((Price) other).currentPrice)); // state check
     }
 
     public String toString() {
-        return this.value.toString();
+        return this.currentPrice.toString();
     }
 }

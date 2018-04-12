@@ -28,6 +28,7 @@ import seedu.address.logic.commands.TagCommand.EditCoinDescriptor;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.coin.Amount;
 import seedu.address.model.coin.Coin;
 import seedu.address.testutil.CoinBuilder;
 import seedu.address.testutil.CoinUtil;
@@ -53,10 +54,10 @@ public class CoinBookParserTest {
         Coin coin = new CoinBuilder().build();
         BuyCommand command = (BuyCommand) parser.parseCommand(BuyCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_COIN.getOneBased() + PREFIX_AMOUNT  + " 50.0");
-        assertEquals(new BuyCommand(new CommandTarget(INDEX_FIRST_COIN), 50.0), command);
+        assertEquals(new BuyCommand(new CommandTarget(INDEX_FIRST_COIN), new Amount("50.0")), command);
         command = (BuyCommand) parser.parseCommand(BuyCommand.COMMAND_ALIAS + " "
                 + INDEX_FIRST_COIN.getOneBased() + PREFIX_AMOUNT  + " 50.0");
-        assertEquals(new BuyCommand(new CommandTarget(INDEX_FIRST_COIN), 50.0), command);
+        assertEquals(new BuyCommand(new CommandTarget(INDEX_FIRST_COIN), new Amount("50.0")), command);
     }
 
     @Test

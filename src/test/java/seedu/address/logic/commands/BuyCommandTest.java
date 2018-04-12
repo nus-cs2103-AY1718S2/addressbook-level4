@@ -20,11 +20,15 @@ import seedu.address.logic.commands.CommandTestUtil.ModelStub;
 import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyCoinBook;
+import seedu.address.model.coin.Amount;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
 import seedu.address.testutil.CoinBuilder;
 
 public class BuyCommandTest {
+
+    private static final Amount VALID_AMOUNT = new Amount("10.0");
+    private static final Amount VALID_OTHER_AMOUNT = new Amount("3.3");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -32,7 +36,7 @@ public class BuyCommandTest {
     @Test
     public void constructor_nullTarget_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new BuyCommand(null, 0);
+        new BuyCommand(null, new Amount());
     }
 
     @Test
@@ -40,7 +44,7 @@ public class BuyCommandTest {
         ModelStubAcceptingCoinUpdated modelStub = new ModelStubAcceptingCoinUpdated();
         Coin validCoin = new CoinBuilder().build();
         Coin editedCoin = new Coin(validCoin);
-        double amountToBuy = 10.0;
+        Amount amountToBuy = VALID_AMOUNT;
 
         modelStub.addCoin(validCoin);
         editedCoin.addTotalAmountBought(amountToBuy);
@@ -53,14 +57,14 @@ public class BuyCommandTest {
     public void equals() {
         Coin alice = new CoinBuilder().withName("ALC").build();
         Coin bob = new CoinBuilder().withName("BOB").build();
-        BuyCommand buyAliceCommand = new BuyCommand(new CommandTarget(alice.getCode()), 10);
-        BuyCommand buyBobCommand = new BuyCommand(new CommandTarget(bob.getCode()), 10);
+        BuyCommand buyAliceCommand = new BuyCommand(new CommandTarget(alice.getCode()), VALID_AMOUNT);
+        BuyCommand buyBobCommand = new BuyCommand(new CommandTarget(bob.getCode()), VALID_AMOUNT);
 
         // same object -> returns true
         assertTrue(buyAliceCommand.equals(buyAliceCommand));
 
         // same values -> returns true
-        BuyCommand buyAliceCommandCopy = new BuyCommand(new CommandTarget(alice.getCode()), 10);
+        BuyCommand buyAliceCommandCopy = new BuyCommand(new CommandTarget(alice.getCode()), VALID_AMOUNT);
         assertTrue(buyAliceCommand.equals(buyAliceCommandCopy));
 
         // different types -> returns false
@@ -73,7 +77,7 @@ public class BuyCommandTest {
         assertFalse(buyAliceCommand.equals(buyBobCommand));
 
         // same coin but different value -> returns false
-        buyAliceCommandCopy = new BuyCommand(new CommandTarget(alice.getCode()), 3);
+        buyAliceCommandCopy = new BuyCommand(new CommandTarget(alice.getCode()), VALID_OTHER_AMOUNT);
         assertFalse(buyAliceCommand.equals(buyAliceCommandCopy));
 
     }
@@ -81,7 +85,7 @@ public class BuyCommandTest {
     /**
      * Generates a new BuyCommand with the details of the given coin.
      */
-    private BuyCommand getBuyCommandForCoin(Coin coin, double amountToAdd, Model model) {
+    private BuyCommand getBuyCommandForCoin(Coin coin, Amount amountToAdd, Model model) {
         BuyCommand command = new BuyCommand(new CommandTarget(coin.getCode()), amountToAdd);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;

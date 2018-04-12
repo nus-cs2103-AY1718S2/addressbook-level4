@@ -17,9 +17,9 @@ public class CoinBuilder {
 
     public static final String DEFAULT_NAME = "XTC";
     public static final String DEFAULT_TAGS = "friends";
-    public static final Price DEFAULT_PRICE = new Price(1.0);
-    public static final Amount DEFAULT_AMOUNT_SOLD = new Amount(0.0);
-    public static final Amount DEFAULT_AMOUNT_BOUGHT = new Amount(0.0);
+    public static final Price DEFAULT_PRICE = new Price();
+    public static final Amount DEFAULT_AMOUNT_SOLD = new Amount();
+    public static final Amount DEFAULT_AMOUNT_BOUGHT = new Amount();
 
     private Code code;
     private Set<Tag> tags;
@@ -92,7 +92,7 @@ public class CoinBuilder {
      */
     public Coin build() {
         Coin coin = new Coin(code, tags);
-        coin = new Coin(coin, price.getValue());
+        coin = new Coin(coin, price);
         coin.addTotalAmountBought(amountBought);
         coin.addTotalAmountSold(amountSold);
         return coin;

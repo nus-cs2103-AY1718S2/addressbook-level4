@@ -18,8 +18,8 @@ public class CoinTest {
         assertTrue(originalCoin.equals(copiedCoin));
 
         // modify values to ensure deep copy
-        copiedCoin.addTotalAmountBought(12.0);
-        copiedCoin.addTotalAmountSold(9.0);
+        copiedCoin.addTotalAmountBought(new Amount("12.0"));
+        copiedCoin.addTotalAmountSold(new Amount("9.0"));
 
         assertNotSame(originalCoin.getTags(), copiedCoin.getTags());
         assertNotEquals(originalCoin.getTotalAmountBought(), copiedCoin.getTotalAmountBought());

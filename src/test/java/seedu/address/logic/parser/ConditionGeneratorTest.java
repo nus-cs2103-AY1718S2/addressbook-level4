@@ -53,8 +53,8 @@ import seedu.address.testutil.CoinBuilder;
 public class ConditionGeneratorTest {
 
     private static final Token INVALID_TAG_NAME = new Token(TokenType.STRING, "invalid-name");
-    private static final double DECIMAL_OFFSET = 1.0;
-    private static final double NEW_PRICE = 2.0;
+    private static final Amount DECIMAL_OFFSET = new Amount("1.0");
+    private static final Price NEW_PRICE = new Price();
     private static Amount greaterAmount;
     private static Amount lesserAmount;
     private static Price greaterPrice;
@@ -66,10 +66,13 @@ public class ConditionGeneratorTest {
     @BeforeClass
     public static void initializeTestValues() throws IllegalValueException {
         // Load the offset values to test numerical conditions
-        greaterAmount = new Amount(ParserUtil.parseDouble(DECIMAL_STRING) + DECIMAL_OFFSET);
-        lesserAmount = new Amount(ParserUtil.parseDouble(DECIMAL_STRING) - DECIMAL_OFFSET);
-        greaterPrice = new Price(ParserUtil.parseDouble(DECIMAL_STRING) + DECIMAL_OFFSET);
-        lesserPrice = new Price(ParserUtil.parseDouble(DECIMAL_STRING) - DECIMAL_OFFSET);
+        greaterAmount = Amount.getSum(ParserUtil.parseAmount(DECIMAL_STRING), DECIMAL_OFFSET);
+        lesserAmount = Amount.getDiff(ParserUtil.parseAmount(DECIMAL_STRING), DECIMAL_OFFSET);
+        greaterPrice = new Price();
+        greaterPrice.setCurrent(Amount.getSum(ParserUtil.parseAmount(DECIMAL_STRING), DECIMAL_OFFSET));
+        lesserPrice = new Price();
+        lesserPrice.setCurrent(Amount.getDiff(ParserUtil.parseAmount(DECIMAL_STRING), DECIMAL_OFFSET));
+        NEW_PRICE.setCurrent(new Amount("2.0"));
     }
 
 

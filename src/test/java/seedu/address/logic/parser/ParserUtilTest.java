@@ -80,18 +80,18 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseDouble_invalidInput_throwsIllegalValueException() throws Exception {
+    public void parseAmount_invalidInput_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseDouble("1.1a");
+        ParserUtil.parseAmount("1.1a");
     }
 
     @Test
-    public void parseDouble_validInput_success() throws Exception {
+    public void parseAmount_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(1.2345, ParserUtil.parseDouble("1.2345"), 0.001);
+        assertEquals("1.23450000", ParserUtil.parseAmount("1.2345").getValue());
 
         // Leading and trailing whitespaces
-        assertEquals(1.2345, ParserUtil.parseDouble("  1.2345  "), 0.001);
+        assertEquals("1.23450000", ParserUtil.parseAmount("  1.2345  ").getValue());
     }
 
     @Test

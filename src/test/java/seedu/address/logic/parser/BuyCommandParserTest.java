@@ -24,7 +24,7 @@ public class BuyCommandParserTest {
 
     private BuyCommand constructBuyCommand(String indexAsString, String valueAsString) throws IllegalValueException {
         return new BuyCommand(new CommandTarget(ParserUtil.parseIndex(indexAsString)),
-                ParserUtil.parseDouble(valueAsString));
+                ParserUtil.parseAmount(valueAsString));
     }
 
     /**

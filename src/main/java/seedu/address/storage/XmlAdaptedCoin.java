@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.coin.Code;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.tag.Tag;
@@ -26,6 +27,18 @@ public class XmlAdaptedCoin {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
+    @XmlElement(required = true)
+    private String totalAmountSold;
+
+    @XmlElement(required = true)
+    private String totalAmountBought;
+
+    @XmlElement(required = true)
+    private String totalDollarsSold;
+
+    @XmlElement(required = true)
+    private String totalDollarsBought;
+
     /**
      * Constructs an XmlAdaptedCoin.
      * This is the no-arg constructor that is required by JAXB.
@@ -40,6 +53,10 @@ public class XmlAdaptedCoin {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        this.totalAmountBought = "0.0";
+        this.totalAmountSold = "0.0";
+        this.totalDollarsBought = "0.0";
+        this.totalDollarsSold = "0.0";
     }
 
     /**
@@ -53,6 +70,10 @@ public class XmlAdaptedCoin {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        totalAmountBought = source.getTotalAmountBought().getValue();
+        totalAmountSold = source.getTotalAmountSold().getValue();
+        totalDollarsBought = source.getTotalDollarsBought().getValue();
+        totalDollarsSold = source.getTotalDollarsSold().getValue();
     }
 
     /**
@@ -75,7 +96,11 @@ public class XmlAdaptedCoin {
         final Code code = new Code(this.code);
 
         final Set<Tag> tags = new HashSet<>(coinTags);
-        return new Coin(code, tags);
+        if (CollectionUtil.isAnyNull(totalAmountBought, totalAmountSold, totalDollarsBought, totalDollarsSold)) {
+            return new Coin(code, tags);
+        } else {
+            return new Coin(code, tags, totalAmountBought, totalAmountSold, totalDollarsBought, totalDollarsSold);
+        }
     }
 
     @Override

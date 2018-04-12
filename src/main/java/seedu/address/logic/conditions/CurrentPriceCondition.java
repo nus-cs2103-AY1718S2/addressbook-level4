@@ -26,6 +26,6 @@ public class CurrentPriceCondition extends AmountCondition {
 
     @Override
     public boolean test(Coin coin) {
-        return amountComparator.test(new Amount(coin.getPrice().getValue()), amount);
+        return amountComparator.test(new Amount(coin.getPrice().getCurrent()), amount);
     }
 }

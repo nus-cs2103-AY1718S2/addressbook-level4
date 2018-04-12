@@ -41,6 +41,21 @@ public class Coin {
     }
 
     /**
+     * Every field must be present and not null.
+     */
+    public Coin(Code code, Set<Tag> tags, String aBought, String aSold, String dBought, String dSold) {
+        requireAllNonNull(code, tags, aBought, aSold, dBought, dSold);
+        this.code = code;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.price = new Price();
+        this.totalAmountSold = new Amount(aSold);
+        this.totalAmountBought = new Amount(aBought);
+        this.totalDollarsSold = new Amount(dSold);
+        this.totalDollarsBought = new Amount(dBought);
+    }
+
+    /**
      * Copy constructor for coins.
      */
     public Coin(Coin toCopy) {
@@ -59,7 +74,7 @@ public class Coin {
     /**
      * Copy constructor with price update.
      */
-    public Coin(Coin toCopy, double newPrice) {
+    public Coin(Coin toCopy, Price newPrice) {
         requireAllNonNull(toCopy);
         this.code = toCopy.code;
         // protect internal tags from changes in the arg list
@@ -91,10 +106,6 @@ public class Coin {
         return code;
     }
 
-    public Amount getCurrentAmountHeld() {
-        return new Amount(totalAmountBought.getValue() - totalAmountSold.getValue());
-    }
-
     public Price getPrice() {
         return price;
     }
@@ -106,6 +117,66 @@ public class Coin {
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
     }
+
+    public Amount getTotalAmountSold() {
+        return totalAmountSold;
+    }
+
+    /**
+     * Updates the total amount sold of this coin in units held and return gained
+     * @param addAmount
+     */
+    public void addTotalAmountSold(Amount addAmount) {
+        // Bounds check, not to sell more than being held
+        if (addAmount.compareTo(getCurrentAmountHeld()) > 0) {
+            addAmount = getCurrentAmountHeld();
+        }
+        this.totalAmountSold.addValue(addAmount);
+        this.totalDollarsSold.addValue(Amount.getMult(addAmount, price.getCurrent()));
+    }
+
+    public Amount getTotalAmountBought() {
+        return totalAmountBought;
+    }
+
+    /**
+     * Updates the total amount bought of this coin in units held and capital invested
+     * @param addAmount
+     */
+    public void addTotalAmountBought(Amount addAmount) {
+        this.totalAmountBought.addValue(addAmount);
+        this.totalDollarsBought.addValue(Amount.getMult(addAmount, price.getCurrent()));
+    }
+
+    public Amount getCurrentAmountHeld() {
+        return Amount.getDiff(totalAmountBought, totalAmountSold);
+    }
+
+    public Amount getTotalProfit() {
+        return Amount.getDiff(totalDollarsSold, totalDollarsBought);
+    }
+
+    public Amount getDollarsWorth() {
+        return Amount.getMult(price.getCurrent(), getCurrentAmountHeld());
+    }
+
+    public Amount getTotalDollarsSold() {
+        return totalDollarsSold;
+    }
+
+    public Amount getTotalDollarsBought() {
+        return totalDollarsBought;
+    }
+
+    //@@author ewaldhew
+    /**
+     * Gets the difference between two coins and makes a new coin record with that change.
+     * @return (final minus initial) as a coin, where the final coin is this
+     */
+    public Coin getChangeFrom(Coin initialCoin) {
+        return null;
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -139,81 +210,4 @@ public class Coin {
         getTags().forEach(builder::append);
         return builder.toString();
     }
-
-    public Amount getTotalAmountSold() {
-        return totalAmountSold;
-    }
-
-    /**
-     * Updates the total amount sold of this coin in units held and return gained
-     * @param addAmount
-     */
-    public void addTotalAmountSold(Double addAmount) {
-        this.totalAmountSold.addValue(addAmount);
-        this.totalDollarsSold.addValue(addAmount * price.getValue());
-    }
-
-    /**
-     * Updates the total amount sold of this coin in units held and return gained
-     * @param addAmount
-     */
-    public void addTotalAmountSold(Amount addAmount) {
-        this.totalAmountSold.addValue(addAmount);
-        this.totalDollarsSold.addValue(addAmount.getValue() * price.getValue());
-    }
-
-    public Amount getTotalAmountBought() {
-        return totalAmountBought;
-    }
-
-    /**
-     * Updates the total amount bought of this coin in units held and capital invested
-     * @param addAmount
-     */
-    public void addTotalAmountBought(Double addAmount) {
-        this.totalAmountBought.addValue(addAmount);
-        this.totalDollarsBought.addValue(addAmount * price.getValue());
-    }
-
-    /**
-     * Updates the total amount bought of this coin in units held and capital invested
-     * @param addAmount
-     */
-    public void addTotalAmountBought(Amount addAmount) {
-        this.totalAmountBought.addValue(addAmount);
-        this.totalDollarsBought.addValue(addAmount.getValue() * price.getValue());
-    }
-
-    public Amount getTotalProfit() {
-        return new Amount(totalDollarsSold.getValue() - totalDollarsBought.getValue());
-    }
-
-    public Amount getDollarsWorth() {
-        return new Amount(price.getValue() * getCurrentAmountHeld().getValue());
-    }
-
-    public Amount getProfitability() {
-        Amount profitability = new Amount(0);
-        profitability.addValue(getDollarsWorth());
-        profitability.addValue((getTotalProfit().getValue() > 0) ? getTotalProfit().getValue() : 0);
-        return profitability;
-    }
-
-    public Amount getTotalDollarsSold() {
-        return totalDollarsSold;
-    }
-
-    public Amount getTotalDollarsBought() {
-        return totalDollarsBought;
-    }
-
-    //@@author ewaldhew
-    /**
-     * Gets the difference between two coins and makes a new coin record with that change.
-     * @return (final minus initial) as a coin, where the final coin is this
-     */
-    public Coin getChangeFrom(Coin initialCoin) {
-        return null;
-    }
-    //@@author
 }

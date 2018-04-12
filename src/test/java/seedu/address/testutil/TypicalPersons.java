@@ -26,7 +26,7 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("85355255").withPlatforms("https://www.facebook.com/alice.pauline")
+            .withPhone("85355255").withPlatforms("www.facebook.com/alice.pauline")
             .withTags("neighbour", "friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com")
@@ -38,7 +38,8 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com").withAddress("10th street")
             .withTags("armyBuddy", "friends", "roommate").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").withTags("professor", "PC3196").build();
+            .withEmail("werner@example.com").withAddress("michegan ave")
+            .withPlatforms("https://www.facebook.com/bellemay").withTags("professor", "PC3196").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").withTags("labPartner").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")

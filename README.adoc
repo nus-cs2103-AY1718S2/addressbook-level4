@@ -16,9 +16,17 @@ endif::[]
 
 Credit: @jaronchan
 
-* This is a desktop Session Logger and Planner application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a simple Java application intended for social workers to help them plan their day and keep track of their beneficiaries.
-* Some key features of this application include data encryption, secure sign-on, an address book, a planner/todo list, and user session reporting.
+* This is a desktop Session Logger and Planner (SLAP) application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* It is a simple Java application intended for social workers to help them plan their day and keep track of their patients and beneficiaries.
+* Some key features of this application include data encryption, secure sign-on, an patient address book, user session reporting, calendar, daily scheduling,
+and navigation tools.
+
+
+== Target Audience
+SLAP aims to target social workers who have to visit different less privileged families and/or high-risk
+stay-at-home patients as their daily routine. SLAP allow them to organise their schedule for the day as
+they may have to visit multiple locations, take copious notes and help in many different ways.
+
 
 == Site Map
 

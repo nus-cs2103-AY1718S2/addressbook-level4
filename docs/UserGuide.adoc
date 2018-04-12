@@ -111,6 +111,7 @@ Format: `create-user u/USERNAME p/PASSWORD`
 
 ****
 * You will need to enter a unique username to successfully create an new user.
+* The username is *not* case-sensitive. eg. "User", "useR" and "uSeR" are the same username.
 * Multiple entries of username and password can be included, however only the last entry will be considered.
 ****
 
@@ -128,6 +129,8 @@ You will need to be logged out to use this Command.
 ****
 * You will need to enter both the correct username and password for the target user account that you wish to delete.
 * Multiple entries of username and password can be included, however only the last entry will be considered.
+* The username is *not* case-sensitive. eg. "User", "useR" and "uSeR" are the same username.
+* The password is case-sensitive.
 ****
 
 ==== Login : `login`
@@ -137,6 +140,8 @@ Format: `login u/USERNAME p/PASSWORD`
 
 ****
 * Multiple entries of username and password can be included, however only the last entry will be considered.
+* The username is *not* case-sensitive. eg. "User", "useR" and "uSeR" are the same username.
+* The password is case-sensitive.
 ****
 
 ==== Logout: `logout`
@@ -158,6 +163,8 @@ You will need to be logged out to use this Command.
 * You will need to enter both the correct username and password for the target user account that you wish to change password for.
 * You will need to enter both the correct username and password for the target user account that you wish to change password for
 * Multiple entries of username and password can be included, however only the last entry will be considered.
+* The username is *not* case-sensitive. eg. "User", "useR" and "uSeR" are the same username.
+* Passwords is case-sensitive.
 ****
 
 ==== 2-Factor Authentication [Coming in v2.0]

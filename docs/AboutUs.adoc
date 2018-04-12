@@ -12,7 +12,7 @@ to fit social worker more specifically.
 === Chan Jin Jia
 image::jaronchan.jpg[width="150", align="left"]
 
-{empty}[https://github.com/jaronchan[github]]
+{empty}[https://github.com/jaronchan[github]] [https://github.com[Project Portfolio Page]]
 
 Role: Project Developer +
 Responsibilities: Main UI, Map and Daily Scheduler
@@ -21,16 +21,16 @@ Responsibilities: Main UI, Map and Daily Scheduler
 
 === Kaiser Tan
 image::Profilepic_Kaiser.jpg[width="150", align="left"]
-{empty}[https://github.com/kaisertanqr[github]]
+{empty}[https://github.com/kaisertanqr[github]] [https://github.com[Project Portfolio Page]]
 
 Role: Project Developer +
-Responsibilities: Authentication and Security, Multi-user features and User Storage
+Responsibilities: Authentication/Security, Multi-user features and User Storage
 
 '''
 
 === Jason Mason-Hing
 image::ifalluphill.jpg[width="150", align="left"]
-{empty}[https://github.com/ifalluphill[github]]
+{empty}[https://github.com/ifalluphill[github]] [https://github.com[Project Portfolio Page]]
 
 Role: Project Developer +
 Responsibilities: Calendar and Todolist
@@ -39,7 +39,7 @@ Responsibilities: Calendar and Todolist
 
 === Clarissa Yong
 image::Clarissa_profilepic.jpg[width="150", align="left"]
-{empty}[https://github.com/clarissayong[github]]
+{empty}[https://github.com/clarissayong[github]] [https://github.com[Project Portfolio Page]]
 
 Role: Project Developer +
 Responsibilities: Session Reports and Logging

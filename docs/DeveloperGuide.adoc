@@ -1161,7 +1161,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
-//@@author ifalluphill
+
 |`* * *` |user |add calendar events |keep track of my interactions with my contacts
 
 |`* * *` |user |view calendar events |quickly check my schedule
@@ -1195,7 +1195,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |view the address of my contacts on a map |visually see where they live
 
 |`* *` |user |edit/delete the address of my contacts |keep contacts up to date
-//@@author
+
 |`*` |advanced user |export my entire address book as a CSV or JSON |for use in other applications
 
 |`* * *` |user |favourite contacts |keep track of particularly important contacts
@@ -1216,11 +1216,22 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |social worker |send reminder email from address book |be efficient with reminding beneficies of scheduled visits
 
+
+
+|`* * *` |social worker |add new session reports | be able to have a consolidated record of all my reports for easy reference.
+
+|`* * *` |social worker |edit my session reports | be able to have a make edit mistakes in my reports
+
+|`* * ` |social worker |delete my session reports | remove reports that are irrelevant
+
 |`* * *` |secure user |login |gain access to my address book
 
-|`* * *` |secure user |logout |prevent others from having authorised access to my address book
+|`* * *` |social worker |login into my account with any instance of application| so that I can easily access my SLAP information anywhere
 
-|`* * *` |user |change my password |update and secure access to my address book whenever I want
+
+|`* * *` |secure user |logout |prevent others from having authorised access to my SLAP
+
+|`* * *` |secure user |change my password |update and secure access to my address book whenever I want
 
 |`* *` |user |reset my password |still recover my password when I forget what it is
 
@@ -1263,7 +1274,6 @@ Use case ends.
 Use case resumes at step 2.
 
 
-//@@author ifalluphill
 [discrete]
 === Use case: Add Calendar Event
 
@@ -1393,7 +1403,6 @@ Use case ends.
 ** 1a1. AddressBook notifies user that there is no error log.
 +
 Use case ends.
-//@@author
 
 // tag::jaronUseCases[]
 [discrete]
@@ -1439,6 +1448,7 @@ Use case ends.
 
 // end::jaronUseCases[]
 
+// tag::kaiserUseCases[]
 [discrete]
 === Use case: User Login
 
@@ -1486,6 +1496,7 @@ Use case resumes at step 1.
 6.  AddressBook exports storage file into specified directory
 
 
+// end::kaiserUseCases[]
 
 [appendix]
 == Non Functional Requirements
@@ -1494,7 +1505,6 @@ Use case resumes at step 1.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should come with automated unit tests and open source code.
-//@@author ifalluphill
 .  Should preserve user data when the program is restarted or updated.
 .  Should still retain basic functionality even when not connected to the internet.
 .  Should support both 32-bit and 64-bit operating systems.
@@ -1506,7 +1516,6 @@ Use case resumes at step 1.
 .  Should be easy to setup and install for an infrequent computer user.
 .  Should not unnecessarily collect data about a user.
 .  Should sanitize sensitive user data before logging.
-//@@author
 .  Should not allow non-users to access storage file
 .  Should not allow non-users to read storage file
 .  Should not exit the program without encrypting the storage file

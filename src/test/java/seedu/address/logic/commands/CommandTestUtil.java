@@ -112,12 +112,16 @@ public class CommandTestUtil {
     public static final String REMARK_DESC_ONE = " " + PREFIX_REMARK + VALID_REMARK_ONE;
     public static final String VALID_REMARK_TWO = "old age";
     public static final String REMARK_DESC_TWO = " " + PREFIX_REMARK + VALID_REMARK_TWO;
+    public static final String VALID_REMARK_THREE = "May require isolation";
+    public static final String REMARK_DESC_THREE = " " + PREFIX_REMARK + VALID_REMARK_THREE;
 
     // Date Time for appointments
     public static final String VALID_DATE_ONE = "2018-06-17 11:30";
     public static final String DATE_DESC_ONE = " " + PREFIX_DATE + VALID_DATE_ONE;
     public static final String VALID_DATE_TWO = "2018-07-05 16:30";
     public static final String DATE_DESC_TWO = " " + PREFIX_DATE + VALID_DATE_TWO;
+    public static final String VALID_DATE_THREE = "2018-12-22 14:30";
+    public static final String DATE_DESC_THREE = " " + PREFIX_DATE + VALID_DATE_THREE;
 
 
     // PetPatient: Joker

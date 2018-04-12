@@ -24,6 +24,12 @@ public class TypicalAppointments {
             .withRemark("May require isolation")
             .withDateTime("2018-04-22 14:30")
             .withAppointmentTags("vaccination").build();
+    public static final Appointment BOB_APP = new AppointmentBuilder()
+            .withOwnerNric(TypicalPersons.BOB.getNric().toString())
+            .withPetPatientName(TypicalPetPatients.NERO.getName().toString())
+            .withRemark("May require isolation")
+            .withDateTime("2018-12-22 14:30")
+            .withAppointmentTags("vaccination").build();
 
     private TypicalAppointments() {} // prevents instantiation
 

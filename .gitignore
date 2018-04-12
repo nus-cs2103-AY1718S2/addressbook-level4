@@ -15,8 +15,8 @@ preferences.json
 ./screenshot*.png
 classes/
 /data/
-data/addressbook.xml
-data/mkaddressbook.xml
+data
+!data/demoaddressbook.xml
 /bin/
 src/main/resources/docs/
 out/

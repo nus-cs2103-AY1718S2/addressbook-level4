@@ -280,7 +280,7 @@ Format: `fav INDEX`
 ****
 
 [NOTE]
-You can view the list of your favourite students using the command `list -f` (see <<Listing all students : `list`>>
+You can view the list of your favourite students using the command `list -f` (see <<Listing all students : `list`>>).
 
 Example:
 
@@ -497,7 +497,7 @@ Codeducator allows you to create and add milestones in your students' dashboards
 
 * Tasks: +
 Each milestone can contain a list of tasks. A task signifies a piece of work to be done to meet the milestone's objective.
-Codeducator also allows you to create and add tasks to each milestone so that you can keep track of what has already been done and what still needs to be done to reach the milestone.
+Codeducator allows you to create and add tasks to each milestone so that you can keep track of what has already been done and what still needs to be done to reach the milestone.
 
 ==== Show the dashboard of a student: `showDB`
 
@@ -547,6 +547,7 @@ Format: `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE`
 * `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
 * `STUDENT_INDEX` *must be a positive integer* 1, 2, 3, ...
 * `MILESTONE_DUE_DATE` must be in this format: *DD/MM/YYYY hh:mm* where DD/MM/YYYY is the calendar date and hh:mm is the time in 24-hour notation
+* `MILESTONE_DUE_DATE` can be a date in the past (before the current day)
 ****
 
 Example:

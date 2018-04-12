@@ -1,0 +1,71 @@
+= Ngo Chanh Anh Minh - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Pigeons
+
+---
+
+== Overview
+
+Pigeons is a desktop delivery planning application
+used by delivery companies to plan for their delivery services effectively.
+
+== Summary of contributions
+
+* *Major enhancement*: *use Google Map Distance Matrix API as the backbones to create optimized routes, to plan for trips*
+** Application: apply to various parts of one of my minor enhancement(distance command) and one of my friend enhancement(filter command).
+** Justification: This enhancement is used to calculate distance between locations,
+providing data for us determine whether a specific address is exist or not. Then we can create the optimized route for the driver.
+** Highlights: This enhancement affects existing commands and commands to be added in future.
+Moreover, there are many more useful data that we can extract from the Distance Matrix such as estimated durations for different vehicles.
+** Credits: Google Map Distance Matrix API for Java.
+
+* *Major enhancement*: *created events to handle all possible cases related to the main display panel*
+** What it does: load the needed route(s) on Google Map if possible(there is at least one existed address) or display errors on result display panel.
+** Justification: This enhancement help the drivers visualising the locations on the map as well as show them possible routes and which are the optimized routes.
+** Highlights: This enhancement is affected a lot by many existing commands and commands to be added in future.
+Therefore, any future commands, which create events to change the display of the main display panel, require carefulness from the developer(s).
+
+* *Minor enhancement*: added *Distance Command* to calculate distance from 2 locations so that the driver can plan his trip better.
+
+//TODO add links for collation
+* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** Project management:
+*** Kept team on track on TODO's before each tutorial
+** Enhancements to existing features:
+*** Updated the labels color (Listed in collated file)
+*** Added zoom effect for labels (Listed in collated file)
+*** Rewrote some part of the for existing features and existing tests(Browser panel, Select Command,...) (Listed in collated file)
+** Changes to some small parts of my teammate features:
+*** Made changes, added more methods to the Optimized java and Filter command written by my teammate (Listed in collated file)
+** Documentation:
+*** Added related document related to my enhancements to the User Guide
+** Community:
+*** PRs reviewed (with non-trivial review comments)
+** Tools:
+*** Tools: Integrated a new Github plugin (Google Map API service) to the team repo
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=distance]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=distance]
+
+
+
+

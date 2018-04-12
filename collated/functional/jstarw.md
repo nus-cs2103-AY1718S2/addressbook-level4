@@ -12,12 +12,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.Scene?>
 
+<?import javafx.scene.control.TextField?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
     <scene>
         <Scene>
             <stylesheets>
-                <URL value="@DarkTheme.css" />
+                <URL value="@ClearTheme.css" />
                 <URL value="@Extensions.css" />
             </stylesheets>
 
@@ -40,13 +41,16 @@
                             <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
                         </HBox>
                         <FlowPane fx:id="tags" />
-                        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
+                        <Label styleClass="cell_small_label" >Phone: </Label>
+                        <TextField fx:id="phone" text="/$phone"></TextField>
                         <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
                         <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+                        <Label fx:id="age" styleClass="cell_small_label" text="\$age" />
                         <Label fx:id="income" styleClass="cell_small_label" text="\$income" />
                         <Label fx:id="actualSpending" styleClass="cell_small_label" text="\$actualSpending" />
+                        <Label fx:id="isNewClient" styleClass="cell_small_label" text="\$isNewClient" />
                         <Label fx:id="expectedSpending" styleClass="cell_small_label" text="\$expectedSpending" />
-                        <Label fx:id="age" styleClass="cell_small_label" text="\$age" />
+                        <Label fx:id="policy" styleClass="cell_small_label" text="\$policy" />
                     </VBox>
                 </GridPane>
             </HBox>
@@ -113,7 +117,7 @@ public class PersonDetail extends UiPart<Stage> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private TextField phone;
     @FXML
     private Label address;
     @FXML
@@ -128,22 +132,44 @@ public class PersonDetail extends UiPart<Stage> {
     private Label expectedSpending;
     @FXML
     private Label age;
+    @FXML
+    private Label isNewClient;
+    @FXML
+    private Label policy;
 
     public PersonDetail(Person person, int displayedIndex) {
         super("PersonDetail.fxml", new Stage());
         this.person = person;
-        this.id.setText(displayedIndex + ". ");
-        this.name.setText(person.getName().fullName);
-        this.phone.setText(person.getPhone().value);
-        this.address.setText(person.getAddress().value);
-        this.income.setText(person.getIncome().toString());
-        this.age.setText("Age: " + person.getAge().toString());
-        this.email.setText(person.getEmail().value);
-        this.actualSpending.setText("Actual Spending: " + person.getActualSpending().toString());
-        this.expectedSpending.setText("Expected Spending: " + person.getExpectedSpending().toString());
-        person.getTags().forEach((tag) -> {
-            this.tags.getChildren().add(new Label(tag.tagName));
-        });
+        registerAsAnEventHandler(this);
+        id.setText(displayedIndex + ". ");
+        name.setText(person.getName().fullName);
+        phone.setText(person.getPhone().value);
+        address.setText(person.getAddress().value);
+        //@author SoilChang
+        income.setText("Income: " + person.getIncome().toString());
+        age.setText("Age: " + person.getAge().toString() + " years old");
+        email.setText(person.getEmail().value);
+        actualSpending.setText("Actual Spending: " + person.getActualSpending().toString());
+        expectedSpending.setText("Predicted Spending: " + person.getExpectedSpending().toString());
+        isNewClient.setText("New Client");
+        if (person.getPolicy().isPresent()) {
+            policy.setText("Policy: " + person.getPolicy().get().toString());
+        } else {
+            policy.setText("Has not applied to any policy");
+        }
+
+        if (person.getActualSpending().value != 0.0) {
+            // the client has actual income
+            actualSpending.setVisible(true);
+            isNewClient.setVisible(false);
+            expectedSpending.setVisible(false);
+        } else {
+            actualSpending.setVisible(false);
+            isNewClient.setVisible(true);
+            expectedSpending.setVisible(true);
+        }
+        //@author
+        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
     /**
@@ -240,6 +266,83 @@ public class PersonCardDoubleClick extends BaseEvent {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/ShowCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ShowCommand object
+ */
+public class ShowCommandParser implements Parser<ShowCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ShowCommand
+     * and returns an ShowCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ShowCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE));
+        }
+
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new ShowCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/EditCommand.java
+``` java
+        public void setAge(Age age) {
+            this.age = age;
+        }
+```
+###### /java/seedu/address/logic/commands/EditCommand.java
+``` java
+        public Optional<Age> getAge() {
+            return Optional.ofNullable(age);
+        }
+```
+###### /java/seedu/address/logic/commands/ShowCommand.java
+``` java
+/**
+ * Opens up a PersonDetail window
+ */
+public class ShowCommand extends Command {
+
+    public static final String COMMAND_WORD = "show";
+
+    public static final String MESSAGE_USAGE = "Opens up the details window of a specified person.\n"
+            + "Parameters: FULL NAME OF PERSON\n"
+            + "Example: " + COMMAND_WORD + " John Doe";;
+
+    public static final String MESSAGE_SUCCESS = "Opened up person detail window";
+    public static final String MESSAGE_FAIL = "Failed to open window: person not found.";
+
+    private final NameContainsKeywordsPredicate predicate;
+
+    public ShowCommand(NameContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        try {
+            Person person = model.findOnePerson(predicate);
+            loadPersonDetail(person);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(MESSAGE_FAIL);
+        }
+    }
+
+    private void loadPersonDetail(Person person) {
+        PersonDetail personDetail = new PersonDetail(person, 1);
+        personDetail.show();
+    }
+}
+```
 ###### /java/seedu/address/model/person/Age.java
 ``` java
 /**
@@ -284,4 +387,17 @@ public class Age {
     }
 
 }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    public Person findOnePerson(Predicate<Person> predicate) throws PersonNotFoundException {
+        requireNonNull(predicate);
+        ObservableList<Person> persons = addressBook.getPersonList();
+        for (Person person : persons) {
+            if (predicate.test(person)) {
+                return person;
+            }
+        }
+        throw new PersonNotFoundException();
+    }
 ```

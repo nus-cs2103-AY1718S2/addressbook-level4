@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
 import seedu.address.model.person.exceptions.IllegalMarksException;
 import seedu.address.testutil.Assert;
 
@@ -46,11 +47,16 @@ public class ParticipationTest {
         Assert.assertThrows(NullPointerException.class, () -> Participation.isValidParticipation(null));
 
         // invalid participation
-        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("")); // empty string
-        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation(" ")); // spaces only
-        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("^")); // only non-alphanumeric characters
-        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("abcd")); // contains alpha characters
-        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("peter*")); // contains non-alphanumeric characters
+        // empty string
+        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation(""));
+        // spaces only
+        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation(" "));
+        // only non-alphanumeric characters
+        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("^"));
+        // contains alpha characters
+        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("abcd"));
+        // contains non-alphanumeric characters
+        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("peter*"));
         assertFalse(Participation.isValidParticipation("101")); // over limit
         assertFalse(Participation.isValidParticipation("-500")); // below limit
 

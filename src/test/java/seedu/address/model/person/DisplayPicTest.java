@@ -1,11 +1,7 @@
 package seedu.address.model.person;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DISPLAY_AMY;
-
 import org.junit.Test;
-import seedu.address.model.person.exceptions.IllegalMarksException;
+
 import seedu.address.testutil.Assert;
 
 //@@author Alaru

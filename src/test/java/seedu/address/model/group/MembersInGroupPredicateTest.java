@@ -4,9 +4,7 @@ package seedu.address.model.group;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import seedu.address.model.person.Person;
 import seedu.address.testutil.GroupBuilder;
@@ -14,7 +12,7 @@ import seedu.address.testutil.TypicalGroups;
 import seedu.address.testutil.TypicalPersons;
 
 public class MembersInGroupPredicateTest {
-    
+
     private Group groupTest = TypicalGroups.GROUP_F;
 
     @Test

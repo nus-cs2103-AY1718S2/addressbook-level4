@@ -16,7 +16,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -107,7 +107,7 @@ public class DeleteInjuriesHistoryCommand extends UndoableCommand {
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
         String[] injuriesHistoryArray = personToEdit.getInjuriesHistory().toString().split("\n");
         String updateInjuriesHistory = "";
-        NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
+        NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
         boolean injuriesHistoryIsFound = false;
         for (String injuriesHistory : injuriesHistoryArray) {
             if (!injuriesHistory.contains(editPersonDescriptor.getInjuriesHistory().get().toString())) {
@@ -120,7 +120,7 @@ public class DeleteInjuriesHistoryCommand extends UndoableCommand {
         if (injuriesHistoryIsFound) {
             InjuriesHistory updatedInjuriesHistory = parseInjuriesHistory(updateInjuriesHistory);
             return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                    updatedInjuriesHistory, updatedNameOfKin);
+                    updatedInjuriesHistory, updatedNextOfKin);
         } else {
             throw new CommandException("The target injuriesHistory cannot be missing.");
         }

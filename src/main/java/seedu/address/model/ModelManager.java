@@ -26,7 +26,6 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 
 import seedu.address.model.person.Person;
@@ -155,15 +154,13 @@ public class ModelManager extends ComponentManager implements Model {
 
         // NOK Details
 
-        String nokName = person.getNameOfKin().toString();
+        String nokName = person.getNextOfKin().fullName;
         htmlString = htmlString.replace("NOK Name", nokName);
-        /*
-        String nokEmail = person.getNextOfKin().getEmail().toString();
+        String nokEmail = person.getNextOfKin().email;
         htmlString = htmlString.replace("NOK Email", nokEmail);
-
-        String nokPhone = person.getNextOfKin().getPhone().toString();
+        String nokPhone = person.getNextOfKin().phone;
         htmlString = htmlString.replace("NOK Phone", nokPhone);
-        */
+
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write(htmlString);
         bw.close();
@@ -209,12 +206,6 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void addNextOfKin(NextOfKin nextOfKin) throws DuplicatePersonException {
-        addressBook.addNextOfKin(nextOfKin);
-
     }
 
     @Override

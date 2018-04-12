@@ -26,7 +26,11 @@ public class Cca {
 
     @Override
     public String toString() {
-        return value + ": " + pos;
+        if (value != "" && pos != "") {
+            return value + ": " + pos;
+        } else {
+            return "";
+        }
     }
 
     public String getValue() {

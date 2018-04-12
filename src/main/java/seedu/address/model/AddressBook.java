@@ -186,9 +186,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Exports the current address book to portfolio.csv
      */
-    public void exportPortfolio() {
+    public void exportPortfolio(String filePath) {
         try {
-            PrintWriter pw = new PrintWriter(new File(userPrefs.getExportPortfolioFilePath()));
+            PrintWriter pw = new PrintWriter(new File(filePath));
             StringBuilder sb = new StringBuilder();
             sb.append("Name,Phone,Email,Address,Tags\n");
             for (Person person : persons) {

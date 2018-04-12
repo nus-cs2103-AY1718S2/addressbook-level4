@@ -102,6 +102,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
+        //@@author Nethergale
         case SortCommand.COMMAND_WORD:
             return new SortCommand();
 
@@ -111,6 +112,7 @@ public class AddressBookParser {
         case RemovePlatformCommand.COMMAND_WORD:
             return new RemovePlatformCommandParser().parse(arguments);
 
+        //@@author
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

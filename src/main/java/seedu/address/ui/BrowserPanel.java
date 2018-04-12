@@ -30,9 +30,7 @@ import seedu.address.model.smplatform.Twitter;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String FACEBOOK_PROFILE_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
-    public static final String TWITTER_PROFILE_PAGE_URL =
+    public static final String DUMMY_PROFILE_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     public static final String FACEBOOK_SEARCH_PAGE_URL =
             //"https://www.facebook.com/search/people?q=";
@@ -61,16 +59,18 @@ public class BrowserPanel extends UiPart<Region> {
     private Tab twitterTab;
 
     @FXML
-    private WebView browser;
+    private WebView facebookBrowser;
 
     @FXML
-    private WebView browser1;
+    private WebView twitterBrowser;
 
     public BrowserPanel() {
         super(FXML);
 
+        //@@author Nethergale
         openTabIdSet = tabPane.getTabs().stream().map(tab -> tab.getId()).collect(Collectors.toSet());
 
+        //@@author
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
@@ -78,6 +78,7 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author Nethergale
     /**
      * Updates the display of social media browser tabs.
      *
@@ -156,43 +157,45 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Loads the Facebook profile page for the browser on the Facebook tab if it exists.
      */
-    private void loadBrowserProfilePage(Person person) {
+    private void loadFacebookBrowserProfilePage(Person person) {
         if (person.getSocialMediaPlatformMap().containsKey(Link.FACEBOOK_LINK_TYPE)) {
             updateBrowserTabs(FUNCTION_ADD, FACEBOOK_TAB_ID);
             String url = person.getSocialMediaPlatformMap().get(Link.FACEBOOK_LINK_TYPE).getLink().value;
-            loadBrowserPage(parseUrl(url));
+            loadFacebookBrowserPage(parseUrl(url));
         } else {
             updateBrowserTabs(FUNCTION_REMOVE, FACEBOOK_TAB_ID);
-            loadBrowserPage(FACEBOOK_PROFILE_PAGE_URL + person.getName().fullName);
+            loadFacebookBrowserPage(DUMMY_PROFILE_PAGE_URL + person.getName().fullName);
         }
     }
 
     /**
      * Loads the Twitter profile page for the browser on the Twitter tab if it exists.
      */
-    private void loadBrowser1ProfilePage(Person person) {
+    private void loadTwitterBrowserProfilePage(Person person) {
         if (person.getSocialMediaPlatformMap().containsKey(Link.TWITTER_LINK_TYPE)) {
             updateBrowserTabs(FUNCTION_ADD, TWITTER_TAB_ID);
             String url = person.getSocialMediaPlatformMap().get(Link.TWITTER_LINK_TYPE).getLink().value;
-            loadBrowser1Page(parseUrl(url));
+            loadTwitterBrowserPage(parseUrl(url));
         } else {
             updateBrowserTabs(FUNCTION_REMOVE, TWITTER_TAB_ID);
-            loadBrowser1Page(TWITTER_PROFILE_PAGE_URL + person.getName().fullName);
+            loadTwitterBrowserPage(DUMMY_PROFILE_PAGE_URL + person.getName().fullName);
         }
     }
 
+    //@@author KevinChuangCH
     private void loadBrowserSearchPage(String searchName) {
-        loadBrowserPage(FACEBOOK_SEARCH_PAGE_URL + searchName);
+        loadFacebookBrowserPage(FACEBOOK_SEARCH_PAGE_URL + searchName);
     }
     private void loadBrowser1SearchPage(String searchName) {
-        loadBrowser1Page(TWITTER_SEARCH_PAGE_URL + searchName);
+        loadTwitterBrowserPage(TWITTER_SEARCH_PAGE_URL + searchName);
     }
 
-    public void loadBrowserPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+    //@@author
+    public void loadFacebookBrowserPage(String url) {
+        Platform.runLater(() -> facebookBrowser.getEngine().load(url));
     }
-    public void loadBrowser1Page(String url) {
-        Platform.runLater(() -> browser1.getEngine().load(url));
+    public void loadTwitterBrowserPage(String url) {
+        Platform.runLater(() -> twitterBrowser.getEngine().load(url));
     }
 
     /**
@@ -200,25 +203,26 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadBrowserPage(defaultPage.toExternalForm());
-        loadBrowser1Page(defaultPage.toExternalForm());
+        loadFacebookBrowserPage(defaultPage.toExternalForm());
+        loadTwitterBrowserPage(defaultPage.toExternalForm());
     }
 
     /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
-        browser = null;
-        browser1 = null;
+        facebookBrowser = null;
+        twitterBrowser = null;
     }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadBrowserProfilePage(event.getNewSelection().person);
-        loadBrowser1ProfilePage(event.getNewSelection().person);
+        loadFacebookBrowserProfilePage(event.getNewSelection().person);
+        loadTwitterBrowserProfilePage(event.getNewSelection().person);
     }
 
+    //@@author KevinChuangCH
     @Subscribe
     private void handleSearchPersonEvent(SearchPersonEvent event) {
 
@@ -230,10 +234,10 @@ public class BrowserPanel extends UiPart<Region> {
         if (StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_KEYWORD)
                 || StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_ALIAS)) {
             loadBrowserSearchPage(event.getSearchName());
-            loadBrowser1Page(defaultPage.toExternalForm());
+            loadTwitterBrowserPage(defaultPage.toExternalForm());
         } else if (StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_KEYWORD)
                 || StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_ALIAS)) {
-            loadBrowserPage(defaultPage.toExternalForm());
+            loadFacebookBrowserPage(defaultPage.toExternalForm());
             loadBrowser1SearchPage(event.getSearchName());
         } else {
             loadBrowserSearchPage(event.getSearchName());

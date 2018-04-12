@@ -14,23 +14,25 @@ import seedu.address.model.smplatform.Link;
  */
 public class BrowserPanelHandle extends NodeHandle<Node> {
 
-    public static final String BROWSER_ID = "#browser";
-    public static final String BROWSER1_ID = "#browser1";
+    //@@author Nethergale
+    public static final String FACEBOOK_BROWSER_ID = "#facebookBrowser";
+    public static final String TWITTER_BROWSER_ID = "#twitterBrowser";
     public static final String TAB_PANE_ID = "#tabPane";
 
     private boolean isWebViewLoaded = true;
 
     private URL lastRememberedUrl;
 
-    private WebView webView;
-    private WebView webView1;
+    private WebView facebookWebView;
+    private WebView twitterWebView;
 
     public BrowserPanelHandle(Node browserPanelNode) {
         super(browserPanelNode);
 
-        webView = getChildNode(BROWSER_ID); // browser for facebookTab
-        WebEngine engine = webView.getEngine();
-        new GuiRobot().interact(() -> engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+        facebookWebView = getChildNode(FACEBOOK_BROWSER_ID); // browser for facebookTab
+        WebEngine facebookEngine = facebookWebView.getEngine();
+        new GuiRobot().interact(() -> facebookEngine.getLoadWorker().stateProperty().addListener((
+                obs, oldState, newState) -> {
             if (newState == Worker.State.RUNNING) {
                 isWebViewLoaded = false;
             } else if (newState == Worker.State.SUCCEEDED) {
@@ -38,9 +40,10 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
             }
         }));
 
-        webView1 = getChildNode(BROWSER1_ID); // browser for twitterTab
-        WebEngine engine1 = webView1.getEngine();
-        new GuiRobot().interact(() -> engine1.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+        twitterWebView = getChildNode(TWITTER_BROWSER_ID); // browser for twitterTab
+        WebEngine twitterEngine = twitterWebView.getEngine();
+        new GuiRobot().interact(() -> twitterEngine.getLoadWorker().stateProperty().addListener((
+                obs, oldState, newState) -> {
             if (newState == Worker.State.RUNNING) {
                 isWebViewLoaded = false;
             } else if (newState == Worker.State.SUCCEEDED) {
@@ -53,7 +56,7 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
      * Returns the {@code URL} of the currently loaded page for the default browser tab (i.e. facebookTab).
      */
     public URL getLoadedUrl() {
-        return WebViewUtil.getLoadedUrl(webView);
+        return WebViewUtil.getLoadedUrl(facebookWebView);
     }
 
     /**
@@ -61,11 +64,12 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
      */
     public URL getLoadedUrl(String browserTab) {
         if (browserTab.equals(Link.TWITTER_LINK_TYPE)) {
-            return WebViewUtil.getLoadedUrl(webView1);
+            return WebViewUtil.getLoadedUrl(twitterWebView);
         }
         return getLoadedUrl();
     }
 
+    //@@author
     /**
      * Remembers the {@code URL} of the currently loaded page.
      */

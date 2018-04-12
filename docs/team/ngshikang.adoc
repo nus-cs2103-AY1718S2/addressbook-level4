@@ -27,6 +27,8 @@ organize deliveries for the delivery people.
 ** Documentation:
 *** Modified existing guides to include the premises of our project (https://github.com/CS2103JAN2018-T16-B2/main/pull/5[#5], https://github.com/CS2103JAN2018-T16-B2/main/pull/7[#7], https://github.com/CS2103JAN2018-T16-B2/main/pull/15[#15], https://github.com/CS2103JAN2018-T16-B2/main/pull/44[#44], https://github.com/CS2103JAN2018-T16-B2/main/pull/126[#126], https://github.com/CS2103JAN2018-T16-B2/main/pull/148[#148])
 *** Added documentation for all the features I added in the dev guide and user guide. (https://github.com/CS2103JAN2018-T16-B2/main/pull/32[#32], https://github.com/CS2103JAN2018-T16-B2/main/pull/47[#47], https://github.com/CS2103JAN2018-T16-B2/main/pull/107[#107])
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T15-B1/main/issues/44[1], https://github.com/CS2103JAN2018-T15-B1/main/issues/66[2], https://github.com/CS2103JAN2018-T15-B1/main/issues/53[3], https://github.com/CS2103JAN2018-T15-B1/main/issues/59[4], https://github.com/CS2103JAN2018-T15-B1/main/issues/70[5], https://github.com/CS2103JAN2018-T15-B1/main/issues/51[6], https://github.com/CS2103JAN2018-T15-B1/main/issues/48[7])
 
 == Contributions to the User Guide
 

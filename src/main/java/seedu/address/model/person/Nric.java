@@ -9,9 +9,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Nric {
     public static final String MESSAGE_NRIC_CONSTRAINTS = "Person NRIC should be of the format #0000000@ "
-        + "where # is a letter that can be S T F or G,\n "
-        + "0000000 is a 7 digit serial number assigned to the document holder, \n "
-        + "@ is the checksum letter calculated with respect to # and 0000000. ";
+        + "where # is a letter that can be S T F or G,\n"
+        + "0000000 represents 7 digits which can be any number from 0-9,\n"
+        + "@ can be any alphabet A-Z.";
 
     private static final String FIRST_CHAR_REGEX = "[STFG]";
     private static final String MIDDLE_NUM_REGEX = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9]";

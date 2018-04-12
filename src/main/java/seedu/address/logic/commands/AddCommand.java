@@ -16,8 +16,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
@@ -52,7 +54,7 @@ public class AddCommand extends UndoableCommand {
             + "To add a new appointment: "
             + COMMAND_WORD + " -a " + PREFIX_DATE + "DATE "
             + PREFIX_REMARK + "REMARK "
-            + "[" + PREFIX_TAG + "TYPE OF APPOINTMENT]... -o " + PREFIX_NRIC + "OWNER_NRIC -p "
+            + PREFIX_TAG + "TYPE OF APPOINTMENT... -o " + PREFIX_NRIC + "OWNER_NRIC -p "
             + PREFIX_NAME + " PET_NAME\n"
             + "To add all new: " + COMMAND_WORD + " -o " + PREFIX_NAME + "OWNER_NAME "
             + PREFIX_PHONE + "PHONE "
@@ -68,7 +70,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_REMARK + "REMARK "
             + PREFIX_TAG + "TYPE OF APPOINTMENT...";
 
-    public static final String MESSAGE_PERSON = "Option -o : Person details. "
+    public static final String MESSAGE_PERSON = "option -o\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -84,7 +86,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_NRIC + "S1234567Q "
             + PREFIX_TAG + "medical supplier";
 
-    public static final String MESSAGE_APPOINTMENT = "Option -a : Appointment details. "
+    public static final String MESSAGE_APPOINTMENT = "option -a\n"
             + "Parameters: "
             + PREFIX_DATE + "DATE "
             + PREFIX_REMARK + "REMARK "
@@ -95,7 +97,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "checkup "
             + PREFIX_TAG + "vaccination";
 
-    public static final String MESSAGE_PETPATIENT = COMMAND_WORD + " -p : Pet Patient details. "
+    public static final String MESSAGE_PETPATIENT = "option -p\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_SPECIES + "SPECIES "
@@ -118,7 +120,10 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PET_PATIENT = "This pet patient already exists in Medeina";
     public static final String MESSAGE_INVALID_NRIC = "The specified NRIC does not belong to anyone in Medeina."
             + " Please add a new person.";
-    public static final String MESSAGE_MISSING_NRIC_PREFIX = "Missing prefix \"nr/\" for NRIC after -o option";
+    public static final String MESSAGE_MISSING_NRIC_PREFIX = "option -o\n"
+            + "Missing prefix \"nr/\" for NRIC.";
+    public static final String MESSAGE_MISSING_PET_PATIENT_NAME_PREFIX = "option -p\n"
+            + "Missing prefix \"n/\" for pet patient name.";
     public static final String MESSAGE_INVALID_PET_PATIENT = "The specified pet cannot be found under the specified "
             + "owner in Medeina. Please add a new pet patient.";
 
@@ -208,6 +213,10 @@ public class AddCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         } catch (DuplicateDateTimeException e) {
             throw new CommandException(MESSAGE_DUPLICATE_DATETIME);
+        } catch (ConcurrentAppointmentException e) {
+            throw new AssertionError("Concurrent appointment.");
+        } catch (PastAppointmentException e) {
+            throw new AssertionError("Past-date appointment.");
         }
     }
 
@@ -232,7 +241,7 @@ public class AddCommand extends UndoableCommand {
      * Add a new appointment for an existing pet patient under an existing person.
      */
     private CommandResult addNewAppt() throws CommandException, DuplicateAppointmentException,
-            DuplicateDateTimeException {
+            DuplicateDateTimeException, ConcurrentAppointmentException, PastAppointmentException {
         person = model.getPersonWithNric(ownerNric);
         petPatient = model.getPetPatientWithNricAndName(ownerNric, petPatientName);
 
@@ -253,7 +262,8 @@ public class AddCommand extends UndoableCommand {
      * (New appointment for the new patient under a new person).
      */
     private CommandResult addAllNew() throws DuplicatePersonException, DuplicateNricException,
-            DuplicatePetPatientException, DuplicateAppointmentException, DuplicateDateTimeException {
+            DuplicatePetPatientException, DuplicateAppointmentException, DuplicateDateTimeException,
+        ConcurrentAppointmentException, PastAppointmentException {
         model.addPerson(person);
         model.addPetPatient(petPatient);
         model.addAppointment(appt);

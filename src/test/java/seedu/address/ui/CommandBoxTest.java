@@ -161,7 +161,7 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void commandBox_autocompleteCommandWord() {
         //add command
-        testAutocompleteForUserInput(" ", -1, "a", 1, " add");
+        testAutocompleteForUserInput("    ", -1, "a", 1, "    add");
         testAutocompleteForUserInput("a", -1, "d", 1, "add");
 
         //clear command
@@ -171,7 +171,7 @@ public class CommandBoxTest extends GuiUnitTest {
         testAutocompleteForUserInput(" ", -1, "d", 1, " delete");
 
         //edit command
-        testAutocompleteForUserInput(" ", -1, "e", 1, " edit");
+        testAutocompleteForUserInput("  ", -1, "e", 1, "  edit");
         testAutocompleteForUserInput("e", -1, "d", 1, "edit");
 
         //exit command
@@ -191,6 +191,9 @@ public class CommandBoxTest extends GuiUnitTest {
         //list command
         testAutocompleteForUserInput(" ", -1, "l", 1, " list");
 
+        //listappt command
+        testAutocompleteForUserInput(" ", -1, "l", 2, " listappt");
+
         //theme command
         testAutocompleteForUserInput("t", -1, "h", 1, "theme");
 
@@ -209,6 +212,14 @@ public class CommandBoxTest extends GuiUnitTest {
         testAutocompleteForUserInput("add ", -1, "-", 1, "add -a");
         testAutocompleteForUserInput("find ", -1, "-", 7, "find -o");
         testAutocompleteForUserInput("find ", -1, "-", 8, "find -p");
+        testAutocompleteForUserInput("listappt ", -1, "-", 2,
+                "listappt -d");
+        testAutocompleteForUserInput("listappt ", -1, "-", 6,
+                "listappt -m");
+        testAutocompleteForUserInput("listappt ", -1, "-", 9,
+                "listappt -w");
+        testAutocompleteForUserInput("listappt ", -1, "-", 10,
+                "listappt -y");
     }
 
     @Test
@@ -311,14 +322,14 @@ public class CommandBoxTest extends GuiUnitTest {
     public void commandBox_autocompletePetPatientName() {
         testAutocompleteForUserInput("add -a -o -p", -1, " n/", 1,
                 "add -a -o -p n/Jenn");
-        testAutocompleteForUserInput("find -p", -1, " n/", 2,
-                "find -p n/Jewel");
         testAutocompleteForUserInput("add -a -o -p", -1, " n/", 3,
                 "add -a -o -p n/Joker");
 
         // autocomplete will not work
         testAutocompleteForUserInput("edit -p", -1, " n/", 1,
                 "edit -p n/");
+        testAutocompleteForUserInput("find -p", -1, " n/", 2,
+                "find -p n/");
     }
 
     @Test

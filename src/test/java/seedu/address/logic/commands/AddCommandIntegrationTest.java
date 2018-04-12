@@ -27,6 +27,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.petpatient.PetPatient;
@@ -49,7 +51,7 @@ public class AddCommandIntegrationTest {
     private Model model;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     }
 
@@ -65,14 +67,16 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
+    public void execute_duplicatePerson_throwsCommandException()
+        throws ConcurrentAppointmentException, PastAppointmentException {
         Person personInList = model.getAddressBook().getPersonList().get(0);
         assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
     //@@author aquarinte
     @Test
-    public void execute_duplicateNric_throwsCommandException() {
+    public void execute_duplicateNric_throwsCommandException()
+        throws ConcurrentAppointmentException, PastAppointmentException {
         Nric nric = model.getAddressBook().getPersonList().get(0).getNric();
         Person duplicateNric = new PersonBuilder().withName("Red").withPhone("90002134").withEmail("red@gmail.com")
                 .withAddress("24 Pallet Town").withNric(nric.toString()).build();
@@ -92,14 +96,16 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_duplicatePetPatient_throwsCommandException() {
+    public void execute_duplicatePetPatient_throwsCommandException()
+        throws ConcurrentAppointmentException, PastAppointmentException {
         PetPatient duplicate = model.getAddressBook().getPetPatientList().get(0);
         assertCommandFailure(prepareCommand(duplicate, duplicate.getOwner(), model),
                 model, AddCommand.MESSAGE_DUPLICATE_PET_PATIENT);
     }
 
     @Test
-    public void execute_newPetPatientWithNricDoesNotExist_throwsCommandException() {
+    public void execute_newPetPatientWithNricDoesNotExist_throwsCommandException()
+        throws ConcurrentAppointmentException, PastAppointmentException {
         // Nric does not exists in address book
         String nricDoesNotExist = VALID_NRIC_DION;
         PetPatient validPetPatient = new PetPatientBuilder().withOwnerNric(nricDoesNotExist).build();
@@ -123,7 +129,8 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_newAppointmentWithNricDoesNotExists_throwsCommandException() {
+    public void execute_newAppointmentWithNricDoesNotExists_throwsCommandException()
+        throws ConcurrentAppointmentException, PastAppointmentException {
         String nricDoesNotExist = VALID_NRIC_DION;
         String petPatientNameExists = model.getAddressBook().getPetPatientList().get(0).getName().toString();
         Appointment validAppt = new AppointmentBuilder().withOwnerNric(nricDoesNotExist)
@@ -134,7 +141,8 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_newAppointmentWithPetPatientNameDoesNotExists_throwsCommandException() {
+    public void execute_newAppointmentWithPetPatientNameDoesNotExists_throwsCommandException()
+        throws ConcurrentAppointmentException, PastAppointmentException {
         String petNameDoesNotExist = VALID_NAME_NERO;
         String ownerNricExists = model.getAddressBook().getPersonList().get(0).getNric().toString();
         Appointment validAppt = new AppointmentBuilder().withOwnerNric(ownerNricExists)
@@ -145,14 +153,16 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_duplicateAppointment_throwsCommandException() {
+    public void execute_duplicateAppointment_throwsCommandException()
+        throws ConcurrentAppointmentException, PastAppointmentException {
         Appointment duplicate = model.getAddressBook().getAppointmentList().get(0);
         assertCommandFailure(prepareCommand(duplicate, duplicate.getOwnerNric(), duplicate.getPetPatientName(), model),
                 model, AddCommand.MESSAGE_DUPLICATE_APPOINTMENT);
     }
 
     @Test
-    public void execute_duplicateDateTimeAppointment_throwsCommandException() {
+    public void execute_duplicateDateTimeAppointment_throwsCommandException()
+        throws ConcurrentAppointmentException, PastAppointmentException {
         PetPatient existing = model.getAddressBook().getPetPatientList().get(0);
         Person owner = model.getPersonWithNric(existing.getOwner());
         String dupDateTime = model.getAddressBook().getAppointmentList().get(0).getFormattedLocalDateTime();

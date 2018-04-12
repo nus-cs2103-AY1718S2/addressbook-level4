@@ -18,8 +18,10 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentDependencyNotEmptyException;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateNricException;
@@ -231,7 +233,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void addAppointment(Appointment appointment)
-            throws DuplicateAppointmentException, DuplicateDateTimeException {
+            throws DuplicateAppointmentException, DuplicateDateTimeException,
+        ConcurrentAppointmentException, PastAppointmentException {
         addressBook.addAppointment(appointment);
         updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         indicateAddressBookChanged();

@@ -9,8 +9,10 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Remark;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 //import seedu.address.model.person.NRIC;
@@ -29,7 +31,6 @@ import seedu.address.model.petpatient.Species;
 import seedu.address.model.petpatient.exceptions.DuplicatePetPatientException;
 import seedu.address.model.tag.Tag;
 
-//@@author wynonaK
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
@@ -60,7 +61,7 @@ public class SampleDataUtil {
         };
     }
 
-    //@@author
+    //@@author wynonaK
     public static PetPatient[] getSamplePetPatients() {
         return new PetPatient[] {
             new PetPatient(new PetPatientName("Ane"), new Species("Cat"), new Breed("Siamese"),
@@ -90,7 +91,7 @@ public class SampleDataUtil {
         };
     }
 
-    //@@author wynonaK
+
     public static Appointment[] getSampleAppointments() {
         return new Appointment[] {
             new Appointment(new Nric("S0123456B"), new PetPatientName("Ane"), new Remark("nil"),
@@ -137,6 +138,10 @@ public class SampleDataUtil {
             throw new AssertionError("sample data cannot contain double booked appointments", e);
         } catch (DuplicateAppointmentException e) {
             throw new AssertionError("sample data cannot contain duplicate appointments", e);
+        } catch (ConcurrentAppointmentException cae) {
+            throw new AssertionError("AddressBook should not add appointments to on-going appointment slots");
+        } catch (PastAppointmentException pae) {
+            throw new AssertionError("AddressBook should not add appointments with past DateTime");
         }
     }
 

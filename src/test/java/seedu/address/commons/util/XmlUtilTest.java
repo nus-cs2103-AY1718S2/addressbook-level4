@@ -81,7 +81,7 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                null, VALID_NRIC, VALID_TAGS, null, null, VALID_REMARK, VALID_INJURIES_HISTORY,
+                null, VALID_NRIC, VALID_TAGS, null, VALID_REMARK, VALID_INJURIES_HISTORY,
                 VALID_CCA, VALID_NAME);
         assertEquals(expectedPerson, actualPerson);
     }
@@ -91,7 +91,7 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, INVALID_NRIC, VALID_TAGS, null, null, VALID_REMARK, VALID_INJURIES_HISTORY,
+                VALID_NAME, INVALID_NRIC, VALID_TAGS, null, VALID_REMARK, VALID_INJURIES_HISTORY,
                 VALID_CCA, VALID_NAME);
         assertEquals(expectedPerson, actualPerson);
     }
@@ -101,7 +101,7 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, VALID_NRIC, VALID_TAGS, null, null, VALID_REMARK, VALID_INJURIES_HISTORY,
+                VALID_NAME, VALID_NRIC, VALID_TAGS, null, VALID_REMARK, VALID_INJURIES_HISTORY,
                 VALID_CCA, VALID_NAME);
         assertEquals(expectedPerson, actualPerson);
     }

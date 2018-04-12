@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +16,6 @@ import seedu.address.model.person.NameOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
-import seedu.address.model.score.Score;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
@@ -36,8 +34,6 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedSubject> subjects = new ArrayList<>();
-    @XmlElement
-    private List<XmlAdaptedScore> scores = new ArrayList<>();
     @XmlElement(required = true)
     private String remark;
     @XmlElement
@@ -59,8 +55,7 @@ public class XmlAdaptedPerson {
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String nric, List<XmlAdaptedTag> tagged, List<XmlAdaptedSubject> subjects,
-                            List<XmlAdaptedScore> scores, String remark, String cca, String injuriesHistory,
-                            String nameOfKin) {
+                            String remark, String cca, String injuriesHistory, String nameOfKin) {
         this.name = name;
         this.nric = nric;
         this.remark = remark;
@@ -69,9 +64,6 @@ public class XmlAdaptedPerson {
         }
         if (subjects != null) {
             this.subjects = new ArrayList<>(subjects);
-        }
-        if (scores != null) {
-            this.scores = new ArrayList<>(scores);
         }
         this.cca = cca;
         this.injuriesHistory = injuriesHistory;
@@ -94,10 +86,6 @@ public class XmlAdaptedPerson {
         for (Subject subject : source.getSubjects()) {
             subjects.add(new XmlAdaptedSubject(subject));
         }
-        scores = new ArrayList<>();
-        for (Score score : source.getScores()) {
-            scores.add(new XmlAdaptedScore(score));
-        }
         remark = source.getRemark().value;
         cca = source.getCca().value;
         pos = source.getCca().pos;
@@ -113,15 +101,11 @@ public class XmlAdaptedPerson {
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
         final List<Subject> personSubjects = new ArrayList<>();
-        final List<Score> personScores = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
         for (XmlAdaptedSubject subject : subjects) {
             personSubjects.add(subject.toModelType());
-        }
-        for (XmlAdaptedScore score : scores) {
-            personScores.add(score.toModelType());
         }
 
         if (this.name == null) {
@@ -142,7 +126,6 @@ public class XmlAdaptedPerson {
 
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Subject> subjects = new HashSet<>(personSubjects);
-        final Set<Score> scores = new HashSet<>(personScores);
 
         if (this.remark == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));
@@ -169,7 +152,7 @@ public class XmlAdaptedPerson {
 
         final NameOfKin nameOfKin = new NameOfKin(this.nameOfKin);
 
-        return new Person(name, nric, tags, subjects, Collections.emptySet(), remark, cca, injuriesHistory, nameOfKin);
+        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nameOfKin);
     }
 
     @Override

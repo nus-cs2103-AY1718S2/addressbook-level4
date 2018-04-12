@@ -1,5 +1,6 @@
 package seedu.organizer.model.subtask;
 
+//@@author agus
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.commons.exceptions.DuplicateDataException;
 import seedu.organizer.commons.util.CollectionUtil;
 
@@ -78,6 +80,43 @@ public class UniqueSubtaskList implements Iterable<Subtask> {
             throw new DuplicateSubtaskException();
         }
         internalList.add(toAdd);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Count the number of specified subtask
+     * @param subtask to count
+     * @return number of specified subtask
+     */
+    public int count(Subtask subtask) {
+        int result = 0;
+
+        for (Subtask i: internalList) {
+            if (i.equals(subtask)) {
+                result += 1;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Set subtask in a specified index
+     * @throws DuplicateSubtaskException
+     */
+    public void set(Index index, Subtask toReplace) throws  DuplicateSubtaskException {
+        requireNonNull(toReplace);
+
+        int subtaskCount = this.count(toReplace);
+        if (internalList.get(index.getZeroBased()).equals(toReplace)) {
+            subtaskCount -= 1;
+        }
+        if (subtaskCount > 0) {
+            throw new DuplicateSubtaskException();
+        }
+
+        internalList.set(index.getZeroBased(), toReplace);
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }

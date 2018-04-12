@@ -28,6 +28,7 @@ import seedu.organizer.logic.commands.CurrentMonthCommand;
 import seedu.organizer.logic.commands.DeleteCommand;
 import seedu.organizer.logic.commands.DeleteSubtaskCommand;
 import seedu.organizer.logic.commands.EditCommand;
+import seedu.organizer.logic.commands.EditSubtaskCommand;
 import seedu.organizer.logic.commands.ExitCommand;
 import seedu.organizer.logic.commands.FindDeadlineCommand;
 import seedu.organizer.logic.commands.FindDescriptionCommand;
@@ -162,6 +163,24 @@ public class OrganizerParserLoggedInTest {
         assertEquals(new EditCommand(INDEX_FIRST_TASK, descriptor), command);
         assertEquals(new EditCommand(INDEX_FIRST_TASK, descriptor), commandAlias);
     }
+
+    //@@author agus
+    @Test
+    public void parseCommand_editSubtask() throws Exception {
+        Task task = new TaskBuilder().build();
+        Subtask subtask = new Subtask(task.getName());
+        EditSubtaskCommand command = (EditSubtaskCommand) parser.parseCommand(EditSubtaskCommand.COMMAND_WORD
+                + " "
+                + INDEX_FIRST_TASK.getOneBased() + " " + INDEX_FIRST_TASK.getOneBased() + " "
+                + TaskUtil.getSubtaskDetails(task));
+        EditSubtaskCommand commandAlias = (EditSubtaskCommand) parser.parseCommand(
+                EditSubtaskCommand.COMMAND_ALIAS
+                + " " + INDEX_FIRST_TASK.getOneBased() + " " + INDEX_FIRST_TASK.getOneBased() + " "
+                + TaskUtil.getSubtaskDetails(task));
+        assertEquals(new EditSubtaskCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK, subtask), command);
+        assertEquals(new EditSubtaskCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK, subtask), commandAlias);
+    }
+    //@@author
 
     @Test
     public void parseCommand_addSubtask() throws Exception {

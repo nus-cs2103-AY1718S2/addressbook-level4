@@ -73,6 +73,7 @@ public class ParserUtilTest {
         assertEquals(INDEX_FIRST_TASK, ParserUtil.parseIndex("  1  "));
     }
 
+    //@@author agus
     @Test
     public void parseMultipleIndex_invalidInput_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
@@ -148,6 +149,7 @@ public class ParserUtilTest {
         // Leading and trailing whitespaces
         assertArrayEquals(testCase, ParserUtil.parseSubtaskIndex("  1   2  "));
     }
+    //@@author
 
     @Test
     public void parseName_null_throwsNullPointerException() {

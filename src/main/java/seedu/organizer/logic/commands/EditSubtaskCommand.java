@@ -29,39 +29,40 @@ import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Add a subtask into a task
+ * Edit a subtask
  */
-public class AddSubtaskCommand extends UndoableCommand {
+public class EditSubtaskCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "adds";
-    public static final String COMMAND_ALIAS = "as";
+    public static final String COMMAND_WORD = "edits";
+    public static final String COMMAND_ALIAS = "es";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a subtask to a task. "
-            + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_NAME + "NAME "
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_NAME + "Submit report ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": edit a subttask. "
+            + "Parameters: TASK_INDEX (must be a positive integer) SUBTASK_INDEX (must be a positive integer)"
+            + PREFIX_NAME + "NAME ";
 
-    public static final String MESSAGE_SUCCESS = "New subtask added: %1$s";
+    public static final String MESSAGE_SUCCESS = "Subtask edited: %1$s";
     public static final String MESSAGE_DUPLICATED = "Subtask already exist";
 
-    private final Subtask toAdd;
-    private final Index index;
+    private final Subtask toEdit;
+    private final Index taskIndex;
+    private final Index subtaskIndex;
 
     private Task taskToEdit;
     private Task editedTask;
 
-    public AddSubtaskCommand(Index index, Subtask toAdd) {
-        requireNonNull(toAdd);
-        requireNonNull(index);
-        this.index = index;
-        this.toAdd = toAdd;
+    public EditSubtaskCommand(Index taskIndex, Index subtaskIndex, Subtask toEdit) {
+        requireNonNull(toEdit);
+        requireNonNull(taskIndex);
+        requireNonNull(subtaskIndex);
+        this.taskIndex = taskIndex;
+        this.subtaskIndex = subtaskIndex;
+        this.toEdit = toEdit;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            editedTask = createEditedTask(taskToEdit, toAdd);
+            editedTask = createEditedTask(taskToEdit, subtaskIndex, toEdit);
             model.updateTask(taskToEdit, editedTask);
         } catch (DuplicateTaskException dpe) {
             throw new AssertionError("Task duplication should not happen");
@@ -78,17 +79,22 @@ public class AddSubtaskCommand extends UndoableCommand {
     protected void preprocessUndoableCommand() throws CommandException {
         List<Task> lastShownList = model.getFilteredTaskList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
+        if (taskIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        taskToEdit = lastShownList.get(index.getZeroBased());
+        taskToEdit = lastShownList.get(taskIndex.getZeroBased());
+
+        if (subtaskIndex.getZeroBased() >= taskToEdit.getSubtasks().size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_SUBTASK_DISPLAYED_INDEX);
+        }
     }
 
     /**
      * Creates and returns a {@code Task} with the details of {@code taskToEdit}
      */
-    private static Task createEditedTask(Task taskToEdit, Subtask toAdd) throws DuplicateSubtaskException {
+    private static Task createEditedTask(Task taskToEdit, Index subtaskIndex,
+                                         Subtask toAdd) throws DuplicateSubtaskException {
         assert taskToEdit != null;
 
         Name updatedName = taskToEdit.getName();
@@ -99,11 +105,11 @@ public class AddSubtaskCommand extends UndoableCommand {
         DateCompleted oldDateCompleted = taskToEdit.getDateCompleted();
         Description updatedDescription = taskToEdit.getDescription();
         Set<Tag> updatedTags = taskToEdit.getTags();
-        UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(taskToEdit.getSubtasks());
         Status updatedStatus = taskToEdit.getStatus();
         Recurrence updatedRecurrence = taskToEdit.getRecurrence();
 
-        updatedSubtasks.add(toAdd);
+        UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(taskToEdit.getSubtasks());
+        updatedSubtasks.set(subtaskIndex, toAdd);
 
         return new Task(updatedName, updatedPriority, basePriority, updatedDeadline, oldDateAdded, oldDateCompleted,
                 updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(), getCurrentlyLoggedInUser(),
@@ -113,8 +119,10 @@ public class AddSubtaskCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddSubtaskCommand // instanceof handles nulls
-                && this.index.equals(((AddSubtaskCommand) other).index) // state check
-                && this.toAdd.equals(((AddSubtaskCommand) other).toAdd)); // state check
+                || (other instanceof EditSubtaskCommand // instanceof handles nulls
+                && this.toEdit.equals(((EditSubtaskCommand) other).toEdit) // state check
+                && this.subtaskIndex.equals(((EditSubtaskCommand) other).subtaskIndex) // state check
+                && this.taskIndex.equals(((EditSubtaskCommand) other).taskIndex)); // state check
     }
 }
+

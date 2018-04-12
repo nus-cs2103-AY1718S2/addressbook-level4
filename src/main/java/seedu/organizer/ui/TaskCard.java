@@ -86,6 +86,7 @@ public class TaskCard extends UiPart<Region> {
         });
     }
 
+    //@@author agus
     /**
      * Creates the subtask for {@code task}.
      */
@@ -96,6 +97,7 @@ public class TaskCard extends UiPart<Region> {
         });
         subtasks.setPrefHeight(10 + CELL_HEIGHT * task.getSubtasks().size());
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

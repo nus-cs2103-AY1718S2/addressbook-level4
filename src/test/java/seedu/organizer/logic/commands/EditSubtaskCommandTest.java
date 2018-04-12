@@ -32,21 +32,18 @@ import seedu.organizer.model.task.Name;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
-import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
-public class AddSubtaskCommandTest {
+public class EditSubtaskCommandTest {
 
     private Model model = new ModelManager(getTypicalOrganizer(), new UserPrefs());
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         try {
             model.loginUser(ADMIN_USER);
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
-            e.printStackTrace();
-        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }
@@ -56,55 +53,47 @@ public class AddSubtaskCommandTest {
         Subtask subtask = new Subtask(new Name(VALID_NAME_EXAM));
 
         Task originalTask = model.getFilteredTaskList().get(0);
-        Task editedTask = addSubtask(originalTask, subtask);
+        Task editedTask = editSubtask(originalTask, INDEX_FIRST_TASK, subtask);
 
-        AddSubtaskCommand addSubtaskCommand = prepareCommand(INDEX_FIRST_TASK, subtask);
+        EditSubtaskCommand editSubtaskCommand = prepareCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK, subtask);
 
-        String expectedMessage = String.format(AddSubtaskCommand.MESSAGE_SUCCESS, editedTask);
-
-        Model expectedModel = new ModelManager(new Organizer(model.getOrganizer()), new UserPrefs());
-        expectedModel.loginUser(ADMIN_USER);
-        expectedModel.updateTask(originalTask, editedTask);
-
-        assertCommandSuccess(addSubtaskCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_secondunfilteredList_success() throws Exception {
-        Subtask subtask = new Subtask(new Name(VALID_NAME_EXAM));
-
-        Task originalTask = model.getFilteredTaskList().get(1);
-        Task editedTask = addSubtask(originalTask, subtask);
-
-        AddSubtaskCommand addSubtaskCommand = prepareCommand(INDEX_SECOND_TASK, subtask);
-
-        String expectedMessage = String.format(AddSubtaskCommand.MESSAGE_SUCCESS, editedTask);
+        String expectedMessage = String.format(editSubtaskCommand.MESSAGE_SUCCESS, editedTask);
 
         Model expectedModel = new ModelManager(new Organizer(model.getOrganizer()), new UserPrefs());
         expectedModel.loginUser(ADMIN_USER);
         expectedModel.updateTask(originalTask, editedTask);
 
-        assertCommandSuccess(addSubtaskCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editSubtaskCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_failure() {
+    public void execute_invalidTaskIndexUnfilteredList_failure() {
         Subtask subtask = new Subtask(new Name(VALID_NAME_EXAM));
 
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
-        AddSubtaskCommand addSubtaskCommand = prepareCommand(outOfBoundsIndex, subtask);
+        EditSubtaskCommand editSubtaskCommand = prepareCommand(outOfBoundsIndex, INDEX_FIRST_TASK, subtask);
 
-        assertCommandFailure(addSubtaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        assertCommandFailure(editSubtaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidsubaskIndexUnfilteredList_failure() {
+        Subtask subtask = new Subtask(new Name(VALID_NAME_EXAM));
+
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredTaskList().get(0).getSubtasks().size() + 1);
+        EditSubtaskCommand editSubtaskCommand = prepareCommand(INDEX_FIRST_TASK, outOfBoundsIndex, subtask);
+
+        assertCommandFailure(editSubtaskCommand, model, Messages.MESSAGE_INVALID_SUBTASK_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_duplicateSubtask_failure() {
         Task originalTask = model.getFilteredTaskList().get(0);
-        Subtask subtask = originalTask.getSubtasks().get(0);
+        Subtask subtask = originalTask.getSubtasks().get(1);
 
-        AddSubtaskCommand addSubtaskCommand = prepareCommand(INDEX_FIRST_TASK, subtask);
+        EditSubtaskCommand editSubtaskCommand = prepareCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK, subtask);
 
-        assertCommandFailure(addSubtaskCommand, model, AddSubtaskCommand.MESSAGE_DUPLICATED);
+        assertCommandFailure(editSubtaskCommand , model, EditSubtaskCommand.MESSAGE_DUPLICATED);
     }
 
     @Test
@@ -116,17 +105,17 @@ public class AddSubtaskCommandTest {
         Subtask subtask = new Subtask(new Name(VALID_NAME_EXAM));
 
         Task originalTask = model.getFilteredTaskList().get(0);
-        Task editedTask = addSubtask(originalTask, subtask);
+        Task editedTask = editSubtask(originalTask, INDEX_FIRST_TASK, subtask);
 
-        AddSubtaskCommand addSubtaskCommand = prepareCommand(INDEX_FIRST_TASK, subtask);
+        EditSubtaskCommand editSubtaskCommand = prepareCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK, subtask);
         Model expectedModel = new ModelManager(new Organizer(model.getOrganizer()), new UserPrefs());
         expectedModel.loginUser(ADMIN_USER);
 
         // edit -> first task edited
-        addSubtaskCommand.execute();
-        undoRedoStack.push(addSubtaskCommand);
+        editSubtaskCommand.execute();
+        undoRedoStack.push(editSubtaskCommand);
 
-        // undo -> reverts organizer back to previous state and filtered task list to show all tasks
+        // undo -> reverts addressbook back to previous state and filtered task list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first task edited again
@@ -139,10 +128,10 @@ public class AddSubtaskCommandTest {
         Subtask subtask = new Subtask(new Name(VALID_NAME_EXAM));
         Subtask otherSubtask = model.getFilteredTaskList().get(0).getSubtasks().get(0);
 
-        AddSubtaskCommand firstIndexSubtask = prepareCommand(INDEX_FIRST_TASK, subtask);
-        AddSubtaskCommand firstIndexOtherSubtask = prepareCommand(INDEX_FIRST_TASK, otherSubtask);
-        AddSubtaskCommand secondIndexSubtask = prepareCommand(INDEX_SECOND_TASK, subtask);
-        AddSubtaskCommand secondIndexOtherSubtask = prepareCommand(INDEX_SECOND_TASK, otherSubtask);
+        EditSubtaskCommand firstIndexSubtask = prepareCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK, subtask);
+        EditSubtaskCommand firstIndexOtherSubtask = prepareCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK, otherSubtask);
+        EditSubtaskCommand secondIndexSubtask = prepareCommand(INDEX_FIRST_TASK, INDEX_SECOND_TASK, subtask);
+        EditSubtaskCommand secondIndexOtherSubtask = prepareCommand(INDEX_SECOND_TASK, INDEX_FIRST_TASK, subtask);
 
         assertNotEquals(firstIndexSubtask, firstIndexOtherSubtask);
         assertNotEquals(firstIndexSubtask, secondIndexOtherSubtask);
@@ -153,8 +142,8 @@ public class AddSubtaskCommandTest {
     public void equal_equalObject_true() {
         Subtask subtask = new Subtask(new Name(VALID_NAME_EXAM));
 
-        AddSubtaskCommand firstIndexSubtask = prepareCommand(INDEX_FIRST_TASK, subtask);
-        AddSubtaskCommand firstIndexOtherSubtask = prepareCommand(INDEX_FIRST_TASK, subtask);
+        EditSubtaskCommand firstIndexSubtask = prepareCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK, subtask);
+        EditSubtaskCommand firstIndexOtherSubtask = prepareCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK, subtask);
 
         assertEquals(firstIndexSubtask, firstIndexOtherSubtask);
         assertEquals(firstIndexSubtask, firstIndexSubtask);
@@ -163,9 +152,9 @@ public class AddSubtaskCommandTest {
     /**
      * Retrun an (@code Task) with added subtask
      */
-    private Task addSubtask(Task task, Subtask subtask) {
+    private Task editSubtask(Task task, Index index, Subtask subtask) {
         List<Subtask> subtasks = new ArrayList<Subtask>(task.getSubtasks());
-        subtasks.add(subtask);
+        subtasks.set(index.getZeroBased(), subtask);
         return new Task(
                 task.getName(),
                 task.getUpdatedPriority(),
@@ -178,15 +167,17 @@ public class AddSubtaskCommandTest {
                 task.getTags(),
                 subtasks,
                 task.getUser(),
-                task.getRecurrence());
+                task.getRecurrence()
+        );
     }
 
     /**
-     * Returns an {@code AddSubtaskCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code editSubtaskCommand} with parameters {@code taskIndex}, {@code subtaskIndex}
+     * and {@code subtask}
      */
-    private AddSubtaskCommand prepareCommand(Index index, Subtask subtask) {
-        AddSubtaskCommand addSubtaskCommand = new AddSubtaskCommand(index, subtask);
-        addSubtaskCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return addSubtaskCommand;
+    private EditSubtaskCommand prepareCommand(Index taskIndex, Index subtaskIndex, Subtask subtask) {
+        EditSubtaskCommand editSubtaskCommand = new EditSubtaskCommand (taskIndex, subtaskIndex, subtask);
+        editSubtaskCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return editSubtaskCommand;
     }
 }

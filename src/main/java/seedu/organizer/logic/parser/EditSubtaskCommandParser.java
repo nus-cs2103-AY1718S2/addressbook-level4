@@ -9,30 +9,30 @@ import java.util.Optional;
 
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.commons.exceptions.IllegalValueException;
-import seedu.organizer.logic.commands.AddSubtaskCommand;
+import seedu.organizer.logic.commands.EditSubtaskCommand;
 import seedu.organizer.logic.parser.exceptions.ParseException;
 import seedu.organizer.model.subtask.Subtask;
 import seedu.organizer.model.task.Name;
 
 /**
- * Parses input arguments and creates a new AddSubtaskCommand object
+ * Parses input arguments and creates a new EditSubtaskCommand object
  */
-public class AddSubtaskCommandParser implements Parser<AddSubtaskCommand> {
+public class EditSubtaskCommandParser implements Parser<EditSubtaskCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddSubtaskCommand
-     * and returns an AddSubtaskCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public AddSubtaskCommand parse(String args) throws ParseException {
+    public EditSubtaskCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME);
-        Index index;
-
+        Index[] indexs;
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            indexs = ParserUtil.parseSubtaskIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddSubtaskCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditSubtaskCommand.MESSAGE_USAGE));
         }
 
         Optional<Name> name = Optional.empty();
@@ -46,9 +46,9 @@ public class AddSubtaskCommandParser implements Parser<AddSubtaskCommand> {
         if (name.isPresent()) {
             toAdd = new Subtask(name.get());
         } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddSubtaskCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditSubtaskCommand.MESSAGE_USAGE));
         }
 
-        return new AddSubtaskCommand(index, toAdd);
+        return new EditSubtaskCommand(indexs[0], indexs[1], toAdd);
     }
 }

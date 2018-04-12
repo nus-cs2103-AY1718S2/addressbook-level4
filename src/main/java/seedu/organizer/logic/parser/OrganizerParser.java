@@ -18,6 +18,7 @@ import seedu.organizer.logic.commands.CurrentMonthCommand;
 import seedu.organizer.logic.commands.DeleteCommand;
 import seedu.organizer.logic.commands.DeleteSubtaskCommand;
 import seedu.organizer.logic.commands.EditCommand;
+import seedu.organizer.logic.commands.EditSubtaskCommand;
 import seedu.organizer.logic.commands.ExitCommand;
 import seedu.organizer.logic.commands.FindDeadlineCommand;
 import seedu.organizer.logic.commands.FindDescriptionCommand;
@@ -122,6 +123,13 @@ public class OrganizerParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
+        //@@author agus
+        case EditSubtaskCommand.COMMAND_WORD:
+            return new EditSubtaskCommandParser().parse(arguments);
+
+        case EditSubtaskCommand.COMMAND_ALIAS:
+            return new EditSubtaskCommandParser().parse(arguments);
+
         case ToggleCommand.COMMAND_WORD:
             return new ToggleCommandParser().parse(arguments);
 
@@ -133,6 +141,7 @@ public class OrganizerParser {
 
         case ToggleSubtaskCommand.COMMAND_ALIAS:
             return new ToggleSubtaskCommandParser().parse(arguments);
+        //@@author
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
@@ -140,6 +149,7 @@ public class OrganizerParser {
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
+        //@@author agus
         case DeleteSubtaskCommand.COMMAND_WORD:
             return new DeleteSubtaskCommandParser().parse(arguments);
 
@@ -151,6 +161,7 @@ public class OrganizerParser {
 
         case AddSubtaskCommand.COMMAND_ALIAS:
             return new AddSubtaskCommandParser().parse(arguments);
+        //@@author
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();

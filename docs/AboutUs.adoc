@@ -19,7 +19,7 @@ Role: Route Logic Developer
 
 === Ng Shi Kang
 image::ngshikang.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/ngshikang.adoc[portfolio]]
+{empty}[http://github.com/ngshikang[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/ngshikang.adoc[portfolio]]
 
 Role: User Profile Developer
 
@@ -27,7 +27,7 @@ Role: User Profile Developer
 
 === Matthieu Buot de L'Epine
 image::matthieu.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/mattbuot.adoc[portfolio]]
+{empty}[http://github.com/mattbuot[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/mattbuot.adoc[portfolio]]
 
 Role: Communication Developer
 
@@ -35,7 +35,7 @@ Role: Communication Developer
 
 === Minh Ngo
 image::minhngo.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/ncaminh.adoc]
+{empty}[http://github.com/ncaminh[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/ncaminh.adoc]
 
 Role: Mapping Visualization Developer
 

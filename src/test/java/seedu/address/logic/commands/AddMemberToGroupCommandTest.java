@@ -60,7 +60,7 @@ public class AddMemberToGroupCommandTest {
         thrown.expect(NullPointerException.class);
         new AddMemberToGroupCommand(null, null);
     }
-
+    
     @Test
     public void execute_groupAcceptedByModel_addSuccessful() throws Exception {
         AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded modelStub = new
@@ -75,7 +75,7 @@ public class AddMemberToGroupCommandTest {
                 person.getName().toString(), validGroup.getInformation().toString()),
                 commandResult.feedbackToUser);
     }
-    
+
     @Test
     public void equals() {
         Group groupF = new GroupBuilder().withPerson("Group F", TypicalPersons.ALICE).build();

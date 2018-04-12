@@ -374,7 +374,7 @@ Birthday prefix "b/" has been added to the add command so that users can add the
 
 ==== Design Considerations
 
-===== Aspect: Implementation of Appointments (Since v1.2)
+===== Aspect: Implementation of Appointments (Since v1.5rc)
 
 * **Alternative 1 (current choice): ** Implementation of Appointments as an attribute of Person
 ** Pros: Appointments are merged with existing commands as a prefix
@@ -588,6 +588,7 @@ In addition the XML file will be unlocked when the password is entered to allow 
 Lastly, password will be hashed and salted instead of being encrypted with a key.
 // end:: password[]
 
+// tag::export[]
 === Exporting
 
 ==== Current Implementation
@@ -604,9 +605,10 @@ In terms of implementation, the export command works in similar fashion to most 
 
 ==== Aspect: Parameters of export
 
-*Since v1.4*
+*Since v1.5rc*
 
 * The application will handle the `export` command with one argument (Format: `export EXPORT_TYPE`).
+* If the `EXPORT_TYPE` is `portfolio`, then another argument is allowed to specify output filename (Format: `export portfolio FILENAME`).
 * The export types are from an enum class at `seedu.address.model.export.ExportType`.
 * To add another export type to be caught by the user's input, simply add another value to the enum class mentioned above.
 ** After adding an export type, an export function for that specific type should be created in the `seedu.address.model.AddressBook` class.
@@ -618,8 +620,7 @@ In terms of implementation, the export command works in similar fashion to most 
 * The export file type should be controlled by the arguments of the command.
 ** Example: `export portfolio csv`
 *** Should download a portfolio as a csv file onto the user's computer
-* Add another argument for specifying the output file name
-
+// end::export[]
 
 === Logging
 

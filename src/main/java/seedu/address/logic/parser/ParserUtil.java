@@ -255,6 +255,7 @@ public class ParserUtil {
         return new Appointment(trimmedAppointment);
     }
 
+    //@@author daviddalmaso
     /**
      * @param exportType
      * @return the corresponding ExportType
@@ -263,9 +264,31 @@ public class ParserUtil {
     public static ExportType parseExportType(String exportType) throws IllegalArgumentException {
         requireNonNull(exportType);
         String trimmedExportType = exportType.trim().toUpperCase();
-        if (!ExportType.isValidExportType(trimmedExportType)) {
+        String[] allArgs = trimmedExportType.split(" ");
+        String checkExportType = allArgs[0];
+        if (!ExportType.isValidExportType(checkExportType)) {
             throw new IncorrectExportTypeException();
         }
-        return ExportType.valueOf(trimmedExportType);
+        return ExportType.valueOf(checkExportType);
+    }
+
+    /**
+     *
+     * @param args args of a valid export portfolio command
+     * @return the file path if specified, otherwise null
+     * @throws IllegalArgumentException
+     */
+    public static String parseExportFilePath(String args) throws IllegalArgumentException {
+        requireNonNull(args);
+        String trimmedArgs = args.trim().toLowerCase();
+        String[] pathArgs = trimmedArgs.split("portfolio", 2);
+        if (pathArgs.length < 2) {
+            return null;
+        }
+        String filePath = pathArgs[1].trim();
+        if (filePath == null || filePath.isEmpty()) {
+            return null;
+        }
+        return filePath + ".csv";
     }
 }

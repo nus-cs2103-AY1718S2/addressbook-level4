@@ -27,19 +27,31 @@ public class ExportCommand extends UndoableCommand {
     public final UserPrefs userPrefs = new UserPrefs();
 
     private ExportType typeToExport;
+    private String filePath;
 
     public ExportCommand(ExportType typeToExport) {
         this.typeToExport = typeToExport;
+        this.filePath = userPrefs.getExportPortfolioFilePath();
+    }
+
+    public ExportCommand(ExportType typeToExport, String filePath) {
+        this.typeToExport = typeToExport;
+        if (filePath == null || filePath.isEmpty()) {
+            this.filePath = userPrefs.getExportPortfolioFilePath();
+        } else {
+            this.filePath = filePath;
+        }
     }
 
     @Override
     protected CommandResult executeUndoableCommand() {
         requireNonNull(model);
-        model.export(typeToExport);
         if (typeToExport.equals(ExportType.PORTFOLIO)) {
+            model.exportPortfolio(filePath);
             return new CommandResult(String.format(PORTFOLIO_MESSAGE_SUCCESS,
-                    userPrefs.getExportPortfolioFilePath()));
+                    filePath));
         } else {
+            model.exportCalendar();
             return new CommandResult(CALENDAR_MESSAGE_SUCCESS);
         }
     }

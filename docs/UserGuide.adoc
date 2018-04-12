@@ -284,10 +284,15 @@ Format: `clear` Alias: `c`
 [TIP]
 Clearing all entries from reInsurance can also be done by moving the mouse over `File` section of the navigation bar then clicking `Clear`.
 
+// tag::export[]
 === Export data : `export`
 
 Exports the data from the specified export type (case insensitive). +
 Format: `export EXPORT_TYPE`
+** The `EXPORT_TYPE` must be either `calendar` or `portfolio`.
+
+Exports the portfolio to a specified export location. +
+Format `export portfolio FILENAME`.
 
 Examples:
 
@@ -295,16 +300,19 @@ Examples:
 Exports the data on the calendar to Google Calendar
 ** When running this command, you will be prompted to enter your credentials to your Google Account.
 * `export portfolio` +
-Exports the data in the portfolio to a .csv file
+Exports the data in the portfolio to a `portfolio.csv` file.
+* `export portfolio my_data` +
+Exports the data in the portfolio to a `my_data.csv` file.
 
 [NOTE]
 ====
 * Coming in v2.0, there will be more options on the types of data to export.
-* As of v1.4, the application handles the command for the portfolio and calendar.
+* As of v1.5rc, the application handles the command for the portfolio and calendar.
 * Default destination file is at `portfolio.csv` for the `export portfolio` command.
 * The default calendar created in Google Calendars is titled `reInsurance Events`, which contains birthdays and appointments.
 * Coming in v2.0, the user will be able to specify what the created calendar is called.
 ====
+// end:export[]
 
 // tag::group[]
 === Group entries : `group`

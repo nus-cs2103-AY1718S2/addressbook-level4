@@ -551,6 +551,28 @@ Deletes the injury history from the 1st student in the results of the `find` com
 
 *_return to <<toc,Table of Contents>>_*
 
+=== Changing theme of EduBuddy : `theme` [since v1.5]
+Changes colour theme of  _EduBuddy_ to dark or light theme. +
+Format: `theme colour` +
+You will be able to see the success message, +
+`Theme Changed!`
+
+
+[IMPORTANT]
+`colour` *must be 'dark' or 'light'
+
+Examples:
+
+* `theme` dark +
+Changes visual theme to dark theme.
+* `theme` light +
+Changes visual theme to light theme.
+
+*_return to <<toc,Table of Contents>>_*
+
+
+
+
 === Clearing all entries : `clear` or `c`
 
 Clears all student entries from _EduBuddy_. +
@@ -803,6 +825,8 @@ OR +
 |*AddRemark* |Adds a remark to a specific student|`addremark 1 r/REMARK`|
 
 |*DeleteRemark* |Deletes a remark from a specific student|`deleteremark 1 r/REMARK`|
+
+|*Theme* |Changes theme of EduBuddy |`theme COLOR`|`theme dark` |
 
 |*Undo* |Undo previous command |`undo` +
 OR +

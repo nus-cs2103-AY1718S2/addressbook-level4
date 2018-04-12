@@ -196,6 +196,12 @@ public class ViewTaskListCommand extends Command {
             if (targetWeek > 0) {
                 out.print("<h2 style=\"font-family:verdana; color:white\">"
                         + DEFAULT_LIST_TITLE + "  Week: " + targetWeek + "</h2>\n<br>\n");
+            } else if (targetWeek == COMPULSORY) {
+                out.print("<h2 style=\"font-family:verdana; color:white\">"
+                        + DEFAULT_LIST_TITLE + "  [Compulsory]" + "</h2>\n<br>\n");
+            } else if (targetWeek == SUBMISSION) {
+                out.print("<h2 style=\"font-family:verdana; color:white\">"
+                        + DEFAULT_LIST_TITLE + "  [Submission]" + "</h2>\n<br>\n");
             } else {
                 out.print("<h2 style=\"font-family:verdana; color:white\">"
                         + DEFAULT_LIST_TITLE + "</h2>\n<br>\n");
@@ -307,7 +313,17 @@ public class ViewTaskListCommand extends Command {
                     + "</head>\n"
                     + "<body  style=\"background-color:grey;\">\n"
                     + "<div class=\"container\">\n"
-                    + "    <h2 style = \"font-size: x-large; color: white;\">Your Progress: "
+                    + "    <h2 style = \"font-size: x-large; color: white;\">Your Progress");
+
+            if (targetWeek > 0) {
+                out.print("(Week" + targetWeek + ")");
+            } else if (targetWeek == COMPULSORY) {
+                out.print("([Compulsory])");
+            } else if (targetWeek == SUBMISSION) {
+                out.print("([Submission])");
+            }
+
+            out.print(": "
                     + percentage + "%</h2>\n"
                     + "    <br>\n"
                     + "    <div class=\"progress\">\n"

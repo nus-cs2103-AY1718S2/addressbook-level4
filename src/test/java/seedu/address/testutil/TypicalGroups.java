@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.group.Group;
+import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 
 /**
  * A utility class containing a list of {@code Group} objects to be used in tests.
@@ -28,4 +30,17 @@ public class TypicalGroups {
     public static List<Group> getTypicalGroups() {
         return new ArrayList<>(Arrays.asList(GROUP_A, GROUP_B, GROUP_F, GROUP_H));
     }
+
+     public static UniqueGroupList getTypicalGroupsList() {
+        UniqueGroupList groupList = new UniqueGroupList();
+        try {
+            groupList.add(GROUP_A);
+            groupList.add(GROUP_B);
+            groupList.add(GROUP_F);
+            groupList.add(GROUP_H);
+        } catch (DuplicateGroupException e) {
+            throw new IllegalArgumentException("group is expected to be unique.");
+        }
+        return groupList;
+     }
 }

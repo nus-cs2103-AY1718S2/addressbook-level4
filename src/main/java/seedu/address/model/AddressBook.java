@@ -261,23 +261,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Removes all notifications associated with a person id.
      */
     private void removeNotificationsWithOwnerId(Integer id) {
-        boolean deletedSuccessfully = false;
-        while (!deletedSuccessfully) {
-            try {
-                for (Notification n : notifications) {
-                    if (Integer.parseInt(n.getOwnerId()) == id) {
-                        notifications.remove(n);
-                    }
-                }
-                deletedSuccessfully = true;
-            } catch (ConcurrentModificationException e) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        }
+       LinkedList<Notification> toDelete = new LinkedList<>();
+       for (Notification n: notifications) {
+           if (n.getOwnerId().equals(id + "")) {
+               toDelete.add(n);
+           }
+       }
+       for (Notification n: toDelete) {
+           notifications.remove(n);
+       }
     }
     //@@author
 

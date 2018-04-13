@@ -1,12 +1,12 @@
 package seedu.address.logic;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import com.google.maps.DistanceMatrixApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
-import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 

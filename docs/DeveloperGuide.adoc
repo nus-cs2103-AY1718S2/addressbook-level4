@@ -261,7 +261,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::search[]
+// tag::search1[]
 === Search feature
 
 The search feature allows the user to search for books on https://books.google.com/[Google Books, window="_blank"] that matches some user-specified parameters.
@@ -271,10 +271,12 @@ This allows the user to easily search for particular books, and to add them with
 
 [[Search-Network]]
 ===== Network component
+// end::search1[]
 
 As part of the implementation of the search feature, the network component was added to allow for communicating with online services.
 An overview of the network component can be found in <<Design-Network>>.
 
+// tag::search2[]
 The `Network` object is passed by `LogicManager` into each `Command`, and is available for use by default, without the need for the `Command` to override `setData`.
 
 The `Network` API exposes various methods for making web API calls to various endpoints.
@@ -283,7 +285,7 @@ Apart from those, it also provides a `stop` method that allows for graceful shut
 As an example, if a command needs to retrieve search results from https://developers.google.com/books/[Google Books API, window="_blank"], it can make a call to the `searchBooks` method of the `Network` API.
 The following sequence diagram shows what happens when `searchBooks` is called:
 
-image::SearchBooksSequenceDiagram.png[width="750"]
+image::SearchBooksSequenceDiagram.png[width="700"]
 
 The methods shown above are asynchronous - they will not wait for the completion of the HTTP request.
 In particular, note that when `Network#searchBooks` finishes execution, the HTTP request might not have completed yet.
@@ -303,7 +305,7 @@ This is most evident in the `executeGetAndApply` method, as shown below:
 
 Once the HTTP request completes, the operations in the `CompletableFuture` objects will be executed. These operations are summarized by the following activity diagram:
 
-image::SearchBooksActivityDiagram.png[width="650"]
+image::SearchBooksActivityDiagram.png[width="600"]
 
 If the HTTP request fails, the response is unexpected, or the conversion to `BookShelf` fails, then the proceeding operations
 added by the calls to `thenApply` will be skipped, and the `CompletableFuture` is considered to have completed exceptionally.
@@ -317,7 +319,7 @@ With the network component in place, the `search` command can now be implemented
 When a `search` command is entered, a `SearchCommand` object will be created if the parsing of the command was successful,
 which will make a call to `searchBooks` on the `Network` API, as shown in the sequence diagram below:
 
-image::SearchCommandSequenceDiagram.png[width="800"]
+image::SearchCommandSequenceDiagram.png[width="750"]
 
 As described in <<Search-Network>>, when the event is handled by `NetworkManager`, this will result in an asynchronous HTTP request being made to https://developers.google.com/books/[Google Books API, window="_blank"].
 Once the request and the parsing of the response completes successfully, the operation added by the `thenAccept` call in `SearchCommand` will be executed.
@@ -326,16 +328,17 @@ This results in the execution of the following method in `SearchCommand`:
 [source,java]
 ----
     private void displaySearchResults(ReadOnlyBookShelf bookShelf) {
-        Platform.runLater(() -> {
-            model.updateSearchResults(bookShelf);
-            EventsCenter.getInstance().post(new SwitchToSearchResultsRequestEvent());
-            EventsCenter.getInstance().post(new NewResultAvailableEvent(...));
-        });
+        model.updateSearchResults(bookShelf);
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        EventsCenter.getInstance().post(new ActiveListChangedEvent());
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, bookShelf.size())));
+        EventsCenter.getInstance().post(new EnableCommandBoxRequestEvent());
     }
 ----
 
-Note that the update to the model must be done on the JavaFX thread (using `Platform#runLater`),
-since updating the search results will update its observable list, which will cause the UI to be updated.
+Note that this method is run on the JavaFX thread (using `Platform#runLater`) because it will result in updates to the book list panel.
+If such updates are not done on the JavaFX thread, JavaFX will throw an `IllegalStateException`.
 
 ==== Design Considerations
 
@@ -365,8 +368,7 @@ since updating the search results will update its observable list, which will ca
 * **Alternative 2:** Convert parsed JSON directly to model type.
 ** Pros: Faster and more efficient.
 ** Cons: Code will be more complicated and tedious - we will need to traverse through the JSON node tree manually.
-
-// end:search[]
+// end::search2[]
 
 // tag::undoredo[]
 === Undo feature
@@ -1199,14 +1201,14 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [discrete]
 ==== Qiu Siyu
 * **Search for books using Google Books API** (major)
-** Added the network component and a `search` command to allow the user to search for books on Google Books.
+** Added network component to support making asychronous HTTP requests.
+** Added `search` command to allow the user to search for books on Google Books.
 ** This allows the user to easily search for particular books, and add them without having to enter all the information manually (using the updated `add` command).
-* **Customize aliases to use in place of full commands** (major)
+* **Customize command aliases to use in place of full commands** (minor)
 ** Added `addalias`, `aliases` and `deletealias` commands to allow adding, viewing and deleting of aliases.
-** This allows users to reduce the typing needed.
-* **Change application theme** (minor)
-** Added a `theme` command that allows the user to switch between the various themes included with Bibliotek.
-** This allows the user to change the design of Bibliotek according to their own preferences.
+** Updated command parser to support command aliases.
+** Updated storage component to save command aliases in XML format.
+** This allows users to reduce the amount of typing needed.
 
 [discrete]
 ==== Qiu Siqi
@@ -1221,7 +1223,6 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [discrete]
 ==== Shi Jin
 * **Mark a book as read, change the priority of a book and rate books** (major)
-** Added attributes rating, status, priority.
 ** Added `edit` command that allows user to rate, set status and change priority of
 some books.
 ** This allows the user to keep track of what to read and what have been read and give recommendations to others.

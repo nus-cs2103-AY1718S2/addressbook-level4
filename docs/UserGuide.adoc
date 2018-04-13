@@ -102,12 +102,12 @@ If you want to find any books with `Harry Potter` as keyword, enter `search Harr
 Bibliotek shows `Searching for matching books...` to indicate that your `search` is being processed.
 This may take some time since an external service is being called to fetch your search results.
 
-image::SearchCommandSearching.png[width="700"]
+image::SearchCommandSearching.png[width="675"]
 
 When your search results are ready, Bibliotek shows `Found xx matching books.` and displays your
 search results in the left panel.
 
-image::SearchCommandFound.png[width="700"]
+image::SearchCommandFound.png[width="675"]
 
 NOTE: If Bibliotek shows `Failed to retrieve information from online.`, it means your search request has timed out.
 You should try again after some time.
@@ -133,7 +133,7 @@ Format: `select INDEX`
 
 Suppose you have the following search results.
 
-image::SearchCommandFound.png[width="700"]
+image::SearchCommandFound.png[width="675"]
 
 If you are interested in `The Ivory Tower and Harry Potter` and wish to view more information,
 enter `select 3`.
@@ -141,7 +141,7 @@ enter `select 3`.
 Bibliotek shows `Selected Book: 3` to indicate that your `select` is successful. The left panel
 is auto-scrolled to the selected book and the right panel shows detailed information of the book.
 
-image::SelectCommand.png[width="700"]
+image::SelectCommand.png[width="675"]
 
 Alternatively, instead of entering `select 3`, you can directly select `The Ivory Tower and Harry Potter`
 by clicking on it in the left panel.
@@ -149,7 +149,7 @@ by clicking on it in the left panel.
 Bibliotek shows the detailed information of the book in the right panel. Note that no confirmation message
 will be shown in this case.
 
-image::SelectCommandUI.png[width="700"]
+image::SelectCommandUI.png[width="675"]
 
 Other examples:
 
@@ -180,7 +180,7 @@ You also need Internet connection.
 
 Suppose you have the following search results.
 
-image::SearchCommandFound.png[width="700"]
+image::SearchCommandFound.png[width="675"]
 
 If you want to add `Harry Potter and the Classical World` to your book shelf, enter `add 2`.
 
@@ -188,15 +188,15 @@ Bibliotek shows `Adding the book into your book shelf...` to indicate that your 
 This may take some time since an external service is being called to fetch more detailed information about
 the book before adding it to your book shelf.
 
-image::AddCommandAdding.png[width="700"]
+image::AddCommandAdding.png[width="675"]
 
 Once the necessary information is fetched and the book is added, Bibliotek shows `New book added: TITLE - Authors: AUTHORS`.
 
-image::AddCommandAdded.png[width="700"]
+image::AddCommandAdded.png[width="675"]
 
 You can verify that the book have been added by entering `list t/TITLE`. In this case, you can enter `list t/Harry Potter`.
 
-image::AddCommandAddedConfirmation.png[width="700"]
+image::AddCommandAddedConfirmation.png[width="675"]
 
 Other examples:
 
@@ -240,7 +240,7 @@ If you want to view all books in your book shelf, you can simply enter `list`.
 Bibliotek shows `Listed xx books.` to indicate that the command was successful.
 The left panel will show all the books in your book shelf.
 
-image::ListCommand.png[width="700"]
+image::ListCommand.png[width="675"]
 
 Other examples:
 
@@ -295,14 +295,14 @@ They may serve as useful reference in the future.
 
 Suppose you have the following books in your book shelf.
 
-image::ListCommand.png[width="700"]
+image::ListCommand.png[width="675"]
 
 If you no longer want to read `Harry Potter and the Classical World` and wish to remove it from your book shelf, enter `delete 3`.
 
 Bibliotek shows `Deleted Book: TITLE - Authors: AUTHORS` to indicate that your `delete` is successful.
 The book no longer exist in the left panel.
 
-image::DeleteCommand.png[width="700"]
+image::DeleteCommand.png[width="675"]
 
 Other examples:
 
@@ -323,7 +323,7 @@ If you want to delete all books, enter `clear`.
 Bibliotek shows `Book shelf has been cleared!` to indicate that your `clear` is successful.
 The left panel is now empty.
 
-image::ClearCommand.png[width="700"]
+image::ClearCommand.png[width="675"]
 
 [[undo-command]]
 === Undoing previous command : `undo`
@@ -342,14 +342,14 @@ Undoable commands: those commands that modify the book shelf's content (`add`, `
 
 Suppose you just deleted a book `Harry Potter and the Classical World`.
 
-image::DeleteCommand.png[width="700"]
+image::DeleteCommand.png[width="675"]
 
 If you regret your deletion and wish to undo it, enter `undo`.
 
 Bibliotek shows `Successfully undone deleting of TITLE - Authors: AUTHORS.`
 to indicate that your `undo` of the deletion is successful. `Harry Potter and the Classical World` is back in your book shelf as seen in the left panel.
 
-image::UndoCommand.png[width="700"]
+image::UndoCommand.png[width="675"]
 
 NOTE: Your entire book shelf is shown in the left panel after performing `undo`.
 
@@ -386,7 +386,7 @@ You can select books in the `recent` list, but this will not count as a newest s
 
 Suppose you recently selected `The Ivory Tower and Harry Potter` in your search results.
 
-image::SelectCommand.png[width="700"]
+image::SelectCommand.png[width="675"]
 
 You did not add the book into your book shelf. After performing various other selections,
 you regret not adding `The Ivory Tower and Harry Potter` into your book shelf. Instead of
@@ -396,7 +396,7 @@ Bibliotek shows `Listed all recently selected books.` to indicate that your `rec
 is successful. You can scroll down the left panel to locate `The Ivory Tower and Harry Potter`
 (index 4 in this case).
 
-image::RecentCommand.png[width="700"]
+image::RecentCommand.png[width="675"]
 
 You can then enter `add 4` to add the book into your book shelf.
 
@@ -422,7 +422,7 @@ WARNING: You can only perform `reviews` with Internet connection.
 
 Suppose you have the following search results.
 
-image::SearchCommandFound.png[width="700"]
+image::SearchCommandFound.png[width="675"]
 
 If you want to view book reviews for `The Ivory Tower and Harry Potter`, enter `reviews 3`.
 
@@ -430,7 +430,7 @@ Bibliotek shows `Showing reviews for book: TITLE - Authors: AUTHORS.` and displa
 The browser will begin loading the reviews page of the book on https://goodreads.com[goodreads, window="_blank"].
 Once the web page has loaded, you will be able to see the reviews, as shown below.
 
-image::ReviewsCommandLoaded.png[width="700"]
+image::ReviewsCommandLoaded.png[width="675"]
 
 Other examples:
 
@@ -454,19 +454,19 @@ WARNING: You can only perform `library` with Internet connection.
 
 Suppose you have the following books in your display list.
 
-image::ListCommand.png[width="700"]
+image::ListCommand.png[width="675"]
 
 If you want to search the library for `Harry Potter and the Classical World`, enter `library 3`.
 
 Bibliotek shows `Searching for the book in the library...` to indicate that your `library` command is being processed.
 This may take some time since data is being loaded from the online library catalogue.
 
-image::LibraryCommandSearching.png[width="700"]
+image::LibraryCommandSearching.png[width="675"]
 
 Once the data is ready, Bibliotek shows `Showing availability of book: TITLE - Authors: AUTHORS`.
 You will be able to see the availability of the book in the library in the right panel, as shown below.
 
-image::LibraryCommandAfter.png[width="700"]
+image::LibraryCommandAfter.png[width="675"]
 
 NOTE: If Bibliotek shows `Failed to retrieve information from online.`,
 it means your search request has timed out. You should try again after some time.
@@ -487,6 +487,7 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+// tag::alias[]
 [[addalias-command]]
 === Adding a command alias : `addalias` _(since v1.5)_
 
@@ -534,7 +535,7 @@ Format: `aliases`
 After entering the `aliases` command, Bibliotek shows `Listed xx aliases.` to indicate that the command was successful.
 The right panel will display a list of all your command aliases.
 
-image::AliasesCommand.png[width="700"]
+image::AliasesCommand.png[width="675"]
 
 [[deletealias-command]]
 === Delete a command alias : `deletealias` _(since v1.5)_
@@ -553,6 +554,7 @@ Examples:
 Deletes the command alias with the name `rm`.
 * `deletealias read` +
 Deletes the command alias with the name `read`.
+// end::alias[]
 
 [[theme-command]]
 === Changing theme : `theme` _(since v1.2)_
@@ -570,15 +572,15 @@ You can change the application to the white theme using `theme white`.
 
 Bibliotek shows `Application theme changed to: white` to indicate that your theme change is successful.
 
-image::ThemeWhite.png[width="700"]
+image::ThemeWhite.png[width="675"]
 
 The same goes for `theme light`:
 
-image::ThemeLight.png[width="700"]
+image::ThemeLight.png[width="675"]
 
 And `theme dark`:
 
-image::ThemeDark.png[width="700"]
+image::ThemeDark.png[width="675"]
 
 [[exit-command]]
 === Closing the program : `exit`

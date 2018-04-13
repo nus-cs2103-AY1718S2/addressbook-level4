@@ -71,7 +71,7 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         BookShelfStorage bookShelfStorage = new XmlBookShelfStorage(userPrefs.getBookShelfFilePath());
-        RecentBooksStorage recentBooksStorage = new XmlRecentBooksStorage(config.getRecentBooksFilePath());
+        RecentBooksStorage recentBooksStorage = new XmlRecentBooksStorage(userPrefs.getRecentBooksFilePath());
         AliasListStorage aliasListStorage = new XmlAliasListStorage(userPrefs.getAliasListFilePath());
         storage = new StorageManager(bookShelfStorage, userPrefsStorage, recentBooksStorage, aliasListStorage);
 

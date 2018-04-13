@@ -48,12 +48,12 @@ import seedu.address.model.tag.Tag;
 public class AddCommandParser implements Parser<AddCommand> {
 
     private static final Pattern ADD_COMMAND_FORMAT_ALL_NEW = Pattern.compile("-(o)+(?<ownerInfo>.*)"
-            + "-(p)+(?<petInfo>.*)-(a)+(?<apptInfo>.*)");
+        + "-(p)+(?<petInfo>.*)-(a)+(?<apptInfo>.*)");
     private static final Pattern ADD_COMMAND_FORMAT_OWNER_ONLY = Pattern.compile("-(o)+(?<ownerInfo>.*)");
     private static final Pattern ADD_COMMAND_FORMAT_NEW_PET_EXISTING_OWNER = Pattern.compile("-(p)+(?<petInfo>.*)"
-            + "-(o)+(?<ownerNric>.*)");
+        + "-(o)+(?<ownerNric>.*)");
     private static final Pattern ADD_COMMAND_FORMAT_NEW_APPT_EXISTING_OWNER_PET = Pattern.compile("-(a)+(?<apptInfo>.*)"
-            + "-(o)+(?<ownerNric>.*)" + "-(p)+(?<petName>.*)");
+        + "-(o)+(?<ownerNric>.*)" + "-(p)+(?<petName>.*)");
 
     /**
      * Parses the given {@code String} of arguments in the context of the Person class
@@ -62,11 +62,11 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public Person parsePerson(String ownerInfo) throws ParseException {
         ArgumentMultimap argMultimapOwner =
-                ArgumentTokenizer.tokenize(ownerInfo, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_NRIC, PREFIX_TAG);
+            ArgumentTokenizer.tokenize(ownerInfo, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_ADDRESS, PREFIX_NRIC, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimapOwner, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_NRIC)
-                || !argMultimapOwner.getPreamble().isEmpty()) {
+            || !argMultimapOwner.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
         }
 
@@ -93,12 +93,12 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public Appointment parseAppointment(String apptInfo) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(apptInfo, PREFIX_DATE, PREFIX_REMARK, PREFIX_TAG);
+            ArgumentTokenizer.tokenize(apptInfo, PREFIX_DATE, PREFIX_REMARK, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_DATE, PREFIX_REMARK, PREFIX_TAG)
-                || !argMultimap.getPreamble().isEmpty()) {
+            || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_APPOINTMENT));
+                String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_APPOINTMENT));
         }
 
         try {
@@ -116,9 +116,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             return appointment;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
+
         }
     }
-
     /**
      * Parses the given {@code String} of arguments in the context of the PetPatient class
      * and returns an PetPatient object.
@@ -126,12 +126,12 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public PetPatient parsePetPatient(String petInfo) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(petInfo, PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_COLOUR,
-                        PREFIX_BLOODTYPE, PREFIX_TAG);
+            ArgumentTokenizer.tokenize(petInfo, PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_COLOUR,
+                PREFIX_BLOODTYPE, PREFIX_TAG);
 
         if (!arePrefixesPresent(
-                argMultimap, PREFIX_NAME, PREFIX_BREED, PREFIX_SPECIES, PREFIX_COLOUR, PREFIX_BLOODTYPE)
-                || !argMultimap.getPreamble().isEmpty()) {
+            argMultimap, PREFIX_NAME, PREFIX_BREED, PREFIX_SPECIES, PREFIX_COLOUR, PREFIX_BLOODTYPE)
+            || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
         }
 
@@ -162,7 +162,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NRIC) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
-                    AddCommand.MESSAGE_MISSING_NRIC_PREFIX));
+                AddCommand.MESSAGE_MISSING_NRIC_PREFIX));
         }
 
         try {
@@ -185,7 +185,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
-                    AddCommand.MESSAGE_MISSING_PET_PATIENT_NAME_PREFIX));
+                AddCommand.MESSAGE_MISSING_PET_PATIENT_NAME_PREFIX));
         }
 
         try {
@@ -203,7 +203,7 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format.
      */
     private AddCommand createNewOwnerPetAppt(String ownerInfo, String petInfo, String apptInfo)
-            throws ParseException {
+        throws ParseException {
         Person owner = parsePerson(ownerInfo);
 
         PetPatient petPatient = parsePetPatient(petInfo);
@@ -222,7 +222,7 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format.
      */
     private AddCommand createNewApptforExistingOwnerAndPet(String apptInfo, String ownerNric, String petName)
-            throws ParseException {
+        throws ParseException {
         Appointment appt = parseAppointment(apptInfo);
         Nric nric = parseNric(ownerNric);
         PetPatientName petPatientName = parsePetPatientName(petName);

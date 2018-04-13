@@ -1,6 +1,7 @@
 # melvintzw-reused
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
+
     /**
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
@@ -18,12 +19,13 @@
         private Date oweDueDate;
         private StandardInterest standardInterest;
         private LateInterest lateInterest;
-        private Runner runner;
+        private Person runner;
 
         //Runner fields
         private List<Person> customers;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         /**
          * Copy constructor.
@@ -58,6 +60,7 @@
         public void setName(Name name) {
             this.name = name;
         }
+
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
         }
@@ -65,6 +68,7 @@
         public void setPhone(Phone phone) {
             this.phone = phone;
         }
+
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
         }
@@ -72,6 +76,7 @@
         public void setEmail(Email email) {
             this.email = email;
         }
+
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
         }
@@ -79,6 +84,7 @@
         public void setAddress(Address address) {
             this.address = address;
         }
+
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
@@ -86,6 +92,7 @@
         public void setMoneyBorrowed(MoneyBorrowed moneyBorrowed) {
             this.moneyBorrowed = moneyBorrowed;
         }
+
         public Optional<MoneyBorrowed> getMoneyBorrowed() {
             return Optional.ofNullable(moneyBorrowed);
         }
@@ -93,6 +100,7 @@
         public void setOweStartDate(Date oweStartDate) {
             this.oweStartDate = oweStartDate;
         }
+
         public Optional<Date> getOweStartDate() {
             return Optional.ofNullable(oweStartDate);
         }
@@ -100,6 +108,7 @@
         public void setOweDueDate(Date oweDueDate) {
             this.oweDueDate = oweDueDate;
         }
+
         public Optional<Date> getOweDueDate() {
             return Optional.ofNullable(oweDueDate);
         }
@@ -107,6 +116,7 @@
         public void setStandardInterest(StandardInterest standardInterest) {
             this.standardInterest = standardInterest;
         }
+
         public Optional<StandardInterest> getStandardInterest() {
             return Optional.ofNullable(standardInterest);
         }
@@ -114,20 +124,23 @@
         public void setLateInterest(LateInterest lateInterest) {
             this.lateInterest = lateInterest;
         }
+
         public Optional<LateInterest> getLateInterest() {
             return Optional.ofNullable(lateInterest);
         }
 
-        public void setRunner(Runner runner) {
+        public void setRunner(Person runner) {
             this.runner = runner;
         }
-        public Optional<Runner> getRunner() {
+
+        public Optional<Person> getRunner() {
             return Optional.ofNullable(runner);
         }
 
         public void setCustomers(List<Person> customers) {
             this.customers = customers;
         }
+
         public Optional<List<Person>> getCustomers() {
             return Optional.ofNullable(customers);
         }

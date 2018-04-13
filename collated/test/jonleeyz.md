@@ -40,17 +40,13 @@
         populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
 
-        /**Unusual: Ctrl + Space does not work when focus is on PersonListPanel.
-         * Although most accelerators work fine when focus is on PersonListPanel,
-         * the Space key does not play nice with the PersonListPanel.
-         */
         getPersonListPanel().click();
         populateAddCommandUsingAccelerator();
-        assertPopulationFailure();
+        assertPopulationSuccess();
 
         getBrowserPanel().click();
         populateAddCommandUsingAccelerator();
-        assertPopulationFailure();
+        assertPopulationSuccess();
 
         //use menu button
         populateAddCommandUsingMenu();
@@ -76,27 +72,11 @@
     }
 
     /**
-     * Asserts that population of the {@code CommandBox} with the AddCommand
-     * template was unsuccessful.
-     */
-    private void assertPopulationFailure() {
-        AddCommand addCommand = new AddCommand();
-        assertNotEquals(addCommand.getTemplate(), getCommandBox().getInput());
-        assertNotEquals(addCommand.getUsageMessage(), getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-
-        executeCommand("invalid command");
-        assertTrue(getCommandBox().clear());
-        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-    }
-
-    /**
      * Populates the {@code CommandBox} with the AddCommand template
      * using the associated accelerator in {@code MainWindow}.
      */
     private void populateAddCommandUsingAccelerator() {
-        populateUsingAccelerator(KeyCode.CONTROL, KeyCode.SPACE);
+        populateUsingAccelerator(KeyCode.CONTROL, KeyCode.I);
     }
 
     /**
@@ -224,7 +204,7 @@
 
         getBrowserPanel().click();
         populateDeleteCommandUsingAccelerator();
-        assertPopulationFailure();
+        assertPopulationSuccess();
 
         //use menu button
         populateDeleteCommandUsingMenu();
@@ -241,22 +221,6 @@
         DeleteCommand deleteCommand = new DeleteCommand();
         assertEquals(deleteCommand.getTemplate(), getCommandBox().getInput());
         assertEquals(deleteCommand.getUsageMessage(), getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-
-        executeCommand("invalid command");
-        assertTrue(getCommandBox().clear());
-        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-    }
-
-    /**
-     * Asserts that population of the {@code CommandBox} with the AddCommand
-     * template was unsuccessful.
-     */
-    private void assertPopulationFailure() {
-        DeleteCommand deleteCommand = new DeleteCommand();
-        assertNotEquals(deleteCommand.getTemplate(), getCommandBox().getInput());
-        assertNotEquals(deleteCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");
@@ -300,7 +264,7 @@
 
         getBrowserPanel().click();
         populateEditCommandUsingAccelerator();
-        assertPopulationFailure();
+        assertPopulationSuccess();
 
         //use menu button
         populateEditCommandUsingMenu();
@@ -317,22 +281,6 @@
         EditCommand editCommand = new EditCommand();
         assertEquals(editCommand.getTemplate(), getCommandBox().getInput());
         assertEquals(editCommand.getUsageMessage(), getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-
-        executeCommand("invalid command");
-        assertTrue(getCommandBox().clear());
-        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-    }
-
-    /**
-     * Asserts that population of the {@code CommandBox} with the AddCommand
-     * template was unsuccessful.
-     */
-    private void assertPopulationFailure() {
-        EditCommand editCommand = new EditCommand();
-        assertNotEquals(editCommand.getTemplate(), getCommandBox().getInput());
-        assertNotEquals(editCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");
@@ -376,7 +324,7 @@
 
         getBrowserPanel().click();
         populateFindCommandUsingAccelerator();
-        assertPopulationFailure();
+        assertPopulationSuccess();
 
         //use menu button
         populateFindCommandUsingMenu();
@@ -393,22 +341,6 @@
         FindCommand findCommand = new FindCommand();
         assertEquals(findCommand.getTemplate(), getCommandBox().getInput());
         assertEquals(findCommand.getUsageMessage(), getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-
-        executeCommand("invalid command");
-        assertTrue(getCommandBox().clear());
-        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-    }
-
-    /**
-     * Asserts that population of the {@code CommandBox} with the AddCommand
-     * template was unsuccessful.
-     */
-    private void assertPopulationFailure() {
-        FindCommand findCommand = new FindCommand();
-        assertNotEquals(findCommand.getTemplate(), getCommandBox().getInput());
-        assertNotEquals(findCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");
@@ -439,14 +371,14 @@
      * Executes the HelpCommand using its accelerator in {@code MainMenu}
      */
     private void executeHelpCommandUsingAccelerator() {
-        executeUsingAccelerator(KeyCode.F1);
+        executeUsingAccelerator(KeyCode.F12);
     }
 
     /**
      * Executes the HelpCommand using its menu bar item in {@code MainMenu}.
      */
     private void executeHelpCommandUsingMenu() {
-        executeUsingMenuItem("Help", "F1");
+        executeUsingMenuItem("Help", "F12");
     }
 ```
 ###### \java\systemtests\SelectCommandSystemTest.java
@@ -468,7 +400,7 @@
 
         getBrowserPanel().click();
         populateSelectCommandUsingAccelerator();
-        assertPopulationFailure();
+        assertPopulationSuccess();
 
         //use menu button
         populateSelectCommandUsingMenu();
@@ -485,22 +417,6 @@
         SelectCommand selectCommand = new SelectCommand();
         assertEquals(selectCommand.getTemplate(), getCommandBox().getInput());
         assertEquals(selectCommand.getUsageMessage(), getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-
-        executeCommand("invalid command");
-        assertTrue(getCommandBox().clear());
-        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
-        guiRobot.pauseForHuman();
-    }
-
-    /**
-     * Asserts that population of the {@code CommandBox} with the AddCommand
-     * template was unsuccessful.
-     */
-    private void assertPopulationFailure() {
-        SelectCommand selectCommand = new SelectCommand();
-        assertNotEquals(selectCommand.getTemplate(), getCommandBox().getInput());
-        assertNotEquals(selectCommand.getUsageMessage(), getResultDisplay().getText());
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

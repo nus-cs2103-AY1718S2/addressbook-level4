@@ -1,4 +1,33 @@
 # melvintzw
+###### \java\seedu\address\commons\events\ui\FieldsChangedEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.person.Person;
+
+/**
+ * Represents a selection change in the Person List Panel
+ */
+public class FieldsChangedEvent extends BaseEvent {
+
+
+    public final Person person;
+
+    public FieldsChangedEvent(Person person) {
+        this.person = person;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AssignCommand.java
 ``` java
 
@@ -10,12 +39,26 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     public static final String COMMAND_WORD = "assign";
     public static final String COMMAND_ALIAS = "as";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": assigns customers to a runner "
-            + "by the index number used in the last person listing.\n"
-            + "Parameters: RUNNER-INDEX (positive integer) "
-            + PREFIX_CUSTOMERS + " CUSTOMER INDEX (positive integer) "
-            + "[ CUSTOMER 2 INDEX...]\n"
-            + "Example: " + COMMAND_WORD + " 5 " + PREFIX_CUSTOMERS + " 2 ";
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + " | assigns customers to a runner associated with the index number used in the last "
+            + "person listing."
+            + "\n\t"
+            + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
+
+            + "\n\t"
+            + "Parameters:\t"
+            + COMMAND_WORD + " "
+            + "RUNNER-INDEX (positive integer) "
+            + PREFIX_CUSTOMERS + " CUSTOMER-INDEX (positive integer) "
+            + "[ CUSTOMER-INDEX] ..."
+
+            + "\n\t"
+            + "Example:\t\t"
+            + COMMAND_WORD + " 1 " + PREFIX_CUSTOMERS + " 2"
+
+            + "\n\t"
+            + "Example:\t\t"
+            + COMMAND_WORD + " 1 " + PREFIX_CUSTOMERS + " 2 5 8";
 
     public static final String MESSAGE_ASSIGN_PERSON_SUCCESS = "Successfully assigned!\nUpdated Runner Info:\n%1$s";
     // message
@@ -55,13 +98,16 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
+            deletePrevRunnerCustomer();
             model.updatePerson(personToEdit, editedPerson);
-
             int i = 0;
             for (Person c : newCustomers) {
                 model.updatePerson(c, updatedCustomers.get(i));
                 i++;
             }
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(runnerIndex));
+            EventsCenter.getInstance().post(new FieldsChangedEvent(editedPerson));
+
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -86,10 +132,49 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         }
         //NOTE: it is important to call these methods in this order so that the appropriate resources are generated
         generateNewCustomerList();
-        updateCustDescWithAssignedRunner();
+        generateCustDescWithAssignedRunner();
         generateUpdatedCustomerList();
         makeEditRunnerDescriptorFromUpdatedCustList(); //modifies editRunnerDescriptor
         editedPerson = createEditedPerson(personToEdit, editRunnerDescriptor);
+    }
+
+    /**
+     * Since each Customer should only have 1 Runner, if the customer had a runner previously assigned, then that
+     * previous runner should have its association with this customer removed. The customer will now only be associated
+     * with the newly assigned runner.
+     */
+    private void deletePrevRunnerCustomer() throws CommandException, PersonNotFoundException,
+            DuplicatePersonException {
+        List<Person> pl = model.getAddressBook().getPersonList();
+        //List<Person> allCustomers = new ArrayList<>();
+        //allCustomers.addAll(oldCustomers);
+        //allCustomers.addAll(newCustomers);
+        for (Person c : newCustomers) {
+            Person r = ((Customer) c).getRunner(); //not getting a runner from pl but an incomplete copy
+            int indexOfActualPerson = pl.indexOf(r);
+
+            if (indexOfActualPerson >= 0) {
+                //the conditional check is necessary so that I'm only modifying valid existing runners
+
+                Person actualRunner =  pl.get(indexOfActualPerson); //getting the actual complete runner from pl
+
+                //generate editPersonDescriptor with c removed from runner's customer list
+                EditPersonDescriptor runnerDescWCustRemoved = new EditPersonDescriptor();
+
+                runnerDescWCustRemoved.setName(actualRunner.getName());
+                runnerDescWCustRemoved.setPhone(actualRunner.getPhone());
+                runnerDescWCustRemoved.setEmail(actualRunner.getEmail());
+                runnerDescWCustRemoved.setAddress(actualRunner.getAddress());
+                runnerDescWCustRemoved.setTags(actualRunner.getTags());
+
+                List<Person> newList = ((Runner) actualRunner).getCustomers();
+                newList.remove(c);
+                runnerDescWCustRemoved.setCustomers(newList);
+
+                Person editedPrevRunner = createEditedPerson((Runner) actualRunner, runnerDescWCustRemoved);
+                model.updatePerson(actualRunner, editedPrevRunner);
+            }
+        }
     }
 
     /**
@@ -143,7 +228,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
                 throw new CommandException("invalid customer index");
             }
             if (oldCustomers.indexOf(p) >= 0) {
-                throw new CommandException(String.format("customer at index %d, already assigned to runner",
+                throw new CommandException(String.format("one or more customers already assigned to runner",
                         index.getOneBased()));
             }
             if (newCustomers.indexOf(p) >= 0) {
@@ -158,7 +243,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
      * This helper method is meant to be called in executeUndoableCommand().
      * references to each other.
      */
-    private void updateCustDescWithAssignedRunner() {
+    private void generateCustDescWithAssignedRunner() {
         List<Person> lastShownList = model.getFilteredPersonList();
         Person runnerToBeEdited = lastShownList.get(runnerIndex.getZeroBased());
         assert (runnerToBeEdited instanceof Runner);
@@ -211,7 +296,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
                     .orElse(((Customer) personToEdit).getStandardInterest());
             LateInterest lateInterest = editPersonDescriptor.getLateInterest().orElse(((Customer) personToEdit)
                     .getLateInterest());
-            Runner runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
+            Person runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
                     .getRunner());
 
             return new Customer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, moneyBorrowed,
@@ -296,7 +381,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         private Date oweDueDate;
         private StandardInterest standardInterest;
         private LateInterest lateInterest;
-        private Runner runner;
+        private Person runner;
 
         //Runner fields
         private List<Person> customers;
@@ -396,10 +481,10 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             return Optional.ofNullable(lateInterest);
         }
 
-        public void setRunner(Runner runner) {
+        public void setRunner(Person runner) {
             this.runner = runner;
         }
-        public Optional<Runner> getRunner() {
+        public Optional<Person> getRunner() {
             return Optional.ofNullable(runner);
         }
 
@@ -473,13 +558,24 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
                     .orElse(((Customer) personToEdit).getStandardInterest());
             LateInterest lateInterest = editPersonDescriptor.getLateInterest().orElse(((Customer) personToEdit)
                     .getLateInterest());
-            Runner runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
+            Person runner = editPersonDescriptor.getRunner().orElse(((Customer) personToEdit)
                     .getRunner());
+
+            if (oweDueDate.compareTo(oweStartDate) < 0) {
+                throw new CommandException("OWE_DUE_DATE cannot be before OWE_START_DATE");
+            }
 
             return new Customer(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, moneyBorrowed,
                     oweStartDate, oweDueDate, standardInterest, lateInterest, runner);
 
         } else if (personToEdit instanceof Runner) {
+
+            if (editPersonDescriptor.getStandardInterest().isPresent()
+                    || editPersonDescriptor.getMoneyBorrowed().isPresent()
+                    || editPersonDescriptor.getOweStartDate().isPresent()
+                    || editPersonDescriptor.getOweDueDate().isPresent()) {
+                throw new CommandException("Cannot edit Runner using Customer-only fields");
+            }
 
             List<Person> customers = editPersonDescriptor.getCustomers().orElse(((Runner) personToEdit)
                     .getCustomers());
@@ -487,7 +583,6 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             return new Runner(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, customers);
 
         } else {
-
             throw new CommandException("Error: Invalid Person");
         }
     }
@@ -524,12 +619,20 @@ public class FindCommand extends Command implements PopulatableCommand {
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose fields contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Valid specifiers are -all, -n, -p, -e, -a, -t, for ALL, NAME, PHONE, EMAIL, ADDRESS and TAGS"
-            + " respectively \n"
-            + "Parameters: [SPECIFIER] KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " -n alice bob charlie";
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + " | Finds all persons whose fields contain any of the specified keywords (case-insensitive) "
+            + "and displays them as a list with index numbers."
+            + "\n\t"
+            + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
+            + "\n\t"
+            + "Parameters:\t"
+            + COMMAND_WORD + " "
+            + "[SPECIFIER] KEYWORD [MORE_KEYWORDS]..."
+            + "\n\t"
+            + "Specifiers:\t\t"
+            + "-all, -n, -p, -e, -a, -t : ALL, NAME, PHONE, EMAIL, ADDRESS and TAGS respectively."
+            + "\n\t"
+            + "Example:\t\t" + COMMAND_WORD + " -n alice bob charlie";
 
     private final Predicate<Person> predicate;
 
@@ -562,6 +665,7 @@ public class FindCommand extends Command implements PopulatableCommand {
 ```
 ###### \java\seedu\address\logic\parser\AddCommandParser.java
 ``` java
+
 /**
  * Parses input arguments and creates a new AddCommand object
  */
@@ -570,6 +674,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
@@ -598,16 +703,30 @@ public class AddCommandParser implements Parser<AddCommand> {
             if (argMultimap.getValue(PREFIX_TYPE).get().matches("[cC]")) {
                 Date oweStartDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWESTARTDATE)).orElse(new Date(0));
                 Date oweDueDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_OWEDUEDATE)).orElse(new Date(0));
+
+                if (oweDueDate.compareTo(oweStartDate) < 0) {
+                    throw new ParseException("OWE_DUE_DATE cannot be before OWE_START_DATE");
+                }
+
                 MoneyBorrowed moneyBorrowed = ParserUtil.parseMoneyBorrowed(argMultimap.getValue(PREFIX_MONEYOWED))
                         .orElse(new MoneyBorrowed());
+
                 StandardInterest standardInterest = ParserUtil.parseStandardInterest(argMultimap
-                                .getValue(PREFIX_INTEREST)).orElse(new StandardInterest());
+                        .getValue(PREFIX_INTEREST)).orElse(new StandardInterest());
 
                 Customer customer = new Customer(name, phone, email, address, tagList, moneyBorrowed,
                         oweStartDate, oweDueDate, standardInterest, new LateInterest(), new Runner());
+
                 return new AddCommand(customer);
 
             } else if (argMultimap.getValue(PREFIX_TYPE).get().matches("[rR]")) {
+                if (argMultimap.getValue(PREFIX_MONEYOWED).isPresent()
+                        || argMultimap.getValue(PREFIX_OWEDUEDATE).isPresent()
+                        || argMultimap.getValue(PREFIX_OWESTARTDATE).isPresent()
+                        || argMultimap.getValue(PREFIX_INTEREST).isPresent()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                            AddCommand.MESSAGE_INVALID_PREFIX));
+                }
                 Runner runner = new Runner(name, phone, email, address, tagList, new ArrayList<>());
                 return new AddCommand(runner);
 
@@ -696,7 +815,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
+                        PREFIX_MONEYOWED, PREFIX_INTEREST, PREFIX_OWEDUEDATE, PREFIX_OWESTARTDATE);
 
         Index index;
 
@@ -747,7 +867,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         String[] keywords;
         //check arguments[0] for specifier
 
-        if (arguments[0].matches("\\p{Alnum}+.++")) {
+        if (arguments[0].matches("\\p{Alnum}+.*+")) {
             return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(arguments)));
         }
 
@@ -821,7 +941,13 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         */
 
-        return new MoneyBorrowed(Double.parseDouble(moneyBorrowed));
+        try {
+            return new MoneyBorrowed(Double.parseDouble(moneyBorrowed));
+        } catch (NumberFormatException nfe) {
+            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_CONSTRAINTS);
+        } catch (IllegalArgumentException iae) {
+            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_CONSTRAINTS);
+        }
     }
 
     /**
@@ -844,14 +970,15 @@ public class EditCommandParser implements Parser<EditCommand> {
     public static StandardInterest parseStandardInterest(String value) throws IllegalValueException {
         requireNonNull(value);
 
-        /*
-        String trimmed = moneyBorrowed.trim();
-        if (!Email.isValidEmail(trimmed)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        */
+        value = value.trim();
 
-        return new StandardInterest(Double.parseDouble(value));
+        try {
+            return new StandardInterest(Double.parseDouble(value));
+        } catch (NumberFormatException nfe) {
+            throw new IllegalValueException(StandardInterest.MESSAGE_INTEREST_CONSTRAINTS);
+        } catch (IllegalArgumentException iae) {
+            throw new IllegalValueException(StandardInterest.MESSAGE_INTEREST_CONSTRAINTS);
+        }
     }
 
     /**
@@ -940,7 +1067,7 @@ public class Customer extends Person {
     private final Date oweDueDate;
     private final StandardInterest standardInterest; //in percent
     private final LateInterest lateInterest; //in percent
-    private final Runner runner;
+    private final Person runner;
 
     /**
      * customer constructor
@@ -958,7 +1085,7 @@ public class Customer extends Person {
 
     public Customer(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
                     MoneyBorrowed moneyBorrowed, Date oweStartDate, Date oweDueDate, StandardInterest
-                            standardInterest, LateInterest lateInterest, Runner runner) {
+                            standardInterest, LateInterest lateInterest, Person runner) {
         super(name, phone, email, address, tags);
         this.setType(PersonType.CUSTOMER);
         this.moneyBorrowed = moneyBorrowed;
@@ -989,7 +1116,7 @@ public class Customer extends Person {
         return lateInterest;
     }
 
-    public Runner getRunner() {
+    public Person getRunner() {
         return runner;
     }
 
@@ -1030,24 +1157,29 @@ public class Customer extends Person {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Name: ")
-                .append(getName())
+                .append(getName() + ";")
                 .append(" Phone: ")
-                .append(getPhone())
+                .append(getPhone() + ";")
                 .append(" Email: ")
-                .append(getEmail())
+                .append(getEmail() + ";")
                 .append(" Address: ")
-                .append(getAddress())
+                .append(getAddress() + ";")
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+
+        SimpleDateFormat simpledate = new SimpleDateFormat("EEE, d MMM yyyy");
+        String oweStartDate = simpledate.format(getOweStartDate());
+        String oweDueDate = simpledate.format(getOweDueDate());
+
         builder.append("\nMoney Owed: ")
-                .append(getMoneyCurrentlyOwed())
-                .append(" Standard Interest Rate: ")
-                .append(getStandardInterest())
+                .append(String.format("$%.2f", getMoneyCurrentlyOwed()))
+                .append(" Weekly Interest Rate: ")
+                .append(getStandardInterest() + "%" + ";")
                 .append(" Start Date: ")
-                .append(getOweStartDate())
+                .append(oweStartDate + ";")
                 .append(" Due Date: ")
-                .append(getOweDueDate())
-                .append("\nrunner: ")
+                .append(oweDueDate)
+                .append("\nRunner Assigned: ")
                 .append(runner.getName());
         return builder.toString();
     }
@@ -1116,17 +1248,17 @@ public class LateInterest {
 ###### \java\seedu\address\model\person\customer\MoneyBorrowed.java
 ``` java
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 /**
  * Represents a customer's amount of money that he/she borrowed.
  * Guarantees: immutable;
  */
 public class MoneyBorrowed {
 
-    /*
-    public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
-    */
+
+    public static final String MESSAGE_MONEYBORROWED_CONSTRAINTS =
+            "MONEY_BORROWED can only contain numbers, and should not be negative";
 
     public final double value;
 
@@ -1140,19 +1272,16 @@ public class MoneyBorrowed {
      * @param value an amount borrowed form the loanshark
      */
     public MoneyBorrowed(double value) {
-        //checkArgument(isValidPhone(phone), MESSAGE_PHONE_CONSTRAINTS);
+        checkArgument(isValidMoneyBorrowed(value), MESSAGE_MONEYBORROWED_CONSTRAINTS);
         this.value = value;
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given value is zero or positive, returns false otherwise
      */
-    /*
-    public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
+    public static boolean isValidMoneyBorrowed(double test) {
+        return (!(test < 0));
     }
-    */
-
 
     @Override
     public String toString() {
@@ -1175,17 +1304,18 @@ public class MoneyBorrowed {
 ```
 ###### \java\seedu\address\model\person\customer\StandardInterest.java
 ``` java
+
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 /**
  * Represents a customer's standard interest rate.
  * Guarantees: immutable;
  */
 public class StandardInterest {
 
-    /*
-    public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
-    */
+
+    public static final String MESSAGE_INTEREST_CONSTRAINTS =
+            "Interest rates can only be given as integers or floating numbers and should not be negative";
 
     public final double value;
 
@@ -1199,19 +1329,16 @@ public class StandardInterest {
      * @param value an amount borrowed form the loanshark
      */
     public StandardInterest(double value) {
-        //checkArgument(isValidPhone(phone), MESSAGE_PHONE_CONSTRAINTS);
+        checkArgument(isValidInterest(value), MESSAGE_INTEREST_CONSTRAINTS);
         this.value = value;
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a give value is zero or positive, returns false otherwise
      */
-    /*
-    public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
+    public static boolean isValidInterest(double test) {
+        return (!(test < 0));
     }
-    */
-
 
     @Override
     public String toString() {
@@ -1413,22 +1540,28 @@ public class Runner extends Person {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Name: ")
-                .append(getName())
+                .append(getName() + ";")
                 .append(" Phone: ")
-                .append(getPhone())
+                .append(getPhone() + ";")
                 .append(" Email: ")
-                .append(getEmail())
+                .append(getEmail() + ";")
                 .append(" Address: ")
-                .append(getAddress())
+                .append(getAddress() + ";")
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         builder.append("\n");
-        builder.append("Customers:\n");
-        for (Person customer : customers) {
-            builder.append(customer.getName());
-            builder.append(" ");
+        builder.append("Customers: ");
+        if (customers.size() > 0) {
+            builder.append(customers.get(0).getName());
+        }
+        if (customers.size() > 1) {
+            for (int i = 1; i < customers.size(); i++) {
+                builder.append(", ");
+                builder.append(customers.get(i).getName());
+            }
         }
         return builder.toString();
+
     }
 }
 ```
@@ -1474,8 +1607,52 @@ public class TagsContainsKeywordsPredicate implements Predicate<Person> {
 ```
 ###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
+            new Runner(new Name("The Terminator"), new Phone("84444448"), new Email("protection@money.com"),
+                    new Address("Fountain of Wealth"),
+                    getTagSet("Arnold", "HealthIsWealth"), new ArrayList<>()),
+            new Runner(new Name("Donny J"), new Phone("0013451945"), new Email("protection@money.com"),
+                    new Address("Changi Prison Complex"),
+                    getTagSet("Inactive", "Disavowed", "Joker"), new ArrayList<>()),
+            new Customer(new Name("Zhong Ming"), new Phone("91121345"), new Email("important@ming.com"),
+                    new Address("Merlion"),
+                    getTagSet("ImportantMing", "ZhongMing", "MingGreatest", "mingdynasty", "HighSES"),
+                    new MoneyBorrowed(98789060),
+                    createDate(2014, 6, 7), createDate(2016, 11, 9),
+                    new StandardInterest(1.75), new LateInterest(), new Runner()),
+            new Runner(new Name("Wu Lui"), new Phone("90011009"), new Email("nigerian_prince@bankofchina.com"),
+                    new Address("The LINQ Hotel & Casino"),
+                    getTagSet("OnTheStrip", "HighRoller"), new ArrayList<>()),
+            new Customer(new Name("Queen Samsung"), new Phone("000"), new Email("king@kim.com"),
+                    new Address("Samsung Innovation Museum"),
+                    getTagSet("Korean", "Royalty", "Untouchable", "HighSES"), new MoneyBorrowed(999999999),
+                    createDate(2000, 1, 1), createDate(2112, 12, 12),
+                    new StandardInterest(0.01), new LateInterest(), new Runner()),
+            new Customer(new Name("Ma Qing Da Wen"), new Phone("764543543123"), new Email("important@ming.com"),
+                    new Address("Town Green"),
+                    getTagSet("ForeignContact", "Code49"), new MoneyBorrowed(1124),
+                    createDate(2003, 4, 11), createDate(2028, 5, 29),
+                    new StandardInterest(5.76), new LateInterest(), new Runner()),
+            new Customer(new Name("Lim Tin Ken"), new Phone("81140976"), new Email("limtincan@u.nus.edu"),
+                    new Address("Cinnamon College"),
+                    getTagSet("USP", "Cinnamonster"), new MoneyBorrowed(0.1),
+                    createDate(2018, 4, 1), createDate(2018, 11, 11),
+                    new StandardInterest(1000), new LateInterest(), new Runner()),
+            new Customer(new Name("Master Wu Gui"), new Phone("94523112"), new Email("turtle@dojo.net"),
+                    new Address("The Singapore Island Country Club"),
+                    getTagSet("MOJO", "HighSES"), new MoneyBorrowed(645644),
+                    createDate(2012, 3, 17), createDate(2015, 7, 30),
+                    new StandardInterest(0.9), new LateInterest(), new Runner()),
+            new Customer(new Name("Hilarious Kleiny"), new Phone("91208888"), new Email("turtle@dojo.net"),
+                    new Address("Institute of Mental Health"),
+                    getTagSet("SiaoLiao", "Joker"), new MoneyBorrowed(12064543),
+                    createDate(2010, 10, 10), createDate(2022, 9, 22),
+                    new StandardInterest(2.309), new LateInterest(), new Runner()),
+        };
+    }
+
     /**
      * helper method to generate a meaningful date. Currently hard-coded for 1 March 2018.
+     *
      * @return
      */
     private static Date defaultDate() {
@@ -1492,6 +1669,16 @@ public class TagsContainsKeywordsPredicate implements Predicate<Person> {
 
     /**
      * helper method to generate a custom meaningful date.
+     *
+     * @return
+     */
+    private static Date createDate(int year, int month, int dayOfMonth) {
+        return createDate(year, month, dayOfMonth, 0, 0, 0);
+    }
+
+    /**
+     * helper method to generate a custom meaningful date.
+     *
      * @return
      */
     private static Date createDate(int year, int month, int dayOfMonth, int hourOfDay, int minute, int second) {
@@ -1535,7 +1722,7 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private Date oweDueDate;
     @XmlElement(required = true)
-    private Runner runner;
+    private XmlAdaptedPerson runner;
 
     //Runner fields
     @XmlElement(required = true)
@@ -1583,7 +1770,7 @@ public class XmlAdaptedPerson {
             lateInterest = ((Customer) source).getLateInterest();
             oweStartDate = ((Customer) source).getOweStartDate();
             oweDueDate = ((Customer) source).getOweDueDate();
-            runner = ((Customer) source).getRunner();
+            runner = new XmlAdaptedPerson(((Customer) source).getRunner());
         }
 
         if (source instanceof Runner) {
@@ -1682,8 +1869,16 @@ public class XmlAdaptedPerson {
             //TODO: write valid regex check
             final LateInterest lateInterest = this.lateInterest;
 
+            //runner
+            if (this.runner == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, LateInterest.class
+                        .getSimpleName()));
+            }
+            //TODO: write valid regex check
+            final Person runner = this.runner.toModelType();
+
             return new Customer(name, phone, email, address, tags, moneyBorrowed, oweStartDate, oweDueDate,
-                    standardInterest, lateInterest, new Runner());
+                    standardInterest, lateInterest, runner);
 
         } else if (this.personType == Person.PersonType.RUNNER) {
             if (this.customers == null) {
@@ -1723,5 +1918,15 @@ public class XmlAdaptedPerson {
                 && Objects.equals(address, otherPerson.address)
                 && tagged.equals(otherPerson.tagged);
     }
+}
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    @Subscribe
+    private void handleFieldsChangedEvent(FieldsChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.person);
+    }
+
 }
 ```

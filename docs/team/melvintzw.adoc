@@ -18,7 +18,7 @@ HuatAh! is a desktop loan shark manager application. It has a GUI but most of th
 
 ** Justification: Implementation of this feature was necessary for ensuring that features specific to our target-user could be developed and enjoyed.
 
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required significant changes to some existing commands (`Add`, `Edit, `Delete`) and touched nearly all components (Model, Logic, Storage).
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required significant changes to some existing commands (`Add`, `Edit, `Delete`) and touched all components (Model, Logic, Storage, UI).
 
 * *Minor enhancement*: Implemented an `Assign` command to allow the user to delegate one or more customers to a single runner. This is to allow the user (the loan shark syndicate boss) to manage loan shark operations better. This command was meant to be one example of a target-user-specific usage of the new subclasses.
 

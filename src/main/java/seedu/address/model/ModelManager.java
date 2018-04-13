@@ -172,9 +172,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public int getPatienActualIndexInList(int targetIndex) {
+        return filteredPatients.getSourceIndex(targetIndex) + 1;
+    }
+
+    @Override
     public synchronized Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException {
         requireNonNull(targetIndex);
         int patientIndex = filteredPatients.getSourceIndex(targetIndex.getZeroBased());
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         imdb.addPatientToQueue(patientIndex);
         indicateQueueChanged();
 

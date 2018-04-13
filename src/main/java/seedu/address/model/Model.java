@@ -84,4 +84,7 @@ public interface Model {
 
     /** Get list index of patient in the queue*/
     ObservableList<Integer> getPatientListIndexInQueue();
+
+    /** Get patient actual index in the list */
+    int getPatienActualIndexInList(int targetIndex);
 }

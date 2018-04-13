@@ -7,7 +7,9 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -45,7 +47,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
         Patient toQueue;
 
         try {
-            toQueue = model.addPatientToQueue(targetIndex);
+            toQueue = model.addPatientToQueue(actualIndex);
         } catch (DuplicatePatientException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PatientNotFoundException e) {
@@ -60,6 +62,14 @@ public class AddPatientQueueCommand extends UndoableCommand {
         List<Patient> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        String actualIndexInString = model.getPatienActualIndexInList(targetIndex.getZeroBased()) + "";
+
+        try {
+            actualIndex = ParserUtil.parseIndex(actualIndexInString);
+        } catch (IllegalValueException e) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
     }

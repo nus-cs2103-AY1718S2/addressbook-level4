@@ -78,10 +78,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    public void setToDos(List<ToDo> todos) throws DuplicateToDoException {
-        this.todos.setToDos(todos);
-    }
-
     public void setGroups(List<Group> groups) throws DuplicateGroupException {
         this.groups.setGroups(groups);
     }
@@ -156,20 +152,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Replaces the given ToDo {@code target} in the list with {@code editedToDo}.
-     *
-     * @throws DuplicateToDoException if updating the ToDo's details causes the ToDo to be equivalent to
-     *                                  another existing ToDo in the list.
-     * @throws ToDoNotFoundException  if {@code target} could not be found in the list.
-     */
-    public void updateToDo(ToDo target, ToDo editedToDo)
-            throws DuplicateToDoException, ToDoNotFoundException {
-        requireNonNull(editedToDo);
-
-        todos.setToDo(target, editedToDo);
-    }
-
-    /**
      * Replaces the given Group {@code target} in the list with {@code editedGroup}.
      *
      * @throws DuplicateGroupException if updating the Group's details causes the Group to be equivalent to
@@ -220,6 +202,27 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author nhatquang3112
+    //// to-do-level operations
+    /**
+     * Adds a to-do to the address book.
+     *
+     * @throws DuplicateToDoException if an equivalent to-do already exists.
+     */
+    public void addToDo(ToDo todo) throws DuplicateToDoException {
+        todos.add(todo);
+    }
+
+    @Override
+    public ObservableList<ToDo> getToDoList() {
+        return todos.asObservableList();
+    }
+
+    @Override
+    public double getToDoListCompleteRatio() {
+        return todos.getCompleteRatio();
+    }
+
     /**
      * Removes {@code key} from this {@code AddressBook}.
      *
@@ -233,16 +236,24 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //// to-do-level operations
-
     /**
-     * Adds a to-do to the address book.
+     * Replaces the given ToDo {@code target} in the list with {@code editedToDo}.
      *
-     * @throws DuplicateToDoException if an equivalent to-do already exists.
+     * @throws DuplicateToDoException if updating the ToDo's details causes the ToDo to be equivalent to
+     *                                  another existing ToDo in the list.
+     * @throws ToDoNotFoundException  if {@code target} could not be found in the list.
      */
-    public void addToDo(ToDo todo) throws DuplicateToDoException {
-        todos.add(todo);
+    public void updateToDo(ToDo target, ToDo editedToDo)
+            throws DuplicateToDoException, ToDoNotFoundException {
+        requireNonNull(editedToDo);
+
+        todos.setToDo(target, editedToDo);
     }
+
+    public void setToDos(List<ToDo> todos) throws DuplicateToDoException {
+        this.todos.setToDos(todos);
+    }
+    //@@author
 
     //// tag-level operations
 
@@ -293,16 +304,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
-    }
-
-    @Override
-    public ObservableList<ToDo> getToDoList() {
-        return todos.asObservableList();
-    }
-
-    @Override
-    public double getToDoListCompleteRatio() {
-        return todos.getCompleteRatio();
     }
 
     @Override

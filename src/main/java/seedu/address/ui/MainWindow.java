@@ -150,11 +150,12 @@ public class MainWindow extends UiPart<Stage> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        todoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
-        todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
-
         groupListPanel = new GroupListPanel(logic.getFilteredGroupList());
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
+
+        //@@author nhatquang3112
+        todoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
+        todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
 
         progressIndicatorLabel = new Label(PROGRESS_INDICATOR_LABEL_NAME);
         progressIndicatorLabel.setStyle(PROGRESS_INDICATOR_LABEL_COLOR);
@@ -165,6 +166,7 @@ public class MainWindow extends UiPart<Stage> {
         progressIndicator.setPrefSize(PROGRESS_INDICATOR_WIDTH, PROGRESS_INDICATOR_HEIGHT);
         progressIndicator.setProgress(logic.getToDoListCompleteRatio());
         progressIndicatorPlaceholder.getChildren().add(progressIndicator);
+        //@@author
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -178,9 +180,11 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    //@@author nhatquang3112
     void updateProgressIndicator() {
         progressIndicator.setProgress(logic.getToDoListCompleteRatio());
     }
+    //@@author
 
     //@@author LeonidAgarth
     /**

@@ -85,6 +85,7 @@ public class OpenEmailWindow {
         try {
             if (message.getContent() instanceof String) {
                 content = (String) message.getContent();
+                msgContent.setText(content);
             } else if (message.isMimeType("multipart/*")) {
                 Multipart multipart = (Multipart) message.getContent();
                 if (multipart.getCount() > 0) {

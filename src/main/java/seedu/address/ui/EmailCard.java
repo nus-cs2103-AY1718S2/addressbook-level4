@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.Part;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -50,12 +51,35 @@ public class EmailCard extends UiPart<Region> {
                 if (message.getContent() instanceof String) {
                     String content = (String) message.getContent();
                     preview.setText(((String) message.getContent()).substring(0, min(20, content.length())));
-                } else {
+                } else if (message.isMimeType("multipart/*")){
                     Multipart multipart = (Multipart) message.getContent();
                     if (multipart.getCount() > 0) {
                         String msg = multipart.getBodyPart(0).getContent().toString();
-                        preview.setText(msg);
+                        preview.setText(msg.substring(0, min(20, msg.length())));
                     }
+                } else if (message.isMimeType("message/rfc822")) {
+                    Part part = (Part) message.getContent();
+                    try {
+                        if (part.getContent() instanceof String) {
+                            String content = (String) part.getContent();
+                            preview.setText(((String) part.getContent()).substring(0, min(20, content.length())));
+                        } else if (part.isMimeType("multipart/*")) {
+                            Multipart multipart = (Multipart) part.getContent();
+                            if (multipart.getCount() > 0) {
+                                String msg = multipart.getBodyPart(0).getContent().toString();
+                                preview.setText(msg.substring(0, min(20, msg.length())));
+                            }
+
+                        } else {
+                            preview.setText("This message is not in a supported format.");
+                        }
+                    } catch (MessagingException e) {
+                        System.out.println("Messaging Exception");
+                    } catch (IOException e) {
+                        System.out.println("IOException");
+                    }
+                } else {
+                    preview.setText("This message is not in a supported format.");
                 }
             } catch (MessagingException e) {
                 System.out.println("Messaging Exception");

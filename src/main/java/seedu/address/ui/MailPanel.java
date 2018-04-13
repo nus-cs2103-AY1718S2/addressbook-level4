@@ -2,22 +2,30 @@ package seedu.address.ui;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
+import javax.mail.event.MessageCountAdapter;
+import javax.mail.event.MessageCountEvent;
 
 import com.sun.mail.imap.IMAPFolder;
 import com.sun.mail.imap.IMAPStore;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
 
 
 /**
@@ -25,7 +33,12 @@ import javafx.scene.layout.Region;
  */
 //@@author glorialaw
 public class MailPanel extends UiPart<Region> {
+    private static final long freq = 60;
     private static final String FXML = "EmailPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(MailPanel.class);
+    private final ObservableList<EmailCard> emailList = FXCollections.observableArrayList();
+    private int messageCount = 0;
+    private final IMAPFolder inbox = getInbox();
 
     @FXML
     private ListView<EmailCard> emailListView;
@@ -33,46 +46,60 @@ public class MailPanel extends UiPart<Region> {
     public MailPanel() throws MessagingException, IOException {
         super(FXML);
         setConnections();
+        ScheduledExecutorService runChecks = Executors.newScheduledThreadPool(1);
+        Runnable rc = new Runnable() {
+            @Override
+            public void run() {
+                Platform.setImplicitExit(false);
+                refreshMessages();
+            }
+        };
+        runChecks.scheduleAtFixedRate(rc, freq, freq, TimeUnit.SECONDS);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections() {
         //gets the list of messages
         int length = 0;
-        ObservableList<EmailCard> emailList = FXCollections.observableArrayList();
         Message[] messages = messageList();
         if (messages != null) {
             length = messages.length;
+            messageCount = length;
             for (int i = 0; i < length; i++) {
                 emailList.add(new EmailCard(messages[i]));
             }
         } else if (messages == null) {
             emailList.add(new EmailCard(null));
         }
+        FXCollections.reverse(emailList);
         emailListView.setItems(emailList);
         emailListView.setCellFactory(listView -> new EmailListViewCell());
+
     }
 
-    /*private void setEventHandlerForSelectionChangeEvent() {
-        personListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
-                    }
-                });
-    }*/
     /**
      * Returns a list of messages in the inbox
      * @return list of messages
      */
     public Message[] messageList() {
-        IMAPFolder inbox = getInbox();
         if (inbox != null) {
             try {
                 inbox.open(Folder.READ_ONLY);
                 //gets & returns messages
                 Message[] messages = inbox.getMessages();
+                inbox.addMessageCountListener(new MessageCountAdapter() {
+                    public void messagesAdded(MessageCountEvent mce) {
+                        //System.out.println("Listener finally worked");
+                        Platform.runLater(() -> {
+                            Message[] newMessages = mce.getMessages();
+                            FXCollections.reverse(emailList);
+                            for (Message message : newMessages) {
+                                emailList.add(new EmailCard(message));
+                            }
+                            FXCollections.reverse(emailList);
+                        });
+                    }
+                });
                 return messages;
             } catch (NoSuchProviderException e) {
                 e.printStackTrace();
@@ -89,16 +116,18 @@ public class MailPanel extends UiPart<Region> {
      * Refreshes the inbox so that the contents can be updated
      * @return
      */
-    private Message[] refreshMessages() {
-        IMAPFolder inbox = getInbox();
-        if (inbox != null) {
-            try {
+    @FXML
+    private void refreshMessages() {
+        //System.out.println("Inside refresh messages");
+        try {
+            if (!inbox.isOpen()) {
                 inbox.open(Folder.READ_ONLY);
-            } catch (MessagingException me) {
-                me.printStackTrace();
+                inbox.idle();
             }
+        } catch (MessagingException me) {
+            me.getCause();
         }
-        return null;
+
     }
 
     private IMAPFolder getInbox() {

@@ -97,7 +97,7 @@ public class ComposeEmailWindow {
             previousMessage = previousMessage + "Begin Forwarded Message: \n\n";
         }
         previousMessage = previousMessage + "From: " + email + "\n"
-                + "To: sell.it.sg@gmail.com\n"
+                + "To: sg.salesperson@gmail.com\n"
                 + "Subject: " + subject + "\n\n"
                 + content + "\n\n\n";
         message.setText(previousMessage);

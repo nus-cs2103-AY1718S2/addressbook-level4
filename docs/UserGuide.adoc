@@ -322,7 +322,7 @@ Example:
 `fav 1` +
 Adds the 1st student in the address book to favourites.
 
-*Steps taken*: +
+===== Steps taken
 
 *Step 1*: First, find the student you wish to add to favourites using the `list` command (See <<Listing all students : `list`>>).
 
@@ -342,7 +342,7 @@ The student `INDEX` provided must be valid. Otherwise, an error message "The stu
 .Error message displayed when an invalid student index is entered
 image::fav3_screenshot.png[width="800"]
 
-==== Remove a student from favourites : `unfav`
+==== Removing a student from favourites : `unfav`
 
 If you want to remove a student from favourites, you can simply use the `unfav` command. +
 
@@ -359,7 +359,7 @@ Example:
 `unfav 1` +
 Removes the 1st student in the address book from favourites.
 
-*Steps taken*: +
+===== Steps taken
 
 *Step 1*: First, find the student you wish to remove from your favourites using the `list -f` command (See <<Listing all students : `list`>>).
 
@@ -545,7 +545,7 @@ Format: `sync`
 === Dashboard
 
 In Codeducator, you can *track the learning progress* of your students easily by utilising our Dashboard feature.
-Each of your student in your contact list will have a dashboard which you can view and manage easily. +
+Each of your student in your contact list has their own dashboard which you can view and manage easily. +
 
 *What's in a dashboard?*
 
@@ -557,7 +557,10 @@ Codeducator allows you to create and add milestones in your students' dashboards
 Each milestone can contain a list of tasks. A task signifies a piece of work to be done to meet the milestone's objective.
 Codeducator allows you to create and add tasks to each milestone so that you can keep track of what has already been done and what still needs to be done to reach the milestone.
 
-==== Show the dashboard of a student: `showDB`
+.An example of a student's dashboard
+image::dashboardScreenshot.png[width="800"]
+
+==== Showing the dashboard of a student: `showDB`
 
 You can view the dashboard of a student by using the `showDB` command. +
 
@@ -574,7 +577,7 @@ Example:
 `showDB 1` +
 Shows the dashboard of the 1st student in the address book.
 
-*Steps taken*: +
+===== Steps taken
 
 *Step 1*: First, find the student whose dashboard you wish to view using the `list` command (See <<Listing all students : `list`>>).
 
@@ -595,7 +598,7 @@ The student `INDEX` provided must be valid. Otherwise, an error message "The stu
 image::showDB3_screenshot.png[width="800"]
 
 
-==== Add a milestone to a student's dashboard: `addMS`
+==== Adding a milestone to a student's dashboard: `addMS`
 
 If you want to keep track of a learning objective you want your student to fulfil, you can add a milestone to your student's dashboard using the `addMS` command. +
 
@@ -615,7 +618,7 @@ Example:
 `addMS i/1 d/23/05/2018 23:59 o/Learn Arrays` +
 Adds a milestone to the dashboard of the 1st student in the address book. The milestone is due on 23/05/2018 23:59 and the objective is "Learn Arrays".
 
-*Steps taken*:
+===== Steps taken
 
 *Step 1*: First, view the dashboard of the student where you want to add the milestone to (See <<Show the dashboard of a student: `showDB`>>).
 
@@ -643,7 +646,7 @@ The `MILESTONE_DUE_DATE` provided must have a valid calendar date and follows th
 image::addMS4_screenshot.png[width="800"]
 
 
-==== Delete a milestone from a student's dashboard: `deleteMS`
+==== Deleting a milestone from a student's dashboard: `deleteMS`
 
 If you wish to remove a milestone you no longer need from a student's dashboard, you can use the `deleteMS` command. +
 
@@ -663,7 +666,7 @@ Examples:
 `deleteMS i/1 m/1` +
 Deletes the 1st milestone from the dashboard of the 1st student in the address book.
 
-*Steps taken*:
+===== Steps taken
 
 *Step 1*: First, view the dashboard of the student where you want to remove the milestone from (See <<Show the dashboard of a student: `showDB`>>).
 
@@ -683,7 +686,7 @@ The `STUDENT_INDEX` and `MILESTONE_INDEX` provided must be valid. Otherwise, an 
 .Error message displayed when invalid `STUDENT_INDEX` and `MILESTONE_INDEX` are entered
 image::deleteMS3_screenshot.png[width="800"]
 
-==== Add a task to a milestone: `addTask`
+==== Adding a task to a milestone: `addTask`
 
 If you wish to keep track of a piece of work that needs to be done to complete a milestone's objective, you can add a task to the milestone in the student's dashboard using the `addTask` command. +
 
@@ -703,7 +706,7 @@ Examples:
 `addTask i/1 m/1 n/Learn Array Syntax o/Student to refer to the textbook` +
 Adds a task to the 1st milestone in the dashboard of the 1st student in the address book. The name of the task is "Learn Array Syntax" and the description is "Student to refer to the textbook".
 
-*Steps taken*:
+===== Steps taken
 
 *Step 1*: First, view the dashboard of the student where you want to add the task to (See <<Show the dashboard of a student: `showDB`>>).
 
@@ -723,7 +726,7 @@ The `STUDENT_INDEX` and `MILESTONE_INDEX` provided must be valid. Otherwise, an 
 .Error message displayed when invalid `STUDENT_INDEX` and `MILESTONE_INDEX` are entered
 image::addTask3_screenshot.png[width="800"]
 
-==== Delete a task from a milestone: `deleteTask`
+==== Deleting a task from a milestone: `deleteTask`
 
 If you wish to remove a task you no longer need in a milestone of a dashboard, you can use the `deleteTask` command. +
 
@@ -745,7 +748,7 @@ Examples:
 `deleteTask i/1 m/1 tk/1` +
 Deletes the 1st task in the 1st milestone. The milestone is in the dashboard of the 1st student in the address book.
 
-*Steps taken*:
+===== Steps taken
 
 *Step 1*: First, view the dashboard of the student where you want to delete the task from (See <<Show the dashboard of a student: `showDB`>>).
 
@@ -756,7 +759,7 @@ image::deleteTask1_screenshot.png[width="800"]
 
 *Step 3*: You have succeeded in deleting the task from the milestone if you see the message: "Deleted task:" followed by the description of the task you deleted in the result box. The task will also no longer be in the task list of the milestone.
 
-.Success in deleting the task of index 1 from the 1st milestone in the dashboard of Alex Yeow. Alex Yeow has the index 1 on the students list.
+.Success in deleting the task of index 1 from the 1st milestone in the dashboard of Alex Yeoh. Alex Yeoh has the index 1 on the students list.
 image::deleteTask2_screenshot.png[width="800"]
 
 [WARNING]
@@ -765,7 +768,7 @@ The `STUDENT_INDEX`, `MILESTONE_INDEX`, and `TASK_INDEX` provided must be valid.
 .Error message displayed when invalid `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX` are entered
 image::deleteTask3_screenshot.png[width="800"]
 
-==== Mark a task as completed: `checkTask`
+==== Marking a task as completed: `checkTask`
 
 If your student has completed a task and you wish to mark it as completed, you can use the `checkTask` command. +
 
@@ -790,7 +793,7 @@ Examples:
 `checkTask i/1 m/1 tk/1` +
 Marks the 1st task in the 1st milestone as completed. The milestone is in the dashboard of the 1st student in the address book.
 
-*Steps taken*:
+===== Steps taken
 
 *Step 1*: First, view the dashboard of the student where the task is (See <<Show the dashboard of a student: `showDB`>>).
 
@@ -802,11 +805,11 @@ image::checkTask1_screenshot.png[width="800"]
 *Step 3*: You have succeeded in marking the task as completed if you see the message "Task `TASK_INDEX` marked as completed in milestone `MILESTONE_INDEX` ".
 The task's "Completed" field will become "Yes" and the progress of the milestone will be updated.
 
-.Success in marking the task of index 1 from the 1st milestone in the dashboard of Alex Yeow as completed. Alex Yeoh has the index 1 on the students list. The task's "Completed" field is now "Yes" and the milestone's progress is updated to 100%.
+.Success in marking the task of index 1 from the 1st milestone in the dashboard of Alex Yeoh as completed. Alex Yeoh has the index 1 on the students list. The task's "Completed" field is now "Yes" and the milestone's progress is updated to 100%.
 image::checkTask2_screenshot.png[width="800"]
 
 [WARNING]
-Marking an already completed task as complete will cause an error message "Task is already marked as completed" to be displayed in the result box at *Step 3*.
+Marking an already completed task as complete will cause the message "Task is already marked as completed" to be displayed in the result box at *Step 3*.
 
 .Error message displayed when specified task is already marked as completed
 image::checkTask4_screenshot.png[width="800"]

@@ -42,14 +42,14 @@ public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FILE_ALICE_BENSON_ENCRYPTED_BACKUP = TEST_DATA_FOLDER
             + "encryptedAliceBensonAddressBookBackup.xml";
 
-    private final AddressBook addressBookWithAliceAndBenson = new AddressBookBuilder().withPerson(ALICE)
-            .withPerson(BENSON).build();
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
+
+    private final AddressBook addressBookWithAliceAndBenson = new AddressBookBuilder().withPerson(ALICE)
+            .withPerson(BENSON).build();
 
     @Test
     public void readAddressBook_nullFilePath_throwsNullPointerException() throws Exception {
@@ -243,7 +243,7 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void exportAddressBook_invalidFilepath_throwIOException() throws Exception {
+    public void exportAddressBook_invalidFilepath_throwsIoException() throws Exception {
         thrown.expect(IOException.class);
         String filePath = TEST_DATA_FOLDER;
         AddressBook addressBook = addressBookWithAliceAndBenson;

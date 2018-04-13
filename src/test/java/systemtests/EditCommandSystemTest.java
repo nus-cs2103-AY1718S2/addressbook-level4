@@ -200,7 +200,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         getCommandBox().click();
         populateEditCommandUsingAccelerator();
         assertPopulationSuccess();
-        }
+    }
 
     @Test
     public void focusOnResultDisplay_populateEditCommandTemplate_usingAccelerator() {

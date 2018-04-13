@@ -9,8 +9,6 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MONEY_BORROWED_NEGATIVE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MONEY_BORROWED_NOT_DOUBLE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_OWE_DUE_DATE;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_OWE_START_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_STANDARD_INTEREST_NEGATIVE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_STANDARD_INTEREST_NOT_DOUBLE;
@@ -108,13 +106,13 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
         //@@author jonleeyz
-        assertParseFailure(parser,"1" + INVALID_MONEY_BORROWED_NOT_DOUBLE,
+        assertParseFailure(parser, "1" + INVALID_MONEY_BORROWED_NOT_DOUBLE,
                 MoneyBorrowed.MESSAGE_MONEY_BORROWED_DOUBLE_ONLY); // invalid money borrowed: not a double
-        assertParseFailure(parser,"1" + INVALID_MONEY_BORROWED_NEGATIVE,
+        assertParseFailure(parser, "1" + INVALID_MONEY_BORROWED_NEGATIVE,
                 MoneyBorrowed.MESSAGE_MONEY_BORROWED_NO_NEGATIVE); // invalid money borrowed: negative
-        assertParseFailure(parser,"1" + INVALID_STANDARD_INTEREST_NOT_DOUBLE,
+        assertParseFailure(parser, "1" + INVALID_STANDARD_INTEREST_NOT_DOUBLE,
                 StandardInterest.MESSAGE_STANDARD_INTEREST_DOUBLE_ONLY); // invalid standard interest: not a double
-        assertParseFailure(parser,"1" + INVALID_STANDARD_INTEREST_NEGATIVE,
+        assertParseFailure(parser, "1" + INVALID_STANDARD_INTEREST_NEGATIVE,
                 StandardInterest.MESSAGE_STANDARD_INTEREST_NO_NEGATIVE); // invalid standard interest: negative
         //@@author
 

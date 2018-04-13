@@ -49,8 +49,6 @@ import seedu.address.ui.testutil.EventsCollectorRule;
  * for test verification.
  */
 public abstract class AddressBookSystemTest {
-    protected final GuiRobot guiRobot = new GuiRobot();
-
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
@@ -58,15 +56,17 @@ public abstract class AddressBookSystemTest {
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
 
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    protected final GuiRobot guiRobot = new GuiRobot();
+
     private List<String> defaultStyleOfResultDisplay;
     private List<String> errorStyleOfResultDisplay;
 
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
     private SystemTestSetupHelper setupHelper;
-
-    @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @BeforeClass
     public static void setupBeforeClass() {

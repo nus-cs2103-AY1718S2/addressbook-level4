@@ -1553,7 +1553,7 @@ Expected:
 * A message saying that the task is already marked as completed will be shown in the result box.
 * Timestamp in the status bar remains the same.
 
-//end::dashboardTest[] 
+//end::dashboardTest[]
 
 === Adding a lesson
 

@@ -165,15 +165,11 @@ public class ModelManager extends ComponentManager implements Model {
      * @param password
      */
     @Override
-    public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException {
+    public void exportAddressBook(String filepath, Password password) throws IOException {
         requireNonNull(filepath);
-        try {
-            XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
-            xmlAddressBook.exportAddressBook(filepath, password, filteredPersons);
-            indicateAddressBookChanged();
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError();
-        }
+        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+        xmlAddressBook.exportAddressBook(filepath, password, filteredPersons, addressBook.getAliasList(),
+                                         addressBook.getTagList());
     }
 
     /**
@@ -213,7 +209,6 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Vacant Room Finder ==========================================================================
 
     //@@author Caijun7
-
     /**
      * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList.
      *

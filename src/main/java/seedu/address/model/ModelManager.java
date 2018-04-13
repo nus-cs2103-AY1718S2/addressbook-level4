@@ -88,6 +88,7 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author
     @Override
     public synchronized void deletePerson(Patient target) throws PatientNotFoundException {
+        //removePatientIfInQueue(target);
         imdb.removePerson(target);
         indicateAddressBookChanged();
     }
@@ -134,6 +135,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author Kyholmes
+    @Override
+    public boolean checkIfPatientInQueue(Patient patientToDelete) {
+        int targetIndex = filteredPatients.getSourceIndex(filteredPatients.indexOf(patientToDelete));
+        if (imdb.getUniquePatientQueueNo().contains(targetIndex)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public Patient getPatientFromList(Predicate<Patient> predicate) {
         filteredPatients.setPredicate(predicate);
         if (filteredPatients.size() > 0) {
@@ -179,8 +190,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException {
         requireNonNull(targetIndex);
-        int patientIndex = filteredPatients.getSourceIndex(targetIndex.getZeroBased());
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        int patientIndex = filteredPatients.getSourceIndex(targetIndex.getZeroBased());
         imdb.addPatientToQueue(patientIndex);
         indicateQueueChanged();
 

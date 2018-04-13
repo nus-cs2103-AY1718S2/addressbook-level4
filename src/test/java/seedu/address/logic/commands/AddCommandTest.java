@@ -200,6 +200,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return 0;
         }
+
+        @Override
+        public boolean checkIfPatientInQueue(Patient targetPatient) {
+            fail("This method should not be called.");
+            return false;
+        }
     }
 
     /**

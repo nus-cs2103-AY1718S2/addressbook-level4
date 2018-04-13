@@ -57,6 +57,11 @@ public class DeleteCommand extends UndoableCommand {
         }
 
         patientToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        if (model.checkIfPatientInQueue(patientToDelete)) {
+            throw new CommandException(String.format(Messages.MESSAGE_PERSONS_EXIST_IN_QUEUE,
+                    patientToDelete.getName().fullName));
+        }
     }
 
     @Override

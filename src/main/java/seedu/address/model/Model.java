@@ -87,4 +87,7 @@ public interface Model {
 
     /** Get patient actual index in the list */
     int getPatienActualIndexInList(int targetIndex);
+
+    /** Check if the patient is in the queue */
+    boolean checkIfPatientInQueue(Patient targetPatient);
 }

@@ -41,7 +41,7 @@ This project is based on the https://github.com/se-edu/addressbook-level4[Addres
 *** Improved the `select` command to show the location of the student on Google Maps
 
 ** Documentation:
-*** Tweaked writing style of the User Guide to make it more personal to the user.
+*** Proofreading the User Guide and making alterations to make it more personal to the user.
 
 ** Tools:
 *** Integrated a third party library (IBM Watson™ Assistant service) to the project (https://github.com/CS2103JAN2018-W09-B3/main/issues/#24)
@@ -54,12 +54,14 @@ This project is based on the https://github.com/se-edu/addressbook-level4[Addres
 
 include::../UserGuide.adoc[tag=NLP]
 
-
 == Contributions to the Developer Guide
 
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=a]
+include::../DeveloperGuide.adoc[tag=location]
+
+include::../DeveloperGuide.adoc[tag=nlp]
+
 

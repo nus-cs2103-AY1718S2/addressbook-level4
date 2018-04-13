@@ -4,7 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEYOWED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY_BORROWED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWEDUEDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWESTARTDATE;
@@ -47,7 +47,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_TYPE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_MONEYOWED, PREFIX_OWESTARTDATE, PREFIX_OWEDUEDATE,
+                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_MONEY_BORROWED, PREFIX_OWESTARTDATE, PREFIX_OWEDUEDATE,
                         PREFIX_INTEREST);
 
         //TODO: add test case
@@ -73,7 +73,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                     throw new ParseException("OWE_DUE_DATE cannot be before OWE_START_DATE");
                 }
 
-                MoneyBorrowed moneyBorrowed = ParserUtil.parseMoneyBorrowed(argMultimap.getValue(PREFIX_MONEYOWED))
+                MoneyBorrowed moneyBorrowed = ParserUtil.parseMoneyBorrowed(argMultimap.getValue(PREFIX_MONEY_BORROWED))
                         .orElse(new MoneyBorrowed());
 
                 StandardInterest standardInterest = ParserUtil.parseStandardInterest(argMultimap
@@ -85,7 +85,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 return new AddCommand(customer);
 
             } else if (argMultimap.getValue(PREFIX_TYPE).get().matches("[rR]")) {
-                if (argMultimap.getValue(PREFIX_MONEYOWED).isPresent()
+                if (argMultimap.getValue(PREFIX_MONEY_BORROWED).isPresent()
                         || argMultimap.getValue(PREFIX_OWEDUEDATE).isPresent()
                         || argMultimap.getValue(PREFIX_OWESTARTDATE).isPresent()
                         || argMultimap.getValue(PREFIX_INTEREST).isPresent()) {

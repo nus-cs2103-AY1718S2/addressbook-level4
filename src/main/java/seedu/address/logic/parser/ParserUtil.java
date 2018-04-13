@@ -184,7 +184,7 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code date} is invalid.
      */
-    public static Date parseDate(String date) throws IllegalValueException {
+    public static Date parseDate(String date) {
         requireNonNull(date);
         String trimmedDate = date.trim();
         com.joestelmach.natty.Parser dateParser = new Parser();
@@ -196,7 +196,7 @@ public class ParserUtil {
      * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
+    public static Optional<Date> parseDate(Optional<String> date) {
         requireNonNull(date);
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }

@@ -25,8 +25,7 @@ public class TypicalGroups {
             TypicalPersons.BENSON).build();
     public static final Group GROUP_H = new GroupBuilder().withPerson("Group H", TypicalPersons.ALICE,
             TypicalPersons.BENSON).build();
-    public static final Group GROUP_I = new GroupBuilder().withPerson("Group F", TypicalPersons.ALICE,
-            TypicalPersons.BENSON).build();
+    public static final Group GROUP_I = new GroupBuilder().withInformation("Group F").build();
 
     public static List<Group> getTypicalGroups() {
         return new ArrayList<>(Arrays.asList(GROUP_A, GROUP_B, GROUP_F, GROUP_H));
@@ -35,10 +34,10 @@ public class TypicalGroups {
     public static UniqueGroupList getTypicalGroupsList() {
         UniqueGroupList groupList = new UniqueGroupList();
         try {
-            groupList.add(GROUP_A);
-            groupList.add(GROUP_B);
-            groupList.add(GROUP_F);
-            groupList.add(GROUP_H);
+            groupList.add(new Group(GROUP_A.getInformation(),GROUP_A.getPersonList()));
+            groupList.add(new Group(GROUP_B.getInformation(),GROUP_B.getPersonList()));
+            groupList.add(new Group(GROUP_F.getInformation(),GROUP_F.getPersonList()));
+            groupList.add(new Group(GROUP_H.getInformation(),GROUP_H.getPersonList()));
         } catch (DuplicateGroupException e) {
             throw new IllegalArgumentException("group is expected to be unique.");
         }

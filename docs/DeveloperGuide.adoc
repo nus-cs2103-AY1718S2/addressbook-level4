@@ -476,6 +476,7 @@ image::UndoRedoActivityDiagram.png[width="550"]
 **Additional Info:** See the discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 // end::undoredo[]
 
+// tag::edit[]
 === Edit status, priority, and rating of books: `edit` command
 
 ==== Current implementation
@@ -489,14 +490,27 @@ When `edit` command is entered,
 . The `Book` to edit (`bookToEdit`) is identified by the index. Another `Book` (`editedBook`) is created based on the specified parameters.
 . `editedBook` replaces `bookToEdit` in `BookShelf`.
 
+
+Sequence Diagram
+
+image::editseq.png[width="550"]
+
+Default value of the book.
+
+image::defaultbook.png[width="550"]
+
+The book after you edit (r/4, s/r, p/h).
+
+image::newbook.png[width="550"]
+
 ==== Design considerations
 
 ===== Aspect: Presentation of rating
 
-* **Alternative 1 (current choice):** Show users the rating as a number.
+* **Alternative 1:** Show users the rating as a number.
 ** Pros: Easy to implement.
 ** Cons: Not aesthetically appealing.
-* **Alternative 2:** Show users the rating as stars.
+* **Alternative 2 (current choice):** Show users the rating as stars.
 ** Pros: Difficult to implement.
 ** Cons: Improves the aesthetic appeal and clarity.
 
@@ -508,6 +522,7 @@ When `edit` command is entered,
 * **Alternative 2:** Unspecified parameters are set to default value.
 ** Pros: Easy to implement.
 ** Cons: Users need to specify all parameters to change one.
+// end::edit[]
 
 // tag::recent[]
 === View recently selected books: `recent` command
@@ -645,12 +660,135 @@ This eliminates the need to manually enter search information into the NLB catal
 ** Cons: User will be able to see the navigation between pages.
 // end::library[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::encrypt[]
+=== Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
+==== Current implementation
 
-// end::dataencryption[]
+* **When `encrypt` command is entered**
+
+. `EncryptCommand` is processed to set isEncrypt to be true.
+
+. The `Bibliotek` cannot be run any command except `decrypt` and `help` command.
+
+* If you enter a wrong key.
+
+image::shouldbedecryptfirst.png[width="650"]
+
+* **When the `Bibliotek` is encrypted and `decrypt` command is entered**
+
+. `DecryptCommandParser` will extract key from the user input.
+. `DecryptCommandParser` creates an `DecryptCommand` the key.
+. `DecryptCommand` is preprocessed to check that key is correct(decode the key from the storage).
+. `DecryptCommand` is processed to set isEncrypt to be false.
+
+* If your entered key is correct
+
+image::correctkey.png[width="650"]
+
+* If your entered key is wrong
+
+image::wrongkey.png[width="650"]
+
+
+* **When `setKey` command is entered**
+
+. `setKeyCommandParser` will extract the old key and new key from the user input.
+. `setKeyCommandParser` checks that  two parameters are present, and that the parameters are valid.
+. `setKeyCommandParser` creates an `setKeyCommand` with the parameters.
+. `setKeyCommand` is preprocessed to check that oldKey is correct.
+. If the oldKye is correct, `setKeyCommand` will send a setKey command to LogicManager.
+. LogicManager will send set_new_key request to ModelManger.
+. ModelManager indicate the keyChangedevent and handle it, and set the bookshelf's key to be new key.
+. ModelManager will encode the key, before indicate the keyChangedevent.
+. StorageManager handle the event by update the bibliotek with the new key(encoded key).
+
+* If you entered old key is correct.
+
+image::setsuccess.png[width="650"]
+
+* If you entered old key is incorrect.
+
+image::wrongkey(set).png[width="650"]
+
+* The encode key are implement in this way:
+[source,java]
+----
+    public static String encrypKey(String mykey) throws Exception {
+        byte[] byarray = encrypt(mykey.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
+        String encryptkey = new BASE64Encoder().encode(byarray);
+        return encryptkey;
+    }
+
+    public static byte[] encrypt(byte[] mykey, byte[] key) throws Exception {
+        SecureRandom secureRandom = new SecureRandom();
+
+        DESKeySpec desKeySpec = new DESKeySpec(key);
+
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
+        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
+
+        Cipher cipher = Cipher.getInstance(DES);
+
+        cipher.init(Cipher.ENCRYPT_MODE, securekey, secureRandom);
+
+        return cipher.doFinal(mykey);
+    }
+----
+
+* The encode key are implement in this way:
+[source,java]
+----
+    public static String decryptKey(String yourkey) throws IOException, Exception {
+        if (yourkey == null) {
+            return null;
+        }
+        BASE64Decoder base64Decoder = new BASE64Decoder();
+        byte[] decodeBuffer = base64Decoder.decodeBuffer(yourkey);
+        byte[] bytes = decrypt(decodeBuffer, defaultKey.getBytes(ENCODE));
+        return new String(bytes, ENCODE);
+    }
+
+    private static byte[] decrypt(byte[] yourkey, byte[] key) throws Exception {
+
+        SecureRandom secureRandom = new SecureRandom();
+
+        DESKeySpec desKeySpec = new DESKeySpec(key);
+
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
+        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
+
+        Cipher cipher = Cipher.getInstance(DES);
+
+        cipher.init(Cipher.DECRYPT_MODE, securekey, secureRandom);
+
+        return cipher.doFinal(yourkey);
+    }
+----
+The default key "admin" will be stored as:
+
+image::password_admin.png[width="650"]
+// end::encrypt[]
+
+==== Design considerations
+
+===== Aspect: Whether to use three commands instead of only one
+
+* **Alternative 1 (current choice):** Use three commands to do the encrypt, decrypt and setkey actions
+** Pros: Users can clearly know what they can do about the key.
+** Cons: Users should learn two more commands
+* **Alternative 2:** Use only one setKey command to solve all three features.
+** Pros: Seem that users can eliminate the typing.
+** Cons: Users will feel confuse, not so clear about the command.
+
+===== Aspect: Whether to encode the key before store it
+
+* **Alternative 1 (current choice):** Stores the encoded key.
+** Pros: Others cannot know users' key easily.
+** Cons: Difficult to implement.
+* **Alternative 2:** Store the text form key.
+** Pros: Easy to implement.
+** Cons: Others can know users' key easily.
 
 === Logging
 

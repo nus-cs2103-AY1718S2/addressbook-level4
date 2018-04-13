@@ -154,7 +154,7 @@ keyboard shortcuts.
 ***
 === Displaying all Runners and Customers : `list`, kbd:[F2] [[list]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  list
 ====
@@ -170,7 +170,7 @@ with the latest addition at the bottom.
 ***
 === Showing command history : `history`, kbd:[F3] [[history]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  history
 ====
@@ -186,7 +186,7 @@ with the latest addition at the bottom.
 // tag::addcommand[]
 === Adding a person: `add`, kbd:[Ctrl+I] [since v1.3] [[add]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  add n: NAME ty: r(or c) [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...
 ====
@@ -201,7 +201,7 @@ with the latest addition at the bottom.
 * Interest will be compounded weekly.
 ====
 
-*[.underline]#Usage examples:#*
+*Usage examples:*
 
 ====
  add ty: c n: Xiao Ming p: 88888888 e: xiao@ming.com a: W Hotel s: today d: 5 May 2018 m: 31415926535897 i: 9.71 t: richxiaoming
@@ -231,7 +231,7 @@ address "Ang Mo Kio Police Divison HQ" and tags "undercoverrunner" and "tripleag
 //@@author melvintzw
 === Assigning one or more Customers to a Runner : `assign`, kbd:[Ctrl+Shift+A] [since v1.4] [[assign]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX …​]
 ====
@@ -246,7 +246,7 @@ and `CUSTOMER-INDICES`.
 
 ====
 
-*[.underline]#Usage examples:#*
+*Usage examples:*
 
 ====
 `assign 1 c: 2`
@@ -266,7 +266,7 @@ _Assigns the Customers associated with indices `2`, `5`, `8` to the Runner assoc
 //@@author jonleeyz
 === Clearing the database : `clear`, kbd:[Ctrl+Shift+C] [[clear]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  clear
 ====
@@ -281,7 +281,7 @@ _Assigns the Customers associated with indices `2`, `5`, `8` to the Runner assoc
 ***
 === Deleting a person : `delete`, kbd:[Ctrl+D] [[delete]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  delete INDEX
 ====
@@ -293,7 +293,7 @@ _Assigns the Customers associated with indices `2`, `5`, `8` to the Runner assoc
 ** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
 ====
 
-*[.underline]#Usage examples:#*
+*Usage examples:*
 
 ====
  list
@@ -313,7 +313,7 @@ _Deletes the first person in the results of the `find` command._
 ***
 === Editing a person : `edit`, kbd:[Ctrl+E] [since v1.3] [[edit]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] …
 ====
@@ -330,7 +330,7 @@ _Deletes the first person in the results of the `find` command._
 * You cannot Edit a Runner with Customer-only fields
 ====
 
-*[.underline]#Usage examples:#*
+*Usage examples:*
 ====
  edit 1 p: 999 e: ahlong@houseofhuat.com
 
@@ -345,7 +345,7 @@ _Edits the name of the second person to be `Kimmy Aunty` and clears all existing
 ***
 === Searching for relevant persons : `find`, kbd:[Ctrl+F] [since v1.1] [[find]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  find [SPECIFIER] KEYWORD [MORE_KEYWORDS]
 ====
@@ -369,7 +369,7 @@ _Edits the name of the second person to be `Kimmy Aunty` and clears all existing
 * Only full words will be matched e.g. `Han` will not match `Hans`.
 ====
 
-*[.underline]#Usage examples:#*
+*Usage examples:*
 
 ====
  find John
@@ -399,7 +399,7 @@ _Returns all persons with phone number "91234567"._
 ***
 === Displaying a person's address using Google Maps : `locate`, kbd:[Ctrl+L] [[locate]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  locate [SPECIFIER] KEYWORD [MORE_KEYWORDS]
 ====
@@ -420,7 +420,7 @@ _Returns all persons with phone number "91234567"._
 * Alternatively, this command displays the given address and displays the person associated with that address in the PersonListPanel.
 ====
 
-*[.underline]#Usage examples:#*
+*Usage examples:*
 
 ====
  locate David
@@ -450,12 +450,12 @@ _Locates any persons with phone number "91234567" and displays the address assoc
 ***
 === Redoing the previously undone command : `redo`, kbd:[Ctrl+Y] [[redo]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  redo
 ====
 
-*[.underline]#Usage examples:#*
+*Usage examples:*
 
 ====
  delete 1
@@ -483,7 +483,7 @@ _The `redo` command fails as there are no `undo` commands executed previously._
 ***
 === Selecting and displaying details about a person : `select`, kbd:[Ctrl+S] [since v1.4] [[select]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  select INDEX
 ====
@@ -495,7 +495,7 @@ _The `redo` command fails as there are no `undo` commands executed previously._
 ** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
 ====
 
-*[.underline]#Usage examples:#*
+*Usage examples:*
 
 ====
  list
@@ -515,7 +515,7 @@ _Selects the first person from the results of the `find` command._
 ***
 === Undoing the last undoable command : `undo`, kbd:[Ctrl+Z] [[undo]]
 
-*[.underline]#Syntax:#*
+*Syntax:*
 ====
  undo
 ====
@@ -526,7 +526,7 @@ _Selects the first person from the results of the `find` command._
 * Only undoable commands can be undone.
 ====
 
-*[.underline]#Usage examples:#*
+*Usage examples:*
 
 ====
  delete 1

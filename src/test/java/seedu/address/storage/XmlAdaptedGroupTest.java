@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_INFORMATION;
 import static seedu.address.storage.XmlAdaptedGroup.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalGroups.GROUP_A;
 import static seedu.address.testutil.TypicalGroups.GROUP_F;
+import static seedu.address.testutil.TypicalGroups.GROUP_I;
 
 import org.junit.Test;
 
@@ -34,23 +35,11 @@ public class XmlAdaptedGroupTest {
     }
 
     @Test
-    public void toModelType_withPerson_returnSuccess() throws Exception {
-        Group groupToChange = new GroupBuilder().withInformation("Group F").build();
-        Person personToAdd = TypicalPersons.ALICE;
-        groupToChange.addPerson(personToAdd);
-        XmlAdaptedGroup group = new XmlAdaptedGroup(groupToChange);
-
-        assertEquals(GROUP_F, group.toModelType());
-    }
-
-    @Test
     public void toModelType_addPerson_returnSuccess() throws Exception {
-        Group groupToChange = new GroupBuilder().withInformation("Group F").build();
-        XmlAdaptedPerson personToAdd = new XmlAdaptedPerson(TypicalPersons.ALICE);
-        XmlAdaptedGroup group = new XmlAdaptedGroup(groupToChange);
+        XmlAdaptedGroup group = new XmlAdaptedGroup(GROUP_F);
+        XmlAdaptedPerson personToAdd = new XmlAdaptedPerson(TypicalPersons.BENSON);
         group.getPersonList().add(personToAdd);
-
-        assertEquals(GROUP_F, group.toModelType());
+        assertEquals(GROUP_I, group.toModelType());
     }
 
     @Test

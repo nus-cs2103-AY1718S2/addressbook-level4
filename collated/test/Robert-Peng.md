@@ -352,10 +352,10 @@ public class PetPatientListPanelTest extends GuiUnitTest {
      */
     public static void assertCardDisplaysPetPatient(PetPatient expectedPetPatient, PetPatientCardHandle actualCard) {
         assertEquals(expectedPetPatient.getName().toString(), actualCard.getName());
-        assertEquals(expectedPetPatient.getSpecies(), actualCard.getSpecies());
-        assertEquals(expectedPetPatient.getBreed(), actualCard.getBreed());
-        assertEquals(expectedPetPatient.getColour(), actualCard.getColour());
-        assertEquals(expectedPetPatient.getBloodType(), actualCard.getBloodType());
+        assertEquals(expectedPetPatient.getSpecies().toString(), actualCard.getSpecies());
+        assertEquals(expectedPetPatient.getBreed().toString(), actualCard.getBreed());
+        assertEquals(expectedPetPatient.getColour().toString(), actualCard.getColour());
+        assertEquals(expectedPetPatient.getBloodType().toString(), actualCard.getBloodType());
         assertEquals(expectedPetPatient.getOwner().toString(), actualCard.getOwnerNric());
 
         //assertTagsEqual(expectedPetPatient, actualCard);
@@ -394,7 +394,7 @@ public class PetPatientListPanelTest extends GuiUnitTest {
         /* Case: missing nric -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
 ```
 ###### \java\systemtests\AddCommandSystemTest.java
 ``` java

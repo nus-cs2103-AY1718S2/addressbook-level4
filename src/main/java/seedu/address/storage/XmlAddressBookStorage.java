@@ -13,7 +13,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.EncryptionUtil;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.UserPrefs;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.

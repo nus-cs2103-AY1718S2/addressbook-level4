@@ -124,7 +124,7 @@ public class MainApp extends Application {
                 File book = new File(userPrefs.getAddressBookFilePath());
                 EncryptionUtil.encrypt(book);
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             logger.warning("Problem while reading from the password file");
         }
         return new ModelManager(initialData, userPrefs);
@@ -245,7 +245,7 @@ public class MainApp extends Application {
             UserPrefs userPrefs = new UserPrefs();
             File file = new File(userPrefs.getAddressBookFilePath());
             EncryptionUtil.encrypt(file);
-        }catch(IOException ioe){
+        } catch (IOException ioe) {
             logger.warning("File not found" + ioe.getMessage());
         }
         System.exit(0);

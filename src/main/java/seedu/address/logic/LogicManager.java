@@ -48,13 +48,7 @@ public class LogicManager extends ComponentManager implements Logic {
             if (isLocked) {
                 throw new CommandException(PasswordCommand.MESSAGE_WRONG_PASSWORD);
             } else {
-                try {
-                    UserPrefs userPrefs = new UserPrefs();
-                    File file = new File(userPrefs.getAddressBookFilePath());
-                    EncryptionUtil.decrypt(file);
-                }catch(IOException ioe){
-                    logger.warning("File not found" + ioe.getMessage());
-                }
+                decryptFile();
                 return new CommandResult("Welcome to reInsurance");
             }
         }
@@ -67,6 +61,16 @@ public class LogicManager extends ComponentManager implements Logic {
             return result;
         } finally {
             history.add(commandText);
+        }
+    }
+
+    private void decryptFile() {
+        try {
+            UserPrefs userPrefs = new UserPrefs();
+            File file = new File(userPrefs.getAddressBookFilePath());
+            EncryptionUtil.decrypt(file);
+        } catch(IOException ioe) {
+            logger.warning("File not found" + ioe.getMessage());
         }
     }
 

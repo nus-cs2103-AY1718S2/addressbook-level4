@@ -6,7 +6,6 @@ import java.io.IOException;
 import javax.xml.bind.JAXBException;
 
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.commons.util.EncryptionUtil;
 import seedu.address.commons.util.XmlUtil;
 
 /**

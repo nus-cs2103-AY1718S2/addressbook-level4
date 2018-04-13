@@ -11,7 +11,6 @@ public class GroupCardHandle extends NodeHandle<Node> {
 
     private static final String ID_FIELD_ID = "#id";
     private static final String INFORMATION_FIELD_INFORMATION = "#information";
-  
     private final Label idLabel;
     private final Label information;
 

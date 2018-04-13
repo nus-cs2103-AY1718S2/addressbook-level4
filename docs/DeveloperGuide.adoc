@@ -688,6 +688,9 @@ The code snippet below shows how the `studentToEdit` is created when the `editMi
 
 After that, the student will be updated with the new details for his/her miscellaneous information.
 
+
+[large]*`editPicture` Command*
+
 For the command `editPicture`, the student's index will have to be provided by the user again. The next parameter for this is the required file path of the picture file.
 This can be in the form of an absolute file path (starting from a hardrive like `C:/Users/.../picture.png`) or relative to the folder that the jar application is in.
 
@@ -718,25 +721,39 @@ The code below shows how the saving of the file is done:
 
 Thus, the HTML file for displaying the student's profile page will be able to show the new image, which is copied to the local jar folder.
 
+The following sequence diagram illustrates the process of calling the `editPicture` command.
+
+.Sequence diagram showing the important details of the process of the `editPicture` command
+image::editPictureCommandSD.png[width:800]
+
+As seen from the above diagram, the `createFinalEditedStudent()` method ensures that the correct profile picture path is saved onto the student's XML data in order to be read by the HTML file which displays the student profile page.
+The method `createEditedStudent` creates the student wi
+
 ==== Design Considerations
 
-===== Aspect: Displaying and styling the profile page of a student
+[width="100%", cols="2e, 2,4 ,2 ,4 "options="header",]
+|=======================================================================
+| Aspect | Alternative 1 (Current choice) | Pros (+)/ Cons(-) | Alternative 2 | Pros(+) / Cons(-)
+|`Displaying and styling the profile page of a student`
+| Have it as a JavaScript function in the HTML file of the student's profile page. | + Able to directly read the XML data of students from the file.  +
+{empty} +
+- Have to export the required files and folder out of the jar file as the JavaScript is unable to retrieve files outside of the Jar folder.
+|  Have it as a JavaFX file.
+| + Able to read the student's data from the UniqueStudentList. +
+{empty} +
+- Might be more difficult and messy to implement in code.
+|`Editing the profile picture`
+| Copy the picture file into the local jar directory.
+| + Ensures that the picture can still be loaded even when the original picture file is deleted. +
+{empty} +
+- Requires more code to copy the files over and ensure their validity
+| Read from the direct location of the original picture file.
+| + Less code of copying is required and any modifications to the original photo is immediately updated. +
+{empty} +
+- If the picture is deleted or corrupted, the profile picture would not be able to display.
 
-* **Alternative 1 (current choice):** Have it as a JavaScript function in the HTML file of the student's profile page.
-** Pros: Able to directly read the XML data of students from the file.
-** Cons: Have to export the required files and folder out of the jar file as the JavaScript is unable to retrieve files outside of the Jar folder.
-* **Alternative 2:** Have it as a JavaFX file.
-** Pros: Able to read the student's data from the UniqueStudentList.
-** Cons: Might be more difficult and messy to implement in code.
+|=======================================================================
 
-===== Aspect: Editing the profile picture.
-
-* **Alternative 1 (current choice):** Copy the picture file into the local jar directory.
-** Pros: Ensures that the picture can still be loaded even when the original picture file is deleted.
-** Cons: Requires more code to copy the files over and ensure their validity.
-* **Alternative 2:** Read from the direct location of the original picture file.
-** Pros: Less code of copying is required and any modifications to the original photo is immediately updated.
-** Cons: If the picture is deleted or corrupted, the profile picture would not be able to display.
 
 //end::profilePage[]
 

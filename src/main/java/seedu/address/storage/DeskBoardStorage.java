@@ -41,4 +41,13 @@ public interface DeskBoardStorage {
      * @see #saveDeskBoard(ReadOnlyDeskBoard)
      */
     void saveDeskBoard(ReadOnlyDeskBoard deskBoard, String filePath) throws IOException;
+
+    //@@author karenfrilya97
+    /**
+     * Exports the given {@link ReadOnlyDeskBoard} to the given {@param filePath}.
+     * @param deskBoard cannot be null.
+     * @param filePath cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
+    void exportDeskBoard(ReadOnlyDeskBoard deskBoard, String filePath) throws IOException;
 }

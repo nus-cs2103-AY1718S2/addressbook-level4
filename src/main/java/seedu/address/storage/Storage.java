@@ -37,5 +37,6 @@ public interface Storage extends DeskBoardStorage, UserPrefsStorage {
     void handleDeskBoardChangedEvent(DeskBoardChangedEvent dbce);
 
     //@@author karenfrilya97
+    @Override
     void exportDeskBoard(ReadOnlyDeskBoard deskBoard, String filePath) throws IOException;
 }

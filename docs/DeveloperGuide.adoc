@@ -1406,7 +1406,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `CLIndar` and the *Actor* is the `User`, unless specified otherwise)
+(For all use cases below, the *System* is `CLIndar` and the *Actor* is the `User`, unless specified otherwise)
 
 [discrete]
 

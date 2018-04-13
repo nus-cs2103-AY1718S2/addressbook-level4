@@ -209,7 +209,7 @@ public class CommandBox extends UiPart<Region> {
 
             suggestions = autocompleteLogic.getSuggestions(commandTextField);
 
-            if (!suggestions.isEmpty()){
+            if (!suggestions.isEmpty()) {
                 setContextMenu();
             }
         }

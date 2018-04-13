@@ -4,9 +4,7 @@ import seedu.address.model.account.Account;
 import seedu.address.model.account.Credential;
 import seedu.address.model.account.MatricNumber;
 import seedu.address.model.account.Name;
-import seedu.address.model.account.Password;
 import seedu.address.model.account.PrivilegeLevel;
-import seedu.address.model.account.Username;
 
 /**
  * A utility class to help with building Account objects.
@@ -25,7 +23,7 @@ public class AccountBuilder {
     private PrivilegeLevel privilegeLevel;
 
     /**
-     *  Constructor for account with default values
+     * Constructor for account with default values
      */
     public AccountBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -36,6 +34,7 @@ public class AccountBuilder {
 
     /**
      * Sets the {@code Name} of the {@code Account} that we are building.
+     *
      * @param name
      * @return
      */
@@ -46,6 +45,7 @@ public class AccountBuilder {
 
     /**
      * Sets the {@code Credential} of the {@code Account} that we are building.
+     *
      * @param username
      * @param password
      * @return
@@ -57,6 +57,7 @@ public class AccountBuilder {
 
     /**
      * Sets the {@code MatricNumber} of the {@code Account} that we are building.
+     *
      * @param matricNumber
      * @return
      */
@@ -67,16 +68,18 @@ public class AccountBuilder {
 
     /**
      * Sets the {@code PrivilegeLevel} of the {@code Account} that we are building.
+     *
      * @param privilegeLevel
      * @return
      */
-    public AccountBuilder withPrivilegeLevel (String privilegeLevel) {
+    public AccountBuilder withPrivilegeLevel(String privilegeLevel) {
         this.privilegeLevel = new PrivilegeLevel(Integer.parseInt(privilegeLevel));
         return this;
     }
 
     /**
      * Create an account
+     *
      * @return
      */
     public Account build() {

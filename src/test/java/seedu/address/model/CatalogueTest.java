@@ -20,10 +20,9 @@ import seedu.address.model.book.Book;
 import seedu.address.model.tag.Tag;
 
 public class CatalogueTest {
+    private final Catalogue catalogue = new Catalogue();
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    private final Catalogue catalogue = new Catalogue();
 
     @Test
     public void constructor() {

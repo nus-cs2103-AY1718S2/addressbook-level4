@@ -37,10 +37,9 @@ import seedu.address.testutil.EditBookDescriptorBuilder;
 
 
 public class CatalogueParserTest {
+    private final CatalogueParser parser = new CatalogueParser();
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    private final CatalogueParser parser = new CatalogueParser();
 
     @Test
     public void parseCommand_add() throws Exception {

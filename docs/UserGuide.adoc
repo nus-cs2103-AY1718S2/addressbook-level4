@@ -1,11 +1,9 @@
-= image:CodeducatorTitle.png[width:100px] Codeducator - User Guide
-
+:imagesDir: images
 :toc:
 :toc-title:
 :toc-placement: preamble
 :toclevels: 4
 :sectnums:
-:imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
 :experimental:
@@ -17,15 +15,76 @@ endif::[]
 :contactsURL: https://contacts.google.com/
 :calendarURL: https://calendar.google.com/calendar/r/week
 
+= image:CodeducatorTitle.png[Codeducator,100,role="le"] Codeducator - User Guide
 By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
-== Introduction
+
+== Welcome to Codeducator!
 
 Codeducator is a desktop address book and scheduling application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. +
 
 You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. +
 
-Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Interested? Jump to the <<Quick Start>> to get started. +
+
+You may want to read <<Quick Overview>> to check out the User Interface, or <<How to use this User Guide>> to find out about the format of our help guide
+
+Enjoy using Codeducator!
+
+=== Quick Overview
+
+Codeducator’s user interface is split into a few sections. These sections are highlighted in the image below.
+
+image::CodeducatorTagged.png[width="850"]
+
+. *Command Box* +
+  Where you type your commands
+. *Command Result Box* +
+  The message result of executing your command
+. *Contact List* +
+  Where you keep your contacts
+. *Infopanel* +
+  A small but powerful multi-use window to view your Schedule, Full Information Page and Student Dashboards
+. *Status Bar* +
+  Tells you when you last updated Codeducator data
+
+The Infopanel has three screens, depending on the task you are trying to execute.
+
+. *Schedule* +
+  Tasks related to your Schedule and Student Lessons
++
+image::CodeducatorSchedule.png[width="790"]
++
+. *Full Information Page* +
+  Tasks related to assigning additional information to your student
++
+image::CodeducatorMoreInfo.png[width="790"]
++
+. *Student Dashboard* +
+  Tasks related to assigning your Student milestones in terms of learning
++
+image::CodeducatorDashboard.png[width="790"]
+
+
+=== How to use this User Guide
+
+Everything you need to know about Codeducator is in this user guide.
+
+You can quickly navigate the user guide by clicking on the links found in the table of contents at the top of the user guide.
+
+An example of the user guide for the features is shown below. You can identify the feature’s title, description, format and easy to follow step by step instructions. The instructions will follow this certain format
+
+image::UserGuideTagged.png[width="790"]
+
+. *Feature Title* +
+  This is the name of the feature or command being explained
+. *Description and use case* +
+  This describes the potential situations that you might need to use this command.
+. *Format of command* +
+  The defined structure of the command. See <<Command Format>> for more information
+. *Steps Taken* +
+  A few example steps to show you how we might do things and what you will see
+  You should have a similar user interface of Codeducator when following the step by step instructions.
 
 == Quick Start
 
@@ -66,8 +125,8 @@ Don't fret! This user guide will show you the many simple commands that will hel
 The subsequent sections of the user guide provides a step by step walk-through of all the commands that Codeducator has to offer.
 
 
+===== Command Format
 ====
-*Command Format*
 
 * Words in `UPPER_CASE` are the _parameters_ to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are _optional_ e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -78,12 +137,15 @@ The subsequent sections of the user guide provides a step by step walk-through o
 Got it? Good! Let's get started on Codeducator! +
 
 === Basic User Interface Commands
+
+Let's start slow. This are the basic commands that Codeducator offers.
+
 ==== Viewing help : `help`
 
 Feeling lost and not sure what to do? Can't remember the usage of the command? +
 You can type the help command and Codeducator will open this user guide in-application for your convenience. Don't be afraid to ask for help!
 
-Format: `help`
+===== Format: `help`
 
 ===== Steps Taken
 
@@ -379,7 +441,7 @@ Need a quick refresh of what lessons you have in the week? Coming from another p
 
 ===== Format: `schedule`
 
-[large]*Steps Taken* +
+===== Steps Taken
 
 . Type `schedule` into the command box. Press kbd:[enter] to execute.
 +
@@ -419,7 +481,7 @@ Adds a lesson for the 1st student of the `list` command. Lesson will be held on 
 `addLesson 1 d/tue st/12:00 et/13:30` +
 Adds a lesson for the 1st student of the `find Betsy` command. Lesson will be held on the day of `tue` and starting time will be `12:00` and ending time will be `13:30`.
 
-[large]*Steps Taken* +
+===== Steps Taken
 
 Let's say that you may want to add a Lesson for Bernice (`index 2`). The lesson time slot would be Sunday, 10:00am to 12:00pm.
 

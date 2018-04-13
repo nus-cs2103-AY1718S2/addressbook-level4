@@ -15,6 +15,7 @@ import org.junit.Test;
 import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -201,6 +202,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         SelectCommand selectCommand = new SelectCommand();
         assertEquals(selectCommand.getTemplate(), getCommandBox().getInput());
         assertEquals(selectCommand.getUsageMessage(), getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

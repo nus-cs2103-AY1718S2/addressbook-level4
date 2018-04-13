@@ -37,6 +37,7 @@ import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -333,6 +334,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         EditCommand editCommand = new EditCommand();
         assertEquals(editCommand.getTemplate(), getCommandBox().getInput());
         assertEquals(editCommand.getUsageMessage(), getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

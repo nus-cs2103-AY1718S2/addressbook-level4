@@ -42,6 +42,7 @@ import org.junit.Test;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -300,6 +301,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         AddCommand addCommand = new AddCommand();
         assertEquals(addCommand.getTemplate(), getCommandBox().getInput());
         assertEquals(addCommand.getUsageMessage(), getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
+        // assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

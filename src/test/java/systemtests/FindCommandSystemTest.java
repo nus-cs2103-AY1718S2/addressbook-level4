@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -251,6 +252,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         FindCommand findCommand = new FindCommand();
         assertEquals(findCommand.getTemplate(), getCommandBox().getInput());
         assertEquals(findCommand.getUsageMessage(), getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

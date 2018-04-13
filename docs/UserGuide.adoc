@@ -917,8 +917,8 @@ The examples below are just for your reference. Any phrase or sentence can be us
 [IMPORTANT]
 Currently, the commands `Delete` and `Select` only detects English names!
 
-image::Select(before).png[width="500"]
-image::Select(after).png[width="500"]
+image::Select(before).PNG[width="500"]
+image::Select(after).PNG[width="500"]
 
 === Guidelines for using this feature
 * Be sure to check for spelling errors in your sentences.

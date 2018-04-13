@@ -228,6 +228,7 @@ edit -a 3 d/2018-06-04 12:30
 
 {empty} +
 
+// tag::find[]
 === Find contacts or pet patients: `find` or `f` `[Since v1.4]`
 
 You can use `find` or `f` to do the following :
@@ -285,7 +286,64 @@ find -p n/Chae s/Cat b/Russian Blue c/Grey bt/A t/Naive
 ----
 
 {empty} +
+// end::find[]
 
+// tag::listappt[]
+=== Listing appointments in a specified view requested: `listappt` or `la` `[Since v1.5rc]`
+
+You can use `listappt` or `la` to do the following :
+
+[width="100%", cols="15%,<45%a,<40%", options="header"]
+|=====
+| To list appointments
+| Command syntax
+| Notes
+
+.^a|Year
+| `listappt -y [YEAR]`
+a| * The command will list appointments based on the specified `YEAR` in the year view of CalendarFX in YYYY format.
+* The command can run without any `YEAR` keyword. This will switch the view to the year view of today's date.
+* The command will only run for past `YEAR` keywords if there exists an appointment that was made in that year.
+
+.^| Month
+| `listappt -m [YEAR-MONTH/MONTH]`
+a| * The command will list appointments based on the specified `YEAR-MONTH` in the month view of CalendarFX in YYYY-MM format.
+* The command can run without any `MONTH` keyword. This will switch the view to the month view of today's date.
+* The command can run with only the `MONTH` keyword without the `YEAR` keyword in MM format. This will list appointments of the current year with the specified `MONTH`.
+* The command will only run for past `YEAR-MONTH` keywords if there exists an appointment that was made in that year.
+
+.^| Week
+| `listappt -w [DATE]`
+a| * The command will list appointments based on the specified `DATE` in the week view of CalendarFX in YYYY-MM-DD format.
+* The command can run without any `DATE` keyword. This will switch the view to the week view of today's date.
+* The command will only run for past `DATE` keywords if there exists an appointment that was made in that year.
+
+.^| Day
+| `listappt -d [DATE]`
+a| * The command will list appointments based on the specified `DATE` in the day view of CalendarFX in YYYY-MM-DD format.
+* The command can run without any `DATE` keyword. This will switch the view to the day view of today's date.
+* The command will only run for past `DATE` keywords if there exists an appointment that was made in that year.
+|=====
+
+{empty} +
+
+.**Copy & paste to try out**
+----
+listappt -y 2018
+
+listappt -m 2018-01
+
+listappt -m
+
+listappt -w 2018-12-31
+
+listappt -d 2018-01-01
+
+----
+// end::listappt[]
+{empty} +
+
+// tag::delete[]
 === Deleting a owner, pet patient or appointment : `delete` or `d` `[Since v1.3]`
 
 You can use `delete` or `d` to do the following :
@@ -334,7 +392,7 @@ delete -fo 1
 ----
 
 {empty} +
-
+// end::delete[]
 === Listing entered commands : `history` or `his`
 
 To list all the commands that you have entered in reverse chronological order. +

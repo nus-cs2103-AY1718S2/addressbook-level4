@@ -215,7 +215,6 @@ public class CalendarWindow extends UiPart<Region> {
     private void changeWeekView(LocalDate date) {
         WeekFields weekFields = WeekFields.SUNDAY_START;
         int week = date.get(weekFields.weekOfWeekBasedYear()) - 1;
-        System.out.println(week);
 
         if (week == 0 && date.getMonthValue() == 12) {
             //wraparound

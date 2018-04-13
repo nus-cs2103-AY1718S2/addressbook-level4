@@ -570,6 +570,9 @@ Coming v2.0, Medeina can be used concurrently on different systems. The data wil
 
 *Q*: After switching from a year view with appointments to a year view with none, the appointment dates were still colored despite no entry, why is that?
 *A*: The issue is embedded inside CalendarFx API, it has already been documented in our developer guide as well. Hopefully the issue can be resolved in future releases of CalendarFX.
+
+*Q*: When right click on the calendar day view, a window jump out and say
+
 {empty} +
 
 == Command Summary

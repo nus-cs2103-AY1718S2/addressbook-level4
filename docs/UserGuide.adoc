@@ -257,7 +257,7 @@ Deletes all non-clients added before 12/12/2017 in the address book.
 
 
 Emails a person based on the specified name.
-Format: `email KEYWORD TEMPLATE`
+Format: `email n/NAME1 [OPTIONAL NAMES] pu/PURPOSE`
 
 ****
 * Emailed person must have name match the full word of keyword
@@ -270,7 +270,7 @@ Format: `email KEYWORD TEMPLATE`
 
 // tag::templating[]
 
-==== Creating a new template : `addTemplate` or `at`
+==== Creating a new template : `addtemplate` or `at`
 
 Creates a new template based on the specified purpose, subject and message.
 Format: `addtemplate pu/PURPOSE s/SUBJECT m/MESSAGE`
@@ -282,10 +282,10 @@ Examples:
 * `addTemplate pu/greeting s/Hello There m/Luke I am your father`
 * `addTemplate pu/holiday s/Merry Christmas m/Santa Claus is coming to town!`
 
-==== Deleting a template : `deleteTemplate` or `dt`
+==== Deleting a template : `deletetemplate` or `dt`
 
 Deletes a template in the address book. +
-Format: `deletetemplate PURPOSE`
+Format: `deletetemplate pu/PURPOSE`
 
 ****
 * Deletes a template with the specified purpose

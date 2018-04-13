@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PURPOSE;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -18,9 +19,10 @@ public class DeleteTemplateCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the template which has the specified purpose.\n"
-            + "Parameters: PURPOSE "
+            + "Parameters: "
+            + PREFIX_PURPOSE + " PURPOSE \n"
             + "Example: " + COMMAND_WORD + " "
-            + "greeting";
+            + PREFIX_PURPOSE + "greeting";
 
     public static final String MESSAGE_DELETE_TEMPLATE_SUCCESS = "Deleted Template with purpose : %1$s";
 

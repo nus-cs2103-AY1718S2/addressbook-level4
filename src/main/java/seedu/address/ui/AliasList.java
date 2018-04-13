@@ -143,9 +143,9 @@ public class AliasList extends UiPart<Region> {
                             setStyle("");
                         } else {
                             setText(item);
-                            if (!getItem().equals("")){
+                            if (!getItem().equals("")) {
                                 setTextFill(Color.BLACK);
-                                setStyle("-fx-background-color: #17A589");
+                                setStyle("-fx-background-color: #E6B0AA");
                             } else {
                                 setStyle("-fx-background-color: black");
                             }

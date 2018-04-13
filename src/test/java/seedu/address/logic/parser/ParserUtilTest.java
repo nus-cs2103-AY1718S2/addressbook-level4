@@ -22,6 +22,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.customer.LateInterest;
 import seedu.address.model.person.customer.MoneyBorrowed;
 import seedu.address.model.person.customer.StandardInterest;
 import seedu.address.model.tag.Tag;
@@ -37,6 +38,8 @@ public class ParserUtilTest {
     private static final String INVALID_MONEY_BORROWED_NOT_DOUBLE = "34.0d985";
     private static final String INVALID_STANDARD_INTEREST_NEGATIVE = "-34.0985";
     private static final String INVALID_STANDARD_INTEREST_NOT_DOUBLE = "34.0d985";
+    private static final String INVALID_LATE_INTEREST_NEGATIVE = "-34.0985";
+    private static final String INVALID_LATE_INTEREST_NOT_DOUBLE = "34.0d985";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -46,6 +49,7 @@ public class ParserUtilTest {
     private static final String VALID_TAG_2 = "neighbour";
     private static final String VALID_MONEY_BORROWED = "34.0985";
     private static final String VALID_STANDARD_INTEREST = "34.0985";
+    private static final String VALID_LATE_INTEREST = "34.0985";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -339,5 +343,50 @@ public class ParserUtilTest {
         assertEquals(expectedStandardInterest, ParserUtil.parseStandardInterest(VALID_STANDARD_INTEREST));
         assertEquals(Optional.of(expectedStandardInterest),
                 ParserUtil.parseStandardInterest(Optional.of(VALID_STANDARD_INTEREST)));
+    }
+    
+    @Test
+    public void parseLateInterest_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseLateInterest((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseLateInterest((Optional<String>) null));
+    }
+
+    @Test
+    public void parseLateInterest_invalidValueNotDouble_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseLateInterest(INVALID_LATE_INTEREST_NOT_DOUBLE));
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseLateInterest(Optional.of(INVALID_LATE_INTEREST_NOT_DOUBLE)));
+    }
+
+    @Test
+    public void parseLateInterest_invalidValueNegative_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseLateInterest(INVALID_LATE_INTEREST_NEGATIVE));
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseLateInterest(Optional.of(INVALID_LATE_INTEREST_NEGATIVE)));
+    }
+
+    @Test
+    public void parseLateInterest_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseLateInterest(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseLateInterest_validValueWithoutWhitespace_returnsLateInterest() throws Exception {
+        LateInterest expectedLateInterest = new LateInterest(Double.parseDouble(VALID_LATE_INTEREST));
+        assertEquals(expectedLateInterest, ParserUtil.parseLateInterest(VALID_LATE_INTEREST));
+        assertEquals(Optional.of(expectedLateInterest),
+                ParserUtil.parseLateInterest(Optional.of(VALID_LATE_INTEREST)));
+    }
+
+    @Test
+    public void parseLateInterest_validValueWithWhitespace_returnsTrimmedLateInterest() throws Exception {
+        String lateInterestWithWhitespace = WHITESPACE + VALID_LATE_INTEREST + WHITESPACE;
+        LateInterest expectedLateInterest
+                = new LateInterest(Double.parseDouble(lateInterestWithWhitespace));
+        assertEquals(expectedLateInterest, ParserUtil.parseLateInterest(VALID_LATE_INTEREST));
+        assertEquals(Optional.of(expectedLateInterest),
+                ParserUtil.parseLateInterest(Optional.of(VALID_LATE_INTEREST)));
     }
 }

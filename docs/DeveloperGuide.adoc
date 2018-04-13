@@ -101,6 +101,9 @@ image::Architecture.png[width="600"]
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
+[NOTE]
+A fifth component, the `Login` component, is omitted in the above diagram to reduce the complexity of the diagram. This component is also run by the `MainApp` class as further explained below, but will only be run at app launch and subsequently will have limited interaction with the other components, leaving the general architecture of the main application as depicted in the diagram above.
+
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
@@ -170,6 +173,9 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+[NOTE]
+The `login` component has its own independently running user interface, but the classes used for the `login` feature are maintained together with those of the main application in the `UI` component package.
+
 [[Design-Logic]]
 === Logic component
 
@@ -221,6 +227,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the `UserPass` data in json format and read it back.
 
 [[Design-Login]]
 // tag::login[]
@@ -315,6 +322,9 @@ Upon successful verification, the user will be brought to a user-customised vers
 The following sequence diagram shows how the checkLoginDetails method works:
 
 image::LoginDetails.png[width="800"]
+
+The `login` feature thus has limited interactions with the other components of the application after successful verification.
+This, however, may change in v2.0 when encryption of the Pigeons address book is built in and integrated with the profile created by the `login` component.
 
 // end::loginFeature[]
 
@@ -996,7 +1006,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |customer |real-time geo-locate my delivery | to have a better idea of when my delivery will arrive
 |=======================================================================
 
-_{More to be added}_
+_{User stories are added/updated subsequently through issues in GitHub as the project develops through iterative feedback}_
 
 [appendix]
 == Use Cases
@@ -1060,8 +1070,9 @@ A contact detail that is not meant to be shared with others
 
 [appendix]
 == Product Survey
+Below is a sample of how a product survey may be documented:
 
-*Product Name*
+*Pigeons*
 
 Author: ...
 
@@ -1089,15 +1100,13 @@ These instructions only provide a starting point for testers to work on; testers
 
 .. Download the jar file and copy into an empty folder
 .. Double-click the jar file +
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   Expected: Shows the login screen GUI, and after successful login, it shows GUI with a set of sample contacts. The window size may not be optimum.
 
 . Saving window preferences
 
 .. Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
-
-_{ more test cases ... }_
 
 === Deleting a person
 
@@ -1108,15 +1117,11 @@ _{ more test cases ... }_
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
-
-_{ more test cases ... }_
 
 === Saving data
 
 . Dealing with missing/corrupted data files
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
+.. Delete the data folder or corrupted file and repeat commands. A new data folder/file should be auto-generated and auto-saved again.

@@ -143,7 +143,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException, PatientNotFoundException {
+        public Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException {
             fail("This method should not be called.");
             return null;
         }

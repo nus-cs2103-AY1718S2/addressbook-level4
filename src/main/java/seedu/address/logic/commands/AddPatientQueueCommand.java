@@ -50,8 +50,6 @@ public class AddPatientQueueCommand extends UndoableCommand {
             toQueue = model.addPatientToQueue(actualSourceIndex);
         } catch (DuplicatePatientException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PatientNotFoundException e) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, toQueue.getName().fullName));

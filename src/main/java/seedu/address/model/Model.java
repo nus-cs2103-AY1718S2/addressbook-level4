@@ -54,10 +54,10 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Patient> predicate);
 
     //@@author Kyholmes
-    /** Adds patient into visiting queue
-     * @throws NullPointerException if {@code Patient} is null.*/
-    Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException,
-            PatientNotFoundException;
+    /** Adds patient into visiting queue.
+     * @throws NullPointerException if {@code targetIndex} is null.
+     * @throws DuplicatePatientException if {@code targetIndex} already exist in the visiting queue*/
+    Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException;
 
     /** Remove the first patient from the visiting queue*/
     Patient removePatientFromQueue() throws PatientNotFoundException;

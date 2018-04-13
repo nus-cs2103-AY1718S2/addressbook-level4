@@ -1,71 +1,77 @@
-= John Doe - Project Portfolio
+= Eldon Chung - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: AddressBook - Level 4
+== PROJECT: CoinBook
 
 ---
 
 == Overview
 
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+CoinBook is a desktop accounting application written in Java. It is targeted at cryptocurrency traders and enthusiasts, and allows them to keep track of the coins they hold, obtain price data and analytics, and read the latest news relevant to them in the same place. Primary interaction is through a CLI, and a GUI built with JavaFX.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+* *Major enhancement*: Added *advanced search criteria and boolean logical operators*
+** What it does: Allows the user to search through the __CoinBook__ based on Code, price, etc as well as boolean combinations of these.
+** Justification: This lets users search through a large set of coins quickly as well as allow users the power of very specific queries.
+This allows for ease of use and handling of a large Coin base.
+** Highlights: This enhancement involved revamping the entire input sanitation to allow for a higher level of parsing.
+The resulting system was then used by enhancements written by other team members. Many alternative design considerations were made and tradeoffs were sacrificed.
+** Credits: Concepts of tokenization, parsing, syntax specification and boolean predicate generation were covered extensively in __Compilers: Principles, Techniques, and Tools__ by Alfred V. Aho, Monica S. Lam, Ravi Sethi, and Jeffrey D. Ullman.
+The conceptualization of the parser would not have been possible without the valuable lessons obtained from that book.
 
-* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
+* *Proposed extensions* :
+** Boolean logical queries may be difficult for users to consistently express. One possible enhancement could be to include syntax
+highlighting on the text as it is typed in to notify the user when the string is valid without requiring the user to use the `Enter` key.
+** It could be very useful to automatically translate such boolean queries into English as the user types the queries, to give them a sense of
+what their expression means. For example: when the user keys in `(p/>50 AND t/fav) OR c/BTC` it could be possible for some text
+to appear with the following sentence: "Based on this query, you wish to find all coins that are priced above 50 dollars and you have tagged as favourite. Also,
+you wish to find the coin named BTC".
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+** The Tokenizer, along with its TokenTypes and the SyntaxParser was designed to be extensible in the case there needs to be
+a drastic change in syntax. An approach to the Unix-style command line interface is another possible direction.
+
+* *Minor enhancement*: Added a news panel which loads subreddits for coins through the view command when invoked. Also provided the ability for __CoinBook__ to warn
+the user when the coin added does not exist.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F09-B3/main/blob/master/collated/functional/Eldon-Chung.md[Functional code]] [https://github.com/CS2103JAN2018-F09-B3/main/blob/master/collated/test/Eldon-Chung.md[Test code]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+*** Managed releases `v1.5rc` (1 release) on GitHub
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Refactored old tests to suit new code base (Pull requests https://github.com/CS2103JAN2018-F09-B3/main/pull/202[#202], https://github.com/CS2103JAN2018-F09-B3/main/pull/202[#211])
+*** Refactored entire code base for general quality (https://github.com/CS2103JAN2018-F09-B3/main/pull/147[#147], https://github.com/CS2103JAN2018-F09-B3/main/pull/138[#138],
+https://github.com/CS2103JAN2018-F09-B3/main/pull/112[#112], https://github.com/CS2103JAN2018-F09-B3/main/pull/189[#189], https://github.com/CS2103JAN2018-F09-B3/main/pull/204[#204])
+*** Reported and addressed bugs (Pull requests https://github.com/CS2103JAN2018-F09-B3/main/pull/183[#183], https://github.com/CS2103JAN2018-F09-B3/main/issues/184[#184], https://github.com/CS2103JAN2018-F09-B3/main/issues/188[#188],
+https://github.com/CS2103JAN2018-F09-B3/main/issues/191[#191], https://github.com/CS2103JAN2018-F09-B3/main/issues/192[#192], https://github.com/CS2103JAN2018-F09-B3/main/pull/193[#193])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Managed the UG and DG: (Pull requests https://github.com/CS2103JAN2018-F09-B3/main/pull/121[#121], https://github.com/CS2103JAN2018-F09-B3/main/pull/180[#180], https://github.com/CS2103JAN2018-F09-B3/main/pull/76[#76])
+*** Standardised the diagram color scheme and renamed "address to coin" in the UG and DG: (Pull requests https://github.com/CS2103JAN2018-F09-B3/main/commit/01dbe64f74fe4a7a8ce156988d8c25afb0ae64da[1])
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+*** Reported bugs for other teams in the class(examples:  https://github.com/CS2103JAN2018-F12-B3/main/issues/108#event-1570704377[1])
+
 ** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
-
-_{you can add/remove categories in the list above}_
-
+*** Used PlantUML for generating diagrams for the Developer Guide
 == Contributions to the User Guide
 
-
 |===
-|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|_Given below is the main section I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
-
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=findcommand]
 
 == Contributions to the Developer Guide
 
 |===
-|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|_Given below is the main section I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-include::../DeveloperGuide.adoc[tag=dataencryption]
+include::../DeveloperGuide.adoc[tag=condition]
 
 
 == PROJECT: PowerPointLabs
 
 ---
-
-_{Optionally, you may include other projects in your portfolio.}_

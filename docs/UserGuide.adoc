@@ -292,6 +292,7 @@ See details for the `Bitcoin` account
 
 See details for the 2nd account in the current listing
 
+//tag::findcommand[]
 === Search through accounts `find` | `f` `[Coming in v1.5]`
 
 .Format
@@ -343,7 +344,7 @@ Finds accounts with the `fav` tag
  find (p/>500 t/fav) OR h/<20
 
 Finds accounts either with current price more than $500 and tagged `fav`, or with less than 20 coins left
-
+//end::findcommand[]
 === Set up notifications `notify` | `n` `[Coming in v1.5]`
 
 .Format

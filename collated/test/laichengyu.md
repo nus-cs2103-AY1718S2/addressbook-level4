@@ -2,7 +2,7 @@
 ###### \java\seedu\address\logic\commands\CommandTestUtil.java
 ``` java
         @Override
-        public void syncAll(JsonObject newData)
+        public void syncAll(HashMap<String, Price> newPriceMetrics)
                 throws DuplicateCoinException, CoinNotFoundException {
             fail("This method should not be called.");
         }

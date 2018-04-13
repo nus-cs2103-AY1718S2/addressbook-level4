@@ -15,7 +15,7 @@ image::eldon-chung.png[width="150", align="left"]
 {empty}[https://github.com/Eldon-Chung[github]] [<<eldon-chung#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Documentation, Logic
+Responsibilities: Documentation, Logic, Testing
 
 '''
 

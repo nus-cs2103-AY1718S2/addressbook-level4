@@ -30,6 +30,29 @@ public class CoinChangedEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\ShowNotificationRequestEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * An event requesting to spawn a pop-up notification with the given message.
+ */
+public class ShowNotificationRequestEvent extends BaseEvent {
+
+    private final String message;
+
+    public ShowNotificationRequestEvent(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "Notifying about: " + message;
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\ShowNotifManRequestEvent.java
 ``` java
 package seedu.address.commons.events.ui;
@@ -61,7 +84,7 @@ public class ShowNotifManRequestEvent extends BaseEvent {
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.TokenType.PREFIXAMOUNT;
+import static seedu.address.logic.parser.TokenType.PREFIX_AMOUNT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
 
 import java.util.List;
@@ -70,6 +93,7 @@ import java.util.Objects;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.coin.Amount;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.exceptions.CoinNotFoundException;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
@@ -80,18 +104,19 @@ import seedu.address.model.coin.exceptions.DuplicateCoinException;
 public class BuyCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "buy";
+    public static final String COMMAND_ALIAS = "b";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add value to the coin account identified "
             + "by the index number used in the last coin listing or its code. "
             + "Parameters: TARGET "
-            + PREFIXAMOUNT + "AMOUNT\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIXAMOUNT + "50.0";
+            + PREFIX_AMOUNT + "AMOUNT\n"
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_AMOUNT + "50.0";
 
     public static final String MESSAGE_BUY_COIN_SUCCESS = "Bought: %1$s";
     public static final String MESSAGE_NOT_BOUGHT = "Invalid code or amount entered.";
 
     private final CommandTarget target;
-    private final double amountToAdd;
+    private final Amount amountToAdd;
 
     private Coin coinToEdit;
     private Coin editedCoin;
@@ -100,7 +125,7 @@ public class BuyCommand extends UndoableCommand {
      * @param target      in the filtered coin list to change
      * @param amountToAdd to the coin
      */
-    public BuyCommand(CommandTarget target, double amountToAdd) {
+    public BuyCommand(CommandTarget target, Amount amountToAdd) {
         requireNonNull(target);
 
         this.target = target;
@@ -136,7 +161,7 @@ public class BuyCommand extends UndoableCommand {
     /**
      * Creates and returns a {@code Coin} with the details of {@code coinToEdit}
      */
-    private static Coin createEditedCoin(Coin coinToEdit, double amountToAdd) {
+    private static Coin createEditedCoin(Coin coinToEdit, Amount amountToAdd) {
         assert coinToEdit != null;
 
         Coin editedCoin = new Coin(coinToEdit);
@@ -160,7 +185,7 @@ public class BuyCommand extends UndoableCommand {
         // state check
         BuyCommand e = (BuyCommand) other;
         return target.equals(e.target)
-                && amountToAdd == e.amountToAdd
+                && amountToAdd.equals(e.amountToAdd)
                 && Objects.equals(coinToEdit, e.coinToEdit);
     }
 }
@@ -211,8 +236,7 @@ public class CommandTarget {
 
         case CODE:
             // Also throws IndexOutOfBoundsException if code isn't found.
-            return Index.fromOneBased(coinList.filtered(coin -> coin.getCode().equals(code)).size());
-
+            return Index.fromZeroBased(coinList.filtered(coin -> coin.getCode().equals(code)).getSourceIndex(0));
         case INDEX:
             if (index.getZeroBased() >= coinList.size()) {
                 throw new IndexOutOfBoundsException();
@@ -251,7 +275,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.rule.Rule;
+import seedu.address.model.rule.NotificationRule;
 import seedu.address.model.rule.exceptions.DuplicateRuleException;
 
 /**
@@ -260,29 +284,28 @@ import seedu.address.model.rule.exceptions.DuplicateRuleException;
 public class NotifyCommand extends Command {
 
     public static final String COMMAND_WORD = "notify";
+    public static final String COMMAND_ALIAS = "n";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a new notification to be triggered "
             + "upon the specified rule. Rules are provided in the following format:\n"
             + "Parameters: TARGET OPTION/VALUE [...] \n"
             + "Example: " + COMMAND_WORD + " BTC p/15000";
 
-    public static final String MESSAGE_SUCCESS = "Will notify when: %1$s";
+    public static final String MESSAGE_SUCCESS = "Added: %1$s";
     public static final String MESSAGE_DUPLICATE_RULE = "This notification rule already exists!";
 
-    //private final Predicate predicate;
-    private final String value;
+    private final NotificationRule rule;
 
-    public NotifyCommand(String args) {
-        this.value = args;
-        //this.predicate = predicate;
+    public NotifyCommand(NotificationRule rule) {
+        this.rule = rule;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
-            model.addRule(new Rule(value));
-            return new CommandResult(String.format(MESSAGE_SUCCESS, value));
+            model.addRule(rule);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, rule));
         } catch (DuplicateRuleException e) {
             throw new CommandException(MESSAGE_DUPLICATE_RULE);
         }
@@ -291,8 +314,8 @@ public class NotifyCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NotifyCommand); // instanceof handles nulls
-                //&& this.predicate.equals(((NotifyCommand) other).predicate)); // state check
+                || (other instanceof NotifyCommand) // instanceof handles nulls
+                && this.rule.equals(((NotifyCommand) other).rule); // state check
 
     }
 }
@@ -302,7 +325,7 @@ public class NotifyCommand extends Command {
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.TokenType.PREFIXAMOUNT;
+import static seedu.address.logic.parser.TokenType.PREFIX_AMOUNT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_COINS;
 
 import java.util.List;
@@ -311,6 +334,7 @@ import java.util.Objects;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.coin.Amount;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.exceptions.CoinNotFoundException;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
@@ -321,17 +345,18 @@ import seedu.address.model.coin.exceptions.DuplicateCoinException;
 public class SellCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sell";
+    public static final String COMMAND_ALIAS = "s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes value from the coin account identified "
             + "by the index number used in the last coin listing or its code. "
             + "Parameters: TARGET "
-            + PREFIXAMOUNT + "AMOUNT\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIXAMOUNT + "50.0";
+            + PREFIX_AMOUNT + "AMOUNT\n"
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_AMOUNT + "50.0";
 
     public static final String MESSAGE_SELL_COIN_SUCCESS = "Sold: %1$s";
 
     private final CommandTarget target;
-    private final double amountToSell;
+    private final Amount amountToSell;
 
     private Coin coinToEdit;
     private Coin editedCoin;
@@ -340,7 +365,7 @@ public class SellCommand extends UndoableCommand {
      * @param target of the coin in the filtered coin list to change
      * @param amountToSell of the coin
      */
-    public SellCommand(CommandTarget target, double amountToSell) {
+    public SellCommand(CommandTarget target, Amount amountToSell) {
         requireNonNull(target);
 
         this.target = target;
@@ -376,7 +401,7 @@ public class SellCommand extends UndoableCommand {
     /**
      * Creates and returns a {@code Coin} with the details of {@code coinToEdit}
      */
-    private static Coin createEditedCoin(Coin coinToEdit, double amountToSell) {
+    private static Coin createEditedCoin(Coin coinToEdit, Amount amountToSell) {
         assert coinToEdit != null;
 
         Coin editedCoin = new Coin(coinToEdit);
@@ -405,18 +430,51 @@ public class SellCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\SpawnNotificationCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowNotificationRequestEvent;
+
+/**
+ * Spawns a pop-up notification in the corner of the screen.
+ */
+public class SpawnNotificationCommand extends Command {
+
+    private final String message;
+
+    public SpawnNotificationCommand(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowNotificationRequestEvent(message));
+        return new CommandResult("");
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SpawnNotificationCommand // instanceof handles nulls
+                && this.message.equals(((SpawnNotificationCommand) other).message)); // state check
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\BuyCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static A_PREFIX;
+import static seedu.address.logic.parser.TokenType.PREFIX_AMOUNT;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.BuyCommand;
 import seedu.address.logic.commands.CommandTarget;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.coin.Amount;
 
 /**
  * Parses input arguments and creates a new BuyCommand object
@@ -432,15 +490,15 @@ public class BuyCommandParser implements Parser<BuyCommand> {
     public BuyCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenizeToArgumentMultimap(args, PREFIXAMOUNT);
-        if (!argMultimap.arePrefixesPresent(PREFIXAMOUNT)
+                ArgumentTokenizer.tokenizeToArgumentMultimap(args, PREFIX_AMOUNT);
+        if (!argMultimap.arePrefixesPresent(PREFIX_AMOUNT)
                 || argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BuyCommand.MESSAGE_USAGE));
         }
 
         try {
             CommandTarget target = ParserUtil.parseTarget(argMultimap.getPreamble());
-            double amountToAdd = ParserUtil.parseDouble(argMultimap.getValue(PREFIXAMOUNT).get());
+            Amount amountToAdd = ParserUtil.parseAmount(argMultimap.getValue(PREFIX_AMOUNT).get());
             return new BuyCommand(target, amountToAdd);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BuyCommand.MESSAGE_USAGE));
@@ -454,22 +512,82 @@ public class BuyCommandParser implements Parser<BuyCommand> {
 ``` java
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.TokenType.PREFIX_AMOUNT;
+import static seedu.address.logic.parser.TokenType.PREFIX_BOUGHT;
+import static seedu.address.logic.parser.TokenType.PREFIX_BOUGHT_FALL;
+import static seedu.address.logic.parser.TokenType.PREFIX_BOUGHT_RISE;
+import static seedu.address.logic.parser.TokenType.PREFIX_CODE;
+import static seedu.address.logic.parser.TokenType.PREFIX_HELD;
+import static seedu.address.logic.parser.TokenType.PREFIX_HELD_FALL;
+import static seedu.address.logic.parser.TokenType.PREFIX_HELD_RISE;
+import static seedu.address.logic.parser.TokenType.PREFIX_MADE;
+import static seedu.address.logic.parser.TokenType.PREFIX_MADE_FALL;
+import static seedu.address.logic.parser.TokenType.PREFIX_MADE_RISE;
+import static seedu.address.logic.parser.TokenType.PREFIX_NAME;
+import static seedu.address.logic.parser.TokenType.PREFIX_PRICE;
+import static seedu.address.logic.parser.TokenType.PREFIX_PRICE_FALL;
+import static seedu.address.logic.parser.TokenType.PREFIX_PRICE_RISE;
+import static seedu.address.logic.parser.TokenType.PREFIX_SOLD;
+import static seedu.address.logic.parser.TokenType.PREFIX_SOLD_FALL;
+import static seedu.address.logic.parser.TokenType.PREFIX_SOLD_RISE;
+import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
+import static seedu.address.logic.parser.TokenType.PREFIX_WORTH;
+import static seedu.address.logic.parser.TokenType.PREFIX_WORTH_FALL;
+import static seedu.address.logic.parser.TokenType.PREFIX_WORTH_RISE;
+
+import java.util.function.Predicate;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.NotifyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.coin.Coin;
+import seedu.address.model.rule.NotificationRule;
 
 /**
  * Parses input arguments and creates a new NotifyCommand object
  */
 public class NotifyCommandParser implements Parser<NotifyCommand> {
 
+    private static final TokenType[] EXPECTED_TOKEN_TYPES = {
+        PREFIX_AMOUNT,
+        PREFIX_BOUGHT_RISE, PREFIX_BOUGHT_FALL, PREFIX_BOUGHT,
+        PREFIX_CODE,
+        PREFIX_HELD_RISE, PREFIX_HELD_FALL, PREFIX_HELD,
+        PREFIX_MADE_RISE, PREFIX_MADE_FALL, PREFIX_MADE,
+        PREFIX_NAME,
+        PREFIX_PRICE_RISE, PREFIX_PRICE_FALL, PREFIX_PRICE,
+        PREFIX_SOLD_RISE, PREFIX_SOLD_FALL, PREFIX_SOLD,
+        PREFIX_TAG,
+        PREFIX_WORTH_RISE, PREFIX_WORTH_FALL, PREFIX_WORTH
+    };
+
     /**
      * Parses the given {@code String} of arguments in the context of the NotifyCommand
      * and returns an NotifyCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform to the expected format
      */
     public NotifyCommand parse(String args) throws ParseException {
-        return new NotifyCommand(args);
+        try {
+            NotificationRule notifRule = new NotificationRule(args);
+            return new NotifyCommand(notifRule);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NotifyCommand.MESSAGE_USAGE));
+        }
     }
+
+    /**
+     * Parses a string representation of a notification condition
+     * @see ParserUtil#parseCondition(TokenStack)
+     */
+    public static Predicate<Coin> parseNotifyCondition(String args)
+            throws IllegalValueException {
+        requireNonNull(args);
+        return ParserUtil.parseCondition(ArgumentTokenizer.tokenizeToTokenStack(args, EXPECTED_TOKEN_TYPES));
+    }
+
 }
 ```
 ###### \java\seedu\address\logic\parser\SellCommandParser.java
@@ -478,12 +596,13 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static A_PREFIX;
+import static seedu.address.logic.parser.TokenType.PREFIX_AMOUNT;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CommandTarget;
 import seedu.address.logic.commands.SellCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.coin.Amount;
 
 /**
  * Parses input arguments and creates a new SellCommand object
@@ -498,15 +617,15 @@ public class SellCommandParser implements Parser<SellCommand> {
     public SellCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenizeToArgumentMultimap(args, PREFIXAMOUNT);
-        if (!argMultimap.arePrefixesPresent(PREFIXAMOUNT)
+                ArgumentTokenizer.tokenizeToArgumentMultimap(args, PREFIX_AMOUNT);
+        if (!argMultimap.arePrefixesPresent(PREFIX_AMOUNT)
                 || argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SellCommand.MESSAGE_USAGE));
         }
 
         try {
             CommandTarget target = ParserUtil.parseTarget(argMultimap.getPreamble());
-            double amountToSell = ParserUtil.parseDouble(argMultimap.getValue(PREFIXAMOUNT).get());
+            Amount amountToSell = ParserUtil.parseAmount(argMultimap.getValue(PREFIX_AMOUNT).get());
             return new SellCommand(target, amountToSell);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SellCommand.MESSAGE_USAGE));
@@ -516,11 +635,203 @@ public class SellCommandParser implements Parser<SellCommand> {
 
 }
 ```
+###### \java\seedu\address\logic\RuleChecker.java
+``` java
+package seedu.address.logic;
+
+import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.CoinChangedEvent;
+import seedu.address.commons.events.model.RuleBookChangedEvent;
+import seedu.address.model.ReadOnlyRuleBook;
+import seedu.address.model.RuleBook;
+import seedu.address.model.rule.NotificationRule;
+import seedu.address.model.rule.Rule;
+
+/**
+ * Receives events to check against the rule book triggers.
+ */
+public class RuleChecker {
+    private static final Logger logger = LogsCenter.getLogger(RuleChecker.class);
+    private final RuleBook rules;
+
+    public RuleChecker(ReadOnlyRuleBook rules) {
+        this.rules = new RuleBook(rules);
+        EventsCenter.getInstance().registerHandler(this);
+    }
+
+    @Subscribe
+    public void handleRuleBookChangedEvent(RuleBookChangedEvent rbce) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(rbce, "Reloading rule book..."));
+        this.rules.resetData(rbce.data);
+    }
+
+    @Subscribe
+    public void handleCoinChangedEvent(CoinChangedEvent cce) {
+        for (Rule r : rules.getRuleList()) {
+            switch (r.type) {
+            case NOTIFICATION:
+                NotificationRule nRule = (NotificationRule) r;
+                nRule.checkAndFire(cce.newCoin);
+                break;
+            default:
+                throw new RuntimeException("Unexpected code path!");
+            }
+        }
+    }
+
+}
+```
+###### \java\seedu\address\model\coin\Amount.java
+``` java
+package seedu.address.model.coin;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import seedu.address.commons.core.LogsCenter;
+
+/**
+ * Represents the amount of the coin held in the address book.
+ */
+public class Amount implements Comparable<Amount> {
+
+    private static final String[] MAGNITUDE_CHAR = { "", "K", "M", "B", "T", "Q", "P", "S", "H" };
+    private static final String MESSAGE_TOO_BIG = "This value can't be displayed as it is too big, "
+            + "total amount far exceeds circulating supply!\n"
+            + "Unfortunately, CoinBook cannot yet handle unorthodox usage [Coming in v2.0]";
+    private static final String DISPLAY_TOO_BIG = "Err (see log)";
+
+    private BigDecimal value;
+
+    /**
+     * Constructs an {@code Amount}.
+     */
+    public Amount() {
+        this.value = new BigDecimal(0);
+    }
+
+    /**
+     * Constructs an {@code Amount} with given value.
+     */
+    public Amount(Amount amount) {
+        this.value = amount.value;
+    }
+
+    /**
+     * Constructs an {@code Amount} with given value.
+     */
+    public Amount(String value) {
+        this.value = new BigDecimal(value).setScale(8, RoundingMode.UP);
+    }
+
+    /**
+     * Constructs an {@code Amount} with given value.
+     * For internal use only.
+     */
+    private Amount(BigDecimal value) {
+        this.value = value;
+    }
+
+
+    /**
+     * Adds two amounts together and returns a new object.
+     * @return the sum of the two arguments
+     */
+    public static Amount getSum(Amount first, Amount second) {
+        return new Amount(first.value.add(second.value));
+    }
+
+    /**
+     * Subtracts second from first and returns a new object.
+     * @return the difference of the two arguments
+     */
+    public static Amount getDiff(Amount first, Amount second) {
+        return new Amount(first.value.subtract(second.value));
+    }
+
+    /**
+     * Multiplus two amounts together and returns a new object.
+     * @return the product of the two arguments
+     */
+    public static Amount getMult(Amount first, Amount second) {
+        return new Amount(first.value.multiply(second.value));
+    }
+
+    /**
+     * Adds addAmount to the current value.
+     *
+     * @param addAmount amount to be added.
+     */
+    public void addValue(Amount addAmount) {
+        value = value.add(addAmount.value);
+    }
+
+    /**
+     * Subtracts subtractAmount to the current value.
+     *
+     * @param subtractAmount amount to be subtracted.
+     */
+    public void subtractValue(Amount subtractAmount) {
+        value = value.subtract(subtractAmount.value);
+    }
+
+    /**
+     * Gets the string representation of the full value.
+     * Use {@code toString} instead for display purposes.
+     * @see Amount#toString
+     */
+    public String getValue() {
+        return value.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Amount // instanceof handles nulls
+                && this.value.compareTo(((Amount) other).value) == 0); // state check
+    }
+
+    /**
+     * Gets the display string of the value. Displays up to 4 d.p.
+     * @return
+     */
+    @Override
+    public String toString() {
+        // Calculate the magnitude, which is the nearest lower multiple of three, of digits
+        final int magnitude = value.compareTo(BigDecimal.ZERO) == 0
+                              ? 0
+                              : (value.precision() - value.scale()) / 3;
+
+        if (magnitude < MAGNITUDE_CHAR.length) {
+            // Shift the decimal point to keep the string printed at 7 digits max
+            return value.movePointLeft(magnitude * 3)
+                    .setScale(4, RoundingMode.UP)
+                    .toPlainString()
+                    + MAGNITUDE_CHAR[magnitude];
+        } else {
+            // We don't handle absurd cases specially for now
+            LogsCenter.getLogger(Amount.class).warning(MESSAGE_TOO_BIG);
+            return DISPLAY_TOO_BIG;
+        }
+
+    }
+
+    @Override
+    public int compareTo(Amount other) {
+        return value.compareTo(other.value);
+    }
+}
+```
 ###### \java\seedu\address\model\coin\Coin.java
 ``` java
     /**
      * Gets the difference between two coins and makes a new coin record with that change.
-     * @return (final - initial) as a coin, where the final coin is this
+     * @return (final minus initial) as a coin, where the final coin is this
      */
     public Coin getChangeFrom(Coin initialCoin) {
         return null;
@@ -561,20 +872,93 @@ public class DuplicateRuleException extends DuplicateDataException {
     }
 }
 ```
+###### \java\seedu\address\model\rule\NotificationRule.java
+``` java
+package seedu.address.model.rule;
+
+import seedu.address.logic.commands.SpawnNotificationCommand;
+import seedu.address.logic.parser.NotifyCommandParser;
+import seedu.address.model.coin.Coin;
+
+/**
+ * Represents a rule trigger for spawning notifications.
+ * The target object type is Coins.
+ */
+public class NotificationRule extends Rule<Coin> {
+
+    private static final ActionParser parseAction = SpawnNotificationCommand::new;
+    private static final ConditionParser<Coin> parseCondition = NotifyCommandParser::parseNotifyCondition;
+
+    public NotificationRule(String value) {
+        super(value, RuleType.NOTIFICATION, parseAction, parseCondition);
+    }
+
+}
+```
 ###### \java\seedu\address\model\rule\Rule.java
 ``` java
 package seedu.address.model.rule;
+
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.function.Predicate;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Represents a Rule in the rule book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Rule {
+public class Rule<T> {
 
-    private final String value;
+    public static final String MESSAGE_RULE_INVALID = "Rule description is invalid";
+    private static final String RULE_FORMAT_STRING = "[%1$s]%2$s";
 
-    public Rule(String value) {
-        this.value = value;
+    public final RuleType type;
+    public final String description;
+
+    private final Command action;
+    private final Predicate<T> condition;
+
+    protected Rule(String description, RuleType type, ActionParser actionParser, ConditionParser<T> conditionParser) {
+        requireAllNonNull(description, type, actionParser, conditionParser);
+        this.description = description;
+        this.type = type;
+        this.action = actionParser.parse(description);
+        this.condition = validateAndCreateCondition(description, conditionParser);
+    }
+
+    /**
+     * Uses the given parser to validate the condition string and create the condition object.
+     */
+    private static <T> Predicate<T> validateAndCreateCondition(String conditionArgs, ConditionParser<T> parser) {
+        try {
+            return parser.parse(conditionArgs);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException(MESSAGE_RULE_INVALID);
+        }
+    }
+
+    /**
+     * Checks the trigger condition against the provided object, then
+     * executes the command tied to it if it matches
+     * @param t The object to check against
+     * @return Whether the command was successful.
+     */
+    public boolean checkAndFire(T t) {
+        if (!condition.test(t)) {
+            return false;
+        }
+
+        try {
+            action.execute();
+            return true;
+        } catch (CommandException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -584,7 +968,7 @@ public class Rule {
 
     @Override
     public String toString() {
-        return value;
+        return String.format(RULE_FORMAT_STRING, type, description);
     }
 
     @Override
@@ -598,9 +982,37 @@ public class Rule {
         }
 
         Rule otherRule = (Rule) other;
-        return otherRule.value.equals(this.value);
+        return otherRule.description.equals(this.description)
+                && otherRule.action.equals(this.action);
     }
 
+    /**
+     * Represents a function type used to generate the action for this rule.
+     */
+    @FunctionalInterface
+    protected interface ActionParser {
+        Command parse(String args);
+    }
+
+    /**
+     * Represents a function type used to generate the trigger condition for this rule.
+     */
+    @FunctionalInterface
+    protected interface ConditionParser<T> {
+        Predicate<T> parse(String args) throws IllegalValueException;
+    }
+
+}
+```
+###### \java\seedu\address\model\rule\RuleType.java
+``` java
+package seedu.address.model.rule;
+
+/**
+ * Enumerates the possible types of rules in the RuleBook
+ */
+public enum RuleType {
+    NOTIFICATION
 }
 ```
 ###### \java\seedu\address\model\RuleBook.java
@@ -722,10 +1134,14 @@ public class RuleBook implements ReadOnlyRuleBook {
 ``` java
 package seedu.address.storage;
 
+import static seedu.address.model.rule.RuleType.NOTIFICATION;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.rule.NotificationRule;
 import seedu.address.model.rule.Rule;
+import seedu.address.model.rule.RuleType;
 
 /**
  * JAXB-friendly version of the Rule.
@@ -737,6 +1153,9 @@ public class XmlAdaptedRule {
     @XmlElement(required = true)
     private String value;
 
+    @XmlElement(required = true)
+    private String type;
+
     /**
      * Constructs an XmlAdaptedRule.
      * This is the no-arg constructor that is required by JAXB.
@@ -746,8 +1165,9 @@ public class XmlAdaptedRule {
     /**
      * Constructs an {@code XmlAdaptedRule} with the given rule details.
      */
-    public XmlAdaptedRule(String value) {
+    public XmlAdaptedRule(String value, String type) {
         this.value = value;
+        this.type = type;
     }
 
     /**
@@ -756,7 +1176,8 @@ public class XmlAdaptedRule {
      * @param source future changes to this will not affect the created XmlAdaptedRule
      */
     public XmlAdaptedRule(Rule source) {
-        value = source.toString();
+        value = source.description;
+        type = source.type.toString();
     }
 
     /**
@@ -765,7 +1186,21 @@ public class XmlAdaptedRule {
      * @throws IllegalValueException if there were any data constraints violated in the adapted rule
      */
     public Rule toModelType() throws IllegalValueException {
-        return new Rule(value);
+        if (this.type == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, RuleType.class.getSimpleName()));
+        }
+
+        try {
+            switch (RuleType.valueOf(type)) {
+            case NOTIFICATION:
+                return new NotificationRule(value);
+            default:
+                throw new IllegalValueException(Rule.MESSAGE_RULE_INVALID);
+            }
+        } catch (IllegalArgumentException e) {
+            throw new IllegalValueException(Rule.MESSAGE_RULE_INVALID);
+        }
     }
 
     @Override

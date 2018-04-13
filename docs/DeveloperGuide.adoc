@@ -287,7 +287,7 @@ image::StorageClassDiagram.png[width="800"]
 == Implementation
 
 This chapter describes some noteworthy details on how certain features and components have been implemented. It is highly recommended to read the previous chapter on <<Design>> first so that you have some picture of where these features fit in.
-
+//tag::condition[]
 === Condition Parser Component
 
 ==== Current implementation
@@ -461,7 +461,7 @@ p/>100 AND t/fav
 
 `p/>100` is a condition on price whereas `t/fav` is a condition on tags, and they can be composed using the `Predicate`
 method `and()` to return a logical conjunction of the two conditions.
-
+//end::condition[]
 // tag::undoredo[]
 === Undo/Redo Feature
 ==== Current Implementation

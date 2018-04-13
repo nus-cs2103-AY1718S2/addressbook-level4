@@ -1,20 +1,7 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -22,21 +9,17 @@ import java.util.List;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.runner.Runner;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
-//TODO: implement tests for assign command.
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
  * AssignCommand.
@@ -77,71 +60,94 @@ public class AssignCommandTest {
 
         assertCommandSuccess(assignCommand, model, expectedMessage, expectedModel);
     }
+
+    @Test
+    public void execute_assignOneValidRunnerAndTwoValidCustomers_success() throws Exception {
+        int runnerIndex = 0;
+        int customerIndex1 = 2;
+        int customerIndex2 = 3;
+
+        //produce AssignCommand(runner index, customer index...)
+        AssignCommand assignCommand = prepareCommand(Index.fromZeroBased(runnerIndex),
+                Index.fromZeroBased(customerIndex1), Index.fromZeroBased(customerIndex2));
+
+        //get runner
+        Person runner = model.getFilteredPersonList().get(runnerIndex);
+        //get customer
+        Person customer1 = model.getFilteredPersonList().get(customerIndex1);
+        Person customer2 = model.getFilteredPersonList().get(customerIndex2);
+
+        List<Person> customers = new ArrayList<>();
+        customers.add(customer1);
+        customers.add(customer2);
+
+        //build editedRunner (assigned with customers)
+        Person editedRunner = new PersonBuilder(runner).withCustomers(customers).buildRunner();
+        //build editedCustomer (assigned with runner)
+        Person editedCustomer1 = new PersonBuilder(customer1).withRunner((Runner) runner).buildCustomer();
+        Person editedCustomer2 = new PersonBuilder(customer2).withRunner((Runner) runner).buildCustomer();
+
+        String expectedMessage = String.format(AssignCommand.MESSAGE_ASSIGN_PERSON_SUCCESS, editedRunner);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(runnerIndex), editedRunner);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(customerIndex1), editedCustomer1);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(customerIndex2), editedCustomer2);
+
+        assertCommandSuccess(assignCommand, model, expectedMessage, expectedModel);
+    }
+
+
+    //Test_assertFailure: Assign from empty filtered list
+    @Test
+    public void execute_assignInvalidRunnerIndexAndTwoValidCustomers_failure() throws Exception {
+        int runnerIndex = 20;
+        int customerIndex1 = 2;
+        int customerIndex2 = 3;
+
+        //produce AssignCommand(runner index, customer index...)
+        AssignCommand assignCommand = prepareCommand(Index.fromZeroBased(runnerIndex),
+                Index.fromZeroBased(customerIndex1), Index.fromZeroBased(customerIndex2));
+
+        try {
+            //get runner
+            Person runner = model.getFilteredPersonList().get(runnerIndex);
+            //get customer
+            Person customer1 = model.getFilteredPersonList().get(customerIndex1);
+            Person customer2 = model.getFilteredPersonList().get(customerIndex2);
+
+            List<Person> customers = new ArrayList<>();
+            customers.add(customer1);
+            customers.add(customer2);
+
+            //build editedRunner (assigned with customers)
+            Person editedRunner = new PersonBuilder(runner).withCustomers(customers).buildRunner();
+            //build editedCustomer (assigned with runner)
+            Person editedCustomer1 = new PersonBuilder(customer1).withRunner((Runner) runner).buildCustomer();
+            Person editedCustomer2 = new PersonBuilder(customer2).withRunner((Runner) runner).buildCustomer();
+
+            String expectedMessage = String.format(AssignCommand.MESSAGE_ASSIGN_PERSON_SUCCESS, editedRunner);
+
+            Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+            expectedModel.updatePerson(model.getFilteredPersonList().get(runnerIndex), editedRunner);
+            expectedModel.updatePerson(model.getFilteredPersonList().get(customerIndex1), editedCustomer1);
+            expectedModel.updatePerson(model.getFilteredPersonList().get(customerIndex2), editedCustomer2);
+
+        } catch (Exception e) {
+            assertCommandFailure(assignCommand, model, "The person index provided is invalid");
+        }
+    }
+
+    //TODO: implement the test cases below!
+    //Test_assertFailure: Assign runner to runner
+    //Test_assertFailure: Assign customer to customer
+    //Test_assertFailure: Assign runner to customer
+    //Test_assertFailure: Assign an index that exceeds filteredPersonList.size()
+
+    //Test_assertSuccess: Undo
+    //Test_assertSuccess: Redo
+
     /*
-    @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-
-
-
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(lastPerson, editedPerson);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-
-    /*
-    @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
-        Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_filteredList_success() throws Exception {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
-        Person personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personInFilteredList).withName(VALID_NAME_BOB).buildCustomer();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
-
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_duplicatePersonUnfilteredList_failure() {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
-        EditCommand editCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
-
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
-    }
-
-    @Test
-    public void execute_duplicatePersonFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
-        // edit person in filtered list into a duplicate in address book
-        Person personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder(personInList).build());
-
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
-    }
-
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);

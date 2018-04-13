@@ -119,11 +119,11 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         }
     }
-        /**
-         * Parses the given {@code String} of arguments in the context of the PetPatient class
-         * and returns an PetPatient object.
-         * @throws ParseException if the user input does not conform the expected format.
-         */
+    /**
+     * Parses the given {@code String} of arguments in the context of the PetPatient class
+     * and returns an PetPatient object.
+     * @throws ParseException if the user input does not conform the expected format.
+     */
     public PetPatient parsePetPatient(String petInfo) throws ParseException {
         ArgumentMultimap argMultimap =
             ArgumentTokenizer.tokenize(petInfo, PREFIX_NAME, PREFIX_SPECIES, PREFIX_BREED, PREFIX_COLOUR,

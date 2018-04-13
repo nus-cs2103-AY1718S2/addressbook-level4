@@ -232,7 +232,7 @@ public abstract class AddressBookSystemTest {
 
         try {
             expectedUrl = getExpectedUrl(selectedBrowserLink, selectedCardName);
-            //actualUrl = getBrowserPanel().getLoadedUrl(Link.getLinkType(selectedBrowserLink));
+            actualUrl = getBrowserPanel().getLoadedUrl(Link.getLinkType(selectedBrowserLink));
             actualUrl = expectedUrl;
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");

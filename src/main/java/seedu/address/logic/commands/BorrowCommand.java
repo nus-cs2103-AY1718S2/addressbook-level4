@@ -26,7 +26,7 @@ import static seedu.address.model.book.Avail.BORROWED;
 public class BorrowCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "borrow";
-    public static final String MESSAGE_SUCCESS = "New book borrowed: %1$s";
+    public static final String MESSAGE_BORROW_BOOK_SUCCESS = "New book borrowed: %1$s";
     public static final String MESSAGE_FAILURE = "Book not available for borrowing!";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -45,7 +45,7 @@ public class BorrowCommand extends UndoableCommand {
         this.targetIndex = targetIndex;
     }
 
-    private static Book createBorrowedBook(Book bookToBorrow) {
+    public Book createBorrowedBook(Book bookToBorrow) {
         assert bookToBorrow != null;
 
         Title updatedTitle = bookToBorrow.getTitle();
@@ -67,7 +67,7 @@ public class BorrowCommand extends UndoableCommand {
         } catch (BookNotFoundException pnfe) {
             throw new CommandException(MESSAGE_FAILURE);
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, bookToBorrow));
+        return new CommandResult(String.format(MESSAGE_BORROW_BOOK_SUCCESS, bookToBorrow));
     }
 
     @Override

@@ -115,18 +115,21 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAccountListChanged();
     }
 
-    public void returnBook(Book target, Book returnedBook) throws BookNotFoundException {
+    @Override
+    public synchronized void returnBook(Book target, Book returnedBook) throws BookNotFoundException {
         catalogue.returnBook(target, returnedBook);
         indicateCatalogueChanged();
     }
-
-    public void borrowBook(Book target, Book borrowedBook) throws BookNotFoundException {
+    @Override
+    public synchronized void borrowBook(Book target, Book borrowedBook) throws BookNotFoundException {
         catalogue.borrowBook(target, borrowedBook);
+        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
         indicateCatalogueChanged();
     }
-
-    public void reserveBook(Book target, Book reservedBook) throws BookNotFoundException {
-        catalogue.returnBook(target, reservedBook);
+    @Override
+    public synchronized void reserveBook(Book target, Book reservedBook) throws BookNotFoundException {
+        catalogue.reserveBook(target, reservedBook);
+        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
         indicateCatalogueChanged();
     }
 

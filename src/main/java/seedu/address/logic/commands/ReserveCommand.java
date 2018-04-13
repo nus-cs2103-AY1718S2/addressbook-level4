@@ -25,16 +25,14 @@ import static seedu.address.model.book.Avail.RESERVED;
  */
 public class ReserveCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "reserve";
-    public static final String MESSAGE_SUCCESS = "Book reserved: %1$s";
+    public static final String MESSAGE_RESERVE_BOOK_SUCCESS = "Book reserved: %1$s";
     public static final String MESSAGE_FAILURE = "Book not available for reserving!";
-    public static final String MESSAGE_ALREADY_AVAILABLE = "Do not need to reserve book as book is already available.";
     public static final String MESSAGE_USAGE = COMMAND_WORD
         + ": Reserves the book identified by the index number used in the last book listing.\n"
         + "Parameters: INDEX (must be a positive integer)\n"
         + "Example: " + COMMAND_WORD + " 1";
 
     public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_STUDENT;
-
 
     private final Index targetIndex;
 
@@ -65,7 +63,7 @@ public class ReserveCommand extends UndoableCommand {
         } catch (BookNotFoundException pnfe) {
             throw new CommandException(MESSAGE_FAILURE);
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, bookToReserve));
+        return new CommandResult(String.format(MESSAGE_RESERVE_BOOK_SUCCESS, bookToReserve));
     }
 
     @Override

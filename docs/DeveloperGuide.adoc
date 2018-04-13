@@ -731,7 +731,7 @@ The method `createEditedStudent` creates the student wi
 
 ==== Design Considerations
 
-[width="100%", cols="2e, 2,4 ,2 ,4 "options="header",]
+[width="100%", cols="2m, 2,4 ,2 ,4 "options="header",]
 |=======================================================================
 | Aspect | Alternative 1 (Current choice) | Pros (+)/ Cons(-) | Alternative 2 | Pros(+) / Cons(-)
 |`Displaying and styling the profile page of a student`
@@ -1233,8 +1233,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |`*` |user with many students in the address book |sort students by name |locate a student easily
 |=======================================================================
 
-_{More to be added}_
-
 [appendix]
 == Use Cases
 
@@ -1318,23 +1316,6 @@ Windows, Linux, Unix, OS-X
 
 [[timetable]] Timetable::
 A weekly timetable that shows status of all timeslots in one hour divisions
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing
@@ -1571,3 +1552,97 @@ Expected:
 * Timestamp in the status bar remains the same.
 
 //end::dashboardTest[]
+
+//tag::profilePageTest[]
+=== Displaying the profile page of a student
+. Showing the profile page of a student with the student list on the left and the browser panel is showing currently.
+.. Prerequisites: There is at least 1 student in the contacts data and the last shown filtered list. There exists XML data of that particular student.
+.. Test case: `moreInfo 1` +
+Expected:
+* The profile page of a student is shown.
+* The student's main information is shown, including `Name`, `Phone`, `Address` , `Email`, `ProgrammingLanguage` and `tags`.
+* The student's miscellaneous information is shown, including `Allergies`, `Next Of Kin Name`, `Next Of Kin Phone` and `Remarks`.
+* The student's profile picture is displayed. Note: if he/she does not have a custom profile picture, they are assigned a placeholder picture in its place.
+.. Test case: `moreInfo 0` +
+Expected:
+* There is no student whose index is 0. Thus the main panel on the right remains unchanged.
+* An error message is shown in the command box.
+.. Test case: `moreInfo 1` with no XML data of Students +
+Expected:
+* No profile page will be shown as this command only works when there is existing XML data( as mentioned in the prerequisites)
+* An error message is shown in the command box.
+
+. Showing the profile page of a student with the student list on the left and the dashboard panel is showing currently
+.. Test case: `moreInfo 1` +
+Expected:
+* The dashboard panel is switched with the browser panel.
+* The profile page of a student is loaded.
+* The student's main information is shown, including `Name`, `Phone`, `Address` , `Email`, `ProgrammingLanguage` and `tags`.
+* The student's miscellaneous information is shown, including `Allergies`, `Next Of Kin Name`, `Next Of Kin Phone` and `Remarks`.
+* The student's profile picture is displayed. Note: if he/she does not have a custom profile picture, they are assigned a placeholder picture in its place.
+.. Test case: `moreInfo 0` +
+Expected:
+* There is no student whose index is 0. Thus, the dashboard panel will still be on display and will not switch with the browser panel.
+* An error message is shown in the command box.
+.. Test case: `moreInfo 1` with no XML data of Students +
+Expected:
+* No profile page will be shown as this command only works when there is existing XML data( as mentioned in the prerequisites)
+* The dashboard panel will still be on display and will not switch with the browser panel.
+* An error message is shown in the command box.
+
+=== Editing the miscellaneous information of a student
+. Editing the miscellaneous information of a student while the student's profile page is being shown on the main browser panel.
+
+.. Test case: `editMisc 1 al/Nuts` +
+Expected
+* The student's allergies portion of his/her miscellaneous information is overwritten with the string "Nuts".
+* The profile page refreshes and displays the latest updated information of the student.
+* Timestamp in the status bar is updated.
+.. Test case: `editMisc 1 al/Nuts r/Naughty`
+Expected
+* The student's allergies portion, as well as the remarks portion, of his/her miscellaneous information is overwritten with "Nuts" and "Naughty" respectively.
+* The profile page refreshes and displays the latest updated information of the student.
+* Timestamp in the status bar is updated.
+.. Test case: `editMisc 0 al/Nuts` +
+Expected
+* There is no student whose index is 0. Thus, the miscellaneous information of the student is not changed.
+* Information of the student on the browser panel is not changed.
+* An error message is shown in the command box.
+* Timestamp in the status bar remains the same.
+.. Test case: `editMisc 1 al/ `
+Expected
+* Fields entered cannot take in empty values. Thus, the miscellaneous information of the student is not changed.
+* Information of the student on the browser panel is not changed.
+* An error message is shown in the command box.
+* Timestamp in the status bar remains the same.
+
+=== Editing the profile picture of a student
+. Editing the profile picture of a student while his/her profile page is on display on the browser panel.
+.. Test case: `editPicture i/1 pa/test.jpg` given "test.jpg" is a valid picture file that exists
+Expected
+* The student's profile picture is overwritten with the new profile picture.
+* The picture from the filepath indicated by the user is copied onto the local data folder.
+* The profile page refreshes and displays the latest updated information of the student.
+* Timestamp in the status bar is updated.
+.. Test case: `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg` given the file path is a valid picture file that exists
+Expected
+* The student's profile picture is overwritten with the new profile picture.
+* The picture from the filepath indicated by the user is copied onto the local data folder.
+* The profile page refreshes and displays the latest updated information of the student.
+* Timestamp in the status bar is updated.
+.. Test case: `editPicture i/1 pa/missingFile.jpg` given the file path is a picture file that *does not* exists
+Expected
+* As the file does not exist, the profile picture of the student will not be modified.
+* The profile picture of the student displayed on the browser panel is not changed.
+* An error message is shown in the command box.
+* Timestamp in the status bar remains the same.
+.. Test case: `editPicture i/1 pa/wrongFile.exe` given the file path is a *not* a picture file but it does exist.
+Expected
+* As the file does not end with an extension of `.jpg` or `png`, the profile picture of the student will not be modified.
+* The profile picture of the student displayed on the browser panel is not changed.
+* An error message is shown in the command box.
+* Timestamp in the status bar remains the same.
+//end::profilePageTest[]
+
+
+

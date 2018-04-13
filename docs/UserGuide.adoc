@@ -171,6 +171,8 @@ _This section explains the commands specific to command inquiry and *User* accou
 
 === Viewing help : `help`
 
+Show all available commands in PrioriTask ..
+
 [.format]
 ====
 [format-title]#Format:# `help`
@@ -189,8 +191,10 @@ Sign up for a PrioriTask account. +
 ====
 [example-title]#Examples:#
 
-* [example]#`signup u/patrick p/pat19503`#
-* [example]#`signup u/mary p/m4ry`#
+* [example]#`signup u/patrick p/pat19503`# +
+Add user `patrick` with password `pat19503` to PrioriTask.
+* [example]#`signup u/mary p/m4ry`# +
+Add user `mary` with password `m4ry` to PrioriTask.
 ====
 
 === Logging in: `login` or `in` `[since v1.4]`
@@ -206,8 +210,10 @@ Login to PrioriTask. +
 ====
 [example-title]#Examples:#
 
-* [example]#`login u/patrick p/pat19503`#
-* [example]#`login u/mary p/m4ry`#
+* [example]#`login u/patrick p/pat19503`# +
+Login to user `patrick`.
+* [example]#`login u/mary p/m4ry`# +
+Login to user `mary`.
 ====
 
 === Logging out: `logout` or `out` `[since v1.4]`
@@ -237,8 +243,10 @@ Must be currently logged in to a user account on PrioriTask.
 ====
 [example-title]#Examples:#
 
-* [example]#`addqa q/are you male? a/yes`#
-* [example]#`addqa q/are you female? a/yes`#
+* [example]#`addqa q/are you male? a/yes`# +
+Add question `are you male?` with answer `yes` to current logged user.
+* [example]#`addqa q/are you female? a/yes`# +
+Add question `are you female?` with answer `yes` to current logged user.
 ====
 
 === Retrieving question for user's password: `forgotpassword` or `fp` `[since v1.4]`
@@ -254,8 +262,10 @@ Retrieve question for user's password. +
 ====
 [example-title]#Examples:#
 
-* [example]#`forgotpassword u/patrick`#
-* [example]#`forgotpassword u/mary`#
+* [example]#`forgotpassword u/patrick`# +
+Retrive question for user `patrick`.
+* [example]#`forgotpassword u/mary`# +
+Retrive question for user `mary`.
 ====
 
 === Answering question: `answer` or `ans` `[since v1.4]`
@@ -271,8 +281,10 @@ Answer a user's question to retrieve the password. The question need not be retr
 ====
 [example-title]#Examples:#
 
-* [example]#`answer u/patrick a/yes`#
-* [example]#`answer u/mary a/no`#
+* [example]#`answer u/patrick a/yes`# +
+Answer password question for user `patrick` with `yes`.
+* [example]#`answer u/mary a/no`# +
+Answer password question for user `mary` with `no`.
 ====
 
 === Deleting an account `[coming in v2.0]`
@@ -360,8 +372,8 @@ Add a task to PrioriTask. +
 ====
 [example-title]#Examples:#
 
-* [example]#`add n/CS2103T Developer Guide p/9 d/2018-03-02 des/Write Introduction`#
-* [example]#`add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t/CS2101`#
+* [example]#`add n/CS2103T Developer Guide p/9 d/2018-03-02 des/Write Introduction`# +
+Add a task with name `CS2103T Developer Guide`, due on 2nd march 2018, with priority level of 9, with detailed description as `Write Introduction`.
 ====
 
 === Deleting a task : `delete` or `d`
@@ -464,7 +476,10 @@ Find tasks whose names, descriptions or deadlines contain any of the given keywo
 [format-title]#Format:# `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 ====
 
-IMPORTANT: Only the name, description and deadline are searched.
+[NOTE]
+====
+Only the name, description and deadline are searched.
+====
 
 [.example]
 ====
@@ -485,7 +500,10 @@ Find tasks whose names contain any of the given keywords. +
 [format-title]#Format:# `findn KEYWORD [MORE_KEYWORDS]` or `fn KEYWORD [MORE_KEYWORDS]`
 ====
 
-IMPORTANT: Only the name is searched.
+[NOTE]
+====
+Only the name is searched.
+====
 
 [.example]
 ====
@@ -506,7 +524,10 @@ Find tasks whose descriptions contain any of the given keywords. +
 [format-title]#Format:# `finddes KEYWORD [MORE_KEYWORDS]` or `fdes KEYWORD [MORE_KEYWORDS]`
 ====
 
-IMPORTANT: Only the description is searched.
+[NOTE]
+====
+Only the description is searched.
+====
 
 [.example]
 ====
@@ -527,7 +548,10 @@ Find tasks whose deadlines contain any of the given keywords. +
 [format-title]#Format:# `findd KEYWORD [MORE_KEYWORDS]` or `fd KEYWORD [MORE_KEYWORDS]`
 ====
 
-IMPORTANT: Only the deadline is searched.
+[NOTE]
+====
+Only the deadline is searched.
+====
 
 [.example]
 ====
@@ -606,7 +630,7 @@ Recurs the 1st task weekly for 3 times.
 ====
 // end::recurw[]
 
-// tag::subtaskFeatureSummary[]
+// tag::subtaskFeature[]
 == Subtask Management Features
 
 _This section explains what a *Subtask* is, and the commands to manage them._
@@ -668,9 +692,30 @@ Deletes the first subtask of the first task in PrioriTask.
 Deletes the fourth subtask of the second task in th result of `find cleaning` command.
 ====
 
-=== Editing a subtask `[coming in v2.0]`
+=== Editing a subtask: `edits` or `es` `[since v1.5]`
 
-_Edit the name of a subtask_
+Edit name of a subtask
+
+[.format]
+====
+[format-title]#Format:# `edits TASK_INDEX SUBTASK_INDEX n/NAME`
+====
+
+* Edit the `SUBTASK_INDEX`-th subtask of task at the specified by `SUBTASK_INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (i.e. `1, 2, 3, ...`).
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`list`# +
+[example]#`delete-subtask 1 1 n/Do some research`# +
+Changes the first subtask of the first task name to `Do some research`.
+* [example]#`find cleaning`# +
+[example]#`delete-subtask 2 4 n/Run for 7.87 Km`# +
+Change the fourth subtask of the second task in the result of `find cleaning` command name to `Run for 7.87 Km`.
+====
 
 === Mark subtask as complete: `toggle-subtask` or `ts` `[since v1.3]`
 
@@ -701,7 +746,7 @@ Toggles the fourth subtask of the second task in th result of `find homework` co
 === Reorder subtask `[coming in v2.0]`
 
 _Reorder subtasks using a given condition_
-// end::subtaskFeatureSummary[]
+// end::subtaskFeature[]
 
 // tag::calendar[]
 == Calendar Features
@@ -932,12 +977,14 @@ e.g.[example-no-box]#`recurw 2 x/2`#
 
 // tag::subtaskFeatureSummary[]
 === Subtask Management Features
-* *Add Subtask* : [format-no-box]#`adds INDEX n/NAME`# +
+* *Add Subtask* : [format-no-box]#`adds TASK_INDEX n/NAME`# +
 e.g. [example-no-box]#`adds 1 n/Submit Report`#
 * *Delete Subtask* : [format-no-box]#`delete-subtask TASK_INDEX SUBTASK_INDEX`# +
 e.g. [example-no-box]#`delete-subtask 2 3`#
 * *Toggle Subtask* : [format-no-box]#`toggle-subtask TASK_INDEX SUBTASK_INDEX`# +
 e.g.[example-no-box]#`toggle-subtask 3 2`#
+* *Edit Subtask* : [format-no-box]#`edits TASK_INDEX SUBTASK_INDEX n/NAME`# +
+e.g.[example-no-box]#`edits 3 2 n/Feed cats`#
 // end::subtaskFeatureSummary[]
 
 === Calendar Features

@@ -21,7 +21,7 @@ public class ShowDashboardCommand extends Command {
     public static final String COMMAND_WORD = "showDB";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the student's dashboard.\n"
-            + "Parameters: " + "INDEX (must be a positive integer)\n"
+            + "Parameters: " + "STUDENT_INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_STUDENT_DASHBOARD_SUCCESS = "Selected Dashboard of Student: %1$s";

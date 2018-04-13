@@ -31,7 +31,7 @@ public class UnfavouriteCommandTest {
         Student unfavouriteTargetStudent = new StudentBuilder(targetStudent).withFavourite(false).build();
         UnfavouriteCommand unfavouriteCommand = prepareCommand(INDEX_FIRST);
 
-        String expectedMessage = String.format(UnfavouriteCommand.MESSAGE_SUCCESS, unfavouriteTargetStudent);
+        String expectedMessage = String.format(UnfavouriteCommand.MESSAGE_SUCCESS, unfavouriteTargetStudent.getName());
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Schedule());
         expectedModel.updateStudent(targetStudent, unfavouriteTargetStudent);

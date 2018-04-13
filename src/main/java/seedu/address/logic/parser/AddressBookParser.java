@@ -195,7 +195,7 @@ public class AddressBookParser {
                     entity = entities.get(i).getValue();
                 }
             }
-            System.out.println("this is the value of the entity " + entity);
+            System.out.println("this is the value of the entity: " + entity);
 
             switch (intention) {
             case "Clear":

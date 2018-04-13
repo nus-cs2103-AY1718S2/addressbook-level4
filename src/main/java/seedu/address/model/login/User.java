@@ -13,6 +13,8 @@ public class User {
 
     public static final String AB_FILEPATH_PREFIX = "data/addressbook-";
     public static final String AB_FILEPATH_POSTFIX = ".xml";
+    public static final String MESSAGE_AB_FILEPATH_CONSTRAINTS = "AddressBook file path is incorrect.";
+
 
     private Username username;
     private Password password;
@@ -24,15 +26,25 @@ public class User {
         this.addressBookFilePath = "data/addressbook-default.xml";
     }
 
+    /**
+     * Creates a user instance
+     */
     public User(Username username, Password password) {
         this(username, password, AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX);
     }
 
+    /**
+     * Creates a user instance with a specific address book file path {@code addressBookFilePath}
+     */
     public User(Username username, Password password, String addressBookFilePath) {
         requireAllNonNull(username, password, addressBookFilePath);
         this.username = username;
         this.password = password;
         this.addressBookFilePath = addressBookFilePath;
+    }
+
+    public static boolean isValidAddressBookFilePath(String test, String username) {
+        return test.matches(AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX) && !test.equals("");
     }
 
     public Username getUsername() {

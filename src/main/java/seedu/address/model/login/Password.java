@@ -11,13 +11,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Password {
 
     public static final String MESSAGE_PASSWORD_CONSTRAINTS =
-            "Password should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Password should only contain alphanumeric characters, no spaces, and it should not be blank.";
 
     /*
      * The first character of the password must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String PASSWORD_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String PASSWORD_VALIDATION_REGEX = "[\\p{Alnum}]*";
 
     public final String password;
 
@@ -36,7 +36,7 @@ public class Password {
      * Returns true if a given string is a valid person name.
      */
     public static boolean isValidPassword(String test) {
-        return test.matches(PASSWORD_VALIDATION_REGEX);
+        return test.matches(PASSWORD_VALIDATION_REGEX) && !test.equals("");
     }
 
 

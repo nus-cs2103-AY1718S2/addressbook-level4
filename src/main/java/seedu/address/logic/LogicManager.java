@@ -3,6 +3,7 @@ package seedu.address.logic;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.TabPane;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.DeleteUtil;
@@ -39,6 +40,7 @@ public class LogicManager extends ComponentManager implements Logic {
      */
     public void clearRedundantImages() {
         DeleteUtil.clearImageFiles(model.getItemList(), model.getFilteredPersonList());
+        logger.info("Deleting unused display pictures");
         model.clearDeleteItems();
     }
 
@@ -74,5 +76,10 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    @Override
+    public void setTabPane(TabPane tabPane) {
+        addressBookParser.setTabPane(tabPane);
     }
 }

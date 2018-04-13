@@ -204,6 +204,11 @@ public class CommandTestUtil {
         }
 
         @Override
+        public void sortCoinList(boolean isSort) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteRule(Rule target) throws RuleNotFoundException {
             fail("This method should not be called.");
         }

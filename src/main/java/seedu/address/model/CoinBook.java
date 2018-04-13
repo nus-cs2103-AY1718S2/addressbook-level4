@@ -118,6 +118,12 @@ public class CoinBook implements ReadOnlyCoinBook {
         EventsCenter.getInstance().post(new CoinChangedEvent(target, editedCoin));
         coins.setCoin(target, syncedEditedCoin);
     }
+    //@@author neilish3re
+
+    public void sortCoinBook(boolean isSort) {
+        coins.sort(isSort);
+    }
+    //@@ author
 
     //@@author laichengyu
     /**

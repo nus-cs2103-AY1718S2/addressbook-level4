@@ -34,6 +34,7 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_NUMBER = "Argument is not a valid number.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_ARG = "Argument that is provided is not valid.";
     public static final String MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX = "%s structure of the argument is invalid:"
             + " Expected %s but instead got %s.";
 
@@ -134,6 +135,24 @@ public class ParserUtil {
         }
         return tagSet;
     }
+    //@@author neilish3re
+    /**
+     * Parses sortOrder and returns it
+     * Throws IllegalValueException if index that is specified is invalid
+     */
+    public static boolean parseSort(String sortOrder) throws IllegalValueException {
+        sortOrder = sortOrder.trim();
+        switch (sortOrder) {
+        case "":
+        case "a":                       //ascending alphabetical order
+            return false;
+        case "z":
+            return true;                //descending alphabetical order
+        default:
+            throw new IllegalValueException(MESSAGE_INVALID_ARG);
+        }
+    }
+    //@@author
 
     //@@author Eldon-Chung
     /**

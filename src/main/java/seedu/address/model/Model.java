@@ -62,6 +62,10 @@ public interface Model {
      */
     void updateFilteredCoinList(Predicate<Coin> predicate);
 
+    //@@author neilish3re
+    void sortCoinList(boolean isSort);
+
+    //@@author
 
     /** Deletes the given rule. */
     void deleteRule(Rule target) throws RuleNotFoundException;

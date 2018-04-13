@@ -68,6 +68,7 @@ public class UniqueCoinList implements Iterable<Coin> {
         internalList.set(index, editedCoin);
     }
 
+
     /**
      * Removes the equivalent coin from the list.
      *
@@ -101,6 +102,21 @@ public class UniqueCoinList implements Iterable<Coin> {
     public ObservableList<Coin> asObservableList() {
         return FXCollections.unmodifiableObservableList(internalList);
     }
+
+    //@@author neilish3re
+
+    /**
+     * Sorts the coins using compareTo
+     * @param isSort
+     */
+    public void sort(boolean isSort) {
+        if (isSort) {
+            internalList.sort((coin1, coin2) -> (coin2.getCode().fullName.compareTo(coin1.getCode().fullName)));
+        } else {
+            internalList.sort((coin1, coin2) -> (coin1.getCode().fullName.compareTo(coin2.getCode().fullName)));
+        }
+    }
+    //@@author
 
     @Override
     public Iterator<Coin> iterator() {

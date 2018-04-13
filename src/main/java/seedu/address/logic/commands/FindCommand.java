@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -28,20 +30,24 @@ public class FindCommand extends Command {
             + "Accepted Prefixes for Pet Patient: n/NAME, s/SPECIES, b/BREED, c/COLOUR, bt/BLOODTYPE, t/TAG\n"
             + "Example: " + COMMAND_WORD + "-o n/alice bob charlie";
 
-    private Predicate<Person> personPredicate = null;
-    private Predicate<PetPatient> petPatientPredicate = null;
+    private HashMap<String, String[]> hashMap;
     private int type = 0;
 
-    public FindCommand(Predicate<Person> personPredicate) {
-        this.personPredicate = personPredicate;
-        type = 1;
+    public FindCommand(HashMap<String, String[]> hashMap) {
+        this.hashMap = hashMap;
+        if (hashMap.containsKey("ownerName")
+                || hashMap.containsKey("ownerNric")
+                || hashMap.containsKey("ownerTag")) {
+            type = 1;
+        } else if (hashMap.containsKey("petName")
+                || hashMap.containsKey("petSpecies")
+                || hashMap.containsKey("petBreed")
+                || hashMap.containsKey("petColour")
+                || hashMap.containsKey("petBloodType")
+                || hashMap.containsKey("petTag")) {
+            type = 2;
+        }
     }
-
-    public FindCommand(Predicate<PetPatient> petPatientPredicate, int petPatientIndicator) {
-        this.petPatientPredicate = petPatientPredicate;
-        type = petPatientIndicator;
-    }
-
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -59,7 +65,38 @@ public class FindCommand extends Command {
      * Finds owners with given {@code predicate} in this {@code addressbook}.
      */
     private CommandResult findOwner() {
-        model.updateFilteredPersonList(personPredicate);
+        Predicate<Person> finalPredicate = null;
+
+        if (hashMap.containsKey("ownerName")) {
+            String[] nameKeywords = hashMap.get("ownerName");
+            Predicate<Person> namePredicate =  person -> Arrays.stream(nameKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+            finalPredicate = namePredicate;
+        }
+
+        if (hashMap.containsKey("ownerNric")) {
+            String[] nricKeywords = hashMap.get("ownerNric");
+            Predicate<Person>  nricPredicate = person -> Arrays.stream(nricKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), keyword));
+            if (finalPredicate == null) {
+                finalPredicate = nricPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(nricPredicate);
+            }
+        }
+
+        if (hashMap.containsKey("ownerTag")) {
+            String[] tagKeywords = hashMap.get("ownerTag");
+            Predicate<Person> tagPredicate = person -> Arrays.stream(tagKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagString(), keyword));
+            if (finalPredicate == null) {
+                finalPredicate = tagPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(tagPredicate);
+            }
+        }
+
+        model.updateFilteredPersonList(finalPredicate);
         updatePetListForOwner();
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
                 + "\n"
@@ -70,7 +107,72 @@ public class FindCommand extends Command {
      * Finds owners with given {@code predicate} in this {@code addressbook}.
      */
     private CommandResult findPetPatient() {
-        model.updateFilteredPetPatientList(petPatientPredicate);
+        Predicate<PetPatient> finalPredicate = null;
+
+        if (hashMap.containsKey("petName")) {
+            String[] nameKeywords = hashMap.get("petName");
+            Predicate<PetPatient> namePredicate =  petPatient -> Arrays.stream(nameKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getName().fullName, keyword));
+            finalPredicate = namePredicate;
+        }
+
+        if (hashMap.containsKey("petSpecies")) {
+            String[] speciesKeywords = hashMap.get("petSpecies");
+            Predicate<PetPatient> speciesPredicate =  petPatient -> Arrays.stream(speciesKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getSpecies().species, keyword));
+            if (finalPredicate == null) {
+                finalPredicate = speciesPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(speciesPredicate);
+            }
+        }
+
+        if (hashMap.containsKey("petBreed")) {
+            String[] breedKeywords = hashMap.get("petBreed");
+            Predicate<PetPatient> breedPredicate =  petPatient -> Arrays.stream(breedKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getBreed().breed, keyword));
+            if (finalPredicate == null) {
+                finalPredicate = breedPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(breedPredicate);
+            }
+        }
+
+        if (hashMap.containsKey("petColour")) {
+            String[] colourKeywords = hashMap.get("petColour");
+            Predicate<PetPatient> colourPredicate =  petPatient -> Arrays.stream(colourKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getColour().colour, keyword));
+            if (finalPredicate == null) {
+                finalPredicate = colourPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(colourPredicate);
+            }
+        }
+
+        if (hashMap.containsKey("petBloodType")) {
+            String[] bloodTypeKeywords = hashMap.get("petBloodType");
+            Predicate<PetPatient> bloodTypePredicate =  petPatient -> Arrays.stream(bloodTypeKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
+                            petPatient.getBloodType().bloodType, keyword));
+            if (finalPredicate == null) {
+                finalPredicate = bloodTypePredicate;
+            } else {
+                finalPredicate = finalPredicate.and(bloodTypePredicate);
+            }
+        }
+
+        if (hashMap.containsKey("petTag")) {
+            String[] tagKeywords = hashMap.get("petTag");
+            Predicate<PetPatient> tagPredicate = petPatient -> Arrays.stream(tagKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getTagString(), keyword));
+            if (finalPredicate == null) {
+                finalPredicate = tagPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(tagPredicate);
+            }
+        }
+
+        model.updateFilteredPetPatientList(finalPredicate);
         updateOwnerListForPets();
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
                 + "\n"
@@ -109,6 +211,6 @@ public class FindCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof FindCommand // instanceof handles nulls
-                && this.personPredicate.equals(((FindCommand) other).personPredicate)); // state check
+                && this.hashMap.equals(((FindCommand) other).hashMap)); // state check
     }
 }

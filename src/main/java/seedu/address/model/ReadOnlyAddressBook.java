@@ -42,7 +42,7 @@ public interface ReadOnlyAddressBook {
      * Returns an arraylist of arraylist of alias strings.
      * This list will not contain any duplicate aliases.
      */
-    ArrayList<ArrayList<String>> getUIFormattedAliasList();
+    ArrayList<ArrayList<String>> getUiFormattedAliasList();
 
     /**
      * Resets the alias list to an empty list

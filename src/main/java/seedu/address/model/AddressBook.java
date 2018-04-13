@@ -75,19 +75,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    //@@author jingyinno
-    public void setAliases(Set<Alias> aliases) {
-        this.aliases.setAliases(aliases);
-    }
-    //@@author
-
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
-        setAliases(new HashSet<>(newData.getAliasList()));
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
@@ -99,6 +92,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author jingyinno
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -116,8 +110,9 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
     }
-    //// person-level operations
+    //@@author
 
+    //// person-level operations
     /**
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
@@ -309,7 +304,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ArrayList<ArrayList<String>> getUIFormattedAliasList() {
+    public ArrayList<ArrayList<String>> getUiFormattedAliasList() {
         return aliases.extractAliasMapping();
     }
 

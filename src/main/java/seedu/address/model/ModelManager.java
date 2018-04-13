@@ -114,8 +114,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized ArrayList<ArrayList<String>> getUIFormattedAliasList() {
-        return addressBook.getUIFormattedAliasList();
+    public synchronized ArrayList<ArrayList<String>> getUiFormattedAliasList() {
+        return addressBook.getUiFormattedAliasList();
     }
     //@@author
 

@@ -54,7 +54,7 @@ public interface Model {
     HashMap<String, String> getAliasList();
 
     /** Returns an arraylist of arraylist of alias strings formatted for the UI */
-    ArrayList<ArrayList<String>> getUIFormattedAliasList();
+    ArrayList<ArrayList<String>> getUiFormattedAliasList();
     //@@author
 
     /**

@@ -1,15 +1,12 @@
 package seedu.address.model.alias;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
@@ -110,16 +107,6 @@ public class UniqueAliasList {
     }
 
     /**
-     * Set internList to contain {@code aliases}.
-     */
-    public void setAliases(Set<Alias> aliases) {
-        ObservableList<Alias> internalList = FXCollections.observableArrayList();
-        requireAllNonNull(aliases);
-        internalList.setAll(aliases);
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
      * Replaces the aliases in this aliasCommandMap with those.
      */
     public void replaceHashmap(HashMap<String, String> aliases) {
@@ -146,20 +133,21 @@ public class UniqueAliasList {
      * Returns an arraylist of arraylist of string aliases grouped by command.
      */
     public ArrayList<ArrayList<String>> extractAliasMapping() {
+        requireNonNull(aliasCommandMap);
         ArrayList<ArrayList<String>> aliases = new ArrayList<>();
         convertAliasHashmapToArrayList(aliases);
 
         int largest = findMaxCommandAliasSize(aliases);
         populateEmptyAliasCells(aliases, largest);
 
-        ArrayList<ArrayList<String>> formattedAliases = formattingArrayListForUI(aliases, largest);
+        ArrayList<ArrayList<String>> formattedAliases = formattingArrayListForUi(aliases, largest);
         return formattedAliases;
     }
 
     /**
      * Returns an arraylist of arraylist of aliases organised by rows of commands.
      */
-    private ArrayList<ArrayList<String>> formattingArrayListForUI(ArrayList<ArrayList<String>> aliases, int largest) {
+    private ArrayList<ArrayList<String>> formattingArrayListForUi(ArrayList<ArrayList<String>> aliases, int largest) {
         ArrayList<ArrayList<String>> formattedAliases = new ArrayList<>();
         for (int j = 0; j < largest; j++) {
             formattedAliases.add(new ArrayList<>());

@@ -258,6 +258,7 @@ public class ParserUtilTest {
         assertEquals(expectedTagSet, actualTagSet);
     }
 
+    //@@author jonleeyz
     @Test
     public void parseMoneyBorrowed_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseMoneyBorrowed((String) null));
@@ -393,4 +394,5 @@ public class ParserUtilTest {
         assertEquals(Optional.of(expectedLateInterest),
                 ParserUtil.parseLateInterest(Optional.of(VALID_LATE_INTEREST)));
     }
+    //@@author
 }

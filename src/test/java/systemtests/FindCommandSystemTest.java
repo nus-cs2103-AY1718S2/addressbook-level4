@@ -19,9 +19,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -31,8 +31,6 @@ import seedu.address.model.tag.Tag;
 
 //@@author melvintzw
 public class FindCommandSystemTest extends AddressBookSystemTest {
-    private final GuiRobot guiRobot = new GuiRobot();
-
     @Test
     public void find() {
         /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
@@ -177,25 +175,36 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateFindCommandTemplate() {
+    public void focusOnCommandBox_populateFindCommandTemplate_usingAccelerator() {
         //use accelerator
         getCommandBox().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnResultDisplay_populateFindCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateFindCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateFindCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateFindCommandTemplate_usingMenuButton() {
         populateFindCommandUsingMenu();
         assertPopulationSuccess();
     }
@@ -252,6 +261,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         FindCommand findCommand = new FindCommand();
         assertEquals(findCommand.getTemplate(), getCommandBox().getInput());
         assertEquals(findCommand.getUsageMessage(), getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

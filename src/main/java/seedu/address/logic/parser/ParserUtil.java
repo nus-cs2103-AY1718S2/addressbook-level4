@@ -184,7 +184,7 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code date} is invalid.
      */
-    public static Date parseDate(String date) throws IllegalValueException {
+    public static Date parseDate(String date) {
         requireNonNull(date);
         String trimmedDate = date.trim();
         com.joestelmach.natty.Parser dateParser = new Parser();
@@ -193,10 +193,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
+    public static Optional<Date> parseDate(Optional<String> date) {
         requireNonNull(date);
         return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
@@ -204,10 +204,10 @@ public class ParserUtil {
     //TODO: add methods to parse Customer fields and Runner fields
 
     /**
-     * Parses a {@code string double} into an {@code MoneyOwed}.
+     * Parses a {@code string double} into an {@code MoneyBorrowed}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code MoneyOwed} is invalid.
+     * @throws IllegalValueException if the given {@code MoneyBorrowed} is invalid.
      */
     public static MoneyBorrowed parseMoneyBorrowed(String moneyBorrowed) throws IllegalValueException {
         requireNonNull(moneyBorrowed);
@@ -221,7 +221,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> MoneyBorrowed} into an {@code Optional<MoneyBorrowed>} if {@code moneyBorrowed}
+     * Parses a {@code Optional<String> moneyBorrowed} into an {@code Optional<MoneyBorrowed>} if {@code moneyBorrowed}
      * is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
@@ -235,7 +235,7 @@ public class ParserUtil {
      * Parses a {@code string double} into an {@code StandardInterest}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code MoneyOwed} is invalid.
+     * @throws IllegalValueException if the given {@code StandardInterest} is invalid.
      */
     public static StandardInterest parseStandardInterest(String value) throws IllegalValueException {
         requireNonNull(value);
@@ -252,7 +252,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> StandardInterest} into an {@code Optional<StandardInterest>} if {@code
+     * Parses a {@code Optional<String> standardInterest} into an {@code Optional<StandardInterest>} if {@code
      * value} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
@@ -266,7 +266,7 @@ public class ParserUtil {
      * Parses a {@code string double} into an {@code LateInterest}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code MoneyOwed} is invalid.
+     * @throws IllegalValueException if the given {@code LateInterest} is invalid.
      */
     public static LateInterest parseLateInterest(String value) throws IllegalValueException {
         requireNonNull(value);
@@ -283,7 +283,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> LateInterest} into an {@code Optional<LateInterest>} if {@code
+     * Parses a {@code Optional<String> lateInterest} into an {@code Optional<LateInterest>} if {@code
      * value} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */

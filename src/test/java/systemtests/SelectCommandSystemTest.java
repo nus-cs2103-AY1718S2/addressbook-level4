@@ -15,6 +15,7 @@ import org.junit.Test;
 import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -104,25 +105,35 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateSelectCommandTemplate() {
-        //use accelerator
+    public void focusOnCommandBox_populateSelectCommandTemplate_usingAccelerator() {
         getCommandBox().click();
         populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnResultDisplay_populateSelectCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateSelectCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateSelectCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateSelectCommandTemplate_usingMenuButton() {
         populateSelectCommandUsingMenu();
         assertPopulationSuccess();
     }
@@ -191,6 +202,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         SelectCommand selectCommand = new SelectCommand();
         assertEquals(selectCommand.getTemplate(), getCommandBox().getInput());
         assertEquals(selectCommand.getUsageMessage(), getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

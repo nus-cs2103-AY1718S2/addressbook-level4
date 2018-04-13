@@ -55,10 +55,12 @@ public class SecurityUtil {
      */
     public static void encrypt(File file, byte[] password)throws IOException, WrongPasswordException {
         try {
+            logger.info("Encrypting...");
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretAesKey);
             processFile(cipher, file);
+            logger.info("Encrypted");
         } catch (InvalidKeyException ike) {
             logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
             throw new AssertionError("Wrong key length");
@@ -91,10 +93,12 @@ public class SecurityUtil {
      */
     public static void decrypt(File file, byte[] password) throws IOException, WrongPasswordException {
         try {
+            logger.info("Decrypting...");
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretAesKey);
             processFile(cipher, file);
+            logger.info("Decrypted");
         } catch (InvalidKeyException ike) {
             logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
             throw new AssertionError("Wrong key length");

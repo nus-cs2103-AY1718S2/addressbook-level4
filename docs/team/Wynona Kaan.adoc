@@ -46,6 +46,8 @@ _{you can add/remove categories in the list above}_
 
 include::../UserGuide.adoc[tag=find]
 
+include::../UserGuide.adoc[tag=listappt]
+
 include::../UserGuide.adoc[tag=delete]
 
 == Contributions to the Developer Guide

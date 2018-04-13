@@ -32,7 +32,7 @@ public class FavouriteCommandTest {
         Student favouritedTargetStudent = new StudentBuilder(targetStudent).withFavourite(true).build();
         FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST);
 
-        String expectedMessage = String.format(FavouriteCommand.MESSAGE_SUCCESS, favouritedTargetStudent);
+        String expectedMessage = String.format(FavouriteCommand.MESSAGE_SUCCESS, favouritedTargetStudent.getName());
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Schedule());
         expectedModel.updateStudent(targetStudent, favouritedTargetStudent);

@@ -74,12 +74,6 @@ public class MailPanel extends UiPart<VBox> {
         emailListView.setCellFactory(listView -> new EmailListViewCell());
     }
 
-    private class EmailThread extends Thread {
-        public void run() {
-            setConnections();
-        }
-    }
-
     /**
      * Returns a list of messages in the inbox
      * @return list of messages

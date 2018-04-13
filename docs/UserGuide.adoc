@@ -614,24 +614,35 @@ Marks the 4th task in the 3rd milestone as completed. The milestone is in the da
 
 // tag:profilePage[]
 === Student Profile Page
-==== Full information page for each student : `moreInfo`
+==== Displaying profile page for each student : `moreInfo`
 
-Displays the full information of a student on the browser panel. This includes his/her profile picture if one exists. +
+Displays the full information of a student on the browser panel. You will be able to view his/her profile picture too if one exists. +
 Format: `moreInfo INDEX`
 
-[NOTE]
-The `moreInfo` command _**cannot**_ function if there is no real existing XML data of students. Thus, the sample student data provided at the initial start up *will not work* with this command. A warning will be mentioned if the command is called without existing data.
+[IMPORTANT]
+The `moreInfo` command _**cannot**_ work if there is no existing XML data of students. Should you encounter this warning,you can either: +
+1) Simply enter `clear` and start out with an empty student list. +
+2) Add, edit or delete a student using their coresponding commands to generate XML data of the students.
+
+
+[large]*Steps Taken* +
+
+. If you wish to view the profile page of the 1st student in the list, enter `moreInfo 1` in the command box.
+
+.Executing the command `moreInfo 1` displays the 1st student (Alex Yeoh's) profile page +
+image::moreInfoResult.png[width:800]
+
+[start=2]
+. You will then be able to view the profile page of the student. Enter the same command with a different number for viewing the profile page of other students (e.g. `moreInfo 2`).
+
+[TIP]
+You will be able to attain the profile page style in `Figure 5` if your OS zoom scale is set to `125%`. The profile photo may seem of a different size for other configurations. Search you computer settings should you wish to change this.
 
 
 ****
 * Displays the full information of a student with the specified `INDEX`.
 * The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
 ****
-
-Examples:
-
-* `moreInfo 2`
-Displays the full information of the 2nd student in the current listing.
 
 ==== Edit the profile picture of a student : `editPicture`
 

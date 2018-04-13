@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.exception.DuplicateUsernameException;
 import seedu.address.model.exception.InvalidPasswordException;
 import seedu.address.model.exception.InvalidUsernameException;
 import seedu.address.model.exception.MultipleLoginException;
@@ -82,11 +81,6 @@ public interface Model {
 
     //@@author Jason1im
     /**
-     * Returns AccountsManager.
-     */
-    ReadOnlyAccountsManager getAccountsManager();
-
-    /**
      * Logs the user into contactHeRo.
      * @throws InvalidUsernameException if username is invalid.
      * @throws InvalidPasswordException if the password is invalid.
@@ -102,10 +96,19 @@ public interface Model {
     void logout() throws UserLogoutException;
 
     /**
-     * Register a new account for user.
-     * @throws DuplicateUsernameException if {@param username} is already in used.
+     * Changes the password of the user account
+     * @param oldPassword
+     * @param newPassword
+     * @throws InvalidPasswordException if password_1 is invalid.
      */
-    void register(String username, String password) throws DuplicateUsernameException;
+    void updatePassword(String oldPassword, String newPassword)
+            throws InvalidPasswordException;
+
+    /**
+     * Changes the username of the user account.
+     * @throws InvalidUsernameException
+     */
+    void updateUsername(String oldUsername) throws InvalidUsernameException;
 
     //@@author
     /** Adds the given person */

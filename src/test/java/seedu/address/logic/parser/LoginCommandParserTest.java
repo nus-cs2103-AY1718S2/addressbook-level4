@@ -22,7 +22,7 @@ public class LoginCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + USERNAME_DESC_USER
-                + PASSWORD_DESC_USER, new LoginCommand("John", "1234"));
+                + PASSWORD_DESC_USER, new LoginCommand(VALID_USERNAME_USER, VALID_PASSWORD_USER));
     }
 
     @Test

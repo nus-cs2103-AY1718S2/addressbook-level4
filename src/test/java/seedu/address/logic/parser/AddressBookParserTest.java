@@ -28,8 +28,8 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SignupCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UpdatePasswordCommand;
 import seedu.address.logic.commands.appointment.AddAppointmentCommand;
 import seedu.address.logic.commands.appointment.CalendarCommand;
 import seedu.address.logic.commands.appointment.DateCommand;
@@ -205,12 +205,13 @@ public class AddressBookParserTest {
 
     //@@author Jason1im
     @Test
-    public void parseCommand_signupCommandWord_returnsSignupCommand() throws Exception {
-        String testUsername = "test";
-        String testPassword = "123";
-        SignupCommand command = (SignupCommand) parser.parseCommand(
-                SignupCommand.COMMAND_WORD + " u/" + testUsername + " pw/" + testPassword);
-        assertEquals(new SignupCommand(testUsername, testPassword), command);
+    public void parseCommand_updatePasswordCommandWord_returnsUpdatePasswordCommand() throws Exception {
+        String testPassword1 = "test";
+        String testPassword2 = "123";
+        UpdatePasswordCommand command = (UpdatePasswordCommand) parser.parseCommand(
+                UpdatePasswordCommand.COMMAND_WORD + " pw/" + testPassword1
+                            + " npw/" + testPassword2);
+        assertEquals(new UpdatePasswordCommand(testPassword1, testPassword2), command);
     }
 
     //@@author

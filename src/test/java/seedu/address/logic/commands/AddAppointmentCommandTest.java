@@ -21,14 +21,12 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.appointment.AddAppointmentCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AccountsManager;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.exception.DuplicateUsernameException;
 import seedu.address.model.exception.InvalidPasswordException;
 import seedu.address.model.exception.InvalidUsernameException;
 import seedu.address.model.exception.MultipleLoginException;
@@ -163,9 +161,13 @@ public class AddAppointmentCommandTest {
         }
 
         @Override
-        public AccountsManager getAccountsManager() {
+        public void updateUsername(String username) {
             fail("This method should not be called.");
-            return null;
+        }
+
+        @Override
+        public void updatePassword(String password1, String password2) {
+            fail("This method should not be called.");
         }
 
         @Override
@@ -184,13 +186,6 @@ public class AddAppointmentCommandTest {
         public void logout() throws UserLogoutException {
             fail("This method should not be called.");
         };
-
-
-
-        @Override
-        public void register(String username, String password) throws DuplicateUsernameException {
-            fail("This method should not be called.");
-        }
 
         @Override
         public void addJob(Job job) throws DuplicateJobException {

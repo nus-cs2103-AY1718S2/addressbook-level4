@@ -786,6 +786,9 @@ public class XmlAdaptedUser {
         if (this.addressbookfilepath == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "AddressBook file path"));
         }
+        if (!User.isValidAddressBookFilePath(this.addressbookfilepath, this.username.toString())) {
+            throw new IllegalValueException(User.MESSAGE_AB_FILEPATH_CONSTRAINTS);
+        }
 
         final String addressBookFilePath = this.addressbookfilepath;
 
@@ -1432,8 +1435,10 @@ public class UniqueUserList implements Iterable<User> {
      */
     public void add(User toAdd) throws DuplicateUserException {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicateUserException();
+        for (User user : internalList) {
+            if (user.getUsername().equals(toAdd.getUsername())) {
+                throw new DuplicateUserException();
+            }
         }
         internalList.add(toAdd);
     }
@@ -1486,7 +1491,7 @@ public class UniqueUserList implements Iterable<User> {
     public void setUsers(List<User> users) throws DuplicateUserException {
         requireAllNonNull(users);
         final UniqueUserList replacement = new UniqueUserList();
-        for (final User user : users) {
+        for (User user : users) {
             replacement.add(user);
         }
         setUsers(replacement);
@@ -1527,6 +1532,8 @@ public class User {
 
     public static final String AB_FILEPATH_PREFIX = "data/addressbook-";
     public static final String AB_FILEPATH_POSTFIX = ".xml";
+    public static final String MESSAGE_AB_FILEPATH_CONSTRAINTS = "AddressBook file path is incorrect.";
+
 
     private Username username;
     private Password password;
@@ -1538,15 +1545,25 @@ public class User {
         this.addressBookFilePath = "data/addressbook-default.xml";
     }
 
+    /**
+     * Creates a user instance
+     */
     public User(Username username, Password password) {
         this(username, password, AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX);
     }
 
+    /**
+     * Creates a user instance with a specific address book file path {@code addressBookFilePath}
+     */
     public User(Username username, Password password, String addressBookFilePath) {
         requireAllNonNull(username, password, addressBookFilePath);
         this.username = username;
         this.password = password;
         this.addressBookFilePath = addressBookFilePath;
+    }
+
+    public static boolean isValidAddressBookFilePath(String test, String username) {
+        return test.matches(AB_FILEPATH_PREFIX + username + AB_FILEPATH_POSTFIX) && !test.equals("");
     }
 
     public Username getUsername() {
@@ -1606,13 +1623,13 @@ public class User {
 public class Username {
 
     public static final String MESSAGE_USERNAME_CONSTRAINTS =
-            "Usernames should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Usernames should only contain alphanumeric characters, no spaces and it should not be blank.";
 
     /*
      * The first character of the username must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String USERNAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String USERNAME_VALIDATION_REGEX = "[\\p{Alnum}]*";
 
     public final String fullUsername;
 
@@ -1631,7 +1648,7 @@ public class Username {
      * Returns true if a given string is a valid username.
      */
     public static boolean isValidUsername(String test) {
-        return test.matches(USERNAME_VALIDATION_REGEX);
+        return test.matches(USERNAME_VALIDATION_REGEX) && !test.equals("");
     }
 
 
@@ -1677,13 +1694,13 @@ public class AuthenticationFailedException extends Exception {}
 public class Password {
 
     public static final String MESSAGE_PASSWORD_CONSTRAINTS =
-            "Password should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Password should only contain alphanumeric characters, no spaces, and it should not be blank.";
 
     /*
      * The first character of the password must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String PASSWORD_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String PASSWORD_VALIDATION_REGEX = "[\\p{Alnum}]*";
 
     public final String password;
 
@@ -1702,7 +1719,7 @@ public class Password {
      * Returns true if a given string is a valid person name.
      */
     public static boolean isValidPassword(String test) {
-        return test.matches(PASSWORD_VALIDATION_REGEX);
+        return test.matches(PASSWORD_VALIDATION_REGEX) && !test.equals("");
     }
 
 

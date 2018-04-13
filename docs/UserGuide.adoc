@@ -45,6 +45,7 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
+* * `add-log 2 log/Patient is feeling unwell today`* : Adds a session log to the 2nd person shown in the current list.
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
@@ -108,10 +109,17 @@ Format: `help`
 
 Creates a new user account in the application. +
 Format: `create-user u/USERNAME p/PASSWORD`
+e.g. `create-user u/marcus p/pass`
+
+
+[NOTE]
+====
+* The username is *not* case-sensitive. eg. "User", "useR" and "uSeR" are the same username.
+* Both username and password only allows a single word (no spaces) that contains only alphanumeric characters.
+====
 
 ****
 * You will need to enter a unique username to successfully create an new user.
-* The username is *not* case-sensitive. eg. "User", "useR" and "uSeR" are the same username.
 * Multiple entries of username and password can be included, however only the last entry will be considered.
 ****
 
@@ -326,7 +334,7 @@ Example: `add-log 2 log\Today the patient reported he was feeling unwell ... ...
 
 ****
 * Adds the session log the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* The date and time will automatically be included. It will store the date and time at the moment you execute the command.
+* The date and time will automatically be added. It will store the date and time at the moment you execute the command.
 ****
 
 ==== Delete a existing session report: `delete-log` [Coming in v2.0]
@@ -589,6 +597,7 @@ Encryption should be done automatically when SLAP is logged out or is exited.
 
 * *Help Guide* : `help`
 * *Create New User* : `create-user u/USERNAME p/PASSWORD`
+e.g. `create-user u/marcus p/pass`
 * *Delete Existing User* : `delete-user u/USERNAME p/PASSWORD`
 * *Change Password of Existing User* : `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
 * *Login* : `login u/USERNAME p/PASSWORD`

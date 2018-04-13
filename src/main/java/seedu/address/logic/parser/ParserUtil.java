@@ -20,7 +20,7 @@ import seedu.address.model.person.Cca;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
@@ -363,7 +363,7 @@ public class ParserUtil {
     public static Optional<Cca> parseCca(Optional<String> cca, Optional<String> pos) {
         requireNonNull(cca);
         requireNonNull(pos);
-        return cca.isPresent() ? Optional.of(parseCca(cca.get(), pos.get())) : Optional.empty();
+        return (cca.isPresent() && pos.isPresent()) ? Optional.of(parseCca(cca.get(), pos.get())) : Optional.empty();
     }
 
     /**
@@ -394,22 +394,41 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
-    public static NameOfKin parseNameOfKin(String nameOfKin) throws IllegalValueException {
-        requireNonNull(nameOfKin);
-        String trimmedNameOfKin = nameOfKin.trim();
-        if (!NameOfKin.isValidName(trimmedNameOfKin)) {
-            throw new IllegalValueException(NameOfKin.MESSAGE_NAME_CONSTRAINTS);
+    public static NextOfKin parseNextOfKin(String name, String phone, String email, String remark)
+            throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!NextOfKin.isValidName(trimmedName)) {
+            throw new IllegalValueException(NextOfKin.MESSAGE_NAME_CONSTRAINTS);
         }
-        return new NameOfKin(trimmedNameOfKin);
+        requireNonNull(phone);
+        String trimmedPhone = phone.trim();
+        /*if (!NextOfKin.isValidPhone(trimmedPhone)) {
+            throw new IllegalValueException(NextOfKin.MESSAGE_PHONE_CONSTRAINTS);
+        }*/
+        requireNonNull(email);
+        String trimmedEmail = email.trim();
+        /*if (!NextOfKin.isValidEmail(trimmedEmail)) {
+            throw new IllegalValueException(NextOfKin.MESSAGE_EMAIL_CONSTRAINTS);
+        }*/
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+
+        return new NextOfKin(trimmedName, trimmedPhone, trimmedEmail, trimmedRemark);
     }
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<NameOfKin> parseNameOfKin(Optional<String> nameOfKin) throws IllegalValueException {
-        requireNonNull(nameOfKin);
-        return nameOfKin.isPresent() ? Optional.of(parseNameOfKin(nameOfKin.get()))
+    public static Optional<NextOfKin> parseNextOfKin(Optional<String> name, Optional<String> phone,
+                                                     Optional<String> email, Optional<String> remark)
+                                                    throws IllegalValueException {
+        requireNonNull(name);
+        requireNonNull(phone);
+        requireNonNull(email);
+        requireNonNull(remark);
+        return name.isPresent() ? Optional.of(parseNextOfKin(name.get(), phone.get(), email.get(), remark.get()))
                 : Optional.empty();
     }
 }

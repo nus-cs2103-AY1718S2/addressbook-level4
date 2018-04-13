@@ -9,7 +9,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Remark;
 import seedu.address.model.subject.Subject;
@@ -28,7 +28,7 @@ public class EditPersonDescriptor {
     private Remark remark;
     private Cca cca;
     private InjuriesHistory injuriesHistory;
-    private NameOfKin nameOfKin;
+    private NextOfKin nextOfKin;
 
     public EditPersonDescriptor() {}
 
@@ -44,14 +44,15 @@ public class EditPersonDescriptor {
         setRemark(toCopy.remark);
         setCca(toCopy.cca);
         setInjuriesHistory(toCopy.injuriesHistory);
-        setNameOfKin(toCopy.nameOfKin);
+        setNextOfKin(toCopy.nextOfKin);
     }
 
     /**
      * Returns true if at least one field is edited.
      */
     public boolean isAnyFieldEdited() {
-        return CollectionUtil.isAnyNonNull(this.name, this.nric, this.tags);
+        return CollectionUtil.isAnyNonNull(this.name, this.nric, this.tags, this.subjects, this.remark, this.cca,
+                this.injuriesHistory, this.nextOfKin);
     }
 
     public void setName(Name name) {
@@ -70,12 +71,12 @@ public class EditPersonDescriptor {
         return Optional.ofNullable(nric);
     }
 
-    public void setNameOfKin(NameOfKin nameOfKin) {
-        this.nameOfKin = nameOfKin;
+    public void setNextOfKin(NextOfKin nextOfKin) {
+        this.nextOfKin = nextOfKin;
     }
 
-    public Optional<NameOfKin> getNameOfKin() {
-        return Optional.ofNullable(nameOfKin);
+    public Optional<NextOfKin> getNextOfKin() {
+        return Optional.ofNullable(nextOfKin);
     }
     /**
      * Sets {@code tags} to this object's {@code tags}.

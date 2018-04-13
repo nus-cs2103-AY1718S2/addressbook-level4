@@ -1,10 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
@@ -27,26 +24,19 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
+//@@author TeyXinHui
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the subject details of the student at a specified index.
  */
-public class EditCommand extends UndoableCommand {
+public class EditSubjectCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "editsub";
 
-    public static final String COMMAND_WORD = "edit";
-    public static final String COMMAND_ALIAS = "e";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the subject details of the student identified "
+            + "by the index number used in the last student listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_NRIC + "NRIC] "
-            + "[" + PREFIX_TAG + "TAG]..."
             + "[" + PREFIX_SUBJECT + "SUBJECT SUBJECT_GRADE...]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_NRIC + "S9123457A"
-            + "Example: " + COMMAND_ALIAS + " 1 "
-            + PREFIX_NRIC + "S9123457A";
+            + "Example: " + COMMAND_WORD + " 1 sub/English A1 Chinese A1 AMath A1 EMath A1 Phy A1 Hist A1";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -62,7 +52,7 @@ public class EditCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditSubjectCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
@@ -114,7 +104,7 @@ public class EditCommand extends UndoableCommand {
                 .orElse(personToEdit.getInjuriesHistory());
         NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                            updatedInjuriesHistory, updatedNextOfKin);
+                updatedInjuriesHistory, updatedNextOfKin);
     }
 
     @Override
@@ -125,14 +115,15 @@ public class EditCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof EditSubjectCommand)) {
             return false;
         }
 
         // state check
-        EditCommand e = (EditCommand) other;
+        EditSubjectCommand e = (EditSubjectCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);
     }
+    //@@author
 }

@@ -15,8 +15,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.FieldsChangedEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -109,6 +112,8 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
                 model.updatePerson(c, updatedCustomers.get(i));
                 i++;
             }
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(runnerIndex));
+            EventsCenter.getInstance().post(new FieldsChangedEvent(editedPerson));
 
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);

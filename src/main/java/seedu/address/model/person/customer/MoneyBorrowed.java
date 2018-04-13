@@ -14,8 +14,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class MoneyBorrowed {
 
 
-    public static final String MESSAGE_MONEYBORROWED_CONSTRAINTS =
-            "MONEY_BORROWED can only contain numbers, and should not be negative";
+    public static final String MESSAGE_MONEYBORROWED_DOUBLE_ONLY =
+            "MONEY_BORROWED can only contain numbers";
+    public static final String MESSAGE_MONEYBORROWED_NO_NEGATIVE =
+            "MONEY_BORROWED cannot be negative";
 
     public final double value;
 
@@ -29,7 +31,7 @@ public class MoneyBorrowed {
      * @param value an amount borrowed form the loanshark
      */
     public MoneyBorrowed(double value) {
-        checkArgument(isValidMoneyBorrowed(value), MESSAGE_MONEYBORROWED_CONSTRAINTS);
+        checkArgument(isValidMoneyBorrowed(value), MESSAGE_MONEYBORROWED_NO_NEGATIVE);
         this.value = value;
     }
 

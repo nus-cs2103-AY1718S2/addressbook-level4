@@ -1,8 +1,8 @@
-= John Doe - Project Portfolio
+= Wynona Kaan - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: AddressBook - Level 4
+== PROJECT: Medeina
 
 ---
 
@@ -12,33 +12,28 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+* *Major enhancement*: added *the ability to delete and force delete*
+** What it does: deletion can be done by including a option together with the index of what is to be deleted. Force deletion can be done for owner and pet patient options, where all relevant dependencies are also deleted together with the index of what needs to be deleted.
+** Justification: This feature improves the product significantly because a user can delete other information other than persons, like pet patients and appointments. In addition, the user does not need to go through the hassle of deleting every dependency (appointments, pet patients) before an owner can be deleted, but can just use the force option to immediately delete all dependencies.
+** Highlights: This enhancement changes the format of the delete command to `delete -OPTION INDEX`. Implementation for the force option was difficult as it required safe deletion of dependencies before an element that has dependencies can be deleted.
 
-* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
+* *Major enhancement*: added *the ability find owners, pet patients and multiple prefixes of information*
+** What it does: find can be done by including an `OPTION` (accepted `-o` for owner, `-p` for pet patients) and added with any amount of supported `PREFIX` with any amount of keywords under each `PREFIX`.
+** Justification: This feature improves the product significantly because a user can find all important information, not only just by name, which was in the initial implementation of the find command. In addition, the user can find more specific information by adding on prefixes and more keywords. This is important especially for pet patients, when they need to find for specific pets for instance, a cat with blood type A that can be a blood donor to a dying patient.
+** Highlights: This enhancement changes the format of the find command to `delete -OPTION PREFIX/KEYWORDS [MORE_PREFIX/MORE_KEYWORDS]`. The find command can go as specific as `find -p n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD_TYPE t/TAGS` to find as specific information as possible. This required understanding of the prior FindCommand which made heavy use of Java 8 Predicates.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Minor enhancement*: added the capability to store appointments in the .xml file.
+
+* *Minor enhancement*: added the capability list appointments of any date, in all 4 views allowed in CalendarFX.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/functional/wynonaK.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/test/wynonaK.md[Test code]] _{give links to collated code files}_
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
-** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Managed releases `v1.4` (1 release) on GitHub
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
+*** Reported bugs and suggestions for other teams in the class (examples: )
 
 _{you can add/remove categories in the list above}_
 
@@ -49,20 +44,15 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=find]
 
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=delete]
 
 == Contributions to the Developer Guide
 
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
-
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-include::../DeveloperGuide.adoc[tag=dataencryption]
-
 
 == PROJECT: PowerPointLabs
 

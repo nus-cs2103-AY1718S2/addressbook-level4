@@ -31,7 +31,7 @@ Responsibilities: Storage component, managing documentation
 
 === Wynona Kaan
 image::wynonaK.png[width="150", align="left"]
-{empty}[https://github.com/wynonaK[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/wynonaK[github]] [<<Wynona Kaan#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model component

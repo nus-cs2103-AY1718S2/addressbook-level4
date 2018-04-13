@@ -115,12 +115,6 @@ public class LoginManager extends ComponentManager implements Login {
             }
         } else {
             addUser(username, password);
-            try {
-                File file = new File("data/login/" + filepath);
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new DuplicateUserException();
-            }
             loginUser(filepath);
         }
 

@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -30,7 +31,7 @@ public class XmlLoginStorage {
         return filePath;
     }
 
-    private LoginManager readLogin() throws DataConversionException, IOException {
+    private Optional<LoginManager> readLogin() throws DataConversionException, IOException {
         return readLogin(filePath);
     }
 
@@ -39,7 +40,7 @@ public class XmlLoginStorage {
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public LoginManager readLogin(String filePath) throws DataConversionException,
+    public Optional<LoginManager> readLogin(String filePath) throws DataConversionException,
             FileNotFoundException {
         requireNonNull(filePath);
 
@@ -47,12 +48,12 @@ public class XmlLoginStorage {
 
         if (!loginFile.exists()) {
             logger.info("AddressBook file "  + loginFile + " not found");
-            return null;
+            return Optional.empty();
         }
 
         XmlSerializableLogin xmlSerializableLogin = XmlLoginFileStorage.loadDataFromSaveFile(new File(filePath));
         try {
-            return xmlSerializableLogin.toModelType();
+            return Optional.of(xmlSerializableLogin.toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + loginFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);

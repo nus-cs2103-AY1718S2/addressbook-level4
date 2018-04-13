@@ -100,6 +100,7 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         }
     }
+
     //@@author
     /**
      * Creates and returns a {@code Book} with the details of {@code bookToEdit}

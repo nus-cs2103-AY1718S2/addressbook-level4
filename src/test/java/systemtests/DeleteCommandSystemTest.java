@@ -1,7 +1,6 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_BOOK_SUCCESS;
 import static seedu.address.testutil.TestUtil.getBook;
 import static seedu.address.testutil.TestUtil.getLastIndex;
@@ -86,8 +85,6 @@ public class DeleteCommandSystemTest extends BibliotekSystemTest {
         /* Case: invalid arguments (extra argument) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**

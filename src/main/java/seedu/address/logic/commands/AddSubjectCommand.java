@@ -125,7 +125,7 @@ public class AddSubjectCommand extends UndoableCommand {
      * Checks if the new subjects to be added exist in original subject list.
      * If the subject exists, the subject will not be added to the list. Else, it will be added.
      */
-    public static void checkIfSubjectExist(Set<Subject> newSubjects, Set<Subject> subjectList){
+    public static void checkIfSubjectExist(Set<Subject> newSubjects, Set<Subject> subjectList) {
         boolean isPresent = false;
         for (Subject subToAdd : newSubjects) {
             for (Subject sub : subjectList) {

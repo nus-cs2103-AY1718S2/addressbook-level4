@@ -103,7 +103,7 @@ public class TypicalPersons {
         }
         for (Group group : getTypicalGroups()) {
             try {
-                ab.addGroup(group);
+                ab.addGroup(new Group(group.getInformation(), group.getPersonList()));
             } catch (DuplicateGroupException e) {
                 throw new AssertionError("not possible");
             }

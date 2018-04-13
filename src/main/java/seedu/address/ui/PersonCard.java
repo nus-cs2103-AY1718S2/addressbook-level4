@@ -15,7 +15,6 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    //@@author jas5469
     private static final String[] TAG_COLOR_STYLES = AVAILABLE_COLORS;
 
     /**

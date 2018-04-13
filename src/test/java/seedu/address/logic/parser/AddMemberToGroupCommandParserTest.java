@@ -6,14 +6,19 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDGROUPMEMBE
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDGROUPMEMBER_INFORMATION;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDGROUPMEMBER_NO_GROUP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_INFORMATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddMemberToGroupCommand;
+import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
-
+import seedu.address.testutil.TypicalGroups;
 
 public class AddMemberToGroupCommandParserTest {
 
@@ -59,5 +64,16 @@ public class AddMemberToGroupCommandParserTest {
         //wrong input for Group Information
         assertParseFailure(parser, INVALID_ADDGROUPMEMBER_INFORMATION, expectedMessage);
 
+    }
+
+    @Test
+    public void parse_validInformation_success() {
+
+        //correct input
+        Index index = INDEX_FIRST_PERSON;
+        String correctInput = index.getOneBased() + " " + PREFIX_GROUP + "Group A";
+        Group group = TypicalGroups.getTypicalGroups().get(0);
+
+        assertParseSuccess(parser, correctInput, new AddMemberToGroupCommand(index, group));
     }
 }

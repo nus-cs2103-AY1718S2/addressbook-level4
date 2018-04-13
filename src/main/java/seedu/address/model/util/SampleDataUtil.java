@@ -98,7 +98,7 @@ public class SampleDataUtil {
             new Person(new Name("Tezuka Kunimitsu"), new Phone("92247377"), new Email("teuzkak@example.com"),
                 new Address("Blk 106 Bukit Purmei Street 10, #20-20"), new Nric("S2012044D"),
                 getTagSet("supplier", "owner"))
-    };
+        };
     }
 
     public static PetPatient[] getSamplePetPatients() {

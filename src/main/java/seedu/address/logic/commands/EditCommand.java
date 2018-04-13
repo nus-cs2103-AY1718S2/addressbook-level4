@@ -35,7 +35,10 @@ import seedu.address.logic.descriptors.EditPetPatientDescriptor;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Remark;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ConcurrentAppointmentException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.appointment.exceptions.DuplicateDateTimeException;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -100,7 +103,14 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_DUPLICATE_PET_PATIENT = "This pet patient already exists in the address book.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the address book.";
-
+    public static final String MESSAGE_MISSING_PERSON = "The target person cannot be missing.";
+    public static final String MESSAGE_MISSING_PET_PATIENT = "The target pet patient cannot be missing";
+    public static final String MESSAGE_MISSING_APPOINTMENT = "The target appointment cannot be missing.";
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT_TIMING = "Duplicate in appointment timing.";
+    public static final String MESSAGE_PAST_APPOINTMENT = "Appointment cannot be in the past.";
+    public static final String MESSAGE_CONCURRENT_APPOINTMENT = "Appointment cannot be concurrent "
+            + "with other appointments.";
+    
     /**
      * Enum to support the type of edit command that the user wishes to execute.
      */
@@ -174,6 +184,9 @@ public class EditCommand extends UndoableCommand {
                 break;
             case EDIT_APPOINTMENT:
                 checkForClashes();
+                checkForSameAppointmentTiming();
+                checkForConcurrentAppointments();
+                checkForPastAppointment();
                 model.updateAppointment(appointmentToEdit, editedAppointment);
                 break;
             default:
@@ -182,15 +195,21 @@ public class EditCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new CommandException(MESSAGE_MISSING_PERSON);
         } catch (DuplicatePetPatientException dppe) {
             throw new CommandException(MESSAGE_DUPLICATE_PET_PATIENT);
         } catch (PetPatientNotFoundException ppnfe) {
-            throw new AssertionError("The target pet patient cannot be missing");
+            throw new CommandException(MESSAGE_MISSING_PET_PATIENT);
+        } catch (DuplicateDateTimeException ddte) {
+            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT_TIMING);
         } catch (DuplicateAppointmentException dae) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         } catch (AppointmentNotFoundException anfe) {
-            throw new AssertionError("The target appointment cannot be missing");
+            throw new CommandException(MESSAGE_MISSING_APPOINTMENT);
+        } catch (PastAppointmentException pae) {
+            throw new CommandException(MESSAGE_PAST_APPOINTMENT);
+        } catch (ConcurrentAppointmentException cae) {
+            throw new CommandException(MESSAGE_CONCURRENT_APPOINTMENT);
         }
         switch (type) {
         case EDIT_PERSON:
@@ -249,17 +268,62 @@ public class EditCommand extends UndoableCommand {
     }
 
     /**
-     * Checks whether there are clashes in appointment date and time
+     * Checks whether there are clashes in appointment date and time (i.e. same timing with another appointment)
      */
-    private void checkForClashes() throws CommandException {
+    private void checkForClashes() throws DuplicateDateTimeException {
         LocalDateTime oldDateTime = appointmentToEdit.getDateTime();
         LocalDateTime newDateTime = editedAppointment.getDateTime();
 
         if (!oldDateTime.equals(newDateTime)) {
             Appointment appointmentWithClash = model.getClashingAppointment(newDateTime);
             if (appointmentWithClash != null) {
-                throw new CommandException("Clash in timing exists. Please change to another date / time.");
+                throw new DuplicateDateTimeException();
             }
+        }
+    }
+
+    /**
+     * Checks whether there are clashes in appointment date and time (concurrent appointments)
+     */
+    private void checkForConcurrentAppointments() throws ConcurrentAppointmentException {
+        LocalDateTime oldDateTime = appointmentToEdit.getDateTime();
+        LocalDateTime newDateTime = editedAppointment.getDateTime();
+
+        for (Appointment a : model.getFilteredAppointmentList()) {
+            LocalDateTime dateTime = a.getDateTime();
+            if (newDateTime.isAfter(dateTime)
+                    && newDateTime.isBefore(dateTime.plusMinutes(30))
+                    && !dateTime.equals(oldDateTime)) {
+                throw new ConcurrentAppointmentException();
+            }
+            if (newDateTime.isBefore(dateTime)
+                    && newDateTime.plusMinutes(30).isAfter(dateTime)
+                    && !dateTime.equals(oldDateTime)) {
+                throw new ConcurrentAppointmentException();
+            }
+        }
+    }
+
+    /**
+     * Checks whether appointment datetime given is in the past
+     */
+    private void checkForPastAppointment() throws PastAppointmentException {
+        LocalDateTime newDateTime = editedAppointment.getDateTime();
+
+        if (newDateTime.isBefore(LocalDateTime.now())) {
+            throw new PastAppointmentException();
+        }
+    }
+
+    /**
+     * Checks whether the new timing for the appointment is equivalent to the old one
+     */
+    private void checkForSameAppointmentTiming() throws CommandException {
+        LocalDateTime oldDateTime = appointmentToEdit.getDateTime();
+        LocalDateTime newDateTime = editedAppointment.getDateTime();
+
+        if (newDateTime.equals(oldDateTime)) {
+            throw new CommandException("Appointment timing has not changed.");
         }
     }
 

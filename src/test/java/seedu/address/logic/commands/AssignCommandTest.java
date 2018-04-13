@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -134,7 +135,7 @@ public class AssignCommandTest {
             expectedModel.updatePerson(model.getFilteredPersonList().get(customerIndex2), editedCustomer2);
 
         } catch (Exception e) {
-            assertCommandFailure(assignCommand, model, "The person index provided is invalid");
+            assertCommandFailure(assignCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
     }
 

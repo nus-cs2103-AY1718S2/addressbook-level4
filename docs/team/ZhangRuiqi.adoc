@@ -26,6 +26,7 @@ HuatAh is adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-level4
 
 ** Project management:
 *** Managed release `v1.4 - v1.5rc` on GitHub
+*** Collated code for 'v1.4' on Github
 ** Enhancements to existing features:
 *** Updated the GUI: removed the redundancy (Pull requests https://github.com/CS2103JAN2018-F12-B4/main/pull/76, hhttps://github.com/CS2103JAN2018-F12-B4/main/pull/6)
 ** Documentation:

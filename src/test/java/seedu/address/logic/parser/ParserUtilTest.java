@@ -266,18 +266,18 @@ public class ParserUtilTest {
 
     @Test
     public void parseMoneyBorrowed_invalidValueNotDouble_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class,
-            () -> ParserUtil.parseMoneyBorrowed(INVALID_MONEY_BORROWED_NOT_DOUBLE));
-        Assert.assertThrows(IllegalValueException.class,
-            () -> ParserUtil.parseMoneyBorrowed(Optional.of(INVALID_MONEY_BORROWED_NOT_DOUBLE)));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseMoneyBorrowed(INVALID_MONEY_BORROWED_NOT_DOUBLE));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseMoneyBorrowed(Optional.of(INVALID_MONEY_BORROWED_NOT_DOUBLE)));
     }
 
     @Test
     public void parseMoneyBorrowed_invalidValueNegative_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseMoneyBorrowed(INVALID_MONEY_BORROWED_NEGATIVE));
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseMoneyBorrowed(Optional.of(INVALID_MONEY_BORROWED_NEGATIVE)));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseMoneyBorrowed(INVALID_MONEY_BORROWED_NEGATIVE));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseMoneyBorrowed(Optional.of(INVALID_MONEY_BORROWED_NEGATIVE)));
     }
 
     @Test
@@ -304,8 +304,10 @@ public class ParserUtilTest {
 
     @Test
     public void parseStandardInterest_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseStandardInterest((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseStandardInterest((Optional<String>) null));
+        Assert.assertThrows(NullPointerException.class, () ->
+                ParserUtil.parseStandardInterest((String) null));
+        Assert.assertThrows(NullPointerException.class, () ->
+                ParserUtil.parseStandardInterest((Optional<String>) null));
     }
 
     @Test

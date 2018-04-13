@@ -194,7 +194,7 @@ public class AddressBookParserTest {
     public void parseCommand_email() throws Exception {
         EmailCommand command = (EmailCommand) parser.parseCommand(
                 EmailCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
-        assertEquals(new EmailCommand(INDEX_FIRST), command);
+        assertEquals(new EmailCommand(INDEX_FIRST, ""), command);
     }
     //@@author
     @Test

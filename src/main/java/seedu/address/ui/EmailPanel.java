@@ -16,6 +16,7 @@ import javafx.stage.StageStyle;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.GmailClient;
+import seedu.address.model.EmailSubject;
 import seedu.address.model.GmailMessage;
 import seedu.address.model.person.Person;
 //@@author KevinCJH
@@ -87,9 +88,11 @@ public class EmailPanel extends UiPart<Region> {
      */
     private void fillEmailDraft(Person person) {
         recipientEmail = person.getEmail().value;
+        EmailSubject emailSubjectModel = EmailSubject.getInstance();
         toTxtField.setText(recipientEmail);
         bodyTxtField.setHtmlText("<font face=\"Segoe UI\">Dear " + person.getName().fullName + ",</font>");
-        subjectTxtField.requestFocus();
+        subjectTxtField.setText(emailSubjectModel.getSubject());
+        bodyTxtField.requestFocus();
     }
 
     /**

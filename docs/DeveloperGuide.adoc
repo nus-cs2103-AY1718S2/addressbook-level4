@@ -626,8 +626,8 @@ This newly created `GmailClient` class will provide all the services that use th
 Now that the `GmailClient` is created, we can use it send out emails!
 
 The user will use the `email` command to start this process.
-The `EmailCommand` class will open an email interface to send email to the chosen contact. `EmailCommand` extends the `Command` class. It takes in an index through the `EmailCommandParser`,
-similar to the implementation of `DeleteCommand` and `DeleteCommandParser`.
+The `EmailCommand` class will open an email interface to send email to the chosen contact. `EmailCommand` extends the `Command` class. It takes in an index and also an optional field `EMAILSUBJECT` through the `EmailCommandParser`,
+similar to the implementation of `EditCommand` and `EditCommandParser`.
 
 The `EmailPanel` is the UI for user to draft their email. The UI has 3 inputs, *To*, *Subject* and *Body*. *From* is not needed here as we already have
 the authorised user's email address in `GoogleAuthentication`.

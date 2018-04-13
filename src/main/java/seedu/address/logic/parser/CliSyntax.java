@@ -23,5 +23,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_TITLE = new Prefix("t/");
     public static final Prefix PREFIX_START_DATE_TIME = new Prefix("sdt/");
     public static final Prefix PREFIX_END_DATE_TIME = new Prefix("edt/");
+    public static final Prefix PREFIX_EMAIL_SUBJECT = new Prefix("sub/");
 
 }

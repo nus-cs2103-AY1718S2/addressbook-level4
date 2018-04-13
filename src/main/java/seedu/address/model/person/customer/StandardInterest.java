@@ -1,8 +1,5 @@
 package seedu.address.model.person.customer;
 
-//import static java.util.Objects.requireNonNull;
-//import static seedu.address.commons.util.AppUtil.checkArgument;
-
 //@@author melvintzw
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -14,8 +11,11 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class StandardInterest {
 
 
-    public static final String MESSAGE_INTEREST_CONSTRAINTS =
-            "Interest rates can only be given as integers or floating numbers and should not be negative";
+    public static final String MESSAGE_STANDARD_INTEREST_DOUBLE_ONLY =
+            "MONEY_BORROWED can only contain numbers";
+    public static final String MESSAGE_STANDARD_INTEREST_NO_NEGATIVE =
+            "MONEY_BORROWED cannot be negative";
+
 
     public final double value;
 
@@ -29,7 +29,7 @@ public class StandardInterest {
      * @param value an amount borrowed form the loanshark
      */
     public StandardInterest(double value) {
-        checkArgument(isValidInterest(value), MESSAGE_INTEREST_CONSTRAINTS);
+        checkArgument(isValidInterest(value), MESSAGE_STANDARD_INTEREST_NO_NEGATIVE);
         this.value = value;
     }
 

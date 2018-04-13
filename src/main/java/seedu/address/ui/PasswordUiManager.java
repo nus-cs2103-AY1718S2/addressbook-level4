@@ -100,6 +100,8 @@ public class PasswordUiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handlePasswordCorrectEvent(PasswordCorrectEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        primaryStage.setResizable(true);
+        primaryStage.setMaxHeight(MAX_WINDOW_SIZE);
         ui.start(primaryStage);
         autoOpenBirthdayNotification();
     }

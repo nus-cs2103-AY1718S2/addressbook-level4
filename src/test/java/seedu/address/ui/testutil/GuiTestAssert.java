@@ -7,11 +7,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.GroupCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.ToDoCardHandle;
 import seedu.address.model.event.Event;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.todo.ToDo;
 import seedu.address.ui.CalendarDate;
@@ -140,5 +142,13 @@ public class GuiTestAssert {
      */
     public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
         assertEquals(expected, resultDisplayHandle.getText());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedToDo}.
+     */
+    public static void assertCardDisplaysGroup(Group expectedGroup, GroupCardHandle actualCard) {
+        assertEquals(expectedGroup.getInformation().value, actualCard.getInformation());
+
     }
 }

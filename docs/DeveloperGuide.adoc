@@ -9,6 +9,7 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W09-B3/main
 
@@ -549,7 +550,7 @@ This feature revolves mainly around 3 commands:
 
 For the command `moreInfo`, the model manager calls upon the data storage (addressbook) to raise an event for the Browser Panel to display the profile page of a student.
 
-[NOTE]
+[WARNING]
 The `moreInfo` command *cannot* function if there is no real existing XML data of students. Thus, the sample student data provided at the initial start up will not work with this command. A warning will be mentioned if the command is called without existing data.
 
 The code below shows how the the method is called with the parameter of the required `Student` functions:

@@ -1,5 +1,11 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_COLOR;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_HEIGHT;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_LABEL_COLOR;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_LABEL_NAME;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_WIDTH;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -150,13 +156,15 @@ public class MainWindow extends UiPart<Stage> {
         groupListPanel = new GroupListPanel(logic.getFilteredGroupList());
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
-        progressIndicatorLabel = new Label("To-dos Completion");
-        progressIndicatorLabel.setStyle("-fx-text-fill: white;");
-        progressIndicator = new ProgressIndicator(0);
-        progressIndicator.setStyle(" -fx-progress-color: #4DA194;");
-        progressIndicator.setPrefSize(150, 150);
+        progressIndicatorLabel = new Label(PROGRESS_INDICATOR_LABEL_NAME);
+        progressIndicatorLabel.setStyle(PROGRESS_INDICATOR_LABEL_COLOR);
+        progressIndicatorPlaceholder.getChildren().add(progressIndicatorLabel);
+
+        progressIndicator = new ProgressIndicator();
+        progressIndicator.setStyle(PROGRESS_INDICATOR_COLOR);
+        progressIndicator.setPrefSize(PROGRESS_INDICATOR_WIDTH, PROGRESS_INDICATOR_HEIGHT);
         progressIndicator.setProgress(logic.getToDoListCompleteRatio());
-        progressIndicatorPlaceholder.getChildren().addAll(progressIndicatorLabel, progressIndicator);
+        progressIndicatorPlaceholder.getChildren().add(progressIndicator);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

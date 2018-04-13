@@ -168,6 +168,7 @@ image::List_Command.PNG[width="800"]
 
 {empty} +
 
+// tag::editcommandUG[]
 === Editing a contact, pet patient or appointment : `edit` or `ed` `[Since v1.4]`
 
 You can use `edit` or `ed` to do the following:
@@ -223,6 +224,7 @@ edit -p 2 n/Makkachin t/
 
 edit -a 3 d/2018-06-04 12:30
 ----
+// end::editcommandUG[]
 
 {empty} +
 
@@ -568,6 +570,7 @@ Coming v2.0, Medeina can be used concurrently on different systems. The data wil
 
 {empty} +
 
+// tag::commandsummaryUG[]
 == Command Summary
 
 You can find a summary of all commands available in Medeina in the following sections.
@@ -714,3 +717,4 @@ You can find a summary of all commands available in Medeina in the following sec
 | `q`
 | Exits the program
 |=====
+// tag::commandsummaryUG[]

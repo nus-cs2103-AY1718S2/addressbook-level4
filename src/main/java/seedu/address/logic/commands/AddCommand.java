@@ -52,12 +52,14 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
             + PREFIX_NAME + " Xiao Ming "
             + PREFIX_PHONE + " 88888888 "
             + PREFIX_EMAIL + " xiao@ming.com "
-            + PREFIX_ADDRESS + " W Hotel "
+            + PREFIX_ADDRESS + " The Fullerton "
             + PREFIX_OWESTARTDATE + " today "
-            + PREFIX_OWEDUEDATE + " 5 May 2018 "
+            + PREFIX_OWEDUEDATE + " 7 June 2018 "
             + PREFIX_MONEYOWED + " 314159265 "
             + PREFIX_INTEREST + " 9.71 "
-            + PREFIX_TAG + " richxiaoming";
+            + PREFIX_TAG + " richxiaoming "
+            + PREFIX_TAG + " HighSES "
+            + PREFIX_TAG + " mingdynasty";
 
     public static final String MESSAGE_INVALID_PREFIX = "You have entered a prefix applicable only to Customers"
             + " (ty: c)";

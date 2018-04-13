@@ -96,7 +96,7 @@ public class GuiTestAssert {
             return "green";
 
         case "spca":
-                return "blue";
+            return "blue";
 
         case "husband":
             return "grey";

@@ -7,6 +7,7 @@ import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.model.Model;
 import seedu.address.model.account.Account;
 import seedu.address.model.account.PrivilegeLevel;
+import seedu.address.model.account.Username;
 import seedu.address.model.account.exceptions.AccountNotFoundException;
 
 /**
@@ -23,11 +24,12 @@ public class DeleteAccountCommand extends UndoableCommand {
 
     public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
 
+    private String username;
     private Account accountToDelete;
 
-    public DeleteAccountCommand(Account account) {
-        requireNonNull(account);
-        accountToDelete = account;
+    public DeleteAccountCommand(String username) {
+        requireNonNull(username);
+        this.username = username;
     }
 
     @Override
@@ -42,18 +44,11 @@ public class DeleteAccountCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_DELETE_ACCOUNT_SUCCESS, accountToDelete));
     }
 
-    /*
-       @Override
+        @Override
         protected void preprocessUndoableCommand() throws CommandException {
-            ArrayList<Account> lastShownList = model.getFilteredAccountList();
-
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
-            }
-
-            accountToDelete = lastShownList.get(targetIndex.getZeroBased());
+        accountToDelete = model.getAccountList().searchByUsername(new Username(username));
         }
-    */
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

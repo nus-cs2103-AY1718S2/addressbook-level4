@@ -24,13 +24,10 @@ public class DeleteAccountCommandParser implements Parser<DeleteAccountCommand> 
 
     public DeleteAccountCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-
-        UniqueAccountList accountList = new UniqueAccountList();
-        Account account = accountList.searchByUsername(new Username(trimmedArgs));
-        try {
-            return new DeleteAccountCommand(account);
-        } catch (AccountNotFoundException pnfe2) {
+        if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAccountCommand.MESSAGE_USAGE));
+        } else {
+            return new DeleteAccountCommand(trimmedArgs);
         }
     }
 }

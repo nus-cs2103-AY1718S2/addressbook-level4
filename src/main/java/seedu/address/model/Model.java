@@ -68,6 +68,11 @@ public interface Model {
     ObservableList<Book> getFilteredBookList();
 
     /**
+     * Returns an unmodifiable view of the account list
+     */
+    UniqueAccountList getAccountList();
+
+    /**
      * Updates the filter of the filtered book list to filter by the given {@code predicate}.
      *
      * @throws NullPointerException if {@code predicate} is null.

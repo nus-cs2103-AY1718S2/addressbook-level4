@@ -143,6 +143,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public UniqueAccountList getAccountList() {
+        return accountList;
+    }
+
+    @Override
     public ReadOnlyCatalogue getCatalogue() {
         return catalogue;
     }

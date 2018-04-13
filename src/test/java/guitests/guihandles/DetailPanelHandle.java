@@ -20,18 +20,16 @@ public class DetailPanelHandle extends NodeHandle<Node> {
     public static final String BROWSER_PANEL_ID = "#detailPanel";
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
-    //@@author
 
-    private boolean isWebViewLoaded = true;
-    private URL lastRememberedUrl;
-
-    //@@author emer7
     private final Label nameLabel;
     private final Label addressLabel;
 
     private Label oldNameLabel;
     private Label oldAddressLabel;
     //@@author
+
+    private boolean isWebViewLoaded = true;
+    private URL lastRememberedUrl;
 
     public DetailPanelHandle(Node detailPanelNode) {
         super(detailPanelNode);

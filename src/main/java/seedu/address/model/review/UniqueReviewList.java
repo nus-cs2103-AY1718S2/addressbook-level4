@@ -42,7 +42,7 @@ public class UniqueReviewList implements Iterable<Review> {
     }
 
     /**
-     * Returns all reviews in this list as a Set.
+     * Returns all Reviews in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */
     public Set<Review> toSet() {
@@ -51,7 +51,7 @@ public class UniqueReviewList implements Iterable<Review> {
     }
 
     /**
-     * Replaces the Reviews in this list with those in the argument review list.
+     * Replaces the Reviews in this list with those in the argument reviews list.
      */
     public void setReviews(Set<Review> reviews) {
         requireAllNonNull(reviews);

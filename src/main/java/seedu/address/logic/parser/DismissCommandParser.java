@@ -1,6 +1,6 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_NOTIFICATION_CARD_INDEX_NON_POSITIVE;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -22,8 +22,7 @@ public class DismissCommandParser implements Parser<DismissCommand> {
             Index index = ParserUtil.parseIndex(args);
             return new DismissCommand(index);
         } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DismissCommand.MESSAGE_USAGE));
+            throw new ParseException(MESSAGE_INVALID_NOTIFICATION_CARD_INDEX_NON_POSITIVE);
         }
     }
 }

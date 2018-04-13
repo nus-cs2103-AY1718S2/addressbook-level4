@@ -9,6 +9,8 @@ public class AuthenCommand extends Command {
 
     public static final String COMMAND_WORD = "authenET";
 
+    public static final String COMMAND_USAGE = "Authorize ET with your google calendar.";
+
     public static final String MESSAGE_SUCCESS = "You have authorized ET!";
 
     public static final String MESSAGE_FAILURE = "You haven't authorized ET successfully,"

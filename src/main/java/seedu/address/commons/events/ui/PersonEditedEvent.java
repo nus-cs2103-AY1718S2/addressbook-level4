@@ -5,14 +5,15 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a person edited change
  */
 public class PersonEditedEvent extends BaseEvent {
 
-
+    private final int index;
     private final Person newPerson;
 
-    public PersonEditedEvent(Person newPerson) {
+    public PersonEditedEvent(int index, Person newPerson) {
+        this.index = index;
         this.newPerson = newPerson;
     }
 
@@ -23,5 +24,9 @@ public class PersonEditedEvent extends BaseEvent {
 
     public Person getNewPerson() {
         return newPerson;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

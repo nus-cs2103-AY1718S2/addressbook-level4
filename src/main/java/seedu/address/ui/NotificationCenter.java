@@ -164,20 +164,19 @@ public class NotificationCenter {
     public void removeNotificationForPerson(int targetId) {
         System.out.println("TargetId: targetId");
         int totalRemoved = 0;
-        Iterator<NotificationCard> iterator = notificationCardCopy.iterator();
-        //to bypass null at index 0
-        iterator.next();
-        for (int i = 1; i <= notificationCardCopy.size(); i++) {
-            NotificationCard curr = iterator.next();
-            System.out.println("Checking id:" + curr.getOwnerId());
-            if (Integer.parseInt(curr.getOwnerId()) == targetId) {
-                iterator.remove();
-                notificationCardsBox.getChildren().remove(notificationCards.remove(i - 1));
+        LinkedList<NotificationCard> toDelete = new LinkedList<>();
+        for (NotificationCard nc: notificationCardCopy) {
+            if (nc != null && nc.getOwnerId().equals(targetId + "")) {
+                toDelete.add(nc);
+                notificationCards.remove(nc.getRoot());
+                notificationCardsBox.getChildren().remove(nc.getRoot());
                 totalRemoved++;
             } else if (totalRemoved > 0) {
-                System.out.println("Total removed: " + totalRemoved);
-                curr.decreaseIndex(totalRemoved);
+                nc.decreaseIndex(totalRemoved);
             }
+        }
+        for (NotificationCard nc: toDelete) {
+            notificationCardCopy.remove(nc);
         }
     }
 }

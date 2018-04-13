@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -39,7 +40,7 @@ public class OpenEmailWindow {
     private Label subjectContent;
 
     @FXML
-    private Label msgContent;
+    private TextArea msgContent;
 
     @FXML
     private Button newEmailButton;
@@ -57,12 +58,17 @@ public class OpenEmailWindow {
      * Open the email message window
      */
     public OpenEmailWindow(String email, String subject, Message msg) throws IOException, SyntaxException {
+        String errorMsg = "Please ensure that you are connected to the internet.";
         //get URL
         FXMLLoader fxmlLoader = loadScene(openWindow);
         Parent root = (Parent) fxmlLoader.load();
         fromContent.setText(email);
         subjectContent.setText(subject);
-        setContent(msg);
+        if (msg != null) {
+            setContent(msg);
+        } else {
+            msgContent.setText(errorMsg);
+        }
         puWindow.initModality(Modality.APPLICATION_MODAL);
         puWindow.initStyle(StageStyle.UNDECORATED);
         puWindow.setTitle("Compose Email");
@@ -78,8 +84,9 @@ public class OpenEmailWindow {
         String content = "";
         try {
             if (message.getContent() instanceof String) {
-                msgContent.setText((String) message.getContent());
-            } else {
+                content = (String) message.getContent();
+                msgContent.setText(content);
+            } else if (message.isMimeType("multipart/*")) {
                 Multipart multipart = (Multipart) message.getContent();
                 if (multipart.getCount() > 0) {
                     int i;
@@ -88,6 +95,8 @@ public class OpenEmailWindow {
                     }
                     msgContent.setText(content);
                 }
+            } else {
+                msgContent.setText("This message is in an unsupported format.");
             }
         } catch (IOException e) {
             System.out.println("ioexception");
@@ -117,7 +126,7 @@ public class OpenEmailWindow {
     @FXML
     private void openComposeWindow() {
         try {
-            ComposeEmailWindow cew = new ComposeEmailWindow("");
+            ComposeEmailWindow cew = new ComposeEmailWindow("", "", "", "");
         } catch (IOException e) {
             System.out.println("IOException");
         }
@@ -129,7 +138,8 @@ public class OpenEmailWindow {
     @FXML
     private void openReplyWindow() {
         try {
-            ComposeEmailWindow cew = new ComposeEmailWindow(this.fromContent.getText());
+            ComposeEmailWindow cew = new ComposeEmailWindow("RE: ", this.fromContent.getText(),
+                    this.subjectContent.getText(), this.msgContent.getText());
         } catch (IOException e) {
             System.out.println("IOException");
         }
@@ -141,7 +151,8 @@ public class OpenEmailWindow {
     @FXML
     private void openForwardWindow() {
         try {
-            ComposeEmailWindow cew = new ComposeEmailWindow("");
+            ComposeEmailWindow cew = new ComposeEmailWindow("FWD: ", this.fromContent.getText(),
+                     this.subjectContent.getText(), this.msgContent.getText());
         } catch (IOException e) {
             System.out.println("IOException");
         }

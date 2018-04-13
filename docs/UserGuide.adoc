@@ -82,7 +82,7 @@ image::UserGuideTagged.png[width="790"]
 . *Description and use case* +
   This describes the potential situations that you might need to use this command.
 . *Format of command* +
-  The defined structure of the command. See <<Command Format>> for more information
+  The defined structure of the command. See <<The Command Format>> for more information
 . *Steps Taken* +
   A few example steps to show you how we might do things and what you will see
   You should have a similar user interface of Codeducator when following the step by step instructions.
@@ -126,7 +126,8 @@ Don't fret! This user guide will show you the many simple commands that will hel
 The subsequent sections of the user guide provides a step by step walk-through of all the commands that Codeducator has to offer.
 
 
-===== Command Format
+=== The Command Format
+
 ====
 
 * Words in `UPPER_CASE` are the _parameters_ to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.

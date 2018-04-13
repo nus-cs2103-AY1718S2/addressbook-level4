@@ -738,7 +738,7 @@ Thus, the HTML file for displaying the student's profile page will be able to sh
 ** Pros: Less code of copying is required and any modifications to the original photo is immediately updated.
 ** Cons: If the picture is deleted or corrupted, the profile picture would not be able to display.
 
-//end::profilePage[]
+// end::profilePage[]
 
 // tag::schedule[]
 === Schedule feature
@@ -1568,6 +1568,3 @@ Expected:
    Expected:
 *** No lesson will be added due to invalid student index. Error details shown in results screen.
 .. Other incorrect deleteLessons to try: `deleteLesson`, `deleteLesson x` where x is larger than the index of the last lesson
-
-
-

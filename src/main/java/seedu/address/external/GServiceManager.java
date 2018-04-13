@@ -87,7 +87,6 @@ public class GServiceManager {
 
         credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver()).authorize("user");
-        
     }
 
     /**

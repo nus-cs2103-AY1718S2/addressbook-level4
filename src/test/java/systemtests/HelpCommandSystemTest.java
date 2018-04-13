@@ -8,7 +8,6 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.commands.DeleteCommand;
@@ -26,31 +25,8 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
             + "that this is a bug with TestFX library that we are using. If this test fails, you have to run your "
             + "tests on headless mode. See UsingGradle.adoc on how to do so.";
 
-    private final GuiRobot guiRobot = new GuiRobot();
-
     @Test
-    public void openHelpWindow() {
-        //use accelerator
-        getCommandBox().click();
-        executeHelpCommandUsingAccelerator();
-        assertHelpWindowOpen();
-
-        getResultDisplay().click();
-        executeHelpCommandUsingAccelerator();
-        assertHelpWindowOpen();
-
-        getPersonListPanel().click();
-        executeHelpCommandUsingAccelerator();
-        assertHelpWindowOpen();
-
-        getBrowserPanel().click();
-        executeHelpCommandUsingAccelerator();
-        assertHelpWindowOpen();
-
-        //use menu button
-        executeHelpCommandUsingMenu();
-        assertHelpWindowOpen();
-
+    public void clear() {
         //use command box
         executeCommand(HelpCommand.COMMAND_WORD);
         assertHelpWindowOpen();
@@ -71,6 +47,40 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
         // note: the select command tested above does not update the status bar
         executeCommand(DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertNotEquals(StatusBarFooter.SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+    }
+
+    @Test
+    public void focusOnCommandBox_executeHelpCommand_usingAccelerator() {
+        getCommandBox().click();
+        executeHelpCommandUsingAccelerator();
+        assertHelpWindowOpen();
+    }
+
+    @Test
+    public void focusOnResultDisplay_executeHelpCommand_usingAccelerator() {
+        getResultDisplay().click();
+        executeHelpCommandUsingAccelerator();
+        assertHelpWindowOpen();
+    }
+
+    @Test
+    public void focusOnPersonListPanel_executeHelpCommand_usingAccelerator() {
+        getPersonListPanel().click();
+        executeHelpCommandUsingAccelerator();
+        assertHelpWindowOpen();
+    }
+
+    @Test
+    public void focusOnBrowserPanel_executeHelpCommand_usingAccelerator() {
+        getBrowserPanel().click();
+        executeHelpCommandUsingAccelerator();
+        assertHelpWindowOpen();
+    }
+
+    @Test
+    public void executeHelpCommand_usingMenuButton() {
+        executeHelpCommandUsingMenu();
+        assertHelpWindowOpen();
     }
 
     /**

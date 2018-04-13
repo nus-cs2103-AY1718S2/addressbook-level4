@@ -27,7 +27,7 @@ public class CheckToDoCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Checks the to-do identified as done "
             + "by the index number used in the last to-do listing. "
             + "Status of the to-do will be overwritten as done.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 ";
 
     public static final String MESSAGE_CHECK_TODO_SUCCESS = "Checked ToDo: %1$s";

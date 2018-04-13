@@ -16,6 +16,9 @@ public class RemovePatientQueueCommandParser implements Parser<RemovePatientQueu
     /**
      * Parses the given {@code String} of arguments in the context of the RemovePatientQueueCommand
      * and returns an RemovePatientQueueCommand object for execution.
+     * If argument is empty, construct RemovePatientQueueCommand object without parameter and return the object.
+     * If arguement is not empty, parse argument to {@Index} object and construct RemovePatientQueueCommand object with
+     * parameter and return the object.
      * @throws ParseException if the user input does not conform the expected format
      */
     @Override

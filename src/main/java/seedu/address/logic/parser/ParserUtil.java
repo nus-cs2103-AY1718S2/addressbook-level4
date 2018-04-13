@@ -209,20 +209,12 @@ public class ParserUtil {
      */
     public static MoneyBorrowed parseMoneyBorrowed(String moneyBorrowed) throws IllegalValueException {
         requireNonNull(moneyBorrowed);
-
-        /*
-        String trimmed = moneyBorrowed.trim();
-        if (!Email.isValidEmail(trimmed)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        */
-
         try {
             return new MoneyBorrowed(Double.parseDouble(moneyBorrowed));
         } catch (NumberFormatException nfe) {
-            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_CONSTRAINTS);
+            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_DOUBLE_ONLY);
         } catch (IllegalArgumentException iae) {
-            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_CONSTRAINTS);
+            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_NO_NEGATIVE);
         }
     }
 

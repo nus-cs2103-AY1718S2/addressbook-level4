@@ -16,8 +16,12 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonEditEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.parser.EditCommandParser;
+import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -32,6 +36,7 @@ public class MainWindow extends UiPart<Stage> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Model model;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -62,12 +67,13 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane agendaPanelPlaceholer;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Model model) {
         super(FXML, primaryStage);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.model = model;
         this.config = config;
         this.prefs = prefs;
 
@@ -205,5 +211,21 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author jstarw
+    @Subscribe
+    private void handleSubmitEvent(PersonEditEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        try {
+
+            EditCommandParser editCommandParser = new EditCommandParser();
+            EditCommand editCommand = editCommandParser.parse(event.getArgs());
+            editCommand.setData(model, null, null);
+            editCommand.execute();
+        } catch (Exception exc) {
+            exc.printStackTrace();
+
+        }
     }
 }

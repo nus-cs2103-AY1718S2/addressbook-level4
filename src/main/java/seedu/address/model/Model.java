@@ -68,7 +68,12 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-
+    /**
+     * Finds and returns the first person.
+     * @param predicate
+     * @return
+     */
+    Person findOnePerson(Predicate<Person> predicate) throws PersonNotFoundException;
 
 
 

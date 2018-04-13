@@ -162,6 +162,13 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author jstarw
+        @Override
+        public Person findOnePerson(Predicate<Person> predicate) {
+            fail("This method should not be called.");
+            return null;
+        }
+
         @Override
         public CalendarSource getCalendar() {
             fail("This method should not be called.");

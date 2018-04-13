@@ -496,6 +496,9 @@ use can change certain details by simply double clicking on each field and edit 
 A new `.fxml` file is created that will display the persons attributes on a new window. A new event called
 `PersonCardDoubleClick` is created. This will listen to anytime a person card is double clicked. Subscribed listeners
 (eg. BrowserPanel) will be alerted and the new window will open.
+
+It can also be opened using the `show` command. This takes in a name and scans the entire addressbook. Once the first
+person is found which matches the name, the window pops up. The matching is the same logic as the `find` command.
 // end::persondetail[]
 
 // tag::dataencryption[]

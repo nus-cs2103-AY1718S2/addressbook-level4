@@ -33,7 +33,7 @@ public class AssignCommandTest {
 
     @Test
     public void execute_assignOneValidRunnerAndOneValidCustomer_success() throws Exception {
-        int runnerIndex = 0;
+        int runnerIndex = 5;
         int customerIndex = 2;
 
         //produce AssignCommand(runner index, customer index...)
@@ -64,7 +64,7 @@ public class AssignCommandTest {
 
     @Test
     public void execute_assignOneValidRunnerAndTwoValidCustomers_success() throws Exception {
-        int runnerIndex = 0;
+        int runnerIndex = 5;
         int customerIndex1 = 2;
         int customerIndex2 = 3;
 

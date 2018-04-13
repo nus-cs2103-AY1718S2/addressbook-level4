@@ -10,6 +10,7 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W09-B3/main/releases
 :contactsURL: https://contacts.google.com/
@@ -620,7 +621,7 @@ Displays the full information of a student on the browser panel. The full inform
 
 Format: `moreInfo INDEX`
 
-[IMPORTANT]
+[WARNING]
 The `moreInfo` command _**cannot**_ work if there is no existing XML data of students. Should you encounter this warning,you can either: +
 1) Simply enter `clear` and start out with an empty student list. +
 2) Add, edit or delete a student using their corresponding commands to generate XML data of the students.
@@ -642,7 +643,8 @@ image::moreInfoCommand.png[width:400]
 .Executing the command `moreInfo 1` displays the 1st student (Alex Yeoh's) profile page
 image::moreInfoResult.png[width:800]
 
-
+{empty} +
+{empty} +
 [TIP]
 You will be able to attain the profile page style in `Figure 5` if your OS zoom scale is set to `125%`. The profile photo may seem of a different size for other configurations. Search you computer settings should you wish to change this.
 
@@ -686,6 +688,9 @@ image::editPictureSuccess.png[width:400]
 
 .The profile page of the selected student is shown with the new profile picture!
 image::editedPicture.png[width:800]
+
+{empty} +
+{empty} +
 
 [TIP]
 The ideal aspect ratio of the picture is 1.25 from height to width.

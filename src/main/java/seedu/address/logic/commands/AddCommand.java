@@ -214,9 +214,9 @@ public class AddCommand extends UndoableCommand {
         } catch (DuplicateDateTimeException e) {
             throw new CommandException(MESSAGE_DUPLICATE_DATETIME);
         } catch (ConcurrentAppointmentException e) {
-            throw new AssertionError("Concurrent appointment.");
+            throw new CommandException("Appointment cannot be concurrent with other appointments.");
         } catch (PastAppointmentException e) {
-            throw new AssertionError("Past-date appointment.");
+            throw new CommandException("Appointment cannot be created with past dateTime.");
         }
     }
 

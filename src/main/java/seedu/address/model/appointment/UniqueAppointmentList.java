@@ -62,6 +62,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
             if (toAdd.getDateTime().isAfter(dateTime) && toAdd.getDateTime().isBefore(dateTime.plusMinutes(30))) {
                 throw new ConcurrentAppointmentException();
             }
+            if (toAdd.getDateTime().isBefore(dateTime) && toAdd.getDateTime().plusMinutes(30).isAfter(dateTime)) {
+                throw new ConcurrentAppointmentException();
+            }
         }
         internalList.add(toAdd);
     }

@@ -545,6 +545,7 @@ Commands that cannot be undone:
 
 [NOTE]
 To see the last few days of the final month, click on the `>>` button to navigate to the next months calendar, the last days of that month will be displayed there, as well as its tasks.
+
 == Toggling between themes
 
 Your TA starts off with a default `Dark Theme`. However, it can be toggled to become a `Light Theme`.

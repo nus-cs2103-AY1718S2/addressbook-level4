@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.ToDoCard;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a selection change in the ToDo List Panel
  */
 public class ToDoPanelSelectionChangedEvent extends BaseEvent {
 

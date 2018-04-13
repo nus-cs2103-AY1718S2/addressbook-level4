@@ -13,7 +13,7 @@ HuatAh is adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-level4
 == Summary of contributions
 
 * *Major enhancement*: added the feature of locating a person on Google Map
-** What it does: allows the user to locate a person using all fields of a person (e.g, name/phone/email...) on Google Map, and it perflectly helps the user to keep track of the person.
+** What it does: allows the user to locate a person using any fields of a person (e.g, name/phone/email...) on Google Map, and it perfectly helps the user to keep track of the person.
 ** Justification: Allowing the target users of this app - loan shark managers, to know where their customers are important because it's cost- and time- effienct to assign the customers to the nearest runners. 
 ** Highlights: This enhancement includes the use Google Map which allows for much more future possibilities to integrate with Google. It makes integrating with other Google functions in the future easier.
 ** Credits: _https://github.com/CS2103AUG2017-F11-B3/main/blob/master/src/main/java/seedu/address/logic/commands/GmapCommand.java_

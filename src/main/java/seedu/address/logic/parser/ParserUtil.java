@@ -261,7 +261,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code string double} into an {@code StandardInterest}.
+     * Parses a {@code string double} into an {@code LateInterest}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code MoneyOwed} is invalid.
@@ -269,23 +269,23 @@ public class ParserUtil {
     public static LateInterest parseLateInterest(String value) throws IllegalValueException {
         requireNonNull(value);
 
-        /*
-        String trimmed = moneyBorrowed.trim();
-        if (!Email.isValidEmail(trimmed)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        */
+        value = value.trim();
 
-        return new LateInterest(Double.parseDouble(value));
+        try {
+            return new LateInterest(Double.parseDouble(value));
+        } catch (NumberFormatException nfe) {
+            throw new IllegalValueException(LateInterest.MESSAGE_LATE_INTEREST_DOUBLE_ONLY);
+        } catch (IllegalArgumentException iae) {
+            throw new IllegalValueException(LateInterest.MESSAGE_LATE_INTEREST_NO_NEGATIVE);
+        }
     }
 
     /**
-     * Parses a {@code Optional<String> StandardInterest} into an {@code Optional<StandardInterest>} if {@code
+     * Parses a {@code Optional<String> LateInterest} into an {@code Optional<LateInterest>} if {@code
      * value} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<LateInterest> parseLateInterest(Optional<String> value) throws
-            IllegalValueException {
+    public static Optional<LateInterest> parseLateInterest(Optional<String> value) throws IllegalValueException {
         requireNonNull(value);
         return value.isPresent() ? Optional.of(parseLateInterest(value.get())) : Optional.empty();
     }

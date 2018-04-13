@@ -169,7 +169,7 @@ public class XmlAdaptedPerson {
                         .getSimpleName()));
             }
             if (!MoneyBorrowed.isValidMoneyBorrowed(this.moneyBorrowed.value)) {
-                throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_CONSTRAINTS);
+                throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEY_BORROWED_NO_NEGATIVE);
             }
             final MoneyBorrowed moneyBorrowed = new MoneyBorrowed(this.moneyBorrowed.value);
 
@@ -195,7 +195,7 @@ public class XmlAdaptedPerson {
                         .getSimpleName()));
             }
             if (!standardInterest.isValidInterest(this.standardInterest.value)) {
-                throw new IllegalValueException(standardInterest.MESSAGE_INTEREST_CONSTRAINTS);
+                throw new IllegalValueException(standardInterest.MESSAGE_STANDARD_INTEREST_NO_NEGATIVE);
             }
             final StandardInterest standardInterest = this.standardInterest;
 
@@ -205,7 +205,7 @@ public class XmlAdaptedPerson {
                         .getSimpleName()));
             }
             if (!standardInterest.isValidInterest(this.lateInterest.value)) {
-                throw new IllegalValueException(standardInterest.MESSAGE_INTEREST_CONSTRAINTS);
+                throw new IllegalValueException(standardInterest.MESSAGE_STANDARD_INTEREST_NO_NEGATIVE);
             }
             final LateInterest lateInterest = this.lateInterest;
 

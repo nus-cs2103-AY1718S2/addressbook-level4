@@ -103,7 +103,7 @@ You may use create a folder called `Codeducator` on your `Desktop`, or in `My Do
 
 .  Double-click the file to start the app. You should see the application open in a appear in a few seconds.
 +
-image::firstStart.png[width="790"]
+image::UI.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -672,7 +672,7 @@ You are now ready to sync your account! +
 . There is a *45 second timeout* for the login process. If you do not login successfully (due to closing the window unexpectedly or poor network connection), the login process will timeout.
 . Authorising Codeducator is important! Denying access will stop Codeducator from uploading data to your account.
 . If you have already logged in before without logging out, you may skip the Google login process by just simply typing in `login`.
-. If you do not successfully login , do wory! Just repeat the steps to login again.
+. If you do not successfully login , don't worry! Just repeat the steps to login again.
 . Your stored credential may expire after a long period of not using Codeducator. Simply logout and re-login to re-authenticate. See <<Logging out of your Google Account>>
 ====
 
@@ -747,7 +747,7 @@ If you have many contacts or lessons, it will take some time to synchronise your
 
 ==== Logging out of your Google Account
 
-For security purposes, Codeducator allows you to logs out of your Google Account. Codeducator will ecurely delete the OAuth2 credential stored in the App. +
+For security purposes, Codeducator allows you to log out of your Google Account. Codeducator will ecurely delete the OAuth2 credential stored in the App. +
 
 [NOTE]
 You must first be logged in to log out.

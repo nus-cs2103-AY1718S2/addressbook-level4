@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.model.student.dashboard.Progress;
 
 //@@author yapni
@@ -17,6 +19,8 @@ public class ProgressBuilder {
      * Initializes the ProgressBuilder with the data of {@code progressToCopy}.
      */
     public ProgressBuilder(Progress progressToCopy) {
+        requireNonNull(progressToCopy);
+
         totalTasks = progressToCopy.getTotalTasks();
         numCompletedTasks = progressToCopy.getNumCompletedTasks();
         progressInPercent = progressToCopy.getProgressInPercent();
@@ -37,7 +41,9 @@ public class ProgressBuilder {
      * Subtracts 1 from the {@code totalTask} of the {@code Progress} we are building.
      */
     public ProgressBuilder withOneLessIncompletedTaskFromTotal() {
-        this.totalTasks -= 1;
+        if (this.totalTasks > 0) {
+            this.totalTasks -= 1;
+        }
         setProgressPercentAndValue();
 
         return this;
@@ -47,8 +53,12 @@ public class ProgressBuilder {
      * Subtracts 1 from the {@code totalTask} and {@code numCompletedTask } of the {@code Progress} we are building.
      */
     public ProgressBuilder withOneLessCompletedTaskFromTotal() {
-        this.totalTasks -= 1;
-        this.numCompletedTasks -= 1;
+        if (this.totalTasks > 0) {
+            this.totalTasks -= 1;
+        }
+        if (this.numCompletedTasks > 0) {
+            this.numCompletedTasks -= 1;
+        }
         setProgressPercentAndValue();
 
         return this;
@@ -75,6 +85,8 @@ public class ProgressBuilder {
      * Sets the {@code progressInPercent} and {@code value} of the Progress we are building with the current attributes.
      */
     private void setProgressPercentAndValue() {
+        assert this.numCompletedTasks <= this.totalTasks;
+
         this.progressInPercent = (int) (((double) numCompletedTasks / totalTasks) * 100);
         this.value = this.numCompletedTasks + "/" + this.totalTasks;
     }

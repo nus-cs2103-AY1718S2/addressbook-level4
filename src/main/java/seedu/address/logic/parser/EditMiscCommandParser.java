@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditMiscCommand;
 import seedu.address.logic.commands.EditMiscCommand.EditMiscDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-
+//@@author samuelloh
 /**
  * Parses input arguments and creates a new EditMiscCommand object
  */
@@ -54,3 +54,4 @@ public class EditMiscCommandParser implements Parser<EditMiscCommand> {
         return new EditMiscCommand(index, editMiscDescriptor);
     }
 }
+//@@author

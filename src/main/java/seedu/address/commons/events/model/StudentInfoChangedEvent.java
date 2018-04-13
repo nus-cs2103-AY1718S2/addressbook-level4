@@ -1,5 +1,6 @@
 package seedu.address.commons.events.model;
 
+//@@author samuelloh
 import seedu.address.commons.events.BaseEvent;
 
 /**
@@ -12,3 +13,4 @@ public class StudentInfoChangedEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 }
+//@@author

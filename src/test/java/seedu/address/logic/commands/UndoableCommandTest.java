@@ -14,6 +14,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.Schedule;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 
@@ -62,6 +63,8 @@ public class UndoableCommandTest {
                 model.deleteStudent(studentToDelete);
             } catch (StudentNotFoundException pnfe) {
                 fail("Impossible: studentToDelete was retrieved from model.");
+            } catch (LessonNotFoundException pnfe) {
+                fail("Impossible: Lessons associated with studentToDelete was retrieved from model.");
             }
             return new CommandResult("");
         }

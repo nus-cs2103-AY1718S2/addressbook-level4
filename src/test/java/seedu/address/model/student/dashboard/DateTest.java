@@ -43,9 +43,12 @@ public class DateTest {
         assertFalse(Date.isValidDate("01/02/2018 22:1")); // minute with 1 digit
         assertFalse(Date.isValidDate("01/02/2018 22:111")); // minute with 3 digits
 
-        // invalid values
+        // invalid calendar date
         assertFalse(Date.isValidDate("32/02/2018 22:11")); // invalid day
         assertFalse(Date.isValidDate("01/13/2018 22:11")); // invalid month
+        assertFalse(Date.isValidDate("29/02/2018 22:11")); // non-existent day
+
+        // invalid time
         assertFalse(Date.isValidDate("01/02/2018 24:11")); // invalid hour
         assertFalse(Date.isValidDate("01/02/2018 22:61")); // invalid minutes
 

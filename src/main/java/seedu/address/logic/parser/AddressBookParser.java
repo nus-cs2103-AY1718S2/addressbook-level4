@@ -75,16 +75,16 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
-
+        //@@author demitycho
         case AddLessonCommand.COMMAND_WORD:
             return new AddLessonCommandParser().parse(arguments);
-
+        //@@author yapni
         case AddMilestoneCommand.COMMAND_WORD:
             return new AddMilestoneCommandParser().parse(arguments);
 
         case AddTaskCommand.COMMAND_WORD:
             return new AddTaskCommandParser().parse(arguments);
-
+        //@@author
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
@@ -93,16 +93,16 @@ public class AddressBookParser {
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
-
+        //@@author demitycho
         case DeleteLessonCommand.COMMAND_WORD:
             return new DeleteLessonCommandParser().parse(arguments);
-
+        //@@author yapni
         case DeleteMilestoneCommand.COMMAND_WORD:
             return new DeleteMilestoneCommandParser().parse(arguments);
 
         case DeleteTaskCommand.COMMAND_WORD:
             return new DeleteTaskCommandParser().parse(arguments);
-
+        //@@author
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
@@ -111,19 +111,19 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
-
+        //@@author demitycho
         case FindTagCommand.COMMAND_WORD:
             return new FindTagCommandParser().parse(arguments);
-
+        //@@author
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
-
+        //@@author demitycho
         case LoginCommand.COMMAND_WORD:
             return new LoginCommand();
 
         case LogoutCommand.COMMAND_WORD:
             return new LogoutCommand();
-
+        //@author
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
@@ -138,34 +138,34 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
-
+        //@@author demitycho
         case ScheduleCommand.COMMAND_WORD:
             return new ScheduleCommand();
 
         case SyncCommand.COMMAND_WORD:
             return new SyncCommand();
-
+        //@@author
         case UnfavouriteCommand.COMMAND_WORD:
             return new UnfavouriteCommandParser().parse(arguments);
 
-        //@@ samuelloh
+        //@@author samuelloh
         case EditPictureCommand.COMMAND_WORD:
             return new EditPictureCommandParser().parse(arguments);
 
-        //@@ samuelloh
+
+        //@@author samuelloh
         case MoreInfoCommand.COMMAND_WORD:
             return new MoreInfoCommandParser().parse(arguments);
 
-        //@@ smauelloh
+        //@@author smauelloh
         case EditMiscCommand.COMMAND_WORD:
             return new EditMiscCommandParser().parse(arguments);
-
+        //@@author yapni
         case ShowDashboardCommand.COMMAND_WORD:
             return new ShowDashboardCommandParser().parse(arguments);
-
         case CheckTaskCommand.COMMAND_WORD:
             return new CheckTaskCommandParser().parse(arguments);
-
+        //@@author
         default:
             //@@author chweeee
             /**
@@ -231,7 +231,7 @@ public class AddressBookParser {
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
-            //@@ author
+            //@@author
         }
     }
 }

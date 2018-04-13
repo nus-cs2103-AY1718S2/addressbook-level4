@@ -19,19 +19,26 @@ By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-Codeducator is a desktop address book and scheduling application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Codeducator is a desktop address book and scheduling application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. +
+
+You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. +
+Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer. You can download the latest Java release https://java.com/en/download/[here].
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `W09-B3-Coeducator.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Codeducator app.
+
+[TIP]
+You may use create a folder called `Codeducator` on your `Desktop`, or in `My Documents` folder
+
+.  Double-click the file to start the app. You should see the application open in a appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
@@ -49,18 +56,45 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [[Features]]
 == Features
 
+Codeducator has many awesome features to help out coding tutors, it may be pretty scary for a first time user. +
+
+Don't fret! This user guide will show you the many simple commands that will help you go from zero to a Codeducator hero! +
+
+The subsequent sections of the user guide provides a step by step walk-through of all the commands that Codeducator has to offer.
+
+
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Words in `UPPER_CASE` are the _parameters_ to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in square brackets are _optional_ e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times. In addition, the item be left out completely. e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend` or `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
+
+Got it? Good! Let's get started on Codeducator! +
+
 === Basic Commands
 ==== Viewing help : `help`
 
+Feeling lost and not sure what to do? Can't remember the usage of the command? +
+You can type the help command and Codeducator will open this user guide in-application for your convenience. Don't be afraid to ask for help!
+
 Format: `help`
+
+[big]#Steps Taken#
+
+. Type help into the command box, and press Enter to execute it. +
+
+.Typing help into command box +
+image::helpStep1.png[width="790"]
+
+[start=2]
+. The help window will appear as shown. +
+
+.Help box as shown.
+image::helpResult.png[width="790"]
+
 
 ==== Listing entered commands : `history`
 
@@ -323,30 +357,52 @@ Selects the 1st student in the results of the `find` command.
 
 === Schedule
 
+Scheduling is a major feature of Codeducator. To help tutors manage their student lessons, Codeducator has implemented a Schedule component that keeps track of your student lessons on a weekly basis. Codeducator assumes you have regular lessons on a weekly basis. +
+
+.What you will see as a Schedule +
+image::scheduleDiagramUG.png[width="790"]
+
+The Schedule comprises of Lessons. A Lesson represents the tutoring lesson session you will have with a Student in your Contacts List.  +
+
+The Lesson is displayed with +
+
+. The displayed Lesson Index
+. The Student with whom you wil be having the Lesson with.
+
 ==== Viewing your schedule : `schedule`
 
-Shows your weekly schedule as a list of lessons. Displays lessons in chronological order. +
+Need a quick refresh of what lessons you have in the week? Coming from another panel? You can easily view your Schedule with a simple command. +
 Format: `schedule`
 
-[NOTE]
-Currently displayed in the CommandResult Dialogue box. UI will be added in coming weeks.
+[large]*Steps Taken* +
+
+. Enter `schedule` into the command box.
+
+.Executing the `schedule` command +
+image::scheduleResult.png[width="790"]
+
+[start=2]
+. See your schedule in full glory.
+
 
 ==== Adding a lesson to your schedule: `addLesson`
 
-Adds a lesson to your schedule for a student identified by the index number in the last student listing. +
+Your Student needs extra lessons? Got new Students that want lessons? Codeducator will allow you to add Lessons to your schedule.
+
 Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]`
 
-****
 * Adds a lesson for the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
-* The day for the input is the abbreviated first three letters (non-case sensitive) of the name of day, i.e. `mon` for Monday, `fri` for Friday.
+* The day for the input is the abbreviated first three letters (_non-case sensitive_) of the name of day, i.e. `mon` for Monday, `fri` for Friday.
 * The time input must be in the format `HH:MM`, seperated by a colon `:`
-* The time input must be a valid 24-hour time within the range of `00:00` to `23:59`
-* Input lesson cannot clash with existing lessons already in the `Schedule`
+* The time input must be a _valid 24-hour time_ within the range of `00:00` to `23:59`
+* Input lesson _cannot clash_ with existing lessons already in the `Schedule`
 * Lessons will be added in chronological order to your `Schedule`
-****
 
 [NOTE]
-Overnight lessons i.e. `st/23:30 et/00:30` cannot be held. It is assumed that people lead normal lives and work between 00:00 and 23:59 fo the same day.
+--
+* Overnight lessons i.e. `st/23:30 et/00:30` cannot be held. It is assumed that people lead normal lives and work between 00:00 and 23:59 of the same day. +
+* If you need to add a lesson that ends at midnight, enter `23:59`.
+--
 
 Examples:
 
@@ -358,6 +414,8 @@ Adds a lesson for the 1st student of the `list` command. Lesson will be held on 
 * `find Betsy` +
 `addLesson 1 d/tue st/12:00 et/13:30` +
 Adds a lesson for the 1st student of the `find Betsy` command. Lesson will be held on the day of `tue` and starting time will be `12:00` and ending time will be `13:30`.
+
+[
 
 ==== Deleting a lesson in your schedule: `deleteLesson`
 
@@ -445,7 +503,7 @@ Format: `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE`
 * Adds a milestone to the dashboard of a student at the specified `STUDENT_INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-* The milestone due date must be in this format: *DD/MM/YYYY HH:MM* where HH:MM is in 24-hour time notation
+* The milestone due date must be in this format: *DD/MM/YYYY hh:mm* where DD/MM/YYYY is the calendar date and hh:mm is the time in 24-hour notation
 ****
 
 [TIP]
@@ -554,7 +612,8 @@ Marks the 3rd task in the 2nd milestone as completed. The milestone is in the da
 Marks the 4th task in the 3rd milestone as completed. The milestone is in the dashboard of the 2nd student in the results of the `find` command.
 // end::dashboard[]
 
-=== Student Profile Picture
+// tag:profilePage[]
+=== Student Profile Page
 ==== Full information page for each student : `moreInfo`
 
 Displays the full information of a student on the browser panel. This includes his/her profile picture if one exists. +
@@ -608,9 +667,13 @@ Examples:
 * `editMisc 1 al/Nuts r/Fast learner` +
 Edits the allergies information and remarks information of the 1st student to be `Nuts` and `Fast learner` respectively.
 
+//end:profilePage[]
+
 
 === Coming in v2.0
 ==== Track student's homework in the dashboard `[coming in v2.0]`
+
+==== Find student's by their miscellaneous information `[coming in v2.0]`
 
 == Interacting using free-form English
 

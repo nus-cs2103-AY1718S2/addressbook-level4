@@ -14,9 +14,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlySchedule;
 
+//@@author demitycho
 /**
  * A class to access Schedule data stored as an xml file on the hard disk.
- * TODO: fix all of Schedule storage
  */
 public class XmlScheduleStorage implements ScheduleStorage {
 

@@ -6,7 +6,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.MoreInfoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
+//@@author samuelloh
 /**
  * Parses input arguments and creates a new MoreInfoCommand object
  */
@@ -28,4 +28,4 @@ public class MoreInfoCommandParser implements Parser<MoreInfoCommand> {
     }
 
 }
-
+//@@author

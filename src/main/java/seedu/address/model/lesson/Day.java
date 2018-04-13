@@ -3,9 +3,14 @@ package seedu.address.model.lesson;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
+import java.util.Date;
 import java.util.HashMap;
 
+import org.joda.time.LocalDate;
+
+//@@author demitycho
 /**
  * Represents a Student's day in a lesson in the Schedule.
  * Guarantees: immutable; is valid as declared in {@link #isValidDay String)}
@@ -49,12 +54,12 @@ public class Day implements Comparable<Day> {
     public final String value;
 
     /**
-     * Builds the {@code dayToIntMap} for the integer value of the day in week
-     * Week starts on Monday, with value of 1, end on Sunday, with value of 7
+     * 1. Builds the {@code dayToIntMap} for the integer value of the day in week
+     *    Week starts on Monday, with value of 1, end on Sunday, with value of 7
      *
-     * Builds the {@code dayToFullDayMap} for short form to long form names of days,
+     * 2. Builds the {@code dayToFullDayMap} for short form to long form names of days,
      *
-     * Builds the {@code dayToDayOfWeekEnumMap} for use with Google Calendar upload
+     * 3. Builds the {@code dayToDayOfWeekEnumMap} for use with Google Calendar upload
      */
     static {
         dayToIntMap.put(STRING_MON, INTEGER_MON);
@@ -115,7 +120,24 @@ public class Day implements Comparable<Day> {
         return dayToFullDayMap.get(this.value);
     }
 
+    /**
+     * Gets a DateTime dateString formatted in dd/MM/yyyy
+     * @return
+     */
+    public String toDateString() {
+        LocalDate now = new LocalDate();
+        LocalDate day = now.withDayOfWeek(dayToIntValue(this.toString()));
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = format1.parse(day.toString());
+            return format2.format(date).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return "01/01/1994";
+    }
     @Override
     public String toString() {
         return value;

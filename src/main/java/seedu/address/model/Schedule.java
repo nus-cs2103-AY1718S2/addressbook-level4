@@ -9,11 +9,12 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.LessonList;
+import seedu.address.model.lesson.Time;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
-
+//@@author demitycho
 /**
  * Wraps all data at the schedule level
  * Duplicates are not allowed (by .equals comparison)
@@ -38,7 +39,8 @@ public class Schedule implements ReadOnlySchedule {
      * @param lessonToBeAdded
      * @throws InvalidLessonTimeSlotException if invalid
      */
-    public void addLesson(Lesson lessonToBeAdded) throws InvalidLessonTimeSlotException {
+    public void addLesson(Lesson lessonToBeAdded)
+            throws InvalidLessonTimeSlotException, DuplicateLessonException {
         if (!isValidSlot(lessonToBeAdded)) {
             throw new InvalidLessonTimeSlotException();
         }
@@ -71,25 +73,7 @@ public class Schedule implements ReadOnlySchedule {
     }
 
     /**
-     * Prints the schedule as a list
-     */
-    public String print(AddressBook addressBook) {
-        addressBook.printAll();
-        int index = 1;
-        Student student;
-        String finalMessage = "\n" + this.toString();
-        System.out.println(this.toString());
-        printAll();
-        for (Lesson l : lessons) {
-            student = addressBook.findStudentByKey(l.getUniqueKey());
-            String message = index++ + " " + student.getName() +  " " + l.toString();
-            finalMessage = finalMessage + "\n" + message;
-            System.out.println(message);
-        }
-        return finalMessage;
-    }
-    /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code Schedule} with {@code newData}.
      */
     public void resetData(ReadOnlySchedule newData) {
         requireNonNull(newData);
@@ -117,12 +101,52 @@ public class Schedule implements ReadOnlySchedule {
                     + " " + l.getStartTime() + " " + l.getEndTime());
         }
     }
-    //// util methods
 
+    /**
+     * Deletes all Lessons in LessonList associated with a Student {@code UniqueKey key}
+     * @param target
+     * @throws LessonNotFoundException
+     */
+    public void removeStudentLessons(Student target) throws LessonNotFoundException {
+        lessons.removeStudentLessons(target);
+
+    }
+
+    /**
+     * Finds the latest EndTime in the Schedule
+     * @return
+     */
+    @Override
+    public Time getLatestEndTime() {
+        Time latest = new Time("00:00");
+        for (Lesson l : lessons) {
+            if (l.getEndTime().compareTo(latest) > 0) {
+                latest = l.getEndTime();
+            }
+        }
+        return latest;
+    }
+
+    /**
+     * Finds the earliest StartTime in the Schedule
+     * @return
+     */
+    @Override
+    public Time getEarliestStartTime() {
+        Time earliest = new Time("23:59");
+
+        for (Lesson l : lessons) {
+            if (l.getStartTime().compareTo(earliest) < 0) {
+                earliest = l.getStartTime();
+            }
+        }
+        return earliest;
+    }
+
+    //// util methods
     @Override
     public String toString() {
         return lessons.asObservableList().size() + " lessons";
-        // TODO: refine later
     }
 
     @Override

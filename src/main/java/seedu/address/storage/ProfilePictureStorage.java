@@ -1,7 +1,7 @@
 package seedu.address.storage;
 
 import java.io.File;
-
+//@@author samuelloh
 /**
  * Stores the profile pictures of students
  */
@@ -27,3 +27,4 @@ public class ProfilePictureStorage {
 
 
 }
+//@@author

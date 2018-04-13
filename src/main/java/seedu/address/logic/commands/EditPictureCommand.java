@@ -23,13 +23,14 @@ import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.MiscellaneousInfo;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 
 /**
  * Edits the profile picture of an existing student in the address book.
  */
-//@@author samuel
+//@@author samuelloh
 public class EditPictureCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "editPicture";
@@ -44,7 +45,6 @@ public class EditPictureCommand extends UndoableCommand {
             + PREFIX_INDEX + "C:\\example.jpg";
 
     public static final String MESSAGE_EDIT_STUDENT_SUCCESS = "Edited profile picture of Student: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "Error in editing profile picture.";
     private final Index index;
     private final ProfilePicturePath newProfilePicturePath;
 
@@ -88,7 +88,7 @@ public class EditPictureCommand extends UndoableCommand {
     }
     /**
      * Creates and returns a {@code Student} with the details of {@code studentToEdit}
-     * edited with the new {@code profilePicturePath}.
+     * edited with the new picture from {@code profilePicturePath}.
      */
     private Student createPictureEditedStudent(Student studentToEditPicture) {
         Name name = studentToEditPicture.getName();
@@ -102,13 +102,15 @@ public class EditPictureCommand extends UndoableCommand {
         Dashboard dashboard = studentToEditPicture.getDashboard();
         ProfilePicturePath profilePicturePath = this.newProfilePicturePath;
 
+        MiscellaneousInfo miscellaneousInfo = studentToEditPicture.getMiscellaneousInfo();
+
         return new Student(uniqueKey, name, phone, email, address, programmingLanguage,
-                tags, isFavourite, dashboard, profilePicturePath);
+                tags, isFavourite, dashboard, profilePicturePath, miscellaneousInfo);
     }
 
     /**
      * Creates and returns a {@code Student} with the details of {@code studentToEdit}
-     * edited with the designated path for the profile picture in addressbook.
+     * edited with the designated path for the profile picture in the data storage.
      */
     private Student createFinalEditedStudent(Student studentToEdit) {
         Name name = studentToEdit.getName();
@@ -120,12 +122,13 @@ public class EditPictureCommand extends UndoableCommand {
         Set<Tag> tags = studentToEdit.getTags();
         Favourite isFavourite = studentToEdit.getFavourite();
         Dashboard dashboard = studentToEdit.getDashboard();
-        ProfilePicturePath profilePicturePath = new ProfilePicturePath("/data/profilePictures/"
+        ProfilePicturePath profilePicturePath = new ProfilePicturePath("data/profilePictures/"
                     + uniqueKey.toString() + this.newProfilePicturePath.getExtension());
 
+        MiscellaneousInfo miscellaneousInfo = studentToEdit.getMiscellaneousInfo();
 
         return new Student(uniqueKey, name, phone, email, address, programmingLanguage,
-                tags, isFavourite, dashboard, profilePicturePath);
+                tags, isFavourite, dashboard, profilePicturePath, miscellaneousInfo);
     }
 
 

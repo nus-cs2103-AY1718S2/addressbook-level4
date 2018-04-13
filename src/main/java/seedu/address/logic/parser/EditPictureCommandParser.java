@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditPictureCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
-
+//@@author samuelloh
 /**
  * Parses input arguments and creates a new EditPictureCommand object
  */
@@ -53,4 +53,4 @@ public class EditPictureCommandParser implements Parser<EditPictureCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }
-
+//@@author

@@ -33,7 +33,7 @@ import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.student.miscellaneousinfo.Remarks;
 import seedu.address.model.tag.Tag;
 
-//@@author samuel
+//@@author samuelloh
 /**
  * Edits the miscellaneous info of an existing student in the address book.
  */

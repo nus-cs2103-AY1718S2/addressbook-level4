@@ -1,6 +1,6 @@
 package seedu.address.model.student.miscellaneousinfo;
 
-//@@author samuel
+//@@author samuelloh
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -58,4 +58,4 @@ public class Remarks {
         return value;
     }
 }
-//@@ author samuel
+//@@author

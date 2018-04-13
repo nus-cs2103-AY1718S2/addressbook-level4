@@ -14,16 +14,16 @@
 
 <fx:root minHeight="600" minWidth="450" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <icons>
-    <Image url="@/images/address_book_32.png" />
+    <Image url="@/images/codeducator_32.png" />
   </icons>
   <scene>
     <Scene>
       <stylesheets>
-        <URL value="@DarkTheme.css" />
+        <URL value="@main.css" />
         <URL value="@Extensions.css" />
       </stylesheets>
 
-      <VBox>
+      <VBox fx:id="details">
         <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
           <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
@@ -41,23 +41,24 @@
 
         <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
           <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
+            <Insets bottom="5" left="20" right="20" top="5" />
           </padding>
         </StackPane>
 
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
           <VBox fx:id="studentList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
-              <Insets bottom="10" left="10" right="10" top="10" />
+              <Insets bottom="10" left="20" right="0" top="10" />
             </padding>
             <StackPane fx:id="studentListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
 
           <StackPane fx:id="infoPanelPlaceholder" prefWidth="340">
             <padding>
-              <Insets bottom="10" left="10" right="10" top="10" />
+              <Insets bottom="10" left="20" right="30" top="10" />
             </padding>
           </StackPane>
+
         </SplitPane>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

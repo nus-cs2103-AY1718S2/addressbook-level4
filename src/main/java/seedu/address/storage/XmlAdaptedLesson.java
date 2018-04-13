@@ -10,6 +10,7 @@ import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.student.UniqueKey;
 
+//@@author demitycho
 /**
  * JAXB-friendly version of the Lesson.
  */

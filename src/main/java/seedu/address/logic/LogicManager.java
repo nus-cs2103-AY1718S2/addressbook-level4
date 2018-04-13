@@ -11,6 +11,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.student.Student;
 
 /**
@@ -53,5 +55,15 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    @Override
+    public ReadOnlySchedule getSchedule() {
+        return model.getSchedule();
+    }
+
+    @Override
+    public ReadOnlyAddressBook getAddressBook() {
+        return model.getAddressBook();
     }
 }

@@ -2,16 +2,6 @@
 <html>
 <head>
     <link rel="stylesheet" href="StudentInfoTheme.css">
-	<style>
-table,th,td {
-  border : 1px solid black;
-  border-collapse: collapse;
-  font-size: 20px;
-}
-th,td {
-  padding: 5px;
-}
-</style>
 
 </head>
 
@@ -43,7 +33,7 @@ th,td {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script language="JavaScript" type="text/javascript">
-
+//@@author samuelloh
 function test(){
 	document.write(location.href);
 }
@@ -117,7 +107,8 @@ function loadAddressBook() {
 	var profilePicturePath = studentInfo[index].getElementsByTagName("profilePicturePath")[0].childNodes[0].nodeValue;
 	var imageSourcePart1;
 
-	if (profilePicturePath == "profile_photo_placeholder.png") {
+	if (profilePicturePath == "data\\view\\profile_photo_placeholder.png") {
+		var profilePicturePath = profilePicturePath.substring(10);
 		imageSourcePart1 = "<img src='";
 	} else {
 		imageSourcePart1 = "<img src='../../";
@@ -144,6 +135,7 @@ function loadAddressBook() {
 	document.getElementById("remarks").innerHTML = remarks;
 
 	}
+//@@author
 </script>
 
 

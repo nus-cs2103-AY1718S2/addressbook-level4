@@ -1,8 +1,10 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.exceptions.StorageFileMissingException.STORAGE_FILE_MISSING;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -20,6 +22,8 @@ import seedu.address.commons.events.model.StudentInfoChangedEvent;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.storage.ProfilePictureChangeEvent;
 import seedu.address.commons.events.storage.RequiredStudentIndexChangeEvent;
+import seedu.address.commons.exceptions.StorageFileMissingException;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.external.GServiceManager;
 import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.lesson.Day;
@@ -65,9 +69,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyAddressBook newData, ReadOnlySchedule newSchedule) {
         addressBook.resetData(newData);
+        schedule.resetData(newSchedule);
+        indicateStudentInfoChanged();
         indicateAddressBookChanged();
+        indicateScheduleChanged();
     }
 
     @Override
@@ -81,7 +88,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteStudent(Student target) throws StudentNotFoundException {
+    public synchronized void deleteStudent(Student target)
+            throws StudentNotFoundException, LessonNotFoundException {
+        schedule.removeStudentLessons(target);
+        indicateScheduleChanged();
         addressBook.removeStudent(target);
         indicateAddressBookChanged();
     }
@@ -94,7 +104,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-
     @Override
     public void updateStudent(Student target, Student editedStudent)
             throws DuplicateStudentException, StudentNotFoundException {
@@ -103,6 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateStudent(target, editedStudent);
         indicateAddressBookChanged();
         indicateStudentInfoChanged();
+        indicateScheduleChanged();
     }
 
 
@@ -122,7 +132,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private void indicateScheduleChanged() {
-        raise(new ScheduleChangedEvent(schedule));
+        raise(new ScheduleChangedEvent(schedule, addressBook));
+        raise(new AddressBookChangedEvent(addressBook));
     }
 
     /**
@@ -135,20 +146,37 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Schedule getSchedule() {
+    public ReadOnlySchedule getSchedule() {
         return schedule;
     }
 
+    //@@author samuelloh
     /**
      * Displays Student details on a browser panel in the UI
      * @param target
      * @throws StudentNotFoundException
      */
-    public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
+    public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException,
+            StorageFileMissingException {
         addressBook.checkForStudentInAdressBook(target);
+        checkIfStorageFileExists();
         indicateRequiredStudentIndexChange(filteredStudents.indexOf(target));
         indicateBrowserPanelToDisplayStudent(target);
     }
+
+    /**
+     * Checks if the xml file containing student's data exists.
+     * @throws StorageFileMissingException
+     */
+    private void checkIfStorageFileExists() throws StorageFileMissingException {
+        if (FileUtil.isFileExists(new File("data/addressBook.xml"))) {
+            return;
+        }
+        throw new StorageFileMissingException(STORAGE_FILE_MISSING);
+
+    }
+
+    /** Raises an event to indicate that real xml data is required for moreInfo to function */
 
     /** Raises an event to indicate Browser Panel display changed to display student's information */
     private void indicateBrowserPanelToDisplayStudent(Student target) {
@@ -163,11 +191,6 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate an update of the student index required at the moment in storage */
     private void indicateRequiredStudentIndexChange(int studentIndex) {
         raise(new RequiredStudentIndexChangeEvent(studentIndex));
-    }
-
-    @Override
-    public String printSchedule() {
-        return schedule.print(addressBook);
     }
 
     @Override
@@ -187,6 +210,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateProfilePictureChange(Student target) {
         raise(new ProfilePictureChangeEvent(target));
     }
+    //@@author
 
     //=========== Filtered Student List Accessors =============================================================
 

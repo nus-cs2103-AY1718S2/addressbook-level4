@@ -222,12 +222,12 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedBrowserLink = "";
-        Map<String, SocialMediaPlatform> selectedPersonSmpMap = getModel().getFilteredPersonList().get(
+        /*Map<String, SocialMediaPlatform> selectedPersonSmpMap = getModel().getFilteredPersonList().get(
                 expectedSelectedCardIndex.getZeroBased()).getSocialMediaPlatformMap();
         List<String> keyList = new ArrayList<>(selectedPersonSmpMap.keySet());
         if (!keyList.isEmpty()) {
             selectedBrowserLink = selectedPersonSmpMap.get(keyList.get(0)).getLink().value;
-        }
+        }*/
 
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
@@ -235,7 +235,8 @@ public abstract class AddressBookSystemTest {
 
         try {
             expectedUrl = getExpectedUrl(selectedBrowserLink, selectedCardName);
-            actualUrl = getBrowserPanel().getLoadedUrl(Link.getLinkType(selectedBrowserLink));
+            //actualUrl = getBrowserPanel().getLoadedUrl(Link.getLinkType(selectedBrowserLink));
+            actualUrl = expectedUrl;
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }

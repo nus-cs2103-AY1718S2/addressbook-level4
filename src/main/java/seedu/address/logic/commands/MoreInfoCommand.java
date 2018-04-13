@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.StorageFileMissingException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -45,7 +46,10 @@ public class MoreInfoCommand extends Command {
 
         } catch (StudentNotFoundException e) {
             throw new AssertionError("The target student cannot be missing");
+        } catch (StorageFileMissingException e) {
+            throw new CommandException(e.getMessage());
         }
+
 
         return new CommandResult((String.format(MESSAGE_MOREINFO_STUDENT_SUCCESS, studentToGetInfoFrom.getName())));
     }

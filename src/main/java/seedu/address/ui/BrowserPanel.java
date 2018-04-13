@@ -62,8 +62,24 @@ public class BrowserPanel extends UiPart<Region> {
         String jarFolder = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation()
                 .getPath()).getParentFile().getPath().replace('\\', '/');
         String studentPageFilePath = "file:/" + jarFolder + "/data/view/" + STUDENT_MISC_INFO_PAGE;
-        loadPage(studentPageFilePath);
+        String finalPath = testIfFileExists(studentPageFilePath);
+        loadPage(finalPath);
 
+    }
+
+    /**
+     * Tests if the file with the specified filepath exists. This is to handle a directory issue when
+     * running the app in IDE instead of the Jar file.
+     */
+    private String testIfFileExists(String testPath) {
+        File toTest = new File(testPath.substring(6).replace("%20", " "));
+        if (!toTest.exists()) {
+            String resourceFile = MainApp.class.getResource(FXML_FILE_FOLDER).toExternalForm();
+            String mainFile =  resourceFile.substring(0, resourceFile.lastIndexOf("out"));
+            return new String(mainFile + "data/view/" + STUDENT_MISC_INFO_PAGE);
+        } else {
+            return testPath;
+        }
     }
 
 
@@ -109,6 +125,10 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleStudentInfoChangedEvent(StudentInfoChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        reloadPage();
+        String location = browser.getEngine().getLocation();
+        if (location.contains(STUDENT_MISC_INFO_PAGE)) {
+            reloadPage();
+        }
+
     }
 }

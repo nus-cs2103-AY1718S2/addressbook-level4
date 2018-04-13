@@ -23,6 +23,7 @@ import seedu.address.model.student.UniqueKey;
 import seedu.address.model.student.dashboard.Dashboard;
 import seedu.address.model.student.exceptions.DuplicateStudentException;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.MiscellaneousInfo;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.model.tag.Tag;
 
@@ -44,7 +45,6 @@ public class EditPictureCommand extends UndoableCommand {
             + PREFIX_INDEX + "C:\\example.jpg";
 
     public static final String MESSAGE_EDIT_STUDENT_SUCCESS = "Edited profile picture of Student: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "Error in editing profile picture.";
     private final Index index;
     private final ProfilePicturePath newProfilePicturePath;
 
@@ -102,8 +102,10 @@ public class EditPictureCommand extends UndoableCommand {
         Dashboard dashboard = studentToEditPicture.getDashboard();
         ProfilePicturePath profilePicturePath = this.newProfilePicturePath;
 
+        MiscellaneousInfo miscellaneousInfo = studentToEditPicture.getMiscellaneousInfo();
+
         return new Student(uniqueKey, name, phone, email, address, programmingLanguage,
-                tags, isFavourite, dashboard, profilePicturePath);
+                tags, isFavourite, dashboard, profilePicturePath, miscellaneousInfo);
     }
 
     /**
@@ -123,9 +125,10 @@ public class EditPictureCommand extends UndoableCommand {
         ProfilePicturePath profilePicturePath = new ProfilePicturePath("data/profilePictures/"
                     + uniqueKey.toString() + this.newProfilePicturePath.getExtension());
 
+        MiscellaneousInfo miscellaneousInfo = studentToEdit.getMiscellaneousInfo();
 
         return new Student(uniqueKey, name, phone, email, address, programmingLanguage,
-                tags, isFavourite, dashboard, profilePicturePath);
+                tags, isFavourite, dashboard, profilePicturePath, miscellaneousInfo);
     }
 
 

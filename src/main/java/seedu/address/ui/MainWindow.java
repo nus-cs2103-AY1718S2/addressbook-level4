@@ -17,7 +17,6 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.events.ui.ShowScheduleEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -120,7 +119,6 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         infoPanel = new InfoPanel();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
-        raise(new ShowScheduleEvent(logic.getSchedule(), logic.getAddressBook()));
 
         studentListPanel = new StudentListPanel(logic.getFilteredStudentList());
         studentListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());

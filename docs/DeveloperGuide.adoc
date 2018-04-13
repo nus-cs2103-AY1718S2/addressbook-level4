@@ -555,24 +555,32 @@ The editedStudent will have the new programming language attribute and will henc
 
 ==== Design Considerations
 
-===== Aspect: How to store `ProgrammingLanguage` for a `Student`
+[width="100%", cols="2, 2,4 ,2 ,4 "options="header",]
+|=======================================================================
+| Aspect | Alternative 1 (Current choice) | Pros (+)/ Cons(-) | Alternative 2 | Pros(+) / Cons(-)
+|*How to store `ProgrammingLanguage` for a `Student`*
+| Store as an attribute of Student. | + Easy to keep track of as well as modify.  +
+{empty} +
+- Coupling increases as more classes (`ProgrammingLanguage` and `Student`) are associated with each other.
+| Store as a separate list and have each student index in the UniqueStudentsList be mapped to each item in the list.
 
-* **Alternative 1 (current choice):** Store as an attribute of Student.
-** Pros: Easy to keep track of as well as modify.
-** Cons: Coupling increases as more classes (`ProgrammingLanguage` and `Student`) are associated with each other.
-* **Alternative 2:** Store as a separate list and have each student index in the UniqueStudentsList be mapped to each item in the list.
-** Pros: Less coupling so less need to refactor code
-** Cons: Might be messier to implement, especially if the UniqueStudentsList have it's students swapping indexes.
+| +  Less coupling so less need to refactor code +
+{empty} +
+- Might be messier to implement, especially if the UniqueStudentsList have it's students swapping indexes.
 
-===== Aspect: What command to add `ProgrammingLanguage` to `Student`
+|*What command to add `ProgrammingLanguage` to `Student`*
+| Implement it through the existing `add` command.
+| + Intuitive and the user does not have to learn an additional command +
+{empty} +
+- User will have to type a longer string for add command to include the programming language used by the student.
 
-* **Alternative 1 (current choice):** Implement it through the existing `add` command.
-** Pros: Intuitive and the user does not have to learn an additional command
-** Cons: User will have to type a longer string for add command to include the programming language used by the student.
-* **Alternative 2:** Implement it as a new command.
-** Pros: User will be able to add or modify `ProgrammingLanguage` one or possibly even a few students at their own discretion.
-** Cons: User will have to learn a new specific command and might also be slightly difficult to implement.
-//end::programmingLanguage[]
+| Implement it as a new command.
+| + User will be able to add or modify `ProgrammingLanguage` one or possibly even a few students at their own discretion. +
+{empty} +
+- User will have to learn a new specific command and might also be slightly difficult to implement.
+
+|=======================================================================
+
 
 //tag:profilePage[]
 === Profile Page feature
@@ -731,10 +739,10 @@ The method `createEditedStudent` creates the student wi
 
 ==== Design Considerations
 
-[width="100%", cols="2m, 2,4 ,2 ,4 "options="header",]
+[width="100%", cols="2, 2,4 ,2 ,4 "options="header",]
 |=======================================================================
 | Aspect | Alternative 1 (Current choice) | Pros (+)/ Cons(-) | Alternative 2 | Pros(+) / Cons(-)
-|`Displaying and styling the profile page of a student`
+|*Displaying and styling the profile page of a student*
 | Have it as a JavaScript function in the HTML file of the student's profile page. | + Able to directly read the XML data of students from the file.  +
 {empty} +
 - Have to export the required files and folder out of the jar file as the JavaScript is unable to retrieve files outside of the Jar folder.
@@ -742,7 +750,7 @@ The method `createEditedStudent` creates the student wi
 | + Able to read the student's data from the UniqueStudentList. +
 {empty} +
 - Might be more difficult and messy to implement in code.
-|`Editing the profile picture`
+|*Editing the profile picture*
 | Copy the picture file into the local jar directory.
 | + Ensures that the picture can still be loaded even when the original picture file is deleted. +
 {empty} +

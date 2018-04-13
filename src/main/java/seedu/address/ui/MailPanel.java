@@ -14,29 +14,50 @@ import com.sun.mail.imap.IMAPStore;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 
 /**
  * Mail panel
  */
 //@@author glorialaw
-public class MailPanel extends UiPart<Region> {
+public class MailPanel extends UiPart<VBox> {
     private static final String FXML = "EmailPanel.fxml";
 
+    @FXML
+    private Label loading;
     @FXML
     private ListView<EmailCard> emailListView;
 
     public MailPanel() throws MessagingException, IOException {
         super(FXML);
-        setConnections();
+
+        Task<Void> fetchEmails = new Task<Void>() {
+            @Override
+            protected Void call() {
+                setConnections();
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                MailPanel.this.getRoot().getChildren().remove(0);
+            }
+
+        };
+
+        new Thread(fetchEmails).start();
+
         registerAsAnEventHandler(this);
     }
 
     private void setConnections() {
+        loading.setText("Loading Emails...");
         //gets the list of messages
         System.out.println("In set Connections");
         ObservableList<EmailCard> emailList = FXCollections.observableArrayList();

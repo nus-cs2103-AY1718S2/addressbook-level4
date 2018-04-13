@@ -14,7 +14,7 @@ public class ToDoCard extends UiPart<Region> {
 
     private static final String FXML = "ToDoListCard.fxml";
 
-    public final ToDo todo;
+    public final ToDo toDo;
 
     @FXML
     private HBox cardPane;
@@ -25,16 +25,16 @@ public class ToDoCard extends UiPart<Region> {
     @FXML
     private Label id;
 
-    public ToDoCard(ToDo todo, int displayedIndex) {
+    public ToDoCard(ToDo toDo, int displayedIndex) {
         super(FXML);
-        this.todo = todo;
+        this.toDo = toDo;
         id.setText(displayedIndex + ". ");
-        content.setText(todo.getContent().value);
-        status.setText(todo.getStatus().value);
+        content.setText(toDo.getContent().value);
+        status.setText(toDo.getStatus().value);
     }
 
     public boolean isDone() {
-        return todo.getStatus().value.equals("done");
+        return toDo.getStatus().value.equals("done");
     }
 
     @Override
@@ -52,6 +52,6 @@ public class ToDoCard extends UiPart<Region> {
         // state check
         ToDoCard card = (ToDoCard) other;
         return id.getText().equals(card.id.getText())
-                && todo.equals(card.todo);
+                && toDo.equals(card.toDo);
     }
 }

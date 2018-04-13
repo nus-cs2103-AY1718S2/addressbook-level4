@@ -52,9 +52,9 @@ public class TypicalEvents {
                 throw new AssertionError("not possible");
             }
         }
-        for (ToDo todo : getTypicalToDos()) {
+        for (ToDo toDo : getTypicalToDos()) {
             try {
-                ab.addToDo(todo);
+                ab.addToDo(toDo);
             } catch (DuplicateToDoException e) {
                 throw new AssertionError("not possible");
             }

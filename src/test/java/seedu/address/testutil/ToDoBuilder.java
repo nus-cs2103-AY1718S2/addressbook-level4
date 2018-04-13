@@ -24,11 +24,11 @@ public class ToDoBuilder {
     }
 
     /**
-     * Initializes the ToDoBuilder with the data of {@code todoToCopy}.
+     * Initializes the ToDoBuilder with the data of {@code toDoToCopy}.
      */
-    public ToDoBuilder(ToDo todoToCopy) {
-        content = todoToCopy.getContent();
-        status = todoToCopy.getStatus();
+    public ToDoBuilder(ToDo toDoToCopy) {
+        content = toDoToCopy.getContent();
+        status = toDoToCopy.getStatus();
     }
 
     /**

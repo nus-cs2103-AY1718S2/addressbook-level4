@@ -76,6 +76,9 @@ public class UnlockCommand extends Command {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    /**
+     * handle the event to get the input password.
+     */
     @Subscribe
     private void handlePasswordEnteredEvent(PasswordEnteredEvent event) {
         this.password = event.getPassword();

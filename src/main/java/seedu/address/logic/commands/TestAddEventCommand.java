@@ -76,8 +76,6 @@ public class TestAddEventCommand extends Command {
         Person personToAddEvent = lastShownList.get(targetIndex.getZeroBased());
 
         // Build a new authorized API client service.
-        // Note: Do not confuse this class with the
-        //   com.google.api.services.calendar.model.Calendar class.
         com.google.api.services.calendar.Calendar service =
                 null;
         try {
@@ -105,24 +103,6 @@ public class TestAddEventCommand extends Command {
                 .setDateTime(endDateTime)
                 .setTimeZone("Asia/Singapore");
         event.setEnd(end);
-
-        String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
-        //event.setRecurrence(Arrays.asList(recurrence));
-
-        /*EventAttendee[] attendees = new EventAttendee[] {
-                new EventAttendee().setEmail("jjjsss@example.com"),
-                new EventAttendee().setEmail("dzzzssss@example.com"),
-        };
-        event.setAttendees(Arrays.asList(attendees));
-
-        EventReminder[] reminderOverrides = new EventReminder[] {
-                new EventReminder().setMethod("email").setMinutes(24 * 60),
-                new EventReminder().setMethod("popup").setMinutes(10),
-        };
-        Event.Reminders reminders = new Event.Reminders()
-                .setUseDefault(false)
-                .setOverrides(Arrays.asList(reminderOverrides));
-        event.setReminders(reminders);*/
 
         String calendarId = personToAddEvent.getCalendarId();
         Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);

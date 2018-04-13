@@ -430,42 +430,260 @@ The old `Review` value is obtained from `Person` _personToEdit_.
 `Review` uses JavaFX's `Dialog` to get the review input from the user instead of from command box.
 // end::emer7[]
 
+// tag::calendar[]
+=== Implementation of Calendars and Operations on Calendars
+==== Current Implementation
+
+To implement the calendars for employees, we use a third party source which is Google Calendar API, which allows to manage google
+calendars on desktop applications. The commands that relating to calendars are `addEvent`, `deleteEvent`, `todoList` and `authenET`.
+Below is the overall design:
+
+.Overall design relating to calendars
+image::calendarsystem.png[width="800"]
+
+[NOTE]
+Command `authenET` should be executed before all other commands if it is the first time to use E.T., because only when E.T. is authorized
+with one working google account, all other commands can be executed correctly.
+
+===== Implementation of `todoList` command
+
+. `AddressBookParser` is used to let the application accept `todoList` command.
+. `TodoListCommand` will firstly get the google calendar service through `Authentication`, then it will request google calendar service to retrieve all the events
+on the main calendar. After that, it will post an event to request to open a todo-list window. And post another event containing all the retrieved events.
+. `Uimanager` will handle the first event posted by `TodoListCommand` and show the `TodoListWindow`.
+. `TodoListWindow` will handle the second event posted by `TodoListCommand` and display all the events.
+
+Here is the code snippet of how `todoList` command executes:
+[source,java]
+----
+public CommandResult execute() {
+        // Build a new authorized API client service.
+        com.google.api.services.calendar.Calendar service =
+                null;
+        try {
+            service = Authentication.getCalendarService();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //retrieve events from the main calendar
+        String calendarId = "primary";
+        String pageToken = null;
+        do {
+            Events events = null;
+            try {
+                events = service.events().list(calendarId).setPageToken(pageToken).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            List<Event> items = events.getItems();
+            for (Event event : items) {
+                eventList.add(new ListEvent(event.getSummary(), event.getLocation(), event.getStart().getDateTime()));
+            }
+            pageToken = events.getNextPageToken();
+        } while (pageToken != null);
+        //post events
+        EventsCenter.getInstance().post(new ShowTodoListEvent());
+        EventsCenter.getInstance().post(new ShowTodoListDisplayContentEvent(eventList));
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+----
+
+Below is the sequence diagram for the execution of `todoList` command.
+
+.Sequence diagram of `todoList`
+image::todolist_seq.png[width="800"]
+
+===== Implementation of `addEvent`, `deleteEvent` and `authenET` commands
+
+As stated, `authenET` command is to be executed at the very beginning, and what it does is to sent a HTTP request through `Authentication` in order
+to authorize E.T.. It will then receive a status code and a content page which will be opened by the default browser to ask the permission of authorizing E.T..
+
+The implementation of  `addEvent` and `deleteEvent` commands are similar to `todoList` command, both require to first build a new authorized API calendar service.
+Then they will just sent request through the API service and all other things will be done at google side. Finally, they will do updates according to the request results.
+
+==== Design Considerations
+===== Aspect: Where to place the todo-list window
+* **Alternative 1 (current choice):** Make it as a pop-up window.
+** Pros: Easy to manage, as it is created at a new javaFX stage.
+** Cons: Cannot update information in pop-up windows, that is, if leave the todo-list window open and execute another `todoList` command, another todo-list
+window will pop up which contains the most up-to-date information, then the two windows may cause confusion.
+* **Alternative 2 ():** create a field called todo-list panel in `MainWindow`.
+** Pros: Every time execute `todoList` command, the information can be updated.
+** Cons: Need to re-structure the layout of MainWindow.
+
+// end::calendar[]
+
 // tag::lockunlock[]
-=== Lock and unlock Employees Tracker
+=== Lock and Unlock system
+==== Current Implementation
 
-`lock` command is used to lock the application and hide information.
+The Lock and Unlock system is facilitated by maintaining a password inside `LogicManager` at runtime, and also maintaining
+the password in storage when application is closed. It allows to lock the application (hiding information) while keeping the application
+running, and unlock it to resume at anytime.
 
-The details of implementation of `lock` command are as follow:
+The password is stored as a field annotated as `@XmlElement` in `XmlSerializableAddressBook`, and is been read and converted to model type when the application
+is launched and saved at `LogicManager` in which the password can be handled at runtime.
+
+Below is the overall design of Lock and Unlock system, lines in blue, red and green are for event posting and handling.
+
+.Overall design of lock and unlock system
+image::lockunlocksystem.png[width="800"]
+
+===== Implementation of `lock` command
+The logic flow of `lock` command is:
 
 . `AddressBookParser` is used to let the application accept `lock` command.
-. `LockCommand` is used to set the state of the application to be locked, and post an event to indicate the application is locked and should not
-show any information now.
-. `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
+. `LockCommandParser` is to make sure no other extra inputs are entered besides the command word `lock`. Refer to the first code snippet below.
+. `LockCommand` is used to set the state of the application to be locked, and post an event to indicate the application is locked such that
+no information should be shown now. Note the `DetailPanel` is the handler of the event. There are mainly two parts that need to be hidden: `PersonList` and `DetailPanel`. Refer to the second code snippet below.
+. `LogicManager` is used to check the state and decide whether the application is locked or not, and decide the logic flow accordingly.
 
-`unlock` command is used to unlock the application.
+Below is how `LockCommandParser` deals with user input:
+[source,java]
+----
+public LockCommand parse(String args) throws ParseException {
+    if (!args.trim().isEmpty()) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+        LockCommand.MESSAGE_USAGE));
+    }
+    return new LockCommand();
+}
+----
 
-The details of implementation of `unlock` command are as follow:
+Below is the execution logic of `LockCommand`:
+[source,java]
+----
+public CommandResult execute() {
+    model.updateFilteredPersonList(predicate);
+    EventsCenter.getInstance().post(new HideDetailPanelEvent());
+    LogicManager.lock();
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+
+The following sequence diagram shows how `lock` command works:
+
+[NOTE]
+The event posted by LockCommand should firstly be reacted by `EventsCenter` and then handled by `DetailPanel`,
+this step is removed for clearer viewing and without messing up the diagram.
+
+.Sequence Diagram for Lock Command
+image::lock_seq.jpg[width="800"]
+
+===== Implementation of `unlock` command
+
+The logic flow of `unlock` command is:
 
 . `AddressBookParser` is used to let the application accept `unlock` command.
-. `UnlockCommand` is used to post an event to pop up a password input dialog, get the password entered by user, and
-compare it with the application's unlock password to decide whether the unlock process is successful.
+. `UnlockCommandParser` is to make sure no other extra inputs are entered besides the command word `unlock`. Similar to `LockCommandParser`.
+. `UnlockCommand` is used to post an event requesting `MainWindow` to pop up a password input dialog, get the password entered by user, and
+compare it with the application's unlock password to decide whether the unlock process is successful. Refer to the code snippet below.
 . `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
+
+Below is the execution logic of `UnlockCommand`:
+[source,java]
+----
+    public CommandResult execute() {
+        if (!LogicManager.isLocked()) {
+            return new CommandResult("Employees Tracker is already unlocked!");
+        }
+        //post a event to show password input dialog.
+        EventsCenter.getInstance().post(new ShowPasswordFieldEvent());
+
+        // if the password is set to "nopassword", means no input got from user.
+        if (this.password.equals("nopassword")) {
+            return new CommandResult(MESSAGE_MISSING_PASSWORD);
+        }
+        //check if the entered password match the unlock password.
+        if (this.password.compareTo(LogicManager.getPassword()) == 0) {
+            LogicManager.unLock();
+            EventsCenter.getInstance().post(new AddressBookUnlockedEvent());
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            return new CommandResult(MESSAGE_INCORRECT_PASSWORD);
+        }
+    }
+
+    /**
+    * handle the event to get the input password.
+    */
+    @Subscribe
+    private void handlePasswordEnteredEvent(PasswordEnteredEvent event) {
+        this.password = event.getPassword();
+    }
+----
+
+The following sequence diagram shows how `unlock` command works:
+
+[NOTE]
+This is a simplified sequence diagram, the detail of the instantiation of `UnlockCommand` is removed, because it is similar to that of
+`LockCommand`. Note that both `MainWindow` and `UnlockCommand` are event handler, which is indicated by the two post method and the
+blue activation bar in the diagram, and the interaction with `EventsCenter` is also omitted like before.
+
+.Sequence Diagram for Unlock Command
+image::unlock_seq.jpg[width="800"]
+
+===== Implementation of `setPassword` command
+
+This command is used to set new unlock password of the application, which is also part of
+the Lock and Unlock system. The implementation of `setPassword` command is similar to that of `unlock` command, but additionally,
+`setPassword` command requires to update the password in both model and storage.
+
+The logic flow of `setPassword` command is:
+
+. `AddressBookParser` is used to let the application accept `setPassword` command.
+. `SetPasswordCommandParser` is to make sure no other extra inputs are entered besides the command word `setPassword`. Similar to `LockCommandParser`.
+. `SetPasswordCommand` is used to post an event requesting `MainWindow` to pop up a password input dialog, get the passwords (old password and new password) entered by user, and
+compare the old password with the application's current unlock password to decide whether they match. If match, then update the password in both `LogicManager` and storage. Refer to the code snippet below.
+
+[source,java]
+----
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowSetPasswordDialogEvent());
+        //check if all password input fields are inputed by user.
+        if (!isComplete) {
+            return new CommandResult(MESSAGE_INCOMPLETE_FIELD);
+        }
+        //check if the old password match the current one.
+        if (this.oldPassword.compareTo(LogicManager.getPassword()) == 0) {
+            LogicManager.setPassword(this.newPassword);
+            model.setPassword(this.newPassword);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            return new CommandResult(MESSAGE_INCORRECT_OLDPASSWORD);
+        }
+    }
+----
+
+==== Design Considerations
+===== Aspect: How to input password values
+* **Alternative 1 (current choice):** Input all password in dialogs.
+** Pros: It is more secure as all password inputs in dialogs can be invisible.
+** Cons: Need the cooperation with UI to pop up the dialogs, which makes it harder to implement.
+* **Alternative 2 (old version):** Just let the passwords be the command parameters.
+** Pros: Easy to achieve as only need to parse the inputs in command parser to get the passwords.
+** Cons: Not so secure, because the password inputs are all visible like the command word, and someone else may accidentally see them.
+
+===== Aspect: Way of showing the password input dialog
+* **Alternative 1 (current choice):** Post an event to request MainWindow to show the Dialog.
+** Pros: It is good to comply with the Events-Driven nature of the application's design, making the design more cohesive and less coupling.
+** Cons: Events-Driven design is routine-less. Need to put extra effort to control the events. As the application grows, there are more events posted
+and it is necessary to control these events well to prevent events messing up.
+* **Alternative 2:** Just add a static method in MainWindow that will show the Dialog.
+** Pros: Simpler implementation than current one, no need extra effort for controlling.
+** Cons: The static method could not use the non-static attributes in MainWindow, as a result, need extra effort to deal with referencing non-static variables.
+
+===== Aspect: How to store the password in storage
+* **Alternative 1 (current choice):** Password is a visible field in storage in plaintext.
+** Pros: Easy to retrieve and update the password in storage.
+** Cons: Not secure because password is visible in plaintext.
+* **Alternative 2:** Password is still visible but encrypted.
+** Pros: Though password is visible, it it encrypted and one can only get the correct password by getting the encryption key. It is more secure.
+** Cons: Every time load the password from data, need to decrypt it and every time update it in storage, need to encrypt it.
+Also need to keep the encryption key secret.
+
 // end::lockunlock[]
-
-// tag::calendar[]
-=== Assign a timetable to every employee
-
-To implement the timetables for employees, we use a third party source which is Google Calendar API. With this API, we
-can integrate the application with Google Calendar, and achieve things liking creating events through application commands as what we usually do on
-Google Calendar website. The import of Google Calendar API is simple: just add the necessary
-dependencies in Build.gradle and which will import the external libraries after building.
-
-After we have the API, what we need to do is just automatically creating a new timetable (calendar) for every employee
-at the time this employee was added to Employees Tracker.
-
-Additionally, as everyone has their own unique timetables, a new field called `CalendarId` will be created for each
-employee, to indicate their associated timetables.
-// end::calendar[]
 
 === Add events on anyone's timetable
 

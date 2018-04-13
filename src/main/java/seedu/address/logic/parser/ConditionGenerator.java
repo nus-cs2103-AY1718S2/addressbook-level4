@@ -4,14 +4,20 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.conditions.AmountCondition.CompareMode;
+import seedu.address.logic.conditions.AmountChangeCondition.CompareMode;
+import seedu.address.logic.conditions.AmountHeldChangeCondition;
 import seedu.address.logic.conditions.AmountHeldCondition;
 import seedu.address.logic.conditions.CodeCondition;
+import seedu.address.logic.conditions.CurrentPriceChangeCondition;
 import seedu.address.logic.conditions.CurrentPriceCondition;
+import seedu.address.logic.conditions.DollarsBoughtChangeCondition;
 import seedu.address.logic.conditions.DollarsBoughtCondition;
+import seedu.address.logic.conditions.DollarsSoldChangeCondition;
 import seedu.address.logic.conditions.DollarsSoldCondition;
+import seedu.address.logic.conditions.MadeChangeCondition;
 import seedu.address.logic.conditions.MadeCondition;
 import seedu.address.logic.conditions.TagCondition;
+import seedu.address.logic.conditions.WorthChangeCondition;
 import seedu.address.logic.conditions.WorthCondition;
 import seedu.address.model.coin.Amount;
 import seedu.address.model.coin.Coin;
@@ -100,42 +106,66 @@ public class ConditionGenerator {
         case PREFIX_HELD_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new AmountHeldCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new AmountHeldCondition(specifiedAmount, amountComparator);
+            } else {
+                return new AmountHeldChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_SOLD:
         case PREFIX_SOLD_RISE:
         case PREFIX_SOLD_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new DollarsSoldCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new DollarsSoldCondition(specifiedAmount, amountComparator);
+            } else {
+                return new DollarsSoldChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_BOUGHT:
         case PREFIX_BOUGHT_RISE:
         case PREFIX_BOUGHT_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new DollarsBoughtCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new DollarsBoughtCondition(specifiedAmount, amountComparator);
+            } else {
+                return new DollarsBoughtChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_MADE:
         case PREFIX_MADE_RISE:
         case PREFIX_MADE_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new MadeCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new MadeCondition(specifiedAmount, amountComparator);
+            } else {
+                return new MadeChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_PRICE:
         case PREFIX_PRICE_RISE:
         case PREFIX_PRICE_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new CurrentPriceCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new CurrentPriceCondition(specifiedAmount, amountComparator);
+            } else {
+                return new CurrentPriceChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_WORTH:
         case PREFIX_WORTH_RISE:
         case PREFIX_WORTH_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new WorthCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new WorthCondition(specifiedAmount, amountComparator);
+            } else {
+                return new WorthChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_CODE:
             return new CodeCondition(tokenStack.popToken().getPattern());
@@ -152,14 +182,6 @@ public class ConditionGenerator {
 
     private CompareMode getCompareModeFromType(TokenType type) {
         switch (type) {
-        case PREFIX_HELD:
-        case PREFIX_SOLD:
-        case PREFIX_BOUGHT:
-        case PREFIX_MADE:
-        case PREFIX_PRICE:
-        case PREFIX_WORTH:
-            return CompareMode.EQUALS;
-
         case PREFIX_HELD_RISE:
         case PREFIX_SOLD_RISE:
         case PREFIX_BOUGHT_RISE:

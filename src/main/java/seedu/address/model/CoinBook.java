@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.CoinChangedEvent;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.coin.Price;
 import seedu.address.model.coin.UniqueCoinList;
@@ -113,6 +115,7 @@ public class CoinBook implements ReadOnlyCoinBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any coin
         // in the coin list.
+        EventsCenter.getInstance().post(new CoinChangedEvent(target, editedCoin));
         coins.setCoin(target, syncedEditedCoin);
     }
 

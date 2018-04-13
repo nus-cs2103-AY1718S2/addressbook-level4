@@ -25,6 +25,8 @@ public class Coin {
 
     private final UniqueTagList tags;
 
+    private Coin prevState;
+
     /**
      * Every field must be present and not null.
      */
@@ -57,6 +59,7 @@ public class Coin {
 
     /**
      * Copy constructor for coins.
+     * Sets previous state to copied coin.
      */
     public Coin(Coin toCopy) {
         requireAllNonNull(toCopy);
@@ -68,11 +71,13 @@ public class Coin {
         this.totalAmountBought = new Amount(toCopy.getTotalAmountBought());
         this.totalDollarsSold = new Amount(toCopy.getTotalDollarsSold());
         this.totalDollarsBought = new Amount(toCopy.getTotalDollarsBought());
+        prevState = toCopy;
     }
 
     //@@author laichengyu
     /**
      * Copy constructor with price update.
+     * Sets previous state to copied coin.
      */
     public Coin(Coin toCopy, Price newPrice) {
         requireAllNonNull(toCopy);
@@ -84,11 +89,13 @@ public class Coin {
         this.totalAmountBought = new Amount(toCopy.getTotalAmountBought());
         this.totalDollarsSold = new Amount(toCopy.getTotalDollarsSold());
         this.totalDollarsBought = new Amount(toCopy.getTotalDollarsBought());
+        prevState = toCopy;
     }
     //@@author
 
     /**
      * Copy constructor with update.
+     * Sets previous state to copied coin.
      */
     public Coin(Coin toCopy, Code code, Set<Tag> tags) {
         requireAllNonNull(toCopy, code, tags);
@@ -100,6 +107,14 @@ public class Coin {
         this.totalAmountBought = new Amount(toCopy.getTotalAmountBought());
         this.totalDollarsSold = new Amount(toCopy.getTotalDollarsSold());
         this.totalDollarsBought = new Amount(toCopy.getTotalDollarsBought());
+        prevState = toCopy;
+    }
+
+    /**
+     * Gets the previous state of this coin
+     */
+    public Coin getPrevState() {
+        return prevState;
     }
 
     public Code getCode() {
@@ -175,6 +190,14 @@ public class Coin {
      */
     public Coin getChangeFrom(Coin initialCoin) {
         return null;
+    }
+
+    public Coin getChangeFromPrev() {
+        return getChangeFrom(prevState);
+    }
+
+    public Coin getChangeToPrev() {
+        return prevState.getChangeFrom(this);
     }
     //@@author
 

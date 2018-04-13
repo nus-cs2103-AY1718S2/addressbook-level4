@@ -19,8 +19,8 @@ public class AmountHeldCondition extends AmountCondition {
     public static final TokenType PREFIX = PREFIX_HELD;
     public static final TokenType PARAMETER_TYPE = NUM;
 
-    public AmountHeldCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
+    public AmountHeldCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
+        super(amount, amountComparator);
     }
 
     @Override

@@ -9,21 +9,17 @@ import seedu.address.model.coin.Coin;
  */
 public class CoinChangedEvent extends BaseEvent {
 
-    public final Coin oldCoin;
-    public final Coin newCoin;
+    private static final String FORMAT_STRING = "Coin changed [%1$s] -> [%2$s]";
 
-    /** Pseudo-coin record that represents the change made.
-     *  @see Coin#getChangeFrom(Coin)} */
-    public final Coin delCoin;
+    public final Coin data;
 
     public CoinChangedEvent(Coin oldCoin, Coin newCoin) {
-        this.oldCoin = oldCoin;
-        this.newCoin = newCoin;
-        this.delCoin = newCoin.getChangeFrom(oldCoin);
+        assert(newCoin.getPrevState().equals(oldCoin));
+        this.data = newCoin;
     }
 
     @Override
     public String toString() {
-        return "coin changed ";
+        return String.format(FORMAT_STRING, data.getPrevState(), data);
     }
 }

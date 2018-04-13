@@ -12,23 +12,12 @@ import seedu.address.model.coin.Coin;
  */
 public abstract class AmountCondition implements Predicate<Coin> {
 
-    /**
-     * Indicates whether to compare absolute or change
-     */
-    public enum CompareMode {
-        EQUALS,
-        RISE,
-        FALL
-    }
-
     protected BiPredicate<Amount, Amount> amountComparator;
     protected Amount amount;
-    protected CompareMode compareMode;
 
-    public AmountCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
+    public AmountCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
         this.amount = amount;
         this.amountComparator = amountComparator;
-        this.compareMode = compareMode;
     }
 
     public abstract boolean test(Coin coin);

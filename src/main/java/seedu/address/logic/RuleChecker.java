@@ -11,14 +11,16 @@ import seedu.address.commons.events.model.CoinChangedEvent;
 import seedu.address.commons.events.model.RuleBookChangedEvent;
 import seedu.address.model.ReadOnlyRuleBook;
 import seedu.address.model.RuleBook;
-import seedu.address.model.rule.NotificationRule;
 import seedu.address.model.rule.Rule;
 
 /**
  * Receives events to check against the rule book triggers.
  */
 public class RuleChecker {
+
     private static final Logger logger = LogsCenter.getLogger(RuleChecker.class);
+    private static final String MESSAGE_PROCESS_RULE = "Found %1$s";
+
     private final RuleBook rules;
 
     public RuleChecker(ReadOnlyRuleBook rules) {
@@ -37,9 +39,9 @@ public class RuleChecker {
         for (Rule r : rules.getRuleList()) {
             switch (r.type) {
             case NOTIFICATION:
-                NotificationRule nRule = (NotificationRule) r;
-                nRule.checkAndFire(cce.newCoin);
+                r.checkAndFire(cce.data);
                 break;
+
             default:
                 throw new RuntimeException("Unexpected code path!");
             }

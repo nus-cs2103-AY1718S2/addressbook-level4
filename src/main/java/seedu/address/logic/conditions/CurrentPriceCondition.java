@@ -20,8 +20,8 @@ public class CurrentPriceCondition extends AmountCondition {
     public static final TokenType PARAMETER_TYPE = NUM;
 
 
-    public CurrentPriceCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
+    public CurrentPriceCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
+        super(amount, amountComparator);
     }
 
     @Override

@@ -19,14 +19,12 @@ public class DollarsBoughtCondition extends AmountCondition {
     public static final TokenType PREFIX = PREFIX_BOUGHT;
     public static final TokenType PARAMETER_TYPE = NUM;
 
-    public DollarsBoughtCondition(Amount amount,
-                                  BiPredicate<Amount, Amount> amountComparator,
-                                  CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
+    public DollarsBoughtCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
+        super(amount, amountComparator);
     }
 
     @Override
     public boolean test(Coin coin) {
-        return amountComparator.test(coin.getTotalAmountBought(), amount);
+        return amountComparator.test(coin.getTotalDollarsBought(), amount);
     }
 }

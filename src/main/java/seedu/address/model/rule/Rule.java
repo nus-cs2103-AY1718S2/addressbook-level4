@@ -4,7 +4,9 @@ package seedu.address.model.rule;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -17,6 +19,9 @@ public class Rule<T> {
 
     public static final String MESSAGE_RULE_INVALID = "Rule description is invalid";
     private static final String RULE_FORMAT_STRING = "[%1$s]%2$s";
+    private static final String MESSAGE_FIRED = "[Rule Match] %1$s <==> %2$s";
+
+    private static final Logger logger = LogsCenter.getLogger(Rule.class);
 
     public final RuleType type;
     public final String description;
@@ -56,9 +61,10 @@ public class Rule<T> {
 
         try {
             action.execute();
+            logger.info(String.format(MESSAGE_FIRED, this, t));
             return true;
         } catch (CommandException e) {
-            e.printStackTrace();
+            logger.warning(e.getMessage());
             return false;
         }
     }

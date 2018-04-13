@@ -139,7 +139,41 @@ is specified when adding a customer.
 // end::commandsummary[]
 == Feature details
 
-=== Showing command history : `history`
+=== Displaying the home view : kbd:[F1] [[home]]
+
+[NOTE]
+====
+* Utilising this keyboard shortcut will display the home view.
+** The CommandBox will be empty and focused (will be ready to receive input).
+** The ResultDisplay will show a welcome message.
+** The BrowserPanel will display a list of commands, as well as their respective aliases and
+keyboard shortcuts.
+====
+<<Command Summary, Back to Command Summary>>
+
+***
+=== Displaying all Runners and Customers : `list`, kbd:[F2] [[list]]
+
+*[.underline]#Syntax:#*
+====
+ list
+====
+
+[NOTE]
+====
+* This command will display all `Runners` and `Customers` in the database.
+* The `Runners` and `Customers` will be displayed in the order they were added into the database,
+with the latest addition at the bottom.
+====
+<<Command Summary, Back to Command Summary>>
+
+***
+=== Showing command history : `history`, kbd:[F3] [[history]]
+
+*[.underline]#Syntax:#*
+====
+ history
+====
 
 [NOTE]
 ====
@@ -230,6 +264,18 @@ _Assigns the Customers associated with indices `2`, `5`, `8` to the Runner assoc
 ***
 //@@author
 //@@author jonleeyz
+=== Clearing the database : `clear`, kbd:[Ctrl+Shift+C] [[clear]]
+
+*[.underline]#Syntax:#*
+====
+ clear
+====
+
+[NOTE]
+====
+* This command will clear all `Runners` and `Customers` from the database.
+* This command may be undone.
+====
 <<Command Summary, Back to Command Summary>>
 
 ***

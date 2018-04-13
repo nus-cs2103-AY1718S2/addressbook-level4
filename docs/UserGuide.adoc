@@ -54,10 +54,6 @@ The various menu items have keyboard shortcuts that can be used to speed up your
 
 //@@author melvintzw
 == Known Issues
-* Deleting a customer will not update any Runner whose customer list contains that customer
-[functionality not yet implemented - coming in v1.5].
-* Deleting a runner will not update any Customer whose Runner field contains that runner
-[functionality not yet implemented - coming in v1.5].
 * Default date is January 1, 1970 (default Java Date value), when no start date or due date
 is specified when adding a customer.
 //@@author
@@ -251,10 +247,9 @@ _Deletes the first person in the results of the `find` command._
 ** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* Only fields common to both Customer and Runner can be edited (NAME, PHONE, EMAIL, ADDRESS)
-* Functionality to edit Customer-specific fields, such as MONEY_OWED, INTEREST_RATE, etc..., will come in v2.0
 * When editing tags, the existing tags of the person will be replaced i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t:` without specifying any tags after it.
+* You cannot Edit a Runner with Customer-only fields
 ====
 
 *Usage examples:*
@@ -321,8 +316,17 @@ _Returns all persons with phone number "91234567"._
 
 [NOTE]
 ====
-* This command identifies a person by name, email, phone or tags and displays their address using Google Maps.
-* For details on the specifiers and parameters, refer to the <<Searching for relevant persons : `find` [since v1.1], find command section>>.
+* This command searches for relevant persons with the specified information.
+* Name, phone, email, address and tags are searched by default (no `SPECIFIER` or `-all` `SPECIFIERS`)
+* `Customer` and `Runner` specific fields cannot be searched.
+* Only one `SPECIFIER` can be used at a time.
+* If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
+* Description of `SPECIFIERS`:
+** `-n` to search only names.
+** `-p` to search only phones.
+** `-e` to search only emails.
+** `-a` to search only addresses.
+** `-t` to search only tags.
 * Alternatively, this command displays the given address and displays the person associated with that address in the PersonListPanel.
 ====
 
@@ -331,13 +335,25 @@ _Returns all persons with phone number "91234567"._
 ====
  locate David
 
-_Locates the person with name "David" and displays his address on Google Maps._
+_Locates any persons with name, address or tag "David" and displays the address associated with the first result on Google Maps._
 ====
 
 ====
- locate Blk 30
+ locate -n David
+
+_Locates any persons with name "David" and displays the address associated with the first result on Google Maps._
+====
+
+====
+ locate -a Blk 30
 
 _Locates the address "Blk 30" on Google Maps and displays the person with that address in the PersonListPanel._
+====
+
+====
+ locate -p 91234567
+
+_Locates any persons with phone number "91234567" and displays the address associated with the first result on Google Maps._
 ====
 ***
 === Redoing the previously undone command : `redo`

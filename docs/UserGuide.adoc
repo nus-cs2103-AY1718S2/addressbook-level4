@@ -675,7 +675,7 @@ Edits the allergies information and remarks information of the 1st student to be
 
 ==== Find student's by their miscellaneous information `[coming in v2.0]`
 
-// tag::NLP[]
+//tag::NLP[]
 == Interacting using free-form English
 
 CodEducator also allows you to use features of the applications using everyday english sentences, without the need to remember specific command words.

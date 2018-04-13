@@ -9,7 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author chweeee
 /**
- * purpose of this class is to be able to send userInput as text to the chatbot to be processed
+ * purpose of this class is to be able to send userInput as text to the agent to be processed
  **/
 public class ConversationCommand extends Command {
 

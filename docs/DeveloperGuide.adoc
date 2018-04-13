@@ -361,12 +361,34 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+[[Implementation-Configuration]]
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
+
+== Features Implementation
 
 // tag::favourites[]
 === Favourites feature
@@ -413,8 +435,9 @@ To mark a `Student` object called "studentToFavourite" as favourite:
 
 // tag::location[]
 === Location feature
-==== Current Implementation
 Selecting a student using the `select` command will render their location on google maps.
+
+==== Current Implementation
 
 The address of the student is extracted and converted in a string to be appended to the end of the `SEARCH_PAGE_URL` in the following function
 
@@ -428,7 +451,7 @@ The address of the student is extracted and converted in a string to be appended
 
 An example is provided below when `select 1` is entered as a command:
 
-image::location_screenshot.png[width="300"]
+image::location_ss.png[width="600"]
 
 ==== Design Considerations
 
@@ -822,25 +845,95 @@ As seen from the above diagram,
 
 // end::dashboard[]
 
-=== Logging
+// tag::nlp[]
+=== Natural Language Processing capabilities
+Allows users to invoke features using free-form english, apart from keywords specific to each feature.
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+==== Current implementation
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
+An AI bot(agent) that is trained to process sentences based on the features integrated is into the application.
+Its primary goal is to identify the user's intention of the input and match it with a corresponding feature which the
+user wishes to use.
 
-*Logging Levels*
+A new class `ConversationCommand` is written to process sentences that do not match the syntax of any features.
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+===== Making API calls via the REST API
+The method below, written using the IBM Watson™ Assistant service API, is used to make the API call to the agent.
+The `userInput` field contains the sentence that the user inputs.
+----
+    public static MessageResponse getMessageResponse(String userInput) {
+        MessageResponse response = null;
 
-[[Implementation-Configuration]]
-=== Configuration
+        InputData input = new InputData.Builder(userInput).build();
+        MessageOptions option = new MessageOptions.Builder("19f7b6f4-7944-419d-83a0-6bf9837ec333").input(input).build();
+        response = service.message(option).execute();
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+        return response;
+    }
+----
+===== Intents and Entities
+
+*Intents* refers to the intention behind the input of the user and *entities* refer to objects of interest e.g. name, address, location
+
+The agent is integrated into the `AddressBookParser` class and the following code snippet deciphers the *intents*
+and the *entity* embedded in the user's input.
+
+----
+            //processes the userInput
+            response = ConversationCommand.getMessageResponse(userInput);
+            intents = response.getIntents();
+            entities = response.getEntities();
+
+            for (int i = 0; i < intents.size(); i++) {
+                intention = intents.get(i).getIntent();
+            }
+
+            if (entities.size() != 0) {
+                for (int i = 0; i < intents.size(); i++) {
+                    entity = entities.get(i).getValue();
+                }
+            }
+----
+
+[IMPORTANT]
+Every single input always has an *intent*, but that is not the case for *entities*!
+
+For further clarification, refer to the screenshot below:
+
+.Example of an intention and an entity, with its corresponding value. The intention is `Select` and the entity refers to the name of a person, which takes on a value of `Jason` in this particular case.
+image::debug_message.png[width="700"]
+
+===== Matching the desired command
+After identifying the *intent* and *entities* (if present) in the user's input, the corresponding features matching intent is called,
+passing any *entities* as parameters to the feature's method.
+
+.Following the example in Figure 12, the `select` command is invoked, passing `Jason` as a parameter, after the intent and entity is identified.
+
+image::Select(after).png[width="650"]
+
+==== Design Consideration
+
+===== Aspect: Selection of an appropriate third-party APIs to implement NLP
+* Alternative 1 (current choice): IBM Watson™ Assistant service
+
+** Pros: Offers extensive NLP functions which are easy to implement. User-friendly interface allows ease of training of the model, which has high scalability
+
+** Cons: Lite version offers a limited number of API calls per month (10,000).
+
+* Alternative 2: Stanford CoreNLP
+
+** Pros: Possesses a powerful and comprehensive API, comprising of a set of stable and well-tested natural language processing tools, widely used by various groups in academia, industry, and government.
+
+** Cons: Highly modularised and requires in-depth knowledge of Machine-learning and Deep-learning to use effectively.
+
+* Alternative 3:Google Cloud Natural Language
+
+** Pros: Offers a variety of functions (Syntax Analysis, Entity Recognition, Sentiment Analysis etc.) and integrates REST API,
+ powerful enough to analyse texts properly and texts can be uploaded in the request or integrated with Google Cloud Storage.
+
+
+** Cons: difficult to implement and integrate properly into the application
+// end::nlp[]
 
 == Documentation
 
@@ -871,6 +964,7 @@ Here are the steps to convert the project documentation files to PDF format.
 
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
+
 
 [[Testing]]
 == Testing

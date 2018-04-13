@@ -328,7 +328,7 @@ Format: `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROB
 ****
 
 [TIP]
-If you have rated the student, existing scores will be overwritten when you use the `rate` command again.
+If you have rated the student, you will NOT be able to use the `rate` command on the same student again. Please use the `rating-edit` command to overwrite existing scores.
 
 Examples:
 
@@ -337,6 +337,48 @@ Rates the 1st person to have technical skills score of 4.5, communication skills
 * `rate 2 t/3 c/5 p/3.5 e/2` +
 Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2. The overall rating is computed to be 3.38.
 // end::rate[]
+
+// tag::rating-edit[]
+=== Editing the rating given to a student : `rating-edit` `[since v1.5]`
+
+Edits the rating given to the student identified by the index number used in the last person listing. +
+Format: `rating-edit INDEX [t/TECHNICAL_SKILLS_SCORE] [c/COMMUNICATION_SKILLS_SCORE] [p/PROBLEM_SOLVING_SKILLS_SCORE] [e/EXPERIENCE_SKILLS_SCORE]`
+
+****
+* Edits the rating of the student at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* such as 1, 2, 3, ...
+* At least one rating score must be edited.
+* The score(s) should be a number in the range of *1 to 5* (inclusive). Scores with more than two decimal places are rounded to *two decimal places*.
+* The overall rating of a student will be re-computed and rounded to two decimal places.
+****
+
+[TIP]
+If you have not rated the student, please use the `rate` command to assign new rating scores.
+
+Examples:
+
+* `rating-edit 1 t/4.5 p/4 e/3.5` +
+Edits the 1st person to have technical skills score of 4.5, problem solving skills of 4, experience score of 3.5.
+* `rating-edit 2 p/3.5` +
+Edits the 2nd person to have problem solving skills of 3.5.
+// end::ratingedit[]
+
+// tag::ratingdelete[]
+=== Deleting the rating given to a student : `rating-delete` `[since v1.2]`
+
+Deletes the rating given to the student identified by the index number used in the last person listing. +
+Format: `rating-delete INDEX`
+
+****
+* Deletes the rating of the applicant at the specified `INDEX`.
+* The index refers to the index number shown in the last person listing.
+* The index *must be a positive integer* such as 1, 2, 3, ...
+****
+
+Examples:
+
+* `rating-delete 1` +
+Deletes the rating of the first applicant in HR+.
+// end::ratingdelete[]
 
 // tag::sort[]
 === Sorting the list of students based on different fields : `sort` `[since v1.3]`
@@ -358,24 +400,6 @@ Sorts the current list of students according to their overall rating in ascendin
 * `sort gpa o/desc` +
 Sorts the current list of students according to their grade point average in descending order.
 // end::sort[]
-
-// tag::ratingdelete[]
-=== Deleting the rating given to an applicant : `rating-delete` `[since v1.2]`
-
-Deletes the rating given to the student identified by the index number used in the last person listing. +
-Format: `rating-delete INDEX`
-
-****
-* Deletes the rating of the applicant at the specified `INDEX`.
-* The index refers to the index number shown in the last person listing.
-* The index *must be a positive integer* such as 1, 2, 3, ...
-****
-
-Examples:
-
-* `rating-delete 1` +
-Deletes the rating of the first applicant in HR+.
-// end::ratingdelete[]
 
 // tag::status[]
 === Update applicant's status: `status` [Since v1.3]
@@ -524,10 +548,12 @@ e.g. `filter y/2019`
 e.g.`select 2`
 * *Rate* : `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE` +
 e.g. `rate 1 t/4.5 c/3 p/4 e/3.5`
-* *Sort* : `sort FIELD o/SORT ORDER` +
-e.g. `sort gpa o/asc`
+* *Edit Rating* : `rating-edit INDEX [t/TECHNICAL_SKILLS_SCORE] [c/COMMUNICATION_SKILLS_SCORE] [p/PROBLEM_SOLVING_SKILLS_SCORE] [e/EXPERIENCE_SKILLS_SCORE]` +
+e.g. `rating-edit 1 t/4.5 c/3`
 * *Delete Rating* : `rating-delete INDEX` +
 e.g. `rating-delete 1`
+* *Sort* : `sort FIELD o/SORT ORDER` +
+e.g. `sort gpa o/asc`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

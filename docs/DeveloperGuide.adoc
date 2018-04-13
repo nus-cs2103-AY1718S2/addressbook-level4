@@ -253,8 +253,8 @@ As shown above, execution of the `rate` command comprises the following steps:
 
 ===== Aspect: Implementation of adding and editing rating scores
 
-* **Alternative 1 (current choice):** Implement a new command class `RateCommand` that supports both adding and editing rating scores
-** Pros: Results in a more customisable command that can be easily modified to support more prefixes and additional rating criteria
+* **Alternative 1 (current choice):** Implement a new command class `RateCommand` that supports adding rating scores and `RatingEditCommand` to handle editing of rating scores
+** Pros: Results in more customisable commands that can be easily modified to support more prefixes and additional rating criteria
 ** Cons: Complicates the system as users need to familiarise themselves with more commands
 * **Alternative 2:** Extend the original `EditCommand` to allow it to add and modify rating scores of a student
 ** Pros: Minimises the number of commands users have to remember to execute tasks, making the application more user-friendly

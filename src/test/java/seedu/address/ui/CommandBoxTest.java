@@ -205,6 +205,19 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void commandBox_commandNoAutocompleteOptionAndPrefix() {
+        testAutocompleteForUserInput("clear ", -1, "n", 1, "");
+        testAutocompleteForUserInput("clear ", -1, "-", 1, "");
+        testAutocompleteForUserInput("list ", -1, " n", 1, "");
+        testAutocompleteForUserInput("list ", -1, "-", 1, "");
+        testAutocompleteForUserInput("exit ", -1, "n", 1, "");
+        testAutocompleteForUserInput("exit ", -1, "-", 1, "");
+        testAutocompleteForUserInput("help ", -1, "n", 1, "");
+        testAutocompleteForUserInput("help ", -1, "-", 1, "");
+
+    }
+
+    @Test
     public void commandBox_autocompleteOption() {
         testAutocompleteForUserInput("delete ", -1, "-", 3, "delete -fa");
         testAutocompleteForUserInput("delete ", -1, "-", 4, "delete -fo");
@@ -383,6 +396,14 @@ public class CommandBoxTest extends GuiUnitTest {
                 "add -a t/checkup");
         testAutocompleteForUserInput("add -a ", -1, "t/", 2,
                 "add -a t/vaccination");
+
+        // no option: all tags
+        testAutocompleteForUserInput("add ", -1, "t/", 2,
+                "add t/checkup");
+        testAutocompleteForUserInput("add ", -1, "t/", 3,
+                "add t/depression");
+        testAutocompleteForUserInput("add ", -1, "t/", 5,
+                "add t/owesMoney");
     }
 
     @Test

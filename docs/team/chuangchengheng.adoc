@@ -20,7 +20,7 @@ Media Socializer is a one-stop social media desktop application made to help use
 
 * *Minor enhancement*: added a findtag command that allows the user to find persons whose tags contain the input keywords.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-F12-B3/main/blob/master/collated/functional/KevinChuangCH.md[Functional code]] [https://github.com/CS2103JAN2018-F12-B3/main/blob/master/collated/test/KevinChuangCH.md[Test code]]
 
 * *Other contributions*:
 

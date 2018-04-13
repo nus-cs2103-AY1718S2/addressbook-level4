@@ -70,14 +70,14 @@ public class AddPatientQueueCommand extends UndoableCommand {
         try {
             actualSourceIndex = ParserUtil.parseIndex(actualIndexInString);
         } catch (IllegalValueException e) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new AssertionError("The target patient cannot be missing");
         }
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddPatientQueueCommand // instanceof handles nulls
+        return other == this
+                || (other instanceof AddPatientQueueCommand
                 && this.targetIndex.equals(((AddPatientQueueCommand) other).targetIndex));
     }
 }

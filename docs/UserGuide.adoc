@@ -24,6 +24,23 @@ _CoinBook_ is a desktop application that is made for users who prefer to work on
 _Coinbook_ allows you to store a portfolio of your cryptocurrency purchases as well as track the latest price trends and news, in addition to providing various
 tools to simplify and expedite your management process such as profit calculation.
 
+== How the program looks like
+
+The figure below (fig. 1) describes each section of the interface.
+
+.Main Layout Window
+image::LabelledUI.png[width="790"]
+
+1. File Menu - Contains the buttons to exit and bring up the Help window.
+2. Command prompt - Contains the text box for you to type your commands into.
+3. Response pane - Contains the text responses of the program. The responses are usually to either acknowledge user commands or to notify them that an error has occurred.
+4. Coin list pane - Contains the list of coin accounts that you currently own.
+5. Coin account - Contains information such coin such as the coin Code name. Additionally, to its right the amount that you currently hold, and below it are the tags and current price.
+6. Detail pane - Brings up the price chart and subreddit that is associated with the coin of your choice.
+7. Update status - Notifies you when was the last time you had synchronised your program to obtain the latest prices.
+8. Account counter - Indicates the current number of coin accounts you currently possess in CoinBook.
+9. Storage filepath - Shows the current file path at which the data is stored.
+
 == How to Use this Guide
 Read this document to get up and running fast with _CoinBook_. The first thing you need to do is to get it set up, by reading the <<Quick Start>> section. Once you have _CoinBook_ running, get to know the things you can do with it by reading the <<Features>> section. If you prefer to just have a quick overview of the available commands, skip to the <<Command Summary>> section.
 
@@ -312,7 +329,7 @@ Updates the listing to show only coin accounts whose details satisfy the given c
 ****
 * Possible query options are: +
 ** `n/NAME`:  Name of the coin [Coming in v2.0]
-** `c/CODE`: Trading code of the coin
+** `c/CODE`: Trading code of the coin (can be a substring, and is case insensitive)
 ** `t/TAG...`: Tags attached to the coin
 ** `p/PRICE`: Current price, in dollars, of the coin
 ** `h/AMOUNT`: Current amount, in coin units, held in an account
@@ -341,7 +358,7 @@ Finds accounts with `BT` in their code
 
 Finds accounts with the `fav` tag
 
- find (p/>500 t/fav) OR h/<20
+ find (p/>500 AND t/fav) OR h/<20
 
 Finds accounts either with current price more than $500 and tagged `fav`, or with less than 20 coins left
 //end::findcommand[]

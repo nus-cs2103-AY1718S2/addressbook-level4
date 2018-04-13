@@ -127,7 +127,7 @@ public class SyncCommand extends Command {
                     .get(CURRENCY_TYPE)
                     .getAsJsonObject()
                     .get("PRICE")
-                    .toString()));
+                    .getAsString()));
 
             priceObjs.put(code, newCurrentPrice);
         }

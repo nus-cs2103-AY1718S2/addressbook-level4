@@ -435,7 +435,7 @@ The Lesson is displayed with +
 . The displayed Lesson Index
 . The Student with whom you wil be having the Lesson with.
 
-==== Viewing your schedule : `schedule`
+==== Viewing your Schedule
 
 Need a quick refresh of what lessons you have in the week? Coming from another panel? You can easily view your Schedule with a simple command. +
 
@@ -450,7 +450,7 @@ image::scheduleResult.png[width="790"]
 +
 . See your schedule in full glory.
 
-==== Adding a lesson to your schedule: `addLesson`
+==== Adding a Lesson to your Schedule
 
 Your Student needs extra lessons? Got new Students that want lessons? Codeducator will allow you to add Lessons to your schedule.
 
@@ -501,7 +501,7 @@ image::addLessonStep2.png[width="790"]
 .Result of the `addLesson` command
 image::addLessonResult.png[width="790"]
 
-==== Deleting a lesson in your schedule: `deleteLesson`
+==== Deleting a Lesson in your Schedule
 
 Need to remove lessons because Students drop out? Let's use Codeducator's `deleteLesson` command to do that for you.
 
@@ -600,6 +600,7 @@ You are now ready to sync your account! +
 . Authorising Codeducator is important! Denying access will stop Codeducator from uploading data to your account.
 . If you have already logged in before without logging out, you may skip the Google login process by just simply typing in `login`.
 . If you do not successfully login , do wory! Just repeat the steps to login again.
+. Your stored credential may expire after a long period of not using Codeducator. Simply logout and re-login to re-authenticate. See <<Logging out of your Google Account>>
 ====
 
 ==== Syncing data with your Google Account
@@ -642,7 +643,7 @@ Format: `sync`
 .What my Google Contacts and Calendar look like before the sync
 image::syncStep00.png[width="790]
 +
-. View the schedule that you want to sync. See <<Viewing your schedule : `schedule`>>
+. View the schedule that you want to sync. See <<Viewing your schedule>>
 +
 .We will be using this example schedule
 image::syncStep0.png[width="790]

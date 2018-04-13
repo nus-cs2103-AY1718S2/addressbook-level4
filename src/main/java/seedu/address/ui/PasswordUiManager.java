@@ -118,6 +118,7 @@ public class PasswordUiManager extends ComponentManager implements Ui {
                 WRONG_PASSWORD_ERROR_DIALOG_CONTENT_MESSAGE);
     }
 
+    //@@author AzuraAir
     /**
      * Opens birthday notification
      * Called after UI is called

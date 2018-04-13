@@ -252,9 +252,7 @@ Deletes all non-clients added before 12/12/2017 in the address book.
 // end::deletebefore[]
 
 // tag::emailing[]
-
 ==== Emailing a person : `email` or `em`
-
 
 Emails a person based on the specified name.
 Format: `email KEYWORD TEMPLATE`
@@ -269,7 +267,6 @@ Format: `email KEYWORD TEMPLATE`
 // end::emailing[]
 
 // tag::templating[]
-
 ==== Creating a new template : `addTemplate` or `at`
 
 Creates a new template based on the specified purpose, subject and message.
@@ -325,14 +322,14 @@ Format: `import_contacts PATH.csv`
 
 For example `import_contacts ~/PATH/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv` at `PATH`.
 
-[Note]
+[NOTE]
 *The _command_ should meet the following conditions:*
 
 * Include the file extension `.csv` at the end of the file path
 * Use the *full* (not the _relative_) file path
 * _No need_ to include quotations ("...") around the file path
 
-[Note]
+[NOTE]
 *The `.csv` file from which you are importing the contacts should:*
 
 * Have 4 headers in the following order: Name, Email, Phone, Address. The header is simply the first row of the .csv
@@ -344,7 +341,7 @@ An example of a suitable import file format is shown below.
 image::import_file_example.png[width="700"]
 //end::import[]
 
-//tag:export[]
+//tag::export[]
 ==== Exporting contacts to CSV: `export_contacts` or `ec`
 
 Export all contacts to a .csv file.
@@ -391,7 +388,7 @@ Selects the 2nd person in the address book and shows the profile page of the per
 Selects the 1st person in the results of the `find` command and shows the profile page of the person.
 // end::select[]
 
-// tag::scheduling[]
+// tag::appointment[]
 === Scheduling Features
 
 TIP: The calendar view is optimized for fullscreen mode.
@@ -443,7 +440,9 @@ Examples:
 image::daScreenshot.png[width="800"]
 * `da n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate` +
 Deletes the appointment previously arranged with Betsy on 12/12/2017 from 12:30pm to 1:30pm at Gold Park Estate.
+// end::appointment[]
 
+// tag::zoomin[]
 ==== Zooming in calendar view : `zoomin` or `zi`
 
 Zooms in the calendar panel to show a more detailed calendar view  +
@@ -458,6 +457,7 @@ Examples:
 image::ziScreenshot.png[width="800"]
 * `zi` +
 If the calendar panel is previously showing the Month View, it will now be showing the Week View.
+// end::zoomin[]
 
 ==== Zooming out calendar view : `zoomout` or `zo`
 
@@ -474,6 +474,7 @@ image::zoScreenshot.png[width="800"]
 * `zo` +
 If the calendar panel is previously showing the Day View, it will now be showing the Week View.
 
+// tag::gobackward[]
 ==== Going backward on calendar view : `gobackward` or `gb`
 
 Makes the calendar view go backward in time from the currently displaying date. +
@@ -484,6 +485,7 @@ Examples:
 image::gbScreenshot.png[width="800"]
 * `gb` +
 If the calendar panel is currently displaying Day View for 02/02/2018, it will change the Day View to 01/02/2018
+// end::gobackward[]
 
 ==== Going forward on calendar view : `goforward` or `gf`
 
@@ -496,6 +498,7 @@ image::gfScreenshot.png[width="800"]
 * `gf` +
 If the calendar panel is currently displaying Day View for 02/02/2018, it will change the Day View to 03/02/2018
 
+// tag::schedulingv2.0[]
 ==== Finding an appointment : `findappointment` or `fa` `[Coming in v2.0]`
 
 Finds appointments with details containing any of the given keywords or part thereof. +
@@ -569,7 +572,7 @@ Examples:
 
 * `cc s/STYLE_2` +
 Set the calendar theme to the predefined `STYLE_2`.
-// end::scheduling[]
+// end::schedulingv2.0[]
 
 == FAQ
 

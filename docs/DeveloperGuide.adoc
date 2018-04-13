@@ -585,7 +585,7 @@ Besides, the commands related to this module are also implemented using the *Com
 The `Appointment` model is created to support the scheduling feature of the address book. It stores the information of appointments
 arranged by the user. The class diagram for the `Appointment` model is as follows:
 
-image::AppointmentClassDiagram.png[width="600", align="center"]
+image::AppointmentClassDiagram.png[width="400", align="center"]
 
 Similar to the `Person` model, the `Appointment` model consists of an `Appointment` class which has its attributes implemented as separate classes to
 observe the *Single Responsibility Principle*. The attributes include:
@@ -629,7 +629,7 @@ of an input date
 The calendar is implemented using third party libraries provided by https://github.com/dlemmermann/CalendarFX[CalendarFX].
 The calendar panel view is shown below:
 
-image::CalendarView.png[width="800", align="center"]
+image::CalendarView.png[width="650", align="center"]
 
 The setting up of the `CalendarView` is done by first creating a `Calendar` named _Appointments_ which is added to a `CalendarSource`.
 The `CalendarSource` is then added to the `CalendarView`. The implementation details are as shown in the following code snippet:
@@ -695,7 +695,7 @@ Besides, the function also disallows the creation of clashing appointments in ti
 
 Following is an activity diagram describing the flow of the add `Appointment` function:
 
-image::aaActivityDiagram.png[width="900", , align="center"]
+image::aaActivityDiagram.jpg[width="900", align="center"]
 
 ===== Design Considerations
 ====== Aspect: What `Event` to raise when adding a new `Appointment`?
@@ -715,7 +715,7 @@ implementation of the `DeleteAppointmentCommand` is similar to that of the `Dele
 
 Following is a sequence diagram describing how the delete `Appointment` function works:
 
-image::DeleteAppointmentSequenceDiagram.png[width="900", , align="center"]
+image::DeleteAppointmentSequenceDiagram.png[width="900", align="center"]
 
 ===== Design Considerations
 ====== Aspect: What fields to input when deleting an `Appointment`?
@@ -824,6 +824,7 @@ image::ImportContactDiagram.png[width="700"]
 
 //tag::export[]
 === Export Contacts to CSV file Function
+==== Current Implementation
 The exporting persons mechanism allows the user to write the current `Person` list from the `ReadOnlyAddressBook` to a .csv file. The core functionality of this mechanism is contained in the `ExportContactsCommand` class, with a parser written in `ExportContactsCommandParser`.
 
 If the user does not specify a file path, `ExportContactsCommand` will be default write to _data/exportToExisting.csv_. If the user specifies a path to a file that doesn't exist, `CSVPrinter` will create the .csv file and write to it.
@@ -833,6 +834,8 @@ If the user does not specify a file path, `ExportContactsCommand` will be defaul
 A diagram of the architecture is displayed below:
 
 image::ExportContactDiagram.png[width="700"]
+
+==== Design Consideration
 
 ===== Aspect: Implementation of `ImportContactsCommand.getCsvToWriteTo()`
 * **Alternative 1 (current choice):** Put the logic for `getCsvToWriteTo()` in a separate function that creates and returns a local `CSVPrinter` object.

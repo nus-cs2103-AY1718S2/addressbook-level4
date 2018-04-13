@@ -18,14 +18,11 @@ public class AccountBuilder {
     public static final String DEFAULT_PRIVILEGE_LEVEL = "2";
     public static final String DEFAULT_USERNAME = "victor";
     public static final String DEFAULT_PASSWORD = "victor123";
-    public static final String DEFAULT_CREDENTIAL = null;
 
     private Name name;
     private Credential credential;
     private MatricNumber matricNumber;
     private PrivilegeLevel privilegeLevel;
-    private Username username;
-    private Password password;
 
     /**
      *  Constructor for account with default values

@@ -431,10 +431,10 @@ The old `Review` value is obtained from `Person` _personToEdit_.
 // end::emer7[]
 
 // tag::calendar[]
-=== Implementation of Calendars and Operations on Calendars
+=== Calendars and Operations on Calendars
 ==== Current Implementation
 
-To implement the calendars for employees, we use a third party source which is Google Calendar API, which allows to manage google
+To implement the calendars for employees, a third party source has been used which is Google Calendar API, it allows to manage google
 calendars on desktop applications. The commands that relating to calendars are `addEvent`, `deleteEvent`, `todoList` and `authenET`.
 Below is the overall design:
 
@@ -447,10 +447,12 @@ with one working google account, all other commands can be executed correctly.
 
 ===== Implementation of `todoList` command
 
+The logic flow of `todoList` command is:
+
 . `AddressBookParser` is used to let the application accept `todoList` command.
 . `TodoListCommand` will firstly get the google calendar service through `Authentication`, then it will request google calendar service to retrieve all the events
-on the main calendar. After that, it will post an event to request to open a todo-list window. And post another event containing all the retrieved events.
-. `Uimanager` will handle the first event posted by `TodoListCommand` and show the `TodoListWindow`.
+on the main calendar. After that, it will post an event to request to open a todo-list window. And post another event containing all the retrieved events that are to be displayed.
+. `UiManager` will handle the first event posted by `TodoListCommand` and show the `TodoListWindow`.
 . `TodoListWindow` will handle the second event posted by `TodoListCommand` and display all the events.
 
 Here is the code snippet of how `todoList` command executes:
@@ -499,18 +501,26 @@ As stated, `authenET` command is to be executed at the very beginning, and what 
 to authorize E.T.. It will then receive a status code and a content page which will be opened by the default browser to ask the permission of authorizing E.T..
 
 The implementation of  `addEvent` and `deleteEvent` commands are similar to `todoList` command, both require to first build a new authorized API calendar service.
-Then they will just sent request through the API service and all other things will be done at google side. Finally, they will do updates according to the request results.
+Then they will just sent request through the API service and all other things will be done at google service side. Finally, they will do updates according to the request results.
 
 ==== Design Considerations
 ===== Aspect: Where to place the todo-list window
 * **Alternative 1 (current choice):** Make it as a pop-up window.
-** Pros: Easy to manage, as it is created at a new javaFX stage.
+** Pros: Easy to manage, it is relatively independent to main window as it is created at a new javaFX stage.
 ** Cons: Cannot update information in pop-up windows, that is, if leave the todo-list window open and execute another `todoList` command, another todo-list
 window will pop up which contains the most up-to-date information, then the two windows may cause confusion.
-* **Alternative 2 ():** create a field called todo-list panel in `MainWindow`.
-** Pros: Every time execute `todoList` command, the information can be updated.
+* **Alternative 2:** create a field called todo-list panel in `MainWindow`.
+** Pros: Every time execute `todoList` command, the information can be updated, without creating new windows.
 ** Cons: Need to re-structure the layout of MainWindow.
 
+===== Aspect: When and how to authorize E.T.
+* **Alternative 1 (current choice):** A dedicated command `authenET` to authorize E.T..
+** Pros: Make the logic more clear and systematic.
+** Cons: Single point of failure: if not execute `authenET` ahead, all other commands relating to calendars will not work.
+* **Alternative 2 (old version):** Every command goes through the authorization step to check if authorized.
+** Pros: No need extra command ahead, each command can execute independently.
+** Cons: A lot of unnecessary authorization processes, because this step is supposed to be run only once and all are set. The
+response time per command will be longer.
 // end::calendar[]
 
 // tag::lockunlock[]
@@ -519,12 +529,12 @@ window will pop up which contains the most up-to-date information, then the two 
 
 The Lock and Unlock system is facilitated by maintaining a password inside `LogicManager` at runtime, and also maintaining
 the password in storage when application is closed. It allows to lock the application (hiding information) while keeping the application
-running, and unlock it to resume at anytime.
+open, and unlock it to resume at anytime.
 
-The password is stored as a field annotated as `@XmlElement` in `XmlSerializableAddressBook`, and is been read and converted to model type when the application
-is launched and saved at `LogicManager` in which the password can be handled at runtime.
+The password is stored in storage as a field annotated as `@XmlElement` in `XmlSerializableAddressBook`, and is been read and converted to model type when the application
+is launched and kept at `LogicManager` in which the password can be handled at runtime.
 
-Below is the overall design of Lock and Unlock system, lines in blue, red and green are for event posting and handling.
+Below is the overall design of Lock and Unlock system. Arrows are representing logic flow and lines in blue, red and green are for event posting and handling.
 
 .Overall design of lock and unlock system
 image::lockunlocksystem.png[width="800"]
@@ -533,22 +543,10 @@ image::lockunlocksystem.png[width="800"]
 The logic flow of `lock` command is:
 
 . `AddressBookParser` is used to let the application accept `lock` command.
-. `LockCommandParser` is to make sure no other extra inputs are entered besides the command word `lock`. Refer to the first code snippet below.
+. `LockCommandParser` is to make sure no other extra inputs are entered besides the command word `lock`.
 . `LockCommand` is used to set the state of the application to be locked, and post an event to indicate the application is locked such that
-no information should be shown now. Note the `DetailPanel` is the handler of the event. There are mainly two parts that need to be hidden: `PersonList` and `DetailPanel`. Refer to the second code snippet below.
-. `LogicManager` is used to check the state and decide whether the application is locked or not, and decide the logic flow accordingly.
-
-Below is how `LockCommandParser` deals with user input:
-[source,java]
-----
-public LockCommand parse(String args) throws ParseException {
-    if (!args.trim().isEmpty()) {
-        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-        LockCommand.MESSAGE_USAGE));
-    }
-    return new LockCommand();
-}
-----
+no information should be shown now. Note the `DetailPanel` is the handler of the event. There are mainly two parts that need to be hidden: `PersonList` and `DetailPanel`. Refer to the first code snippet below.
+. `LogicManager` is used to check the state and decide whether the application is locked or not, and decide the logic flow accordingly. Refer to the second code snippet below.
 
 Below is the execution logic of `LockCommand`:
 [source,java]
@@ -559,6 +557,24 @@ public CommandResult execute() {
     LogicManager.lock();
     return new CommandResult(MESSAGE_SUCCESS);
 }
+----
+
+Below is the logic flow in `LogicManger`:
+[source,java]
+----
+    if (isLocked && !(command instanceof HelpCommand)) { //check if locked
+        command.setData(model, history, undoRedoStack);
+        if (command instanceof UnlockCommand) { //check unlock command
+            UnlockCommand unlockCommand = (UnlockCommand) command;
+            result = unlockCommand.execute();
+        } else {
+            result = new CommandResult("Addressbook has been locked, please unlock it first!");
+        }
+    } else { //unlocked case
+        command.setData(model, history, undoRedoStack);
+        result = command.execute();
+        undoRedoStack.push(command);
+    }
 ----
 
 The following sequence diagram shows how `lock` command works:
@@ -576,8 +592,9 @@ The logic flow of `unlock` command is:
 
 . `AddressBookParser` is used to let the application accept `unlock` command.
 . `UnlockCommandParser` is to make sure no other extra inputs are entered besides the command word `unlock`. Similar to `LockCommandParser`.
-. `UnlockCommand` is used to post an event requesting `MainWindow` to pop up a password input dialog, get the password entered by user, and
-compare it with the application's unlock password to decide whether the unlock process is successful. Refer to the code snippet below.
+. `UnlockCommand` is used to post an event requesting `MainWindow` to pop up a password input dialog.
+. `MainWindow` will handle the event posted by `UnlockCommand` and show the password input dialog. Then it will post an event containing user entered password.
+. `UnlockCommand` will then handle the event and get the password from the event, and compare it with the application's unlock password to decide whether the unlock process is successful. Refer to the code snippet below.
 . `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
 
 Below is the execution logic of `UnlockCommand`:
@@ -617,7 +634,7 @@ Below is the execution logic of `UnlockCommand`:
 The following sequence diagram shows how `unlock` command works:
 
 [NOTE]
-This is a simplified sequence diagram, the detail of the instantiation of `UnlockCommand` is removed, because it is similar to that of
+The detail of the instantiation of `UnlockCommand` is removed, because it is similar to that of
 `LockCommand`. Note that both `MainWindow` and `UnlockCommand` are event handler, which is indicated by the two post method and the
 blue activation bar in the diagram, and the interaction with `EventsCenter` is also omitted like before.
 
@@ -636,6 +653,7 @@ The logic flow of `setPassword` command is:
 . `SetPasswordCommandParser` is to make sure no other extra inputs are entered besides the command word `setPassword`. Similar to `LockCommandParser`.
 . `SetPasswordCommand` is used to post an event requesting `MainWindow` to pop up a password input dialog, get the passwords (old password and new password) entered by user, and
 compare the old password with the application's current unlock password to decide whether they match. If match, then update the password in both `LogicManager` and storage. Refer to the code snippet below.
+. `MainWindow` will handle the event and post another event containing user inputs, which is similar to that in `Unlock` command.
 
 [source,java]
 ----
@@ -671,7 +689,7 @@ compare the old password with the application's current unlock password to decid
 ** Cons: Events-Driven design is routine-less. Need to put extra effort to control the events. As the application grows, there are more events posted
 and it is necessary to control these events well to prevent events messing up.
 * **Alternative 2:** Just add a static method in MainWindow that will show the Dialog.
-** Pros: Simpler implementation than current one, no need extra effort for controlling.
+** Pros: Simpler implementation than current one, no need extra effort for event controlling.
 ** Cons: The static method could not use the non-static attributes in MainWindow, as a result, need extra effort to deal with referencing non-static variables.
 
 ===== Aspect: How to store the password in storage
@@ -681,24 +699,87 @@ and it is necessary to control these events well to prevent events messing up.
 * **Alternative 2:** Password is still visible but encrypted.
 ** Pros: Though password is visible, it it encrypted and one can only get the correct password by getting the encryption key. It is more secure.
 ** Cons: Every time load the password from data, need to decrypt it and every time update it in storage, need to encrypt it.
-Also need to keep the encryption key secret.
-
+Also need to keep the encryption key somewhere secret.
 // end::lockunlock[]
 
-=== Add events on anyone's timetable
+// tag::addphoto[]
+=== Add photo to employees
+==== Current Implementation
 
-`addEvent` command is used to add an event on one employee's timetable. The implementation mainly touches 3 objects in
-the logic component: +
+Command `addPhoto` mainly copy the local photo files chosen by users to the data folder of E.T., and employees will be assigned with these
+photos which matches to their fields for photo.
 
-. Command: TestAddEventCommand.
-. CommandParser: TestAddEventCommandParser.
-. AddressBookParser.
+The logic flow of `addPhoto` command is:
 
-The details of implementation of `addEvent` command are as follow:
+. `AddressBookParser` is used to let the application accept `addPhoto` command.
+. `AddPhotoCommandParser` is to make sure the user inputs are correct and extract the parameter.
+. `AddPhotoCommand` is will first post an event requesting `MainWindow` to pop up a file chooser, get the photo file chose by user,
+and check its validation. It will then copy this photo to the data folder if this photo does not exist there. Finally, it will update
+person and pass to `ModelManager`.
+. `ModelManager` will update the person list and the photo list accordingly.
 
-. `AddressBookParser` is used to let the application accept `addEvent` command.
-. `TestAddEventCommandParser` is used to extracts information of the event to be added from user input.
-. `TestAddEventCommand` is used to perform the addition of the event to one's timetable with Google Calendar API.
+Here is the class diagram of `addPhoto` command:
+
+.Class diagram of `addPhoto` command
+image::addphotoclassdia.png[width="800"]
+
+==== Design Considerations
+===== Aspect: How to maintain the photos
+* **Alternative 1 (current choice):** Store them at application's data folder which can be retrieved at runtime.
+** Pros: Easy to manage, as the photos are all in application's data folder.
+** Cons: Need to maintain an extra list in runtime storage to manage the photos in data folder.
+* **Alternative 2:** No need to store photos at application's data folder, load them directly from local disk.
+** Pros: No need to maintain the list of photos in application.
+** Cons: The change of photos' paths in local disk will cause loading error at runtime, need mechanisms to ensure person photo paths are
+dynamically referenced.
+// end::addphoto[]
+
+// tag::exportcom[]
+=== Export employees data
+
+Command `export` will export employees data as a .csv file into data folder.
+
+The logic flow of `addPhoto` command is:
+
+. `AddressBookParser` is used to let the application accept `export` command.
+. `ExportEmployeesCommand` is will first post an event to get the current employee list in `ModelManager`, and then create a .csv file
+at data folder. It will finally write the employees' information to that file.
+
+Here is the code snippet of the execution of `export` command:
+
+[source,java]
+----
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new GetEmployeesRequestEvent());
+        File csv = new File(EXPORT_FILE_PATH);
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter(csv));
+            bw.write("Name,Phone,Email,Address,Tags\n");
+            for (Person p : employees) {
+                String temp = p.getName().fullName + "," + p.getPhone().value + "," + p.getEmail().value + ","
+                        + p.getAddress().value.replaceAll(",", " ");
+                if (!p.getTags().isEmpty()) {
+                    temp = temp + "," + p.getTags().toString()
+                            .replaceAll(", ", " | ");
+                }
+                temp = temp + "\n";
+                bw.write(temp);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new CommandResult(MESSAGE_FAIL);
+        }
+        try {
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+----
+// end::exportcom[]
+
 
 === Show notifications about expired events
 This section discusses about the implementation of the notification feature of Employees Tracker.

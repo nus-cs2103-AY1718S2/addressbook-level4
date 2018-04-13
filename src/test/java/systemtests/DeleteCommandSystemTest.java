@@ -115,25 +115,35 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateDeleteCommandTemplate() {
-        //use accelerator
+    public void focusOnCommandBox_populateDeleteCommandTemplate_usingAccelerator() {
         getCommandBox().click();
         populateDeleteCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnResultDisplay_populateDeleteCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateDeleteCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateDeleteCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateDeleteCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateDeleteCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateDeleteCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateDeleteCommandTemplate_usingMenuButton() {
         populateDeleteCommandUsingMenu();
         assertPopulationSuccess();
     }

@@ -91,7 +91,7 @@ is specified when adding a customer.
 |kbd:[F3]
 |`history`
 
-|<<add, add>> (`a`)
+|<<add, add>> (`i`)
 |kbd:[Ctrl+I]
 |`add ty: r(or c) n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
 

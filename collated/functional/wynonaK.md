@@ -1,4 +1,81 @@
 # wynonaK
+###### \java\seedu\address\commons\events\ui\ChangeDayViewRequestEvent.java
+``` java
+/**
+ * Indicates a request to change to the day view of the date requested.
+ */
+public class ChangeDayViewRequestEvent extends BaseEvent {
+
+    public final LocalDate date;
+
+    public ChangeDayViewRequestEvent(LocalDate date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\ChangeMonthViewRequestEvent.java
+``` java
+/**
+ * Indicates a request to change to the yearmonth view of the yearmonth requested.
+ */
+public class ChangeMonthViewRequestEvent extends BaseEvent {
+
+    public final YearMonth yearMonth;
+
+    public ChangeMonthViewRequestEvent(YearMonth yearMonth) {
+        this.yearMonth = yearMonth;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+
+```
+###### \java\seedu\address\commons\events\ui\ChangeWeekViewRequestEvent.java
+``` java
+/**
+ * Indicates a request to change to the week view of the date requested.
+ */
+public class ChangeWeekViewRequestEvent extends BaseEvent {
+
+    public final LocalDate date;
+
+    public ChangeWeekViewRequestEvent(LocalDate date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\ChangeYearViewRequestEvent.java
+``` java
+/**
+ * Indicates a request to change to the year view of the year requested.
+ */
+public class ChangeYearViewRequestEvent extends BaseEvent {
+
+    public final Year year;
+
+    public ChangeYearViewRequestEvent(Year year) {
+        this.year = year;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\DeleteCommand.java
 ``` java
 /**
@@ -167,7 +244,6 @@ public class DeleteCommand extends UndoableCommand {
             List<PetPatient> petPatientsDeleted = model.deletePetPatientDependencies(personToDelete);
             List<Appointment> appointmentsDeleted = new ArrayList<>();
             for (PetPatient pp : petPatientsDeleted) {
-                System.out.println(pp.getName());
                 appointmentsDeleted.addAll(model.deleteAppointmentDependencies(pp));
                 deleteDependenciesList += "\n" + (String.format(MESSAGE_DELETE_PET_PATIENT_SUCCESS, pp));
             }
@@ -255,22 +331,29 @@ public class FindCommand extends Command {
             + " the specified option, prefixes & keywords (case-sensitive)"
             + " and displays them as a list with index numbers.\n"
             + "Parameters: OPTION PREFIX/KEYWORD [MORE_PREFIX/MORE_KEYWORDS]...\n"
+            + "Accepted Options: -o (OWNER-RELATED), -p (PET-PATIENT-RELATED)\n"
+            + "Accepted Prefixes for Owner: n/NAME, nr/NRIC, t/TAG\n"
+            + "Accepted Prefixes for Pet Patient: n/NAME, s/SPECIES, b/BREED, c/COLOUR, bt/BLOODTYPE, t/TAG\n"
             + "Example: " + COMMAND_WORD + "-o n/alice bob charlie";
 
-    private Predicate<Person> personPredicate = null;
-    private Predicate<PetPatient> petPatientPredicate = null;
+    private HashMap<String, String[]> hashMap;
     private int type = 0;
 
-    public FindCommand(Predicate<Person> personPredicate) {
-        this.personPredicate = personPredicate;
-        type = 1;
+    public FindCommand(HashMap<String, String[]> hashMap) {
+        this.hashMap = hashMap;
+        if (hashMap.containsKey("ownerName")
+                || hashMap.containsKey("ownerNric")
+                || hashMap.containsKey("ownerTag")) {
+            type = 1;
+        } else if (hashMap.containsKey("petName")
+                || hashMap.containsKey("petSpecies")
+                || hashMap.containsKey("petBreed")
+                || hashMap.containsKey("petColour")
+                || hashMap.containsKey("petBloodType")
+                || hashMap.containsKey("petTag")) {
+            type = 2;
+        }
     }
-
-    public FindCommand(Predicate<PetPatient> petPatientPredicate, int petPatientIndicator) {
-        this.petPatientPredicate = petPatientPredicate;
-        type = petPatientIndicator;
-    }
-
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -288,7 +371,38 @@ public class FindCommand extends Command {
      * Finds owners with given {@code predicate} in this {@code addressbook}.
      */
     private CommandResult findOwner() {
-        model.updateFilteredPersonList(personPredicate);
+        Predicate<Person> finalPredicate = null;
+
+        if (hashMap.containsKey("ownerName")) {
+            String[] nameKeywords = hashMap.get("ownerName");
+            Predicate<Person> namePredicate =  person -> Arrays.stream(nameKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+            finalPredicate = namePredicate;
+        }
+
+        if (hashMap.containsKey("ownerNric")) {
+            String[] nricKeywords = hashMap.get("ownerNric");
+            Predicate<Person>  nricPredicate = person -> Arrays.stream(nricKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getNric().toString(), keyword));
+            if (finalPredicate == null) {
+                finalPredicate = nricPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(nricPredicate);
+            }
+        }
+
+        if (hashMap.containsKey("ownerTag")) {
+            String[] tagKeywords = hashMap.get("ownerTag");
+            Predicate<Person> tagPredicate = person -> Arrays.stream(tagKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagString(), keyword));
+            if (finalPredicate == null) {
+                finalPredicate = tagPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(tagPredicate);
+            }
+        }
+
+        model.updateFilteredPersonList(finalPredicate);
         updatePetListForOwner();
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
                 + "\n"
@@ -299,7 +413,72 @@ public class FindCommand extends Command {
      * Finds owners with given {@code predicate} in this {@code addressbook}.
      */
     private CommandResult findPetPatient() {
-        model.updateFilteredPetPatientList(petPatientPredicate);
+        Predicate<PetPatient> finalPredicate = null;
+
+        if (hashMap.containsKey("petName")) {
+            String[] nameKeywords = hashMap.get("petName");
+            Predicate<PetPatient> namePredicate =  petPatient -> Arrays.stream(nameKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getName().fullName, keyword));
+            finalPredicate = namePredicate;
+        }
+
+        if (hashMap.containsKey("petSpecies")) {
+            String[] speciesKeywords = hashMap.get("petSpecies");
+            Predicate<PetPatient> speciesPredicate =  petPatient -> Arrays.stream(speciesKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getSpecies().species, keyword));
+            if (finalPredicate == null) {
+                finalPredicate = speciesPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(speciesPredicate);
+            }
+        }
+
+        if (hashMap.containsKey("petBreed")) {
+            String[] breedKeywords = hashMap.get("petBreed");
+            Predicate<PetPatient> breedPredicate =  petPatient -> Arrays.stream(breedKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getBreed().breed, keyword));
+            if (finalPredicate == null) {
+                finalPredicate = breedPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(breedPredicate);
+            }
+        }
+
+        if (hashMap.containsKey("petColour")) {
+            String[] colourKeywords = hashMap.get("petColour");
+            Predicate<PetPatient> colourPredicate =  petPatient -> Arrays.stream(colourKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getColour().colour, keyword));
+            if (finalPredicate == null) {
+                finalPredicate = colourPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(colourPredicate);
+            }
+        }
+
+        if (hashMap.containsKey("petBloodType")) {
+            String[] bloodTypeKeywords = hashMap.get("petBloodType");
+            Predicate<PetPatient> bloodTypePredicate =  petPatient -> Arrays.stream(bloodTypeKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
+                            petPatient.getBloodType().bloodType, keyword));
+            if (finalPredicate == null) {
+                finalPredicate = bloodTypePredicate;
+            } else {
+                finalPredicate = finalPredicate.and(bloodTypePredicate);
+            }
+        }
+
+        if (hashMap.containsKey("petTag")) {
+            String[] tagKeywords = hashMap.get("petTag");
+            Predicate<PetPatient> tagPredicate = petPatient -> Arrays.stream(tagKeywords)
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(petPatient.getTagString(), keyword));
+            if (finalPredicate == null) {
+                finalPredicate = tagPredicate;
+            } else {
+                finalPredicate = finalPredicate.and(tagPredicate);
+            }
+        }
+
+        model.updateFilteredPetPatientList(finalPredicate);
         updateOwnerListForPets();
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
                 + "\n"
@@ -338,7 +517,172 @@ public class FindCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof FindCommand // instanceof handles nulls
-                && this.personPredicate.equals(((FindCommand) other).personPredicate)); // state check
+                && this.hashMap.equals(((FindCommand) other).hashMap)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ListAppointmentCommand.java
+``` java
+/**
+ * Lists appointments based on the specified year, month, week or day.
+ */
+public class ListAppointmentCommand extends Command {
+    public static final String COMMAND_WORD = "listappt";
+    public static final String COMMAND_ALIAS = "la";
+
+    public static final String MESSAGE_SUCCESS = "Successfully listed appointments in the %1$s view requested.";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": To handle all appointment related listings.\n"
+            + "Parameters: OPTION FIELD\n"
+            + "Accepted Options: -y (YEAR VIEW), -m (MONTH VIEW), -w (WEEK VIEW), -d (DAY VIEW)\n"
+            + "YEAR VIEW accepts a year field in the format of yyyy.\n"
+            + "MONTH VIEW accepts a year and month field in the format of yyyy-MM"
+            + " or just a month field in the format of MM, of which the year will be defaulted to this current year.\n"
+            + "WEEK VIEW accepts a date field in the format of yyyy-MM-dd.\n"
+            + "DAY VIEW accepts a date field in the format of yyyy-MM-dd.\n"
+            + "If nothing is given as a FIELD, it will return the specified view of the current date.\n"
+            + "You can only list past appointments if you had an appointment in the year of the specified field.";
+
+    private int type = 0; //year = 1, month = 2, week = 3, day = 4.
+    private Year year = null;
+    private YearMonth yearMonth = null;
+    private LocalDate date = null;
+
+    public ListAppointmentCommand(int type, Year year) {
+        this.type = type;
+        this.year = year;
+    }
+
+    public ListAppointmentCommand(int type, YearMonth yearMonth) {
+        this.type = type;
+        this.yearMonth = yearMonth;
+    }
+
+    public ListAppointmentCommand(int type, LocalDate date) {
+        this.type = type;
+        this.date = date;
+    }
+
+
+    private CommandResult getYearView() throws NoAppointmentInYearException {
+        if (year.isBefore(Year.now())) {
+            if (!checkPastAppointment(year.getValue())) {
+                throw new NoAppointmentInYearException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+            }
+        }
+
+        EventsCenter.getInstance().post(new ChangeYearViewRequestEvent(year));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, "year"));
+    }
+
+    private CommandResult getMonthView() throws NoAppointmentInYearException {
+        if (yearMonth.isBefore(YearMonth.now())) {
+            if (!checkPastAppointment(yearMonth.getYear())) {
+                throw new NoAppointmentInYearException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+            }
+        }
+
+        EventsCenter.getInstance().post(new ChangeMonthViewRequestEvent(yearMonth));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, "month"));
+    }
+
+    private CommandResult getWeekView() throws NoAppointmentInYearException {
+        if (date.isBefore(LocalDate.now())) {
+            if (!checkPastAppointment(date.getYear())) {
+                throw new NoAppointmentInYearException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+            }
+        }
+
+        EventsCenter.getInstance().post(new ChangeWeekViewRequestEvent(date));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, "week"));
+    }
+
+    private CommandResult getDayView() throws NoAppointmentInYearException {
+        if (date.isBefore(LocalDate.now())) {
+            if (!checkPastAppointment(date.getYear())) {
+                throw new NoAppointmentInYearException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+            }
+        }
+
+        EventsCenter.getInstance().post(new ChangeDayViewRequestEvent(date));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, "day"));
+    }
+
+    /**
+     * Check if there exists a past appointment with in the {@code model} with the {@code year} specified.
+     */
+    private boolean checkPastAppointment(int year) {
+        model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        List<Appointment> appointmentList = model.getFilteredAppointmentList();
+        for (Appointment appointment : appointmentList) {
+            if  (appointment.getDateTime().getYear() == year)  {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        try {
+            switch (type) {
+            case 1:
+                return getYearView();
+            case 2:
+                return getMonthView();
+            case 3:
+                return getWeekView();
+            case 4:
+                return getDayView();
+            default:
+                throw new CommandException(MESSAGE_USAGE);
+            }
+        } catch (NoAppointmentInYearException e) {
+            throw new CommandException("You can only list past appointments if you had an appointment"
+                    + " in the year of the specified field!");
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof ListAppointmentCommand)) {
+            return false;
+        }
+
+        ListAppointmentCommand otherListAppointmentCommand = (ListAppointmentCommand) other;
+
+        boolean yearSame = isTheSame(year, otherListAppointmentCommand.year);
+        boolean yearMonthSame = isTheSame(yearMonth, otherListAppointmentCommand.yearMonth);
+        boolean dateSame = isTheSame(date, otherListAppointmentCommand.date);
+
+        if (yearSame || yearMonthSame || dateSame) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if both objects are the same.
+     * Returns true if both objects are equivalent.
+     * Returns true if both objects are null.
+     */
+    public boolean isTheSame(Object one, Object two) {
+        if (one != null && two != null) {
+            if (one.equals(two)) {
+                return true;
+            }
+        }
+
+        if (one == null && two == null) {
+            return true;
+        }
+
+        return false;
     }
 }
 ```
@@ -427,6 +771,81 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\ListAppointmentCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ListAppointmentCommand object
+ */
+public class ListAppointmentCommandParser implements Parser<ListAppointmentCommand> {
+
+    private static final Pattern LIST_APPOINTMENT_COMMAND_FORMAT_YEAR = Pattern.compile("-(y)+(?<info>.*)");
+    private static final Pattern LIST_APPOINTMENT_COMMAND_FORMAT_MONTH = Pattern.compile("-(m)+(?<info>.*)");
+    private static final Pattern LIST_APPOINTMENT_COMMAND_FORMAT_WEEK = Pattern.compile("-(w)+(?<info>.*)");
+    private static final Pattern LIST_APPOINTMENT_COMMAND_FORMAT_DAY = Pattern.compile("-(d)+(?<info>.*)");
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ListAppointmentCommand
+     * and returns an ListAppointmentCommand object for execution.
+     * type changes depending on what pattern it matches
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    @Override
+    public ListAppointmentCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+
+        final Matcher matcherForYear = LIST_APPOINTMENT_COMMAND_FORMAT_YEAR.matcher(trimmedArgs);
+        if (matcherForYear.matches()) {
+            int type = 1;
+
+            try {
+                Year year = ParserUtil.parseYear(matcherForYear.group("info"));
+                return new ListAppointmentCommand(type, year);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListAppointmentCommand.MESSAGE_USAGE));
+            }
+        }
+
+        final Matcher matcherForMonth = LIST_APPOINTMENT_COMMAND_FORMAT_MONTH.matcher(trimmedArgs);
+        if (matcherForMonth.matches()) {
+            try {
+                int type = 2;
+                YearMonth yearMonth = ParserUtil.parseMonth(matcherForMonth.group("info"));
+                return new ListAppointmentCommand(type, yearMonth);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListAppointmentCommand.MESSAGE_USAGE));
+            }
+        }
+
+        final Matcher matcherForWeek = LIST_APPOINTMENT_COMMAND_FORMAT_WEEK.matcher(trimmedArgs);
+        if (matcherForWeek.matches()) {
+            try {
+                int type = 3;
+                LocalDate date = ParserUtil.parseDate(matcherForWeek.group("info"));
+                return new ListAppointmentCommand(type, date);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListAppointmentCommand.MESSAGE_USAGE));
+            }
+        }
+
+        final Matcher matcherForDay = LIST_APPOINTMENT_COMMAND_FORMAT_DAY.matcher(trimmedArgs);
+        if (matcherForDay.matches()) {
+            try {
+                int type = 4;
+                LocalDate date = ParserUtil.parseDate(matcherForDay.group("info"));
+                return new ListAppointmentCommand(type, date);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListAppointmentCommand.MESSAGE_USAGE));
+            }
+        }
+
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListAppointmentCommand.MESSAGE_USAGE));
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
@@ -461,23 +880,159 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public static LocalDateTime parseDateTime(String dateTime) throws IllegalValueException {
         requireNonNull(dateTime);
+
+        dateTime = dateTime.trim();
+
+        try {
+            String[] dateTimeArray = dateTime.split("\\s+");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            df.setLenient(false);
+            df.parse(dateTimeArray[0]);
+        } catch (ParseException e) {
+            throw new IllegalValueException("Please give a valid date based on the format yyyy-MM-dd!");
+        }
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime localDateTime = null;
         try {
             localDateTime = LocalDateTime.parse(dateTime, formatter);
         } catch (DateTimeParseException e) {
-            throw new IllegalValueException("Please follow the format of yyyy-MM-dd HH:mm");
+            throw new IllegalValueException("Please ensure all fields are valid "
+                    + "and follow the format of yyyy-MM-dd HH:mm!");
         }
+
         return localDateTime;
     }
 
     /**
-     * Parses {@code Optional<String> dateTime} into an {@code Optional<LocalDatetime>} if {@code dateTime} is present.
+     * Parses {@code Optional<String> dateTime} into an {@code Optional<LocalDateTime>} if {@code dateTime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<LocalDateTime> parseDateTime(Optional<String> dateTime) throws IllegalValueException {
         requireNonNull(dateTime);
         return dateTime.isPresent() ? Optional.of(parseDateTime(dateTime.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String date} into an {@code LocalDate} object.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code dateTime} is invalid.
+     */
+    public static LocalDate parseDate(String date) throws IllegalValueException {
+        LocalDate localDate = null;
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        date = date.trim();
+
+        if (date.isEmpty()) {
+            localDate = LocalDate.now();
+            return localDate;
+        }
+
+        try {
+            df.setLenient(false);
+            df.parse(date);
+            localDate = LocalDate.parse(date, formatter);
+        } catch (ParseException | DateTimeParseException e) {
+            throw new IllegalValueException("Please give a valid date based on the format yyyy-MM-dd!");
+        }
+
+        return localDate;
+    }
+
+    /**
+     * Parses {@code Optional<String> date} into an {@code Optional<LocalDate>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LocalDate> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String stringYear} into an {@code Year} object.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code stringYear} is invalid.
+     */
+    public static Year parseYear(String stringYear) throws IllegalValueException {
+        Year year = null;
+        DateFormat df = new SimpleDateFormat("yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+        stringYear = stringYear.trim();
+
+        if (stringYear.isEmpty()) {
+            year = Year.now();
+            return year;
+        }
+
+        try {
+            df.setLenient(false);
+            df.parse(stringYear);
+            year = Year.parse(stringYear, formatter);
+        } catch (ParseException | DateTimeParseException e) {
+            throw new IllegalValueException("Please give a valid year based on the format yyyy!");
+        }
+
+        return year;
+    }
+
+    /**
+     * Parses {@code Optional<String> month} into an {@code Optional<Year>} if {@code year} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Year> parseYear(Optional<String> year) throws IllegalValueException {
+        requireNonNull(year);
+        return year.isPresent() ? Optional.of(parseYear(year.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String stringMonth} into an {@code YearMonth} object.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code stringMonth} is invalid.
+     */
+    public static YearMonth parseMonth(String stringMonth) throws IllegalValueException {
+        YearMonth yearMonth = null;
+        DateFormat df = new SimpleDateFormat("yyyy-MM");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        stringMonth = stringMonth.trim();
+
+        if (stringMonth.isEmpty()) {
+            yearMonth = YearMonth.now();
+            return yearMonth;
+        }
+
+        try {
+            if (stringMonth.length() == 2) {
+                int month = Integer.parseInt(stringMonth);
+                yearMonth = YearMonth.now().withMonth(month);
+                return yearMonth;
+            }
+
+            df.setLenient(false);
+            df.parse(stringMonth);
+            yearMonth = YearMonth.parse(stringMonth, formatter);
+        } catch (ParseException e) {
+            throw new IllegalValueException("Please give a valid year and month based on the format yyyy-MM!");
+        } catch (NumberFormatException nfe) {
+            throw new IllegalValueException("Please input integer for month in the format MM!");
+        } catch (DateTimeException dte) {
+            throw new IllegalValueException("Please give a valid month based on the format MM!");
+        }
+
+        return yearMonth;
+    }
+
+    /**
+     * Parses {@code Optional<String> month} into an {@code Optional<YearMonth>} if {@code month} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<YearMonth> parseMonth(Optional<String> month) throws IllegalValueException {
+        requireNonNull(month);
+        return month.isPresent() ? Optional.of(parseMonth(month.get())) : Optional.empty();
     }
 
 ```
@@ -516,7 +1071,8 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      *
      * @throws DuplicateAppointmentException if an equivalent person already exists.
      */
-    public void addAppointment(Appointment a) throws DuplicateAppointmentException, DuplicateDateTimeException {
+    public void addAppointment(Appointment a) throws DuplicateAppointmentException, DuplicateDateTimeException,
+        ConcurrentAppointmentException, PastAppointmentException {
         Appointment appointment = syncWithMasterTagList(a);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any appointment
@@ -590,7 +1146,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         for (Appointment appointment : appointments) {
             if (appointment.getPetPatientName().equals(key.getName())
                     && appointment.getOwnerNric().equals(key.getOwner())) {
-                throw new AppointmentDependencyNotEmptyException();
+                throw new AppointmentDependencyNotEmptyException("Appointment dependency still exist!");
             }
         }
     }
@@ -601,7 +1157,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     private void petPatientDependenciesExist(Person key) throws PetDependencyNotEmptyException {
         for (PetPatient petPatient : petPatients) {
             if (petPatient.getOwner().equals(key.getNric())) {
-                throw new PetDependencyNotEmptyException();
+                throw new PetDependencyNotEmptyException("Pet Patient dependency still exist!");
             }
         }
     }
@@ -754,16 +1310,23 @@ public class Appointment {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("\t")
+        builder.append("    ")
                 .append(getFormattedLocalDateTime())
-                .append("\tRemarks: ")
+                .append("    Remarks: ")
                 .append(getRemark())
-                .append("\tType(s): ");
+                .append("    Type(s): ");
         getAppointmentTags().forEach(builder::append);
         return builder.toString();
     }
 
-}
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getTag() {
+        return Collections.unmodifiableSet(appointmentTags.toSet());
+    }
+
 ```
 ###### \java\seedu\address\model\appointment\exceptions\AppointmentDependencyNotEmptyException.java
 ``` java
@@ -772,14 +1335,18 @@ public class Appointment {
  */
 
 public class AppointmentDependencyNotEmptyException extends Exception {
+    public AppointmentDependencyNotEmptyException(String message) {
+        super(message);
+    }
 }
 ```
 ###### \java\seedu\address\model\appointment\exceptions\AppointmentNotFoundException.java
 ``` java
 /**
- * Signals that the operation is unable to find the specified person.
+ * Signals that the operation is unable to find the specified appointment.
  */
-public class AppointmentNotFoundException extends Exception {}
+public class AppointmentNotFoundException extends Exception {
+}
 ```
 ###### \java\seedu\address\model\appointment\exceptions\DuplicateAppointmentException.java
 ``` java
@@ -800,6 +1367,17 @@ public class DuplicateAppointmentException extends DuplicateDataException {
 public class DuplicateDateTimeException extends DuplicateDataException {
     public DuplicateDateTimeException() {
         super("Operation would result in multiple bookings in the same time slot");
+    }
+}
+```
+###### \java\seedu\address\model\appointment\exceptions\NoAppointmentInYearException.java
+``` java
+/**
+ * Signals that the operation cannot be done as there is no appointments in said year.
+ */
+public class NoAppointmentInYearException extends Exception {
+    public NoAppointmentInYearException(String message) {
+        super(message);
     }
 }
 ```
@@ -885,15 +1463,30 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      *
      * @throws DuplicateAppointmentException if the person to add is a duplicate of an existing person in the list.
      */
-    public void add(Appointment toAdd) throws DuplicateAppointmentException, DuplicateDateTimeException {
+    public void add(Appointment toAdd) throws DuplicateAppointmentException, DuplicateDateTimeException,
+        PastAppointmentException, ConcurrentAppointmentException {
         requireNonNull(toAdd);
+
         if (contains(toAdd)) {
             throw new DuplicateAppointmentException();
         }
 
+        if (toAdd.getDateTime().isBefore(LocalDateTime.now())) {
+            throw new PastAppointmentException();
+        }
+
+        ArrayList<LocalDateTime> timeList = new ArrayList<>();
+
         for (Appointment a : internalList) {
+            timeList.add(a.getDateTime());
             if (a.getDateTime().equals(toAdd.getDateTime())) {
                 throw new DuplicateDateTimeException();
+            }
+        }
+
+        for (LocalDateTime dateTime : timeList) {
+            if (toAdd.getDateTime().isAfter(dateTime) && toAdd.getDateTime().isBefore(dateTime.plusMinutes(30))) {
+                throw new ConcurrentAppointmentException();
             }
         }
         internalList.add(toAdd);
@@ -941,7 +1534,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     public void setAppointments(List<Appointment> appointments)
-            throws DuplicateAppointmentException, DuplicateDateTimeException {
+            throws DuplicateAppointmentException, DuplicateDateTimeException,
+        ConcurrentAppointmentException, PastAppointmentException {
         requireAllNonNull(appointments);
         final UniqueAppointmentList replacement = new UniqueAppointmentList();
         for (final Appointment appointment : appointments) {
@@ -1009,7 +1603,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 
     @Override
     public synchronized void addAppointment(Appointment appointment)
-            throws DuplicateAppointmentException, DuplicateDateTimeException {
+            throws DuplicateAppointmentException, DuplicateDateTimeException,
+        ConcurrentAppointmentException, PastAppointmentException {
         addressBook.addAppointment(appointment);
         updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
         indicateAddressBookChanged();
@@ -1050,60 +1645,42 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
  * Signals that the operation is unable to continue because there are still pets dependent.
  */
 public class PetDependencyNotEmptyException extends Exception {
+    public PetDependencyNotEmptyException(String message) {
+        super(message);
+    }
 }
 ```
 ###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
-/**
- * Contains utility methods for populating {@code AddressBook} with sample data.
- */
-public class SampleDataUtil {
-    public static Person[] getSamplePersons() {
-        return new Person[] {
-            new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"), new Nric("S0123456B"),
-                getTagSet("owner")),
-            new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new Nric("T0123456C"),
-                getTagSet("owner")),
-            new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new Nric("G0123456A"),
-                getTagSet("owner")),
-            new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new Nric("F0123456B"),
-                getTagSet("owner")),
-            new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                new Address("Blk 47 Tampines Street 20, #17-35"), new Nric("S0163456E"),
-                getTagSet("owner")),
-            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                new Address("Blk 45 Aljunied Street 85, #11-31"), new Nric("F0123056T"),
-                getTagSet("owner")),
-            new Person(new Name("Fuji Syuusuke"), new Phone("90245123"), new Email("fujis@example.com"),
-                new Address("Blk 106 Bukit Purmei Street 10, #20-20"), new Nric("S9015638A"),
-                getTagSet("supplier"))
+    public static PetPatient[] getSamplePetPatients() {
+        return new PetPatient[] {
+            new PetPatient(new PetPatientName("Ane"), new Species("Cat"), new Breed("Siamese"),
+                new Colour("Brown"), new BloodType("A"), new Nric("S0123456B"),
+                getTagSet("Hostile")),
+            new PetPatient(new PetPatientName("Bei"), new Species("Cat"), new Breed("British Shorthair"),
+                new Colour("Grey"), new BloodType("B"), new Nric("T0123456C"),
+                getTagSet("Overfriendly")),
+            new PetPatient(new PetPatientName("Nei"), new Species("Cat"), new Breed("Maine Coon"),
+                new Colour("Black"), new BloodType("AB"), new Nric("T0123456C"),
+                getTagSet("Aggressive")),
+            new PetPatient(new PetPatientName("Chae"), new Species("Cat"), new Breed("Russian Blue"),
+                new Colour("Grey"), new BloodType("A"), new Nric("G0123456A"),
+                getTagSet("Naive")),
+            new PetPatient(new PetPatientName("Don"), new Species("Dog"), new Breed("German Shepherd"),
+                new Colour("Brown"), new BloodType("DEA 4"), new Nric("F0123456B"),
+                getTagSet("Aggressive")),
+            new PetPatient(new PetPatientName("Este"), new Species("Dog"), new Breed("Golden Retriever"),
+                new Colour("Golden"), new BloodType("DEA 6"), new Nric("S0163456E"),
+                getTagSet("Overfriendly")),
+            new PetPatient(new PetPatientName("Famm"), new Species("Dog"), new Breed("Pug"),
+                new Colour("Golden"), new BloodType("DEA 1.1-"), new Nric("F0123056T"),
+                getTagSet("3legged")),
+            new PetPatient(new PetPatientName("Plan"), new Species("Dog"), new Breed("Siberian Husky"),
+                new Colour("White"), new BloodType("DEA 1.1+"), new Nric("F0123056T"),
+                getTagSet("Hostile")),
         };
     }
 
-    public static PetPatient[] getSamplePetPatients() {
-        return new PetPatient[] {
-            new PetPatient(new PetPatientName("Ane"), "Cat", "Siamese",
-                    "Brown", "A", new Nric("S0123456B"), getTagSet("Hostile")),
-            new PetPatient(new PetPatientName("Bei"), "Cat", "British Shorthair",
-                    "Grey", "B", new Nric("T0123456C"), getTagSet("Overfriendly")),
-            new PetPatient(new PetPatientName("Nei"), "Cat", "Maine Coon",
-                    "Black", "AB", new Nric("T0123456C"), getTagSet("Aggressive")),
-            new PetPatient(new PetPatientName("Chae"), "Cat", "Russian Blue",
-                    "Grey", "A", new Nric("G0123456A"), getTagSet("Naive")),
-            new PetPatient(new PetPatientName("Don"), "Dog", "German Shepherd",
-                    "Brown", "DEA 4", new Nric("F0123456B"), getTagSet("Aggressive")),
-            new PetPatient(new PetPatientName("Este"), "Dog", "Golden Retriever",
-                    "Golden", "DEA 6", new Nric("S0163456E"), getTagSet("Overfriendly")),
-            new PetPatient(new PetPatientName("Famm"), "Dog", "Pug",
-                    "Golden", "DEA 1.1-", new Nric("F0123056T"), getTagSet("3legged")),
-            new PetPatient(new PetPatientName("Plan"), "Dog", "Siberian Husky",
-                    "White", "DEA 1.1+", new Nric("F0123056T"), getTagSet("Hostile")),
-        };
-    }
 
     public static Appointment[] getSampleAppointments() {
         return new Appointment[] {
@@ -1151,6 +1728,10 @@ public class SampleDataUtil {
             throw new AssertionError("sample data cannot contain double booked appointments", e);
         } catch (DuplicateAppointmentException e) {
             throw new AssertionError("sample data cannot contain duplicate appointments", e);
+        } catch (ConcurrentAppointmentException cae) {
+            throw new AssertionError("AddressBook should not add appointments to on-going appointment slots");
+        } catch (PastAppointmentException pae) {
+            throw new AssertionError("AddressBook should not add appointments with past DateTime");
         }
     }
 
@@ -1310,4 +1891,75 @@ public class XmlAdaptedAppointment {
                 && appointmentTagged.equals(otherAppointment.appointmentTagged);
     }
 }
+```
+###### \java\seedu\address\ui\CalendarWindow.java
+``` java
+    private void changeYearView(Year year) {
+        calendarView.showYear(year);
+    }
+
+    private void changeMonthView(YearMonth yearMonth) {
+        calendarView.showYearMonth(yearMonth);
+    }
+
+    /**
+     * changes the week view based on {@code date}.
+     * Does some particular checks (as weekFields give diff result from calendarFX),
+     * to ensure that it runs smoothly.
+     */
+    private void changeWeekView(LocalDate date) {
+        WeekFields weekFields = WeekFields.SUNDAY_START;
+        int week = date.get(weekFields.weekOfWeekBasedYear()) - 1;
+        System.out.println(week);
+
+        if (week == 0 && date.getMonthValue() == 12) {
+            //wraparound
+            week = 52;
+            calendarView.showWeek(Year.of(date.getYear()), week);
+        } else if (week == 0 && date.getMonthValue() == 1) {
+            //wraparound
+            LocalDate dateOfFirstJan = LocalDate.of(date.getYear(), 1, 1);
+            if (dateOfFirstJan.getDayOfWeek().getValue() != 7) {
+                week = 52;
+                calendarView.showWeek(Year.of(date.getYear() - 1), week);
+            } else {
+                week = 53;
+                calendarView.showWeek(Year.of(date.getYear() - 1), week);
+            }
+        } else {
+            calendarView.showWeek(Year.of(date.getYear()), week);
+        }
+    }
+
+    private void changeDayView(LocalDate date) {
+        calendarView.showDate(date);
+    }
+
+    @Subscribe
+    private void handleChangeYearView(ChangeYearViewRequestEvent event) {
+        Year year = event.year;
+        Platform.runLater(() -> changeYearView(year));
+    }
+
+    @Subscribe
+    private void handleChangeMonthView(ChangeMonthViewRequestEvent event) {
+        YearMonth yearMonth = event.yearMonth;
+        Platform.runLater(() -> changeMonthView(yearMonth));
+    }
+
+    @Subscribe
+    private void handleChangeWeekView(ChangeWeekViewRequestEvent event) {
+        LocalDate date = event.date;
+        Platform.runLater(() -> changeWeekView(date));
+    }
+
+    @Subscribe
+    private void handleChangeDayView(ChangeDayViewRequestEvent event) {
+        LocalDate date = event.date;
+        Platform.runLater(() -> changeDayView(date));
+    }
+
+}
+
+
 ```

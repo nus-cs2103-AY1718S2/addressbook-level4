@@ -347,10 +347,10 @@ public class EditCommand extends UndoableCommand {
         assert petPatientToEdit != null;
 
         PetPatientName updatedName = editPetPatientDescriptor.getName().orElse(petPatientToEdit.getName());
-        String updatedSpecies = editPetPatientDescriptor.getSpecies().orElse(petPatientToEdit.getSpecies());
-        String updatedBreed = editPetPatientDescriptor.getBreed().orElse(petPatientToEdit.getBreed());
-        String updatedColour = editPetPatientDescriptor.getColour().orElse(petPatientToEdit.getColour());
-        String updatedBloodType = editPetPatientDescriptor.getBloodType().orElse(petPatientToEdit.getBloodType());
+        Species updatedSpecies = editPetPatientDescriptor.getSpecies().orElse(petPatientToEdit.getSpecies());
+        Breed updatedBreed = editPetPatientDescriptor.getBreed().orElse(petPatientToEdit.getBreed());
+        Colour updatedColour = editPetPatientDescriptor.getColour().orElse(petPatientToEdit.getColour());
+        BloodType updatedBloodType = editPetPatientDescriptor.getBloodType().orElse(petPatientToEdit.getBloodType());
         Nric updatedOwnerNric = editPetPatientDescriptor.getOwnerNric().orElse(petPatientToEdit.getOwner());
         Set<Tag> updatedTags = editPetPatientDescriptor.getTags().orElse(petPatientToEdit.getTags());
 
@@ -411,353 +411,241 @@ public class EditCommand extends UndoableCommand {
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);
     }
+}
+```
+###### \java\seedu\address\logic\descriptors\EditAppointmentDescriptor.java
+``` java
+/**
+ * Stores the details to edit the appointment with. Each non-empty field value will replace the
+ * corresponding field value of the appointment.
+ */
+public class EditAppointmentDescriptor {
+    private Nric ownerNric;
+    private PetPatientName petPatientName;
+    private Remark remark;
+    private LocalDateTime localDateTime;
+    private Set<Tag> tags;
+
+    public EditAppointmentDescriptor() {}
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Copy constructor.
+     * A defensive copy of {@code tags} is used internally.
      */
-    public static class EditPersonDescriptor {
-        private Name name;
-        private Phone phone;
-        private Email email;
-        private Address address;
-        private Nric nric;
-        private Set<Tag> tags;
-
-        public EditPersonDescriptor() {}
-
-        /**
-         * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
-            setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setAddress(toCopy.address);
-            setNric(toCopy.nric);
-            setTags(toCopy.tags);
-        }
-
-        /**
-         * Returns true if at least one field is edited.
-         */
-        public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email,
-                    this.address, this.nric, this.tags);
-        }
-
-        public void setName(Name name) {
-            this.name = name;
-        }
-
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
-        }
-
-        public void setPhone(Phone phone) {
-            this.phone = phone;
-        }
-
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
-        }
-
-        public void setEmail(Email email) {
-            this.email = email;
-        }
-
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
-        }
-
-        public void setNric(Nric nric) {
-            this.nric = nric;
-        }
-
-        public Optional<Nric> getNric() {
-            return Optional.ofNullable(nric);
-        }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            // short circuit if same object
-            if (other == this) {
-                return true;
-            }
-
-            // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
-                return false;
-            }
-
-            // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
-
-            return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress())
-                    && getNric().equals(e.getNric())
-                    && getTags().equals(e.getTags());
-        }
+    public EditAppointmentDescriptor(EditAppointmentDescriptor toCopy) {
+        setOwnerNric(toCopy.ownerNric);
+        setPetPatientName(toCopy.petPatientName);
+        setRemark(toCopy.remark);
+        setLocalDateTime(toCopy.localDateTime);
+        setTags(toCopy.tags);
     }
 
     /**
-     * Stores the details to edit the pet patient with. Each non-empty field value will replace the
-     * corresponding field value of the pet patient.
+     * Returns true if at least one field is edited.
      */
-    public static class EditPetPatientDescriptor {
-        private PetPatientName name;
-        private String species;
-        private String breed;
-        private String colour;
-        private String bloodType;
-        private Nric ownerNric;
-        private Set<Tag> tags;
+    public boolean isAnyFieldEdited() {
+        return CollectionUtil.isAnyNonNull(this.ownerNric, this.petPatientName, this.remark,
+                this.localDateTime, this.tags);
+    }
 
-        public EditPetPatientDescriptor() {}
+    public void setOwnerNric(Nric ownerNric) {
+        this.ownerNric = ownerNric;
+    }
 
-        /**
-         * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public EditPetPatientDescriptor(EditPetPatientDescriptor toCopy) {
-            setName(toCopy.name);
-            setSpecies(toCopy.species);
-            setBreed(toCopy.breed);
-            setColour(toCopy.colour);
-            setBloodType(toCopy.bloodType);
-            setOwnerNric(toCopy.ownerNric);
-            setTags(toCopy.tags);
-        }
+    public Optional<Nric> getOwnerNric() {
+        return Optional.ofNullable(ownerNric);
+    }
 
-        /**
-         * Returns true if at least one field is edited.
-         */
-        public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.species, this.breed,
-                    this.colour, this.bloodType, this.ownerNric, this.tags);
-        }
+    public void setPetPatientName(PetPatientName petPatientName) {
+        this.petPatientName = petPatientName;
+    }
 
-        public void setName(PetPatientName name) {
-            this.name = name;
-        }
+    public Optional<PetPatientName> getPetPatientName() {
+        return Optional.ofNullable(petPatientName);
+    }
 
-        public Optional<PetPatientName> getName() {
-            return Optional.ofNullable(name);
-        }
+    public void setRemark(Remark remark) {
+        this.remark = remark;
+    }
 
-        public void setSpecies(String species) {
-            this.species = species;
-        }
+    public Optional<Remark> getRemark() {
+        return Optional.ofNullable(remark);
+    }
 
-        public Optional<String> getSpecies() {
-            return Optional.ofNullable(species);
-        }
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
+    }
 
-        public void setBreed(String breed) {
-            this.breed = breed;
-        }
-
-        public Optional<String> getBreed() {
-            return Optional.ofNullable(breed);
-        }
-
-        public void setColour(String colour) {
-            this.colour = colour;
-        }
-
-        public Optional<String> getColour() {
-            return Optional.ofNullable(colour);
-        }
-
-        public void setBloodType(String bloodType) {
-            this.bloodType = bloodType;
-        }
-
-        public Optional<String> getBloodType() {
-            return Optional.ofNullable(bloodType);
-        }
-
-        public void setOwnerNric(Nric nric) {
-            this.ownerNric = nric;
-        }
-
-        public Optional<Nric> getOwnerNric() {
-            return Optional.ofNullable(ownerNric);
-        }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            // short circuit if same object
-            if (other == this) {
-                return true;
-            }
-
-            // instanceof handles nulls
-            if (!(other instanceof EditPetPatientDescriptor)) {
-                return false;
-            }
-
-            // state check
-            EditPetPatientDescriptor e = (EditPetPatientDescriptor) other;
-
-            return getName().equals(e.getName())
-                    && getSpecies().equals(e.getSpecies())
-                    && getBreed().equals(e.getBreed())
-                    && getColour().equals(e.getColour())
-                    && getBloodType().equals(e.getBloodType())
-                    && getOwnerNric().equals(e.getOwnerNric())
-                    && getTags().equals(e.getTags());
-        }
+    public Optional<LocalDateTime> getLocalDateTime() {
+        return Optional.ofNullable(localDateTime);
     }
 
     /**
-     * Stores the details to edit the appointment with. Each non-empty field value will replace the
-     * corresponding field value of the appointment.
+     * Sets {@code tags} to this object's {@code tags}.
+     * A defensive copy of {@code tags} is used internally.
      */
-    public static class EditAppointmentDescriptor {
-        private Nric ownerNric;
-        private PetPatientName petPatientName;
-        private Remark remark;
-        private LocalDateTime localDateTime;
-        private Set<Tag> tags;
+    public void setTags(Set<Tag> tags) {
+        this.tags = (tags != null) ? new HashSet<>(tags) : null;
+    }
 
-        public EditAppointmentDescriptor() {}
+    /**
+     * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     * Returns {@code Optional#empty()} if {@code tags} is null.
+     */
+    public Optional<Set<Tag>> getTags() {
+        return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+    }
 
-        /**
-         * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public EditAppointmentDescriptor(EditAppointmentDescriptor toCopy) {
-            setOwnerNric(toCopy.ownerNric);
-            setPetPatientName(toCopy.petPatientName);
-            setRemark(toCopy.remark);
-            setLocalDateTime(toCopy.localDateTime);
-            setTags(toCopy.tags);
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
         }
 
-        /**
-         * Returns true if at least one field is edited.
-         */
-        public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.ownerNric, this.petPatientName, this.remark,
-                    this.localDateTime, this.tags);
+        // instanceof handles nulls
+        if (!(other instanceof EditAppointmentDescriptor)) {
+            return false;
         }
 
-        public void setOwnerNric(Nric ownerNric) {
-            this.ownerNric = ownerNric;
+        // state check
+        EditAppointmentDescriptor e = (EditAppointmentDescriptor) other;
+
+        return getOwnerNric().equals(e.getOwnerNric())
+                && getPetPatientName().equals(e.getPetPatientName())
+                && getRemark().equals(e.getRemark())
+                && getLocalDateTime().equals(e.getLocalDateTime())
+                && getTags().equals(e.getTags());
+    }
+}
+```
+###### \java\seedu\address\logic\descriptors\EditPetPatientDescriptor.java
+``` java
+/**
+ * Stores the details to edit the pet patient with. Each non-empty field value will replace the
+ * corresponding field value of the pet patient.
+ */
+public class EditPetPatientDescriptor {
+    private PetPatientName name;
+    private Species species;
+    private Breed breed;
+    private Colour colour;
+    private BloodType bloodType;
+    private Nric ownerNric;
+    private Set<Tag> tags;
+
+    public EditPetPatientDescriptor() {}
+
+    /**
+     * Copy constructor.
+     * A defensive copy of {@code tags} is used internally.
+     */
+    public EditPetPatientDescriptor(EditPetPatientDescriptor toCopy) {
+        setName(toCopy.name);
+        setSpecies(toCopy.species);
+        setBreed(toCopy.breed);
+        setColour(toCopy.colour);
+        setBloodType(toCopy.bloodType);
+        setOwnerNric(toCopy.ownerNric);
+        setTags(toCopy.tags);
+    }
+
+    /**
+     * Returns true if at least one field is edited.
+     */
+    public boolean isAnyFieldEdited() {
+        return CollectionUtil.isAnyNonNull(this.name, this.species, this.breed,
+                this.colour, this.bloodType, this.ownerNric, this.tags);
+    }
+
+    public void setName(PetPatientName name) {
+        this.name = name;
+    }
+
+    public Optional<PetPatientName> getName() {
+        return Optional.ofNullable(name);
+    }
+
+    public void setSpecies(Species species) {
+        this.species = species;
+    }
+
+    public Optional<Species> getSpecies() {
+        return Optional.ofNullable(species);
+    }
+
+    public void setBreed(Breed breed) {
+        this.breed = breed;
+    }
+
+    public Optional<Breed> getBreed() {
+        return Optional.ofNullable(breed);
+    }
+
+    public void setColour(Colour colour) {
+        this.colour = colour;
+    }
+
+    public Optional<Colour> getColour() {
+        return Optional.ofNullable(colour);
+    }
+
+    public void setBloodType(BloodType bloodType) {
+        this.bloodType = bloodType;
+    }
+
+    public Optional<BloodType> getBloodType() {
+        return Optional.ofNullable(bloodType);
+    }
+
+    public void setOwnerNric(Nric nric) {
+        this.ownerNric = nric;
+    }
+
+    public Optional<Nric> getOwnerNric() {
+        return Optional.ofNullable(ownerNric);
+    }
+
+    /**
+     * Sets {@code tags} to this object's {@code tags}.
+     * A defensive copy of {@code tags} is used internally.
+     */
+    public void setTags(Set<Tag> tags) {
+        this.tags = (tags != null) ? new HashSet<>(tags) : null;
+    }
+
+    /**
+     * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     * Returns {@code Optional#empty()} if {@code tags} is null.
+     */
+    public Optional<Set<Tag>> getTags() {
+        return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
         }
 
-        public Optional<Nric> getOwnerNric() {
-            return Optional.ofNullable(ownerNric);
+        // instanceof handles nulls
+        if (!(other instanceof EditPetPatientDescriptor)) {
+            return false;
         }
 
-        public void setPetPatientName(PetPatientName petPatientName) {
-            this.petPatientName = petPatientName;
-        }
+        // state check
+        EditPetPatientDescriptor e = (EditPetPatientDescriptor) other;
 
-        public Optional<PetPatientName> getPetPatientName() {
-            return Optional.ofNullable(petPatientName);
-        }
-
-        public void setRemark(Remark remark) {
-            this.remark = remark;
-        }
-
-        public Optional<Remark> getRemark() {
-            return Optional.ofNullable(remark);
-        }
-
-        public void setLocalDateTime(LocalDateTime localDateTime) {
-            this.localDateTime = localDateTime;
-        }
-
-        public Optional<LocalDateTime> getLocalDateTime() {
-            return Optional.ofNullable(localDateTime);
-        }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            // short circuit if same object
-            if (other == this) {
-                return true;
-            }
-
-            // instanceof handles nulls
-            if (!(other instanceof EditAppointmentDescriptor)) {
-                return false;
-            }
-
-            // state check
-            EditAppointmentDescriptor e = (EditAppointmentDescriptor) other;
-
-            return getOwnerNric().equals(e.getOwnerNric())
-                    && getPetPatientName().equals(e.getPetPatientName())
-                    && getRemark().equals(e.getRemark())
-                    && getLocalDateTime().equals(e.getLocalDateTime())
-                    && getTags().equals(e.getTags());
-        }
+        return getName().equals(e.getName())
+                && getSpecies().equals(e.getSpecies())
+                && getBreed().equals(e.getBreed())
+                && getColour().equals(e.getColour())
+                && getBloodType().equals(e.getBloodType())
+                && getOwnerNric().equals(e.getOwnerNric())
+                && getTags().equals(e.getTags());
     }
 }
 ```
@@ -807,44 +695,9 @@ public class EditCommandParser implements Parser<EditCommand> {
         throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
     }
 
-    /**
-     * Parses the given {@code personInfo} of arguments in the context of the EditCommand
-     * and returns an EditCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public EditCommand parsePerson(String personInfo) throws ParseException {
-        requireNonNull(personInfo);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(personInfo, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                    PREFIX_ADDRESS, PREFIX_NRIC, PREFIX_TAG);
-
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-        }
-
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        try {
-            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
-            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
-            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
-            ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC)).ifPresent(editPersonDescriptor::setNric);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
-        }
-
-        return new EditCommand(index, editPersonDescriptor);
-    }
-
+```
+###### \java\seedu\address\logic\parser\EditCommandParser.java
+``` java
     /**
      * Parses the given {@code petPatientInfo} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
@@ -929,24 +782,220 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editAppointmentDescriptor);    }
+        return new EditCommand(index, editAppointmentDescriptor);
 
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
     }
 
+```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<PetPatientName> parsePetPatientName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(parsePetPatientName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String species} into a {@code Species}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Species parseSpecies(String species) throws IllegalValueException {
+        requireNonNull(species);
+        String trimmedSpecies = species.trim();
+        if (!Species.isValidSpecies(trimmedSpecies)) {
+            throw new IllegalValueException(Species.MESSAGE_PET_SPECIES_CONSTRAINTS);
+        }
+        String[] wordsInSpecies = trimmedSpecies.split(" ");
+        StringBuilder formattedSpecies = new StringBuilder();
+        for (String s : wordsInSpecies) {
+            formattedSpecies = formattedSpecies
+                    .append(s.substring(0, 1).toUpperCase())
+                    .append(s.substring(1).toLowerCase())
+                    .append(" ");
+        }
+        return new Species(formattedSpecies.toString().trim());
+    }
+
+    /**
+     * Parses a {@code Optional<String> species} into an {@code Optional<Species>} if {@code species} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Species> parseSpecies(Optional<String> species) throws IllegalValueException {
+        requireNonNull(species);
+        return species.isPresent() ? Optional.of(parseSpecies(species.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String breed} into a {@code Breed}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Breed parseBreed(String breed) throws IllegalValueException {
+        requireNonNull(breed);
+        String trimmedBreed = breed.trim();
+        if (!Breed.isValidBreed(trimmedBreed)) {
+            throw new IllegalValueException(Breed.MESSAGE_PET_BREED_CONSTRAINTS);
+        }
+        String[] wordsInBreed = trimmedBreed.split(" ");
+        StringBuilder formattedBreed = new StringBuilder();
+        for (String s : wordsInBreed) {
+            formattedBreed = formattedBreed
+                    .append(s.substring(0, 1).toUpperCase())
+                    .append(s.substring(1).toLowerCase())
+                    .append(" ");
+        }
+        return new Breed(formattedBreed.toString().trim());
+    }
+
+    /**
+     * Parses a {@code Optional<String> breed} into an {@code Optional<Breed>} if {@code breed} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Breed> parseBreed(Optional<String> breed) throws IllegalValueException {
+        requireNonNull(breed);
+        return breed.isPresent() ? Optional.of(parseBreed(breed.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String colour} into a {@code Colour}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Colour parseColour(String colour) throws IllegalValueException {
+        requireNonNull(colour);
+        String trimmedColour = colour.trim();
+        if (!Colour.isValidColour(trimmedColour)) {
+            throw new IllegalValueException(Colour.MESSAGE_PET_COLOUR_CONSTRAINTS);
+        }
+        String[] wordsInColour = trimmedColour.split(" ");
+        StringBuilder formattedColour = new StringBuilder();
+        for (String s : wordsInColour) {
+            formattedColour = formattedColour
+                    .append(s.substring(0).toLowerCase())
+                    .append(" ");
+        }
+        return new Colour(formattedColour.toString().trim());
+    }
+
+    /**
+     * Parses a {@code Optional<String> colour} into an {@code Optional<Colour>} if {@code colour} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Colour> parseColour(Optional<String> colour) throws IllegalValueException {
+        requireNonNull(colour);
+        return colour.isPresent() ? Optional.of(parseColour(colour.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String bloodType} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static BloodType parseBloodType(String bloodType) throws IllegalValueException {
+        requireNonNull(bloodType);
+        String trimmedBloodType = bloodType.trim();
+        if (!BloodType.isValidBloodType(trimmedBloodType)) {
+            throw new IllegalValueException(BloodType.MESSAGE_PET_BLOODTYPE_CONSTRAINTS);
+        }
+        String[] wordsInBloodType = trimmedBloodType.split(" ");
+        StringBuilder formattedBloodType = new StringBuilder();
+        for (String s : wordsInBloodType) {
+            formattedBloodType = formattedBloodType
+                    .append(s.substring(0).toUpperCase())
+                    .append(" ");
+        }
+        return new BloodType(formattedBloodType.toString().trim());
+    }
+
+    /**
+     * Parses a {@code Optional<String> bloodType} into an {@code Optional<BloodType>} if {@code bloodType} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<BloodType> parseBloodType(Optional<String> bloodType) throws IllegalValueException {
+        requireNonNull(bloodType);
+        return bloodType.isPresent() ? Optional.of(parseBloodType(bloodType.get())) : Optional.empty();
+    }
 }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * Replaces the given pet patient {@code target} in the list with {@code editedPetPatient}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPetPatient}.
+     *
+     * @throws DuplicatePetPatientException if updating the pet patient's details causes the pet patient to be
+     *                                      equivalent to another existing pet patient in the list.
+     * @throws PetPatientNotFoundException  if {@code target} could not be found in the list.
+     * @see #syncWithMasterTagList(PetPatient)
+     */
+    public void updatePetPatient(PetPatient target, PetPatient editedPetPatient)
+            throws DuplicatePetPatientException, PetPatientNotFoundException {
+        requireNonNull(editedPetPatient);
+
+        PetPatient syncEditedPetPatient = syncWithMasterTagList(editedPetPatient);
+        petPatients.setPetPatient(target, syncEditedPetPatient);
+        removeUselessTags();
+    }
+
+    /**
+     * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedAppointment}.
+     *
+     * @throws DuplicateAppointmentException if updating the appointment's details causes the appointment to be
+     *                                       equivalent to another existing appointment in the list.
+     * @throws AppointmentNotFoundException  if {@code target} could not be found in the list.
+     * @see #syncWithMasterTagList(Appointment)
+     */
+    public void updateAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+        requireNonNull(editedAppointment);
+
+        Appointment syncEditedPetPatient = syncWithMasterTagList(editedAppointment);
+        appointments.setAppointment(target, syncEditedPetPatient);
+        removeUselessTags();
+    }
+
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * Updates the master tag list to include tags in {@code petPatient} that are not in the list.
+     *
+     * @return a copy of this {@code petPatient} such that every tag in this pet patient points to a Tag object in the
+     * master list.
+     */
+    private PetPatient syncWithMasterTagList (PetPatient petPatient) {
+        final UniqueTagList currentPetPatientTags = new UniqueTagList(petPatient.getTags());
+        tags.mergeFrom(currentPetPatientTags);
+
+        // Create map with values = tag object references in the master list
+        // used for checking person tag references
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        currentPetPatientTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        return new PetPatient(
+                petPatient.getName(),
+                petPatient.getSpecies(),
+                petPatient.getBreed(),
+                petPatient.getColour(),
+                petPatient.getBloodType(),
+                petPatient.getOwner(),
+                correctTagReferences);
+    }
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void addPetPatient(PetPatient petPatient) throws DuplicatePetPatientException {
+        addressBook.addPetPatient(petPatient);
+        updateFilteredPetPatientList(PREDICATE_SHOW_ALL_PET_PATIENTS);
+        indicateAddressBookChanged();
+    }
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -1012,6 +1061,212 @@ public class EditCommandParser implements Parser<EditCommand> {
     }
 
 ```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    /**
+     * Returns an unmodifiable view of the list of {@code PetPatient} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<PetPatient> getFilteredPetPatientList() {
+        return FXCollections.unmodifiableObservableList(filteredPetPatients);
+    }
+
+    @Override
+    public void updateFilteredPetPatientList(Predicate<PetPatient> predicate) {
+        requireNonNull(predicate);
+        filteredPetPatients.setPredicate(predicate);
+    }
+
+```
+###### \java\seedu\address\model\petpatient\BloodType.java
+``` java
+/**
+ * Represents a PetPatient's blood type in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidBloodType(String)}
+ */
+public class BloodType {
+
+    public static final String MESSAGE_PET_BLOODTYPE_CONSTRAINTS =
+            "Pet Patient blood type should only contain alphabetic characters, punctuations and spaces, "
+                    + "and it should not be blank.";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String BLOODTYPE_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}\\p{Punct}\\p{Blank}]*";
+
+    public final String bloodType;
+
+    /**
+     * Constructs a {@code BloodType}.
+     *
+     * @param bloodType A valid bloodType.
+     */
+    public BloodType(String bloodType) {
+        requireNonNull(bloodType);
+        checkArgument(isValidBloodType(bloodType), MESSAGE_PET_BLOODTYPE_CONSTRAINTS);
+        this.bloodType = bloodType;
+    }
+
+    /**
+     * Returns true if a given string is a valid bloodType.
+     */
+    public static boolean isValidBloodType(String test) {
+        return test.matches(BLOODTYPE_VALIDATION_REGEX);
+    }
+
+
+    @Override
+    public String toString() {
+        return bloodType;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof BloodType // instanceof handles nulls
+                && this.bloodType.equals(((BloodType) other).bloodType)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return bloodType.hashCode();
+    }
+}
+```
+###### \java\seedu\address\model\petpatient\Breed.java
+``` java
+/**
+ * Represents a PetPatient's breed in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidBreed(String)}
+ */
+public class Breed {
+
+    public static final String MESSAGE_PET_BREED_CONSTRAINTS =
+            "Pet Patient breed should only contain alphabetic characters and spaces, and it should not be blank.";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String BREED_VALIDATION_REGEX = "[\\p{Alpha}][\\p{Alpha} ]*";
+
+    public final String breed;
+
+    /**
+     * Constructs a {@code Breed}.
+     *
+     * @param breed A valid breed.
+     */
+    public Breed(String breed) {
+        requireNonNull(breed);
+        checkArgument(isValidBreed(breed), MESSAGE_PET_BREED_CONSTRAINTS);
+        this.breed = breed;
+    }
+
+    /**
+     * Returns true if a given string is a valid breed.
+     */
+    public static boolean isValidBreed(String test) {
+        return test.matches(BREED_VALIDATION_REGEX);
+    }
+
+
+    @Override
+    public String toString() {
+        return breed;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Breed // instanceof handles nulls
+                && this.breed.equals(((Breed) other).breed)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return breed.hashCode();
+    }
+}
+```
+###### \java\seedu\address\model\petpatient\Colour.java
+``` java
+/**
+ * Represents a PetPatient's colour in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidColour(String)}
+ */
+public class Colour {
+
+    public static final String MESSAGE_PET_COLOUR_CONSTRAINTS =
+            "Pet Patient colour should only contain alphabetic characters and spaces, and it should not be blank.";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String COLOUR_VALIDATION_REGEX = "[\\p{Alpha}][\\p{Alpha} ]*";
+
+    public final String colour;
+
+    /**
+     * Constructs a {@code Colour}.
+     *
+     * @param colour A valid colour.
+     */
+    public Colour(String colour) {
+        requireNonNull(colour);
+        checkArgument(isValidColour(colour), MESSAGE_PET_COLOUR_CONSTRAINTS);
+        this.colour = colour;
+    }
+
+    /**
+     * Returns true if a given string is a valid colour.
+     */
+    public static boolean isValidColour(String test) {
+        return test.matches(COLOUR_VALIDATION_REGEX);
+    }
+
+
+    @Override
+    public String toString() {
+        return colour;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Colour // instanceof handles nulls
+                && this.colour.equals(((Colour) other).colour)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return colour.hashCode();
+    }
+}
+```
+###### \java\seedu\address\model\petpatient\exceptions\DuplicatePetPatientException.java
+``` java
+/**
+ * Signals that the operation will result in duplicate PetPatient objects.
+ */
+public class DuplicatePetPatientException extends DuplicateDataException {
+    public DuplicatePetPatientException() {
+        super("Operation would result in duplicate pet patients");
+    }
+}
+```
+###### \java\seedu\address\model\petpatient\exceptions\PetPatientNotFoundException.java
+``` java
+/**
+ * Signals that the operation is unable to find the specified pet patient.
+ */
+public class PetPatientNotFoundException extends Exception {
+}
+```
 ###### \java\seedu\address\model\petpatient\PetPatient.java
 ``` java
 /**
@@ -1020,10 +1275,10 @@ public class EditCommandParser implements Parser<EditCommand> {
  */
 public class PetPatient {
     private final PetPatientName name;
-    private final String species; // e.g. dogs, cats, birds, etc.
-    private final String breed; // different varieties of the same species
-    private final String colour;
-    private final String bloodType;
+    private final Species species; // e.g. dogs, cats, birds, etc.
+    private final Breed breed; // different varieties of the same species
+    private final Colour colour;
+    private final BloodType bloodType;
 
     private final UniqueTagList tags;
 
@@ -1033,10 +1288,10 @@ public class PetPatient {
 
     //keep this constructor, as owner NRIC can be null initially when adding a new PetPatient
     public PetPatient(PetPatientName name,
-                      String species,
-                      String breed,
-                      String colour,
-                      String bloodType,
+                      Species species,
+                      Breed breed,
+                      Colour colour,
+                      BloodType bloodType,
                       Set<Tag> tags) {
         requireAllNonNull(name, species, breed, colour, bloodType, tags);
         this.name = name;
@@ -1052,10 +1307,10 @@ public class PetPatient {
     }
 
     public PetPatient(PetPatientName name,
-                      String species,
-                      String breed,
-                      String colour,
-                      String bloodType,
+                      Species species,
+                      Breed breed,
+                      Colour colour,
+                      BloodType bloodType,
                       Nric ownerNric,
                       Set<Tag> tags) {
         requireAllNonNull(name, species, breed, colour, bloodType, tags);
@@ -1072,10 +1327,10 @@ public class PetPatient {
 
     //keep this constructor
     public PetPatient(PetPatientName name,
-                      String species,
-                      String breed,
-                      String colour,
-                      String bloodType,
+                      Species species,
+                      Breed breed,
+                      Colour colour,
+                      BloodType bloodType,
                       Nric ownerNric,
                       Optional<Date> dateOfBirth,
                       Set<Tag> tags) {
@@ -1099,19 +1354,19 @@ public class PetPatient {
         return dateOfBirth;
     }
 
-    public String getSpecies() {
+    public Species getSpecies() {
         return species;
     }
 
-    public String getBreed() {
+    public Breed getBreed() {
         return breed;
     }
 
-    public String getColour() {
+    public Colour getColour() {
         return colour;
     }
 
-    public String getBloodType() {
+    public BloodType getBloodType() {
         return bloodType;
     }
 
@@ -1253,6 +1508,62 @@ public class PetPatientName {
         return fullName.hashCode();
     }
 
+}
+```
+###### \java\seedu\address\model\petpatient\Species.java
+``` java
+/**
+ * Represents a PetPatient's species in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidSpecies(String)}
+ */
+public class Species {
+
+    public static final String MESSAGE_PET_SPECIES_CONSTRAINTS =
+            "Pet Patient species should only contain alphabetic characters and spaces, and it should not be blank.";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String SPECIES_VALIDATION_REGEX = "[\\p{Alpha}][\\p{Alpha} ]*";
+
+    public final String species;
+
+    /**
+     * Constructs a {@code Species}.
+     *
+     * @param species A valid species.
+     */
+    public Species(String species) {
+        requireNonNull(species);
+        checkArgument(isValidSpecies(species), MESSAGE_PET_SPECIES_CONSTRAINTS);
+        this.species = species;
+    }
+
+    /**
+     * Returns true if a given string is a valid species.
+     */
+    public static boolean isValidSpecies(String test) {
+        return test.matches(SPECIES_VALIDATION_REGEX);
+    }
+
+
+    @Override
+    public String toString() {
+        return species;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Species // instanceof handles nulls
+                && this.species.equals(((Species) other).species)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return species.hashCode();
+    }
 }
 ```
 ###### \java\seedu\address\model\petpatient\UniquePetPatientList.java
@@ -1428,10 +1739,10 @@ public class XmlAdaptedPetPatient {
      */
     public XmlAdaptedPetPatient(PetPatient source) {
         name = source.getName().fullName;
-        species = source.getSpecies();
-        breed = source.getBreed();
-        colour = source.getColour();
-        bloodType = source.getBloodType();
+        species = source.getSpecies().species;
+        breed = source.getBreed().breed;
+        colour = source.getColour().colour;
+        bloodType = source.getBloodType().bloodType;
         ownerNric = source.getOwner().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -1460,20 +1771,39 @@ public class XmlAdaptedPetPatient {
         final PetPatientName name = new PetPatientName(this.name);
 
         if (this.species == null) {
-            throw new IllegalValueException(String.format(MISSING_SPECIES_FIELD_MESSAGE_FORMAT));
+            throw new IllegalValueException(
+                    String.format(MISSING_SPECIES_FIELD_MESSAGE_FORMAT, Species.class.getSimpleName()));
         }
+        if (!Species.isValidSpecies(this.species)) {
+            throw new IllegalValueException(Species.MESSAGE_PET_SPECIES_CONSTRAINTS);
+        }
+        final Species species = new Species(this.species);
 
         if (this.breed == null) {
-            throw new IllegalValueException(String.format(MISSING_BREED_FIELD_MESSAGE_FORMAT));
+            throw new IllegalValueException(
+                    String.format(MISSING_BREED_FIELD_MESSAGE_FORMAT, Breed.class.getSimpleName()));
         }
+        if (!Breed.isValidBreed(this.breed)) {
+            throw new IllegalValueException(Breed.MESSAGE_PET_BREED_CONSTRAINTS);
+        }
+        final Breed breed = new Breed(this.breed);
 
         if (this.colour == null) {
-            throw new IllegalValueException(String.format(MISSING_COLOUR_FIELD_MESSAGE_FORMAT));
+            throw new IllegalValueException(
+                    String.format(MISSING_COLOUR_FIELD_MESSAGE_FORMAT, Colour.class.getSimpleName()));
         }
+        if (!Colour.isValidColour(this.colour)) {
+            throw new IllegalValueException(Colour.MESSAGE_PET_COLOUR_CONSTRAINTS);
+        }
+        final Colour colour = new Colour(this.colour);
 
         if (this.bloodType == null) {
             throw new IllegalValueException(String.format(MISSING_BLOODTYPE_FIELD_MESSAGE_FORMAT));
         }
+        if (!BloodType.isValidBloodType(this.bloodType)) {
+            throw new IllegalValueException(BloodType.MESSAGE_PET_BLOODTYPE_CONSTRAINTS);
+        }
+        final BloodType bloodType = new BloodType(this.bloodType);
 
         if (this.ownerNric == null) {
             throw new IllegalValueException(

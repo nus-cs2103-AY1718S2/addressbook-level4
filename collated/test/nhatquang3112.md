@@ -1,4 +1,182 @@
 # nhatquang3112
+###### \java\guitests\guihandles\ToDoCardHandle.java
+``` java
+package guitests.guihandles;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+
+/**
+ * Provides a handle to a to-do card in the to-do list panel.
+ */
+public class ToDoCardHandle extends NodeHandle<Node> {
+
+    private static final String ID_FIELD_ID = "#id";
+    private static final String CONTENT_FIELD_ID = "#content";
+    private static final String STATUS_FIELD_ID = "#status";
+
+    private final Label idLabel;
+    private final Label contentLabel;
+    private final Label statusLabel;
+
+    public ToDoCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.idLabel = getChildNode(ID_FIELD_ID);
+        this.contentLabel = getChildNode(CONTENT_FIELD_ID);
+        this.statusLabel = getChildNode(STATUS_FIELD_ID);
+    }
+
+    public String getId() {
+        return idLabel.getText();
+    }
+
+    public String getContent() {
+        return contentLabel.getText();
+    }
+
+    public String getStatus() {
+        return statusLabel.getText();
+    }
+}
+```
+###### \java\guitests\guihandles\ToDoListPanelHandle.java
+``` java
+package guitests.guihandles;
+
+import java.util.List;
+import java.util.Optional;
+
+import javafx.scene.control.ListView;
+import seedu.address.model.todo.ToDo;
+import seedu.address.ui.ToDoCard;
+
+/**
+ * Provides a handle for {@code ToDoListPanel} containing the list of {@code ToDoCard}.
+ */
+public class ToDoListPanelHandle extends NodeHandle<ListView<ToDoCard>> {
+    public static final String TODO_LIST_VIEW_ID = "#todoListView";
+
+    private Optional<ToDoCard> lastRememberedSelectedToDoCard;
+
+    public ToDoListPanelHandle(ListView<ToDoCard> toDoListPanelNode) {
+        super(toDoListPanelNode);
+    }
+
+    /**
+     * Returns a handle to the selected {@code ToDoCardHandle}.
+     * A maximum of 1 item can be selected at any time.
+     * @throws AssertionError if no card is selected, or more than 1 card is selected.
+     */
+    public ToDoCardHandle getHandleToSelectedCard() {
+        List<ToDoCard> toDoList = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (toDoList.size() != 1) {
+            throw new AssertionError("ToDo list size expected 1.");
+        }
+
+        return new ToDoCardHandle(toDoList.get(0).getRoot());
+    }
+
+    /**
+     * Returns the index of the selected card.
+     */
+    public int getSelectedCardIndex() {
+        return getRootNode().getSelectionModel().getSelectedIndex();
+    }
+
+    /**
+     * Returns true if a card is currently selected.
+     */
+    public boolean isAnyCardSelected() {
+        List<ToDoCard> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedCardsList.size() > 1) {
+            throw new AssertionError("Card list size expected 0 or 1.");
+        }
+
+        return !selectedCardsList.isEmpty();
+    }
+
+    /**
+     * Navigates the listview to display and select the to-do.
+     */
+    public void navigateToCard(ToDo toDo) {
+        List<ToDoCard> cards = getRootNode().getItems();
+        Optional<ToDoCard> matchingCard = cards.stream().filter(card -> card.todo.equals(toDo)).findFirst();
+
+        if (!matchingCard.isPresent()) {
+            throw new IllegalArgumentException("ToDo does not exist.");
+        }
+
+        guiRobot.interact(() -> {
+            getRootNode().scrollTo(matchingCard.get());
+            getRootNode().getSelectionModel().select(matchingCard.get());
+        });
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Returns the to-do card handle of a to-do associated with the {@code index} in the list.
+     */
+    public ToDoCardHandle getToDoCardHandle(int index) {
+        return getToDoCardHandle(getRootNode().getItems().get(index).todo);
+    }
+
+    /**
+     * Returns the {@code ToDoCardHandle} of the specified {@code toDo} in the list.
+     */
+    public ToDoCardHandle getToDoCardHandle(ToDo toDo) {
+        Optional<ToDoCardHandle> handle = getRootNode().getItems().stream()
+                .filter(card -> card.todo.equals(toDo))
+                .map(card -> new ToDoCardHandle(card.getRoot()))
+                .findFirst();
+        return handle.orElseThrow(() -> new IllegalArgumentException("ToDo does not exist."));
+    }
+
+    /**
+     * Selects the {@code ToDoCard} at {@code index} in the list.
+     */
+    public void select(int index) {
+        getRootNode().getSelectionModel().select(index);
+    }
+
+    /**
+     * Remembers the selected {@code ToDoCard} in the list.
+     */
+    public void rememberSelectedToDoCard() {
+        List<ToDoCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedItems.size() == 0) {
+            lastRememberedSelectedToDoCard = Optional.empty();
+        } else {
+            lastRememberedSelectedToDoCard = Optional.of(selectedItems.get(0));
+        }
+    }
+
+    /**
+     * Returns true if the selected {@code ToDoCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedToDoCard()} call.
+     */
+    public boolean isSelectedToDoCardChanged() {
+        List<ToDoCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedItems.size() == 0) {
+            return lastRememberedSelectedToDoCard.isPresent();
+        } else {
+            return !lastRememberedSelectedToDoCard.isPresent()
+                    || !lastRememberedSelectedToDoCard.get().equals(selectedItems.get(0));
+        }
+    }
+
+    /**
+     * Returns the size of the list.
+     */
+    public int getListSize() {
+        return getRootNode().getItems().size();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AddToDoCommandIntegrationTest.java
 ``` java
 package seedu.address.logic.commands;
@@ -894,6 +1072,172 @@ public class UnCheckToDoCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\AddToDoCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_CONTENT;
+import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CONTENT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.AddToDoCommand;
+import seedu.address.model.todo.Content;
+import seedu.address.model.todo.ToDo;
+import seedu.address.testutil.ToDoBuilder;
+
+public class AddToDoCommandParserTest {
+    private AddToDoCommandParser parser = new AddToDoCommandParser();
+
+    @Test
+    public void parse_allFieldsPresent_success() {
+        ToDo expectedToDo = new ToDoBuilder().withContent(VALID_CONTENT).build();
+
+        // whitespace only preamble
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + VALID_CONTENT,
+                new AddToDoCommand(expectedToDo));
+
+        // valid content
+        assertParseSuccess(parser, VALID_CONTENT,
+                new AddToDoCommand(expectedToDo));
+    }
+
+    @Test
+    public void parse_compulsoryFieldMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToDoCommand.MESSAGE_USAGE);
+
+        // missing content
+        assertParseFailure(parser, PREAMBLE_WHITESPACE,
+                expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        // invalid content
+        assertParseFailure(parser, INVALID_CONTENT,
+                Content.MESSAGE_CONTENT_CONSTRAINTS);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\CheckToDoCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TODO;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.CheckToDoCommand;
+
+/**
+ * As we are only doing white-node testing, our test cases do not cover path variations
+ * outside of the CheckToDoCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the CheckToDoCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class CheckToDoCommandParserTest {
+
+    private CheckToDoCommandParser parser = new CheckToDoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsCheckToDoCommand() {
+        assertParseSuccess(parser, "1", new CheckToDoCommand(INDEX_FIRST_TODO));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckToDoCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\DeleteToDoCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TODO;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.DeleteToDoCommand;
+
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeleteToDoCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the DeleteToDoCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class DeleteToDoCommandParserTest {
+
+    private DeleteToDoCommandParser parser = new DeleteToDoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteToDoCommand() {
+        assertParseSuccess(parser, "1", new DeleteToDoCommand(INDEX_FIRST_TODO));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteToDoCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\model\person\DetailTest.java
+``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
+
+public class DetailTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Detail(null));
+    }
+
+    @Test
+    public void constructor_invalidEmail_throwsIllegalArgumentException() {
+        String invalidDetail = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Detail(invalidDetail));
+    }
+
+    @Test
+    public void isValidDetail() {
+        // null detail
+        Assert.assertThrows(NullPointerException.class, () -> Detail.isValidDetail(null));
+
+        // invalid detail
+        assertFalse(Detail.isValidDetail("")); // empty string
+        assertFalse(Detail.isValidDetail(" ")); // spaces only
+        assertFalse(Detail.isValidDetail("^")); // only non-alphanumeric characters
+        assertFalse(Detail.isValidDetail("tennis*")); // contains non-alphanumeric characters
+
+        // valid detail
+        assertTrue(Detail.isValidDetail("likes tennis")); // alphabets only
+        assertTrue(Detail.isValidDetail("12345")); // numbers only
+        assertTrue(Detail.isValidDetail("has 3 dogs")); // alphanumeric characters
+        assertTrue(Detail.isValidDetail("Likes tennis")); // with capital letters
+    }
+
+```
 ###### \java\seedu\address\model\todo\ContentTest.java
 ``` java
 package seedu.address.model.todo;
@@ -1048,10 +1392,18 @@ public class ToDoTest {
 ``` java
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static seedu.address.logic.commands.CommandTestUtil.CONTENT_B;
+import static seedu.address.logic.commands.CommandTestUtil.CONTENT_E;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CONTENT;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.todo.Content;
+import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.UniqueToDoList;
 
 public class UniqueToDoListTest {
@@ -1064,7 +1416,7 @@ public class UniqueToDoListTest {
         thrown.expect(UnsupportedOperationException.class);
         uniqueToDoList.asObservableList().remove(0);
     }
-}
+
 ```
 ###### \java\seedu\address\storage\XmlAdaptedToDoTest.java
 ``` java
@@ -1232,6 +1584,35 @@ public class ToDoBuilder {
         return new ToDo(content, status);
     }
 
+}
+```
+###### \java\seedu\address\testutil\ToDoUtil.java
+``` java
+package seedu.address.testutil;
+
+import seedu.address.logic.commands.AddToDoCommand;
+import seedu.address.model.todo.ToDo;
+
+/**
+ * A utility class for ToDo.
+ */
+public class ToDoUtil {
+
+    /**
+     * Returns an addToDo command string for adding the {@code todo}.
+     */
+    public static String getAddToDoCommand(ToDo todo) {
+        return AddToDoCommand.COMMAND_WORD + " " + getToDoDetails(todo);
+    }
+
+    /**
+     * Returns the part of command string for the given {@code todo}'s details.
+     */
+    public static String getToDoDetails(ToDo todo) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(todo.getContent().value);
+        return sb.toString();
+    }
 }
 ```
 ###### \java\seedu\address\testutil\TypicalToDos.java

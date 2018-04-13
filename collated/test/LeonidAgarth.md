@@ -437,6 +437,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_END_TIME_
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_NDP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_START_TIME_NDP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_VENUE_NDP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -540,10 +541,15 @@ public class AddEventCommandParserTest {
                         + INVALID_EVENT_START_TIME_DESC + EVENT_END_TIME_DESC_NDP,
                 Event.MESSAGE_TIME_CONSTRAINTS);
 
-        // invalid link
+        // invalid end time
         assertParseFailure(parser, EVENT_NAME_DESC_NDP + EVENT_VENUE_DESC_NDP + EVENT_DATE_DESC_NDP
                         + EVENT_START_TIME_DESC_NDP + INVALID_EVENT_END_TIME_DESC,
                 Event.MESSAGE_TIME_CONSTRAINTS);
+
+        // endTime before Start
+        assertParseFailure(parser, EVENT_NAME_DESC_NDP + EVENT_VENUE_DESC_NDP + EVENT_DATE_DESC_NDP
+                        + " " + PREFIX_END_TIME + "0000" + EVENT_START_TIME_DESC_NDP,
+                AddEventCommand.MESSAGE_END_BEFORE_START);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_EVENT_NAME_DESC + EVENT_VENUE_DESC_NDP + EVENT_DATE_DESC_NDP
@@ -661,6 +667,42 @@ public class ChangeTagColorCommandParserTest {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\ScheduleGroupCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_INFORMATION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INFORMATION;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.ScheduleGroupCommand;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.Information;
+
+/**
+ * Tests for the parsing of input arguments and creating a new ScheduleGroupCommand object
+ */
+public class ScheduleGroupCommandParserTest {
+
+    private ScheduleGroupCommandParser parser = new ScheduleGroupCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsScheduleGroupCommand() {
+        Group group = new Group(new Information(VALID_INFORMATION));
+        assertParseSuccess(parser, VALID_INFORMATION, new ScheduleGroupCommand(group));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, INVALID_INFORMATION,
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleGroupCommand.MESSAGE_USAGE));
+    }
+}
+```
 ###### \java\seedu\address\model\event\EventTest.java
 ``` java
 package seedu.address.model.event;
@@ -775,6 +817,9 @@ public class WeeklyEventTest {
 
     private WeeklyEvent event1 = new WeeklyEvent("CS2101", "COM1", "1500", "1600", "WEDNESDAY");
     private WeeklyEvent event2 = new WeeklyEvent(new Module("CS2103", "Software Engineer"), new Schedule());
+    private WeeklyEvent event3 = new WeeklyEvent(new Module("CS2103", "Software Engineer"), new Schedule());
+    private WeeklyEvent event4 = new WeeklyEvent("CS2103T", "I3", "1500", "1700", "WEDNESDAY");
+    private WeeklyEvent event5 = new WeeklyEvent("CS2102", "COM2", "2000", "2100", "WEDNESDAY");
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -813,10 +858,21 @@ public class WeeklyEventTest {
     }
 
     @Test
-    public void equals() {
+    public void equals_test() {
         assertTrue(event1.equals(event1));
+        assertTrue(event2.equals(event3));
         assertFalse(event1.equals(1));
         assertFalse(event1.equals(event2));
+    }
+
+    @Test
+    public void clash() {
+        assertTrue(event1.clash(event1));
+        assertTrue(event1.clash(event4));
+        assertTrue(event2.clash(event3));
+        assertFalse(event1.clash(event2));
+        assertFalse(event1.clash(event5));
+        assertFalse(event3.clash(event5));
     }
 
     @Test
@@ -1180,6 +1236,69 @@ public class UniqueEventListTest {
     }
 }
 ```
+###### \java\seedu\address\model\UniqueToDoListTest.java
+``` java
+    @Test
+    public void equals_sameList_true() throws Exception {
+        UniqueToDoList uniqueToDoList1 = new UniqueToDoList();
+        UniqueToDoList uniqueToDoList2 = new UniqueToDoList();
+        assertEquals(uniqueToDoList1, uniqueToDoList2);
+
+        uniqueToDoList1.add(new ToDo(new Content(CONTENT_E)));
+        uniqueToDoList2.add(new ToDo(new Content(CONTENT_E)));
+        assertEquals(uniqueToDoList1, uniqueToDoList2);
+
+        uniqueToDoList1.add(new ToDo(new Content(CONTENT_B)));
+        uniqueToDoList1.add(new ToDo(new Content(VALID_CONTENT)));
+        uniqueToDoList2.add(new ToDo(new Content(CONTENT_B)));
+        uniqueToDoList2.add(new ToDo(new Content(VALID_CONTENT)));
+        assertEquals(uniqueToDoList1, uniqueToDoList2);
+    }
+
+    @Test
+    public void equals_differentList_false() throws Exception {
+        UniqueToDoList uniqueToDoList1 = new UniqueToDoList();
+        UniqueToDoList uniqueToDoList2 = new UniqueToDoList();
+        uniqueToDoList2.add(new ToDo(new Content(CONTENT_E)));
+        assertNotEquals(uniqueToDoList1, uniqueToDoList2);
+
+        uniqueToDoList1.add(new ToDo(new Content(CONTENT_B)));
+        uniqueToDoList1.add(new ToDo(new Content(CONTENT_E)));
+        uniqueToDoList2.add(new ToDo(new Content(CONTENT_B)));
+        assertNotEquals(uniqueToDoList1, uniqueToDoList2);
+    }
+
+    @Test
+    public void hashCode_sameList_sameResult() throws Exception {
+        UniqueToDoList uniqueToDoList1 = new UniqueToDoList();
+        UniqueToDoList uniqueToDoList2 = new UniqueToDoList();
+        assertEquals(uniqueToDoList1.hashCode(), uniqueToDoList2.hashCode());
+
+        uniqueToDoList1.add(new ToDo(new Content(CONTENT_E)));
+        uniqueToDoList2.add(new ToDo(new Content(CONTENT_E)));
+        assertEquals(uniqueToDoList1, uniqueToDoList2);
+
+        uniqueToDoList1.add(new ToDo(new Content(CONTENT_B)));
+        uniqueToDoList1.add(new ToDo(new Content(VALID_CONTENT)));
+        uniqueToDoList2.add(new ToDo(new Content(CONTENT_B)));
+        uniqueToDoList2.add(new ToDo(new Content(VALID_CONTENT)));
+        assertEquals(uniqueToDoList1, uniqueToDoList2);
+    }
+
+    @Test
+    public void hashCode_differentList_differentResult() throws Exception {
+        UniqueToDoList uniqueToDoList1 = new UniqueToDoList();
+        UniqueToDoList uniqueToDoList2 = new UniqueToDoList();
+        uniqueToDoList2.add(new ToDo(new Content(CONTENT_E)));
+        assertNotEquals(uniqueToDoList1.hashCode(), uniqueToDoList2.hashCode());
+
+        uniqueToDoList1.add(new ToDo(new Content(CONTENT_B)));
+        uniqueToDoList1.add(new ToDo(new Content(CONTENT_E)));
+        uniqueToDoList2.add(new ToDo(new Content(CONTENT_B)));
+        assertNotEquals(uniqueToDoList1.hashCode(), uniqueToDoList2.hashCode());
+    }
+}
+```
 ###### \java\seedu\address\storage\StorageManagerTest.java
 ``` java
     @Test
@@ -1505,7 +1624,7 @@ public class EventBuilder {
     public static final String DEFAULT_VENUE = "Marina Bay Street Circuit";
     public static final String DEFAULT_DATE = "19/07/2018";
     public static final String DEFAULT_START_TIME = "1000";
-    public static final String DEFAULT_END_TIME = "1300";
+    public static final String DEFAULT_END_TIME = "2100";
 
     private String name;
     private String venue;
@@ -1921,11 +2040,11 @@ public class SwitchCommandSystemTest extends AddressBookSystemTest {
     }
 
     private void assertViewChanged(Model model, Model expectedModel) {
-        Assert.assertNotEquals(model.calendarIsViewed(), expectedModel.calendarIsViewed());
+        Assert.assertEquals(model.calendarIsViewed(), expectedModel.calendarIsViewed());
     }
 
     private void assertViewDidNotChange(Model model, Model expectedModel) {
-        Assert.assertEquals(model.calendarIsViewed(), expectedModel.calendarIsViewed());
+        Assert.assertNotEquals(model.calendarIsViewed(), expectedModel.calendarIsViewed());
     }
 }
 ```

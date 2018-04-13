@@ -95,7 +95,7 @@ is specified when adding a customer.
 |kbd:[Ctrl+I]
 |`add ty: r(or c) n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
 
-|<<assign, assign>> (`as`)
+|<<assign, assign>> (`a`)
 |kbd:[Ctrl+Shift+A]
 |`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX] ...`
 

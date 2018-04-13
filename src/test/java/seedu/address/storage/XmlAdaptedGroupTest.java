@@ -12,8 +12,11 @@ import static seedu.address.testutil.TypicalGroups.GROUP_F;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
 import seedu.address.testutil.Assert;
+import seedu.address.testutil.GroupBuilder;
+import seedu.address.testutil.TypicalPersons;
 
 public class XmlAdaptedGroupTest {
 
@@ -26,6 +29,15 @@ public class XmlAdaptedGroupTest {
     @Test
     public void toModelType_getPersonList_returnPersonList() throws Exception {
         XmlAdaptedGroup group = new XmlAdaptedGroup(GROUP_F);
+        assertEquals(GROUP_F.getPersonList(), group.toModelType().getPersonList());
+    }
+
+    @Test
+    public void toModelType_addPerson_returnSuccess() throws Exception {
+        Group groupToChange = new GroupBuilder().withInformation("Group A").build();
+        groupToChange.addPerson(TypicalPersons.ALICE);
+        XmlAdaptedGroup group = new XmlAdaptedGroup(groupToChange);
+
         assertEquals(GROUP_F.getPersonList(), group.toModelType().getPersonList());
     }
 

@@ -63,7 +63,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        String actualIndexInString = model.getPatienActualIndexInList(targetIndex.getZeroBased()) + "";
+        String actualIndexInString = model.getPatientSourceIndexInList(targetIndex.getZeroBased()) + "";
 
         try {
             actualSourceIndex = ParserUtil.parseIndex(actualIndexInString);

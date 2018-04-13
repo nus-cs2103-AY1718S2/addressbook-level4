@@ -196,7 +196,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public int getPatienActualIndexInList(int targetIndex) {
+        public int getPatientSourceIndexInList(int targetIndex) {
             fail("This method should not be called.");
             return 0;
         }

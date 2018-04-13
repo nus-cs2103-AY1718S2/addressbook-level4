@@ -56,20 +56,32 @@ public interface Model {
     //@@author Kyholmes
     /** Adds patient into visiting queue.
      * @throws NullPointerException if {@code targetIndex} is null.
-     * @throws DuplicatePatientException if {@code targetIndex} already exist in the visiting queue*/
+     * @throws DuplicatePatientException if {@code targetIndex} already exist in the visiting queue.*/
     Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException;
 
-    /** Remove the first patient from the visiting queue*/
+    /** Remove the first patient from the visiting queue
+     * @throws PatientNotFoundException if the visiting queue is empty.*/
     Patient removePatientFromQueue() throws PatientNotFoundException;
 
-    /** Remove a specific patient from the visiting queue*/
+    /** Remove a specific patient from the visiting queue
+     * @throws PatientNotFoundException if {@code targetIndex} cannot be found in the visiting queue or the visiting
+     * queue is empty.*/
     Patient removePatientFromQueueByIndex(Index targetIndex) throws PatientNotFoundException;
 
-    /** Get patient visiting queue*/
+    /** Get patient visiting queue (contain patient objects)*/
     ObservableList<Patient> getVisitingQueue();
 
     /** Get Patient from the patient list */
     Patient getPatientFromList(Predicate<Patient> predicate);
+
+    /** Get patient visiting queue (contain patient index)*/
+    ObservableList<Integer> getPatientListIndexInQueue();
+
+    /** Get patient source index in the patient filtered list */
+    int getPatientSourceIndexInList(int targetIndex);
+
+    /** Check if the patient is in the queue */
+    boolean checkIfPatientInQueue(Patient targetPatient);
 
     /** Delete a patient's appointment*/
     boolean deletePatientAppointment(Patient patient, Index index);
@@ -81,13 +93,4 @@ public interface Model {
     void addPatientAppointment(Patient patient, String dateTimeString) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException;
-
-    /** Get list index of patient in the queue*/
-    ObservableList<Integer> getPatientListIndexInQueue();
-
-    /** Get patient actual index in the list */
-    int getPatienActualIndexInList(int targetIndex);
-
-    /** Check if the patient is in the queue */
-    boolean checkIfPatientInQueue(Patient targetPatient);
 }

@@ -183,7 +183,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public int getPatienActualIndexInList(int targetIndex) {
+    public int getPatientSourceIndexInList(int targetIndex) {
         return filteredPatients.getSourceIndex(targetIndex) + 1;
     }
 

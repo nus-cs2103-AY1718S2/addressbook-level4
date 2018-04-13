@@ -7,7 +7,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.patient.Patient;
 
 /**
- * An UI component that displays information of a {@code queue}.
+ * An UI component that displays {@code Patient}'s name in the visiting queue.
  */
 public class QueueCard extends UiPart<Region> {
 

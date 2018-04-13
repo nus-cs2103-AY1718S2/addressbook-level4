@@ -40,10 +40,8 @@ public class Authentication {
     /** Global instance of the HTTP transport. */
     private static HttpTransport httpTransport;
 
-    /** Global instance of the scopes required by this quickstart.
-     *
-     * If modifying these scopes, deleteNotification your previously saved credentials
-     * at ~/.credentials/calendar-java-quickstart
+    /**
+     *  Global instance of the scopes.
      */
     private static final List<String> SCOPES =
             Arrays.asList(CalendarScopes.CALENDAR);

@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PURPOSE;
+
 import com.google.api.services.gmail.Gmail;
 
 import javafx.collections.ObservableList;
@@ -25,8 +28,12 @@ public class EmailCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Emails all persons whose names matches any of "
             + "the specified keywords (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: NAME TEMPLATE\n"
-            + "Example: " + COMMAND_WORD + " alice coldemail";
+            + "Parameters: "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_PURPOSE + "PURPOSE \n"
+            + "Example: " + COMMAND_WORD +  " "
+            + PREFIX_NAME + "alice "
+            + PREFIX_PURPOSE + "coldemail";
 
     private final NameContainsKeywordsPredicate predicate;
     private final String search;

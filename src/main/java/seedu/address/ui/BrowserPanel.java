@@ -30,8 +30,7 @@ import seedu.address.model.smplatform.Twitter;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String LOADING_PAGE_URL =
-            "https://cs2103jan2018-f12-b3.github.io/main/LoadingPage.html";
+    public static final String LOADING_PAGE_URL = "https://cs2103jan2018-f12-b3.github.io/main/LoadingPage.html";
     public static final String FACEBOOK_SEARCH_PAGE_URL =
             "https://www.facebook.com/search/people?q=";
     public static final String TWITTER_SEARCH_PAGE_URL =

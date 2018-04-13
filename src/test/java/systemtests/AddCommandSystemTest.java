@@ -185,25 +185,35 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateAddCommandTemplate() {
-        //use accelerator
+    public void focusOnCommandBox_populateAddCommandTemplate_usingAccelerator() {
         getCommandBox().click();
         populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnResultDisplay_populateAddCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateAddCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateAddCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateAddCommandTemplate_usingMenuButton() {
         populateAddCommandUsingMenu();
         assertPopulationSuccess();
     }

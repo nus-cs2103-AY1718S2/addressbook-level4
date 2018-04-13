@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Text?>
 
 <!-- @@author adityaa1998 -->
-<HBox id="cardPane" fx:id="cardPane" prefHeight="140.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" prefHeight="140.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane prefHeight="140.0" prefWidth="380.0" HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />

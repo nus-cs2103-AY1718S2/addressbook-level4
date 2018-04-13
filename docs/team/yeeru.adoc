@@ -25,10 +25,11 @@ ProgressChecker is *a desktop application for CS2103/T students to have a centra
 * *Other contributions*:
 
 ** Project management:
-*** Managed listing of type.epic and type.stories issues on issue tracker to kickstart the team's type.task issues managment
+*** Managed listing of type.epic and type.stories issues on issue tracker to kickstart the team's type.task issues management
 *** Tracked and made sure pull requests and their relevant issues are assigned the correct milestone and have been closed accordingly
 ** Enhancements to existing features:
 *** Updated tags in PersonCard to have differing colors https://github.com/CS2103JAN2018-T09-B3/main/pull/2[#2]
+*** Changed GUI color scheme https://github.com/CS2103JAN2018-T09-B3/main/pull/243[#243]
 ** Documentation:
 *** Added prefaces to User and Developer Guide for each section https://github.com/CS2103JAN2018-T09-B3/main/pull/124[#124]
 *** Contributed to User Stories and Use Cases https://github.com/CS2103JAN2018-T09-B3/main/pull/76[#76] https://github.com/CS2103JAN2018-T09-B3/main/pull/4[#4]

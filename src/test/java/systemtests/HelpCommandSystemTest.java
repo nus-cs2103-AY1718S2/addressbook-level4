@@ -1,6 +1,7 @@
 package systemtests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.progresschecker.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -40,10 +41,15 @@ public class HelpCommandSystemTest extends ProgressCheckerSystemTest {
 
         getPersonListPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();
+        assertHelpWindowNotOpen();
 
         getBrowserPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
+        assertHelpWindowNotOpen();
+
+        //use menu button
+        getMainMenu().openHelpWindowUsingMenu();
+        assertHelpWindowOpen();
 
         //use command box
         executeCommand(HelpCommand.COMMAND_WORD);
@@ -76,5 +82,12 @@ public class HelpCommandSystemTest extends ProgressCheckerSystemTest {
 
         new HelpWindowHandle(guiRobot.getStage(HelpWindowHandle.HELP_WINDOW_TITLE)).close();
         getMainWindowHandle().focus();
+    }
+
+    /**
+     * Asserts that the help window isn't open.
+     */
+    private void assertHelpWindowNotOpen() {
+        assertFalse(ERROR_MESSAGE, HelpWindowHandle.isWindowPresent());
     }
 }

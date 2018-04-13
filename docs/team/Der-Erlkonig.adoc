@@ -2,43 +2,40 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: LoanShark Manager
+== PROJECT: HuatAh!
 
 ---
 
 == Overview
 
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+HuatAh! is a Java desktop application designed for loanshark managers to manage their enterprise's operations. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+* *Major enhancement*: added *the ability to view the various details of Customers and Runners on the BrowserPanel*
+** What it does: Upon selecting a Person, his details will be listed on the BrowserPanel. Depending on whether the Person is a Customer or Runner, their different fields will be shown accordingly.
+** Justification: This feature improves the product significantly because a Loanshark manager can easily see the details of his Customers and Runners at a quick glance, enhancing productivity.
+** Highlights: This feature makes use of the same BrowserPanel which displays the GoogleMaps.
+** Credits: https://www.w3schools.com/html/ for to introduction to html syntax.
 
-* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
+* *Minor enhancement*: Modify the color schema of the new application.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/functional/Der-Erlkonig.md[functional]] [https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/test/Der-Erlkonig.md[test]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+*** Manage pull requests
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Updated tbc (Pull requests https://github.com[tbc], https://github.com[tbc])
+*** Wrote additional tests for existing features to increase coverage from 0% to 0% (Pull requests https://github.com[tbc], https://github.com[tbc])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Did tweaks to existing contents of the User Guide: https://github.com[tbc]
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+*** PRs reviewed (with non-trivial review comments): https://github.com[tbc], https://github.com[tbc]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[tbc], https://github.com[tbc])
 ** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
+
 
 _{you can add/remove categories in the list above}_
 
@@ -55,7 +52,7 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-== PROJECT: PowerPointLabs
+== PROJECT: tbc
 
 ---
 

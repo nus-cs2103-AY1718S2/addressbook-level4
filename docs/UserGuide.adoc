@@ -361,6 +361,9 @@ Finds accounts with the `fav` tag
  find (p/>500 AND t/fav) OR h/<20
 
 Finds accounts either with current price more than $500 and tagged `fav`, or with less than 20 coins left
+
+// tag::notifications[]
+
 //end::findcommand[]
 === Set up notifications `notify` | `n` `[Coming in v1.5]`
 
@@ -383,6 +386,8 @@ Sets a condition that triggers a popup notification whenever the condition match
 notify h/>0
 ----
 Notify when the amount held in an account is more than 0 after the update. This always triggers and hence is useless on its own, but can be combined with other conditions to restrict notifications to a smaller set of accounts
+
+// end::notifications[]
 
 ----
 notify c/BTC w/=50

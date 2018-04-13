@@ -24,6 +24,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
@@ -231,6 +232,12 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         addressBook.addAppointment(appointment);
         updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
+        addressBook.removeAppointment(target);
         indicateAddressBookChanged();
     }
     //@@author

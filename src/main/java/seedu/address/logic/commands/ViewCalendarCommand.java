@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 //@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
+import static seedu.address.ui.util.CalendarFxUtil.DAY_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.MONTH_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.WEEK_VIEW;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
@@ -25,9 +28,6 @@ public class ViewCalendarCommand extends Command {
 
     public static final String MESSAGE_SHOW_CALENDAR_SUCCESS = "Display Calendar in %1$s-View.";
 
-    public static final String MONTH_VIEW = "Month";
-    public static final String DAY_VIEW = "Day";
-    public static final String WEEK_VIEW = "Week";
 
     private final String view;
 

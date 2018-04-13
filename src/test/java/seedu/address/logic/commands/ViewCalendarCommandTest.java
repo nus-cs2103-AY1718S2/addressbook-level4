@@ -3,6 +3,9 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.ui.util.CalendarFxUtil.DAY_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.MONTH_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.WEEK_VIEW;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,14 +43,14 @@ public class ViewCalendarCommandTest {
 
     @Test
     public void equals() {
-        ViewCalendarCommand viewCalendarFirstCommand = new ViewCalendarCommand(ViewCalendarCommand.DAY_VIEW);
-        ViewCalendarCommand viewCalendarSecondCommand = new ViewCalendarCommand(ViewCalendarCommand.WEEK_VIEW);
+        ViewCalendarCommand viewCalendarFirstCommand = new ViewCalendarCommand(DAY_VIEW);
+        ViewCalendarCommand viewCalendarSecondCommand = new ViewCalendarCommand(WEEK_VIEW);
 
         // same object -> returns true
         assertTrue(viewCalendarFirstCommand.equals(viewCalendarFirstCommand));
 
         // same values -> returns true
-        ViewCalendarCommand selectFirstCommandCopy = new ViewCalendarCommand(ViewCalendarCommand.DAY_VIEW);
+        ViewCalendarCommand selectFirstCommandCopy = new ViewCalendarCommand(DAY_VIEW);
         assertTrue(viewCalendarFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false
@@ -69,7 +72,7 @@ public class ViewCalendarCommandTest {
 
         try {
             CommandResult commandResult = viewCalendarCommand.execute();
-            assertEquals(String.format(ViewCalendarCommand.MESSAGE_SHOW_CALENDAR_SUCCESS, ViewCalendarCommand.DAY_VIEW),
+            assertEquals(String.format(ViewCalendarCommand.MESSAGE_SHOW_CALENDAR_SUCCESS, DAY_VIEW),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
@@ -77,7 +80,7 @@ public class ViewCalendarCommandTest {
 
         ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
-        assertEquals(ViewCalendarCommand.DAY_VIEW, lastEvent.getView());
+        assertEquals(DAY_VIEW, lastEvent.getView());
     }
 
     /**
@@ -90,14 +93,14 @@ public class ViewCalendarCommandTest {
         try {
             CommandResult commandResult = viewCalendarCommand.execute();
             assertEquals(String.format(ViewCalendarCommand.MESSAGE_SHOW_CALENDAR_SUCCESS,
-                    ViewCalendarCommand.WEEK_VIEW), commandResult.feedbackToUser);
+                    WEEK_VIEW), commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
         ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
-        assertEquals(ViewCalendarCommand.WEEK_VIEW, lastEvent.getView());
+        assertEquals(WEEK_VIEW, lastEvent.getView());
     }
 
     /**
@@ -110,14 +113,14 @@ public class ViewCalendarCommandTest {
         try {
             CommandResult commandResult = viewCalendarCommand.execute();
             assertEquals(String.format(ViewCalendarCommand.MESSAGE_SHOW_CALENDAR_SUCCESS,
-                    ViewCalendarCommand.MONTH_VIEW), commandResult.feedbackToUser);
+                    MONTH_VIEW), commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
         ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
-        assertEquals(ViewCalendarCommand.MONTH_VIEW, lastEvent.getView());
+        assertEquals(MONTH_VIEW, lastEvent.getView());
     }
 
 }

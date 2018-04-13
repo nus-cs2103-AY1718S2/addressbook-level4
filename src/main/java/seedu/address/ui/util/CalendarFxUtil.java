@@ -1,13 +1,22 @@
 package seedu.address.ui.util;
-
+//@@author SuxianAlicia
 import com.calendarfx.view.CalendarView;
 import com.calendarfx.view.page.DayPage;
 
 /**
+ * Contains helper methods and list of constants related to handling CalendarFx display.
  * Contains methods to initialise Calendar such that unused functions are not displayed, and mouse events are not
  * listened to.
  */
 public class CalendarFxUtil {
+
+    public static final String MONTH_VIEW = "Month";
+    public static final String DAY_VIEW = "Day";
+    public static final String WEEK_VIEW = "Week";
+
+    public static final String REQUEST_TODAY = "Today";
+    public static final String REQUEST_BACK = "Back";
+    public static final String REQUEST_NEXT = "Next";
 
     /**
      * Returns modified CalendarView such that unnecessary buttons and features are not shown.

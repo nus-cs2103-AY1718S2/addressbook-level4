@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_NEXT;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,6 +57,6 @@ public class ViewNextCommandTest {
 
         ChangeCalendarPageRequestEvent lastEvent = (ChangeCalendarPageRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
-        assertEquals(ViewNextCommand.REQUEST_NEXT, lastEvent.getRequestType());
+        assertEquals(REQUEST_NEXT, lastEvent.getRequestType());
     }
 }

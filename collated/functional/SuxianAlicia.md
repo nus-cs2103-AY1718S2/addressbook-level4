@@ -1204,7 +1204,7 @@ import java.util.Objects;
 import com.calendarfx.model.Calendar;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CalendarUtil;
+import seedu.address.commons.util.CalendarEntryConversionUtil;
 import seedu.address.model.event.CalendarEntry;
 import seedu.address.model.event.UniqueCalendarEntryList;
 import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;

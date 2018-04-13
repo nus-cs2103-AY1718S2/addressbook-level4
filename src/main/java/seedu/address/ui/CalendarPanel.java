@@ -1,6 +1,12 @@
 package seedu.address.ui;
 //@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
+import static seedu.address.ui.util.CalendarFxUtil.DAY_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.MONTH_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_BACK;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_NEXT;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_TODAY;
+import static seedu.address.ui.util.CalendarFxUtil.WEEK_VIEW;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,14 +33,6 @@ import seedu.address.ui.util.CalendarFxUtil;
  */
 public class CalendarPanel extends UiPart<Region> {
 
-    private static final String DAY_VIEW = "Day";
-    private static final String MONTH_VIEW = "Month";
-    private static final String WEEK_VIEW = "Week";
-
-    private static final String REQUEST_TODAY = "Today";
-    private static final String REQUEST_BACK = "Back";
-    private static final String REQUEST_NEXT = "Next";
-
     private static final String FXML = "CalendarPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -43,7 +41,7 @@ public class CalendarPanel extends UiPart<Region> {
     private final CalendarSource calendarSource;
 
     @FXML
-    private StackPane calendarPanelholder;
+    private StackPane calendarPanelHolder;
 
     public CalendarPanel(Calendar calendar) {
         super(FXML);
@@ -90,7 +88,7 @@ public class CalendarPanel extends UiPart<Region> {
     public void initialiseCalendar(Calendar calendar) {
         calendarSource.getCalendars().addAll(calendar);
         calendarView.getCalendarSources().setAll(calendarSource);
-        calendarPanelholder.getChildren().setAll(calendarView);
+        calendarPanelHolder.getChildren().setAll(calendarView);
     }
 
     /**

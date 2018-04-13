@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 //@@author SuxianAlicia
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_BACK;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -21,7 +23,6 @@ public class ViewBackCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_VIEW_CALENDAR_BACK_SUCCESS = "Displayed previous page in Calendar.";
-    public static final String REQUEST_BACK = "Back";
 
     @Override
     public CommandResult execute() throws CommandException {

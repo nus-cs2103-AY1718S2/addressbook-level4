@@ -3,7 +3,6 @@ package seedu.address.ui;
 import com.calendarfx.model.Calendar;
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -13,8 +12,6 @@ import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
 import seedu.address.commons.events.ui.DisplayPersonPanelRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ResetPersonPanelRequestEvent;
-import seedu.address.model.event.CalendarEntry;
-
 
 /**
  * The Center Panel of the App that can switch between Person Panel and Calendar Panel.
@@ -28,7 +25,6 @@ public class CenterPanel extends UiPart<Region> {
     private CalendarPanel calendarPanel;
 
     private PersonPanel personPanel;
-    private ObservableList<CalendarEntry> calendarEvents;
 
     @FXML
     private StackPane centerPlaceholder;
@@ -38,7 +34,6 @@ public class CenterPanel extends UiPart<Region> {
 
         personPanel = new PersonPanel();
         calendarPanel = new CalendarPanel(calendar);
-        this.calendarEvents = calendarEvents;
 
         displayPersonPanel();
         registerAsAnEventHandler(this);

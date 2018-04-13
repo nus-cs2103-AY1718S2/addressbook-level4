@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 //@@author SuxianAlicia
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_TODAY;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -17,7 +19,6 @@ public class ViewTodayCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_VIEW_CALENDAR_TODAY_SUCCESS = "Displayed Today in Calendar.";
-    public static final String REQUEST_TODAY = "Today";
 
     @Override
     public CommandResult execute() throws CommandException {

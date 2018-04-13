@@ -9,7 +9,7 @@ import java.util.Objects;
 import com.calendarfx.model.Calendar;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CalendarUtil;
+import seedu.address.commons.util.CalendarEntryConversionUtil;
 import seedu.address.model.event.CalendarEntry;
 import seedu.address.model.event.UniqueCalendarEntryList;
 import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
@@ -56,7 +56,8 @@ public class CalendarManager implements ReadOnlyCalendarManager {
      */
     private void updateCalendar() {
         calendar.clear();
-        calendar.addEntries(CalendarUtil.convertEntireListToEntries(calendarEntryList.asObservableList()));
+        calendar.addEntries(
+                CalendarEntryConversionUtil.convertEntireListToEntries(calendarEntryList.asObservableList()));
     }
 
     /**

@@ -14,7 +14,7 @@ import seedu.address.model.event.CalendarEntry;
 /**
  * Provides utilities to convert between {@code Entry} used in CalendarFX and its Model Version, {@code CalendarEntry}.
  */
-public class CalendarUtil {
+public class CalendarEntryConversionUtil {
 
     /**
      * Converts {@code CalendarEntry} to {@code Entry} used in CalendarFX.
@@ -37,7 +37,7 @@ public class CalendarUtil {
         List<Entry<?>> convertedEntries = new ArrayList<>();
 
         for (CalendarEntry ce: calendarEntries) {
-            convertedEntries.add(CalendarUtil.convertToEntry(ce));
+            convertedEntries.add(CalendarEntryConversionUtil.convertToEntry(ce));
         }
 
         return convertedEntries;

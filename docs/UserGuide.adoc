@@ -375,8 +375,7 @@ Format: `addTask title/TITLE desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY
 New tasks will be added into the *To-do list* and *Calendar*.
 
 [NOTE]
-Deadline field can take in any day value from 1 to 31, month value from 01-12 and year value that is now or in the future. If the month that the task is scheduled in does not have 31 days, or the day value specified, the task will be scheduled on the last day of the month.
-e.g.: typing 31-04-2018 into the deadline field will result in the task being scheduled on 30-04-2018.
+Deadline has to be a date that exists.
 
 [NOTE]
 The month value has to be a month no more than 6 months after the current month (Start counting to 6 from the next month).

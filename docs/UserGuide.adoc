@@ -15,7 +15,7 @@ endif::[]
 :contactsURL: https://contacts.google.com/
 :calendarURL: https://calendar.google.com/calendar/r/week
 
-= image:CodeducatorTitle.png[Codeducator,100,role="le"] Codeducator - User Guide
+= image:CodeducatorTitle.png[width=60px] Codeducator - User Guide
 By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 
@@ -102,7 +102,7 @@ You may use create a folder called `Codeducator` on your `Desktop`, or in `My Do
 
 .  Double-click the file to start the app. You should see the application open in a appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::firstStart.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.

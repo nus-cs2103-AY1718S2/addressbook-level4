@@ -17,7 +17,6 @@ import seedu.address.model.group.Information;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.Assert;
 import seedu.address.testutil.GroupBuilder;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalPersons;
 
 public class XmlAdaptedGroupTest {

@@ -24,6 +24,7 @@ import seedu.address.commons.events.model.ScheduleChangedEvent;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.Time;
 import seedu.address.model.student.Student;
 
 //@@author demitycho
@@ -36,6 +37,11 @@ public class CalendarPanel extends UiPart<CalendarView> {
     private static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm";
     private static final String STRING_ENTRY_TITLE = "%d Lesson: %s";
 
+    private static final Time TIME_DEFAULT_START = new Time("07:00");
+    private static final Time TIME_DEFAULT_END = new Time("22:00");
+    private static final LocalTime TEMPORAL_TIME_DEFAULT_START = LocalTime.of(00, 30);
+    private static final LocalTime TEMPORAL_TIME_DEFAULT_END = LocalTime.of(23, 59);
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @javafx.fxml.FXML
@@ -47,10 +53,12 @@ public class CalendarPanel extends UiPart<CalendarView> {
 
     private ReadOnlyAddressBook addressBook;
 
+    private ReadOnlySchedule schedule;
+
     public CalendarPanel(ReadOnlySchedule readOnlySchedule, ReadOnlyAddressBook addressBook) {
         super(FXML);
         initializeCalendar();
-        setUpCalendarView();
+        setUpCalendarView(readOnlySchedule);
         loadEntries(readOnlySchedule, addressBook);
         updateTime();
         registerAsAnEventHandler(this);
@@ -75,7 +83,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
      * Sets up the calendar view
      * Uses many methods to modify the default CalendarView
      */
-    private void setUpCalendarView() {
+    private void setUpCalendarView(ReadOnlySchedule schedule) {
         CalendarSource calendarSource = new CalendarSource("My Calendar");
         calendarSource.getCalendars().addAll(calendar);
 
@@ -101,16 +109,11 @@ public class CalendarPanel extends UiPart<CalendarView> {
         calendarView.getWeekPage().setShowNavigation(false);
         calendarView.getWeekPage().setShowDate(false);
         calendarView.weekFieldsProperty().setValue(WeekFields.of(Locale.FRANCE)); // Start week from Monday
-        LocalTime startTime = LocalTime.of(7, 00);
-        LocalTime endTime = LocalTime.of(22, 00);
-        calendarView.setStartTime(startTime);
-        calendarView.setEndTime(endTime);
 
         DetailedWeekView detailedWeekView = calendarView.getWeekPage().getDetailedWeekView();
         detailedWeekView.setEarlyLateHoursStrategy(DayViewBase.EarlyLateHoursStrategy.HIDE);
         detailedWeekView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_COUNT);
-        detailedWeekView.setVisibleHours((int) ChronoUnit.HOURS.between(startTime, endTime));
-        detailedWeekView.setShowScrollBar(false);
+        resizeCalendar(calendarView, schedule);
     }
 
     /**
@@ -119,9 +122,29 @@ public class CalendarPanel extends UiPart<CalendarView> {
     private void loadEntries(ReadOnlySchedule readOnlySchedule, ReadOnlyAddressBook addressBook) {
         lessonDisplayIndex = 1;
         this.addressBook = addressBook;
+        this.schedule = readOnlySchedule;
         readOnlySchedule.getSchedule().stream().forEach(this::loadEntry);
+        resizeCalendar(calendarView, readOnlySchedule);
     }
 
+    /**
+     * Resizes the calendar view if any time slots are outside of the default time range
+     * @param calendarView
+     * @param schedule
+     */
+    private void resizeCalendar(CalendarView calendarView, ReadOnlySchedule schedule) {
+        DetailedWeekView detailedWeekView = calendarView.getWeekPage().getDetailedWeekView();
+        Time start = TIME_DEFAULT_START.compareTo(schedule.getEarliestStartTime()) < 0
+                ? TIME_DEFAULT_START : schedule.getEarliestStartTime();
+        Time end = TIME_DEFAULT_END.compareTo(schedule.getLatestEndTime()) > 0
+                ? TIME_DEFAULT_END : schedule.getLatestEndTime();
+        LocalTime startTime = LocalTime.parse(start.toString());
+        LocalTime endTime = LocalTime.parse(end.toString());
+
+        detailedWeekView.setVisibleHours((int) ChronoUnit.HOURS.between(startTime, endTime));
+        calendarView.setStartTime(startTime);
+        calendarView.setEndTime(endTime);
+    }
     /**
      * Creates an entry with the {@code lesson} details and loads it into the calendar
      */
@@ -140,6 +163,9 @@ public class CalendarPanel extends UiPart<CalendarView> {
 
         entry.setTitle(String.format(STRING_ENTRY_TITLE, lessonDisplayIndex++, student.getName()));
         entry.setCalendar(calendar);
+
+
+
     }
 
 

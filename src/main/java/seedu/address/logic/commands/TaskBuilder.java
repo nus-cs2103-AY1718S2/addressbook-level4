@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.model.student.dashboard.Task;
 
 //@@author yapni
@@ -16,6 +18,8 @@ public class TaskBuilder {
      * Initializes the TaskBuilder with the data of {@code taskToCopy}.
      */
     public TaskBuilder(Task taskToCopy) {
+        requireNonNull(taskToCopy);
+
         name = taskToCopy.getName();
         description = taskToCopy.getDescription();
         isCompleted = taskToCopy.isCompleted();

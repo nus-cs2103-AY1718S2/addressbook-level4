@@ -133,6 +133,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void indicateScheduleChanged() {
         raise(new ScheduleChangedEvent(schedule, addressBook));
+        raise(new AddressBookChangedEvent(addressBook));
     }
 
     /**

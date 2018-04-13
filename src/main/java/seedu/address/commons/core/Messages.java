@@ -13,7 +13,8 @@ public class Messages {
     public static final String MESSAGE_INVALID_TASK_DISPLAYED_INDEX = "The task index provided is invalid";
     public static final String MESSAGE_STUDENT_LISTED_OVERVIEW = "%1$d students listed!";
     public static final String MESSAGE_INVALID_START_END_TIME = "End time "
-                                                    + "must be strictly later than Start time!";
+                                                    + "must be strictly later than Start time!\n"
+                                                    + "If you want to end at midnight, please use 23:59";
     public static final String MESSAGE_INVALID_LESSON_DISPLAYED_INDEX = "The lesson index provided is invalid";
 
 }

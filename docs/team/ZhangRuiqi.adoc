@@ -18,7 +18,7 @@ HuatAh is adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-level4
 ** Highlights: This enhancement includes the use Google Map which allows for much more future possibilities to integrate with Google. It makes integrating with other Google functions in the future easier.
 ** Credits: _https://github.com/CS2103AUG2017-F11-B3/main/blob/master/src/main/java/seedu/address/logic/commands/GmapCommand.java_
 
-* *Minor enhancement*: added alias for command that allows the user to use a command more easily
+* *Minor enhancement*: added alias for command that allows the user to use a command more easily, minor change to ui-app logo
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/functional/zhangriqi.md[Functional code]] [https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/test/zhangriqi.md[Test code]]
 

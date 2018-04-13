@@ -528,6 +528,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::predict_command[]
 === Prediction Function
 
 A command by the keyword of "predict" is added. It takes no argument.
@@ -550,6 +551,7 @@ Imaging a form of Ax=b where A is a matrix and x is a vector of weights
 and b is the expected outcome. The name of the game is to find the
 weights that minimises the loss of the objective function A.
 The numerical solver used here is Stochastic Gradient Descent.
+// end::predict_command[]
 
 // tag::policy[]
 === Policy Feature

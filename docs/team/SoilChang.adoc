@@ -1,0 +1,59 @@
+= Chang HoHuan - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Smart Insurance Collection
+
+---
+
+== Overview
+
+Smart Insurance Collection(SIC) is for insurance agents who *prefer to use a desktop app for managing contacts and appointments*. More importantly, SIC is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+
+== Summary of contributions
+
+* *Major enhancement*: added *Predict Command*
+** What it does: It predicts the potential spending of a new customer based on the information from the
+existing customers
+** Justification: A insurance agents can have hundreds of potential customers. It would be very handy and essential for
+them to have a heuristics to rank the customers by priority. One obvious factor is how much the customer would spend on
+the insurance. Based on this, a "predict" command would be very useful to predict how much a potential customers
+will spend. Therefore the insurance agents can prioritise visiting those customers who are likely to spend more.
+** Highlights: This features requires a lot of foundational enhancements from other parts of the application. The original
+address book does not come with the features to encode the information needed for the calculation. Hence I need to
+add in more features in order to develop this feature. In the process, I have made enhancements to every components from
+storage to the UI.
+
+* *Minor enhancement*: Income field, actual spending field and expected spending field.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/functional/SoilChang.md] [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/test/SoilChang.md]}_
+
+* *Other contributions*:
+1. Created and Integrated Travis into the repository
+2. Created and released production builds in version 1.4 and 1.5
+3. Created and Managed the main and side branches in the repository to manage the team project
+4. Created the team organisation and instantiated the organisation repository
+5. Helped and advised teammates on technical challenges in the whatsapp channel
+6. Managed and safeguard the main release branch to ensure everyone has a working build
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=predict_command]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=predict_command]
+include::../DeveloperGuide.adoc[tag=model]
+include::../DeveloperGuide.adoc[tag=logic]
+

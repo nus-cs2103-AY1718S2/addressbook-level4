@@ -305,6 +305,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::predict_command[]
 === Predict: `predict`
 Predict the potential spending of the of a new customer. Some of the customers have
 their "actual spending" recorded down while some don't have because they have
@@ -368,7 +369,7 @@ Test Input 3: +
     ==>  divergent solution
 
 this is to illustrate unrealistic extreme values might lead to divergent solution.
-
+// end::predict_command[]
 
 
 

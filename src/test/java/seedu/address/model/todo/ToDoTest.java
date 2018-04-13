@@ -11,17 +11,17 @@ import seedu.address.testutil.ToDoBuilder;
 public class ToDoTest {
     @Test
     public void equals() {
-        ToDo todoA = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
-        ToDo todoB = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
-        ToDo todoC = new ToDoBuilder().withContent("Something to do").withStatus("done").build();
+        ToDo toDoA = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
+        ToDo toDoB = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
+        ToDo toDoC = new ToDoBuilder().withContent("Something to do").withStatus("done").build();
 
         // different types -> returns false
-        assertFalse(todoA.equals(1));
+        assertFalse(toDoA.equals(1));
 
         // same content -> returns true
-        assertTrue(todoA.hashCode() == todoB.hashCode());
+        assertTrue(toDoA.hashCode() == toDoB.hashCode());
 
         // same content, different status -> returns true
-        assertTrue(todoA.equals(todoC));
+        assertTrue(toDoA.equals(toDoC));
     }
 }

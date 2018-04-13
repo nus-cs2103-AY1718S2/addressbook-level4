@@ -113,7 +113,7 @@ public class UnCheckToDoCommandTest {
         // null -> returns false
         assertFalse(unCheckToDoFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different to-do -> returns false
         assertFalse(unCheckToDoFirstCommand.equals(unCheckToDoSecondCommand));
     }
 

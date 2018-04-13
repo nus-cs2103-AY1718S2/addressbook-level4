@@ -24,14 +24,14 @@ public class UnCheckToDoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "uncheck";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unchecks the ToDo identified as done"
-            + "by the index number used in the last ToDo listing. "
-            + "Status of the ToDo will be overwritten as done.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unchecks the to-do identified as undone "
+            + "by the index number used in the last to-do listing. "
+            + "Status of the to-do will be overwritten as undone.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_UNCHECK_TODO_SUCCESS = "Unchecked ToDo: %1$s";
-    public static final String MESSAGE_NOT_UNCHECKED = "Unchecked ToDo failed.";
+    public static final String MESSAGE_UNCHECK_TODO_SUCCESS = "Unchecked to-do: %1$s";
+    public static final String MESSAGE_NOT_UNCHECKED = "Unchecked to-do failed.";
 
     private final Index index;
 

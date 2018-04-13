@@ -49,7 +49,7 @@ public class MainWindow extends UiPart<Stage> {
     private Calendar calendar;
     private Timetable timetable;
     private PersonListPanel personListPanel;
-    private ToDoListPanel todoListPanel;
+    private ToDoListPanel toDoListPanel;
     private GroupListPanel groupListPanel;
     private ProgressIndicator progressIndicator;
     private Label progressIndicatorLabel;
@@ -72,7 +72,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
-    private StackPane todoListPanelPlaceholder;
+    private StackPane toDoListPanelPlaceholder;
 
     @FXML
     private StackPane groupListPanelPlaceholder;
@@ -154,8 +154,8 @@ public class MainWindow extends UiPart<Stage> {
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         //@@author nhatquang3112
-        todoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
-        todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
+        toDoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
+        toDoListPanelPlaceholder.getChildren().add(toDoListPanel.getRoot());
 
         progressIndicatorLabel = new Label(PROGRESS_INDICATOR_LABEL_NAME);
         progressIndicatorLabel.setStyle(PROGRESS_INDICATOR_LABEL_COLOR);

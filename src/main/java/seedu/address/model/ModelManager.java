@@ -118,8 +118,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addToDo(ToDo todo) throws DuplicateToDoException {
-        addressBook.addToDo(todo);
+    public synchronized void addToDo(ToDo toDo) throws DuplicateToDoException {
+        addressBook.addToDo(toDo);
         indicateAddressBookChanged();
     }
 

@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
@@ -31,8 +30,6 @@ import seedu.address.model.tag.Tag;
 
 //@@author melvintzw
 public class FindCommandSystemTest extends AddressBookSystemTest {
-    private final GuiRobot guiRobot = new GuiRobot();
-
     @Test
     public void find() {
         /* Case: find multiple persons in address book, command with leading spaces and trailing spaces

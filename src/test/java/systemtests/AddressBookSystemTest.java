@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
+import guitests.GuiRobot;
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
@@ -40,12 +41,15 @@ import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.CommandBox;
 import seedu.address.ui.ResultDisplay;
+import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
 public abstract class AddressBookSystemTest {
+    protected final GuiRobot guiRobot = new GuiRobot();
+
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 

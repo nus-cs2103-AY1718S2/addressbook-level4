@@ -13,7 +13,6 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -25,10 +24,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
-
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-    private final GuiRobot guiRobot = new GuiRobot();
 
     @Test
     public void delete() {

@@ -39,7 +39,6 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -57,8 +56,6 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
-    private final GuiRobot guiRobot = new GuiRobot();
-
     @Test
     public void add() throws Exception {
         Model model = getModel();

@@ -97,6 +97,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author KevinChuangCH
     /**
      * Checks for the validation of {@code inputPlatform} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -124,6 +125,7 @@ public class ParserUtil {
         }
         return trimmedInputName;
     }
+    //@@author
 
     /**
      * Parses a {@code String name} into a {@code Name}.

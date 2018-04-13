@@ -1,5 +1,6 @@
 package seedu.address.model.smplatform;
 
+//@@author KevinChuangCH
 /**
  * Represents a social media platform, which can take many forms.
  */

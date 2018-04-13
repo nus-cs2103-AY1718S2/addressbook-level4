@@ -252,9 +252,7 @@ Deletes all non-clients added before 12/12/2017 in the address book.
 // end::deletebefore[]
 
 // tag::emailing[]
-
 ==== Emailing a person : `email` or `em`
-
 
 Emails a person based on the specified name.
 Format: `email KEYWORD TEMPLATE`
@@ -269,7 +267,6 @@ Format: `email KEYWORD TEMPLATE`
 // end::emailing[]
 
 // tag::templating[]
-
 ==== Creating a new template : `addTemplate` or `at`
 
 Creates a new template based on the specified purpose, subject and message.
@@ -325,14 +322,14 @@ Format: `import_contacts PATH.csv`
 
 For example `import_contacts ~/PATH/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv` at `PATH`.
 
-[Note]
+[NOTE]
 *The _command_ should meet the following conditions:*
 
 * Include the file extension `.csv` at the end of the file path
 * Use the *full* (not the _relative_) file path
 * _No need_ to include quotations ("...") around the file path
 
-[Note]
+[NOTE]
 *The `.csv` file from which you are importing the contacts should:*
 
 * Have 4 headers in the following order: Name, Email, Phone, Address. The header is simply the first row of the .csv
@@ -344,7 +341,7 @@ An example of a suitable import file format is shown below.
 image::import_file_example.png[width="700"]
 //end::import[]
 
-//tag:export[]
+//tag::export[]
 ==== Exporting contacts to CSV: `export_contacts` or `ec`
 
 Export all contacts to a .csv file.

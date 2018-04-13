@@ -824,6 +824,7 @@ image::ImportContactDiagram.png[width="700"]
 
 //tag::export[]
 === Export Contacts to CSV file Function
+==== Current Implementation
 The exporting persons mechanism allows the user to write the current `Person` list from the `ReadOnlyAddressBook` to a .csv file. The core functionality of this mechanism is contained in the `ExportContactsCommand` class, with a parser written in `ExportContactsCommandParser`.
 
 If the user does not specify a file path, `ExportContactsCommand` will be default write to _data/exportToExisting.csv_. If the user specifies a path to a file that doesn't exist, `CSVPrinter` will create the .csv file and write to it.
@@ -833,6 +834,8 @@ If the user does not specify a file path, `ExportContactsCommand` will be defaul
 A diagram of the architecture is displayed below:
 
 image::ExportContactDiagram.png[width="700"]
+
+==== Design Consideration
 
 ===== Aspect: Implementation of `ImportContactsCommand.getCsvToWriteTo()`
 * **Alternative 1 (current choice):** Put the logic for `getCsvToWriteTo()` in a separate function that creates and returns a local `CSVPrinter` object.

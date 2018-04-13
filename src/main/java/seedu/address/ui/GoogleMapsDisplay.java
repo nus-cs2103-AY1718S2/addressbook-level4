@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javafx.application.Platform;
@@ -32,16 +34,17 @@ public class GoogleMapsDisplay extends UiPart<Region> {
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
-
         loadDefaultPage();
     }
 
     public void loadMapPage(String location) {
-        loadPage(MAP_SEARCH_URL_PREFIX + location);
+        String address = MAP_SEARCH_URL_PREFIX + location;
+        loadPage(address);
     }
 
     public void loadMapDirections(String locations) {
-        loadPage(MAP_DIRECTIONS_URL_PREFIX + locations);
+        String address = MAP_DIRECTIONS_URL_PREFIX + locations;
+        loadPage(address);
     }
 
     public void loadPage(String url) {

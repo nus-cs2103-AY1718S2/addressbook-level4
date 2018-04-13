@@ -7,6 +7,8 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+import java.io.IOException;
+
 //@@author jingyinno
 /**
  * Launches Google Maps with specified location(s)
@@ -20,6 +22,7 @@ public class MapCommand extends Command {
             + "Example: " + COMMAND_WORD + " 119077/117417 ";
 
     public static final String MESSAGE_SUCCESS = "Launching Google Maps ...";
+    public static final String MESSAGE_NO_INTERNET = "Please check that you have internet connection";
 
     private String locations;
     private boolean isOneLocation;
@@ -48,9 +51,12 @@ public class MapCommand extends Command {
             locations = locationsArray[0];
             isOneLocation = true;
         }
-
-        EventsCenter.getInstance().post(new GoogleMapsEvent(locations, isOneLocation));
-        return new CommandResult(String.format(MESSAGE_SUCCESS));
+        try {
+            EventsCenter.getInstance().post(new GoogleMapsEvent(locations, isOneLocation));
+            return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } catch (IOException e) {
+            throw new CommandException(MESSAGE_NO_INTERNET);
+        }
 
     }
 

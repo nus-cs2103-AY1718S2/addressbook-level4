@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -47,13 +46,6 @@ public class AliasCommand extends UndoableCommand {
     public AliasCommand(Alias alias) {
         requireNonNull(alias);
         toAdd = alias;
-    }
-
-    /**
-     * Creates a default AliasCommand
-     */
-    public AliasCommand() {
-        toAdd = null;
     }
 
     @Override

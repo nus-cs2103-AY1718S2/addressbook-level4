@@ -46,6 +46,8 @@ This feature can also be extended in the future by adding additional user roles 
 
 include::../UserGuide.adoc[tag=login]
 
+include::../UserGuide.adoc[tag=logout]
+
 include::../UserGuide.adoc[tag=print]
 
 == Contributions to the Developer Guide

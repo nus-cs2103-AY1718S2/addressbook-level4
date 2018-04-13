@@ -3,8 +3,6 @@ package seedu.address.ui;
 import java.net.URL;
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -15,7 +13,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PatientPanelSelectionChangedEvent;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.tag.Tag;
 
@@ -72,7 +69,7 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Loads the details of the patient.
      */
-    private void loadPersonPage(Patient patient) {
+    public void loadPersonPage(Patient patient) {
         this.patient = patient;
         name.setText(patient.getName().fullName);
         nric.setText("NRIC: " + patient.getNric().value);
@@ -104,12 +101,6 @@ public class BrowserPanel extends UiPart<Region> {
      */
     public void freeResources() {
         browser = null;
-    }
-
-    @Subscribe
-    private void handlePatientPanelSelectionChangedEvent(PatientPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().patient);
     }
 
     /**

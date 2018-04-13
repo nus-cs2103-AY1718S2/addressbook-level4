@@ -80,23 +80,12 @@ public class CoinSubredditList {
  */
 public abstract class AmountCondition implements Predicate<Coin> {
 
-    /**
-     * Indicates whether to compare absolute or change
-     */
-    public enum CompareMode {
-        EQUALS,
-        RISE,
-        FALL
-    }
-
     protected BiPredicate<Amount, Amount> amountComparator;
     protected Amount amount;
-    protected CompareMode compareMode;
 
-    public AmountCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
+    public AmountCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
         this.amount = amount;
         this.amountComparator = amountComparator;
-        this.compareMode = compareMode;
     }
 
     public abstract boolean test(Coin coin);
@@ -113,8 +102,8 @@ public class AmountHeldCondition extends AmountCondition {
     public static final TokenType PREFIX = PREFIX_HELD;
     public static final TokenType PARAMETER_TYPE = NUM;
 
-    public AmountHeldCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
+    public AmountHeldCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
+        super(amount, amountComparator);
     }
 
     @Override
@@ -157,8 +146,8 @@ public class CurrentPriceCondition extends AmountCondition {
     public static final TokenType PARAMETER_TYPE = NUM;
 
 
-    public CurrentPriceCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
+    public CurrentPriceCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
+        super(amount, amountComparator);
     }
 
     @Override
@@ -178,15 +167,13 @@ public class DollarsBoughtCondition extends AmountCondition {
     public static final TokenType PREFIX = PREFIX_BOUGHT;
     public static final TokenType PARAMETER_TYPE = NUM;
 
-    public DollarsBoughtCondition(Amount amount,
-                                  BiPredicate<Amount, Amount> amountComparator,
-                                  CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
+    public DollarsBoughtCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
+        super(amount, amountComparator);
     }
 
     @Override
     public boolean test(Coin coin) {
-        return amountComparator.test(coin.getTotalAmountBought(), amount);
+        return amountComparator.test(coin.getTotalDollarsBought(), amount);
     }
 }
 ```
@@ -201,13 +188,13 @@ public class DollarsSoldCondition extends AmountCondition  {
     public static final TokenType PREFIX = PREFIX_SOLD;
     public static final TokenType PARAMETER_TYPE = NUM;
 
-    public DollarsSoldCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
+    public DollarsSoldCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
+        super(amount, amountComparator);
     }
 
     @Override
     public boolean test(Coin coin) {
-        return amountComparator.test(coin.getTotalAmountSold(), amount);
+        return amountComparator.test(coin.getTotalDollarsSold(), amount);
     }
 }
 ```
@@ -222,8 +209,8 @@ public class MadeCondition extends AmountCondition  {
     public static final TokenType PREFIX = PREFIX_MADE;
     public static final TokenType PARAMETER_TYPE = NUM;
 
-    public MadeCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
+    public MadeCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
+        super(amount, amountComparator);
     }
 
     @Override
@@ -264,8 +251,8 @@ public class WorthCondition extends AmountCondition  {
 
     public static final TokenType PREFIX = PREFIX_WORTH;
 
-    public WorthCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
+    public WorthCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator) {
+        super(amount, amountComparator);
     }
 
     @Override
@@ -451,42 +438,66 @@ public class ConditionGenerator {
         case PREFIX_HELD_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new AmountHeldCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new AmountHeldCondition(specifiedAmount, amountComparator);
+            } else {
+                return new AmountHeldChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_SOLD:
         case PREFIX_SOLD_RISE:
         case PREFIX_SOLD_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new DollarsSoldCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new DollarsSoldCondition(specifiedAmount, amountComparator);
+            } else {
+                return new DollarsSoldChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_BOUGHT:
         case PREFIX_BOUGHT_RISE:
         case PREFIX_BOUGHT_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new DollarsBoughtCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new DollarsBoughtCondition(specifiedAmount, amountComparator);
+            } else {
+                return new DollarsBoughtChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_MADE:
         case PREFIX_MADE_RISE:
         case PREFIX_MADE_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new MadeCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new MadeCondition(specifiedAmount, amountComparator);
+            } else {
+                return new MadeChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_PRICE:
         case PREFIX_PRICE_RISE:
         case PREFIX_PRICE_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new CurrentPriceCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new CurrentPriceCondition(specifiedAmount, amountComparator);
+            } else {
+                return new CurrentPriceChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_WORTH:
         case PREFIX_WORTH_RISE:
         case PREFIX_WORTH_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            return new WorthCondition(specifiedAmount, amountComparator, compareMode);
+            if (compareMode == null) {
+                return new WorthCondition(specifiedAmount, amountComparator);
+            } else {
+                return new WorthChangeCondition(specifiedAmount, amountComparator, compareMode);
+            }
 
         case PREFIX_CODE:
             return new CodeCondition(tokenStack.popToken().getPattern());
@@ -503,14 +514,6 @@ public class ConditionGenerator {
 
     private CompareMode getCompareModeFromType(TokenType type) {
         switch (type) {
-        case PREFIX_HELD:
-        case PREFIX_SOLD:
-        case PREFIX_BOUGHT:
-        case PREFIX_MADE:
-        case PREFIX_PRICE:
-        case PREFIX_WORTH:
-            return CompareMode.EQUALS;
-
         case PREFIX_HELD_RISE:
         case PREFIX_SOLD_RISE:
         case PREFIX_BOUGHT_RISE:

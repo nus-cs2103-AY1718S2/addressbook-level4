@@ -11,22 +11,18 @@ import seedu.address.model.coin.Coin;
  */
 public class CoinChangedEvent extends BaseEvent {
 
-    public final Coin oldCoin;
-    public final Coin newCoin;
+    private static final String FORMAT_STRING = "Coin changed [%1$s] -> [%2$s]";
 
-    /** Pseudo-coin record that represents the change made.
-     *  @see Coin#getChangeFrom(Coin)} */
-    public final Coin delCoin;
+    public final Coin data;
 
     public CoinChangedEvent(Coin oldCoin, Coin newCoin) {
-        this.oldCoin = oldCoin;
-        this.newCoin = newCoin;
-        this.delCoin = newCoin.getChangeFrom(oldCoin);
+        assert(newCoin.getPrevState().equals(oldCoin));
+        this.data = newCoin;
     }
 
     @Override
     public String toString() {
-        return "coin changed ";
+        return String.format(FORMAT_STRING, data.getPrevState(), data);
     }
 }
 ```
@@ -425,7 +421,7 @@ public class SellCommand extends UndoableCommand {
         // state check
         SellCommand e = (SellCommand) other;
         return target.equals(e.target)
-                && amountToSell == e.amountToSell
+                && amountToSell.equals(e.amountToSell)
                 && Objects.equals(coinToEdit, e.coinToEdit);
     }
 }
@@ -459,6 +455,288 @@ public class SpawnNotificationCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof SpawnNotificationCommand // instanceof handles nulls
                 && this.message.equals(((SpawnNotificationCommand) other).message)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\conditions\AmountChangeCondition.java
+``` java
+package seedu.address.logic.conditions;
+
+import java.util.function.BiPredicate;
+
+import seedu.address.model.coin.Amount;
+
+/**
+ * Represents the predicates that evaluate two Amount objects. Is
+ */
+public abstract class AmountChangeCondition extends AmountCondition {
+
+    /**
+     * Indicates whether to compare absolute or change
+     */
+    public enum CompareMode {
+        RISE,
+        FALL
+    }
+
+    public final CompareMode compareMode;
+
+    public AmountChangeCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
+        super(amount, amountComparator);
+        this.compareMode = compareMode;
+    }
+}
+```
+###### \java\seedu\address\logic\conditions\AmountHeldChangeCondition.java
+``` java
+package seedu.address.logic.conditions;
+
+import static seedu.address.logic.parser.TokenType.NUM;
+import static seedu.address.logic.parser.TokenType.PREFIX_HELD;
+
+import java.util.function.BiPredicate;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.parser.TokenType;
+import seedu.address.model.coin.Amount;
+import seedu.address.model.coin.Coin;
+
+/**
+ * Represents a predicate that evaluates to true when the amount held of a {@Coin} is either greater than or less than
+ * (depending on the amount comparator) the amount specified.
+ */
+public class AmountHeldChangeCondition extends AmountChangeCondition {
+
+    public static final TokenType PREFIX = PREFIX_HELD;
+    public static final TokenType PARAMETER_TYPE = NUM;
+
+    public AmountHeldChangeCondition(Amount amount,
+                                     BiPredicate<Amount, Amount> amountComparator,
+                                     CompareMode compareMode) {
+        super(amount, amountComparator, compareMode);
+    }
+
+    @Override
+    public boolean test(Coin coin) {
+        switch (compareMode) {
+        case RISE:
+            return amountComparator.test(coin.getChangeFromPrev().getCurrentAmountHeld(), amount);
+        case FALL:
+            return amountComparator.test(coin.getChangeToPrev().getCurrentAmountHeld(), amount);
+        default:
+            LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
+            return false;
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\conditions\CurrentPriceChangeCondition.java
+``` java
+package seedu.address.logic.conditions;
+
+import static seedu.address.logic.parser.TokenType.NUM;
+import static seedu.address.logic.parser.TokenType.PREFIX_PRICE;
+
+import java.util.function.BiPredicate;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.parser.TokenType;
+import seedu.address.model.coin.Amount;
+import seedu.address.model.coin.Coin;
+
+/**
+ * Represents a predicate that evaluates to true when the price of a {@Coin} is either greater than or less than
+ * (depending on the amount comparator) the amount specified.
+ */
+public class CurrentPriceChangeCondition extends AmountChangeCondition {
+
+    public static final TokenType PREFIX = PREFIX_PRICE;
+    public static final TokenType PARAMETER_TYPE = NUM;
+
+
+    public CurrentPriceChangeCondition(Amount amount,
+                                       BiPredicate<Amount, Amount> amountComparator,
+                                       CompareMode compareMode) {
+        super(amount, amountComparator, compareMode);
+    }
+
+    @Override
+    public boolean test(Coin coin) {
+        switch (compareMode) {
+        case RISE:
+            return amountComparator.test(coin.getChangeFromPrev().getPrice().getCurrent(), amount);
+        case FALL:
+            return amountComparator.test(coin.getChangeToPrev().getPrice().getCurrent(), amount);
+        default:
+            LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
+            return false;
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\conditions\DollarsBoughtChangeCondition.java
+``` java
+package seedu.address.logic.conditions;
+
+import static seedu.address.logic.parser.TokenType.NUM;
+import static seedu.address.logic.parser.TokenType.PREFIX_BOUGHT;
+
+import java.util.function.BiPredicate;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.parser.TokenType;
+import seedu.address.model.coin.Amount;
+import seedu.address.model.coin.Coin;
+
+/**
+ * Represents a predicate that evaluates to true when the amount bought of a {@Coin} is either greater than or less than
+ * (depending on the amount comparator) the amount specified.
+ */
+public class DollarsBoughtChangeCondition extends AmountChangeCondition {
+
+    public static final TokenType PREFIX = PREFIX_BOUGHT;
+    public static final TokenType PARAMETER_TYPE = NUM;
+
+    public DollarsBoughtChangeCondition(Amount amount,
+                                        BiPredicate<Amount, Amount> amountComparator,
+                                        CompareMode compareMode) {
+        super(amount, amountComparator, compareMode);
+    }
+
+    @Override
+    public boolean test(Coin coin) {
+        switch (compareMode) {
+        case RISE:
+            return amountComparator.test(coin.getChangeFromPrev().getTotalDollarsBought(), amount);
+        case FALL:
+            return amountComparator.test(coin.getChangeToPrev().getTotalDollarsBought(), amount);
+        default:
+            LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
+            return false;
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\conditions\DollarsSoldChangeCondition.java
+``` java
+package seedu.address.logic.conditions;
+
+import static seedu.address.logic.parser.TokenType.NUM;
+import static seedu.address.logic.parser.TokenType.PREFIX_SOLD;
+
+import java.util.function.BiPredicate;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.parser.TokenType;
+import seedu.address.model.coin.Amount;
+import seedu.address.model.coin.Coin;
+
+/**
+ * Represents a predicate that evaluates to true when the amount sold of a {@Coin} is either greater than or less than
+ * (depending on the amount comparator) the amount specified.
+ */
+public class DollarsSoldChangeCondition extends AmountChangeCondition  {
+
+    public static final TokenType PREFIX = PREFIX_SOLD;
+    public static final TokenType PARAMETER_TYPE = NUM;
+
+    public DollarsSoldChangeCondition(Amount amount,
+                                      BiPredicate<Amount, Amount> amountComparator,
+                                      CompareMode compareMode) {
+        super(amount, amountComparator, compareMode);
+    }
+
+    @Override
+    public boolean test(Coin coin) {
+        switch (compareMode) {
+        case RISE:
+            return amountComparator.test(coin.getChangeFromPrev().getTotalDollarsSold(), amount);
+        case FALL:
+            return amountComparator.test(coin.getChangeToPrev().getTotalDollarsSold(), amount);
+        default:
+            LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
+            return false;
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\conditions\MadeChangeCondition.java
+``` java
+package seedu.address.logic.conditions;
+
+import static seedu.address.logic.parser.TokenType.NUM;
+import static seedu.address.logic.parser.TokenType.PREFIX_MADE;
+
+import java.util.function.BiPredicate;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.parser.TokenType;
+import seedu.address.model.coin.Amount;
+import seedu.address.model.coin.Coin;
+
+/**
+ * Represents a predicate that evaluates to true when the amount made (dollar profit) of a {@Coin} is either
+ * greater than or less than (depending on the amount comparator) the amount specified.
+ */
+public class MadeChangeCondition extends AmountChangeCondition  {
+
+    public static final TokenType PREFIX = PREFIX_MADE;
+    public static final TokenType PARAMETER_TYPE = NUM;
+
+    public MadeChangeCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
+        super(amount, amountComparator, compareMode);
+    }
+
+    @Override
+    public boolean test(Coin coin) {
+        switch (compareMode) {
+        case RISE:
+            return amountComparator.test(coin.getChangeFromPrev().getTotalProfit(), amount);
+        case FALL:
+            return amountComparator.test(coin.getChangeToPrev().getTotalProfit(), amount);
+        default:
+            LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
+            return false;
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\conditions\WorthChangeCondition.java
+``` java
+package seedu.address.logic.conditions;
+
+import static seedu.address.logic.parser.TokenType.PREFIX_WORTH;
+
+import java.util.function.BiPredicate;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.parser.TokenType;
+import seedu.address.model.coin.Amount;
+import seedu.address.model.coin.Coin;
+
+/**
+ * Represents a predicate that evaluates to true when the worth of a {@Coin} is either greater than or less than
+ * (depending on the amount comparator) the amount specified.
+ */
+public class WorthChangeCondition extends AmountChangeCondition  {
+
+    public static final TokenType PREFIX = PREFIX_WORTH;
+
+    public WorthChangeCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
+        super(amount, amountComparator, compareMode);
+    }
+
+    @Override
+    public boolean test(Coin coin) {
+        switch (compareMode) {
+        case RISE:
+            return amountComparator.test(coin.getChangeFromPrev().getDollarsWorth(), amount);
+        case FALL:
+            return amountComparator.test(coin.getChangeToPrev().getDollarsWorth(), amount);
+        default:
+            LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
+            return false;
+        }
     }
 }
 ```
@@ -649,14 +927,16 @@ import seedu.address.commons.events.model.CoinChangedEvent;
 import seedu.address.commons.events.model.RuleBookChangedEvent;
 import seedu.address.model.ReadOnlyRuleBook;
 import seedu.address.model.RuleBook;
-import seedu.address.model.rule.NotificationRule;
 import seedu.address.model.rule.Rule;
 
 /**
  * Receives events to check against the rule book triggers.
  */
 public class RuleChecker {
+
     private static final Logger logger = LogsCenter.getLogger(RuleChecker.class);
+    private static final String MESSAGE_PROCESS_RULE = "Found %1$s";
+
     private final RuleBook rules;
 
     public RuleChecker(ReadOnlyRuleBook rules) {
@@ -675,9 +955,9 @@ public class RuleChecker {
         for (Rule r : rules.getRuleList()) {
             switch (r.type) {
             case NOTIFICATION:
-                NotificationRule nRule = (NotificationRule) r;
-                nRule.checkAndFire(cce.newCoin);
+                r.checkAndFire(cce.data);
                 break;
+
             default:
                 throw new RuntimeException("Unexpected code path!");
             }
@@ -836,6 +1116,14 @@ public class Amount implements Comparable<Amount> {
     public Coin getChangeFrom(Coin initialCoin) {
         return null;
     }
+
+    public Coin getChangeFromPrev() {
+        return getChangeFrom(prevState);
+    }
+
+    public Coin getChangeToPrev() {
+        return prevState.getChangeFrom(this);
+    }
 ```
 ###### \java\seedu\address\model\ReadOnlyRuleBook.java
 ``` java
@@ -902,7 +1190,9 @@ package seedu.address.model.rule;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -915,6 +1205,9 @@ public class Rule<T> {
 
     public static final String MESSAGE_RULE_INVALID = "Rule description is invalid";
     private static final String RULE_FORMAT_STRING = "[%1$s]%2$s";
+    private static final String MESSAGE_FIRED = "[Rule Match] %1$s <==> %2$s";
+
+    private static final Logger logger = LogsCenter.getLogger(Rule.class);
 
     public final RuleType type;
     public final String description;
@@ -954,9 +1247,10 @@ public class Rule<T> {
 
         try {
             action.execute();
+            logger.info(String.format(MESSAGE_FIRED, this, t));
             return true;
         } catch (CommandException e) {
-            e.printStackTrace();
+            logger.warning(e.getMessage());
             return false;
         }
     }
@@ -1313,6 +1607,24 @@ public class ChartsPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         notificationsWindow = new NotificationsWindow(secondaryStage, event.data);
         notificationsWindow.show();
+    }
+
+    @Subscribe
+    private void handleShowNotificationEvent(ShowNotificationRequestEvent nre) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(nre));
+        spawnNotification(nre.toString());
+    }
+
+    /**
+     * Spawns a popup notification with the given message.
+     */
+    private void spawnNotification(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("CoinBook notification");
+        alert.setHeaderText("The following rule has triggered this notification:");
+        alert.setContentText(message);
+
+        alert.show();
     }
 ```
 ###### \java\seedu\address\ui\NotificationsWindow.java

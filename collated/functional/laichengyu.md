@@ -189,6 +189,33 @@ public class UrlBuilderUtil {
     }
 }
 ```
+###### \java\seedu\address\logic\CommandList.java
+``` java
+
+package seedu.address.logic;
+
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Stores a list of all available commands
+ */
+public class CommandList {
+    private List<String> commandList;
+
+    public CommandList() {
+        commandList = Arrays.asList("help", "add", "buy", "sell", "delete", "clear", "tag", "list", "find", "view",
+                "notify", "order", "history", "undo", "redo", "sync", "exit");
+    }
+
+    /**
+     * Returns a defensive copy of {@code commandList}.
+     */
+    public List<String> getList() {
+        return commandList;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\SyncCommand.java
 ``` java
 
@@ -319,7 +346,7 @@ public class SyncCommand extends Command {
                     .get(CURRENCY_TYPE)
                     .getAsJsonObject()
                     .get("PRICE")
-                    .toString()));
+                    .getAsString()));
 
             priceObjs.put(code, newCurrentPrice);
         }
@@ -348,10 +375,31 @@ public class SyncCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\Logic.java
+``` java
+    /** Returns an unmodifiable view of the list of coin codes */
+    List<String> getCodeList();
+
+    /** Returns an unmodifiable view of the list of coin codes */
+    List<String> getCommandList();
+```
+###### \java\seedu\address\logic\LogicManager.java
+``` java
+    @Override
+    public List<String> getCodeList() {
+        return model.getCodeList();
+    }
+
+    @Override
+    public List<String> getCommandList() {
+        return commandList.getList();
+    }
+```
 ###### \java\seedu\address\model\coin\Coin.java
 ``` java
     /**
      * Copy constructor with price update.
+     * Sets previous state to copied coin.
      */
     public Coin(Coin toCopy, Price newPrice) {
         requireAllNonNull(toCopy);
@@ -363,6 +411,7 @@ public class SyncCommand extends Command {
         this.totalAmountBought = new Amount(toCopy.getTotalAmountBought());
         this.totalDollarsSold = new Amount(toCopy.getTotalDollarsSold());
         this.totalDollarsBought = new Amount(toCopy.getTotalDollarsBought());
+        prevState = toCopy;
     }
 ```
 ###### \java\seedu\address\model\coin\Price.java
@@ -468,6 +517,11 @@ public class SyncCommand extends Command {
     public void backupCoinBook(ReadOnlyCoinBook addressBook) throws IOException {
         saveCoinBook(addressBook, backupFilePath);
     }
+```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+        SuggestionProvider<String> suggestionProvider = SuggestionProvider.create(logic.getCommandList());
+        TextFields.bindAutoCompletion(commandTextField, suggestionProvider);
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java

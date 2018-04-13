@@ -561,6 +561,10 @@ Marks the 4th task in the 3rd milestone as completed. The milestone is in the da
 Displays the full information of a student on the browser panel. This includes his/her profile picture if one exists. +
 Format: `moreInfo INDEX`
 
+[NOTE]
+The `moreInfo` command _**cannot**_ function if there is no real existing XML data of students. Thus, the sample student data provided at the initial start up *will not work* with this command. A warning will be mentioned if the command is called without existing data.
+
+
 ****
 * Displays the full information of a student with the specified `INDEX`.
 * The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -615,7 +619,7 @@ Edits the allergies information and remarks information of the 1st student to be
 === Coming in v2.0
 ==== Track student's homework in the dashboard `[coming in v2.0]`
 
-==== Find student's by their miscellaneous information `[coming in v2.0]`
+==== Find students by their miscellaneous information `[coming in v2.0]`
 
 == Interacting using free-form English
 

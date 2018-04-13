@@ -273,7 +273,7 @@ Format: `email KEYWORD TEMPLATE`
 ==== Creating a new template : `addTemplate` or `at`
 
 Creates a new template based on the specified purpose, subject and message.
-Format: `addTemplate pu/PURPOSE s/SUBJECT m/MESSAGE`
+Format: `addtemplate pu/PURPOSE s/SUBJECT m/MESSAGE`
 
 TIP: You cannot create two templates with the same purpose
 
@@ -285,7 +285,7 @@ Examples:
 ==== Deleting a template : `deleteTemplate` or `dt`
 
 Deletes a template in the address book. +
-Format: `deleteTemplate PURPOSE`
+Format: `deletetemplate PURPOSE`
 
 ****
 * Deletes a template with the specified purpose

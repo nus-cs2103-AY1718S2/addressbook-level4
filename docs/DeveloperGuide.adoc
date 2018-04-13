@@ -460,7 +460,7 @@ image::SortCommandSequenceDiagram.png[width="800"]
 // end::sort[]
 
 // tag::search[]
-=== Findtag feature
+=== Search feature
 ==== Current Implementation
 
 The implementation of the search feature follows very closely to the Event-Driven architecture. It is used for searching profiles on the social media platforms available in the application. The key components of the feature is the 'SearchPersonEvent' and its handler method.

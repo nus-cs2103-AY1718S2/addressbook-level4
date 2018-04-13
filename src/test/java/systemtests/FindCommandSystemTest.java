@@ -168,25 +168,36 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateFindCommandTemplate() {
+    public void focusOnCommandBox_populateFindCommandTemplate_usingAccelerator() {
         //use accelerator
         getCommandBox().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnResultDisplay_populateFindCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateFindCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateFindCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateFindCommandTemplate_usingMenuButton() {
         populateFindCommandUsingMenu();
         assertPopulationSuccess();
     }

@@ -8,8 +8,8 @@ import seedu.address.model.LoginManager;
 public class SampleLoginDataUtil {
     public static LoginManager getSampleLoginManager() {
 
-        LoginManager sampleLM = new LoginManager();
+        LoginManager sampleLoginManager = new LoginManager();
 
-        return sampleLM;
+        return sampleLoginManager;
     }
 }

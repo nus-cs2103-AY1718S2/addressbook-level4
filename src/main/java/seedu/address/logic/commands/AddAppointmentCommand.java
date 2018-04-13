@@ -54,7 +54,7 @@ public class AddAppointmentCommand extends Command {
     private Person selectedPerson;
 
     /**
-     * Creates an AppointmentCommand to add the specified {@code Appointment}
+     * Creates an AddAppointmentCommand to add the specified {@code Appointment}
      */
     public AddAppointmentCommand(Index index, Appointment appointment) {
         requireNonNull(index);

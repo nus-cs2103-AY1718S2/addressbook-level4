@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEYOWED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY_BORROWED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWEDUEDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWESTARTDATE;
@@ -37,7 +37,7 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
             + "[" + PREFIX_ADDRESS + " ADDRESS] "
             + "[" + PREFIX_OWESTARTDATE + " OWE_START_DATE] "
             + "[" + PREFIX_OWEDUEDATE + " OWE_DUE_DATE] "
-            + "[" + PREFIX_MONEYOWED + " MONEY_OWED] "
+            + "[" + PREFIX_MONEY_BORROWED + " MONEY_OWED] "
             + "[" + PREFIX_INTEREST + " INTEREST_RATE] "
             + "[" + PREFIX_TAG + " TAG] ..."
 
@@ -55,7 +55,7 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
             + PREFIX_ADDRESS + " The Fullerton "
             + PREFIX_OWESTARTDATE + " today "
             + PREFIX_OWEDUEDATE + " 7 June 2018 "
-            + PREFIX_MONEYOWED + " 314159265 "
+            + PREFIX_MONEY_BORROWED + " 314159265 "
             + PREFIX_INTEREST + " 9.71 "
             + PREFIX_TAG + " richxiaoming "
             + PREFIX_TAG + " HighSES "
@@ -114,7 +114,7 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
         return COMMAND_WORD + " " + PREFIX_TYPE + "  " + PREFIX_NAME + "  "
                 + PREFIX_PHONE + "  " + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  "
                 + PREFIX_OWESTARTDATE + "  " + PREFIX_OWEDUEDATE + "  "
-                + PREFIX_MONEYOWED + "  " + PREFIX_INTEREST + "  " + PREFIX_TAG + " ";
+                + PREFIX_MONEY_BORROWED + "  " + PREFIX_INTEREST + "  " + PREFIX_TAG + " ";
     }
 
     @Override

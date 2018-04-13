@@ -5,7 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEYOWED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY_BORROWED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWEDUEDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWESTARTDATE;
@@ -42,7 +42,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
-                        PREFIX_MONEYOWED, PREFIX_INTEREST, PREFIX_OWEDUEDATE, PREFIX_OWESTARTDATE);
+                        PREFIX_MONEY_BORROWED, PREFIX_INTEREST, PREFIX_OWEDUEDATE, PREFIX_OWESTARTDATE);
 
         Index index;
 
@@ -70,8 +70,8 @@ public class EditCommandParser implements Parser<EditCommand> {
                 editPersonDescriptor.setOweDueDate(oweDueDate);
             }
 
-            if (argMultimap.getValue(PREFIX_MONEYOWED).isPresent()) {
-                MoneyBorrowed moneyBorrowed = ParserUtil.parseMoneyBorrowed(argMultimap.getValue(PREFIX_MONEYOWED)
+            if (argMultimap.getValue(PREFIX_MONEY_BORROWED).isPresent()) {
+                MoneyBorrowed moneyBorrowed = ParserUtil.parseMoneyBorrowed(argMultimap.getValue(PREFIX_MONEY_BORROWED)
                         .get());
                 editPersonDescriptor.setMoneyBorrowed(moneyBorrowed);
             }

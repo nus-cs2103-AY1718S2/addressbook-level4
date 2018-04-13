@@ -6,7 +6,7 @@ html {
 	height: 100%;
 }
 
-body { 
+body {
 	height: 100%;
 }
 
@@ -51,7 +51,6 @@ body {
 	border-width: thick;
 	width : 85%;
 	padding: 1%;
-	
 }
 
 #phone, #email, #address, #programmingLanguage, #tags, #allergies, #nextOfKinName, #nextOfKinPhone, #remarks {

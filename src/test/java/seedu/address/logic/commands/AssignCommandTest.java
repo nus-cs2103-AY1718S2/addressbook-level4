@@ -17,6 +17,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -29,44 +32,56 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.runner.Runner;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 //TODO: implement tests for assign command.
 /**
- * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
+ * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
+ * AssignCommand.
  */
 public class AssignCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    //refer to TypicalPersons.java for the list of default Persons initialized in the model
 
-    /*
+
     @Test
-    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Person editedPerson = new PersonBuilder().buildCustomer();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+    public void execute_assignOneValidRunnerAndOneValidCustomer_success() throws Exception {
+        int runnerIndex = 0;
+        int customerIndex = 2;
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        //produce AssignCommand(runner index, customer index...)
+        AssignCommand assignCommand = prepareCommand(Index.fromZeroBased(runnerIndex),
+                Index.fromZeroBased(customerIndex));
+
+        //get runner
+        Person runner = model.getFilteredPersonList().get(runnerIndex);
+        //get customer
+        Person customer = model.getFilteredPersonList().get(customerIndex);
+
+        List<Person> customers = new ArrayList<>();
+        customers.add(customer);
+
+        //build editedRunner (assigned with customer)
+        Person editedRunner = new PersonBuilder(runner).withCustomers(customers).buildRunner();
+        //build editedCustomer (assigned with runner)
+        Person editedCustomer = new PersonBuilder(customer).withRunner((Runner) runner).buildCustomer();
+
+        String expectedMessage = String.format(AssignCommand.MESSAGE_ASSIGN_PERSON_SUCCESS, editedRunner);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(runnerIndex), editedRunner);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(customerIndex), editedCustomer);
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(assignCommand, model, expectedMessage, expectedModel);
     }
-
+    /*
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
-        Person lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
 
-        PersonBuilder personInList = new PersonBuilder(lastPerson);
-        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).buildCustomer();
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
-        EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
@@ -76,6 +91,7 @@ public class AssignCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+    /*
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
@@ -257,11 +273,12 @@ public class AssignCommandTest {
     }
 
     /**
-     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
+     * Sets up AssignCommand object with the correct model, CommandHistory and UndoRedoStack
+     * Returns an {@code AssignCommand} with parameters {@code runnerIndex} and {@code customerIndex...}
      */
-    private EditCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
-        EditCommand editCommand = new EditCommand(index, descriptor);
-        editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return editCommand;
+    private AssignCommand prepareCommand(Index runnerIndex, Index... customerIndex) {
+        AssignCommand assignCommand = new AssignCommand(runnerIndex, customerIndex);
+        assignCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return assignCommand;
     }
 }

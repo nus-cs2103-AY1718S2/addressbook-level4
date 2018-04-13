@@ -59,6 +59,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    private PasswordUiManager pw;
     private boolean passwordChanged;
 
     @Override
@@ -226,7 +227,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
         if (passwordChanged) {
-            PasswordUiManager pw = new PasswordUiManager(storage, model, ui);
+            pw = new PasswordUiManager(storage, model, ui);
             pw.start(primaryStage);
         } else {
             ui.start(primaryStage);
@@ -237,7 +238,12 @@ public class MainApp extends Application {
     @Override
     public void stop() {
         logger.info("============================ [ Stopping Address Book ] =============================");
-        ui.stop();
+        if (passwordChanged) {
+            pw.stop();
+        }
+        else {
+            ui.stop();
+        }
         try {
             storage.saveUserPrefs(userPrefs);
         } catch (IOException e) {

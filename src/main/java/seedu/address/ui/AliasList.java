@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,6 +8,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 //@@author jingyinno
 /**
@@ -69,16 +69,16 @@ public class AliasList extends UiPart<Region> {
     private TableColumn<ArrayList<String>, String> uploadCommand;
 
     public AliasList()  {
-        this(null);
+        super(FXML);
     }
 
-    public AliasList(ObservableList<ArrayList<String>> aliases) {
-        super(FXML);
-        aliasList.setItems(aliases);
-        initializeColumns();
-        initializeTableColumns();
-        aliasList.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-    }
+//    public AliasList(ObservableList<ArrayList<String>> aliases) {
+//        super(FXML);
+//        aliasList.setItems(aliases);
+//        initializeColumns();
+//        initializeTableColumns();
+//        aliasList.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+//    }
 
     /**
      * Initializes columns
@@ -108,6 +108,13 @@ public class AliasList extends UiPart<Region> {
         columns.add(unionCommand);
         columns.add(uploadCommand);
         columns.add(vacantCommand);
+    }
+
+    public void init(ObservableList<ArrayList<String>> aliases) {
+        aliasList.setItems(aliases);
+        initializeColumns();
+        initializeTableColumns();
+        aliasList.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
     /**

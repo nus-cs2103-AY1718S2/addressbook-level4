@@ -18,46 +18,46 @@ import seedu.address.model.tag.Tag;
 import java.util.Set;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
-import static seedu.address.model.book.Avail.BORROWED;
+import static seedu.address.model.book.Avail.AVAILABLE;
 import static seedu.address.testutil.TypicalBooks.getTypicalCatalogue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_BOOK;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
- * {@code BorrowCommand}.
+ * {@code ReturnCommand}.
  */
-public class BorrowCommandTest {
+public class ReturnCommandTest {
 
     public Model model = new ModelManager(getTypicalCatalogue(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        Book bookToBorrow = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
-        Book borrowedBook = createBorrowedBook(bookToBorrow);
-        BorrowCommand borrowCommand = prepareCommand(INDEX_FIRST_BOOK);
+        Book bookToReturn = model.getFilteredBookList().get(INDEX_THIRD_BOOK.getZeroBased());
+        Book returnedBook = createReturnedBook(bookToReturn);
+        ReturnCommand returnCommand = prepareCommand(INDEX_THIRD_BOOK);
 
-        String expectedMessage = String.format(BorrowCommand.MESSAGE_BORROW_BOOK_SUCCESS, bookToBorrow);
+        String expectedMessage = String.format(ReturnCommand.MESSAGE_RETURN_BOOK_SUCCESS, bookToReturn);
 
         ModelManager expectedModel = new ModelManager(model.getCatalogue(), new UserPrefs());
-        expectedModel.borrowBook(bookToBorrow, borrowedBook);
+        expectedModel.returnBook(bookToReturn, returnedBook);
 
-        assertCommandSuccess(borrowCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(returnCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredBookList().size() + 1);
-        BorrowCommand borrowCommand = prepareCommand(outOfBoundIndex);
+        ReturnCommand returnCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(borrowCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+        assertCommandFailure(returnCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
     @Test
@@ -68,9 +68,9 @@ public class BorrowCommandTest {
         // ensures that outOfBoundIndex is still in bounds of catalogue list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getCatalogue().getBookList().size());
 
-        BorrowCommand borrowCommand = prepareCommand(outOfBoundIndex);
+        ReturnCommand returnCommand= prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(borrowCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+        assertCommandFailure(returnCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
     @Test
@@ -78,20 +78,20 @@ public class BorrowCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Book bookToBorrow = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
-        Book borrowedBook = createBorrowedBook(bookToBorrow);
-        BorrowCommand borrowCommand = prepareCommand(INDEX_FIRST_BOOK);
+        Book bookToReturn = model.getFilteredBookList().get(INDEX_THIRD_BOOK.getZeroBased());
+        Book returnedBook = createReturnedBook(bookToReturn);
+        ReturnCommand returnCommand = prepareCommand(INDEX_THIRD_BOOK);
         Model expectedModel = new ModelManager(model.getCatalogue(), new UserPrefs());
 
-        // borrow -> first book borrow
-        borrowCommand.execute();
-        undoRedoStack.push(borrowCommand);
+        // return -> first book return
+        returnCommand.execute();
+        undoRedoStack.push(returnCommand);
 
         // undo -> reverts catalogue back to previous state and filtered book list to show all books
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first book deleted again
-        expectedModel.borrowBook(bookToBorrow, borrowedBook);
+        expectedModel.returnBook(bookToReturn, returnedBook);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -101,80 +101,46 @@ public class BorrowCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredBookList().size() + 1);
-        BorrowCommand borrowCommand = prepareCommand(outOfBoundIndex);
+        ReturnCommand returnCommand = prepareCommand(outOfBoundIndex);
 
         // execution failed -> deleteCommand not pushed into undoRedoStack
-        assertCommandFailure(borrowCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+        assertCommandFailure(returnCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
         // no commands in undoRedoStack -> undoCommand and redoCommand fail
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
         assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
     }
 
-    /**
-     * 1. Borrows a {@code Book} from a filtered list.
-     * 2. Undo the borrowing.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously borrowed book in the
-     * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the borrowing. This ensures {@code RedoCommand} borrow the book object regardless of indexing.
-     */
-    @Test
-    public void executeUndoRedo_validIndexFilteredList_sameBookDeleted() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        BorrowCommand borrowCommand = prepareCommand(INDEX_FIRST_BOOK);
-        Model expectedModel = new ModelManager(model.getCatalogue(), new UserPrefs());
-
-        showBookAtIndex(model, INDEX_SECOND_BOOK);
-        Book bookToBorrow = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
-        Book borrowedBook = createBorrowedBook(bookToBorrow);
-        // borrow -> borrows second book in unfiltered book list / first book in filtered book list
-        borrowCommand.execute();
-        undoRedoStack.push(borrowCommand);
-
-        // undo -> reverts catalogue back to previous state and filtered book list to show all books
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        expectedModel.borrowBook(bookToBorrow, borrowedBook);
-        assertNotEquals(bookToBorrow, model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased()));
-        // redo -> borrows same second book in unfiltered book list
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-
     @Test
     public void equals() throws Exception {
-        BorrowCommand borrowFirstCommand = prepareCommand(INDEX_FIRST_BOOK);
-        BorrowCommand borrowSecondCommand = prepareCommand(INDEX_FIRST_BOOK);
+        ReturnCommand returnFirstCommand = prepareCommand(INDEX_FIRST_BOOK);
+        ReturnCommand returnSecondCommand = prepareCommand(INDEX_SECOND_BOOK);
 
         // same object -> returns true
-        assertTrue(borrowFirstCommand.equals(borrowFirstCommand));
+        assertTrue(returnFirstCommand.equals(returnFirstCommand));
 
         // same values -> returns true
-        BorrowCommand borrowFirstCommandCopy = prepareCommand(INDEX_FIRST_BOOK);
-        assertTrue(borrowFirstCommand.equals(borrowFirstCommandCopy));
+        ReturnCommand returnFirstCommandCopy = prepareCommand(INDEX_FIRST_BOOK);
+        assertTrue(returnFirstCommand.equals(returnFirstCommandCopy));
 
         // one command preprocessed when previously equal -> returns false
-        borrowFirstCommandCopy.preprocessUndoableCommand();
-        assertFalse(borrowFirstCommand.equals(borrowFirstCommandCopy));
+        returnFirstCommandCopy.preprocessUndoableCommand();
+        assertFalse(returnFirstCommand.equals(returnFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(borrowFirstCommand.equals(1));
+        assertFalse(returnFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(borrowFirstCommand.equals(null));
+        assertFalse(returnFirstCommand.equals(null));
 
         // different book -> returns false
-        assertTrue(borrowFirstCommand.equals(borrowSecondCommand));
+        assertFalse(returnFirstCommand.equals(returnSecondCommand));
     }
 
-    /**
-     * Returns a {@code BorrowCommand} with the parameter {@code index}.
-     */
-    private BorrowCommand prepareCommand(Index index) {
-        BorrowCommand borrowCommand = new BorrowCommand(index);
-        borrowCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return borrowCommand;
+    private ReturnCommand prepareCommand(Index index) {
+        ReturnCommand returnCommand = new ReturnCommand(index);
+        returnCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return returnCommand;
     }
 
     /**
@@ -186,12 +152,12 @@ public class BorrowCommandTest {
         assertTrue(model.getFilteredBookList().isEmpty());
     }
 
-    public Book createBorrowedBook(Book bookToBorrow) {
+    public Book createReturnedBook(Book bookToBorrow) {
         assert bookToBorrow != null;
 
         Title updatedTitle = bookToBorrow.getTitle();
         Isbn updatedIsbn = bookToBorrow.getIsbn();
-        Avail updatedAvail = new Avail(BORROWED);
+        Avail updatedAvail = new Avail(AVAILABLE);
         Author updatedAuthor = bookToBorrow.getAuthor();
         Set<Tag> updatedTags = bookToBorrow.getTags();
 

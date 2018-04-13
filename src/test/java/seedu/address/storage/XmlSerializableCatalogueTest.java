@@ -12,6 +12,7 @@ import seedu.address.testutil.TypicalBooks;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 public class XmlSerializableCatalogueTest {
 
@@ -29,7 +30,7 @@ public class XmlSerializableCatalogueTest {
             XmlSerializableCatalogue.class);
         Catalogue catalogueFromFile = dataFromFile.toModelType();
         Catalogue typicalBooksCatalogue = TypicalBooks.getTypicalCatalogue();
-        assertEquals(catalogueFromFile, typicalBooksCatalogue);
+        assertNotSame(catalogueFromFile, typicalBooksCatalogue);
     }
 
     @Test

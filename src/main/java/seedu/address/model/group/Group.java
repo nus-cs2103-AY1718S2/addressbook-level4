@@ -79,6 +79,10 @@ public class Group {
             return true;
         }
 
+        if (!(other instanceof Group)) {
+            return false;
+        }
+
         Group otherGroup = (Group) other;
         if (otherGroup.getInformation().equals(this.getInformation())
             && otherGroup.getPersonList().asObservableList().size() == this.getPersonList().asObservableList().size()) {

@@ -257,7 +257,7 @@ Deletes all non-clients added before 12/12/2017 in the address book.
 
 
 Emails a person based on the specified name.
-Format: `email n/NAME1 [OPTIONAL NAMES] pu/PURPOSE`
+Format: `email n/NAME pu/PURPOSE`
 
 ****
 * Emailed person must have name match the full word of keyword

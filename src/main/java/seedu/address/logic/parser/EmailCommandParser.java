@@ -32,7 +32,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywordArray = (argMultimap.getValue(PREFIX_NAME)).get().split(" ");
+        String[] nameKeywordArray = new String[]{ (argMultimap.getValue(PREFIX_NAME)).get().trim() };
 
         String searchTemplate = (argMultimap.getValue(PREFIX_PURPOSE)).get().trim();
 

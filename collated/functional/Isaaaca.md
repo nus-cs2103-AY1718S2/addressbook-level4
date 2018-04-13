@@ -35,18 +35,19 @@
 ###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
     /**
-     * Returns true if the {@code sentence} contains the {@code word}.
-     * Ignores case, but a full word match is required.
+     * Returns the partial ratio bewteen the {@code sentence} and the {@code word}.
+     * Ignores case.
      * <br>examples:<pre>
-     *       containsWordIgnoreCase("ABc def", "abc") == true
-     *       containsWordIgnoreCase("ABc def", "DEF") == true
-     *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "abc") == 100
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "DEF") == 100
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "AB") == 100
+     *       getPartialRatioFuzzyIgnoreCase("ABc def", "ABcD") == 75
      *       </pre>
      *
      * @param sentence cannot be null
      * @param word     cannot be null, cannot be empty, must be a single word
      */
-    public static int containsWordFuzzyIgnoreCase(String sentence, String word) {
+    public static int getPartialRatioFuzzyIgnoreCase(String sentence, String word) {
         requireNonNull(sentence);
         requireNonNull(word);
 
@@ -323,13 +324,13 @@ public class Schedule {
     private String venue;
 
     public Schedule() {
-        this.classNo = "";
-        this.lessonType = "";
-        this.weekText = "";
-        this.dayText = "";
-        this.startTime = "";
-        this.endTime = "";
-        this.venue = "";
+        this.classNo = "1";
+        this.lessonType = "Lecture";
+        this.weekText = "1";
+        this.dayText = "Monday";
+        this.startTime = "0000";
+        this.endTime = "2359";
+        this.venue = "COM1 01-01";
     }
 
     public Schedule(String classNo, String lessonType, String weekText, String dayText,
@@ -436,6 +437,7 @@ public class Schedule {
             ListCommand.COMMAND_WORD,
             ListTagMembersCommand.COMMAND_WORD,
             RedoCommand.COMMAND_WORD,
+            ScheduleGroupCommand.COMMAND_WORD,
             SelectCommand.COMMAND_WORD,
             SwitchCommand.COMMAND_WORD,
             UnCheckToDoCommand.COMMAND_WORD,
@@ -504,6 +506,21 @@ public class Schedule {
         }
     }
 }
+```
+###### \java\seedu\address\model\group\Group.java
+``` java
+    /**
+     * Adds a person to the group's personList
+     * @param toAdd The Person to add.
+     * @throws DuplicatePersonException
+     */
+    public void addPerson(Person toAdd) throws DuplicatePersonException {
+        if (getPersonList().contains(toAdd)) {
+            throw new DuplicatePersonException();
+        }
+        this.personList.add(toAdd);
+    }
+
 ```
 ###### \java\seedu\address\model\person\TimeTableLink.java
 ``` java

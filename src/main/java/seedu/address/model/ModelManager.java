@@ -110,11 +110,29 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author nhatquang3112
     @Override
     public synchronized void deleteToDo(ToDo target) throws ToDoNotFoundException {
         addressBook.removeToDo(target);
         indicateAddressBookChanged();
     }
+
+    @Override
+    public synchronized void addToDo(ToDo todo) throws DuplicateToDoException {
+        addressBook.addToDo(todo);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateToDo(ToDo target, ToDo editedToDo)
+            throws DuplicateToDoException, ToDoNotFoundException {
+        requireAllNonNull(target, editedToDo);
+
+        addressBook.updateToDo(target, editedToDo);
+        indicateAddressBookChanged();
+    }
+    //@@author
+
     //@@author jas5469
     @Override
     public synchronized void deleteGroup(Group target) throws GroupNotFoundException {
@@ -126,12 +144,6 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void addToDo(ToDo todo) throws DuplicateToDoException {
-        addressBook.addToDo(todo);
         indicateAddressBookChanged();
     }
 
@@ -155,14 +167,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    @Override
-    public void updateToDo(ToDo target, ToDo editedToDo)
-            throws DuplicateToDoException, ToDoNotFoundException {
-        requireAllNonNull(target, editedToDo);
 
-        addressBook.updateToDo(target, editedToDo);
-        indicateAddressBookChanged();
-    }
     //@@author jas5469
     @Override
     public void updateGroup(Group target, Group editedGroup)
@@ -215,6 +220,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author nhatquang3112
     //=========== Filtered ToDo List Accessors =============================================================
 
     /**
@@ -231,6 +237,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredToDos.setPredicate(predicate);
     }
+    //@@author
 
     //@@author LeonidAgarth
     //=========== Filtered Event List Accessors =============================================================

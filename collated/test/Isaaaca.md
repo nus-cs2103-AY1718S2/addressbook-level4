@@ -48,7 +48,7 @@
             Optional<String> errorMessage) {
         thrown.expect(exceptionClass);
         errorMessage.ifPresent(message -> thrown.expectMessage(message));
-        StringUtil.containsWordFuzzyIgnoreCase(sentence, word);
+        StringUtil.getPartialRatioFuzzyIgnoreCase(sentence, word);
     }
 
     @Test
@@ -97,25 +97,25 @@
     public void containsWordFuzzyIgnoreCase_validInputs_correctResult() {
 
         // Empty sentence
-        assertEquals(0, StringUtil.containsWordFuzzyIgnoreCase("", "abc")); // Boundary case
-        assertEquals(0, StringUtil.containsWordFuzzyIgnoreCase("    ", "123"));
+        assertEquals(0, StringUtil.getPartialRatioFuzzyIgnoreCase("", "abc")); // Boundary case
+        assertEquals(0, StringUtil.getPartialRatioFuzzyIgnoreCase("    ", "123"));
 
         // Matches a partial word only
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "aaa bbb ccc", "bb")); // Sentence word bigger than query word
-        assertEquals(75, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(75, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
 
         // Matches word in the sentence, different upper/lower case letters
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "aaa bBb ccc", "Bbb")); // First word (boundary case)
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "aaa bBb ccc@1", "CCc@1")); // Last word (boundary case)
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "  AAA   bBb   ccc  ", "aaa")); // Sentence has extra spaces
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "Aaa", "aaa")); // Only one word in sentence (boundary case)
-        assertEquals(100, StringUtil.containsWordFuzzyIgnoreCase(
+        assertEquals(100, StringUtil.getPartialRatioFuzzyIgnoreCase(
                 "aaa bbb ccc", "  ccc  ")); // Leading/trailing spaces
 
         // Matches multiple words in sentence
@@ -194,13 +194,13 @@ public class ModuleTest {
 ###### \java\seedu\address\database\module\ScheduleTest.java
 ``` java
 public class ScheduleTest {
-    private static final String DEFAULT_CLASSNO = "1";
-    private static final String DEFAULT_LESSON_TYPE = "Lecture";
+    private static final String DEFAULT_CLASSNO = "9";
+    private static final String DEFAULT_LESSON_TYPE = "Tutorial";
     private static final String DEFAULT_WEEK_TEXT = "EVERY WEEK";
-    private static final String DEFAULT_DAY_TEXT = "MONDAY";
-    private static final String DEFAULT_START_TIME = "0000";
-    private static final String DEFAULT_END_TIME = "2359";
-    private static final String DEFAULT_VENUE = "LT17";
+    private static final String DEFAULT_DAY_TEXT = "WEDNESDAY";
+    private static final String DEFAULT_START_TIME = "1500";
+    private static final String DEFAULT_END_TIME = "1600";
+    private static final String DEFAULT_VENUE = "COM1 B1-04";
 
 
     private Schedule testBlank = new Schedule();
@@ -209,44 +209,44 @@ public class ScheduleTest {
 
     @Test
     public void getClassNo() {
-        Assert.assertEquals("", testBlank.getClassNo());
-        Assert.assertEquals("1", test.getClassNo());
+        Assert.assertEquals("1", testBlank.getClassNo());
+        Assert.assertEquals(DEFAULT_CLASSNO, test.getClassNo());
     }
 
     @Test
     public void getLessonType() {
-        Assert.assertEquals("", testBlank.getLessonType());
-        Assert.assertEquals("Lecture", test.getLessonType());
+        Assert.assertEquals("Lecture", testBlank.getLessonType());
+        Assert.assertEquals(DEFAULT_LESSON_TYPE, test.getLessonType());
     }
 
     @Test
     public void getWeekText() {
-        Assert.assertEquals("", testBlank.getWeekText());
-        Assert.assertEquals("EVERY WEEK", test.getWeekText());
+        Assert.assertEquals("1", testBlank.getWeekText());
+        Assert.assertEquals(DEFAULT_WEEK_TEXT, test.getWeekText());
     }
 
     @Test
     public void getDayText() {
-        Assert.assertEquals("", testBlank.getDayText());
-        Assert.assertEquals("MONDAY", test.getDayText());
+        Assert.assertEquals("Monday", testBlank.getDayText());
+        Assert.assertEquals(DEFAULT_DAY_TEXT, test.getDayText());
     }
 
     @Test
     public void getStartTime() {
-        Assert.assertEquals("", testBlank.getStartTime());
-        Assert.assertEquals("0000", test.getStartTime());
+        Assert.assertEquals("0000", testBlank.getStartTime());
+        Assert.assertEquals(DEFAULT_START_TIME, test.getStartTime());
     }
 
     @Test
     public void getEndTime() {
-        Assert.assertEquals("", testBlank.getEndTime());
-        Assert.assertEquals("2359", test.getEndTime());
+        Assert.assertEquals("2359", testBlank.getEndTime());
+        Assert.assertEquals(DEFAULT_END_TIME, test.getEndTime());
     }
 
     @Test
     public void getVenue() {
-        Assert.assertEquals("", testBlank.getVenue());
-        Assert.assertEquals("LT17", test.getVenue());
+        Assert.assertEquals("COM1 01-01", testBlank.getVenue());
+        Assert.assertEquals(DEFAULT_VENUE, test.getVenue());
     }
 
     @Test
@@ -258,13 +258,13 @@ public class ScheduleTest {
                 + "\nStartTime: " + DEFAULT_START_TIME
                 + "\nEndTime: " + DEFAULT_END_TIME
                 + "\nVenue: " + DEFAULT_VENUE + "\n";
-        String expectedBlank = "ClassNo: "
-                + "\nLessonType: "
-                + "\nWeekText: "
-                + "\nDayText: "
-                + "\nStartTime: "
-                + "\nEndTime: "
-                + "\nVenue: " + "\n";
+        String expectedBlank = "ClassNo: 1"
+                + "\nLessonType: Lecture"
+                + "\nWeekText: 1"
+                + "\nDayText: Monday"
+                + "\nStartTime: 0000"
+                + "\nEndTime: 2359"
+                + "\nVenue: COM1 01-01" + "\n";
         Assert.assertEquals(expected, test.toString());
         Assert.assertEquals(expectedBlank, testBlank.toString());
     }
@@ -327,10 +327,10 @@ public class ScheduleTest {
 
         Person expectedAmy = new PersonBuilder(AMY).withTags().build();
         Person expectedBob = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
-        AddressBook expecetedAddressBook = new AddressBookBuilder()
+        AddressBook expectedAddressBook = new AddressBookBuilder()
                 .withPerson(expectedBob).withPerson(expectedAmy).build();
 
-        ModelManager expectedModelManager = new ModelManager(expecetedAddressBook, userPrefs);
+        ModelManager expectedModelManager = new ModelManager(expectedAddressBook, userPrefs);
         assertEquals(expectedModelManager, modelManager);
 
     }

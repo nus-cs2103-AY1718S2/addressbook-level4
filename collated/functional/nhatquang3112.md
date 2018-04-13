@@ -1,4 +1,29 @@
 # nhatquang3112
+###### \java\seedu\address\commons\events\ui\ToDoPanelSelectionChangedEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.ui.ToDoCard;
+
+/**
+ * Represents a selection change in the Person List Panel
+ */
+public class ToDoPanelSelectionChangedEvent extends BaseEvent {
+
+
+    private final ToDoCard newSelection;
+
+    public ToDoPanelSelectionChangedEvent(ToDoCard newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AddToDoCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -511,6 +536,18 @@ public class UnCheckToDoCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\LogicManager.java
+``` java
+    @Override
+    public ObservableList<ToDo> getFilteredToDoList() {
+        return model.getFilteredToDoList();
+    }
+
+    @Override
+    public double getToDoListCompleteRatio() {
+        return model.getAddressBook().getToDoListCompleteRatio();
+    }
+```
 ###### \java\seedu\address\logic\parser\AddToDoCommandParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -697,6 +734,163 @@ public class UnCheckToDoCommandParser implements Parser<UnCheckToDoCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnCheckToDoCommand.MESSAGE_USAGE));
         }
     }
+}
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    //// to-do-level operations
+    /**
+     * Adds a to-do to the address book.
+     *
+     * @throws DuplicateToDoException if an equivalent to-do already exists.
+     */
+    public void addToDo(ToDo todo) throws DuplicateToDoException {
+        todos.add(todo);
+    }
+
+    @Override
+    public ObservableList<ToDo> getToDoList() {
+        return todos.asObservableList();
+    }
+
+    @Override
+    public double getToDoListCompleteRatio() {
+        return todos.getCompleteRatio();
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     *
+     * @throws ToDoNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeToDo(ToDo key) throws ToDoNotFoundException {
+        if (todos.remove(key)) {
+            return true;
+        } else {
+            throw new ToDoNotFoundException();
+        }
+    }
+
+    /**
+     * Replaces the given ToDo {@code target} in the list with {@code editedToDo}.
+     *
+     * @throws DuplicateToDoException if updating the ToDo's details causes the ToDo to be equivalent to
+     *                                  another existing ToDo in the list.
+     * @throws ToDoNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void updateToDo(ToDo target, ToDo editedToDo)
+            throws DuplicateToDoException, ToDoNotFoundException {
+        requireNonNull(editedToDo);
+
+        todos.setToDo(target, editedToDo);
+    }
+
+    public void setToDos(List<ToDo> todos) throws DuplicateToDoException {
+        this.todos.setToDos(todos);
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void deleteToDo(ToDo target) throws ToDoNotFoundException {
+        addressBook.removeToDo(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addToDo(ToDo todo) throws DuplicateToDoException {
+        addressBook.addToDo(todo);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateToDo(ToDo target, ToDo editedToDo)
+            throws DuplicateToDoException, ToDoNotFoundException {
+        requireAllNonNull(target, editedToDo);
+
+        addressBook.updateToDo(target, editedToDo);
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    //=========== Filtered ToDo List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ToDo} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ToDo> getFilteredToDoList() {
+        return FXCollections.unmodifiableObservableList(filteredToDos);
+    }
+
+    @Override
+    public void updateFilteredToDoList(Predicate<ToDo> predicate) {
+        requireNonNull(predicate);
+        filteredToDos.setPredicate(predicate);
+    }
+```
+###### \java\seedu\address\model\person\Detail.java
+``` java
+package seedu.address.model.person;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+/**
+ * Represents a Person's detail in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDetail(String)}
+ */
+public class Detail {
+
+    public static final String MESSAGE_DETAIL_CONSTRAINTS =
+            "Person detail should only contain alphanumeric characters and spaces, and it should not be blank";
+
+    /*
+     * The first character of the detail must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String DETAIL_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+
+    public final String detail;
+
+    /**
+     * Constructs a {@code Detail}.
+     *
+     * @param detail A valid detail.
+     */
+    public Detail(String detail) {
+        requireNonNull(detail);
+        checkArgument(isValidDetail(detail), MESSAGE_DETAIL_CONSTRAINTS);
+        this.detail = detail;
+    }
+
+    /**
+     * Returns true if a given string is a valid person detail.
+     */
+    public static boolean isValidDetail(String test) {
+        return test.matches(DETAIL_VALIDATION_REGEX);
+    }
+
+
+    @Override
+    public String toString() {
+        return detail;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Detail // instanceof handles nulls
+                && this.detail.equals(((Detail) other).detail)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return detail.hashCode();
+    }
+
 }
 ```
 ###### \java\seedu\address\model\todo\Content.java
@@ -1164,6 +1358,42 @@ public class XmlAdaptedToDo {
     }
 }
 ```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+        todoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
+        todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
+
+        progressIndicatorLabel = new Label(PROGRESS_INDICATOR_LABEL_NAME);
+        progressIndicatorLabel.setStyle(PROGRESS_INDICATOR_LABEL_COLOR);
+        progressIndicatorPlaceholder.getChildren().add(progressIndicatorLabel);
+
+        progressIndicator = new ProgressIndicator();
+        progressIndicator.setStyle(PROGRESS_INDICATOR_COLOR);
+        progressIndicator.setPrefSize(PROGRESS_INDICATOR_WIDTH, PROGRESS_INDICATOR_HEIGHT);
+        progressIndicator.setProgress(logic.getToDoListCompleteRatio());
+        progressIndicatorPlaceholder.getChildren().add(progressIndicator);
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    void updateProgressIndicator() {
+        progressIndicator.setProgress(logic.getToDoListCompleteRatio());
+    }
+```
+###### \java\seedu\address\ui\ProgressIndicatorProperties.java
+``` java
+package seedu.address.ui;
+
+/**
+ * Contains properties to initialize Progress Indicator and Progress Indicator Label
+ */
+public class ProgressIndicatorProperties {
+    public static final String PROGRESS_INDICATOR_LABEL_NAME = "TO-DO COMPLETION";
+    public static final String PROGRESS_INDICATOR_LABEL_COLOR = "-fx-text-fill: black;";
+    public static final String PROGRESS_INDICATOR_COLOR = "-fx-progress-color: #4DA194;";
+    public static final int PROGRESS_INDICATOR_WIDTH = 150;
+    public static final int PROGRESS_INDICATOR_HEIGHT = 150;
+}
+```
 ###### \java\seedu\address\ui\ToDoCard.java
 ``` java
 package seedu.address.ui;
@@ -1200,6 +1430,9 @@ public class ToDoCard extends UiPart<Region> {
         status.setText(todo.getStatus().value);
     }
 
+    public boolean isDone() {
+        return todo.getStatus().value.equals("done");
+    }
 
     @Override
     public boolean equals(Object other) {
@@ -1283,12 +1516,40 @@ public class ToDoListPanel extends UiPart<Region> {
             if (empty || todo == null) {
                 setGraphic(null);
                 setText(null);
-            } else {
-                setGraphic(todo.getRoot());
+                return;
             }
+
+            this.getStylesheets().clear();
+            if (todo.isDone()) {
+                this.getStylesheets().add("view/ToDoDone.css");
+            } else {
+                this.getStylesheets().add("view/ToDoUnDone.css");
+            }
+            setGraphic(todo.getRoot());
         }
     }
+}
+```
+###### \resources\view\ToDoDone.css
+``` css
+.list-cell:filled:even {
+    -fx-background-color: #4DA194;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+    -fx-border-color: derive(#1d1d1d, 20%);
+}
 
+.list-cell:filled:odd {
+    -fx-background-color: #4DA194;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+    -fx-border-color: derive(#1d1d1d, 20%);
+}
+
+.list-cell .label {
+    -fx-text-fill: #DEF0EE;
 }
 ```
 ###### \resources\view\ToDoListCard.fxml
@@ -1302,26 +1563,26 @@ public class ToDoListPanel extends UiPart<Region> {
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <GridPane HBox.hgrow="ALWAYS">
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+  <GridPane HBox.hgrow="ALWAYS">
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
-        <VBox id="toDoCardPane" alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-            <padding>
-                <Insets top="5" right="5" bottom="5" left="15" />
-            </padding>
-            <HBox spacing="5" alignment="CENTER_LEFT">
-                <Label fx:id="id" styleClass="cell_big_label">
-                    <minWidth>
-                        <!-- Ensures that the label text is never truncated -->
-                        <Region fx:constant="USE_PREF_SIZE" />
-                    </minWidth>
-                </Label>
-                <Label fx:id="content" text="\$content" styleClass="cell_big_label" />
-            </HBox>
-            <Label fx:id="status" text="\$status" styleClass="cell_small_label" />
-        </VBox>
-    </GridPane>
+        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+          <padding>
+            <Insets top="5" right="5" bottom="5" left="15" />
+          </padding>
+      <HBox spacing="5" alignment="CENTER_LEFT">
+        <Label fx:id="id" styleClass="cell_big_label">
+          <minWidth>
+            <!-- Ensures that the label text is never truncated -->
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+        </Label>
+        <Label fx:id="content" text="\$content" styleClass="cell_big_label" />
+      </HBox>
+      <Label fx:id="status" text="\$status" styleClass="cell_small_label" />
+    </VBox>
+  </GridPane>
 </HBox>
 ```
 ###### \resources\view\ToDoListPanel.fxml
@@ -1329,7 +1590,36 @@ public class ToDoListPanel extends UiPart<Region> {
 
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <Label  prefHeight="23.0" prefWidth="95.0" text="TO-DO LIST" >
+        <font>
+            <Font name="System Bold" size="16.0" />
+        </font>
+    </Label>
     <ListView fx:id="todoListView" VBox.vgrow="ALWAYS" />
 </VBox>
+```
+###### \resources\view\ToDoUnDone.css
+``` css
+.list-cell:filled:even {
+    -fx-background-color: #EFEFEF;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+    -fx-border-color: derive(#1d1d1d, 20%);
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #EFEFEF;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+    -fx-border-color: derive(#1d1d1d, 20%);
+}
+
+.list-cell .label {
+    -fx-text-fill: black;
+}
 ```

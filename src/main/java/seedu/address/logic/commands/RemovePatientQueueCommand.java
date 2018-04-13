@@ -26,27 +26,28 @@ public class RemovePatientQueueCommand extends UndoableCommand {
             + "INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_REMOVE_SUCCESS = "%1$s is removed from the waiting list";
-    public static final String MESSAGE_PERSON_NOT_FOUND_QUEUE = "This patient is not in the waiting list";
-    public static final String MESSAGE_QUEUE_EMPTY = "Waiting list is empty";
+    public static final String MESSAGE_REMOVE_SUCCESS = "%1$s is removed from the visiting queue.";
+    public static final String MESSAGE_PERSON_NOT_FOUND_QUEUE = "This patient is not in the visiting queue.";
+    public static final String MESSAGE_QUEUE_EMPTY = "Visiting queue is empty";
 
-    public final boolean indexIsExist;
+    public final boolean indexArguementIsExist;
     private Index targetIndex;
 
     public RemovePatientQueueCommand() {
-        indexIsExist = false;
+        indexArguementIsExist = false;
 
     }
 
     public RemovePatientQueueCommand(Index targetIndex) {
         requireNonNull(targetIndex);
-        indexIsExist = true;
+        indexArguementIsExist = true;
         this.targetIndex = targetIndex;
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        if (indexIsExist) {
+        if (indexArguementIsExist) {
+            //Unfilter patient list
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
             if (targetIndex.getZeroBased() >= model.getFilteredPersonList().size()) {
@@ -60,7 +61,7 @@ public class RemovePatientQueueCommand extends UndoableCommand {
 
         try {
             Patient patientToRemove;
-            if (indexIsExist) {
+            if (indexArguementIsExist) {
                 patientToRemove = model.removePatientFromQueueByIndex(targetIndex);
             } else {
                 patientToRemove = model.removePatientFromQueue();
@@ -80,7 +81,7 @@ public class RemovePatientQueueCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof RemovePatientQueueCommand)
-                && this.indexIsExist == ((RemovePatientQueueCommand) other).indexIsExist
+                && this.indexArguementIsExist == ((RemovePatientQueueCommand) other).indexArguementIsExist
                 && this.targetIndex.equals(((RemovePatientQueueCommand) other).targetIndex);
     }
 }

@@ -15,14 +15,10 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddMemberToGroupCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
 import seedu.address.testutil.TypicalGroups;
-import seedu.address.testutil.TypicalPersons;
-
 
 public class AddMemberToGroupCommandParserTest {
 

@@ -56,7 +56,7 @@ public class EditCommandSystemTest extends CatalogueSystemTest {
         Model model = getModel();
         executeCommand("login admin admin");
 
-
+        //@@author khiayi
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
 
         /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
@@ -101,7 +101,6 @@ public class EditCommandSystemTest extends CatalogueSystemTest {
         assertCommandSuccess(command, index, editedBook);
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
-        //@@author khiayi
         /* Case: filtered book list, edit index within bounds of catalogue and book list -> edited */
         showBooksWithTitle(KEYWORD_MATCHING_GIRL);
         index = INDEX_FIRST_BOOK;
@@ -132,7 +131,6 @@ public class EditCommandSystemTest extends CatalogueSystemTest {
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new book's name
         assertCommandSuccess(command, index, XVI, index);
-        //@@author
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
         /* Case: invalid index (0) -> rejected */
@@ -189,6 +187,7 @@ public class EditCommandSystemTest extends CatalogueSystemTest {
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_YOU + ISBN_DESC_YOU
             + AVAIL_DESC_YOU + AUTHOR_DESC_YOU + TAG_DESC_FICTION;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_BOOK);
+        //@@author
     }
 
     /**

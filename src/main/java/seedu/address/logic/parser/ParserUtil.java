@@ -109,9 +109,11 @@ public class ParserUtil {
     public static Address parseAddress(String address) throws IllegalValueException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
+        /*
         if (!Address.isValidAddress(trimmedAddress)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
+        */
         return new Address(trimmedAddress);
     }
 
@@ -209,20 +211,12 @@ public class ParserUtil {
      */
     public static MoneyBorrowed parseMoneyBorrowed(String moneyBorrowed) throws IllegalValueException {
         requireNonNull(moneyBorrowed);
-
-        /*
-        String trimmed = moneyBorrowed.trim();
-        if (!Email.isValidEmail(trimmed)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        */
-
         try {
             return new MoneyBorrowed(Double.parseDouble(moneyBorrowed));
         } catch (NumberFormatException nfe) {
-            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_CONSTRAINTS);
+            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEY_BORROWED_DOUBLE_ONLY);
         } catch (IllegalArgumentException iae) {
-            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_CONSTRAINTS);
+            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEY_BORROWED_NO_NEGATIVE);
         }
     }
 
@@ -251,9 +245,9 @@ public class ParserUtil {
         try {
             return new StandardInterest(Double.parseDouble(value));
         } catch (NumberFormatException nfe) {
-            throw new IllegalValueException(StandardInterest.MESSAGE_INTEREST_CONSTRAINTS);
+            throw new IllegalValueException(StandardInterest.MESSAGE_STANDARD_INTEREST_DOUBLE_ONLY);
         } catch (IllegalArgumentException iae) {
-            throw new IllegalValueException(StandardInterest.MESSAGE_INTEREST_CONSTRAINTS);
+            throw new IllegalValueException(StandardInterest.MESSAGE_STANDARD_INTEREST_NO_NEGATIVE);
         }
     }
 
@@ -269,7 +263,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code string double} into an {@code StandardInterest}.
+     * Parses a {@code string double} into an {@code LateInterest}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code MoneyOwed} is invalid.
@@ -277,23 +271,23 @@ public class ParserUtil {
     public static LateInterest parseLateInterest(String value) throws IllegalValueException {
         requireNonNull(value);
 
-        /*
-        String trimmed = moneyBorrowed.trim();
-        if (!Email.isValidEmail(trimmed)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        */
+        value = value.trim();
 
-        return new LateInterest(Double.parseDouble(value));
+        try {
+            return new LateInterest(Double.parseDouble(value));
+        } catch (NumberFormatException nfe) {
+            throw new IllegalValueException(LateInterest.MESSAGE_LATE_INTEREST_DOUBLE_ONLY);
+        } catch (IllegalArgumentException iae) {
+            throw new IllegalValueException(LateInterest.MESSAGE_LATE_INTEREST_NO_NEGATIVE);
+        }
     }
 
     /**
-     * Parses a {@code Optional<String> StandardInterest} into an {@code Optional<StandardInterest>} if {@code
+     * Parses a {@code Optional<String> LateInterest} into an {@code Optional<LateInterest>} if {@code
      * value} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<LateInterest> parseLateInterest(Optional<String> value) throws
-            IllegalValueException {
+    public static Optional<LateInterest> parseLateInterest(Optional<String> value) throws IllegalValueException {
         requireNonNull(value);
         return value.isPresent() ? Optional.of(parseLateInterest(value.get())) : Optional.empty();
     }

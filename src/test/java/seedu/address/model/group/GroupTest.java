@@ -27,7 +27,7 @@ public class GroupTest {
     public void compare_equalGroups() throws Exception {
         assertEquals(groupA, groupA2);
     }
-    
+
     @Test
     public void hashCodeAndString_test() {
         assertEquals(groupA.hashCode(), groupA.hashCode());

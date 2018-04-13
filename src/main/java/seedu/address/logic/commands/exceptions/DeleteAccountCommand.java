@@ -2,6 +2,8 @@ package seedu.address.logic.commands.exceptions;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.NoSuchElementException;
+
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.model.Model;
@@ -20,7 +22,7 @@ public class DeleteAccountCommand extends UndoableCommand {
         + ": Deletes the account identified by the name of the user stored in account list.\n"
         + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
         + "Example: " + COMMAND_WORD + " John";
-    public static final String MESSAGE_DELETE_ACCOUNT_SUCCESS = "Deleted Book: %1$s";
+    public static final String MESSAGE_DELETE_ACCOUNT_SUCCESS = "Deleted Account: %1$s";
 
     public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
 
@@ -33,11 +35,13 @@ public class DeleteAccountCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.deleteAccount(accountToDelete);
-        } catch (AccountNotFoundException pnfe2) {
-            throw new AssertionError("The account is missing from the Account List");
+        } catch (AccountNotFoundException anfe) {
+            //anfe.printStackTrace();
+            throw new CommandException("Account does not exist");
+            //throw new AssertionError("The account is missing from the Account List");
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_ACCOUNT_SUCCESS, accountToDelete));

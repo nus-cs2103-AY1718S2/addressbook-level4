@@ -402,7 +402,9 @@
     -fx-text-fill: black;
     -fx-background-color: #FFEB3B;
 }
+/*@@author*/
 
+/*@@author yeggasd*/
 .modteal {
     -fx-text-fill: black;
     -fx-background-color: #009688;
@@ -426,4 +428,42 @@
 .modsandybrown {
     -fx-text-fill: black;
     -fx-background-color: #F4A460;
+}
+
+.modcyan {
+    -fx-text-fill: black;
+    -fx-background-color: #00BCD4;
+}
+
+.modpink {
+    -fx-text-fill: black;
+    -fx-background-color: #FFB6C1;
+}
+
+.modlightblue {
+    -fx-text-fill: black;
+    -fx-background-color: #ADD8E6;
+}
+
+.modpurple{
+    -fx-text-fill: white;
+    -fx-background-color: #9C27B0;
+}
+.modindigo {
+    -fx-text-fill: white;
+    -fx-background-color: #3F51B5;
+}
+.modlightgreen {
+    -fx-text-fill: black;
+    -fx-background-color: #8BC34A;
+}
+
+.modorange {
+    -fx-text-fill: black;
+    -fx-background-color: #fab297;
+}
+
+.modgoldbrown {
+    -fx-text-fill: white;
+    -fx-background-color: #7F6600;
 }

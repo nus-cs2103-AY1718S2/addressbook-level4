@@ -75,6 +75,9 @@ public class XmlAdaptedUser {
         if (this.addressbookfilepath == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "AddressBook file path"));
         }
+        if (!User.isValidAddressBookFilePath(this.addressbookfilepath, this.username.toString())) {
+            throw new IllegalValueException(User.MESSAGE_AB_FILEPATH_CONSTRAINTS);
+        }
 
         final String addressBookFilePath = this.addressbookfilepath;
 

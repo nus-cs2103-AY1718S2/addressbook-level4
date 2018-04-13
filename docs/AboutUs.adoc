@@ -21,7 +21,7 @@ Responsibilities: Main UI, Map and Daily Scheduler
 
 === Kaiser Tan
 image::Profilepic_Kaiser.jpg[width="150", align="left"]
-{empty}[https://github.com/kaisertanqr[github]] [https://github.com[Project Portfolio Page]]
+{empty}[https://github.com/kaisertanqr[github]] [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/docs/team/kaisertan.adoc[Project Portfolio Page]]
 
 Role: Project Developer +
 Responsibilities: Authentication/Security, Multi-user features and User Storage

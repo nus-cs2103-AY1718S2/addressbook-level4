@@ -24,7 +24,7 @@ public class SampleDataUtil {
 
     public static final String SAMPLE_SESSION_REPORT_A =
             SESSION_LOG_DIVIDER + SESSION_LOG_DATE_PREFIX + "11/11/2017 15:01"
-            + "Presenting Problem\n"
+            + "\n\nPresenting Problem\n"
             + "Stan is a 32 year-old, homosexual, white male. Stan has been using methamphetamine for the "
             + "past eight years. Initially, he was smoking the drug. Five years ago he began using intravenously."
             + " Stan injects methamphetamine 3-5 times daily.\n"

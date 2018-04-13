@@ -1207,6 +1207,160 @@ public class DeleteUserCommandTest {
     }
 }
 ```
+###### /java/seedu/address/logic/commands/LogoutCommandTest.java
+``` java
+
+public class LogoutCommandTest {
+
+    @Test
+    public void execute_loginAcceptedByModel_logoutSuccessful() throws Exception {
+        LogoutCommandTest.ModelStubAcceptingLogout modelStub = new LogoutCommandTest.ModelStubAcceptingLogout();
+
+        CommandResult commandResult = getLogoutCommand(modelStub).execute();
+
+        assertEquals(LogoutCommand.MESSAGE_LOGOUT_SUCCESS, commandResult.feedbackToUser);
+    }
+
+    /**
+     * Generates a new AddCommand with the details of the given person.
+     */
+    private LogoutCommand getLogoutCommand(Model model) {
+        LogoutCommand command = new LogoutCommand();
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+
+
+    /**
+     * A default model stub that have all of the methods failing.
+     */
+    private abstract class ModelStub implements Model {
+        @Override
+        public void addPerson(Person person) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetData(ReadOnlyAddressBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deletePerson(Person target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updatePerson(Person target, Person editedPerson)
+                throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Person> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public boolean hasLoggedIn() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public User getLoggedInUser() {
+            fail("This method should not be called.");
+            return null;
+        };
+
+        @Override
+        public void setLoginStatus(boolean status) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<Person> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean checkCredentials(Username username, Password password) throws AlreadyLoggedInException {
+            fail("This method should not be called.");
+            return false;
+        };
+
+        @Override
+        public void updateUserPassword(User target, User userWithNewPassword) throws UserNotFoundException {
+            fail("This method should not be called.");
+        };
+
+        @Override
+        public void addUser(User person) throws DuplicateUserException {
+            fail("This method should not be called.");
+        };
+
+        @Override
+        public void deleteUser(User target) throws UserNotFoundException {
+            fail("This method should not be called.");
+        };
+
+        @Override
+        public ReadOnlyAddressBook getUserDatabase() {
+            fail("This method should not be called.");
+            return null;
+        };
+
+        @Override
+        public void addLogToPerson(Person target, Person editedPersonWithNewLog)
+                throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void setUsersList(UniqueUserList uniqueUserList) {
+            fail("This method should not be called.");
+        }
+    }
+
+    /**
+     * A Model stub that always accepts the login attempt.
+     */
+    private class ModelStubAcceptingLogout extends LogoutCommandTest.ModelStub {
+
+        private boolean loginStatus = false;
+
+        @Override
+        public boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException {
+            requireNonNull(username);
+            requireNonNull(password);
+            setLoginStatus(true);
+            return true;
+        }
+
+
+        @Override
+        public void setLoginStatus(boolean status) {
+            this.loginStatus = status;
+        }
+
+
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/CreateUserCommandTest.java
 ``` java
 public class CreateUserCommandTest {
@@ -1391,6 +1545,383 @@ public class CreateUserCommandTest {
 
 }
 ```
+###### /java/seedu/address/storage/XmlUserDatabaseStorageTest.java
+``` java
+public class XmlUserDatabaseStorageTest {
+
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlUserDatabaseStorageTest/");
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+
+    @Test
+    public void readUserDatabase_nullFilePath_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        readUserDatabase(null);
+    }
+
+    private java.util.Optional<ReadOnlyUserDatabase> readUserDatabase(String filePath) throws Exception {
+        return new XmlUserDatabaseStorage(filePath).readUserDatabase(addToTestDataPathIfNotNull(filePath));
+    }
+
+    private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
+        return prefsFileInTestDataFolder != null
+                ? TEST_DATA_FOLDER + prefsFileInTestDataFolder
+                : null;
+    }
+
+    @Test
+    public void read_missingFile_emptyResult() throws Exception {
+        assertFalse(readUserDatabase("NonExistentFile.xml").isPresent());
+    }
+
+    @Test
+    public void read_notXmlFormat_exceptionThrown() throws Exception {
+
+        thrown.expect(DataConversionException.class);
+        readUserDatabase("NotXmlFormatUserDatabase.xml");
+
+        /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
+         * That means you should not have more than one exception test in one method
+         */
+    }
+
+    @Test
+    public void readAndSaveUserDatabase_allInOrder_success() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        UserDatabase original = getTypicalUserDatabase();
+        XmlUserDatabaseStorage xmlUserDatabaseStorage = new XmlUserDatabaseStorage(filePath);
+
+        //Save in new file and read back
+        xmlUserDatabaseStorage.saveUserDatabase(original, filePath);
+        ReadOnlyUserDatabase readBack = xmlUserDatabaseStorage.readUserDatabase(filePath).get();
+        assertEquals(original, new UserDatabase(readBack));
+
+        //Modify data, overwrite exiting file, and read back
+        original.addUser(RACH);
+        original.removeUser(DEFAULT_USER);
+        xmlUserDatabaseStorage.saveUserDatabase(original, filePath);
+        readBack = xmlUserDatabaseStorage.readUserDatabase(filePath).get();
+        assertEquals(original, new UserDatabase(readBack));
+
+        //Save and read without specifying file path
+        original.addUser(RICK);
+        xmlUserDatabaseStorage.saveUserDatabase(original); //file path not specified
+        readBack = xmlUserDatabaseStorage.readUserDatabase().get(); //file path not specified
+        assertEquals(original, new UserDatabase(readBack));
+
+    }
+
+    @Test
+    public void readUserDatabase_invalidPersonUserDatabase_throwDataConversionException() throws Exception {
+        thrown.expect(DataConversionException.class);
+        readUserDatabase("invalidUserUserDatabase.xml");
+    }
+
+    @Test
+    public void readUserDatabase_invalidAndValidUserDatabase_throwDataConversionException() throws Exception {
+        thrown.expect(DataConversionException.class);
+        readUserDatabase("invalidAndValidUserUserDatabase.xml");
+    }
+
+    @Test
+    public void saveUserDatabase_nullUserDatabase_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        saveUserDatabase(null, "SomeFile.xml");
+    }
+
+    /**
+     * Saves {@code addressBook} at the specified {@code filePath}.
+     */
+    private void saveUserDatabase(ReadOnlyUserDatabase userDatabase, String filePath) {
+        try {
+            new XmlUserDatabaseStorage(filePath).saveUserDatabase(userDatabase, addToTestDataPathIfNotNull(filePath));
+        } catch (IOException ioe) {
+            throw new AssertionError("There should not be an error writing to the file.", ioe);
+        }
+    }
+
+    @Test
+    public void saveUserDatabase_nullFilePath_throwsNullPointerException() throws IOException {
+        thrown.expect(NullPointerException.class);
+        saveUserDatabase(new UserDatabase(), null);
+    }
+}
+```
+###### /java/seedu/address/storage/XmlAdaptedUserTest.java
+``` java
+public class XmlAdaptedUserTest {
+
+    private static final String INVALID_USERNAME = "Kaiser@@";
+    private static final String INVALID_PASSWORD = "+651234";
+    private static final String INVALID_ADDRESS_BOOK_FILE_PATH = "sadsasa.xml";
+
+    private static final String VALID_USERNAME = KARA.getUsername().toString();
+    private static final String VALID_PASSWORD = KARA.getPassword().toString();
+    private static final String VALID_ADDRESSBOOK_FILE_PATH = KARA.getAddressBookFilePath().toString();
+
+
+    @Test
+    public void toModelType_validUserDetails_returnsUser() throws Exception {
+        XmlAdaptedUser user = new XmlAdaptedUser(KARA);
+        assertEquals(KARA, user.toModelType());
+    }
+
+    @Test
+    public void toModelType_invalidUsername_throwsIllegalValueException() {
+        XmlAdaptedUser user =
+                new XmlAdaptedUser(INVALID_USERNAME, VALID_PASSWORD, VALID_ADDRESSBOOK_FILE_PATH);
+        String expectedMessage = Username.MESSAGE_USERNAME_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, user::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullUsername_throwsIllegalValueException() {
+        XmlAdaptedUser user =
+                new XmlAdaptedUser(null, VALID_PASSWORD, VALID_ADDRESSBOOK_FILE_PATH);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Username.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, user::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidPassword_throwsIllegalValueException() {
+        XmlAdaptedUser user =
+                new XmlAdaptedUser(VALID_USERNAME, INVALID_PASSWORD, VALID_ADDRESSBOOK_FILE_PATH);
+        String expectedMessage = Password.MESSAGE_PASSWORD_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, user::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullPassword_throwsIllegalValueException() {
+        XmlAdaptedUser user =
+                new XmlAdaptedUser(VALID_USERNAME, null, INVALID_ADDRESS_BOOK_FILE_PATH);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Password.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, user::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidAddressBookFilePath_throwsIllegalValueException() {
+        XmlAdaptedUser user =
+                new XmlAdaptedUser(VALID_USERNAME, VALID_PASSWORD, INVALID_ADDRESS_BOOK_FILE_PATH);
+        String expectedMessage = User.MESSAGE_AB_FILEPATH_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, user::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullAddressBookFilePath_throwsIllegalValueException() {
+        XmlAdaptedUser user =
+                new XmlAdaptedUser(VALID_USERNAME, VALID_PASSWORD, null);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "AddressBook file path");
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, user::toModelType);
+    }
+
+}
+```
+###### /java/seedu/address/storage/XmlSerializableUserDatabaseTest.java
+``` java
+public class XmlSerializableUserDatabaseTest {
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializableUserDatabaseTest/");
+    private static final File TYPICAL_USERS_FILE = new File(TEST_DATA_FOLDER + "typicalUsersUserDatabase.xml");
+    private static final File INVALID_USER_FILE = new File(TEST_DATA_FOLDER + "invalidUserUserDatabase.xml");
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void toModelType_typicalPersonsFile_success() throws Exception {
+        XmlSerializableUserDatabase dataFromFile = XmlUtil.getDataFromFile(TYPICAL_USERS_FILE,
+                XmlSerializableUserDatabase.class);
+        UserDatabase userDatabaseFromFile = dataFromFile.toModelType();
+        UserDatabase typicalUsersAddressBook = TypicalUsers.getTypicalUserDatabase();
+        assertEquals(userDatabaseFromFile, typicalUsersAddressBook);
+    }
+
+    @Test
+    public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableUserDatabase dataFromFile = XmlUtil.getDataFromFile(INVALID_USER_FILE,
+                XmlSerializableUserDatabase.class);
+        thrown.expect(IllegalValueException.class);
+        dataFromFile.toModelType();
+    }
+}
+```
+###### /java/seedu/address/model/person/PersonTest.java
+``` java
+public class PersonTest {
+
+    private static final Name VALID_NAME = BENSON.getName();
+    private static final Phone VALID_PHONE = BENSON.getPhone();
+    private static final Email VALID_EMAIL = BENSON.getEmail();
+    private static final Address VALID_ADDRESS = BENSON.getAddress();
+    private static final SessionLogs VALID_SESSION_LOG = BENSON.getSessionLogs();
+    private static final Set<Tag> VALID_TAGS = BENSON.getTags();
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        // ================== normal constructor ======================
+
+        // null name
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS));
+
+        // null phone
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(VALID_NAME, null, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS));
+
+        // null email
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(VALID_NAME, VALID_PHONE, null, VALID_ADDRESS, VALID_TAGS));
+
+        // null address
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(VALID_NAME, VALID_PHONE, VALID_EMAIL, null, VALID_TAGS));
+
+        // null tags
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, null));
+
+        // ================== overloaded constructor ======================
+
+        // null name
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, VALID_SESSION_LOG));
+
+        // null phone
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(VALID_NAME, null, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, VALID_SESSION_LOG));
+
+        // null email
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(VALID_NAME, VALID_PHONE, null, VALID_ADDRESS, VALID_TAGS, VALID_SESSION_LOG));
+
+        // null address
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(VALID_NAME, VALID_PHONE, VALID_EMAIL, null, VALID_TAGS, VALID_SESSION_LOG));
+
+        // null tags
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, null, VALID_SESSION_LOG));
+
+        // null session log
+        Assert.assertThrows(NullPointerException.class, () -> new
+                Person(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, null));
+
+    }
+}
+```
+###### /java/seedu/address/model/UniqueUserListTest.java
+``` java
+
+public class UniqueUserListTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniqueUserList uniqueUserList = new UniqueUserList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniqueUserList.asObservableList().remove(0);
+    }
+}
+```
+###### /java/seedu/address/model/login/UsernameTest.java
+``` java
+public class UsernameTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Username(null));
+    }
+
+    @Test
+    public void constructor_invalidUsername_throwsIllegalArgumentException() {
+        String invalidUsername = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Username(invalidUsername));
+    }
+
+    @Test
+    public void isValidUsername() {
+        // null address
+        Assert.assertThrows(NullPointerException.class, () -> Username.isValidUsername(null));
+
+        // invalid usernames
+        assertFalse(Username.isValidUsername("")); // empty string
+        assertFalse(Username.isValidUsername(" ")); // spaces only
+        assertFalse(Username.isValidUsername("kaiser tan")); // contains spaces
+        assertFalse(Username.isValidUsername("Kaiser@@")); // non-alphanumeric character
+
+        // valid usernames
+        assertTrue(Username.isValidUsername("kaiser123"));
+    }
+}
+```
+###### /java/seedu/address/model/login/UserTest.java
+``` java
+public class UserTest {
+
+    private static final Username VALID_USERNAME = new Username("kaiser");
+    private static final Password VALID_PASSWORD = new Password("pass");
+    private static final String VALID_FILE_PATH = "addressbook-kaiser.xml";
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        // ================== normal constructor ======================
+
+        // null username
+        Assert.assertThrows(NullPointerException.class, () -> new User(null, VALID_PASSWORD));
+
+        // null password
+        Assert.assertThrows(NullPointerException.class, () -> new User(VALID_USERNAME, null));
+
+        // ================== overloaded constructor ======================
+
+        // null username
+        Assert.assertThrows(NullPointerException.class, () -> new User(null, VALID_PASSWORD, VALID_FILE_PATH));
+
+        // null password
+        Assert.assertThrows(NullPointerException.class, () -> new User(VALID_USERNAME, null, VALID_FILE_PATH));
+
+        // null address book file path
+        Assert.assertThrows(NullPointerException.class, () -> new User(VALID_USERNAME, VALID_PASSWORD, null));
+
+    }
+}
+```
+###### /java/seedu/address/model/login/PasswordTest.java
+``` java
+public class PasswordTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Username(null));
+    }
+
+    @Test
+    public void constructor_invalidPassword_throwsIllegalArgumentException() {
+        String invalidPassword = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Password(invalidPassword));
+    }
+
+    @Test
+    public void isValidUsername() {
+        // null address
+        Assert.assertThrows(NullPointerException.class, () -> Password.isValidPassword(null));
+
+        // invalid usernames
+        assertFalse(Password.isValidPassword("")); // empty string
+        assertFalse(Password.isValidPassword(" ")); // spaces only
+        assertFalse(Password.isValidPassword("secret pass")); // contains spaces
+        assertFalse(Password.isValidPassword("PassWord@@")); // non-alphanumeric character
+
+        // valid usernames
+        assertTrue(Password.isValidPassword("password123"));
+    }
+}
+```
 ###### /java/seedu/address/testutil/TypicalUsers.java
 ``` java
 /**
@@ -1403,6 +1934,8 @@ public class TypicalUsers {
     public static final User LONG = new User(new Username("long"), new Password("pass"));
     public static final User KARA = new User(new Username("kara"), new Password("pass"));
     public static final User DANY = new User(new Username("dany"), new Password("pass"));
+    public static final User RACH = new User(new Username("rach"), new Password("pass"));
+    public static final User RICK = new User(new Username("rick"), new Password("pass"));
 
     private TypicalUsers() {} // prevents instantiation
 

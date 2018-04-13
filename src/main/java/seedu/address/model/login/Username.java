@@ -11,13 +11,13 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Username {
 
     public static final String MESSAGE_USERNAME_CONSTRAINTS =
-            "Usernames should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Usernames should only contain alphanumeric characters, no spaces and it should not be blank.";
 
     /*
      * The first character of the username must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String USERNAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String USERNAME_VALIDATION_REGEX = "[\\p{Alnum}]*";
 
     public final String fullUsername;
 
@@ -36,7 +36,7 @@ public class Username {
      * Returns true if a given string is a valid username.
      */
     public static boolean isValidUsername(String test) {
-        return test.matches(USERNAME_VALIDATION_REGEX);
+        return test.matches(USERNAME_VALIDATION_REGEX) && !test.equals("");
     }
 
 

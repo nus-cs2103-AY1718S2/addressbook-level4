@@ -21,6 +21,8 @@ public class TypicalUsers {
     public static final User LONG = new User(new Username("long"), new Password("pass"));
     public static final User KARA = new User(new Username("kara"), new Password("pass"));
     public static final User DANY = new User(new Username("dany"), new Password("pass"));
+    public static final User RACH = new User(new Username("rach"), new Password("pass"));
+    public static final User RICK = new User(new Username("rick"), new Password("pass"));
 
     private TypicalUsers() {} // prevents instantiation
 

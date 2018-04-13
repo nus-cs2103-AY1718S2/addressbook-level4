@@ -25,6 +25,7 @@ public class Person {
     private final UniqueTagList tags;
 
     /**
+     * Creates a new person instance
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
@@ -43,6 +44,7 @@ public class Person {
     }
 
     /**
+     * Creates a new person instance with a given session log {@code sessionLogs}.
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, SessionLogs sessionLogs) {

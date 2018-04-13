@@ -23,7 +23,7 @@ import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.exceptions.DeleteAccountCommand;
+import seedu.address.logic.commands.DeleteAccountCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**

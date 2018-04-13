@@ -12,7 +12,9 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-T16-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T16-B2`      Since: `Mar 2018`      Licence: `MIT`
+
+Special Credits to: AddressBook-Level4 project created by SE-EDU initiative at https://github.com/se-edu/
 
 == Setting up
 

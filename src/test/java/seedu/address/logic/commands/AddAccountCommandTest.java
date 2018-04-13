@@ -133,6 +133,12 @@ public class AddAccountCommandTest {
         }
 
         @Override
+        public UniqueAccountList getAccountList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredBookList(Predicate<Book> predicate) {
             fail("This method should not be called.");
         }

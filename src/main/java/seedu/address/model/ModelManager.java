@@ -97,6 +97,9 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws AccountNotFoundException
      */
     public void deleteAccount(Account account) throws AccountNotFoundException {
+        if (account == null) {
+            throw new AccountNotFoundException("Account not Found!");
+        }
         accountList.remove(account);
         indicateAccountListChanged();
     }
@@ -140,6 +143,11 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetAccount(UniqueAccountList newData) {
         this.accountList = newData;
         indicateAccountListChanged();
+    }
+
+    @Override
+    public UniqueAccountList getAccountList() {
+        return accountList;
     }
 
     @Override

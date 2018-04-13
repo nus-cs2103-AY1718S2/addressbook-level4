@@ -19,6 +19,7 @@ import seedu.address.model.account.Name;
 import seedu.address.model.account.Password;
 import seedu.address.model.account.PrivilegeLevel;
 import seedu.address.model.account.Username;
+import seedu.address.model.account.exceptions.AccountNotFoundException;
 
 /**
  * Parses input arguments and creates a new AddAccountCommand object
@@ -62,7 +63,7 @@ public class AddAccountCommandParser implements Parser<AddAccountCommand> {
             Account account = new Account(name, credential, matricNumber, privilegeLevel);
 
             return new AddAccountCommand(account);
-        } catch (IllegalValueException ive) {
+        } catch (AccountNotFoundException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }

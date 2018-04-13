@@ -22,6 +22,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.customer.MoneyBorrowed;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
 
@@ -31,6 +32,8 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_MONEY_BORROWED_NEGATIVE = "-34.0985";
+    private static final String INVALID_MONEY_BORROWED_NOT_DOUBLE = "34.0d985";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -38,6 +41,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_MONEY_BORROWED = "34.0985";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -243,4 +247,49 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    @Test
+    public void parseMoneyBorrowed_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseMoneyBorrowed((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseMoneyBorrowed((Optional<String>) null));
+    }
+
+    @Test
+    public void parseMoneyBorrowed_invalidValueNotDouble_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseMoneyBorrowed(INVALID_MONEY_BORROWED_NOT_DOUBLE));
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseMoneyBorrowed(Optional.of(INVALID_MONEY_BORROWED_NOT_DOUBLE)));
+    }
+
+    @Test
+    public void parseMoneyBorrowed_invalidValueNegative_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseMoneyBorrowed(INVALID_MONEY_BORROWED_NEGATIVE));
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseMoneyBorrowed(Optional.of(INVALID_MONEY_BORROWED_NEGATIVE)));
+    }
+
+    @Test
+    public void parseMoneyBorrowed_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseMoneyBorrowed(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseMoneyBorrowed_validValueWithoutWhitespace_returnsMoneyBorrowed() throws Exception {
+        MoneyBorrowed expectedMoneyBorrowed = new MoneyBorrowed(Double.parseDouble(VALID_MONEY_BORROWED));
+        assertEquals(expectedMoneyBorrowed, ParserUtil.parseMoneyBorrowed(VALID_MONEY_BORROWED));
+        assertEquals(Optional.of(expectedMoneyBorrowed),
+                ParserUtil.parseMoneyBorrowed(Optional.of(VALID_MONEY_BORROWED)));
+    }
+
+    @Test
+    public void parseMoneyBorrowed_validValueWithWhitespace_returnsTrimmedMoneyBorrowed() throws Exception {
+        String moneyBorrowedWithWhitespace = WHITESPACE + VALID_MONEY_BORROWED + WHITESPACE;
+        MoneyBorrowed expectedMoneyBorrowed = new MoneyBorrowed(Double.parseDouble(moneyBorrowedWithWhitespace));
+        assertEquals(expectedMoneyBorrowed, ParserUtil.parseMoneyBorrowed(VALID_MONEY_BORROWED));
+        assertEquals(Optional.of(expectedMoneyBorrowed),
+                ParserUtil.parseMoneyBorrowed(Optional.of(VALID_MONEY_BORROWED)));
+    }
+
 }

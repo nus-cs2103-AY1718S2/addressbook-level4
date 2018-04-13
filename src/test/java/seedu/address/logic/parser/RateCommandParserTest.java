@@ -12,6 +12,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import org.junit.Test;
 
 import seedu.address.logic.commands.RateCommand;
+import seedu.address.logic.commands.RatingEditCommand;
 import seedu.address.model.person.Rating;
 
 //@@author kexiaowen
@@ -40,7 +41,7 @@ public class RateCommandParserTest {
         assertParseFailure(parser, "1" + " " + PREFIX_TECHNICAL_SKILLS_SCORE
                 + " " + PREFIX_COMMUNICATION_SKILLS_SCORE
                 + " " + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE
-                + " " + PREFIX_EXPERIENCE_SCORE, Rating.MESSAGE_RATING_CONSTRAINTS);
+                + " " + PREFIX_EXPERIENCE_SCORE, RatingEditCommand.MESSAGE_EMPTY_SCORE);
     }
 
 }

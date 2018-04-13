@@ -1,6 +1,7 @@
 //@@author IzHoBX
 package seedu.address.storage;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.notification.NotificationTime;
 
 /**
@@ -28,16 +29,18 @@ public class NotificationTimeParserUtil {
     /**
      * Parses the input time string into time fields.
      *
-     * @params input that a string containing time information in the format
-     * {"dateTime":"YYYY-MM-DDTHH:MM:SS.000+08:00",
-     * "timeZone":"Asia/Singapore"}<
+     * @params input that a string containing time information in the format:
+     * Default format: {"dateTime":"YYYY-MM-DDTHH:MM:SS.000+08:00timeZone:"Asia/Singapore"}
+     * Acceptable format: YYYY-MM-DDTHH:MM:SS
      *
      * @return NotificationTime containing the parsed time fields.
      */
     public static NotificationTime parseTime(String input) {
         int firstIntegerOffset = findFirstIntegerOffset(input);
-        NotificationTime tet = new NotificationTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX
-                        + firstIntegerOffset,
+        assert(firstIntegerOffset != -1 && SECOND_END_INDEX + firstIntegerOffset <= input.length());
+        try {
+             NotificationTime tet = new NotificationTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX
+                            + firstIntegerOffset,
                     YEAR_END_INDEX + firstIntegerOffset)),
                     Integer.parseInt(input.substring(MONTH_BEGIN_INDEX + firstIntegerOffset, MONTH_END_INDEX
                             + firstIntegerOffset)) + MONTH_INDEX_OFFSET,
@@ -49,7 +52,13 @@ public class NotificationTimeParserUtil {
                             MINUTE_END_INDEX + firstIntegerOffset)),
                     Integer.parseInt(input.substring(SECOND_BEGIN_INDEX + firstIntegerOffset,
                             SECOND_END_INDEX + firstIntegerOffset)));
-        return tet;
+            return tet;
+        } catch (NumberFormatException e) {
+            LogsCenter.getLogger(NotificationTimeParserUtil.class).info("Time format in notification mismatch");
+            assert(false);
+        }
+        //should not be returned
+        return null;
     }
 
     /**

@@ -81,6 +81,7 @@ public class TypicalBooks {
 
     public static final String KEYWORD_MATCHING_GIRL = "Girl"; // A keyword that matches GIRL
     public static final String KEYWORD_MATCHING_BREAKING = "Breaking"; // A keyword that matches BREAKING
+
     //@@author
     private TypicalBooks() {
     } // prevents instantiation

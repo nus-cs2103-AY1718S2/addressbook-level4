@@ -204,11 +204,13 @@ public class EditCommandParserTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
+        // owe start date
         userInput = targetIndex.getOneBased() + OWE_START_DATE_070518;
         descriptor = new EditPersonDescriptorBuilder().withOweStartDate(VALID_OWE_START_DATE_070518).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
+        // owe due date
         userInput = targetIndex.getOneBased() + OWE_DUE_DATE_121221;
         descriptor = new EditPersonDescriptorBuilder().withOweDueDate(VALID_OWE_DUE_DATE_121221).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);

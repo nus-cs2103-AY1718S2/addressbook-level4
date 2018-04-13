@@ -22,19 +22,19 @@ public class AddPatientQueueCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addq";
     public static final String COMMAND_ALIAS = "aq";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient into vising queue. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient into visiting queue. "
             + "Parameters: "
             + "INDEX (must be a positive integer)\n "
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SUCCESS = "%1$s is registered in the waiting list";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This patient already registered.";
+    public static final String MESSAGE_SUCCESS = "%1$s is added into visiting queue";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This patient already added into visiting queue.";
     public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database.";
     private final Index targetIndex;
-    private Index actualIndex;
+    private Index actualSourceIndex;
 
     /**
-     * Creates an AddCommand to add the specified {@code Patient}
+     * Creates an AddPatientQueueCommand to add the specified patient by its list index
      */
     public AddPatientQueueCommand(Index index) {
         requireNonNull(index);
@@ -47,7 +47,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
         Patient toQueue;
 
         try {
-            toQueue = model.addPatientToQueue(actualIndex);
+            toQueue = model.addPatientToQueue(actualSourceIndex);
         } catch (DuplicatePatientException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PatientNotFoundException e) {
@@ -68,7 +68,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
         String actualIndexInString = model.getPatienActualIndexInList(targetIndex.getZeroBased()) + "";
 
         try {
-            actualIndex = ParserUtil.parseIndex(actualIndexInString);
+            actualSourceIndex = ParserUtil.parseIndex(actualIndexInString);
         } catch (IllegalValueException e) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }

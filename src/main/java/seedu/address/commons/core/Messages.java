@@ -12,6 +12,6 @@ public class Messages {
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The patient index provided is invalid";
     public static final String MESSAGE_INVALID_STATE = "Invalid state!";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
-    public static final String MESSAGE_PERSONS_EXIST_IN_QUEUE = "%1$s is still in the visiting queue." +
-            "Remove the patient from the queue before deleting.";
+    public static final String MESSAGE_PERSONS_EXIST_IN_QUEUE = "%1$s is still in the visiting queue."
+            + "Remove the patient from the queue before deleting.";
 }

@@ -1,11 +1,13 @@
 package seedu.address.logic;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.util.EncryptionUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.PasswordCommand;
@@ -13,6 +15,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.storage.PasswordManger;
 
@@ -45,6 +48,7 @@ public class LogicManager extends ComponentManager implements Logic {
             if (isLocked) {
                 throw new CommandException(PasswordCommand.MESSAGE_WRONG_PASSWORD);
             } else {
+                decryptFile();
                 return new CommandResult("Welcome to reInsurance");
             }
         }
@@ -57,6 +61,19 @@ public class LogicManager extends ComponentManager implements Logic {
             return result;
         } finally {
             history.add(commandText);
+        }
+    }
+
+    /**
+     * Method to decrypt file
+     */
+    private void decryptFile() {
+        try {
+            UserPrefs userPrefs = new UserPrefs();
+            File file = new File(userPrefs.getAddressBookFilePath());
+            EncryptionUtil.decrypt(file);
+        } catch (IOException ioe) {
+            logger.warning("File not found" + ioe.getMessage());
         }
     }
 

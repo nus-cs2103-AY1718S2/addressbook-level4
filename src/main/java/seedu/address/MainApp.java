@@ -1,5 +1,6 @@
 package seedu.address;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -17,6 +18,8 @@ import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
+import seedu.address.commons.util.EncryptionUtil;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -86,6 +89,7 @@ public class MainApp extends Application {
      * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Data remains encrypted if a password is set.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
@@ -114,6 +118,15 @@ public class MainApp extends Application {
             initGoogleCalendar();
         }
 
+        File file = new File(userPrefs.getPasswordFilePath());
+        try {
+            if (FileUtil.isPassExists(file)) {
+                File book = new File(userPrefs.getAddressBookFilePath());
+                EncryptionUtil.encrypt(book);
+            }
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the password file");
+        }
         return new ModelManager(initialData, userPrefs);
     }
 
@@ -228,6 +241,13 @@ public class MainApp extends Application {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
         Platform.exit();
+        try {
+            UserPrefs userPrefs = new UserPrefs();
+            File file = new File(userPrefs.getAddressBookFilePath());
+            EncryptionUtil.encrypt(file);
+        } catch (IOException ioe) {
+            logger.warning("File not found" + ioe.getMessage());
+        }
         System.exit(0);
     }
 

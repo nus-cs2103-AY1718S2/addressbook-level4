@@ -55,7 +55,7 @@ import seedu.address.ui.ToDoCard;
  * Provides a handle for {@code ToDoListPanel} containing the list of {@code ToDoCard}.
  */
 public class ToDoListPanelHandle extends NodeHandle<ListView<ToDoCard>> {
-    public static final String TODO_LIST_VIEW_ID = "#todoListView";
+    public static final String TODO_LIST_VIEW_ID = "#toDoListView";
 
     private Optional<ToDoCard> lastRememberedSelectedToDoCard;
 
@@ -103,7 +103,7 @@ public class ToDoListPanelHandle extends NodeHandle<ListView<ToDoCard>> {
      */
     public void navigateToCard(ToDo toDo) {
         List<ToDoCard> cards = getRootNode().getItems();
-        Optional<ToDoCard> matchingCard = cards.stream().filter(card -> card.todo.equals(toDo)).findFirst();
+        Optional<ToDoCard> matchingCard = cards.stream().filter(card -> card.toDo.equals(toDo)).findFirst();
 
         if (!matchingCard.isPresent()) {
             throw new IllegalArgumentException("ToDo does not exist.");
@@ -120,7 +120,7 @@ public class ToDoListPanelHandle extends NodeHandle<ListView<ToDoCard>> {
      * Returns the to-do card handle of a to-do associated with the {@code index} in the list.
      */
     public ToDoCardHandle getToDoCardHandle(int index) {
-        return getToDoCardHandle(getRootNode().getItems().get(index).todo);
+        return getToDoCardHandle(getRootNode().getItems().get(index).toDo);
     }
 
     /**
@@ -128,7 +128,7 @@ public class ToDoListPanelHandle extends NodeHandle<ListView<ToDoCard>> {
      */
     public ToDoCardHandle getToDoCardHandle(ToDo toDo) {
         Optional<ToDoCardHandle> handle = getRootNode().getItems().stream()
-                .filter(card -> card.todo.equals(toDo))
+                .filter(card -> card.toDo.equals(toDo))
                 .map(card -> new ToDoCardHandle(card.getRoot()))
                 .findFirst();
         return handle.orElseThrow(() -> new IllegalArgumentException("ToDo does not exist."));
@@ -637,7 +637,7 @@ public class CheckToDoCommandTest {
         // null -> returns false
         assertFalse(checkToDoFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different to-do -> returns false
         assertFalse(checkToDoFirstCommand.equals(checkToDoSecondCommand));
     }
 
@@ -1058,7 +1058,7 @@ public class UnCheckToDoCommandTest {
         // null -> returns false
         assertFalse(unCheckToDoFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different to-do -> returns false
         assertFalse(unCheckToDoFirstCommand.equals(unCheckToDoSecondCommand));
     }
 
@@ -1279,7 +1279,7 @@ public class ContentTest {
         assertTrue(Content.isValidContent("12345")); // numbers only
         assertTrue(Content.isValidContent("hello world the 2nd")); // alphanumeric characters
         assertTrue(Content.isValidContent("Hello World")); // with capital letters
-        assertTrue(Content.isValidContent("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Content.isValidContent("This is a very very very very very loooong content")); // long content
     }
 
     @Test
@@ -1373,18 +1373,18 @@ import seedu.address.testutil.ToDoBuilder;
 public class ToDoTest {
     @Test
     public void equals() {
-        ToDo todoA = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
-        ToDo todoB = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
-        ToDo todoC = new ToDoBuilder().withContent("Something to do").withStatus("done").build();
+        ToDo toDoA = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
+        ToDo toDoB = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
+        ToDo toDoC = new ToDoBuilder().withContent("Something to do").withStatus("done").build();
 
         // different types -> returns false
-        assertFalse(todoA.equals(1));
+        assertFalse(toDoA.equals(1));
 
         // same content -> returns true
-        assertTrue(todoA.hashCode() == todoB.hashCode());
+        assertTrue(toDoA.hashCode() == toDoB.hashCode());
 
         // same content, different status -> returns true
-        assertTrue(todoA.equals(todoC));
+        assertTrue(toDoA.equals(toDoC));
     }
 }
 ```
@@ -1442,47 +1442,47 @@ public class XmlAdaptedToDoTest {
 
     @Test
     public void toModelType_validToDoDetails_returnsToDo() throws Exception {
-        XmlAdaptedToDo todo = new XmlAdaptedToDo(TODO_A);
-        assertEquals(TODO_A, todo.toModelType());
+        XmlAdaptedToDo toDo = new XmlAdaptedToDo(TODO_A);
+        assertEquals(TODO_A, toDo.toModelType());
     }
 
     @Test
     public void toModelType_invalidContent_throwsIllegalValueException() {
-        XmlAdaptedToDo todo =
+        XmlAdaptedToDo toDo =
                 new XmlAdaptedToDo(INVALID_CONTENT);
         String expectedMessage = Content.MESSAGE_CONTENT_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void toModelType_nullContent_throwsIllegalValueException() {
-        XmlAdaptedToDo todo = new XmlAdaptedToDo((String) null);
+        XmlAdaptedToDo toDo = new XmlAdaptedToDo((String) null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Content.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void toModelType_nullStatus_throwsIllegalValueException() {
-        XmlAdaptedToDo todo = new XmlAdaptedToDo(VALID_CONTENT, null);
+        XmlAdaptedToDo toDo = new XmlAdaptedToDo(VALID_CONTENT, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void toModelType_invalidStatus_throwsIllegalValueException() {
-        XmlAdaptedToDo todo =
+        XmlAdaptedToDo toDo =
                 new XmlAdaptedToDo(VALID_CONTENT, INVALID_STATUS);
         String expectedMessage = Status.MESSAGE_STATUS_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void equals() {
-        XmlAdaptedToDo todoA = new XmlAdaptedToDo(TODO_A);
-        XmlAdaptedToDo todoB = new XmlAdaptedToDo(TODO_A);
-        assertTrue(todoA.equals(todoA));
-        assertFalse(todoA.equals(1));
-        assertTrue(todoA.equals(todoB));
+        XmlAdaptedToDo toDoA = new XmlAdaptedToDo(TODO_A);
+        XmlAdaptedToDo toDoB = new XmlAdaptedToDo(TODO_A);
+        assertTrue(toDoA.equals(toDoA));
+        assertFalse(toDoA.equals(1));
+        assertTrue(toDoA.equals(toDoB));
     }
 }
 ```
@@ -1557,11 +1557,11 @@ public class ToDoBuilder {
     }
 
     /**
-     * Initializes the ToDoBuilder with the data of {@code todoToCopy}.
+     * Initializes the ToDoBuilder with the data of {@code toDoToCopy}.
      */
-    public ToDoBuilder(ToDo todoToCopy) {
-        content = todoToCopy.getContent();
-        status = todoToCopy.getStatus();
+    public ToDoBuilder(ToDo toDoToCopy) {
+        content = toDoToCopy.getContent();
+        status = toDoToCopy.getStatus();
     }
 
     /**
@@ -1599,18 +1599,18 @@ import seedu.address.model.todo.ToDo;
 public class ToDoUtil {
 
     /**
-     * Returns an addToDo command string for adding the {@code todo}.
+     * Returns an addToDo command string for adding the {@code toDo}.
      */
-    public static String getAddToDoCommand(ToDo todo) {
-        return AddToDoCommand.COMMAND_WORD + " " + getToDoDetails(todo);
+    public static String getAddToDoCommand(ToDo toDo) {
+        return AddToDoCommand.COMMAND_WORD + " " + getToDoDetails(toDo);
     }
 
     /**
-     * Returns the part of command string for the given {@code todo}'s details.
+     * Returns the part of command string for the given {@code toDo}'s details.
      */
-    public static String getToDoDetails(ToDo todo) {
+    public static String getToDoDetails(ToDo toDo) {
         StringBuilder sb = new StringBuilder();
-        sb.append(todo.getContent().value);
+        sb.append(toDo.getContent().value);
         return sb.toString();
     }
 }
@@ -1638,6 +1638,34 @@ public class TypicalToDos {
 
     public static List<ToDo> getTypicalToDos() {
         return new ArrayList<>(Arrays.asList(TODO_A, TODO_B, TODO_C));
+    }
+}
+```
+###### \java\seedu\address\ui\ProgressIndicatorPropertiesTest.java
+``` java
+package seedu.address.ui;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+
+public class ProgressIndicatorPropertiesTest {
+    private static final String EXPECTED_PROGRESS_INDICATOR_LABEL_NAME = "TO-DO COMPLETION";
+    private static final String EXPECTED_PROGRESS_INDICATOR_LABEL_COLOR = "-fx-text-fill: black;";
+    private static final String EXPECTED_PROGRESS_INDICATOR_COLOR = "-fx-progress-color: #4DA194;";
+    private static final int EXPECTED_PROGRESS_INDICATOR_WIDTH = 150;
+    private static final int EXPECTED_PROGRESS_INDICATOR_HEIGHT = 150;
+
+    @Test
+    public void checkIfAllPropertiesAreCorrect() {
+        ProgressIndicatorProperties properties = new ProgressIndicatorProperties();
+
+        assertTrue(properties.PROGRESS_INDICATOR_LABEL_NAME.equals(EXPECTED_PROGRESS_INDICATOR_LABEL_NAME));
+        assertTrue(properties.PROGRESS_INDICATOR_LABEL_COLOR.equals(EXPECTED_PROGRESS_INDICATOR_LABEL_COLOR));
+        assertTrue(properties.PROGRESS_INDICATOR_COLOR.equals(EXPECTED_PROGRESS_INDICATOR_COLOR));
+        assertTrue(properties.PROGRESS_INDICATOR_WIDTH == EXPECTED_PROGRESS_INDICATOR_WIDTH);
+        assertTrue(properties.PROGRESS_INDICATOR_HEIGHT == EXPECTED_PROGRESS_INDICATOR_HEIGHT);
     }
 }
 ```
@@ -1799,10 +1827,9 @@ public class AddToDoCommandSystemTest extends AddressBookSystemTest {
      * 2. Command node has the default style class.<br>
      * 3. Result display node displays the success message of executing {@code AddToDoCommand} with the details of
      * {@code toAdd}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
+     * 4. {@code Model}, {@code Storage} and {@code ToDoListPanel} equal to the corresponding components in
      * the current model added with {@code toAdd}.<br>
-     * 5. Browser url and selected card remain unchanged.<br>
-     * 6. Status bar's sync status changes.<br>
+     * 5. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -1849,8 +1876,7 @@ public class AddToDoCommandSystemTest extends AddressBookSystemTest {
      * 1. Command node displays {@code command}.<br>
      * 2. Command node has the error style class.<br>
      * 3. Result display node displays {@code expectedResultMessage}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
-     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * 4. {@code Model}, {@code Storage} and {@code ToDoListPanel} remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)

@@ -7,7 +7,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.ToDoCard;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a selection change in the ToDo List Panel
  */
 public class ToDoPanelSelectionChangedEvent extends BaseEvent {
 
@@ -44,7 +44,7 @@ public class AddToDoCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a to-do to the address book. "
             + "Parameters: "
-            + "TO-DO DESCRIPTION "
+            + "CONTENT\n"
             + "Example: " + COMMAND_WORD + " "
             + "Organize a meeting";
 
@@ -108,14 +108,14 @@ public class CheckToDoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "check";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Checks the ToDo identified as done"
-            + "by the index number used in the last ToDo listing. "
-            + "Status of the ToDo will be overwritten as done.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Checks the to-do identified as done "
+            + "by the index number used in the last to-do listing. "
+            + "Status of the to-do will be overwritten as done.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_CHECK_TODO_SUCCESS = "Checked ToDo: %1$s";
-    public static final String MESSAGE_NOT_CHECKED = "Checked ToDo failed.";
+    public static final String MESSAGE_CHECK_TODO_SUCCESS = "Checked to-do: %1$s";
+    public static final String MESSAGE_NOT_CHECKED = "Checked to-do failed.";
 
     private final Index index;
 
@@ -216,7 +216,7 @@ public class DeleteToDoCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_TODO_SUCCESS = "Deleted To-do: %1$s";
+    public static final String MESSAGE_DELETE_TODO_SUCCESS = "Deleted to-do: %1$s";
 
     private final Index targetIndex;
 
@@ -290,15 +290,15 @@ public class EditToDoCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "editToDo";
     public static final String COMMAND_ALIAS = "eTD";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the content of the ToDo identified "
-            + "by the index number used in the last ToDo listing. "
-            + "Content of the ToDo will be overwritten by the input value.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the content of the to-do identified "
+            + "by the index number used in the last to-do listing. "
+            + "Content of the to-do will be overwritten by the input value.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_CONTENT + "CONTENT] "
+            + "[" + PREFIX_CONTENT + "CONTENT]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_CONTENT + "Submit presentation scripts";
 
-    public static final String MESSAGE_EDIT_TODO_SUCCESS = "Edited ToDo: %1$s";
+    public static final String MESSAGE_EDIT_TODO_SUCCESS = "Edited to-do: %1$s";
     public static final String MESSAGE_NOT_EDITED_TODO = "The new to-do content to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_TODO = "This to-do already exists in the address book.";
 
@@ -456,14 +456,14 @@ public class UnCheckToDoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "uncheck";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unchecks the ToDo identified as done"
-            + "by the index number used in the last ToDo listing. "
-            + "Status of the ToDo will be overwritten as done.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unchecks the to-do identified as undone "
+            + "by the index number used in the last to-do listing. "
+            + "Status of the to-do will be overwritten as undone.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_UNCHECK_TODO_SUCCESS = "Unchecked ToDo: %1$s";
-    public static final String MESSAGE_NOT_UNCHECKED = "Unchecked ToDo failed.";
+    public static final String MESSAGE_UNCHECK_TODO_SUCCESS = "Unchecked to-do: %1$s";
+    public static final String MESSAGE_NOT_UNCHECKED = "Unchecked to-do failed.";
 
     private final Index index;
 
@@ -798,8 +798,8 @@ public class UnCheckToDoCommandParser implements Parser<UnCheckToDoCommand> {
     }
 
     @Override
-    public synchronized void addToDo(ToDo todo) throws DuplicateToDoException {
-        addressBook.addToDo(todo);
+    public synchronized void addToDo(ToDo toDo) throws DuplicateToDoException {
+        addressBook.addToDo(toDo);
         indicateAddressBookChanged();
     }
 
@@ -1360,8 +1360,8 @@ public class XmlAdaptedToDo {
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
-        todoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
-        todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
+        toDoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
+        toDoListPanelPlaceholder.getChildren().add(toDoListPanel.getRoot());
 
         progressIndicatorLabel = new Label(PROGRESS_INDICATOR_LABEL_NAME);
         progressIndicatorLabel.setStyle(PROGRESS_INDICATOR_LABEL_COLOR);
@@ -1405,13 +1405,13 @@ import javafx.scene.layout.Region;
 import seedu.address.model.todo.ToDo;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code ToDo}.
  */
 public class ToDoCard extends UiPart<Region> {
 
     private static final String FXML = "ToDoListCard.fxml";
 
-    public final ToDo todo;
+    public final ToDo toDo;
 
     @FXML
     private HBox cardPane;
@@ -1422,16 +1422,16 @@ public class ToDoCard extends UiPart<Region> {
     @FXML
     private Label id;
 
-    public ToDoCard(ToDo todo, int displayedIndex) {
+    public ToDoCard(ToDo toDo, int displayedIndex) {
         super(FXML);
-        this.todo = todo;
+        this.toDo = toDo;
         id.setText(displayedIndex + ". ");
-        content.setText(todo.getContent().value);
-        status.setText(todo.getStatus().value);
+        content.setText(toDo.getContent().value);
+        status.setText(toDo.getStatus().value);
     }
 
     public boolean isDone() {
-        return todo.getStatus().value.equals("done");
+        return toDo.getStatus().value.equals("done");
     }
 
     @Override
@@ -1449,7 +1449,7 @@ public class ToDoCard extends UiPart<Region> {
         // state check
         ToDoCard card = (ToDoCard) other;
         return id.getText().equals(card.id.getText())
-                && todo.equals(card.todo);
+                && toDo.equals(card.toDo);
     }
 }
 ```
@@ -1471,34 +1471,34 @@ import seedu.address.commons.events.ui.ToDoPanelSelectionChangedEvent;
 import seedu.address.model.todo.ToDo;
 
 /**
- * Panel containing the list of todos.
+ * Panel containing the list of to-dos.
  */
 public class ToDoListPanel extends UiPart<Region> {
     private static final String FXML = "ToDoListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(ToDoListPanel.class);
 
     @FXML
-    private ListView<ToDoCard> todoListView;
+    private ListView<ToDoCard> toDoListView;
 
-    public ToDoListPanel(ObservableList<ToDo> todoList) {
+    public ToDoListPanel(ObservableList<ToDo> toDoList) {
         super(FXML);
-        setConnections(todoList);
+        setConnections(toDoList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ToDo> todoList) {
+    private void setConnections(ObservableList<ToDo> toDoList) {
         ObservableList<ToDoCard> mappedList = EasyBind.map(
-                todoList, (todo) -> new ToDoCard(todo, todoList.indexOf(todo) + 1));
-        todoListView.setItems(mappedList);
-        todoListView.setCellFactory(listView -> new ToDoListViewCell());
+                toDoList, (toDo) -> new ToDoCard(toDo, toDoList.indexOf(toDo) + 1));
+        toDoListView.setItems(mappedList);
+        toDoListView.setCellFactory(listView -> new ToDoListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        todoListView.getSelectionModel().selectedItemProperty()
+        toDoListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in todo list panel changed to : '" + newValue + "'");
+                        logger.fine("Selection in to-do list panel changed to : '" + newValue + "'");
                         raise(new ToDoPanelSelectionChangedEvent(newValue));
                     }
                 });
@@ -1510,22 +1510,22 @@ public class ToDoListPanel extends UiPart<Region> {
     class ToDoListViewCell extends ListCell<ToDoCard> {
 
         @Override
-        protected void updateItem(ToDoCard todo, boolean empty) {
-            super.updateItem(todo, empty);
+        protected void updateItem(ToDoCard toDo, boolean empty) {
+            super.updateItem(toDo, empty);
 
-            if (empty || todo == null) {
+            if (empty || toDo == null) {
                 setGraphic(null);
                 setText(null);
                 return;
             }
 
             this.getStylesheets().clear();
-            if (todo.isDone()) {
+            if (toDo.isDone()) {
                 this.getStylesheets().add("view/ToDoDone.css");
             } else {
                 this.getStylesheets().add("view/ToDoUnDone.css");
             }
-            setGraphic(todo.getRoot());
+            setGraphic(toDo.getRoot());
         }
     }
 }
@@ -1598,7 +1598,7 @@ public class ToDoListPanel extends UiPart<Region> {
             <Font name="System Bold" size="16.0" />
         </font>
     </Label>
-    <ListView fx:id="todoListView" VBox.vgrow="ALWAYS" />
+    <ListView fx:id="toDoListView" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
 ###### \resources\view\ToDoUnDone.css

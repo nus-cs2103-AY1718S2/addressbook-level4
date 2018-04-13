@@ -1,4 +1,4 @@
-= HuatAh! v1.5rc - User Guide
+= HuatAh! v1.5 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -24,8 +24,7 @@ If you:
 * prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI),
 * can type fast and prefer a keyboard as your main input method,
 
-HuatAh! can get your operations management tasks done faster than traditional GUI apps. Interested? Jump to <<Quick Start>> to get
-started. Enjoy!
+HuatAh! can get your operations management tasks done faster than traditional GUI apps. Interested? Read on!
 
 == Quick Start
 
@@ -119,10 +118,6 @@ is specified when adding a customer.
 |kbd:[Ctrl+L]
 |`locate [SPECIFIER] KEYWORD [KEYWORD] ...`
 
-|<<redo, redo>> (`r`)
-|kbd:[Ctrl+Y]
-|`redo`
-
 |<<select, select>> (`s`)
 |kbd:[Ctrl+S]
 |`select INDEX`
@@ -130,6 +125,10 @@ is specified when adding a customer.
 |<<undo, undo>> (`u`)
 |kbd:[Ctrl+Z]
 |`undo`
+
+|<<redo, redo>> (`r`)
+|kbd:[Ctrl+Y]
+|`redo`
 
 |exit
 |kbd:[Alt+Q]
@@ -168,7 +167,7 @@ with the latest addition at the bottom.
 <<Command Summary, Back to Command Summary>>
 
 ***
-=== Showing command history : `history`, kbd:[F3] [[history]]
+=== Showing history of commands entered : `history`, kbd:[F3] [[history]]
 
 *Syntax:*
 ====
@@ -340,7 +339,7 @@ _Edits the phone number and email address of the first person to be `999` and `a
 ====
  edit 2 n: Kimmy Aunty t:
 
-_Edits the name of the second person to be `Kimmy Aunty` and clears all existing tags._
+_Edits the name of the second person to be `Kimmy Aunty` and clears all existing tags from that person._
 ====
 ***
 === Searching for relevant persons : `find`, kbd:[Ctrl+F] [since v1.1] [[find]]
@@ -354,7 +353,7 @@ _Edits the name of the second person to be `Kimmy Aunty` and clears all existing
 ====
 * This command searches for relevant persons with the specified information.
 * Name, phone, email, address and tags are searched by default (no `SPECIFIER` or `-all` `SPECIFIERS`)
-* `Customer` and `Runner` specific fields cannot be searched.
+* `Customer` and `Runner` specific fields cannot be searched in this version [coming in v2.0]
 * Only one `SPECIFIER` can be used at a time.
 * If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
 * Description of `SPECIFIERS`:
@@ -406,9 +405,9 @@ _Returns all persons with phone number "91234567"._
 
 [NOTE]
 ====
-* This command searches for relevant persons with the specified information.
-* Name, phone, email, address and tags are searched by default (no `SPECIFIER` or `-all` `SPECIFIERS`)
-* `Customer` and `Runner` specific fields cannot be searched.
+* This command searches for relevant persons with the specified information then displays the first relevant person's address on google maps.
+* Name, phone, email, address and tags are searched by when no `SPECIFIER` or the `-all` `SPECIFIER` is input)
+* `Customer` and `Runner` specific fields are not queried in this version [coming in v2.0]
 * Only one `SPECIFIER` can be used at a time.
 * If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
 * Description of `SPECIFIERS`:
@@ -417,7 +416,7 @@ _Returns all persons with phone number "91234567"._
 ** `-e` to search only emails.
 ** `-a` to search only addresses.
 ** `-t` to search only tags.
-* Alternatively, this command displays the given address and displays the person associated with that address in the PersonListPanel.
+
 ====
 
 *Usage examples:*
@@ -444,39 +443,6 @@ _Locates the address "Blk 30" on Google Maps and displays the person with that a
  locate -p 91234567
 
 _Locates any persons with phone number "91234567" and displays the address associated with the first result on Google Maps._
-====
-<<Command Summary, Back to Command Summary>>
-
-***
-=== Redoing the previously undone command : `redo`, kbd:[Ctrl+Y] [[redo]]
-
-*Syntax:*
-====
- redo
-====
-
-*Usage examples:*
-
-====
- delete 1
- undo (reverses the "delete 1" command)
- redo (reapplies the "delete 1" command)
-====
-
-====
- delete 1
- redo
-
-_The `redo` command fails as there are no `undo` commands executed previously._
-====
-
-====
- delete 1
- clear
- undo (reverses the "clear" command)
- undo (reverses the "delete 1" command)
- redo (reapplies the "delete 1" command)
- redo (reapplies the "clear" command)
 ====
 <<Command Summary, Back to Command Summary>>
 
@@ -550,18 +516,64 @@ _The `undo` command fails as there are no undoable commands executed previously.
 ====
 <<Command Summary, Back to Command Summary>>
 
-== Up and coming features [coming in v2.0]
+***
+=== Redoing the previously undone command : `redo`, kbd:[Ctrl+Y] [[redo]]
 
-* Adding multiple persons from an input file
-* Editing `Customer` and `Runner` specific fields.
-* Searching `Customer` and `Runner` specific fields.
-* Adding visitation history to `Customers`
-* Adding job history to `Runners`
-* Scheduling jobs for `Runners`
-* Changing status of jobs for `Runners`
-* Plotting a visitation route given a set of `Customers` and displaying it in Google Maps
-* Show countdown timers for `Customers`
-* Show a detailed summary and analytics page on application start
+*Syntax:*
+====
+ redo
+====
+
+*Usage examples:*
+
+====
+ delete 1
+ undo (reverses the "delete 1" command)
+ redo (reapplies the "delete 1" command)
+====
+
+====
+ delete 1
+ redo
+
+_The `redo` command fails as there are no `undo` commands executed previously._
+====
+
+====
+ delete 1
+ clear
+ undo (reverses the "clear" command)
+ undo (reverses the "delete 1" command)
+ redo (reapplies the "delete 1" command)
+ redo (reapplies the "clear" command)
+====
+<<Command Summary, Back to Command Summary>>
+
+***
+== Features coming in v2.0
+
+*Improvements to existing features:*
+
+* `Find` Command: Searching fields specific to Runners and Customers.
+* `Find` Command: ability to filter the currently displayed list further
+
+*Other New Features:*
+
+_Functional:_
+
+* `Unassign` customers from a runner
+* Add multiple persons by inputting a file
+* `Schedule` dates for runners to visit customers
+* Change the status of customers (whether they've paid or not)
+* Display countdown timers for Customers' due dates
+* `Sort` customers and runners by certain fields
+* More useful statistics on the home page
+
+_Cosmetic:_
+
+* Improvement of the UI to display one list of Customers and a separate list of Runners
+* Aesthetic improvements for the display of data
+* `Theme` command to choose and switch between UI theme/colours
 
 // tag::FAQ[]
 == FAQ

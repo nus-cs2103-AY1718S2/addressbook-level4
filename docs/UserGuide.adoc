@@ -79,56 +79,55 @@ is specified when adding a customer.
 |kbd:[F12]
 |`help`
 
-|home
+|<<home, home>>
 |kbd:[F1]
 |
 
-|list
+|<<list, list>>
 |kbd:[F2]
 |`list`
 
-|history (`h`)
+|<<history, history>> (`h`)
 |kbd:[F3]
 |`history`
 
-|add (`a`)
+|<<add, add>> (`a`)
 |kbd:[Ctrl+I]
 |`add n: NAME ty: r(or c) [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
 
-|assign (`as`)
+|<<assign, assign>> (`as`)
 |kbd:[Ctrl+Shift+A]
 |`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX ...]`
 
-|clear (`c`)
+|<<clear, clear>> (`c`)
 |kbd:[Ctrl+Shift+C]
 |`clear`
 
-|delete (`d`)
+|<<delete, delete>> (`d`)
 |kbd:[Ctrl+D]
 |`delete INDEX`
 
-|edit (`e`)
+|<<edit, edit>> (`e`)
 |kbd:[Ctrl+E]
 |`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
 
-|find (`f`)
+|<<find, find>> (`f`)
 |kbd:[Ctrl+F]
 |`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
-|locate (`l`)
+|<<locate, locate>> (`l`)
 |kbd:[Ctrl+L]
-|`locate INDEX` +
-`locate [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
+|`locate [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
 
-|redo (`r`)
+|<<redo, redo>> (`r`)
 |kbd:[Ctrl+Y]
 |`redo`
 
-|select (`s`)
+|<<select, select>> (`s`)
 |kbd:[Ctrl+S]
 |`select INDEX`
 
-|undo (`u`)
+|<<undo, undo>> (`u`)
 |kbd:[Ctrl+Z]
 |`undo`
 
@@ -147,9 +146,11 @@ is specified when adding a customer.
 * This command will list all the commands that you have previously entered in *reverse chronological order*.
 * Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+<<Command Summary, Back to Command Summary>>
+
 ***
 // tag::addcommand[]
-=== Adding a person: `add` [since v1.3]
+=== Adding a person: `add`, kbd:[Ctrl+I] [since v1.3] [[add]]
 
 [NOTE]
 ====
@@ -183,11 +184,13 @@ _Adds the same `Customer` as above, just with values specified in a different or
 _Adds a new `Runner` named "Ping An", with phone number "93698369", email address "pingan@houseofahlong.com",
 address "Ang Mo Kio Police Divison HQ" and tags "undercoverrunner" and "tripleagent"._
 ====
+<<Command Summary, Back to Command Summary>>
+
 ***
 // end::addcommand[]
 //@@author
 //@@author melvintzw
-=== Assigning one or more Customers to a Runner : `assign` [since v1.4]
+=== Assigning one or more Customers to a Runner : `assign`, kbd:[Ctrl+Shift+A] [since v1.4] [[assign]]
 
 [NOTE]
 ====
@@ -212,10 +215,14 @@ _Assigns the Customer associated with index `2` to the Runner associated with in
 
 _Assigns the Customers associated with indices `2`, `5`, `8` to the Runner associated with index `1` based on the last shown listing._
 ====
+<<Command Summary, Back to Command Summary>>
+
 ***
 //@@author
 //@@author jonleeyz
-=== Deleting a person : `delete`
+<<Command Summary, Back to Command Summary>>
+
+=== Deleting a person : `delete`, kbd:[Ctrl+D] [[delete]]
 
 [NOTE]
 ====
@@ -239,8 +246,10 @@ _Deletes the second person in the database._
 
 _Deletes the first person in the results of the `find` command._
 ====
+<<Command Summary, Back to Command Summary>>
+
 ***
-=== Editing a person : `edit` [since v1.3]
+=== Editing a person : `edit`, kbd:[Ctrl+E] [since v1.3] [[edit]]
 
 [NOTE]
 ====
@@ -267,7 +276,7 @@ _Edits the phone number and email address of the first person to be `999` and `a
 _Edits the name of the second person to be `Kimmy Aunty` and clears all existing tags._
 ====
 ***
-=== Searching for relevant persons : `find` [since v1.1]
+=== Searching for relevant persons : `find`, kbd:[Ctrl+F] [since v1.1] [[find]]
 
 [NOTE]
 ====
@@ -313,8 +322,10 @@ _Returns all persons with names, addresses or tags matching `Betsy`, `Tim`, or `
 
 _Returns all persons with phone number "91234567"._
 ====
+<<Command Summary, Back to Command Summary>>
+
 ***
-=== Displaying a person's address using Google Maps : `locate`
+=== Displaying a person's address using Google Maps : `locate`, kbd:[Ctrl+L] [[locate]]
 
 [NOTE]
 ====
@@ -357,8 +368,10 @@ _Locates the address "Blk 30" on Google Maps and displays the person with that a
 
 _Locates any persons with phone number "91234567" and displays the address associated with the first result on Google Maps._
 ====
+<<Command Summary, Back to Command Summary>>
+
 ***
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo`, kbd:[Ctrl+Y] [[redo]]
 
 *Usage examples:*
 
@@ -383,8 +396,10 @@ _The `redo` command fails as there are no `undo` commands executed previously._
  redo (reapplies the "delete 1" command)
  redo (reapplies the "clear" command)
 ====
+<<Command Summary, Back to Command Summary>>
+
 ***
-=== Selecting and displaying details about a person : `select` [since v1.4]
+=== Selecting and displaying details about a person : `select`, kbd:[Ctrl+S] [since v1.4] [[select]]
 
 [NOTE]
 ====
@@ -408,8 +423,10 @@ _Selects the second person in the database._
 
 _Selects the first person from the results of the `find` command._
 ====
+<<Command Summary, Back to Command Summary>>
+
 ***
-=== Undoing the last undoable command : `undo`
+=== Undoing the last undoable command : `undo`, kbd:[Ctrl+Z] [[undo]]
 
 [NOTE]
 ====
@@ -439,7 +456,8 @@ _The `undo` command fails as there are no undoable commands executed previously.
  undo (reverses the "clear" command)
  undo (reverses the "delete 1" command)
 ====
-***
+<<Command Summary, Back to Command Summary>>
+
 == Up and coming features [coming in v2.0]
 
 * Adding multiple persons from an input file

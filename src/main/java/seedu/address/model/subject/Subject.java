@@ -33,6 +33,9 @@ public class Subject {
     public static final String MESSAGE_SUBJECT_GRADE_CONSTRAINTS = "Subject grade should be alphanumeric and should be"
             + " one of the following: \n" + Arrays.deepToString(SUBJECT_GRADE) + ".";
 
+    public static final String MESSAGE_DUPLICATE_SUBJECT = "There should not be duplicate subject(s) assigned "
+            + "to student.";
+
     // Use for the calculation of the L1R5 subjects
     public static final String[] L1_SUBJECT = {"English", "HChi", "HTamil", "HMalay"};
     public static final String[] R1_SUBJECT = {"Hist", "Geog", "Com.Hum",  "ELit", "CLit", "MLit", "TLit", "HArt",

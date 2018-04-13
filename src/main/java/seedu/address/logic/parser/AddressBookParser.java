@@ -17,8 +17,8 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SignupCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UpdatePasswordCommand;
 import seedu.address.logic.commands.appointment.AddAppointmentCommand;
 import seedu.address.logic.commands.appointment.CalendarCommand;
 import seedu.address.logic.commands.appointment.DateCommand;
@@ -118,6 +118,9 @@ public class AddressBookParser {
         case LogoutCommand.COMMAND_WORD:
             return new LogoutCommand();
 
+        case UpdatePasswordCommand.COMMAND_WORD:
+            return new UpdatePasswordCommandParser().parse(arguments);
+
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
@@ -141,9 +144,6 @@ public class AddressBookParser {
 
         case GoogleLoginCommand.COMMAND_WORD:
             return new GoogleLoginCommand();
-
-        case SignupCommand.COMMAND_WORD:
-            return new SignupCommandParser().parse(arguments);
 
         case CalendarCommand.COMMAND_WORD:
             return new CalendarCommand();

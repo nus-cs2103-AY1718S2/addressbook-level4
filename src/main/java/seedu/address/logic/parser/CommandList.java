@@ -12,8 +12,8 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SignupCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UpdatePasswordCommand;
 import seedu.address.logic.commands.appointment.AddAppointmentCommand;
 import seedu.address.logic.commands.appointment.CalendarCommand;
 import seedu.address.logic.commands.appointment.DateCommand;
@@ -74,12 +74,12 @@ public class CommandList {
         commandList.add(JobMatchCommand.COMMAND_WORD);
         commandList.add(RedoCommand.COMMAND_WORD);
         commandList.add(SelectCommand.COMMAND_WORD);
-        commandList.add(SignupCommand.COMMAND_WORD);
         commandList.add(UndoCommand.COMMAND_WORD);
         commandList.add(MonthCommand.COMMAND_WORD);
         commandList.add(RedoCommand.COMMAND_WORD);
         commandList.add(SelectCommand.COMMAND_WORD);
         commandList.add(UndoCommand.COMMAND_WORD);
+        commandList.add(UpdatePasswordCommand.COMMAND_WORD);
         commandList.add(WeekCommand.COMMAND_WORD);
         commandList.add(YearCommand.COMMAND_WORD);
 
@@ -114,7 +114,9 @@ public class CommandList {
             return JobFindCommand.COMMAND_SYNTAX;
 
         case AddAppointmentCommand.COMMAND_WORD:
-            return AddAppointmentCommand.COMMAND_SYNTAX;
+
+        case UpdatePasswordCommand.COMMAND_WORD:
+            return UpdatePasswordCommand.COMMAND_SYNTAX;
 
         case EmailCommand.COMMAND_WORD:
             return EmailCommand.COMMAND_SYNTAX;

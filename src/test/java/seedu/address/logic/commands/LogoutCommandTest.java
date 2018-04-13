@@ -26,11 +26,7 @@ public class LogoutCommandTest {
     @Before
     public void setUp() throws Exception {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        SignupCommand command = new SignupCommand("John", "123");
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        command.execute();
-
-        LoginCommand login = new LoginCommand("John", "123");
+        LoginCommand login = new LoginCommand("Admin", "ad123");
         login.setData(model, new CommandHistory(), new UndoRedoStack());
         login.execute();
     }

@@ -151,6 +151,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateUsername(String username) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updatePassword(String password1, String password2) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteSkill(Skill t)
                 throws PersonNotFoundException, DuplicatePersonException, UniqueSkillList.DuplicateSkillException {
             fail("This method should not be called.");
@@ -207,11 +217,6 @@ public class AddCommandTest {
 
         @Override
         public void logout() {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void register(String username, String password) {
             fail("This method should not be called.");
         }
 

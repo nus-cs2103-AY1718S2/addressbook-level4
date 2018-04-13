@@ -17,8 +17,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-public class LoginCommandTest {
-
+public class UpdatePasswordCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -26,52 +25,40 @@ public class LoginCommandTest {
     private String username = "Admin";
     private String password = "ad123";
 
+
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        LoginCommand command = new LoginCommand(username, password);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.execute();
     }
+
 
     @Test
     public void constructor_nullValues_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new LoginCommand(null, password);
-        new LoginCommand(username, null);
+        new UpdatePasswordCommand(null, "123");
+        new UpdatePasswordCommand(password, null);
     }
 
     @Test
-    public void execute_loginSuccessful() throws Exception {
-        CommandResult commandResult = getLoginCommand(username, password, model).execute();
-        assertEquals(String.format(LoginCommand.MESSAGE_SUCCESS, username),
+    public void execute_updateSuccessful() throws Exception {
+        CommandResult commandResult = getUpdatePasswordCommand(password, "as12", model).execute();
+        assertEquals(String.format(UpdatePasswordCommand.MESSAGE_SUCCESS, password),
                 commandResult.feedbackToUser);
-    }
-
-    @Test
-    public void execute_invalidUsername_throwsCommandException() throws Exception {
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(Messages.MESSAGE_INVALID_USERNAME);
-        LoginCommand command = getLoginCommand("Jane", password, model);
-        command.execute();
     }
 
     @Test
     public void execute_invalidPassword_throwsCommandException() throws Exception {
         thrown.expect(CommandException.class);
         thrown.expectMessage(Messages.MESSAGE_INVALID_PASSWORD);
-        LoginCommand command = getLoginCommand(username, "43546", model);
+        UpdatePasswordCommand command = getUpdatePasswordCommand("asd", "4de546", model);
         command.execute();
     }
 
-    @Test
-    public void execute_multipleLogin_throwsCommandException() throws Exception {
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(LoginCommand.MESSAGE_MULTIPLE_LOGIN);
-        LoginCommand command = getLoginCommand(username, password, model);
-        command.execute();
-        command.execute();
-    }
-
-    public LoginCommand getLoginCommand(String username, String password, Model model) {
-        LoginCommand command = new LoginCommand(username, password);
+    public UpdatePasswordCommand getUpdatePasswordCommand(String oldPassword, String newPassword, Model model) {
+        UpdatePasswordCommand command = new UpdatePasswordCommand(oldPassword, newPassword);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

@@ -5,16 +5,15 @@ package seedu.address.model;
  * Represents a user account.
  */
 public final class Account {
-    private String username = "JohnDoe";
-    private String password = "12345";
+    private static final String DEFAULT_USERNAME = "Admin";
+    private static final String DEFAULT_PASSWORD = "ad123";
 
-    /**
-     * @param username should not be null
-     * @param password should not be null
-     */
-    public Account(String username, String password) {
-        this.username = username;
-        this.password = password;
+    private String username;
+    private String password;
+
+    public Account() {
+        this.username = DEFAULT_USERNAME;
+        this.password = DEFAULT_PASSWORD;
     }
 
     public String getUsername() {
@@ -37,6 +36,10 @@ public final class Account {
      */
     public void updatePassword(String newPassword) {
         password = newPassword;
+    }
+
+    public void resetPassword() {
+        password = DEFAULT_PASSWORD;
     }
 
     @Override

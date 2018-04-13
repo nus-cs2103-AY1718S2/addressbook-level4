@@ -62,7 +62,7 @@ public class CommandTestUtil {
     public static final String VALID_SKILL_HUSBAND = "husband";
     public static final String VALID_SKILL_FRIEND = "friend";
     public static final String VALID_USERNAME_USER = "John";
-    public static final String VALID_PASSWORD_USER = "1234";
+    public static final String VALID_PASSWORD_USER = "doe123";
     public static final String VALID_POSITION_DEVELOPER_INTERN = "Developer Intern";
     public static final String VALID_POSITION_INTERN = "Intern";
     public static final String VALID_TEAM_DEVELOPER_INTERN = "Web Development";

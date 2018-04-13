@@ -20,7 +20,6 @@ import seedu.address.commons.events.ui.ReloadCalendarEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.exception.DuplicateUsernameException;
 import seedu.address.model.exception.InvalidPasswordException;
 import seedu.address.model.exception.InvalidUsernameException;
 import seedu.address.model.exception.MultipleLoginException;
@@ -142,11 +141,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author Jason1im
-    @Override
-    public ReadOnlyAccountsManager getAccountsManager() {
-        return accountsManager;
-    }
-
     /**
      * Logs the user into the system.
      * @throws InvalidUsernameException
@@ -181,8 +175,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void register(String username, String password) throws DuplicateUsernameException {
-        accountsManager.register(username, password);
+    public void updateUsername(String oldUsername) throws InvalidUsernameException {
+        accountsManager.updateUsername(oldUsername);
+    }
+
+    @Override
+    public void updatePassword(String oldPassword, String newPassword)
+        throws InvalidPasswordException {
+        accountsManager.updatePassword(oldPassword, newPassword);
     }
 
     private void setUser(Account account) {

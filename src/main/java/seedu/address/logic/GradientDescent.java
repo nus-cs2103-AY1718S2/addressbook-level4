@@ -129,8 +129,8 @@ public class GradientDescent {
             //loop through each row
 
             Double outcome = this.predict(matrix.get(i));
-            Double percentError = Math.abs((outcome - targets.get(i) / normalizationConstant.get(0)) / targets.get(i));
-            average += percentError;
+            Double error = Math.abs((outcome - targets.get(i)) / targets.get(i));
+            average += (1 - error);
         }
 
         return average / targets.size();

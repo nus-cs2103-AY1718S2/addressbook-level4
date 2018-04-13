@@ -443,6 +443,7 @@ More command and features relating to PetPatient List are to be properly develop
 ==== Future Work
 Implement the corresponding Add, Delete, List commands for petPatients and decide on the tags to be used for petPatients.
 
+// tag::calendar[]
 === Show Appointments on calendar
 ==== Current Implementation
 
@@ -471,6 +472,7 @@ Only the UI of CalendarFX is integrated to show calendar view.
 After the appointment class being finished, we'll be able to implement `setAppointment` function in CalendarFX, the user will then be able to see future appointments in either All-day/weekly/monthly/yearly view.
 
 We may also make enhancements to the Medeina's UI such as changing theme colour to match the UI colour of CalendarFX.
+// end::calendar[]
 
 === Improvements to Command Syntax
 ==== Current Implementation

@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
@@ -120,7 +122,7 @@ class NotificationCenterStub extends NotificationCenter {
     }
 
     public void add(NotificationCardStub newNotificationCard) {
-      notificationCardCopy.add(newNotificationCard);
+        notificationCardCopy.add(newNotificationCard);
     }
 
     @Override
@@ -210,6 +212,9 @@ class EmailCommandStub {
         this.model = model;
     }
 
+    /**
+     * Mimics the behavior of preprocessUndoableCommand() in EmailCommand
+     */
     public void preprocessUndoableCommand() throws CommandException {
         if (targetIndex.getZeroBased() >= model.getNotificationCenter().getTotalUndismmissedNotificationCards() - 1) {
             throw new CommandException(Messages.MESSAGE_INVALID_NOTIFICATION_CARD_INDEX);
@@ -219,6 +224,8 @@ class EmailCommandStub {
         owner = model.getAddressBook().findPersonById(Integer.parseInt(ownerId));
     }
 
-    public Person getPerson() { return owner;}
+    public Person getPerson() {
+        return owner;
+    }
 }
 

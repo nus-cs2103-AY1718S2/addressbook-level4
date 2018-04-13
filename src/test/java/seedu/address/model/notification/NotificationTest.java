@@ -7,7 +7,7 @@ import org.junit.Test;
 import seedu.address.model.person.Person;
 
 public class NotificationTest {
-    private String SAMPLE_STRING = "123";
+    private static final String SAMPLE_STRING = "123";
 
     @Test
     public void notification_nullTitle_fail() {
@@ -79,7 +79,8 @@ public class NotificationTest {
     @Test
     public void notification_allParameterNonNull_success() {
         try {
-            Notification n = new Notification(SAMPLE_STRING, SAMPLE_STRING, SAMPLE_STRING, SAMPLE_STRING, SAMPLE_STRING);
+            Notification n = new Notification(SAMPLE_STRING, SAMPLE_STRING, SAMPLE_STRING, SAMPLE_STRING,
+                    SAMPLE_STRING);
         } catch (Error e) {
             assertTrue(false);
             return;

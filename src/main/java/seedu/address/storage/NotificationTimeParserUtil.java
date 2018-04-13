@@ -39,7 +39,7 @@ public class NotificationTimeParserUtil {
         int firstIntegerOffset = findFirstIntegerOffset(input);
         assert(firstIntegerOffset != -1 && SECOND_END_INDEX + firstIntegerOffset <= input.length());
         try {
-             NotificationTime tet = new NotificationTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX
+            NotificationTime tet = new NotificationTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX
                             + firstIntegerOffset,
                     YEAR_END_INDEX + firstIntegerOffset)),
                     Integer.parseInt(input.substring(MONTH_BEGIN_INDEX + firstIntegerOffset, MONTH_END_INDEX

@@ -567,28 +567,28 @@ You must first be logged out to log in
 
 . Type `login` in the command box. We will use the `schedule` screen, but it will work from any screen.
 +
-.Type `login` into the command box
+.Type `login` into the command box (Codeducator window)
 image::loginStep1.png[width="790"]
 +
 . Execute the command using kbd:[enter].
 . Your default browser will redirect to Google's login screen. Follow the OAuth2 procedure by typing your Google username and password into the login screen.
 +
-.Google's login screen
+.Google's login screen (Your browser window)
 image::loginStep3.png[width="790"]
 +
 . After logging in, you will see this window. Authorise Codeducator by clicking "Allow"
 +
-.Google's OAuth/authentication window
+.Google's OAuth/authentication window (Your browser window)
 image::loginStep4.png[width="790"]
 +
 . If you have successfully logged in. Your browser will display this message as a sign of login success.
 +
-.Google's login success message
+.Google's login success message (Your browser window)
 image::loginStep5.png[width="790"]
 +
 . Open the Codeducator window again. You will see that the message displays that you are logged in
 +
-.Codeducator's login success message
+.Codeducator's login success message (Codeducator window)
 image::loginStep6.png[width="790"]
 +
 
@@ -597,9 +597,9 @@ You are now ready to sync your account! +
 [NOTE]
 ====
 . There is a *45 second timeout* for the login process. If you do not login successfully (due to closing the window unexpectedly or poor network connection), the login process will timeout.
-. Authorising Codeducator is important! Denying access will stop Codeducator for accessing your account.
-. If you have already logged in before without logging out, you may skip the login process by just typing in `login`
-. If you do not successfully login , do not fret! Just repeat the steps to login again.
+. Authorising Codeducator is important! Denying access will stop Codeducator from uploading data to your account.
+. If you have already logged in before without logging out, you may skip the Google login process by just simply typing in `login`.
+. If you do not successfully login , do wory! Just repeat the steps to login again.
 ====
 
 ==== Syncing data with your Google Account
@@ -607,14 +607,46 @@ You are now ready to sync your account! +
 Updates both Google Contacts and Google Calendar with Addressbook and Schedule. Deletes the old data that Codeducator
 has uploaded previously, and uploads the updated data, correct as of time of entering the `sync` command. +
 
+Google Contacts will create a new Contact Label group called "Students". Contacts from your Codeducator app will be uploaded here.
+Your Student's Name, Phone Number and Address will be uploaded. +
+
+Google Calendar will create a Calendar group called "Student Lessons". Lessons from your Calendar will be uploaded here.
+The name of the event will be "Lesson with <Student>", using the Start and End times of the Lesson, location will be using the address associated with the Student.
+The Calendar will only start syncing from the *first Lesson occurring after the current day* that you perform the sync. +
+
 [NOTE]
-You must first be logged in to sync your data
+====
+If you have synced before, future syncs will +
+
+.. Look for "Students" label in Google Contacts and delete contacts in those groups before reuploading your Student data
+.. Look for "Student Lessons" calendar and delete the events in that Calendar before reuploading your Schedule data.
+====
+
+Currently, Google Calendar will create a recurring weekly event per lesson, repeated over 4 weeks. If you have no edits to your Schedule within the month, do a sync at the end of the month to refresh your Calendar data.
+
+
+[WARNING]
+====
+. You must first be logged in to sync your data
+. Do not change the name of the Students label. Codeducator will not be able to delete those contacts in future syncs.
+. Likewise, do not change the name of the Calendar "Student Lessons" as it will be similarly used for future syncs
+====
 
 Format: `sync`
 
 ===== Steps Taken
 
 . Ensure that you have logged in to your account. See <<Logging in to your Google Account>>
+.. Example Google Calendar and Contacts, account, I'll be starting with empty Google Contacts and Calendar
++
+.What my Google Contacts and Calendar look like before the sync
+image::syncStep00.png[width="790]
++
+. View the schedule that you want to sync. See <<Viewing your schedule : `schedule`>>
++
+.We will be using this example schedule
+image::syncStep0.png[width="790]
++
 . Type `sync` in the command box. Press kbd:[enter] to execute
 +
 .Type `sync` into the command box
@@ -623,13 +655,16 @@ image::syncStep1.png[width="790"]
 . Codeducator will now try to upload the current data. If you had previously used `sync`,
 Codeducator will delete the old data in you Google Contacts and Calendar
 +
-.Viewing your contacts list in link:{calendarURL}[calendar.google.com]
+.Viewing your schedule in Week and Month View in link:{calendarURL}[calendar.google.com]. Note the new Calendar "Student Lessons"
 image::syncResult1.png[width="790"]
 +
-.Viewing your schedule in link:{contactsURL}[contacts.google.com]
+.Viewing your contacts list in Google Contacts in link:{contactsURL}[contacts.google.com]. Note the new Label "Students"
 image::syncResult2.png[width="790"]
 +
-. Congrats, your data has been synchronised! You are free to use them across your devices
+.You will see this message if you successfully synced your account!
+image::syncResult3.png[width="790"]
++
+. Congrats, your data has been synchronised! You are free to use them across your devices in anyway that Google Contacts and Calendar supports!
 
 [NOTE]
 =====
@@ -641,7 +676,7 @@ If you have many contacts or lessons, it will take some time to synchronise your
 For security purposes, Codeducator allows you to logs out of your Google Account. Codeducator will ecurely delete the OAuth2 credential stored in the App. +
 
 [NOTE]
-You must first be logged in to log out
+You must first be logged in to log out.
 
 Format: `logout`
 

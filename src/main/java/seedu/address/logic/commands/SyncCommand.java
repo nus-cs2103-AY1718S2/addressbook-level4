@@ -21,7 +21,8 @@ public class SyncCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Google Contacts and Calendar synced!";
     public static final String MESSAGE_FAILED_SYNC = "Failed to sync!";
     public static final String MESSAGE_GOOGLE_SERVICE_ISSUE = "There was a problem with the Google Service. Try again!";
-    public static final String MESSAGE_NOT_LOGGED_IN = "You are not logged in!";
+    public static final String MESSAGE_NOT_LOGGED_IN = "You are not logged in!\n" +
+            "Or your credentials have expired, logout and re-login to sync";
 
     public SyncCommand() {}
 

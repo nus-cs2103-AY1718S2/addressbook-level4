@@ -39,11 +39,10 @@ public class AddSubjectCommand extends UndoableCommand {
             + "[" + PREFIX_SUBJECT + "SUBJECT SUBJECT_GRADE...]...\n"
             + "Example: " + COMMAND_WORD + " 1 sub/Jap A1";
 
-    public static final String MESSAGE_ADD_SUBJECT_SUCCESS = "Edited Person: %1$s";
-    public static final String MESSAGE_NEW_SUBJECTS = ". Updated Subjects: %1$s";
+    public static final String MESSAGE_ADD_SUBJECT_SUCCESS = "Edited Person: ";
+    public static final String MESSAGE_NEW_SUBJECTS = ". Updated Subjects: ";
     public static final String MESSAGE_NOT_EDITED = "At least one field to add must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    private static boolean isReplaced;
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -76,10 +75,6 @@ public class AddSubjectCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        if (!isReplaced) {
-            return new CommandResult(result.append(MESSAGE_ADD_SUBJECT_SUCCESS).append(editedPerson.getName())
-                    .append("No new subjects added.").toString());
-        }
         return new CommandResult(result.append(MESSAGE_ADD_SUBJECT_SUCCESS).append(editedPerson.getName())
                 .append(MESSAGE_NEW_SUBJECTS).append(editedPerson.getSubjects()).toString());
     }
@@ -109,9 +104,6 @@ public class AddSubjectCommand extends UndoableCommand {
         Set<Subject> updatedSubjects = new HashSet<>(personToEdit.getSubjects());
         Set<Subject> newSubjects = new HashSet<>(editPersonDescriptor.getSubjectsAsSet());
         checkIfSubjectExist(newSubjects, updatedSubjects);
-        if (updatedSubjects.equals(personToEdit.getSubjects())) {
-            isReplaced = true;
-        }
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
@@ -131,12 +123,12 @@ public class AddSubjectCommand extends UndoableCommand {
             for (Subject sub : subjectList) {
                 if (subToAdd.subjectName.equals(sub.subjectName)) {
                     isPresent = true;
-                    break;
                 }
             }
             if (!isPresent) {
                 subjectList.add(subToAdd);
             }
+            isPresent = false;
         }
     }
 

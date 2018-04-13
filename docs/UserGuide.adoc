@@ -152,6 +152,11 @@ is specified when adding a customer.
 // tag::addcommand[]
 === Adding a person: `add`, kbd:[Ctrl+I] [since v1.3] [[add]]
 
+*[.underline]#Syntax:#*
+====
+ add n: NAME ty: r(or c) [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...
+====
+
 [NOTE]
 ====
 * This command adds a new `Customer` or `Runner` with the specified details.
@@ -192,6 +197,11 @@ address "Ang Mo Kio Police Divison HQ" and tags "undercoverrunner" and "tripleag
 //@@author melvintzw
 === Assigning one or more Customers to a Runner : `assign`, kbd:[Ctrl+Shift+A] [since v1.4] [[assign]]
 
+*[.underline]#Syntax:#*
+====
+ assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX …​]
+====
+
 [NOTE]
 ====
 * This command assigns one or more `Customers` to a `Runner` according to a specified `RUNNER-INDEX`
@@ -222,7 +232,13 @@ _Assigns the Customers associated with indices `2`, `5`, `8` to the Runner assoc
 //@@author jonleeyz
 <<Command Summary, Back to Command Summary>>
 
+***
 === Deleting a person : `delete`, kbd:[Ctrl+D] [[delete]]
+
+*[.underline]#Syntax:#*
+====
+ delete INDEX
+====
 
 [NOTE]
 ====
@@ -251,6 +267,11 @@ _Deletes the first person in the results of the `find` command._
 ***
 === Editing a person : `edit`, kbd:[Ctrl+E] [since v1.3] [[edit]]
 
+*[.underline]#Syntax:#*
+====
+ edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] …
+====
+
 [NOTE]
 ====
 * This command edits the person associated with the specified `INDEX`.
@@ -277,6 +298,11 @@ _Edits the name of the second person to be `Kimmy Aunty` and clears all existing
 ====
 ***
 === Searching for relevant persons : `find`, kbd:[Ctrl+F] [since v1.1] [[find]]
+
+*[.underline]#Syntax:#*
+====
+ find [SPECIFIER] KEYWORD [MORE_KEYWORDS]
+====
 
 [NOTE]
 ====
@@ -327,6 +353,11 @@ _Returns all persons with phone number "91234567"._
 ***
 === Displaying a person's address using Google Maps : `locate`, kbd:[Ctrl+L] [[locate]]
 
+*[.underline]#Syntax:#*
+====
+ locate [SPECIFIER] KEYWORD [MORE_KEYWORDS]
+====
+
 [NOTE]
 ====
 * This command searches for relevant persons with the specified information.
@@ -373,6 +404,11 @@ _Locates any persons with phone number "91234567" and displays the address assoc
 ***
 === Redoing the previously undone command : `redo`, kbd:[Ctrl+Y] [[redo]]
 
+*[.underline]#Syntax:#*
+====
+ redo
+====
+
 *[.underline]#Usage examples:#*
 
 ====
@@ -401,6 +437,11 @@ _The `redo` command fails as there are no `undo` commands executed previously._
 ***
 === Selecting and displaying details about a person : `select`, kbd:[Ctrl+S] [since v1.4] [[select]]
 
+*[.underline]#Syntax:#*
+====
+ select INDEX
+====
+
 [NOTE]
 ====
 * This command selects and displays details about the person associated with the specified `INDEX`.
@@ -427,6 +468,11 @@ _Selects the first person from the results of the `find` command._
 
 ***
 === Undoing the last undoable command : `undo`, kbd:[Ctrl+Z] [[undo]]
+
+*[.underline]#Syntax:#*
+====
+ undo
+====
 
 [NOTE]
 ====

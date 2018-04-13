@@ -64,12 +64,15 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    /**
+     * Method to decrypt file
+     */
     private void decryptFile() {
         try {
             UserPrefs userPrefs = new UserPrefs();
             File file = new File(userPrefs.getAddressBookFilePath());
             EncryptionUtil.decrypt(file);
-        } catch(IOException ioe) {
+        } catch (IOException ioe) {
             logger.warning("File not found" + ioe.getMessage());
         }
     }

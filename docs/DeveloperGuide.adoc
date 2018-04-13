@@ -1224,3 +1224,15 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+=== Adding a lesson
+
+. Adding a lesson while all students are listed
+.. Prerequisites: List all students using the `list` command. Multiple students in the list. Your current schedule would preferably have no lessons starting before 7am or ending after 10pm.
+.. Test case: `addLesson 1 d/mon st/10:00 et/12:00` +
+   Expected: a lesson will be added for student at index 1, starting at 10:00am, ending at 12:00pm
+.. Test case (Maximum range): `addLesson 1 d/wed st/00:00 et/23:59` +
+   Expected: a lesson will be added for student at index 1, starting at 00:00pm, ending at 23:59pm (whole day).
+   The schedule should resize to show the lesson in the whole day.
+
+. Adding a lesson for a student not

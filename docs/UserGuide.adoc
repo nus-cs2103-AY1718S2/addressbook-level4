@@ -24,7 +24,6 @@ More importantly, it is optimized for those who prefer to work with a Command Li
 
 If you can type fast, ContactSails can get your sales management related tasks done faster than traditional GUI apps.
 
-
 == Quick Start
 
 Before you start, ensure you have Java version `1.8.0_60` or later installed in your computer.
@@ -45,12 +44,12 @@ image::ContactSails_Interface_StartUp.PNG[width="790" align="center"]
 +
 .  Type a command in the command box (located right below Menu Bar) and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+*  Some example commands you can try:
 
-* `list` : lists all contacts
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* `delete 3` : deletes the 3rd contact shown in the current list
-* `exit` : exits the app
+** `list` : lists all contacts
+** `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+** `delete 3` : deletes the 3rd contact shown in the current list
+** `exit` : exits the app
 
 .  Refer to <<Features>> for details of each command.
 
@@ -89,11 +88,10 @@ Here are some guidelines you will have to take note of to execute commands in Co
 ** For example, in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 . Items in square brackets are optional.
 ** For example, `n/NAME [g/GROUP]` can be used as `n/John Doe g/friend` or simply as `n/John Doe`.
-. Items with `...`​ after them can be used multiple times. They can be omitted as well i.e. used 0 times.
+. Items with `...` after them can be used multiple times. They can be omitted as well i.e. used 0 times.
 ** For example, `[g/GROUP]...` can be used as `'{nbsp}'` (i.e. 0 times), as `g/friend`, or  as `g/friend g/family`, etc.
 . Parameters can be in any order.
 ** For example, if the command format specifies `n/NAME p/PHONE_NUMBER`, entering `p/PHONE_NUMBER n/NAME` instead will also be acceptable.
-
 
 [TIP]
 ContactSails will automatically complete the command you want to enter if you press the kbd:[Tab] key. +
@@ -105,8 +103,7 @@ For example, typing `ad` in the command box and then pressing kbd:[Tab] will aut
 This section describes each command in ContactSails in detail.
 
 === Viewing help : `help`
-
-Description: Opens User Guide in a new window. +
+Description: Opens the User Guide in a new window. +
 
 ****
 Format: `help` +
@@ -491,20 +488,25 @@ Format: `orderlist` +
 
 Command Alias: `ol`
 
-=== Viewing Calendar
+// tag::calendarandentries[]
+=== Viewing the Calendar
 
 This section describes commands related to viewing the calendar in ContactSails.
-Given below is how the Calendar in ContactSails look like.
+The calendar is displayed at the CenterPanel of the interface when you enter any of the commands in this section.
+Figure 3 below shows how the calendar looks like.
 
 [.text-center]
 .ContactSails interface with Calendar and Calendar Entries displayed.
 image::ContactSails_Ui_Calendar.PNG[width="790" align="center"]
 
-The calendar has a day view, week view and month view to help you view all your scheduled events.
+In Figure 3, the calendar is set to Day-view, hence it displays all calendar entries that occur in the displayed date (11 April 2018, Wednesday).
+In the calendar, calendar entries appears as colored blocks, such as the green block in Figure 3, indicating the title and starting time of the entry.
+You can change the viewing format of the calendar using `calendar` command to switch to either of the 3 views; Day-view, Week-view and Month-view.
+To change the displayed date, you can enter `calendarjump` command to view your desired date.
 
 ==== Displaying the calendar : `calendar` `since v1.3`
 
-Description: Displays the Calendar in the CenterPanel in specified viewing format. +
+Description: Displays the calendar in the Center Panel in specified viewing format. +
 
 ****
 Format: `calendar [VIEW_FORMAT]` +
@@ -513,21 +515,22 @@ Format: `calendar [VIEW_FORMAT]` +
 Command Alias: `cal`
 
 ****
-* Calendar has 3 views; Day, Week, and Month.
+* Calendar can be set to display 1 of the 3 views; Day, Week, and Month.
 * `VIEW_FORMAT` only accepts the keywords, `day`, `week` and `month` to display the calendar in the respective format.
-* Calendar shows current day by default if no parameters are entered or invalid parameters are entered.
-* Calendar will display all incoming entries within timeframe of the specified view.
+* Calendar is set to Day-view by default if no parameters are entered or invalid parameters are entered.
+* Calendar will display all entries within timeframe of the specified view.
 ****
 
-Examples:
+Example:
 
-* `calendar` OR +
-`cal` +
-Shows Calendar in Day-View.
+To set display of calendar to Month-view, execute the following command:
 
 * `calendar month` OR +
 `cal month` +
-Shows Calendar in Month-View.
+Shows calendar in Month-view as seen in the figure below.
+
+.Calendar set to Month-view
+image::Calendar_Month_View.png[width]
 
 ==== Go to next page in the calendar : `calendarnext` `since v1.5rc`
 
@@ -540,9 +543,10 @@ Format: `calendarnext` +
 Command Alias: `calnext`
 
 ****
-* If calendar is displaying in day-view, command displays the next day of original date in day-view.
-* If calendar is displaying in week-view, command displays the next week of original date in week-view.
-* If calendar is displaying in month-view, command displays next month of original date in month-view.
+* The command has the same effect as pressing the kbd:[&rarr;] button at the top left corner of the calendar.
+* If calendar is displaying in Day-view, command displays the next day of original date in Day-view.
+* If calendar is displaying in Week-view, command displays the next week of original date in Week-view.
+* If calendar is displaying in Month-view, command displays next month of original date in Month-view.
 ****
 
 ==== Go to previous page in the calendar : `calendarback` `since v1.5rc`
@@ -556,14 +560,15 @@ Format: `calendarback` +
 Command Alias: `calback`
 
 ****
-* If calendar is displaying in day-view, command displays the previous day of original date in day-view.
-* If calendar is displaying in week-view, command displays the previous week of original date in week-view.
-* If calendar is displaying in month-view, command displays previous month of original date in month-view.
+* The command has the same effect as pressing the kbd:[Left] button at the top left corner of the calendar.
+* If calendar is displaying in Day-view, command displays the previous day of original date in Day-view.
+* If calendar is displaying in Week-view, command displays the previous week of original date in Week-view.
+* If calendar is displaying in Month-view, command displays previous month of original date in Month-view.
 ****
 
 ==== Display current day in the calendar : `calendartoday` `since v1.5rc`
 
-Description: Displays today's date in Calendar. +
+Description: Displays today's date in the calendar. +
 
 ****
 Format: `calendartoday` +
@@ -572,14 +577,15 @@ Format: `calendartoday` +
 Command Alias: `caltoday`
 
 ****
-* If calendar is displaying in day-view, command displays today's date in day-view.
-* If calendar is displaying in week-view, command displays the current week of today in week-view.
-* If calendar is displaying in month-view, command displays current month of today in month-view.
+* The command has the same effect as pressing the kbd:[today] button at the top left corner of the calendar.
+* If calendar is displaying in Day-view, command displays today's date in Day-view.
+* If calendar is displaying in Week-view, command displays the current week of today in Week-view.
+* If calendar is displaying in Month-view, command displays current month of today in Month-view.
 ****
 
 ==== Display given date in the calendar : `calendarjump` `since v1.5`
 
-Description: Displays given date in Calendar. +
+Description: Displays the given date in calendar. +
 
 ****
 Format: `calendarjump td/TARGET_DATE` +
@@ -597,45 +603,53 @@ Command Alias: `caljump`
 === Managing Calendar Entries
 
 This section describes commands you can use to manage calendar entries in ContactSails.
-You can use calendar entries to represent events, deadlines or meetings.
-These entries will be displayed in the calendar.
+You can use calendar entries to represent events, deadlines or meetings. +
+
+A calendar entry has a title, start date, end date, start time and end time.
+These entries will be displayed in the calendar in the Center Panel and calendar entry list in the Right Panel.
+Figure 5 below shows how a calendar entry appears in the calendar entry list.
+
+.Calendar Entry Description
+image::Calendar_Entry_Card.png[width]
+
+In Figure 5, calendar entry has an index of 1, indicating its position in the list.
+Beside the index is the title of the calendar entry (Meet Aaron).
+The description indicates the entry's starting date (11-04-2018) and ending date (11-04-2018).
+The last sentence indicates the starting time (14:00) and ending time. (17:00) of the entry.
+
 
 ==== Adding entries to calendar entry list : `entryadd` `since v1.3`
 
-Description: Adds an entry to the Calendar entry list and displays it in the calendar. +
+Description: Adds an entry to the calendar entry list and displays it in the calendar. +
 
 ****
-Format: `entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
+Format: `entryadd t/ENTRY_TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` +
 ****
 
 Command Alias: `ea` +
 
 ****
+* `ENTRY_TITLE` must be alphanumeric, but whitespaces are allowed in between words.
 * If input does not contain `START_DATE`, it is assumed that `START DATE` is the same as `END_DATE`.
 * If input does not contain `START_TIME`, it is assumed that `START_TIME` is 00:00.
 * `TITLE` is alphanumeric and accepts white space. `TITLE` accepts maximum of 40 characters.
 * `START_DATE` and `END_DATE` must follow the format: DD-MM-YYYY (E.g. 04-04-2020 represents 4 April 2020)
 * `START_TIME` and `END_TIME` must follow the 24-Hour format: HH:MM (E.g. 23:59)
-*
+* Duration of an entry must be at least 15 minutes.
 ****
 
-Examples:
+Example:
 
 * `entryadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00` OR +
 `ea t/meet with boss ed/05-05-2020 st/10:00 et/12:00` +
 Creates a calendar entry with listed title, starts from 1000 and ends at 1200 on 5 May 2020. +
-Entry appears on specified date in the dalendar.
-
-* `entryadd t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` OR +
-`ea t/roadshow sd/01-01-2019 ed/10-01-2019 st/09:00 et/18:00` +
-Entry starting from `1 Jan 2019 1000` and ending at `10 Jan 2019 1800` appears at the specified time period in the calendar.
 
 ==== Editing entries in calendar entry list : `entryedit` `since v1.5rc`
 
-Description: Edits an existing entry in the Calendar entry list and displays the edited entry in the calendar. +
+Description: Edits an existing entry in the calendar entry list and displays the edited entry in the calendar. +
 
 ****
-Format: `entryedit ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
+Format: `entryedit ENTRY_INDEX [t/ENTRY_TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` +
 ****
 
 Command Alias: `ee` +
@@ -645,16 +659,23 @@ Command Alias: `ee` +
 * At least one of the optional fields must be provided.
 ****
 
-Examples:
+Example:
 
-* `entryedit 1 t/meet with bosses et/1400` OR +
+The calendar entry list currently has the following calendar entry at index 1:
+
+.Initial state of "Meet boss" calendar entry
+image::Edit_Entry_Before.png[width]
+
+To edit the above calendar entry, execute the following command:
+
+* `entryedit 1 t/Meeting with Bosses et/14:00` OR +
 `ee 1 t/meet with bosses et/1400` +
-Edits title and end time of 1st entry in entry list to `meet with bosses` and `1400` respectively. +
-Changes reflect on the Calendar.
 
-* `entryedit 3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` OR +
-`ee 3 sd/01-01-2019 ed/11-01-2019 st/0900 et/1800` +
-Edits starting date and time, ending date and time of the 3rd entry in entry list.
+Edits title and end time of 1st entry in entry list to "Meeting with Bosses" and 1400 respectively.
+The result is shown in the figure below.+
+
+.Result of editing "Meet boss" calendar entry
+image::Edit_Entry_After.png[width]
 
 ==== Deleting entries in calendar entry list : `entrydelete` `since v1.4`
 
@@ -672,12 +693,12 @@ Command Alias: `ed` +
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-Examples:
+Example:
 
 * `entrydelete 1` OR +
 `ed 1` +
 Deletes the entry at index 1 of most recent entry listing. +
-Entry is removed from the Calendar.
+Entry is removed from the calendar.
 
 ==== Listing all calendar entries : `entrylist` `since v1.4`
 
@@ -699,6 +720,7 @@ Format: `entryclear` +
 
 Command Alias: `ec`
 
+// end::calendarandentries[]
 === Miscellaneous Commands
 
 This section describes other commands you can use in ContactSails.
@@ -740,7 +762,6 @@ Changes the theme of the application to the light theme. The figure below shows 
 
 .ContactSails Light Theme
 image::ContactSails_Light_Theme.png[width="790" align="center"]
-
 
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
@@ -844,6 +865,14 @@ Command Alias: `q`
 . Open the `Terminal` application.
 . Execute the command `java -jar YOUR_APPLICATION_JAR_FILE_NAME.jar`
 
+*Q*: Why is it that an error shows up when I clicked the interface of the calendar twice, as seen in Figure ? below?
+
+.Error dialog box when calendar is clicked twice.
+image::Calendar_DoubleClick_Error.png[width]
+
+*A*: As of V1.5, we have disabled the ability for users to add entries by clicking on the calendar twice, as entries created this way will not be saved in ContactSails.
+This ability will be enabled in future versions of ContactSails.
+
 *Q*: How do I transfer my data to another computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous ContactSails folder.
 
@@ -896,17 +925,17 @@ The following sections summarize the commands you can use in ContactSails.
 |Function |Command |Alias |Example
 |Display the calendar. |`calendar [VIEW_FORMAT]` |`cal` |`calendar month`
 |Go to the next page of the calendar. |`calendarnext` |`calnext` |`calendarnext`
-|Go to the previous page of the calendar. |`calendarback` |`calback` |`calendarprev`
+|Go to the previous page of the calendar. |`calendarback` |`calback` |`calendarback`
 |Go to the current day. |`calendartoday` |`caltoday` |`calendartoday`
-|Jump to specified day. |`calendarjump td/TARGET_DATE` |`caljump` |`calendarjump td/04-04-2020`
+|Go to specified date. |`calendarjump td/TARGET_DATE` |`caljump` |`calendarjump 10-10-2020`
 |===
 
 === Managing Calendar Entries
 [width="99%",cols="25%,25%,25%,25%",options="header",]
 |===
 |Function |Command |Alias |Example
-|Add a calendar entry. |`entryadd t/TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` |`ea` |`entryadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00`
-|Edit an existing calendar entry. |`entryedit ENTRY_INDEX [t/TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` |`ee` |`entryedit 1 t/meet with bosses et/1400`
+|Add a calendar entry. |`entryadd t/ENTRY_TITLE [sd/START_DATE] ed/END_DATE [st/START_TIME] et/END_TIME` |`ea` |`entryadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00`
+|Edit an existing calendar entry. |`entryedit ENTRY_INDEX [t/ENTRY_TITLE] [sd/START_DATE] [ed/END_DATE] [st/START_TIME] [et/END_TIME]` |`ee` |`entryedit 1 t/meet with bosses et/1400`
 |Delete an existing calendar entry. |`entrydelete ENTRY_INDEX` |`ed` |`entrydelete 1`
 |List all calendar entries. |`entrylist` |`el` |`entrylist`
 |Clear all calendar entries. |`entryclear`  |`ec` |`entryclear`
@@ -930,10 +959,19 @@ The following sections summarize the commands you can use in ContactSails.
 
 The following section describes some of the proposed features we are planning to add to ContactSails in `v2.0`.
 
-=== Viewing top customers : `topcustomers` `coming in v2.0`
+=== Viewing Customer Statistics
 
-Displays a list of the top customers based on the frequency their contacts are accessed. +
-Format: `topcustomers NUMBER` +
+One of the features we are planning to add in ContactSails `v2.0` is the ability to view relevant statistics regarding your customers and sales orders.
+The command descriptions for these features are given below.
+
+==== Viewing top customers : `topcustomers` `coming in v2.0`
+
+Description: Displays a list of the top customers based on the frequency their contacts are accessed. +
+
+****
+Format: `topcustomers NUMBER`
+****
+
 Command Alias: `tc`
 
 ****
@@ -947,10 +985,14 @@ Examples:
 `tc 10` +
 Displays the list of the top ten persons in ContactSails based on how frequently you access these contacts.
 
-=== Viewing top customers : `topitems` `coming in v2.0`
+==== Viewing top customers : `topitems` `coming in v2.0`
 
-Displays a list of the top items based on amount of items that have been sold to customers. +
-Format: `topitems NUMBER` +
+Description: Displays a list of the top items based on amount of items that have been sold to customers. +
+
+****
+Format: `topitems NUMBER`
+****
+
 Command Alias: `ti`
 
 ****
@@ -964,10 +1006,19 @@ Examples:
 `ti 10` +
 Displays the list of the top ten items in ContactSails based on how many of the items have been sold.
 
-=== Sending promotions based on group : `sendpromogroup` `coming in v2.0`
+=== Sending Promotions
 
-Opens a promotion email draft in the browser, which can be sent to multiple persons having the same group tags.
+Another proposed feature we are planning to implement is the ability to send promotions to multiple customers based on their groups or preferences.
+The command descriptions for these features are given below.
+
+==== Sending promotions based on group : `sendpromogroup` `coming in v2.0`
+
+Description: Opens a promotion email draft in the browser, which can be sent to multiple persons having the same group tags.
+
+****
 Format: `sendpromogroup GROUP... [sub/SUBJECT] [b/BODY]`
+****
+
 Command Alias: `spg`
 
 ****
@@ -983,10 +1034,14 @@ Examples:
 `spg friends sub/New Offer on Sunglasses` +
 Opens an email draft in the browser with recipients as all persons tagged as 'friends' and subject as 'New Offer on Sunglasses'. +
 
-=== Sending promotions based on preference : `sendpromopref` `coming in v2.0`
+==== Sending promotions based on preference : `sendpromopref` `coming in v2.0`
 
-Opens a promotion email draft in the browser, which can be sent to multiple persons having the same preference tags.
+Description: Opens a promotion email draft in the browser, which can be sent to multiple persons having the same preference tags.
+
+****
 Format: `sendpromopref PREFERENCE... [sub/SUBJECT] [b/BODY]`
+****
+
 Command Alias: `spp`
 
 ****
@@ -1043,3 +1098,6 @@ A Panel that displays all sales orders that you have added to ContactSails.
 
 [[entrylistpanel]]EntryListPanel::
 A Panel that displays all the calendar entries that you have added to ContactSails.
+
+[[alphanumeric]]Alphanumeric::
+The parameter can only contain alphabets and/or numbers.

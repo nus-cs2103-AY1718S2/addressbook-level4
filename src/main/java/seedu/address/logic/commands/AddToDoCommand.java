@@ -17,7 +17,7 @@ public class AddToDoCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a to-do to the address book. "
             + "Parameters: "
-            + "TO-DO DESCRIPTION "
+            + "CONTENT\n"
             + "Example: " + COMMAND_WORD + " "
             + "Organize a meeting";
 

@@ -11,5 +11,5 @@
             <Font name="System Bold" size="16.0" />
         </font>
     </Label>
-    <ListView fx:id="todoListView" VBox.vgrow="ALWAYS" />
+    <ListView fx:id="toDoListView" VBox.vgrow="ALWAYS" />
 </VBox>

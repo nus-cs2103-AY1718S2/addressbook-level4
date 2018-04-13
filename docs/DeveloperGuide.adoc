@@ -367,7 +367,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 === Add ToDo feature
 ==== Current Implementation
 
-The add todos mechanism is facilitated by `AddToDoCommand`, which resides inside `Logic` component. It supports adding ToDo objects to the address book. AddToDoCommand inherits from `UndoableCommand`.
+The add to-dos mechanism is facilitated by `AddToDoCommand`, which resides inside `Logic` component. It supports adding ToDo objects to the address book. AddToDoCommand inherits from `UndoableCommand`.
 
 Hence, AddToDoCommand can be undone using `UndoRedoStack`.
 With the extra layer, the AddToDoCommand that is undoable is implemented this way:
@@ -421,7 +421,7 @@ image::AddToDoSequenceDiagram.png[width="800"]
 === Check/UnCheck ToDo feature
 ==== Current Implementation
 
-The check/uncheck todos mechanism is facilitated by `CheckToDoCommand` and `UnCheckToDoCommand`, which resides inside `Logic` component. It supports modifying Status objects within ToDo objects. CheckToDoCommand and UnCheckToDoCommand inherit from `UndoableCommand`.
+The check/uncheck to-dos mechanism is facilitated by `CheckToDoCommand` and `UnCheckToDoCommand`, which resides inside `Logic` component. It supports modifying Status objects within ToDo objects. CheckToDoCommand and UnCheckToDoCommand inherit from `UndoableCommand`.
 
 Hence, CheckToDoCommand and UnCheckToDoCommand can be undone using `UndoRedoStack`.
 With the extra layer, the CheckToDoCommand and UnCheckToDoCommand that are undoable are implemented this way:
@@ -1177,7 +1177,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 ** Dark color theme makes the application comfortable to use in different light conditions
 
 * Personal To-do list (major):
-** User can add to-dos, notes, upcomming tasks and organize them in the todo-list
+** User can add to-dos, notes, upcomming tasks and organize them in the to-do list
 ** To-do list serves to remind user of important tasks, events in group projects
 
 * Meetup Time Generator (major):

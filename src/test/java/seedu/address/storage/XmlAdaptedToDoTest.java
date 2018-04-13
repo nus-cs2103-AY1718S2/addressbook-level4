@@ -21,46 +21,46 @@ public class XmlAdaptedToDoTest {
 
     @Test
     public void toModelType_validToDoDetails_returnsToDo() throws Exception {
-        XmlAdaptedToDo todo = new XmlAdaptedToDo(TODO_A);
-        assertEquals(TODO_A, todo.toModelType());
+        XmlAdaptedToDo toDo = new XmlAdaptedToDo(TODO_A);
+        assertEquals(TODO_A, toDo.toModelType());
     }
 
     @Test
     public void toModelType_invalidContent_throwsIllegalValueException() {
-        XmlAdaptedToDo todo =
+        XmlAdaptedToDo toDo =
                 new XmlAdaptedToDo(INVALID_CONTENT);
         String expectedMessage = Content.MESSAGE_CONTENT_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void toModelType_nullContent_throwsIllegalValueException() {
-        XmlAdaptedToDo todo = new XmlAdaptedToDo((String) null);
+        XmlAdaptedToDo toDo = new XmlAdaptedToDo((String) null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Content.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void toModelType_nullStatus_throwsIllegalValueException() {
-        XmlAdaptedToDo todo = new XmlAdaptedToDo(VALID_CONTENT, null);
+        XmlAdaptedToDo toDo = new XmlAdaptedToDo(VALID_CONTENT, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void toModelType_invalidStatus_throwsIllegalValueException() {
-        XmlAdaptedToDo todo =
+        XmlAdaptedToDo toDo =
                 new XmlAdaptedToDo(VALID_CONTENT, INVALID_STATUS);
         String expectedMessage = Status.MESSAGE_STATUS_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void equals() {
-        XmlAdaptedToDo todoA = new XmlAdaptedToDo(TODO_A);
-        XmlAdaptedToDo todoB = new XmlAdaptedToDo(TODO_A);
-        assertTrue(todoA.equals(todoA));
-        assertFalse(todoA.equals(1));
-        assertTrue(todoA.equals(todoB));
+        XmlAdaptedToDo toDoA = new XmlAdaptedToDo(TODO_A);
+        XmlAdaptedToDo toDoB = new XmlAdaptedToDo(TODO_A);
+        assertTrue(toDoA.equals(toDoA));
+        assertFalse(toDoA.equals(1));
+        assertTrue(toDoA.equals(toDoB));
     }
 }

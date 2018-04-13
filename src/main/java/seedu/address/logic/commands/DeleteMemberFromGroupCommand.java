@@ -31,7 +31,7 @@ public class DeleteMemberFromGroupCommand extends UndoableCommand {
             + PREFIX_GROUP + "CS1010";
 
     public static final String MESSAGE_NO_SUCH_GROUP = "No such group exist.";
-    public static final String MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS = "%1$s deleted from group %2$s";
+    public static final String MESSAGE_DELETE_PERSON_FROM_GROUP_SUCCESS = "%1$s deleted from group %2$s";
     public static final String MESSAGE_GROUP_NOT_FOUND = "No such Group in Fastis";
     public static final String MESSAGE_DUPLICATE_GROUP = "Group already in Group";
     public static final String MESSAGE_PERSON_NOT_FOUND = "No such Person in Group";
@@ -68,7 +68,7 @@ public class DeleteMemberFromGroupCommand extends UndoableCommand {
                 }
             }
         }
-        return new CommandResult(String.format(MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS, personToDelete.getName(),
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_FROM_GROUP_SUCCESS, personToDelete.getName(),
                 groupToDelete.getInformation().toString()));
     }
 

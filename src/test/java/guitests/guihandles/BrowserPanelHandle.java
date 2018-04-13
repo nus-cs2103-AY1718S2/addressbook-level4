@@ -1,5 +1,6 @@
 package guitests.guihandles;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import guitests.GuiRobot;
@@ -8,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seedu.address.model.smplatform.Link;
+import seedu.address.ui.BrowserPanel;
 
 /**
  * A handler for the {@code BrowserPanel} of the UI.
@@ -56,6 +58,16 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
      * Returns the {@code URL} of the currently loaded page for the default browser tab (i.e. facebookTab).
      */
     public URL getLoadedUrl() {
+        URL loadedUrl = WebViewUtil.getLoadedUrl(twitterWebView);
+        if (Link.isValidLink(loadedUrl.toExternalForm())) {
+            String completeUrl = BrowserPanel.parseUrl(loadedUrl.toExternalForm());
+            try {
+                loadedUrl = new URL(completeUrl);
+                return loadedUrl;
+            } catch (MalformedURLException mue) {
+                throw new AssertionError("URL expected to be valid.");
+            }
+        }
         return WebViewUtil.getLoadedUrl(facebookWebView);
     }
 
@@ -64,7 +76,16 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
      */
     public URL getLoadedUrl(String browserTab) {
         if (browserTab.equals(Link.TWITTER_LINK_TYPE)) {
-            return WebViewUtil.getLoadedUrl(twitterWebView);
+            URL loadedUrl = WebViewUtil.getLoadedUrl(twitterWebView);
+            if (Link.isValidLink(loadedUrl.toExternalForm())) {
+                String completeUrl = BrowserPanel.parseUrl(loadedUrl.toExternalForm());
+                try {
+                    loadedUrl = new URL(completeUrl);
+                    return loadedUrl;
+                } catch (MalformedURLException mue) {
+                    throw new AssertionError("URL expected to be valid.");
+                }
+            }
         }
         return getLoadedUrl();
     }

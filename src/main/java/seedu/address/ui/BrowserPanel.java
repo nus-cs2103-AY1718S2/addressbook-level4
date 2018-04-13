@@ -32,20 +32,18 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String LOADING_PAGE_URL =
             "https://cs2103jan2018-f12-b3.github.io/main/LoadingPage.html";
-    public static final String DUMMY_PROFILE_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
     public static final String FACEBOOK_SEARCH_PAGE_URL =
-            //"https://www.facebook.com/search/people?q=";
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://www.facebook.com/search/people?q=";
     public static final String TWITTER_SEARCH_PAGE_URL =
-            //"https://twitter.com/search?f=users&vertical=news&q=";
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://twitter.com/search?f=users&vertical=news&q=";
 
     private static final String FXML = "BrowserPanel.fxml";
     private static final String FACEBOOK_TAB_ID = "facebookTab";
     private static final String TWITTER_TAB_ID = "twitterTab";
     private static final String FUNCTION_ADD = "add";
     private static final String FUNCTION_REMOVE = "remove";
+
+    private URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + "default.html");
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -148,9 +146,17 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Returns the given {@code url} with a protocol if unspecified.
      */
-    private String parseUrl(String url) {
+    public static String parseUrl(String url) {
         if (!url.contains("://")) {
+            if (!url.contains("www")) {
+                return "https://www." + url;
+            }
             return "https://" + url;
+        } else {
+            if (!url.contains("www")) {
+                String[] splitUrl = url.split("//");
+                return "https://www." + splitUrl[1];
+            }
         }
 
         return url;
@@ -166,7 +172,7 @@ public class BrowserPanel extends UiPart<Region> {
             loadFacebookBrowserPage(parseUrl(url));
         } else {
             updateBrowserTabs(FUNCTION_REMOVE, FACEBOOK_TAB_ID);
-            loadFacebookBrowserPage(DUMMY_PROFILE_PAGE_URL + person.getName().fullName);
+            loadFacebookBrowserPage(defaultPage.toExternalForm());
         }
     }
 
@@ -180,7 +186,7 @@ public class BrowserPanel extends UiPart<Region> {
             loadTwitterBrowserPage(parseUrl(url));
         } else {
             updateBrowserTabs(FUNCTION_REMOVE, TWITTER_TAB_ID);
-            loadTwitterBrowserPage(DUMMY_PROFILE_PAGE_URL + person.getName().fullName);
+            loadTwitterBrowserPage(defaultPage.toExternalForm());
         }
     }
 
@@ -204,7 +210,6 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads a default HTML file with a background that matches the general theme.
      */
     private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadFacebookBrowserPage(defaultPage.toExternalForm());
         loadTwitterBrowserPage(defaultPage.toExternalForm());
     }
@@ -231,17 +236,22 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         String platformToSearch = event.getPlatform();
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
 
         if (StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_KEYWORD)
                 || StringUtil.containsWordIgnoreCase(platformToSearch, Facebook.PLATFORM_ALIAS)) {
+            updateBrowserTabs(FUNCTION_ADD, FACEBOOK_TAB_ID);
+            updateBrowserTabs(FUNCTION_REMOVE, TWITTER_TAB_ID);
             loadBrowserSearchPage(event.getSearchName());
             loadTwitterBrowserPage(defaultPage.toExternalForm());
         } else if (StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_KEYWORD)
                 || StringUtil.containsWordIgnoreCase(platformToSearch, Twitter.PLATFORM_ALIAS)) {
+            updateBrowserTabs(FUNCTION_ADD, TWITTER_TAB_ID);
+            updateBrowserTabs(FUNCTION_REMOVE, FACEBOOK_TAB_ID);
             loadFacebookBrowserPage(defaultPage.toExternalForm());
             loadBrowser1SearchPage(event.getSearchName());
         } else {
+            updateBrowserTabs(FUNCTION_ADD, FACEBOOK_TAB_ID);
+            updateBrowserTabs(FUNCTION_ADD, TWITTER_TAB_ID);
             loadBrowserSearchPage(event.getSearchName());
             loadBrowser1SearchPage(event.getSearchName());
         }

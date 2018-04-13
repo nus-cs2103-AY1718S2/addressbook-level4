@@ -152,6 +152,7 @@ Examples:
 Returns any person having tags `friends`
 * `find friends classmate neighbour` +
 Returns any person having tags `friends`, `classmate`, or `neighbour`
+// end::findtag[]
 
 === Deleting a person : `delete`
 
@@ -272,6 +273,7 @@ Search with keyword "tom" on Facebook and display the search result in the brows
 
 * `search twitter, tom` +
 Search with keyword "tom" on Twitter and display the search result in the browser window under the Twitter tab.
+// end::search[]
 
 === Selecting a person : `select`
 

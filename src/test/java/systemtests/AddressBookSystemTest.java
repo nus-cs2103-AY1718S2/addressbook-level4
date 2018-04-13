@@ -18,6 +18,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Rule;
 
 import guitests.GuiRobot;
 import guitests.guihandles.BrowserPanelHandle;
@@ -63,6 +64,9 @@ public abstract class AddressBookSystemTest {
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
     private SystemTestSetupHelper setupHelper;
+
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @BeforeClass
     public static void setupBeforeClass() {

@@ -29,7 +29,7 @@ public class DatabaseManagerTest {
     }
 
     @Test
-    public void parseQuery_success() {
+    public void parseEvents_success() {
         ArrayList<WeeklyEvent> expected = new ArrayList<>();
         Module cs2103t = new Module("CS2103T", "Software Engineering");
         Schedule tutT3 = new Schedule("T3", "Tutorial", "Every Week", "Wednesday",
@@ -41,10 +41,19 @@ public class DatabaseManagerTest {
     }
 
     @Test
-    public void parseQuery_incompatibleLink_returnsEmptyList() {
+    public void parseEvents_invalidLink_returnsEmptyList() {
+        ArrayList<WeeklyEvent> expected = new ArrayList<>();
+        ArrayList<WeeklyEvent> actual = DatabaseManager.parseEvents(new TimeTableLink("http://modsn.us/abcde"));
+        Assert.assertArrayEquals(expected.toArray(), actual.toArray());
+    }
+
+    @Test
+    public void parseEvents_incompatibleLink_returnsEmptyList() {
         ArrayList<WeeklyEvent> expected = new ArrayList<>();
         ArrayList<WeeklyEvent> actual = DatabaseManager.parseEvents(new TimeTableLink("http://modsn.us/oEZ0r"));
         Assert.assertArrayEquals(expected.toArray(), actual.toArray());
     }
+
+
 
 }

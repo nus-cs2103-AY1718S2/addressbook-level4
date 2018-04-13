@@ -85,7 +85,6 @@ public class DatabaseManager {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-                System.out.println(DEFAULT_JSON_DATABASE_URL);
                 logger.severe("Unable to download Module Database. Scheduling functionality will no be available.");
             }
         }
@@ -215,7 +214,7 @@ public class DatabaseManager {
      * @param filePath
      * @return hashMap of all modules from jsonfile
      */
-    public HashMap<String, Module> parseDatabase(String filePath) {
+    private HashMap<String, Module> parseDatabase(String filePath) {
         List<Module> moduleList;
         try {
             moduleList = JsonUtil.readJsonArrayFromFile(filePath, Module.class);

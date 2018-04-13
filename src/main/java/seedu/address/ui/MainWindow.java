@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputControl;
@@ -22,6 +23,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.LoadingEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowNotifManRequestEvent;
+import seedu.address.commons.events.ui.ShowNotificationRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -224,6 +226,24 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         notificationsWindow = new NotificationsWindow(secondaryStage, event.data);
         notificationsWindow.show();
+    }
+
+    @Subscribe
+    private void handleShowNotificationEvent(ShowNotificationRequestEvent nre) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(nre));
+        spawnNotification(nre.toString());
+    }
+
+    /**
+     * Spawns a popup notification with the given message.
+     */
+    private void spawnNotification(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("CoinBook notification");
+        alert.setHeaderText("The following rule has triggered this notification:");
+        alert.setContentText(message);
+
+        alert.show();
     }
     //@@author
 

@@ -38,6 +38,7 @@ public class RateCommand extends UndoableCommand {
             + "EXPERIENCE SCORE \n"
             + "Note: 1. The scores must be numbers in the range of 1 to 5 (inclusive).\n"
             + "2. Scores are rounded to two decimal places.\n"
+            + "3. All four scores must be supplied.\n"
             + "EXAMPLE: " + COMMAND_WORD + " 1 "
             + PREFIX_TECHNICAL_SKILLS_SCORE + "5 "
             + PREFIX_COMMUNICATION_SKILLS_SCORE + "4.5 "
@@ -48,6 +49,8 @@ public class RateCommand extends UndoableCommand {
             + "Technical skills: %2$s, Communication skills: %3$s, "
             + "Problem solving skills: %4$s, Experience: %5$s \n"
             + "Overall: %6$s";
+    public static final String MESSAGE_PERSON_ALREADY_RATED = "You have already rated %1$s.\n"
+            + "Use the rating-edit command to modify rating scores assigned to the student.";
 
     private final Index index;
     private final Rating rating;
@@ -97,6 +100,9 @@ public class RateCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         personToRate = lastShownList.get(index.getZeroBased());
+        if (personToRate.getRating().getOverallScore() != Rating.DEFAULT_SCORE) {
+            throw new CommandException(String.format(MESSAGE_PERSON_ALREADY_RATED, personToRate.getName()));
+        }
         ratedPerson = createRatedPerson(personToRate, rating);
     }
 

@@ -47,13 +47,13 @@ public class RateCommandParser implements Parser<RateCommand> {
 
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
-            double technicalSkillsScore = ParserUtil.parseTechnicalSkillsScore(
+            double technicalSkillsScore = ParserUtil.parseScore(
                     argMultimap.getValue(PREFIX_TECHNICAL_SKILLS_SCORE)).get();
-            double communicationSkillsScore = ParserUtil.parseCommunicationSkillsScore(
+            double communicationSkillsScore = ParserUtil.parseScore(
                     argMultimap.getValue(PREFIX_COMMUNICATION_SKILLS_SCORE)).get();
-            double problemSolvingSkillsScore = ParserUtil.parseProblemSolvingSkillsScore(
+            double problemSolvingSkillsScore = ParserUtil.parseScore(
                     argMultimap.getValue(PREFIX_PROBLEM_SOLVING_SKILLS_SCORE)).get();
-            double experienceScore = ParserUtil.parseExperienceScore(
+            double experienceScore = ParserUtil.parseScore(
                     argMultimap.getValue(PREFIX_EXPERIENCE_SCORE)).get();
             rating = new Rating(technicalSkillsScore, communicationSkillsScore, problemSolvingSkillsScore,
                     experienceScore);

@@ -675,33 +675,51 @@ Edits the allergies information and remarks information of the 1st student to be
 
 ==== Find student's by their miscellaneous information `[coming in v2.0]`
 
+// tag::NLP[]
 == Interacting using free-form English
 
 CodEducator also allows you to use features of the applications using everyday english sentences, without the need to remember specific command words.
+
+[WARNING]
+An active internet connection is required for this to work!
+
+=== How do i use this?
 
 You can refer to the table below to see which are the features that you are able to invoke using conversational English.
 
 [TIP]
 The examples below are just for your reference. Any phrase or sentence can be used, so long as your *intention* is precise and clear!
+[width="100%", cols=",^2m,^2e",options="header",]
+|=======================================================================
+| Command 2+| Examples
+|`Clear`|"I want everyone to be gone" | "Empty everything"
+|`Redo`|"do it again" | "reuse previous"
+|`Undo`|"revert back" | "negate the previous action"
+|`Help`|"I am lost"| "I need assistance"
+|`Exit`|"I'm done here"| "i wish to quit"
+|`History`|"what are my previous commands"| "archives of commands entered"
+|`List`|"Show me all my students"| "enumerate everyone"
+|`Schedule`|"what is my agenda"|"show me my timetable"
+|`Delete`| "Erase Susan"| "Remove Jason"
+|`Select`| "Choose Susan"| "Single out Jason"
+|=======================================================================
 
 [IMPORTANT]
 Currently, the commands `Delete` and `Select` only detects English names!
-[width="100%", <40%, <40%",options="header",]
-|=======================================================================
-| Example | Command
-.2+|`Clear`|"I want everyone to be gone" | "Empty everything"
-.2+|`Redo`|"do it again" | "reuse previous"
-.2+|`Undo`|"revert back" | "negate the previous action"
-.2+|`Help`|"I am lost"| "I need assistance"
-.2+|`Exit`|"I'm done here"| "i wish to quit"
-.2+|`History`|"what are my previous commands"| "archives of commands entered"
-.2+|`List`|"Show me all my students"| "enumerate everyone"
-.2+|'Schedule'|"what is my agenda"| "show me my timetable"
-.2+|`Delete`| "Erase Susan"| "Remove Jason"
-.2+|`Select`| "Choose Susan"| "Single out Jason"
-|=======================================================================
 
+image::Select(before).png[width="500"]
+image::Select(after).png[width="500"]
 
+=== Guidelines for using this feature
+* Be sure to check for spelling errors in your sentences.
+
+[WARNING]
+Spelling errors can be mis-interpreted and the wrong command might be invoked!
+
+* Be as precise as possible in specifying your intentions in the sentences, to prevent mis-interpretation of commands.
+* If the wrong feature is invoked, you can always use the `undo` command revert any undesired changes.
+
+//end::NLP[]
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

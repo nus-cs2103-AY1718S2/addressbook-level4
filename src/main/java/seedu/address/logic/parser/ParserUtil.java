@@ -243,9 +243,9 @@ public class ParserUtil {
         try {
             return new StandardInterest(Double.parseDouble(value));
         } catch (NumberFormatException nfe) {
-            throw new IllegalValueException(StandardInterest.MESSAGE_INTEREST_CONSTRAINTS);
+            throw new IllegalValueException(StandardInterest.MESSAGE_STANDARD_INTEREST_DOUBLE_ONLY);
         } catch (IllegalArgumentException iae) {
-            throw new IllegalValueException(StandardInterest.MESSAGE_INTEREST_CONSTRAINTS);
+            throw new IllegalValueException(StandardInterest.MESSAGE_STANDARD_INTEREST_NO_NEGATIVE);
         }
     }
 

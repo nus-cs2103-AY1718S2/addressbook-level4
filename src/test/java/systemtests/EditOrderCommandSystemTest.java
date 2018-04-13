@@ -62,20 +62,12 @@ public class EditOrderCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo editing the last person in the list -> last person edited again */
+        /* Case: redo editing the last order in the list -> last order edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         model.updateOrder(
                 getModel().getFilteredOrderList().get(INDEX_THIRD_ORDER.getZeroBased()), editedOrder);
         assertCommandSuccess(command, model, expectedResultMessage);
-
-        /* Case: edit some fields -> edited */
-        index = INDEX_THIRD_ORDER;
-        command = EditOrderCommand.COMMAND_WORD + " " + index.getOneBased() + QUANTITY_DESC_COMPUTER;
-        Order orderToEdit = getModel().getFilteredOrderList().get(index.getZeroBased());
-        editedOrder = new OrderBuilder(orderToEdit).withQuantity(VALID_QUANTITY_COMPUTER).build();
-        assertCommandSuccess(command, index, editedOrder);
-
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 

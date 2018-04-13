@@ -26,6 +26,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 public class ChangeThemeCommandTest {
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 

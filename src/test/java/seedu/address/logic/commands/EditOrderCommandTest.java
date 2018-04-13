@@ -5,7 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_COMICBOOK;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_COMPUTER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_COMPUTER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_CHOC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_QUANTITY_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_QUANTITY_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -15,6 +18,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ORDER;
 import static seedu.address.testutil.TypicalOrders.getTypicalAddressBookWithOrders;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -37,19 +41,34 @@ import seedu.address.testutil.OrderBuilder;
  */
 public class EditOrderCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBookWithOrders(), new CalendarManager(), new UserPrefs());
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBookWithOrders(), new CalendarManager(), new UserPrefs());
+    }
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Order editedOrder = new OrderBuilder().build();
-        EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder(editedOrder).build();
-        EditOrderCommand editOrderCommand = prepareCommand(INDEX_FIRST_ORDER, descriptor);
+        Index indexLastOrder = Index.fromOneBased(model.getFilteredOrderList().size());
+        Order lastOrder = model.getFilteredOrderList().get(indexLastOrder.getZeroBased());
+
+        OrderBuilder orderInList = new OrderBuilder(lastOrder);
+        Order editedOrder = orderInList.withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER)
+                .withPrice(VALID_PRICE_CHOC).withQuantity(VALID_QUANTITY_BOOKS)
+                .withDeliveryDate(VALID_DELIVERY_DATE_BOOKS).build();
+        EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
+                .withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER).withPrice(VALID_PRICE_CHOC)
+                .withQuantity(VALID_QUANTITY_BOOKS).withDeliveryDate(VALID_DELIVERY_DATE_BOOKS)
+                .build();
+
+        EditOrderCommand editOrderCommand = prepareCommand(indexLastOrder, descriptor);
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
                 new UserPrefs());
-        expectedModel.updateOrder(model.getFilteredOrderList().get(0), editedOrder);
+        expectedModel.updateOrder(lastOrder, editedOrder);
 
         assertCommandSuccess(editOrderCommand, model, expectedMessage, expectedModel);
     }
@@ -66,6 +85,7 @@ public class EditOrderCommandTest {
         EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
                 .withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER)
                 .withQuantity(VALID_QUANTITY_COMPUTER).build();
+
         EditOrderCommand editOrderCommand = prepareCommand(indexLastOrder, descriptor);
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);

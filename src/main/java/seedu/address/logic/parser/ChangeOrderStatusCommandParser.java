@@ -13,7 +13,7 @@ import seedu.address.model.order.OrderStatus;
 /**
  * Parses input arguments and creates a new ChangeOrderStatusCommand object.
  */
-public class ChangeOrderStatusCommandParser {
+public class ChangeOrderStatusCommandParser implements Parser<ChangeOrderStatusCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the ChangeOrderStatusCommand
      * and returns an ChangeOrderStatusCommand object for execution.

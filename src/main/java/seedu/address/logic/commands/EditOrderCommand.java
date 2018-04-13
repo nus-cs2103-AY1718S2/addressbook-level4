@@ -107,7 +107,7 @@ public class EditOrderCommand extends UndoableCommand {
      * edited with {@code editOrderDescriptor}.
      */
     private static Order createEditedOrder(Order orderToEdit, EditOrderDescriptor editOrderDescriptor) {
-        assert orderToEdit != null;
+        requireNonNull(orderToEdit);
 
         OrderInformation updatedOrderInformation = editOrderDescriptor.getOrderInformation()
                 .orElse(orderToEdit.getOrderInformation());

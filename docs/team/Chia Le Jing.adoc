@@ -1,46 +1,40 @@
-= John Doe - Project Portfolio
+= Chia Le Jing - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: AddressBook - Level 4
+== PROJECT: Medeina
 
 ---
 
 == Overview
 
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Medeina is a desktop application primarily designed for veterinarians and their assistants (henceforth referred to as user/s) to better manage their contacts, pet patient and appointments details. The main bulk of interactions that the user will have with Medeina is through the Command Line Interface (CLI). However, it also has a Graphical User Interface (GUI) created with JavaFX so that users can visualise the data easily. Medeina is written in Java, and has about 20 kLoC.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+* *Major enhancement*: Implemented `edit` command
+** What it does: Allows the user to edit contacts, pet patients and appointments in Medeina. Relevant dependencies are also resolved as well. For example, if the user wishes to edit the name of a pet patient, the pet patient's name entry under the owner and also its relevant list of appointments will be updated to reflect the new name.
+** Justification: Editing the details of contacts, pet patients and appointments is critical to the workflow of our users. This is because certain details might have been keyed in wrongly at the time of entry, and our users will want to modify these details to ensure the accuracy of their data in Medeina. The resolution of dependencies is also vital to the operation of Medeina, as it gives users the freedom to edit contacts, pet patients and appointments as they require without upsetting the relations between these objects.
+** Highlights: some highlight
 
-* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Minor enhancement*: Wrote PetPatient and all its relevant classes (PetPatientName, Species, Breed, Colour and BloodType). This enhancement is critical to the operation of Medeina, as most commands make use of PetPatient objects.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/functional/chialejing.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/test/chialejing.md[Test code]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+*** Managed release `v1.5rc` (1 release) on GitHub
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Some enhancement
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-F14-B2/main/blob/master/docs/UserGuide.adoc[UG]
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
-
-_{you can add/remove categories in the list above}_
+*** Reported bugs and suggestions for other teams in the class (Examples:  https://github.com/CS2103JAN2018-T09-B3/main/issues/192[1], https://github.com/CS2103JAN2018-T09-B3/main/issues/193[2], https://github.com/CS2103JAN2018-T09-B3/main/issues/180[3],
+https://github.com/CS2103JAN2018-T09-B3/main/issues/185[4],
+https://github.com/CS2103JAN2018-T09-B3/main/issues/190[5])
 
 == Contributions to the User Guide
 
@@ -49,9 +43,9 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=editcommandUG]
 
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=commandsummaryUG]
 
 == Contributions to the Developer Guide
 
@@ -59,13 +53,4 @@ include::../UserGuide.adoc[tag=dataencryption]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-include::../DeveloperGuide.adoc[tag=dataencryption]
-
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
+include::../DeveloperGuide.adoc[tag=editcommandUG]

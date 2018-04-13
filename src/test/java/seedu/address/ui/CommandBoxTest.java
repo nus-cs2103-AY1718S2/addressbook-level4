@@ -214,6 +214,9 @@ public class CommandBoxTest extends GuiUnitTest {
         testAutocompleteForUserInput("exit ", -1, "-", 1, "");
         testAutocompleteForUserInput("help ", -1, "n", 1, "");
         testAutocompleteForUserInput("help ", -1, "-", 1, "");
+        testAutocompleteForUserInput("history ", -1, "-", 1, "");
+        testAutocompleteForUserInput("undo ", -1, "-", 1, "");
+        testAutocompleteForUserInput("redo ", -1, "-", 1, "");
 
     }
 

@@ -117,6 +117,7 @@ Examples:
 * `addappointment n/Meeting d/2018-06-13 13:25 tz/Asia/Singapore`
 * `addappointment 1 2 n/Meeting d/2018-06-13 13:25 tz/America/New_York`
 
+// end::addappointment[]
 === Listing all persons excluding archived : `list`
 
 Shows a list of all unarchived persons in the address book. +
@@ -160,6 +161,7 @@ Archives an existing client +
 Format: `archive INDEX`
 Alias: `ar`
 
+// end::archive[]
 // tag::unarchive[]
 === Unarchives a client: `unarchive` `Since v1.2`
 
@@ -167,6 +169,7 @@ Unarchives an existing client +
 Format: `unarchive INDEX`
 Alias: `uar`
 
+// end::unarchive[]
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -207,6 +210,7 @@ Examples:
 * `editappointment 1 2 3 n/Sell laptop` +
 Edits the name of the appointment to "Sell laptop". Adds/Removes persons 2 and 3.
 
+// end::editappointment[]
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -265,8 +269,9 @@ Alias: `da`
 
 Examples:
 
-* `delete 2` +
+* `deleteappointment 2` +
 Deletes the 2nd appointment in the address book.
+// end::deleteappointment[]
 
 === Deleting a tag : `deletetag`
 
@@ -379,6 +384,7 @@ Alias: `c`
 Switches theme from dark to light or vice versa. Persists across restarts. +
 Format: `switch`
 
+// end::switch[]
 === Exiting the program : `exit`
 
 Exits the program. +

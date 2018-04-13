@@ -299,7 +299,7 @@ The current codebase has a flaw in tags management. Tags no longer in use by any
 * **Alternative 2:** When deleting a tag, check whether there are person still having it as a tag.
 ** Pros: Less time consuming.
 ** Cons: More complex inplementation.
-//end::DeletTag[]
+//end::DeleteTag[]
 
 // tag::TotalPersonStatusBar[]
 === TotalPersonStatusBar feature

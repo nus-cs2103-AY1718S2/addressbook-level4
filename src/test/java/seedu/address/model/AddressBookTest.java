@@ -175,7 +175,7 @@ public class AddressBookTest {
         }
 
         @Override
-        public ArrayList<ArrayList<String>> getUIFormattedAliasList() {
+        public ArrayList<ArrayList<String>> getUiFormattedAliasList() {
             return null;
         }
 

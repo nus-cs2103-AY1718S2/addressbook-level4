@@ -1,5 +1,12 @@
 package seedu.address.model;
 
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.function.Predicate;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.alias.Alias;
@@ -11,13 +18,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.function.Predicate;
-
-import static org.junit.Assert.fail;
 
 //@@author jingyinno
 /**
@@ -108,7 +108,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public ArrayList<ArrayList<String>> getUIFormattedAliasList() {
+    public ArrayList<ArrayList<String>> getUiFormattedAliasList() {
         fail("This method should not be called.");
         return null;
     }

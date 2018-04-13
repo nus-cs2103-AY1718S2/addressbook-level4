@@ -738,7 +738,7 @@ Thus, the HTML file for displaying the student's profile page will be able to sh
 ** Pros: Less code of copying is required and any modifications to the original photo is immediately updated.
 ** Cons: If the picture is deleted or corrupted, the profile picture would not be able to display.
 
-//end::profilePage[]
+// end::profilePage[]
 
 // tag::schedule[]
 === Schedule feature
@@ -1554,3 +1554,17 @@ Expected:
 * Timestamp in the status bar remains the same.
 
 //end::dashboardTest[]
+
+=== Adding a lesson
+
+. Adding a lesson while all students are listed
+.. Prerequisites: List all students using the `list` command. Multiple students in the list. Your current schedule would preferably have no lessons starting before 7am or ending after 10pm.
+.. Test case: `addLesson 1 d/mon st/10:00 et/12:00` +
+   Expected: a lesson will be added for student at index 1, starting at 10:00am, ending at 12:00pm
+.. Test case (Maximum range): `addLesson 1 d/wed st/00:00 et/23:59` +
+   Expected: a lesson will be added for student at index 1, starting at 00:00pm, ending at 23:59pm (whole day).
+   The schedule should resize to show the lesson in the whole day.
+.. Test case: `deleteLesson 0` +
+   Expected:
+*** No lesson will be added due to invalid student index. Error details shown in results screen.
+.. Other incorrect deleteLessons to try: `deleteLesson`, `deleteLesson x` where x is larger than the index of the last lesson

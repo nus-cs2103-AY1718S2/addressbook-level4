@@ -401,12 +401,14 @@ The favourites feature allows users to remember/mark a student by adding them to
 
 To facilitate the favourite/unfavourite feature, an association with a new `Favourite` class is added to the `Student` class:
 
+.Structure of the atrributes of a `Student` in the Model component. The diagram shows that the `Student` class is associated with the `Favourite` class.
 image::StudentWithPLFeature.png[width="500"]
 
 Since the implementation of the favourite and unfavourite command are similar, we will describe the implementation of the favourite command only.
 
 The following sequence diagram shows how the favourite command works:
 
+.Sequence diagram for the favourite command
 image::FavouriteCommandSequenceDiagram.png[width="800"]
 
 . The `FavouriteCommandParser` parses the user input to obtain the target student index and constructs a new `FavouriteCommand` with this index.
@@ -768,8 +770,9 @@ The dashboard feature aims to help users keep track of their students' learning 
 ==== Current Implementation
 
 To have a dashboard for each student, an association with a new `Dashboard` class is added to the `Student` class. We have also created new classes associated with the `Dashboard` class to facilitate the different capabilities of the dashboard.
-The following diagram shows the structure of the classes that facilitate the dashboard feature:
+The following diagram shows the class diagram of the components that facilitate the dashboard feature:
 
+.Class diagram of the components that facilitate the dashboard feature
 image::ModelComponentDashboardClassDiagram.png[width="500"]
 
 Both `UniqueMilestoneList` and `UniqueTaskList` contain an attribute called "internalList" which are `ObservableList<Milestone>` and `ObservableList<Task>` respectively.
@@ -817,7 +820,7 @@ For example, in the `AddMilestoneCommand`, to add a new milestone object to the 
     }
 ----
 [start=2]
-. In the `AddMilestoneCommand.executeUndoableCommand()` method, `Model.updateStudent(Student, Student)` is called to replace "targetStudent" with "editedStudent" in the Address Book in-memory
+. In the `AddMilestoneCommand.executeUndoableCommand()` method, `Model.updateStudent(Student, Student)` is called to replace "targetStudent" with "editedStudent" in the Address Book in-memory.
 
 ===== Implementation for displaying the dashboard
 
@@ -832,6 +835,7 @@ The `ShowDashboardCommand` facilitates the displaying of a student's dashboard. 
 ----
 As seen from the above code snippet, `ShowDashboardCommand.execute()` raises a `ShowStudentDashboardEvent`. The sequence diagram below shows how the `EventsCenter` reacts to that event.
 
+.Sequence diagram showing how the the `EventsCenter` and the Ui components react to the `ShowDashboardCommand`
 image::ShowDashboardCommandSequenceDiagram.png[width="800"]
 
 As seen from the above diagram,

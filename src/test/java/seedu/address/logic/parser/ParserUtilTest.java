@@ -267,9 +267,9 @@ public class ParserUtilTest {
     @Test
     public void parseMoneyBorrowed_invalidValueNotDouble_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseMoneyBorrowed(INVALID_MONEY_BORROWED_NOT_DOUBLE));
+            () -> ParserUtil.parseMoneyBorrowed(INVALID_MONEY_BORROWED_NOT_DOUBLE));
         Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseMoneyBorrowed(Optional.of(INVALID_MONEY_BORROWED_NOT_DOUBLE)));
+            () -> ParserUtil.parseMoneyBorrowed(Optional.of(INVALID_MONEY_BORROWED_NOT_DOUBLE)));
     }
 
     @Test
@@ -310,18 +310,18 @@ public class ParserUtilTest {
 
     @Test
     public void parseStandardInterest_invalidValueNotDouble_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseStandardInterest(INVALID_STANDARD_INTEREST_NOT_DOUBLE));
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseStandardInterest(Optional.of(INVALID_STANDARD_INTEREST_NOT_DOUBLE)));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseStandardInterest(INVALID_STANDARD_INTEREST_NOT_DOUBLE));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseStandardInterest(Optional.of(INVALID_STANDARD_INTEREST_NOT_DOUBLE)));
     }
 
     @Test
     public void parseStandardInterest_invalidValueNegative_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseStandardInterest(INVALID_STANDARD_INTEREST_NEGATIVE));
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseStandardInterest(Optional.of(INVALID_STANDARD_INTEREST_NEGATIVE)));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseStandardInterest(INVALID_STANDARD_INTEREST_NEGATIVE));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseStandardInterest(Optional.of(INVALID_STANDARD_INTEREST_NEGATIVE)));
     }
 
     @Test
@@ -340,13 +340,13 @@ public class ParserUtilTest {
     @Test
     public void parseStandardInterest_validValueWithWhitespace_returnsTrimmedStandardInterest() throws Exception {
         String standardInterestWithWhitespace = WHITESPACE + VALID_STANDARD_INTEREST + WHITESPACE;
-        StandardInterest expectedStandardInterest
-                = new StandardInterest(Double.parseDouble(standardInterestWithWhitespace));
+        StandardInterest expectedStandardInterest =
+                new StandardInterest(Double.parseDouble(standardInterestWithWhitespace));
         assertEquals(expectedStandardInterest, ParserUtil.parseStandardInterest(VALID_STANDARD_INTEREST));
         assertEquals(Optional.of(expectedStandardInterest),
                 ParserUtil.parseStandardInterest(Optional.of(VALID_STANDARD_INTEREST)));
     }
-    
+
     @Test
     public void parseLateInterest_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseLateInterest((String) null));
@@ -355,18 +355,18 @@ public class ParserUtilTest {
 
     @Test
     public void parseLateInterest_invalidValueNotDouble_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseLateInterest(INVALID_LATE_INTEREST_NOT_DOUBLE));
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseLateInterest(Optional.of(INVALID_LATE_INTEREST_NOT_DOUBLE)));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseLateInterest(INVALID_LATE_INTEREST_NOT_DOUBLE));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseLateInterest(Optional.of(INVALID_LATE_INTEREST_NOT_DOUBLE)));
     }
 
     @Test
     public void parseLateInterest_invalidValueNegative_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseLateInterest(INVALID_LATE_INTEREST_NEGATIVE));
-        Assert.assertThrows(IllegalValueException.class,
-                () -> ParserUtil.parseLateInterest(Optional.of(INVALID_LATE_INTEREST_NEGATIVE)));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseLateInterest(INVALID_LATE_INTEREST_NEGATIVE));
+        Assert.assertThrows(IllegalValueException.class, () ->
+                ParserUtil.parseLateInterest(Optional.of(INVALID_LATE_INTEREST_NEGATIVE)));
     }
 
     @Test
@@ -385,8 +385,8 @@ public class ParserUtilTest {
     @Test
     public void parseLateInterest_validValueWithWhitespace_returnsTrimmedLateInterest() throws Exception {
         String lateInterestWithWhitespace = WHITESPACE + VALID_LATE_INTEREST + WHITESPACE;
-        LateInterest expectedLateInterest
-                = new LateInterest(Double.parseDouble(lateInterestWithWhitespace));
+        LateInterest expectedLateInterest =
+                new LateInterest(Double.parseDouble(lateInterestWithWhitespace));
         assertEquals(expectedLateInterest, ParserUtil.parseLateInterest(VALID_LATE_INTEREST));
         assertEquals(Optional.of(expectedLateInterest),
                 ParserUtil.parseLateInterest(Optional.of(VALID_LATE_INTEREST)));

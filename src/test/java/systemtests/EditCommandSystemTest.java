@@ -195,25 +195,35 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateEditCommandTemplate() {
-        //use accelerator
+    public void focusOnCommandBox_populateEditCommandTemplate_usingAccelerator() {
         getCommandBox().click();
         populateEditCommandUsingAccelerator();
         assertPopulationSuccess();
+        }
 
+    @Test
+    public void focusOnResultDisplay_populateEditCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateEditCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateEditCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateEditCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateEditCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateEditCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateEditCommandTemplate_usingMenuButton() {
         populateEditCommandUsingMenu();
         assertPopulationSuccess();
     }

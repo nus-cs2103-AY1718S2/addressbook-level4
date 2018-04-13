@@ -1521,7 +1521,7 @@ Use case ends.
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 5000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  Must be aesthetically appealing which follows Googles Material Design principles
+.  Must be aesthetically appealing which follows Google Material Design principles
 .  Customisable theme
 .  Must be less than 15MB in size
 .  Data must be backed up and saved before exiting the application
@@ -1552,34 +1552,107 @@ Given below are instructions to test the app manually.
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
 
-=== Launch and Shutdown
+[NOTE]
+Currently, there is a glitch in the scaling of the calendar Year Page due to bugs in the third party libraries used.
 
-. Initial launch
+[TIP]
+After each test, you can use the `undo` command to restore the initial state of the address book for subsequent tests.
 
-.. Download the jar file and copy into an empty folder
-.. Double-click the jar file +
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+=== Deleting dated persons
 
-. Saving window preferences
+. Deleting all persons matching the specified tags added before the specified date.
 
-.. Resize the window to an optimum size. Move the window to a different location. Close the window.
-.. Re-launch the app by double-clicking the jar file. +
-   Expected: The most recent window size and location is retained.
+.. Test case: `deletebefore d/12/12/2017 t/nonclient` +
+   Expected: All persons with the "nonclient" tag added before 12/12/2017 are deleted. Success message is shown in the result
+   box, indicating the total number of persons deleted. Timestamp in the status bar is updated.
+.. Test case: `deletebefore d/_today's date_ t/nonclient` +
+   Expected: All persons with the "nonclient" tag are deleted. Success message is shown in the result box, indicating the
+   total number of persons deleted. Timestamp in the status bar is updated.
+.. Test case: `deletebefore d/12/12/2017 t/bestclient` +
+   Expected: No person is deleted. "No such persons found" error message is shown in the result box. Status bar remains the same.
+.. Test case: `deletebefore d/12/34 t/client` +
+   Expected: No person is deleted. Date constraints message is shown in the result box. Status bar remains the same.
+.. Test case: Missing any parameter +
+   Expected: No person is deleted. Invalid command message is shown in the result box. Status bar remains the same.
 
-=== Deleting a person
+=== Adding an appointment
 
-. Deleting a person while all persons are listed
+. Adding an appointment to the address book.
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
-   Expected: Similar to previous.
+[CAUTION]
+All tests should be done using the Command Line Interface(CLI). There should be no modification done to the calendar by clicking on it (GUI).
 
-=== Saving data
+.. Test case: `addappointment n/Joshua d/13/04/2018 st/11:30 et/12:30 l/NUS` +
+   Expected: The specified appointment is added to the address book and reflected in the calendar view. Success message is shown in the result box.
+   Timestamp in the status bar is updated.
+.. Test case: `addappointment n/Joshua d/11/04/2018 st/11:15 et/12:15 l/NUS` +
+   Expected: No appointment is added. Clashing appointment error message is shown in the result box. Status bar remains the same.
+.. Test case: `addappointment n/Chris Chrissy d/11/04/2018 st/15:30 et/16:30 l/Paya Lebar MRT` +
+   Expected: No appointment is added. Duplicate appointment error message is shown in the result box. Status bar remains the same.
+.. Test case: Missing any parameter +
+   Expected: No appointment is added. Invalid command message is shown in the result box. Status bar remains the same.
 
-. Dealing with missing/corrupted data files
+=== Deleting an appointment
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+. Deleting an appointment from the address book.
+
+[CAUTION]
+All tests should be done using the Command Line Interface(CLI). There should be no modification done to the calendar by clicking on it (GUI).
+
+.. Test case: `deleteappointment n/Chris Chrissy d/11/04/2018 st/15:30 et/16:30 l/Paya Lebar MRT` +
+   Expected: The specified appointment is deleted from the address book and reflected in the calendar view. Success message is shown in the result box.
+   Timestamp in the status bar is updated.
+.. Test case: `deleteappointment n/Joshua d/11/05/2018 st/11:15 et/12:15 l/NUS` +
+   Expected: No appointment is deleted. "No such appointment found" error message is shown in the result box. Status bar remains the same.
+.. Test case: Missing any parameter +
+   Expected: No appointment is deleted. Invalid command message is shown in the result box. Status bar remains the same.
+
+
+=== Zooming in calendar view
+
+. Zooming in the calendar panel to show a more detailed calendar view.
+
+.. Prerequisites: The calendar is currently showing the Month Page
+.. Test case: `zoomin` +
+   Expected: The calendar panel is now showing the Week Page. Success message is shown in the result box.
+.. Test case: `zoomin` +
+   Expected: The calendar panel is now showing the Day Page. Success message is shown in the result box.
+.. Test case: `zoomin` +
+   Expected: The calendar does not zoom in anymore. Error message is shown in the result box.
+
+=== Zooming out calendar view
+
+. Zooming out the calendar panel to show a more general calendar view.
+
+.. Prerequisites: The calendar is currently showing the Week Page
+.. Test case: `zoomout` +
+   Expected: The calendar panel is now showing the Month Page. Success message is shown in the result box.
+.. Test case: `zoomout` +
+   Expected: The calendar panel is now showing the Year Page. Success message is shown in the result box.
+.. Test case: `zoomout` +
+   Expected: The calendar does not zoom out anymore. Error message is shown in the result box.
+
+
+=== Going backward on calendar view
+
+. Making the calendar view go backward in time from the currently displaying date.
+
+.. Test case: `gobackward` (Assuming calendar is currently showing the Month Page) +
+   Expected: The calendar panel is now showing the previous month. Success message is shown in the result box.
+.. Test case: `gobackward` (Assuming calendar is currently showing the Week Page) +
+   Expected: The calendar panel is now showing the previous week. Success message is shown in the result box.
+.. Test case: `gobackward` (Assuming calendar is currently showing the Day Page) +
+   Expected: The calendar panel is now showing the previous day. Success message is shown in the result box.
+
+=== Going forward on calendar view
+
+. Making the calendar view go forward in time from the currently displaying date.
+
+.. Test case: `goforward` (Assuming calendar is currently showing the Month Page) +
+   Expected: The calendar panel is now showing the next month. Success message is shown in the result box.
+.. Test case: `goforward` (Assuming calendar is currently showing the Week Page) +
+   Expected: The calendar panel is now showing the next week. Success message is shown in the result box.
+.. Test case: `goforward` (Assuming calendar is currently showing the Day Page) +
+   Expected: The calendar panel is now showing the next day. Success message is shown in the result box.
+
+

@@ -25,12 +25,11 @@ import seedu.address.storage.Storage;
  * The manager of the Password UI component.
  */
 public class PasswordUiManager extends ComponentManager implements Ui {
-    private static final double MAX_WINDOW_SIZE = Double.MAX_VALUE;
-    public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
-
     public static final String WRONG_PASSWORD_ERROR_DIALOG_STAGE_TITLE = "Password Wrong Error";
     public static final String WRONG_PASSWORD_ERROR_DIALOG_HEADER_MESSAGE = "Wrong Password used";
     public static final String WRONG_PASSWORD_ERROR_DIALOG_CONTENT_MESSAGE = "Try Again";
+    public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
+    private static final double MAX_WINDOW_SIZE = Double.MAX_VALUE;
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 

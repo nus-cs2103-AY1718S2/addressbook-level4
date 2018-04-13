@@ -240,8 +240,7 @@ public class MainApp extends Application {
         logger.info("============================ [ Stopping Address Book ] =============================");
         if (passwordChanged) {
             pw.stop();
-        }
-        else {
+        } else {
             ui.stop();
         }
         try {

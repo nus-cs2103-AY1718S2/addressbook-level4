@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
@@ -36,11 +35,12 @@ import seedu.address.model.person.TimeTableLink;
 public class DatabaseManager {
     public static final String INCOMPATIBLE_LINK_MESSAGE = "One or more Timetable link(s) points to a different"
             + " semester as the one in Fastis.";
-    private static final String ACAD_YEAR = Integer.toString(CalendarUtil.getAcadYear()) + "-"
-            + Integer.toString(CalendarUtil.getAcadYear() + 1);
+    private static final String ACAD_YEAR = Integer.toString(CalendarUtil.getCurrAcadYear()) + "-"
+            + Integer.toString(CalendarUtil.getCurrAcadYear() + 1);
     private static final String SEMESTER = Integer.toString(CalendarUtil.getCurrentSemester());
 
-    private static final String DEFAULT_JSON_DATABASE_FILEPATH = "modules.json";
+    private static final String DEFAULT_JSON_DATABASE_FILEPATH = "sem" + CalendarUtil.getCurrentSemester()
+            + "modules.json";
     private static final String DEFAULT_JSON_DATABASE_URL = "https://api.nusmods.com/"
             + ACAD_YEAR + "/" + SEMESTER + "/modules.json";
     private static final Logger logger = LogsCenter.getLogger(DatabaseManager.class);
@@ -128,7 +128,7 @@ public class DatabaseManager {
      *
      * @param link TimeTableLinkto be parsed
      */
-    public ArrayList<WeeklyEvent> parseEvents(TimeTableLink link) {
+    public static ArrayList<WeeklyEvent> parseEvents(TimeTableLink link) {
         ArrayList<WeeklyEvent> eventList = new ArrayList<>();
 
         if (!isCurrentSem(link)) {
@@ -210,18 +210,6 @@ public class DatabaseManager {
         return new URL(connection.getHeaderField("Location"));
     }
 
-    /**
-     * @param filePath
-     * @return module from jsonfile
-     */
-    public Optional<Module> parseModule(String filePath) {
-        try {
-            return JsonUtil.readJsonFile(filePath, Module.class);
-        } catch (DataConversionException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     /**
      * @param filePath

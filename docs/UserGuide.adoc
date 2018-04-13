@@ -74,10 +74,11 @@ image::Ui.png[width="790"]
 
 {empty} +
 
+// tag::autocompleteUG[]
 === Autocomplete `[Since v1.3]`
 
 .Medeina's autocomplete
-image::autocomplete.png[width="500"]
+image::autocomplete.png[width="700"]
 
 * Medeina supports autocomplete for command words, options, prefixes, and parameters.
 * You will be shown a list of suggested NRICs when when you need to reference an existing person in Medeina e.g. adding a pet patient / appointment, editing a pet patient to change ownership.
@@ -85,6 +86,8 @@ image::autocomplete.png[width="500"]
 * Autocomplete matching is case-insensitive e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
 * You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the pop-up context menu.
 * Press kbd:[Enter] to select an autocomplete suggestion on the pop-up context menu.
+* You can toggle autocomplete on/off using kbd:[F2] when the command box is focused.
+// end::autocompleteUG[]
 
 {empty} +
 
@@ -97,6 +100,7 @@ If you are feeling lost, enter `help` or `h` in Medeina's command box, or press 
 
 {empty} +
 
+// tag::addcommandUG[]
 === Adding a contact, pet patient or appointment : `add` or `a` `[Since v1.2]`
 
 If you want to add contact, pet patient, and/or appointment to Medeina, simply use the `add` or `a` command.
@@ -144,12 +148,12 @@ add -o n/Viktor Nikiforov p/91237890 e/v_nikiforov@gmail.com a/27 Skating Place 
 add -p n/Makkachin s/dog b/poodle c/brown bt/DEA-1.1 -o nr/F0012345Z
 
 add -a d/2018-05-27 14:30 r/had poor appetite the last 3 days t/vaccination t/checkup -o nr/F0012345Z
--p n/Makkachin
+ -p n/Makkachin
 
 add -o n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/S1234567G -p n/jewel
  s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/surgery t/sterilization
 ----
-
+// end::addcommandUG[]
 {empty} +
 
 // tag::listcommand[]
@@ -462,6 +466,7 @@ This command **cannot** be undone. Please be certain that you have backed up you
 
 {empty} +
 
+// tag::changethemeUG[]
 === Changing theme : `theme` or `t` `[Since v1.1]`
 
 You can use `theme THEME_NAME` or `t THEME_NAME` to change Medeina's theme to one of the following: +
@@ -476,12 +481,12 @@ You can use `theme THEME_NAME` or `t THEME_NAME` to change Medeina's theme to on
 {empty} +
 
 .Dark theme
-image::Theme_Dark.PNG[width:800]
+image::Theme_Dark.PNG[width:790]
 {empty} +
 
 .Light theme
-image::Theme_Light.PNG[width:800]
-
+image::Ui.png[width:790]
+// end::changethemeUG[]
 {empty} +
 
 === Exiting the program : `exit` or `q`

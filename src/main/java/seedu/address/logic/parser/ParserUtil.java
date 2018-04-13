@@ -212,9 +212,9 @@ public class ParserUtil {
         try {
             return new MoneyBorrowed(Double.parseDouble(moneyBorrowed));
         } catch (NumberFormatException nfe) {
-            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_DOUBLE_ONLY);
+            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEY_BORROWED_DOUBLE_ONLY);
         } catch (IllegalArgumentException iae) {
-            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_NO_NEGATIVE);
+            throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEY_BORROWED_NO_NEGATIVE);
         }
     }
 

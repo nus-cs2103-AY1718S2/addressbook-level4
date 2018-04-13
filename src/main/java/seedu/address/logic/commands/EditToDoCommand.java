@@ -36,7 +36,7 @@ public class EditToDoCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_CONTENT + "Submit presentation scripts";
 
-    public static final String MESSAGE_EDIT_TODO_SUCCESS = "Edited ToDo: %1$s";
+    public static final String MESSAGE_EDIT_TODO_SUCCESS = "Edited to-do: %1$s";
     public static final String MESSAGE_NOT_EDITED_TODO = "The new to-do content to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_TODO = "This to-do already exists in the address book.";
 

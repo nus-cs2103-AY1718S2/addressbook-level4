@@ -25,7 +25,7 @@ public class DeleteToDoCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_TODO_SUCCESS = "Deleted To-do: %1$s";
+    public static final String MESSAGE_DELETE_TODO_SUCCESS = "Deleted to-do: %1$s";
 
     private final Index targetIndex;
 

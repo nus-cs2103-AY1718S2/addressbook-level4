@@ -30,8 +30,8 @@ public class CheckToDoCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_CHECK_TODO_SUCCESS = "Checked ToDo: %1$s";
-    public static final String MESSAGE_NOT_CHECKED = "Checked ToDo failed.";
+    public static final String MESSAGE_CHECK_TODO_SUCCESS = "Checked to-do: %1$s";
+    public static final String MESSAGE_NOT_CHECKED = "Checked to-do failed.";
 
     private final Index index;
 

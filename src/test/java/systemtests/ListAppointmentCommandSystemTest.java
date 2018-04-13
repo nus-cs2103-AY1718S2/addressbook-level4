@@ -55,6 +55,24 @@ public class ListAppointmentCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(ListAppointmentCommand.COMMAND_WORD + " ",
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ListAppointmentCommand.MESSAGE_USAGE));
 
+        String expectedMessage = "You can only list past appointments if you had an appointment"
+                + " in the year of the specified field!";
+        //listappt past year with no appointments, fail
+        assertCommandFailure(ListAppointmentCommand.COMMAND_WORD + " -y 2016",
+                expectedMessage);
+
+        //listappt past month of year with no appointments, fail
+        assertCommandFailure(ListAppointmentCommand.COMMAND_WORD + " -m 2016-01",
+                expectedMessage);
+
+        //listappt past week of year with no appointments, fail
+        assertCommandFailure(ListAppointmentCommand.COMMAND_WORD + " -w 2016-01-01",
+                expectedMessage);
+
+        //listappt past date of year with no appointments, fail
+        assertCommandFailure(ListAppointmentCommand.COMMAND_WORD + " -d 2016-01-01",
+                expectedMessage);
+
         //writing wrong caps, fail
         assertCommandFailure("LiStApPt",
                 String.format(Messages.MESSAGE_UNKNOWN_COMMAND));

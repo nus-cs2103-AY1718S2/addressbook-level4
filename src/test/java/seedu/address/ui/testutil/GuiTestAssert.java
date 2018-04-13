@@ -143,12 +143,13 @@ public class GuiTestAssert {
     public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
         assertEquals(expected, resultDisplayHandle.getText());
     }
-
+    //@@author jas5469
     /**
-     * Asserts that {@code actualCard} displays the details of {@code expectedToDo}.
+     * Asserts that {@code actualCard} displays the details of {@code expectedGroup}.
      */
     public static void assertCardDisplaysGroup(Group expectedGroup, GroupCardHandle actualCard) {
         assertEquals(expectedGroup.getInformation().value, actualCard.getInformation());
 
     }
+    //@@author
 }

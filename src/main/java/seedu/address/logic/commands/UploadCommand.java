@@ -14,7 +14,7 @@ import seedu.address.storage.exceptions.RequestTimeoutException;
 /**
  * Uploads an address book to the existing address book.
  */
-public class UploadCommand extends UndoableCommand {
+public class UploadCommand extends Command {
 
     public static final String COMMAND_WORD = "upload";
 
@@ -26,10 +26,9 @@ public class UploadCommand extends UndoableCommand {
             + "testpassword";
 
     public static final String MESSAGE_SUCCESS = "Current list of Persons, tags, or aliases from "
-            + "Addressbook are successfully uploaded.";
-    public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to given filepath. "
-            + "Please give another filepath.";
-    public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for Addressbook file.";
+            + "StardyTogether are successfully uploaded.";
+    public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to Google Drive. ";
+    public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for StardyTogether file.";
     public static final String MESSAGE_NO_AUTHORIZATION = "Unable to access your Google Drive. "
             + "Please grant authorization.";
     public static final String MESSAGE_REQUEST_TIMEOUT = "Authorization request timed out. Please try again.";
@@ -59,7 +58,7 @@ public class UploadCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
             model.uploadAddressBook(filepath, password);

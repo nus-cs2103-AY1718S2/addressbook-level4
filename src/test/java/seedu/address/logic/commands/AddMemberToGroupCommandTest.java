@@ -6,7 +6,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -18,9 +22,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -40,6 +46,7 @@ import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
 import seedu.address.model.todo.exceptions.ToDoNotFoundException;
 import seedu.address.testutil.GroupBuilder;
+import seedu.address.testutil.TypicalGroups;
 import seedu.address.testutil.TypicalPersons;
 
 public class AddMemberToGroupCommandTest {
@@ -73,6 +80,30 @@ public class AddMemberToGroupCommandTest {
         assertEquals(String.format(AddMemberToGroupCommand.MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS,
                 person.getName().toString(), validGroup.getInformation().toString()),
                 commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_duplicatePerson_throwsCommandException() throws Exception {
+        AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded modelStub = new
+                AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded();
+        Group validGroup = getTypicalAddressBook().getGroupList().get(2);
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddMemberToGroupCommand.MESSAGE_DUPLICATE_PERSON);
+
+        getAddMemberToGroupCommandForGroup(INDEX_FIRST_PERSON, validGroup, modelStub).execute();
+    }
+
+    @Test
+    public void execute_noSuchGroup_throwsCommandException() throws Exception {
+        AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded modelStub = new
+                AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded();
+        Group invalidGroup = new GroupBuilder().withInformation("INVALID").build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddMemberToGroupCommand.MESSAGE_NO_SUCH_GROUP);
+
+        getAddMemberToGroupCommandForGroup(INDEX_FIRST_PERSON, invalidGroup, modelStub).execute();
     }
 
     @Test
@@ -251,7 +282,7 @@ public class AddMemberToGroupCommandTest {
         }
     }
     /**
-     * A Model stub that always accept the to-do being added.
+     * A Model stub that always accept the group being added.
      */
     private class ModelStubAcceptingGroupAdded extends AddMemberToGroupCommandTest.ModelStub {
         final ArrayList<Group> groupsAdded = new ArrayList<>();

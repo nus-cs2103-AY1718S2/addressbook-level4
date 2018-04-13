@@ -26,6 +26,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Remark;
+import seedu.address.model.appointment.exceptions.PastAppointmentException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -102,6 +103,11 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         try {
             LocalDateTime localDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_DATE)).get();
+
+            if (localDateTime.isBefore(LocalDateTime.now())) {
+                throw new PastAppointmentException();
+            }
+
             Remark remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             Set<Tag> type = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 

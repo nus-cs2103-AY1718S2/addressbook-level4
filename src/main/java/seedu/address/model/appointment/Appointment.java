@@ -115,11 +115,11 @@ public class Appointment {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("\t")
+        builder.append("    ")
                 .append(getFormattedLocalDateTime())
-                .append("\tRemarks: ")
+                .append("    Remarks: ")
                 .append(getRemark())
-                .append("\tType(s): ");
+                .append("    Type(s): ");
         getAppointmentTags().forEach(builder::append);
         return builder.toString();
     }

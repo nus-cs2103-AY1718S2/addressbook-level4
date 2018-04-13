@@ -60,6 +60,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author aquarinte
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
@@ -74,13 +75,14 @@ public class ParserUtil {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
         String[] wordsInName = trimmedName.split(" ");
-        String formattedName = "";
+        StringBuilder formattedName = new StringBuilder();
         for (String n : wordsInName) {
-            formattedName += n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase() + " ";
+            formattedName = formattedName.append(n.substring(0, 1).toUpperCase())
+                    .append(n.substring(1).toLowerCase()).append(" ");
         }
-        return new Name(formattedName.trim());
+        return new Name(formattedName.toString().trim());
     }
-
+    //@@author
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -126,7 +128,15 @@ public class ParserUtil {
         if (!Address.isValidAddress(trimmedAddress)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        String[] wordsInAddress = trimmedAddress.split(" ");
+        StringBuilder formattedAddress = new StringBuilder();
+        for (String s : wordsInAddress) {
+            formattedAddress = formattedAddress
+                    .append(s.substring(0, 1).toUpperCase())
+                    .append(s.substring(1).toLowerCase())
+                    .append(" ");
+        }
+        return new Address(formattedAddress.toString().trim());
     }
 
     /**
@@ -393,6 +403,7 @@ public class ParserUtil {
         if (!Tag.isValidTagName(trimmedTag)) {
             throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
+        trimmedTag = trimmedTag.toLowerCase();
         return new Tag(trimmedTag);
     }
 
@@ -408,6 +419,7 @@ public class ParserUtil {
         return tagSet;
     }
 
+    //@@author aquarinte
     /**
      * Parses a {@code String name} into a {@code PetPatientName}.
      * Leading and trailing whitespaces will be trimmed.
@@ -422,11 +434,12 @@ public class ParserUtil {
             throw new IllegalValueException(PetPatientName.MESSAGE_PET_NAME_CONSTRAINTS);
         }
         String[] wordsInName = trimmedName.split(" ");
-        String formattedName = "";
+        StringBuilder formattedName = new StringBuilder();
         for (String n : wordsInName) {
-            formattedName += n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase() + " ";
+            formattedName = formattedName.append(n.substring(0, 1).toUpperCase())
+                    .append(n.substring(1).toLowerCase()).append(" ");
         }
-        return new PetPatientName(formattedName.trim());
+        return new PetPatientName(formattedName.toString().trim());
     }
 
     //@@author chialejing
@@ -449,7 +462,15 @@ public class ParserUtil {
         if (!Species.isValidSpecies(trimmedSpecies)) {
             throw new IllegalValueException(Species.MESSAGE_PET_SPECIES_CONSTRAINTS);
         }
-        return new Species(trimmedSpecies);
+        String[] wordsInSpecies = trimmedSpecies.split(" ");
+        StringBuilder formattedSpecies = new StringBuilder();
+        for (String s : wordsInSpecies) {
+            formattedSpecies = formattedSpecies
+                    .append(s.substring(0, 1).toUpperCase())
+                    .append(s.substring(1).toLowerCase())
+                    .append(" ");
+        }
+        return new Species(formattedSpecies.toString().trim());
     }
 
     /**
@@ -471,7 +492,15 @@ public class ParserUtil {
         if (!Breed.isValidBreed(trimmedBreed)) {
             throw new IllegalValueException(Breed.MESSAGE_PET_BREED_CONSTRAINTS);
         }
-        return new Breed(trimmedBreed);
+        String[] wordsInBreed = trimmedBreed.split(" ");
+        StringBuilder formattedBreed = new StringBuilder();
+        for (String s : wordsInBreed) {
+            formattedBreed = formattedBreed
+                    .append(s.substring(0, 1).toUpperCase())
+                    .append(s.substring(1).toLowerCase())
+                    .append(" ");
+        }
+        return new Breed(formattedBreed.toString().trim());
     }
 
     /**
@@ -493,7 +522,14 @@ public class ParserUtil {
         if (!Colour.isValidColour(trimmedColour)) {
             throw new IllegalValueException(Colour.MESSAGE_PET_COLOUR_CONSTRAINTS);
         }
-        return new Colour(trimmedColour);
+        String[] wordsInColour = trimmedColour.split(" ");
+        StringBuilder formattedColour = new StringBuilder();
+        for (String s : wordsInColour) {
+            formattedColour = formattedColour
+                    .append(s.substring(0).toLowerCase())
+                    .append(" ");
+        }
+        return new Colour(formattedColour.toString().trim());
     }
 
     /**
@@ -515,7 +551,14 @@ public class ParserUtil {
         if (!BloodType.isValidBloodType(trimmedBloodType)) {
             throw new IllegalValueException(BloodType.MESSAGE_PET_BLOODTYPE_CONSTRAINTS);
         }
-        return new BloodType(trimmedBloodType);
+        String[] wordsInBloodType = trimmedBloodType.split(" ");
+        StringBuilder formattedBloodType = new StringBuilder();
+        for (String s : wordsInBloodType) {
+            formattedBloodType = formattedBloodType
+                    .append(s.substring(0).toUpperCase())
+                    .append(" ");
+        }
+        return new BloodType(formattedBloodType.toString().trim());
     }
 
     /**

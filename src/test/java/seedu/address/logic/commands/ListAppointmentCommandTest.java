@@ -86,4 +86,12 @@ public class ListAppointmentCommandTest {
         thrown.expect(NullPointerException.class);
         new ListAppointmentCommand(4, date).execute();
     }
+
+    @Test
+    public void execute_getPast_failure() throws CommandException {
+        LocalDate date = LocalDate.of(2017, 01, 01);
+        thrown.expect(CommandException.class);
+        new ListAppointmentCommand(5, date).execute();
+    }
+
 }

@@ -3,6 +3,41 @@
     background-color: #383838; /* Used in the default.html file */
 }
 
+//@@author Robert-Peng
+
+.tab-pane .tab-header-area .tab-background{
+-fx-opacity: 0;
+}
+
+#owner-Tab {
+    -fx-background-color: A9A9A9;
+    -fx-text-base-color: black;
+}
+
+#petPatient-Tab {
+    -fx-background-color: A9A9A9;
+    -fx-text-base-color: black;
+}
+
+#owner-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: null;
+    -fx-border-color: null;
+    -fx-background-color: derive(#1d1d1d, 20%);
+
+}
+
+#petPatient-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: null;
+    -fx-border-color: null;
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+//@@author
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -30,7 +65,7 @@
 }
 
 .tab-pane {
-    -fx-padding: 0 0 0 1;
+    -fx-padding: 0 0 0 10;
 }
 
 .tab-pane .tab-header-area {
@@ -40,9 +75,9 @@
 }
 
 .table-view {
-    -fx-base: #1d1d1d;
-    -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
+    -fx-base: black;
+    -fx-control-inner-background: black;
+    -fx-background-color: black;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -57,9 +92,6 @@
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color:
-        transparent
-        transparent
-        derive(-fx-base, 80%)
         transparent;
     -fx-border-insets: 0 10 1 0;
 }
@@ -87,10 +119,28 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
+//@@author Robert-Peng
+
+#personListView {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: white;
+}
+
+#personListView .list-cell:filled:odd {
+    -fx-background-color: #515658;
+}
+
+#petPatientListView {
     -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+#petPatientListView .list-cell:filled:odd {
+    -fx-background-color: #515658
 }
 
 .list-cell {
@@ -104,8 +154,9 @@
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: transparent;
 }
+//@@author
 
 .list-cell:empty {
     /* Empty cells will not have alternating colours */

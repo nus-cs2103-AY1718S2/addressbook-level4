@@ -167,6 +167,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 The sections below give more details of each component.
 
 [[Design-Ui]]
+// tag::UIcomponent[]
 === UI component
 
 The following diagram displays the structure of the UI component.
@@ -185,6 +186,8 @@ The `UI` component,
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
+
+// end::UIcomponent[]
 
 [[Design-Logic]]
 === Logic component
@@ -440,6 +443,7 @@ Linking of pet patients to their respective owners and appointments will be impl
 // end::addPetPatient[]
 
 
+// tag::ListPets[]
 === Display List of PetPatients
 ==== Current Implemaentation
 Since Veterinarians and their assistants have the need to view the PetPatients as a list and see how many PetPatients belong to the same Owner. It is necessary to implement the PetPatient List feature.
@@ -460,7 +464,9 @@ More command and features relating to PetPatient List are to be properly develop
 
 ==== Future Work
 Implement the corresponding Add, Delete, List commands for petPatients and decide on the tags to be used for petPatients.
+// end::ListPets[]
 
+// tag::calendar[]
 === Show Appointments on calendar
 ==== Current Implementation
 
@@ -489,6 +495,7 @@ Only the UI of CalendarFX is integrated to show calendar view.
 After the appointment class being finished, we'll be able to implement `setAppointment` function in CalendarFX, the user will then be able to see future appointments in either All-day/weekly/monthly/yearly view.
 
 We may also make enhancements to the Medeina's UI such as changing theme colour to match the UI colour of CalendarFX.
+// end::calendar[]
 
 // tag::autocompleteDG[]
 === Autocomplete

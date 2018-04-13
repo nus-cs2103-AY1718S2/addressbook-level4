@@ -23,35 +23,35 @@
         <name>Carl Kurz</name>
         <phone>95352563</phone>
         <email>heinz@example.com</email>
-        <address>wall street</address>
+        <address>Wall Street</address>
         <nric>F2345678U</nric>
     </persons>
     <persons>
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
-        <address>10th street</address>
+        <address>10th Street</address>
         <nric>T0123456L</nric>
     </persons>
     <persons>
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <email>werner@example.com</email>
-        <address>michegan ave</address>
+        <address>Michegan Ave</address>
         <nric>T0120956W</nric>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
-        <address>little tokyo</address>
+        <address>Little Tokyo</address>
         <nric>S0156956W</nric>
     </persons>
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
         <email>anna@example.com</email>
-        <address>4th street</address>
+        <address>4th Street</address>
         <nric>F0184556R</nric>
     </persons>
     <tags>friends</tags>

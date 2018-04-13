@@ -97,9 +97,9 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String VALID_TAG_UNUSED = "unused";
-    public static final String VALID_TAG_FIV = "Fiv";
+    public static final String VALID_TAG_FIV = "fiv";
     public static final String TAG_DESC_FIV = " " + PREFIX_TAG + VALID_TAG_FIV;
-    public static final String VALID_TAG_DEPRESSION = "Depression";
+    public static final String VALID_TAG_DEPRESSION = "depression";
     public static final String TAG_DESC_DEPRESSION = " " + PREFIX_TAG + VALID_TAG_DEPRESSION;
     public static final String VALID_TAG_CHECKUP = "checkup";
     public static final String TAG_DESC_CHECKUP = " " + PREFIX_TAG + VALID_TAG_CHECKUP;
@@ -111,18 +111,22 @@ public class CommandTestUtil {
     public static final String REMARK_DESC_ONE = " " + PREFIX_REMARK + VALID_REMARK_ONE;
     public static final String VALID_REMARK_TWO = "old age";
     public static final String REMARK_DESC_TWO = " " + PREFIX_REMARK + VALID_REMARK_TWO;
+    public static final String VALID_REMARK_THREE = "May require isolation";
+    public static final String REMARK_DESC_THREE = " " + PREFIX_REMARK + VALID_REMARK_THREE;
 
     // Date Time for appointments
     public static final String VALID_DATE_ONE = "2018-06-17 11:30";
     public static final String DATE_DESC_ONE = " " + PREFIX_DATE + VALID_DATE_ONE;
     public static final String VALID_DATE_TWO = "2018-07-05 16:30";
     public static final String DATE_DESC_TWO = " " + PREFIX_DATE + VALID_DATE_TWO;
+    public static final String VALID_DATE_THREE = "2018-12-22 14:30";
+    public static final String DATE_DESC_THREE = " " + PREFIX_DATE + VALID_DATE_THREE;
 
 
     // PetPatient: Joker
     public static final String VALID_NAME_JOKER = "Joker";
-    public static final String VALID_SPECIES_JOKER = "cat";
-    public static final String VALID_BREED_JOKER = "domestic shorthair";
+    public static final String VALID_SPECIES_JOKER = "Cat";
+    public static final String VALID_BREED_JOKER = "Domestic Shorthair";
     public static final String VALID_COLOUR_JOKER = "brown and white";
     public static final String VALID_BLOODTYPE_JOKER = "O";
     public static final String NAME_DESC_JOKER = " " + PREFIX_NAME + VALID_NAME_JOKER;
@@ -133,9 +137,9 @@ public class CommandTestUtil {
 
     // PetPatient: Nero
     public static final String VALID_NAME_NERO = "Nero";
-    public static final String VALID_SPECIES_NERO = "cat";
+    public static final String VALID_SPECIES_NERO = "Cat";
     public static final String VALID_BREED_NERO = "British Shorthair";
-    public static final String VALID_COLOUR_NERO = "Blue";
+    public static final String VALID_COLOUR_NERO = "blue";
     public static final String VALID_BLOODTYPE_NERO = "AB";
     public static final String NAME_DESC_NERO = " " + PREFIX_NAME + VALID_NAME_NERO;
     public static final String SPECIES_DESC_NERO = " " + PREFIX_SPECIES + VALID_SPECIES_NERO;
@@ -145,9 +149,9 @@ public class CommandTestUtil {
 
     // PetPatient: Hazel
     public static final String VALID_NAME_HAZEL = "Hazel";
-    public static final String VALID_SPECIES_HAZEL = "dog";
+    public static final String VALID_SPECIES_HAZEL = "Dog";
     public static final String VALID_BREED_HAZEL = "Poodle";
-    public static final String VALID_COLOUR_HAZEL = "White";
+    public static final String VALID_COLOUR_HAZEL = "white";
     public static final String VALID_BLOODTYPE_HAZEL = "A";
     public static final String NAME_DESC_HAZEL = " " + PREFIX_NAME + VALID_NAME_HAZEL;
     public static final String SPECIES_DESC_HAZEL = " " + PREFIX_SPECIES + VALID_SPECIES_HAZEL;
@@ -173,10 +177,15 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_NRIC = "&2345678M"; // '&' not allowed in NRIC
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "&2345678M"; // '&' not allowed in NRIC
+    public static final String INVALID_SPECIES_DESC = " " + PREFIX_SPECIES + "c@+";
+    public static final String INVALID_BREED_DESC = " " + PREFIX_BREED + "p3rsi4n";
+    public static final String INVALID_COLOUR_DESC = " " + PREFIX_COLOUR + "siv3r";
+    public static final String INVALID_BLOODTYPE_DESC = " " + PREFIX_BLOODTYPE + "\\x00";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_OWNER_DESC = " " + PREFIX_NRIC + "S000000000T"; // invalid Nric
     public static final String INVALID_REMARK_DESC = " " + PREFIX_REMARK; //empty string not allowed for remark
-    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "twelvemarchtwozerooneeight"; //follows format
+    public static final String INVALID_DATETIME_DESC = " " + PREFIX_DATE + "twelvemarchtwozerooneeight"; //follow format
+    public static final String INVALID_TIME_DESC = " " + PREFIX_DATE + "2018-08-09 1230"; //follows format, wrong time
     public static final String INVALID_THEME_PINK = "pink";
     public static final String INVALID_THEME_LIGHTT = "lightt";
     public static final String INVALID_OPTION = " -z";

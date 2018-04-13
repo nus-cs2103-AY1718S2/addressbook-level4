@@ -156,12 +156,15 @@ add -o n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/
 // end::addcommandUG[]
 {empty} +
 
+// tag::listcommand[]
 === Listing all contacts : `list` or `ls`
 
 Medeina will show a list of all stored Owners and PetPatients if you enter `list` or `ls` in the command box.
 
 .`list` command
 image::List_Command.PNG[width="800"]
+
+// end::listcommand[]
 
 {empty} +
 

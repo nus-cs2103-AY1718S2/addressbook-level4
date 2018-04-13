@@ -29,7 +29,7 @@ public class PasswordUiManager extends ComponentManager implements Ui {
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
 
     public static final String WRONG_PASSWORD_ERROR_DIALOG_STAGE_TITLE = "Password Wrong Error";
-    public static final String WRONG_PASSWORD_ERROR_DIALOG_HEADER_MESSAGE = "Password keyed wrong";
+    public static final String WRONG_PASSWORD_ERROR_DIALOG_HEADER_MESSAGE = "Wrong Password used";
     public static final String WRONG_PASSWORD_ERROR_DIALOG_CONTENT_MESSAGE = "Try Again";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);

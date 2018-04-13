@@ -216,7 +216,7 @@ public class AddCommand extends UndoableCommand {
         } catch (ConcurrentAppointmentException e) {
             throw new CommandException("Appointment cannot be concurrent with other appointments.");
         } catch (PastAppointmentException e) {
-            throw new CommandException("Appointment cannot be created with past dateTime.");
+            throw new CommandException("Appointment cannot be created with past DateTime.");
         }
     }
 

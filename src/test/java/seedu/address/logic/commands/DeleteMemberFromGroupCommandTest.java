@@ -96,7 +96,7 @@ public class DeleteMemberFromGroupCommandTest {
         getDeleteMemberFromGroupCommandForGroup(INDEX_FIRST_PERSON, validGroup, modelStub).execute();
 
     }
-    
+
     /**
      * Returns a {@code DeleteMemberFromGroupCommand} with the parameter {@code index}.
      */
@@ -110,7 +110,8 @@ public class DeleteMemberFromGroupCommandTest {
     /**
      * Generates a new DeleteMemberFromGroupCommand with the details of the given to-do.
      */
-    private DeleteMemberFromGroupCommand getDeleteMemberFromGroupCommandForGroup(Index index, Group group, Model model) {
+    private DeleteMemberFromGroupCommand getDeleteMemberFromGroupCommandForGroup(Index index, Group group,
+                                                                                 Model model) {
         DeleteMemberFromGroupCommand command = new DeleteMemberFromGroupCommand(index, group);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;

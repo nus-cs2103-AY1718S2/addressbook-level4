@@ -94,7 +94,7 @@ public class AddMemberToGroupCommandTest {
         AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded modelStub = new
                 AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded();
         Group validGroup = new GroupBuilder().withInformation("Group A").build();
-        Index index = Index.fromZeroBased(model.getFilteredPersonList().size()+1);
+        Index index = Index.fromZeroBased(model.getFilteredPersonList().size() + 1);
         thrown.expect(CommandException.class);
         thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 

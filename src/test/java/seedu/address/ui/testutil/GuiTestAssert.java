@@ -87,9 +87,16 @@ public class GuiTestAssert {
         case "family":
         case "friend":
             return "orange";
+
         case "owner":
         case "friends":
             return "brown";
+
+        case "volunteer":
+            return "green";
+
+        case "spca":
+            return "blue";
 
         case "husband":
             return "grey";

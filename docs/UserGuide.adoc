@@ -582,7 +582,7 @@ Set the calendar theme to the predefined `STYLE_2`.
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Add Appointment* : `addappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
 e.g. `addappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
-* *Add Template* : `addTemplate pu/PURPOSE s/SUBJECT m/MESSAGE` +
+* *Add Template* : `addtemplate pu/PURPOSE s/SUBJECT m/MESSAGE` +
 e.g. `addTemplate pu/holiday s/Merry Christmas m/Santa Claus is coming to town!`
 * *Calendar Go Back* : `gobackward`
 * *Calendar Go Forward* : `goforward`
@@ -598,7 +598,7 @@ e.g. `deleteappointment 3`
 * *Delete Before* : `deletebefore d/DATE [t/TAG]...` +
 e.g. `deletebefore d/12/12/2017 t/friends`
 * *Delete Template* : `deleteTemplate PURPOSE` +
-e.g. `deleteTemplate greeting`
+e.g. `deletetemplate greeting`
 * *Email* : `email KEYWORD TEMPLATE` +
 e.g. `email James followup`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +

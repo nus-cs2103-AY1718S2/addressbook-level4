@@ -59,6 +59,9 @@ public class EmailCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
         ObservableList<Person> emailList = model.getFilteredPersonList();
+        if (emailList.size() == 0) {
+            return new CommandResult(Messages.MESSAGE_PERSONS_NOT_FOUND);
+        }
         for (Person person : emailList) {
             try {
                 Template template = model.selectTemplate(this.search);

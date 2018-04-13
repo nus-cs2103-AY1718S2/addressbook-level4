@@ -1294,7 +1294,6 @@ Major Enhancement :
 ** Implement email function which takes in a search parameter and a template parameter
 *** Adding the email utility into the Application
 *** Implementing `Email` Package and its subsidiary models
-*** Implementing persistence of data for Email Templates
 *** Implementing add and remove for new Email Templates
 
 *Lucas Gaylord*
@@ -1577,6 +1576,45 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
+
+=== Adding a template
+
+. Adding a template
+
+.. Prerequisites: A template with the same purpose cannot already exist
+.. Test case: `at pu/greeting s/Hello There m/Luke I am your father` +
+    Expected: A template with the following details will be created. Details of the template shown in the status message.
+.. Test case: `at pu/greeting s/Hello There m/Luke I am your father` +
+    Expected: No template will be added. Error details shown in the status message.
+.. Other incorrect adding template commands to try: `at something`, `at`.+
+    Expected: Similar to previous
+
+=== Deleting a template
+
+. Deleting a template
+
+.. Prerequisites: A template with the specified purpose must exist, and must be the exact string match
+.. Test case: `dt pu/greeting` +
+    Expected: Template with purpose `greeting` is deleted from the template list. Status message will indicate the purpose of deleted template.
+.. Test case: `dt pu/No Such Template` +
+    Expected: No template will be deleted. Error details shown in the status message.
+.. Other incorrect deleting template commands to try: `dt`, `delete something` +
+    Expected: Similar to previous
+
+=== Sending an email
+
+. Sending an email
+
+.. Prerequisites: A template with the specified purpose must exist, and people matching the specified name must also exist.
+.. Test case : `em n/Amy pu/greeting` +
+    Expected: An email will be sent to Amy. If it is the first time sending email, user may be prompted to authenticate their Gmail account.
+    Further emails will not require this as the credentials will be cached. Status message will reflect number of people email was sent to.
+.. Test case: `em n/NoSuchPerson pu/greeting` +
+    Expected: No email will be sent. Status message will reflect that there is no such persons found
+.. Test case: `em n/Amy pu/NoSuchTemplate` +
+    Expected: No email will be sent. Status message will reflect that there is no such Template found.
+.. Other incorrect email commands to try : `em`, `em person` `em template` +
+   Expected: Similar to previous
 
 === Saving data
 

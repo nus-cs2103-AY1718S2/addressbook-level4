@@ -12,7 +12,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class BirthdaysCommandParser implements Parser<BirthdaysCommand> {
 
-
     /**
      * Parses the given {@code String} of arguments in the context of the BirthdaysCommand
      * and returns an BirthdaysCommand object for execution.
@@ -27,13 +26,15 @@ public class BirthdaysCommandParser implements Parser<BirthdaysCommand> {
                 return new BirthdaysCommand(true);
             } else if (trimmedArgs[0].equalsIgnoreCase("")) {
                 return new BirthdaysCommand(false);
+            } else {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
             }
         } else {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
         }
 
-        return new BirthdaysCommand(false);
     }
 
 }

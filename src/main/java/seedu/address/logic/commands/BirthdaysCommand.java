@@ -42,6 +42,13 @@ public class BirthdaysCommand extends Command {
     }
 
     @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof BirthdaysCommand // instanceof handles nulls
+                && isToday == ((BirthdaysCommand) other).isToday);
+    }
+
+    @Override
     public CommandResult execute() {
         requireNonNull(model);
 

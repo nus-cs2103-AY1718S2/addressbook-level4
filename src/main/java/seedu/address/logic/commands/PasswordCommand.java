@@ -10,10 +10,10 @@ import seedu.address.commons.util.SecurityUtil;
  */
 public class PasswordCommand extends Command {
 
-    public static final String COMMAND_WORD = "password";
+    public static final String COMMAND_WORD = "encrypt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the password used for en. "
-            + "Parameters: password PASSWORD"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Encrypts the data with the password provided. "
+            + "Parameters: encrypt PASSWORD"
             + "Example: " + COMMAND_WORD + "test";
     public static final String INVALID_PASSWORD = "Password cannot be blank!";
 

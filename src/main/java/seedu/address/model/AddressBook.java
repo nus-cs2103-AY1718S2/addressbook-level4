@@ -98,6 +98,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     */
+    public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newList) {
+        requireNonNull(newData);
+        setTags(new HashSet<>(newData.getTagList()));
+        this.aliases.replaceHashmap(newList);
+        List<Person> syncedPersonList = newData.getPersonList().stream()
+                .map(this::syncWithMasterTagList)
+                .collect(Collectors.toList());
+        updatePassword(newData.getPassword());
+        try {
+            setPersons(syncedPersonList);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+    }
     //// person-level operations
 
     /**

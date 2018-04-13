@@ -20,6 +20,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.building.Building;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -32,16 +33,21 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TIMETABLE = "http://google.com/";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_TIMETABLE = "http://modsn.us/oNZLY";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+
+    //@@author AzuraAiR
+    private static final String VALID_TIMETABLE = "http://modsn.us/oNZLY";
+    private static final String VALID_BIRTHDAY = "01011995";
+    private static final String INVALID_TIMETABLE = "http://google.com/";
+    private static final String INVALID_BIRTHDAY = "31021985";
+    //@@author
 
     //@@author jingyinno
     private static final String VALID_BUILDING = "COM1";
@@ -207,6 +213,28 @@ public class ParserUtilTest {
         assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
     }
 
+    //@@author AzuraAiR
+    @Test
+    public void parseBirthday_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseBirthday((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseBirthday((Optional<String>) null));
+    }
+
+    @Test
+    public void parseBirthday_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseBirthday(INVALID_BIRTHDAY));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseBirthday(Optional
+                .of(INVALID_BIRTHDAY)));
+    }
+
+    @Test
+    public void parseTimetable_validValue_returnsBirthday() throws Exception {
+        Birthday expectedBirthday = new Birthday(VALID_BIRTHDAY);
+        assertEquals(expectedBirthday, ParserUtil.parseBirthday(VALID_BIRTHDAY));
+        assertEquals(Optional.of(expectedBirthday), ParserUtil.parseBirthday(Optional.of(VALID_BIRTHDAY)));
+    }
+
+
     @Test
     public void parseTimetable_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseTimetable((String) null));
@@ -216,7 +244,7 @@ public class ParserUtilTest {
     @Test
     public void parseTimetable_invalidValue_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseTimetable(INVALID_TIMETABLE));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(Optional
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseTimetable(Optional
                 .of(INVALID_TIMETABLE)));
     }
 
@@ -240,6 +268,7 @@ public class ParserUtilTest {
         assertEquals(Optional.of(expectedTimetable), ParserUtil.parseTimetable(Optional
                 .of(timetableWithWhitespace)));
     }
+    //@@author
 
     @Test
     public void parseTag_null_throwsNullPointerException() throws Exception {

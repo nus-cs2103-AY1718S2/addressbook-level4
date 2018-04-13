@@ -8,8 +8,8 @@ import static java.util.Objects.requireNonNull;
  */
 public class RemovePasswordCommand extends Command {
 
-    public static final String COMMAND_WORD = "nopassword";
-    public static final String MESSAGE_SUCCESS = "Password removed.";
+    public static final String COMMAND_WORD = "decrypt";
+    public static final String MESSAGE_SUCCESS = "Password removed and data decrypted.";
     @Override
     public CommandResult execute() {
         requireNonNull(model);

@@ -24,6 +24,11 @@ public class GroupTest {
     private Group groupB = new GroupBuilder().withInformation("Group B").build();
 
     @Test
+    public void compare_equalGroups() throws Exception {
+        assertEquals(groupA, groupA2);
+    }
+    
+    @Test
     public void hashCodeAndString_test() {
         assertEquals(groupA.hashCode(), groupA.hashCode());
         assertEquals(groupA.hashCode(), groupA2.hashCode());

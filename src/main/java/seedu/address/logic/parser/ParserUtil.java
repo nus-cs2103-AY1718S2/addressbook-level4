@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.person.Name.MESSAGE_NAME_CONSTRAINTS;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -65,7 +66,7 @@ public class ParserUtil {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!Name.isValidName(trimmedName)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
         return new Name(trimmedName);
     }
@@ -399,7 +400,7 @@ public class ParserUtil {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!NextOfKin.isValidName(trimmedName)) {
-            throw new IllegalValueException(NextOfKin.MESSAGE_NAME_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
         requireNonNull(phone);
         String trimmedPhone = phone.trim();

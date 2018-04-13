@@ -11,6 +11,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddInjuriesHistoryCommand;
 import seedu.address.logic.commands.AddRemarkCommand;
 import seedu.address.logic.commands.AppointmentCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCcaCommand;
@@ -18,6 +19,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteInjuriesHistoryCommand;
 import seedu.address.logic.commands.DeleteRemarkCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditSubjectCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -64,6 +66,9 @@ public class AddressBookParser {
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
+        case ChangeThemeCommand.COMMAND_WORD:
+            return new ChangeThemeCommandParser().parse(arguments);
+
         case AddCcaCommand.COMMAND_WORD:
             return new AddCcaCommandParser().parse(arguments);
 
@@ -79,6 +84,9 @@ public class AddressBookParser {
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
+
+        case EditSubjectCommand.COMMAND_WORD:
+            return new EditSubjectCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
@@ -144,6 +152,8 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
+
+
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

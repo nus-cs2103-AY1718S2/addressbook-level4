@@ -54,9 +54,9 @@ public class BrowserPanel extends UiPart<Region> {
         String append = location.urlstyle();
         loadPage(SEARCH_PAGE_URL + append);
     }
-//@author samuelloh
+    //@author samuelloh
     /**
-     * Loads the student's full information page on the browser including his/her profile picture if it exists
+     * Loads the student's full information page on the browser including his/her profile picture if it exists.
      */
     private void loadStudentInfoPage() {
         String studentPageFilePath = constructPathToLoad();
@@ -90,7 +90,7 @@ public class BrowserPanel extends UiPart<Region> {
             return testPath;
         }
     }
-//@@author
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));

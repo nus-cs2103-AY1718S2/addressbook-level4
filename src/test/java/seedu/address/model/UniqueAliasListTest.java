@@ -25,6 +25,9 @@ import seedu.address.model.alias.exceptions.DuplicateAliasException;
 //@@author jingyinno
 public class UniqueAliasListTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private UniqueAliasList uniqueAliasList;
 
     @Before
@@ -36,9 +39,6 @@ public class UniqueAliasListTest {
     public void clean() throws AliasNotFoundException {
         clearAliasList();
     }
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {

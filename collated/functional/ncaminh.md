@@ -190,6 +190,11 @@ public class DistanceCommand extends Command {
         }
     }
 
+    /**
+     * Trim address
+     * @param address
+     * @return
+     */
     private String trimAddress(String address) {
         if (address.indexOf('#') > 2) {
             int stringCutIndex;
@@ -245,6 +250,7 @@ public class DistanceCommand extends Command {
 ```
 ###### \java\seedu\address\logic\GetDistance.java
 ``` java
+    private static final Logger logger = LogsCenter.getLogger(GetDistance.class);
     public DistanceMatrix getMatrix(String origin, String destination) {
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey("AIzaSyBWyCJkCym1dSouzHX_FxLk6Tj11C7F0Ao")
@@ -261,7 +267,7 @@ public class DistanceCommand extends Command {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning("Out of API quota");
         }
         return matrix;
     }
@@ -339,7 +345,7 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
     private void readWelcomeMessage() {
         try {
             readWelcomeScriptForMac();
-        } catch (IOException notMac){
+        } catch (IOException notMac) {
             try {
                 createFolderIfNeeded();
                 createScriptIfNeeded();
@@ -422,7 +428,7 @@ public class DistanceCommandParser implements Parser<DistanceCommand> {
     }
 
     /**
-     * Run script that read person name
+     * Run script that read person's name
      * @param person
      */
     private void readPersonName(Person person) {

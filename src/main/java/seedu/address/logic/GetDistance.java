@@ -1,11 +1,14 @@
 package seedu.address.logic;
 
+import com.google.maps.errors.OverDailyLimitException;
 import java.io.IOException;
 
 import com.google.maps.DistanceMatrixApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
+import java.util.logging.Logger;
+import seedu.address.commons.core.LogsCenter;
 
 /**
  * Testing retrieve distance data
@@ -13,9 +16,10 @@ import com.google.maps.model.DistanceMatrix;
 public class GetDistance {
 
     //@@author ncaminh
+    private static final Logger logger = LogsCenter.getLogger(GetDistance.class);
     public DistanceMatrix getMatrix(String origin, String destination) {
         GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyDga8lhEq6jOcAm03b4GGWR65GhWOrbOxg")
+                .apiKey("AIzaSyBWyCJkCym1dSouzHX_FxLk6Tj11C7F0Ao")
                 .build();
 
         String[] origins = {origin};
@@ -29,7 +33,7 @@ public class GetDistance {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning("Out of API quota");
         }
         return matrix;
     }

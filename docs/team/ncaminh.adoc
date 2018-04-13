@@ -29,8 +29,10 @@ Therefore, any future commands, which create events to change the display of the
 
 * *Minor enhancement*: added *Distance Command* to calculate distance from 2 locations so that the driver can plan his trip better.
 
+* *Minor enhancement*: added *Sound system* to welcome user after login and read person card name.
+
 //TODO add links for collation
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-T16-B2/main/tree/master/collated/functional/ncaminh.md[Functional code]] [https://github.com/CS2103JAN2018-T16-B2/main/tree/master/collated/test/ncaminh.md[Test code]] [https://github.com/CS2103JAN2018-T16-B2/main/tree/master/collated/unused[Unused code]] _{give links to collated code files}_
 
 * *Other contributions*:
 

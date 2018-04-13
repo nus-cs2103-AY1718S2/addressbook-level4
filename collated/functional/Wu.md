@@ -665,6 +665,185 @@ public class ImportCommand extends Command {
 
     public ImportCommand(String filePath) {
         this.filePath = filePath.trim();
+<<<<<<< HEAD
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+        try {
+            ReadOnlyAddressBook newDataSet = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+            model.resetData(newDataSet);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (IOException e) {
+            throw new CommandException(MESSAGE_INVALID_PATH);
+        } catch (DataConversionException e) {
+            throw new CommandException(MESSAGE_INVALID_FILE);
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\commands\SwitchTabCommand.java
+``` java
+public class SwitchTabCommand extends Command {
+
+    public static final String COMMAND_WORD = "switchTab";
+    public static final String COMMAND_ALIAS = "swt";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Switches between tabs of Person List and Todo List. ";
+    public static final String MESSAGE_SUCCESS = "Tab switched.";
+
+    private static final int PERSON_TAB = 0;
+    private static final int TASK_TAB = 1;
+
+    private TabPane tabPane;
+
+    public SwitchTabCommand(TabPane tabPane) {
+        this.tabPane = tabPane;
+    }
+
+    @Override
+    public CommandResult execute() {
+        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+        int selectedTab = selectionModel.getSelectedIndex();
+        selectionModel.select(selectAnotherTab(selectedTab));
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Alternates the tab index
+     * @param currentTab index
+     * @return alternated tab index
+     */
+    private int selectAnotherTab(int currentTab) {
+        if (currentTab == PERSON_TAB) {
+            return TASK_TAB;
+        }
+        return PERSON_TAB;
+    }
+}
+```
+###### \java\seedu\address\logic\parser\DeleteTaskCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new DeleteCommand object
+ */
+public class DeleteTaskCommandParser implements Parser<DeleteTaskCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteTaskCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new DeleteTaskCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTaskCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\EditTaskCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new EditTaskCommand object
+ */
+public class EditTaskCommandParser implements Parser<EditTaskCommand> {
+
+    public static final String PLACE_HOLDER_HASH = "EDITED_DISPLAY";
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the EditTaskCommand
+     * and returns an EditTaskCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public EditTaskCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_TASK_DESC, PREFIX_DEADLINE, PREFIX_PRIORITY);
+
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE));
+        }
+
+        EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
+        try {
+            ParserUtil.parseTaskTitle(argMultimap.getValue(PREFIX_TITLE)).ifPresent(editTaskDescriptor::setTitle);
+            ParserUtil.parseTaskDescription(argMultimap.getValue(PREFIX_TASK_DESC))
+                    .ifPresent(editTaskDescriptor::setDescription);
+            ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).ifPresent(editTaskDescriptor::setDeadline);
+            ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).ifPresent(editTaskDescriptor::setPriority);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        if (!editTaskDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditTaskCommand.MESSAGE_NOT_EDITED);
+        }
+
+        return new EditTaskCommand(index, editTaskDescriptor);
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\ImportCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ImportCommandParser object
+ */
+public class ImportCommandParser implements Parser<ImportCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ImportCommand
+     * and returns an Import Command object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ImportCommand parse(String userInput) throws ParseException {
+        String trimmedInput = userInput.trim();
+
+        String exceptionMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE);
+        if (trimmedInput.isEmpty()) {
+            throw new ParseException(exceptionMessage);
+        }
+
+        return new ImportCommand(userInput);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code String taskTitle} into a {@code TaskTitle}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code taskDescription} is invalid.
+     */
+    public static Title parseTaskTitle(String taskTitle) throws IllegalValueException {
+        requireNonNull(taskTitle);
+        String trimmedTaskTitle = taskTitle.trim();
+        if (!TaskDescription.isValidDescription(trimmedTaskTitle)) {
+            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return new Title(trimmedTaskTitle);
+    }
+
+    /**
+     * Parses a {@code Optional<String> taskDescription} into an {@code Optional<TaskDescription>}
+     * if {@code TaskDscription} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Title> parseTaskTitle(Optional<String> title) throws IllegalValueException {
+        requireNonNull(title);
+        return title.isPresent() ? Optional.of(parseTaskTitle(title.get())) : Optional.empty();
+=======
+>>>>>>> 8120314b1b5ecce7cb60b6c03090396164741055
     }
 
     @Override
@@ -816,3 +995,238 @@ public class Title {
     }
 
 ```
+<<<<<<< HEAD
+###### \java\seedu\address\ui\TodoCard.java
+``` java
+/**
+ * A UI component that displays information of a {@code task} in TodoList.
+ */
+public class TodoCard extends UiPart<Region> {
+
+    private static final String FXML = "TodoListCard.fxml";
+
+    /**
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
+     * As a consequence, UI elements' variable names cannot be set to such keywords
+     * or an exception will be thrown by JavaFX during runtime.
+     *
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     */
+
+    public final Task task;
+
+    @FXML
+    private HBox cardPane;
+    @FXML
+    private Label title;
+    @FXML
+    private Label id;
+    @FXML
+    private Label priority;
+    @FXML
+    private Label deadline;
+    @FXML
+    private Label description;
+    @FXML
+    private FlowPane tags;
+
+    public TodoCard(Task task, int displayedIndex) {
+        super(FXML);
+        this.task = task;
+        id.setText(displayedIndex + ". ");
+        title.setText(task.getTitle().value);
+        priority.setText(task.getPriority().toString());
+        deadline.setText(task.getDeadline().dateString);
+        description.setText(task.getTaskDesc().value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof TodoCard)) {
+            return false;
+        }
+
+        // state check
+        TodoCard card = (TodoCard) other;
+        return id.getText().equals(card.id.getText())
+                && task.equals(card.task);
+    }
+}
+```
+###### \java\seedu\address\ui\TodoListPanel.java
+``` java
+/**
+ * Panel containing the list of tasks shown in TodoList.
+ */
+public class  TodoListPanel extends UiPart<Region> {
+    private static final String FXML = "TodoListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(TodoListPanel.class);
+
+    @FXML
+    private ListView<TodoCard> todoListView;
+
+    public TodoListPanel(ObservableList<Task> taskList) {
+        super(FXML);
+        setConnections(taskList);
+        registerAsAnEventHandler(this);
+    }
+
+    private void setConnections(ObservableList<Task> taskList) {
+        ObservableList<TodoCard> mappedList = EasyBind.map(
+                taskList, (task) -> new TodoCard(task, taskList.indexOf(task) + 1));
+        todoListView.setItems(mappedList);
+        todoListView.setCellFactory(listView -> new todoListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        todoListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in task list panel changed to : '" + newValue + "'");
+                        raise(new TodoPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
+    /**
+     * Scrolls to the {@code TodoCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            todoListView.scrollTo(index);
+            todoListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     */
+    class todoListViewCell extends ListCell<TodoCard> {
+
+        @Override
+        protected void updateItem(TodoCard task, boolean empty) {
+            super.updateItem(task, empty);
+
+            if (empty || task == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(task.getRoot());
+            }
+        }
+    }
+}
+```
+###### \resources\view\DarkTheme.css
+``` css
+.tab-pane {
+    -fx-padding: 0 0 0 1;
+    -fx-background-color: #232A34;
+}
+
+.tab-pane .tab-header-area {
+    -fx-background-color: #232A34;
+    -fx-padding: 0 0 0 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane {
+    -fx-tab-min-width:150px;
+}
+
+.tab {
+    -fx-background-insets: 0 1 0 1,0,0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #404040;
+
+}
+
+.tab-pane .tab:selected {
+    -fx-border-color: transparent !important;
+    -fx-background-color: #5F6A6A;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #f3f3f3;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx-border-color: transparent !important;
+    -fx-text-fill: white;
+}
+```
+###### \resources\view\MainWindow.fxml
+``` fxml
+        <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+          <VBox fx:id="personList" minWidth="360" prefWidth="360" SplitPane.resizableWithParent="false">
+            <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="personListTab" text="Person List">
+                  <StackPane fx:id="personListPanelPlaceholder" minWidth="357" maxWidth="357" VBox.vgrow="ALWAYS"/>
+                </Tab>
+                <Tab fx:id="todoListTab" text="Todo List">
+                  <StackPane fx:id="todoListPanelPlaceholder" minWidth="357" maxWidth="357" VBox.vgrow="ALWAYS"/>
+                </Tab>
+              </tabs>
+            </TabPane>
+          </VBox>
+
+```
+###### \resources\view\todoListCard.fxml
+``` fxml
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+            <padding>
+                <Insets top="5" right="5" bottom="5" left="15"/>
+            </padding>
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label fx:id="id" styleClass="cell_big_label">
+                    <minWidth>
+                        <Region fx:constant="USE_PREF_SIZE"/>
+                    </minWidth>
+                </Label>
+                <Label fx:id="title" text="\$title" styleClass="cell_big_label"/>
+            </HBox>
+            <FlowPane fx:id="tags" />
+            <Label fx:id="description" styleClass="cell_small_label" text="\$description"/>
+            <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline"/>
+            <Label fx:id="priority" styleClass="cell_small_label" text="\$priority"/>
+        </VBox>
+    </GridPane>
+</HBox>
+```
+###### \resources\view\todoListPanel.fxml
+``` fxml
+<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+    <ListView fx:id="todoListView" VBox.vgrow="ALWAYS" />
+</VBox>
+```
+=======
+>>>>>>> 8120314b1b5ecce7cb60b6c03090396164741055

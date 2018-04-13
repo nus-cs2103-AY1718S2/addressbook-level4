@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 
-import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Password;
 import seedu.address.storage.exceptions.GoogleAuthorizationException;
@@ -28,7 +27,6 @@ public class UploadCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Current list of Persons, tags, or aliases from "
             + "StardyTogether are successfully uploaded.";
     public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to Google Drive. ";
-    public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for StardyTogether file.";
     public static final String MESSAGE_NO_AUTHORIZATION = "Unable to access your Google Drive. "
             + "Please grant authorization.";
     public static final String MESSAGE_REQUEST_TIMEOUT = "Authorization request timed out. Please try again.";
@@ -69,8 +67,6 @@ public class UploadCommand extends Command {
             throw new CommandException(MESSAGE_REQUEST_TIMEOUT);
         } catch (IOException ioe) {
             throw new CommandException(MESSAGE_FILE_UNABLE_TO_SAVE);
-        } catch (WrongPasswordException e) {
-            throw new CommandException(MESSAGE_INVALID_PASSWORD);
         }
     }
 

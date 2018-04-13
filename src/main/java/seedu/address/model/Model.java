@@ -109,7 +109,7 @@ public interface Model {
      * @param filepath
      * @param password
      */
-    void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+    void uploadAddressBook(String filepath, Password password) throws IOException,
             GoogleAuthorizationException, RequestTimeoutException;
     //@@author
 

@@ -18,16 +18,16 @@ public class DeleteUtil {
      * @param persons List of Person objects in the addressbook
      */
     public static void clearImageFiles(List<String> itemsToDelete, ObservableList<Person> persons) {
-        for (String it : itemsToDelete) {
+        for (String item : itemsToDelete) {
             boolean notUsed = true;
             for (Person p : persons) {
-                if (p.getDisplayPic().toString().equals(it)) {
+                if (p.getDisplayPic().toString().equals(item) || p.getDisplayPic().isDefault()) {
                     notUsed = false;
                     break;
                 }
             }
             if (notUsed) {
-                deleteFile(it);
+                deleteFile(item);
             }
         }
     }

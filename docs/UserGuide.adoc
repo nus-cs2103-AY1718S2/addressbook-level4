@@ -17,9 +17,9 @@ By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-*Your TA* is for those who *prefer to use a desktop app for managing contacts*.
+*Your TA* is for university teaching assistants who prefer to use a desktop application to manage student contacts and plan your schedule.
 More importantly, it is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). +
-If you can type fast, it can get your contact management tasks done faster than traditional GUI applications. +
+If you can type fast, it can get your contact management and tasks scheduling done faster than traditional GUI applications. +
 Once you're ready, jump to <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
@@ -49,7 +49,25 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window for the 
 .  Refer to <<Features>> for details of each command.
 
 [[Features]]
-== Features
+== Login Feature
+
+Before you are able to access the application, login is required.
+====
+* Enter your `Username` and `Password` in the respective fields. +
+* Click on the `login` button.
+* If you have entered either of those incorrectly, the text "Wrong username or password entered" will be displayed. You have an unlimited number of tries to log in. +
+* Upon successful login, the application will load with your previously saved data.
+====
+
+[NOTE]
+Both `Username` and `Password` fields are case-sensitive.
+
+[TIP]
+If you are a first-time user, create an account by entering your desired `Username` and `Password` in the username and password text fields respectively. +
+Then, click on the `Login` button.
+
+
+== Contact Features
 
 ====
 *Command Format*
@@ -91,8 +109,12 @@ The address book initially starts with default inputs as displayed in Figure 2:
 .Initial Address Book State +
 image::UiInitial.png[width="800"]
 
+Let's try entering a command, such as the one below: +
+
 Command entered: +
-`add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01`: +
+`add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dp/C:\Users\Name\Desktop\John.jpg`: +
+[NOTE]
+The filepath after the `dp/` depends on where your image file is located.
 This will add a person, 'John Doe' into the list with his respective details into the application (Figure 3).
 
 .Application after John Doe has been Added +
@@ -101,6 +123,9 @@ image::UiAfterFirst.png[width="800"]
 Command entered: +
 `add n/Betsy Crowe t/friend m/A1234567C e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`: +
 This will add a person, 'Betsy Crowe' into the list with her respective details into the application (Figure 4).
+
+[NOTE]
+You may leave the `dp/` portion empty if you do not have a profile picture. The application will default to using the default profile picture.
 
 .Application after Betsy Crowe has been added +
 image::UiAfterSecond.png[width="800"]
@@ -170,7 +195,7 @@ image::AllListed.png[width="800"]
 
 Edits an existing person in the address book. +
 Alias: `e` +
-Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dp/IMAGE PATH] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -178,6 +203,7 @@ Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADD
 * Existing values will be updated to the input values.
 * Replaced display pictures will be removed from storage upon the next start up of Your TA.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
@@ -189,47 +215,21 @@ Address book starts with the following as shown in Figure 10:
 image::AllListed.png[width="800"]
 
 Command entered: +
-`edit 3 p/91234567 e/johndoe@example.com`: +
-This changes the details of the person with index 3 (John Doe), in this case, his phone number and email address and writes over his original saved details (Figure 11).
+`edit 2 p/91234567 e/johndoe@example.com`: +
+This changes the details of the person with index 2 (John Doe), in this case, his phone number and email address and writes over his original saved details (Figure 11).
 
 .Phone Number and Email of 3rd Person (John Doe) Edited. +
 image::FirstEdit.png[width="800"]
 
 Command entered: +
-`edit 4 n/Betsy Crower t/`: +
-This changed the details of the person with index 3 (originally Betsy Crowe), in this case, her name and tags. +
-Her tags are also cleared (Figure 12).
+`edit 3 n/Betsy Crower dp/C:\Users\Name\Desktop\Betsy.jpg t/`: +
+This changed the details of the person with index 3 (originally Betsy Crowe), in this case, her name and tags.
+It also updated her display picture. +
 
 .Name changed to "Betsy Crower" and All Tags Cleared. +
 image::SecondEdit.png[width="800"]
 
-=== Emailing a person : `email`
-
-Email a person in the address book. This uses your default mail app to email. +
-Format: `email INDEX`
-
-****
-* Emails the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-Command(s) entered: +
-`list` +
-Lists all people in the address book. Followed by: +
-`email 2` +
-Emails the 2nd person in the address book.
-
-Command(s) entered: +
-`find Betsy` +
-Returns Betsy as a result. Followed by: +
-`email 1` +
-Emails the 1st person in the results of the `find` command, in this case, Betsy.
-
-<<<<<<< HEAD
-=======
+// tag::participation[]
 === Adding Participation Marks : `markPart`
 
 Adds to the participation marks of a person. The maximum limit for participation marks is 100
@@ -256,7 +256,41 @@ Returns Betsy as a result. Followed by: +
 `markPart 1 marks/70` +
 Adds 70 marks to the 1st person in the results of the `find` command, in this case, Betsy.
 
->>>>>>> fcc9ca17c2c8c77b827c5874d6beb415b936f8ca
+// end::participation[]
+
+// tag::display[]
+
+=== Updating the display picture : `updateDP`
+
+Updates a person's display picture in the address book. +
+Format: `updateDP INDEX dp/[IMAGE PATH]`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
+* The aspect ratio of the image will be used to fill a circle, thus using an image with a ratio close to 1:1 pixels would be optimal.
+****
+
+[WARNING]
+The application does not support reading image files from a folder named `dp` due to the nature of how the application parses the prefixes.
+
+Examples:
+
+Command(s) entered: +
+`list` +
+Lists all people in the address book. Followed by: +
+`updateDP 2 dp/` +
+Deletes the display picture of the 2nd person, turning it back to the default profile picture.
+
+Command(s) entered: +
+`find Betsy` +
+Returns Betsy as a result. Followed by: +
+`updateDP 1 dp/C:\Users\Betsy\Desktop\betsy.jpg` +
+Updates the display picture of the 1st person, in this case Betsy, to the picture specified in the `dp/` field.
+
+// end::display[]
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -277,8 +311,8 @@ Address book starts with the following as shown in Figure 13:
 image::SecondEdit.png[width="800']
 
 Command(s) entered: +
-`list`, `delete 3`: +
-The 3rd person listed in the address book is deleted (Figure 14).
+`list`, `delete 2`: +
+The 2nd person listed in the address book is deleted (Figure 14).
 
 .3rd Person Deleted. +
 image::FirstDelete.png[width="800"]
@@ -310,7 +344,7 @@ Examples:
 Address book starts with the following as shown in Figure 16:
 
 .Application before Select. +
-image::UiInitial.png[width="800"]
+image::SecondStart.png[width="800"]
 
 Command(s) entered: +
 `list`, `select 1`: +
@@ -320,11 +354,57 @@ Lists all people in address book and selects the 1st person (Figure 17).
 image::FirstSelect.png[width="800"]
 
 Command(s) entered: +
-`find Timothy`, `select 1`: +
-The 1st person in the results of the `find` command is selected, in this case, Timothy is selected (Figure 18).
+`find John`, `select 1`: +
+The 1st person in the results of the `find` command is selected, in this case, John is selected (Figure 18).
 
 .1st Person from `find` Command Selected. +
 image::SecondSelect.png[width="800"]
+
+== Task, To-do list and Calendar Features
+
+To see how the task scheduling feature works on the `Todo List` and `Calendar`, select the `Todo Lit` tab located right beside the `Person List` tab.
+
+=== Adding a task: `addTask`
+
+Adds a task to the address book. +
+Format: `addTask title/TITLE desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY`
+
+New tasks will be added into the *To-do list* and *Calendar*.
+
+Examples:
+
+Current date: 03-04-2018 +
+The application initially starts with no tasks as displayed in Figure 2:
+
+Command entered: +
+`addTask title/Grade Exams desc/Grade mid-terms by/04-04-2018 priority/2`: +
+This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure ).
+
+Command entered: +
+`addTask title/Submit Attendance desc/Submit tutorial attendance by/05-04-2018 priority/3`: +
+This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application (Figure ).
+
+=== Editing a task: `editTask`
+
+Edits a task to the address book. +
+Format: `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
+
+The specified tasks will be edited in the *To-do list* and *Calendar*.
+
+****
+* The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+=== Removing a task: `deleteTask`
+
+Deletes a task in the address book. +
+Format: `deleteTask INDEX`
+
+The specified tasks will be deleted from the *To-do list* and *Calendar*.
+
+== Miscellaneous Commands
 
 === Listing entered commands : `history`
 
@@ -354,7 +434,7 @@ Examples:
 Address book starts with the following as shown in Figure 19:
 
 .Application before any Commands +
-image::UiInitial.png[width="800"]
+image::SecondStart.png[width="800"]
 
 Command(s) entered: +
 `delete 1`, `list`, `undo`: +
@@ -404,8 +484,13 @@ image::SecondRedo.png[width="800"]
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
+This command will also clear all the display picture images stored.
+
 Alias: `c` +
 Format: `clear`
+
+[NOTE]
+This command clears ALL the data from the application (both people and tasks). +
 
 === Importing data from another file : `import`
 
@@ -429,67 +514,16 @@ Format: `sort`
 Exits the program. +
 Format: `exit`
 
-<<<<<<< HEAD
-=======
-== Task, To-do list and Calendar Features
-
-=== Adding a task: `addTask`
-
-Adds a task to the address book. +
-Format: `addTask desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY`
-
-New tasks will be added into the *To-do list* and *Calendar*.
-
-Examples:
-
-Current date: 03-04-2018 +
-The application initially starts with no tasks as displayed in Figure 2:
-
-Command entered: +
-`addTask desc/Grade mid-terms by/04-04-2018 priority/2`: +
-This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure ).
-
-Command entered: +
-`addTask desc/Submit tutorial attendance by/05-04-2018 priority/3`: +
-This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application (Figure ).
-
-=== Editing a task: `editTask`
-
-Edits a task to the address book. +
-Format: `editTask INDEX title [/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY`]
-
-The specified tasks will be edited in the *To-do list* and *Calendar*.
-
-****
-* The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-****
-
-=== Removing a task: `deleteTask`
-
-Deletes a task in the address book. +
-Format: `deleteTask INDEX
-
-The specified tasks will be deleted from the *To-do list* and *Calendar*.
-
->>>>>>> fcc9ca17c2c8c77b827c5874d6beb415b936f8ca
-=== Saving the data
+== Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{Placeholder: to be revised when encryption code is added}_
-// end::dataencryption[]
 
 == Additional Information on Features
 
 This section goes more in depth for some of the features mentioned in the above chapter.
 
-=== Add Command
+=== Add command
 
 The `add` command adds a person into the application. +
 This command have specific compulsory (must-have) and non-compulsory fields. +
@@ -512,7 +546,7 @@ e.g the NAME field must only contain letters.
 
 If the wrong format is detected, the application will prompt you of the correct input format in the results display panel right underneath the command input line.
 
-=== Undo Command
+=== Undo command
 
 As stated in chapter 3.10, certain commands (not all) can be undone.
 
@@ -520,6 +554,20 @@ Commands that cannot be undone:
 
 * `list`
 * `find`
+
+== Toggling between themes
+
+Your TA starts off with a default `Dark Theme`. However, it can be toggled to become a `Light Theme`.
+
+On the top left side of the app, there are some menus.
+
+Click on the menu labeled `Switch Theme`.
+
+A drop-down menu will appear and click on the `toggle` option to switch to the theme that is not currently in use.
+
+[NOTE]
+As of version 1.5, the app only supports 2 themes, `Dark Theme` and `Light Theme`.
+
 
 == FAQ
 
@@ -534,6 +582,8 @@ Commands that cannot be undone:
 
 == Command Summary
 
+=== Contact commands
+
 * *Add* `add n/NAME m/MATRICULATION_NUMBER p/PHONE_NUMBER e/EMAIL a/ADDRESS dp/DISPLAY_PICTURE [t/TAG]...` +
 e.g. `add n/James Ho m/A2345678J p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
@@ -544,9 +594,25 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]...` +
 e.g. `find James Jake`
 * *List* : `list`
-* *Help* : `help`
+* *MarkParticipation* : `markPart INDEX marks/DIGIT`
+e.g `markpart 1 marks/50`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *UpdateDP* : `updateDP INDEX dp/[IMAGE PATH]` +
+e.g `updateDP 1 dp/C:\Users\Betsy\Desktop\betsy.jpg`
+
+=== Tasks, To-do list and Calendar commands
+
+*Add Task* `addTask desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY` +
+e.g. `addTask title/Grade Exams desc/Grade mid-terms by/04-04-2018 priority/2`
+*Delete Task* `deleteTask INDEX` +
+e.g. `deleteTask 1`
+*Edit Task* `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
+e.g. `editTask 1 title/Eat Dinner`
+
+=== Miscellaneous Commands
+
+* *Help* : `help`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

@@ -4,6 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+//@@author JoonKai1995
 /**
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -59,7 +60,7 @@ public class Task implements Comparable<Task> {
             return true;
         }
 
-        if (!(other instanceof seedu.address.model.person.Person)) {
+        if (!(other instanceof seedu.address.model.task.Task)) {
             return false;
         }
 

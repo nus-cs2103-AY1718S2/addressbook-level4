@@ -98,9 +98,6 @@ public class AddCommandTest {
     /**
      * A default model stub that have all of the methods failing.
      */
-    /**
-     * A default model stub that have all of the methods failing.
-     */
     private class ModelStub implements Model {
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
@@ -170,10 +167,6 @@ public class AddCommandTest {
         @Override
         public void updateFilteredTaskList(Predicate<Task> predicate) {
 
-        }
-
-        @Override
-        public void addDeleteItem(String filepath) {
         }
 
         @Override

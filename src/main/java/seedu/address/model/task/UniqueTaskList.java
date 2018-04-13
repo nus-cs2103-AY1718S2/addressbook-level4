@@ -1,5 +1,6 @@
 package seedu.address.model.task;
 
+//@@author JoonKai1995
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -91,7 +92,8 @@ public class UniqueTaskList implements Iterable<Task> {
      */
     public boolean remove(Task toRemove) throws TaskNotFoundException {
         requireNonNull(toRemove);
-        final boolean taskFoundAndDeleted = internalList.remove(toRemove);
+        final boolean taskFoundAndDeleted = internalList.remove(toRemove)
+                && calendarList[toRemove.getDeadline().diff][toRemove.getDeadlineDay()].remove(toRemove);
         if (!taskFoundAndDeleted) {
             throw new TaskNotFoundException();
         }
@@ -101,6 +103,11 @@ public class UniqueTaskList implements Iterable<Task> {
     //@@author
     public void setTasks(UniqueTaskList replacement) {
         this.internalList.setAll(replacement.internalList);
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 32; j++) {
+                calendarList[i][j].setAll(replacement.calendarList[i][j]);
+            }
+        }
     }
 
     public void setTasks(List<Task> tasks) {

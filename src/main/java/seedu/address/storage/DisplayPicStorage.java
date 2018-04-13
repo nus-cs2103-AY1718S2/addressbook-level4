@@ -13,11 +13,13 @@ import seedu.address.MainApp;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.AppUtil;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.HashUtil;
 import seedu.address.model.person.DisplayPic;
 
 /**
  *  A class to save and open image files from the user's hard disk.
  */
+//@@author Alaru
 public class DisplayPicStorage {
 
     public static final String SAVE_LOCATION = "data/displayPic/";
@@ -64,20 +66,44 @@ public class DisplayPicStorage {
     }
 
     /**
+     * Returns true if a given string points to a valid file that has an extension.
+     */
+    public static boolean hasValidExtension(String test) {
+        try {
+            FileUtil.getFileType(test);
+            return true;
+        } catch (IllegalValueException ive) {
+            return false;
+        }
+    }
+
+    /**
      * Tries to save a copy of the image provided by the user into a default location.
      * @param name the name of the new image file
      * @param filePath the location of the current image file
      * @param fileType the file extension of the current image file
-     * @return whether the image was successfully copied
+     * @return the filename of the image
      */
-    public static boolean saveDisplayPic(String name, String filePath, String fileType) {
+    public static String saveDisplayPic(String name, String filePath, String fileType) throws IllegalValueException {
         try {
+            boolean sameFile = false;
             File input = new File(filePath);
-            BufferedImage image = ImageIO.read(input);
-            FileUtil.copyImage(image, fileType, SAVE_LOCATION + name + '.' + fileType);
-            return true;
+            String uniqueFileName = HashUtil.generateUniqueName(name);
+            File toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
+            while (FileUtil.isFileExists(toSave)) {
+                if (FileUtil.isSameFile(input, toSave)) {
+                    sameFile = true;
+                    break;
+                }
+                uniqueFileName = HashUtil.generateUniqueName(uniqueFileName);
+                toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
+            }
+            if (!sameFile) {
+                FileUtil.copyImage(filePath, toSave);
+            }
+            return uniqueFileName;
         } catch (IOException | IllegalValueException exc) {
-            return false;
+            throw new IllegalValueException("Unable to write file");
         }
     }
 
@@ -97,6 +123,23 @@ public class DisplayPicStorage {
             File input = new File(dp.toString());
             return new Image(input.toURI().toString());
         }
+    }
+
+    /**
+     * Checks whether the display picture filepath between 2 DisplayPic objects are the same.
+     * If they are not the same, the new display picture (in @code display1) will be updated and save.
+     */
+    public static DisplayPic toSaveDisplay(DisplayPic display1, DisplayPic display2, String details) {
+        if (!display1.equals(display2)) {
+            try {
+                display1.saveDisplay(details);
+                return display1;
+            } catch (IllegalValueException ive) {
+                display1.updateToDefault();
+                return display1;
+            }
+        }
+        return display1;
     }
 
 }

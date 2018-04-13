@@ -9,7 +9,8 @@ import java.security.NoSuchAlgorithmException;
  * toHex() code referenced from:
  * https://stackoverflow.com/questions/36162622/how-do-i-generate-a-hash-code-with-hash-sha256-in-java
  */
-public class NamingUtil {
+//@@author Alaru
+public class HashUtil {
 
     /**
      * This method uses SHA-256 to hash the 2 input strings and returns it.
@@ -29,6 +30,7 @@ public class NamingUtil {
      * @param hashValue is a byte array
      * @return A hex encode of a byte array
      */
+    //@@author Alaru-reused
     private static String toHex(byte[] hashValue) {
         StringBuilder sb = new StringBuilder();
         for (byte b : hashValue) {

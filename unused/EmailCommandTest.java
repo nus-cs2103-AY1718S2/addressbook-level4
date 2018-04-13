@@ -25,6 +25,8 @@ import seedu.address.model.person.Person;
  * Contains unit tests for
  * {@code EmailCommand}.
  */
+//@@author Alaru-unused
+//Code not used as EmailCommand was removed
 public class EmailCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());

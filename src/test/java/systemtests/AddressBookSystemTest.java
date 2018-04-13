@@ -12,11 +12,9 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;

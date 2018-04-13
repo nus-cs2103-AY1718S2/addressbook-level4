@@ -9,6 +9,7 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W09-B3/main
 
@@ -599,9 +600,11 @@ This feature revolves mainly around 3 commands:
 * `editMisc` : Edits the miscellaneous information of a student.
 * `editPicture` : Edits the profile picture of a student with a valid picture file(refer to note above). The user will have to provide the filepath to this file.
 
+[large]*`moreInfo` Command*
+
 For the command `moreInfo`, the model manager calls upon the data storage (addressbook) to raise an event for the Browser Panel to display the profile page of a student.
 
-[NOTE]
+[WARNING]
 The `moreInfo` command *cannot* function if there is no real existing XML data of students. Thus, the sample student data provided at the initial start up will not work with this command. A warning will be mentioned if the command is called without existing data.
 
 The code below shows how the the method is called with the parameter of the required `Student` functions:
@@ -642,10 +645,19 @@ Lastly, indicating the browser panel to display a student will raise a `StudentI
 ----
 	private void handleStudentInfoDisplayEvent(StudentInfoDisplayEvent event) {
 		//... logging process...
+
 		loadStudentInfoPage();
-		raise(new ShowStudentProfileEvent());
+
+		//... raising event to switch panels...
 	}
 ----
+
+The diagram below shows how the event is handled in the `BrowserPanel` :
+
+image::moreInfoCommandSD.png[width:500]
+
+
+[large]*`editMisc` Command*
 
 For the command `editMisc`, this is similar to the edit function, except it takes on different optional parameters. These are [ALLERGIES], [NEXTOFKINNAME], [NEXTOFKINPHONE], [REMARKS].
 The code snippet below shows how the `studentToEdit` is created when the `editMisc command` is called.

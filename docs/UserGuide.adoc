@@ -11,6 +11,7 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W09-B3/main/releases
 :contactsURL: https://contacts.google.com/
@@ -824,25 +825,85 @@ image::checkTask3_screenshot.png[width="800"]
 
 // tag:profilePage[]
 === Student Profile Page
-==== Full information page for each student : `moreInfo`
+==== Displaying profile page for each student : `moreInfo`
 
-Displays the full information of a student on the browser panel. This includes his/her profile picture if one exists. +
+Displays the full information of a student on the browser panel. The full information of a student consists of 3 elements, main information, miscellaneous information and his/her profile picture. You will be able to view his/her profile picture if one exists. +
+
 Format: `moreInfo INDEX`
+
+[WARNING]
+The `moreInfo` command _**cannot**_ work if there is no existing XML data of students. Should you encounter this warning,you can either: +
+1) Simply enter `clear` and start out with an empty student list. +
+2) Add, edit or delete a student using their corresponding commands to generate XML data of the students.
+
+
+[large]*Steps Taken* +
+
+Suppose you wish to view the profile page of the 1st student of the current student list
+
+. Enter the command as shown below:
+
+.Command to be entered to display the 1st student's profile page.
+image::moreInfoCommand.png[width:400]
+
+
+[start=2]
+. You will then be able to view the profile page of the student. Enter the same command with a different number for viewing the profile page of other students (e.g. `moreInfo 2`).
+
+.Executing the command `moreInfo 1` displays the 1st student (Alex Yeoh's) profile page
+image::moreInfoResult.png[width:800]
+
+{empty} +
+{empty} +
+[TIP]
+You will be able to attain the profile page style in `Figure 5` if your OS zoom scale is set to `125%`. The profile photo may seem of a different size for other configurations. Search you computer settings should you wish to change this.
+
 
 ****
 * Displays the full information of a student with the specified `INDEX`.
 * The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-Examples:
-
-* `moreInfo 2`
-Displays the full information of the 2nd student in the current listing.
-
 ==== Edit the profile picture of a student : `editPicture`
 
-Edits the current profile picture of a student to a new picture from a specific file path indicated by the user. +
+Allows you to edit the current profile picture of a student to a new picture from a specific file path indicated by you. +
+
 Format: `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE`
+
+[NOTE]
+====
+The image file you wish to use must exist and have extensions either of `.jpg` or `.png`. +
+The file path you entered can be relative to the current folder of the `jar` file or the absolute path e.g. `C:/Users/User/Desktop/photo.jpg`
+====
+
+[large]*Steps Taken* +
+
+Suppose you wish to have this picture, with the file name of `animal.jpg`  as a new profile picture as your student:
+
+image::animal.jpg[width:200]
+
+. Enter the command as shown below:
+
+.Command to be entered to edit a student's profile picture
+image::editPictureCommand.png[width:400]
+
+[start=2]
+. You will edit the profile picture of the 1st student of the latest student list to a picture existing in the same folder as the jar file with the name `animal.jpg`. You will then see the following:
+
+.Command to edit the student's profile picture success!
+image::editPictureSuccess.png[width:400]
+
+[start=3]
+. By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated picture as shown below:
+
+.The profile page of the selected student is shown with the new profile picture!
+image::editedPicture.png[width:800]
+
+{empty} +
+{empty} +
+
+[TIP]
+The ideal aspect ratio of the picture is 1.25 from height to width.
 
 ****
 * Changes the profile photo of a student with the specified `INDEX` to a new one which has a file path of `FILE_PATH_OF_PICTURE`
@@ -850,21 +911,33 @@ Format: `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE`
 * The file path of the picture is either relative to the folder which the jar application is or can be speicifed from the hard drive.
 ****
 
-[NOTE]
-====
-Image files must exist and have extensions either of `.jpg` or `.png`.
-====
-
-Examples:
-
-* `list` +
-`editPicture i/1 pa/C:/Users/User/Desktop/test.jpg` +
-Changes the profile photo of the 1st student in the current listing to the image found at the specific file path.
-
 ==== Edit the miscellaneous info of a student : `editMisc`
 
-Edits the miscellaneous information of a student in the addressbook. +
+Allows you to edit the miscellaneous information of a student. This includes his/her allergies, Next-Of-Kin name, Next-Of-Kin contact number and remarks for the student. +
+
 Format: `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS]`
+
+[large]*Steps Taken* +
+
+Suppose you wish to edit the allergies information of a student to `Allergic to nuts`.
+
+. Enter the command as shown below:
+
+.Command to be entered to edit the allergies information of a student.
+image::editMiscCommand.png[width 400]
+
+[start=2]
+. You will edit the `allergies` portion of the miscellaneous information of the 1st student of the student list to "Allergic to nuts". You will then see the following:
+
+.Command to edit the allergies portion of the student's miscellaneous information success!
+image::editPictureSuccess.png[][width:400]
+
+[start=3]
+. By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated allergies information as shown below:
+
+.The profile page of the selected student is shown with the newly updated allergies information!
+image::editMiscSuccess.png[width:800]
+
 
 ****
 * Edits the student's miscellaneous info at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -872,18 +945,13 @@ Format: `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN
 * Existing values will be updated to and overwritten by the input values.
 ****
 
-Examples:
-
-* `editMisc 1 al/Nuts r/Fast learner` +
-Edits the allergies information and remarks information of the 1st student to be `Nuts` and `Fast learner` respectively.
-
 //end:profilePage[]
 
 
 === Coming in v2.0
 ==== Track student's homework in the dashboard `[coming in v2.0]`
 
-==== Find student's by their miscellaneous information `[coming in v2.0]`
+==== Find students by their miscellaneous information `[coming in v2.0]`
 
 //tag::NLP[]
 == Interacting using free-form English

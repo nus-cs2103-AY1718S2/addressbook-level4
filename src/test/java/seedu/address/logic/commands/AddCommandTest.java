@@ -142,6 +142,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public UniqueAccountList getAccountList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public PrivilegeLevel authenticate(Credential c) {
             return Model.PRIVILEGE_LEVEL_GUEST;
         }

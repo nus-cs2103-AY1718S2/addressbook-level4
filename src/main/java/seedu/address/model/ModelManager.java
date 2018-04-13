@@ -97,6 +97,9 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws AccountNotFoundException
      */
     public void deleteAccount(Account account) throws AccountNotFoundException {
+        if (account == null) {
+            throw new AccountNotFoundException("Account not Found!");
+        }
         accountList.remove(account);
         indicateAccountListChanged();
     }

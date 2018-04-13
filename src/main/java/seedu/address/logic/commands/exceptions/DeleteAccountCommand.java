@@ -34,7 +34,6 @@ public class DeleteAccountCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() {
-        requireNonNull(accountToDelete);
         try {
             model.deleteAccount(accountToDelete);
         } catch (AccountNotFoundException pnfe2) {

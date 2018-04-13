@@ -935,7 +935,7 @@ Every single input always has an *intent*, but that is not the case for *entitie
 For further clarification, refer to the screenshot below:
 
 .Example of an intention and an entity, with its corresponding value. The intention is `Select` and the entity refers to the name of a person, which takes on a value of `Jason` in this particular case.
-image::debug_message.png[width="700"]
+image::debug_message.PNG[width="700"]
 
 ===== Matching the desired command
 After identifying the *intent* and *entities* (if present) in the user's input, the corresponding features matching intent is called,
@@ -943,7 +943,7 @@ passing any *entities* as parameters to the feature's method.
 
 .Following the example in Figure 12, the `select` command is invoked, passing `Jason` as a parameter, after the intent and entity is identified.
 
-image::Select(after).png[width="650"]
+image::Select(after).PNG[width="650"]
 
 ==== Design Consideration
 

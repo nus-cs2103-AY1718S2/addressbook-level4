@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -86,6 +87,19 @@ public class AddMemberToGroupCommandTest {
         thrown.expectMessage(AddMemberToGroupCommand.MESSAGE_NO_SUCH_GROUP);
 
         getAddMemberToGroupCommandForGroup(INDEX_FIRST_PERSON, invalidGroup, modelStub).execute();
+    }
+
+    @Test
+    public void execute_invalidIndex_throwsCommandException() throws Exception {
+        AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded modelStub = new
+                AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded();
+        Group validGroup = new GroupBuilder().withInformation("Group A").build();
+        Index index = Index.fromZeroBased(model.getFilteredPersonList().size()+1);
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        getAddMemberToGroupCommandForGroup(index, validGroup, modelStub).execute();
+
     }
 
     @Test

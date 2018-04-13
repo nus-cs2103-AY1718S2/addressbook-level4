@@ -198,7 +198,7 @@ public class CommandBox extends UiPart<Region> {
 
     //@@author aquarinte
     /**
-     * Sets and shows the elements of ContextMenu {@code suggestionBox} with autocomplete suggestions.
+     * Calls Autocomplete class to process commandTextField's content.
      *
      * @param newValue New user input.
      */
@@ -209,15 +209,23 @@ public class CommandBox extends UiPart<Region> {
 
             suggestions = autocompleteLogic.getSuggestions(commandTextField);
 
-            for (String s : suggestions) {
-                MenuItem m = new MenuItem(s);
-                String autocompleteValue = StringUtil.removeDescription(s);
-                m.setOnAction(event -> handleAutocompleteSelection(autocompleteValue));
-                suggestionBox.getItems().add(m);
+            if (!suggestions.isEmpty()){
+                setContextMenu();
             }
-
-            suggestionBox.show(commandTextField, Side.BOTTOM, 0, 0);
         }
+    }
+
+    /**
+     * Sets the context menu {@code suggestionBox} with autocomplete suggestions.
+     */
+    private void setContextMenu() {
+        for (String s : suggestions) {
+            MenuItem m = new MenuItem(s);
+            String autocompleteValue = StringUtil.removeDescription(s);
+            m.setOnAction(event -> handleAutocompleteSelection(autocompleteValue));
+            suggestionBox.getItems().add(m);
+        }
+        suggestionBox.show(commandTextField, Side.BOTTOM, 0, 0);
     }
 
     /**

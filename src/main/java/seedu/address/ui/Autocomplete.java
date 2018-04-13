@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SPECIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -25,8 +26,15 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.CliSyntax;
 
 //@@author aquarinte
@@ -42,6 +50,7 @@ public class Autocomplete {
     private Logic logic;
     private String trimmedCommandInput;
     private String[] trimmedCommandInputArray;
+    private String commandWord;
     private String option;
     private String targetWord;
     private Set<String> tagSet;
@@ -76,6 +85,7 @@ public class Autocomplete {
         // split string, but retain all whitespaces in array "trimmedCommandInputArray"
         trimmedCommandInputArray = trimmedCommandInput.split("((?<= )|(?= ))", -1);
 
+        commandWord = trimmedCommandInputArray[0];
         targetWord = trimmedCommandInputArray[trimmedCommandInputArray.length - 1].toLowerCase();
         setOption();
 
@@ -112,15 +122,57 @@ public class Autocomplete {
                 return getTagSuggestions();
             }
 
-            if (targetWord.startsWith("-")) {
+            if (hasOptionsAndPrefixes() && targetWord.startsWith("-")) {
                 return getOptionSuggestions();
             }
 
-            return getPrefixSuggestions();
+            if (hasOptionsAndPrefixes()) {
+                return getPrefixSuggestions();
+            }
 
         } else {
-            return getPrefixSuggestions();
+
+            if (hasOptionsAndPrefixes()) {
+                return getPrefixSuggestions();
+            }
         }
+
+        return new ArrayList<String>();
+    }
+
+    /**
+     * Returns false if the command is one that does not require any options or prefixes in its syntax.
+     */
+    private boolean hasOptionsAndPrefixes() {
+        if (commandWord.equals(ClearCommand.COMMAND_WORD)) {
+            return false;
+        }
+
+        if (commandWord.equals(ListCommand.COMMAND_WORD)) {
+            return false;
+        }
+
+        if (commandWord.equals(ExitCommand.COMMAND_WORD)) {
+            return false;
+        }
+
+        if (commandWord.equals(UndoCommand.COMMAND_WORD)) {
+            return false;
+        }
+
+        if (commandWord.equals(RedoCommand.COMMAND_WORD)) {
+            return false;
+        }
+
+        if (commandWord.equals(HelpCommand.COMMAND_WORD)) {
+            return false;
+        }
+
+        if (commandWord.equals(HistoryCommand.COMMAND_WORD)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -130,12 +182,12 @@ public class Autocomplete {
      * Returns false if the command input is to add a new person.
      */
     private boolean hasAddCommandReferNric() {
-        if (trimmedCommandInputArray[0].equals(AddCommand.COMMAND_WORD)
+        if (commandWord.equals(AddCommand.COMMAND_WORD)
                 && trimmedCommandInputArray[2].equals(OPTION_OWNER)) {
             return false;
         }
 
-        if (trimmedCommandInputArray[0].equals(AddCommand.COMMAND_WORD)
+        if (commandWord.equals(AddCommand.COMMAND_WORD)
                 && trimmedCommandInputArray[trimmedCommandInputArray.length - 3].equals(OPTION_OWNER)
                 && targetWord.startsWith(PREFIX_NRIC.toString())) {
             return true;
@@ -150,7 +202,7 @@ public class Autocomplete {
      * Returns true if editing the owner's nric of a pet patient.
      */
     private boolean hasEditCommandReferNric() {
-        if (trimmedCommandInputArray[0].equals(EditCommand.COMMAND_WORD)
+        if (commandWord.equals(EditCommand.COMMAND_WORD)
                 && option.equals(OPTION_PETPATIENT)
                 && targetWord.startsWith(PREFIX_NRIC.toString())) {
             return true;
@@ -165,7 +217,7 @@ public class Autocomplete {
      * Returns true if finding a person by nric.
      */
     private boolean hasFindCommandReferNric() {
-        if (trimmedCommandInputArray[0].equals(FindCommand.COMMAND_WORD)
+        if (commandWord.equals(FindCommand.COMMAND_WORD)
                 && option.equals(OPTION_OWNER) && targetWord.startsWith(PREFIX_NRIC.toString())) {
             return true;
         }
@@ -183,25 +235,25 @@ public class Autocomplete {
      */
     private boolean hasReferenceToExistingPetPatientNames() {
         // Add new pet patient
-        if (trimmedCommandInputArray[0].equals(AddCommand.COMMAND_WORD)
+        if (commandWord.equals(AddCommand.COMMAND_WORD)
                 && trimmedCommandInputArray[2].equals(OPTION_PETPATIENT)
                 && targetWord.startsWith(PREFIX_NAME.toString())) {
             return false;
         }
 
         // Add new owner, new pet patient & new appointment
-        if (trimmedCommandInputArray[0].equals(AddCommand.COMMAND_WORD)
+        if (commandWord.equals(AddCommand.COMMAND_WORD)
                 && trimmedCommandInputArray[2].equals(OPTION_OWNER)
                 && trimmedCommandInputArray[trimmedCommandInputArray.length - 3].equals(OPTION_PETPATIENT)
                 && targetWord.startsWith(PREFIX_NAME.toString())) {
             return false;
         }
 
-        if (trimmedCommandInputArray[0].equals(EditCommand.COMMAND_WORD)) {
+        if (commandWord.equals(EditCommand.COMMAND_WORD)) {
             return false;
         }
 
-        if (trimmedCommandInputArray[0].equals(FindCommand.COMMAND_WORD)) {
+        if (commandWord.equals(FindCommand.COMMAND_WORD)) {
             return false;
         }
 

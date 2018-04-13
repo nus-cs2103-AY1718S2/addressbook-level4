@@ -1,7 +1,10 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.storage.XmlAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.util.ArrayList;
@@ -22,7 +25,8 @@ public class XmlAdaptedPersonTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_TAG_NAME = "#friend";
+    private static final String INVALID_TAG_COLOR_STYLE = "notacolor";
 
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
@@ -101,10 +105,28 @@ public class XmlAdaptedPersonTest {
     @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
-        invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
+        invalidTags.add(new XmlAdaptedTag(INVALID_TAG_NAME, INVALID_TAG_COLOR_STYLE));
         XmlAdaptedPerson person =
                 new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, invalidTags);
         Assert.assertThrows(IllegalValueException.class, person::toModelType);
     }
 
+    @Test
+    public void equals() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(BENSON);
+
+        //same object
+        assertTrue(person.equals(person));
+
+        //same value
+        XmlAdaptedPerson personCopy = new XmlAdaptedPerson(BENSON);
+        assertTrue(person.equals(personCopy));
+
+        //different type
+        assertFalse(person.equals(1));
+
+        //different obj
+        XmlAdaptedPerson anotherPerson = new XmlAdaptedPerson(ALICE);
+        assertFalse(person.equals(anotherPerson));
+    }
 }

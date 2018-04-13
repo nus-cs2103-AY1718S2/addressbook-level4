@@ -11,7 +11,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.education.Class;
+import seedu.address.model.event.Appointment;
+import seedu.address.model.event.Task;
 import seedu.address.model.person.Person;
+import seedu.address.model.shortcuts.ShortcutDoubles;
 
 /**
  * The main LogicManager of the app.
@@ -27,7 +31,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public LogicManager(Model model) {
         this.model = model;
         history = new CommandHistory();
-        addressBookParser = new AddressBookParser();
+        addressBookParser = new AddressBookParser(model.getFilteredCommandsList());
         undoRedoStack = new UndoRedoStack();
     }
 
@@ -51,7 +55,32 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public ObservableList<Appointment> getFilteredAppointmentList() {
+        return model.getFilteredAppointmentList();
+    }
+
+    @Override
+    public ObservableList<Task> getFilteredTaskList() {
+        return model.getFilteredTaskList();
+    }
+
+    @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    @Override
+    public ObservableList<ShortcutDoubles> getFilteredShortcutList() {
+        return model.getFilteredCommandsList();
+    }
+
+    @Override
+    public ObservableList<Class> getFilteredClassList() {
+        return model.getFilteredClassList();
+    }
+
+    @Override
+    public String getCurrentActiveListType() {
+        return model.getCurrentActiveListType();
     }
 }

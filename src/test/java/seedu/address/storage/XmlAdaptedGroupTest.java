@@ -34,13 +34,23 @@ public class XmlAdaptedGroupTest {
     }
 
     @Test
-    public void toModelType_addPerson_returnSuccess() throws Exception {
-        Group groupToChange = new GroupBuilder().withInformation("Group A").build();
+    public void toModelType_withPerson_returnSuccess() throws Exception {
+        Group groupToChange = new GroupBuilder().withInformation("Group F").build();
         Person personToAdd = TypicalPersons.ALICE;
         groupToChange.addPerson(personToAdd);
         XmlAdaptedGroup group = new XmlAdaptedGroup(groupToChange);
 
-        assertEquals(GROUP_F.getPersonList(), group.toModelType().getPersonList());
+        assertEquals(GROUP_F, group.toModelType());
+    }
+
+    @Test
+    public void toModelType_addPerson_returnSuccess() throws Exception {
+        Group groupToChange = new GroupBuilder().withInformation("Group F").build();
+        XmlAdaptedPerson personToAdd = new XmlAdaptedPerson(TypicalPersons.ALICE);
+        XmlAdaptedGroup group = new XmlAdaptedGroup(groupToChange);
+        group.getPersonList().add(personToAdd);
+
+        assertEquals(GROUP_F, group.toModelType());
     }
 
     @Test

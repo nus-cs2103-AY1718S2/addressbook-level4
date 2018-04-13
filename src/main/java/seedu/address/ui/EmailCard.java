@@ -51,7 +51,7 @@ public class EmailCard extends UiPart<Region> {
                 if (message.getContent() instanceof String) {
                     String content = (String) message.getContent();
                     preview.setText(((String) message.getContent()).substring(0, min(20, content.length())));
-                } else if (message.isMimeType("multipart/*")){
+                } else if (message.isMimeType("multipart/*")) {
                     Multipart multipart = (Multipart) message.getContent();
                     if (multipart.getCount() > 0) {
                         String msg = multipart.getBodyPart(0).getContent().toString();

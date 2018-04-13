@@ -8,14 +8,12 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_INFORMATION;
 import static seedu.address.storage.XmlAdaptedGroup.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalGroups.GROUP_A;
 import static seedu.address.testutil.TypicalGroups.GROUP_F;
-import static seedu.address.testutil.TypicalGroups.GROUP_I;
 
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.group.Information;
 import seedu.address.testutil.Assert;
-import seedu.address.testutil.TypicalPersons;
 
 public class XmlAdaptedGroupTest {
 

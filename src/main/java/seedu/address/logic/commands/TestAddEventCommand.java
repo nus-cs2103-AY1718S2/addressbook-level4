@@ -53,6 +53,7 @@ public class TestAddEventCommand extends Command {
     private final String startTime;
     private final String endTime;
     private final String description;
+    private final Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
@@ -83,7 +84,7 @@ public class TestAddEventCommand extends Command {
         try {
             service = Authentication.getCalendarService();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning("Couldn't authenticate Google Calendar Service");
         }
 
 
@@ -133,7 +134,6 @@ public class TestAddEventCommand extends Command {
                 calendarId = CreateNewCalendar.execute(personToAddEvent.getName().fullName);
                 logger.info("calendar created successfully");
             } catch (IOException e) {
-                e.printStackTrace();
                 logger.info("unable to create calendar");
                 return new CommandResult(MESSAGE_FAILURE);
             }

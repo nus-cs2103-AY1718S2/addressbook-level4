@@ -1,6 +1,8 @@
 //@@author IzHoBX
 package seedu.address.model.notification;
 
+import seedu.address.model.person.Person;
+
 /**
  * Represents a timetable entry added to Employees Tracker
  */
@@ -12,6 +14,8 @@ public class Notification {
     private String ownerId;
 
     public Notification(String title, String calendarId, String id, String endDate, String ownerId) {
+        assert(title != null && id != null && endDate != null && ownerId != null && !ownerId.equals(Person
+                .UNINITIALISED_ID + ""));
         this.title = title;
         this.calendarId = calendarId;
         this.id = id;

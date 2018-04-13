@@ -4,7 +4,6 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.notification.Notification;
 import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.ui.NotificationCard;
 
@@ -24,8 +23,6 @@ public class DismissCommand extends UndoableCommand {
     public static final String MESSAGE_ERROR = "Error occurred. Please try again later.";
 
     private final Index targetIndex;
-
-    private Notification notificationToDelete;
 
     public DismissCommand(Index targetIndex) {
         this.targetIndex = targetIndex;

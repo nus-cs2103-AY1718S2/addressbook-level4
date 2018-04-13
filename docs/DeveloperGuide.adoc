@@ -364,25 +364,27 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 The 'findtag' feature is implemented with the same mechanism as the 'find' feature. It is used for finding stored persons with their tags instead of names. The key components of the feature are 'FindWithTagCommand', 'FindWithTagCommandParser', and 'TagContainsKeywordsPredicate'.
 
-The main component of 'findtag' is the 'FindWithTagCommand' which resides inside the logic component. It inherit from 'Command', as such, similar to 'find', 'findtag' is not an undoable command. The following diagram shows the inheritance diagram for 'FindWithTagCommand':
+The main component of 'findtag' is the 'FindWithTagCommand' which resides inside the logic component. It inherit from 'Command', as such, similar to 'find', 'findtag' is not an undoable command. From the class diagram of Logic class, we can see inheritance  of 'FindWithTagCommand' in comparison with other types of commands:
 
-image::LogicCommandClassDiagram.png[width="800"]
+image::FindTagInLogicClassDiagram.png[width="800"]
 
 The user execute the FindWithTagCommand with the keyword ‘findtag’ following by the tag keywords, separated by whitespace. When the command is executed, the current list of persons shown in the GUI will only contain the persons with the tags same as the tag keywords. The following image shows the result of a 'findtag' execution:
 
-image::FindTagResultDiagram.png[width="800"]
+image::FindtagExecution.png[width="800"]
 
 Note that the tag keywords are not case sensitive; however, the command keyword is. For example, both 'findtag friends' and 'findtag FrIeNdS' can be executed and return a list of persons with the tag 'friends'. However 'FiNdTaG friends' cannot be executed and will result in a 'Unknown Command' feedback, as shown in the following:
 
-image::InvalidCommandKeywordDiagram.png[width="800"]
+image::DifferentCaseSize.png[width="800"]
 
-Note that the list of persons displayed will not change for in this case.
+Since the application does not recognize the command, the list of person displayed will not be changed.
 
 The 'findtag' command can handle multiple input tag keywords and, similar to 'find', 'findtag' is an ‘or’ search. For example, 'findtag friends owesMoney' will find any person with the tag ‘friends’ or ‘owesMoney’ or both.
 
+image::FindMultipleTags.png[width="800"]
+
 The following sequence diagram shows how the findtag operation works:
 
-image::UndoRedoSequenceDiagram.png[width="800"]
+image::FindTagSequenceDiagram.png[width="900"]
 
 ==== Design Considerations
 
@@ -390,7 +392,7 @@ image::UndoRedoSequenceDiagram.png[width="800"]
 
 * **Alternative 1 (current choice):** Follow the mechanism of `FindCommand`
 ** Pros: 'findtag' works in the same mechanism as 'find', thus will not deviate from the overall architecture of the address book (i.e. Event Driven design).
-** Cons: May generate classes/ methods that are implemented with very similar style (i.e. a general pattern can be abstract out). Thus, additional work may be needed to handle the abstraction.
+** Cons: May generate classes/ methods that are implemented with very similar style, or in the worse case, we may have duplicate codes. Thus, additional attention needds to be given to ensure that the implementation of 'findtag' will not result in duplicate codes.
 * **Alternative 2:** Implement new mechanism specifically for `FindWithTagCommand`
 ** Pros: Does not generate similar classes/ methods.
 ** Cons: Hard to implement, risk deviating away from the overall architecture of the address book.
@@ -456,6 +458,48 @@ image::SortCommandSequenceDiagram.png[width="800"]
 ** Pros: More properly describes what `sort` actually does by showing the full list of persons sorted.
 ** Cons: Current list is replaced by showing all persons.
 // end::sort[]
+
+// tag::search[]
+=== Findtag feature
+==== Current Implementation
+
+The implementation of the search feature follows very closely to the Event-Driven architecture. It is used for searching profiles on the social media platforms available in the application. The key components of the feature is the 'SearchPersonEvent' and its handler method.
+
+The 'SearchCommand' class is located within the logic component. It is not an undoable command, hence it inherit from 'Command'.
+
+The search feature is able to perform search on either the input platform or all the available platforms. To execute the search feature, simply input the command keyword "search" followed by an optional declaration of platform to perform the search on, and lastly followed by the profile name to be searched for.
+
+image::SearchFunction.png[width="1000"]
+
+Similar to most of the other feature in the application, the command keyword is case sensitive while the search name is not. As for platform declaration, only predefined inputs are allowed. These predefined inputs are the names of the platform as well as the aliases. (e.g. facebook, fb, twitter...) An invalid command format prompt will be shown if the input platform is not one of the predefined inputs, or has a different case size.
+
+image::InvalidPlatformCases.png[width="1000"]
+
+Upon execution of the search feature with the keyword "search", the validation of input arguments are first checked by the parser, then a SearchPersonEvent will be posted to the event bus. This event is handled by the handleSearchPersonEvent method, which determine the platform to perform the search on and choose the tabs to display.
+
+image::SearchPersonEvent.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SearchCommand` `SearchPersonEvent` and the handler method
+
+* **Alternative 1:** Implement multiple Command class, Event class, and handler method to facilitate searching on different social media platforms.
+** Pros: Easier to implement since each class only need to handle search on one platform.
+** Cons: High chance of generating similar/duplicated codes.
+* **Alternative 2 (current choice):** Have a common 'SearchCommand' class for search.
+** Pros: Reduce repeated/similar code.
+** Cons: Harder to implement since the feature now has to determine the platform to search on base on the input form the user.
+
+===== Aspect: Link to the search functions of different social media platforms
+
+* **Alternative 1 (current choice):** Use the search URL of different platform to perfom the search.
+** Pros: Much easier to implement since we are simply loading the search URL into our browser.
+** Cons: Direct use of search URL uses a lot of resources.
+* **Alternative 2:** Use a third party code to perform the search.
+** Pros: May consume less resources.
+** Cons: May have to program the UI to display the search result.
+
+// end::search[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

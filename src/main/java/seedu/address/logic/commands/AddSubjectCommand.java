@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -28,19 +29,21 @@ import seedu.address.model.tag.Tag;
 /**
  * Edits the subject details of the student at a specified index.
  */
-public class EditSubjectCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "editsub";
+public class AddSubjectCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "addsub";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the subject details of the student identified "
-            + "by the index number used in the last student listing. "
-            + "Existing values will be overwritten by the input values.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds on the new subjects to the student's "
+            + "subjects identified by the index number used in the last student listing. Duplicate subject input "
+            + "will not alter the original subject in the subject list.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_SUBJECT + "SUBJECT SUBJECT_GRADE...]...\n"
-            + "Example: " + COMMAND_WORD + " 1 sub/English A1 Chinese A1 AMath A1 EMath A1 Phy A1 Hist A1";
+            + "Example: " + COMMAND_WORD + " 1 sub/Jap A1";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_ADD_SUBJECT_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_NEW_SUBJECTS = ". Updated Subjects: %1$s";
+    public static final String MESSAGE_NOT_EDITED = "At least one field to add must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    private static boolean isReplaced;
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -52,7 +55,7 @@ public class EditSubjectCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditSubjectCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public AddSubjectCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
@@ -62,6 +65,7 @@ public class EditSubjectCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException, IOException {
+        StringBuilder result = new StringBuilder();
         try {
             model.updatePerson(personToEdit, editedPerson);
             model.deletePage(personToEdit);
@@ -72,7 +76,12 @@ public class EditSubjectCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        if (!isReplaced) {
+            return new CommandResult(result.append(MESSAGE_ADD_SUBJECT_SUCCESS).append(editedPerson.getName())
+                    .append("No new subjects added.").toString());
+        }
+        return new CommandResult(result.append(MESSAGE_ADD_SUBJECT_SUCCESS).append(editedPerson.getName())
+                .append(MESSAGE_NEW_SUBJECTS).append(editedPerson.getSubjects()).toString());
     }
 
     @Override
@@ -97,7 +106,12 @@ public class EditSubjectCommand extends UndoableCommand {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
+        Set<Subject> updatedSubjects = new HashSet<>(personToEdit.getSubjects());
+        Set<Subject> newSubjects = new HashSet<>(editPersonDescriptor.getSubjectsAsSet());
+        checkIfSubjectExist(newSubjects, updatedSubjects);
+        if (updatedSubjects.equals(personToEdit.getSubjects())) {
+            isReplaced = true;
+        }
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
@@ -105,6 +119,25 @@ public class EditSubjectCommand extends UndoableCommand {
         NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
                 updatedInjuriesHistory, updatedNextOfKin);
+    }
+
+    /**
+     * Checks if the new subjects to be added exist in original subject list.
+     * If the subject exists, the subject will not be added to the list. Else, it will be added.
+     */
+    public static void checkIfSubjectExist(Set<Subject> newSubjects, Set<Subject> subjectList) {
+        boolean isPresent = false;
+        for (Subject subToAdd : newSubjects) {
+            for (Subject sub : subjectList) {
+                if (subToAdd.subjectName.equals(sub.subjectName)) {
+                    isPresent = true;
+                    break;
+                }
+            }
+            if (!isPresent) {
+                subjectList.add(subToAdd);
+            }
+        }
     }
 
     @Override
@@ -115,12 +148,12 @@ public class EditSubjectCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditSubjectCommand)) {
+        if (!(other instanceof AddSubjectCommand)) {
             return false;
         }
 
         // state check
-        EditSubjectCommand e = (EditSubjectCommand) other;
+        AddSubjectCommand e = (AddSubjectCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);

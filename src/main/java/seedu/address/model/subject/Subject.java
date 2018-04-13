@@ -144,7 +144,7 @@ public class Subject {
             return false;
         }
         Subject object = (Subject) other;
-        return (this.subjectName == object.subjectName && this.subjectGrade == object.subjectGrade);
+        return (this.subjectName.equals(object.subjectName) && this.subjectGrade.equals(object.subjectGrade));
     }
 
     @Override

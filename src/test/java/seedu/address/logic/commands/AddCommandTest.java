@@ -47,11 +47,6 @@ public class AddCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final String messageAddpetpatient = "New pet patient added: %1$s \nunder owner: %2$s";
-    private final String messageAddappointment = "New appointment made: %1$s\nunder owner: %2$s\nfor pet patient: %3$s";
-    private final String messageAddall = "New person added: %1$s\nNew pet patient added: %2$s\n"
-            + "New appointment made: %3$s";
-
     @Test
     public void constructor_nullPersonPetPatientAppointment_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
@@ -83,14 +78,14 @@ public class AddCommandTest {
         //add a new person (a)
         Person validPerson = new PersonBuilder().build();
         CommandResult resultToAddPerson = getAddCommandForPerson(validPerson, modelStub).execute();
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), resultToAddPerson.feedbackToUser);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS_PERSON, validPerson), resultToAddPerson.feedbackToUser);
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
 
         //add a new pet patient (b) under person (a)
         PetPatient validPetPatient = new PetPatientBuilder().build();
         CommandResult resultToAddPetPatient = getAddCommandForPetPatient(validPetPatient, validPerson.getNric(),
                 modelStub).execute();
-        assertEquals(String.format(messageAddpetpatient, validPetPatient, validPerson),
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS_PETPATIENT, validPetPatient, validPerson),
                 resultToAddPetPatient.feedbackToUser);
         assertEquals(Arrays.asList(validPetPatient), modelStub.petPatientsAdded);
 
@@ -98,8 +93,8 @@ public class AddCommandTest {
         Appointment validAppointment = new AppointmentBuilder().build();
         CommandResult resultToAddAppointment = getAddCommandForAppointment(validAppointment, validPerson.getNric(),
                 validPetPatient.getName(), modelStub).execute();
-        assertEquals(String.format(messageAddappointment, validAppointment, validPerson, validPetPatient),
-                resultToAddAppointment.feedbackToUser);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS_APPOINTMENT, validAppointment, validPerson,
+                validPetPatient), resultToAddAppointment.feedbackToUser);
         assertEquals(Arrays.asList(validAppointment), modelStub.appointmentsAdded);
 
         //add new person, new pet patient and new appointment
@@ -108,7 +103,8 @@ public class AddCommandTest {
         Appointment newAppt = TypicalAppointments.BENSON_APP;
         CommandResult resultToAddAll = getAddCommandForNewPersonPetPatientAppointment(newPerson, newPetPatient, newAppt,
                 modelStub).execute();
-        assertEquals(String.format(messageAddall, newPerson, newPetPatient, newAppt), resultToAddAll.feedbackToUser);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS_EVERYTHING, newPerson, newPetPatient, newAppt),
+                resultToAddAll.feedbackToUser);
     }
 
     @Test
@@ -229,7 +225,6 @@ public class AddCommandTest {
         assertFalse(addAliceCommand.equals(addBobCommand));
         assertFalse(addJosephCommand.equals(addTiaCommand));
         assertFalse(addApptCommand.equals(addAppt2Command));
-
     }
 
     /**

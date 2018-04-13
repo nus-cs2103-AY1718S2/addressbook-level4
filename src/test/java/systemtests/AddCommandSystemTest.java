@@ -282,28 +282,28 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_PERSON));
 
         /* Case: missing phone -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_PERSON));
 
         /* Case: missing email -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY
                 + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_PERSON));
 
         /* Case: missing address -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + NRIC_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_PERSON));
 
         //@@author Robert-Peng
         /* Case: missing nric -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_OWNER + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_PERSON));
         //@@author
 
         /* Case: invalid keyword -> rejected */
@@ -351,27 +351,32 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing pet patient name -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_PET + SPECIES_DESC_NERO + BREED_DESC_NERO
                 + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
+                AddCommand.MESSAGE_ERROR_PETPATIENT));
 
         /* Case: missing pet patient species -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_PET + NAME_DESC_NERO + BREED_DESC_NERO
                 + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
+                AddCommand.MESSAGE_ERROR_PETPATIENT));
 
         /* Case: missing pet patient breed -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO
                 + COLOUR_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
+                AddCommand.MESSAGE_ERROR_PETPATIENT));
 
         /* Case: missing pet patient colour -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO
                 + BREED_DESC_NERO + BLOODTYPE_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
+                AddCommand.MESSAGE_ERROR_PETPATIENT));
 
         /* Case: missing pet patient blood type -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO
                 + BREED_DESC_NERO + COLOUR_DESC_NERO + OPTION_OWNER + NRIC_DESC_BOB;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
+                AddCommand.MESSAGE_ERROR_PETPATIENT));
 
         /* Case: missing option and owner's nric -> rejected */
         command = AddCommand.COMMAND_WORD + " " + OPTION_PET + NAME_DESC_NERO + SPECIES_DESC_NERO
@@ -389,21 +394,21 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + REMARK_DESC_THREE + TAG_DESC_VACCINATION + OPTION_OWNER + NRIC_DESC_BOB + OPTION_PET
                 + NAME_DESC_NERO;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
-                AddCommand.MESSAGE_APPOINTMENT));
+                AddCommand.MESSAGE_ERROR_APPOINTMENT));
 
         /* Case: missing appointment remark -> rejected */
         command = AddCommand.COMMAND_WORD + OPTION_APPOINTMENT + DATE_DESC_THREE
                 + TAG_DESC_VACCINATION + OPTION_OWNER + NRIC_DESC_BOB + OPTION_PET
                 + NAME_DESC_NERO;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
-                AddCommand.MESSAGE_APPOINTMENT));
+                AddCommand.MESSAGE_ERROR_APPOINTMENT));
 
         /* Case: missing appointment tag -> rejected */
         command = AddCommand.COMMAND_WORD + OPTION_APPOINTMENT + DATE_DESC_THREE
                 + REMARK_DESC_THREE + OPTION_OWNER + NRIC_DESC_BOB + OPTION_PET
                 + NAME_DESC_NERO;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
-                AddCommand.MESSAGE_APPOINTMENT));
+                AddCommand.MESSAGE_ERROR_APPOINTMENT));
 
         /* Case: missing appointment's owner nric -> rejected */
         command = AddCommand.COMMAND_WORD + OPTION_APPOINTMENT + DATE_DESC_THREE
@@ -460,8 +465,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
             throw new CommandException(MESSAGE_INVALID_PET_PATIENT);
         }
 
-        String message = "New appointment made: %1$s\nunder owner: %2$s\nfor pet patient: %3$s";
-
         try {
             expectedModel.addAppointment(toAdd);
         } catch (DuplicateAppointmentException dae) {
@@ -473,7 +476,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         } catch (PastAppointmentException p) {
             throw new IllegalArgumentException("this date has already past.");
         }
-        String expectedResultMessage = String.format(message, toAdd, owner, pet);
+        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS_APPOINTMENT, toAdd, owner, pet);
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
@@ -507,14 +510,13 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         if (owner == null) {
             throw new CommandException(MESSAGE_INVALID_NRIC);
         }
-        String message = "New pet patient added: %1$s \nunder owner: %2$s";
 
         try {
             expectedModel.addPetPatient(toAdd);
         } catch (DuplicatePetPatientException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
-        String expectedResultMessage = String.format(message, toAdd, owner);
+        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS_PETPATIENT, toAdd, owner);
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
@@ -552,7 +554,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         } catch (DuplicateNricException e) {
             throw new IllegalArgumentException("toAdd's NRIC already exists in the model.");
         }
-        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
+        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS_PERSON, toAdd);
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }

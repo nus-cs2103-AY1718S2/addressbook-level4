@@ -4,10 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import seedu.address.logic.commands.exceptions.DeleteAccountCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.account.Account;
-import seedu.address.model.account.UniqueAccountList;
-import seedu.address.model.account.Username;
-import seedu.address.model.account.exceptions.AccountNotFoundException;
+
 /**
  * Parses input arguments and creates a new DeleteAccountCommand object
  */

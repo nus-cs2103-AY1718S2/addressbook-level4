@@ -30,10 +30,12 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, ReadOnlyV
     @Override
     Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException, WrongPasswordException;
 
+    //@@author yeggasd
     @Override
     Optional<ReadOnlyAddressBook> readAddressBook(Password password)
             throws DataConversionException, IOException, WrongPasswordException;
-
+    //@@author
+    
     @Override
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException, WrongPasswordException;
 

@@ -32,11 +32,13 @@ public interface AddressBookStorage {
      */
     Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException,
                                                                         WrongPasswordException;
+    //@@author yeggasd
     /**
      * @see #getAddressBookFilePath()
      */
     Optional<ReadOnlyAddressBook> readAddressBook(Password password) throws DataConversionException,
                                                                             IOException, WrongPasswordException;
+    //@@author
 
     /**
      * @see #getAddressBookFilePath()

@@ -211,6 +211,10 @@ a|
 |=======================================================================
 ========================================================================
 
+IMPORTANT: It is not guaranteed that the link provided leads to an available page. Links are accepted so long as they
+match any of the patterns as defined above. This feature will be improved to test for broken/removed pages
+in future releases.
+
 Examples:
 
 * `addplatform 1 l/www.facebook.com/johndoe` +

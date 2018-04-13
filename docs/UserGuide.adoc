@@ -118,10 +118,6 @@ is specified when adding a customer.
 |kbd:[Ctrl+L]
 |`locate [SPECIFIER] KEYWORD [KEYWORD] ...`
 
-|<<redo, redo>> (`r`)
-|kbd:[Ctrl+Y]
-|`redo`
-
 |<<select, select>> (`s`)
 |kbd:[Ctrl+S]
 |`select INDEX`
@@ -129,6 +125,10 @@ is specified when adding a customer.
 |<<undo, undo>> (`u`)
 |kbd:[Ctrl+Z]
 |`undo`
+
+|<<redo, redo>> (`r`)
+|kbd:[Ctrl+Y]
+|`redo`
 
 |exit
 |kbd:[Alt+Q]

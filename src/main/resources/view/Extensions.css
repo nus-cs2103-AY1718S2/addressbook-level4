@@ -1,4 +1,4 @@
-
+/* @@author jaronchan */
 .error {
     -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
 }
@@ -34,7 +34,7 @@
  }
 
 .tab-pane .tab-header-area {
-    -fx-padding: 0 0 0 0%;
+    -fx-padding: 0 0 0 18;
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
@@ -44,13 +44,14 @@
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab {
-    -fx-background-radius: 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-background-radius: 8 8 0 0;
     -fx-background-color: #515658;
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab:selected {
     -fx-background-color: #424d5f;
     -fx-border-width: 1;
+    -fx-border-radius: 8 8 0 0;
     -fx-border-color: #3e7b91;
 }
 
@@ -83,7 +84,7 @@
     -fx-border-color: none;
 }
 
-.grid-pane > .label {
+.label {
     -fx-text-fill: white;
 }
 
@@ -121,4 +122,39 @@
     -fx-text-fill: white;
     -fx-alignment: center-left;
     -fx-opacity: 1;
+}
+
+#commandTextField {
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-background-color: #595959;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+
+#resultDisplay {
+    -fx-border-radius: 8px;
+    -fx-border-width: 2 2 1 2;
+    -fx-border-color: #595959 #383838 #9b9b9b #383838;
+    -fx-background-color: #3E3E3E;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+}
+
+#resultDisplay .content {
+    -fx-background-color: #3E3E3E;
+    -fx-background-radius: 0px;
+}
+
+.status-bar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: derive(#1d1d1d, 30%);
+}
+
+#loginBar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
 }

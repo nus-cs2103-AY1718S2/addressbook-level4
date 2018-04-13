@@ -75,8 +75,8 @@ public class DailySchedulerPanel extends UiPart<Region> {
      * Buttons depending on how many trips to be made.
      */
     public void addButtons(int numOfInstances) {
-        for (int i = 0; i < numOfInstances; i++) {
-            buttonStack.getChildren().add(new ToggleButton(" "));
+        for (int i = 1; i <= numOfInstances; i++) {
+            buttonStack.getChildren().add(new ToggleButton(Integer.toString(i)));
         }
     }
     /**

@@ -44,7 +44,7 @@ public class AddSessionLogCommand extends UndoableCommand {
 
     public static final String MESSAGE_ADD_SESSION_LOG_SUCCESS = "Added new log to %1$s";
 
-    public static final String SESSION_LOG_DIVIDER = "\n\n=============================================";
+    public static final String SESSION_LOG_DIVIDER = "\n\n===========================================";
     public static final String SESSION_LOG_DATE_PREFIX = "\nSession log date added: ";
 
 

@@ -24,9 +24,9 @@ public class UnCheckToDoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "uncheck";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unchecks the ToDo identified as done"
-            + "by the index number used in the last ToDo listing. "
-            + "Status of the ToDo will be overwritten as done.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unchecks the to-do identified as done"
+            + "by the index number used in the last to-do listing. "
+            + "Status of the to-do will be overwritten as done.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1 ";
 

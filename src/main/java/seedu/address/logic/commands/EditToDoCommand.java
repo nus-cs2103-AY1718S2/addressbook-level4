@@ -28,9 +28,9 @@ public class EditToDoCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "editToDo";
     public static final String COMMAND_ALIAS = "eTD";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the content of the ToDo identified "
-            + "by the index number used in the last ToDo listing. "
-            + "Content of the ToDo will be overwritten by the input value.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the content of the to-do identified "
+            + "by the index number used in the last to-do listing. "
+            + "Content of the to-do will be overwritten by the input value.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_CONTENT + "CONTENT] "
             + "Example: " + COMMAND_WORD + " 1 "

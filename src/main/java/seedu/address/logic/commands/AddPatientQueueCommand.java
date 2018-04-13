@@ -12,7 +12,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
-import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
 /**
  * Add patient to visiting queue (registration)

@@ -54,17 +54,26 @@ public class BrowserPanel extends UiPart<Region> {
         String append = location.urlstyle();
         loadPage(SEARCH_PAGE_URL + append);
     }
-
+//@author samuelloh
     /**
      * Loads the student's full information page on the browser including his/her profile picture if it exists
      */
     private void loadStudentInfoPage() {
-        String jarFolder = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation()
-                .getPath()).getParentFile().getPath().replace('\\', '/');
-        String studentPageFilePath = "file:/" + jarFolder + "/data/view/" + STUDENT_MISC_INFO_PAGE;
+        String studentPageFilePath = constructPathToLoad();
         String finalPath = testIfFileExists(studentPageFilePath);
         loadPage(finalPath);
 
+    }
+
+    /**
+     * Constructs the path to load the html files for student info display in string form
+     * @return absolute path to file of studentMiscInfo.html in string
+     */
+    private String constructPathToLoad() {
+        String jarFolder = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation()
+                .getPath()).getParentFile().getPath().replace('\\', '/');
+        String studentPageFilePath = "file:/" + jarFolder + "/data/view/" + STUDENT_MISC_INFO_PAGE;
+        return studentPageFilePath;
     }
 
     /**
@@ -81,7 +90,7 @@ public class BrowserPanel extends UiPart<Region> {
             return testPath;
         }
     }
-
+//@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));

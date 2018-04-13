@@ -651,24 +651,32 @@ This would have posed problems when implementing the keyboard shortcuts that pop
 Limitation: when the focus is on the BrowserPanel UI element, the implemented keyboard shortcuts do not work as a user would expect them to.
 This is a limitation of the BrowserPanel UI element.
 //@@author
+
+//@@author Der-Erlkonig
 === BrowserPanel Enhancement
-In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows some more important details of the runner or customer.
+In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows some more important details of the `Runner` or `Customer`.
 These are important fields for a loan shark manager to get a quick grasp of a customer's details, as well as who the runners are in charge of.
 
 ==== Enhancement
-Depending on whether the selected Person is a Runner or Customer, the respective HTML file with the desired fields are generated.
+Depending on whether the selected `Person` is a `Runner` or `Customer`, the respective HTML file with the desired fields are generated.
 Upon selection of the PersonCard, or select command from the CommandBox, a HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
-Fields for the Customer are: name, amount owed, due date, status, and runner assigned.
-Fields for the Runner are: name, and a list of customers assigned to the specified runner.
+Both `Customer` and `Runner` will have the fields: name, phone, email, address.
+Fields exclusively for the `Customer` are: amount borrowed, amount owed, due date, and runner assigned.
+
+image::BrowserPanelCustomer.PNG[width="800"]
+
+Fields exclusively for the `Runner` are: a list of customers assigned to the specified runner.
+
+image::BrowserPanelRunner.PNG[width="800"]
+
 The BrowserPanel then displays this HTML file.
 The background and font colors are matched to the HuatAh! application.
-
-image::BrowserPanelMockup.PNG[width="800"]
 
 ==== Rationale
 A customer's amount owed and due dates are very important variables which directly affect the PnL of the loan shark boss' enterprise.
 Being able to view a runner's list of assigned customers is important for managing human resource.
 Therefore, this feature is suitable, and definitely desirable from the perspective of a loan shark boss.
+//@@author
 
 == Documentation
 

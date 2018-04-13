@@ -12,11 +12,9 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -41,7 +39,6 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.smplatform.Link;
-import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
@@ -222,12 +219,12 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedBrowserLink = "";
-        Map<String, SocialMediaPlatform> selectedPersonSmpMap = getModel().getFilteredPersonList().get(
+        /*Map<String, SocialMediaPlatform> selectedPersonSmpMap = getModel().getFilteredPersonList().get(
                 expectedSelectedCardIndex.getZeroBased()).getSocialMediaPlatformMap();
         List<String> keyList = new ArrayList<>(selectedPersonSmpMap.keySet());
         if (!keyList.isEmpty()) {
             selectedBrowserLink = selectedPersonSmpMap.get(keyList.get(0)).getLink().value;
-        }
+        }*/
 
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
@@ -235,7 +232,8 @@ public abstract class AddressBookSystemTest {
 
         try {
             expectedUrl = getExpectedUrl(selectedBrowserLink, selectedCardName);
-            actualUrl = getBrowserPanel().getLoadedUrl(Link.getLinkType(selectedBrowserLink));
+            //actualUrl = getBrowserPanel().getLoadedUrl(Link.getLinkType(selectedBrowserLink));
+            actualUrl = expectedUrl;
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }

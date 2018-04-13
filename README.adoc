@@ -30,4 +30,6 @@ endif::[]
 _Marco Jakob_.
 * Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4]
 
+* Code is developed from AddressBook-Level4 project created by SE-EDU initiative at https://github.com/se-edu/
+
 == Licence : link:LICENSE[MIT]

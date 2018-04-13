@@ -14,25 +14,45 @@ endif::[]
 
 By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
+== Introduction
+
+=== About Codeducator
+
+Codeducator is an open source Command Line Interface (CLI) address book and scheduling desktop application.
+We aim to provide a solution for private programming tutors to better manage their student contacts, tutoring schedule and track their students' learning progress.
+
+=== How to Contribute
+
+There are lots of ways to contribute to Codeducator: coding, testing or improving our build process and tools. This developer's guide provides information that will help you get started as a Codeducator contributor. Even if you are an experienced Codeducator developer, you will still find this guide to be useful to refer to. +
+
+If you are ready to contribute, simply create a Pull Request (PR) on our main repository.
+
+If you have found any bugs or have ideas to improve Codeducator, create an issue https://github.com/CS2103JAN2018-W09-B3/main/issues[here] or https://github.com/CS2103JAN2018-W09-B3/main/blob/master/docs/ContactUs.adoc[contact us] directly.
+
 == Setting up
 
 === Prerequisites
+To contribute to Codeducator, you will need the following software:
 
-. *JDK `1.8.0_60`* or later
+* *JDK `1.8.0_60`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
+You can download the latest Java version https://java.com/en/download/[here].
 
-. *IntelliJ* IDE
+* *IntelliJ* IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
++
+You can download the latest Intellij IDE https://www.jetbrains.com/idea/download[here].
 
 
 === Setting up the project in your computer
+To set up the project in your computer, follow the steps below:
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -47,11 +67,15 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
+You will need to verify if your environment is set up correctly before you can start working on Codeducator. +
+
+In Intellij,
 
 . Run the `seedu.address.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
+You will need to configure and set up some tools we use before you can start making meaningful contributions to Codeducator.
 
 ==== Configuring the coding style
 
@@ -96,10 +120,10 @@ When you are ready to start coding,
 [[Design-Architecture]]
 === Architecture
 
+The *_Architecture Diagram_* given below explains the high-level design of the App. Given below is also a quick overview of each component.
+
 .Architecture Diagram
 image::Architecture.png[width="600"]
-
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
@@ -370,16 +394,21 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // tag::favourites[]
 === Favourites feature
+
+The favourites feature allows users to remember/mark a student by adding them to favourites.
+
 ==== Current Implementation
 
 To facilitate the favourite/unfavourite feature, an association with a new `Favourite` class is added to the `Student` class:
 
+.Structure of the atrributes of a `Student` in the Model component. The diagram shows that the `Student` class is associated with the `Favourite` class.
 image::StudentWithPLFeature.png[width="500"]
 
 Since the implementation of the favourite and unfavourite command are similar, we will describe the implementation of the favourite command only.
 
 The following sequence diagram shows how the favourite command works:
 
+.Sequence diagram for the favourite command
 image::FavouriteCommandSequenceDiagram.png[width="800"]
 
 . The `FavouriteCommandParser` parses the user input to obtain the target student index and constructs a new `FavouriteCommand` with this index.
@@ -735,15 +764,19 @@ To sync with Google Contacts and Google Calendar, a `GServiceManager` class is i
 
 // tag::dashboard[]
 === Dashboard feature
+
+The dashboard feature aims to help users keep track of their students' learning progress.
+
 ==== Current Implementation
 
 To have a dashboard for each student, an association with a new `Dashboard` class is added to the `Student` class. We have also created new classes associated with the `Dashboard` class to facilitate the different capabilities of the dashboard.
-The following diagram shows the structure of the classes that facilitate the dashboard feature:
+The following diagram shows the class diagram of the components that facilitate the dashboard feature:
 
+.Class diagram of the components that facilitate the dashboard feature
 image::ModelComponentDashboardClassDiagram.png[width="500"]
 
-`UniqueMilestoneList` and `UniqueTaskList` are associated to `ObservableList<Milestone>` and `ObservableList<Task>` respectively that can be 'observed'.
-This means that the UI can be bound to both of the lists so that the UI automatically updates when the data in both lists change.
+Both `UniqueMilestoneList` and `UniqueTaskList` contain an attribute called "internalList" which are `ObservableList<Milestone>` and `ObservableList<Task>` respectively.
+This means that the UI can be bound to both of the lists so that it can automatically update when the data in any of the lists change.
 
 A new `Dashboard` object is created every time a new `Student` is being created. The `Dashboard` object will contain an empty milestone list until the user adds new milestones to the dashboard.
 This enforces 1-to-1 association between `Student` and `Dashboard`, as well as between `Dashboard` and `UniqueMilestoneList`.
@@ -787,7 +820,7 @@ For example, in the `AddMilestoneCommand`, to add a new milestone object to the 
     }
 ----
 [start=2]
-. In the `AddMilestoneCommand.executeUndoableCommand()` method, `Model.updateStudent(Student, Student)` is called to replace "targetStudent" with "editedStudent" in the Address Book in-memory
+. In the `AddMilestoneCommand.executeUndoableCommand()` method, `Model.updateStudent(Student, Student)` is called to replace "targetStudent" with "editedStudent" in the Address Book in-memory.
 
 ===== Implementation for displaying the dashboard
 
@@ -802,6 +835,7 @@ The `ShowDashboardCommand` facilitates the displaying of a student's dashboard. 
 ----
 As seen from the above code snippet, `ShowDashboardCommand.execute()` raises a `ShowStudentDashboardEvent`. The sequence diagram below shows how the `EventsCenter` reacts to that event.
 
+.Sequence diagram showing how the the `EventsCenter` and the Ui components react to the `ShowDashboardCommand`
 image::ShowDashboardCommandSequenceDiagram.png[width="800"]
 
 As seen from the above diagram,
@@ -999,7 +1033,7 @@ E.g. Next of kin contact and an optional profile picture
 * *(Major)* Add a functionality that enables tutor to use free-form english to execute commands instead of conforming to the specific syntax
 ** This makes the app more user-friendly without the need to memorise the syntax of respective commands and able to execute them more intuitively.
 
-*Yap ni:*
+*Yap Ni:*
 
 * *(Minor)* Favourites feature where tutors can add or remove students from favourites and list students that are in their favourites
 ** This helps the tutor to remember or view the list of prominent students they want to take note of easily.
@@ -1224,3 +1258,193 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+//tag::favTest[]
+=== Adding a student to favourites
+
+. Adding a student to favourites while all students are listed
+
+.. Prerequisites: List all students using the `list` command and there are multiple students in the list. The first student contact is not in favourites.
+.. Test case: `fav 1` +
+Expected:
+* The name of the first student contact in the student list will turn orange in color.
+* The name of the first student contact will be shown in the result box.
+* Timestamp in the status bar is updated.
+* Executing the command `list -f` will show the student in the favourites list.
+.. Test case: `fav 0` +
+Expected:
+* No student is added to favourites due to the invalid student index.
+* Error details will be shown in the result box.
+* Timestamp in the status bar remains the same.
+.. Other incorrect favourite commands to try: `fav`, `fav x` (where x is larger than the list size) +
+Expected:
+* Similar to the previous test case
+
+
+=== Removing a student from favourites
+
+. Removing a student from favourites while all students are listed
+
+.. Prerequisites: List all students using the `list` command and there are multiple students in the list. The first student contact is in favourites.
+.. Test case: `unfav 1` +
+Expected:
+* The name of the first student contact in the student list will no longer be orange in color.
+* The name of the first student contact will be shown in the result box.
+* Timestamp in the status bar is updated.
+* Executing the command `list -f` will no longer show the student in the favourites list.
+.. Test case: `unfav 0` +
+Expected:
+* No student is removed from favourites due to the invalid student index.
+* Error details will be shown in the result box.
+* Timestamp in the status bar remains the same.
+.. Other incorrect unfavourite commands to try: `unfav`, `unfav x` (where x is larger than the list size) +
+Expected:
+* Similar to the previous test case
+
+. Removing a student from favourites while only students in favourites are listed
+
+.. Prerequisites: List only students in favourites using the `list -f` command and there are multiple students in the list.
+.. Test case: `unfav 1` +
+Expected:
+* First student contact in the favourites list will be removed.
+* The name of the first student contact will be shown in the result box.
+* Timestamp in the status bar is updated.
+
+//end::favTest[]
+
+//tag::dashboardTest[]
+=== Showing the dashboard of a student
+
+. Showing the dashboard of a student while all students are listed and the right panel is showing the schedule
+
+.. Prerequisites: List all students using the `list` command and there are multiple students in the list. The schedule is being displayed on the right panel using the `schedule` command.
+.. Test case: `showDB 1` +
+Expected:
+* The dashboard of the first student contact in the student list replaces the schedule in the right panel.
+* The index 1 is shown in the result box.
+.. Test case: `showDB 0` +
+Expected:
+* The schedule remains in the right panel due to the invalid student index.
+* Error details will be shown in the result box.
+.. Other incorrect show dashboard commands to try: `showDB`, `showDB x` (where x is larger than the list size) +
+Expected:
+* Similar to the previous test case.
+
+. Showing the dashboard of a student while all students are listed and the right panel is showing the browser panel
+
+.. Prerequisites: List all students using the `list` command and there are multiple students in the list. The 1st student in the list is being selected and the browser is being displayed on the right panel using the `select` command.
+.. Test case: `showDB 1` +
+Expected:
+* The dashboard of the first student contact in the student list replaces the browser in the right panel.
+* The index 1 is shown in the result box.
+
+=== Adding a milestone to a student's dashboard
+
+. Adding a milestone to a student's dashboard while the dashboard is being shown
+
+.. Prerequisites: The dashboard of the 1st student in the list is being shown with the `showDB 1` command.
+.. Test case: `addMS i/1 d/23/05/2018 23:59 o/Learn Arrays` +
+Expected:
+* A milestone with the due date "23/05/2018 23:59" and description "Learn Arrays" is added to the dashboard.
+* The milestone details is shown in the result box.
+* Timestamp in the status bar is updated.
+.. Test case: `addMS i/0 d/23/05/2018 23:59 o/Learn Arrays` +
+* Milestone is not added to the dashboard due to the invalid student index.
+* Error details will be shown in the result box.
+* Timestamp in the status bar remains the same.
+.. Test case: `addMS i/1 d/31/02/2018 23:59 o/Learn Arrays` +
+* Milestone is not added to the dashboard due to the invalid date.
+* Error details will be shown in the result box.
+* Timestamp in the status bar remains the same.
+.. Other incorrect add milestone commands to try: `addMS`, `addMS i/1`, `addMS d/23/05/2018`, `addMS o/Learn Arrays`, `addMS i/1 d/23/05/2018 23:59`, `addMS i/1 d/23/05/2018 o/Learn Arrays` +
+Expected:
+* Similar to the previous test case.
+
+=== Deleting a milestone from a student's dashboard
+
+. Deleting a milestone from a student's dashboard while the dashboard is being shown
+
+.. Prerequisites: The dashboard of the 1st student in the list is being shown with the `showDB 1` command. The dashboard contains at least 1 milestone.
+.. Test case: `deleteMS i/1 m/1` +
+Expected:
+* The 1st milestone in the dashboard is being deleted.
+* The milestone details is shown in the result box.
+* Timestamp in the status bar is updated.
+.. Test case: `deleteMS i/1 m/x` (where x is larger than the size of the milestone list)  +
+Expected:
+* No milestone is deleted due to the invalid milestone index.
+* Error details will be shown in the result box.
+* Timestamp in the status bar remains the same.
+.. Other incorrect delete milestone commands to try: `deleteMS`, `deleteMS i/1`, `deleteMS m/1`, `deleteMS i/0 m/1`
+Expected:
+* Similar to the previous test case.
+
+=== Adding a task to a milestone
+
+. Adding a task to a milestone in a student's dashboard while the dashboard is being shown
+
+.. Prerequisites: The dashboard of the 1st student in the list is being shown with the `showDB 1` command. The dashboard contains at least 1 milestone.
+.. Test case: `addTask i/1 m/1 n/Learn Array Syntax o/Student to refer to the textbook` +
+Expected:
+* A task with the name "Learn Array Syntax" and description "Student to refer to the textbook" is added to the 1st milestone in the dashboard.
+* The task details are shown in the result box.
+* Timestamp in the status bar is updated.
+.. Test case: `addTask i/1 m/x n/Learn Array Syntax o/Student to refer to the textbook` (where x larger than the size of the milestone list) +
+Expected:
+* Task is not added to the milestone due to the invalid milestone index.
+* Error details will be shown in the result box.
+* Timestamp in the status bar remains the same.
+.. Other incorrect add task commands to try: `addTask`, `addTask i/1 m/1`, `addTask i/1 m/1 n/Learn Array Syntax`, `addTask n/Learn Array Syntax o/Student to refer to the textbook` +
+Expected:
+* Similar to the previous test case.
+
+=== Deleting a task from a milestone
+
+. Deleting a task from a milestone in a student's dashboard while the dashboard is being shown
+
+.. Prerequisites: The dashboard of the 1st student in the list is being shown with the `showDB 1` command. The dashboard contains at least 1 milestone with at least 1 task.
+.. Test case: `deleteTask i/1 m/1 tk/1` +
+Expected:
+* The 1st task in the 1st milestone is being deleted.
+* The task details are shown in the result box.
+* Timestamp in the status bar is updated.
+.. Test case: `deleteTask i/1 m/1 tk/x` (where x is larger than the size of the task list) +
+Expected:
+* No task is deleted due to the invalid task index.
+* Error details will be shown in the result box.
+* Timestamp in the status bar remains the same.
+.. Other incorrect delete task commands to try: `deleteTask`, `deleteTask tk/1`, `deleteTask m/1 tk/1`, `deleteTask i/0 m/1 tk/1`, `deleteTask i/1 m/0 tk/1` +
+Expected:
+* Similar to the previous test case.
+
+=== Marking a task as completed
+
+. Marking an _incomplete_ task from a milestone in a student's dashboard as completed while the dashboard is being shown
+
+.. Prerequisites: The dashboard of the 1st student in the list is being shown with the `showDB 1` command. The dashboard contains at least 1 milestone with the 1st task not marked as completed.
+.. Test case: `checkTask i/1 m/1 tk/1` +
+Expected:
+* The 1st task in the 1st milestone is marked as completed with the "Completed" field turning from "No" to "Yes".
+* The progress of the 1st milestone is updated.
+* The task index and milestone index are shown in the result box.
+* Timestamp in the status bar is updated.
+.. Test case: `checkTask i/1 m/1 tk/x` (where x is larger than the size of the task list) +
+Expected:
+* No task is marked as completed due to the invalid task index.
+* Error details will be shown in the result box.
+* Timestamp in the status bar remains the same.
+.. Other incorrect marking task as completed command to try: `checkTask`, `checkTask tk/1`, `checkTask m/1 tk/1`, `checkTask i/0 m/1 tk/1`, `checkTask i/1 m/0 tk/1` +
+Expected:
+* Similar to the previous test case.
+
+. Marking a _completed_ task from a milestone in a student's dashboard as completed while the dashboard is being shown
+
+.. Prerequisites: The dashboard of the 1st student in the list is being shown with the `showDB 1` command. The dashboard contains at least 1 milestone with the 1st task already marked as completed.
+.. Test case: `checkTask i/1 m/1 tk/1` +
+Expected:
+* The 1st task in the 1st milestone remains marked as completed with the "Completed" field being "Yes". +
+* The progress in the 1st milestone remains the same.
+* A message saying that the task is already marked as completed will be shown in the result box.
+* Timestamp in the status bar remains the same.
+
+//end::dashboardTest[]

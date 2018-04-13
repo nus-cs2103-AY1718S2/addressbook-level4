@@ -50,7 +50,7 @@ public class UnfavouriteCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, editedStudent));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedStudent.getName()));
     }
 
     @Override

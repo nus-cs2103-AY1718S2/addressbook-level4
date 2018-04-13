@@ -11,7 +11,6 @@ import seedu.address.model.PredictionModel;
 
 
 
-
 /**
  * Gradient Descent solver on Person models in prediction of purchasing power
  */
@@ -109,7 +108,7 @@ public class GradientDescent {
             this.model.updatePredictionResult(this.getWeights());
             return new CommandResult(String.format(MESSAGE_PREDICTION_SUCCESS)
                     + ", with Confidence Rate "
-                    + String.format("%.2f", confidence * 100)
+                    + String.format("%.2f", confidence)
                     + "%"
             );
         } catch (CommandException e) {
@@ -133,7 +132,13 @@ public class GradientDescent {
             average += (1 - error);
         }
 
-        return average / targets.size();
+        Double confidence = average / targets.size() * 100;
+        if (confidence < 0) {
+            confidence = 0.0;
+        } else if (confidence > 100) {
+            confidence = 100.0;
+        }
+        return confidence;
     }
 
     //@@author SoilChang
@@ -172,11 +177,10 @@ public class GradientDescent {
      */
     private boolean hasNaN(ArrayList<Double> weights) {
         for (Double i : weights) {
-            if (i.isNaN()) {
+            if (i.isNaN() || Double.isInfinite(i)) {
                 return true;
             }
         }
-
         return false;
     }
 

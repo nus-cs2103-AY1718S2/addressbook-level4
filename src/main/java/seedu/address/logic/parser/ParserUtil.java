@@ -32,6 +32,8 @@ import seedu.address.model.policy.Month;
 import seedu.address.model.policy.Price;
 import seedu.address.model.tag.Tag;
 
+
+
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  * {@code ParserUtil} contains methods that take in {@code Optional} as parameters. However, it goes against Java's
@@ -60,10 +62,10 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
     //@@author yuxiangSg
+
     /**
      * Parses a {@code String input} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.
-     *
      */
     static String parseString(String input) {
         requireNonNull(input);
@@ -88,7 +90,7 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
-    static LocalDateTime parseDateTime(String input) throws  IllegalValueException {
+    static LocalDateTime parseDateTime(String input) throws IllegalValueException {
         requireNonNull(input);
         String trimmedInput = input.trim();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_TIME_VALIDATION)
@@ -102,7 +104,6 @@ public class ParserUtil {
         } catch (DateTimeParseException e) {
             throw new IllegalValueException(AppointmentEntry.MESSAGE_DATE_TIME_CONSTRAINTS);
         }
-
 
 
     }
@@ -122,7 +123,7 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
-    static LocalDate parseDate(String input) throws  IllegalValueException {
+    static LocalDate parseDate(String input) throws IllegalValueException {
         requireNonNull(input);
         String trimmedInput = input.trim();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(LookDateCommand.DATE_VALIDATION)
@@ -138,7 +139,6 @@ public class ParserUtil {
         }
 
 
-
     }
 
     /**
@@ -150,6 +150,7 @@ public class ParserUtil {
         return input.isPresent() ? Optional.of(parseDate(input.get())) : Optional.empty();
     }
     //@@author
+
     /**
      * Parses a {@code String name} into an {@code Name}
      * Leading and trailing whitespaces will be trimmed.
@@ -247,6 +248,7 @@ public class ParserUtil {
     }
 
     //@author SoilChang
+
     /**
      * Parses a {@code String value} into an {@code value}.
      * Leading and trailing whitespaces will be trimmed.
@@ -255,11 +257,17 @@ public class ParserUtil {
      */
     public static Income parseIncome(String income) throws IllegalValueException {
         requireNonNull(income);
-        Double trimmedIncome = Double.parseDouble(income.trim());
+        Double trimmedIncome = 0.0;
+        try {
+            trimmedIncome = Double.parseDouble(income.trim());
+        } catch (Exception e) {
+            throw new IllegalValueException(Income.MESSAGE_INCOME_CONSTRAINTS);
+        }
+
         if (!Income.isValid(trimmedIncome)) {
             throw new IllegalValueException(Income.MESSAGE_INCOME_CONSTRAINTS);
         }
-        return new Income(trimmedIncome);
+        return new Income(Math.abs(trimmedIncome));
     }
 
     /**
@@ -280,11 +288,17 @@ public class ParserUtil {
      */
     public static Expenditure parseActualSpending(String actualSpending) throws IllegalValueException {
         requireNonNull(actualSpending);
-        Double trimmedActualSpending = Double.parseDouble(actualSpending.trim());
+        Double trimmedActualSpending = 0.0;
+        try {
+            trimmedActualSpending = Double.parseDouble(actualSpending.trim());
+        } catch (Exception e) {
+            throw new IllegalValueException(Expenditure.MESSAGE_EXPENDITURE_CONSTRAINTS);
+        }
+
         if (!Expenditure.isValid(trimmedActualSpending)) {
             throw new IllegalValueException(Expenditure.MESSAGE_EXPENDITURE_CONSTRAINTS);
         }
-        return new Expenditure(trimmedActualSpending);
+        return new Expenditure(Math.abs(trimmedActualSpending));
     }
 
 
@@ -353,6 +367,7 @@ public class ParserUtil {
     }
 
     //@@author ValerianRey
+
     /**
      * Parses a {@code String value} into a {@code Price}.
      * Leading and trailing whitespaces will be trimmed.
@@ -383,7 +398,7 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code date} is invalid.
      */
-    public static Date parsePolicyDate(String date) throws  IllegalValueException {
+    public static Date parsePolicyDate(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedInput = date.trim();
 

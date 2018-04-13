@@ -42,9 +42,9 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals("Phone:\t\t" + expectedPerson.getPhone().value, actualCard.getPhone());
+        assertEquals("Email:\t\t" + expectedPerson.getEmail().value, actualCard.getEmail());
+        assertEquals("Address:\t\t" + expectedPerson.getAddress().value, actualCard.getAddress());
 
         assertTagsEqual(expectedPerson, actualCard);
     }
@@ -55,11 +55,12 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPetPatient(PetPatient expectedPetPatient, PetPatientCardHandle actualCard) {
         assertEquals(expectedPetPatient.getName().toString(), actualCard.getName());
-        assertEquals(expectedPetPatient.getSpecies().toString(), actualCard.getSpecies());
-        assertEquals(expectedPetPatient.getBreed().toString(), actualCard.getBreed());
-        assertEquals(expectedPetPatient.getColour().toString(), actualCard.getColour());
-        assertEquals(expectedPetPatient.getBloodType().toString(), actualCard.getBloodType());
-        assertEquals(expectedPetPatient.getOwner().toString(), actualCard.getOwnerNric());
+        assertEquals("Species:\t\t" + expectedPetPatient.getSpecies().toString(), actualCard.getSpecies());
+        assertEquals("Breed:\t\t" + expectedPetPatient.getBreed().toString(), actualCard.getBreed());
+        assertEquals("Colour:\t\t" + expectedPetPatient.getColour().toString(), actualCard.getColour());
+        assertEquals("Blood Type:\t" + expectedPetPatient.getBloodType().toString(),
+                actualCard.getBloodType());
+        assertEquals("Owner NRIC:\t" + expectedPetPatient.getOwner().toString(), actualCard.getOwnerNric());
 
         //assertTagsEqual(expectedPetPatient, actualCard);
     }
@@ -87,9 +88,16 @@ public class GuiTestAssert {
         case "family":
         case "friend":
             return "orange";
+
         case "owner":
         case "friends":
             return "brown";
+
+        case "volunteer":
+            return "green";
+
+        case "spca":
+            return "blue";
 
         case "husband":
             return "grey";

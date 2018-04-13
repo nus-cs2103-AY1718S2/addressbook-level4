@@ -49,10 +49,6 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
             throw new DuplicateAppointmentException();
         }
 
-        if (toAdd.getDateTime().isBefore(LocalDateTime.now())) {
-            throw new PastAppointmentException();
-        }
-
         ArrayList<LocalDateTime> timeList = new ArrayList<>();
 
         for (Appointment a : internalList) {
@@ -64,6 +60,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 
         for (LocalDateTime dateTime : timeList) {
             if (toAdd.getDateTime().isAfter(dateTime) && toAdd.getDateTime().isBefore(dateTime.plusMinutes(30))) {
+                throw new ConcurrentAppointmentException();
+            }
+            if (toAdd.getDateTime().isBefore(dateTime) && toAdd.getDateTime().plusMinutes(30).isAfter(dateTime)) {
                 throw new ConcurrentAppointmentException();
             }
         }

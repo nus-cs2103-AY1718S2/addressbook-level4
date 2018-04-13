@@ -23,6 +23,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.customer.MoneyBorrowed;
+import seedu.address.model.person.customer.StandardInterest;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
 
@@ -34,6 +35,8 @@ public class ParserUtilTest {
     private static final String INVALID_TAG = "#friend";
     private static final String INVALID_MONEY_BORROWED_NEGATIVE = "-34.0985";
     private static final String INVALID_MONEY_BORROWED_NOT_DOUBLE = "34.0d985";
+    private static final String INVALID_STANDARD_INTEREST_NEGATIVE = "-34.0985";
+    private static final String INVALID_STANDARD_INTEREST_NOT_DOUBLE = "34.0d985";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -42,6 +45,7 @@ public class ParserUtilTest {
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
     private static final String VALID_MONEY_BORROWED = "34.0985";
+    private static final String VALID_STANDARD_INTEREST = "34.0985";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -292,4 +296,48 @@ public class ParserUtilTest {
                 ParserUtil.parseMoneyBorrowed(Optional.of(VALID_MONEY_BORROWED)));
     }
 
+    @Test
+    public void parseStandardInterest_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseStandardInterest((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseStandardInterest((Optional<String>) null));
+    }
+
+    @Test
+    public void parseStandardInterest_invalidValueNotDouble_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseStandardInterest(INVALID_STANDARD_INTEREST_NOT_DOUBLE));
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseStandardInterest(Optional.of(INVALID_STANDARD_INTEREST_NOT_DOUBLE)));
+    }
+
+    @Test
+    public void parseStandardInterest_invalidValueNegative_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseStandardInterest(INVALID_STANDARD_INTEREST_NEGATIVE));
+        Assert.assertThrows(IllegalValueException.class,
+                () -> ParserUtil.parseStandardInterest(Optional.of(INVALID_STANDARD_INTEREST_NEGATIVE)));
+    }
+
+    @Test
+    public void parseStandardInterest_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseStandardInterest(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseStandardInterest_validValueWithoutWhitespace_returnsStandardInterest() throws Exception {
+        StandardInterest expectedStandardInterest = new StandardInterest(Double.parseDouble(VALID_STANDARD_INTEREST));
+        assertEquals(expectedStandardInterest, ParserUtil.parseStandardInterest(VALID_STANDARD_INTEREST));
+        assertEquals(Optional.of(expectedStandardInterest),
+                ParserUtil.parseStandardInterest(Optional.of(VALID_STANDARD_INTEREST)));
+    }
+
+    @Test
+    public void parseStandardInterest_validValueWithWhitespace_returnsTrimmedStandardInterest() throws Exception {
+        String standardInterestWithWhitespace = WHITESPACE + VALID_STANDARD_INTEREST + WHITESPACE;
+        StandardInterest expectedStandardInterest
+                = new StandardInterest(Double.parseDouble(standardInterestWithWhitespace));
+        assertEquals(expectedStandardInterest, ParserUtil.parseStandardInterest(VALID_STANDARD_INTEREST));
+        assertEquals(Optional.of(expectedStandardInterest),
+                ParserUtil.parseStandardInterest(Optional.of(VALID_STANDARD_INTEREST)));
+    }
 }

@@ -104,25 +104,35 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateSelectCommandTemplate() {
-        //use accelerator
+    public void focusOnCommandBox_populateSelectCommandTemplate_usingAccelerator() {
         getCommandBox().click();
         populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnResultDisplay_populateSelectCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateSelectCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateSelectCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateSelectCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateSelectCommandTemplate_usingMenuButton() {
         populateSelectCommandUsingMenu();
         assertPopulationSuccess();
     }

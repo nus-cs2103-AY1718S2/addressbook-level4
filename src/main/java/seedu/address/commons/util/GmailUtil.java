@@ -37,7 +37,6 @@ import com.google.api.services.gmail.model.Message;
  */
 public class GmailUtil {
 
-    /** Application name. */
     private static final String APPLICATION_NAME =
             "Gmail API Java Quickstart";
 
@@ -45,14 +44,14 @@ public class GmailUtil {
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
             System.getProperty("user.home"), ".credentials/gmail-java-quickstart");
 
-    /** Global instance of the {@link FileDataStoreFactory}. */
+    /** Global instance of the {@link FileDataStoreFactory} to create the credentials file to save to*/
     private static FileDataStoreFactory dataStoreFactory;
 
-    /** Global instance of the JSON factory. */
+    /** Global instance of the JSON factory for reading and writing json*/
     private static final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
 
-    /** Global instance of the HTTP transport. */
+    /** Global instance of the HTTP transport to support http calls*/
     private static HttpTransport httpTransport;
 
 
@@ -77,19 +76,19 @@ public class GmailUtil {
     public GmailUtil() throws IOException {
         this.service = getGmailService();
     }
+
     /**
-     * Creates an authorized Credential object.
+     * Creates an authorized Credential object by
+     * Loading client secrets and
+     * Building flow and triggering user authorization request.
      * @return an authorized Credential object.
-     * @throws IOException
+     * @throws IOException if there is anything wrong with reading/writing to file.
      */
     public static Credential authorize() throws IOException {
-        // Load client secrets.
         InputStream in =
                 GmailUtil.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
-        // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
                         httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
@@ -106,7 +105,7 @@ public class GmailUtil {
     /**
      * Build and return an authorized Gmail client service.
      * @return an authorized Gmail client service
-     * @throws IOException
+     * @throws IOException from authorize
      */
     public static Gmail getGmailService() throws IOException {
         Credential credential = authorize();
@@ -117,13 +116,8 @@ public class GmailUtil {
 
     /**
      * Using inputs, generate MimeMessage type object to use to encapsulate message states.
-     * @param to
-     * @param cc
-     * @param from
-     * @param subject
-     * @param bodyText
      * @return MimeMessage to pass to createMessageWithEmail
-     * @throws MessagingException
+     * @throws MessagingException if message is invalid
      */
     private static MimeMessage createEmail(String to, String cc, String from, String subject, String bodyText)
             throws MessagingException {
@@ -147,10 +141,6 @@ public class GmailUtil {
 
     /**
      * Taking in MimeMessage email, generate a Message which can be used to send through Gmail api
-     * @param email
-     * @return
-     * @throws MessagingException
-     * @throws IOException
      */
     private static Message createMessageWithEmail(MimeMessage email) throws MessagingException, IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -164,15 +154,6 @@ public class GmailUtil {
     /**
      * Start of the chain, takes all the inputs and generates Message using createMessageWithEmail and uses gmail
      * api to send the email out
-     *
-     * @param service
-     * @param recipientEmail
-     * @param ccEmail
-     * @param fromEmail
-     * @param title
-     * @param message
-     * @throws IOException
-     * @throws MessagingException
      */
     public static void send(Gmail service, String recipientEmail, String ccEmail, String fromEmail, String title,
                             String message) throws IOException, MessagingException {

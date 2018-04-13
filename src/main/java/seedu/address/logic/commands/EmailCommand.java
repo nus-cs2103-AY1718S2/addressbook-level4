@@ -59,19 +59,18 @@ public class EmailCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
         ObservableList<Person> emailList = model.getFilteredPersonList();
-        for (Person p : emailList) {
+        for (Person person : emailList) {
             try {
                 Template template = model.selectTemplate(this.search);
                 GmailUtil handler = new GmailUtil();
                 Gmail service = handler.getService();
-                handler.send(service, p.getEmail().toString(), "",
+                handler.send(service, person.getEmail().toString(), "",
                         service.users().getProfile("me").getUserId(), template.getTitle(),
                         template.getMessage());
             } catch (TemplateNotFoundException e) {
                 return new CommandResult(Messages.MESSAGE_TEMPLATE_NOT_FOUND);
             } catch (Exception e) {
-                System.out.println(e);
-                System.out.println("Some Exception occurred");
+                return new CommandResult(Messages.MESSAGE_EMAIL_UNKNOWN_ERROR);
             }
         }
         return new CommandResult(getMessageForPersonEmailSummary(model.getFilteredPersonList().size()));

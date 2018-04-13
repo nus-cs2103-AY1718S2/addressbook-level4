@@ -4,4 +4,6 @@ package seedu.address.model.email.exceptions;
 /**
  * Signals that the operation is unable to find the specified template.
  */
-public class TemplateNotFoundException extends Exception {}
+public class TemplateNotFoundException extends Exception {
+
+}

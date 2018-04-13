@@ -13,7 +13,9 @@ public class Messages {
     public static final String MESSAGE_APPT_NOT_FOUND = "No such appointment found!";
     //@@author ng95junwei
     public static final String MESSAGE_EMAIL_SENT = "Email sent to %1$d persons!";
+    public static final String MESSAGE_EMAIL_UNKNOWN_ERROR = "An unknown error occurred while sending your email!";
     public static final String MESSAGE_TEMPLATE_NOT_FOUND = "No such templates found!";
+
     //@@author
 
 }

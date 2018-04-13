@@ -57,12 +57,12 @@ public class UniqueTemplateList implements Iterable<Template> {
      * @throws DuplicateTemplateException if the template to add is a duplicate of an existing template
      * in the list.
      */
-    public void add(Template toAdd) throws DuplicateTemplateException {
-        requireNonNull(toAdd);
-        if (contains(toAdd)) {
+    public void add(Template templateToAdd) throws DuplicateTemplateException {
+        requireNonNull(templateToAdd);
+        if (contains(templateToAdd)) {
             throw new DuplicateTemplateException();
         }
-        internalList.add(toAdd);
+        internalList.add(templateToAdd);
     }
 
     /**

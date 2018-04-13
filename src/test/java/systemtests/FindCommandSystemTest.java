@@ -80,6 +80,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //TODO: implement test cases for specifiers: -n -p -e -a -t
+        //ModelHelper.setFilteredList()
+        //refer to TypicalPersons.java and test.data.sandbox.sampleData.xml for fields to check
+
+        //-------------INVALID CASES--------------------------------------------------------------------------------->
+
         /* Case: undo previous find command -> rejected */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
@@ -203,6 +209,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
      * selected card updated accordingly, depending on {@code cardStatus}.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
@@ -222,6 +229,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
@@ -235,6 +243,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
     }
 
     //@@author jonleeyz
+
     /**
      * Asserts that population of the {@code CommandBox} with the AddCommand
      * template was successful.

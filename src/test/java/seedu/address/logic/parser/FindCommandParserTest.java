@@ -33,6 +33,7 @@ public class FindCommandParserTest {
                 FindCommand.MESSAGE_USAGE));
     }
 
+    //@@author melvintzw
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
@@ -68,4 +69,5 @@ public class FindCommandParserTest {
                 "bob@example.com")));
         assertParseSuccess(parser, "-e alice@example.com bob@example.com", expectedFindCommand);
     }
+    //@@author
 }

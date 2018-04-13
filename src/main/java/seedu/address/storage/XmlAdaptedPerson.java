@@ -162,14 +162,15 @@ public class XmlAdaptedPerson {
 
         final Set<Tag> tags = new HashSet<>(personTags);
 
-        //TODO: implement runner and customers field
         if (this.personType == Person.PersonType.CUSTOMER) {
             //moneyBorrowed
             if (this.moneyBorrowed == null) {
                 throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MoneyBorrowed.class
                         .getSimpleName()));
             }
-            //TODO: write valid regex check
+            if (!MoneyBorrowed.isValidMoneyBorrowed(this.moneyBorrowed.value)) {
+                throw new IllegalValueException(MoneyBorrowed.MESSAGE_MONEYBORROWED_CONSTRAINTS);
+            }
             final MoneyBorrowed moneyBorrowed = new MoneyBorrowed(this.moneyBorrowed.value);
 
             //oweStartDate
@@ -177,7 +178,7 @@ public class XmlAdaptedPerson {
                 throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName
                         ()));
             }
-            //TODO: write valid regex check
+
             final Date oweStartDate = this.oweStartDate;
 
             //oweDueDate
@@ -185,7 +186,7 @@ public class XmlAdaptedPerson {
                 throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName
                         ()));
             }
-            //TODO: write valid regex check
+
             final Date oweDueDate = this.oweDueDate;
 
             //standardInterest
@@ -193,7 +194,9 @@ public class XmlAdaptedPerson {
                 throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, StandardInterest.class
                         .getSimpleName()));
             }
-            //TODO: write valid regex check
+            if (!standardInterest.isValidInterest(this.standardInterest.value)) {
+                throw new IllegalValueException(standardInterest.MESSAGE_INTEREST_CONSTRAINTS);
+            }
             final StandardInterest standardInterest = this.standardInterest;
 
             //lateInterest
@@ -201,7 +204,9 @@ public class XmlAdaptedPerson {
                 throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, LateInterest.class
                         .getSimpleName()));
             }
-            //TODO: write valid regex check
+            if (!standardInterest.isValidInterest(this.lateInterest.value)) {
+                throw new IllegalValueException(standardInterest.MESSAGE_INTEREST_CONSTRAINTS);
+            }
             final LateInterest lateInterest = this.lateInterest;
 
             //runner
@@ -209,7 +214,6 @@ public class XmlAdaptedPerson {
                 throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, LateInterest.class
                         .getSimpleName()));
             }
-            //TODO: write valid regex check
             final Person runner = this.runner.toModelType();
 
             return new Customer(name, phone, email, address, tags, moneyBorrowed, oweStartDate, oweDueDate,
@@ -220,7 +224,6 @@ public class XmlAdaptedPerson {
                 throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, StandardInterest.class
                         .getSimpleName()));
             }
-            //TODO: write valid regex check
 
             final List<Person> customerList = new ArrayList<>();
             for (XmlAdaptedPerson person : customers) {

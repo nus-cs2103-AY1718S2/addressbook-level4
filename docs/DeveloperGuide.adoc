@@ -763,7 +763,7 @@ The method `createEditedStudent` creates the student wi
 |=======================================================================
 
 
-//end::profilePage[]
+// end::profilePage[]
 
 // tag::schedule[]
 === Schedule feature
@@ -972,7 +972,7 @@ Every single input always has an *intent*, but that is not the case for *entitie
 For further clarification, refer to the screenshot below:
 
 .Example of an intention and an entity, with its corresponding value. The intention is `Select` and the entity refers to the name of a person, which takes on a value of `Jason` in this particular case.
-image::debug_message.png[width="700"]
+image::debug_message.PNG[width="700"]
 
 ===== Matching the desired command
 After identifying the *intent* and *entities* (if present) in the user's input, the corresponding features matching intent is called,
@@ -980,7 +980,7 @@ passing any *entities* as parameters to the feature's method.
 
 .Following the example in Figure 12, the `select` command is invoked, passing `Jason` as a parameter, after the intent and entity is identified.
 
-image::Select(after).png[width="650"]
+image::Select(after).PNG[width="650"]
 
 ==== Design Consideration
 
@@ -1652,5 +1652,17 @@ Expected
 * Timestamp in the status bar remains the same.
 //end::profilePageTest[]
 
+=== Adding a lesson
 
+. Adding a lesson while all students are listed
+.. Prerequisites: List all students using the `list` command. Multiple students in the list. Your current schedule would preferably have no lessons starting before 7am or ending after 10pm.
+.. Test case: `addLesson 1 d/mon st/10:00 et/12:00` +
+   Expected: a lesson will be added for student at index 1, starting at 10:00am, ending at 12:00pm
+.. Test case (Maximum range): `addLesson 1 d/wed st/00:00 et/23:59` +
+   Expected: a lesson will be added for student at index 1, starting at 00:00pm, ending at 23:59pm (whole day).
+   The schedule should resize to show the lesson in the whole day.
+.. Test case: `deleteLesson 0` +
+   Expected:
+*** No lesson will be added due to invalid student index. Error details shown in results screen.
+.. Other incorrect deleteLessons to try: `deleteLesson`, `deleteLesson x` where x is larger than the index of the last lesson
 

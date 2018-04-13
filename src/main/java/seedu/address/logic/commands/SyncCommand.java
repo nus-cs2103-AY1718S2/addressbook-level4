@@ -19,6 +19,10 @@ public class SyncCommand extends Command {
             + ": syncs your schedule to the cloud";
 
     public static final String MESSAGE_SUCCESS = "Google Contacts and Calendar synced!";
+    public static final String MESSAGE_FAILED_SYNC = "Failed to sync!";
+    public static final String MESSAGE_GOOGLE_SERVICE_ISSUE = "There was a problem with the Google Service. Try again!";
+    public static final String MESSAGE_NOT_LOGGED_IN = "You are not logged in!\n"
+            + "Or your credentials have expired, logout and re-login to sync";
 
     public SyncCommand() {}
 
@@ -28,11 +32,11 @@ public class SyncCommand extends Command {
             model.synchronize();
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (IOException ioe) {
-            throw new CommandException("Failed to sync");
+            throw new CommandException(MESSAGE_FAILED_SYNC);
         } catch (ServiceException se) {
-            throw new CommandException("GG");
+            throw new CommandException(MESSAGE_GOOGLE_SERVICE_ISSUE);
         } catch (NullPointerException ne) {
-            throw new CommandException("Lost");
+            throw new CommandException(MESSAGE_NOT_LOGGED_IN);
         }
     }
 }

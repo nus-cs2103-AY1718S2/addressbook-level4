@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -8,6 +9,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author demitycho
@@ -23,9 +25,12 @@ public class LoginCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Google account logged in";
 
-    private static final String MESSAGE_LOGIN_ATTEMPT = "Trying to login";
+    private static final String MESSAGE_ALREADY_LOGGED_IN = "You are already logged in!";
+    private static final String MESSAGE_AUTH_DENIED = "Google account's authorisation denied!";
+    private static final String MESSAGE_LOGIN_SUCCESS = "Successfully logged in to Google accounts";
     private static final String MESSAGE_TIME_OUT = "Login timeout!";
-    private static final String MESSAGE_UNKNOWN_FAILURE = "Unable to login!";
+    private static final String MESSAGE_UNKNOWN_FAILURE = "Unable to login(reason unknown)!";
+
     private static final Integer INTEGER_TIME_ALLOWED = 45;
 
     public LoginCommand() {}
@@ -38,14 +43,20 @@ public class LoginCommand extends Command {
         final Future<String> handler = executor.submit(new Callable() {
             @Override
             public String call() throws Exception {
-                model.loginGoogleAccount();
-                return MESSAGE_LOGIN_ATTEMPT;
+                try {
+                    model.loginGoogleAccount();
+                    return MESSAGE_LOGIN_SUCCESS;
+                } catch (IOException ioe) {
+                    return MESSAGE_AUTH_DENIED;
+                } catch (CredentialsException ce) {
+                    return MESSAGE_ALREADY_LOGGED_IN;
+                }
             }
         });
 
         try {
-            handler.get(timeout.toMillis(), TimeUnit.MILLISECONDS);
-            return new CommandResult(MESSAGE_SUCCESS);
+            String result = handler.get(timeout.toMillis(), TimeUnit.MILLISECONDS);
+            return new CommandResult(result);
         } catch (TimeoutException e) {
             handler.cancel(true);
             executor.shutdownNow();

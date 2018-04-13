@@ -1,10 +1,9 @@
-= Codeducator - User Guide
+:imagesDir: images
 :toc:
 :toc-title:
 :toc-placement: preamble
 :toclevels: 3
 :sectnums:
-:imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
 :experimental:
@@ -17,14 +16,76 @@ endif::[]
 :contactsURL: https://contacts.google.com/
 :calendarURL: https://calendar.google.com/calendar/r/week
 
+= image:CodeducatorTitle.png[width=60px] Codeducator - User Guide
 By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
-== Introduction
+
+== Welcome to Codeducator!
 
 Codeducator is a desktop address book and scheduling application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. +
 
 You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. +
-Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+
+Interested? Jump to the <<Quick Start>> to get started. +
+
+You may want to read <<Quick Overview>> to check out the User Interface, or <<How to use this User Guide>> to find out about the format of our help guide
+
+Enjoy using Codeducator!
+
+=== Quick Overview
+
+Codeducator’s user interface is split into a few sections. These sections are highlighted in the image below.
+
+image::CodeducatorTagged.png[width="850"]
+
+. *Command Box* +
+  Where you type your commands
+. *Command Result Box* +
+  The message result of executing your command
+. *Contact List* +
+  Where you keep your contacts
+. *Infopanel* +
+  A small but powerful multi-use window to view your Schedule, Full Information Page and Student Dashboards
+. *Status Bar* +
+  Tells you when you last updated Codeducator data
+
+The Infopanel has three screens, depending on the task you are trying to execute.
+
+. *Schedule* +
+  Tasks related to your Schedule and Student Lessons
++
+image::CodeducatorSchedule.png[width="790"]
++
+. *Full Information Page* +
+  Tasks related to assigning additional information to your student
++
+image::CodeducatorMoreInfo.png[width="790"]
++
+. *Student Dashboard* +
+  Tasks related to assigning your Student milestones in terms of learning
++
+image::CodeducatorDashboard.png[width="790"]
+
+
+=== How to use this User Guide
+
+Everything you need to know about Codeducator is in this user guide.
+
+You can quickly navigate the user guide by clicking on the links found in the table of contents at the top of the user guide.
+
+An example of the user guide for the features is shown below. You can identify the feature’s title, description, format and easy to follow step by step instructions. The instructions will follow this certain format
+
+image::UserGuideTagged.png[width="790"]
+
+. *Feature Title* +
+  This is the name of the feature or command being explained
+. *Description and use case* +
+  This describes the potential situations that you might need to use this command.
+. *Format of command* +
+  The defined structure of the command. See <<The Command Format>> for more information
+. *Steps Taken* +
+  A few example steps to show you how we might do things and what you will see
+  You should have a similar user interface of Codeducator when following the step by step instructions.
 
 == Quick Start
 
@@ -42,7 +103,7 @@ You may use create a folder called `Codeducator` on your `Desktop`, or in `My Do
 
 .  Double-click the file to start the app. You should see the application open in a appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::UI.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -65,8 +126,9 @@ Don't fret! This user guide will show you the many simple commands that will hel
 The subsequent sections of the user guide provides a step by step walk-through of all the commands that Codeducator has to offer.
 
 
+=== The Command Format
+
 ====
-*Command Format*
 
 * Words in `UPPER_CASE` are the _parameters_ to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are _optional_ e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -76,24 +138,26 @@ The subsequent sections of the user guide provides a step by step walk-through o
 
 Got it? Good! Let's get started on Codeducator! +
 
-=== Basic Commands
+=== Basic User Interface Commands
+
+Let's start slow. This are the basic commands that Codeducator offers.
+
 ==== Viewing help : `help`
 
 Feeling lost and not sure what to do? Can't remember the usage of the command? +
 You can type the help command and Codeducator will open this user guide in-application for your convenience. Don't be afraid to ask for help!
 
-Format: `help`
+===== Format: `help`
 
-[big]#Steps Taken#
+===== Steps Taken
 
-. Type help into the command box, and press Enter to execute it. +
-
+. Type help into the command box, and press kbd:[Enter] to execute it. +
++
 .Typing help into command box +
 image::helpStep1.png[width="790"]
-
-[start=2]
++
 . The help window will appear as shown. +
-
++
 .Help box as shown.
 image::helpResult.png[width="790"]
 
@@ -166,7 +230,7 @@ Format: `exit`
 
 ==== Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Contact list and schedule data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -258,8 +322,6 @@ Edits the phone number and email address of the 1st student to be `91234567` and
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
-
-
 ==== Locating students by name: `find`
 
 Finds students whose names contain any of the given keywords. +
@@ -280,6 +342,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any student having names `Betsy`, `Tim`, or `John`
 
+// tag::findTag[]
 ==== Locating students by tags: `findTag`
 
 Finds students whose labels contain any of the given keywords. +
@@ -301,6 +364,7 @@ When your AddressBook has a student named John Doe, which you have tagged t/frie
 Returns `John Doe`
 * `findTag friends owesMoney` +
 Returns any student having tags `friends`, `owesMoney`, i.e. `John Doe` and `Betsy`
+// end::findTag[]
 
 // tag::favUnfav[]
 ==== Adding a student to favourites : `fav`
@@ -385,7 +449,8 @@ image::unfav3_screenshot.png[width="800"]
 ==== Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-Format: `clear`
+
+===== Format: `clear`
 
 
 ==== Deleting a student : `delete`
@@ -428,6 +493,7 @@ Selects the 2nd student in the address book.
 `select 1` +
 Selects the 1st student in the results of the `find` command.
 
+// tag::schedule[]
 === Schedule
 
 Scheduling is a major feature of Codeducator. To help tutors manage their student lessons, Codeducator has implemented a Schedule component that keeps track of your student lessons on a weekly basis. Codeducator assumes you have regular lessons on a weekly basis. +
@@ -442,27 +508,27 @@ The Lesson is displayed with +
 . The displayed Lesson Index
 . The Student with whom you wil be having the Lesson with.
 
-==== Viewing your schedule : `schedule`
+==== Viewing your Schedule
 
 Need a quick refresh of what lessons you have in the week? Coming from another panel? You can easily view your Schedule with a simple command. +
-Format: `schedule`
 
-[large]*Steps Taken* +
+===== Format: `schedule`
 
-. Enter `schedule` into the command box.
+===== Steps Taken
 
+. Type `schedule` into the command box. Press kbd:[enter] to execute.
++
 .Executing the `schedule` command +
 image::scheduleResult.png[width="790"]
-
-[start=2]
++
 . See your schedule in full glory.
 
-
-==== Adding a lesson to your schedule: `addLesson`
+==== Adding a Lesson to your Schedule
 
 Your Student needs extra lessons? Got new Students that want lessons? Codeducator will allow you to add Lessons to your schedule.
 
-Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]`
+===== Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]` +
+Adds a lesson for the Student identified by their `INDEX`, for a certain `DAY`, starting at `START_TIME` and ending at `END_TIME` +
 
 * Adds a lesson for the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
 * The day for the input is the abbreviated first three letters (_non-case sensitive_) of the name of day, i.e. `mon` for Monday, `fri` for Friday.
@@ -488,33 +554,81 @@ Adds a lesson for the 1st student of the `list` command. Lesson will be held on 
 `addLesson 1 d/tue st/12:00 et/13:30` +
 Adds a lesson for the 1st student of the `find Betsy` command. Lesson will be held on the day of `tue` and starting time will be `12:00` and ending time will be `13:30`.
 
-[
+===== Steps Taken
 
-==== Deleting a lesson in your schedule: `deleteLesson`
+Let's say that you may want to add a Lesson for Bernice (`index 2`). The lesson time slot would be Sunday, 10:00am to 12:00pm.
 
+. Type `schedule` into the command box. Press kbd:[enter] to execute.
++
+.Executing the `schedule` command +
+image::addLessonStep1.png[width="790"]
++
+. Visually find a free time slot. Sunday, 10:00 to 12:00 looks free!
+. Type `addLesson 2 d/sun st/10:00 et/12:00`. Press kbd:[enter] to execute the command
++
+.Type out the command as shown
+image::addLessonStep2.png[width="790"]
++
+. The lesson will be added to your Schedule!
++
+.Result of the `addLesson` command
+image::addLessonResult.png[width="790"]
+
+==== Deleting a Lesson in your Schedule
+
+Need to remove lessons because Students drop out? Let's use Codeducator's `deleteLesson` command to do that for you.
+
+===== Format: `deleteLesson INDEX` +
 Deletes an existing lesson in your schedule identified by the index number in the last schedule listing. of day, i.e. `mon` for Monday, `fri` for Friday.
-
-Format: `deleteLesson INDEX`
 
 ****
 * Deletes a lesson for the student at the specified `INDEX`.
-* The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
+* The index refers to the displayed Lesson Index shown in the title. The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-Examples:
+===== Examples:
 
-* `schedule` +
-`deleteLesson 2` +
+* `deleteLesson 2` +
 Deletes the 2nd lesson listing in the schedule
 
-==== Syncing with your Google Account
+===== Steps Taken
 
-Syncs your Schedule and AddressBook and uploads them to your Google Account.
-AddressBook is synced with Google Contacts: link:{contactsURL}[`contacts.google.com`].
-Schedule is synced with Google Calendar: link:{calendarURL}[`calendar.google.com`]
+Let's say you want to delete Charlotte's Lesson, on Tuesday, 10:00am-12:00pm
 
-===== Logging in to your Google Account
+. Type `schedule` into the command box. Press kbd:[enter] to execute.
++
+.After executing the `schedule` command. The Lesson is identified by `INDEX:2` +
+image::deleteLessonStep1.png[width="790"]
++
+. Type `deleteLesson` into the command box. Press kbd:[enter] to execute the command
++
+.Type out the command as shown
+image::deleteLessonStep2.png[width="790"]
++
+. The lesson will be removed from your schedule!
++
+.Result of executing the `deleteLesson` command
+image::deleteLessonResult.png[width="790"]
+// end::schedule[]
 
+// tag::sync[]
+=== Syncing with your Google Account
+
+You probably want to view your contacts and schedule across your devices. With today's pervasive use of cloud services, Codeducator takes advantage of Google's Contacts and Calendar.
+Outside of Codeducator, you may view your contacts and schedule data in Google's mobile and web applications.
+
+Codeducator uploads both contact list and schedule data to your Google Account.
+Your contact list is synced with Google Contacts: link:{contactsURL}[contacts.google.com].
+Your schedule is synced with Google Calendar: link:{calendarURL}[calendar.google.com]
+
+==== Logging in to your Google Account
+
+Associate your Google account with Codeducator and authorise Codeducator to upload data to your Google account's cloud services
+
+[NOTE]
+Ensure you have a Google account! Take advantage of Google's cloud services
+
+===== Format: `login`
 Logs in to your Google Account. Authorizes your Google Account to communicate with our app and gives
 Codeducator permission to modify your data. +
 Opens a new window in your default browser to the Oauth2 screen +
@@ -522,25 +636,141 @@ Opens a new window in your default browser to the Oauth2 screen +
 [NOTE]
 You must first be logged out to log in
 
-Format: `login`
+===== Steps Taken
 
-===== Logging out of your Google Account
+. Type `login` in the command box. We will use the `schedule` screen, but it will work from any screen.
++
+.Type `login` into the command box (Codeducator window)
+image::loginStep1.png[width="790"]
++
+. Execute the command using kbd:[enter].
+. Your default browser will redirect to Google's login screen. Follow the OAuth2 procedure by typing your Google username and password into the login screen.
++
+.Google's login screen (Your browser window)
+image::loginStep3.png[width="790"]
++
+. After logging in, you will see this window. Authorise Codeducator by clicking "Allow"
++
+.Google's OAuth/authentication window (Your browser window)
+image::loginStep4.png[width="790"]
++
+. If you have successfully logged in. Your browser will display this message as a sign of login success.
++
+.Google's login success message (Your browser window)
+image::loginStep5.png[width="790"]
++
+. Open the Codeducator window again. You will see that the message displays that you are logged in
++
+.Codeducator's login success message (Codeducator window)
+image::loginStep6.png[width="790"]
++
 
-Logs out of your Google Account. Securely deletes the OAuth2 credential stored in the App. +
+You are now ready to sync your account! +
+
 [NOTE]
-You must first be logged in to log out
+====
+. There is a *45 second timeout* for the login process. If you do not login successfully (due to closing the window unexpectedly or poor network connection), the login process will timeout.
+. Authorising Codeducator is important! Denying access will stop Codeducator from uploading data to your account.
+. If you have already logged in before without logging out, you may skip the Google login process by just simply typing in `login`.
+. If you do not successfully login , don't worry! Just repeat the steps to login again.
+. Your stored credential may expire after a long period of not using Codeducator. Simply logout and re-login to re-authenticate. See <<Logging out of your Google Account>>
+====
+
+==== Syncing data with your Google Account
+
+Updates both Google Contacts and Google Calendar with Addressbook and Schedule. Deletes the old data that Codeducator
+has uploaded previously, and uploads the updated data, correct as of time of entering the `sync` command. +
+
+Google Contacts will create a new Contact Label group called "Students". Contacts from your Codeducator app will be uploaded here.
+Your Student's Name, Phone Number and Address will be uploaded. +
+
+Google Calendar will create a Calendar group called "Student Lessons". Lessons from your Calendar will be uploaded here.
+The name of the event will be "Lesson with <Student>", using the Start and End times of the Lesson, location will be using the address associated with the Student.
+The Calendar will only start syncing from the *first Lesson occurring after the current day* that you perform the sync. +
+
+[NOTE]
+====
+If you have synced before, future syncs will +
+
+.. Look for "Students" label in Google Contacts and delete contacts in those groups before reuploading your Student data
+.. Look for "Student Lessons" calendar and delete the events in that Calendar before reuploading your Schedule data.
+====
+
+Currently, Google Calendar will create a recurring weekly event per lesson, repeated over 4 weeks. If you have no edits to your Schedule within the month, do a sync at the end of the month to refresh your Calendar data.
+
+
+[WARNING]
+====
+. You must first be logged in to sync your data
+. Do not change the name of the Students label. Codeducator will not be able to delete those contacts in future syncs.
+. Likewise, do not change the name of the Calendar "Student Lessons" as it will be similarly used for future syncs
+====
+
+Format: `sync`
+
+===== Steps Taken
+
+. Ensure that you have logged in to your account. See <<Logging in to your Google Account>>
+.. Example Google Calendar and Contacts, account, I'll be starting with empty Google Contacts and Calendar
++
+.What my Google Contacts and Calendar look like before the sync
+image::syncStep00.png[width="790]
++
+. View the schedule that you want to sync. See <<Viewing your schedule>>
++
+.We will be using this example schedule
+image::syncStep0.png[width="790]
++
+. Type `sync` in the command box. Press kbd:[enter] to execute
++
+.Type `sync` into the command box
+image::syncStep1.png[width="790"]
++
+. Codeducator will now try to upload the current data. If you had previously used `sync`,
+Codeducator will delete the old data in you Google Contacts and Calendar
++
+.Viewing your schedule in Week and Month View in link:{calendarURL}[calendar.google.com]. Note the new Calendar "Student Lessons"
+image::syncResult1.png[width="790"]
++
+.Viewing your contacts list in Google Contacts in link:{contactsURL}[contacts.google.com]. Note the new Label "Students"
+image::syncResult2.png[width="790"]
++
+.You will see this message if you successfully synced your account!
+image::syncResult3.png[width="790"]
++
+. Congrats, your data has been synchronised! You are free to use them across your devices in anyway that Google Contacts and Calendar supports!
+
+[NOTE]
+=====
+If you have many contacts or lessons, it will take some time to synchronise your data. Be patient as Codeducator uploads your data!
+=====
+
+==== Logging out of your Google Account
+
+For security purposes, Codeducator allows you to log out of your Google Account. Codeducator will ecurely delete the OAuth2 credential stored in the App. +
+
+[NOTE]
+You must first be logged in to log out.
 
 Format: `logout`
 
-===== Syncing data with your Google Account
+===== Steps taken
 
-Updates both Google Contacts and Google Calendar with Addressbook and Schedule. Deletes the old data that Codeducator
-has written before, and uploads the new updated copy, correct as of time of entering the `sync` command.+
+. Ensure that you are logged in. See <<Logging in to your Google Account>>
+.. If you are not logged in, you are already logged out!
+. Type `logout` in the command box. Press kbd:[enter] to execute the command.
++
+.Type `logout` in the command box.
+image::logoutStep1.png[width="790"]
++
+. You should see the following window
++
+.Result of executing `logout` command
+image::logoutResult.png[width="790"]
++
+. You have successfully logged out of your account! Log in again if you want to sync your contacts and schedule.
 
-[NOTE]
-You must first be logged in to sync your data
-
-Format: `sync`
+// end::sync[]
 
 // tag::dashboard[]
 === Dashboard
@@ -985,8 +1215,8 @@ The examples below are just for your reference. Any phrase or sentence can be us
 [IMPORTANT]
 Currently, the commands `Delete` and `Select` only detects English names!
 
-image::Select(before).png[width="500"]
-image::Select(after).png[width="500"]
+image::Select(before).PNG[width="500"]
+image::Select(after).PNG[width="500"]
 
 === Guidelines for using this feature
 * Be sure to check for spelling errors in your sentences.
@@ -1005,46 +1235,52 @@ Spelling errors can be mis-interpreted and the wrong command might be invoked!
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pl/PROGRAMMING_LANGUAGE [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 pl/HTML t/friend t/1stYear`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pl/PROGRAMMING_LANGUAGE] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Show Dashboard*: `showDB INDEX` +
-e.g. `showDB 3`
-* *Add Milestone* : `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE` +
-e.g. `addMS i/1 d/23/11/2018 23:59 o/Arrays`
-* *Delete Milestone* : `deleteMS i/STUDENT_INDEX m/MILESTONE_INDEX` +
+[width="60%",cols="20%,<40%,<40%",options="header",]
+|=======================================================================
+| Purpose | Format | Example
+3+| *_Contact List Commands_*
+
+| Adding a student |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pl/PROGRAMMING_LANGUAGE [t/TAG]...`|`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 pl/HTML t/friend t/1stYear`
+| Clearing your entire contact list 2+| `clear`
+| Deleting a student | `delete INDEX` | `delete 3`
+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pl/PROGRAMMING_LANGUAGE] [t/TAG]...` |
+`edit 2 n/James Lee e/jameslee@example.com`
+| Find | `find KEYWORD [MORE_KEYWORDS]` | `find James Jake`
+| List 2+| `list`
+| Help 2+| `help`
+| Select | `select INDEX` | `select 2`
+| History 2+| `history`
+| Undo 2+| `undo`
+| Redo 2+| `redo`
+
+3+| *_Dashboard Commands_*
+| Show Dashboard | `showDB INDEX` |
+`showDB 3`
+| Add Milestone | `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE` |
+`addMS i/1 d/23/11/2018 23:59 o/Arrays`
+| Delete Milestone | `deleteMS i/STUDENT_INDEX m/MILESTONE_INDEX` |
 e.g. `deleteMS i/1 m/2`
-* *Add Task* : `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_OF_TASK` +
+| Add Task | `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_OF_TASK` |
 e.g. `addTask i/1 m/2 n/Learn arrays syntax o/Refer to textbook`
-* *Delete Task* : `deleteTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX` +
+| Delete Task | `deleteTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX` |
 e.g. `deleteTask i/1 m/2 tk/3`
-* *Mark Task As Completed* : `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX` +
+| Mark Task As Completed | `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX` |
 e.g. `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
-* *View your Schedule* : `schedule`
-* *Add a Lesson* : `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]` +
+
+3+| *_Schedule related commands_*
+| View your Schedule 2+| `schedule`
+| Add a Lesson | `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]` |
 e.g. `addLesson 1 d/mon st/10:00 et/10:30`
-* *Delete a Lesson* : `deleteLesson INDEX` +
+| Delete a Lesson | `deleteLesson INDEX` |
 e.g. `deleteLesson 2`
-* *Login to your Google Account* : `login`
-* *Logout of your Google Account* : `logout`
-* *Synchronize data with Google Account* : `sync`
-* *Full information page* : `moreInfo INDEX`
-* *Edit the profile picture* : `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE` +
+| Login to your Google Account 2+| `login`
+| Synchronize data with Google Account 2+| `sync`
+| Logout of your Google Account 2+| `logout`
+
+3+| *_Full information page Commands_*
+| Full information page | `moreInfo INDEX` | `moreInfo 1`
+| Edit the profile picture | `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE` |
 e.g. `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg`
-* *Edit the miscellaneous info of a student* :  `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS]
-e.g. `editMisc 2 al/seafood`
-
-
+| Edit the miscellaneous info of a student |  `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS] |
+e.g. `editMisc 2 al/seafood` |
+=======================================================================|

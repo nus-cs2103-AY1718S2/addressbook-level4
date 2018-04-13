@@ -340,7 +340,7 @@ image::Parse_Success.PNG[width="450"]
 After that, you can add more fields if you want, or you can just press kbd:[Enter] to submit an `add` command!
 
 [NOTE]
-Currently only http://recipes.wikia.com/ is supported!
+Currently only http://recipes.wikia.com/ and its children sites, e.g. http://cocktails.wikia.com/, http://japaneserecipes.wikia.com/ are supported!
 //end::web-parse[]
 
 === *`redo`* : Redoing the previously undone command
@@ -711,13 +711,15 @@ Uploads the 6th recipe in the recipe book to the server.
 These are issues that have been reported and might be resolved in the future:
 
 * `parse` command does not work on some sites. +
-_Currently `parse` only works with http://recipes.wikia.com/ (both desktop and mobile versions). Support for other sites will be considered for v2.0._
-* `parse` command returns results for pages that are not recipes. +
-`parse` _is intended to work with recipe pages only. ReciRecipé might or might not parse other types of pages. Restricting `parse` to work on only recipe pages will be considred for v2.0._
+_Currently `parse` only works with http://recipes.wikia.com/ and its children sites (both desktop and mobile versions). Support for other sites will be considered for v2.0._
+* `parse` command returns results for pages that are not recipes / doesn't return result for pages that are recipes. +
+_A powerful text analyzer that can parse almost anything with high accuracy is out of our product scale. However, we will try our best to improve the parser quality so that you can enjoy a better product._
 * *_PREPARATION_TIME_* and *_COOKING_TIME_* accept invalid time values, e.g. `1h90m`, `200 mins 2 hours`, etc. +
 _We expect you to provide ReciRecipé with a correct and valid time value like `150m` instead of `1h90m`. More restrictive formats will be considered for v2.0._
+* Sometimes `add` command hangs ReciRecipé. +
+_This is likely due to a tricky input that confuses our product. If you encounter such an event while using ReciRecipé, please https://github.com/CS2103JAN2018-F09-B2/main/issues[send us a feedback] with the input that caused the problem._
 * kbd:[F1] and kbd:[F2] don't work when the in-app browser is clicked. +
-_This is a known problem with current version of Java. We have been looking into this problem and the issue might be resolved soon._
+_This is a known problem with current versions of Java. We have been looking into this problem and the issue might be resolved soon._
 * Big images make ReciRecipé laggy. +
 _Currently, ReciRecipé does not distinguish between large and small images. You should use images under 1MB as a workaround for now. This problem will be resolved in v2.0._
 //end:current-issues[]

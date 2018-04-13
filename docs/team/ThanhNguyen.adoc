@@ -23,6 +23,7 @@ Please visit the https://recirecipe.netlify.com/team/ThanhNguyen.html[online pag
 
 == Project overview
 
+[.include]
 include::../UserGuide.adoc[tag=applicationDescription]
 
 *Code contributed*: https://github.com/CS2103JAN2018-F09-B2/main/blob/master/collated/functional/kokonguyen191.md[Functional code] || https://github.com/CS2103JAN2018-F09-B2/main/blob/master/collated/test/kokonguyen191.md[Test code]
@@ -36,7 +37,11 @@ A recipe book needs to have instructions and instructions usually consist of lon
 
 This feature has been implemented in version 1.1, in PR link:https://github.com/CS2103JAN2018-F09-B2/main/pull/12[#12].
 
+[.include]
 include::../DeveloperGuide.adoc[tag=multiple-lines]
+
+[.include.not-print]
+include::../DeveloperGuide.adoc[tag=multiple-lines-consideration]
 
 === Enhancement: Keyboard shortcuts support
 ==== Why?
@@ -44,7 +49,11 @@ The changes made to the original AddressBook to support input with multiple line
 
 This feature has been implemented in version 1.1, in PR link:https://github.com/CS2103JAN2018-F09-B2/main/pull/12[#12].
 
+[.include]
 include::../DeveloperGuide.adoc[tag=keyboard-shortcut]
+
+[.include.not-print]
+include::../DeveloperGuide.adoc[tag=keyboard-shortcut-consideration]
 
 === New feature: Toggling between themes, adding bright theme
 ==== Why?
@@ -52,9 +61,14 @@ Pictures of food usually are very bright and thus look bad on dark background. T
 
 This feature has been implemented in version 1.3, in PR link:https://github.com/CS2103JAN2018-F09-B2/main/pull/77[#77].
 
+[.include]
 include::../UserGuide.adoc[leveloffset=1,tag=change-theme]
 
+[.include]
 include::../DeveloperGuide.adoc[tag=change-theme]
+
+[.include.not-print]
+include::../DeveloperGuide.adoc[tag=change-theme-consideration]
 
 === New feature: Searching for a recipe on the Internet
 ==== Why?
@@ -62,9 +76,14 @@ This feature removes the need to open a separate browser to add recipes to ReciR
 
 This feature has been implemented in version 1.3, in PR link:https://github.com/CS2103JAN2018-F09-B2/main/pull/78[#78].
 
+[.include]
 include::../UserGuide.adoc[leveloffset=1,tag=internet-search]
 
+[.include]
 include::../DeveloperGuide.adoc[tag=internet-search]
+
+[.include.not-print]
+include::../DeveloperGuide.adoc[tag=internet-search-consideration]
 
 === New feature: Parsing a recipe from a website
 ==== Why?
@@ -72,9 +91,14 @@ This feature, in addition to the searching feature, removes the need for manual 
 
 This feature has been implemented in version 1.4, in PR link:https://github.com/CS2103JAN2018-F09-B2/main/pull/90[#90].
 
+[.include]
 include::../UserGuide.adoc[leveloffset=1,tag=web-parse]
 
+[.include]
 include::../DeveloperGuide.adoc[tag=web-parse]
+
+[.include.not-print]
+include::../DeveloperGuide.adoc[tag=web-parse-consideration]
 
 === New feature: Downloading an image in-app
 ==== Why?
@@ -82,7 +106,11 @@ This feature complements the parsing feature. With this feature, users no longer
 
 This feature has been implemented in version 1.5rc, in PR link:https://github.com/CS2103JAN2018-F09-B2/main/pull/134[#134].
 
+[.include]
 include::../DeveloperGuide.adoc[tag=download-image]
+
+[.include.not-print]
+include::../DeveloperGuide.adoc[tag=download-image-consideration]
 
 == Other contributions
 

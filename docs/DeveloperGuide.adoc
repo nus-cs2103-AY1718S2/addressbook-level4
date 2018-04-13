@@ -431,14 +431,13 @@ private void loadStyle(boolean darkTheme) {
     primaryStage.show();
 }
 ----
+// end::change-theme[]
 
-[.not-print]
+// tag::change-theme-consideration[]
 ==== Design considerations
 
-[.not-print]
 ===== Aspect: Handling of default page in `_BrowserPanel_`.
 
-[.not-print]
 * **Alternative 1 (current choice):** Reload the default page if there is nothing loaded in `_BrowserPanel_`.
 ** Pros: This would prevent any previously loaded page from being lost.
 ** Cons: This approach requires extra work to detect if there is any page loaded in `_BrowserPanel_`.
@@ -451,7 +450,7 @@ private void loadStyle(boolean darkTheme) {
 * **Alternative 4:** Stop using the default page.
 ** Pros: It is relatively easy to implement.
 ** Cons: There is no default page to display so we have to find another approach to make `_BrowserPanel_` display something as a placeholder, *without* using a default page.
-// end::change-theme[]
+// end::change-theme-consideration[]
 
 === Cloud storage support
 // tag::cloud-storage[]
@@ -625,14 +624,13 @@ public static String downloadImagewidth="750"tring imageUrlString) {
 ----
 
 For the detailed implementation of each step, please see link:{repoURL}/src/main/java/seedu/recipe/storage/ImageDownloader.java[`ImageDownloader.java`].
+// end::download-image[]
 
-[.not-print]
+// tag::download-image-consideration[]
 ==== Design considerations
 
-[.not-print]
 ===== Aspect: Image file name.
 
-[.not-print]
 * **Alternative 1 (current choice):** Use MD5 of the image data.
 ** Pros: MD5 can ensure that there won't be duplicates of an image.
 ** Cons: MD5 is significantly more computationally expensive compared to a simple `hashCode()`.
@@ -642,7 +640,7 @@ For the detailed implementation of each step, please see link:{repoURL}/src/main
 * **Alternative 3:** Use the recipe name.
 ** Pros: This is by far the most intuitive approach.
 ** Cons: However, this approach looks a lot easier than it seems. Furthermore, it would be hard to update the file name if the recipe name is changed.
-// end::download-image[]
+// end::download-image-consideration[]
 
 // tag::embedded-url[]
 === Embedded URL
@@ -844,21 +842,20 @@ private void handleKeyPress(KeyEvent keyEvent) {
 ----
 
 As seen from above, all key combinations implemented consume the default effect of the combinations. However, this is not a must as there may be future mappings that do not require consuming the `KeyEvent`.
+// end::keyboard-shortcut[]
 
-[.not-print]
+// tag::keyboard-shortcut-consideration[]
 ==== Design considerations
 
-[.not-print]
 ===== Aspect: Location of the shortcuts.
 
-[.not-print]
 * **Alternative 1 (current choice):** Store in the `_KeyboardShortcutsMapping_` class.
 ** Pros: There is good modularity, making it easier to keep track of the mappings.
 ** Cons: The shortcuts have to be imported to be used.
 * **Alternative 2:** Store in the `_CommandBox_` class.
 ** Pros: There is no need for imports. Furthermore, it is possible to declare new mappings on the run and use it directly in the `_CommandBox_`.
 ** Cons: It is impossible to use them if we want to implement shortcuts for other UI components or globally.
-// end::keyboard-shortcut[]
+// end::keyboard-shortcut-consideration[]
 
 === Logging
 
@@ -900,14 +897,13 @@ private void createNewLine() {
     commandTextArea.positionCaret(caretPosition + 1);
 }
 ----
+// end::multiple-lines[]
 
-[.not-print]
+// tag::multiple-lines-consideration[]
 ==== Design considerations
 
-[.not-print]
 ===== Aspect: Usage of a component that support multiple lines input.
 
-[.not-print]
 * **Alternative 1 (current choice):** `_TextArea_`.
 ** Pros: It is easy to use and very intuitive.
 ** Cons: The <<CSS,CSS>> is particularly hard to handle due to the way `_TextArea_` and its body function separately. There is no default handler for kbd:[Enter].
@@ -917,7 +913,7 @@ private void createNewLine() {
 * **Alternative 3:** `HTMLEditor`.
 ** Pros: There are abundant formatting features.
 ** Cons: It is too complex to implement and contains unintuitive inputs.
-// end::multiple-lines[]
+// end::multiple-lines-consideration[]
 
 === Parsing a recipe from BrowserPanel
 // tag::web-parse[]
@@ -982,7 +978,7 @@ image::WebParserCD.png[width="750"]
 The full implementation can be found in link:{repoURL}/src/main/java/seedu/recipe/ui/parser/WebParserHandler.java[`WebParserHandler.java`].
 
 The `WebParser`, in turn, takes a string value of the HTML of the page loaded in the `WebView`, parses it then returns the parsed recipe. Therefore, a `WebParser` needs to have methods that return the name, instructions, ingredients, etc... of a recipe. +
-An example of the implementation of a `WebParser` can be found at link:{repoURL}/src/main/java/seedu/recipe/ui/util/WikiaParser.java[`WikiaParser.java`].
+An example of the implementation of a `WebParser` can be found at link:{repoURL}/src/main/java/seedu/recipe/ui/parser/WikiaParser.java[`WikiaParser.java`].
 
 After we get a recipe, or to be exact, a string that contains the `add` command with the recipe, `MainWindow` passes `parsedRecipe`, which is now the string of an `add` command, to the `CommandBox`. Then the `CommandBox` just replaces its body with the given string. See <<fig-ParseCommandDetailsSD>> for an example when a `parse` command is submitted with a wikia page loaded in the `BrowserPanel`. +
 {nbsp} +
@@ -992,14 +988,13 @@ After we get a recipe, or to be exact, a string that contains the `add` command 
 image::SDforParseCommandDetails.png[width="900"]
 [.not-print]
 {nbsp} +
+// end::web-parse[]
 
-[.not-print]
+// tag::web-parse-consideration[]
 ==== Design considerations
 
-[.not-print]
 ===== Aspect: How to extract data from `WebView`.
 
-[.not-print]
 * **Alternative 1 (current choice):** Use Jsoup.
 ** Pros: It returns a Jsoup supported string, which will make parsing *significantly easier* later.
 ** Cons: This approach uses a 3rd-party library.
@@ -1007,10 +1002,8 @@ image::SDforParseCommandDetails.png[width="900"]
 ** Pros: This approach requires only one line of code.
 ** Cons: However, as we are going to see below, this method makes parsing almost impossible without a lot of trial-and-error.
 
-[.not-print]
 ===== Aspect: How to parse data from `WebView`.
 
-[.not-print]
 * **Alternative 1 (current choice):** Create a Jsoup Document from a HTML string, then parse on it.
 ** Pros: This approach is the easiest to do as Jsoup is a very robust HTML parsing library, especially when you are familiar with the way JQuery selects elements.
 ** Cons: This approach uses a 3rd-party library.
@@ -1018,17 +1011,15 @@ image::SDforParseCommandDetails.png[width="900"]
 ** Pros: This approach uses the built-in Java codes.
 ** Cons: The DOM queries that have to be made are very expensive. Furthermore, IntelliJ does not support variable debugging on w3c.dom.Document, which, as a result, makes parsing for the correct elements a game of lottery.
 
-[.not-print]
 ===== Aspect: Testing.
 
-[.not-print]
 * **Alternative 1 (current choice):** Create a dummy Document object for `WebParserHandler`.
 ** Pros: This is currently the only working approach.
 ** Cons: This approach does not fully test for the correctness of `WebParserHandler` constructor. Furthermore, the tests usually fail even though they should pass.
 * **Alternative 2:** Do a correct test by using a long waiting time.
 ** Pros: This approach works.
 ** Cons: It makes testing a lot slower due to the long waiting time.
-// end::web-parse[]
+// end::web-parse-consideration[]
 
 === Randomising Tag Colors
 // tag::randomised-tag-colors[]
@@ -1144,21 +1135,20 @@ private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) 
     }
 }
 ----
+// end::internet-search[]
 
-[.not-print]
+// tag::internet-search-consideration[]
 ==== Design considerations
 
-[.not-print]
 ===== Aspect: Usage of `_WikiaQueryHandler_`.
 
-[.not-print]
 * **Alternative 1 (current choice):** Use `_WikiaQueryHandler_`.
 ** Pros: This approach allows more data to be processed separately from the page handling by `_BrowserPanel_`.
 ** Cons: In return, using a separate class makes the implementation a lot harder to manage.
 * **Alternative 2:** Do not use `_WikiaQueryHandler_`. Let `_BrowserPanel_` directly load the query URL.
 ** Pros: This approach is significantly easier to implement, requiring only 3-4 lines in `_BrowserPanel_`.
 ** Cons: However, we don't get any extra information for pre-processing and this could lead to redundant requests.
-// end::internet-search[]
+// end::internet-search-consideration[]
 
 === Searching by ingredients
 [discrete]

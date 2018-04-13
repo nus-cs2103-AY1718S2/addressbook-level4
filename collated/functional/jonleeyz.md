@@ -2,7 +2,7 @@
 ###### \java\seedu\address\commons\events\ui\ExecuteCommandRequestEvent.java
 ``` java
 /**
- * Indicates that a new result is available.
+ * Indicates that a new request to execute a Command is available.
  */
 public class ExecuteCommandRequestEvent extends BaseEvent {
     public final String commandWord;
@@ -17,10 +17,30 @@ public class ExecuteCommandRequestEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\HomeRequestEvent.java
+``` java
+
+/**
+ * Indicates a request to execute the home command
+ */
+public class HomeRequestEvent extends BaseEvent {
+    public static final String MESSAGE_HOME =
+            "Home view displayed. "
+            + "\n\n"
+            + "Utilise one of the keyboard shortcuts below to get started!"
+            + "\n"
+            + "Alternatively, press \"F12\" or type \"help\" to view the User Guide!";
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\PopulatePrefixesRequestEvent.java
 ``` java
 /**
- * Indicates that a new result is available.
+ * Indicates that a new request to populate the CommandBox is available.
  */
 public class PopulatePrefixesRequestEvent extends BaseEvent {
 
@@ -53,7 +73,8 @@ public class PopulatePrefixesRequestEvent extends BaseEvent {
     public String getTemplate() {
         return COMMAND_WORD + " " + PREFIX_TYPE + "  " + PREFIX_NAME + "  "
                 + PREFIX_PHONE + "  " + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  "
-                + PREFIX_TAG + " ";
+                + PREFIX_OWESTARTDATE + "  " + PREFIX_OWEDUEDATE + "  "
+                + PREFIX_MONEYOWED + "  " + PREFIX_INTEREST + "  " + PREFIX_TAG + " ";
     }
 
     @Override
@@ -174,7 +195,7 @@ public interface ImmediatelyExecutableCommand {
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + "-";
+        return COMMAND_WORD + " -";
     }
 
     @Override
@@ -244,6 +265,50 @@ public interface PopulatableCommand {
         return COMMAND_WORD;
     }
 ```
+###### \java\seedu\address\model\util\SampleDataUtil.java
+``` java
+    public static Person[] getSamplePersons() {
+        return new Person[]{
+            new Customer(new Name("Xiao Ming"), new Phone("88888888"), new Email("xiao@ming.com"),
+                    new Address("The Fullerton"),
+                    getTagSet("richxiaoming", "mingdynasty", "HighSES"), new MoneyBorrowed(314159265),
+                    createDate(2017, 5, 7), createDate(2018, 5, 7),
+                    new StandardInterest(9.71), new LateInterest(), new Runner()),
+            new Customer(new Name("Korean Defender"), new Phone("99994321"),
+                    new Email("kalbitanglover@tourism.korea.com"), new Address("The Hwang's"),
+                    getTagSet("defenderOfTheFree", "defenderOfKalbiTang", "yummeh", "UTownHeritage"),
+                    new MoneyBorrowed(413255),
+                    createDate(2010, 10, 3), createDate(2019, 1, 1),
+                    new StandardInterest(5.4), new LateInterest(), new Runner()),
+            new Customer(new Name("Bob the Builder"), new Phone("92334532"), new Email("bob@bobthebuilder.com"),
+                    new Address("IKEA Alexandra"),
+                    getTagSet("FatherOfHDB", "InBobWeTrust"), new MoneyBorrowed(0.24),
+                    createDate(1965, 8, 9), createDate(2015, 8, 9),
+                    new StandardInterest(0.0005), new LateInterest(), new Runner()),
+            new Runner(new Name("Ah Seng"), new Phone("90011009"), new Email("quick_and_easy_money@hotmail.com"),
+                    new Address("Marina Bay Sands"),
+                    getTagSet("EmployeeOfTheMonth", "InvestorFirstGrade", "HighSES"), new ArrayList<>()),
+            new Runner(new Name("Mas Selamat Kastari"), new Phone("999"), new Email("kastari@johorbahru.my"),
+                    new Address("Internal Security Department"),
+                    getTagSet("BeatTheSystem", "BeatByTheSystem"), new ArrayList<>()),
+            new Customer(new Name("Aunty Kim"), new Phone("99994321"), new Email("hotkorean1905@hotmail.com"),
+                    new Address("I'm Kim Korean BBQ"),
+                    getTagSet("RichAunty", "KBBQBossLady", "Aunty"),
+                    new MoneyBorrowed(413255),
+                    createDate(2010, 10, 3), createDate(2019, 1, 1),
+                    new StandardInterest(5.4), new LateInterest(), new Runner()),
+            new Runner(new Name("Leon Tay"), new Phone("93498349"), new Email("laoda@leontay349.com"),
+                    new Address("Bao Mei Boneless Chicken Rice"),
+                    getTagSet("LaoDa", "349", "Joker"), new ArrayList<>()),
+            new Runner(new Name("Ping An"), new Phone("93698369"), new Email("pingan@houseofahlong.com"),
+                    new Address("Ang Mo Kio Police Divison HQ"),
+                    getTagSet("UndercoverRunner", "TripleAgent", "Joker"), new ArrayList<>()),
+            new Customer(new Name("Da Ming"), new Phone("83699369"), new Email("da@ming.com"),
+                    new Address("Fountain of Wealth"),
+                    getTagSet("RicherDaMing", "BigMing", "MingSuperior", "mingdynasty"), new MoneyBorrowed(98789060),
+                    createDate(2017, 3, 1), createDate(2020, 12, 5),
+                    new StandardInterest(3.14), new LateInterest(), new Runner()),
+```
 ###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
@@ -253,22 +318,38 @@ public interface PopulatableCommand {
      */
     @Subscribe
     private void handlePopulatePrefixesRequestEvent(PopulatePrefixesRequestEvent event) {
+        commandTextField.requestFocus();
         replaceText(event.commandTemplate, event.caretIndex);
     }
 
     /**
      * Handles the event where a valid keyboard shortcut is pressed
      * to execute a command immediately
-     * {@code CommandRequestEvent}.
+     * {@code ExecuteCommandRequestEvent}.
      */
     @Subscribe
     private void handleExecuteCommandRequestEvent(ExecuteCommandRequestEvent event) {
         replaceText(event.commandWord);
         handleCommandInputChanged();
+        commandTextField.requestFocus();
+    }
+
+    /**
+     * Handles the event where the Esc key is pressed or "home" is input to the CommandBox.
+     * {@code HomeRequestEvent}.
+     */
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        replaceText("");
+        commandTextField.requestFocus();
     }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
+
+    @FXML
+    private MenuItem homeMenuItem;
+
     @FXML
     private MenuItem exitMenuItem;
 
@@ -308,28 +389,37 @@ public interface PopulatableCommand {
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     private void setAccelerators() {
+        setAccelerator(homeMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(exitMenuItem, KeyCombination.valueOf("Alt + Q"));
 
         setAccelerator(undoMenuItem, KeyCombination.valueOf("Ctrl + Z"));
         setAccelerator(redoMenuItem, KeyCombination.valueOf("Ctrl + Y"));
         setAccelerator(clearMenuItem, KeyCombination.valueOf("Ctrl + Shift + C"));
 
-        setAccelerator(historyMenuItem, KeyCombination.valueOf("Ctrl + H"));
+        setAccelerator(historyMenuItem, KeyCombination.valueOf("F3"));
         setAccelerator(listMenuItem, KeyCombination.valueOf("F2"));
         setAccelerator(findMenuItem, KeyCombination.valueOf("Ctrl + F"));
 
-        setAccelerator(addMenuItem, KeyCombination.valueOf("Ctrl + Space"));
+        setAccelerator(addMenuItem, KeyCombination.valueOf("Ctrl + I"));
         setAccelerator(deleteMenuItem, KeyCombination.valueOf("Ctrl + D"));
         setAccelerator(editMenuItem, KeyCombination.valueOf("Ctrl + E"));
         setAccelerator(locateMenuItem, KeyCombination.valueOf("Ctrl + L"));
         setAccelerator(selectMenuItem, KeyCombination.valueOf("Ctrl + S"));
         setAccelerator(assignMenuItem, KeyCombination.valueOf("Ctrl + Shift + A"));
 
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(helpMenuItem, KeyCombination.valueOf("F12"));
     }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
+    /**
+     * Executes the {@code home} operation
+     */
+    @FXML
+    private void handleHome() {
+        raise(new HomeRequestEvent());
+    }
+
     /**
      * Executes the {@code undo} operation
      */
@@ -418,6 +508,17 @@ public interface PopulatableCommand {
         raise(new PopulatePrefixesRequestEvent(new SelectCommand()));
     }
 ```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    /**
+     * Handles the event where the Esc key is pressed or "home" is input to the CommandBox.
+     * {@code HomeRequestEvent}.
+     */
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        //@TODO to be implemented
+    }
+```
 ###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
     /**
@@ -430,6 +531,18 @@ public interface PopulatableCommand {
         setStyleToIndicateCommandSuccess();
         Platform.runLater(() -> {
             displayed.setValue(event.commandUsageMessage);
+        });
+    }
+
+    /**
+     * Handles the event where the Esc key is pressed or "home" is input to the CommandBox.
+     * {@code HomeRequestEvent}.
+     */
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        setStyleToIndicateCommandSuccess();
+        Platform.runLater(() -> {
+            displayed.setValue(event.MESSAGE_HOME);
         });
     }
 ```

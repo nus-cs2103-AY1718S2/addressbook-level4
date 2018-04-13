@@ -166,14 +166,6 @@ public class LocateCommandTest {
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
-    public void parseCommand_listAlias() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
-    }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
     public void parseCommand_selectAlias() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());

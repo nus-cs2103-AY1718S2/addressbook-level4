@@ -14,7 +14,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ImdbChangedEvent;
-import seedu.address.commons.events.model.QueueChangedEvent;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -45,11 +44,6 @@ public class QueuePanel extends UiPart<Region> {
     @Subscribe
     public void handleImdbChangedEvent(ImdbChangedEvent ice) {
         setConnections(ice.data.getUniquePatientQueue(), ice.data.getUniquePatientQueueNo());
-    }
-
-    @Subscribe
-    public void handleQueueChangedEvent(QueueChangedEvent qce) {
-        setConnections(qce.data.getUniquePatientQueue(), qce.data.getUniquePatientQueueNo());
     }
 
     /**

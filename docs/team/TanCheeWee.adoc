@@ -43,9 +43,6 @@ This project is based on the https://github.com/se-edu/addressbook-level4[Addres
 ** Documentation:
 *** Tweaked writing style of the User Guide to make it more personal to the user.
 
-** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-
 ** Tools:
 *** Integrated a third party library (IBM Watson™ Assistant service) to the project (https://github.com/CS2103JAN2018-W09-B3/main/issues/#24)
 

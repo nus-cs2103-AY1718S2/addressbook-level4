@@ -93,11 +93,11 @@ is specified when adding a customer.
 
 |<<add, add>> (`a`)
 |kbd:[Ctrl+I]
-|`add n: NAME ty: r(or c) [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
+|`add ty: r(or c) n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
 
 |<<assign, assign>> (`as`)
 |kbd:[Ctrl+Shift+A]
-|`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX ...]`
+|`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX] ...`
 
 |<<clear, clear>> (`c`)
 |kbd:[Ctrl+Shift+C]
@@ -113,11 +113,11 @@ is specified when adding a customer.
 
 |<<find, find>> (`f`)
 |kbd:[Ctrl+F]
-|`find [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
+|`find [SPECIFIER] KEYWORD [KEYWORD] ...`
 
 |<<locate, locate>> (`l`)
 |kbd:[Ctrl+L]
-|`locate [SPECIFIER] KEYWORD [MORE_KEYWORDS]`
+|`locate [SPECIFIER] KEYWORD [KEYWORD] ...`
 
 |<<redo, redo>> (`r`)
 |kbd:[Ctrl+Y]
@@ -188,7 +188,7 @@ with the latest addition at the bottom.
 
 *Syntax:*
 ====
- add n: NAME ty: r(or c) [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...
+ add ty: r(or c) n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...
 ====
 
 [NOTE]
@@ -204,24 +204,24 @@ with the latest addition at the bottom.
 *Usage examples:*
 
 ====
- add ty: c n: Xiao Ming p: 88888888 e: xiao@ming.com a: W Hotel s: today d: 5 May 2018 m: 31415926535897 i: 9.71 t: richxiaoming
+ add ty: c n: Xiao Ming p: 88888888 e: xiao@ming.com a: The Fullerton s: today d: 7 June 2018 m: 31415926535897 i: 9.71 t: richxiaoming t: HighSES t: mingdynasty
 
-_Adds a new `Customer` named "Xiao Ming", with phone number "88888888", email address "xiao@ming.com", address "W Hotel",
-and tag "richxiaoming", who borrows $31 415 926 535 897 at a weekly interest rate of 9.71% on the date this command is
-entered and is due to return the full amount on 5 May 2018._
+_Adds a new `Customer` named "Xiao Ming", with phone number "88888888", email address "xiao@ming.com", address
+"The Fullerton", and tags "richxiaoming", "HighSES" and mingdynasty", who borrows $31 415 926 535 897 at a weekly
+interest rate of 9.71% on the date this command is entered and is due to return the full amount on 7 June 2018._
 ====
 
 ====
- add ty: c  p: 88888888 n: Xiao Ming e: xiao@ming.com s: today a: W Hotel d: 5 May 2018 m: 314159265 i: 9.71 t: richxiaoming
+ add ty: c  p: 88888888 n: Xiao Ming e: xiao@ming.com s: today a: The Fullerton d: 5 May 2018 m: 314159265 i: 9.71 t: richxiaoming t: mingdynasty t: HighSES
 
 _Adds the same `Customer` as above, just with values specified in a different order._
 ====
 
 ====
- add ty: r n: Ping An p: 93698369 e: pingan@houseofahlong.com a: Ang Mo Kio Police Divison HQ t: undercoverrunner t: tripleagent
+ add ty: r n: Ping An p: 93698369 e: pingan@houseofahlong.com a: Ang Mo Kio Police Divison HQ t: UndercoverRunner t: TripleAgent t: Joker
 
 _Adds a new `Runner` named "Ping An", with phone number "93698369", email address "pingan@houseofahlong.com",
-address "Ang Mo Kio Police Divison HQ" and tags "undercoverrunner" and "tripleagent"._
+address "Ang Mo Kio Police Divison HQ" and tags "UndercoverRunner", "TripleAgent" and "Joker"._
 ====
 <<Command Summary, Back to Command Summary>>
 
@@ -233,7 +233,7 @@ address "Ang Mo Kio Police Divison HQ" and tags "undercoverrunner" and "tripleag
 
 *Syntax:*
 ====
- assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX …​]
+ assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX] ...
 ====
 
 [NOTE]
@@ -347,7 +347,7 @@ _Edits the name of the second person to be `Kimmy Aunty` and clears all existing
 
 *Syntax:*
 ====
- find [SPECIFIER] KEYWORD [MORE_KEYWORDS]
+ find [SPECIFIER] KEYWORD [KEYWORD] ...
 ====
 
 [NOTE]
@@ -401,7 +401,7 @@ _Returns all persons with phone number "91234567"._
 
 *Syntax:*
 ====
- locate [SPECIFIER] KEYWORD [MORE_KEYWORDS]
+ locate [SPECIFIER] KEYWORD [KEYWORD] ...
 ====
 
 [NOTE]

@@ -3,7 +3,6 @@ package guitests.guihandles;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import seedu.address.model.group.Information;
 
 /**
  * Provides a handle to a group card in the group list panel.
@@ -30,5 +29,4 @@ public class GroupCardHandle extends NodeHandle<Node> {
     public String getInformation() {
         return information.getText();
     }
-    
 }

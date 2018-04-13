@@ -3,41 +3,50 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-Pigeons was developed by T16-B2 from the CS2103 course. We are a team comprised of students from NUS as well as
+Pigeons is a delivery-tracking tool for both business-owners and delivery drivers,
+ developed by T16-B2 from the CS2103 course. We are a team comprised of students from NUS as well as
 students doing exchange from around the world.
 
 == Project Team
 
-=== Meera Kanani
-image::meerakanani.jpg[width="150", align="left"]
+=== MEERA KANANI
+image::meerakanani10.png[width="150", align="left"]
 {empty}[https://github.com/meerakanani[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/meerakanani.adoc[porfolio]]
 {empty}
 
-Role: Route Logic Developer
+Main Role: Route Logic Developer
+
+Also in charge of: Team lead; Code quality
 
 '''
 
-=== Ng Shi Kang
-image::ngshikang.jpg[width="150", align="left"]
+=== NG SHI KANG
+image::ngshikang.png[width="150", align="left"]
 {empty}[http://github.com/ngshikang[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/ngshikang.adoc[portfolio]]
 
-Role: User Profile Developer
+Main Role: User Profile Developer
+
+Also in charge of: Deliverables and deadlines; Scheduling and tracking
 
 '''
 
-=== Matthieu Buot de L'Epine
-image::matthieu.jpg[width="150", align="left"]
+=== MATTHIEU MARIE EMMANUEL BUOT DE L'EPINE
+image::mattbuot.png[width="150", align="left"]
 {empty}[http://github.com/mattbuot[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/mattbuot.adoc[portfolio]]
 
-Role: Communication Developer
+Main Role: Communication Developer
+
+Also in charge of: Integration; Documentation
 
 '''
 
-=== Minh Ngo
-image::minhngo.jpg[width="150", align="left"]
-{empty}[http://github.com/ncaminh[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/ncaminh.adoc]
+=== NGO CHANH ANH MINH
+image::ncaminh.png[width="150", align="left"]
+{empty}[http://github.com/ncaminh[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/ncaminh.adoc[portfolio]]
 
-Role: Mapping Visualization Developer
+Main Role: Mapping Visualization Developer
+
+Also in charge of: Maps API Expert; Testing
 
 '''
 

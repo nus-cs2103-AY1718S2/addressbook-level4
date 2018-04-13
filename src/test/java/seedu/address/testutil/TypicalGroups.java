@@ -34,10 +34,10 @@ public class TypicalGroups {
     public static UniqueGroupList getTypicalGroupsList() {
         UniqueGroupList groupList = new UniqueGroupList();
         try {
-            groupList.add(new Group(GROUP_A.getInformation(),GROUP_A.getPersonList()));
-            groupList.add(new Group(GROUP_B.getInformation(),GROUP_B.getPersonList()));
-            groupList.add(new Group(GROUP_F.getInformation(),GROUP_F.getPersonList()));
-            groupList.add(new Group(GROUP_H.getInformation(),GROUP_H.getPersonList()));
+            groupList.add(new Group(GROUP_A.getInformation(), GROUP_A.getPersonList()));
+            groupList.add(new Group(GROUP_B.getInformation(), GROUP_B.getPersonList()));
+            groupList.add(new Group(GROUP_F.getInformation(), GROUP_F.getPersonList()));
+            groupList.add(new Group(GROUP_H.getInformation(), GROUP_H.getPersonList()));
         } catch (DuplicateGroupException e) {
             throw new IllegalArgumentException("group is expected to be unique.");
         }

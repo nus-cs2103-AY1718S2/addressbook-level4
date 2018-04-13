@@ -44,7 +44,8 @@ public class DeleteMemberFromGroupCommandTest {
      * Returns a {@code DeleteMemberFromGroupCommand} with the parameter {@code index}.
      */
     private DeleteMemberFromGroupCommand prepareCommand(Index index, Group groupToDelete) {
-        DeleteMemberFromGroupCommand deleteMemberFromGroupCommand = new DeleteMemberFromGroupCommand(index, groupToDelete);
+        DeleteMemberFromGroupCommand deleteMemberFromGroupCommand = new DeleteMemberFromGroupCommand(index,
+                groupToDelete);
         deleteMemberFromGroupCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteMemberFromGroupCommand;
     }

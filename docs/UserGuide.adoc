@@ -148,6 +148,7 @@ is specified when adding a customer.
 * Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 ***
+// tag::addcommand[]
 === Adding a person: `add` [since v1.3]
 
 [NOTE]
@@ -183,6 +184,7 @@ _Adds a new `Runner` named "Ping An", with phone number "93698369", email addres
 address "Ang Mo Kio Police Divison HQ" and tags "undercoverrunner" and "tripleagent"._
 ====
 ***
+// end::addcommand[]
 //@@author
 //@@author melvintzw
 === Assigning one or more Customers to a Runner : `assign` [since v1.4]
@@ -451,6 +453,7 @@ _The `undo` command fails as there are no undoable commands executed previously.
 * Show countdown timers for `Customers`
 * Show a detailed summary and analytics page on application start
 
+// tag::FAQ[]
 == FAQ
 
 [qanda]
@@ -471,4 +474,5 @@ We just like to make software that makes a positive impact on the world! :)
 
 What if I am not a loan shark boss yet?::
 Work hard and collect more protection money! Maybe one day you'll make it! ;)
+// end::FAQ[]
 //@@author

@@ -495,7 +495,7 @@ You can easily exit Medeina without any mouse click by entering `exit` or `q` in
 
 {empty} +
 
-== Data saving
+== Data Integrity
 
 The data in Medeina is automatically saved to the hard disk after any command that may result in a change in the storage. +
 Commands that may result in a change in the storage are:
@@ -508,6 +508,8 @@ This command will update information in the storage.
 This command will remove information in the storage.
 
 You do not need to manually save the data.
+
+However, user should take note not to modify the default files in anyway. Manipulating the data inside files such as Medeina.xml, might cause exceptions (the application may still run, but will not be able to return error messages).
 
 {empty} +
 

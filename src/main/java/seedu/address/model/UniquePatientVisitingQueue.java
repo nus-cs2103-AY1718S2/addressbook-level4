@@ -27,9 +27,10 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
     }
 
     /**
-     * Adds a patient to the visiting queue.
+     * Adds a patient into visiting queue.
      *
-     * @throws DuplicatePatientException if the patient index to add is a duplicate of an existing patient in the queue.
+     * @throws DuplicatePatientException if the patient index to add is a duplicate of an existing patient index in the
+     * queue.
      */
     public void add(int patientIndex) throws DuplicatePatientException {
         requireNonNull(patientIndex);
@@ -39,10 +40,6 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
         }
 
         visitingQueue.add(patientIndex);
-    }
-
-    public int getNextPatient() {
-        return visitingQueue.peekFirst();
     }
 
     /**
@@ -82,11 +79,10 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
     }
 
     /**
-     * Returns true if the queue contains an equivalent patient as the given argument.
+     * Returns true if the queue contains an equivalent patient index as the given argument.
      */
     public boolean contains(int toCheck) {
         requireNonNull(toCheck);
-        boolean exist = visitingQueue.contains(toCheck);
         return visitingQueue.contains(toCheck);
     }
 
@@ -97,8 +93,8 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UniquePatientVisitingQueue // instanceof handles nulls
+        return other == this
+                || (other instanceof UniquePatientVisitingQueue
                 && this.visitingQueue.equals(((UniquePatientVisitingQueue) other).visitingQueue));
     }
 
@@ -116,7 +112,7 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
     }
 
     /**
-     * Replaces the Queue in this list with those in the argument queue list.
+     * Replaces the visiting queue in this list with those in the argument visiting queue.
      */
     public void setVisitingQueue(Set<Integer> queueNos) {
         requireAllNonNull(queueNos);

@@ -110,7 +110,6 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_PAST_APPOINTMENT = "Appointment cannot be in the past.";
     public static final String MESSAGE_CONCURRENT_APPOINTMENT = "Appointment cannot be concurrent "
             + "with other appointments.";
-    
     /**
      * Enum to support the type of edit command that the user wishes to execute.
      */

@@ -17,12 +17,11 @@ import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.model.patient.Patient;
 
 /**
- * Panel containing the queue.
+ * Panel containing the visiting queue.
  */
 public class QueuePanel extends UiPart<Region> {
 
     private static final String FXML = "QueueListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(QueuePanel.class);
 
     @FXML
     private ListView<QueueCard> queueCardListView;

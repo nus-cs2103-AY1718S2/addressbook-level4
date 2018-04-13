@@ -396,7 +396,7 @@ Selects the 1st person in the results of the `find` command and shows the profil
 
 TIP: The calendar view is optimized for fullscreen mode.
 
-NOTE: Currently, there is a glitch in the scaling of the calendar Year Page. We are working with the
+NOTE: Currently, there is a glitch in the scaling of the calendar Year Page. We are working very hard with the
 third party provider to resolve this issue.
 
 ==== Adding an appointment : `addappointment` or `aa`

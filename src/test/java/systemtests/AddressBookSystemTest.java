@@ -233,7 +233,7 @@ public abstract class AddressBookSystemTest {
         URL actualUrl;
 
         try {
-            expectedUrl = getExpectedUrl(selectedBrowserLink, selectedCardName);
+            expectedUrl = getExpectedUrl(selectedBrowserLink);
             actualUrl = getBrowserPanel().getLoadedUrl(Link.getLinkType(selectedBrowserLink));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
@@ -324,7 +324,7 @@ public abstract class AddressBookSystemTest {
      * Returns the expected URL in the correct format when provided with a String type {@code url}.
      * {@code personName} is utilised when no URLs of the available platforms can be constructed.
      */
-    protected URL getExpectedUrl(String url, String personName) throws MalformedURLException {
+    protected URL getExpectedUrl(String url) throws MalformedURLException {
         if (Link.getLinkType(url).equals(Link.FACEBOOK_LINK_TYPE)) {
             return new URL("https://m." + url.substring(url.indexOf(Link.FACEBOOK_LINK_TYPE)));
         } else if (Link.getLinkType(url).equals(Link.TWITTER_LINK_TYPE)) {

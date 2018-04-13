@@ -144,17 +144,17 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     * Returns the given {@code url} with a protocol if unspecified.
+     * Returns the given {@code url} with a protocol and subdomain if unspecified.
      */
     public static String parseUrl(String url) {
         if (!url.contains("://")) {
-            if (!url.contains("www")) {
+            if (!url.contains("www.")) {
                 return "https://www." + url;
             }
             return "https://" + url;
         } else {
-            if (!url.contains("www")) {
-                String[] splitUrl = url.split("//");
+            if (!url.contains("www.")) {
+                String[] splitUrl = url.split("://");
                 return "https://www." + splitUrl[1];
             }
         }

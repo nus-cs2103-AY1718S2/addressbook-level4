@@ -228,7 +228,6 @@ public abstract class AddressBookSystemTest {
             selectedBrowserLink = selectedPersonSmpMap.get(keyList.get(0)).getLink().value;
         }
 
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         URL actualUrl;
 

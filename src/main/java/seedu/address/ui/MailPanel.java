@@ -21,18 +21,19 @@ import com.sun.mail.imap.IMAPStore;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
-
 
 /**
  * Mail panel
  */
 //@@author glorialaw
-public class MailPanel extends UiPart<Region> {
+public class MailPanel extends UiPart<VBox> {
     private static final long freq = 60;
     private static final String FXML = "EmailPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(MailPanel.class);
@@ -41,10 +42,27 @@ public class MailPanel extends UiPart<Region> {
     private final IMAPFolder inbox = getInbox();
 
     @FXML
+    private Label loading;
+    @FXML
     private ListView<EmailCard> emailListView;
 
     public MailPanel() throws MessagingException, IOException {
         super(FXML);
+        Task<Void> fetchEmails = new Task<Void>() {
+            @Override
+            protected Void call() {
+                setConnections();
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                MailPanel.this.getRoot().getChildren().remove(0);
+            }
+
+        };
+
+        new Thread(fetchEmails).start();
         setConnections();
         ScheduledExecutorService runChecks = Executors.newScheduledThreadPool(1);
         Runnable rc = new Runnable() {
@@ -59,6 +77,7 @@ public class MailPanel extends UiPart<Region> {
     }
 
     private void setConnections() {
+        loading.setText("Loading Emails...");
         //gets the list of messages
         int length = 0;
         Message[] messages = messageList();

@@ -23,7 +23,8 @@ public class HtmlWriter {
     private final String phone;
     private final String email;
     private final String address;
-    private final String amountOwed;
+    private final String amountBorrowed;
+    private final String amountCurrentlyOwed;
     private final String dueDate;
     private final String runnerAssigned;
 
@@ -34,7 +35,8 @@ public class HtmlWriter {
         this.phone = null;
         this.email = null;
         this.address = null;
-        this.amountOwed = null;
+        this.amountBorrowed = null;
+        this.amountCurrentlyOwed = null;
         this.dueDate = null;
         this.runnerAssigned = null;
         this.customerList = null;
@@ -49,7 +51,8 @@ public class HtmlWriter {
         this.phone = customer.getPhone().value;
         this.email = customer.getEmail().value;
         this.address = customer.getAddress().value;
-        this.amountOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
+        this.amountBorrowed = String.format("%,.2f", customer.getMoneyBorrowed().value);
+        this.amountCurrentlyOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
         this.dueDate = customer.getOweDueDate().toString();
         this.runnerAssigned = customer.getRunner().getName().fullName;
         this.customerList = null;
@@ -64,7 +67,8 @@ public class HtmlWriter {
         this.phone = runner.getPhone().value;
         this.email = runner.getEmail().value;
         this.address = runner.getAddress().value;
-        this.amountOwed = "";
+        this.amountBorrowed = "";
+        this.amountCurrentlyOwed = "";
         this.dueDate = "";
         this.runnerAssigned = "";
         this.customerList = runner.getCustomers();
@@ -85,7 +89,8 @@ public class HtmlWriter {
             printWriter.println("<tr><td style=\"width: 240px;\">phone: </td><td>" + phone + "</td></tr>");
             printWriter.println("<tr><td>email: </td><td>" + email + "</td></tr>");
             printWriter.println("<tr><td>address: </td><td>" + address + "</td></tr>");
-            printWriter.println("<tr><td>amount owed: </td><td>$" + amountOwed + "</td></tr>");
+            printWriter.println("<tr><td>amount borrowed: </td><td>$" + amountBorrowed + "</td></tr>");
+            printWriter.println("<tr><td>amount owed: </td><td>$" + amountCurrentlyOwed + "</td></tr>");
             printWriter.println("<tr><td>due date: </td><td>" + dueDate + "</td></tr>");
             printWriter.println("<tr><td>runner assigned: </td><td>" + runnerAssigned + "</td></tr>");
             printWriter.println("</table></body></html>");

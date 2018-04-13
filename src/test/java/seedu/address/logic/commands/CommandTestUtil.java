@@ -29,6 +29,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.descriptors.EditAppointmentDescriptor;
 import seedu.address.logic.descriptors.EditPersonDescriptor;
 import seedu.address.logic.descriptors.EditPetPatientDescriptor;
+import seedu.address.logic.parser.CliSyntax;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -160,9 +161,9 @@ public class CommandTestUtil {
     public static final String BLOODTYPE_DESC_HAZEL = " " + PREFIX_BLOODTYPE + VALID_BLOODTYPE_HAZEL;
 
     // options
-    public static final String OPTION_OWNER = " -o";
-    public static final String OPTION_PET = " -p";
-    public static final String OPTION_APPOINTMENT = " -a";
+    public static final String OPTION_OWNER = " " + CliSyntax.OPTION_OWNER;
+    public static final String OPTION_PET = " " + CliSyntax.OPTION_PETPATIENT;
+    public static final String OPTION_APPOINTMENT = " " + CliSyntax.OPTION_APPOINTMENT;
 
     // themes
     public static final String VALID_THEME_LIGHT = "light";

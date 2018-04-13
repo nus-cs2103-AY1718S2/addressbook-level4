@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_BIOLOGY
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_HISTORY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_MATHEMATICS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;

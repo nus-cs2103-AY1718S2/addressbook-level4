@@ -38,7 +38,7 @@ public class ContentTest {
         assertTrue(Content.isValidContent("12345")); // numbers only
         assertTrue(Content.isValidContent("hello world the 2nd")); // alphanumeric characters
         assertTrue(Content.isValidContent("Hello World")); // with capital letters
-        assertTrue(Content.isValidContent("David Roger Jackson Ray Jr 2nd")); // long content
+        assertTrue(Content.isValidContent("This is a very very very very very loooong content")); // long content
     }
 
     @Test

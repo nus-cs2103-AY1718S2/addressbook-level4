@@ -78,31 +78,48 @@ public class DisplayPicStorage {
     }
 
     /**
-     * Tries to save a copy of the image provided by the user into a default location.
-     * @param name the name of the new image file
-     * @param filePath the location of the current image file
-     * @param fileType the file extension of the current image file
-     * @return the filename of the image
+     * Creates a unique and unused file name to store the image file as
+     * @param name is the unique details of a person
+     * @param filePath the filepath of the image to read from
+     * @param fileType the extension of the imagefile
+     * @return a String that will be used as the filename and is unique
+     * @throws IllegalValueException the filepath is an illegal value
      */
-    public static String saveDisplayPic(String name, String filePath, String fileType) throws IllegalValueException {
+    public static String generateDisplayPicName(String name, String filePath, String fileType)
+            throws IllegalValueException {
         try {
-            boolean sameFile = false;
             File input = new File(filePath);
             String uniqueFileName = HashUtil.generateUniqueName(name);
             File toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
             while (FileUtil.isFileExists(toSave)) {
                 if (FileUtil.isSameFile(input, toSave)) {
-                    sameFile = true;
                     break;
                 }
                 uniqueFileName = HashUtil.generateUniqueName(uniqueFileName);
                 toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
             }
-            if (!sameFile) {
+            return uniqueFileName;
+
+        } catch (IOException ioe) {
+            throw new IllegalValueException("Unable to open input file");
+        }
+    }
+
+    /**
+     * Tries to save a copy of the image provided by the user into a default location.
+     * @param uniqueName the name of the new image file
+     * @param filePath the location of the current image file
+     * @param fileType the file extension of the current image file
+     */
+    public static void saveDisplayPic(String uniqueName, String filePath, String fileType)
+            throws IllegalValueException {
+        try {
+            File toSave = new File(SAVE_LOCATION + uniqueName + '.' + fileType);
+            File input = new File(filePath);
+            if (!FileUtil.isSameFile(toSave, input)) {
                 FileUtil.copyImage(filePath, toSave);
             }
-            return uniqueFileName;
-        } catch (IOException | IllegalValueException exc) {
+        } catch (IOException ioe) {
             throw new IllegalValueException("Unable to write file");
         }
     }
@@ -132,7 +149,8 @@ public class DisplayPicStorage {
     public static DisplayPic toSaveDisplay(DisplayPic display1, DisplayPic display2, String details) {
         if (!display1.equals(display2)) {
             try {
-                display1.saveDisplay(details);
+                String uniqueName = display1.getSaveDisplay(details);
+                display1.saveDisplay(uniqueName);
                 return display1;
             } catch (IllegalValueException ive) {
                 display1.updateToDefault();

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Person;
 
 /**
@@ -21,7 +22,7 @@ public class DeleteUtil {
         for (String item : itemsToDelete) {
             boolean notUsed = true;
             for (Person p : persons) {
-                if (p.getDisplayPic().toString().equals(item) || p.getDisplayPic().isDefault()) {
+                if (p.getDisplayPic().toString().equals(item) || item.equals(DisplayPic.DEFAULT_DISPLAY_PIC)) {
                     notUsed = false;
                     break;
                 }

@@ -73,7 +73,7 @@ Format: `help`
 
 Adds an order to the order book, which keeps track all the orders received+
 Alias: `a` +
-Format: `add n/NAME p/PHONE_NUMBER a/ADDRESS o/FOOD_ORDER [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER a/ADDRESS f/FOOD_ORDER [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
 
 ****
 * Order book is the left dispalyed panel.
@@ -87,19 +87,14 @@ First letter for every word of FOOD_ORDER must be capitalised
 
 [TIP]
 Current Menu:
-Chicken Rice
-Curry Chicken
-Chicken Chop
-Ban Mian
-Ice Milo
-Coffee
+Chicken Rice, Curry Chicken, Chicken Chop, Ban Mian, Ice Milo, Coffee
 
 Examples:
 
-* `add n/John Doe p/98765432  a/John street, block 123, #01-01 o/Chicken rice h/HALAL v/VEGETARIAN`
-* `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal o/Chicken chop h/HALAL`
-* `a n/John Doe p/98765432  a/John street, block 123, #01-01 o/Chicken rice h/HALAL v/VEGETARIAN`
-* `a n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal o/Chicken chop h/HALAL`
+* `add n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken rice h/HALAL v/VEGETARIAN`
+* `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal f/Chicken chop h/HALAL`
+* `a n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken rice h/HALAL v/VEGETARIAN`
+* `a n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal f/Chicken chop h/HALAL`
 
 === Listing all orders (order book): `list`
 
@@ -115,7 +110,7 @@ Format: `list`
 
 Edits an existing order in the order book. +
 Alias: `e` +
-Format: `edit INDEX [n/NAME] [p/PHONE] [a/ADDRESS] [t/FOOD_ORDER] [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD_ORDER] [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
 
 [TIP]
 First letter for every word of FOOD_ORDER must be capitalised

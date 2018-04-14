@@ -18,7 +18,6 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Order order;
-    private final Email email;
     private final Address address;
     private final Halal halal;
     private final Vegetarian vegetarian;
@@ -28,13 +27,12 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Order order, Email email, Address address,
+    public Person(Name name, Phone phone, Order order, Address address,
                   Halal halal, Vegetarian vegetarian, Set<Tag> tags) {
-        requireAllNonNull(name, phone, order, email, address, halal, vegetarian, tags);
+        requireAllNonNull(name, phone, order, address, halal, vegetarian, tags);
         this.name = name;
         this.phone = phone;
         this.order = order;
-        this.email = email;
         this.address = address;
         this.halal = halal;
         this.vegetarian = vegetarian;
@@ -55,10 +53,6 @@ public class Person {
         return order;
     }
     //@@author
-
-    public Email getEmail() {
-        return email;
-    }
 
     public Address getAddress() {
         return address;
@@ -95,14 +89,14 @@ public class Person {
         Person otherPerson = (Person) other;
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
-                && otherPerson.getEmail().equals(this.getEmail())
+                && otherPerson.getOrder().equals(this.getOrder())
                 && otherPerson.getAddress().equals(this.getAddress());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, order, email, address, halal, vegetarian, tags);
+        return Objects.hash(name, phone, order, address, halal, vegetarian, tags);
     }
 
     @Override
@@ -113,8 +107,6 @@ public class Person {
                 .append(getPhone())
                 .append(" Order: ")
                 .append(getOrder())
-                .append(" Email: ")
-                .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
                 .append(" Halal: ")

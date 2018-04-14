@@ -6,7 +6,6 @@
         <!-- @@author ZacZequn -->
         <order isPrivate="false">Chicken Rice</order>
         <!-- @@author -->
-        <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <!-- @@author ZacZequn -->
         <halal isPrivate="false">Non-halal</halal>
@@ -19,7 +18,6 @@
         <!-- @@author ZacZequn -->
         <order isPrivate="false">Chicken Rice</order>
         <!-- @@author -->
-        <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
         <!-- @@author ZacZequn -->
         <halal isPrivate="false">Non-halal</halal>
@@ -32,7 +30,6 @@
         <!-- @@author ZacZequn -->
         <order isPrivate="false">Chicken Rice</order>
         <!-- @@author -->
-        <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
         <!-- @@author ZacZequn -->
         <halal isPrivate="false">Non-halal</halal>
@@ -45,7 +42,6 @@
         <!-- @@author ZacZequn -->
         <order isPrivate="false">Chicken Rice</order>
         <!-- @@author -->
-        <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
         <!-- @@author ZacZequn -->
         <halal isPrivate="false">Non-halal</halal>
@@ -58,7 +54,6 @@
         <!-- @@author ZacZequn -->
         <order isPrivate="false">Chicken Rice</order>
         <!-- @@author -->
-        <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
         <!-- @@author ZacZequn -->
         <halal isPrivate="false">Non-halal</halal>
@@ -71,7 +66,6 @@
         <!-- @@author ZacZequn -->
         <order isPrivate="false">Chicken Rice</order>
         <!-- @@author -->
-        <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
         <!-- @@author ZacZequn -->
         <halal isPrivate="false">Non-halal</halal>
@@ -84,7 +78,6 @@
         <!-- @@author ZacZequn -->
         <order isPrivate="false">Chicken Rice</order>
         <!-- @@author -->
-        <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
         <!-- @@author ZacZequn -->
         <halal isPrivate="false">Non-halal</halal>
@@ -97,7 +90,6 @@
         <!-- @@author ZacZequn -->
         <order isPrivate="false">Chicken Rice</order>
         <!-- @@author -->
-        <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
         <!-- @@author ZacZequn -->
         <halal isPrivate="false">Non-halal</halal>
@@ -110,7 +102,6 @@
         <!-- @@author ZacZequn -->
         <order isPrivate="false">Chicken Rice</order>
         <!-- @@author -->
-        <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
         <!-- @@author ZacZequn -->
         <halal isPrivate="false">Non-halal</halal>

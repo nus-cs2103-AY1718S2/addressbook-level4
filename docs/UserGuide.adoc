@@ -31,6 +31,12 @@ The symbols which are used in the User Guide as well as their meaning are listed
 ❗: Warning +
 ⚠: Specific user only command +
 CAUTION: Command is not undoable +
+
+[INFO]: Information +
+[TIPS]: Tips +
+[IMPORTANT]: Warning +
+[WARNING]: Specific user only command +
+[CAUTION]: Command is not undoable +
 // end::introduction[]
 
 // tag::quickstart[]
@@ -194,8 +200,7 @@ Reapplies the `clear` command. +
 Clears all entries from the IMDB. +
 Format: `clear` or `c`
 
-[WARNING:]
-This command will clear *all the patient entries* in IMDB. +
+[WARNING:] This command will clear *all the patient entries* in IMDB. +
 Please proceed with caution.
 
 [TIP]

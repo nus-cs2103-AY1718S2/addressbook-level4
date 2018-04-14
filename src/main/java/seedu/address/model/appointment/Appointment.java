@@ -20,17 +20,23 @@ public class Appointment {
     public static final String APPOINTMENT_START_TIME_VALIDATION_REGEX = "^[0-9]{4}$";
     public static final String APPOINTMENT_END_TIME_VALIDATION_REGEX = "^[0-9]{4}$";
 
+    public final String name;
     public final String info;
     public final String date;
     public final String startTime;
     public final String endTime;
 
 
-    public Appointment(String info, String date, String startTime, String endTime) {
+    public Appointment(String name, String info, String date, String startTime, String endTime) {
+        this.name = name;
         this.info = info;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getInfo() {

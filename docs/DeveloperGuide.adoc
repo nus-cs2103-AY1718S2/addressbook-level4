@@ -206,7 +206,7 @@ image::ModelClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model`component,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.

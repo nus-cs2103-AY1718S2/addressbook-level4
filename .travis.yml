@@ -1,27 +1,34 @@
-sudo: required
-services:
-- docker
 language: java
 matrix:
   include:
-  - jdk: oraclejdk8
-script: "./config/travis/run-checks.sh && travis_retry ./gradlew clean checkstyleMain
-  checkstyleTest headless allTests coverage coveralls asciidoctor"
+    - jdk: oraclejdk8
+
+script: >-
+    ./config/travis/run-checks.sh &&
+    travis_retry ./gradlew clean checkstyleMain checkstyleTest headless allTests coverage coveralls asciidoctor
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: ./config/travis/deploy_github_pages.sh
+  on:
+    branch: master
+
 deploy:
   provider: gae
-  keyfile: gce.json
+  keyfile: client_secret.json
   project: spherical-realm-197214
+
 addons:
   apt:
     packages:
-    - oracle-java8-installer
+      - oracle-java8-installer
+
 before_cache:
-- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
-  - "$HOME/.gradle/caches/"
-  - "$HOME/.gradle/wrapper/"
-before_install:
-- openssl aes-256-cbc -K $encrypted_0adb4a302aac_key -iv $encrypted_0adb4a302aac_iv
-  -in gce.json.enc -out gce.json -d
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/

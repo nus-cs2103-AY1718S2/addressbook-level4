@@ -109,6 +109,15 @@ public class ErrorsWindow extends UiPart<Stage> {
         logger.fine("Showing error log within the application.");
         getRoot().show();
     }
+
+    /**
+     * Hides the calendar window.
+     * @throws IllegalStateException
+     */
+    public void close() {
+        logger.fine("Hiding error log.");
+        getRoot().close();
+    }
 }
 
 //@@author

@@ -74,10 +74,11 @@ it was essential to provide an easy way to generate the error log on demand to h
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.2` - `v1.4` (3 releases), co-managed release `v1.5rc` on GitHub
+*** Managed releases `v1.2` - `v1.4` (3 releases), co-managed release `v1.5rc and v1.5` on GitHub
 ** Enhancements to existing features:
 *** Updated the menu to include option to open standalone calendar instance as well as view the error log (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/1[#1], https://github.com/CS2103JAN2018-T15-B3/main/pull/21[#21])
 *** Set up issue labels, created milestones each week, wrote detailed issues every week, and ensured that housekeeping was performed weekly (i.e. closing issues and milestones, creating releases, etc.) in accordance to their deadlines
+*** Extended @kaisertanqr's login status bar to display the logged in user in the status bar.
 ** Documentation:
 *** : Contributed several user stories to the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]
 *** : Added 6 use cases to the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]

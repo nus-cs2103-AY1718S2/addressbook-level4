@@ -83,6 +83,15 @@ public class CalendarWindow extends UiPart<Stage> {
         logger.fine("Showing calendar window.");
         getRoot().show();
     }
+
+    /**
+     * Hides the calendar window.
+     * @throws IllegalStateException
+    */
+    public void close() {
+        logger.fine("Hiding calendar window.");
+        getRoot().close();
+    }
 }
 
 //@@author

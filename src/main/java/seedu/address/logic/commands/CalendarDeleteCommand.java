@@ -2,6 +2,8 @@
 
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 
 import com.google.api.services.calendar.model.Event;
@@ -27,11 +29,15 @@ public class CalendarDeleteCommand extends Command {
     private final Event event;
 
     public CalendarDeleteCommand(Event event) {
+        requireNonNull(event);
         this.event = event;
     };
 
     @Override
     public CommandResult execute() throws CommandException {
+        requireNonNull(event);
+        requireNonNull(model);
+
         User user = model.getLoggedInUser();
 
         try {

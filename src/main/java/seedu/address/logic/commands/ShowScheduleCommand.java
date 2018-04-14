@@ -2,6 +2,7 @@
 
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 
 import java.io.IOException;
@@ -42,6 +43,8 @@ public class ShowScheduleCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        requireNonNull(model);
+
         User user = model.getLoggedInUser();
 
         try {
@@ -53,7 +56,6 @@ public class ShowScheduleCommand extends Command {
             }
 
             //@@author jaronchan
-
             List<Event> dailyEventsList = OAuthManager.getDailyEvents(user, localDate);
             EventsCenter.getInstance().post(new DailyScheduleShownChangedEvent(dailyEventsList));
             EventsCenter.getInstance().post(new ResetDirectionsEvent());

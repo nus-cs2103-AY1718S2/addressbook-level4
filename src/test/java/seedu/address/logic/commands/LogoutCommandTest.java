@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.function.Predicate;
@@ -10,6 +11,7 @@ import org.junit.Test;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.OAuthManager;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -36,6 +38,12 @@ public class LogoutCommandTest {
         CommandResult commandResult = getLogoutCommand(modelStub).execute();
 
         assertEquals(LogoutCommand.MESSAGE_LOGOUT_SUCCESS, commandResult.feedbackToUser);
+
+        //@@author ifalluphill
+        assertNull(OAuthManager.getMostRecentEventList());
+        assertNull(OAuthManager.getMostRecentDailyEventList());
+        assertNull(OAuthManager.getMostRecentDailyEventListDate());
+        //@@author kaisertanqr
     }
 
     /**

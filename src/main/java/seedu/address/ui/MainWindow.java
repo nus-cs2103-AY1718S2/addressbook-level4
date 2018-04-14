@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -53,6 +55,8 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
     private LoginStatusBar loginStatusBar;
+    private List<ErrorsWindow> errorsWindowsOpened = new ArrayList<>();
+    private List<CalendarWindow> calendarWindowsOpened = new ArrayList<>();
 
 
     @FXML
@@ -205,13 +209,18 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Hides browser and person list panel.
+     * @throws IOException
      */
-    public void hideBeforeLogin() {
+    public void hideBeforeLogin() throws IOException {
         loginStatusBar.updateLoginStatus(false, null);
         featuresTabPane.setVisible(false);
         beneficiariesPane.setVisible(false);
         personDetailsPlaceholder.setVisible(false);
         calendarPlaceholder.setVisible(false);
+        //@@author ifalluphill
+        calendarPanel.reloadDefaultPage();
+        cleanOpenedWindows();
+        //@@author kaisertanqr
         dailySchedulerPlaceholder.setVisible(false);
         personListPanelPlaceholder.setVisible(false);
         logger.fine("Hiding panels before login.");
@@ -231,6 +240,27 @@ public class MainWindow extends UiPart<Stage> {
         logger.fine("Displaying panels after login.");
 
     }
+
+    //@@author ifalluphill
+    /**
+     * Closes all opened WebViews left open during a logged in session.
+     */
+    private void cleanOpenedWindows() {
+        if (calendarWindowsOpened != null) {
+            for (CalendarWindow cw : calendarWindowsOpened) {
+                cw.close();
+            }
+        }
+        if (errorsWindowsOpened != null) {
+            for (ErrorsWindow ew : errorsWindowsOpened) {
+                ew.close();
+            }
+        }
+
+        calendarWindowsOpened = new ArrayList<>();
+        errorsWindowsOpened = new ArrayList<>();
+    }
+
     //@@author jaronchan
     /**
      * Disables the selection of tabs and persons cards by mouse click.
@@ -287,8 +317,9 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleViewErrors() {
-        ErrorsWindow errorsWindow = new ErrorsWindow(logic);
-        errorsWindow.show();
+        ErrorsWindow errorsWindowInstance = new ErrorsWindow(logic);
+        errorsWindowsOpened.add(errorsWindowInstance);
+        errorsWindowInstance.show();
     }
 
     /**
@@ -296,8 +327,9 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleViewCalendar() throws IOException {
-        CalendarWindow calendarWindow = new CalendarWindow(logic);
-        calendarWindow.show();
+        CalendarWindow calendarWindowInstance = new CalendarWindow(logic);
+        calendarWindowsOpened.add(calendarWindowInstance);
+        calendarWindowInstance.show();
     }
     //@@author
 

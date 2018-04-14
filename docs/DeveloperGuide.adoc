@@ -773,9 +773,9 @@ To get better control of one's weekly schedule, we will now attach a component c
 
 image::LessonClassDiagram.png[width="800"]
 
-A `Schedule` is a list of `Lessons`. A `Lesson` has a `UniqueKey` attribute, a `Day` attribute, a starting `TIME START_TIME` and an ending `TIME END_TIME` attribute
+A `Schedule` has a list of `Lesson` objects. A `Lesson` has a `UniqueKey` attribute, a `Day` attribute, a starting `TIME START_TIME` and an ending `TIME END_TIME` attribute
 
-* Students have a unique UniqueKey field, which we will now use in Lesson to create a relation to Student objects.
+* Students have a unique `UniqueKey` field, which we will now use in `Lesson` to create a relation to Student objects.
 * A `Lesson` object called `newLesson` will be created by `ModelManager.addLesson(UniqueKey key, Day day, Time startTime, Time endTime)`, which is implemented as such:
 [source, java]
 ----

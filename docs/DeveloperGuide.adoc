@@ -225,7 +225,7 @@ image::DeleteStudentSdForLogic.png[width="800"]
 image::ModelClassDiagram.png[width="800"]
 
 .Structure of the Dashboard Class. This diagram shows finer details about the Dashboard Class.
-image::ModelComponentDashboardClassDiagram.png[width="400"]
+image::ModelComponentDashboardClassDiagram.png[width="600"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -955,7 +955,7 @@ passing any *entities* as parameters to the feature's method.
 
 .Following the example in Figure 12, the `select` command is invoked, passing `Jason` as a parameter, after the intent and entity is identified.
 
-image::Select(after).PNG[width="650"]
+image::Select(after).png[width="650"]
 
 ==== Design Consideration
 

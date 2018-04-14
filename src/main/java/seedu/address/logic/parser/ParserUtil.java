@@ -274,7 +274,7 @@ public class ParserUtil {
     public static Title parseTaskTitle(String taskTitle) throws IllegalValueException {
         requireNonNull(taskTitle);
         String trimmedTaskTitle = taskTitle.trim();
-        if (!TaskDescription.isValidDescription(trimmedTaskTitle)) {
+        if (!Title.isValidTitle(trimmedTaskTitle)) {
             throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
         }
         return new Title(trimmedTaskTitle);

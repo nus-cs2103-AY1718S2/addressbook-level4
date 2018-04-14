@@ -143,7 +143,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException, PatientNotFoundException {
+        public Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException {
             fail("This method should not be called.");
             return null;
         }
@@ -193,6 +193,18 @@ public class AddCommandTest {
         public ObservableList<Integer> getPatientListIndexInQueue() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public int getPatientSourceIndexInList(int targetIndex) {
+            fail("This method should not be called.");
+            return 0;
+        }
+
+        @Override
+        public boolean checkIfPatientInQueue(Patient targetPatient) {
+            fail("This method should not be called.");
+            return false;
         }
     }
 

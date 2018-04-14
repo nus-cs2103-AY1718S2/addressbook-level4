@@ -148,6 +148,36 @@ public class DeleteCommandTest {
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
+    //@@author Kyholmes-test
+    @Test
+    public void execute_validIndexUnfilteredListPatientInQueue_throwsCommandException() throws Exception {
+        model.addPatientToQueue(INDEX_SECOND_PERSON);
+        Patient patientToDelete = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_SECOND_PERSON);
+
+        assertCommandFailure(deleteCommand, model, String.format(Messages.MESSAGE_PERSONS_EXIST_IN_QUEUE,
+                patientToDelete.getName().fullName));
+    }
+
+    @Test
+    public void executeUndoRedo_validIndexUnfilteredListPatientInQueue_faiure() throws Exception {
+        UndoRedoStack undoRedoStack = new UndoRedoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
+        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+        model.addPatientToQueue(INDEX_SECOND_PERSON);
+        Patient patientToDelete = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_SECOND_PERSON);
+
+        //execution failed -> deleteCommand not pushed into undoRedoStack
+        assertCommandFailure(deleteCommand, model, String.format(Messages.MESSAGE_PERSONS_EXIST_IN_QUEUE,
+                patientToDelete.getName().fullName));
+
+        //no commands in undoRedoStack -> undoCommand and redoCommand fail
+        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
+        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    //@@author
     @Test
     public void equals() throws Exception {
         DeleteCommand deleteFirstCommand = prepareCommand(INDEX_FIRST_PERSON);

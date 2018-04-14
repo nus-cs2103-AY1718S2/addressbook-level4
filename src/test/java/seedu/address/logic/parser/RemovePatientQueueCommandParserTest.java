@@ -8,14 +8,13 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemovePatientQueueCommand;
 
 public class RemovePatientQueueCommandParserTest {
     private RemovePatientQueueCommandParser parser = new RemovePatientQueueCommandParser();
 
     @Test
-    public void parse_validArgs_returnsRemovePatientQueueCommand() throws IllegalValueException {
+    public void parse_validArgs_returnsRemovePatientQueueCommand() {
         assertParseSuccess(parser, "1", new RemovePatientQueueCommand(INDEX_FIRST_PERSON));
     }
 

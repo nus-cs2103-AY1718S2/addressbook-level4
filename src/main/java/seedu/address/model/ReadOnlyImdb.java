@@ -30,14 +30,14 @@ public interface ReadOnlyImdb {
     ObservableList<AppointmentEntry> getAppointmentEntryList();
 
     /**
-     * Returns an unmodifiable view of the patient queue.
+     * Returns an unmodifiable view of the patient visiting queue.
      * This list will not contain any duplicate patient in the queue.
      */
     ObservableList<Patient> getUniquePatientQueue();
 
     /**
-     * Returns an unmodifiable view of the patient queue. no
-     * This list will not contain any duplicate patient in the queue.
+     * Returns an unmodifiable view of the patient visiting queue indices.
+     * This list will not contain any duplicate patient index in the queue.
      */
     ObservableList<Integer> getUniquePatientQueueNo();
 }

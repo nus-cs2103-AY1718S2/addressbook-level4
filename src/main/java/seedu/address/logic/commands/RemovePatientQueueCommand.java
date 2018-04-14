@@ -3,18 +3,17 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
-
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
 /**
  * Remove patient from visiting queue (checkout)
  */
-public class RemovePatientQueueCommand extends Command {
+public class RemovePatientQueueCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "removeq";
     public static final String COMMAND_ALIAS = "rq";
@@ -27,38 +26,42 @@ public class RemovePatientQueueCommand extends Command {
             + "INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_REMOVE_SUCCESS = "%1$s is removed from the waiting list";
-    public static final String MESSAGE_PERSON_NOT_FOUND_QUEUE = "This patient is not in the waiting list";
-    public static final String MESSAGE_QUEUE_EMPTY = "Waiting list is empty";
+    public static final String MESSAGE_REMOVE_SUCCESS = "%1$s is removed from the visiting queue.";
+    public static final String MESSAGE_PERSON_NOT_FOUND_QUEUE = "This patient is not in the visiting queue.";
+    public static final String MESSAGE_QUEUE_EMPTY = "Visiting queue is empty";
 
-    public final boolean indexIsExist;
+    public final boolean indexArguementIsExist;
     private Index targetIndex;
 
     public RemovePatientQueueCommand() {
-        indexIsExist = false;
+        indexArguementIsExist = false;
 
     }
 
     public RemovePatientQueueCommand(Index targetIndex) {
         requireNonNull(targetIndex);
-        indexIsExist = true;
+        indexArguementIsExist = true;
         this.targetIndex = targetIndex;
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    protected void preprocessUndoableCommand() throws CommandException {
+        if (indexArguementIsExist) {
+            //Unfilter patient list
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
-        if (indexIsExist) {
-            List<Patient> lastShownList = model.getFilteredPersonList();
-
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            if (targetIndex.getZeroBased() >= model.getFilteredPersonList().size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
 
         try {
             Patient patientToRemove;
-            if (indexIsExist) {
+            if (indexArguementIsExist) {
                 patientToRemove = model.removePatientFromQueueByIndex(targetIndex);
             } else {
                 patientToRemove = model.removePatientFromQueue();
@@ -78,7 +81,7 @@ public class RemovePatientQueueCommand extends Command {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof RemovePatientQueueCommand)
-                && this.indexIsExist == ((RemovePatientQueueCommand) other).indexIsExist
+                && this.indexArguementIsExist == ((RemovePatientQueueCommand) other).indexArguementIsExist
                 && this.targetIndex.equals(((RemovePatientQueueCommand) other).targetIndex);
     }
 }

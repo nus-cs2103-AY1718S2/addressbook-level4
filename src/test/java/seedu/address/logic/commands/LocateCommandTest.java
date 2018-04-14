@@ -67,6 +67,7 @@ public class LocateCommandTest {
         assertFalse(locateFirstCommand.equals(locateSecondCommand));
     }
 
+    //@@author zhangriqi-unused
     @Test
     public void execute_zeroKeywords_noPersonFound() {
         String arguments = " ";
@@ -89,7 +90,7 @@ public class LocateCommandTest {
         LocateCommand command = prepareCommand(new PersonContainsKeywordsPredicate(list));
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, ELLE));
 
-        //test FindCommand object that uses the NameContainsKeyWordsPredicate
+        //test LocateCommand object that uses the NameContainsKeyWordsPredicate
         arguments = "carl daniel elle";
         splitArguments = arguments.split("\\s+");
         list = Arrays.asList(splitArguments);
@@ -105,7 +106,7 @@ public class LocateCommandTest {
         command = prepareCommand(new PhoneContainsKeywordsPredicate(list));
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, ELLE));
 
-        //test FindCommand object that uses the EmailContainsKeyWordsPredicate
+        //test LocateCommand object that uses the EmailContainsKeyWordsPredicate
         arguments = "heinz@example.com cornelia@example.com werner@example.com";
         splitArguments = arguments.split("\\s+");
         list = Arrays.asList(splitArguments);
@@ -113,7 +114,7 @@ public class LocateCommandTest {
         command = prepareCommand(new EmailContainsKeywordsPredicate(list));
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, ELLE));
 
-        //test FindCommand object that uses the AddressContainsKeyWordsPredicate
+        //test LocateCommand object that uses the AddressContainsKeyWordsPredicate
         arguments = "wall 10th michegan";
         splitArguments = arguments.split("\\s+");
         list = Arrays.asList(splitArguments);

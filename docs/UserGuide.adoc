@@ -568,10 +568,14 @@ Coming v2.0, Medeina can be used concurrently on different systems. The data wil
 *Q*: What if my questions are not answered through this user guide? +
 *A*: Post an issue in our github link:{repoURL}/issues[here]. Alternatively, email us at help@medeina.com. We will address your question as soon as possible.
 
-*Q*: After switching from a year view with appointments to a year view with none, the appointment dates were still colored despite no entry, why is that?
+*Q*: After switching from a year view with appointments to a year view with none, the appointment dates were still colored despite no entry, why is that? +
 *A*: The issue is embedded inside CalendarFx API, it has already been documented in our developer guide as well. Hopefully the issue can be resolved in future releases of CalendarFX.
 
-*Q*: When right click on the calendar day view, a window jump out and say
+*Q*: When right click on the calendar day view, a window jump out and says "unable to create a new entry", why is that? +
+*A*: Since Medeina is a command line based application, clicking on calendar to create appointments have been disabled. User should create appointments using `add` command.
+
+*Q*: When click on appointments, a pop over window appears to show details of appointments but its unmodifiable, why? +
+*A*: Because of Medeina's command line based property, modifying of appointments details using mouse is disabled. Instead, users should use `edit` command.
 
 {empty} +
 

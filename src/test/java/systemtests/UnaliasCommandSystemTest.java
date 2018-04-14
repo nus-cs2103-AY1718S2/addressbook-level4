@@ -13,6 +13,7 @@ import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.testutil.AliasUtil;
 
+//@@author jingyinno
 public class UnaliasCommandSystemTest extends AddressBookSystemTest {
 
     @Test

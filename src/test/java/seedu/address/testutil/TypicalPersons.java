@@ -25,27 +25,27 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
-            .withAddress("123, Jurong West Ave 6, #08-111").withPhone("85355255").withOrder("Chicken Rice")
+            .withAddress("123, Jurong West Ave 6, #08-111").withPhone("85355255").withOrder("Chicken Chop")
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25").withPhone("98765432").withOrder("Chicken Rice")
+            .withAddress("311, Clementi Ave 2, #02-25").withPhone("98765432").withOrder("Chicken Chop")
             .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withOrder("Chicken Rice").withAddress("wall street").build();
+            .withOrder("Chicken Chop").withAddress("wall street").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withOrder("Chicken Rice").withAddress("10th street").build();
+            .withOrder("Chicken Chop").withAddress("10th street").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withOrder("Chicken Rice").withAddress("michegan ave").build();
+            .withOrder("Chicken Chop").withAddress("michegan ave").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withOrder("Chicken Rice").withAddress("little tokyo").build();
+            .withOrder("Chicken Chop").withAddress("little tokyo").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withOrder("Chicken Rice").withAddress("4th street").build();
+            .withOrder("Chicken Chop").withAddress("4th street").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withOrder("Chicken Rice").withAddress("little india").build();
+            .withOrder("Chicken Chop").withAddress("little india").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withOrder("Chicken Rice").withAddress("chicago ave").build();
+            .withOrder("Chicken Chop").withAddress("chicago ave").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)

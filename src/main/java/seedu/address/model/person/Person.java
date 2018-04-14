@@ -89,6 +89,7 @@ public class Person {
         Person otherPerson = (Person) other;
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
+                && otherPerson.getOrder().equals(this.getOrder())
                 && otherPerson.getAddress().equals(this.getAddress());
     }
 

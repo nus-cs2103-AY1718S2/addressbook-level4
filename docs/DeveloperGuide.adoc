@@ -212,10 +212,12 @@ The `Model`,
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
+// tag::storagepic[]
 === Storage component
 
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
+// end::storagepic[]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 

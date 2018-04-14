@@ -599,9 +599,17 @@ The group mechanism is facilitated by `UniqueGroupList`, which resides inside `M
 The groups in the group list are facilitated by `Group` class. Each `Group` object have a `Information` object, representing the information of the group.
 `Group`,`Information` and `UniqueGroupList` class reside inside `Model` component. The following is the class diagram showing the relationship between `Group`, `Information` and `UniqueGroupList`:
 
-image:GroupInformationClassDiagram.png[width ="800"]
+.Group Class Diagram.
+image:GroupClassDiagram.png[width ="800"]
 
 Suppose that the user has just launched the application . The `UniqueGroupList` in the address book will include few groups that are declared in SampleDataUtil.
+
+A Group consists of the following:
+
+* Information: Represents the information of the group.
+* PersonList: Represents the list of persons in a group.
+
+===== Add Group Feature
 
 The add groups mechanism is facilitated by `AddGroupCommand`, which resides inside `Logic` component. It supports adding Group objects to the address book. AddGroupCommand inherits from `UndoableCommand`.
 
@@ -625,6 +633,9 @@ public class AddGroupCommand extends UndoableCommand {
     }
 }
 ----
+
+.Class Diagram of add group Command.
+image:AddGroupCommandClassDiagram.png[width:"600"]
 
 The user executes a new `AddGroupCommand` with `Information`, to add a new group to the address book.
 The new group is added to the `UniqueGroupList` and the current state of the address book is saved.

@@ -552,7 +552,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 // tag::displaying-a-recipe[]
 === Displaying a recipe
 [discrete]
-==== Current Implementation
+==== Current implementation
 
 The text from a selected recipe is always displayed in the `_ResultDisplay_`.
 
@@ -565,7 +565,7 @@ The `_HtmlFormatter_` class is responsible for the HTML formatting of a recipe.
 === Downloading an image
 
 // tag::download-image[]
-==== Current Implementation
+==== Current implementation
 
 When an *`add`* or *`edit`* command has an image field input, that input will be checked if it is a valid image URL using `ImageDownloader`.
 [.not-print]
@@ -600,10 +600,10 @@ If the input is indeed a URL that links to an image, `ImageDownloader` will go t
 
 [[fig-DownloadImageAD]]
 .Activity diagram of an image downloading process
-image::DownloadImageAD.png[width="800"]
+image::DownloadImageAD.png[width="900"]
 {nbsp} +
 
-A particular step that might seems out of place here is the checksum calculation. Because the `BufferedImage` object created by `ImageIO` has different hash code based on the execution configuration, using `hashCode()` does not guarantee the same file name for an image. However, we can be sure the same image data will return the same <<MD5>> checksum, and MD5 checksum is sufficient for the scale of our product. Therefore, using MD5 checksum for the file name will almost guarantee no hash collision and no image duplication. +
+Why do we need checksum calculation? The `BufferedImage` object created by `ImageIO` does not guarantee the same return value for `hashCode()` so we cannot use it as a file name. However, the same image data will certainly return the same <<MD5, MD5>> checksum. Therefore, using MD5 checksum as the file name will guarantee no image duplication. +
 [.not-print]
 Below is the implementation of `downloadImage()`:
 
@@ -648,7 +648,7 @@ For the detailed implementation of each step, please see link:{repoURL}/src/main
 // tag::embedded-url[]
 === Embedded URL
 
-==== Current Implementation
+==== Current implementation
 
 The URL field is an optional field in the *`add`* command and can be omitted. In the case when a URL is embedded to a recipe, the `_BrowserPanel_` will load the given URL.
 
@@ -686,7 +686,7 @@ public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws Il
 
 // tag::facebook-compatibility[]
 === Facebook compatibility
-==== Current Implementation
+==== Current implementation
 
 The *`share`* command is implemented in the `_ShareCommand_` class. On command execution, a new `_ShareRecipeEvent_` is created (with parameters index and recipe) and posted to the `_EventsCenter_`.
 
@@ -788,7 +788,7 @@ As the result of this implementation, when user creates a group that has the sam
 
 // tag::inserting-an-image[]
 === Inserting an image
-==== Current Implementation
+==== Current implementation
 
 The image field is an optional field in the *`add`* command and can be omitted. A User can add an image to a recipe by inserting the absolute pathname of the image into the image field. The pathname must reference to a valid image file.
 
@@ -1201,7 +1201,7 @@ private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) 
 === Searching by ingredients
 [discrete]
 // tag::ingredient-search[]
-==== Current Implementation
+==== Current implementation
 The user input is parsed and separated into a `String[]` of keywords that represent each ingredient in `IngredientCommandParser`. This array is then passed to `IngredientContainsKeywordsPredicate` which compares them individually to the entire list of recipes and their ingredients. The matching is case-insensitive and the predicate will only be true when the recipe contains ALL ingredients in the parsed array.
 The implementation of that can be seen below:
 [source,java]
@@ -1226,7 +1226,7 @@ Since the sequence is very similar to searching by tags, the sequence diagram of
 === Searching by tags
 [discrete]
 // tag::tag-search[]
-==== Current Implementation
+==== Current implementation
 The user input is parsed and separated into a `String[]` of keywords in `TagCommandParser`. This array is then passed to `TagContainsKeywordsPredicate` which compares them individually to the entire list of recipes and their tags using a stream, setting the predicate to true when there is any match (i.e. the recipe does not have to contain ALL the tags specified like how the ingredient search was implemented).
 The matching is case-sensitive and the implementation can be seen below:
 [source,java]
@@ -1248,7 +1248,7 @@ image::TagCommandSD.PNG[width="900"]
 // end::tag-search[]
 
 === Undo/Redo feature
-==== Current Implementation
+==== Current implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `_LogicManager_`. It supports undoing and redoing of commands that modify the state of the recipe book (e.g. *`add`*, *`edit`*). Such commands will inherit from `_UndoableCommand_`.
 
@@ -1375,7 +1375,7 @@ The following activity diagram <<diag-UndoRedoActDiag>> summarizes what happens 
 image::UndoRedoActivityDiagram.png[width="650"]
 {nbsp} +
 
-==== Design Considerations
+==== Design considerations
 
 ===== Aspect: Implementation of `_UndoableCommand_`.
 

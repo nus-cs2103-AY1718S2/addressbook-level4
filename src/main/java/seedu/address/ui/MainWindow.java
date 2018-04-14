@@ -1,5 +1,11 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_COLOR;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_HEIGHT;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_LABEL_COLOR;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_LABEL_NAME;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_WIDTH;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -43,7 +49,7 @@ public class MainWindow extends UiPart<Stage> {
     private Calendar calendar;
     private Timetable timetable;
     private PersonListPanel personListPanel;
-    private ToDoListPanel todoListPanel;
+    private ToDoListPanel toDoListPanel;
     private GroupListPanel groupListPanel;
     private ProgressIndicator progressIndicator;
     private Label progressIndicatorLabel;
@@ -66,7 +72,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
-    private StackPane todoListPanelPlaceholder;
+    private StackPane toDoListPanelPlaceholder;
 
     @FXML
     private StackPane groupListPanelPlaceholder;
@@ -144,19 +150,23 @@ public class MainWindow extends UiPart<Stage> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        todoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
-        todoListPanelPlaceholder.getChildren().add(todoListPanel.getRoot());
-
         groupListPanel = new GroupListPanel(logic.getFilteredGroupList());
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
-        progressIndicatorLabel = new Label("To-dos Completion");
-        progressIndicatorLabel.setStyle("-fx-text-fill: white;");
-        progressIndicator = new ProgressIndicator(0);
-        progressIndicator.setStyle(" -fx-progress-color: #4DA194;");
-        progressIndicator.setPrefSize(150, 150);
+        //@@author nhatquang3112
+        toDoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
+        toDoListPanelPlaceholder.getChildren().add(toDoListPanel.getRoot());
+
+        progressIndicatorLabel = new Label(PROGRESS_INDICATOR_LABEL_NAME);
+        progressIndicatorLabel.setStyle(PROGRESS_INDICATOR_LABEL_COLOR);
+        progressIndicatorPlaceholder.getChildren().add(progressIndicatorLabel);
+
+        progressIndicator = new ProgressIndicator();
+        progressIndicator.setStyle(PROGRESS_INDICATOR_COLOR);
+        progressIndicator.setPrefSize(PROGRESS_INDICATOR_WIDTH, PROGRESS_INDICATOR_HEIGHT);
         progressIndicator.setProgress(logic.getToDoListCompleteRatio());
-        progressIndicatorPlaceholder.getChildren().addAll(progressIndicatorLabel, progressIndicator);
+        progressIndicatorPlaceholder.getChildren().add(progressIndicator);
+        //@@author
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -170,9 +180,11 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    //@@author nhatquang3112
     void updateProgressIndicator() {
         progressIndicator.setProgress(logic.getToDoListCompleteRatio());
     }
+    //@@author
 
     //@@author LeonidAgarth
     /**

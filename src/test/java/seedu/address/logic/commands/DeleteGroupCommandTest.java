@@ -24,7 +24,7 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
 
 /**
- * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
+ * Contains tests  and unit tests for
  * {@code DeleteGroupCommand}.
  */
 public class DeleteGroupCommandTest {

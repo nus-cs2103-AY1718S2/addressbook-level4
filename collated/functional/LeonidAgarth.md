@@ -1860,6 +1860,30 @@ public class Timetable extends UiPart<Region> {
     }
 
     /**
+     * Ensure that every {@code mod} displayed on the timetable has a unique color
+     *
+     * @param used usedColor HashMap to determine which color has been used
+     * @param node the node on the timetable to display the mod on
+     * @param modStyle the style of the mod
+     * @return
+     */
+    private int setUnusedColor(HashMap<Integer, String> used, TimetableSlot node, WeeklyEvent mod, String modStyle) {
+        int color = node.setModule(modStyle, mod);
+        if (!used.containsKey(color)) {
+            used.put(color, mod.getName());
+            return color;
+        }
+        String module = used.get(color);
+        if (mod.getName().equals(module)) {
+            return color;
+        }
+        while (used.containsKey(color)) {
+            color = node.randomizeColor(modStyle);
+        }
+        return color;
+    }
+
+    /**
      * Return the Timetable to view in application
      */
     public VBox getTimetableView() {

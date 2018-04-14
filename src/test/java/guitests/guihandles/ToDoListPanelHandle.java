@@ -1,3 +1,4 @@
+//@@author nhatquang3112
 package guitests.guihandles;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import seedu.address.ui.ToDoCard;
  * Provides a handle for {@code ToDoListPanel} containing the list of {@code ToDoCard}.
  */
 public class ToDoListPanelHandle extends NodeHandle<ListView<ToDoCard>> {
-    public static final String TODO_LIST_VIEW_ID = "#todoListView";
+    public static final String TODO_LIST_VIEW_ID = "#toDoListView";
 
     private Optional<ToDoCard> lastRememberedSelectedToDoCard;
 
@@ -59,7 +60,7 @@ public class ToDoListPanelHandle extends NodeHandle<ListView<ToDoCard>> {
      */
     public void navigateToCard(ToDo toDo) {
         List<ToDoCard> cards = getRootNode().getItems();
-        Optional<ToDoCard> matchingCard = cards.stream().filter(card -> card.todo.equals(toDo)).findFirst();
+        Optional<ToDoCard> matchingCard = cards.stream().filter(card -> card.toDo.equals(toDo)).findFirst();
 
         if (!matchingCard.isPresent()) {
             throw new IllegalArgumentException("ToDo does not exist.");
@@ -76,7 +77,7 @@ public class ToDoListPanelHandle extends NodeHandle<ListView<ToDoCard>> {
      * Returns the to-do card handle of a to-do associated with the {@code index} in the list.
      */
     public ToDoCardHandle getToDoCardHandle(int index) {
-        return getToDoCardHandle(getRootNode().getItems().get(index).todo);
+        return getToDoCardHandle(getRootNode().getItems().get(index).toDo);
     }
 
     /**
@@ -84,7 +85,7 @@ public class ToDoListPanelHandle extends NodeHandle<ListView<ToDoCard>> {
      */
     public ToDoCardHandle getToDoCardHandle(ToDo toDo) {
         Optional<ToDoCardHandle> handle = getRootNode().getItems().stream()
-                .filter(card -> card.todo.equals(toDo))
+                .filter(card -> card.toDo.equals(toDo))
                 .map(card -> new ToDoCardHandle(card.getRoot()))
                 .findFirst();
         return handle.orElseThrow(() -> new IllegalArgumentException("ToDo does not exist."));

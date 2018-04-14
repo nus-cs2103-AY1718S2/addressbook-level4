@@ -24,14 +24,14 @@ public class CheckToDoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "check";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Checks the ToDo identified as done"
-            + "by the index number used in the last ToDo listing. "
-            + "Status of the ToDo will be overwritten as done.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Checks the to-do identified as done "
+            + "by the index number used in the last to-do listing. "
+            + "Status of the to-do will be overwritten as done.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_CHECK_TODO_SUCCESS = "Checked ToDo: %1$s";
-    public static final String MESSAGE_NOT_CHECKED = "Checked ToDo failed.";
+    public static final String MESSAGE_CHECK_TODO_SUCCESS = "Checked to-do: %1$s";
+    public static final String MESSAGE_NOT_CHECKED = "Checked to-do failed.";
 
     private final Index index;
 

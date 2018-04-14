@@ -13,12 +13,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.CalendarUtil;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.database.module.Module;
 import seedu.address.database.module.Schedule;
@@ -26,13 +28,21 @@ import seedu.address.model.event.WeeklyEvent;
 import seedu.address.model.person.TimeTableLink;
 
 //@@author Isaaaca
+
 /**
  * The main DatabaseManager of the app.
  */
 public class DatabaseManager {
+    public static final String INCOMPATIBLE_LINK_MESSAGE = "One or more Timetable link(s) points to a different"
+            + " semester as the one in Fastis.";
+    private static final String ACAD_YEAR = Integer.toString(CalendarUtil.getCurrAcadYear()) + "-"
+            + Integer.toString(CalendarUtil.getCurrAcadYear() + 1);
+    private static final String SEMESTER = Integer.toString(CalendarUtil.getCurrentSemester());
 
-    private static final String DEFAULT_JSON_DATABASE_FILEPATH = "modules.json";
-    private static final String DEFAULT_JSON_DATABASE_URL = "https://api.nusmods.com/2017-2018/2/modules.json";
+    private static final String DEFAULT_JSON_DATABASE_FILEPATH = "sem" + CalendarUtil.getCurrentSemester()
+            + "modules.json";
+    private static final String DEFAULT_JSON_DATABASE_URL = "https://api.nusmods.com/"
+            + ACAD_YEAR + "/" + SEMESTER + "/modules.json";
     private static final Logger logger = LogsCenter.getLogger(DatabaseManager.class);
 
     private static final Map<String, String> lessonAbbrev = Collections.unmodifiableMap(
@@ -117,17 +127,22 @@ public class DatabaseManager {
      *
      * @param link TimeTableLinkto be parsed
      */
-    public ArrayList<WeeklyEvent> parseEvents(TimeTableLink link) { //todo return list of events when available
+    public static ArrayList<WeeklyEvent> parseEvents(TimeTableLink link) {
+        ArrayList<WeeklyEvent> eventList = new ArrayList<>();
+
+        if (!isCurrentSem(link)) {
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(INCOMPATIBLE_LINK_MESSAGE, false));
+            logger.warning(INCOMPATIBLE_LINK_MESSAGE);
+            return eventList;
+        }
+
         String query = getQuery(link);
         StringBuilder result = new StringBuilder();
-
-        ArrayList<WeeklyEvent> eventList = new ArrayList<>();
 
         StringTokenizer queryTokenizer = new StringTokenizer(query, "&");
         while (queryTokenizer.hasMoreTokens()) {
             StringTokenizer modTokenizer = new StringTokenizer(queryTokenizer.nextToken(), "=");
             Module module = moduleDatabase.get(modTokenizer.nextToken());
-            result.append(module.getModuleCode() + "\n"); //TODO: remove after integrating with Events class
 
             String[] lessons = modTokenizer.nextToken().split(",");
             List<Schedule> scheduleList = module.getScheduleList();
@@ -140,29 +155,22 @@ public class DatabaseManager {
                     if (queryAbbrev.equals(lessonAbbrev.get(schedule.getLessonType()))
                             && queryLessonNum.equals(schedule.getClassNo())) {
                         eventList.add(new WeeklyEvent(module, schedule));
-                        result.append(schedule.getLessonType() + " " + schedule.getClassNo() + "\n"); //TODO: remove
-                        result.append("\t" + schedule.getDayText() + "\n");
-                        result.append("\t" + schedule.getStartTime() + " to " + schedule.getEndTime() + "\n");
-                        result.append("\t" + schedule.getVenue() + "\n");
 
                     }
                 }
             }
         }
-        logger.info(result.toString());
         return eventList;
     }
 
     /**
-     * Connects to the timeTableLink given and returns a list of modules
+     * Takes a shortened link from NUSmods and returns its query
      *
      * @param timeTableLink a TimeTableLink representing an URL to a NUSmods schedule
      */
     public static String getQuery(TimeTableLink timeTableLink) {
         try {
-            URL shortUrl = new URL(timeTableLink.toString());
-            URLConnection connection = shortUrl.openConnection();
-            URL longUrl = new URL(connection.getHeaderField("Location"));
+            URL longUrl = getLongUrl(new URL(timeTableLink.toString()));
             return longUrl.getQuery();
 
         } catch (MalformedURLException e) {
@@ -174,23 +182,39 @@ public class DatabaseManager {
     }
 
     /**
-     * @param filePath
-     * @return module from jsonfile
+     * Takes a shortened link from NUSmods and checks if it corresponds to the semester the app is working with
+     *
+     * @param timeTableLink a TimeTableLink representing an URL to a NUSmods schedule
      */
-    public Optional<Module> parseModule(String filePath) {
+    private static boolean isCurrentSem(TimeTableLink timeTableLink) {
         try {
-            return JsonUtil.readJsonFile(filePath, Module.class);
-        } catch (DataConversionException e) {
+            URL longUrl = getLongUrl(new URL(timeTableLink.toString()));
+            String currSem = "sem-" + Integer.toString(CalendarUtil.getCurrentSemester());
+            return longUrl.getPath().contains(currSem);
+        } catch (MalformedURLException e) {
+            logger.info("NUSmods URL Invalid.");
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return false;
     }
+
+    /**
+     * Takes a shortened URL and returns its longer form
+     *
+     * @param shortUrl a TimeTableLink representing an URL to a NUSmods schedule
+     */
+    private static URL getLongUrl(URL shortUrl) throws IOException {
+        URLConnection connection = shortUrl.openConnection();
+        return new URL(connection.getHeaderField("Location"));
+    }
+
 
     /**
      * @param filePath
      * @return hashMap of all modules from jsonfile
      */
-    public HashMap<String, Module> parseDatabase(String filePath) {
+    private HashMap<String, Module> parseDatabase(String filePath) {
         List<Module> moduleList;
         try {
             moduleList = JsonUtil.readJsonArrayFromFile(filePath, Module.class);

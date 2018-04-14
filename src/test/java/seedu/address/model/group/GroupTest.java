@@ -25,6 +25,11 @@ public class GroupTest {
     private Group groupB = new GroupBuilder().withInformation("Group B").build();
 
     @Test
+    public void compare_equalGroups() throws Exception {
+        assertEquals(groupA, groupA2);
+    }
+
+    @Test
     public void hashCodeAndString_test() {
         assertEquals(groupA.hashCode(), groupA.hashCode());
         assertEquals(groupA.hashCode(), groupA2.hashCode());
@@ -87,5 +92,10 @@ public class GroupTest {
         groupA.addPerson(CARL);
         thrown.expect(PersonNotFoundException.class);
         groupA.removePerson(BENSON);
+    }
+
+    @Test
+    public void compare_notEqualGroups() throws Exception {
+        assertNotEquals(groupA, groupB);
     }
 }

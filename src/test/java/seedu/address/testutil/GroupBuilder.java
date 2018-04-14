@@ -12,7 +12,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  */
 public class GroupBuilder {
 
-    public static final String DEFAULT_INFORMATION = "Something to do";
+    public static final String DEFAULT_INFORMATION = "Group";
 
     private Information information;
     private UniquePersonList personList;

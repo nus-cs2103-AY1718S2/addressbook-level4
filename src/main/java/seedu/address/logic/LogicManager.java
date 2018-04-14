@@ -53,6 +53,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author nhatquang3112
     @Override
     public ObservableList<ToDo> getFilteredToDoList() {
         return model.getFilteredToDoList();
@@ -62,6 +63,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public double getToDoListCompleteRatio() {
         return model.getAddressBook().getToDoListCompleteRatio();
     }
+    //@@author
 
     @Override
     public ObservableList<Group> getFilteredGroupList() {

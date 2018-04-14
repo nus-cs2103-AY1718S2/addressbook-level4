@@ -2,10 +2,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -18,7 +16,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -42,9 +39,13 @@ import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.exceptions.DuplicateToDoException;
 import seedu.address.model.todo.exceptions.ToDoNotFoundException;
 import seedu.address.testutil.GroupBuilder;
-import seedu.address.testutil.TypicalPersons;
 
-public class AddMemberToGroupCommandTest {
+
+/**
+ * Contains tests  and unit tests for
+ * {@code DeleteMembersFromGroupCommand}.
+ */
+public class DeleteMemberFromGroupCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -57,80 +58,61 @@ public class AddMemberToGroupCommandTest {
     }
 
     @Test
-    public void constructor_nullGroup_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        new AddMemberToGroupCommand(null, null);
-    }
+    public void execute_deletePerson_success() throws Exception {
+        Group groupToDelete = model.getFilteredGroupList().get(2);
+        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Index index = Index.fromZeroBased(0);
 
-    @Test
-    public void execute_groupAcceptedByModel_addSuccessful() throws Exception {
-        AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded modelStub = new
-                AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded();
-        Person person = modelStub.getFilteredPersonList().get(0);
-        Group validGroup = getTypicalAddressBook().getGroupList().get(0);
+        String expectedMessage = String.format(DeleteMemberFromGroupCommand.MESSAGE_DELETE_PERSON_FROM_GROUP_SUCCESS,
+                personToDelete.getName().toString(), groupToDelete);
+        DeleteMemberFromGroupCommand deleteMemberFromGroupCommand = prepareCommand(index, groupToDelete);
+        ModelManager expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel.getFilteredGroupList().get(2).removePerson(personToDelete);
 
-        CommandResult commandResult = getAddMemberToGroupCommandForGroup(INDEX_FIRST_PERSON, validGroup,
-                modelStub).execute();
-
-        assertEquals(String.format(AddMemberToGroupCommand.MESSAGE_ADD_PERSON_TO_GROUP_SUCCESS,
-                person.getName().toString(), validGroup.getInformation().toString()),
-                commandResult.feedbackToUser);
+        assertCommandSuccess(deleteMemberFromGroupCommand, model, expectedMessage, model);
     }
 
     @Test
     public void execute_noSuchGroup_throwsCommandException() throws Exception {
-        AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded modelStub = new
-                AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded();
+        DeleteMemberFromGroupCommandTest.ModelStubAcceptingGroupEditted modelStub = new
+                DeleteMemberFromGroupCommandTest.ModelStubAcceptingGroupEditted();
         Group invalidGroup = new GroupBuilder().withInformation("INVALID").build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddMemberToGroupCommand.MESSAGE_NO_SUCH_GROUP);
+        thrown.expectMessage(DeleteMemberFromGroupCommand.MESSAGE_NO_SUCH_GROUP);
 
-        getAddMemberToGroupCommandForGroup(INDEX_FIRST_PERSON, invalidGroup, modelStub).execute();
+        getDeleteMemberFromGroupCommandForGroup(INDEX_FIRST_PERSON, invalidGroup, modelStub).execute();
     }
 
     @Test
     public void execute_invalidIndex_throwsCommandException() throws Exception {
-        AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded modelStub = new
-                AddMemberToGroupCommandTest.ModelStubAcceptingGroupAdded();
+        DeleteMemberFromGroupCommandTest.ModelStubAcceptingGroupEditted modelStub = new
+                DeleteMemberFromGroupCommandTest.ModelStubAcceptingGroupEditted();
         Group validGroup = new GroupBuilder().withInformation("Group A").build();
-        Index index = Index.fromZeroBased(model.getFilteredPersonList().size() + 1);
+
         thrown.expect(CommandException.class);
-        thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        thrown.expectMessage(DeleteMemberFromGroupCommand.MESSAGE_PERSON_NOT_FOUND);
 
-        getAddMemberToGroupCommandForGroup(index, validGroup, modelStub).execute();
+        getDeleteMemberFromGroupCommandForGroup(INDEX_FIRST_PERSON, validGroup, modelStub).execute();
 
-    }
-
-    @Test
-    public void equals() {
-        Group groupF = new GroupBuilder().withPerson("Group F", TypicalPersons.ALICE).build();
-        Group groupG = new GroupBuilder().withPerson("Group G", TypicalPersons.BENSON).build();
-        AddMemberToGroupCommand addMemberToGroupFCommand = new AddMemberToGroupCommand(INDEX_FIRST_PERSON, groupF);
-        AddMemberToGroupCommand addMemberToGroupGCommand = new AddMemberToGroupCommand(INDEX_FIRST_PERSON, groupG);
-
-        // same object -> returns true
-        assertTrue(addMemberToGroupFCommand.equals(addMemberToGroupFCommand));
-
-        // same values -> returns true
-        AddMemberToGroupCommand addMemberToGroupCommand = new  AddMemberToGroupCommand(INDEX_FIRST_PERSON, groupF);
-        assertTrue(addMemberToGroupFCommand.equals(addMemberToGroupCommand));
-
-        // different types -> returns false
-        assertFalse(addMemberToGroupFCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(addMemberToGroupFCommand.equals(null));
-
-        // different groups -> returns false
-        assertFalse(addMemberToGroupFCommand.equals(addMemberToGroupGCommand));
     }
 
     /**
-     * Generates a new AddMemberToGroupCommand with the details of the given to-do.
+     * Returns a {@code DeleteMemberFromGroupCommand} with the parameter {@code index}.
      */
-    private AddMemberToGroupCommand getAddMemberToGroupCommandForGroup(Index index, Group group, Model model) {
-        AddMemberToGroupCommand command = new AddMemberToGroupCommand(index, group);
+    private DeleteMemberFromGroupCommand prepareCommand(Index index, Group groupToDelete) {
+        DeleteMemberFromGroupCommand deleteMemberFromGroupCommand = new DeleteMemberFromGroupCommand(index,
+                groupToDelete);
+        deleteMemberFromGroupCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteMemberFromGroupCommand;
+    }
+
+    /**
+     * Generates a new DeleteMemberFromGroupCommand with the details of the given to-do.
+     */
+    private DeleteMemberFromGroupCommand getDeleteMemberFromGroupCommandForGroup(Index index, Group group,
+                                                                                 Model model) {
+        DeleteMemberFromGroupCommand command = new DeleteMemberFromGroupCommand(index, group);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -280,7 +262,7 @@ public class AddMemberToGroupCommandTest {
     /**
      * A Model stub that always accept the group being added.
      */
-    private class ModelStubAcceptingGroupAdded extends AddMemberToGroupCommandTest.ModelStub {
+    private class ModelStubAcceptingGroupEditted extends DeleteMemberFromGroupCommandTest.ModelStub {
         final ArrayList<Group> groupsAdded = new ArrayList<>();
 
         @Override
@@ -294,5 +276,4 @@ public class AddMemberToGroupCommandTest {
             return new AddressBook();
         }
     }
-
 }

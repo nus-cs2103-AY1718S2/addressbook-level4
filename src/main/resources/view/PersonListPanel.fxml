@@ -8,6 +8,7 @@
    <Label text="PERSON LIST">
       <font>
          <Font name="System Bold" size="16.0" />
-      </font></Label>
+      </font>
+   </Label>
   <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
 </VBox>

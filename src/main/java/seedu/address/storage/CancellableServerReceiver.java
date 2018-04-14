@@ -28,56 +28,16 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
     private static final String LOCALHOST = "localhost";
     private static final String CALLBACK_PATH = "/Callback";
 
-    /**
-     * Server or {@code null} before {@link #getRedirectUri()}.
-     */
+
     private Server server;
-
-    /**
-     * Verification code or {@code null} for none.
-     */
     private String code;
-
-    /**
-     * Error code or {@code null} for none.
-     */
     private String error;
-
-    /**
-     * Lock on the code and error.
-     */
     private final Lock lock = new ReentrantLock();
-
-    /**
-     * Condition for receiving an authorization response.
-     */
     private final Condition gotAuthorizationResponse = lock.newCondition();
-
-    /**
-     * Port to use or {@code -1} to select an unused port in {@link #getRedirectUri()}.
-     */
     private int port;
-
-    /**
-     * Host name to use.
-     */
     private final String host;
-
-    /**
-     * Callback path of redirect_uri
-     */
     private final String callbackPath;
-
-    /**
-     * URL to an HTML page to be shown (via redirect) after successful login. If null, a canned
-     * default landing page will be shown (via direct response).
-     */
     private String successLandingPageUrl;
-
-    /**
-     * URL to an HTML page to be shown (via redirect) after failed login. If null, a canned
-     * default landing page will be shown (via direct response).
-     */
     private String failureLandingPageUrl;
 
     /**
@@ -180,16 +140,10 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
         }
     }
 
-    /**
-     * Returns the host name to use.
-     */
     public String getHost() {
         return host;
     }
 
-    /**
-     * Returns the port to use or {@code -1} to select an unused port in {@link #getRedirectUri()}.
-     */
     public int getPort() {
         return port;
     }
@@ -208,20 +162,10 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
      * Builder class for CancellableServerReceiver. Implementation is not thread-safe.
      */
     public static final class Builder {
-
-        /**
-         * Host name to use.
-         */
         private String host = LOCALHOST;
-
-        /**
-         * Port to use or {@code -1} to select an unused port.
-         */
         private int port = -1;
-
         private String successLandingPageUrl;
         private String failureLandingPageUrl;
-
         private String callbackPath = CALLBACK_PATH;
 
         /**
@@ -236,39 +180,24 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
             return host;
         }
 
-        /**
-         * Sets the host name to use.
-         */
         public Builder setHost(String host) {
             this.host = host;
             return this;
         }
 
-        /**
-         * Returns the port to use or {@code -1} to select an unused port.
-         */
         public int getPort() {
             return port;
         }
 
-        /**
-         * Sets the port to use or {@code -1} to select an unused port.
-         */
         public Builder setPort(int port) {
             this.port = port;
             return this;
         }
 
-        /**
-         * Returns the callback path of redirect_uri
-         */
         public String getCallbackPath() {
             return callbackPath;
         }
 
-        /**
-         * Sets the callback path of redirect_uri
-         */
         public Builder setCallbackPath(String callbackPath) {
             this.callbackPath = callbackPath;
             return this;

@@ -73,6 +73,7 @@ public class CommandBox extends UiPart<Region> {
                 keyEvent.consume();
                 clearCurrentFieldOrPrefix();
             }
+            break;
         default:
             // let JavaFx handle the keypress
         }
@@ -184,7 +185,7 @@ public class CommandBox extends UiPart<Region> {
 
         // if last prefix is too close to caret, find the second last prefix position
         if (currentCaretPosition - previousPrefixPosition < 3) {
-            previousPrefixPosition = commandTextField.getText().lastIndexOf(":",previousPrefixPosition - 1);
+            previousPrefixPosition = commandTextField.getText().lastIndexOf(":", previousPrefixPosition - 1);
         }
 
         // set new caret position to be in front of chosen prefix. If prefix not found, then set at index 0.

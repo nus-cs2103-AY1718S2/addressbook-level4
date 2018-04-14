@@ -33,25 +33,7 @@ The symbols which are used in the User Guide as well as their meaning are listed
 💡: Tips +
 ❗: Warning +
 ⚠: Specific user only command +
-CAUTION: Command is not undoable +
-
-[NOTE]
-Having any Java 8 version is not enough. +
-
-[TIP]
-Tips +
-
-[IMPORTANT]
-Warning +
-
-[WARNING]
-Specific user only command +
-
-[CAUTION]
-Command is not undoable +
-
-WARNING: Wolpertingers are known to nest in server racks.
-Enter at your own risk.
+◀️: Command is undoable +
 // end::introduction[]
 
 // tag::quickstart[]
@@ -215,7 +197,11 @@ Reapplies the `clear` command. +
 Clears all entries from the IMDB. +
 Format: `clear` or `c`
 
-[WARNING:] This command will clear *all the patient entries* in IMDB. +
+[IMPORTANT]
+This command is undoable.
+
+[WARNING]
+This command will clear *all the patient entries* in IMDB. +
 Please proceed with caution.
 
 [TIP]
@@ -262,6 +248,9 @@ Adds a patient to the IMDB +
 Format: `add n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...` or
         `a n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...`
 
+[IMPORTANT]
+This command is undoable.
+
 [TIP]
 A patient can have any number of conditions (including 0).
 
@@ -277,6 +266,9 @@ Adds a new patient named Betsy.
 
 Deletes the specified patient from the IMDB. +
 Format: `delete INDEX` or `d`
+
+[IMPORTANT]
+This command is undoable.
 
 ****
 * The index refers to the index number shown in the most recent listing.
@@ -298,6 +290,9 @@ Deletes the 1st patient in the results of the `find` command.
 Edits an existing patient in the IMDB. +
 Format: `edit INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE][c/CONDITION]...` or
         `e INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE] [c/CONDITION]...`
+
+[IMPORTANT]
+This command is undoable.
 
 ****
 * The index refers to the index number shown in the most recent listing.
@@ -327,6 +322,9 @@ Format: `remark INDEX r/[REMARK]` or `rk INDEX r/[REMARK]`
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
+[IMPORTANT]
+This command is undoable.
+
 Examples:
 
 * `list` +
@@ -343,6 +341,9 @@ Removes the remark for the first patient.
 Adds a medical condition to an existing patient. +
 Format: `addc INDEX c/[CONDITION]` or `ac INDEX c/[CONDITION]`
 
+[IMPORTANT]
+This command is undoable.
+
 Examples:
 
 * `addc 1 c/aspirin` +
@@ -357,6 +358,9 @@ Adds `asthma` to the list of conditions that the patient at index `2` has.
 
 Removes a medical condition to an existing patient. +
 Format: `delc INDEX c/[CONDITION]` or `dc INDEX c/[CONDITION]`
+
+[IMPORTANT]
+This command is undoable.
 
 Examples:
 
@@ -441,6 +445,12 @@ Deletes the medical record specified by the record index for a patient specified
 *This command is only accessible to doctors.* +
 Format: `remover INDEX in/[RECORD INDEX]` or `rr INDEX in/[RECORD INDEX]`
 
+[IMPORTANT]
+This command is undoable.
+
+[CAUTION]
+This command is only for doctors.
+
 ****
 * Deleting a medical record will shift all other medical records up the medical record list.
 * If the deletion of the medical record would leave the list of records empty, an empty medical record will be generated.
@@ -461,6 +471,9 @@ Deletes the first medical record for the first person in the result of the list 
 Formats and prints a patient's medical records into a pdf file. This pdf file is located in the same directory as the IMDB application. +
 *This command is only accessible to doctors.* +
 Format: `print INDEX` or `p INDEX`
+
+[CAUTION]
+This command is only for doctors.
 // end::print[]
 
 ==== Attaching and viewing the X-ray scans for a patient `[coming in v2.0]`
@@ -478,6 +491,12 @@ Adds a patient into the end of the visiting queue (registration). +
 *This command is only accessible to medical staff and is not undoable.* +
 
 Format: `addq INDEX` or `aq INDEX`
+
+[IMPORTANT]
+This command is undoable.
+
+[CAUTION]
+This command is only for medical staff.
 
 Examples:
 
@@ -501,6 +520,12 @@ Removes the first patient from the visiting queue (check-out). +
 
 Format: `removeq` or `rq`
 
+[IMPORTANT]
+This command is undoable.
+
+[CAUTION]
+This command is only for medical staff.
+
 Examples:
 
 * `removeq` +
@@ -516,6 +541,12 @@ Removes a patient from the visiting queue specified by the index number used in 
 *This command is only accessible to medical staff and is not undoable.* +
 
 Format: `removeq INDEX` or `rq INDEX`
+
+[IMPORTANT]
+This command is undoable.
+
+[CAUTION]
+This command is only for medical staff.
 
 ****
 * The index refers to the index number shown in the most recent listing.
@@ -542,6 +573,9 @@ Adds a medical appointment to a patient specified by their name, with the appoin
 *This command is only accessible to medical staff and is not undoable.* +
 
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
+
+[CAUTION]
+This command is only for medical staff.
 
 ****
 * The date of the appointment must be in the following format: DD/MM/YYYY.
@@ -579,6 +613,9 @@ Deletes the medical appointment at the given index of a patient specified by the
 *This command is only accessible to medical staff and is not undoable.* +
 
 Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
+
+[CAUTION]
+This command is only for medical staff.
 
 Examples:
 

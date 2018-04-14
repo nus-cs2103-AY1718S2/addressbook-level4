@@ -30,7 +30,7 @@ The existing commands were also updated to support the adding, deleting and edit
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.1` - `v1.2` and `v1.5`(3 releases) on GitHub
+*** Managed releases `v1.2` and `v1.5rc`(2 releases) on GitHub
 *** Manage and set up the organization repo, assigned issues and mange Pull Requests.
 *** Set up Coverall for the organization repo.
 ** Documentation:

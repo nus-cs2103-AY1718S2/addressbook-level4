@@ -25,8 +25,6 @@ public class PersonDetailsCardHandle extends NodeHandle<Node> {
     private static final String TAGS_FIELD_ID = "#tags";
     private static final String TIMETABLE_FIELD_ID = "#timeTable";
 
-    private ArrayList<TableColumn<ArrayList<String>, String>> columns;
-
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;

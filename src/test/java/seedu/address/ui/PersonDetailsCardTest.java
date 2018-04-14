@@ -18,13 +18,13 @@ public class PersonDetailsCardTest extends GuiUnitTest {
         Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
         PersonDetailsCard personDetailsCard = new PersonDetailsCard(personWithNoTags, 1);
         uiPartRule.setUiPart(personDetailsCard);
-        assertCardDisplay(personDetailsCard, personWithNoTags, 1);
+        assertDetailsCardDisplay(personDetailsCard, personWithNoTags);
 
         // with tags
         Person personWithTags = new PersonBuilder().build();
         personDetailsCard = new PersonDetailsCard(personWithTags, 0);
         uiPartRule.setUiPart(personDetailsCard);
-        assertCardDisplay(personDetailsCard, personWithTags, 0);
+        assertDetailsCardDisplay(personDetailsCard, personWithTags);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class PersonDetailsCardTest extends GuiUnitTest {
      * Asserts that {@code personDetailsCard} displays the details of {@code expectedPerson} correctly and matches
      * {@code expectedId}.
      */
-    private void assertCardDisplay(PersonDetailsCard personDetailsCard, Person expectedPerson, int expectedId) {
+    private void assertDetailsCardDisplay(PersonDetailsCard personDetailsCard, Person expectedPerson) {
         guiRobot.pauseForHuman();
 
         PersonDetailsCardHandle personDetailsCardHandle = new PersonDetailsCardHandle(personDetailsCard.getRoot());

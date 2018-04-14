@@ -35,6 +35,7 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    //@@author Isaaaca
     @Test
     public void deleteTag_nonExistent_modelUnchanged() throws Exception {
         AddressBook addressBook = new AddressBookBuilder().withPerson(BOB).withPerson(AMY).build();
@@ -55,13 +56,15 @@ public class ModelManagerTest {
 
         Person expectedAmy = new PersonBuilder(AMY).withTags().build();
         Person expectedBob = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
-        AddressBook expecetedAddressBook = new AddressBookBuilder()
+        AddressBook expectedAddressBook = new AddressBookBuilder()
                 .withPerson(expectedBob).withPerson(expectedAmy).build();
 
-        ModelManager expectedModelManager = new ModelManager(expecetedAddressBook, userPrefs);
+        ModelManager expectedModelManager = new ModelManager(expectedAddressBook, userPrefs);
         assertEquals(expectedModelManager, modelManager);
 
     }
+    //@@author
+
 
     @Test
     public void equals() {

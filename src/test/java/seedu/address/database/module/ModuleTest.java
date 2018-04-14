@@ -1,4 +1,4 @@
-package seedu.address.model.module;
+package seedu.address.database.module;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
-
+//@@author Isaaaca
 public class ModuleTest {
 
     private static final String DEFAULT_MODULE_CODE = "CS2013T";

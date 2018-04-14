@@ -52,17 +52,18 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friends";
     public static final String VALID_TAG_COLOR_RED = "red";
+    public static final String VALID_TAG_COLOR_BROWN = "brown";
     public static final String VALID_TAG_UNUSED = "UNUSED"; //for testing only, do not use to build person
 
     public static final String VALID_EVENT_NAME_F1 = "F1 Race";
     public static final String VALID_EVENT_NAME_NDP = "National Day Parade";
-    public static final String VALID_EVENT_VENUE_F1 = "Marina Bay";
+    public static final String VALID_EVENT_VENUE_F1 = "Marina Bay Street Circuit";
     public static final String VALID_EVENT_VENUE_NDP = "Promenade";
     public static final String VALID_EVENT_DATE_F1 = "19/07/2018";
     public static final String VALID_EVENT_DATE_NDP = "09/08/2018";
     public static final String VALID_EVENT_START_TIME_F1 = "1000";
     public static final String VALID_EVENT_START_TIME_NDP = "1700";
-    public static final String VALID_EVENT_END_TIME_F1 = "1300";
+    public static final String VALID_EVENT_END_TIME_F1 = "2100";
     public static final String VALID_EVENT_END_TIME_NDP = "1900";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
@@ -128,13 +129,15 @@ public class CommandTestUtil {
     public static final String INVALID_CONTENT_DESC = " " + PREFIX_CONTENT + INVALID_CONTENT;
 
     public static final String INFORMATION_A = "Group A";
+    public static final String INFORMATION_E = "Group E";
     public static final String VALID_INFORMATION = "GROUP A";
     public static final String INVALID_INFORMATION = "Group! A"; //'!' not supported in information
 
     public static final String VALID_DESC_GROUP = " " + PREFIX_GROUP + VALID_INFORMATION + " "
             + PREFIX_NAME + VALID_NAME_BOB;
-    public static final String INVALID_DESC_NO_GROUP = " " + PREFIX_NAME + VALID_NAME_BOB;
-    public static final String INVALID_DESC_NO_NAME = " " + PREFIX_GROUP + "Group A";
+    public static final String INVALID_ADDGROUPMEMBER_NO_GROUP = " 1 " + "";
+    public static final String INVALID_ADDGROUPMEMBER_INDEX = " -1 " + PREFIX_GROUP + "Group A";
+    public static final String INVALID_ADDGROUPMEMBER_INFORMATION = " 1 " + PREFIX_GROUP + "!@#";
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)

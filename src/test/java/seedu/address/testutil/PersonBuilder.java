@@ -97,6 +97,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author Isaaaca
     /**
      * Sets the {@code TimeTableLink} of the {@code Person} that we are building.
      */
@@ -104,6 +105,7 @@ public class PersonBuilder {
         this.link = new TimeTableLink(link);
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Detail} of the {@code Person} that we are building.

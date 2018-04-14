@@ -1,6 +1,5 @@
-package seedu.address.testutil;
-
 //@@author jas5469
+package seedu.address.testutil;
 
 import seedu.address.logic.commands.AddGroupCommand;
 import seedu.address.model.group.Group;

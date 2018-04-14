@@ -1,17 +1,18 @@
-package seedu.address.testutil;
-
 //@@author jas5469
+package seedu.address.testutil;
 
 import seedu.address.model.group.Group;
 import seedu.address.model.group.Information;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * A utility class to help with building Group objects.
  */
 public class GroupBuilder {
 
-    public static final String DEFAULT_INFORMATION = "Something to do";
+    public static final String DEFAULT_INFORMATION = "Group";
 
     private Information information;
     private UniquePersonList personList;
@@ -34,6 +35,23 @@ public class GroupBuilder {
      */
     public GroupBuilder withInformation(String information) {
         this.information = new Information(information);
+        personList = new UniquePersonList();
+        return this;
+    }
+
+    /**
+     * Sets the {@code Information} of the {@code Group} that we are building.
+     */
+    public GroupBuilder withPerson(String information, Person... personsToAdd) {
+        this.information = new Information(information);
+        personList = new UniquePersonList();
+        try {
+            for (Person person : personsToAdd) {
+                personList.add(person);
+            }
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("person is expected to be unique.");
+        }
         return this;
     }
 

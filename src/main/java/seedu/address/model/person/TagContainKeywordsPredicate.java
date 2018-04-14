@@ -1,6 +1,5 @@
-package seedu.address.model.person;
-
 //@@author jas5469
+package seedu.address.model.person;
 
 import java.util.List;
 import java.util.Set;

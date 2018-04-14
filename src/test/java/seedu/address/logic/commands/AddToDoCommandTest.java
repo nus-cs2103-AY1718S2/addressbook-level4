@@ -22,10 +22,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -159,6 +160,12 @@ public class AddToDoCommandTest {
         }
 
         @Override
+        public void deleteGroup(Group target) throws GroupNotFoundException {
+            fail("This method should not be called.");
+        }
+
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -217,6 +224,27 @@ public class AddToDoCommandTest {
 
         @Override
         public void updateFilteredGroupList(Predicate<Group> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void indicateCalendarChanged() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void indicateTimetableChanged() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean calendarIsViewed() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void switchView() {
             fail("This method should not be called.");
         }
     }

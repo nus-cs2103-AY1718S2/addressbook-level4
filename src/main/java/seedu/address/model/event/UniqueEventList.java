@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
@@ -9,10 +10,12 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Event#equals(Object)
@@ -47,7 +50,7 @@ public class UniqueEventList implements Iterable<Event> {
      * Replaces the event {@code target} in the list with {@code editedEvent}.
      *
      * @throws DuplicateEventException if the replacement is equivalent to another existing event in the list.
-     * @throws EventNotFoundException if {@code target} could not be found in the list.
+     * @throws EventNotFoundException  if {@code target} could not be found in the list.
      */
     public void setEvent(Event target, Event editedEvent)
             throws DuplicateEventException, EventNotFoundException {

@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+//@@author Isaaaca
 /**
  * Represents the link to a Person's TimeTable.
  * Guarantees: immutable; is valid as declared in {@link #isValidLink(String)}

@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -22,6 +23,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_END_TIME_
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_NDP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_START_TIME_NDP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_VENUE_NDP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -125,10 +127,15 @@ public class AddEventCommandParserTest {
                         + INVALID_EVENT_START_TIME_DESC + EVENT_END_TIME_DESC_NDP,
                 Event.MESSAGE_TIME_CONSTRAINTS);
 
-        // invalid link
+        // invalid end time
         assertParseFailure(parser, EVENT_NAME_DESC_NDP + EVENT_VENUE_DESC_NDP + EVENT_DATE_DESC_NDP
                         + EVENT_START_TIME_DESC_NDP + INVALID_EVENT_END_TIME_DESC,
                 Event.MESSAGE_TIME_CONSTRAINTS);
+
+        // endTime before Start
+        assertParseFailure(parser, EVENT_NAME_DESC_NDP + EVENT_VENUE_DESC_NDP + EVENT_DATE_DESC_NDP
+                        + " " + PREFIX_END_TIME + "0000" + EVENT_START_TIME_DESC_NDP,
+                AddEventCommand.MESSAGE_END_BEFORE_START);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_EVENT_NAME_DESC + EVENT_VENUE_DESC_NDP + EVENT_DATE_DESC_NDP

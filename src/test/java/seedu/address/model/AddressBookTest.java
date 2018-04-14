@@ -93,7 +93,7 @@ public class AddressBookTest {
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
-
+    //@@author jas5469
     @Test
     public void resetData_withDuplicateGroups_throwsAssertionError() {
         // Repeat GROUP_A twice
@@ -107,7 +107,7 @@ public class AddressBookTest {
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
-
+    //@@author
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
@@ -132,6 +132,7 @@ public class AddressBookTest {
         addressBook.getToDoList().remove(0);
     }
 
+    //@@author Isaaaca
     @Test
     public void removeTag_removeNonexistentTag_addressBookUnchanged() throws Exception {
         amyNBobAddressBook.removeTag(new Tag(VALID_TAG_UNUSED));
@@ -152,6 +153,7 @@ public class AddressBookTest {
 
         assertEquals(expectedAddressBook, amyNBobAddressBook);
     }
+    //@@author
 
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
@@ -195,6 +197,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Event> getEventList() {
             return events;
+        }
+
+        @Override
+        public double getToDoListCompleteRatio() {
+            return 0.0;
         }
     }
 }

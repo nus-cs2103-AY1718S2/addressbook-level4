@@ -44,7 +44,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     public String getTotalPersonsStatus() {
         return totalPersonsStatusNode.getText();
     }
-
+    //@@author
     /**
      * Returns the text of the 'save location' portion of the status bar.
      */
@@ -66,7 +66,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     public boolean isSyncStatusChanged() {
         return !lastRememberedSyncStatus.equals(getSyncStatus());
     }
-
+    //@@author jas5469
     /**
      * Remembers the content of the 'total persons' portion of the status bar.
      */
@@ -81,7 +81,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     public boolean isTotalPersonsStatusChanged() {
         return !lastRememberedTotalPersonsStatus.equals(getTotalPersonsStatus());
     }
-
+    //@@author
     /**
      * Remembers the content of the 'save location' portion of the status bar.
      */

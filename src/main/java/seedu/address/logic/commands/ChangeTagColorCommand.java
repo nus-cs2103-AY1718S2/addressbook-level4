@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -32,7 +33,7 @@ public class ChangeTagColorCommand extends UndoableCommand {
     private Tag editedTag;
 
     /**
-     * @param name of the tag to edit
+     * @param name  of the tag to edit
      * @param color to change the tag into
      */
     public ChangeTagColorCommand(String name, String color) {
@@ -58,7 +59,7 @@ public class ChangeTagColorCommand extends UndoableCommand {
     protected void preprocessUndoableCommand() throws CommandException {
         editedTag = new Tag(tagName, tagColor);
         List<Tag> allTags = model.getAddressBook().getTagList();
-        for (Tag tag: allTags) {
+        for (Tag tag : allTags) {
             if (tag.name.equals(tagName)) {
                 tagToEdit = tag;
                 return;

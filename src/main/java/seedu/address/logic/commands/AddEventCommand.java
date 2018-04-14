@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -8,8 +9,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 
 /**
  * Adds an event to the address book.
@@ -36,7 +37,8 @@ public class AddEventCommand extends UndoableCommand {
             + "      TIME must be in the format of HHmm\n";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book";
+    public static final String MESSAGE_END_BEFORE_START = "The event's ENDTIME must be after STARTTIME";
 
     private final Event toAdd;
 

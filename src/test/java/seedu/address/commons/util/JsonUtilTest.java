@@ -44,6 +44,7 @@ public class JsonUtilTest {
         assertEquals(serializableTestClass.getMapOfIntegerToString(), SerializableTestClass.getHashMapTestValues());
     }
 
+    //@@author Isaaaca
     @Test
     public void deserializeArrayFromJsonFile_noExceptionThrown() throws DataConversionException, IOException {
         FileUtil.writeToFile(SERIALIZATION_ARRAY_FILE, "[" + SerializableTestClass.JSON_STRING_REPRESENTATION
@@ -71,6 +72,7 @@ public class JsonUtilTest {
             assertEquals(expectedObject.getMapOfIntegerToString(), actualObject.getMapOfIntegerToString());
         }
     }
+    //@@author
 
     //TODO: @Test jsonUtil_readJsonStringToObjectInstance_correctObject()
 

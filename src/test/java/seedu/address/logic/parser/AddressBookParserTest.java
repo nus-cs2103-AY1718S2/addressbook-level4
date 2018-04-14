@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.commons.core.Messages.MESSAGE_DID_YOU_MEAN;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -20,9 +21,11 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddGroupCommand;
 import seedu.address.logic.commands.AddToDoCommand;
+import seedu.address.logic.commands.ChangeTagColorCommand;
 import seedu.address.logic.commands.CheckToDoCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.DeleteToDoCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -33,14 +36,16 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListGroupMembersCommand;
+import seedu.address.logic.commands.ListTagMembersCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UnCheckToDoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.Information;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.TagContainKeywordsPredicate;
@@ -136,7 +141,7 @@ public class AddressBookParserTest {
                 DeleteToDoCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TODO.getOneBased());
         assertEquals(new DeleteToDoCommand(INDEX_FIRST_TODO), command);
     }
-
+    //@@author jas5469
     @Test
     public void parseCommand_addGroup() throws Exception {
         Group group = new GroupBuilder().build();
@@ -144,7 +149,6 @@ public class AddressBookParserTest {
                 + " " + group.getInformation());
         assertEquals(new AddGroupCommand(group), command);
     }
-
 
     @Test
     public void parseCommand_addGroupAlias() throws Exception {
@@ -154,6 +158,23 @@ public class AddressBookParserTest {
         assertEquals(new AddGroupCommand(group), command);
     }
 
+    @Test
+    public void parseCommand_deleteGroup() throws Exception {
+        Information information = new Information("Group A");
+        DeleteGroupCommand command = (DeleteGroupCommand) parser.parseCommand(
+                DeleteGroupCommand.COMMAND_WORD + " " + "Group A");
+        assertEquals(new DeleteGroupCommand(information), command);
+    }
+
+    @Test
+    public void parseCommand_deleteGroupAlias() throws Exception {
+        Information information = new Information("Group A");
+        DeleteGroupCommand command = (DeleteGroupCommand) parser.parseCommand(
+                DeleteGroupCommand.COMMAND_ALIAS + " " + "Group A");
+        assertEquals(new DeleteGroupCommand(information), command);
+    }
+
+    //@@author LeonidAgarth
     @Test
     public void parseCommand_addEvent() throws Exception {
         Event event = new EventBuilder().build();
@@ -169,6 +190,37 @@ public class AddressBookParserTest {
         assertEquals(new AddEventCommand(event), command);
     }
 
+    @Test
+    public void parseCommand_changeTagColor() throws Exception {
+        String tagName = "friends";
+        String tagColor = "red";
+        ChangeTagColorCommand command = (ChangeTagColorCommand) parser.parseCommand(ChangeTagColorCommand.COMMAND_WORD
+                + " " + tagName + " " + tagColor);
+        assertEquals(new ChangeTagColorCommand(tagName, tagColor), command);
+    }
+
+    @Test
+    public void parseCommand_changeTagColorAlias() throws Exception {
+        String tagName = "friends";
+        String tagColor = "red";
+        ChangeTagColorCommand command = (ChangeTagColorCommand) parser.parseCommand(ChangeTagColorCommand.COMMAND_ALIAS
+                + " " + tagName + " " + tagColor);
+        assertEquals(new ChangeTagColorCommand(tagName, tagColor), command);
+    }
+
+    @Test
+    public void parseCommand_switch() throws Exception {
+        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_WORD) instanceof SwitchCommand);
+        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_WORD + " view") instanceof SwitchCommand);
+    }
+
+    @Test
+    public void parseCommand_switchAlias() throws Exception {
+        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_ALIAS) instanceof SwitchCommand);
+        assertTrue(parser.parseCommand(SwitchCommand.COMMAND_ALIAS + " view") instanceof SwitchCommand);
+    }
+
+    //@@author
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -250,7 +302,8 @@ public class AddressBookParserTest {
             parser.parseCommand("histories");
             fail("The expected ParseException was not thrown.");
         } catch (ParseException pe) {
-            assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
+            assertEquals(MESSAGE_UNKNOWN_COMMAND + MESSAGE_DID_YOU_MEAN + HistoryCommand.COMMAND_WORD,
+                    pe.getMessage());
         }
     }
 
@@ -271,23 +324,23 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
-
+    //@@author jas5469
     @Test
-    public void parseCommand_listGroupMembers() throws Exception {
+    public void parseCommand_listTagMembers() throws Exception {
         List<String> keywords = Arrays.asList("friends", "CS3230");
-        ListGroupMembersCommand command = (ListGroupMembersCommand) parser.parseCommand(
-                ListGroupMembersCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new ListGroupMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
+        ListTagMembersCommand command = (ListTagMembersCommand) parser.parseCommand(
+                ListTagMembersCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new ListTagMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
     }
 
     @Test
-    public void parseCommand_listGroupMembersAlias() throws Exception {
+    public void parseCommand_listTagGMembersAlias() throws Exception {
         List<String> keywords = Arrays.asList("friends", "CS3230");
-        ListGroupMembersCommand command = (ListGroupMembersCommand) parser.parseCommand(
-                ListGroupMembersCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new ListGroupMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
+        ListTagMembersCommand command = (ListTagMembersCommand) parser.parseCommand(
+                ListTagMembersCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new ListTagMembersCommand(new TagContainKeywordsPredicate(keywords)), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(

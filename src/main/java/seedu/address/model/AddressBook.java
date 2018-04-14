@@ -11,9 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.UniqueEventList;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
@@ -76,10 +76,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
-    }
-
-    public void setToDos(List<ToDo> todos) throws DuplicateToDoException {
-        this.todos.setToDos(todos);
     }
 
     public void setGroups(List<Group> groups) throws DuplicateGroupException {
@@ -156,20 +152,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Replaces the given ToDo {@code target} in the list with {@code editedToDo}.
-     *
-     * @throws DuplicateToDoException if updating the ToDo's details causes the ToDo to be equivalent to
-     *                                  another existing ToDo in the list.
-     * @throws ToDoNotFoundException  if {@code target} could not be found in the list.
-     */
-    public void updateToDo(ToDo target, ToDo editedToDo)
-            throws DuplicateToDoException, ToDoNotFoundException {
-        requireNonNull(editedToDo);
-
-        todos.setToDo(target, editedToDo);
-    }
-
-    /**
      * Replaces the given Group {@code target} in the list with {@code editedGroup}.
      *
      * @throws DuplicateGroupException if updating the Group's details causes the Group to be equivalent to
@@ -220,6 +202,27 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author nhatquang3112
+    //// to-do-level operations
+    /**
+     * Adds a to-do to the address book.
+     *
+     * @throws DuplicateToDoException if an equivalent to-do already exists.
+     */
+    public void addToDo(ToDo todo) throws DuplicateToDoException {
+        todos.add(todo);
+    }
+
+    @Override
+    public ObservableList<ToDo> getToDoList() {
+        return todos.asObservableList();
+    }
+
+    @Override
+    public double getToDoListCompleteRatio() {
+        return todos.getCompleteRatio();
+    }
+
     /**
      * Removes {@code key} from this {@code AddressBook}.
      *
@@ -233,28 +236,49 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //// to-do-level operations
-
     /**
-     * Adds a to-do to the address book.
+     * Replaces the given ToDo {@code target} in the list with {@code editedToDo}.
      *
-     * @throws DuplicateToDoException if an equivalent to-do already exists.
+     * @throws DuplicateToDoException if updating the ToDo's details causes the ToDo to be equivalent to
+     *                                  another existing ToDo in the list.
+     * @throws ToDoNotFoundException  if {@code target} could not be found in the list.
      */
-    public void addToDo(ToDo todo) throws DuplicateToDoException {
-        todos.add(todo);
+    public void updateToDo(ToDo target, ToDo editedToDo)
+            throws DuplicateToDoException, ToDoNotFoundException {
+        requireNonNull(editedToDo);
+
+        todos.setToDo(target, editedToDo);
     }
+
+    public void setToDos(List<ToDo> todos) throws DuplicateToDoException {
+        this.todos.setToDos(todos);
+    }
+    //@@author
 
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
-
+    //@@author jas5469
     ////Group operation
     public void addGroup(Group group) throws DuplicateGroupException {
         groups.add(group);
     }
 
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     *
+     * @throws ToDoNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeGroup(Group key) throws GroupNotFoundException {
+        if (groups.remove(key)) {
+            return true;
+        } else {
+            throw new GroupNotFoundException();
+        }
+    }
+    //@@author
     ////Event operations
     /**
      * Adds an event to the address book.
@@ -283,11 +307,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ToDo> getToDoList() {
-        return todos.asObservableList();
-    }
-
-    @Override
     public ObservableList<Group> getGroupList() {
         return groups.asObservableList();
     }
@@ -311,6 +330,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
+    //@@author Isaaaca-unused
     /**
      * Removes {@code tag} from all {@code persons} in the {@code AddressBook} and from the {@code AddressBook}.
      */
@@ -337,7 +357,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             tags.setTags(editedTagList);
         }
     }
-
+    //@@author LeonidAgarth
     /**
      * Replaces the old {@code target} tag with the new {@code editedTag}
      */
@@ -379,7 +399,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                     + "a PersonNotFoundException. See Person#equals(Object).");
         }
     }
-
+    //@@author Isaaaca
     /**
      * Removes {@code tag} from all {@code persons} in the {@code AddressBook}.
      */

@@ -3,8 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
@@ -25,6 +25,7 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ToDo> PREDICATE_SHOW_ALL_TODOS = unused -> true;
     Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
+    Predicate<Group> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -37,6 +38,9 @@ public interface Model {
 
     /** Deletes the given to-do. */
     void deleteToDo(ToDo target) throws ToDoNotFoundException;
+
+    /** Deletes the given group. */
+    void deleteGroup(Group target) throws GroupNotFoundException;
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
@@ -122,4 +126,17 @@ public interface Model {
 
     /** Adds the given Event */
     void addEvent(Event event) throws DuplicateEventException;
+
+    //@@author LeonidAgarth
+    /** Checks whether application is in Calendar or Timetable view */
+    boolean calendarIsViewed();
+
+    /** Switches between Calendar and Timetable view */
+    void switchView();
+
+    /** Raises an event to indicate the calendar has changed */
+    void indicateCalendarChanged();
+
+    /** Raises an event to indicate the timetable has changed */
+    void indicateTimetableChanged();
 }

@@ -1,4 +1,5 @@
-package seedu.address.model.event;
+//@@author LeonidAgarth
+package seedu.address.model.event.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 

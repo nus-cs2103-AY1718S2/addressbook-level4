@@ -1,3 +1,4 @@
+//@@author LeonidAgarth
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -41,6 +42,10 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             String date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
             String startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_START_TIME).get());
             String endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_END_TIME).get());
+
+            if (Integer.parseInt(startTime) > Integer.parseInt(endTime)) {
+                throw new ParseException(AddEventCommand.MESSAGE_END_BEFORE_START);
+            }
 
             Event event = new Event(name, venue, date, startTime, endTime);
 

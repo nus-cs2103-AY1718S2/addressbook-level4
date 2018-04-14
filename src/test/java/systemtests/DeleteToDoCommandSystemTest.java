@@ -1,6 +1,7 @@
 //@@author nhatquang3112
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_DID_YOU_MEAN;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TODO_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteToDoCommand.MESSAGE_DELETE_TODO_SUCCESS;
@@ -77,7 +78,8 @@ public class DeleteToDoCommandSystemTest extends AddressBookSystemTest {
                 DeleteToDoCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_TODO_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("DelETEtOdO 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("DelETEtOdO 1",
+                MESSAGE_UNKNOWN_COMMAND + MESSAGE_DID_YOU_MEAN + DeleteToDoCommand.COMMAND_WORD);
     }
 
     /**

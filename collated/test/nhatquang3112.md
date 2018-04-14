@@ -1,4 +1,182 @@
 # nhatquang3112
+###### \java\guitests\guihandles\ToDoCardHandle.java
+``` java
+package guitests.guihandles;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+
+/**
+ * Provides a handle to a to-do card in the to-do list panel.
+ */
+public class ToDoCardHandle extends NodeHandle<Node> {
+
+    private static final String ID_FIELD_ID = "#id";
+    private static final String CONTENT_FIELD_ID = "#content";
+    private static final String STATUS_FIELD_ID = "#status";
+
+    private final Label idLabel;
+    private final Label contentLabel;
+    private final Label statusLabel;
+
+    public ToDoCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.idLabel = getChildNode(ID_FIELD_ID);
+        this.contentLabel = getChildNode(CONTENT_FIELD_ID);
+        this.statusLabel = getChildNode(STATUS_FIELD_ID);
+    }
+
+    public String getId() {
+        return idLabel.getText();
+    }
+
+    public String getContent() {
+        return contentLabel.getText();
+    }
+
+    public String getStatus() {
+        return statusLabel.getText();
+    }
+}
+```
+###### \java\guitests\guihandles\ToDoListPanelHandle.java
+``` java
+package guitests.guihandles;
+
+import java.util.List;
+import java.util.Optional;
+
+import javafx.scene.control.ListView;
+import seedu.address.model.todo.ToDo;
+import seedu.address.ui.ToDoCard;
+
+/**
+ * Provides a handle for {@code ToDoListPanel} containing the list of {@code ToDoCard}.
+ */
+public class ToDoListPanelHandle extends NodeHandle<ListView<ToDoCard>> {
+    public static final String TODO_LIST_VIEW_ID = "#toDoListView";
+
+    private Optional<ToDoCard> lastRememberedSelectedToDoCard;
+
+    public ToDoListPanelHandle(ListView<ToDoCard> toDoListPanelNode) {
+        super(toDoListPanelNode);
+    }
+
+    /**
+     * Returns a handle to the selected {@code ToDoCardHandle}.
+     * A maximum of 1 item can be selected at any time.
+     * @throws AssertionError if no card is selected, or more than 1 card is selected.
+     */
+    public ToDoCardHandle getHandleToSelectedCard() {
+        List<ToDoCard> toDoList = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (toDoList.size() != 1) {
+            throw new AssertionError("ToDo list size expected 1.");
+        }
+
+        return new ToDoCardHandle(toDoList.get(0).getRoot());
+    }
+
+    /**
+     * Returns the index of the selected card.
+     */
+    public int getSelectedCardIndex() {
+        return getRootNode().getSelectionModel().getSelectedIndex();
+    }
+
+    /**
+     * Returns true if a card is currently selected.
+     */
+    public boolean isAnyCardSelected() {
+        List<ToDoCard> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedCardsList.size() > 1) {
+            throw new AssertionError("Card list size expected 0 or 1.");
+        }
+
+        return !selectedCardsList.isEmpty();
+    }
+
+    /**
+     * Navigates the listview to display and select the to-do.
+     */
+    public void navigateToCard(ToDo toDo) {
+        List<ToDoCard> cards = getRootNode().getItems();
+        Optional<ToDoCard> matchingCard = cards.stream().filter(card -> card.toDo.equals(toDo)).findFirst();
+
+        if (!matchingCard.isPresent()) {
+            throw new IllegalArgumentException("ToDo does not exist.");
+        }
+
+        guiRobot.interact(() -> {
+            getRootNode().scrollTo(matchingCard.get());
+            getRootNode().getSelectionModel().select(matchingCard.get());
+        });
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Returns the to-do card handle of a to-do associated with the {@code index} in the list.
+     */
+    public ToDoCardHandle getToDoCardHandle(int index) {
+        return getToDoCardHandle(getRootNode().getItems().get(index).toDo);
+    }
+
+    /**
+     * Returns the {@code ToDoCardHandle} of the specified {@code toDo} in the list.
+     */
+    public ToDoCardHandle getToDoCardHandle(ToDo toDo) {
+        Optional<ToDoCardHandle> handle = getRootNode().getItems().stream()
+                .filter(card -> card.toDo.equals(toDo))
+                .map(card -> new ToDoCardHandle(card.getRoot()))
+                .findFirst();
+        return handle.orElseThrow(() -> new IllegalArgumentException("ToDo does not exist."));
+    }
+
+    /**
+     * Selects the {@code ToDoCard} at {@code index} in the list.
+     */
+    public void select(int index) {
+        getRootNode().getSelectionModel().select(index);
+    }
+
+    /**
+     * Remembers the selected {@code ToDoCard} in the list.
+     */
+    public void rememberSelectedToDoCard() {
+        List<ToDoCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedItems.size() == 0) {
+            lastRememberedSelectedToDoCard = Optional.empty();
+        } else {
+            lastRememberedSelectedToDoCard = Optional.of(selectedItems.get(0));
+        }
+    }
+
+    /**
+     * Returns true if the selected {@code ToDoCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedToDoCard()} call.
+     */
+    public boolean isSelectedToDoCardChanged() {
+        List<ToDoCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedItems.size() == 0) {
+            return lastRememberedSelectedToDoCard.isPresent();
+        } else {
+            return !lastRememberedSelectedToDoCard.isPresent()
+                    || !lastRememberedSelectedToDoCard.get().equals(selectedItems.get(0));
+        }
+    }
+
+    /**
+     * Returns the size of the list.
+     */
+    public int getListSize() {
+        return getRootNode().getItems().size();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AddToDoCommandIntegrationTest.java
 ``` java
 package seedu.address.logic.commands;
@@ -82,10 +260,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -219,6 +398,12 @@ public class AddToDoCommandTest {
         }
 
         @Override
+        public void deleteGroup(Group target) throws GroupNotFoundException {
+            fail("This method should not be called.");
+        }
+
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -227,6 +412,12 @@ public class AddToDoCommandTest {
         @Override
         public void updateToDo(ToDo target, ToDo editedToDo)
                 throws DuplicateToDoException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateGroup(Group target, Group editedGroup)
+                throws DuplicateGroupException {
             fail("This method should not be called.");
         }
 
@@ -249,6 +440,12 @@ public class AddToDoCommandTest {
         }
 
         @Override
+        public ObservableList<Group> getFilteredGroupList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
@@ -260,6 +457,32 @@ public class AddToDoCommandTest {
 
         @Override
         public void updateFilteredEventList(Predicate<Event> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredGroupList(Predicate<Group> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void indicateCalendarChanged() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void indicateTimetableChanged() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean calendarIsViewed() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void switchView() {
             fail("This method should not be called.");
         }
     }
@@ -414,7 +637,7 @@ public class CheckToDoCommandTest {
         // null -> returns false
         assertFalse(checkToDoFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different to-do -> returns false
         assertFalse(checkToDoFirstCommand.equals(checkToDoSecondCommand));
     }
 
@@ -835,7 +1058,7 @@ public class UnCheckToDoCommandTest {
         // null -> returns false
         assertFalse(unCheckToDoFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different to-do -> returns false
         assertFalse(unCheckToDoFirstCommand.equals(unCheckToDoSecondCommand));
     }
 
@@ -848,6 +1071,172 @@ public class UnCheckToDoCommandTest {
         return unCheckToDoCommand;
     }
 }
+```
+###### \java\seedu\address\logic\parser\AddToDoCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_CONTENT;
+import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CONTENT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.AddToDoCommand;
+import seedu.address.model.todo.Content;
+import seedu.address.model.todo.ToDo;
+import seedu.address.testutil.ToDoBuilder;
+
+public class AddToDoCommandParserTest {
+    private AddToDoCommandParser parser = new AddToDoCommandParser();
+
+    @Test
+    public void parse_allFieldsPresent_success() {
+        ToDo expectedToDo = new ToDoBuilder().withContent(VALID_CONTENT).build();
+
+        // whitespace only preamble
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + VALID_CONTENT,
+                new AddToDoCommand(expectedToDo));
+
+        // valid content
+        assertParseSuccess(parser, VALID_CONTENT,
+                new AddToDoCommand(expectedToDo));
+    }
+
+    @Test
+    public void parse_compulsoryFieldMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToDoCommand.MESSAGE_USAGE);
+
+        // missing content
+        assertParseFailure(parser, PREAMBLE_WHITESPACE,
+                expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        // invalid content
+        assertParseFailure(parser, INVALID_CONTENT,
+                Content.MESSAGE_CONTENT_CONSTRAINTS);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\CheckToDoCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TODO;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.CheckToDoCommand;
+
+/**
+ * As we are only doing white-node testing, our test cases do not cover path variations
+ * outside of the CheckToDoCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the CheckToDoCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class CheckToDoCommandParserTest {
+
+    private CheckToDoCommandParser parser = new CheckToDoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsCheckToDoCommand() {
+        assertParseSuccess(parser, "1", new CheckToDoCommand(INDEX_FIRST_TODO));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, CheckToDoCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\DeleteToDoCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TODO;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.DeleteToDoCommand;
+
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeleteToDoCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the DeleteToDoCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class DeleteToDoCommandParserTest {
+
+    private DeleteToDoCommandParser parser = new DeleteToDoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteToDoCommand() {
+        assertParseSuccess(parser, "1", new DeleteToDoCommand(INDEX_FIRST_TODO));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteToDoCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\model\person\DetailTest.java
+``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
+
+public class DetailTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Detail(null));
+    }
+
+    @Test
+    public void constructor_invalidEmail_throwsIllegalArgumentException() {
+        String invalidDetail = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Detail(invalidDetail));
+    }
+
+    @Test
+    public void isValidDetail() {
+        // null detail
+        Assert.assertThrows(NullPointerException.class, () -> Detail.isValidDetail(null));
+
+        // invalid detail
+        assertFalse(Detail.isValidDetail("")); // empty string
+        assertFalse(Detail.isValidDetail(" ")); // spaces only
+        assertFalse(Detail.isValidDetail("^")); // only non-alphanumeric characters
+        assertFalse(Detail.isValidDetail("tennis*")); // contains non-alphanumeric characters
+
+        // valid detail
+        assertTrue(Detail.isValidDetail("likes tennis")); // alphabets only
+        assertTrue(Detail.isValidDetail("12345")); // numbers only
+        assertTrue(Detail.isValidDetail("has 3 dogs")); // alphanumeric characters
+        assertTrue(Detail.isValidDetail("Likes tennis")); // with capital letters
+    }
+
 ```
 ###### \java\seedu\address\model\todo\ContentTest.java
 ``` java
@@ -890,7 +1279,7 @@ public class ContentTest {
         assertTrue(Content.isValidContent("12345")); // numbers only
         assertTrue(Content.isValidContent("hello world the 2nd")); // alphanumeric characters
         assertTrue(Content.isValidContent("Hello World")); // with capital letters
-        assertTrue(Content.isValidContent("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Content.isValidContent("This is a very very very very very loooong content")); // long content
     }
 
     @Test
@@ -984,18 +1373,18 @@ import seedu.address.testutil.ToDoBuilder;
 public class ToDoTest {
     @Test
     public void equals() {
-        ToDo todoA = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
-        ToDo todoB = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
-        ToDo todoC = new ToDoBuilder().withContent("Something to do").withStatus("done").build();
+        ToDo toDoA = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
+        ToDo toDoB = new ToDoBuilder().withContent("Something to do").withStatus("undone").build();
+        ToDo toDoC = new ToDoBuilder().withContent("Something to do").withStatus("done").build();
 
         // different types -> returns false
-        assertFalse(todoA.equals(1));
+        assertFalse(toDoA.equals(1));
 
         // same content -> returns true
-        assertTrue(todoA.hashCode() == todoB.hashCode());
+        assertTrue(toDoA.hashCode() == toDoB.hashCode());
 
         // same content, different status -> returns true
-        assertTrue(todoA.equals(todoC));
+        assertTrue(toDoA.equals(toDoC));
     }
 }
 ```
@@ -1003,10 +1392,18 @@ public class ToDoTest {
 ``` java
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static seedu.address.logic.commands.CommandTestUtil.CONTENT_B;
+import static seedu.address.logic.commands.CommandTestUtil.CONTENT_E;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CONTENT;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.todo.Content;
+import seedu.address.model.todo.ToDo;
 import seedu.address.model.todo.UniqueToDoList;
 
 public class UniqueToDoListTest {
@@ -1019,7 +1416,7 @@ public class UniqueToDoListTest {
         thrown.expect(UnsupportedOperationException.class);
         uniqueToDoList.asObservableList().remove(0);
     }
-}
+
 ```
 ###### \java\seedu\address\storage\XmlAdaptedToDoTest.java
 ``` java
@@ -1045,47 +1442,47 @@ public class XmlAdaptedToDoTest {
 
     @Test
     public void toModelType_validToDoDetails_returnsToDo() throws Exception {
-        XmlAdaptedToDo todo = new XmlAdaptedToDo(TODO_A);
-        assertEquals(TODO_A, todo.toModelType());
+        XmlAdaptedToDo toDo = new XmlAdaptedToDo(TODO_A);
+        assertEquals(TODO_A, toDo.toModelType());
     }
 
     @Test
     public void toModelType_invalidContent_throwsIllegalValueException() {
-        XmlAdaptedToDo todo =
+        XmlAdaptedToDo toDo =
                 new XmlAdaptedToDo(INVALID_CONTENT);
         String expectedMessage = Content.MESSAGE_CONTENT_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void toModelType_nullContent_throwsIllegalValueException() {
-        XmlAdaptedToDo todo = new XmlAdaptedToDo((String) null);
+        XmlAdaptedToDo toDo = new XmlAdaptedToDo((String) null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Content.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void toModelType_nullStatus_throwsIllegalValueException() {
-        XmlAdaptedToDo todo = new XmlAdaptedToDo(VALID_CONTENT, null);
+        XmlAdaptedToDo toDo = new XmlAdaptedToDo(VALID_CONTENT, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void toModelType_invalidStatus_throwsIllegalValueException() {
-        XmlAdaptedToDo todo =
+        XmlAdaptedToDo toDo =
                 new XmlAdaptedToDo(VALID_CONTENT, INVALID_STATUS);
         String expectedMessage = Status.MESSAGE_STATUS_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, todo::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, toDo::toModelType);
     }
 
     @Test
     public void equals() {
-        XmlAdaptedToDo todoA = new XmlAdaptedToDo(TODO_A);
-        XmlAdaptedToDo todoB = new XmlAdaptedToDo(TODO_A);
-        assertTrue(todoA.equals(todoA));
-        assertFalse(todoA.equals(1));
-        assertTrue(todoA.equals(todoB));
+        XmlAdaptedToDo toDoA = new XmlAdaptedToDo(TODO_A);
+        XmlAdaptedToDo toDoB = new XmlAdaptedToDo(TODO_A);
+        assertTrue(toDoA.equals(toDoA));
+        assertFalse(toDoA.equals(1));
+        assertTrue(toDoA.equals(toDoB));
     }
 }
 ```
@@ -1160,11 +1557,11 @@ public class ToDoBuilder {
     }
 
     /**
-     * Initializes the ToDoBuilder with the data of {@code todoToCopy}.
+     * Initializes the ToDoBuilder with the data of {@code toDoToCopy}.
      */
-    public ToDoBuilder(ToDo todoToCopy) {
-        content = todoToCopy.getContent();
-        status = todoToCopy.getStatus();
+    public ToDoBuilder(ToDo toDoToCopy) {
+        content = toDoToCopy.getContent();
+        status = toDoToCopy.getStatus();
     }
 
     /**
@@ -1187,6 +1584,35 @@ public class ToDoBuilder {
         return new ToDo(content, status);
     }
 
+}
+```
+###### \java\seedu\address\testutil\ToDoUtil.java
+``` java
+package seedu.address.testutil;
+
+import seedu.address.logic.commands.AddToDoCommand;
+import seedu.address.model.todo.ToDo;
+
+/**
+ * A utility class for ToDo.
+ */
+public class ToDoUtil {
+
+    /**
+     * Returns an addToDo command string for adding the {@code toDo}.
+     */
+    public static String getAddToDoCommand(ToDo toDo) {
+        return AddToDoCommand.COMMAND_WORD + " " + getToDoDetails(toDo);
+    }
+
+    /**
+     * Returns the part of command string for the given {@code toDo}'s details.
+     */
+    public static String getToDoDetails(ToDo toDo) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(toDo.getContent().value);
+        return sb.toString();
+    }
 }
 ```
 ###### \java\seedu\address\testutil\TypicalToDos.java
@@ -1212,6 +1638,34 @@ public class TypicalToDos {
 
     public static List<ToDo> getTypicalToDos() {
         return new ArrayList<>(Arrays.asList(TODO_A, TODO_B, TODO_C));
+    }
+}
+```
+###### \java\seedu\address\ui\ProgressIndicatorPropertiesTest.java
+``` java
+package seedu.address.ui;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+
+public class ProgressIndicatorPropertiesTest {
+    private static final String EXPECTED_PROGRESS_INDICATOR_LABEL_NAME = "TO-DO COMPLETION";
+    private static final String EXPECTED_PROGRESS_INDICATOR_LABEL_COLOR = "-fx-text-fill: black;";
+    private static final String EXPECTED_PROGRESS_INDICATOR_COLOR = "-fx-progress-color: #4DA194;";
+    private static final int EXPECTED_PROGRESS_INDICATOR_WIDTH = 150;
+    private static final int EXPECTED_PROGRESS_INDICATOR_HEIGHT = 150;
+
+    @Test
+    public void checkIfAllPropertiesAreCorrect() {
+        ProgressIndicatorProperties properties = new ProgressIndicatorProperties();
+
+        assertTrue(properties.PROGRESS_INDICATOR_LABEL_NAME.equals(EXPECTED_PROGRESS_INDICATOR_LABEL_NAME));
+        assertTrue(properties.PROGRESS_INDICATOR_LABEL_COLOR.equals(EXPECTED_PROGRESS_INDICATOR_LABEL_COLOR));
+        assertTrue(properties.PROGRESS_INDICATOR_COLOR.equals(EXPECTED_PROGRESS_INDICATOR_COLOR));
+        assertTrue(properties.PROGRESS_INDICATOR_WIDTH == EXPECTED_PROGRESS_INDICATOR_WIDTH);
+        assertTrue(properties.PROGRESS_INDICATOR_HEIGHT == EXPECTED_PROGRESS_INDICATOR_HEIGHT);
     }
 }
 ```
@@ -1359,7 +1813,8 @@ public class AddToDoCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid keyword -> rejected */
         command = "addsToDo " + ToDoUtil.getToDoDetails(toAdd);
-        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure(command,
+                Messages.MESSAGE_UNKNOWN_COMMAND + Messages.MESSAGE_DID_YOU_MEAN + AddToDoCommand.COMMAND_WORD);
 
         /* Case: add a duplicate to-do -> rejected */
         command = ToDoUtil.getAddToDoCommand(TODO_E);
@@ -1372,10 +1827,9 @@ public class AddToDoCommandSystemTest extends AddressBookSystemTest {
      * 2. Command node has the default style class.<br>
      * 3. Result display node displays the success message of executing {@code AddToDoCommand} with the details of
      * {@code toAdd}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
+     * 4. {@code Model}, {@code Storage} and {@code ToDoListPanel} equal to the corresponding components in
      * the current model added with {@code toAdd}.<br>
-     * 5. Browser url and selected card remain unchanged.<br>
-     * 6. Status bar's sync status changes.<br>
+     * 5. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -1422,8 +1876,7 @@ public class AddToDoCommandSystemTest extends AddressBookSystemTest {
      * 1. Command node displays {@code command}.<br>
      * 2. Command node has the error style class.<br>
      * 3. Result display node displays {@code expectedResultMessage}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
-     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * 4. {@code Model}, {@code Storage} and {@code ToDoListPanel} remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -1612,6 +2065,7 @@ public class CheckToDoCommandSystemTest extends AddressBookSystemTest {
 ``` java
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_DID_YOU_MEAN;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TODO_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteToDoCommand.MESSAGE_DELETE_TODO_SUCCESS;
@@ -1688,7 +2142,8 @@ public class DeleteToDoCommandSystemTest extends AddressBookSystemTest {
                 DeleteToDoCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_TODO_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("DelETEtOdO 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("DelETEtOdO 1",
+                MESSAGE_UNKNOWN_COMMAND + MESSAGE_DID_YOU_MEAN + DeleteToDoCommand.COMMAND_WORD);
     }
 
     /**

@@ -1,6 +1,6 @@
+//@@author jas5469
 package seedu.address.logic.commands;
 
-//@@author jas5469
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,10 +22,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.event.DuplicateEventException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -117,7 +118,7 @@ public class AddGroupCommandTest {
         }
 
         @Override
-        public void addToDo(ToDo todos) throws DuplicateToDoException {
+        public void addToDo(ToDo toDos) throws DuplicateToDoException {
             fail("This method should not be called.");
         }
 
@@ -159,6 +160,11 @@ public class AddGroupCommandTest {
         }
 
         @Override
+        public void deleteGroup(Group target) throws GroupNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -169,6 +175,7 @@ public class AddGroupCommandTest {
                 throws DuplicateToDoException {
             fail("This method should not be called.");
         }
+
         @Override
         public void updateGroup(Group target, Group editedGroup)
                 throws DuplicateGroupException {
@@ -204,6 +211,7 @@ public class AddGroupCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
         public void updateFilteredToDoList(Predicate<ToDo> predicate) {
             fail("This method should not be called.");
         }
@@ -218,6 +226,26 @@ public class AddGroupCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
+        public void indicateCalendarChanged() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void indicateTimetableChanged() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean calendarIsViewed() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void switchView() {
+            fail("This method should not be called.");
+        }
     }
 
     /**

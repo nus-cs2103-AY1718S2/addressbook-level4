@@ -1,6 +1,6 @@
 = Your TA - User Guide
 :toc:
-:toc-title:
+:toc-title: Table of Content
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -32,11 +32,19 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `YourTA.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your application.
-.  Double-click the file to start the application. The GUI should appear in a few seconds, as shown in Figure 1 below.
+.  Double-click the file to start the application. The Login GUI should appear in a few seconds, as shown in Figure 1 below.
 +
-.The GUI upon Starting Up.
+.The Login GUI upon double-clicking.
+//dummy image, plz update this image
+image::Login.png[width="800"]
+
+.  Enter your `Username` and `Password` to log in. _Refer to <<Features>> for details of the feature._
+.  After logging in, now you should see the main Application GUI in turn appear, as shown in Figure 2 below.
+
+.The main Application GUI upon login.
+//update this image also
 image::UiInitial.png[width="800"]
-+
+
 .  The command box is where you type in commands followed by pressing kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window for the application.
 .  Some example commands you can try:
@@ -72,7 +80,7 @@ Then, click on the `Login` button.
 ====
 *Command Format*
 
-* There are some equivalent shortcut commands known as aliases with fewer alphabetic letters or a sign. +
+* There are some equivalent shortcut commands known as _aliases_ with fewer alphabetic letters or a sign. +
 e.g. to add a person to the addressbook, you can type 'add n/John Doe', 'a n/John Doe' or '+ n/John Doe'.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user. +
 e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
@@ -360,16 +368,23 @@ The 1st person in the results of the `find` command is selected, in this case, J
 .1st Person from `find` Command Selected. +
 image::SecondSelect.png[width="800"]
 
+[[TaskList_Feature]]
 == Task, To-do list and Calendar Features
 
-To see how the task scheduling feature works on the `Todo List` and `Calendar`, select the `Todo Lit` tab located right beside the `Person List` tab.
+To see how the task scheduling feature works on the `Todo List` and `Calendar`, select the `Todo List` tab located right beside the `Person List` tab.
 
 === Adding a task: `addTask`
 
 Adds a task to the address book. +
+Alias: `at` +
 Format: `addTask title/TITLE desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY`
 
-New tasks will be added into the *To-do list* and *Calendar*.
+New tasks will be added into the *To-do list* and *Calendar*. +
+
+[NOTE]
+====
+`DEADLINE` must be in the format of dd-MM-YYYY.
+====
 
 Examples:
 
@@ -387,9 +402,15 @@ This will add a task, 'Submit tutorial attendance' into the calendar and to-do l
 === Editing a task: `editTask`
 
 Edits a task to the address book. +
+Alias: `et` +
 Format: `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
 
-The specified tasks will be edited in the *To-do list* and *Calendar*.
+[NOTE]
+====
+Not all fields are required, you may only pick the fields that you want to edit.
+====
+
+The specified tasks will be edited in the *Todo List* and *Calendar*.
 
 ****
 * The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -400,10 +421,37 @@ The specified tasks will be edited in the *To-do list* and *Calendar*.
 === Removing a task: `deleteTask`
 
 Deletes a task in the address book. +
+Alias: `dt` +
 Format: `deleteTask INDEX`
 
-The specified tasks will be deleted from the *To-do list* and *Calendar*.
+The specified indexed task will be deleted from the *Todo List* and *Calendar*.
 
+// tag::dispalyTask[]
+=== Listing all tasks: `listTask`
+
+Shows a list of all tasks in application. +
+Alias: `lt` +
+Format: `listTask`
+
+All the tasks stored in application will be listed in the *Todo List*
+
+=== Listing current month tasks: `listCurrentTask`
+
+Shows a list of tasks that have deadline in the current month. +
+Alias: `lct` +
+Format: `listCurrentTask`
+
+Only the tasks due within current month will be listed in the *Todo List*
+
+=== Sorting tasks: `sortTask`
+
+Sorts all entries displayed in *Todo List* in date order. +
+Alias: `stt`
+Format: `sortTask`
+
+// end::displayTask[]
+
+[[otherCommands]]
 == Miscellaneous Commands
 
 === Listing entered commands : `history`
@@ -494,7 +542,7 @@ This command clears ALL the data from the application (both people and tasks). +
 
 === Importing data from another file : `import`
 
-Extracting data from an xml formatted file and
+Extracts data from an xml formatted file and
 replaces the current stored data. +
 Format: `import FILEPATH`
 
@@ -502,6 +550,15 @@ Examples:
 
 Command entered: +
 `import ~/download/NewData.xml`
+
+// tag::switchTab[]
+=== Switching between tabs: `switchTab`
+
+Switches between the *Person List* tab and *Todo List* tab.
+Alias: `swt`
+Format: `switchTab`
+
+// end::switchTab[]
 
 === Sorting all entries : `sort`
 
@@ -603,12 +660,15 @@ e.g `updateDP 1 dp/C:\Users\Betsy\Desktop\betsy.jpg`
 
 === Tasks, To-do list and Calendar commands
 
-*Add Task* `addTask desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY` +
+*Add Task*: `addTask desc/TASK DESCRIPTION by/DEADLINE priority/PRIORITY` +
 e.g. `addTask title/Grade Exams desc/Grade mid-terms by/04-04-2018 priority/2`
-*Delete Task* `deleteTask INDEX` +
+*Delete Task*: `deleteTask INDEX` +
 e.g. `deleteTask 1`
-*Edit Task* `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
-e.g. `editTask 1 title/Eat Dinner`
+*Edit Task*: `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
+e.g. `editTask 1 title/Eat Dinner` +
+*List Task*: `listTask` +
+*List Current month tasks*: `listCurrentTask` +
+*Sort tasks by date*: `sortTask`
 
 === Miscellaneous Commands
 
@@ -616,3 +676,4 @@ e.g. `editTask 1 title/Eat Dinner`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Switch tabs*: `switchTab`

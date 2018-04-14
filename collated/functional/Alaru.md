@@ -77,7 +77,7 @@ public class DeleteUtil {
     /**
      * Copies a file over. The new file will be binary equivalent to the original.
      */
-    public static void copyFile(String origFile, File outputFile) throws  IOException {
+    public static void copyFile(String origFile, File outputFile) throws IOException {
         byte[] buffer = new byte[4096];
         createIfMissing(outputFile);
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(origFile));
@@ -250,7 +250,7 @@ public class UpdateDisplayCommand extends UndoableCommand {
     public UpdateDisplayCommand(Index index, DisplayPic dp) {
         requireNonNull(index);
         requireNonNull(dp);
-        this.targetIndex = index;
+        targetIndex = index;
         this.dp = dp;
     }
 
@@ -362,7 +362,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
      */
     public static DisplayPic parseDisplayPic(String displayPic)
             throws IllegalValueException {
-        if (displayPic == null) {
+        if (displayPic.equals("")) {
             return new DisplayPic();
         } else {
             String trimmedDisplayPath = displayPic.trim();
@@ -575,11 +575,9 @@ public class DisplayPic {
     public static final String MESSAGE_DISPLAY_PIC_NO_EXTENSION =
             "The filepath should point to a file with an extension.";
 
-    public final String originalPath;
     private String value;
 
     public DisplayPic() {
-        this.originalPath = DEFAULT_DISPLAY_PIC;
         this.value = DEFAULT_DISPLAY_PIC;
     }
 
@@ -593,7 +591,6 @@ public class DisplayPic {
         checkArgument(DisplayPicStorage.isValidPath(filePath), MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
         checkArgument(DisplayPicStorage.hasValidExtension(filePath), MESSAGE_DISPLAY_PIC_NO_EXTENSION);
         checkArgument(DisplayPicStorage.isValidImage(filePath), MESSAGE_DISPLAY_PIC_NOT_IMAGE);
-        this.originalPath = filePath;
         this.value = filePath;
     }
 
@@ -601,11 +598,11 @@ public class DisplayPic {
      * Saves the display picture to the specified storage location.
      */
     public void saveDisplay(String personDetails) throws IllegalValueException {
-        if (originalPath.equals(DEFAULT_DISPLAY_PIC)) {
+        if (value.equals(DEFAULT_DISPLAY_PIC)) {
             return;
         }
-        String fileType = FileUtil.getFileType(originalPath);
-        String uniqueFileName = DisplayPicStorage.saveDisplayPic(personDetails, originalPath, fileType);
+        String fileType = FileUtil.getFileType(value);
+        String uniqueFileName = DisplayPicStorage.saveDisplayPic(personDetails, value, fileType);
         this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
     }
 
@@ -648,7 +645,8 @@ public class IllegalMarksException extends IllegalArgumentException {
 ``` java
 public class Participation {
 
-    public static final String MESSAGE_PARTICIPATION_CONSTRAINTS = "Participation marks cannot be negative or over 100!";
+    public static final String MESSAGE_PARTICIPATION_CONSTRAINTS =
+            "Participation marks cannot be negative or over 100!";
     public static final String UI_DISPLAY_HEADER = "Participation marks: ";
 
     public final Integer threshold;
@@ -684,6 +682,11 @@ public class Participation {
         return (value >= threshold);
     }
 
+    /**
+     * Validates the participation mark
+     * @param value
+     * @return true if it is valid
+     */
     public static boolean isValidParticipation(String value) {
         requireNonNull(value);
         try {

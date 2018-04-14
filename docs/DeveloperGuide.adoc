@@ -533,24 +533,193 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 A command by the keyword of "predict" is added. It takes no argument.
 
-* `Function` : Customers in the list may or may not have
-"actual spending" entered. Because at the point in time,
-the customer has not purchased any policy at all.
-Hence it would be convenient to have a way to predict the
-likely amount of purchase they would make so that the
-insurance agent can prioritize those customers with higher
-likelihood to spend more.
+* `Overview` : Customers in the list may or may not have
+"actual spending" entered. Because at the point,
+the customer may not have purchased any policy at all. Those
+customers without actual spending would be those customers who
+have not spent anything. Predict function would use gradient descent
+method to reach the least square regression line. And the value produced
+by the least square regression line would be used as the prediction value.
 
-* `Implementation` : Each customer's data would be extracted as a row.
-The column represents. Each Targeted fields such as income, age and so on.
-The model used here is linear regression. That means we assume the purchase made
-by the customer is a linear combination of all the targeted fields.
-This model is not perfect. However for the first version of this
-function, we will just use this model. These data would form a matrix.
-Imaging a form of Ax=b where A is a matrix and x is a vector of weights
-and b is the expected outcome. The name of the game is to find the
-weights that minimises the loss of the objective function A.
-The numerical solver used here is Stochastic Gradient Descent.
+
+* `Implementation` :
+
+** The `GradientDescent` is designed to be a singleton class. The reason for that is
+the weights from the previous calculation should be retained and used for the subsequent
+calculation. Therefore only one instantiation of this class is allowed.
+
+[source,java]
+----
+private GradientDescent(PredictionModel model) {
+        this.model = model;
+    }
+
+    public static GradientDescent getInstance(PredictionModel model) {
+        if (instance == null) {
+            instance = new GradientDescent(model);
+            instance.resetWeights();
+        }
+        return instance;
+    }
+----
+
+
+The constructor takes a `PredictionModel`.
+
+PredictionModel is a interface that extends Model interface. The reason for this implementation is
+that `GradientDescent` requires some specific methods from the `Model` interface. And those methods are
+not useful to any other part of the app. Hence a new interface is created for `ModelManager` to implement
+specifically for gradient descent purpose. This to ensure the proper separation of concern and encapsulation.
+Those components that does not interact with predict command will not need to know the existence of those
+methods.
+
+
+[source,java]
+----
+public interface PredictionModel extends Model {
+    void preparePredictionData(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets,
+                               ArrayList<Double> normalizationConstant);
+
+    void updatePredictionResult(ArrayList<Double> weights)
+            throws CommandException;
+}
+----
+
+** `GradientDescent` class is a simply a solver. The driver class is a public method called `solve()`.
+It does not take any arguments. All the parameters required to run the solver is generated automatically
+within the class.
+
+[source,java]
+----
+public CommandResult solve() throws CommandException {
+
+}
+----
+
+
+The solver consists of 5 Steps:
+
+. Instantiation
+. Data Preparation
+. Solving
+. Validating
+. Update Results
+
+`Instantiation`: +
+
+The solver basically follows the equation of Aw=x, where
+A is a matrix, w is the weights and x is the target output.
+
+[source,java]
+----
+ArrayList<ArrayList<Double>> matrix = new ArrayList<>(new ArrayList<>());
+ArrayList<Double> targets = new ArrayList<>();
+----
+
+`Data Preparation`: +
+
+A method from `PredictionModel` interface is invoked to to extract the relevant values from the
+`ModelManager` to the function. This implementation is to ensure proper encapsulation. `GradientDescent`
+does not need to know what data is available or what formats are those data stored in the
+`ModelManager`. It only needs to know a consistent matrix A and vector x are passed back.
+[source,java]
+----
+this.model.preparePredictionData(matrix, targets, normalizationConstant);
+----
+
+`Solving`: +
+
+A function call to descent().
+[source,java]
+----
+descent(matrix, targets);
+----
+
+The implementation of descent():
+The idea is simply looping through each epoch and calculate the outcome and error. use their difference
+and learning rate to generate an update for the weights.
+[source,java]
+----
+private void descent(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets) {
+    for (int itt = 0; itt < epoch; itt++) {
+
+        //check data validity
+        if (this.hasNaN(this.weights)) {
+            this.logger.warning("The solution is not convergent");
+            break;
+        }
+
+        // fixed amount of training iteration
+        for (int r = 0; r < matrix.size(); r++) { //going through each training data
+
+            ArrayList<Double> row = matrix.get(r);
+            Double outcome = predict(row);
+            Double error = targets.get(r) - outcome;
+            for (int i = 0; i < row.size(); i++) {
+                Double deltaW = this.learningRate * error * row.get(i);
+                this.weights.set(i, this.weights.get(i) + deltaW);
+            }
+        }
+    }
+}
+----
+
+`Validating`: +
+Here a simple method is used to validate the accuracy of the results. After the weights are
+obtained, we validate it against the existing data. See how far off they are as compared to
+the existing data. By right the training set and validation set should be separated. But since
+for the current use case, the data entries are usually very little. Hence this simplified method
+is used instead.
+
+[source,java]
+----
+private Double validate(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets) {
+    Double average = 0.0;
+    for (int i = 0; i < matrix.size(); i++) {
+
+        //loop through each row
+
+        Double outcome = this.predict(matrix.get(i));
+        Double error = Math.abs((outcome - targets.get(i)) / targets.get(i));
+        average += (1 - error);
+    }
+
+    Double confidence = average / targets.size() * 100;
+    if (confidence < 0) {
+        confidence = 0.0;
+    } else if (confidence > 100) {
+        confidence = 100.0;
+    }
+    return confidence;
+}
+----
+
+`Update Results`: +
+The implementation of updating follows closed to that of Edit command. The actual updating
+takes place in the model itself instead of `GradientDescent` class. Again, `GradientDescent`
+does not need to be concerned with how the model is updated. 
+
+[source,java]
+----
+try {
+    this.model.updatePredictionResult(this.getWeights());
+    return new CommandResult(String.format(MESSAGE_PREDICTION_SUCCESS)
+            + ", with Confidence Rate "
+            + String.format("%.2f", confidence)
+            + "%"
+    );
+} catch (CommandException e) {
+    return new CommandResult(String.format(MESSAGE_PREDICTION_FAIL));
+}
+----
+
+* `Future Work`:
+1. The regression line is currently 2 dimensional at the moment, with only
+the contribution from "actual spending" and "income". In the future, the parameters
+should be extended to multi-dimension with other fields included.
+2. Auto separate training set and validation set once data gets large enough.
+
+
 // end::predict_command[]
 
 // tag::policy[]

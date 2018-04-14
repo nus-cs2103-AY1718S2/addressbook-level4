@@ -55,5 +55,4 @@ include::../UserGuide.adoc[tag=predict_command]
 
 include::../DeveloperGuide.adoc[tag=predict_command]
 include::../DeveloperGuide.adoc[tag=model]
-include::../DeveloperGuide.adoc[tag=logic]
 

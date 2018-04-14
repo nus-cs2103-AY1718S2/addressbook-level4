@@ -13,7 +13,7 @@ import seedu.address.model.person.PersonContainsGroupsPredicate;
 
 public class GroupCommandParserTest {
 
-    private FindCommandParser parser = new FindCommandParser();
+    private GroupCommandParser parser = new GroupCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -21,7 +21,7 @@ public class GroupCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsFindCommand() {
+    public void parse_validArgs_returnsGroupCommand() {
         // no leading and trailing whitespaces
         GroupCommand expectedGroupCommand =
                 new GroupCommand(new PersonContainsGroupsPredicate(Arrays.asList("Alice", "Bob")));

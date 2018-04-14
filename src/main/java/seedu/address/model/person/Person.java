@@ -128,7 +128,7 @@ public class Person {
                 .append(getCustTimeZone())
                 .append(" Comment: ")
                 .append(getComment())
-                .append(" Tags: ")
+                .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

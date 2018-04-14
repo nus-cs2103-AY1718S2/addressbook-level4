@@ -71,8 +71,9 @@ public class SuggestionsPopUp extends ContextMenu {
         // gets caret position based on input text and font
         double anchorX = findDisplayPositionX(textInputProcessor.getCaretPositionX());
         double anchorY = findDisplayPositionY(textInputProcessor.getCaretPositionY());
-
+        
         // shows at bottom of input area if text is too long
+        textInputProcessor.setContent(commandTextArea.getText());
         if (textInputProcessor.isTextTooLong()) {
             anchorX = anchorY = MARGIN;
         }

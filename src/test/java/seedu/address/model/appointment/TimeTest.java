@@ -31,7 +31,7 @@ public class TimeTest {
         assertFalse(Time.isValidTime("1234")); // invalid time
         assertFalse(Time.isValidTime("time")); // non-numeric
         assertFalse(Time.isValidTime("eleven 30")); // alphabets within time
-        assertFalse(Time.isValidTime("12 /12/2018")); // spaces within time
+        assertFalse(Time.isValidTime("12 :30")); // spaces within time
         assertFalse(Time.isValidTime("25:00")); // invalid hour
 
         // valid time

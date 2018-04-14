@@ -75,6 +75,9 @@ public class TypicalPersonsAndAppointments {
             .withDate("06/06/2018").withStartTime("10:30").withEndTime("11:30").withLocation("little tokyo").build();
     public static final Appointment GEORGE_APPT = new AppointmentBuilder().withPersonName("George Best")
             .withDate("07/07/2018").withStartTime("10:30").withEndTime("11:30").withLocation("4th street").build();
+    public static final Appointment HALEM_APPT = new AppointmentBuilder().withPersonName("Halem Brooke")
+            .withDate("01/01/2018").withStartTime("10:30").withEndTime("11:30")
+            .withLocation("Diamond Park").build();
     //@@author
 
     private TypicalPersonsAndAppointments() {} // prevents instantiation

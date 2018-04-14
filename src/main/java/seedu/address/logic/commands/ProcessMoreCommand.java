@@ -4,15 +4,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.queue.TaskList;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.task.Task;
-
-import java.util.List;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.core.Messages;
-import seedu.address.model.person.Person;
 
 /**
  * Add multiple orders to the application's processing queue
@@ -47,7 +38,7 @@ public class ProcessMoreCommand extends ProcessNextCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ProcessMoreCommand // instanceof handles nulls
-                && toAdd.equals(((ProcessMoreCommand) other).toAdd));
+                && noOfTimes==((ProcessMoreCommand) other).noOfTimes);
     }
 }
 

@@ -8,7 +8,6 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.ProcessOrderCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
@@ -54,7 +53,8 @@ public class CompleteOrderCommand extends Command {
             List<Task> taskList = model.getFilteredTaskList();
 
             if (number >= taskList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+                throw new CommandException("There are only "+taskList.size()
+                + " orders being cooking");
             }
 
             Task taskToDelete = taskList.get(targetIndex.getZeroBased());

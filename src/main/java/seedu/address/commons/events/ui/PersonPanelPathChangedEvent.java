@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.PersonCard;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a change in the browser Panel
  */
 public class PersonPanelPathChangedEvent extends BaseEvent {
 

@@ -48,6 +48,8 @@ include::../UserGuide.adoc[tag=loginout]
 |===
 
 include::../DeveloperGuide.adoc[tag=storagepic]
+include::../DeveloperGuide.adoc[tag=usecaseloginoutlistfind]
+include::../DeveloperGuide.adoc[tag=manualtestloginoutlistfind]
 
 
 

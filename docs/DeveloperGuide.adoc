@@ -904,6 +904,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+// tag::usecaseloginoutlistfind[]
 [discrete]
 === Use case: Login/Logout
 
@@ -973,7 +974,7 @@ Use case ends.
 * 2a. The list is empty
 +
 Use case ends.
-
+// end::usecaseloginoutlistfind[]
 
 
 [appendix]
@@ -1035,13 +1036,62 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
+// tag::manualtestloginoutlistfind[]
+=== Login
+
+.  Initial login
+
+.. Prerequisites: The account-password combination `wrong acount` is not in the AccountList
+.. Test case: `login admin admin` +
+   Expected: The user is logged in as an librarian. The user will be privileged to execute any command.
+.. Test case: `login wrong account` +
+   Expected: An error message will be shown. The user is not logged in.
+
+=== Logout
+
+.  Logout after logged in
+.. Prerequisites: The current account logged in is a student or a librarian
+.. Test case: `logout` +
+   Expected: The user is logged out. The current account will become guest account.
+
+.  Logout without logging in
+
+.. Prerequisites: The current account logged in is a guest
+.. Test case: `logout` +
+   Expected: An error message will be shown. The user will stay as a guest.
+
+=== List
+
+.   List all books
+..  Prerequisites: There is at least one book in the book list.
+..  Test case: `list` +
+    Expected: A list of all books will be shown.
+
+.   List all books when the book list is empty
+..  Prerequisites: There is no book in the book list.
+..  Test case: `list` +
+    Expected: An empty list will be shown.
+
+=== Find
+
+.   Find books with the keyword in title
+..  Prerequisites: The book list contains default sample data.
+..  Test case: `find animal` +
+    Expected: The book 'Animal Farm' will be shown.
+..  Test case: `find animal girl` +
+    Expected: The book 'Animal Farm' and 'California Girl' will be shown.
+..  Test case: `find catalog` +
+    Expected: An empty list will be shown.
+// end::manualtestloginoutlistfind[]
+
+
 === Deleting a book
 
 . Deleting a book while all books are listed
 
 .. Prerequisites: List all books using the `list` command. Multiple books in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First book is deleted from the list. Details of the deleted book shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No book is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +

@@ -95,7 +95,7 @@ public class ScheduledEventCardTest extends GuiUnitTest {
                 + EVENT_CONDITION_HEADER + FUTURE_IMPLEMENTATION + "\n"
                 + EVENT_DIVIDER + EVENT_DIVIDER;
 
-        assertEquals(eventAsString ,eventCardToFormat.getFormattedScheduledEvent());
+        assertEquals(eventAsString, eventCardToFormat.getFormattedScheduledEvent());
     }
 
     @Test

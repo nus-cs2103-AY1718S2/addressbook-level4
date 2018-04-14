@@ -69,14 +69,26 @@ public enum TokenType {
      */
     public static boolean isPrefixType(TokenType type) {
         return type == PREFIX_AMOUNT
+                || type == PREFIX_BOUGHT_RISE
+                || type == PREFIX_BOUGHT_FALL
                 || type == PREFIX_BOUGHT
                 || type == PREFIX_CODE
+                || type == PREFIX_HELD_RISE
+                || type == PREFIX_HELD_FALL
                 || type == PREFIX_HELD
+                || type == PREFIX_MADE_RISE
+                || type == PREFIX_MADE_FALL
                 || type == PREFIX_MADE
                 || type == PREFIX_NAME
+                || type == PREFIX_PRICE_RISE
+                || type == PREFIX_PRICE_FALL
                 || type == PREFIX_PRICE
+                || type == PREFIX_SOLD_RISE
+                || type == PREFIX_SOLD_FALL
                 || type == PREFIX_SOLD
                 || type == PREFIX_TAG
+                || type == PREFIX_WORTH_RISE
+                || type == PREFIX_WORTH_FALL
                 || type == PREFIX_WORTH;
     }
 }

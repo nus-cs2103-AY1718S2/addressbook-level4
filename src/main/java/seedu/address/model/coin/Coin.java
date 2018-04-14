@@ -58,6 +58,22 @@ public class Coin {
     }
 
     /**
+     * Every field must be present and not null.
+     * Only used internally to generate diff coin
+     */
+    private Coin(Code code, Set<Tag> tags, Price price, Amount aBought, Amount aSold, Amount dBought, Amount dSold) {
+        requireAllNonNull(code, tags, aBought, aSold, dBought, dSold);
+        this.code = code;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.price = price;
+        this.totalAmountSold = aSold;
+        this.totalAmountBought = aBought;
+        this.totalDollarsSold = dSold;
+        this.totalDollarsBought = dBought;
+    }
+
+    /**
      * Copy constructor for coins.
      * Sets previous state to copied coin.
      */
@@ -189,7 +205,15 @@ public class Coin {
      * @return (final minus initial) as a coin, where the final coin is this
      */
     public Coin getChangeFrom(Coin initialCoin) {
-        return null;
+        assert(initialCoin.code.equals(this.code));
+
+        return new Coin(initialCoin.code,
+                initialCoin.getTags(),
+                price.getChangeFrom(initialCoin.price),
+                Amount.getDiff(this.totalAmountBought, initialCoin.totalAmountBought),
+                Amount.getDiff(this.totalAmountSold, initialCoin.totalAmountSold),
+                Amount.getDiff(this.totalDollarsBought, initialCoin.totalDollarsBought),
+                Amount.getDiff(this.totalDollarsSold, initialCoin.totalDollarsSold));
     }
 
     public Coin getChangeFromPrev() {

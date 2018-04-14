@@ -173,7 +173,7 @@ public class ParserUtil {
             expectedTokenType = conditionSyntaxParser.getExpectedType();
             actualTokenType = conditionSyntaxParser.getActualType();
             logger.warning(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Syntactic",
-                    expectedTokenType.description, actualTokenType.description));
+                    expectedTokenType.description, actualTokenType.typeName));
             throw new ParseException("command arguments invalid.");
         }
 
@@ -182,7 +182,7 @@ public class ParserUtil {
             expectedTokenType = conditionSemanticParser.getExpectedType();
             actualTokenType = conditionSemanticParser.getActualType();
             logger.warning(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Semantic",
-                    expectedTokenType.description, actualTokenType.description));
+                    expectedTokenType.description, actualTokenType.typeName));
             throw new ParseException("command arguments invalid.");
         }
 

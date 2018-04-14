@@ -31,6 +31,15 @@ public class Price {
         this.currentPrice = currentPrice;
     }
 
+    //@@author ewaldhew
+    public Price getChangeFrom(Price initial) {
+        Price result = new Price();
+        result.currentPrice = Amount.getDiff(currentPrice, initial.currentPrice);
+
+        return result;
+    }
+    //@@author
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -38,6 +47,7 @@ public class Price {
                 && this.currentPrice.equals(((Price) other).currentPrice)); // state check
     }
 
+    @Override
     public String toString() {
         return this.currentPrice.toString();
     }

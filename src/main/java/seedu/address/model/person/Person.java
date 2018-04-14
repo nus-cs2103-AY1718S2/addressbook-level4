@@ -417,7 +417,7 @@ public class Person {
                 .append(getRemark());
         builder.append(" Cca: ").append(getCca());
         builder.append(" InjuriesHistory: ").append(getInjuriesHistory());
-        builder.append(" NameOfKin:").append(getNextOfKin());
+        builder.append(" NameOfKin: ").append(getNextOfKin());
         return builder.toString();
     }
 

@@ -6,49 +6,129 @@
 
 ---
 
-== Overview
+== 1. Project Overview
 
 ContactSails is a desktop application targeted at salespersons who want to manage their customer contacts, sales orders,
 and calendar events in an efficient manner.
 The user interacts with it using a CLI, and it has a GUI created with JavaFX.
 It is written in Java, and has about 10 kLoC.
 
-== Summary of contributions
+== 2. About this Portfolio
+
+This project portfolio documents my contributions to ContactSails by including a summary of features implemented by me in the project.
+It also showcases my documentation skills by including relevant extracts written by me in the UserGuide and DeveloperGuide for this project.
+
+== 3. Summary of Contributions
 
 * *Major enhancement*: added the ability to *manage customer orders*.
-** What it does: Orders can be added, edited, and deleted. A list of current orders can be viewed. Orders can also be marked as ongoing or fulfilled.
-** Justification: For salespersons, this feature will be essential to have as they would want to keep track of what their customers are ordering and what they have ordered already. If customers have any issues regarding their orders, salespersons will be able to view all the relevant information in a single place.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-* *Minor enhancement*: added *auto-complete functionality* for all commands.
+** Functionality: Orders can be added, edited, and deleted. A list of current orders can be viewed. Orders can also be marked as ongoing or fulfilled.
+** Justification: This feature will be essential for salespersons as they would want to keep track of customer orders. Salespersons will be able to view relevant information about customer orders in a single place.
+** Highlights: This enhancement affects commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing model and UI of the application.
+* *Minor enhancement*: added the ability to switch between themes provided in the application.
+** Functionality: Theme of the application can be switched between 'light' or 'dark' themes.
+** Justification: This feature will allow the salesperson to customize the application to suit their needs.
 * *Code contributed*: [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/functional/amad-person.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/test/amad-person.md[Test code]]
 * *Other contributions*:
 
 ** Project management:
 *** Managed releases `v1.2` - `v1.5rc` (4 releases) on GitHub.
 ** Enhancements to existing features:
-*** Added command aliases so users can execute commands in a quicker manner (Pull request https://github.com/CS2103JAN2018-W13-B1/main/pull/51[#51]).
-*** Added ability to change themes (Pull requests https://github.com/CS2103JAN2018-W13-B1/main/pull/98[#98], https://github.com/CS2103JAN2018-W13-B1/main/pull/164[#164]).
-*** Improved the UI of the application (Pull requests https://github.com/CS2103JAN2018-W13-B1/main/pull/130[#130], https://github.com/CS2103JAN2018-W13-B1/main/pull/166[#166], https://github.com/CS2103JAN2018-W13-B1/main/pull/188[#188], https://github.com/CS2103JAN2018-W13-B1/main/pull/191[#191]).
+*** Added command aliases so users can execute commands in a quicker manner (Pull request https://github.com/CS2103JAN2018-W13-B1/main/pull/37[#37]).
+*** Added ability to auto-complete commands (Pull request https://github.com/CS2103JAN2018-W13-B1/main/pull/51[#51]).
+*** Improved the overall UI of the application (Pull requests https://github.com/CS2103JAN2018-W13-B1/main/pull/130[#130], https://github.com/CS2103JAN2018-W13-B1/main/pull/166[#166], https://github.com/CS2103JAN2018-W13-B1/main/pull/188[#188], https://github.com/CS2103JAN2018-W13-B1/main/pull/191[#191]).
 ** Documentation:
-*** Added new sections and improved existing sections of the User Guide. (Pull requests https://github.com/CS2103JAN2018-W13-B1/main/pull/124[#124], https://github.com/CS2103JAN2018-W13-B1/main/pull/141[#141], https://github.com/CS2103JAN2018-W13-B1/main/pull/165[#165]).
+*** Added new sections and improved existing sections of the User Guide. (Pull requests https://github.com/CS2103JAN2018-W13-B1/main/pull/124[#124], https://github.com/CS2103JAN2018-W13-B1/main/pull/141[#141], https://github.com/CS2103JAN2018-W13-B1/main/pull/165[#165], https://github.com/CS2103JAN2018-W13-B1/main/pull/217[#217]).
+*** Improved existing sections of the Developer Guide. (Pull requests https://github.com/CS2103JAN2018-W13-B1/main/pull/57[#57], https://github.com/CS2103JAN2018-W13-B1/main/pull/88[#88], https://github.com/CS2103JAN2018-W13-B1/main/pull/101[#101], https://github.com/CS2103JAN2018-W13-B1/main/pull/105[#105], https://github.com/CS2103JAN2018-W13-B1/main/pull/226[#226])
 ** Community:
 *** Reviewed PRs in the team repository.
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W15-B4/main/issues/196[1], https://github.com/CS2103JAN2018-W15-B4/main/issues/191[2], https://github.com/CS2103JAN2018-W15-B4/main/issues/199[3])
 
-== Contributions to the User Guide
+== 4. Contributions to the User Guide
 
 |===
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=cominginfuture]
+=== 4.1. Major Enhancement : Order Management
 
-include::../UserGuide.adoc[tag=commandsummary]
+This section contains extracts from the UserGuide related to order management.
 
-== Contributions to the Developer Guide
+#Start of Extract (from User Guide)#
+
+include::../UserGuide.adoc[tag=userguideorders]
+
+#End of Extract (from User Guide)#
+
+=== 4.2. Minor Enhancement : Change Themes
+
+This section contains extracts from the UserGuide related to changing themes.
+
+#Start of Extract (from User Guide)#
+
+include::../UserGuide.adoc[tag=userguidethemes]
+
+#Start of Extract (from User Guide)#
+
+== 5. Contributions to the Developer Guide
 
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=orders]
+#Start of Extract (from Developer Guide)#
+
+include::../DeveloperGuide.adoc[tag=ordermanagementintro]
+
+include::../DeveloperGuide.adoc[tag=addingorders]
+
+include::../DeveloperGuide.adoc[tag=otherinfo-orders]
+
+#End of Extract (from Developer Guide)#
+
+== Appendix A : Other Sections in UserGuide
+
+|===
+|_Given below are other sections I contributed to the User Guide._
+|===
+
+=== Proposed Feature : Viewing Customer Statistics
+
+#Start of Extract (from User Guide)#
+
+include::../UserGuide.adoc[tag=customerstats]
+
+#End of Extract (from User Guide)#
+
+=== Proposed Feature : Sending Promotions
+
+#Start of Extract (from User Guide)#
+
+include::../UserGuide.adoc[tag=sendingpromos]
+
+#End of Extract (from User Guide)#
+
+== Appendix B : Other Sections in DeveloperGuide
+
+|===
+|_Given below are other sections I contributed to the Developer Guide._
+|===
+
+=== Major Enhancement : Order Management
+
+#Start of Extract (from Developer Guide)#
+
+include::../DeveloperGuide.adoc[tag=editingorders]
+
+include::../DeveloperGuide.adoc[tag=changeorderstatus]
+
+include::../DeveloperGuide.adoc[tag=deletingorders]
+
+#End of Extract (from Developer Guide)#
+
+=== Proposed Feature : Data Encryption
+
+#Start of Extract (from Developer Guide)#
+
+include::../DeveloperGuide.adoc[tag=proposeddataencryption]
+
+#End of Extract (from Developer Guide)#

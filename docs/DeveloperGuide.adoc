@@ -46,7 +46,7 @@ You can download it http://www.oracle.com/technetwork/java/javase/downloads/jdk8
 +
 
 [NOTE]
-This app will not work with earlier versions of Java 8, so ensure that you have installed the right version of Java 8.
+ContactSails will not work with earlier versions of Java 8, so ensure that you have installed the right version of Java 8.
 +
 
 . *IntelliJ* IDEA
@@ -66,16 +66,35 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 Follow these steps to set up the project on your computer:
 
 . Fork this repo, and clone the fork to your computer.
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+
+.Forking and cloning the ContactSails repository from its Github page.
+image::ForkAndClone.png[width="400" align="center"]
+
+[start=2]
+. Open IntelliJ. You should see the Welcome Screen (shown in the figure below).
+[NOTE]
+If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first.
+
+.IntelliJ's Welcome screen.
+image::IntelliJWelcomeScreen.png[width="400" align="center"]
+
+[start=3]
 . Set up the correct JDK version for Gradle:
 .. Click `Configure` > `Project Defaults` > `Project Structure`.
 .. Click `New...` and find the directory of the JDK.
 . Click `Import Project`.
-. Locate the `build.gradle` file and select it. Click `OK`.
+. Locate the `build.gradle` file in the ContactSails repository directory and select it. Click `OK`.
 . Click `Open as Project`.
-. Click `OK` to accept the default settings.
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
-This will generate all resources required by the application and tests.
+. Click `OK` to accept the default settings. You will now be directed to the `Import Project` window, as shown below.
+
+.The 'Import Project' window.
+image::ImportWindowFirstScreen.png[width="400" align="center"]
+
+[start=8]
+. Click `Next` repeatedly to import the project with the default settings until you reach the last window (this window will have a `Finish` button).
+. Click `Finish` to finish importing the project.
+. Open the `Terminal` and run the command `gradlew processResources` (run `./gradlew processResources` for Mac/Linux). It should finish with the `BUILD SUCCESSFUL` message. +
+This generates all the resources required by the application and tests.
 
 === Verifying the setup
 
@@ -262,6 +281,7 @@ The `Model` Component does the following:
 . Stores a `UserPref` object that represents the user's preferences.
 . Stores the Address Book data.
 . Exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+. Exposes an unmodifiable `ObservableList<Order>` and `ObservableList<CalendarEntry>` similar to the `ObservableList<Person>` mentioned above.
 
 [[Design-Storage]]
 === Storage Component
@@ -500,7 +520,6 @@ image::SelectionPersonPanelSequenceDiagram.png[width="800" align="center"]
 When a contact is selected using a mouse or a command in `PersonListPanel`, this will result in `EventsCenter`
 returning a `Person` of the selected contact, which then displays the contact information in `PersonPanel`.
 
-
 ==== Design Considerations
 
 ===== Aspect: Display of tags in PersonPanel (and PersonCard)
@@ -523,67 +542,58 @@ returning a `Person` of the selected contact, which then displays the contact in
 
 //end::Person Panel[]
 
-// tag::orders[]
-=== Orders
+// tag::ordermanagementintro[]
+=== Order Management
 
 Orders refer to the sales orders that are added by the salesperson to ContactSails.
 These orders can be added to any particular person of the address book.
-After being added, orders can be edited and deleted.
+After being added, orders can be edited and deleted. Additionally, orders can be marked as `ongoing` and `done`.
 
 ==== Current Implementation
 
-An `Order` is represented in the application as shown in _Figure 19_ given below.
+An `Order` is represented in the application as shown in the figure given below.
+It contains the `OrderInformation`, `OrderStatus`, `Price`, `Quantity`, and `DeliveryDate` fields.
 
-// UML Diagram for Order
-.UML Diagram for Order
-image::OrderUMLDiagram.png[width="500" align="center"]
+.UML Diagram for an Order object.
+image::OrderUMLDiagram.png[width="300" align="center"]
 
-A brief description of each of the attributes of an `Order` is given below: +
+`Order` objects are kept in-memory during an application session with the help of a `UniqueOrderList` object, whose UML diagram is given below.
 
-* OrderInformation: Represents information about the order item. +
-* OrderStatus: Denotes whether the sales order is ongoing or has been fulfilled by the salesperson. +
-* Price: Represents the price of a single item of the sales order. +
-* Quantity: Represents the number of items in the sales order. +
-* DeliveryDate: Represents the date by which the sales order must be fulfilled. +
+.UML Diagram for UniqueOrderList.
+image::UniqueOrderListUMLDiagram.png[width="300" align="center"]
 
-As orders are added to a particular person, there exists an association between a `Person` object and an `Order` object.
-This relationship is shown in _Figure 20_ given below.
+The `UniqueOrderList` object ensures that ContactSails does not have any duplicate `Order` objects. This object is stored in the `ModelManager`.
 
-// UML Diagram showing association between a Person and an Order
-.UML Diagram showing association between a Person and an Order
-image::PersonOrderAssociationUMLDiagram.png[width="500" align="center"]
+The `ModelManager` utilises the `UniqueOrderList` object for order management related operations.
+An example operation would be adding an order to ContactSails.
+Given below is a high-level sequence diagram for this operation.
 
-The association is implemented in the following manner:
-[source,java]
-----
-public class Person {
+.High-Level Sequence Diagram for adding an order. Other operations follow the same high level sequence diagram.
+image::HighLevelSequenceDiagramForOrderAdd.png[width="500" align="center"]
 
-    // ... other Person attributes ...
+Operations on orders can be done using the `AddOrderCommand`, `EditOrderCommand`, `ChangeOrderStatusCommand`, and `DeleteOrderCommand` commands.
+The class diagram given below shows how these commands are part of the `Logic` Component.
 
-    private final UniquePersonOrderList personOrders;
-}
-----
+.UML Diagram showing order management related commands in the `Logic` component.
+image::UMLDiagramOrderCommandsLogic.png[width="300" align="center"]
 
-----
-public class PersonOrder {
+These commands are described in more detail in the sections below. +
+// end::ordermanagementintro[]
 
-    Person person;
-    Order order;
-
-    // ... PersonOrder attribute getters and setters ...
-}
-----
-
-Operations on orders can be done using the `AddOrderCommand`, `EditOrderCommand`, and `DeleteOrderCommand` commands.
-These commands are described in more detail below. +
-
+// tag::addingorders[]
 ===== Adding Orders
 
-The `AddOrderCommand` adds an order to the person specified by their `index` in the last shown listing of persons.
+---
+The `AddOrderCommand` adds an order to list of orders in ContactSails.
 
-The following snippet shows how the `executeUndoableCommand()` method updates the `model` of the
-application by adding `orderToAdd` to the list of orders of the `person` specified. Note that `orderToAdd` will
-not be added if the `person` has not been found or a duplicate order has already been assigned to this `person`.
+The figure below shows the sequence diagram for adding an order.
+
+.Sequence Diagram for `AddOrderCommand`.
+image::AddOrderSeqDiagram.png[width="600" align="center"]
+
+The following snippet shows how the `AddOrderCommand#executeUndoableCommand()` method updates the `model` of the
+application by adding `orderToAdd` to the list of orders in the application. Note that `orderToAdd` will
+not be added if a duplicate order has already been added to the list of orders before.
 
 [source,java]
 ----
@@ -591,9 +601,7 @@ public class AddOrderCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addOrderToPerson(person, orderToAdd);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            model.addOrderToOrderList(orderToAdd);
         } catch (DuplicateOrderException e) {
             throw new CommandException(MESSAGE_ORDER_NOT_ADDED);
         }
@@ -603,130 +611,164 @@ public class AddOrderCommand extends UndoableCommand {
 }
 ----
 
-The order added will be displayed in ContactSails.
+The order added will be displayed in the OrderListPanel in ContactSails.
+// end::addingorders[]
 
+// tag::editingorders[]
 ===== Editing Orders
 
+---
 The `EditOrderCommand` edits the `targetOrder` with the provided information which is specified by its `index`
-in the last shown listing of orders. The order will be updated with the information stored in `editOrderDescriptor`
+in the last shown listing of orders. The order will be updated with the new values given by the user.
+
+The figure below shows the sequence diagram for editing an order.
+
+.Sequence Diagram for `EditOrderCommand`.
+image::EditOrderSeqDiagram.png[width="600" align="center"]
+
+In the `EditOrderCommand` class, a new class called `EditOrderDescriptor` is defined to create objects
+that will store the new values of the fields that need to be edited in the original order.
+The `createEditedOrder()` method uses the `editOrderDescriptor` object to create the `editedOrder`
 object.
 
-A new class called `EditOrderDescriptor` is defined to create the `editOrderDescriptor` object that stores the new values
-of the fields that need to be edited. Each non-empty field value will replace the corresponding field value of the `order`.
+The `executeUndoableCommand()` method uses this `editedOrder` object to update the `model` of the application.
+The new order is now stored in ContactSails in the place of the old order.
+// end::editingorders[]
 
-The constructors of this class are shown below:
-[source,java]
-----
-public static class EditOrderDescriptor {
-    public EditOrderDescriptor() {}
+// tag::changeorderstatus[]
+===== Changing OrderStatus
 
-    /**
-     * Copy constructor.
-     */
-    public EditOrderDescriptor(EditOrderDescriptor toCopy) {
-        setOrderInformation(toCopy.orderInformation);
-        setOrderStatus(toCopy.orderStatus);
-        setPrice(toCopy.price);
-        setQuantity(toCopy.quantity);
-        setDeliveryDate(toCopy.deliveryDate);
-    }
-}
-----
+---
+The `ChangeOrderStatusCommand` changes the `OrderStatus` field of an `Order` object to either `ongoing` or `done`.
+The `order` object is obtained by using its `index` in the last shown listing of orders.
 
-The `EditOrderDescriptor` uses Optionals to return `Optional.empty()` if any of the field values are null.
-If `Optional.empty()` is returned for any field, that particular field does not need to be edited.
+The figure below shows the sequence diagram for changing an order's status.
 
-The `createEditedOrder()` method constructs the edited order. Finally, the `executeUndoableCommand()` method calls the `createEditedOrder()` method
-for getting the edited order and updates the `model` of the application.
+.Sequence Diagram for `ChangeOrderStatusCommand`.
+image::ChangeOrderStatusSeqDiagram.png[width="600" align="center"]
 
-[source,java]
-----
-public class EditOrderCommand extends UndoableCommand {
-    public CommandResult executeUndoableCommand() throws CommandException {
-        try {
-            model.updateOrder(orderToEdit, editedOrder);
-        } catch (DuplicateOrderException doe) {
-            throw new CommandException(MESSAGE_DUPLICATE_ORDER);
-        } catch (OrderNotFoundException onfe) {
-            throw new AssertionError("The target order cannot be missing");
-        }
+On changing the order status of an order, the colour of the corresponding `OrderCard` in the `OrderListPanel` also changes.
+This is done by simply removing the existing `CSS` styles associated with the `OrderCard`
+and re-adding a new stylesheet with the appropriate colours to that `OrderCard`.
+// end::changeorderstatus[]
 
-        // ... display updated address book ...
-    }
-}
-----
-
-The new order returned is now stored in the address book in the place of the old order.
-
+// tag::deletingorders[]
 ===== Deleting Orders
 
+---
 The `DeleteOrderCommand` deletes the order specified by its `index` in the last shown listing of orders.
+The figure below shows the sequence diagram for changing an order's status.
 
-The code snippet below shows the `executeUndoableMethod()` of the `DeleteOrderCommand` class:
-
-[source,java]
-----
-public class DeleteOrderCommand extends UndoableCommand {
-    public CommandResult executeUndoableCommand() {
-        requireNonNull(orderToDelete);
-        try {
-            model.deleteOrder(orderToDelete);
-        } catch (OrderNotFoundException onfe) {
-            throw new AssertionError("The target order cannot be missing");
-        }
-
-        // ... display updated address book ...
-    }
-}
-----
+.Sequence Diagram for `DeleteOrderCommand`.
+image::DeleteOrderSeqDiagram.png[width="600" align="center"]
 
 The above method deletes `orderToDelete` from the `model` of the address book and the resulting list of orders is displayed.
+// end::deletingorders[]
+
+// tag::deletingorders[]
+===== Storing Orders
+
+---
+Storing orders in the application data file is very similar to that of storing persons.
+The `XmlAdaptedOrder` class is used to convert the `Order` objects in the `model` to JAXB-friendly `XmlAdaptedOrder` objects
+that can be stored in the `.xml` data file. When the application starts up, this class is also used to convert the `XmlAdaptedOrder` objects
+into a `model`-friendly `Order` objects.
 
 ===== Displaying Orders In GUI
 
-A single `Order` is displayed using an `OrderListCard` (refer to Figure 21 below). The list of all orders in the address book is then displayed in a list
-using the `OrderListPanel`.
+---
+A single `Order` is displayed using an `OrderListCard`. The list of all orders in the address book is then displayed in a list
+using the `OrderListPanel`, which contains an `OrderListView` of multiple `OrderListCards`.
+// end::otherinfo-orders[]
 
-.OrderListCard FXML Render
-image::OrderListCardFXMLRender.png[width="150" align="center"]
-
+// tag::designcons-orders[]
 ==== Design Considerations
 
 ===== Aspect: Data structures to support order operations
 
-* **Alternative 1 (current choice):** Using the `PersonOrder` association class.
-** Pros: Duplicate orders (with the same information except the person associated with it) will just be stored as a
-single order in memory. If multiple persons have the same order, there will be multiple references to one `Order` object.
-** Cons: Harder to implement as updating or deleting orders for one person must not affect orders of another person having
-the same order.
-* **Alternative 2:** Store a `UniqueOrderList` of orders in each person.
-** Pros: Easier to implement.
+* **Alternative 1 (current choice):** Store a UniqueOrderList of orders containing orders of all persons in the application.
+** Pros: Easier to implement. Additionally, all order management operations will be synchronised.
 ** Cons: Higher memory usage might affect the performance of the application.
-// end::orders[]
+* **Alternative 2:** Using an association class to store multiple references to the same order.
+** Pros: Duplicate orders (with the same information except the person associated with it) will just be stored as a single order in memory.
+If multiple persons have the same order, there will be multiple references to one Order object. This reduces memory usage.
+** Cons: Harder to implement as updating or deleting orders for one person must not affect orders of another person having the same order.
+// tag::designconsorders[]
 
-// tag::dataencryption[]
-=== Data Encryption
+// tag::changingthemes[]
+=== Changing Themes
+
+The theme of ContactSails can be changed using the `ChangeThemeCommand`.
+Currently, ContactSails supports `dark` and `light` themes.
 
 ==== Current Implementation
+
+The `Theme` object in the `model` is used to store the current theme version.
+
+The figure below shows the hierarchy of the `Theme` class.
+
+.UML Diagram showing the `Model` component with the `Theme` class.
+image::ThemeClassUMLDiagram.png[width="300" align="center"]
+
+When the `ChangeThemeCommand` is executed, a `ChangeThemeEvent` is raised by `EventsCenter`.
+
+The `handleChangeThemeEvent() method in the `MainWindow`
+class subscribes to this particular event and calls the `handleChangeTheme()` FXML controller method. This method changes the theme of the application based on the
+theme version it receives as a parameter. This is done by attaching the corresponding `CSS` stylesheet to the `MainWindow` JavaFX scene of the application.
+
+Given below is a high level sequence diagram for the `ChangeThemeCommand`.
+
+.High-Level Sequence Diagram for `ChangeThemeCommand`.
+image::HighLevelSequenceDiagramChangeTheme.png[width="500" align="center"]
+
+When the user exits the application, the current theme version will be stored in the `preferences.json` file as shown in the code snippet below.
+----
+{
+  "guiSettings" : {
+        // ... guiSettings attributes ...
+    },
+    "theme" : "dark"
+  },
+  // ... file management attributes ...
+}
+----
+
+Storing the theme in the `preferences.json` enables the theme change to be persistent across different application sessions.
+
+==== Design Considerations
+
+===== Aspect: Storing theme version
+* **Alternative 1 (current choice):** Encapsulate the theme version in a `Theme` object.
+** Pros: Relevant attributes and methods will be encapsulated in a single class.
+** Cons: Higher memory overhead.
+* **Alternative 2:** Storing the theme version as a string in guiSettings.
+** Pros: Easier to implement, and lesser memory overhead.
+** Cons: Methods related to changing themes would have to be written in multiple classes.
+// end::changingthemes[]
+
+=== [Proposed] Data Encryption
+
+// tag::proposeddataencryption[]
+==== Proposed Implementation
 
 The address book will decrypt and encrypt the XML data file every time there is an update that needs to be made to the data
 being stored.
 
-The secret key for encryption/decryption is generated using the `javax.crypto` library.
+The secret key for encryption/decryption will be generated using the `KeyGenerator` class in the `javax.crypto` library.
 
-The actual encryption/decryption is done using the `org.apache.xml.security` library, specifically the `XMLCipher` class.
+The actual encryption/decryption will be done using the `org.apache.xml.security` library, specifically the `XMLCipher` class.
 
 ==== Design Considerations
-// end::dataencryption[]
 
 ===== Aspect: Time of encryption of XML data file
 
-* **Alternative 1 (current choice):** Encrypt/decrypt the whole file each time there is an update to what information needs to stored.
+* **Alternative 1:** Encrypt/decrypt the whole file each time there is an update to what information needs to stored.
 ** Pros: A new secret key can be used for each encryption/decryption, which would make it more secure against tampering or outsider access.
 ** Cons: Encryption of data file for every minor change can reduce the performance of the application.
 * **Alternative 2:** Encrypt/decrypt the file only after a set time interval.
 ** Pros: Performance will be improved.
 ** Cons: Approach might be less secure. Implementation can also be harder.
+// end::proposeddataencryption[]
 
 === Logging
 
@@ -742,7 +784,6 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
 
 // tag::calendarentries[]
 === Calendar and Entry tracking
@@ -818,8 +859,6 @@ This file is separate from the one storing `Person` and `Order`.
 `CalendarPanel` residing in `Ui` component creates an instance of `CalendarView` to manage the display of the calendar.
 The panel responds to events related to the calendar, such as changing the viewing format or changing the current date displayed.
 Any changes made to `Calendar` in `Model` will automatically be shown via the `CalendarView`.
-
-
 
 ==== Design Considerations
 
@@ -1129,11 +1168,11 @@ A typical user from our target user profile:
 ** Orders can be added, edited, and deleted.
 ** A list of current orders can be viewed.
 ** Orders can also be marked as ongoing or fulfilled.
-* *Minor Feature*: Encryption of application data.
+* *Minor Feature*: Changing theme of the application.
 * *How the above features fit into the product scope:*
 ** *Major Feature*: For salespersons, this feature will be essential to have as they would want to keep track of what their customers are ordering and what they have ordered already.
 If customers have any issues regarding their orders, salespersons will be able to view all the relevant information in a single place.
-** *Minor Feature*: Since ContactSails has a lot of personal details of customers, the owner of the address book would want to encrypt the application data file to prevent outside access to sensitive information.
+** *Minor Feature*: As a user, the salesperson would want to customise the application to suit their needs.
 
 2. *Alicia Ho Sor Sian*
 * *Major Feature*: Ability to manage entries which are displayed in a calendar.

@@ -19,7 +19,6 @@ import seedu.address.logic.Authentication;
 import seedu.address.logic.CreateNewCalendar;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.notification.Notification;
-import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -52,6 +51,7 @@ public class TestAddEventCommand extends Command {
     private final String startTime;
     private final String endTime;
     private final String description;
+    private final Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
@@ -79,7 +79,7 @@ public class TestAddEventCommand extends Command {
         try {
             service = Authentication.getCalendarService();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning("Couldn't authenticate Google Calendar Service");
         }
 
         //Solution below adpated from https://developers.google.com/calendar/quickstart/java
@@ -111,7 +111,6 @@ public class TestAddEventCommand extends Command {
                 calendarId = CreateNewCalendar.execute(personToAddEvent.getName().fullName);
                 logger.info("calendar created successfully");
             } catch (IOException e) {
-                e.printStackTrace();
                 logger.info("unable to create calendar");
                 return new CommandResult(MESSAGE_FAILURE);
             }
@@ -148,14 +147,11 @@ public class TestAddEventCommand extends Command {
         //@@author IzHoBX
         Notification notification = new Notification(title, calendarId, event.getId(), event.getEnd().toString(),
                 model.getPerson(targetIndex.getZeroBased()).getId().toString());
-        try {
-            model.addNotification(notification);
-        } catch (DuplicateTimetableEntryException e) {
-            throw new CommandException("Duplicated event");
-        }
+        model.addNotification(notification);
         //@@author crizyli
 
         logger.info("Event created: " + event.getHtmlLink());
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

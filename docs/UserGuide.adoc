@@ -244,7 +244,7 @@ the photo is copied, you should not delete it from that folder manually.
 // end::addphoto[]
 
 // tag::auth[]
-=== Authorizes Employees Tracker : `authenET`
+=== Authorizing Employees Tracker : `authenET`
 
 Get the permission to allow E.T. to access your google calendar. +
 

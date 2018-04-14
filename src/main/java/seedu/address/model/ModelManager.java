@@ -20,9 +20,9 @@ import seedu.address.commons.events.logic.RequestToDeleteNotificationEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AddressBookPasswordChangedEvent;
 import seedu.address.commons.events.model.NotificationAddedEvent;
+import seedu.address.commons.events.model.RequestForNotificationCenterEvent;
 import seedu.address.commons.events.model.ReturnedEmployeesEvent;
 import seedu.address.model.notification.Notification;
-import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -81,6 +81,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         int targetId = target.getId();
         addressBook.removePerson(target);
+        ensureNotificationCenterNonNull();
         if (notificationCenter != null) {
             notificationCenter.removeNotificationForPerson(targetId);
         }
@@ -88,6 +89,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author IzHoBX
+
+    /**
+     * Ensures Notification Center is non-null. Attempts to assign notification center if so.
+     */
+    private void ensureNotificationCenterNonNull() {
+        if (notificationCenter == null) {
+            raise(new RequestForNotificationCenterEvent());
+        }
+    }
     @Override
     public synchronized void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws
             NotificationNotFoundException {
@@ -98,6 +108,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         if (!deleteFromAddressBookOnly) {
             try {
+                ensureNotificationCenterNonNull();
                 notificationCenter.deleteNotification(id);
             } catch (NullPointerException e) {
                 logger.info("NullPointerException encountered when deleting notification for deleted employee");
@@ -108,6 +119,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public NotificationCard deleteNotificationByIndex(Index targetIndex) throws NotificationNotFoundException {
+        ensureNotificationCenterNonNull();
         addressBook.deleteNotification(notificationCenter.getIdByIndex(targetIndex));
         indicateAddressBookChanged();
         NotificationCard toDelete = notificationCenter.deleteNotificationByIndex(targetIndex);
@@ -125,7 +137,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author IzHoBX
     @Override
-    public void addNotification(Notification e) throws DuplicateTimetableEntryException {
+    public void addNotification(Notification e) {
         addressBook.addNotification(e);
         indicateAddressBookChanged();
         indicateNotificationAdded(e);
@@ -225,6 +237,7 @@ public class ModelManager extends ComponentManager implements Model {
             deleteNotification(event.id, event.deleteFromAddressbookOnly);
         } catch (NotificationNotFoundException e) {
             e.printStackTrace();
+            logger.info("Notification is not stored locally");
         }
     }
 
@@ -239,6 +252,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public void setNotificationCenter(NotificationCenter notificationCenter) {
+        assert(notificationCenter != null);
         this.notificationCenter = notificationCenter;
     }
 

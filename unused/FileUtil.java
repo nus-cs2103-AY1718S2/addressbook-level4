@@ -6,7 +6,7 @@
  * @return whether the two files given are equal
  * @throws IOException when there is an issue reading from either file
  */
-//@@author Alaru
+//@@author Alaru-unused
 //Unused due to other teammate's feature breaking the original intention, originally from FileUtil
 public static boolean isSameFile(File file1, File file2) throws IOException {
     if (file1.length() != file2.length()) {

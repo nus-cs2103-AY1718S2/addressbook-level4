@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SET;
 import org.junit.Test;
 
 import seedu.address.logic.commands.PasswordCommand;
-import seedu.address.model.Model;
+
 //@@author limzk1994
 public class PasswordCommandSystemTest extends AddressBookSystemTest {
 

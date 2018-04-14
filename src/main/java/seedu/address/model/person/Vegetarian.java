@@ -24,7 +24,11 @@ public class Vegetarian {
             this.value = "Non-vegetarian";
         } else {
             checkArgument(isValidVegetarian(vegetarian), MESSAGE_VEGETARIAN_CONSTRAINTS);
-            this.value = vegetarian;
+            if (vegetarian.equalsIgnoreCase("Vegetarian")) {
+                this.value = "Vegetarian";
+            } else {
+                this.value = "Non-vegetarian";
+            }
         }
     }
 

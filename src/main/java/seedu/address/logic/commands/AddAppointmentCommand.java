@@ -20,7 +20,8 @@ public class AddAppointmentCommand extends Command {
             + "Parameters: "
             + "NAME "
             + "DATE "
-            + "TIME";
+            + "TIME\n"
+            + "Example: " + COMMAND_WORD + " John" + " 10/10/2018" + " 1000";;
 
     public static final String MESSAGE_SUCCESS = "A new appointment is added.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exist.";

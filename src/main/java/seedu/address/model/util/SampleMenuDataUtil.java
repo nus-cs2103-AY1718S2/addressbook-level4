@@ -13,12 +13,12 @@ import seedu.address.model.dish.Price;
 public class SampleMenuDataUtil {
     public static Dish[] getSampleDishes() {
         return new Dish[] {
-                new Dish(new Name("Chicken Rice"), new Price("3")),
-                new Dish(new Name("Curry Chicken"), new Price("4")),
-                new Dish(new Name("Chicken Chop"), new Price("5")),
-                new Dish(new Name("Ban Mian"), new Price("4")),
-                new Dish(new Name("Ice Milo"), new Price("2")),
-                new Dish(new Name("Coffee"), new Price("2"))
+            new Dish(new Name("Chicken Rice"), new Price("3")),
+            new Dish(new Name("Curry Chicken"), new Price("4")),
+            new Dish(new Name("Chicken Chop"), new Price("5")),
+            new Dish(new Name("Ban Mian"), new Price("4")),
+            new Dish(new Name("Ice Milo"), new Price("2")),
+            new Dish(new Name("Coffee"), new Price("2"))
         };
     }
 

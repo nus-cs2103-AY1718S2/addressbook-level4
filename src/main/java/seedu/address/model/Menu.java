@@ -1,22 +1,13 @@
 //@@author ZacZequn
 package seedu.address.model;
 
-//import java.io.File;
-//import java.io.FileNotFoundException;
+import static java.util.Objects.requireNonNull;
+
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
-//import java.util.Scanner;
 
 import seedu.address.model.dish.Dish;
-import seedu.address.model.dish.Name;
-import seedu.address.model.dish.Price;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
 
-import static java.util.Objects.requireNonNull;
+
 
 
 /**
@@ -35,15 +26,6 @@ public class Menu implements ReadOnlyMenu {
      */
     {
         dishes = new HashMap<>();
-        //only for testing
-        /*
-        dishes.put("Chicken Rice", new Dish(new Name("Chicken Rice"), new Price("3")));
-        dishes.put("Curry Chicken", new Dish(new Name("Curry Chicken"), new Price("4")));
-        dishes.put("Chicken Chop", new Dish(new Name("Chicken Chop"), new Price("5")));
-        dishes.put("Ban Mian", new Dish(new Name("Ban Mian"), new Price("4")));
-        dishes.put("Ice Milo", new Dish(new Name("Ice Milo"), new Price("2")));
-        dishes.put("Coffee", new Dish(new Name("Coffee"), new Price("2")));
-        */
     }
 
     public Menu() {}
@@ -85,7 +67,7 @@ public class Menu implements ReadOnlyMenu {
      * Adds a dish to the menu.
      */
     public void addDish(Dish dish) {
-        dishes.put(dish.getName().toString(),dish);
+        dishes.put(dish.getName().toString(), dish);
     }
 
 

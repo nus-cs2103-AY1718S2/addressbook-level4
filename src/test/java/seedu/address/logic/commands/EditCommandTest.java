@@ -29,7 +29,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.activity.Activity;
-import seedu.address.testutil.EditActivityDescriptorBuilder;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
 import seedu.address.testutil.TaskBuilder;
 
 /**
@@ -45,7 +45,7 @@ public class EditCommandTest {
      */
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Activity editedActivity = new TaskBuilder().build();
-        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(editedActivity).build();
+        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder(editedActivity).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
@@ -69,7 +69,7 @@ public class EditCommandTest {
                 .withDateTime(VALID_DATE_TIME_CS2010_QUIZ)
                 .withTags(VALID_TAG_MA2108).build();
 
-        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ)
+        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ)
                 .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withTags(VALID_TAG_MA2108).build();
         EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 
@@ -86,7 +86,7 @@ public class EditCommandTest {
      * Test
      */
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, new EditActivityDescriptor());
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, new EditCommand.EditTaskDescriptor());
         Activity editedActivity = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
@@ -106,7 +106,7 @@ public class EditCommandTest {
         Activity activityInFilteredList = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
         Activity editedActivity = new TaskBuilder(activityInFilteredList).withName(VALID_NAME_CS2010_QUIZ).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY,
-                new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
+                new EditTaskDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
 
@@ -122,7 +122,7 @@ public class EditCommandTest {
      */
     public void execute_duplicatePersonUnfilteredList_failure() {
         Activity firstActivity = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(firstActivity).build();
+        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder(firstActivity).build();
         EditCommand editCommand = prepareCommand(INDEX_SECOND_ACTIVITY, descriptor);
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_ACTIVITY);
@@ -138,7 +138,7 @@ public class EditCommandTest {
         // edit activity in filtered list into a duplicate in address book
         Activity activityInList = model.getDeskBoard().getActivityList().get(INDEX_SECOND_ACTIVITY.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY,
-                new EditActivityDescriptorBuilder(activityInList).build());
+                new EditTaskDescriptorBuilder(activityInList).build());
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_ACTIVITY);
     }
@@ -149,7 +149,7 @@ public class EditCommandTest {
      */
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
-        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder()
                 .withName(VALID_NAME_CS2010_QUIZ).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
 
@@ -168,7 +168,7 @@ public class EditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getDeskBoard().getActivityList().size());
 
         EditCommand editCommand = prepareCommand(outOfBoundIndex,
-                new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
+                new EditTaskDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
     }
@@ -183,7 +183,7 @@ public class EditCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Activity editedActivity = new TaskBuilder().build();
         Activity activityToEdit = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(editedActivity).build();
+        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder(editedActivity).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
         Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
 
@@ -208,7 +208,7 @@ public class EditCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
-        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder()
                 .withName(VALID_NAME_CS2010_QUIZ).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
 
@@ -233,7 +233,7 @@ public class EditCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Activity editedActivity = new TaskBuilder().build();
-        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(editedActivity).build();
+        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder(editedActivity).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
         Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
 
@@ -260,7 +260,7 @@ public class EditCommandTest {
         final EditCommand standardCommand = prepareCommand(INDEX_FIRST_ACTIVITY, DESC_MA2108_HOMEWORK);
 
         // same values -> returns true
-        EditCommand.EditActivityDescriptor copyDescriptor = new EditActivityDescriptor(DESC_MA2108_HOMEWORK);
+        EditCommand.EditActivityDescriptor copyDescriptor = new EditCommand.EditTaskDescriptor(DESC_MA2108_HOMEWORK);
         EditCommand commandWithSameValues = prepareCommand(INDEX_FIRST_ACTIVITY, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 

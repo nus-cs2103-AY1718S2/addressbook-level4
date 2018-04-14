@@ -38,7 +38,7 @@
 //import seedu.address.model.activity.Name;
 //import seedu.address.model.activity.Remark;
 //import seedu.address.model.tag.Tag;
-//import seedu.address.testutil.EditActivityDescriptorBuilder;
+//import seedu.address.testutil.EditTaskDescriptorBuilder;
 //
 //public class EditCommandParserTest {
 //
@@ -111,7 +111,7 @@
 //                + EMAIL_DESC_MA2108_HOMEWORK + ADDRESS_DESC_MA2108_HOMEWORK + NAME_DESC_MA2108_HOMEWORK
 //                + TAG_DESC_FRIEND;
 //
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withName(VALID_NAME_MA2108_HOMEWORK)
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_MA2108_HOMEWORK)
 //                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withAddress(VALID_REMARKS_MA2108_HOMEWORK)
 //                .withTags(VALID_TAG_MA2108, VALID_TAG_CS2010).build();
 //        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -124,7 +124,7 @@
 //        Index targetIndex = INDEX_FIRST_ACTIVITY;
 //        String userInput = targetIndex.getOneBased() + DATE_TIME_DESC_CS2010_QUIZ + EMAIL_DESC_MA2108_HOMEWORK;
 //
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder()
 //                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).build();
 //        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 //
@@ -136,32 +136,32 @@
 //        // name
 //        Index targetIndex = INDEX_THIRD_ACTIVITY;
 //        String userInput = targetIndex.getOneBased() + NAME_DESC_MA2108_HOMEWORK;
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder()
 //                .withName(VALID_NAME_MA2108_HOMEWORK).build();
 //        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 //        assertParseSuccess(parser, userInput, expectedCommand);
 //
 //        // phone
 //        userInput = targetIndex.getOneBased() + DATE_TIME_DESC_MA2108_HOMEWORK;
-//        descriptor = new EditActivityDescriptorBuilder().withPhone(VALID_DATE_TIME_MA2108_HOMEWORK).build();
+//        descriptor = new EditTaskDescriptorBuilder().withPhone(VALID_DATE_TIME_MA2108_HOMEWORK).build();
 //        expectedCommand = new EditCommand(targetIndex, descriptor);
 //        assertParseSuccess(parser, userInput, expectedCommand);
 //
 //        // email
 //        userInput = targetIndex.getOneBased() + EMAIL_DESC_MA2108_HOMEWORK;
-//        descriptor = new EditActivityDescriptorBuilder().build();
+//        descriptor = new EditTaskDescriptorBuilder().build();
 //        expectedCommand = new EditCommand(targetIndex, descriptor);
 //        assertParseSuccess(parser, userInput, expectedCommand);
 //
 //        // address
 //        userInput = targetIndex.getOneBased() + ADDRESS_DESC_MA2108_HOMEWORK;
-//        descriptor = new EditActivityDescriptorBuilder().withAddress(VALID_REMARKS_MA2108_HOMEWORK).build();
+//        descriptor = new EditTaskDescriptorBuilder().withAddress(VALID_REMARKS_MA2108_HOMEWORK).build();
 //        expectedCommand = new EditCommand(targetIndex, descriptor);
 //        assertParseSuccess(parser, userInput, expectedCommand);
 //
 //        // tags
 //        userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
-//        descriptor = new EditActivityDescriptorBuilder().withTags(VALID_TAG_CS2010).build();
+//        descriptor = new EditTaskDescriptorBuilder().withTags(VALID_TAG_CS2010).build();
 //        expectedCommand = new EditCommand(targetIndex, descriptor);
 //        assertParseSuccess(parser, userInput, expectedCommand);
 //    }
@@ -175,7 +175,7 @@
 //                + TAG_DESC_FRIEND + DATE_TIME_DESC_CS2010_QUIZ + ADDRESS_DESC_CS2010_QUIZ
 //                + EMAIL_DESC_CS2010_QUIZ + TAG_DESC_HUSBAND;
 //
-//        EditCommand.EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+//        EditCommand.EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder()
 //                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withAddress(VALID_REMARK_CS2010_QUIZ)
 //                .withTags(VALID_TAG_CS2010, VALID_TAG_MA2108).build();
 //        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -188,7 +188,7 @@
 //        // no other valid values specified
 //        Index targetIndex = INDEX_FIRST_ACTIVITY;
 //        String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + DATE_TIME_DESC_CS2010_QUIZ;
-//        EditCommand.EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+//        EditCommand.EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder()
 //                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).build();
 //        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 //        assertParseSuccess(parser, userInput, expectedCommand);
@@ -196,7 +196,7 @@
 //        // other valid values specified
 //        userInput = targetIndex.getOneBased() + EMAIL_DESC_CS2010_QUIZ + INVALID_PHONE_DESC + ADDRESS_DESC_CS2010_QUIZ
 //                + DATE_TIME_DESC_CS2010_QUIZ;
-//        descriptor = new EditActivityDescriptorBuilder().withPhone(VALID_DATE_TIME_CS2010_QUIZ)
+//        descriptor = new EditTaskDescriptorBuilder().withPhone(VALID_DATE_TIME_CS2010_QUIZ)
 //                .withAddress(VALID_REMARK_CS2010_QUIZ).build();
 //        expectedCommand = new EditCommand(targetIndex, descriptor);
 //        assertParseSuccess(parser, userInput, expectedCommand);
@@ -207,7 +207,7 @@
 //        Index targetIndex = INDEX_THIRD_ACTIVITY;
 //        String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 //
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withTags().build();
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder().withTags().build();
 //        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 //
 //        assertParseSuccess(parser, userInput, expectedCommand);

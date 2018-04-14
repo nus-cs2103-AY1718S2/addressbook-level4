@@ -58,7 +58,10 @@ public class DateTimeSchedulerTest {
                 throws DuplicateActivityException, ActivityNotFoundException {
 
         }
+        @Override
+        public void addActivities(ReadOnlyDeskBoard deskBoard) {
 
+        }
         @Override
         public ObservableList<Activity> getFilteredActivityList() {
             return null;

@@ -57,22 +57,27 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Some commands have command aliases which can be used in place of the command, e.g. `a` for `add`.
 ====
 
+//tag::unlock[]
 === Login : `unlock`
 
-You need to login to the APP to do any actions. The initial password is 123456.+
+You can unlock the APP while it is locked. The initial password is 123456.+
 Format: `unlock [PASSWORD]`
 alias: `ulk`
 
 Examples:
 
 * `unlock 123456`
+//end::unlock[]
 
+//tag::lock[]
 === Logout : `lock`
 
-You need to logout after using the APP. The initial password is 123456.+
+You can logout after using the APP. The initial password is 123456.+
 Format: `lock`
 alias: `lk`
+//end::lock[]
 
+//tag::setPassword[]
 === Reset password : `setPassword`
 
 You may change the password of login. The initial password is 123456.+
@@ -82,6 +87,7 @@ alias: `sp`
 Examples:
 
 * `setPassword 123456 123`
+//end::setPassword[]
 
 === Viewing help : `help`
 
@@ -130,17 +136,21 @@ Shows a list of all persons (including archived) in the address book. +
 Format: `listall`
 Alias: `la`
 
+//tag::sort[]
 === Sorting all persons : `sort`
 
 Sorts all persons in the address book based on alphabetical order of their full names. +
 Format: `sort`
 Alias: `so`
+//end::sort[]
 
+//tag::export[]
 === Export all persons : `export`
 
 Exports all persons in the address book based to a csv file. +
 Format: `export`
 Alias: `ep`
+//end::export[]
 
 === Listing all clients tagged with one or more specific tag (union): `listtag` `Coming in v2.0`
 
@@ -273,6 +283,7 @@ Examples:
 Deletes the 2nd appointment in the address book.
 // end::deleteappointment[]
 
+//tag::deletetag[]
 === Deleting a tag : `deletetag`
 
 Deletes the specified tag from everyone in the address book. +
@@ -287,6 +298,7 @@ Examples:
 
 *`delete family` +
 Deletes the family tag for every person in the address book.
+//end::deletetag[]
 
 === Listing entered commands : `history`
 

@@ -157,12 +157,12 @@ public class LogicManager extends ComponentManager implements Logic {
                     raise(new ShowNotificationEvent(ownerName, notification));
                 } catch (NullPointerException e) {
                     logger.info("Corresponding employee is deleted. Ignoring this notification");
-                    raise(new RequestToDeleteNotificationEvent(notification.getId(), true));
+                    raise(new RequestToDeleteNotificationEvent(notification.getEventId(), true));
                 }
             }
         };
         timetableEntriesStatus.put(task, true);
-        scheduledTimerTasks.put(event.notification.getId(), task);
+        scheduledTimerTasks.put(event.notification.getEventId(), task);
         timerTaskToTimetableEntryMap.put(task, event.notification);
         System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
                 .currentTimeMillis()));

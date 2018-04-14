@@ -15,6 +15,7 @@ public class Rating {
     public static final int DEFAULT_NULL_RATING = -1;
     public static final String INVALID_RATING_DISPLAY = "-";
     public static final String RATING_DISPLAY = ":star2: ";
+    public static final int MAX_RATING = 5;
 
     public final Integer value;
 
@@ -46,7 +47,7 @@ public class Rating {
      * Returns true if a given string is a valid input of person rating.
      */
     public static boolean isValidInputRating(int test) {
-        return test > 0 && test <= 5;
+        return test > 0 && test <= MAX_RATING;
     }
 
     @Override

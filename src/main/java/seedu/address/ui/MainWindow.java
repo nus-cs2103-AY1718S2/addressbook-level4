@@ -38,6 +38,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.FileChoosedEvent;
 import seedu.address.commons.events.logic.PasswordEnteredEvent;
 import seedu.address.commons.events.logic.SetPasswordEnteredEvent;
+import seedu.address.commons.events.model.RequestForNotificationCenterEvent;
 import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowFileChooserEvent;
@@ -326,7 +327,7 @@ public class MainWindow extends UiPart<Stage> {
                 notificationCenter.getTotalUndismmissedNotificationCards() + "",
                 event.getOwnerName(),
                 event.getNotification().getEndDateDisplay(),
-                event.getNotification().getOwnerId(), event.isFirstSatge(), event.getNotification().getId());
+                event.getNotification().getOwnerId(), event.isFirstSatge(), event.getNotification().getEventId());
         Region notificationCard = x.getRoot();
         notificationCard.setMaxHeight(NOTIFICATION_CARD_HEIGHT);
         notificationCard.setMaxWidth(NOTIFICATION_CARD_WIDTH);
@@ -429,6 +430,11 @@ public class MainWindow extends UiPart<Stage> {
     public void deleteNotificationCard(String id) {
         notificationCenter.deleteNotification(id);
     }
+
+    @Subscribe
+    protected void provideNotificationCenter(RequestForNotificationCenterEvent event) {
+        logic.setNotificationCenter(notificationCenter);
+    }
     //@@author
 
     //@@author emer7
@@ -478,6 +484,5 @@ public class MainWindow extends UiPart<Stage> {
             raise(new SetPasswordEnteredEvent("incomplete"));
         }
     }
-
     //@@author
 }

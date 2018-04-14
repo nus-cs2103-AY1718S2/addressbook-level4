@@ -5,7 +5,6 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.notification.Notification;
-import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -41,7 +40,7 @@ public interface Model {
     void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws NotificationNotFoundException;
 
     /** Adds the given person */
-    void addNotification(Notification e) throws DuplicateTimetableEntryException;
+    void addNotification(Notification e);
     //@@author IzHoBX
 
     //@@author crizyli

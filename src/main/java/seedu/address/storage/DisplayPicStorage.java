@@ -4,12 +4,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
 import javafx.scene.image.Image;
 
 import seedu.address.MainApp;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.AppUtil;
 import seedu.address.commons.util.FileUtil;
@@ -21,6 +23,8 @@ import seedu.address.model.person.DisplayPic;
  */
 //@@author Alaru
 public class DisplayPicStorage {
+
+    private static final Logger logger = LogsCenter.getLogger(DisplayPicStorage.class);
 
     public static final String SAVE_LOCATION = "data/displayPic/";
     public static final String INTERNAL_DEFAULT_PIC_SAVE_LOCATION = "/images/displayPic/default.png";
@@ -46,22 +50,21 @@ public class DisplayPicStorage {
         try {
             InputStream imageStream = ImageIO.class.getResourceAsStream(test);
             if (imageStream == null) {
-                try {
-                    BufferedImage image = ImageIO.read(new File(test));
-                    return image != null;
-                } catch (IOException e3) {
-                    return false;
-                }
+                return openImage(test);
             }
             BufferedImage image = ImageIO.read(imageStream);
             return image != null;
-        } catch (IOException e) {
-            try {
-                BufferedImage image = ImageIO.read(new File(test));
-                return image != null;
-            } catch (IOException e2) {
-                return false;
-            }
+        } catch (IOException ioe) {
+            return openImage(test);
+        }
+    }
+
+    private static boolean openImage(String filepath) {
+        try {
+            BufferedImage image = ImageIO.read(new File(filepath));
+            return image != null;
+        } catch (IOException ioe) {
+            return false;
         }
     }
 
@@ -118,9 +121,11 @@ public class DisplayPicStorage {
             File input = new File(filePath);
             if (!FileUtil.isSameFile(toSave, input)) {
                 FileUtil.copyImage(filePath, toSave);
+                logger.info("Successfully saved " + uniqueName + '.' + fileType + " to disk.");
             }
         } catch (IOException ioe) {
-            throw new IllegalValueException("Unable to write file");
+            logger.info("Error saving display picture: " + ioe.getMessage());
+            throw new IllegalValueException("Unable to save display picture");
         }
     }
 
@@ -135,6 +140,8 @@ public class DisplayPicStorage {
         } else {
             String filePath = dp.toString();
             if (!DisplayPicStorage.isValidPath(filePath) || !DisplayPicStorage.isValidImage(filePath)) {
+                logger.info("Unable to open image at : " + dp.toString()
+                        + ", retrieving default display picture.");
                 return AppUtil.getImage(INTERNAL_DEFAULT_PIC_SAVE_LOCATION);
             }
             File input = new File(dp.toString());

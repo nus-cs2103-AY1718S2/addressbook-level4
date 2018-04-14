@@ -1299,6 +1299,20 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
+=== Adding participation marks for a person
+
+. Adding participation marks to a person while all persons are listed
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `markPart 1 marks/50` +
+   Expected: First person is updated with the addition of the marks. Success message shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `markPart 0 marks/50` +
+   Expected: No marks are added to anyone. Error details shown in the status message. Status bar remains the same. +
+.. Test case: `markPart 1` +
+   Expected: No marks are added to anyone. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect markPart commands to try: `markPart`, `markPat x marks/50` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
 === Saving data
 
 . Dealing with missing/corrupted data files

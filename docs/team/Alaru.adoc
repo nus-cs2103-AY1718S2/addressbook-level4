@@ -35,12 +35,14 @@ The existing commands were also updated to support the adding and changing of di
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
-*** Manage and set up the Issue Tracker, assigned issues and added labels to the issues.
+*** Managed releases `v1.3` - `v1.4` (2 releases) on GitHub
+*** Managed the Issue Tracker, assigned issues and added labels to the issues.
+*** Help resolve merge conflicts.
 *** Set up Travis for the organization repo.
 *** Help update README (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/66[#66])
 ** Documentation:
 *** Updated the screenshots used in the User Guide: https://github.com/CS2103JAN2018-F09-B1/main/pull/57[#57]
+*** Re-worked the developer guide.
 ** Community:
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F12-B2/main/issues/83[1], https://github.com/CS2103JAN2018-F12-B2/main/issues/80[2], https://github.com/CS2103JAN2018-F12-B2/main/issues/76[3])
 

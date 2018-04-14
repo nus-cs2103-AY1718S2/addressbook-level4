@@ -32,7 +32,7 @@ public class ViewAppointmentCommandParser implements Parser<ViewAppointmentComma
             return new ViewAppointmentCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ViewAppointmentCommand.MESSAGE_USAGE_PATIENT)));
+                    ViewAppointmentCommand.MESSAGE_USAGE_PATIENT_WITH_INDEX)));
         }
     }
 }

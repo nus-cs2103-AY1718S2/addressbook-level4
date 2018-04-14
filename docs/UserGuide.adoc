@@ -415,6 +415,12 @@ Views the medical record at the specified record index for a patient specified b
 *This command is only accessible to doctors.* +
 Format: `record INDEX in/[RECORD INDEX]` or `rec INDEX in/[RECORD INDEX]`
 
+[IMPORTANT]
+This command is undoable.
+
+[CAUTION]
+This command is only for doctors.
+
 ****
 * The medical record for that patient will be opened in a separate window.
 * If the specified index is more than the number of medical records, a new medical record will be created instead.

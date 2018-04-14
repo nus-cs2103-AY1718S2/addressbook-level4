@@ -167,10 +167,10 @@ image::UiClassDiagramV1.5.png[width="800"]
 
 The UI consists of a `MainWindow` that is made up of parts + 
 `CommandBox` +
-`ResultDisplay`+
-`PersonListPanel`+
-`ToDoListPanel`+
-`GroupListPanel`+
+`ResultDisplay` +
+`PersonListPanel` +
+`ToDoListPanel` +
+`GroupListPanel` +
 `Calendar` +
 `TimeTable` +
 `StatusBarFooter`+

@@ -789,7 +789,7 @@ Each milestone can contain a list of tasks. A task signifies a piece of work to 
 Codeducator allows you to create and add tasks to each milestone so that you can keep track of what has already been done and what still needs to be done to reach the milestone.
 
 .An example of a student's dashboard
-image::dashboardScreenshot.png[width="800"]
+image::DashboardScreenshot.png[width="800"]
 
 ==== Showing the dashboard of a student: `showDB`
 
@@ -1215,8 +1215,8 @@ The examples below are just for your reference. Any phrase or sentence can be us
 [IMPORTANT]
 Currently, the commands `Delete` and `Select` only detects English names!
 
-image::Select(before).PNG[width="500"]
-image::Select(after).PNG[width="500"]
+image::Select(before).png[width="500"]
+image::Select(after).png[width="500"]
 
 === Guidelines for using this feature
 * Be sure to check for spelling errors in your sentences.

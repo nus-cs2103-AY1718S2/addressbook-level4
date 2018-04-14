@@ -45,8 +45,11 @@ and tracking their students' learning development.
 *** Managed release `v1.4` on GitHub
 ** Documentation:
 *** Did cosmetic tweaks to existing contents of the Developer Guide: https://github.com/CS2103JAN2018-W09-B3/main/pull/167[#167]
-** Modification to original AddressBook-Level4 code base:
-*** Refactored the name of some classes in the context of Codeducator (e.g. changed the name of `Person` to `Student` and `Subject` to `ProgrammingLanguage`.
+** Community:
+*** PR reviewed: https://github.com/CS2103JAN2018-W09-B3/main/pull/174[#174]
+*** Reported bugs for another team: https://github.com/CS2103JAN2018-F09-B1/main/issues/77[1], https://github.com/CS2103JAN2018-F09-B1/main/issues/70[2], https://github.com/CS2103JAN2018-F09-B1/main/issues/81[3], https://github.com/CS2103JAN2018-F09-B1/main/issues/89[4]
+** Others:
+*** Refactored the name of some classes in the context of Codeducator (changed the name of `Person` to `Student` and `Subject` to `ProgrammingLanguage`): http://github.com/CS2103JAN2018-W09-B3/main/pull/27[#27]
 
 == Contributions to the User Guide
 

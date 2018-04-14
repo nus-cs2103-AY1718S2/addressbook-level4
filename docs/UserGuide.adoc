@@ -253,7 +253,7 @@ Returns any recipe having substrings `_chicken_`, `_fish_`, or `_pasta_`.
 
 Creates a group of one or multiple recipes by the index or indices used in the last recipe listing.
 
-Format: `group group_name/GROUP_NAME index/INDEX [index/INDEX]`
+Format: `group group_name/GROUP_NAME index/INDEX [index/INDEX]...`
 
 ****
 * The index refers to the index number shown in the most recent listing.

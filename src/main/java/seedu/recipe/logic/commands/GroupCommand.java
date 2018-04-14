@@ -25,7 +25,7 @@ public class GroupCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_GROUP_NAME + "GROUP_NAME "
             + PREFIX_INDEX + "INDEX "
-            + "[" + PREFIX_INDEX + "INDEX] (must be a positive integer)\n"
+            + "[" + PREFIX_INDEX + "INDEX]... (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_GROUP_NAME + "Best "
             + PREFIX_INDEX + "1 "

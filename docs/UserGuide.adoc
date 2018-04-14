@@ -24,9 +24,24 @@ More importantly, it is optimized for those who prefer to work with a Command Li
 
 If you can type fast, ContactSails can get your sales management related tasks done faster than traditional GUI apps.
 
+== About This Guide
+
+This User Guide will help you set up ContactSails on your desktop and explain the all the features provided by our application in detail.
+
+The User Guide has some text styled in different ways to signify different meanings:
+
+* `text` : denotes the commands you will need to enter to execute the corresponding functions in ContactSails. +
+* kbd:[TEXT] : denotes keyboard buttons you might need to press. +
+* <<TEXT>> : denotes links to other parts of the document or links that need to be opened in the browser.
+
+See <<Quick Start>> for instructions on how to install our application.
+
+If you are ready to use the application and want to know more about the CLI commands offered by ContactSails, you can jump to <<Features>>.
+
 == Quick Start
 
 Before you start, ensure you have Java version `1.8.0_60` or later installed in your computer.
+You can download Java from link:https://java.com/en/download/[here].
 
 [NOTE]
 This app will not work with earlier versions of Java 8, so make sure you have installed the right version.
@@ -36,32 +51,23 @@ To install and start using ContactSails, do the following:
 .  Download the latest `ContactSails.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for ContactSails.
 .  Double-click the file to start the app. The User Interface (UI) should appear in a few seconds, as shown in Figure 1 below.
-You can resize the application window as required by dragging the corners of the window.
+You can resize the application window as required by dragging the corners of the application window.
 +
 [.text-center]
 .ContactSails Application UI Interface
-image::ContactSails_Interface_StartUp.PNG[width="790" align="center"]
+image::ContactSails_Interface_StartUp.PNG[width="500" align="center"]
 +
 .  Type a command in the command box (located right below Menu Bar) and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+For example, typing `help` and pressing kbd:[Enter] will open the help window.
 *  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to ContactSails.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* **`calendar month`**: displays the calendar at the center of ContactSails
-* *`exit`* : exits the app
+** `list` : lists all contacts.
+** `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to ContactSails.
+** `delete 3` : deletes the 3rd contact shown in the current list.
+** `calendar month`: displays the calendar at the center of ContactSails.
+** `exit` : exits the app.
 
-
-.  Commands also have alias words so you can execute the same commands in a quicker way.
-.  Some example command aliases you can try:
-** `list` : lists all contacts
-** `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-** `delete 3` : deletes the 3rd contact shown in the current list
-* **`cal month`**: displays the calendar at the center of ContactSails
-** `exit` : exits the app
-
-.  Refer to <<Features>> for details of each command.
+.  Refer to <<Features>> for details of all the commands you can execute in our application. If you want to see a quick summary of all the commands instead, jump to <<Command Summary>>.
 
 == Using ContactSails
 
@@ -72,18 +78,19 @@ This section first describes the various components of ContactSails' User Interf
 This section briefly explains the various panels in the UI interface of ContactSails.
 
 [.text-center]
-.Breakdown of ContactSails UI
-image::ContactSails_Interface_Breakdown.png[width="790" align="center"]
+.Breakdown of ContactSails UI.
+image::ContactSails_Interface_Breakdown.png[width="800" align="center"]
 
 With reference to Figure 2 above, there are 5 important sections in the interface:
 
 . *Command Box*: This is the place for you to type your commands. Pressing kbd:[Enter] will execute the command.
-. *Result Display*: This place shows the result of the command you have executed. It will display messages indicating whether your command has executed successfully.
+. *Result Display*: This place shows the result of the command you have executed. It will display messages indicating whether your command has executed successfully or not.
 If your command fails to execute, error messages indicating the cause of the failure will be shown here.
 . *Person List Panel*: This panel displays the list of persons that exist in ContactSails. You can filter this list of persons with `find` commands.
-. *Center Panel*: This panel can display either a detailed display of a person's information, or a calendar. `calendar` command will display the calendar and `select` command will display selected person's information.
+. *Center Panel*: This panel can display either a detailed display of a person's information, or a calendar.
+The `select` command will display the selected person's information, and the `calendar` command will display the calendar.
 . *Right Panel*: This panel can display either a list of orders or a list of calendar entries in ContactSails. On startup, this panel will show the list of orders by default.
-You can use `entrylist` and `orderlist` to switch between the two lists.
+You can use `orderlist` and `entrylist` to switch between the two lists.
 
 Person List Panel, Center Panel and Right Panel will be explained in greater detail in <<Features>>.
 
@@ -124,9 +131,10 @@ Command Alias: `?`
 === Managing Persons
 
 This section describes commands you can use to manage person entries in ContactSails.
-The figure below shows how ContactSails look currently.
+The figure below shows how ContactSails looks currently.
 
-image::Start.png[width = "790"]
+.Current state of ContactSails.
+image::Start.png[width="500" align="center"]
 
 ==== Adding a person : `add`
 
@@ -139,16 +147,18 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [g/GROUP]... [pr/PREFERENCE
 Command Alias: `a`
 
 [TIP]
-A person can have any number of groups and preferences (including 0)
+A person can have any number of groups and preferences (including 0).
 
-Examples:
+Example:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pr/notebooks` OR +
-`a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pr/notebooks` +
-Adds a contact `John Doe`, with `98765432` as phone number, `johnd@example.com` as email, `John street, block 123, #01-01` as address,
-and `notebooks` as a preference tag.
+Type `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pr/notebooks` OR +
+`a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pr/notebooks` into the Command Box. +
 
-image::add.png[width = "790"]
+This adds a contact `John Doe`, with `98765432` as phone number, `johnd@example.com` as email, `John street, block 123, #01-01` as address,
+and `notebooks` as a preference tag, as shown below.
+
+.Result of executing the 'add' command given above.
+image::AddNewPerson.png[width="500" align="center"]
 
 ==== Editing a person : `edit`
 
@@ -168,17 +178,21 @@ Command Alias: `e`
 * You can remove all the person's groups and preferences by typing `g/` and `pr/` without specifying any groups and preferences after it respectively.
 ****
 
-Here's a picture of current ContactSails
-
-image::add.png[width = "790"]
-
 Example:
 
-* `edit 2 n/Betsy Crower g/` OR +
-`e 2 n/Betsy Crower g/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing groups.
+Here's a picture of how the second contact in ContactSails looks currently:
 
-image::edit.png[width = "790"]
+.Current state of the 2nd contact in ContactSails.
+image::EditPersonBefore.png[width="200" align="center"]
+
+Type `edit 2 n/Betsy Crower g/` OR
+`e 2 n/Betsy Crower g/` into the Command Box. +
+
+This edits the name of the 2nd person to be `Betsy Crower` and clears all existing groups.
+The figure below shows the updated contact.
+
+.Result of executing the 'edit' command given above.
+image::EditPersonAfter.png[width="200" align="center"]
 
 ==== Deleting a person : `delete`
 
@@ -198,13 +212,13 @@ Command Alias: `d`
 
 Examples:
 
-* `list` +
-`delete 2` OR `d 2` +
-Deletes the 2nd person in ContactSails.
+. Type `list`, press kbd:[Enter], then type +
+`delete 2` OR `d 2` into the Command Box. +
+This deletes the 2nd person in ContactSails.
 
-* `find Betsy` +
-`delete 1`  OR `d 1` +
-Deletes the 1st person in the results of the `find` command.
+. Type `find Betsy`, press kbd:[Enter], then type +
+`delete 1`  OR `d 1` into the Command Box. +
+This deletes the 1st person in the results of the `find` command.
 
 ==== Listing all persons : `list`
 
@@ -232,15 +246,11 @@ Command Alias: `s`
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-Examples:
+Example:
 
-* `list` +
-`select 2` OR `s 2` +
-Selects the 2nd person in ContactSails.
+Type `list`, press kbd:[Enter], then type `select 2` OR `s 2` into the Command Box. +
 
-* `find Betsy` +
-`select 1` OR `s 1` +
-Selects the 1st person in the results of the `find` command.
+This selects the 2nd person in ContactSails.
 
 === Finding Persons
 
@@ -267,13 +277,11 @@ Command Alias: `f`
 
 Examples:
 
-* `find John` OR +
-`f John` +
-Returns `john` and `John Doe`
+. Type `find John` OR `f John` into the Command Box. +
+This shows a list of all persons named `john` and `John Doe`.
 
-* `find Betsy Tim John` OR +
-`f Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+. Type `find Betsy Tim John` OR `f Betsy Tim John` into the Command Box. +
+This shows a list of all persons having names `Betsy`, `Tim`, or `John`.
 
 ==== Finding persons by groups : `groupfind` `since v1.2`
 
@@ -292,15 +300,10 @@ Command Alias: `gf`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `criminal friends` will return `John Doe`, `Betsy Crowe` who have the groups `friends` and `criminal` respectively.
 ****
 
-Examples:
+Example:
 
-* `groupfind friends` OR +
-`gf friends` +
-Returns `John Doe`
-
-* `groupfind neighbours friends colleagues` OR +
-`gf neighbours friends colleagues` +
-Returns any person having groups `neighbours`, `friends`, or `colleagues`
+Type `groupfind neighbours friends colleagues` OR `gf neighbours friends colleagues` into the Command Box. +
+This shows a list of all persons with groups `neighbours`, `friends`, or `colleagues`.
 
 ==== Finding persons by preferences : `preffind` `since v1.2`
 
@@ -319,15 +322,10 @@ Command Alias: `pf`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `computers knives` will return `John Doe`, `Betsy Crowe` who have the preferences `computers` and `knives` respectively.
 ****
 
-Examples:
+Example:
 
-* `preffind computers` OR +
-`pf computers` +
-Returns `John Doe`
-
-* `preffind computers shoes necklaces` OR +
-`pf computers shoes necklaces` +
-Returns any person having preferences `computers`, `shoes`, or `necklaces`
+Type `preffind computers shoes necklaces` OR `pf computers shoes necklaces` into the Command Box. +
+This shows a list of all persons with preferences `computers`, `shoes`, or `necklaces`.
 
 === Managing Groups and Preferences
 
@@ -349,26 +347,27 @@ Command Alias: `gd`
 * All persons with specified group will have their group tag removed.
 ****
 
-Examples:
+Example:
 
-Here's a picture of the contacts in ContactSails.
+The figure below shows ContactSails, with the 1st contact selected.
 
-image::BeforeContacts.png[width = "790"]
+.ContactSails with the 1st contact selected.
+image::BeforeContacts.png[width="500" align="center"]
 
-* `groupdelete friends` OR `gd friends`
-* `groupdelete friends` OR +
-`gd friends` +
+Type `groupdelete friends` OR `gd friends` into the Command Box.
 
-All persons in ContactSails with the group `friends` will have the group removed.
+All persons in ContactSails with the group `friends` will have the group removed from their contact.
 
-At first, it will show the following, where the group friends still
-appear at the person panel.
+These changes will be reflected in the list of persons, but the selected contact might still display the `friends` tag, as shown below.
+This is because the PersonPanel needs to be refreshed after the deletion.
 
-image::Warning1.png[width = "790"]
+.The group 'friends' has been removed but the PersonPanel for 'Alex Yeoh' still shows the tag.
+image::GroupDeleteWarning.png[width="500" align="center"]
 
-Now, click on another contact. Then, click back 1. Alex Yeoh to see the change.
+To refresh the PersonPanel, `select` another contact, and then `select 1` again. The PersonPanel will now have the updated information.
 
-image::Warning2.png[width = "790"]
+.After refreshing the PersonPanel, 'Alex Yeoh' will have the updated information.
+image::GroupDeleteRefresh.png[width="500" align="center"]
 
 ==== Deleting a preference : `prefdelete` `since v1.2`
 
@@ -386,28 +385,27 @@ Command Alias: `pd`
 * All persons with specified preference will have their preference tag removed.
 ****
 
-Examples:
+Example:
 
-Here's a picture of the contacts in ContactSails.
+The figure below shows ContactSails, with the 2nd contact selected.
 
-image::Warning3.png[width = "790"]
+.ContactSails with the 2nd contact selected.
+image::Warning3.png[width="500" align="center"]
 
-* `prefdelete shoes` OR
-`pd shoes`.
-All persons in ContactSails with the preference [shoes] will have the preference removed.
+Type `prefdelete shoes` OR `pd shoes` into the Command Box.
 
-At first, it will show the following, where the preference shoes still appear
-at the person panel.
+All persons in ContactSails with the preference `shoes` will have the preference removed from their contact.
 
-image::PreferenceWarning1.png[width = "790"]
+These changes will be reflected in the list of persons, but the selected contact might still display the `shoes` tag, as shown below.
+This is because the PersonPanel needs to be refreshed after the deletion.
 
-Now, click on another contact. Then, click back 2. Bernice Yu to see the change.
+.The preference 'shoes' has been removed but the PersonPanel for 'Bernice Yu' still shows the tag.
+image::PreferenceWarning1.png[width="500" align="center"]
 
-image::PreferenceWarning2.png[width = "790"]
+To refresh the PersonPanel, `select` another contact, and then `select 2` again. The PersonPanel will now have the updated information.
 
-* `prefdelete computers` OR +
-`pd computers` +
-All persons in ContactSails with the preference `computers` will have the preference removed.
+.After refreshing the PersonPanel, 'Bernice Yu' will have the updated information.
+image::PreferenceWarning2.png[width="500" align="center"]
 
 === Managing Orders
 
@@ -415,7 +413,7 @@ This section describes commands you can use to manage order entries in ContactSa
 
 [.text-center]
 .Current state of ContactSails.
-image::OrdersInitialAddressbook.png[width="790" align="center"]
+image::OrdersInitialAddressbook.png[width="500" align="center"]
 
 ==== Adding an order : `orderadd` `since v1.2`
 
@@ -427,15 +425,20 @@ Format: `orderadd INDEX i/ORDER INFORMATION pr/PRICE q/QUANTITY d/DELIVERY DATE`
 
 Command Alias: `oa`
 
-Examples:
+Example:
 
-* `orderadd 2 i/NBA 2k18 pr/59.99 q/1 d/14-04-2018` OR +
-`orderadd 2 i/NBA 2k18 pr/59.99 q/1 d/14-04-2018` +
-Adds the `NBA 2k18` order to `Noel Tay`, the 2nd person, as shown in the figure below.
+Type `orderadd 2 i/NBA 2k18 pr/59.99 q/1 d/14-04-2018` OR
+`orderadd 2 i/NBA 2k18 pr/59.99 q/1 d/14-04-2018` into the Command Box. +
+
+This adds the `NBA 2k18` order to `Noel Tay`, the 2nd person, as shown in the figure below.
 
 [.text-center]
 .Result of adding the 'NBA 2k18' to 'Noel Tay' in ContactSails.
-image::OrderAdd.png[width="790" align="center"]
+image::OrderAdd.png[width="500" align="center"]
+
+[NOTE]
+Currently, the orders added will be shown in the list of all orders in the Right Panel.
+We are planning to add the ability to only view orders specific to a person in their PersonPanel view in `v2.0`.
 
 ==== Editing an order : `orderedit` `since v1.2`
 
@@ -453,23 +456,23 @@ Command Alias: `oe`
 * Existing values will be updated to the input values.
 ****
 
-Examples:
+Example:
 
 ContactSails currently has the following order:
 
 [.text-center]
 .Initial state of the 'Books' order.
-image::OrderEditInit.png[width="250" align="center"]
+image::OrderEditInit.png[width="200" align="center"]
 
 To edit the order above, execute the following command:
 
-* `orderedit 1 pr/12.50 q/5` OR +
-`oe 1 pr/12.50 q/5` +
-Edits the price and quantity fields of `Books`, the 1st order, to be `12.50` and `5` respectively. The result is shown in the figure below.
+Type `orderedit 1 pr/12.50 q/5` OR `oe 1 pr/12.50 q/5` into the Command Box. +
+
+This edits the price and quantity fields of `Books`, the 1st order, to be `12.50` and `5` respectively. The result is shown in the figure below.
 
 [.text-center]
 .Result of editing the 'Books' order.
-image::OrderEditResult.png[width="250" align="center"]
+image::OrderEditResult.png[width="200" align="center"]
 
 ==== Changing the order status : `orderstatus` `since v1.4`
 
@@ -485,15 +488,15 @@ Command Alias: `os`
 * Orders can be marked as `ongoing` and `done` only.
 ****
 
-Examples:
+Example:
 
-* `orderstatus 1 os/done` OR +
-`os 1 os/done`
-Marks the order status of `Books`, the 1st order in the order list as `done`. The figure below shows how the UI updates after executing the command above.
+Type `orderstatus 1 os/done` OR `os 1 os/done` into the Command Box. +
+
+This marks the order status of `Books`, the 1st order in the order list as `done`. The figure below shows how the UI updates after executing the command above.
 
 [.text-center]
 .Result of marking the status of the 'Books' order as 'done'.
-image::OrderStatusResult.png[width="250" align="center"]
+image::OrderStatusResult.png[width="200" align="center"]
 
 ==== Deleting an order : `orderdelete` `since v1.2`
 
@@ -511,21 +514,21 @@ Command Alias: `od`
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-Examples:
+Example:
 
 The figure below shows the current order list in the application:
 
 [.text-center]
 .Initial state of the order list.
-image::OrderDeleteInit.png[width="250" align="center"]
+image::OrderDeleteInit.png[width="200" align="center"]
 
-* `orderdelete 1` OR +
-`od 1` +
-Deletes `Books`, the 1st order in the order list from ContactSails.
+Type `orderdelete 1` OR `od 1` into the Command Box. +
+
+This deletes `Books`, the 1st order in the order list from ContactSails. The updated order list is shown below.
 
 [.text-center]
 .Result of deleting 'Books', the 1st order in the order list.
-image::OrderDeleteResult.png[width="250" align="center"]
+image::OrderDeleteResult.png[width="200" align="center"]
 
 ==== Listing all orders : `orderlist` `since v1.4`
 
@@ -542,14 +545,15 @@ Command Alias: `ol`
 
 This section describes commands related to viewing the calendar in ContactSails.
 The calendar is displayed at the CenterPanel of the interface when you enter any of the commands in this section.
-Figure 3 below shows how the calendar looks like.
+Figure 20 below shows how the calendar looks like.
 
 [.text-center]
 .ContactSails interface with Calendar and Calendar Entries displayed.
-image::ContactSails_Ui_Calendar.PNG[width="790" align="center"]
+image::ContactSails_Ui_Calendar.PNG[width="500" align="center"]
 
-In Figure 3, the calendar is set to Day-view, hence it displays all calendar entries that occur in the displayed date (11 April 2018, Wednesday).
-In the calendar, calendar entries appears as colored blocks, such as the green block in Figure 3, indicating the title and starting time of the entry.
+In Figure 20, the calendar is set to Day-view, hence it displays all calendar entries that occur in the displayed date (11 April 2018, Wednesday).
+In the calendar, calendar entries appears as colored blocks, such as the green block in Figure 20, indicating the title and starting time of the entry.
+
 You can change the viewing format of the calendar using `calendar` command to switch to either of the 3 views; Day-view, Week-view and Month-view.
 To change the displayed date, you can enter `calendarjump` command to view your desired date.
 
@@ -574,12 +578,12 @@ Example:
 
 To set display of calendar to Month-view, execute the following command:
 
-* `calendar month` OR +
-`cal month` +
-Shows calendar in Month-view as seen in the figure below.
+Type `calendar month` OR `cal month` into the Command Box. +
 
-.Calendar set to Month-view
-image::Calendar_Month_View.png[width]
+This shows calendar in Month-view as seen in the figure below.
+
+.Calendar set to Month-view.
+image::Calendar_Month_View.png[width="500" align="center"]
 
 ==== Go to next page in the calendar : `calendarnext` `since v1.5rc`
 
@@ -592,7 +596,7 @@ Format: `calendarnext` +
 Command Alias: `calnext`
 
 ****
-* The command has the same effect as pressing the kbd:[&rarr;] button at the top left corner of the calendar.
+* The command has the same effect as pressing the kbd:[>] button at the top left corner of the calendar.
 * If calendar is displaying in Day-view, command displays the next day of original date in Day-view.
 * If calendar is displaying in Week-view, command displays the next week of original date in Week-view.
 * If calendar is displaying in Month-view, command displays next month of original date in Month-view.
@@ -609,7 +613,7 @@ Format: `calendarback` +
 Command Alias: `calback`
 
 ****
-* The command has the same effect as pressing the kbd:[Left] button at the top left corner of the calendar.
+* The command has the same effect as pressing the kbd:[<] button at the top left corner of the calendar.
 * If calendar is displaying in Day-view, command displays the previous day of original date in Day-view.
 * If calendar is displaying in Week-view, command displays the previous week of original date in Week-view.
 * If calendar is displaying in Month-view, command displays previous month of original date in Month-view.
@@ -656,12 +660,12 @@ You can use calendar entries to represent events, deadlines or meetings. +
 
 A calendar entry has a title, start date, end date, start time and end time.
 These entries will be displayed in the calendar in the Center Panel and calendar entry list in the Right Panel.
-Figure 5 below shows how a calendar entry appears in the calendar entry list.
+Figure 22 below shows how a calendar entry appears in the calendar entry list.
 
 .Calendar Entry Description
-image::Calendar_Entry_Card.png[width]
+image::Calendar_Entry_Card.png[width="300" align="center"]
 
-In Figure 5, calendar entry has an index of 1, indicating its position in the list.
+In Figure 22, calendar entry has an index of 1, indicating its position in the list.
 Beside the index is the title of the calendar entry (Meet Aaron).
 The description indicates the entry's starting date (11-04-2018) and ending date (11-04-2018).
 The last sentence indicates the starting time (14:00) and ending time. (17:00) of the entry.
@@ -689,9 +693,10 @@ Command Alias: `ea` +
 
 Example:
 
-* `entryadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00` OR +
-`ea t/meet with boss ed/05-05-2020 st/10:00 et/12:00` +
-Creates a calendar entry with listed title, starts from 1000 and ends at 1200 on 5 May 2020. +
+Type `entryadd t/meet with boss ed/05-05-2020 st/10:00 et/12:00` OR +
+`ea t/meet with boss ed/05-05-2020 st/10:00 et/12:00` into the Command Box. +
+
+This creates a calendar entry with listed title, starts from 10:00 am and ends at 12:00 noon on 5 May 2020. +
 
 ==== Editing entries in calendar entry list : `entryedit` `since v1.5rc`
 
@@ -712,19 +717,16 @@ Example:
 
 The calendar entry list currently has the following calendar entry at index 1:
 
-.Initial state of "Meet boss" calendar entry
-image::Edit_Entry_Before.png[width]
+.Initial state of 'Meet Boss' calendar entry.
+image::Edit_Entry_Before.png[width="300" align="center"]
 
-To edit the above calendar entry, execute the following command:
+To edit this entry, type `entryedit 1 t/Meeting with Bosses et/14:00` OR `ee 1 t/meet with bosses et/1400` into the Command Box. +
 
-* `entryedit 1 t/Meeting with Bosses et/14:00` OR +
-`ee 1 t/meet with bosses et/1400` +
+This edits the title and end time of 1st entry in entry list to `Meeting with Bosses` and `1400` respectively.
+The result is shown in the figure below. +
 
-Edits title and end time of 1st entry in entry list to "Meeting with Bosses" and 1400 respectively.
-The result is shown in the figure below.+
-
-.Result of editing "Meet boss" calendar entry
-image::Edit_Entry_After.png[width]
+.Result of editing the 'Meet Boss' calendar entry.
+image::Edit_Entry_After.png[width="300" align="center"]
 
 ==== Deleting entries in calendar entry list : `entrydelete` `since v1.4`
 
@@ -744,10 +746,8 @@ Command Alias: `ed` +
 
 Example:
 
-* `entrydelete 1` OR +
-`ed 1` +
-Deletes the entry at index 1 of most recent entry listing. +
-Entry is removed from the calendar.
+Type `entrydelete 1` OR `ed 1` into the Command Box. +
+This deletes the entry at index 1 of most recent entry listing. +
 
 ==== Listing all calendar entries : `entrylist` `since v1.4`
 
@@ -805,12 +805,11 @@ Command Alias: `t`
 
 Examples:
 
-* `theme light` OR +
-`t light` +
-Changes the theme of the application to the light theme. The figure below shows the ContactSails UI with the light theme.
+Type `theme light` OR `t light` into the Command Box. +
+This changes the theme of the application to the light theme. The figure below shows the ContactSails UI with the light theme.
 
 .ContactSails Light Theme
-image::ContactSails_Light_Theme.png[width="790" align="center"]
+image::ContactSails_Light_Theme.png[width="500" align="center"]
 
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
@@ -828,21 +827,13 @@ Command Alias: `u`
 Undoable commands: These are commands that modify ContactSails's state (`add`, `delete`, `edit`, `clear`, etc.).
 ====
 
-Examples:
+Example:
 
-* `delete 1` +
-`list` +
-`undo` OR `u` (reverses the `delete 1` command) +
+Type `delete 1` into the Command Box, and press kbd:[Enter]. This deletes the 1st contact. +
 
-* `select 1` +
-`list` +
-`undo` OR `u` +
-The `undo` command fails as there are no undoable commands executed previously.
+Next, type `list` to display the list of persons after the deletion. You can see that the 1st contact has been deleted. +
 
-* `delete 1` +
-`clear` +
-`undo` OR `u` (reverses the `clear` command) +
-`undo` OR `u` (reverses the `delete 1` command) +
+Now, to undo the deletion, type `undo` OR `u`. You can see that the deleted person has been added back to the list of contacts. +
 
 ==== Redoing the previously undone command : `redo`
 
@@ -854,22 +845,14 @@ Format: `redo` +
 
 Command Alias: `r`
 
-Examples:
+Example:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` OR `r` (reapplies the `delete 1` command) +
+Type `delete 1` into the Command Box, and press kbd:[Enter]. This deletes the 1st contact. +
 
-* `delete 1` +
-`redo` OR `r` +
-The `redo` command fails as there are no `undo` commands executed previously.
+Typing `undo` will add the deleted person back to the list of contacts.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` OR `r` (reapplies the `delete 1` command) +
-`redo` OR `r` (reapplies the `clear` command) +
+Now, if you want to redo the deletion, type `redo` OR `r`. You can see that the same contact has been deleted again. +
+
 // end::undoredo[]
 
 ==== Clearing all entries : `clear`
@@ -917,9 +900,9 @@ Command Alias: `q`
 *Q*: Why is it that an error shows up when I clicked the interface of the calendar twice, as seen in Figure ? below?
 
 .Error dialog box when calendar is clicked twice.
-image::Calendar_DoubleClick_Error.png[width]
+image::Calendar_DoubleClick_Error.png[width="300" align="center"]
 
-*A*: As of V1.5, we have disabled the ability for users to add entries by clicking on the calendar twice, as entries created this way will not be saved in ContactSails.
+*A*: As of `v1.5`, we have disabled the ability for users to add entries by clicking on the calendar twice, as entries created this way will not be saved in ContactSails.
 This ability will be enabled in future versions of ContactSails.
 
 *Q*: How do I transfer my data to another computer? +
@@ -1028,11 +1011,11 @@ Command Alias: `tc`
 * `NUMBER` must be in the range of 1 to total number of persons in ContactSails, both inclusive.
 ****
 
-Examples:
+Example:
 
-* `topcustomers 10` OR +
-`tc 10` +
-Displays the list of the top ten persons in ContactSails based on how frequently you access these contacts.
+Type `topcustomers 10` OR `tc 10` into the Command Box. +
+
+This displays the list of the top ten persons in ContactSails based on how frequently you access these contacts.
 
 ==== Viewing top customers : `topitems` `coming in v2.0`
 
@@ -1049,11 +1032,11 @@ Command Alias: `ti`
 * `NUMBER` must be in the range of 1 to total number of items in ContactSails, both inclusive.
 ****
 
-Examples:
+Example:
 
-* `topitems 10` OR +
-`ti 10` +
-Displays the list of the top ten items in ContactSails based on how many of the items have been sold.
+Type `topitems 10` OR `ti 10` into the Command Box. +
+
+This displays the list of the top ten items in ContactSails based on how many of the items have been sold.
 
 === Sending Promotions
 
@@ -1077,11 +1060,12 @@ Command Alias: `spg`
 * The subject and body of the email will be specified by the `SUBJECT` and `BODY` parameters respectively.
 ****
 
-Examples:
+Example:
 
-* `sendpromogroup friends sub/New Offer on Sunglasses` OR +
-`spg friends sub/New Offer on Sunglasses` +
-Opens an email draft in the browser with recipients as all persons tagged as 'friends' and subject as 'New Offer on Sunglasses'. +
+Type `sendpromogroup friends sub/New Offer on Sunglasses` OR +
+`spg friends sub/New Offer on Sunglasses` into the Command Box. +
+
+This opens an email draft in the browser with recipients as all persons tagged as 'friends' and subject as 'New Offer on Sunglasses'. +
 
 ==== Sending promotions based on preference : `sendpromopref` `coming in v2.0`
 
@@ -1100,11 +1084,12 @@ Command Alias: `spp`
 * The subject and body of the email will be specified by the `SUBJECT` and `BODY` parameters respectively.
 ****
 
-Examples:
+Example:
 
-* `sendpromopref books sub/Books on SALE` OR +
-`spp books sub/Books on SALE` +
-Opens an email draft in the browser with recipients as all persons tagged with 'books' and subject as 'Books on SALE'. +
+Type `sendpromopref books sub/Books on SALE` OR +
+`spp books sub/Books on SALE` into the Command Box. +
+
+This opens an email draft in the browser with recipients as all persons tagged with 'books' and subject as 'Books on SALE'. +
 // end::cominginfuture[]
 
 == Glossary
@@ -1115,8 +1100,8 @@ A command line interface (or CLI) is an application interface where one issues c
 [[gui]]Graphical User Interface::
 A graphical user interface (or GUI) is an application interface where one interacts with the application in a visual manner i.e. using icons, menus, or windows.
 
-[[session]]Session::
-Each usage session begins when you open ContactSails and ends when you close it.
+[[alphanumeric]]Alphanumeric::
+The parameter can only contain alphabets and/or numbers.
 
 [[tag]]Tag::
 A field that you can add to a person's contact to represent additional details about that person.
@@ -1148,5 +1133,5 @@ A Panel that displays all sales orders that you have added to ContactSails.
 [[entrylistpanel]]EntryListPanel::
 A Panel that displays all the calendar entries that you have added to ContactSails.
 
-[[alphanumeric]]Alphanumeric::
-The parameter can only contain alphabets and/or numbers.
+[[session]]Session::
+Each usage session begins when you open ContactSails and ends when you close it.

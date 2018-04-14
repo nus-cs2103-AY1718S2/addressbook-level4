@@ -798,7 +798,7 @@ The image file will then be utilized by JavaFX and displayed on the UI. The drop
 
 === Logging
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+We utilize `java.util.logging` package for logging. The `LogsCenter` class manages the logging levels and logging destinations.
 
 * The logging level can be controlled using the `logLevel` setting in the configuration file. (See <<Implementation-Configuration>>)
 * The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
@@ -814,7 +814,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 [[Implementation-Configuration]]
 === Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+Certain properties of the application can be controlled (e.g app name, logging level) through the configuration file (default: `config.json`).
 
 // tag::dataencryption[]
 === Data encryption (Coming in v2.0)

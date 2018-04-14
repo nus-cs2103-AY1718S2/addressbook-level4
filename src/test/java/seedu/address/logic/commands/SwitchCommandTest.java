@@ -8,6 +8,8 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
+import seedu.address.commons.events.ui.RemoveMapPanelEvent;
+import seedu.address.commons.events.ui.SwitchFeatureEvent;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class SwitchCommandTest {
@@ -18,6 +20,8 @@ public class SwitchCommandTest {
     public void execute_switchFeature_success() {
         CommandResult result = new SwitchCommand("details").execute();
         assertEquals("Switched to details tab", result.feedbackToUser);
+        assertTrue(eventsCollectorRule.eventsCollector.getEventByIndex(0) instanceof SwitchFeatureEvent);
+        assertTrue(eventsCollectorRule.eventsCollector.getEventByIndex(1) instanceof RemoveMapPanelEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof LoadMapPanelEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 3);
     }

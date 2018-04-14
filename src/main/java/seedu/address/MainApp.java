@@ -145,9 +145,9 @@ public class MainApp extends Application {
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample Employees Tracker");
+                logger.info("Data file not found. Will be starting with an empty Employees Tracker");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = addressBookOptional.orElse(new AddressBook());
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty Employees Tracker");
             initialData = new AddressBook();

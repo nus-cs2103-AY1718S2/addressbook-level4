@@ -23,19 +23,18 @@ Sell IT is for salesmen who prefer to use a desktop app for managing their clien
 
 * *Minor enhancement*: added a comment feature which allows the sales person to add the notes of their clients.
 
-* *Minor enhancement*: added a total person at status bar to show the total number of persons in the address book.
-
 * *Minor enhancement*: added an export command that can export all the people in the address book to a csv file.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/functional/XavierMaYuqian.md[Functional code]] [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/test/XavierMaYuqian.md[Test code]]
 
 * *Other contributions*:
 
+** Enhancements to existing features:
+*** Modified the GUI so that the total number of contacts is shown at the status bar (Pull request https://github.com/CS2103JAN2018-W10-B2/main/pull/29[29])
 ** Documentation:
 *** Added my own features and use cases into the developer guide and user guide.
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F14-B1/main/issues/139[139])
 
 == Contributions to the User Guide
 

@@ -500,7 +500,7 @@ public class DetailsPanel extends UiPart<Region> {
 Shown below is the sequence diagram for the above implementation (Refer to figure 15).
 
 .Sequence diagram for the event handling for the Tab Switching Mechanism.
-image::SwitchTabRequestEventSD2.png[width="800", align="center"]
+image::SwitchTabRequestEventSD2.png[width="350", align="center"]
 
 ==== Design Considerations
 
@@ -551,7 +551,7 @@ The job openings management is facilitated by several command classes in contact
 
 The implementation of these commands is quite similar to the equivalent operations in the `Person` class. Let us look at `JobAddCommand` as an example.
 
-==== *Adding Job Openings*
+*Adding Job Openings*
 
 Adding job openings is facilitated by the JobAddCommand. Execution of this command adds a `Job` Object to contactHeRo with the input `Position`, `Team`, `Location`, `NumberOfPositions` and `Skills`.
 
@@ -598,24 +598,18 @@ The job openings are displayed towards the right side of the UI in the `JobListP
 
 ==== Current Implementation
 
-The `JobMatchCommand` uses `PersonSkillContainsKeywordsPredicate` to match person's skills with a job's skills. It accepts the index for the job to match and then uses the `PersonSkillMatchesKeywordsPredicate` to match the job. Below is the code for the execution:
+The `JobMatchCommand` uses `PersonSkillContainsKeywordsPredicate` to match person's skills with a job's skills. It accepts the index for the job to match and then uses the `PersonSkillMatchesKeywordsPredicate` to match the job. Below is the code for the execution of the `JobMatchCommand`:
 
 [source, java]
 ----
 @Override
 public CommandResult execute() throws CommandException {
-
-    List<Job> lastShownList = model.getFilteredJobList();
-
-    if (targetIndex.getZeroBased() >= lastShownList.size()) {
-        throw new CommandException(Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
-    }
-
+    ...
     Job jobToMatch = lastShownList.get(targetIndex.getZeroBased());
 
     model.updateFilteredPersonList(new PersonSkillContainsKeywordsPredicate(
             CollectionUtil.getSetAsStringList(jobToMatch.getSkills())));
-    return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    // return result
 }
 ----
 
@@ -649,38 +643,11 @@ Given below is are the activity diagram (Refer to figurue 20) for the mechanism.
 .UML class diagram for Job Opening
 image::Auto-CompleteActivityDiagram.png[width="800", align="center"]
 
-[NOTE]
-Previous input has been included to account for cases in cases where more than one command share the same prefix. For e.g. the `add`, `addjob` and `addapp` commands share the common `add`. In such a case, the user can just type `a` or `ad` or `add` and press `Tab` multiple times to cycle between these commands which will keep incrementing the Tab counter, `tabNumber` in a cyclic manner.
+The `previous input` and `tab Counter` are recorded to account for cases where more than one command share the same 
+prefix. For e.g. the `add`, `addjob` and `addapp` commands share the common `add`. In such a case, the user can just
+type `a` or `ad` or `add` and press `Tab` multiple times to cycle between these commands which will keep incrementing 
+the Tab counter, `tabNumber` in a cyclic manner.
 
-Given below is the code for the `CommandBox#autoCompleteCommand()` method.
-
-[source, java]
-----
-/**
- * Auto-completes the partial command {@code text} entered with the first command matched
- * in the lexicographically sorted command list
- */
-private void autoCompleteCommand(String text) {
-    if (text.equals("")) {
-        return;
-    }
-    if (!text.startsWith(prevText) || prevText.equals("")) {
-        prevText = text;
-        tabNumber = 0;
-    }
-    CommandList commandListObj = new CommandList();
-
-    List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(prevText))
-            .collect(Collectors.toList());
-
-    if (matchedCommands.size() > 0) {
-        String textToDisplay = commandListObj.getSyntax(matchedCommands.get(tabNumber % matchedCommands.size()));
-
-        replaceText(textToDisplay);
-        commandTextField.positionCaret(matchedCommands.get(0).length() + 1);
-    }
-}
-----
 // end::autoComplete[]
 
 === Logging

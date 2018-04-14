@@ -52,11 +52,13 @@ This portfolio is to collate my contributions towards the developing of contactH
 
 include::../UserGuide.adoc[tag=intro]
 
-include::../UserGuide.adoc[tag=linkedIn]
+include::../UserGuide.adoc[tag=jobs]
 
 include::../UserGuide.adoc[tag=autoComplete]
 
-include::../UserGuide.adoc[tag=jobs]
+include::../UserGuide.adoc[tag=linkedIn]
+
+include::../UserGuide.adoc[tag=proposed]
 
 == Contributions to the Developer Guide
 
@@ -75,8 +77,6 @@ include::../DeveloperGuide.adoc[tag=autoComplete]
 include::../DeveloperGuide.adoc[tag=product]
 
 
-//== PROJECT: PowerPointLabs
-//
-//---
-//
-//_{Optionally, you may include other projects in your portfolio.}_
+=== Proposed Enhancement: Include interviewing process
+
+This feature will transform contactHeRo from a contact management solution to a hiring manager for the recruiter. They will be able to set interview questions and metrics and grade and analyse candidates based on the results.

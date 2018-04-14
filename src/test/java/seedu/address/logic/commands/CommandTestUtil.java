@@ -60,7 +60,7 @@ public class CommandTestUtil {
     public static final String VALID_PROFILEPICTUREPATH_AMY = "src/main/resource/view/profile_photo_placeholder.png";
     public static final String VALID_PROFILEPICTUREPATH_BOB = "src/main/resource/view/test.png";
     public static final String PROFILEPICTUREPATH_DESC_AMY = PREFIX_PICTURE_PATH + VALID_PROFILEPICTUREPATH_AMY;
-    public static final String PROFILEPICTUREPATH_DESC_BOB = PREFIX_PICTURE_PATH + VALID_PROFILEPICTUREPATH_AMY;
+    public static final String PROFILEPICTUREPATH_DESC_BOB = PREFIX_PICTURE_PATH + VALID_PROFILEPICTUREPATH_BOB;
     public static final String INVALID_PROFILEPICTUREPATH_DESC = " " + PREFIX_PICTURE_PATH + "invalid";
 
     public static final String VALID_TAG_HUSBAND = "husband";

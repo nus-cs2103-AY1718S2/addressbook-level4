@@ -32,7 +32,7 @@ import seedu.address.model.tag.Tag;
  * Edits the profile picture of an existing student in the address book.
  */
 //@@author samuelloh
-public class EditPictureCommand extends UndoableCommand {
+public class EditPictureCommand extends Command {
 
     public static final String COMMAND_WORD = "editPicture";
 
@@ -62,7 +62,10 @@ public class EditPictureCommand extends UndoableCommand {
     }
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
+
+        preProcessCommand();
+
         try {
             model.updateProfilePicture(studentToEditPicture, pictureEditedStudent, finalPictureEditedStudent);
         } catch (DuplicateStudentException dpe) {
@@ -71,11 +74,14 @@ public class EditPictureCommand extends UndoableCommand {
             throw new AssertionError("The target student cannot be missing");
         }
         model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
-        return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, pictureEditedStudent));
+        return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, finalPictureEditedStudent));
     }
 
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
+    /**
+     * Preprocesses the {@code EditPictureCommand} before executing it.
+     * @throws CommandException
+     */
+    protected void preProcessCommand() throws CommandException {
         studentToEditPicture = getStudentToEdit();
         pictureEditedStudent = createPictureEditedStudent(studentToEditPicture);
         finalPictureEditedStudent = createFinalEditedStudent(pictureEditedStudent);

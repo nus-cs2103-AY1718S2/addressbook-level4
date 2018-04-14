@@ -40,10 +40,10 @@ Tips +
 Warning +
 
 [CAUTION]
-Specific user only command +
+Specific user only command. +
 
 [IMPORTANT]
-Command is undoable +
+Command is undoable. +
 // end::introduction[]
 
 // tag::quickstart[]
@@ -293,7 +293,6 @@ This command is undoable.
 
 [WARNING]
 If the specified patient is in the queue, you have to remove the patient from the queue before deleting the patient.
-
 
 ****
 * The index refers to the index number shown in the most recent listing.

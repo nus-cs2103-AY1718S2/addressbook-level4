@@ -555,21 +555,23 @@ The editedStudent will have the new programming language attribute and will henc
 
 ==== Design Considerations
 
-[width="100%", cols="2, 2,4 ,2 ,4 "options="header",]
+[width="100%", cols="1, 1, 1 "options="header",]
 |=======================================================================
-| Aspect | Alternative 1 (Current choice) | Pros (+)/ Cons(-) | Alternative 2 | Pros(+) / Cons(-)
-|*How to store `ProgrammingLanguage` for a `Student`*
-| Store as an attribute of Student. | + Easy to keep track of as well as modify.  +
+| Aspect | Alternatives | Pros (+)/ Cons(-)
+.2+| *How to store `ProgrammingLanguage` for a `Student`*
+| *Store as an attribute of Student. (current choice)*
+| + Easy to keep track of as well as modify.  +
 {empty} +
 - Coupling increases as more classes (`ProgrammingLanguage` and `Student`) are associated with each other.
-| Store as a separate list and have each student index in the UniqueStudentsList be mapped to each item in the list.
 
+
+| Store as a separate list and have each student index in the UniqueStudentsList be mapped to each item in the list.
 | +  Less coupling so less need to refactor code +
 {empty} +
 - Might be messier to implement, especially if the UniqueStudentsList have it's students swapping indexes.
 
-|*What command to add `ProgrammingLanguage` to `Student`*
-| Implement it through the existing `add` command.
+.2+| *What command to add `ProgrammingLanguage` to `Student`*
+| *Implement it through the existing `add` command. (current choice)*
 | + Intuitive and the user does not have to learn an additional command +
 {empty} +
 - User will have to type a longer string for add command to include the programming language used by the student.
@@ -580,7 +582,6 @@ The editedStudent will have the new programming language attribute and will henc
 - User will have to learn a new specific command and might also be slightly difficult to implement.
 
 |=======================================================================
-
 
 //tag:profilePage[]
 === Profile Page feature
@@ -769,7 +770,17 @@ The method `createEditedStudent` creates the student wi
 === Schedule feature
 ==== Current Implementation
 
+===== Adding a lesson
+
 To get better control of one's weekly schedule, we will now attach a component called `Schedule` to `Model`.
+
+At startup, a new `Schedule` object is instantiated in `ModelManager`.
+
+A `Schedule` has a `LessonList`, it contains an `ObservableList<Lesson>` internalList attribute, which stores all the `Lesson` objects that describes your schedule.
+The UI is bounded to this `LessonList` so that it can automatically update when data changes.
+
+A `Lesson` has a `UniqueKey` attribute, a `Day` attribute, a starting `TIME START_TIME` and an ending `TIME END_TIME` attribute.
+`Lesson` objects are created by the `addLesson` command.
 
 image::LessonClassDiagram.png[width="800"]
 
@@ -779,11 +790,12 @@ A `Schedule` has a list of `Lesson` objects. A `Lesson` has a `UniqueKey` attrib
 * A `Lesson` object called `newLesson` will be created by `ModelManager.addLesson(UniqueKey key, Day day, Time startTime, Time endTime)`, which is implemented as such:
 [source, java]
 ----
-    public void addLesson(UniqueKey key, Day day, Time startTime, Time endTime)
-            throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
-        //Check for Duplicate Lesson, StudentNotFound, invalid input ime
-
+    public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime) {
+        requireAllNonNull(studentToAddLesson, day, startTime, endTime);
+        UniqueKey studentKey = studentToAddLesson.getUniqueKey();
+        Lesson newLesson = new Lesson(studentKey, day, startTime, endTime);
         schedule.addLesson(newLesson);
+        indicateScheduleChanged();
     }
 ----
 
@@ -793,9 +805,13 @@ The UniqueKey is retrieved from the Student. A new `Lesson` will now be added fo
 [NOTE]
 If you have a future implementation that requires the addition of a new attribute in the `Schedule` class, you must take note of updating the `Model.addLesson(Student, Day, Time START_TIME, Time END_TIME)` method to reflect the new attribute.
 
+
+===== Viewing lessons in schedule
+
 ==== Design Considerations
 
 ===== Aspect: Implementation of `Schedule`
+
 * *Alternative 1 (current choice)*: `Schedule` contains `Lesson` classes that is made up of one layer, with attributes directly attached to `Lesson`
 ** Pro: It is easier implement, just add `Lesson` to a `Schedule`, which is a list of `Lessons`
 ** Con: Results in more coupling, attributes could have been furthur separated out. It is inefficient to search by `Day`. Searching for empty slot requires linear searching.
@@ -1178,7 +1194,7 @@ E.g. Next of kin contact and an optional profile picture
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="80%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 
@@ -1194,15 +1210,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |tutor |search a student by label |
+|`* * *` |tutor |search a student by label/tag |so I can easily categorize my students as per my personal preferences
 
-|`* * *` |tutor |indicate a student's programming language when adding one |
+|`* * *` |tutor |indicate a student's programming language when adding one |so I can know which programming language to prepare before my lesson
 
 |`* * *` |tutor |view the address of a student in the maps |know where the student lives
 
 |`* * *` |tutor |add a student to favourites |keep track of that student
 
 |`* * *` |tutor |list students added to favourites |view students I'm keeping tack
+
+|`* * *` |tutor |upload my contacts to Google Contacts|sync my contacts list with Google Contacts, being able to easily view my data across devices
 
 |`* * *` |tutor |be able to view misc info of my students on a different page |have an easier viewing of them
 
@@ -1218,19 +1236,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 |`* * *` |tutor |delete a lesson for a student |remove lessons that the student cancels
 
-|`* *` |tutor |edit a lesson for a student |keep track of timing changes
+|`* *` |tutor who adds lessons in odd hours(very early or very late)|see my schedule resize |can view my lessons in full and have a better user experience.
 
-|`* * *` |tutor with a filled timetable |check free slot |easily find a free timeslot to allocate to students
+|`* *` |tutor |check free slot |easily find a free timeslot to allocate to students
 
-|`* * *` |tutor with a filled timetable |sync with cloud storage calenders |easily sync my timetable to my schedule
+|`*` |tutor |edit a lesson for a student |make changes to lessons when required
 
-|`* * *` |tutor |get an overview of my student's progress |so that I can see what they don't know and tutor them better
+|`* * *` |tutor |upload my lessons to Google Calendars|easily sync my schedule with Google Calendars, being able to view them across all my devices
+
+
+|`* * *` |tutor |get an overview of my student's progress |can see what they don't know and tutor them better
 
 |`* * *` |tutor |type little but get the command I want |to save time
 
 |`* *` |tutor |sort the contact list by programming language | easily recognise which and how many students are taking a particular programming language
 
-|`* *` |tutor |view hours spent teaching |see how much money I should collect
 
 |`*` |tutor |send emails to my student |to send reminders for upcoming lessons or payments owed
 
@@ -1250,9 +1270,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 *MSS*
 
 1.  User requests to list students
-2.  Scheduler shows a list of students
+2.  Schedule shows a list of students
 3.  User requests to delete a specific student in the list
-4.  Scheduler deletes the student
+4.  Schedule deletes the student
 +
 Use case ends.
 

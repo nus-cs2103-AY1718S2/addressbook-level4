@@ -61,7 +61,7 @@ You can change the password later using the `updatepassword` command.
 .  The user interface should appear in a few seconds as shown below (Refer to figure 1).
 +
 .contactHeRo UI after login
-image::UIMarkup.png[align="center"]
+image::UIMarkup.png[width="800", align="center"]
 
 Now you can start using contactHeRo.
 
@@ -281,7 +281,7 @@ This selects the 1st person in the results of the `find` command.
 On running this command, you should see a similar result as the following (Refer to figure 4). Betsy is selected in the person list and her contact details are visible in the Contact Details Tab.
 
 .Select Command Execution
-image::selectCommand.png[align="center"]
+image::selectCommand.png[width="800", align="center"]
 
 // tag::linkedIn[]
 ==== Searching a person on LinkedIn: `linkedIn`
@@ -312,7 +312,7 @@ This loads the LinkedIn search of 1st person in the results of the `find` comman
 On running the above command and after you have logged in, you should a similar result as the following (Refer to figure 5). Betsy is selected in the person list and she is searched on LinkedIn in the LinkedIn Tab.
 
 .LinkedIn Command Execution
-image::linkedInCommand.png[align="center"]
+image::linkedInCommand.png[width="800", align="center"]
 // end::linkedIn[]
 
 // tag::jobs[]
@@ -440,7 +440,7 @@ This will show any person whose skills match any of those required for the job o
 On running this command, you should see a similar result as the following (Refer to figure 5). All persons having any skill as required by the job 'Software Engineer' will be shown.
 
 .MatchJob Command Execution
-image::matchjobCommand.png[align="center"]
+image::matchjobCommand.png[width="800", align="center"]
 
 // end::jobs[]
 
@@ -766,6 +766,7 @@ You do not need to save manually. contactHeRo saves the data into the hard disk 
 
 You will soon be able to arrange meeting on Gmail calender using contactHeRo.
 
+// tag::proposed[]
 ==== Setting reminders `[coming in v2.0]`
 
 You will soon be able to set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
@@ -777,7 +778,7 @@ Job matching will soon be improved wherein it will be using location-matching an
 ==== Matching people to jobs `[coming in v2.0]`
 
 You will soon be able to match people to jobs as well to see which job opening is suitable for a particular person.
-
+// end::proposed[]
 
 == FAQ
 

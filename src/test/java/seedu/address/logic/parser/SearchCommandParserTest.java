@@ -47,4 +47,10 @@ public class SearchCommandParserTest {
         assertParseFailure(parser, invalidPlatform + ", " + VALID_SEARCH_NAME,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
     }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser,  "yo, test, this, command",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+    }
 }

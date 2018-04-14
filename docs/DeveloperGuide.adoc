@@ -1038,7 +1038,7 @@ viewing the social feeds of friends.
 
 |Chuang Cheng Heng
 a|
-* `searchall` function:
+* `search` function:
 ** Allows user to perform the search action on all the social media platforms available with a single command.
 This feature improves the product significantly because a user can do search on the application instead of going to
 the individual social media platform and repeatedly perform the search.
@@ -1141,7 +1141,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
-_{More to be added}_
 // end::user-stories[]
 
 [appendix]

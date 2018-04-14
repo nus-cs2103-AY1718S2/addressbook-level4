@@ -255,7 +255,7 @@ Deletes all non-clients added before 12/12/2017 in the address book.
 ==== Emailing a person : `email` or `em`
 
 Emails a person based on the specified name.
-Format: `email KEYWORD TEMPLATE`
+Format: `email n/NAME pu/PURPOSE`
 
 ****
 * Emailed person must have name match the full word of keyword
@@ -267,10 +267,10 @@ Format: `email KEYWORD TEMPLATE`
 // end::emailing[]
 
 // tag::templating[]
-==== Creating a new template : `addTemplate` or `at`
+==== Creating a new template : `addtemplate` or `at`
 
 Creates a new template based on the specified purpose, subject and message.
-Format: `addTemplate pu/PURPOSE s/SUBJECT m/MESSAGE`
+Format: `addtemplate pu/PURPOSE s/SUBJECT m/MESSAGE`
 
 TIP: You cannot create two templates with the same purpose
 
@@ -279,10 +279,10 @@ Examples:
 * `addTemplate pu/greeting s/Hello There m/Luke I am your father`
 * `addTemplate pu/holiday s/Merry Christmas m/Santa Claus is coming to town!`
 
-==== Deleting a template : `deleteTemplate` or `dt`
+==== Deleting a template : `deletetemplate` or `dt`
 
 Deletes a template in the address book. +
-Format: `deleteTemplate PURPOSE`
+Format: `deletetemplate pu/PURPOSE`
 
 ****
 * Deletes a template with the specified purpose
@@ -585,8 +585,8 @@ Set the calendar theme to the predefined `STYLE_2`.
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Add Appointment* : `addappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
 e.g. `addappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
-* *Add Template* : `addTemplate pu/PURPOSE s/SUBJECT m/MESSAGE` +
-e.g. `addTemplate pu/holiday s/Merry Christmas m/Santa Claus is coming to town!`
+* *Add Template* : `addtemplate pu/PURPOSE s/SUBJECT m/MESSAGE` +
+e.g. `addtemplate pu/holiday s/Merry Christmas m/Santa Claus is coming to town!`
 * *Calendar Go Back* : `gobackward`
 * *Calendar Go Forward* : `goforward`
 * *Clear* : `clear`
@@ -600,10 +600,10 @@ e.g. `deleteappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estat
 e.g. `deleteappointment 3`
 * *Delete Before* : `deletebefore d/DATE [t/TAG]...` +
 e.g. `deletebefore d/12/12/2017 t/friends`
-* *Delete Template* : `deleteTemplate PURPOSE` +
-e.g. `deleteTemplate greeting`
-* *Email* : `email KEYWORD TEMPLATE` +
-e.g. `email James followup`
+* *Delete Template* : `deletetemplate pu/PURPOSE` +
+e.g. `deletetemplate pu. greeting`
+* *Email* : `email n/KEYWORD pu/TEMPLATE` +
+e.g. `email n/James pu/followup`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit Appointment `[Coming in v2.0]`* : `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]` +

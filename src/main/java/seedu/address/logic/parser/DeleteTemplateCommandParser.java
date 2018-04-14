@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PURPOSE;
 
 import java.util.stream.Stream;
 
@@ -18,13 +19,17 @@ public class DeleteTemplateCommandParser implements Parser<DeleteTemplateCommand
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeleteTemplateCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        String[] nameKeywords = trimmedArgs.split("\\s+");
-        String purpose = nameKeywords[0].trim();
-        if (nameKeywords.length != 1 || purpose.equals("")) {
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                args, PREFIX_PURPOSE);
+
+        if (!arePrefixesPresent(
+                argMultimap, PREFIX_PURPOSE)
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTemplateCommand.MESSAGE_USAGE));
         }
+
+        String purpose = (argMultimap.getValue(PREFIX_PURPOSE)).get().trim();
 
         return new DeleteTemplateCommand(purpose);
 

@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PURPOSE;
+
 import com.google.api.services.gmail.Gmail;
 
 import javafx.collections.ObservableList;
@@ -25,8 +28,12 @@ public class EmailCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Emails all persons whose names matches any of "
             + "the specified keywords (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: NAME TEMPLATE\n"
-            + "Example: " + COMMAND_WORD + " alice coldemail";
+            + "Parameters: "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_PURPOSE + "PURPOSE \n"
+            + "Example: " + COMMAND_WORD +  " "
+            + PREFIX_NAME + "alice "
+            + PREFIX_PURPOSE + "coldemail";
 
     private final NameContainsKeywordsPredicate predicate;
     private final String search;
@@ -52,19 +59,21 @@ public class EmailCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
         ObservableList<Person> emailList = model.getFilteredPersonList();
-        for (Person p : emailList) {
+        if (emailList.size() == 0) {
+            return new CommandResult(Messages.MESSAGE_PERSONS_NOT_FOUND);
+        }
+        for (Person person : emailList) {
             try {
                 Template template = model.selectTemplate(this.search);
                 GmailUtil handler = new GmailUtil();
                 Gmail service = handler.getService();
-                handler.send(service, p.getEmail().toString(), "",
+                handler.send(service, person.getEmail().toString(), "",
                         service.users().getProfile("me").getUserId(), template.getTitle(),
                         template.getMessage());
             } catch (TemplateNotFoundException e) {
                 return new CommandResult(Messages.MESSAGE_TEMPLATE_NOT_FOUND);
             } catch (Exception e) {
-                System.out.println(e);
-                System.out.println("Some Exception occurred");
+                return new CommandResult(Messages.MESSAGE_EMAIL_UNKNOWN_ERROR);
             }
         }
         return new CommandResult(getMessageForPersonEmailSummary(model.getFilteredPersonList().size()));

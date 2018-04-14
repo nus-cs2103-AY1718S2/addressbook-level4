@@ -6,9 +6,11 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.MESSAGE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PURPOSE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.SUBJECT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MESSAGE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PURPOSE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT;
 import static seedu.address.logic.parser.CommandParserTestUtil.createDate;
@@ -366,38 +368,38 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_deleteTemplate() throws Exception {
-        DeleteTemplateCommand command = new DeleteTemplateCommand("test");
+        DeleteTemplateCommand command = new DeleteTemplateCommand(VALID_PURPOSE);
         DeleteTemplateCommand parsedCommand =
-                (DeleteTemplateCommand) parser.parseCommand("deletetemplate test");
+                (DeleteTemplateCommand) parser.parseCommand(
+                        DeleteTemplateCommand.COMMAND_WORD + PURPOSE_DESC);
         assertEquals(command, parsedCommand);
     }
 
     @Test
     public void parseCommand_deleteTemplateAlias() throws Exception {
-        DeleteTemplateCommand command = new DeleteTemplateCommand("test");
+        DeleteTemplateCommand command = new DeleteTemplateCommand(VALID_PURPOSE);
         DeleteTemplateCommand parsedCommand =
-                (DeleteTemplateCommand) parser.parseCommand("dt test");
+                (DeleteTemplateCommand) parser.parseCommand(
+                        DeleteTemplateCommand.COMMAND_ALIAS + PURPOSE_DESC);
         assertEquals(command, parsedCommand);
     }
 
     @Test
     public void parseCommand_email() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "test");
-        String[] nameKeywordArray = new String[]{ "foo" };
-        EmailCommand command = (EmailCommand) parser.parseCommand(
-                EmailCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        String[] nameKeywordArray = new String[]{ VALID_NAME_BOB };
+        String userInput = EmailCommand.COMMAND_WORD + NAME_DESC_BOB + PURPOSE_DESC;
+        EmailCommand command = (EmailCommand) parser.parseCommand(userInput);
         assertEquals(new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywordArray)),
-                "test"), command);
+                VALID_PURPOSE), command);
     }
 
     @Test
     public void parseCommand_emailAlias() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "test");
-        String[] nameKeywordArray = new String[]{ "foo" };
-        EmailCommand command = (EmailCommand) parser.parseCommand(
-                EmailCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        String[] nameKeywordArray = new String[]{ VALID_NAME_BOB };
+        String userInput = EmailCommand.COMMAND_ALIAS + NAME_DESC_BOB + PURPOSE_DESC;
+        EmailCommand command = (EmailCommand) parser.parseCommand(userInput);
         assertEquals(new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywordArray)),
-                "test"), command);
+                VALID_PURPOSE), command);
     }
 
     //@@author

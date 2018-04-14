@@ -24,6 +24,8 @@ import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
 
+
+
 /**
  * Represents the in-memory model of the catalogue data.
  * All changes to any model should be synchronized.
@@ -32,8 +34,8 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final Catalogue catalogue;
-    private final UniqueAccountList accountList;
     private final FilteredList<Book> filteredBooks;
+    private UniqueAccountList accountList;
     private Account currentAccount;
 
     /**
@@ -115,6 +117,24 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAccountListChanged();
     }
 
+    @Override
+    public synchronized void returnBook(Book target, Book returnedBook) throws BookNotFoundException {
+        catalogue.returnBook(target, returnedBook);
+        indicateCatalogueChanged();
+    }
+    @Override
+    public synchronized void borrowBook(Book target, Book borrowedBook) throws BookNotFoundException {
+        catalogue.borrowBook(target, borrowedBook);
+        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        indicateCatalogueChanged();
+    }
+    @Override
+    public synchronized void reserveBook(Book target, Book reservedBook) throws BookNotFoundException {
+        catalogue.reserveBook(target, reservedBook);
+        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        indicateCatalogueChanged();
+    }
+
     /**
      * Adds the initial admin account to the accountList
      */
@@ -134,6 +154,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetData(ReadOnlyCatalogue newData) {
         catalogue.resetData(newData);
         indicateCatalogueChanged();
+    }
+
+    @Override
+    public void resetAccount(UniqueAccountList newData) {
+        this.accountList = newData;
+        indicateAccountListChanged();
     }
 
     @Override

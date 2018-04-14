@@ -10,6 +10,7 @@ import java.util.Iterator;
 import seedu.address.model.account.exceptions.AccountNotFoundException;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 
+
 /**
  * A list of accounts that enforces uniqueness between its elements and does not allow nulls.
  * <p>
@@ -149,6 +150,7 @@ public class UniqueAccountList implements Serializable, Iterable<Account> {
     public int size() {
         return internalList.size();
     }
+
 
     @Override
     public Iterator<Account> iterator() {

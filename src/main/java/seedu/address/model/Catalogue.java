@@ -27,14 +27,13 @@ public class Catalogue implements ReadOnlyCatalogue {
     private final UniqueBookList books;
     private final UniqueTagList tags;
 
-    /*
+        /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */
-    {
+    */ {
         books = new UniqueBookList();
         tags = new UniqueTagList();
     }
@@ -153,6 +152,52 @@ public class Catalogue implements ReadOnlyCatalogue {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    } /**
+     * @param target book that is selected by index to return
+     * @param returnedBook duplicated book that will replace the original book
+     * @throws BookNotFoundException
+     */
+    public void returnBook(Book target, Book returnedBook)
+        throws BookNotFoundException {
+        requireNonNull(returnedBook);
+
+        Book syncedEditedBook = syncWithMasterTagList(returnedBook);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any book
+        // in the book list.
+        books.replaceReturnedBook(target, syncedEditedBook);
+    }
+
+    /**
+     * @param target book that is selected by index to borrow
+     * @param borrowedBook duplicated book that will replace the original book
+     * @throws BookNotFoundException
+     */
+    public void borrowBook(Book target, Book borrowedBook)
+        throws BookNotFoundException {
+        requireNonNull(borrowedBook);
+
+        Book syncedEditedBook = syncWithMasterTagList(borrowedBook);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any book
+        // in the book list.
+        books.replaceBorrowedBook(target, syncedEditedBook);
+    }
+
+    /**
+     * @param target book that is selected by index to reserve
+     * @param reservedBook duplicated book that will replace the original book
+     * @throws BookNotFoundException
+     */
+    public void reserveBook(Book target, Book reservedBook)
+        throws BookNotFoundException {
+        requireNonNull(reservedBook);
+
+        Book syncedEditedBook = syncWithMasterTagList(reservedBook);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any book
+        // in the book list.
+        books.replaceReservedBook(target, syncedEditedBook);
     }
 
     //// util methods

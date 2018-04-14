@@ -60,7 +60,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 //tag::unlock[]
 === Login : `unlock`
 
-You can unlock the APP while it is locked. The initial password is 123456.+
+You can unlock the APP while it is locked if you wish to do modification on contact and appointment. The initial password is 123456.+
 Format: `unlock [PASSWORD]`
 alias: `ulk`
 
@@ -72,7 +72,7 @@ Examples:
 //tag::lock[]
 === Logout : `lock`
 
-You can logout after using the APP. The initial password is 123456.+
+You can logout after doing modification on contacts and appointment on the APP. The initial password is 123456.+
 Format: `lock`
 alias: `lk`
 //end::lock[]

@@ -44,7 +44,7 @@ public class ProcessMoreCommand extends ProcessNextCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ProcessMoreCommand // instanceof handles nulls
-                && noOfTimes==((ProcessMoreCommand) other).noOfTimes);
+                && noOfTimes == ((ProcessMoreCommand) other).noOfTimes);
     }
 }
 

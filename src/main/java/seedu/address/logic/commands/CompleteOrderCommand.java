@@ -5,7 +5,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -54,7 +53,7 @@ public class CompleteOrderCommand extends Command {
             List<Task> taskList = model.getFilteredTaskList();
 
             if (number >= taskList.size()) {
-                throw new CommandException("There are only "+taskList.size()
+                throw new CommandException("There are only " + taskList.size()
                         + " orders being cooking");
             }
 
@@ -68,7 +67,7 @@ public class CompleteOrderCommand extends Command {
 
             List<Person> personList = model.getFilteredPersonList();
 
-            int editIndex=nullIndex;
+            int editIndex = nullIndex;
             for (Person person:personList) {
                 if (person.getOrder().equals(taskToDelete.getOrder())
                         && person.getAddress().equals(taskToDelete.getAddress())) {
@@ -80,7 +79,7 @@ public class CompleteOrderCommand extends Command {
             try {
                 Person personToEdit = personList.get(editIndex);
                 // labels order with tag "Cooked"
-                Person editedPerson = createNewTaggedPerson(personToEdit,"Cooked");
+                Person editedPerson = createNewTaggedPerson(personToEdit, "Cooked");
 
                 model.updatePerson(personToEdit, editedPerson);
                 model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -106,7 +105,7 @@ public class CompleteOrderCommand extends Command {
     /**
      * Add a new tag {@code tag} to the person {@code personToEdit}
      */
-    protected Person createNewTaggedPerson(Person personToEdit,String tag) {
+    protected Person createNewTaggedPerson(Person personToEdit, String tag) {
         assert personToEdit != null;
 
         Halal updatedHalal = personToEdit.getHalal();
@@ -119,7 +118,7 @@ public class CompleteOrderCommand extends Command {
 
         try {
             updatedTags.add(new Tag(tag));
-        } catch (UniqueTagList.DuplicateTagException dte){
+        } catch (UniqueTagList.DuplicateTagException dte) {
             //does not add tag "processing" if already exists
         }
         return new Person(updatedName, updatedPhone, updatedOrder, updatedAddress,

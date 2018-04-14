@@ -30,7 +30,7 @@ public class LoadCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         EventsCenter.getInstance().post(new LoadPageChangedEvent(url));
-        return new CommandResult(String.format(MESSAGE_LOAD_PAGE_SUCCESS,url));
+        return new CommandResult(String.format(MESSAGE_LOAD_PAGE_SUCCESS, url));
 
     }
 

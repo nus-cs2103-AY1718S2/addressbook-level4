@@ -21,8 +21,8 @@ import seedu.address.model.alias.exceptions.DuplicateAliasException;
  */
 public class UniqueAliasList {
 
-    private HashMap<String, String> aliasCommandMap = new HashMap<String, String>();
     private static final String EMPTY_CELL = "";
+    private HashMap<String, String> aliasCommandMap = new HashMap<String, String>();
 
     /**
      * Constructs an empty AliasList.

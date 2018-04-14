@@ -245,6 +245,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
+.Execution of delete command
 image::LogicCommandClassDiagram.png[width="800"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -284,10 +285,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.Push of delete command into undoStack
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
+.Execution of Adding David.
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
@@ -297,6 +300,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
+.State before the add command restored.
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -304,6 +308,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.Sequence diagram for Undo/Redo
 image::UndoRedoSequenceDiagram.png[width="800"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
@@ -313,14 +318,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.Execution of clear command.
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.Execution of list command, which will not be added to undoStack after execution.
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Activity diagram of undo/redo.
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
@@ -506,6 +514,7 @@ Fastis lists all persons in Fastis that have tags similar to input.
 Fastis uses `ListTagMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
 tag.
 
+.Sequence diagram of list tag members command
 image:listGroupMemberSequenceDiagram.png[width="800"] +
 When user types in command line `ListTagMembers` or `ltm` , Fastis will use the keyword provided to search for the
 tag and list out all members under the same  tag.
@@ -583,12 +592,10 @@ Fastis has a group feature that can:
 * delete a person from the group with information that was stated by user input.
 * list all the members in the group with information that was stated by user input.
 
-==== Add Group Feature
 
-Fastis add a group with information that was stated by user input.
+==== Current implementation
 
-===== Current implementation
-
+The group
 The add groups mechanism is facilitated by `AddGroupCommand`, which resides inside `Logic` component. It supports adding Group objects to the address book. AddGroupCommand inherits from `UndoableCommand`.
 
 Hence, AddGroupCommand can be undone using `UndoRedoStack`.
@@ -657,11 +664,54 @@ image:aGMSequenceDiagram.png[width="800"]
 * **Alternative 1 (current choice):** Add a new command method `AddMemberToGroupCommand()`
 ** Pros: It is easy for developers to modify method to suit what they want
 
+=== Add Member To Group feature
+
+Fastis adds a person from the existing contact list to an existing group.
+
+==== Current implementation
+
+The add member to groups mechanism is facilitated by `AddMemberToGroupCommand`, which resides inside `Logic` component.
+It supports adding a member to Group objects to the address book.
+
+The list of members in the group list are facilitated by `Group` class. Each `Group` object have a `UniquePersonList` object, representing the list of persons in the group.
+Address book stores all members added to the group using XmlAdaptedPersons as person object storage.
+The following sequence diagram shows how the addMembersToGroup operates.
+
+image:aGMSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddMemberToGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `AddMemberToGroupCommand()`
+** Pros: It is easy for developers to modify method to suit what they want
+
+=== Delete Member From Group feature
+
+Fastis adds a person from the existing contact list to an existing group.
+
+==== Current implementation
+
+The add member to groups mechanism is facilitated by `AddMemberToGroupCommand`, which resides inside `Logic` component.
+It supports adding a member to Group objects to the address book.
+
+The list of members in the group list are facilitated by `Group` class. Each `Group` object have a `UniquePersonList` object, representing the list of persons in the group.
+Address book stores all members added to the group using XmlAdaptedPersons as person object storage.
+The following sequence diagram shows how the addMembersToGroup operates.
+
+image:aGMSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddMemberToGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `AddMemberToGroupCommand()`
+** Pros: It is easy for developers to modify method to suit what they want
+
+
 === List Group Members Feature
 
 Fastis lists all persons under the group keyed by user.
 
-=== Current implementation
+==== Current implementation
 
 Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
 group.

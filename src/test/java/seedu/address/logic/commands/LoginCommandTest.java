@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.function.Predicate;
@@ -14,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.OAuthManager;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -45,6 +47,12 @@ public class LoginCommandTest {
                 loginAttempt.getPassword(), modelStub).execute();
 
         assertEquals(LoginCommand.MESSAGE_LOGIN_SUCCESS, commandResult.feedbackToUser);
+
+        //@@author ifalluphill
+        assertNull(OAuthManager.getMostRecentEventList());
+        assertNull(OAuthManager.getMostRecentDailyEventList());
+        assertNull(OAuthManager.getMostRecentDailyEventListDate());
+        //@@author kaisertanqr
     }
 
     @Test
@@ -56,6 +64,11 @@ public class LoginCommandTest {
                 invalidloginAttempt.getPassword(), modelStub).execute();
 
         assertEquals(LoginCommand.MESSAGE_LOGIN_SUCCESS, commandResult.feedbackToUser);
+        //@@author ifalluphill
+        assertNull(OAuthManager.getMostRecentEventList());
+        assertNull(OAuthManager.getMostRecentDailyEventList());
+        assertNull(OAuthManager.getMostRecentDailyEventListDate());
+        //@@author kaisertanqr
     }
 
     @Test

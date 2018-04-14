@@ -2,6 +2,7 @@
 
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_LOCATION;
@@ -39,11 +40,15 @@ public class CalendarAddCommand extends Command {
 
 
     public CalendarAddCommand(Event event) {
+        requireNonNull(event);
         this.event = event;
     };
 
     @Override
     public CommandResult execute() throws CommandException {
+        requireNonNull(event);
+        requireNonNull(model);
+
         User user = model.getLoggedInUser();
 
         try {

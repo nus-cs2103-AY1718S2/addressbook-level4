@@ -2,11 +2,14 @@
 
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.util.List;
 
 import seedu.address.logic.OAuthManager;
 import seedu.address.model.login.User;
+
 
 /**
 * Lists up to the next 250 calendar events from their Google Calendar to the user.
@@ -21,6 +24,8 @@ public class CalendarListCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        requireNonNull(model);
+
         User user = model.getLoggedInUser();
 
         try {

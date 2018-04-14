@@ -40,7 +40,6 @@ import seedu.address.storage.XmlUserDatabaseStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
-
 /**
  * The main entry point to the application.
  */
@@ -87,7 +86,7 @@ public class MainApp extends Application {
 
 
     /** Initialise for tests */
-    public void initTest() {
+    public void initTest() throws IOException {
         model.setLoginStatus(true);
         ui.getMainWindow().showAfterLogin();
     }
@@ -220,7 +219,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting SLAP App " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 

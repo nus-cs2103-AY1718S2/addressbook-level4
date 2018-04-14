@@ -3,6 +3,8 @@
 
 package seedu.address.logic;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -98,6 +100,8 @@ public class OAuthManager {
      * @param user
      */
     private static void updateCredentialDirectory(User user) {
+        requireNonNull(user);
+
         // Set custom key directory for each user
         try {
             DATA_STORE_DIR = new java.io.File(CREDENTIAL_PATH + user.getUsername());
@@ -115,6 +119,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static void deleteOauthCert(User user) throws IOException {
+        requireNonNull(user);
+
         Path dirPath = Paths.get(DATA_STORE_DIR.getAbsolutePath());
         Files.walk(dirPath)
                 .map(Path::toFile)
@@ -129,6 +135,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static Credential authorize(User user) throws IOException {
+        requireNonNull(user);
+
         // Load client secrets.
         InputStream in =
             OAuthManager.class.getResourceAsStream("/client_secret.json");
@@ -157,6 +165,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar getCalendarService(User user) throws IOException {
+        requireNonNull(user);
+
         Credential credential = authorize(user);
         return new com.google.api.services.calendar.Calendar.Builder(
                 httpTransport, JSON_FACTORY, credential)
@@ -169,6 +179,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<Event> getUpcomingEvents(User user) throws IOException {
+        requireNonNull(user);
+
         List<Event> upcomingEvents = getNextXEvents(user, 250);
         int numberOfEventsRetrieved = upcomingEvents.size();
 
@@ -188,6 +200,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<String> getUpcomingEventsAsStringList(User user) throws IOException {
+        requireNonNull(user);
+
         List<Event> upcomingEvents = getUpcomingEvents(user);
         int numberOfEventsRetrieved = upcomingEvents.size();
         List<String> eventListAsString = new ArrayList<>();
@@ -213,6 +227,9 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<Event> getDailyEvents(User user, LocalDate localDate) throws IOException {
+        requireNonNull(user);
+        requireNonNull(localDate);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String inputDate = localDate.format(formatter);
         List<Event> dailyEvents = getEventsByDay(user, inputDate);
@@ -235,6 +252,9 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<String> getDailyEventsAsStringList(User user, LocalDate localDate) throws IOException {
+        requireNonNull(user);
+        requireNonNull(localDate);
+
         List<Event> dailyEvents = getDailyEvents(user, localDate);
         int numberOfEventsRetrieved = dailyEvents.size();
         List<String> eventListAsString = new ArrayList<>();
@@ -260,6 +280,8 @@ public class OAuthManager {
      * Formats an event object as a human-readable string.
      */
     public static String formatEventDetailsAsString(Event event) {
+        requireNonNull(event);
+
         String title = event.getSummary();
         DateTime startAsDateTime = event.getStart().getDateTime();
         DateTime endAsDateTime = event.getEnd().getDateTime();
@@ -292,6 +314,8 @@ public class OAuthManager {
      * Formats date-time string as a human-readable string.
      */
     public static String getDateTimeAsHumanReadable(DateTime inputDateTime) {
+        requireNonNull(inputDateTime);
+
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         System.out.println(inputDateTime.toString());
         LocalDateTime dateTime = LocalDateTime.parse(inputDateTime.toString(), inputFormatter);
@@ -305,6 +329,9 @@ public class OAuthManager {
      * @throws IOException
      */
     private static List<Event> getNextXEvents(User user, int x) throws IOException {
+        requireNonNull(user);
+        requireNonNull(x);
+
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -329,6 +356,9 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<Event> getEventsByDay(User user, String date) throws IOException {
+        requireNonNull(user);
+        requireNonNull(date);
+
         com.google.api.services.calendar.Calendar service =
                 getCalendarService(user);
 
@@ -362,6 +392,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static void addEventTest(User user) throws IOException {
+        requireNonNull(user);
+
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -419,6 +451,9 @@ public class OAuthManager {
      * @throws IOException
      */
     public static String addEvent(User user, Event event) throws IOException {
+        requireNonNull(user);
+        requireNonNull(event);
+
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -459,27 +494,7 @@ public class OAuthManager {
     public static Event getEventByIndexFromLastList(int index) {
         return mostRecentEventList.get(index - 1);
     }
-    //@@author jaronchan
-    /**
-     * Gets the specified event pair by index (offset by 1 due to array indexing) according to a user's input.
-     * @param index
-     * @return List
-     */
-    public static List<Event> getEventByIndexPairFromDailyList(int index)
-            throws InvalidCalendarEventCountException, IllegalValueException {
-        List<Event> eventPair = new ArrayList<>();
-        if (index < 1 || index > dailyEventsList.size() - 1) {
-            throw new IllegalValueException(NavigateCommand.MESSAGE_INVALID_RANGE);
-        } else if (dailyEventsList.isEmpty() && dailyEventsList.size() < 2) {
-            throw new InvalidCalendarEventCountException();
-        } else {
-            eventPair.add(dailyEventsList.get(index - 1));
-            eventPair.add(dailyEventsList.get(index));
-        }
 
-        return eventPair;
-    }
-    //@@author ifalluphill
 
     /**
      * Gets the most recent daily event list shown to the user.
@@ -497,6 +512,59 @@ public class OAuthManager {
         return dailyEventsListDate;
     }
 
+    /**
+     * Resets the cached calendar information specific to a user session.
+     */
+    public static void clearCachedCalendarData() {
+        mostRecentEventList = null;
+        dailyEventsList = null;
+        dailyEventsListDate = null;
+    }
+
+    /**
+     * Sets the cached calendar information to valid non-null values for testing purposes.
+     */
+    public static void setNonNullEventsCacheForTest(Event event1, Event event2, LocalDate localDate) {
+        requireNonNull(event1);
+        requireNonNull(event2);
+        requireNonNull(localDate);
+
+        mostRecentEventList = new ArrayList<>();
+        mostRecentEventList.add(event1);
+        mostRecentEventList.add(event2);
+
+        dailyEventsList = new ArrayList<>();
+        dailyEventsList.add(event1);
+        dailyEventsList.add(event2);
+
+        dailyEventsListDate = localDate;
+
+    }
+
+    //@@author jaronchan
+    /**
+     * Gets the specified event pair by index (offset by 1 due to array indexing) according to a user's input.
+     * @param index
+     * @return List
+     */
+    public static List<Event> getEventByIndexPairFromDailyList(int index)
+            throws InvalidCalendarEventCountException, IllegalValueException {
+        requireNonNull(index);
+
+        List<Event> eventPair = new ArrayList<>();
+        if (index < 1 || index > dailyEventsList.size() - 1) {
+            throw new IllegalValueException(NavigateCommand.MESSAGE_INVALID_RANGE);
+        } else if (dailyEventsList.isEmpty() && dailyEventsList.size() < 2) {
+            throw new InvalidCalendarEventCountException();
+        } else {
+            eventPair.add(dailyEventsList.get(index - 1));
+            eventPair.add(dailyEventsList.get(index));
+        }
+
+        return eventPair;
+    }
+
+    //@@author ifalluphill
 
     /**
      * A wrapper of the Google Calendar Event: delete API endpoint to remove a calendar event
@@ -504,6 +572,9 @@ public class OAuthManager {
      * @throws IOException
      */
     public static void deleteEvent(User user, Event event) throws IOException {
+        requireNonNull(user);
+        requireNonNull(event);
+
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.

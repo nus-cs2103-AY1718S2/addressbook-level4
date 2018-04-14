@@ -90,6 +90,7 @@ public class AddEventCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book";
+    public static final String MESSAGE_END_BEFORE_START = "The event's ENDTIME must be after STARTTIME";
 
     private final Event toAdd;
 
@@ -189,7 +190,6 @@ public class ChangeTagColorCommand extends UndoableCommand {
                 return;
             }
         }
-        throw new CommandException(MESSAGE_TAG_NOT_IN_LIST);
     }
 
     @Override
@@ -206,6 +206,124 @@ public class ChangeTagColorCommand extends UndoableCommand {
         ChangeTagColorCommand e = (ChangeTagColorCommand) other;
         return tagName.equals(e.tagName)
                 && tagColor.equals(e.tagColor);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ScheduleGroupCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+
+import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.TimetableChangedEvent;
+import seedu.address.database.DatabaseManager;
+import seedu.address.database.module.Module;
+import seedu.address.database.module.Schedule;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.event.WeeklyEvent;
+import seedu.address.model.group.Group;
+import seedu.address.model.person.Person;
+
+/**
+ * Display the common free time slots of members in a group
+ */
+public class ScheduleGroupCommand extends Command {
+
+    public static final String COMMAND_WORD = "scheduleGroup";
+    public static final String COMMAND_ALIAS = "sG";
+
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + ": Display the common free time slots of members in a group.\n"
+            + "Parameters: GROUP_NAME\n"
+            + "Example: " + COMMAND_WORD + " CS2103T";
+
+    public static final String MESSAGE_SUCCESS = "Common free time slots are displayed for group %1$s";
+    public static final String MESSAGE_GROUP_NOT_FOUND = "There is no group named %1$s.";
+
+    private final Group toShow;
+    private final ArrayList<WeeklyEvent> occupied;
+    private final ArrayList<WeeklyEvent> free;
+
+    /**
+     * Creates an ScheduleGroupCommand to schedule the specified {@code Group}
+     */
+    public ScheduleGroupCommand(Group group) {
+        requireNonNull(group);
+        toShow = group;
+        occupied = new ArrayList<>();
+        free = new ArrayList<>();
+        EventsCenter.getInstance().registerHandler(this);
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+        Group groupToShow = new Group(toShow.getInformation());
+        boolean groupNotFound = true;
+        for (Group group : model.getFilteredGroupList()) {
+            if (toShow.getInformation().equals(group.getInformation())) {
+                groupToShow = group;
+                groupNotFound = false;
+                break;
+            }
+        }
+        if (groupNotFound) {
+            throw new CommandException(String.format(MESSAGE_GROUP_NOT_FOUND, toShow.getInformation()));
+        }
+        fillTimeSlots(groupToShow);
+        generateFreeTimeSlots();
+        EventsCenter.getInstance().post(new TimetableChangedEvent(FXCollections.observableArrayList(free)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, groupToShow.getInformation()));
+    }
+
+    /**
+     * Populate the {@code occupied} list to include all modules from all members from {@code groupToShow}
+     */
+    private void fillTimeSlots(Group groupToShow) {
+        for (Person member : groupToShow.getPersonList()) {
+            ArrayList<WeeklyEvent> moduleList = DatabaseManager.getInstance().parseEvents(member.getTimeTableLink());
+            occupied.addAll(moduleList);
+        }
+    }
+
+    /**
+     * Generate all common free time slots according to the {@code occupied} list and store it in {@code free}
+     */
+    private void generateFreeTimeSlots() {
+        String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        for (String day : daysOfWeek) {
+            for (int s = 800; s < 1800; s += 100) {
+                Module mod = new Module("Free", "", null);
+                Schedule sch = new Schedule("", "", "", day, "" + s, "" + (s + 100), "");
+                WeeklyEvent freeTimeSlot = new WeeklyEvent(mod, sch);
+                if (!moduleClash(freeTimeSlot)) {
+                    free.add(freeTimeSlot);
+                }
+            }
+        }
+    }
+
+    /**
+     * @return true if the {@code timeSlot} clashes with any mod in {@code occupied}
+     */
+    private boolean moduleClash(WeeklyEvent timeSlot) {
+        for (WeeklyEvent mod : occupied) {
+            if (mod.clash(timeSlot)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ScheduleGroupCommand // instanceof handles nulls
+                && toShow.equals(((ScheduleGroupCommand) other).toShow));
     }
 }
 ```
@@ -229,11 +347,9 @@ public class SwitchCommand extends Command {
     public CommandResult execute() {
         if (model.calendarIsViewed()) {
             model.indicateTimetableChanged();
-            model.switchView();
             return new CommandResult(MESSAGE_SUCCESS_TIMETABLE);
         }
         model.indicateCalendarChanged();
-        model.switchView();
         return new CommandResult(MESSAGE_SUCCESS_CALENDAR);
     }
 }
@@ -284,6 +400,10 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             String startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_START_TIME).get());
             String endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_END_TIME).get());
 
+            if (Integer.parseInt(startTime) > Integer.parseInt(endTime)) {
+                throw new ParseException(AddEventCommand.MESSAGE_END_BEFORE_START);
+            }
+
             Event event = new Event(name, venue, date, startTime, endTime);
 
             return new AddEventCommand(event);
@@ -315,6 +435,10 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         case SwitchCommand.COMMAND_WORD:
         case SwitchCommand.COMMAND_ALIAS:
             return new SwitchCommand();
+
+        case ScheduleGroupCommand.COMMAND_WORD:
+        case ScheduleGroupCommand.COMMAND_ALIAS:
+            return new ScheduleGroupCommandParser().parse(arguments);
 ```
 ###### \java\seedu\address\logic\parser\ChangeTagColorCommandParser.java
 ``` java
@@ -431,6 +555,40 @@ public class ChangeTagColorCommandParser implements Parser<ChangeTagColorCommand
             throw new IllegalValueException(Event.MESSAGE_TIME_CONSTRAINTS);
         }
         return trimmedTime;
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ScheduleGroupCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.ScheduleGroupCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.Information;
+
+/**
+ * Parses input arguments and creates a new ScheduleGroupCommand object
+ */
+public class ScheduleGroupCommandParser implements Parser<ScheduleGroupCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ScheduleGroupCommand
+     * and returns an ScheduleGroupCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ScheduleGroupCommand parse(String args) throws ParseException {
+        try {
+            Information information = ParserUtil.parseInformation(args);
+            Group group = new Group(information);
+            return new ScheduleGroupCommand(group);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleGroupCommand.MESSAGE_USAGE));
+        }
     }
 }
 ```
@@ -779,11 +937,11 @@ public class WeeklyEvent extends Event {
     public WeeklyEvent(Module mod, Schedule schedule) {
         requireAllNonNull(mod, schedule);
         this.name = mod.getModuleCode();
-        this.venue = schedule.getClassNo();
+        this.venue = schedule.getVenue();
         this.startTime = schedule.getStartTime();
         this.endTime = schedule.getEndTime();
         this.day = schedule.getDayText();
-        this.details = new String[]{};
+        this.details = new String[]{schedule.getLessonType() + ' ' + schedule.getClassNo(), mod.getModuleTitle()};
     }
 
     public String getDay() {
@@ -793,6 +951,27 @@ public class WeeklyEvent extends Event {
     public ObservableList<String> getDetails() {
         ArrayList<String> temp = new ArrayList<String>(Arrays.asList(details));
         return FXCollections.observableArrayList(temp);
+    }
+
+    /**
+     * @return true if {@code this} clashes with the {@code mod}, false otherwise
+     */
+    public boolean clash(WeeklyEvent mod) {
+        return clash(mod.getDay(), mod.getStartTime(), mod.getEndTime());
+    }
+
+    /**
+     * @return true if {@code this} is on {@code dayOfWeek},
+     * around the time from {@code start} to {@code end}, false otherwise
+     */
+    public boolean clash(String dayOfWeek, String start, String end) {
+        if (!day.equals(dayOfWeek)) {
+            return false;
+        }
+        if (Integer.parseInt(start) >= Integer.parseInt(endTime)) {
+            return false;
+        }
+        return Integer.parseInt(end) > Integer.parseInt(startTime);
     }
 
     @Override
@@ -882,12 +1061,25 @@ public class WeeklyEvent extends Event {
         filteredEvents.setPredicate(predicate);
     }
 ```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Subscribe
+    private void handleCalendarChangedEvent(CalendarChangedEvent event) {
+        inCalendarView = true;
+    }
+
+    @Subscribe
+    private void handleTimetableChangedEvent(TimetableChangedEvent event) {
+        inCalendarView = false;
+    }
+}
+```
 ###### \java\seedu\address\model\tag\Tag.java
 ``` java
-    public static final String MESSAGE_TAG_COLOR_CONSTRAINTS = "Colors available are: "
-            + "teal, red, yellow, blue, orange, brown, green, pink, black, grey";
-    private static final String[] AVAILABLE_COLORS = new String[] {"teal", "red", "yellow", "blue", "orange", "brown",
-        "green", "pink", "black", "grey", "undefined"};
+    public static final String MESSAGE_TAG_COLOR_CONSTRAINTS = "Colors available are: aqua, black, blue, brown, gold, "
+            + "green, grey, lime, magenta, navy, orange, pink, purple, red, teal, yellow, white";
+    public static final String[] AVAILABLE_COLORS = new String[] {"teal", "red", "yellow", "blue", "orange", "brown",
+        "green", "pink", "black", "grey", "purple", "lime", "magenta", "navy", "aqua", "gold", "white", "undefined"};
 
     public final String name;
     public final String color;
@@ -1275,7 +1467,7 @@ public class Calendar extends UiPart<Region> {
             int day = Integer.parseInt(dayMonthYear[0]);
             int month = Integer.parseInt(dayMonthYear[1]);
             int year = Integer.parseInt(dayMonthYear[2]);
-            if (month != currentYearMonth.getMonthValue()) {
+            if (month != currentYearMonth.getMonthValue() || year != currentYearMonth.getYear()) {
                 continue;
             }
             LocalDate date = LocalDate.of(year, month, day);
@@ -1479,6 +1671,7 @@ public class CalendarDate extends UiPart<Region> {
 package seedu.address.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
@@ -1594,6 +1787,7 @@ public class Timetable extends UiPart<Region> {
             TimetableSlot node = getSlotNode("time", hour);
             node.getNode().setPadding(new Insets(-7, 15, 5, 5));
             node.getNode().setAlignment(Pos.TOP_RIGHT);
+            node.getBox().setMinWidth(50);
             if (hour < 1000) {
                 node.setText("0" + hour + "");
             } else {
@@ -1606,6 +1800,7 @@ public class Timetable extends UiPart<Region> {
      * Show all events in eventList onto Timetable
      */
     private void showSlots() {
+        HashMap<Integer, String> usedColor = new HashMap<>();
         for (WeeklyEvent mod : events) {
             String day = mod.getDay();
             int startTime = Integer.parseInt(mod.getStartTime());
@@ -1616,16 +1811,52 @@ public class Timetable extends UiPart<Region> {
             }
             if (endTime - startTime <= 100) {
                 TimetableSlot node = getSlotNode(day, startTime);
-                node.setModule("module1hr", mod);
+                int color = setUnusedColor(usedColor, node, mod, "module1hr");
             } else {
-                TimetableSlot node = getSlotNode(day, startTime);
-                node.setModule("module2hrtop", mod);
                 WeeklyEvent blank = new WeeklyEvent(mod.getName(), "", "", "", "", "");
+                TimetableSlot node = getSlotNode(day, startTime);
+                int color = setUnusedColor(usedColor, node, blank, "module2hrtop");
+
                 node = getSlotNode(day, startTime + 100);
-                node.setModule("module2hrbottom", blank);
+                node.setModule("module2hrbottom", mod);
                 node.getModule().setText("");
+                node.setColor(color);
             }
         }
+    }
+
+    /**
+     * Ensure that every {@code mod} displayed on the timetable has a unique color
+     *
+     * @param used usedColor HashMap to determine which color has been used
+     * @param node the node on the timetable to display the mod on
+     * @param modStyle the style of the mod
+     * @return
+     */
+    private int setUnusedColor(HashMap<Integer, String> used, TimetableSlot node, WeeklyEvent mod, String modStyle) {
+        int color = node.setModule(modStyle, mod);
+        if (used.containsValue(mod.getName())) {
+            for (Integer k : used.keySet()) {
+                if (used.get(k).equals(mod.getName())) {
+                    color = k;
+                    node.setColor(color);
+                    return color;
+                }
+            }
+        }
+        if (!used.containsKey(color)) {
+            used.put(color, mod.getName());
+            return color;
+        }
+        String module = used.get(color);
+        if (mod.getName().equals(module)) {
+            return color;
+        }
+        while (used.containsKey(color)) {
+            color = node.randomizeColor(modStyle);
+        }
+        used.put(color, mod.getName());
+        return color;
     }
 
     /**
@@ -1764,14 +1995,41 @@ public class TimetableSlot extends UiPart<Region> {
         return module;
     }
 
-    public void setModule(String style, WeeklyEvent mod) {
-        setStyleClass(style, AVAILABLE_COLORS[Math.abs(mod.getName().hashCode()) % AVAILABLE_COLORS.length]);
+    /**
+     * Set the node to contain the {@code mod}
+     * with a specified {@code style} and a random color
+     *
+     * @return index of the color chosen
+     */
+    public int setModule(String style, WeeklyEvent mod) {
+        int colorIndex = Math.abs(mod.getName().hashCode()) % AVAILABLE_COLORS.length;
+        setStyleClass(style, AVAILABLE_COLORS[colorIndex]);
         module.setText(mod.getName());
         if (!mod.getDetails().isEmpty() && mod.getDetails().size() >= 2) {
-            lectureType.setText(mod.getDetails().get(1));
+            lectureType.setText(mod.getDetails().get(0));
         }
         venue.setText(mod.getVenue());
+        return colorIndex;
     }
+
+    /**
+     * Randomly change the color of the node while keeping the {@code style}
+     *
+     * @return index of the color randomized
+     */
+    public int randomizeColor(String style) {
+        int randomColor = (int) Math.floor(Math.random() * AVAILABLE_COLORS.length);
+        setStyleClass(style, AVAILABLE_COLORS[randomColor]);
+        return randomColor;
+    }
+
+    /**
+     * Set the node to have a color specified at {@code colorIndex}
+     */
+    public void setColor(int colorIndex) {
+        node.getStyleClass().set(1, AVAILABLE_COLORS[colorIndex]);
+    }
+
 
     public void setText(String text) {
         setStyleClass("time");
@@ -1855,7 +2113,7 @@ public class TimetableSlot extends UiPart<Region> {
 ``` css
 #calendarPlaceholder .yearMonth {
     -fx-font: 25px Tahoma;
-    -fx-fill: #95adf0;
+    -fx-fill: #DEF0EE;
 }
 
 #calendarPlaceholder .button {
@@ -1944,6 +2202,7 @@ public class TimetableSlot extends UiPart<Region> {
 #calendarPlaceholder .timecell {
     -fx-border-width: 0;
     -fx-pref-width: 100;
+    -fx-min-width: 50;
 }
 
 #calendarPlaceholder .time {
@@ -1967,18 +2226,21 @@ public class TimetableSlot extends UiPart<Region> {
     -fx-border-radius: 6;
     -fx-border-width: 0 0 3px 0;
     -fx-background-radius: 10;
+    -fx-padding: 0 0 0 5;
 }
 
 #calendarPlaceholder .module2hrtop {
     -fx-border-radius: 6 6 0 0;
     -fx-border-width: 0;
     -fx-background-radius: 10 10 0 0;
+    -fx-padding: 50 0 0 5;
 }
 
 #calendarPlaceholder .module2hrbottom {
     -fx-border-radius: 0 0 6 6;
     -fx-border-width: 0 0 3px 0;
     -fx-background-radius: 0 0 10 10;
+    -fx-padding: -50 0 0 5;
 }
 
 #calendarPlaceholder .red {

@@ -1200,6 +1200,9 @@ public class ToDoCard extends UiPart<Region> {
         status.setText(todo.getStatus().value);
     }
 
+    public boolean isDone() {
+        return todo.getStatus().value.equals("done");
+    }
 
     @Override
     public boolean equals(Object other) {
@@ -1283,12 +1286,18 @@ public class ToDoListPanel extends UiPart<Region> {
             if (empty || todo == null) {
                 setGraphic(null);
                 setText(null);
-            } else {
-                setGraphic(todo.getRoot());
+                return;
             }
+
+            this.getStylesheets().clear();
+            if (todo.isDone()) {
+                this.getStylesheets().add("view/ToDoDone.css");
+            } else {
+                this.getStylesheets().add("view/ToDoUnDone.css");
+            }
+            setGraphic(todo.getRoot());
         }
     }
-
 }
 ```
 ###### \resources\view\ToDoListCard.fxml
@@ -1302,26 +1311,26 @@ public class ToDoListPanel extends UiPart<Region> {
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <GridPane HBox.hgrow="ALWAYS">
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+  <GridPane HBox.hgrow="ALWAYS">
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
-        <VBox id="toDoCardPane" alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-            <padding>
-                <Insets top="5" right="5" bottom="5" left="15" />
-            </padding>
-            <HBox spacing="5" alignment="CENTER_LEFT">
-                <Label fx:id="id" styleClass="cell_big_label">
-                    <minWidth>
-                        <!-- Ensures that the label text is never truncated -->
-                        <Region fx:constant="USE_PREF_SIZE" />
-                    </minWidth>
-                </Label>
-                <Label fx:id="content" text="\$content" styleClass="cell_big_label" />
-            </HBox>
-            <Label fx:id="status" text="\$status" styleClass="cell_small_label" />
-        </VBox>
-    </GridPane>
+        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+          <padding>
+            <Insets top="5" right="5" bottom="5" left="15" />
+          </padding>
+      <HBox spacing="5" alignment="CENTER_LEFT">
+        <Label fx:id="id" styleClass="cell_big_label">
+          <minWidth>
+            <!-- Ensures that the label text is never truncated -->
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+        </Label>
+        <Label fx:id="content" text="\$content" styleClass="cell_big_label" />
+      </HBox>
+      <Label fx:id="status" text="\$status" styleClass="cell_small_label" />
+    </VBox>
+  </GridPane>
 </HBox>
 ```
 ###### \resources\view\ToDoListPanel.fxml

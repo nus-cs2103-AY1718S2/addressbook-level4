@@ -4,7 +4,7 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 
 //@@author jingyinno
 /**
- * Signals that the operation will result in duplicate Person objects.
+ * Signals that the operation will result in duplicate Alias objects.
  */
 public class DuplicateAliasException extends DuplicateDataException {
 

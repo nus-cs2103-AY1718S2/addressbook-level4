@@ -68,6 +68,11 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void updateAliasesMapping(HashMap<String, String> aliases) {
+        fail("This method should not be called.");
+    }
+
+    @Override
     public void deleteTag(Tag tag) {
         fail("This method should not be called.");
     }
@@ -105,6 +110,12 @@ public class ModelStub implements Model {
     @Override
     public HashMap<String, String> getAliasList() {
         return new HashMap<String, String>();
+    }
+
+    @Override
+    public String getCommandFromAlias(String aliasKey) {
+        fail("This method should not be called.");
+        return null;
     }
 
     @Override

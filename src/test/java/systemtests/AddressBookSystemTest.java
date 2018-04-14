@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
+import guitests.guihandles.AliasListHandle;
 import guitests.guihandles.BirthdayListHandle;
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
@@ -42,6 +43,7 @@ import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.CommandBox;
 import seedu.address.ui.GoogleMapsDisplay;
+import seedu.address.ui.testutil.GuiTestAssert;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -125,6 +127,11 @@ public abstract class AddressBookSystemTest {
     public GoogleMapsDisplayHandle getGoogleMapsDisplay() {
         return mainWindowHandle.getMapPanel();
     }
+
+    public AliasListHandle getAliasList() {
+        return mainWindowHandle.getAliasList();
+    }
+
     //@@author
 
     /**
@@ -140,7 +147,6 @@ public abstract class AddressBookSystemTest {
         mainWindowHandle.getCommandBox().run(command);
 
         waitUntilBrowserLoaded(getGoogleMapsDisplay());
-
     }
 
     /**
@@ -190,15 +196,11 @@ public abstract class AddressBookSystemTest {
     }
 
     //@@author jingyinno
-    /**
-     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
-     * {@code expectedResultMessage}, the model and storage contains the same alias objects as {@code expectedModel}
-     */
-    protected void assertEqualAlias(String expectedCommandInput, String expectedResultMessage, Model expectedModel) {
-        assertEquals("", getCommandBox().getInput());
+    protected void assertTableDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
+                                               String[][] table) {
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
-        assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
+        GuiTestAssert.assertTableContent(getAliasList().getTables(), table);
     }
 
     /**

@@ -58,7 +58,7 @@ public class UniqueAliasListTest {
     public void removeAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
         Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
-        UniqueAliasList.remove(validAlias.getAlias());
+        uniqueAliasList.remove(validAlias.getAlias());
 
         UniqueAliasList expectedList = new UniqueAliasList();
         assertEquals(uniqueAliasList.getAliasObservableList(), expectedList.asObservableList());
@@ -68,7 +68,7 @@ public class UniqueAliasListTest {
     public void removeAlias_invalidAlias_failure() throws AliasNotFoundException {
         Alias validAlias = ADD;
         thrown.expect(AliasNotFoundException.class);
-        UniqueAliasList.remove(validAlias.getAlias());
+        uniqueAliasList.remove(validAlias.getAlias());
     }
 
     @Test
@@ -162,7 +162,7 @@ public class UniqueAliasListTest {
      */
     private void clearAliasList() throws AliasNotFoundException {
         for (Alias alias : uniqueAliasList.getAliasObservableList()) {
-            UniqueAliasList.remove(alias.getAlias());
+            uniqueAliasList.remove(alias.getAlias());
         }
     }
 

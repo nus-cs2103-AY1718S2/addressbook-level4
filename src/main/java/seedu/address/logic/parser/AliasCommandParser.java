@@ -9,9 +9,13 @@ import seedu.address.model.alias.Alias;
 
 //@@author jingyinno
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new AliasCommand object
  */
 public class AliasCommandParser implements Parser<AliasCommand> {
+    private static final String SPLIT_TOKEN = "\\s+";
+    private static final int CORRECT_ARGS_LENGTH = 2;
+    private static final int COMMAND_INDEX = 0;
+    private static final int ALIAS_INDEX = 1;
 
     /**
      * Parses the given {@code String} of arguments in the context of the AliasCommand
@@ -19,17 +23,25 @@ public class AliasCommandParser implements Parser<AliasCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AliasCommand parse(String args) throws ParseException {
-        args = args.trim();
-        String[] trimmedArgs = args.split("\\s+");
-        if (trimmedArgs.length != 2) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
-        }
+        String[] trimmedArgs = validateNumberOfArgs(args);
         try {
-            Alias aliasCreated = ParserUtil.parseAlias(trimmedArgs[0], trimmedArgs[1]);
+            Alias aliasCreated = ParserUtil.parseAlias(trimmedArgs[COMMAND_INDEX], trimmedArgs[ALIAS_INDEX]);
             return new AliasCommand(aliasCreated);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
+    }
+
+    /**
+     * Returns a String Array of valid number of elements after slicing the user input.
+     */
+    private String[] validateNumberOfArgs(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
+        if (splitArgs.length != CORRECT_ARGS_LENGTH) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
+        }
+        return splitArgs;
     }
 }

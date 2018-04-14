@@ -28,7 +28,9 @@ Head to <<Quick Start>> to get started.
 The symbols which are used in the User Guide as well as their meaning are listed below: +
 ℹ️: Information +
 💡: Tips +
-
+:important-caption:: Warning
+:warning-caption:: Specific user only command
+:caution-caption: Command is not undoable
 // end::introduction[]
 
 // tag::quickstart[]

@@ -32,6 +32,7 @@ import guitests.guihandles.WelcomePanelHandle;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.LockManager;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -69,6 +70,7 @@ public abstract class BibliotekSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
+        LockManager.getInstance().unlock(LockManager.getInstance().getPassword());
 
         assertApplicationStartingStateIsCorrect();
     }

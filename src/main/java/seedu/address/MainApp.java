@@ -14,10 +14,13 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
+import seedu.address.commons.events.model.PasswordChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.CipherEngine;
+import seedu.address.logic.LockManager;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.BookShelf;
@@ -70,6 +73,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
+        initLockManager(userPrefs);
+
         BookShelfStorage bookShelfStorage = new XmlBookShelfStorage(userPrefs.getBookShelfFilePath());
         RecentBooksStorage recentBooksStorage = new XmlRecentBooksStorage(userPrefs.getRecentBooksFilePath());
         AliasListStorage aliasListStorage = new XmlAliasListStorage(userPrefs.getAliasListFilePath());
@@ -211,6 +216,17 @@ public class MainApp extends Application {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    /**
+     * Initialize {@link LockManager} based on key in {@code userPrefs}.
+     */
+    private void initLockManager(UserPrefs userPrefs) {
+        try {
+            LockManager.instantiate(CipherEngine.decryptKey(userPrefs.getKey()));
+        } catch (Exception e) {
+            logger.warning("Failed to initialize LockManager. Using no password.");
+        }
+    }
+
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting Bibliotek " + MainApp.VERSION);
@@ -236,6 +252,23 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
+    }
+
+    @Subscribe
+    public void handlePasswordChangedEvent(PasswordChangedEvent event) throws Exception {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        userPrefs.setKey(CipherEngine.encryptKey(LockManager.getInstance().getPassword()));
+        try {
+            storage.saveUserPrefs(userPrefs);
+            if (LockManager.getInstance().wasPasswordProtected()) {
+                CipherEngine.decryptFile(storage.getBookShelfFilePath(), LockManager.getInstance().getOldPassword());
+            }
+            if (LockManager.getInstance().isPasswordProtected()) {
+                CipherEngine.encryptFile(storage.getBookShelfFilePath(), LockManager.getInstance().getPassword());
+            }
+        } catch (IOException e) {
+            logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
+        }
     }
 
     public static void main(String[] args) {

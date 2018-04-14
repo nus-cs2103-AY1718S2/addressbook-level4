@@ -18,6 +18,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AliasListChangedEvent;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
+import seedu.address.logic.LockManager;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.ReadOnlyAliasList;
 import seedu.address.model.alias.UniqueAliasList;
@@ -60,6 +61,10 @@ public class ModelManager extends ComponentManager implements Model {
         this.sortedBookList = new SortedList<>(this.filteredBookList, DEFAULT_BOOK_COMPARATOR);
         this.displayBookList = sortedBookList;
         this.searchResults = new BookShelf();
+
+        if (LockManager.getInstance().isLocked()) {
+            updateBookListFilter(PREDICATE_HIDE_ALL_BOOKS);
+        }
 
         this.recentBooks = new UniqueBookCircularList();
         List<Book> list = recentBooksList.getBookList();

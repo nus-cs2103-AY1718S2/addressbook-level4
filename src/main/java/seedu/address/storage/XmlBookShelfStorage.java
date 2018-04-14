@@ -12,6 +12,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.logic.CipherEngine;
+import seedu.address.logic.LockManager;
 import seedu.address.model.ReadOnlyBookShelf;
 
 /**
@@ -52,13 +54,30 @@ public class XmlBookShelfStorage implements BookShelfStorage {
             return Optional.empty();
         }
 
-        XmlSerializableBookShelf xmlBookShelf = XmlFileStorage.loadBookShelfDataFromFile(new File(filePath));
+        XmlSerializableBookShelf xmlBookShelf = getXmlSerializableBookShelf(filePath);
+
         try {
             return Optional.of(xmlBookShelf.toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + bookShelfFile + ": " + ive.getMessage());
             throw new DataConversionException(ive);
         }
+    }
+
+    /**
+     * Obtains {@link XmlSerializableBookShelf} from {@code filePath}.
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    private XmlSerializableBookShelf getXmlSerializableBookShelf(String filePath)
+            throws DataConversionException, FileNotFoundException {
+        if (LockManager.getInstance().isPasswordProtected()) {
+            CipherEngine.decryptFile(filePath, LockManager.getInstance().getPassword());
+        }
+        XmlSerializableBookShelf xmlBookShelf = XmlFileStorage.loadBookShelfDataFromFile(new File(filePath));
+        if (LockManager.getInstance().isPasswordProtected()) {
+            CipherEngine.encryptFile(filePath, LockManager.getInstance().getPassword());
+        }
+        return xmlBookShelf;
     }
 
     @Override
@@ -77,6 +96,9 @@ public class XmlBookShelfStorage implements BookShelfStorage {
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveBookShelfDataToFile(file, new XmlSerializableBookShelf(bookShelf));
+        if (LockManager.getInstance().isPasswordProtected()) {
+            CipherEngine.encryptFile(filePath, LockManager.getInstance().getPassword());
+        }
     }
 
 }

@@ -23,12 +23,15 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LibraryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.logic.commands.ReviewsCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.ReadOnlyAliasList;
@@ -150,6 +153,9 @@ public class BookShelfParser {
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
 
+        case LockCommand.COMMAND_WORD:
+            return new LockCommand();
+
         case RecentCommand.COMMAND_WORD:
             return new RecentCommand();
 
@@ -162,11 +168,17 @@ public class BookShelfParser {
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
+        case SetPasswordCommand.COMMAND_WORD:
+            return new SetPasswordCommandParser().parse(arguments);
+
         case ThemeCommand.COMMAND_WORD:
             return new ThemeCommandParser().parse(arguments);
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
+
+        case UnlockCommand.COMMAND_WORD:
+            return new UnlockCommand(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

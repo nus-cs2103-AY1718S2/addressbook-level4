@@ -124,4 +124,19 @@ public class StringUtil {
         }
         return s.substring(index);
     }
+
+    /**
+     * Returns {@code target} padded at the end with {@code charToPad} until it is longer than {@code length}.
+     */
+    public static String rightPad(String target, char charToPad, int length) {
+        if (target.length() >= length) {
+            return target;
+        }
+
+        StringBuilder sb = new StringBuilder(target);
+        while (sb.length() < length) {
+            sb.append(charToPad);
+        }
+        return sb.toString();
+    }
 }

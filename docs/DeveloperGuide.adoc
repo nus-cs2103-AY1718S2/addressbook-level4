@@ -765,9 +765,9 @@ image::wrongkey.png[width="650"]
 
 . `setKeyCommandParser` will extract the old key and new key from the user input.
 . `setKeyCommandParser` checks that  two parameters are present, and that the parameters are valid.
-. `setKeyCommandParser` creates an `setKeyCommand` with the parameters.
-. `setKeyCommand` is preprocessed to check that oldKey is correct.
-. If the oldKye is correct, `setKeyCommand` will send a setKey command to LogicManager.
+. `setKeyCommandParser` creates an `setPasswordCommand` with the parameters.
+. `setPasswordCommand` is preprocessed to check that oldPassword is correct.
+. If the oldKye is correct, `setPasswordCommand` will send a setKey command to LogicManager.
 . LogicManager will send set_new_key request to ModelManger.
 . ModelManager indicate the keyChangedevent and handle it, and set the bookshelf's key to be new key.
 . ModelManager will encode the key, before indicate the keyChangedevent.

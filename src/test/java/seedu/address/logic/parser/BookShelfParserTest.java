@@ -6,6 +6,8 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OLD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
@@ -30,7 +32,9 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LibraryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ReviewsCommand;
+import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.book.Priority;
@@ -124,6 +128,19 @@ public class BookShelfParserTest {
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
+    }
+
+    @Test
+    public void parseCommand_unlock() throws Exception {
+        UnlockCommand command = (UnlockCommand) parser.parseCommand(UnlockCommand.COMMAND_WORD + " " + "key");
+        assertEquals(new UnlockCommand("key"), command);
+    }
+
+    @Test
+    public void parseCommand_setPassword() throws Exception {
+        SetPasswordCommand command = (SetPasswordCommand) parser.parseCommand(SetPasswordCommand.COMMAND_WORD + " "
+                + PREFIX_OLD + "oldkey" + " " + PREFIX_NEW + "newkey");
+        assertEquals(new SetPasswordCommand("oldkey", "newkey"), command);
     }
 
     @Test

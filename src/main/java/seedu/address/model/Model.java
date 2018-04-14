@@ -17,6 +17,7 @@ import seedu.address.model.book.exceptions.DuplicateBookException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Book> PREDICATE_SHOW_ALL_BOOKS = unused -> true;
+    Predicate<Book> PREDICATE_HIDE_ALL_BOOKS = unused -> false;
 
     /**
      * Default book {@code Comparator} that sorts by status (in descending order: Reading, Unread, Read),

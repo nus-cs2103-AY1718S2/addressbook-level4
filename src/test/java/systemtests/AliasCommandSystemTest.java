@@ -27,26 +27,26 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         /* Case: add an alias to a non-empty address book, command with leading spaces and trailing spaces -> added */
         Alias toAdd_add = ADD;
         String command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_ADD;
-        String[][] expectedAliases = new String[][] {{VALID_ALIAS_ADD}};
+        Alias[][] expectedAliases = new Alias[][] {{toAdd_add}};
         assertCommandSuccess(command, toAdd_add, expectedAliases);
 
         /* Case: undo adding ADD to the list -> ADD deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        expectedAliases = new String[][] {};
+        expectedAliases = new Alias[][] {};
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo adding ADD to the list -> ADD added again */
         command = RedoCommand.COMMAND_WORD;
         model.addAlias(toAdd_add);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        expectedAliases = new String[][] {{VALID_ALIAS_ADD}};
+        expectedAliases = new Alias[][] {{toAdd_add}};
         assertCommandSuccess(command, model, expectedResultMessage, expectedAliases);
 
         /* Case: add 2 aliases of different commands -> added */
         Alias toAdd_history = HISTORY;
         command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_HISTORY;
-        expectedAliases = new String[][] {{VALID_ALIAS_ADD, VALID_ALIAS_HISTORY}};
+        expectedAliases = new Alias[][] {{toAdd_add, toAdd_history}};
         assertCommandSuccess(command, toAdd_history, expectedAliases);
 
         /* --------------------------------- Perform invalid alias operations ------------------------------------- */
@@ -67,16 +67,16 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandSuccess(Alias toAdd, String[][] expectedTable) {
+    private void assertCommandSuccess(Alias toAdd, Alias[][] expectedTable) {
         assertCommandSuccess(AliasUtil.getAliasCommand(toAdd), toAdd, expectedTable);
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(Alias)}. Executes {@code command}
      * instead.
-     * @see AliasCommandSystemTest#assertCommandSuccess(Alias, String[][])
+     * @see AliasCommandSystemTest#assertCommandSuccess(Alias, Alias[][])
      */
-    private void assertCommandSuccess(String command, Alias toAdd, String[][] expectedTable) {
+    private void assertCommandSuccess(String command, Alias toAdd, Alias[][] expectedTable) {
         Model expectedModel = getModel();
         try {
             expectedModel.addAlias(toAdd);
@@ -94,10 +94,10 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
      * 1. Result display box displays {@code expectedResultMessage}.<br>
      * 2. {@code Model}, {@code Storage} and {@code AliasListPanel} equal to the corresponding components in
      * {@code expectedModel}.<br>
-     * @see AliasCommandSystemTest#assertCommandSuccess(String, Alias, String[][])
+     * @see AliasCommandSystemTest#assertCommandSuccess(String, Alias, Alias[][])
      */
     private void assertCommandSuccess(String command, Model expectedModel,
-                                      String expectedResultMessage, String[][] expectedTable) {
+                                      String expectedResultMessage, Alias[][] expectedTable) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
@@ -114,7 +114,7 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
-    private void assertAliasTable(String[][] expectedTable) {
+    private void assertAliasTable(Alias[][] expectedTable) {
         executeCommand(ListCommand.COMMAND_WORD);
         assertTableDisplaysExpected("", ListCommand.MESSAGE_SUCCESS, expectedTable);
     }

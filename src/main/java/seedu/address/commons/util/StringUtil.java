@@ -80,7 +80,7 @@ public class StringUtil {
 
         try {
             double value = Double.parseDouble(s);
-            return !s.matches(".*[+\\p{Alpha}].*");
+            return !s.matches(".*[-+\\p{Alpha}].*");
         } catch (NumberFormatException nfe) {
             return false;
         }

@@ -49,6 +49,6 @@ public class Price {
 
     @Override
     public String toString() {
-        return this.currentPrice.toString();
+        return "USD " + this.currentPrice.toString();
     }
 }

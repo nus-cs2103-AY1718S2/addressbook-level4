@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXTOFKINPHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -134,6 +135,27 @@ public class EditMiscCommand extends UndoableCommand {
         return new Student(uniqueKey, name, phone, email, address,
                 programmingLanguage, tags, isFavourite, dashboard, profilePicturePath, miscellaneousInfo);
     }
+
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EditMiscCommand)) {
+            return false;
+        }
+
+        // state check
+        EditMiscCommand e = (EditMiscCommand) other;
+        return index.equals(e.index)
+                && editMiscDescriptor.equals(e.editMiscDescriptor)
+                && Objects.equals(studentToEdit, e.studentToEdit);
+    }
+
 
     /**
      * Stores the details to edit the student with. Each non-empty field value will replace the

@@ -2,8 +2,11 @@ package seedu.address.logic.commands;
 
 //@@author samuelloh
 
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_MISC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_MISC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALLERGIES_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARKS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -205,7 +208,39 @@ public class editMiscCommandTest {
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
-    
+    @Test
+    public void equals() throws Exception {
+        final EditMiscCommand standardCommand = prepareCommand(INDEX_FIRST, DESC_MISC_AMY);
+
+        // same values -> returns true
+        EditMiscDescriptor copyDescriptor = new EditMiscDescriptor(DESC_MISC_AMY);
+        EditMiscCommand commandWithSameValues = prepareCommand(INDEX_FIRST, copyDescriptor);
+        if (standardCommand.equals(commandWithSameValues)) {
+
+        }
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // one command preprocessed when previously equal -> returns false
+        commandWithSameValues.preprocessUndoableCommand();
+        assertFalse(standardCommand.equals(commandWithSameValues));
+
+        // null -> returns false
+        assertFalse(standardCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        // different index -> returns false
+        assertFalse(standardCommand.equals(new EditMiscCommand(INDEX_SECOND, DESC_MISC_AMY)));
+
+        // different descriptor -> returns false
+        assertFalse(standardCommand.equals(new EditMiscCommand(INDEX_FIRST, DESC_MISC_BOB)));
+    }
+
+
     /**
      * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
      */

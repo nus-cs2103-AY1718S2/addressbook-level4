@@ -1157,63 +1157,61 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 
-|`* * *` |user |be able to view misc info of my students on a different page |have an easier viewing of them
+|`* * *` |tutor |add a new student |
 
-|`* * *` |user |view the profile pictures of each student(if it exists) |learn to recognise them
+|`* * *` |tutor | be able to edit the miscellaneous information of a student |have the most updated version of a student's information
 
-|`* * *` |user |be able to add/change a profile picture for my students |
+|`* * *` |tutor |delete a student |remove entries that I no longer need
 
-|`* * *` |user | be able to edit the miscellaneous information of a student |have the most updated version of a student's information
+|`* * *` |tutor |find a student by name |locate details of students without having to go through the entire list
 
-|`* * *` |user |have a remarks column included in the misc info for each student |add specific remarks for each particular student that may be important to note
+|`* * *` |tutor |find a student by programming language |locate details of students of a certain programming language
 
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new student |
+|`* * *` |tutor |search a student by label |
 
 |`* * *` |tutor |indicate a student's programming language when adding one |
 
-|`* * *` |user |delete a student |remove entries that I no longer need
+|`* * *` |tutor |view the address of a student in the maps |know where the student lives
 
-|`* * *` |user |find a student by name |locate details of students without having to go through the entire list
+|`* * *` |tutor |add a student to favourites |keep track of that student
 
-|`* * *` |user |find a student by programming language |locate details of students of a certain programming language
+|`* * *` |tutor |list students added to favourites |view students I'm keeping tack
 
-|`* * *` |user |view timetable of lessons by week |easily view my schedule
+|`* * *` |tutor |be able to view misc info of my students on a different page |have an easier viewing of them
 
-|`* * *` |user |add a lesson for a student |
+|`* * *` |tutor |view the profile pictures of each student(if it exists) |learn to recognise them
 
-|`* * *` |user |delete a lesson for a student |remove lessons that the student cancels
+|`* * *` |tutor |be able to add/change a profile picture for my students |
 
-|`* *` |user |edit a lesson for a student |keep track of timing changes
+|`* * *` |tutor |have a remarks column included in the misc info for each student |add specific remarks for each particular student that may be important to note
 
-|`* * *` |user with a filled timetable |check free slot |easily find a free timeslot to allocate to students
+|`* * *` |tutor |view timetable of lessons by week |easily view my schedule
 
-|`* * *` |user with a filled timetable |sync with cloud storage calenders |easily sync my timetable to my schedule
+|`* * *` |tutor |add a lesson for a student |
+
+|`* * *` |tutor |delete a lesson for a student |remove lessons that the student cancels
+
+|`* *` |tutor |edit a lesson for a student |keep track of timing changes
+
+|`* * *` |tutor with a filled timetable |check free slot |easily find a free timeslot to allocate to students
+
+|`* * *` |tutor with a filled timetable |sync with cloud storage calenders |easily sync my timetable to my schedule
+
+|`* * *` |tutor |get an overview of my student's progress |so that I can see what they don't know and tutor them better
+
+|`* * *` |tutor |type little but get the command I want |to save time
 
 |`* *` |tutor |sort the contact list by programming language | easily recognise which and how many students are taking a particular programming language
 
-|`* * *` |user |add a student to favourites |keep track of that student
+|`* *` |tutor |view hours spent teaching |see how much money I should collect
 
-|`* * *` |user |list students added to favourites |view students I'm keeping tack
+|`*` |tutor |send emails to my student |to send reminders for upcoming lessons or payments owed
 
-|`* * *` |user |search a student by label |
+|`*` |tutor |submit feedback to the developers |to improve my user experience
 
-|`* * *` |user |view the address of a student in the maps |know where the student lives
-
-|`* * *` |user |add a programming language for a student |
-
-|`* * *` |user |get an overview of my student's progress |so that I can see what they don't know and tutor them better
-
-|`* * *` |user |type little but get the command I want |to save time
-
-|`*` |user |send emails to my student |to send reminders for upcoming lessons or payments owed
-
-|`*` |user |submit feedback to the developers |to improve my user experience
-
-|`* *` |user |view hours spent teaching |see how much money I should collect
-
-|`*` |user with many students in the address book |sort students by name |locate a student easily
+|`*` |tutor with many students in the address book |sort students by name |locate a student easily
 |=======================================================================
 
 _{More to be added}_
@@ -1301,23 +1299,6 @@ Windows, Linux, Unix, OS-X
 
 [[timetable]] Timetable::
 A weekly timetable that shows status of all timeslots in one hour divisions
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing

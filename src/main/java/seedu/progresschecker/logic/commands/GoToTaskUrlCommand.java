@@ -3,12 +3,14 @@ package seedu.progresschecker.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import static seedu.progresschecker.logic.commands.AddDefaultTasksCommand.DEFAULT_LIST_ID;
+import static seedu.progresschecker.logic.commands.ViewTaskListCommand.TASK_TAB;
 import static seedu.progresschecker.model.task.TaskUtil.INDEX_OUT_OF_BOUND;
 import static seedu.progresschecker.model.task.TaskUtil.getTaskUrl;
 
 import javafx.util.Pair;
 import seedu.progresschecker.commons.core.EventsCenter;
 import seedu.progresschecker.commons.events.ui.LoadUrlEvent;
+import seedu.progresschecker.commons.events.ui.TabLoadChangedEvent;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 
 //@@author EdwardKSG
@@ -58,6 +60,7 @@ public class GoToTaskUrlCommand extends Command {
             }
 
             EventsCenter.getInstance().post(new LoadUrlEvent(url));
+            EventsCenter.getInstance().post(new TabLoadChangedEvent(TASK_TAB));
 
             return new CommandResult(String.format(MESSAGE_SUCCESS, index + ". " + title));
         } catch (CommandException ce) {

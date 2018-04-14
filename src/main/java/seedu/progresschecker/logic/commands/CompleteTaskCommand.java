@@ -6,6 +6,7 @@ import static seedu.progresschecker.logic.commands.AddDefaultTasksCommand.DEFAUL
 import static seedu.progresschecker.model.task.TaskUtil.completeTask;
 
 import javafx.util.Pair;
+import seedu.progresschecker.logic.LogicManager;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 
 //@@author EdwardKSG
@@ -61,7 +62,7 @@ public class CompleteTaskCommand extends Command {
                 return new CommandResult(String.format(MESSAGE_NO_ACTION, index + ". " + title));
             }
 
-            ViewTaskListCommand view = new ViewTaskListCommand(DUMMY_WEEK);
+            ViewTaskListCommand view = LogicManager.getCurrentViewTask();
             view.updateView();
 
             return new CommandResult(String.format(MESSAGE_SUCCESS, index + ". " + title));

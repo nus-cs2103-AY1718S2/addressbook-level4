@@ -3,10 +3,10 @@ package seedu.progresschecker.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import static seedu.progresschecker.logic.commands.AddDefaultTasksCommand.DEFAULT_LIST_ID;
-import static seedu.progresschecker.logic.commands.CompleteTaskCommand.DUMMY_WEEK;
 import static seedu.progresschecker.model.task.TaskUtil.undoTask;
 
 import javafx.util.Pair;
+import seedu.progresschecker.logic.LogicManager;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 
 //@@author EdwardKSG
@@ -61,7 +61,7 @@ public class ResetTaskCommand extends Command {
                 return new CommandResult(String.format(MESSAGE_NO_ACTION, index + ". " + title));
             }
 
-            ViewTaskListCommand view = new ViewTaskListCommand(DUMMY_WEEK);
+            ViewTaskListCommand view = LogicManager.getCurrentViewTask();;
             view.updateView();
 
             return new CommandResult(String.format(MESSAGE_SUCCESS, index + ". " + title));

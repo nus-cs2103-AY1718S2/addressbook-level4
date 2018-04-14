@@ -227,6 +227,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         appointments.add(appointment);
+        appointments.sort();
     }
 
     /**
@@ -235,6 +236,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removeAppointment(Appointment key) throws AppointmentNotFoundException {
         if (appointments.remove(key)) {
+            appointments.sort();
             return true;
         } else {
             throw new AppointmentNotFoundException();
@@ -253,6 +255,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedAppointment);
 
         appointments.setAppointment(target, editedAppointment);
+        appointments.sort();
     }
     //@@author
 

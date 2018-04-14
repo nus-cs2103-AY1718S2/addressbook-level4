@@ -173,7 +173,7 @@ The UI consists of a `MainWindow` that is made up of parts +
 `GroupListPanel` +
 `Calendar` +
 `TimeTable` +
-`StatusBarFooter`+
+`StatusBarFooter` +
 `ProgessIndicatorProperty` +
 `BrowserPanel` + 
 All these, including the `MainWindow`, inherit from the abstract `UiPart` class. + 

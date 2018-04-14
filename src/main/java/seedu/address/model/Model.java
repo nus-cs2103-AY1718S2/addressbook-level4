@@ -110,7 +110,7 @@ public interface Model {
      * @param filepath
      * @param password
      */
-    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException;
+    void exportAddressBook(String filepath, Password password) throws IOException;
 
     /**
      * Exports the current view of {@code AddressBook} to the googledrive folder of local storage.
@@ -120,7 +120,7 @@ public interface Model {
      * @param filepath
      * @param password
      */
-    void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+    void uploadAddressBook(String filepath, Password password) throws IOException,
             GoogleAuthorizationException, RequestTimeoutException;
     //@@author
 

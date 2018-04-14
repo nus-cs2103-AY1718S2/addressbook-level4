@@ -683,6 +683,25 @@ Separation of Concerns as `Patient` now needs to do two different things.
 ==== Current Implementation
 The action of logging into IMDB is facilitated by `LoginCommand` and the static class `LoginManager`, which also contains a static attribute of class `LoginState`.
 
+The static class `LoginManager` is implemented by a final class as follows:
+
+[source,java]
+----
+
+public final class LoginManager {
+    private static LoginState currLoginState = new LoginState(NO_USER_STATE, NO_USER_STRING);
+    private static String passwordPath = "/data/passwords.csv";
+
+    private LoginManager() {
+            currLoginState = new LoginState(NO_USER_STATE, NO_USER_STRING);
+    }
+
+    public static boolean authenticate (String username, String password) {
+        // Check if username and password match and are in the passwords list and updates currLoginState
+    }
+
+----
+
 `LoginCommand` takes in username and password input from the user, then calls the static class `LoginManager` to authenticate the given username and password, meaning that it will check through a csv file of correct usernames and passwords. If the given username and password are found in that file, then the value stored in `LoginState` will be changed to reflect the role of the user who logged in (doctor or medical staff).
 
 If `LoginState` shows that no user is currently logged in, certain commands that access the database such as `AddCommand` and `ListCommand` will throw an exception telling the user to log in. Once logged in, the user can perform those commands.
@@ -703,6 +722,29 @@ each implementation and the pros and cons of each implementation:
 ** Pros: Can store login state as an int instead of an object instance.
 ** Cons: Will require a method in LoginCommand to update login state and verify username and password. Violates Single Responsibility Principle and Separation of Concerns as `LoginCommand` now needs to do two different things. Also, there is a need to somehow pass the login state to IMDBParser.
 // end::login[]
+
+// tag::print[]
+=== Print Medical Records
+==== Current Implementation
+When `PrintCommand` is called, an instance of `PrintFormatter` is created, and a reference to the target `Patient` is passed to it.
+
+`PrintFormatter` retrieves medical records and other information of the `Patient`, then uses iText (an external library) to format and print the records on a PDF.
+
+After the PDF is created, `PrintFormatter` will try to use an existing application to open it. If that fails, an exception is thrown.
+
+==== Design Considerations
+
+The following is an exploration of possible alternative implementations, the various aspects of
+each implementation and the pros and cons of each implementation:
+
+===== Aspect: File format of printed document
+* **Alternative 1 (current choice):** Print records onto a PDF
+** Pros: PDF files are compatible across multiple platform. Also, PDFs cannot be altered without leaving an electronic footprint, so they are secure, which is important when there is confidential patient data.
+** Cons: It is difficult to write on a pdf with basic Java methods, so an external library will have to be used.
+* **Alternative 2:** Print records onto a txt file
+** Pros: Simple to implement using basic Java methods.
+** Cons: Document would not look visually appealing. Also, txt files do not support pictures, which might be needed in the future (e.g. for X-ray photos).
+// end::print[]
 
 === Logging
 

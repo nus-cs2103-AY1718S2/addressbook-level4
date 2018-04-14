@@ -44,14 +44,6 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     /**
-     * Returns true if the list contains an equivalent Tag as the given argument.
-     */
-    public boolean contains(Appointment toCheck) {
-        requireNonNull(toCheck);
-        return internalList.contains(toCheck);
-    }
-
-    /**
      * Adds an Appointment to the list.
      *
      * @throws DuplicateAppointmentException if the Appointment to add is a duplicate of an existing Appointment
@@ -59,7 +51,7 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      */
     public void add(Appointment toAdd) throws DuplicateAppointmentException {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
+        if (isAppointmentOverlapped(toAdd)) {
             throw new DuplicateAppointmentException();
         }
         internalList.add(toAdd);
@@ -91,6 +83,30 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
             replacement.add(appointment);
         }
         setAppointments(replacement);
+    }
+
+    /**
+     * Returns true if the list contains an equivalent Appointment as the given argument or there is an overlap
+     * in appointments
+     */
+    public boolean isAppointmentOverlapped(Appointment toAdd) {
+        for (Appointment appointment : internalList) {
+            if (toAdd.getDate().equals(appointment.getDate())) {
+                if ((Integer.valueOf(toAdd.getStartTime()) > Integer.valueOf(appointment.getStartTime()))
+                    && (Integer.valueOf(toAdd.getStartTime()) < Integer.valueOf(appointment.getEndTime()))) {
+                    return true;
+                }
+                if ((Integer.valueOf(toAdd.getEndTime()) > Integer.valueOf(appointment.getStartTime()))
+                    && (Integer.valueOf(toAdd.getEndTime()) < Integer.valueOf(appointment.getEndTime()))) {
+                    return true;
+                }
+                if ((Integer.valueOf(toAdd.getStartTime()) <= Integer.valueOf(appointment.getStartTime()))
+                    && (Integer.valueOf(toAdd.getEndTime()) >= Integer.valueOf(appointment.getEndTime()))) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

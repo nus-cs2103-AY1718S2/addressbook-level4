@@ -79,7 +79,7 @@ public class XmlAdaptedAppointment {
             return true;
         }
 
-        if (!(other instanceof XmlAdaptedPerson)) {
+        if (!(other instanceof XmlAdaptedAppointment)) {
             return false;
         }
 

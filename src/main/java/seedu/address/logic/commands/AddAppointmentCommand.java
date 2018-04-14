@@ -44,7 +44,8 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_END_TIME + "1600 ";
 
     public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
-    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in EduBuddy";
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in EduBuddy or "
+            + "there is an overlap in appointments";
 
     private final Index index;
     private final Appointment toAdd;

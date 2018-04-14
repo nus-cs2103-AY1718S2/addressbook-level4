@@ -30,28 +30,22 @@
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
       </HBox>
       <FlowPane fx:id="tags" />
-         <FlowPane fx:id="insurances" />
     </VBox>
-      <Label text="Total Commission:" GridPane.rowIndex="7" />
-      <Label fx:id="commission" text="\$commission" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+      <Label fx:id="commission" prefHeight="38.0" prefWidth="205.0" text="\$commission" GridPane.halignment="LEFT" GridPane.rowIndex="8">
          <padding>
             <Insets bottom="10.0" left="30.0" right="10.0" top="10.0" />
          </padding>
       </Label>
-     <Label fx:id="group" styleClass="cell_small_label" text="\$group" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-   <Label fx:id="appointment" styleClass="cell_small_label" text="\$appointment" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-   <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-   <Label fx:id="email" styleClass="cell_small_label" text="\$email" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-   <Label fx:id="address" styleClass="cell_small_label" text="\$address" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-     <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <Label text="Phone:" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-      <Label text="Address:" GridPane.rowIndex="2" />
-      <Label text="Email:" GridPane.rowIndex="3" />
-      <Label text="Birthday:" GridPane.rowIndex="4" />
-      <Label text="Appointment:" GridPane.rowIndex="5" />
-      <Label text="Group:" GridPane.rowIndex="6" />
+     <Label fx:id="group" styleClass="cell_small_label" text="\$group" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
+   <Label fx:id="appointment" styleClass="cell_small_label" text="\$appointment" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
+   <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" GridPane.halignment="LEFT" GridPane.rowIndex="4" />
+   <Label fx:id="email" styleClass="cell_small_label" text="\$email" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+   <Label fx:id="address" styleClass="cell_small_label" text="\$address" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+     <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+      <FlowPane fx:id="insurances" GridPane.rowIndex="7" />
       <rowConstraints>
          <RowConstraints percentHeight="0.0" />
+         <RowConstraints minHeight="10.0" />
          <RowConstraints minHeight="10.0" />
          <RowConstraints minHeight="10.0" />
          <RowConstraints minHeight="10.0" />

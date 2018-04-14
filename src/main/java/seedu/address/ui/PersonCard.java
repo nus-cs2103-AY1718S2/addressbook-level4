@@ -55,17 +55,17 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        birthday.setText(person.getBirthday().value);
+        phone.setText("Phone: " + person.getPhone().value);
+        address.setText("Address: " + person.getAddress().value);
+        email.setText("Email: " + person.getEmail().value);
+        birthday.setText("Birthday: " + person.getBirthday().value);
         if (person.getAppointment() == null || person.getAppointment().equals("")) {
             appointment.setText("No Appointment Date");
         } else {
-            appointment.setText(person.getAppointment().value);
+            appointment.setText("Appointment: " + person.getAppointment().value);
         }
-        commission.setText(person.getTotalCommission());
-        group.setText(person.getGroup().groupName);
+        commission.setText("Total Commission: " + person.getTotalCommission());
+        group.setText("Group: " + person.getGroup().groupName);
         person.getInsurance().forEach(insurance -> insurances.getChildren().add(new Label(insurance.insuranceName)));
 
         startTag(person);

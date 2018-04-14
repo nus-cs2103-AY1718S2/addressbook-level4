@@ -48,7 +48,7 @@ public class PasswordCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandFailure (String command, String expectedResultMessage) {
         executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, getModel());
+        assertApplicationDisplaysExpected("", expectedResultMessage, getModel());
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();

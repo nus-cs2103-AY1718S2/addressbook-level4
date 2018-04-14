@@ -75,6 +75,4 @@ include::../DeveloperGuide.adoc[tag=AddComment]
 
 include::../DeveloperGuide.adoc[tag=ExportCommand]
 
-== PROJECT: PowerPointLabs
-
 ---

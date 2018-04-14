@@ -10,6 +10,7 @@ import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MatriculationNumber;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Participation;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -40,6 +41,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setDisplayPic(person.getDisplayPic());
+        descriptor.setParticipation(person.getParticipation());
         descriptor.setTags(person.getTags());
     }
 
@@ -88,6 +90,14 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withDisplayPic(String displayPic) {
         descriptor.setDisplayPic(new DisplayPic(displayPic));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Participation} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withParticipation(String participation) {
+        descriptor.setParticipation(new Participation(participation));
         return this;
     }
 

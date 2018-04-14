@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.item.UniqueItemList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -18,7 +19,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.Task;
-import seedu.address.model.task.UniqueTaskList;
+import seedu.address.model.task.TaskList;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -26,9 +28,10 @@ import seedu.address.model.task.UniqueTaskList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniqueTaskList tasks;
+    private final TaskList tasks;
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueItemList itemList;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -38,9 +41,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        tasks = new UniqueTaskList();
+        tasks = new TaskList();
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        itemList = new UniqueItemList();
     }
 
     public AddressBook() {}
@@ -57,6 +61,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setPersons(List<Person> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
+    }
+
+    public void setItemList(List<String> itemList) {
+        this.itemList.setItemList(itemList);
+    }
+
+    public void updateItemList(ObservableList<Person> persons) {
+        this.itemList.updateItemList(persons);
     }
 
     public void setTasks(List<Task> tasks) {
@@ -78,6 +90,8 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .collect(Collectors.toList());
 
         try {
+            updateItemList(this.persons.asObservableList());
+            setItemList(newData.getItemList());
             setPersons(syncedPersonList);
             setTasks(newData.getTaskList());
         } catch (DuplicatePersonException e) {
@@ -135,6 +149,32 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given task {@code target} in the list with {@code editedTask}
+     * @throws TaskNotFoundException
+     */
+    public void updateTask(Task target, Task editedTask)
+            throws TaskNotFoundException {
+        requireNonNull(editedTask);
+        tasks.setTask(target, editedTask);
+    }
+
+    //@@author Alaru
+    /**
+     * Adds an item to be scheduled to be deleted to the address book.
+     */
+    public void addDeleteItem(String filepath) {
+        itemList.add(filepath);
+    }
+
+    /**
+     * Removes all items to be scheduled to be deleted to the address book.
+     */
+    public void clearItems() {
+        itemList.clear();
+    }
+    //@@author
+
+    /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
      *  list.
@@ -154,7 +194,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return new Person(
                 person.getName(), person.getMatricNumber(),
                 person.getPhone(), person.getEmail(), person.getAddress(),
-                person.getDisplayPic(), correctTagReferences);
+                person.getDisplayPic(), person.getParticipation(), correctTagReferences);
     }
 
     /**
@@ -169,8 +209,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //// tag-level operations
+    ////tag-level operation
+    //@@author Wu Di
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws TaskNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeTask(Task key) throws TaskNotFoundException {
+        if (tasks.remove(key)) {
+            return true;
+        } else {
+            throw new TaskNotFoundException();
+        }
+    }
 
+    //// tag-level operations
+    //@@author
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
@@ -211,12 +265,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author Alaru
+    @Override
+    public List<String> getItemList() {
+        return itemList.getItemList();
+    }
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.tasks.equals(((AddressBook) other).tasks);
     }
 
     @Override

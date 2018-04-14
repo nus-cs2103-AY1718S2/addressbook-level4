@@ -1,0 +1,180 @@
+= Pearlissa Taim Qi Yah - Project Portfolio
+
+:repoURL: https://github.com/CS2103JAN2018-F09-B1/main
+
+== Project: Your TA
+
+'''
+
+== Overview
+
+Your TA is a desktop contact, calendar and task manager application that caters to tech-savvy university Teaching Assistants and/or Professors/Lecturers. +
+It allows the user to manage their deadlines, as well as keep track of their students. +
+The user is mostly required to interact with the application through a Command Line Interface (CLI), along with minimal Graphical User Interface (GUI) features created with JavaFX. It is written in Java, and has about 15 kLoC.
+
+== Summary of Contributions
+
+* *Major feature*: Implemented a *login* system
+
+
+** What it does: Requires users to log in to their accounts (and create accounts for first-time users) with a username and password to access their personal data.
+
+** Justification: This feature makes the software much more accessible to multiple users as it ensures that each user only has access to their own personal information, and not those of other users.
+
+** Highlights: This feature precedes all the other functionalities upon starting up the application. It is the first attempt at improving data security of the software. It required an in-depth analysis of the `Model` and `Storage` components. The implementation too was challenging as it called for the creation of new model classes and storage classes from scratch.
+
+** Credits: The code was adapted from the study of the `Model` and `Storage` components, together with all their classes.
+
+* *Minor feature*: Added *sort* which sorts the contacts alphanumerically by their name
+
+* *Minor feature*: Added a new *theme* for the application
+
+* *Code contributed*: link:{repoURL}/collated/functional/Pearlissa.md[functional], link:{repoURL}/collated/test/Pearlissa.md[test].
+
+* *Other contributions*: _TO BE FILLED IN_
+
+<<<
+
+== Contributions to the User Guide
+
+*****
+_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+*****
+
+=== Sorting all entries : `sort`
+
+Sorts all entries from the address book in alphabetical order based on name. +
+Alias: `s` +
+Format: `sort`
+
+== Login Feature
+
+Before you are able to access the application, login is required.
+====
+* Enter your `Username` and `Password` in the respective fields. +
+* Click on the `login` button.
+* If you have entered either of those incorrectly, the text "Wrong username or password entered" will be displayed. You have an unlimited number of tries to log in. +
+* Upon successful login, the application will load with your previously saved data.
+====
+
+[NOTE]
+Both `Username` and `Password` fields are case-sensitive.
+
+[TIP]
+If you are a first-time user, create an account by entering your desired `Username` and `Password` in the username and password text fields respectively. +
+Then, click on the `Login` button.
+
+== Contributions to the Developer guide
+
+*****
+_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+*****
+The `User` Class:
+
+* Stores the information of a specific user (TA/Lecturer/Professor) in the application.
+* Information includes: Username and Password.
+* Implements `UniqueUserList` that enforces uniqueness of its elements and disallows nulls.
+* `Username`: Object that stores the username of the `User` Object and contains the regex requirements for a valid username.
+[NOTE]
+User's username should only contain alphanumeric characters, be between 3 and 15 characters long and should not be null.
+* `Password`: Object that stores the password of the `User` Object and contains the regex requirements for a valid password.
+[NOTE]
+User's password should only contain alphanumeric characters, be between 8 and 30 characters long and should not be null.
+
+The `Storage` component:
+
+* Can save the user data in xml format and read it back.
+* can save list of `User` objects for login authentication.
+
+// tag::login[]
+=== Login feature
+==== Current Implementation
+
+The login feature is initialized upon startup of the application, through `LoginStorage` and `LoginManager` and is facilitated by the `LoginUi`. +
+It supports multiple accounts whereby one user cannot access the application content of another user by creating multiple `.xml` storage files. +
+
+image::LoginDiagram.png[width="800"]
+
+As seen from the diagram, upon opening the application, the user is prompted to enter their `Username` and `Password`. The `LoginManager` fetches the data of existing `User` objects, before putting them into a Hashmap<Username, User> as shown below. +
+
+[source,java]
+----
+    public synchronized void addUser(String username, String password) throws DuplicateUserException {
+        if (!userList.getUserList().containsKey(username)) {
+            Username addUsername = new Username(username);
+            Password addPassword = new Password(password);
+            User toAdd = new User(addUsername, addPassword);
+            userList.add(toAdd);
+        }
+    }
+----
+[NOTE]
+`Username` and `Password` are case-sensitive.
+
+The credentials entered by the user are then checked against the HashMap to authenticate the account. Upon successful login, the user's file is retrieved from the `Storage` component and is loaded up with the application. +
+
+[source, java]
+----
+@Override
+    public void authenticate(String username, String password) throws DuplicateUserException {
+
+        logger.fine("Authenticating user: " + username);
+        String filepath = username + ".xml";
+        if (userList.getUserList().containsKey(username)) {
+            if (userList.getUserList().get(username).getPassword().getPassword().equals(password)) {
+                loginUser(filepath);
+            } else {
+                throw new DuplicateUserException();
+            }
+        } else {
+            addUser(username, password);
+            try {
+                File file = new File("data/login/" + filepath);
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new DuplicateUserException();
+            }
+            loginUser(filepath);
+        }
+
+    }
+----
+
+[NOTE]
+If the user is a new (username does not exist), they should simply enter their desired `Username` and `Password` into the respective fields, and the account will be created with the default data of the application.
+
+==== Design Considerations
+
+===== Aspect: Implementing new `User`
+* **Alternative 1 (current choice)**: Using same login window, create new `User` if `Username` entered does not exist
+** Pros: Use of only 1 window, no need to implement additional UI functionalities.
+** Cons: Not the most user-friendly or the most conventional way a login works.
+* **Alternative 2**: Create a registration button, which brings the user to a registration UI for the creation of `User` object
+** Pros: More user-friendly, able to implement a username field, along with a password field and, especially a field for password confirmation.
+** Cons: Need to further add onto UI.
+
+===== Aspect: `User` identification
+* **Alternative 1 (current choice)**: `Username` is case-sensitive
+** Pros: "Johndoe" and "johndoe" are different usernames and different accounts with the same name can be created.
+** Cons: If a user makes a typo in the `Username` field, another account is created instead of correctly logging on to their account.
+* **Alternative 2**: `Username` to be made case-insensitive
+** Pros: Users will not have to worry about whether they signed up with a different `Username`.
+** Cons: Less usernames are available.
+
+===== Aspect: `Username` and `Password` Representation
+* **Alternative 1 (current choice)**: `Username` and `Password` only allow alphanumeric characters
+** Pros: Easy authentication, no need to worry about corner cases.
+** Cons: Less room for different usernames and passwords, not as secure.
+* **Alternative 2**: Include special characters in `Username` and `Password` Regex
+** Pros: More secure, less prone to security issues.
+** Cons: Need for more rigorous testing to ensure no corner cases are left out.
+
+===== Aspect: Salting Passwords/Encryption of Files
+* **Alternative 1 (current choice)**: No encryption/salting implemented
+** Pros: Ease of editing information by administrator.
+** Cons: Security issues, easy to find data path and retrieve files.
+* **Alternative 2**: Encrypt files and salt passwords before encryption
+** Pros: Increases security of software, less prone to be used for malicious purposes.
+** Cons: Large amount of coding and implementation required, prerequisites also include knowledge of security issues and safeguards.
+// end::login[]
+

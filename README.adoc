@@ -8,15 +8,15 @@ https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_m
 https://gitter.im/se-edu/Lobby[image:https://badges.gitter.im/se-edu/Lobby.svg[Gitter chat]]
 
 ifdef::env-github[]
-image::docs/images/UiDisplay.png[width="600"]
+image::docs/images/UiInitial.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
-image::images/UiDisplay.png[width="600"]
+image::images/UiInitial.png[width="600"]
 endif::[]
 
 * This is a desktop "Your TA" application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is an address book cum scheduler targeted at making tracking students for NUS lecturer's easier.
+* It is an address book cum scheduler targeted at making tracking students for NUS student teaching assistants' easier.
 * It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
 * It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
 
@@ -32,6 +32,8 @@ endif::[]
 * This application was adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-level4[AddressBook Level-4]
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
+* Application icon made by http://www.freepik.com[Freepik] from https://www.flaticon.com[Flaticon].
+* Default display picture made by https://www.flaticon.com/authors/iconnice[Iconnice] from https://www.flaticon.com[Flaticon].
 * Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4]
 
 == Licence : link:LICENSE[MIT]

@@ -89,19 +89,15 @@ public class PersonCard extends UiPart<Region> {
         case "owesMoney":
             return TAG_COLOR_STYLES[2]; //red
 
-        case "boyfriend":
-        case "girlfriend":
-            return TAG_COLOR_STYLES[5]; //purple
-
         case "grandparent":
         case "neighbours":
-            return TAG_COLOR_STYLES[6]; //grey
+            return TAG_COLOR_STYLES[5]; //purple
 
         case "colleagues":
             return TAG_COLOR_STYLES[4]; //orange
 
         default:
-            return "";
+            return TAG_COLOR_STYLES[6];
         }
     }
 

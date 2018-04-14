@@ -1,13 +1,15 @@
 package systemtests;
 
-import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ADD;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
+import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.testutil.TypicalAliases.ADD;
+import static seedu.address.testutil.TypicalAliases.HISTORY;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
@@ -17,11 +19,37 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void alias() throws Exception {
+        Model model = getModel();
+
+        /* ------------------------ Perform add operations on the alias list ----------------------------- */
+
+
         /* Case: add an alias to a non-empty address book, command with leading spaces and trailing spaces -> added */
-        Alias toAdd = ADD;
+        Alias toAdd_add = ADD;
         String command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_ADD;
-        String[][] aliases = new String[][] {{VALID_ALIAS_ADD}};
-        assertCommandSuccess(command, toAdd, aliases);
+        String[][] expectedAliases = new String[][] {{VALID_ALIAS_ADD}};
+        assertCommandSuccess(command, toAdd_add, expectedAliases);
+
+        /* Case: undo adding ADD to the list -> ADD deleted */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        expectedAliases = new String[][]{};
+        assertCommandSuccess(command, model, expectedResultMessage, expectedAliases);
+
+        /* Case: redo adding ADD to the list -> ADD added again */
+//        command = RedoCommand.COMMAND_WORD;
+//        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+//        expectedAliases = new String[][] {{VALID_ALIAS_ADD}};
+//        assertCommandSuccess(command, model, expectedResultMessage, expectedAliases);
+
+        /* Case: add 2 aliases of different commands -> added */
+//        Alias toAdd_history = HISTORY;
+//        command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_HISTORY;
+//        expectedAliases = new String[][] {{VALID_ALIAS_ADD, VALID_ALIAS_HISTORY}};
+//        assertCommandSuccess(command, toAdd_history, expectedAliases);
+
+        /* --------------------------------- Perform invalid alias operations ------------------------------------- */
+
     }
 
     /**

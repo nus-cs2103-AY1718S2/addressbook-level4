@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.dish.Price;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Order;
+import seedu.address.model.person.Person;
 
 
 /** The word "Task" is used to avoid confusion between order object in the queue and order of a person
@@ -38,6 +39,11 @@ public class Task implements Comparable<Task> {
     public Task(Task source) {
         this(source.getOrder(), source.getAddress(), source.getPrice(), source.getDistance(), source.getCount(),
                 source.getDescription());
+    }
+
+    public Task(Person person, String orderTime) {
+        this(person.getOrder(), person.getAddress(), new Price("0"),
+                new Distance("0"), new Count("0"), orderTime);
     }
 
     public Order getOrder() {

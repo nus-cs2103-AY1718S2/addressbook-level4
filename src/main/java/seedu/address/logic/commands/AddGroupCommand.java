@@ -40,7 +40,7 @@ public class AddGroupCommand extends UndoableCommand {
         try {
             model.addGroup(addGroup);
             return new CommandResult(String.format(MESSAGE_SUCCESS, addGroup));
-        } catch (DuplicateGroupException e) {
+        } catch (DuplicateGroupException dge) {
             throw new CommandException(MESSAGE_DUPLICATE_GROUP);
         }
 

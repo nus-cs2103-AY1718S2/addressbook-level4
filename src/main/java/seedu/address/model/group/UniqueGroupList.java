@@ -38,12 +38,12 @@ public class UniqueGroupList implements Iterable<Group> {
      *
      * @throws DuplicateGroupException if the Group to add is a duplicate of an existing Group in the list.
      */
-    public void add(Group toAdd) throws DuplicateGroupException {
-        requireNonNull(toAdd);
-        if (contains(toAdd)) {
+    public void add(Group groupToAdd) throws DuplicateGroupException {
+        requireNonNull(groupToAdd);
+        if (contains(groupToAdd)) {
             throw new DuplicateGroupException();
         }
-        internalList.add(toAdd);
+        internalList.add(groupToAdd);
     }
 
     public void setGroups(UniqueGroupList replacement) {

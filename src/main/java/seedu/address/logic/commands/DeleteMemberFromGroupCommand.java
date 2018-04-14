@@ -59,11 +59,11 @@ public class DeleteMemberFromGroupCommand extends UndoableCommand {
                     groupInvolved = new Group(group.getInformation(), group.getPersonList());
                     groupInvolved.removePerson(personToDelete);
                     model.updateGroup(group, groupInvolved);
-                } catch (DuplicateGroupException e) {
+                } catch (DuplicateGroupException dge) {
                     throw new CommandException(MESSAGE_DUPLICATE_GROUP);
-                } catch (GroupNotFoundException e) {
+                } catch (GroupNotFoundException gnfe) {
                     throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
-                } catch (PersonNotFoundException e) {
+                } catch (PersonNotFoundException pnfe) {
                     throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
                 }
             }

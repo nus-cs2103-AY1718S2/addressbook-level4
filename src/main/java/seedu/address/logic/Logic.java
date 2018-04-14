@@ -37,12 +37,6 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered and sorted list of books */
     ObservableList<Book> getDisplayBookList();
 
-    /** Returns an unmodifiable view of the search results list. */
-    ObservableList<Book> getSearchResultsList();
-
-    /** Returns an unmodifiable view of the recently selected books list. */
-    ObservableList<Book> getRecentBooksList();
-
     /** Returns an unmodifiable view of the list of aliases. */
     ObservableList<Alias> getDisplayAliasList();
 

@@ -95,7 +95,7 @@ public class ImportContactsCommandTest {
     @Test
     public void addressBookParser_giveCorrectImport_returnImportContactCommand() throws Exception {
         AddressBookParser abp = new AddressBookParser();
-        assertNotNull(abp.parseCommand("import_contacts ..."));
+        assertNotNull(abp.parseCommand("importcontacts ..."));
         assertNotNull(abp.parseCommand("ic ..."));
     }
 

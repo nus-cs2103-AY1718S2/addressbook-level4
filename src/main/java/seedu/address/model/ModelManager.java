@@ -51,7 +51,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         this.customerStats = new CustomerStats();
         filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
-        this.menu = new Menu();
+        this.menu = new Menu(menu);
     }
 
     public ModelManager() {

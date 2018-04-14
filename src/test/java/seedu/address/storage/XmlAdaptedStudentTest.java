@@ -24,7 +24,7 @@ public class XmlAdaptedStudentTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_SUBJECT = " ";
+    private static final String INVALID_SUBJECT = "\t";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
 

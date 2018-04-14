@@ -1,12 +1,13 @@
 //@@author Jason1im
 package seedu.address.storage;
 
+import static junit.framework.TestCase.assertEquals;
+
 import org.junit.Test;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Account;
 import seedu.address.testutil.Assert;
-
-import static junit.framework.TestCase.assertEquals;
 
 public class XmlAdapatedAccountTest {
     private static final String INVALID_USERNAME = "::";

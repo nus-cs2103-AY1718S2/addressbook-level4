@@ -698,7 +698,7 @@ image::AddressBookClass.png[width="600"]
 
 The `UniqueItemList` consists of an `ArrayList` of unique `String` objects. These `String` objects represent the filepaths of all images that have been added or are used by the application during its runtime.
 
-Upon every launch of the application, during the initialization of the `LogicManager` class, it will run through the `UniqueItemList` and delete
+Upon every launch of the application, during the initialization of the `ModelManager` class, it will run through the `UniqueItemList` and delete
 any unused image files from the `data` folder. It does this by looping through the `UniquePersonList` as well and checks if the image file is used. If it is not used, it will be deleted.
 The following code fragment shows the deletion process:
 
@@ -729,9 +729,9 @@ An example of a `[PATH TO IMAGE]` would be C:\Users\Desktop\Image.jpg for Window
 
 If this is empty, the application will default to using the default profile picture
 which is stored in `src/resources/images/displayPic` as `default.png`.
-If a valid path to an image is provided, the image will be processed and copied over to the `data` folder where the`addressbook.xml` is stored as well.
+If a valid path to an image is provided, the image will be processed and copied over to the `data` folder where the `addressbook.xml` is stored as well.
 
-The image copied over will be stored with a SHA-256 hash name. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.
+The fileanme of the image copied over will be a SHA-256 hash. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.
 The following activity diagram in Figure 16 shows how the files are saved:
 
 .Activity diagram for storing image files

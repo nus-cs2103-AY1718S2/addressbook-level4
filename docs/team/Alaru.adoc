@@ -26,6 +26,8 @@ personal between the tutor and the student. Additionally, it also contains a dro
 ** Highlights: This enhancement fully supports the implemented undo and redo even though image files are stored outside the `AddressBook` memory.
 The existing commands were also updated to support the adding and changing of display pictures.
 
+** Additional changes: Had to modify the codebase to ensure that `add`, `edit`, and `clear` works with the display picture field as well. Relevant tests were updated.
+
 ** Credits: https://stackoverflow.com/users/2970947/elliott-frisch[Elliott Frisch] from stackoverflow on the SHA-256 hash algorithm used to generate the name of the image file.
 
 * *Minor enhancement*: Added a `Participation` attribute to `Person` to keep track of a student's participation level. It supports the addition of marks to the `Person` object.

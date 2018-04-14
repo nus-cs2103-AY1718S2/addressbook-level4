@@ -28,7 +28,6 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
     private static final String LOCALHOST = "localhost";
     private static final String CALLBACK_PATH = "/Callback";
 
-
     private Server server;
     private String code;
     private String error;

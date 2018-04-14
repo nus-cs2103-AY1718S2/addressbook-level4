@@ -91,6 +91,7 @@ public class GoogleDriveStorage {
      * Sets up an instance of Google Drive API client after user authorized the application.
      *
      * @throws GoogleAuthorizationException When application is unable to gain user's authorization
+     * @throws RequestTimeoutException      When authorization request timed out
      */
     private void userAuthorize() throws GoogleAuthorizationException, RequestTimeoutException {
         Preconditions.checkArgument(
@@ -205,5 +206,4 @@ public class GoogleDriveStorage {
         uploader.setDirectUploadEnabled(true);
         return insert.execute();
     }
-
 }

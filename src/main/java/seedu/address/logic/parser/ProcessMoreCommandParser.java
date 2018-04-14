@@ -17,8 +17,7 @@ public class ProcessMoreCommandParser implements Parser<ProcessMoreCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ProcessMoreCommand parse(String args) throws ParseException {
-        try
-        {
+        try {
             int numberOfTimes = Integer.parseInt(args.trim());
             if (numberOfTimes <= 0) {
                 throw new ParseException(

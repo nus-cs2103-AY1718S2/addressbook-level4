@@ -12,11 +12,11 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Vegetarian;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -135,7 +135,7 @@ public class ProcessOrderCommand extends Command {
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      */
-    protected Person createNewTaggedPerson(Person personToEdit,String tag) {
+    protected Person createNewTaggedPerson(Person personToEdit, String tag) {
         assert personToEdit != null;
 
         Name updatedName = personToEdit.getName();
@@ -148,7 +148,7 @@ public class ProcessOrderCommand extends Command {
 
         try {
             updatedTags.add(new Tag(tag));
-        } catch (UniqueTagList.DuplicateTagException dte){
+        } catch (UniqueTagList.DuplicateTagException dte) {
             //does not add tag "processing" if already exists
         }
         return new Person(updatedName, updatedPhone, updatedOrder, updatedAddress,

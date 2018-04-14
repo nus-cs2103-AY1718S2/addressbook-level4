@@ -33,7 +33,7 @@ public class ProcessMoreCommand extends ProcessNextCommand {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
 
-        while (noOfTimes-- >0 ) {
+        while (noOfTimes-- > 0) {
             super.execute();
         }
 

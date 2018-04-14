@@ -17,9 +17,9 @@ public class TypicalUsers {
             .withPassword("12345678").build();
     public static final User ALICE = new UserBuilder().withUsername("ALICE")
             .withPassword("abcdefgh").build();
-    public static final User BENSON = new UserBuilder().withUsername("BENSON1")
+    public static final User BENSON = new UserBuilder().withUsername("BENSON")
             .withPassword("1234ABCDE").build();
-    public static final User CARL = new UserBuilder().withUsername("CARLCARL")
+    public static final User CARL = new UserBuilder().withUsername("CARL")
             .withPassword("1a2b3c4d5e").build();
     public static final User DANIEL = new UserBuilder().withUsername("DANIEL")
             .withPassword("password").build();

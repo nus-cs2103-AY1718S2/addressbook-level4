@@ -45,7 +45,6 @@ public class TestAddEventCommand extends Command {
     public static final String MESSAGE_FAILURE = "Unable to add event, please try again later.";
 
 
-
     private final Index targetIndex;
     private final String title;
     private final String location;
@@ -76,15 +75,14 @@ public class TestAddEventCommand extends Command {
         Person personToAddEvent = lastShownList.get(targetIndex.getZeroBased());
 
         // Build a new authorized API client service.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
         try {
             service = Authentication.getCalendarService();
         } catch (IOException e) {
             logger.warning("Couldn't authenticate Google Calendar Service");
         }
 
-
+        //Solution below adpated from https://developers.google.com/calendar/quickstart/java
         Event event = new Event()
                 .setSummary(title)
                 .setLocation(location)
@@ -137,6 +135,7 @@ public class TestAddEventCommand extends Command {
         }
         //@@author crizyli
 
+        assert calendarId.endsWith("@group.calendar.google.com");
         try {
             event = service.events().insert(calendarId, event).execute();
         } catch (IOException e) {
@@ -151,7 +150,8 @@ public class TestAddEventCommand extends Command {
         model.addNotification(notification);
         //@@author crizyli
 
-        logger.info("Event created: %s\n" + event.getHtmlLink());
+        logger.info("Event created: " + event.getHtmlLink());
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

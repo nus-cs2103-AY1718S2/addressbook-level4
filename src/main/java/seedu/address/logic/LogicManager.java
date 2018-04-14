@@ -34,6 +34,8 @@ import seedu.address.ui.NotificationCenter;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
+    public static final String MESSAGE_LOCKED = "Employees Tracker has been locked,"
+            + "please unlock it first!";
     private static boolean isLocked = false;
     private static String password;
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
@@ -87,7 +89,7 @@ public class LogicManager extends ComponentManager implements Logic {
                     UnlockCommand unlockCommand = (UnlockCommand) command;
                     result = unlockCommand.execute();
                 } else {
-                    result = new CommandResult("Employees Tracker has been locked, please unlock it first!");
+                    result = new CommandResult(MESSAGE_LOCKED);
                 }
             } else {
                 command.setData(model, history, undoRedoStack);

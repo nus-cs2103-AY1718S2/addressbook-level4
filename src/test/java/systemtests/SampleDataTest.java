@@ -50,7 +50,7 @@ public class SampleDataTest extends AddressBookSystemTest {
         //@@author emer7
         Person[] expectedList = new Person[0];
         UnlockCommand testUnlockCommand = new UnlockCommand();
-        testUnlockCommand.setTestMode();
+        testUnlockCommand.setTestMode(true);
         testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
         showAllPersons();

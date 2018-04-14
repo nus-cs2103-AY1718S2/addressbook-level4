@@ -45,7 +45,7 @@ public class UnlockCommandTest {
         testLockCommand.execute();
         UnlockCommand testUnlockCommand = new UnlockCommand();
         testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        testUnlockCommand.setTestMode();
+        testUnlockCommand.setTestMode(true);
         String expectedMessage = UnlockCommand.MESSAGE_SUCCESS;
         CommandResult commandResult = testUnlockCommand.execute();
 
@@ -53,7 +53,7 @@ public class UnlockCommandTest {
     }
 
     @Test
-    public void unlockFail() {
+    public void unlockFail_incorrectPassword() {
         model.setPassword("qwer");
         LogicManager logicManager = new LogicManager(model);
         LockCommand testLockCommand = new LockCommand();
@@ -61,11 +61,42 @@ public class UnlockCommandTest {
         testLockCommand.execute();
         UnlockCommand testUnlockCommand = new UnlockCommand();
         testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        testUnlockCommand.setTestMode();
+        testUnlockCommand.setTestMode(true);
         String expectedMessage = UnlockCommand.MESSAGE_INCORRECT_PASSWORD;
         CommandResult commandResult = testUnlockCommand.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
     }
+
+    @Test
+    public void unlockFail_missingPassword() {
+        model.setPassword("qwer");
+        LogicManager logicManager = new LogicManager(model);
+        LockCommand testLockCommand = new LockCommand();
+        testLockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        testLockCommand.execute();
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        testUnlockCommand.setTestMode(false);
+        String expectedMessage = UnlockCommand.MESSAGE_MISSING_PASSWORD;
+        CommandResult commandResult = testUnlockCommand.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void unlockFail_alreadyUnlocked() {
+        model.setPassword("admin");
+        LogicManager logicManager = new LogicManager(model);
+        LogicManager.unLock();
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        testUnlockCommand.setTestMode(true);
+        String expectedMessage = UnlockCommand.MESSAGE_ALREADY_UNLOCKED;
+        CommandResult commandResult = testUnlockCommand.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+    }
+
 
 }

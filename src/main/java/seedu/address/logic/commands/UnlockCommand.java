@@ -24,11 +24,15 @@ public class UnlockCommand extends Command {
 
     public static final String MESSAGE_INCORRECT_PASSWORD = "Incorrect unlock password!";
 
-    public static final String MESSAGE_MISSING_PASSWORD = "Password is missing!";
+    public static final String MESSAGE_MISSING_PASSWORD = "Password cannot be missing!";
+
+    public static final String MESSAGE_ALREADY_UNLOCKED = "Employees Tracker is already unlocked!";
 
     private String password;
 
     private boolean isTestMode;
+
+    private boolean hasInput;
 
     public UnlockCommand() {
         isTestMode = false;
@@ -38,13 +42,13 @@ public class UnlockCommand extends Command {
     @Override
     public CommandResult execute() {
         if (!LogicManager.isLocked()) {
-            return new CommandResult("Employees Tracker is already unlocked!");
+            return new CommandResult(MESSAGE_ALREADY_UNLOCKED);
         }
 
         if (!isTestMode) {
             EventsCenter.getInstance().post(new ShowPasswordFieldEvent());
         } else {
-            this.password = "admin";
+            this.password = hasInput ? "admin" : "nopassword";
         }
 
         if (this.password.equals("nopassword")) {
@@ -85,7 +89,8 @@ public class UnlockCommand extends Command {
         this.password = event.getPassword();
     }
 
-    public void setTestMode() {
+    public void setTestMode(boolean hasInput) {
         isTestMode = true;
+        this.hasInput = hasInput;
     }
 }

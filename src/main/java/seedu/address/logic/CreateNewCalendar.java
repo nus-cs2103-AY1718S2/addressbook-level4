@@ -15,8 +15,7 @@ public class CreateNewCalendar {
      */
     public static String execute(String personName) throws IOException {
         // Build a new authorized API client service.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
 
         service = Authentication.getCalendarService();
 
@@ -36,6 +35,7 @@ public class CreateNewCalendar {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert calendarId != null;
         return calendarId;
     }
 

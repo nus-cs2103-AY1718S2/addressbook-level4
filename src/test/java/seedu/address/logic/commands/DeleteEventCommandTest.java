@@ -38,6 +38,9 @@ public class DeleteEventCommandTest {
         model = new ModelManager(ab, new UserPrefs());
     }
 
+    /**
+     *  This test can be tested locally, and can not be executed on travis because it requires authentication.
+     */
     /*@Test
     public void execute_addEvent_success() throws Exception {
         TestAddEventCommand addEventCommand = new TestAddEventCommand(INDEX_FIRST_PERSON, "Test Event",

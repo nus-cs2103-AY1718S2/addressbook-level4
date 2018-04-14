@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -18,13 +19,16 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.TestAddEventCommand;
 
 /**
  * To create an authorized google calendar service to be used in commands that require this service.
- *
+ * Solution below adpated from https://developers.google.com/calendar/quickstart/java
  */
 public class Authentication {
+
+    private static final Logger logger = LogsCenter.getLogger(Authentication.class);
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
@@ -80,8 +84,8 @@ public class Authentication {
                         .build();
         Credential credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver()).authorize("user");
-        System.out.println(
-                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+
+        logger.info("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
 
@@ -104,15 +108,14 @@ public class Authentication {
      * @return authentication success or not
      */
     public static boolean authen() {
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
         try {
             service = getCalendarService();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-
+        assert service != null;
         return true;
     }
 }

@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * View the pop-uped browser window of user's calendar.
+ * View the pop-up browser window of user's calendar.
  */
 public class MyCalendarView extends Application {
 

@@ -145,12 +145,12 @@ public class MenuChangedEvent extends BaseEvent {
             if (!menuOptional.isPresent()) {
                 logger.info("Data file for menu not found. Will be starting with an empty file");
             }
-            initialMenu = new Menu();
+            initialMenu = menuOptional.orElseGet(SampleMenuDataUtil::getSampleMenu);
         } catch (DataConversionException e) {
-            logger.warning("Data file for menu in wrong format. Will be starting with an empty file");
+            logger.warning("Data file for menu in wrong format. Menu will be starting with an empty file");
             initialMenu = new Menu();
         }  catch (IOException e) {
-            logger.warning("Problem while reading from the menu file. Will be starting with an empty file");
+            logger.warning("Problem while reading from the menu file. Menu will be starting with an empty file");
             initialMenu = new Menu();
         }
 ```
@@ -373,14 +373,13 @@ public class Price {
 ``` java
 package seedu.address.model;
 
-//import java.io.File;
-//import java.io.FileNotFoundException;
+import static java.util.Objects.requireNonNull;
+
 import java.util.HashMap;
-//import java.util.Scanner;
 
 import seedu.address.model.dish.Dish;
-import seedu.address.model.dish.Name;
-import seedu.address.model.dish.Price;
+
+
 
 
 /**
@@ -399,28 +398,17 @@ public class Menu implements ReadOnlyMenu {
      */
     {
         dishes = new HashMap<>();
-        //only for testing
-        dishes.put("Chicken Rice", new Dish(new Name("Chicken Rice"), new Price("3")));
-        dishes.put("Curry Chicken", new Dish(new Name("Curry Chicken"), new Price("4")));
-        dishes.put("Chicken Chop", new Dish(new Name("Chicken Chop"), new Price("5")));
-        dishes.put("Ban Mian", new Dish(new Name("Ban Mian"), new Price("4")));
-        dishes.put("Ice Milo", new Dish(new Name("Ice Milo"), new Price("2")));
-        dishes.put("Coffee", new Dish(new Name("Coffee"), new Price("2")));
-        /*String path = System.getProperty("user.dir") + "/" + "data/menu.txt";
-        File file = new File(path);
-        try {
-            Scanner sc = new Scanner(file);
-            while (sc.hasNextLine()) {
-                String name = sc.nextLine();
-                String price = sc.nextLine();
-                dishes.put(name, new Dish(new Name(name), new Price(price)));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public Menu() {}
+
+    /**
+     * Creates an Menu using the Dishes {@code toBeCopied}
+     */
+    public Menu(ReadOnlyMenu toBeCopied) {
+        this();
+        resetData(toBeCopied);
+    }
 
     public void setMenu(HashMap<String, Dish> theDishes) {
 
@@ -432,12 +420,28 @@ public class Menu implements ReadOnlyMenu {
     }
 
     /**
+     * Resets the existing data of this {@code Menu} with {@code newData}.
+     */
+    public void resetData(ReadOnlyMenu newData) {
+        requireNonNull(newData);
+        setMenu(newData.getDishes());
+    }
+
+    /**
      * Returns the dish in Menu if available.
      * Otherwise return null.
      */
     public Dish get(String dish) {
         return dishes.get(dish);
     }
+
+    /**
+     * Adds a dish to the menu.
+     */
+    public void addDish(Dish dish) {
+        dishes.put(dish.getName().toString(), dish);
+    }
+
 
     /**
      * Returns a copy of the data in Menu.
@@ -503,7 +507,11 @@ public class Halal {
             this.value = "Non-halal";
         } else {
             checkArgument(isValidHalal(halal), MESSAGE_HALAL_CONSTRAINTS);
-            this.value = halal;
+            if (halal.equalsIgnoreCase("Halal")) {
+                this.value = "Halal";
+            } else {
+                this.value = "Non-halal";
+            }
         }
     }
 
@@ -628,7 +636,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Vegetarian {
     public static final String MESSAGE_VEGETARIAN_CONSTRAINTS =
-            "Person's preference should only be Vegeatrian or Non-vegetarian";
+            "Person's preference should only be Vegetarian or Non-vegetarian";
     public final String value;
 
     /**
@@ -641,7 +649,11 @@ public class Vegetarian {
             this.value = "Non-vegetarian";
         } else {
             checkArgument(isValidVegetarian(vegetarian), MESSAGE_VEGETARIAN_CONSTRAINTS);
-            this.value = vegetarian;
+            if (vegetarian.equalsIgnoreCase("Vegetarian")) {
+                this.value = "Vegetarian";
+            } else {
+                this.value = "Non-vegetarian";
+            }
         }
     }
 
@@ -698,9 +710,44 @@ public interface ReadOnlyMenu {
 ###### \java\seedu\address\model\UserPrefs.java
 ``` java
     public String getMenuFilePath() {
-        return customerStatsFilePath;
+        return menuFilePath;
     }
 
+```
+###### \java\seedu\address\model\util\SampleMenuDataUtil.java
+``` java
+package seedu.address.model.util;
+
+import seedu.address.model.Menu;
+import seedu.address.model.ReadOnlyMenu;
+import seedu.address.model.dish.Dish;
+import seedu.address.model.dish.Name;
+import seedu.address.model.dish.Price;
+
+/**
+ * Contains utility methods for populating {@code AddressBook} with sample data.
+ */
+public class SampleMenuDataUtil {
+    public static Dish[] getSampleDishes() {
+        return new Dish[] {
+            new Dish(new Name("Chicken Rice"), new Price("3")),
+            new Dish(new Name("Curry Chicken"), new Price("4")),
+            new Dish(new Name("Chicken Chop"), new Price("5")),
+            new Dish(new Name("Ban Mian"), new Price("4")),
+            new Dish(new Name("Ice Milo"), new Price("2")),
+            new Dish(new Name("Coffee"), new Price("2"))
+        };
+    }
+
+    public static ReadOnlyMenu getSampleMenu() {
+        Menu sampleMenu = new Menu();
+        for (Dish sampleDish : getSampleDishes()) {
+            sampleMenu.addDish(sampleDish);
+        }
+        return sampleMenu;
+    }
+
+}
 ```
 ###### \java\seedu\address\storage\MenuStorage.java
 ``` java

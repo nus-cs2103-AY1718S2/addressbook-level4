@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DISTANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
 
-import seedu.address.logic.commands.AddOrderCommand;
+import seedu.address.logic.commands.ProcessOrderCommand;
 import seedu.address.model.task.Task;
 
 /**
@@ -21,7 +21,7 @@ public class TaskUtil {
      * Returns an addOrder command string for adding the {@code task}.
      */
     public static String getAddOrderCommand(Task task) {
-        return AddOrderCommand.COMMAND_WORD + " " + getTaskDetails(task);
+        return ProcessOrderCommand.COMMAND_WORD + " " + getTaskDetails(task);
     }
 
     /**

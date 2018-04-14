@@ -11,7 +11,7 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Implementation follows {@code DeleteCommand}
- * Deletes an order identified using it's last displayed index from the address book.
+ * Deletes an order in the processing queue identified by its index
  */
 public class DeleteOrderCommand extends UndoableCommand {
 

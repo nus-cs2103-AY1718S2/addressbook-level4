@@ -401,7 +401,7 @@ public class XmlSerializableCustomerStats {
 }
 
 .label {
-    -fx-font-size: 11pt;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: #555555;
     -fx-opacity: 0.9;
@@ -475,7 +475,8 @@ public class XmlSerializableCustomerStats {
 
 .split-pane:horizontal .split-pane-divider {
     -fx-background-color: derive(#FFC947, 20%);
-    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-width: 10;
+    -fx-border-color: transparent #FFF2A3 #FFF2A3 transparent;
 }
 
 .split-pane {

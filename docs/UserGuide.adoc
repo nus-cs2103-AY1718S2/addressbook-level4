@@ -69,6 +69,7 @@ If you want to find out all the features, or would like to know how to do a cert
 Alias: `h` +
 Format: `help`
 
+// tag::identify[]
 === Adding an order (order book): `add`
 
 Adds an order to the order book, which keeps track all the orders received+
@@ -92,9 +93,10 @@ Chicken Rice, Curry Chicken, Chicken Chop, Ban Mian, Ice Milo, Coffee
 Examples:
 
 * `add n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken rice h/HALAL v/VEGETARIAN`
-* `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal f/Chicken chop h/HALAL`
+* `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/friends f/Chicken chop h/HALAL`
 * `a n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken rice h/HALAL v/VEGETARIAN`
-* `a n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal f/Chicken chop h/HALAL`
+* `a n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/friends f/Chicken chop h/HALAL`
+// end::identify[]
 
 === Listing all orders (order book): `list`
 
@@ -434,7 +436,9 @@ Messages will be shown to remind restaurants to give the customer discount on th
 // end::identify[]
 
 // tag::menu[]
-=== Menu feature
+=== Modify Menu `Coming in v2.0`
+
+The user will be allowed to modify e.g. add or delete or edit(change prices) by using the CLI instead of replacing the order menu file with a new menu file.
 
 // end::menu[]
 

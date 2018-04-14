@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-F09-B1/main/tree/master
 
-By: `F09-B1`      Since: `Mar 2018`      Licence: `MIT`
+By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
@@ -602,11 +602,12 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // tag::participation[]
 === Participation
 
-This feature allows the user to keep track of participation marks of a `Person`. A new class, `Participation`, is created and is associated to the `Person` class.
+This feature allows the user to keep track of participation marks of a `Person`. The participation marks in this case is limited to an integer value of 0 to 100 inclusive. A new class, `Participation`, is created and is associated to the `Person` class.
+This utilizes the `MarkCommand` command to update the participation marks of a `Person`.
 
 ==== Current implementation
 
-The user uses this feature by inputting a command, `markPart INDEX marks/DIGITS`, to the application.
+The user will input a command, `markPart INDEX marks/DIGITS`, to the application to update the marks.
 
 The following figure 12 and paragraph below shows the sequence of how the `MarkCommand` command functions:
 
@@ -630,7 +631,16 @@ image::MarkCommandSequenceDiagram.png[width="700"]
 ** Cons: This uses more memory when executing.
 * **Alternative 2:** Make the `value` in the `Participation` class editable
 ** Pros: It uses less memory, and only the value has to be updated.
-** Cons: This will involve writing more methods, and the existing methods can be easily used for the implementation.
+** Cons: The implementation will require the writing of more methods.
+
+===== Aspect: Setting a limit to the number of marks
+
+* **Alternative 1 (current choice):** Set the limit of participation marks to 100
+** Pros: Maintain a fixed value, prevents unforeseen issues such as <<integer-overflow,integer overflows>>.
+** Cons: The user is restricted to only 100 marks total, and has to be more careful in the amount of marks they wish to add.
+* **Alternative 2:** Do not set a limit for the amount of participation marks
+** Pros: It is more flexible, and allows more variation in the marks the user wishes to add
+** Cons: This requires more validation checks to prevent issues like an integer overflow.
 
 ==== Future enhancements (Coming in v2.0)
 
@@ -658,7 +668,7 @@ image::displaypic_personcard.PNG[width="250"]
 ==== Current implementation
 
 An additional class, `DisplayPic`, is added to the `Person` class. This class contains the filepath to the stored image file.
-It uses validation checks to ensure that the image meets the following requirements.
+It uses validation checks to ensure that the image meets the following requirements:
 
 ** It is a file that exists and has a file extension.
 ** It is a valid image file that can be opened as an image.
@@ -680,7 +690,7 @@ The implementation of the UpdateDisplayCommand (`updateDP`) command closely foll
 The following figure 14 is the sequence diagram of the `updateDP` command to show how it functions:
 
 .UpdateDisplayCommand Sequence Diagram
-image::UpdateDisplayCommandSequenceDiagram.png[width="700"]
+image::UpdateDisplayCommandSequenceDiagram.png[width="800"]
 
 . The user input will be passed in and parsed by the `AddressBookParser` and `UpdateDisplayCommandParser`.
 . The `UpdateDisplayCommandParser` then creates a new `UpdateDisplayCommand` where the `LogicManager` executes the `preprocessUndoableCommand()`.
@@ -727,15 +737,15 @@ The application will take in an argument for the 3 commands mentioned above thro
 [NOTE]
 An example of a `[PATH TO IMAGE]` would be C:\Users\Desktop\Image.jpg for Windows.
 
-If this is empty, the application will default to using the default profile picture
+If this `[PATH TO IMAGE]` leads to a non-existent file or a non-image file, it will utilise the default profile picture
 which is stored in `src/resources/images/displayPic` as `default.png`.
 If a valid path to an image is provided, the image will be processed and copied over to the `data` folder where the `addressbook.xml` is stored as well.
 
-The fileanme of the image copied over will be a SHA-256 hash. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.
+The filename of the image copied over will be a <<sha-256,SHA-256>> hash. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.
 The following activity diagram in Figure 16 shows how the files are saved:
 
 .Activity diagram for storing image files
-image::StoreDisplayPictureActivityDiagram.png[width="700"]
+image::StoreDisplayPictureActivityDiagram.png[width="800"]
 
 Due to the possibility that display pictures for a `Person` can be updated, this could lead to clashing of the same file names. In order to prevent overwriting of files, the new image filename
 will be the SHA-256 hash of the previous image filename.
@@ -769,14 +779,14 @@ The image file will then be utilized by JavaFX and displayed on the UI. The drop
 ===== Aspect: Filepath to the image
 * **Alternative 1 (current choice):** Copy the image file over to a designated location.
 ** Pros: The user does not need to maintain the image file, as the application does so itself.
-** Cons: User has to delete the original file if not there will be 2 of the same files on the user's storage.
+** Cons: Duplication of the image file will take up more space on the user's storage.
 * **Alternative 2:** Use the location of the file the user enters into the application.
 ** Pros: This would mean that there would always be only one copy of the image, hence less space used.
 ** Cons: The user needs to ensure the original image file is not moved or deleted.
 
 ===== Aspect: Filename of the image
 * **Alternative 1 (current choice):** Use a hashing algorithm to name the file.
-** Pros: SHA-256 provides collision resistant which means the filename would be unique and it is easy to implement.
+** Pros: SHA-256 provides <<collision-resistance,collision resistance>> which means the filename would be unique majority of the time and it is easy to implement.
 ** Cons: It is difficult to manually check which `Person` the image file belongs to.
 * **Alternative 2:** Use the name of the `Person` to name the file.
 ** Pros: Image files can be easily identified separately and easy to implement.
@@ -786,13 +796,13 @@ The image file will then be utilized by JavaFX and displayed on the UI. The drop
 * **Alternative 1 (current choice):** Store the filepath in the `AddressBook` and delete it afterwards.
 ** Pros: Fully supports `undo` and `redo` even if the user moves or deletes the original image file.
 ** Cons: It is difficult to manually check which `Person` the image file belongs to.
-* **Alternative 2:** Delete the image file immediately when the associated `Person` is removed
+* **Alternative 2:** Delete the image file immediately when the associated `Person` is removed.
 ** Pros: This allows a simple implementation of immediately deleting the image file.
 ** Cons: The image file could be lost forever if the user moves or deletes the original image file, thus causing `undo` and `redo` to malfunction.
 
 ==== Future enhancements (Coming in v2.0)
 
-* Support for online URLs to download images
+* Support for online URLs to download images.
 
 // end::display[]
 
@@ -817,7 +827,7 @@ We utilize `java.util.logging` package for logging. The `LogsCenter` class manag
 Certain properties of the application can be controlled (e.g app name, logging level) through the configuration file (default: `config.json`).
 
 // tag::dataencryption[]
-=== Data encryption (Coming in v2.0)
+=== Data encryption (coming in v2.0)
 
 _{Explain here how the data encryption feature will be implemented}_
 
@@ -1158,50 +1168,55 @@ Use case ends.
 [appendix]
 == Glossary
 
+[[collision-resistance]] Collision resistance::
+Two different inputs to a function will very unlikely provide the same output.
+
+[[deadline]] Deadline::
+The date for which certain tasks are due to be done.
+
+[[feature]] Feature::
+A specific function of the program.
+
+[[import]] Import::
+Bring into the application from an external source.
+
+[[integer-overflow]] Integer overflow::
+When the value of the integer exceeds the maximum possible value value that can be stored.
+
+[[logic]] Logic::
+The set of commands that can be executed by the application.
+
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
-
-[[ui]] User interface::
-The visible interface that the user will be seeing when using the application
-
-[[logic]] Logic::
-The set of commands that can be executed by the application
-
 [[model]] Model::
-The internal memory used when application is running
-
-[[storage]] Storage::
-The set of instructions to store specific states and data of the application when application is not running so that it
-can be loaded back into the application when application is started again.
-
-[[feature]] Feature::
-A specific function of the program
+The internal memory used when application is running.
 
 [[parser]] Parser::
-A converting function or class that takes in raw input and separates it into its usable components for other methods
+A converting function or class that takes in raw input and separates it into its usable components for other methods.
 
-[[tasks]] Tasks::
-A command to be executed
-
-[[deadline]] Deadline::
-The date for which certain tasks are due to be done
+[[private-contact-detail]] Private contact detail::
+A contact detail that is not meant to be shared with others.
 
 [[sha-256]] SHA-256::
 A cryptographic hash that is akin to a 'signature' for a text or a data file.
 SHA-256 generates an almost-unique 256-bit (32-byte) signature for a text.
 
+[[storage]] Storage::
+The set of instructions to store specific states and data of the application when application is not running so that it
+can be loaded back into the application when application is started again.
+
 [[tags]] Tags::
-Keywords tied to categories or people
+Keywords tied to categories or people.
+
+[[tasks]] Tasks::
+A command to be executed.
 
 [[to-do-list]]To-do list::
-A list of things to do
+A list of things to do.
 
-[[import]] Import::
-Bring into the application from an external source
-
+[[ui]] User interface::
+The visible interface that the user will be seeing when using the application.
 
 
 [appendix]
@@ -1226,8 +1241,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed.
@@ -1239,8 +1252,6 @@ _{ more test cases ... }_
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
-
-_{ more test cases ... }_
 
 === Adding participation marks for a person
 
@@ -1277,6 +1288,11 @@ _{ more test cases ... }_
    Expected: John Doe is added with the specified details and image. Success message shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `add n/John Doe m/A1234567J p/98765432 e/johnd@example.com a/COM1 B#1-04 dp/C:\Users\Hello\Desktop\picture.jpg` +
    Expected: John Doe is added with the specified details and has the default display picture. Success message shown in the status message. Timestamp in the status bar is updated. +
+
+=== Saving and loading of the image files
+
+. Deleting image files while the application is still running.
+
 
 
 === Saving data

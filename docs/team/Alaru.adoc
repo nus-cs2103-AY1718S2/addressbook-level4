@@ -23,8 +23,8 @@ Your TA is build upon https://github.com/se-edu/addressbook-level4[AddressBook -
 which in turn allow the tutor to remember their students better. This would encourage a more holistic environment for teaching and learning as it would make it more
 personal between the tutor and the student. Additionally, it also contains a drop shadow frame which shows whether the student has at least participated sufficiently in classes.
 
-** Highlights: This enhancement fully supports the implemented undo and redo even though image files are stored outside the `AddressBook` memory.
-The existing commands were also updated to support the adding and changing of display pictures.
+** Highlights: This enhancement fully supports the existing undo and redo even though image files are stored outside the `AddressBook` memory.
+The existing commands (add, edit, delete and clear) were also updated to support the adding and changing of display pictures.
 
 ** Additional changes: Had to modify the codebase to ensure that `add`, `edit`, and `clear` works with the display picture field as well. Relevant tests were updated.
 
@@ -41,18 +41,18 @@ The existing commands were also updated to support the adding and changing of di
 *** Managed the Issue Tracker, assigned issues and added labels to the issues.
 *** Help resolve merge conflicts.
 *** Set up Travis for the organization repo.
-*** Help update README (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/66[#66])
+*** Help update README (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/66[#66]), changed application icon and name.
 ** Documentation:
 *** Updated the screenshots used in the User Guide: https://github.com/CS2103JAN2018-F09-B1/main/pull/57[#57]
-*** Re-worked the developer guide.
+*** Edited the developer guide for english, added prefaces, updated images, made explanations clearer and added manual testing cases.
 ** Community:
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F12-B2/main/issues/83[1], https://github.com/CS2103JAN2018-F12-B2/main/issues/80[2], https://github.com/CS2103JAN2018-F12-B2/main/issues/76[3])
+*** Reported bugs and suggestions for another team in the class (examples:  https://github.com/CS2103JAN2018-F12-B2/main/issues/83[1], https://github.com/CS2103JAN2018-F12-B2/main/issues/80[2], https://github.com/CS2103JAN2018-F12-B2/main/issues/76[3])
 
 == Contributions to the User Guide
 
 
 |===
-|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|_Given below are main sections I contributed to the User Guide. Updates were also made to existing User Guide portions such as the add, edit, delete and clear commands.  They showcase my ability to write documentation targeting end-users._
 |===
 
 include::../UserGuide.adoc[tag=participation]

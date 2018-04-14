@@ -54,14 +54,15 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddressBookParserTest {
+
+    private static final int ARG_INDEX = 1;
+    private static final int COMMAND_INDEX = 0;
+    private static final String EMPTY_ARG = "";
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     private final AddressBookParser parser = new AddressBookParser();
-
-    private final int COMMAND_INDEX = 0;
-    private final int ARG_INDEX = 1;
-    private final String EMPTY_ARG = "";
 
     @Test
     public void parseCommand_add() throws Exception {
@@ -101,7 +102,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_map() throws Exception {
         String locations = "com1";
-        String map = MapCommand.COMMAND_WORD+ " " + locations;
+        String map = MapCommand.COMMAND_WORD + " " + locations;
         String[] input = parser.extractCommandArgs(map);
         MapCommand command = (MapCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new MapCommand(locations), command);

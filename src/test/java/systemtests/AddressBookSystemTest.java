@@ -12,11 +12,8 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +34,6 @@ import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -132,7 +128,10 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMapPanel();
     }
 
-    public AliasListHandle getAliasList() { return mainWindowHandle.getAliasList(); }
+    public AliasListHandle getAliasList() {
+        return mainWindowHandle.getAliasList();
+    }
+
     //@@author
 
     /**

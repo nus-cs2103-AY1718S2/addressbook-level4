@@ -16,6 +16,9 @@ public class AliasListHandle extends NodeHandle<TableView> {
         super(AliasListNode);
     }
 
+    /**
+     * Returns the tables in the alias list
+     */
     public ObservableList<TableColumn> getTables() {
         return getRootNode().getColumns();
     }

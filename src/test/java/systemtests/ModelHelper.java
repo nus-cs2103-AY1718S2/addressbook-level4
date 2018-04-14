@@ -25,18 +25,20 @@ public class ModelHelper {
     }
 
     /**
-     * Updates {@code model}'s aliases list to display only {@code aliases}.
-     */
-    public static void setAliases(Model model, HashMap<String, String> aliases) {
-        model.updateAliasesMapping(aliases);
-    }
-
-    /**
      * @see ModelHelper#setFilteredList(Model, List)
      */
     public static void setFilteredList(Model model, Person... toDisplay) {
         setFilteredList(model, Arrays.asList(toDisplay));
     }
+
+    //@@author jingyinno
+    /**
+     * Updates {@code model}'s aliases list to display only {@code aliases}.
+     */
+    public static void setAliases(Model model, HashMap<String, String> aliases) {
+        model.updateAliasesMapping(aliases);
+    }
+    //@@author
 
     /**
      * Returns a predicate that evaluates to true if this {@code Person} equals to {@code other}.

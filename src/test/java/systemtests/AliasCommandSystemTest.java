@@ -74,8 +74,12 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
+        assertAliasTable(expectedTable);
+    }
+
+    private void assertAliasTable(String[][] expectedTable) {
         executeCommand(ListCommand.COMMAND_WORD);
-        assertTableDisplaysExpected("", expectedResultMessage, expectedTable);
+        assertTableDisplaysExpected("", ListCommand.MESSAGE_SUCCESS, expectedTable);
     }
 
     /**

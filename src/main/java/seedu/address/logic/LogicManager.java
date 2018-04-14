@@ -17,15 +17,15 @@ import seedu.address.model.person.Person;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
+    public static final int COMMAND_INDEX = 0;
+    public static final int ARGS_INDEX = 1;
+
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
-
-    private final int COMMAND_INDEX = 0;
-    private final int ARGS_INDEX = 1;
 
     public LogicManager(Model model) {
         this.model = model;

@@ -2,16 +2,18 @@ package seedu.address.ui.testutil;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
+
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.model.person.Person;
 import seedu.address.ui.PersonCard;
@@ -97,10 +99,12 @@ public class GuiTestAssert {
     //@@author
 
     //@@author jingyinno
-
+    /**
+     * Asserts that the content in {@code aliasListTable} matches all the string in {@code expected}
+     */
     public static void assertTableContent(ObservableList<TableColumn> aliasListTable, String[][] expected) {
         ArrayList<ArrayList<String>> expectedList = populateExpectedAliases(expected);
-        for (int i = 0; i < expectedList.size(); i ++) {
+        for (int i = 0; i < expectedList.size(); i++) {
             for (int j = 0; j < expectedList.get(i).size(); j++) {
                 TableColumn column = aliasListTable.get(j);
 
@@ -110,7 +114,11 @@ public class GuiTestAssert {
         }
     }
 
+    /**
+     * Helper method to populate expectedTable with unused empty Alias
+     */
     public static ArrayList<ArrayList<String>> populateExpectedAliases(String[][] expected) {
+        String emptyAlias = "";
         ArrayList<ArrayList<String>> expectedList = new ArrayList<>();
         for (String[] inner : expected) {
             ArrayList<String> innerList = new ArrayList<>();
@@ -119,8 +127,8 @@ public class GuiTestAssert {
                 innerList.add(alias);
             }
             // Generate empty alias ("") for no alias command
-            while(innerList.size() < AliasCommand.getCommands().size()) {
-                innerList.add("");
+            while (innerList.size() < AliasCommand.getCommands().size()) {
+                innerList.add(emptyAlias);
             }
             expectedList.add(innerList);
         }

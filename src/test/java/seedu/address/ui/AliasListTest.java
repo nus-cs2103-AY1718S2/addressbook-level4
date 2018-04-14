@@ -1,21 +1,21 @@
 package seedu.address.ui;
 
-import guitests.guihandles.AliasListHandle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-import org.junit.Before;
-import org.junit.Test;
-import seedu.address.commons.events.ui.AliasListEvent;
-import seedu.address.logic.commands.AliasCommand;
-import seedu.address.model.alias.Alias;
-import seedu.address.ui.testutil.GuiTestAssert;
+import static seedu.address.testutil.EventsUtil.postNow;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
+import org.junit.Before;
+import org.junit.Test;
+
+import guitests.guihandles.AliasListHandle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import seedu.address.commons.events.ui.AliasListEvent;
+import seedu.address.model.alias.Alias;
+import seedu.address.ui.testutil.GuiTestAssert;
 
 //@@author jingyinno
 public class AliasListTest extends GuiUnitTest {

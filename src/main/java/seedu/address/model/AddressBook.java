@@ -301,7 +301,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
-                + password + " password, " + aliases.asObservableList().size() + " aliases" ;
+                + password + " password, " + aliases.asObservableList().size() + " aliases";
         // TODO: refine later
     }
 

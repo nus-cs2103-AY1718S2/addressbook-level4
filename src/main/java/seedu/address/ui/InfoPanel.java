@@ -1,14 +1,20 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
+
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.*;
+import seedu.address.commons.events.ui.AliasListEvent;
+import seedu.address.commons.events.ui.BirthdayListEvent;
+import seedu.address.commons.events.ui.GoogleMapsEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.TimeTableEvent;
+import seedu.address.commons.events.ui.VenueTableEvent;
 import seedu.address.model.person.Person;
-
-import java.util.logging.Logger;
 
 /**
  * Container for both browser panel and person information panel

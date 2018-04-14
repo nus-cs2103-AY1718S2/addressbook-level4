@@ -32,7 +32,7 @@ public class LogicManagerTest {
         LogicManager.lock();
         assertUnlockRequired(validCommand, LogicManager.MESSAGE_LOCKED);
     }
-    //@@author crizyli
+    //@@author
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
@@ -143,5 +143,5 @@ public class LogicManagerTest {
             throw new AssertionError("ParseException and CommandException should not be thrown.");
         }
     }
-    //@@author crizyli
+    //@@author
 }

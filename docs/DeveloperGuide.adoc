@@ -434,6 +434,7 @@ image::ContactDetailsDisplayWireFrame.png[width="600", align="center"]
 **Cons**: In the current implementation one window is easily accessible from another, just by manually switching tabs which would not be possible with this alternative since the user would have to run many different commands to do this.
 //end::details[]
 
+// tag::tabSwitch[]
 === Tab Switching Mechanism
 
 ==== Current Implementation
@@ -514,6 +515,9 @@ image::SwitchTabRequestEventSD2.png[width="800", align="center"]
 **Pros**: . +
 **Cons**: The `TabPane` will have to be accessible to the logic which will increase coupling.
 
+// end::tabSwitch[]
+
+// tag::jobs[]
 === Job Openings Implementation
 
 ==== Current Implementation
@@ -631,7 +635,9 @@ public static boolean match(List<String> keywords, Set<Skill> list) {
 
 [NOTE]
 To minimize code duplication, we made a utility class `SkillUtil` which is used both by `PersonSkillMatchesKeywordsPredicate` during execution of `matchjob` and `find s/` commands and `JobSkillMatchesKeywordsPredicate` during the execution of `findjob s/` command.
+// end::jobs[]
 
+// tag::autoComplete[]
 === Auto-complete Mechanism
 
 ==== Current Implementation
@@ -675,6 +681,7 @@ private void autoCompleteCommand(String text) {
     }
 }
 ----
+// end::autoComplete[]
 
 === Logging
 
@@ -1310,6 +1317,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 The application is targeted towards Human Resources Managers at companies, especially those responsible for recruitment. Such recruiters have a lot of contacts to +
 manage which include contact details and profiles of potential employees, job openings and appointments. +
 It is essential for them to have a quick and easy access to these contacts. Hence, contactHero aims to make their lives easier by helping them to store and manage their contacts efficiently.
+// end::product[]
 
 *User Profile*:
 
@@ -1336,7 +1344,6 @@ It is essential for them to have a quick and easy access to these contacts. Henc
  ** Major Feature: A recruiter needs the list of the job openings in the company so he knows what are the current job openings and what tagsets to look for in people. This way, the user can better search for potential employees.
  ** Major Feature: A recruiter needs the list of the job openings in the company so he knows what are the current job openings and what tagsets to look for in people. This way, the user can better search for potential employees.
  ** Minor Feature: Viewing the contact details in a separate focused panel makes them easier to read for the user as the Person card can now just contain limited information like the person's name, current position and company, also allowing more number of contacts to be displayed at a time since amount of information is reduced. Moreover, recruiters need to keep a track of the professional progress of his/her potential recruits and having easy access to their LinkedIn profiles will help them do this efficiently.
-// end::product[]
 
 2. Do Andre Khoi Nguyen
  * Major Feature: Calendar

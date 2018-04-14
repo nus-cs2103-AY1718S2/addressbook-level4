@@ -82,7 +82,8 @@ public class CommandTestUtil {
                 .withTimeZone(VALID_TIMEZONE_AMY).withComment(VALID_COMMENT_AMY).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTimeZone(VALID_TIMEZONE_BOB).withComment(VALID_COMMENT_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withTimeZone(VALID_TIMEZONE_BOB).withComment(VALID_COMMENT_BOB)
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**

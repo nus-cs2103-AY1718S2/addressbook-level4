@@ -29,7 +29,7 @@ reInsurance is a desktop client tracking application used for insurance agent to
 *** Organise weekly meeting to distribute workload.
 *** Project's time keeper.
 *** Resolved Code style issues within the project caused by teammates(Including myself) : https://github.com/CS2103JAN2018-T11-B3/main/pull/72/files[#72]
-*** Updating product UI: https://github.com/CS2103JAN2018-T11-B3/main/pull/68[#68]
+*** Updating product UI: https://github.com/CS2103JAN2018-T11-B3/main/pull/68[#68] https://github.com/CS2103JAN2018-T11-B3/main/pull/173[#173]
 ** Enhancements to existing features:
 *** Updated the Tag color scheme (Pull requests https://github.com/CS2103JAN2018-T11-B3/main/pull/6[#6])
 

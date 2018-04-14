@@ -87,7 +87,7 @@ public class RemovePatientQueueCommandTest {
     /**
      * Parses {@code userInput} into a {@code RemovePatientQueueCommand}.
      */
-    private RemovePatientQueueCommand prepareCommand() throws IllegalValueException, PatientNotFoundException {
+    private RemovePatientQueueCommand prepareCommand() throws IllegalValueException {
         model.addPatientToQueue(ParserUtil.parseIndex("1"));
         RemovePatientQueueCommand command = new RemovePatientQueueCommand();
         command.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -97,8 +97,7 @@ public class RemovePatientQueueCommandTest {
     /**
      * Parses {@code userInput} into a {@code RemovePatientQueueCommand}.
      */
-    private RemovePatientQueueCommand prepareCommandMorePatient(String userInput) throws IllegalValueException,
-            PatientNotFoundException {
+    private RemovePatientQueueCommand prepareCommandMorePatient(String userInput) throws IllegalValueException {
         model.addPatientToQueue(ParserUtil.parseIndex("1"));
         model.addPatientToQueue(ParserUtil.parseIndex("2"));
         model.addPatientToQueue(ParserUtil.parseIndex("3"));
@@ -110,8 +109,7 @@ public class RemovePatientQueueCommandTest {
     /**
      * Parses {@code userInput} into a {@code RemovePatientQueueCommand}.
      */
-    private RemovePatientQueueCommand prepareCommandMorePatientNotExist(String userInput) throws IllegalValueException,
-            PatientNotFoundException {
+    private RemovePatientQueueCommand prepareCommandMorePatientNotExist(String userInput) throws IllegalValueException {
         model.addPatientToQueue(ParserUtil.parseIndex("1"));
         model.addPatientToQueue(ParserUtil.parseIndex("3"));
         RemovePatientQueueCommand command = new RemovePatientQueueCommand(ParserUtil.parseIndex(userInput));
@@ -120,7 +118,7 @@ public class RemovePatientQueueCommandTest {
     }
 
     @Test
-    public void equals() throws Exception {
+    public void equals() {
         RemovePatientQueueCommand removePatientQueueFirstCommand = new RemovePatientQueueCommand();
 
         //same object -> returns true

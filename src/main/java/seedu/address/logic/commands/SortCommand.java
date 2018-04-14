@@ -12,8 +12,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  * so that the user may sort contacts in the addressBook by name, alphabetically
  */
 public class SortCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "sort_by_name";
-    public static final String COMMAND_ALIAS = "sort";
+    public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "so";
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {

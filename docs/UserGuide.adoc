@@ -296,7 +296,7 @@ Deletes the template with the purpose greeting.
 // end::templating[]
 
 //tag::sort[]
-==== Sorting contacts in address book : `sort_by_name` or `sort`
+==== Sorting contacts in address book : `sort` or `so`
 
 Sorts the contacts in the address book in alphabetical order by name. Sorting will not distinguish between first and last names, but will sort by the full text entered for a contacts name.
 
@@ -305,22 +305,22 @@ Currently only sorting alphabetically by name is supported.
 [NOTE]
 No arguments are necessary, can simply enter `sort` in CLI
 
-Format: `sort` or `sort_by_name`
+Format: `sort` or `so`
 
 Examples:
 
 * `sort`
-* `sort_by_name`
+* `so`
 //end::sort[]
 
 //tag::import[]
-==== Importing contacts from CSV : `import_contacts` or `ic`
+==== Importing contacts from CSV : `importcontacts` or `ic`
 
 Imports contacts from a csv file that contains the header (Name, Email, Phone, Address) +
 
-Format: `import_contacts PATH.csv`
+Format: `importcontacts PATH.csv`
 
-For example `import_contacts ~/PATH/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv` at `PATH`.
+For example `importcontacts ~/PATH/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv` at `PATH`.
 
 [NOTE]
 *The _command_ should meet the following conditions:*
@@ -342,7 +342,7 @@ image::import_file_example.png[width="700"]
 //end::import[]
 
 //tag::export[]
-==== Exporting contacts to CSV: `export_contacts` or `ec`
+==== Exporting contacts to CSV: `exportcontacts` or `ec`
 
 Export all contacts to a .csv file.
 
@@ -608,7 +608,7 @@ e.g. `email James followup`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit Appointment `[Coming in v2.0]`* : `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]` +
 e.g. `editappointment 1 d/25/12/2017 l/Parkway Parade`
-* *Export Contacts* : `export_contacts PATH`
+* *Export Contacts* : `exportcontacts PATH`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Find Appointment `[Coming in v2.0]`* : `findappointment KEYWORD...` +
@@ -617,8 +617,8 @@ e.g. `findappointment 12/12/2018`
 * *Go Forward* : `goforward`
 * *Help* : `help`
 * *History* : `history`
-* *Import Contacts* : `import_contacts PATH.csv` +
-e.g. `import_contacts ~/PATH/examplefile.csv`
+* *Import Contacts* : `importcontacts PATH.csv` +
+e.g. `importcontacts ~/PATH/examplefile.csv`
 * *List* : `list`
 * *Redo* : `redo`
 * *Select `[Coming in v2.0]`* : `select INDEX` +

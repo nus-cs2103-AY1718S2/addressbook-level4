@@ -1,5 +1,7 @@
 package seedu.address;
 
+import static seedu.address.testutil.TypicalDishes.getTypicalMenu;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.function.Supplier;
@@ -13,7 +15,6 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.CustomerStats;
-import seedu.address.model.Menu;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -96,7 +97,7 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs(), new CustomerStats(), new Menu());
+        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs(), new CustomerStats(), getTypicalMenu());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }

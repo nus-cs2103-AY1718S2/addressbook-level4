@@ -60,7 +60,7 @@
             </padding>
           </StackPane>
 
-          <VBox fx:id="eventList" alignment="TOP_RIGHT" minWidth="340" prefWidth="340">
+          <VBox fx:id="taskList" alignment="TOP_RIGHT" minWidth="340" prefWidth="340">
             <padding>
               <Insets bottom="10" left="10" right="10" top="10" />
             </padding>

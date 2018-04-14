@@ -126,8 +126,6 @@ public class MainWindow extends UiPart<Stage> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        logger.info("here ");
-
         orderQueuePanel = new OrderQueuePanel(logic.getFilteredTaskList());
         orderQueuePanelPlaceholder.getChildren().add(orderQueuePanel.getRoot());
 

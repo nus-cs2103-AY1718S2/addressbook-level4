@@ -698,7 +698,7 @@ image::AddressBookClass.png[width="600"]
 
 The `UniqueItemList` consists of an `ArrayList` of unique `String` objects. These `String` objects represent the filepaths of all images that have been added or are used by the application during its runtime.
 
-Upon every launch of the application, during the initialization of the `ModelManager` class, it will run through the `UniqueItemList` and delete
+Upon every launch of the application, during the initialization of the `LogicManager` class, it will run through the `UniqueItemList` and delete
 any unused image files from the `data` folder. It does this by looping through the `UniquePersonList` as well and checks if the image file is used. If it is not used, it will be deleted.
 The following code fragment shows the deletion process:
 
@@ -950,7 +950,7 @@ b. Require developers to download those libraries manually (this creates extra w
 * are reasonably comfortable using CLI apps
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app, includes to-do
-    list features (with prioritization, etc.) and scheduling (with calendar and reminders)
+    list features (with prioritization, etc.) and scheduling (with calendar)
 
 === Feature contribution
 

@@ -24,11 +24,11 @@ public class DeleteAppointmentCommand extends Command {
             + PREFIX_START_DATE_TIME + " "
             + PREFIX_END_DATE_TIME;
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes an appointment to calendar. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes an appointment to calendar. \n"
             + "Parameters: "
             + PREFIX_TITLE + "TITLE "
             + PREFIX_START_DATE_TIME + "START DATE TIME "
-            + PREFIX_END_DATE_TIME + "END DATE TIME "
+            + PREFIX_END_DATE_TIME + "END DATE TIME \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TITLE + "Birthday "
             + PREFIX_START_DATE_TIME + "2018-03-26 12:00 "

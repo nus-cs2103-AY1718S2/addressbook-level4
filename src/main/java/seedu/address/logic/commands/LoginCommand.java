@@ -24,10 +24,10 @@ public class LoginCommand extends Command {
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
                 + PREFIX_USERNAME + " "
                 + PREFIX_PASSWORD;
-    public static final String MESSAGE_USAGE = COMMAND_WORD + "Logs the user into contactHero."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + "Logs the user into contactHero. \n"
                 + "Parameters: "
                 + PREFIX_USERNAME + "USERNAME "
-                + PREFIX_PASSWORD + "PASSWORD\n"
+                + PREFIX_PASSWORD + "PASSWORD \n"
                 + "Example: " + COMMAND_WORD + " "
                 + PREFIX_USERNAME + "JohnDoe "
                 + PREFIX_PASSWORD + "98765432 ";

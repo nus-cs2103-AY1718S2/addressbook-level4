@@ -20,12 +20,12 @@ public class JobFindCommand extends Command {
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " " + PREFIX_POSITION;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all jobs whose"
-            + " POSITION or SKILL or LOCATION"
+            + " POSITION or SKILL or LOCATION "
             + "contains any of the specified keywords (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
             + "Parameters: p/POSITION_KEYWORDS [MORE_POSITION_KEYWORDS] or s/SKILL_KEYWORDS [MORE_SKILL_KEYWORDS]\n"
             + "Example: " + COMMAND_WORD + " p/Alice Bob\n"
-            + "Example: " + COMMAND_WORD + " s/Java C"
+            + "Example: " + COMMAND_WORD + " s/Java\n"
             + "Example: " + COMMAND_WORD + " l/Singapore";
 
     private final Predicate<Job> predicate;

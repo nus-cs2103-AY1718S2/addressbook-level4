@@ -29,7 +29,7 @@ public class EmailCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Send an email to the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a non-zero positive integer) "
-            + "[" + PREFIX_EMAIL_SUBJECT + "EMAIL SUBJECT]\n"
+            + "[" + PREFIX_EMAIL_SUBJECT + "EMAIL SUBJECT] \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_EMAIL_SUBJECT + "Interview for Full-time Software Engineering";
 

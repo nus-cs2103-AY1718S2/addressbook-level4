@@ -30,10 +30,10 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_ADDRESS + " "
             + PREFIX_CURRENT_POSITION + " "
             + PREFIX_COMPANY + " "
-            + "[" + PREFIX_PROFILE_PICTURE + "] "
+            + "[" + PREFIX_PROFILE_PICTURE + "PROFILE_PICTURE_PATH] "
             + "[" + PREFIX_SKILL + "SKILL]...";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. \n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -41,7 +41,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_CURRENT_POSITION + "CURRENT_POSITION "
             + PREFIX_COMPANY + "COMPANY "
-            + "[" + PREFIX_PROFILE_PICTURE + "PROFILE PICTURE NAME] "
+            + "[" + PREFIX_PROFILE_PICTURE + "PROFILE_PICTURE_PATH] "
             + "[" + PREFIX_SKILL + "SKILL]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -51,8 +51,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_CURRENT_POSITION + "Software Engineer "
             + PREFIX_COMPANY + "Google "
             + PREFIX_PROFILE_PICTURE + "/home/trafalgarandre/downloads/john.jpeg "
-            + PREFIX_SKILL + "friends "
-            + PREFIX_SKILL + "owesMoney";
+            + PREFIX_SKILL + "Java "
+            + PREFIX_SKILL + "C++";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

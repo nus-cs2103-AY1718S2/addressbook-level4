@@ -44,16 +44,16 @@ public class JobEditCommand extends UndoableCommand {
             + "[" + PREFIX_TEAM + "] "
             + "[" + PREFIX_LOCATION + "] "
             + "[" + PREFIX_NUMBER_OF_POSITIONS + "] "
-            + "[" + PREFIX_SKILL + "SKILL]...";
+            + "[" + PREFIX_SKILL + "]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the job identified "
             + "by the index number used in the last job listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_POSITION + "] "
-            + "[" + PREFIX_TEAM + "] "
-            + "[" + PREFIX_LOCATION + "] "
-            + "[" + PREFIX_NUMBER_OF_POSITIONS + "] "
+            + "[" + PREFIX_POSITION + "POSITION] "
+            + "[" + PREFIX_TEAM + "TEAM] "
+            + "[" + PREFIX_LOCATION + "LOCATION] "
+            + "[" + PREFIX_NUMBER_OF_POSITIONS + "NUMBER_OF_POSITIONS] "
             + "[" + PREFIX_SKILL + "SKILL]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_POSITION + "Backend Software Engineer "

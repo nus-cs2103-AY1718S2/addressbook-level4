@@ -24,7 +24,7 @@ public class PredicateUtil {
      * @param keywords contains user argument
      * @return void
      */
-    public static AllPredicate parseAllPredicates(String[] keywords) throws ParseException {
+    public AllPredicate parseAllPredicates(String[] keywords) throws ParseException {
         ArrayList<String> substringKeywords = new ArrayList<>();
         ArrayList<String> exactKeywords = new ArrayList<>();
         ArrayList<String> prefixKeywords = new ArrayList<>();
@@ -44,7 +44,7 @@ public class PredicateUtil {
      * @param prefixKeywords stores user argument that matches prefix
      * @param suffixKeywords stores user argument that matches suffix
      */
-    private static void parseKeywordsArray(String[] keywords,
+    private void parseKeywordsArray(String[] keywords,
                                            ArrayList<String> substringKeywords,
                                            ArrayList<String> exactKeywords,
                                            ArrayList<String> prefixKeywords,
@@ -95,7 +95,7 @@ public class PredicateUtil {
      * @param argMultimap mapping of prefixes to their respective user arguments.
      * @return AllPredicate
      */
-    public static AllPredicate parseSelectedPredicates(
+    public AllPredicate parseSelectedPredicates(
             ArgumentMultimap argMultimap) throws ParseException {
 
         Set<Prefix> prefixSet = argMultimap.getAllPrefixes();
@@ -131,7 +131,7 @@ public class PredicateUtil {
      * @param suffixKeywords stores user argument that matches suffix
      * @param allPredicate a predicate class that contains reference to all predicates objects
      */
-    private static void addSelectedPredicates(Prefix prefix, ArrayList<String> substringKeywords,
+    private void addSelectedPredicates(Prefix prefix, ArrayList<String> substringKeywords,
                                               ArrayList<String> exactKeywords,
                                               ArrayList<String> prefixKeywords,
                                               ArrayList<String> suffixKeywords,
@@ -181,7 +181,7 @@ public class PredicateUtil {
      * @return {@code Predicate<Person>}
      */
     @SafeVarargs
-    public static Predicate<Person> formOrPredicate(Predicate<Person>... predicates) {
+    public final Predicate<Person> formOrPredicate(Predicate<Person>... predicates) {
         return Stream.of(predicates).filter(Objects::nonNull)
                 .reduce(condition -> false, Predicate::or);
     }
@@ -193,7 +193,7 @@ public class PredicateUtil {
      * @return {@code Predicate<Person>}
      */
     @SafeVarargs
-    public static Predicate<Person> formAndPredicate(Predicate<Person>... predicates) {
+    public final Predicate<Person> formAndPredicate(Predicate<Person>... predicates) {
         return Stream.of(predicates).filter(Objects::nonNull)
                 .reduce(condition -> true, Predicate::and);
     }

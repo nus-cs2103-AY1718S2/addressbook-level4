@@ -42,7 +42,7 @@ public class EmailPredicate implements FieldPredicate {
         }
         if (!exactKeywords.isEmpty() || !substringKeywords.isEmpty()
                 || !prefixKeywords.isEmpty() || !suffixKeywords.isEmpty()) {
-            emailPredicate = PredicateUtil.formOrPredicate(emailContainsKeywordsPredicate,
+            emailPredicate = new PredicateUtil().formOrPredicate(emailContainsKeywordsPredicate,
                     emailContainsSubstringsPredicate, emailContainsPrefixesPredicate,
                     emailContainsSuffixesPredicate);
         }

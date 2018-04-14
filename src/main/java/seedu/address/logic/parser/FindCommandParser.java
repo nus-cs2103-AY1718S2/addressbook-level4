@@ -45,7 +45,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                         PREFIX_JOB_APPLIED, PREFIX_COMMENT); // more fields to be added if necessary
         try {
             logger.info("Parsing user arguments of find command");
-            Predicate<Person> finalPredicate = FindUtil.parseFindArgs(trimmedArgs, argMultimap);
+            Predicate<Person> finalPredicate = new FindUtil().parseFindArgs(trimmedArgs, argMultimap);
             return new FindCommand(finalPredicate);
         } catch (ParseException ive) {
             throw new ParseException(ive.getMessage(), ive);

@@ -31,7 +31,7 @@ public class FindUtil {
      * @return the predicate user demanded
      * @throws ParseException
      */
-    public static Predicate<Person> parseFindArgs(String trimmedArgs, ArgumentMultimap argMultimap)
+    public Predicate<Person> parseFindArgs(String trimmedArgs, ArgumentMultimap argMultimap)
             throws ParseException {
         requireNonNull(trimmedArgs);
         assert trimmedArgs != null;
@@ -42,8 +42,8 @@ public class FindUtil {
             String[] keywords = trimmedArgs.split(",");
 
             try {
-                AllPredicate allPredicate = PredicateUtil.parseAllPredicates(keywords);
-                finalPredicate = PredicateUtil.formOrPredicate(allPredicate.getNamePredicate().getPredicate(),
+                AllPredicate allPredicate = new PredicateUtil().parseAllPredicates(keywords);
+                finalPredicate = new PredicateUtil().formOrPredicate(allPredicate.getNamePredicate().getPredicate(),
                         allPredicate.getPhonePredicate().getPredicate(),
                         allPredicate.getEmailPredicate().getPredicate(),
                         allPredicate.getAddressPredicate().getPredicate(),
@@ -63,8 +63,8 @@ public class FindUtil {
             }
 
             try {
-                AllPredicate allPredicate = PredicateUtil.parseSelectedPredicates(argMultimap);
-                finalPredicate = PredicateUtil.formAndPredicate(allPredicate.getNamePredicate().getPredicate(),
+                AllPredicate allPredicate = new PredicateUtil().parseSelectedPredicates(argMultimap);
+                finalPredicate = new PredicateUtil().formAndPredicate(allPredicate.getNamePredicate().getPredicate(),
                         allPredicate.getPhonePredicate().getPredicate(),
                         allPredicate.getEmailPredicate().getPredicate(),
                         allPredicate.getAddressPredicate().getPredicate(),
@@ -85,7 +85,7 @@ public class FindUtil {
      * @param trimmedArgs
      * @return boolean value
      */
-    private static boolean startWithPrefix(String trimmedArgs) {
+    private boolean startWithPrefix(String trimmedArgs) {
         assert trimmedArgs != null;
         String[] args = trimmedArgs.split("\\s+");
 

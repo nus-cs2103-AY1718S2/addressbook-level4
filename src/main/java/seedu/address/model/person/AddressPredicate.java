@@ -43,7 +43,7 @@ public class AddressPredicate implements FieldPredicate {
         }
         if (!exactKeywords.isEmpty() || !substringKeywords.isEmpty()
                 || !prefixKeywords.isEmpty() || !suffixKeywords.isEmpty()) {
-            this.addressPredicate = PredicateUtil.formOrPredicate(addressContainsKeywordsPredicate,
+            this.addressPredicate = new PredicateUtil().formOrPredicate(addressContainsKeywordsPredicate,
                     addressContainsSubstringsPredicate, addressContainsPrefixesPredicate,
                     addressContainsSuffixesPredicate);
         }

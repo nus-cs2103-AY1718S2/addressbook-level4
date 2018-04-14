@@ -5,6 +5,8 @@ package seedu.address.logic.parser;
 import static org.testng.Assert.assertEquals;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,5 +53,13 @@ public class SearchTagCommandParserTest {
                 + PREFIX_TAG + TAG_NAME_2);
         assertEquals(searchTagCommand.getTagsToFind(), multipleTagsToFind);
 
+    }
+    /**
+     * Throws exception when no tags are provided.
+     */
+    @Test
+    public void emptyTagsArgs() {
+        assertParseFailure(searchTagCommandParser, "a",
+                String.format(SearchTagCommandParser.MESSAGE_INVALID_COMMAND_NO_TAGS, SearchTagCommand.MESSAGE_USAGE));
     }
 }

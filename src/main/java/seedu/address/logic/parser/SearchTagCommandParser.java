@@ -19,6 +19,8 @@ import seedu.address.model.tag.Tag;
  */
 public class SearchTagCommandParser implements Parser<SearchTagCommand> {
 
+    public static final String MESSAGE_INVALID_COMMAND_NO_TAGS = "Please insert tags in the tag field: t/";
+
     /**
      * Parses the given {@code String} of arguments in the context of the ColorCommand
      * and returns an RemoveTagCommand object for execution.
@@ -32,7 +34,7 @@ public class SearchTagCommandParser implements Parser<SearchTagCommand> {
         try {
             tagsToFind = parseTags(argMultimap.getAllValues(PREFIX_TAG));
             if (tagsToFind.isEmpty()) {
-                throw new ParseException("Please insert tags in the tag field: t/");
+                throw new ParseException(MESSAGE_INVALID_COMMAND_NO_TAGS);
             }
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

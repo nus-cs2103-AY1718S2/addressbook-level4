@@ -40,8 +40,7 @@ public class PersonDetailsPanelTest extends GuiUnitTest {
     }
 
     /**
-     * Asserts that {@code personCard} displays the details of {@code expectedPerson} correctly and matches
-     * {@code expectedId}.
+     * Asserts that {@code personDetailsPanel} displays the details of {@code expectedPerson} correctly.
      */
     private void assertTableDisplay(PersonDetailsPanel personDetailsPanel, Person expectedPerson) {
         guiRobot.pauseForHuman();

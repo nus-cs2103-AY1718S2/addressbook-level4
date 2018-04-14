@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
  */
 public class PersonDetailsPanelHandle extends NodeHandle<Node> {
 
-    public static final String PERSON_DETAILS_PANEL_PLACEHOLDER = "#personsDetailsPanelPlaceholder";
+    public static final String PERSON_DETAILS_PANEL_PLACEHOLDER = "#personDetailsPlaceholder";
     private static final String NAME_FIELD_ID = "#nameLabel";
     private static final String ADDRESS_FIELD_ID = "#addressLabel";
     private static final String PHONE_FIELD_ID = "#phoneNumberLabel";

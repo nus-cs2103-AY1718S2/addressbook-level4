@@ -420,6 +420,7 @@ The customer with phone number "91111111" has accumulated 1 order. +
 The result will be updated and stored in the XML file.
 
 image::UG1.png[width="800"]
+image::3.5.1.a.png[width="800"]
 
 * `add n/Zequn p/92222222 f/Chicken Rice a/NUS` +
 Another customer with a different phone number "92222222" has accumulated 1 order. +

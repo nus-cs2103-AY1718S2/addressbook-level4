@@ -52,7 +52,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
             ParserUtil.parseOrder(argMultimap.getValue(PREFIX_ORDER)).ifPresent(editPersonDescriptor::setOrder);
-            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             ParserUtil.parseHalal(argMultimap.getValue(PREFIX_HALAL)).ifPresent(editPersonDescriptor::setHalal);
             ParserUtil.parseVegetarian(argMultimap.getValue(PREFIX_VEGETARIAN)).ifPresent(

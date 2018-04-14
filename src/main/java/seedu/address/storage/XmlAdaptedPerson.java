@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
@@ -33,8 +32,6 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String order;
     @XmlElement(required = true)
-    private String email;
-    @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
     private String halal;
@@ -53,12 +50,11 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String order, String email, String address,
+    public XmlAdaptedPerson(String name, String phone, String order, String address,
                             String halal, String vegetarian, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.order = order;
-        this.email = email;
         this.address = address;
         this.halal = halal;
         this.vegetarian = vegetarian;
@@ -76,7 +72,6 @@ public class XmlAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         order = source.getOrder().fullOrder;
-        email = source.getEmail().value;
         address = source.getAddress().value;
         halal = source.getHalal().value;
         vegetarian = source.getVegetarian().value;
@@ -123,14 +118,6 @@ public class XmlAdaptedPerson {
         final Order order = new Order(this.order);
         //@@author
 
-        if (this.email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
-        }
-        if (!Email.isValidEmail(this.email)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        final Email email = new Email(this.email);
-
         if (this.address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
@@ -158,7 +145,7 @@ public class XmlAdaptedPerson {
         final Vegetarian vegetarian = new Vegetarian(this.vegetarian);
         //@@author
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, order, email, address, halal, vegetarian, tags);
+        return new Person(name, phone, order, address, halal, vegetarian, tags);
     }
 
     @Override
@@ -174,7 +161,6 @@ public class XmlAdaptedPerson {
         XmlAdaptedPerson otherPerson = (XmlAdaptedPerson) other;
         return Objects.equals(name, otherPerson.name)
                 && Objects.equals(phone, otherPerson.phone)
-                && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
                 && tagged.equals(otherPerson.tagged);
     }

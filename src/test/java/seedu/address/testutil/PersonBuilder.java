@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
@@ -22,7 +21,6 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_ORDER = "Chicken Rice";
-    public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_HALAL = "Non-halal";
     public static final String DEFAULT_VEGETARIAN = "Non-vegetarian";
@@ -31,7 +29,6 @@ public class PersonBuilder {
     private Name name;
     private Phone phone;
     private Order order;
-    private Email email;
     private Address address;
     private Halal halal;
     private Vegetarian vegetarian;
@@ -42,7 +39,6 @@ public class PersonBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         order = new Order(DEFAULT_ORDER);
-        email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         halal = new Halal(DEFAULT_HALAL);
         vegetarian = new Vegetarian(DEFAULT_VEGETARIAN);
@@ -56,7 +52,6 @@ public class PersonBuilder {
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
         order = personToCopy.getOrder();
-        email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         halal = personToCopy.getHalal();
         vegetarian = personToCopy.getVegetarian();
@@ -104,15 +99,6 @@ public class PersonBuilder {
         this.phone = new Phone(phone);
         return this;
     }
-
-    /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withEmail(String email) {
-        this.email = new Email(email);
-        return this;
-    }
-
     //@@author ZacZequn
     /**
      * Sets the {@code Halal} of the {@code Person} that we are building.
@@ -133,7 +119,7 @@ public class PersonBuilder {
 
 
     public Person build() {
-        return new Person(name, phone, order, email, address, halal, vegetarian, tags);
+        return new Person(name, phone, order, address, halal, vegetarian, tags);
     }
 
 }

@@ -6,9 +6,8 @@
         <name>Alice Pauline</name>
         <phone>85355255</phone>
         <!-- @@author ZacZequn -->
-        <order>Chicken Rice</order>
+        <order>Chicken Chop</order>
         <!-- @@author -->
-        <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
         <!-- @@author ZacZequn -->
         <halal>Non-halal</halal>
@@ -20,9 +19,8 @@
         <name>Benson Meier</name>
         <phone>98765432</phone>
         <!-- @@author ZacZequn -->
-        <order>Chicken Rice</order>
+        <order>Chicken Chop</order>
         <!-- @@author -->
-        <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
         <!-- @@author ZacZequn -->
         <halal>Non-halal</halal>
@@ -35,9 +33,8 @@
         <name>Carl Kurz</name>
         <phone>95352563</phone>
         <!-- @@author ZacZequn -->
-        <order>Chicken Rice</order>
+        <order>Chicken Chop</order>
         <!-- @@author -->
-        <email>heinz@example.com</email>
         <address>wall street</address>
         <!-- @@author ZacZequn -->
         <halal>Non-halal</halal>
@@ -49,9 +46,8 @@
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <!-- @@author ZacZequn -->
-        <order>Chicken Rice</order>
+        <order>Chicken Chop</order>
         <!-- @@author -->
-        <email>cornelia@example.com</email>
         <address>10th street</address>
         <!-- @@author ZacZequn -->
         <halal>Non-halal</halal>
@@ -63,9 +59,8 @@
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <!-- @@author ZacZequn -->
-        <order>Chicken Rice</order>
+        <order>Chicken Chop</order>
         <!-- @@author -->
-        <email>werner@example.com</email>
         <address>michegan ave</address>
         <!-- @@author ZacZequn -->
         <halal>Non-halal</halal>
@@ -77,9 +72,8 @@
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <!-- @@author ZacZequn -->
-        <order>Chicken Rice</order>
+        <order>Chicken Chop</order>
         <!-- @@author -->
-        <email>lydia@example.com</email>
         <address>little tokyo</address>
         <!-- @@author ZacZequn -->
         <halal>Non-halal</halal>
@@ -91,9 +85,8 @@
         <name>George Best</name>
         <phone>9482442</phone>
         <!-- @@author ZacZequn -->
-        <order>Chicken Rice</order>
+        <order>Chicken Chop</order>
         <!-- @@author -->
-        <email>anna@example.com</email>
         <address>4th street</address>
         <!-- @@author ZacZequn -->
         <halal>Non-halal</halal>

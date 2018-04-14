@@ -43,6 +43,15 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_PROGRAMMING_LANGUAGE_AMY = "Java";
     public static final String VALID_PROGRAMMING_LANGUAGE_BOB = "Java";
+    public static final String VALID_ALLERGIES_AMY = "milk";
+    public static final String VALID_ALLERGIES_BOB = "nuts";
+    public static final String VALID_NOKNAME_BOB = "Sam";
+    public static final String VALID_NOKNAME_AMY = "Sam";
+    public static final String VALID_NOKPHONE_AMY = "12345678";
+    public static final String VALID_NOKPHONE_BOB = "12345678";
+    public static final String VALID_REMARKS_AMY = "well behaved";
+    public static final String VALID_REMARKS_BOB = "naughty";
+
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_UNUSED = "unused"; // do not use this tag when creating a student

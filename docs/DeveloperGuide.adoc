@@ -1,6 +1,6 @@
 = Your TA - Developer Guide
 :toc:
-:toc-title:
+:toc-title: Table of Content
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -321,21 +321,6 @@ The `Tag` Class,
 * Checks are implemented to guarantee validity.
 [TIP]
 For every `Person` object, there can be multiple (or zero) tags.
-
-The `Task` Class:
-
-* Stores the information of a specific task in the AddressBook
-* Information includes: Task Description, Deadline, Priority.
-* Implements `UniqueTaskList` that enforces uniqueness of its elements and disallows nulls.
-* `Task Description`: Object that stores the task description of the `Task` Object.
-[NOTE]
-Task's name can contain any alphanumeric characters, but should not be null.
-* `Deadline`: Object that stores the deadline of the `Task` Object.
-[NOTE]
-Deadline should not be dates of the past and should only be in the format dd-mm-yyyy.
-* `Priority`: Object that stores the priority of the `Task` Object.
-[NOTE]
-Priority should only be a value from 1 to 3, 1 being the lowest and 3 being the highest.
 
 The `Task` Class:
 
@@ -810,6 +795,91 @@ The image file will then be utilized by JavaFX and displayed on the UI. The drop
 * Support for online URLs to download images
 
 // end::display[]
+
+// tag::task[]
+=== Task List
+
+Users are able to add, edit and remove tasks (with command `addTask`, `editTask` and `deleteTask`) in order to schedule their tasks within the application.
+Tasks scheduled in this application will be stored in `addressbook.xml` and displayed in the `Todo List` tab and `Calender` view respectively.
+
+`Todo List` displays tasks with all fields (title, description, deadline and priority) in a list view whereas `Calender` displays tasks with only task titles in their respective date cells determined by their deadline.
+Tasks displayed in a date cell are sorted by their priority. Tasks are displayed in `Todo List` and `Calender` as shown in figure 19.
+
+.Tasks displayed in the application.
+//update image
+image::displayTask.png[width = "600"]
+
+==== Current Implementation
+
+An additional class, `UniqueTaskList` is added to the `AddressBook` class. This class contains an `ObservableList` of tasks and a 2-dimensional `ObservableList` of tasks.
+The previous is the actual copy of tasks stored in `addressbook.xml` while the latter is a copy of reorganized tasks for displaying in `Calendar`.
+
+===== Adding a Task
+
+The `addTask` command requires fields of `title/`, `desc/`, `by/` and `priority/` to be present.
+Any missing field will cause a built-in exception thrown when creating the `Task` object as the `addTaskCommandParser` validates the presence of all required fields.
+The exception prevents the invalid task from being created and added into `UniqueTaskList`.
+
+Multiple of same field is allowed but all are discarded except the last entry of that field by `ArgumentTokenizer` called in `AddTaskCommandParser`.
+
+After successful creating the `Task` object, `ModelManager` will help add the object into `Addressbook`.
+
+===== Deleting a Task
+
+The `deleteTask` command requires a positive task index which specifies the task to be deleted. The `DeleteTaskCommandParse` validates this index with accordance to the current displayed `Todo List` size.
+If the index is valid, the `DeleteTaskCommand` will delete the corresponding `Task` object from `UniqueTaskList`.
+
+===== Editing a Task
+
+The `editTask` command requires a positive task index and desired edit fields indicated by prefix `title/`, `desc/`, `by/` and `priority/`. The `EditTaskCommandParser` validates that there is at least one field specified in the command.
+
+`EditTaskCommand` then creates a new `Task` object with modified fields and other unmodified fields identical.
+The `AddressBook` will be called by `ModelManager` to delete the original `Task` object from the `UniqueTaskList` and add the newly created task to the `UniqueTaskList`.
+
+[NOTE]
+====
+Add task, delete task and edit task commands support `undo` and `redo` commands.
+====
+
+Add task, delete task and edit task commands have similar sequence behavior. Below is an example of the overview how components interact during deletion of a task.
+
+.Dlete a task.
+image::DeleteTaskCommandSequenceDiagram.png[width = "800"]
+
+===== Listing Tasks
+
+The execution of `listTask` command parses a predicate argument PREDICATE_SHOW_ALL_TASK to `ModelManager` which updates the task list based on this predicate.
+This will extract all tasks saved in the data file `addressbook.xml`.
+
+===== Listing Current Month Tasks
+
+The execution of `listCurrentTask` command parses the predicate argument PREDICATE_SHOW_ALL_CURRENT_TASK to `Model`. `ModelManager` then updates the task list based on this predicate.
+This is similar to Listing tasks but it will only extract tasks with deadlines due in the current month.
+
+===== Sorting Tasks
+
+`Task` class implements Java `Comparable<>` class which enables sorting without writing the actual sorting algorithm. Thus,the execution of `sortTask` command relies on it.
+`Model` then calls `AddressBook` which sorts the tasks in `UniqueTaskList`.
+
+The sorting is done by comparing the year, month and date sequentially. This is specified in the compareTo() method in `Task`.
+
+[NOTE]
+====
+listing and sorting tasks do not support `undo` and `redo` commands.
+====
+
+==== Design Consideration
+
+===== Aspect: How `EditTaskCommand` executes
+* **Alternative 1(current choice): ** Adds a new Task and deletes the original task
+** Pros: Easy to implement, no need to worry about the change of deadline shown in `Calendar`
+** Cons: Unable to maintain the original task list order.
+
+* **Alternative 2: ** Edits the field of original task
+** Pros: Maintains the task list order
+** Cons: Difficult to implement as a new mechanism to sync the `Calendar` cells is needed.
+
+// end::task[]
 
 === Logging
 

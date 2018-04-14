@@ -58,7 +58,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = "addressbook.jar"
+    archiveName = "mediasocializer.jar"
 
     destinationDir = file("${buildDir}/jar/")
 }

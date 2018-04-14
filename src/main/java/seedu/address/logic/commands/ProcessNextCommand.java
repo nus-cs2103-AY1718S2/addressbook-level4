@@ -42,7 +42,7 @@ public class ProcessNextCommand extends ProcessOrderCommand {
 
         List<Person> lastShownList = model.getFilteredPersonList();
         for (Person person:lastShownList) {
-            if (person.getTagList().contains(new Tag("Processing")) == false) {
+            if (person.getTagList().contains(new Tag("Processed")) == false) {
                 targetIndex = lastShownList.indexOf(person);
                 break;
             }
@@ -71,7 +71,7 @@ public class ProcessNextCommand extends ProcessOrderCommand {
 
         Person personToEdit = personToAdd;
         // labels person with tag "Processing"
-        Person editedPerson = createProcessingPerson(personToEdit);
+        Person editedPerson = createNewTaggedPerson(personToEdit,"Processed");
 
         addAndTag(toAdd, personToEdit, editedPerson);
 

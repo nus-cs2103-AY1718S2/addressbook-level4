@@ -78,7 +78,7 @@ public class ProcessOrderCommand extends Command {
 
         Person personToEdit = personToAdd;
         // labels person with tag "Processing"
-        Person editedPerson = createProcessingPerson(personToEdit);
+        Person editedPerson = createNewTaggedPerson(personToEdit,"Processed");
 
         addAndTag(toAdd, personToEdit, editedPerson);
 
@@ -122,7 +122,7 @@ public class ProcessOrderCommand extends Command {
     }
 
 
-    protected Person createProcessingPerson(Person personToEdit) {
+    protected Person createNewTaggedPerson(Person personToEdit,String tag) {
         assert personToEdit != null;
 
         Name updatedName = personToEdit.getName();
@@ -134,7 +134,7 @@ public class ProcessOrderCommand extends Command {
         UniqueTagList updatedTags = new UniqueTagList(personToEdit.getTags());
 
         try {
-            updatedTags.add(new Tag("Processing"));
+            updatedTags.add(new Tag(tag));
         } catch (UniqueTagList.DuplicateTagException dte){
             //does not add tag "processing" if already exists
         }

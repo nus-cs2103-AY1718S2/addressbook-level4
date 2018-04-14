@@ -73,7 +73,7 @@ include::../DeveloperGuide.adoc[tag=TotalPersonStatusBar]
 
 include::../DeveloperGuide.adoc[tag=AddComment]
 
-include::../UserGuide.adoc[tag=ExportCommand]
+include::../DeveloperGuide.adoc[tag=ExportCommand]
 
 == PROJECT: PowerPointLabs
 

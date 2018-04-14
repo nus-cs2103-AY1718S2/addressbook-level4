@@ -2,6 +2,8 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.AppUnlockedEvent;
 import seedu.address.logic.LockManager;
 import seedu.address.model.Model;
 
@@ -21,21 +23,22 @@ public class UnlockCommand extends Command {
     public static final String MESSAGE_NOT_LOCKED = "The app is not locked.";
     public static final String MESSAGE_WRONG_PASSWORD = "Incorrect password. Please try again.";
 
-    private String key;
+    private String password;
 
-    public UnlockCommand(String key) {
-        this.key = key.trim();
+    public UnlockCommand(String password) {
+        this.password = password.trim();
     }
 
     @Override
     public CommandResult execute() {
-        requireAllNonNull(model, key);
+        requireAllNonNull(model, password);
 
         if (!LockManager.getInstance().isLocked()) {
             return new CommandResult(MESSAGE_NOT_LOCKED);
         }
 
-        if (LockManager.getInstance().unlock(key)) {
+        if (LockManager.getInstance().unlock(password)) {
+            EventsCenter.getInstance().post(new AppUnlockedEvent());
             model.updateBookListFilter(Model.PREDICATE_SHOW_ALL_BOOKS);
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
@@ -47,6 +50,6 @@ public class UnlockCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UnlockCommand // instanceof handles nulls
-                && this.key.equals(((UnlockCommand) other).key)); // state check
+                && this.password.equals(((UnlockCommand) other).password)); // state check
     }
 }

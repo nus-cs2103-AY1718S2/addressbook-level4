@@ -106,6 +106,9 @@ public interface Model {
     /** Returns an unmodifiable view of the recently selected books. */
     ObservableList<Book> getRecentBooksList();
 
+    /** Resets the recent books list with the given data. */
+    void resetRecentBooks(ReadOnlyBookShelf newData);
+
     /** Returns the recently selected books as a ReadOnlyBookShelf*/
     ReadOnlyBookShelf getRecentBooksListAsBookShelf();
 

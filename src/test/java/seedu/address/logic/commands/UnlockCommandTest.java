@@ -27,12 +27,14 @@ public class UnlockCommandTest {
     public void setUp() {
         model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
         // set password + lock
-        LockManager.instantiate("testing");
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
+        LockManager.getInstance().setPassword(LockManager.NO_PASSWORD, "testing");
+        LockManager.getInstance().lock();
     }
 
     @After
     public void tearDown() {
-        LockManager.instantiate(LockManager.NO_PASSWORD);
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
     }
 
     @Test

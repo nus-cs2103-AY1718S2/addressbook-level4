@@ -36,7 +36,7 @@ public class SetPasswordCommandTest {
 
     @After
     public void tearDown() {
-        LockManager.instantiate(LockManager.NO_PASSWORD);
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
     }
 
     @Test

@@ -70,12 +70,13 @@ public class XmlBookShelfStorage implements BookShelfStorage {
      */
     private XmlSerializableBookShelf getXmlSerializableBookShelf(String filePath)
             throws DataConversionException, FileNotFoundException {
-        if (LockManager.getInstance().isPasswordProtected()) {
-            CipherEngine.decryptFile(filePath, LockManager.getInstance().getPassword());
+        LockManager lockManager = LockManager.getInstance();
+        if (lockManager.isPasswordProtected()) {
+            CipherEngine.decryptFile(filePath, lockManager.getPassword());
         }
         XmlSerializableBookShelf xmlBookShelf = XmlFileStorage.loadBookShelfDataFromFile(new File(filePath));
-        if (LockManager.getInstance().isPasswordProtected()) {
-            CipherEngine.encryptFile(filePath, LockManager.getInstance().getPassword());
+        if (lockManager.isPasswordProtected()) {
+            CipherEngine.encryptFile(filePath, lockManager.getPassword());
         }
         return xmlBookShelf;
     }

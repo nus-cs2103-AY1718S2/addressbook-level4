@@ -14,6 +14,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
+import seedu.address.commons.events.model.AppUnlockedEvent;
 import seedu.address.commons.events.model.PasswordChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -217,14 +218,10 @@ public class MainApp extends Application {
     }
 
     /**
-     * Initialize {@link LockManager} based on key in {@code userPrefs}.
+     * Initialize {@link LockManager} based on the password hash in {@code userPrefs}.
      */
     private void initLockManager(UserPrefs userPrefs) {
-        try {
-            LockManager.instantiate(CipherEngine.decryptKey(userPrefs.getKey()));
-        } catch (Exception e) {
-            logger.warning("Failed to initialize LockManager. Using no password.");
-        }
+        LockManager.getInstance().initialize(userPrefs.getPasswordHash());
     }
 
     @Override
@@ -249,26 +246,37 @@ public class MainApp extends Application {
     }
 
     @Subscribe
-    public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
+    public void handleAppUnlockedEvent(AppUnlockedEvent event) throws Exception {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        this.stop();
+        if (!storage.isBookShelfLoaded()) {
+            storage.readBookShelf().ifPresent(bookShelf -> model.resetData(bookShelf));
+            storage.readRecentBooksList().ifPresent(bookShelf -> model.resetRecentBooks(bookShelf));
+        }
     }
 
     @Subscribe
     public void handlePasswordChangedEvent(PasswordChangedEvent event) throws Exception {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        userPrefs.setKey(CipherEngine.encryptKey(LockManager.getInstance().getPassword()));
+        userPrefs.setPasswordHash(CipherEngine.hashPassword(event.newPassword));
         try {
             storage.saveUserPrefs(userPrefs);
-            if (LockManager.getInstance().wasPasswordProtected()) {
-                CipherEngine.decryptFile(storage.getBookShelfFilePath(), LockManager.getInstance().getOldPassword());
+            if (event.oldPassword.length() > 0) {
+                CipherEngine.decryptFile(storage.getBookShelfFilePath(), event.oldPassword);
+                CipherEngine.decryptFile(storage.getRecentBooksFilePath(), event.oldPassword);
             }
-            if (LockManager.getInstance().isPasswordProtected()) {
-                CipherEngine.encryptFile(storage.getBookShelfFilePath(), LockManager.getInstance().getPassword());
+            if (event.newPassword.length() > 0) {
+                CipherEngine.encryptFile(storage.getBookShelfFilePath(), event.newPassword);
+                CipherEngine.encryptFile(storage.getRecentBooksFilePath(), event.newPassword);
             }
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
+    }
+
+    @Subscribe
+    public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        this.stop();
     }
 
     public static void main(String[] args) {

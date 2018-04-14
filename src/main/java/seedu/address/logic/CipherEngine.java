@@ -10,6 +10,9 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.logging.Logger;
 
 import javax.crypto.Cipher;
@@ -19,11 +22,10 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.PBEKeySpec;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.StringUtil;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 //@@author 592363789
 /**
@@ -32,11 +34,13 @@ import sun.misc.BASE64Encoder;
 public class CipherEngine {
     private static final Logger logger = LogsCenter.getLogger(CipherEngine.class);
 
-    private static final String TEMP_FILE = "data/change.xml";
+    private static final String TEMP_FILE = "data/__temp.xml";
 
-    private static final String defaultKey = "vsFA#%HZ1c93";
-    private static final String DES = "DES";
-    private static final String ENCODE = "GBK";
+    private static final String PBKDF_ALGORITHM = "PBKDF2WithHmacSHA256";
+    private static final int PBKDF_ITERATION_COUNT = 22000;
+    private static final int PBKDF_KEY_LENGTH = 512;
+    private static final int SALT_BYTE_LENGTH = 64;
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     /**
      *  Encrypts file at {@code fileName} using {@code key}.
@@ -71,24 +75,6 @@ public class CipherEngine {
     }
 
     /**
-     * Encrypts {@code key}.
-     */
-    public static String encryptKey(String key) throws Exception {
-        byte[] byarray = encrypt(key.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
-        return new BASE64Encoder().encode(byarray);
-    }
-
-    /**
-     * Decrypts {@code key}.
-     */
-    public static String decryptKey(String key) throws Exception {
-        BASE64Decoder base64Decoder = new BASE64Decoder();
-        byte[] decodeBuffer = base64Decoder.decodeBuffer(key);
-        byte[] bytes = decrypt(decodeBuffer, defaultKey.getBytes(ENCODE));
-        return new String(bytes, ENCODE);
-    }
-
-    /**
      * Encrypts from {@code inputStream} and outputs to {@code outputStream}.
      * Encryption is done using {@code key}.
      */
@@ -102,27 +88,6 @@ public class CipherEngine {
         cipher.init(Cipher.ENCRYPT_MODE, desKey);
         CipherInputStream cipherInputStream = new CipherInputStream(inputStream, cipher);
         hiding(cipherInputStream, outputStream);
-    }
-    //@@author 592363789
-    /**
-     * Encrypts {@code content} using {@code key}.
-     *
-     * @param content content to encrypt.
-     * @param key key to encrypt with.
-     */
-    private static byte[] encrypt(byte[] content, byte[] key) throws Exception {
-        SecureRandom secureRandom = new SecureRandom();
-
-        DESKeySpec desKeySpec = new DESKeySpec(key);
-
-        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
-        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
-
-        javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance(DES);
-
-        cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, securekey, secureRandom);
-
-        return cipher.doFinal(content);
     }
 
     /**
@@ -139,28 +104,6 @@ public class CipherEngine {
         cipher.init(Cipher.DECRYPT_MODE, desKey);
         CipherOutputStream cipherOutputStream = new CipherOutputStream(outputStream, cipher);
         hiding(inputStream, cipherOutputStream);
-    }
-
-    /**
-     * Decrypts {@code content} using {@code key}.
-     *
-     * @param content content to decrypt.
-     * @param key key to decrypt with.
-     */
-    private static byte[] decrypt(byte[] content, byte[] key) throws Exception {
-
-        SecureRandom secureRandom = new SecureRandom();
-
-        DESKeySpec desKeySpec = new DESKeySpec(key);
-
-        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
-        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
-
-        javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance(DES);
-
-        cipher.init(javax.crypto.Cipher.DECRYPT_MODE, securekey, secureRandom);
-
-        return cipher.doFinal(content);
     }
 
     /**
@@ -221,4 +164,47 @@ public class CipherEngine {
         }
     }
 
+    //@@author
+    /**
+     * Returns a salted and hashed password to be used for storage.
+     */
+    public static String hashPassword(String password) throws Exception {
+        byte[] salt = new byte[SALT_BYTE_LENGTH];
+        RANDOM.nextBytes(salt);
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, PBKDF_ITERATION_COUNT, PBKDF_KEY_LENGTH);
+        byte[] hash = SecretKeyFactory.getInstance(PBKDF_ALGORITHM).generateSecret(spec).getEncoded();
+
+        Base64.Encoder enc = Base64.getEncoder();
+        return PBKDF_ALGORITHM + "$" + PBKDF_ITERATION_COUNT + "$" + PBKDF_KEY_LENGTH + "$"
+                + enc.encodeToString(hash) + "$" + enc.encodeToString(salt);
+    }
+
+    /**
+     * Returns true if the given {@code password} matches the {@code passwordHash}, or false if otherwise.
+     */
+    protected static boolean checkPassword(String password, String passwordHash) throws Exception {
+        String[] split = passwordHash.split("\\$");
+        if (split.length != 5) {
+            throw new IllegalArgumentException("Invalid hash.");
+        }
+
+        int iterationCount = Integer.parseInt(split[1]);
+        int keyLength = Integer.parseInt(split[2]);
+        Base64.Decoder dec = Base64.getDecoder();
+
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), dec.decode(split[4]), iterationCount, keyLength);
+        byte[] hash = SecretKeyFactory.getInstance(PBKDF_ALGORITHM).generateSecret(spec).getEncoded();
+        return Arrays.equals(dec.decode(split[3]), hash);
+    }
+
+    /**
+     * Returns true if the given {@code hash} is a valid password hash, or false if otherwise.
+     */
+    protected static boolean isValidPasswordHash(String hash) {
+        String[] split = hash.split("\\$");
+        if (split.length != 5) {
+            return false;
+        }
+        return split[1].matches("\\d+") && split[2].matches("\\d+");
+    }
 }

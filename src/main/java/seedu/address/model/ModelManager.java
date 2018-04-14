@@ -39,7 +39,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final SortedList<Book> sortedBookList;
     private final ObservableList<Book> displayBookList;
     private final BookShelf searchResults;
-    private final UniqueBookCircularList recentBooks;
+    private UniqueBookCircularList recentBooks;
     private final UniqueAliasList aliases;
     private final ObservableList<Alias> displayAliasList;
 
@@ -196,6 +196,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<Book> getRecentBooksList() {
         return FXCollections.unmodifiableObservableList(recentBooks.asObservableList());
+    }
+
+    @Override
+    public void resetRecentBooks(ReadOnlyBookShelf newData) {
+        recentBooks = new UniqueBookCircularList(newData.getBookList());
     }
 
     public ReadOnlyBookShelf getRecentBooksListAsBookShelf() {

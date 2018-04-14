@@ -10,28 +10,12 @@ public class LockManager {
 
     private static LockManager lockManager;
 
-    private String password;
-    private String oldPassword;
-    private boolean isLocked;
+    private String password = NO_PASSWORD;
+    private String passwordHash = NO_PASSWORD;
+    private boolean isLocked = false;
+    private boolean hasLoggedIn = false;
 
-    private LockManager() {
-        oldPassword = NO_PASSWORD;
-        password = NO_PASSWORD;
-        isLocked = false;
-    }
-
-    /**
-     * Sets up {@code LockManager} with {@code pw} as password.
-     * The state is set to locked if there is a non-empty password.
-     */
-    public static void instantiate(String pw) {
-        LockManager lockManager = getInstance();
-        lockManager.oldPassword = NO_PASSWORD;
-        lockManager.password = pw;
-        if (!pw.equals(NO_PASSWORD)) {
-            lockManager.isLocked = true;
-        }
-    }
+    private LockManager() { }
 
     public static LockManager getInstance() {
         if (lockManager == null) {
@@ -41,24 +25,42 @@ public class LockManager {
     }
 
     /**
-     * Changes the password to {@code newPw} if {@code oldPw} matches the old password.
+     * Sets up the {@code LockManager}. The state is set to locked if
+     * there is a non-empty and valid {@code passwordHash}.
+     */
+    public void initialize(String passwordHash) {
+        if (passwordHash.trim().length() > 0 && CipherEngine.isValidPasswordHash(passwordHash.trim())) {
+            this.passwordHash = passwordHash;
+        } else {
+            this.passwordHash = NO_PASSWORD;
+        }
+        isLocked = !this.passwordHash.isEmpty();
+        hasLoggedIn = !isLocked;
+    }
+
+    public boolean hasLoggedIn() {
+        return hasLoggedIn;
+    }
+
+    /**
+     * Changes the password to {@code newPassword} if {@code oldPassword} matches the old password.
      * @return whether the password is changed.
      */
-    public boolean setPassword(String oldPw, String newPw) {
-        if (!oldPw.equals(password)) {
+    public boolean setPassword(String oldPassword, String newPassword) {
+        if (!checkPassword(oldPassword)) {
             return false;
         }
-        oldPassword = password;
-        password = newPw;
+
+        String newPasswordHash;
+        try {
+            newPasswordHash = newPassword.isEmpty() ? "" : CipherEngine.hashPassword(newPassword);
+        } catch (Exception e) {
+            return false;
+        }
+
+        password = newPassword;
+        passwordHash = newPasswordHash;
         return true;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getOldPassword() {
-        return oldPassword;
     }
 
     /**
@@ -72,12 +74,19 @@ public class LockManager {
      * Unlocks the app if {@code password} matches the current password.
      * @return whether the app is unlocked.
      */
-    public boolean unlock(String pw) {
-        if (!isLocked() || !password.equals(pw)) {
+    public boolean unlock(String password) {
+        if (!isLocked() || !checkPassword(password)) {
             return false;
         }
+
         isLocked = false;
+        hasLoggedIn = true;
+        this.password = password;
         return true;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public boolean isLocked() {
@@ -85,10 +94,20 @@ public class LockManager {
     }
 
     public boolean isPasswordProtected() {
-        return !password.equals(NO_PASSWORD);
+        return !passwordHash.isEmpty();
     }
 
-    public boolean wasPasswordProtected() {
-        return !oldPassword.equals(NO_PASSWORD);
+    //@@author
+    /** Returns true if the given {@code password} matches the current password. */
+    private boolean checkPassword(String password) {
+        if (!isPasswordProtected() && password.isEmpty()) {
+            return true;
+        }
+
+        try {
+            return CipherEngine.checkPassword(password, passwordHash);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

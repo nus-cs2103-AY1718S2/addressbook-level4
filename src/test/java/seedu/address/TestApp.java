@@ -29,7 +29,7 @@ public class TestApp extends MainApp {
 
     private static final String APP_TITLE = "Test App";
     private static final String BOOK_SHELF_NAME = "Test";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD_HASH = "";
 
     private String saveFileLocation;
     private final String recentBooksFileLocation;
@@ -68,7 +68,7 @@ public class TestApp extends MainApp {
         userPrefs.setRecentBooksFilePath(recentBooksFileLocation);
         userPrefs.setAliasListFilePath(aliasListFileLocation);
         userPrefs.setBookShelfName(BOOK_SHELF_NAME);
-        userPrefs.setKey(PASSWORD);
+        userPrefs.setPasswordHash(PASSWORD_HASH);
         return userPrefs;
     }
 

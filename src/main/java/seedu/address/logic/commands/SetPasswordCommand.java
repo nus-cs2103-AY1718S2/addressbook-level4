@@ -23,11 +23,11 @@ public class SetPasswordCommand extends Command {
     private String oldPassword;
     private String newPassword;
 
-    public SetPasswordCommand(String oldPw, String newPw) {
-        requireAllNonNull(oldPw, newPw);
+    public SetPasswordCommand(String oldPassword, String newPassword) {
+        requireAllNonNull(oldPassword, newPassword);
 
-        oldPassword = oldPw;
-        newPassword = newPw;
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
     }
 
     /**
@@ -40,7 +40,7 @@ public class SetPasswordCommand extends Command {
         requireAllNonNull(oldPassword, newPassword);
 
         if (LockManager.getInstance().setPassword(oldPassword, newPassword)) {
-            EventsCenter.getInstance().post(new PasswordChangedEvent());
+            EventsCenter.getInstance().post(new PasswordChangedEvent(oldPassword, newPassword));
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(MESSAGE_WRONG_PASSWORD);

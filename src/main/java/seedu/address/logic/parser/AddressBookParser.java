@@ -46,22 +46,12 @@ public class AddressBookParser {
     /**
      * Parses user input into command for execution.
      *
-     * @param userInput full user input string
+     * @param commandWord commandWord from the user input
+     * @param arguments arguments from the user input
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
-    public Command parseCommand(String userInput) throws ParseException {
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        }
-
-        String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
-
-        if (UniqueAliasList.contains(commandWord)) {
-            commandWord = UniqueAliasList.getCommandFromAlias(commandWord);
-        }
+    public Command parseCommand(String commandWord, String arguments) throws ParseException {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
@@ -137,4 +127,22 @@ public class AddressBookParser {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
+
+    //@@author jingyinno
+    /**
+     * Parses user input into command for execution.
+     *
+     * @param userInput full user input string
+     * @return String[] consists of commandWord and arguments
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public String[] extractCommandArgs(String userInput) throws ParseException {
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        return new String[] {matcher.group("commandWord"), matcher.group("arguments")};
+    }
+    //@@author
 }

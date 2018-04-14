@@ -159,7 +159,8 @@ public class UniqueAliasList {
     /**
      * Generates an ArrayList of a row of aliases for all the commands.
      */
-    private void generateAliasColumn(ArrayList<ArrayList<String>> aliases, ArrayList<ArrayList<String>> formattedAliases, int j) {
+    private void generateAliasColumn(ArrayList<ArrayList<String>> aliases,
+                                     ArrayList<ArrayList<String>> formattedAliases, int j) {
         formattedAliases.add(new ArrayList<>());
         for (int i = 0; i < AliasCommand.getCommands().size(); i++) {
             formattedAliases.get(j).add(aliases.get(i).get(j));

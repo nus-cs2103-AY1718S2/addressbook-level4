@@ -3,11 +3,11 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.building.Building.retrieveNusBuildingIfExist;
 
+import java.io.IOException;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GoogleMapsEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-
-import java.io.IOException;
 
 //@@author jingyinno
 /**
@@ -52,6 +52,9 @@ public class MapCommand extends Command {
         }
     }
 
+    /**
+     * Identifies if one or more locations are specified in the user input
+     */
     private void identifyNumberOfSpecifiedLocations(String[] locationsArray) {
         if (locationsArray.length >= TWO_LOCATIONS_WORD_LENGTH) {
             locations = String.join(SPLIT_TOKEN, locationsArray);
@@ -62,6 +65,9 @@ public class MapCommand extends Command {
         }
     }
 
+    /**
+     * Creates a MapCommand to pass locations to Google Maps
+     */
     private void checkForAndRetrieveNusBuildings(String[] locationsArray) {
         for (int i = 0; i < locationsArray.length; i++) {
             locationsArray[i] = locationsArray[i].trim();

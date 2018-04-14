@@ -33,6 +33,9 @@ public class VacantCommandParser implements Parser<VacantCommand> {
         }
     }
 
+    /**
+     * Returns a String Array of valid number of elements after slicing the user input.
+     */
     private String[] validateNumberOfArgs(String args) throws ParseException {
         int length;
         args = args.trim();

@@ -1,11 +1,11 @@
 package seedu.address.storage;
 
+import java.util.Objects;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.alias.Alias;
-
-import java.util.Objects;
 
 //@@author jingyinno
 /**

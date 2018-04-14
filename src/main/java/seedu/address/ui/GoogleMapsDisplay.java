@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javafx.application.Platform;
@@ -37,11 +35,17 @@ public class GoogleMapsDisplay extends UiPart<Region> {
         loadDefaultPage();
     }
 
+    /**
+     * Loads the Google Maps page with the location.
+     */
     public void loadMapPage(String location) {
         String address = MAP_SEARCH_URL_PREFIX + location;
         loadPage(address);
     }
 
+    /**
+     * Loads the Google Maps page with the directions between locations.
+     */
     public void loadMapDirections(String locations) {
         String address = MAP_DIRECTIONS_URL_PREFIX + locations;
         loadPage(address);

@@ -20,6 +20,9 @@ public class MapCommandParser implements Parser<MapCommand> {
         return validateNumberOfArgs(args);
     }
 
+    /**
+     * Returns a Map Command of not empty location argument.
+     */
     private MapCommand validateNumberOfArgs(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {

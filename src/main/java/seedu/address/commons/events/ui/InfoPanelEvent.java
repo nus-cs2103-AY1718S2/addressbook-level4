@@ -8,8 +8,6 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class InfoPanelEvent extends BaseEvent {
 
-    public InfoPanelEvent() { }
-
     @Override
     public String toString() {
         return "InfoPanelEvent";

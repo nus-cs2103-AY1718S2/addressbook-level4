@@ -2,9 +2,12 @@ package seedu.address.commons.util;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -47,5 +50,19 @@ public class CollectionUtil {
             }
         }
         return true;
+    }
+
+    // @@author kush1509
+    /**
+     * Converts a set into list of strings.
+     */
+    public static List<String> getSetAsStringList(Set<?> skills) {
+        Iterator iterator = skills.iterator();
+        List<String> list = new ArrayList<>();
+        while (iterator.hasNext()) {
+            list.add(iterator.next().toString().replace("[", "")
+                    .replace("]", ""));
+        }
+        return list;
     }
 }

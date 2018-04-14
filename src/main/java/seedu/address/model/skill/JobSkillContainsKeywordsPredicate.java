@@ -1,13 +1,11 @@
 //@@author kush1509
 package seedu.address.model.skill;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.model.job.Job;
-//@@author kush1509
+
 /**
  * Tests that a {@code Job}'s {@code Skill} matches any of the keywords given.
  */
@@ -20,17 +18,7 @@ public class JobSkillContainsKeywordsPredicate implements Predicate<Job> {
 
     @Override
     public boolean test(Job job) {
-        Iterator tagsIterator = job.getSkills().iterator();
-        StringBuilder sb = new StringBuilder();
-        sb.append(tagsIterator.next());
-        while (tagsIterator.hasNext()) {
-            sb.append(" " + tagsIterator.next());
-        }
-        String tagLists = sb.toString()
-                .replace("[", "")
-                .replace("]", "");
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tagLists, keyword));
+        return SkillUtil.match(keywords, job.getSkills());
     }
 
     @Override

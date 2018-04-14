@@ -55,10 +55,14 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
 
             navigateToPreviousInput();
+            prevText = "";
+            tabNumber = 0;
             break;
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            prevText = "";
+            tabNumber = 0;
             break;
         case TAB:
             keyEvent.consume();
@@ -96,7 +100,7 @@ public class CommandBox extends UiPart<Region> {
             String textToDisplay = commandListObj.getSyntax(matchedCommands.get(tabNumber % matchedCommands.size()));
 
             replaceText(textToDisplay);
-            commandTextField.positionCaret(matchedCommands.get(0).length() + 1);
+            commandTextField.positionCaret(textToDisplay.length() + 1);
         }
     }
 

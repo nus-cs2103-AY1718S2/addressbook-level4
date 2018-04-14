@@ -12,12 +12,13 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W09-B2/main/tree/master
 
-By: `Team W09-B2`      Since: `Mar 2018`      Licence: `MIT`
+By: `Team W09-B2`      Since: `Feb 2018`      Licence: `MIT`
 
 // tag::intro[]
 == Intro
 
-Welcome to contactHeRo developer guide! This guide contains all the information you need to quickly get started in developing contactHeRo. +
+Welcome to contactHeRo developer guide! This guide contains all the information you need to quickly get started in contributing to contactHeRo.
+
 If you notice any mistakes or if there are any missing vital information then please let us know via contactHeRo@gmail.com. +
 Let's get started!
 // end::intro[]
@@ -27,7 +28,7 @@ Let's get started!
 Before you start contributing to contactHeRo, let us help you to set up.
 
 === Setting up your environment
-Given below are the required environment for you to start your journey.
+Given below is the required environment for you to start contributing.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -115,13 +116,13 @@ Thanks for joining us in contributing to contactHeRo! Have fun!
 
 == Design
 
-This section helps you understand the overall design of contactHeRo
+This section helps you understand the overall design of contactHeRo.
 
 [[Design-Architecture]]
 === Architecture
 
 .Architecture Diagram
-image::Architecture.png[width="600", align="center"]
+image::Architecture.png[width="800", align="center"]
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -386,18 +387,65 @@ image::UndoRedoActivityDiagram.png[width="650", align="center"]
 
 // tag::details[]
 === Details Panel Implementation
+==== Current Implementation
 
-The `select` command shows the contact details of the person in a separate panel while the `linkedIn` command shows the LinkedIn search of the person.
+`DetailsPanel` is a TabPane which consists of the following tabs:
+// tag::tabs[]
+****
+* `Contact Details`
+* `LinkedIn Search`
+* `Calendar`
+* `Draft Email`
+* `Google`
+****
+// end::tabs[]
 
-The `DetailsPanel` is a TabPane which  which consists of the two tabs, `Contact Details` and `LinkedIn Search`. The `ContactDetailsDisplay` is embedded in the `Contact Details` tab and the `Browser Panel` in the `Linked Search` tab.
+The `select` command shows the contact details of the person at the specified index under the `Contact Details` tab.
+The `ContactDetailsDisplay` is a GridPane embedded in the `Contact Details` tab and the UML diagram below represents the UI structure for the `ContactDetailsPanel` (Refer to Figure 30):
 
-The UML diagram below represents the UI structure for the `DetailsPanel` (Refer to Figure 30):
-
+.UML Diagram for DetailsPanel UI
 image::DetailsPanelClassDiagram.png[width="600", align="center"]
-_Figure 30 : UML Diagram for Panel._
 
-We created a new event, `SwitchTabRequestEvent` which sets the current tab in the `DetailsPanel` to `Contact Details` or `LinkedIn Search` depending on the input command.
-The code for the SwitchTabRequestEvent` event is as follows.
+The `DetailsPanel` also comes into play when the user manually clicks on the `PersonCard` and the panel corresponding `Contact Details` or `LinkedIn` is currently shown. This is implemented by handling the `PersonPanelSelectionChangedEvent` in both the `ContactDetailsPanel` and the `BrowserPanel`.
+
+[NOTE]
+Both the `select` and `linkedIn` command function quite similarly and only differ in the tabs that they trigger.
+
+The figure below (Refer to figure 31) is the wireframe for the `ContactDetailsDisplay`:
+
+.Wireframe for Contact Details Panel.
+image::ContactDetailsDisplayWireFrame.png[width="600", align="center"]
+
+==== Design Considerations
+
+**Aspect:** Improving the UI +
+
+
+**Alternative 1 (current choice):** Show the extra details of contact after they are selected. +
+**Pros**: Allows more readability of the contact details and since other attributes like `Current Position` and `Company` have been added to the `Person` class, too much information would make the `PersonCard` cluttered. +
+**Cons**: User needs to manually select the user to see the contact details of that person. +
+
+**Alternative 2:** Show  the contact details of the person only in the `PersonCard`. +
+**Pros**: User only has to look in the `PersonCard` for any and every detail +
+**Cons**: Looks very cluttered and has poor User Interface design.
+
+**Alternative 3 :** Show all the tabs as completely independent windows. +
+**Pros**: Completely isolates the UI for different commands like `select` and `linkedIn` and provides more focus. +
+**Cons**: In the current implementation one window is easily accessible from another, just by manually switching tabs which would not be possible with this alternative since the user would have to run many different commands to do this.
+//end::details[]
+
+=== Tab Switching Mechanism
+
+==== Current Implementation
+Tab Switching Mechanism is an event driven mechanism.
+
+.Component interaction for Tab Switching Mechanism.
+image::SwitchTabRequestEventHighSD.png[width="800", align="center"]
+
+The above diagram (Refer to Figure 13) shows the high-level overview of the component interactions for the tab switching mechanism. We use the event, `SwitchTabRequestEvent` which sets the current tab in the `DetailsPanel` to one of five tabs below depending on the input command.
+include::DeveloperGuide.adoc[tag=tabs]
+
+The code for the `SwitchTabRequestEvent` event is as follows.
 
 [source, java]
 ----
@@ -414,53 +462,219 @@ public class SwitchTabRequestEvent extends BaseEvent {
 ----
 
 [NOTE]
-The `SwitchTabRequestEvent` has an integer attribute `tabId`. The event handlers use this `tabId` to switch between tabs wherein the `Contact Details` and `LinkedIn Search` have tabIds 0 and 1 respectively.
+The `SwitchTabRequestEvent` has an integer attribute `tabId`. The event handlers use this `tabId` to switch between tabs wherein the tabs `Contact Details`, `LinkedIn Search`, `Calendar`, `Draft Email` and `Google`have tabIds 0, 1, 2, 3 and 4 respectively.
 
-Event handlers use the following code to handle the `SwitchTabRequestEvent` event.
+Let us look at an execution example for the LinkedIn Command.
+
+.Sequence diagram for the event posting for the Tab Switching Mechanism.
+image::SwitchTabRequestEventSD.png[width="800", align="center"]
+
+As seen from the sequence diagram above (Refer to Figure 14), when the user types the `linkedIn` command, an instance of LinkedInCommand would be created and upon execution by LogicManager, the event SwitchTabRequestEvent would be posted by the EventCenter to the EventBus:
 
 [source, java]
 ----
-@Subscribe
-private void handleSwitchTabRequestEvent(SwitchTabRequestEvent event) {
-    logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    tabPane.getSelectionModel().clearAndSelect(event.tabId);
+public class LinkedInCommand extends Command {
+    @Override
+    public CommandResult execute() throws CommandException {
+        //... other execution statements
+        EventsCenter.getInstance().post(new SwitchTabRequestEvent(TAB_ID_LINKEDIN));
+        //... other execution statements
+    }
+    ...
+----
+
+`DetailsPanel` class in the `UI` component has the `handleSwitchTabRequestEvent()` method which listens for the event. Upon receiving the event, it switches the tab depending on the `tabId` passed to the event.
+
+[source, java]
+----
+public class DetailsPanel extends UiPart<Region> {
+    @Subscribe
+    private void handleSwitchTabRequestEvent(SwitchTabRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        tabPane.getSelectionModel().clearAndSelect(event.tabId);
+    }
+    ...
+----
+
+Shown below is the sequence diagram for the above implementation (Refer to figure 15).
+
+.Sequence diagram for the event handling for the Tab Switching Mechanism.
+image::SwitchTabRequestEventSD2.png[width="800", align="center"]
+
+==== Design Considerations
+
+**Aspect:** Implementation +
+
+
+**Alternative 1 (current choice):** Use event driven mechanism. +
+**Pros**: Event is only handled in the `DetailsPanel` and not in the Command itself hence decreasing coupling between the UI and Logic. +
+**Cons**: Tab switching is a hidden mechanism and might not be intuitive to certain users.
+
+**Alternative 2:** Switch tab in the command execution itself. +
+**Pros**: . +
+**Cons**: The `TabPane` will have to be accessible to the logic which will increase coupling.
+
+=== Job Openings Implementation
+
+==== Current Implementation
+
+The `Job` object represents a job opening in contactHeRo. It contains `Position`, `Team`, `Location` and `NumberOfPositions` objects and a set of `Skills`, which represent the position, team, location, the number of available positions and the required skills  for the job opening respectively (Refer to Figure 12).
+
+[NOTE]
+All fields mentioned above are compulsory for the `Job` object unlike the `Person` where `skill` is optional.
+
+.UML class diagram for Job Opening
+image::JobUML.png[width="600", align="center"]
+
+In addition to the above attributes, the `Job` object also contains a set of `Skills` which denote the skills required for the job opening.
+
+`Job` objects are kept in-memory during the running of contactHeRo. A `UniqueJobList` is maintained which contains the Job (Refer to Figure 13) and assures that there are no duplicate `Job` objects. The `UniqueJobList` object is then kept and used by ModelManager to carry out commands related to job openings.
+
+.Model management of Job objects
+image::JobModelUML.png[width="600", align="center"]
+
+The storage of job openings is very similar to that of the persons. `Job` objects are stored in a XML storage file in a JAXB-friendly version `XmlAdaptedJob`. When the program starts, `XmlAdaptedJob` objects are read in as jobs in the `XmlSerializableAddressBook` via `XmlFileStorage`.
+
+The job openings management is facilitated by several command classes in contactHeRo, namely:
+****
+* JobAddCommand
+* JobEditCommand
+* JobDeleteCommand
+* JobFindCommand
+* JobListCommand
+* JobMatchCommand
+****
+
+The implementation of these commands is quite similar to the equivalent operations in the `Person` class. Let us look at `JobAddCommand` as an example.
+
+==== *Adding Job Openings*
+
+Adding job openings is facilitated by the JobAddCommand. Execution of this command adds a `Job` Object to contactHeRo with the input `Position`, `Team`, `Location`, `NumberOfPositions` and `Skills`.
+
+Given below is the sequence diagram for addition of a job opening.
+
+.High Level Sequence Diagram for adding a job opening
+image::SDforAddJobEventHandling.png[width="800", align="center"]
+
+The following snippet shows how the executeUndoableCommand() method updates the model of the application by adding the job to the list of jobs.
+
+[source, java]
+----
+public class JobAddCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addJob(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateJobException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_JOB);
+        }
+    }
+    ...
 }
 ----
 
-The `DetailsPanel` is also displayed when the user manually clicks on the `PersonCard` and the panel corresponding to the current tab is shown. This is implemented by handling the `PersonPanelSelectionChangedEvent` in both the `ContactDetailsPanel` and the `BrowserPanel`.
+The job openings are displayed towards the right side of the UI in the `JobListPanel`.
+
+==== Design Considerations
+
+**Aspect:** Storing job openings +
+
+
+**Alternative 1 (current choice):** Use the same file to store jobs and persons. +
+**Pros**: Certain jobs and persons may have the same skills and in the current implementation there will not be any duplicates in the data file, thus saving memory. +
+**Cons**: Different types of data in the same file.
+
+**Alternative 2:** Use different files to store jobs and persons. +
+**Pros**: Data is segregated by type. +
+**Cons**: Certain jobs and persons may have the same skills and in this implementation, there might be duplicate skills having one copy in each file.
+
+=== Matching jobs implementation
+
+==== Current Implementation
+
+The `JobMatchCommand` uses `PersonSkillContainsKeywordsPredicate` to match person's skills with a job's skills. It accepts the index for the job to match and then uses the `PersonSkillMatchesKeywordsPredicate` to match the job. Below is the code for the execution:
+
+[source, java]
+----
+@Override
+public CommandResult execute() throws CommandException {
+
+    List<Job> lastShownList = model.getFilteredJobList();
+
+    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
+    }
+
+    Job jobToMatch = lastShownList.get(targetIndex.getZeroBased());
+
+    model.updateFilteredPersonList(new PersonSkillContainsKeywordsPredicate(
+            CollectionUtil.getSetAsStringList(jobToMatch.getSkills())));
+    return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+}
+----
+
+`PersonSkillMatchesKeywordsPredicate` takes in the list of skills of the job as the keywords as the parameter and then checks if the person has any of these skills using the `SkillUtil`. The code for matching the skills is as follows:
+
+[source, java]
+----
+/**
+ * Checks if a set of skills contains any of the {@code keywords}.
+ */
+public static boolean match(List<String> keywords, Set<Skill> list) {
+    String skillList = getSkillsAsString(list);
+    return keywords.stream()
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(skillList, keyword));
+}
+----
 
 [NOTE]
-Both the `select` and `linkedIn` command function quite similarly and only differ in the panel that they trigger.
+To minimize code duplication, we made a utility class `SkillUtil` which is used both by `PersonSkillMatchesKeywordsPredicate` during execution of `matchjob` and `find s/` commands and `JobSkillMatchesKeywordsPredicate` during the execution of `findjob s/` command.
 
-The figure below (Refer to figure 31) is the wireframe for the `ContactDetailsDisplay`:
+=== Auto-complete Mechanism
 
-image::ContactDetailsDisplayWireFrame.png[width="600", align="center"]
-_Figure 31 : Wireframe for Contact Details Panel._
+==== Current Implementation
 
-[discrete]
-==== Design Consideration
+The auto-complete mechanism is implemented in the `CommandBox` in the `UI` component. We check the key pressed by the user and if it is the `Tab` key, the auto-complete mechanism is triggered.
 
-**Aspect:** Improving the UI +
+Given below is are the activity diagram (Refer to figurue 20) for the mechanism.
 
+.UML class diagram for Job Opening
+image::Auto-CompleteActivityDiagram.png[width="800", align="center"]
 
-**Alternative 1 (current choice):** Show the extra details of contact after they are selected. +
-**Pros**: Allows more readability of the contact details and if more attributes are added to the `Person` class, not everything needs to be shown in the `PersonCard`. +
-**Cons**: User needs to manually select the user to see more details of that person. +
+[NOTE]
+Previous input has been included to account for cases in cases where more than one command share the same prefix. For e.g. the `add`, `addjob` and `addapp` commands share the common `add`. In such a case, the user can just type `a` or `ad` or `add` and press `Tab` multiple times to cycle between these commands which will keep incrementing the Tab counter, `tabNumber` in a cyclic manner.
 
-**Alternative 2:** Only show the LinkedIn search in the `BrowserPanel` and show the contact details of the person only in the `PersonCard`. +
-**Pros**: User only has to look in the `PersonCard` for any and every detail +
-**Cons**: Looks very cluttered and has poor User Interface design.
+Given below is the code for the `CommandBox#autoCompleteCommand()` method.
 
-**Alternative 3 :** Show the `ContactDetailsDisplay` and `LinkedIn` as completely independent windows without tabs. +
-**Pros**: Completely isolates the `select` and `linkedIn` commands. +
-**Cons**: Removes the connectivity between a person's contact information and LinkedIn profile. Also, in the current implementation one is easily accessible from another, just by manually switching tabs which would not be possible with this alternative.
-//end::details[]
+[source, java]
+----
+/**
+ * Auto-completes the partial command {@code text} entered with the first command matched
+ * in the lexicographically sorted command list
+ */
+private void autoCompleteCommand(String text) {
+    if (text.equals("")) {
+        return;
+    }
+    if (!text.startsWith(prevText) || prevText.equals("")) {
+        prevText = text;
+        tabNumber = 0;
+    }
+    CommandList commandListObj = new CommandList();
 
-=== [Proposed] Data Encryption
+    List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(prevText))
+            .collect(Collectors.toList());
 
-_{Explain here how the data encryption feature will be implemented}_
+    if (matchedCommands.size() > 0) {
+        String textToDisplay = commandListObj.getSyntax(matchedCommands.get(tabNumber % matchedCommands.size()));
 
-// end::dataencryption[]
+        replaceText(textToDisplay);
+        commandTextField.positionCaret(matchedCommands.get(0).length() + 1);
+    }
+}
+----
 
 === Logging
 
@@ -481,6 +695,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
 // tag::profilepicture[]
 === Profile Picture Feature
 Profile picture feature allows to show persons' profile pictures.
@@ -584,7 +799,7 @@ https://docs.oracle.com/javase/8/javafx/api/javafx/scene/image/ImageView.html +
 https://docs.oracle.com/javafx/2/api/javafx/scene/image/Image.html
 
 
-==== Design consideration
+==== Design Considerations
 ===== Aspect: How to link profile picture with `ProfilePicture`
 * **Alternative 1 (current choice):** Takes in the image path ,copy the image to the ProfilePictureFolder and store the copied image's path.
 ** Pros: We still have profile picture if the original profile picture is lost.
@@ -654,7 +869,7 @@ public static void sendEmail(MimeMessage emailContent) throws MessagingException
         message = service.users().messages().send("me", message).execute();
     }
 
-==== Design consideration
+==== Design Considerations
 ===== Aspect: How to login to Google
 * Alternative 1: Using `GoogleAuthorizationCodeFlow` to log in.
 ** Pros: Very simple to implement and handle. `Token` and `Credential` are handled by the API.

@@ -82,7 +82,7 @@ public class CommandTestUtil {
     //negative commission not allowed
     public static final String INVALID_INSURANCE_DESC = " " + PREFIX_INSURANCE + "!Health";
     // '!' not allowed in insurances
-
+    public static final String INVALID_GROUP_DESC = " " + PREFIX_GROUP + "prior!ty";
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 

@@ -2,16 +2,14 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REVIEW_LAZY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.KEYPHRASE_MATCHING_MEIER;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,8 +22,9 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.ReviewCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ReviewCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.model.Model;
@@ -112,7 +111,43 @@ public class ReviewCommandSystemTest extends AddressBookSystemTest {
                 getModel().getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
         assertCommandSuccess(command, model, expectedResultMessage, "redo");
 
-        /* --------------------------------- Performing invalid edit operation -------------------------------------- */
+        /* ------------------ Performing review operation while a filtered list is being shown ---------------------- */
+
+        /* Case: filtered person list, review index within bounds of address book and person list -> edited */
+        showPersonsWithName(KEYPHRASE_MATCHING_MEIER);
+        index = INDEX_FIRST_PERSON;
+        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        command = ReviewCommand.COMMAND_WORD + " " + index.getOneBased();
+        reviewer = "test@example.com";
+        review = "hardwork";
+        editedPerson = getModel().getFilteredPersonList().get(index.getZeroBased());
+        newReview = new HashSet<>();
+        newReview.add(editedPerson.getReviews().iterator().next());
+        newReview.add(new Review(reviewer + "\n" + review));
+        editedPerson.setReviews(newReview);
+        assertCommandSuccess(command, index, editedPerson, reviewer, review);
+
+        /* -------------------- Performing review operation while a person card is selected ------------------------- */
+
+        /* Case: selects first card in the person list, review a person -> reviewed, card selection remains unchanged
+         * but detail panel changes
+         */
+        showAllPersons();
+        index = INDEX_FIRST_PERSON;
+        selectPerson(index);
+        command = ReviewCommand.COMMAND_WORD + " " + index.getOneBased();
+        reviewer = "test@example.com";
+        review = "lazy";
+        editedPerson = new PersonBuilder(ALICE).build();
+        newReview = new HashSet<>();
+        newReview.add(editedPerson.getReviews().iterator().next());
+        newReview.add(new Review(reviewer + "\n" + review));
+        editedPerson.setReviews(newReview);
+        // this can be misleading: card selection actually remains unchanged but the
+        // detail panel is updated to reflect the new person's name
+        assertCommandSuccess(command, index, editedPerson, index, reviewer, review);
+
+        /* -------------------------------- Performing invalid review operation ------------------------------------- */
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(ReviewCommand.COMMAND_WORD + " 0",
@@ -140,14 +175,15 @@ public class ReviewCommandSystemTest extends AddressBookSystemTest {
         assertTrue(ERROR_MESSAGE, ReviewDialogHandle.isWindowPresent());
         guiRobot.pauseForHuman();
 
-        ReviewDialogHandle reviewDialog = new ReviewDialogHandle(guiRobot.getStage(ReviewDialogHandle.REVIEW_DIALOG_WINDOW_TITLE));
+        ReviewDialogHandle reviewDialog =
+                new ReviewDialogHandle(guiRobot.getStage(ReviewDialogHandle.REVIEW_DIALOG_WINDOW_TITLE));
         reviewDialog.close();
         getMainWindowHandle().focus();
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Index, Person, Index)} except that
-     * the browser url and selected card remain unchanged.
+     * the detail panel and selected card remain unchanged.
      * @param toEdit the index of the current model's filtered list
      * @see ReviewCommandSystemTest#assertCommandSuccess(String, Index, Person, Index, String, String)
      */
@@ -187,7 +223,35 @@ public class ReviewCommandSystemTest extends AddressBookSystemTest {
      * 1. Asserts that the command box displays an empty string.<br>
      * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the browser url and selected card update accordingly depending on the card at
+     * 4. Asserts that the detail panel and selected card update accordingly depending on the card.<br>
+     * 5. Asserts that the status bar's sync status changes.<br>
+     * 6. Asserts that the command box has the default style class.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     * @see AddressBookSystemTest#assertSelectedCardDeselectedDetailEmpty()
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
+                                      String undoOrRedo) {
+        executeCommand(command);
+        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertCommandBoxAndResultDisplayShowsDefaultStyle();
+        if (undoOrRedo.equals("redo")) {
+            assertSelectedCardChanged(null);
+        } else {
+            assertSelectedCardDeselectedDetailEmpty();
+        }
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays an empty string.<br>
+     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
+     * 4. Asserts that the detail panel and selected card update accordingly depending on the card at
      * {@code expectedSelectedCardIndex}.<br>
      * 5. Asserts that the status bar's sync status changes.<br>
      * 6. Asserts that the command box has the default style class.<br>
@@ -222,7 +286,7 @@ public class ReviewCommandSystemTest extends AddressBookSystemTest {
      * 1. Asserts that the command box displays {@code command}.<br>
      * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to the current model.<br>
-     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 4. Asserts that the detail panel, selected card and status bar remain unchanged.<br>
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
@@ -245,33 +309,5 @@ public class ReviewCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
         assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
-    }
-
-    /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays an empty string.<br>
-     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the browser url and selected card update accordingly depending on the card.<br>
-     * 5. Asserts that the status bar's sync status changes.<br>
-     * 6. Asserts that the command box has the default style class.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
-     * @see AddressBookSystemTest#assertSelectedCardDeselectedDetailEmpty()
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
-                                      String undoOrRedo) {
-        executeCommand(command);
-        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertCommandBoxAndResultDisplayShowsDefaultStyle();
-        if (undoOrRedo.equals("redo")) {
-            assertSelectedCardChanged(null);
-        } else {
-            assertSelectedCardDeselectedDetailEmpty();
-        }
-        assertStatusBarUnchangedExceptSyncStatus();
     }
 }

@@ -84,7 +84,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK d/DETAIL [
 
 ****
 * A person can have any number of tags (including 0).
-* Timetable link refers to the NUSMods link of the person.
+* Timetable link refers to the <<TimetableLinks,NUSMods link>> of the person.
 ****
 
 
@@ -617,8 +617,9 @@ Format: `modify INDEX`
 *Q*: How do I transfer my data to another computer? +
 *A*: All Fastis data is stored in `addressbook.xml` file in the data folder. Overwrite that file in your other computer with the file that contains the data from your previous computer.
 
+//tag::TimetableLinks[]
 == Appendix
-
+[[TimetableLinks]]
 [big]#*Timetable Links*#
 
 Timetable links can be retrieved from the https://nusmods.com/[NUSMods Website]. To retrieve it simply go the website and click the *Share/Sync* button, circled in Figure 12. +
@@ -630,6 +631,8 @@ The link in the box indicated in Figure 13 below is the TimetableLink for Fastis
 
 image:nusModsLinkResult.PNG[width ="500"] +
 *Figure 13:* The TimetableLink to copy to Fastis commands.
+
+//end::TimetableLinks[]
 
 == Command Summary
 

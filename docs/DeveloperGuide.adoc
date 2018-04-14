@@ -126,7 +126,9 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+<<Design-Database,*`Database`*>> handles the downloading of module information via the https://github.com/nusmodifications/nusmods/tree/master/api/data[NUSmods API], as well as holding and retrieving the information. Because it is only accessed and never changed, the database component resides on its own outside of the `Model` component.
+
+The rest of the App consists of these components:
 
 * <<Design-Ui,*`UI`*>>: The UI of the App.
 * <<Design-Logic,*`Logic`*>>: The command executor.
@@ -232,6 +234,24 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+
+//tag::Database[]
+[[Design-Database]]
+=== Database component
+
+.Structure of the Database Component
+image::DatabaseClassDiagram.png[width="800"]
+
+The `Database` component:
+
+* downloads module information from the `NUSmods API`.
+* retrieves modules given a NUSmods timetable link.
+
+[NOTE]
+NUSmods timetable links are the sharable short URL from a NUSmods page.
+E.g. http://modsn.us/MYwiD
+
+//end::Database[]
 
 [[Design-Commons]]
 === Common classes
@@ -486,29 +506,81 @@ The existing to-do is replaced by the new to-do in the `UniqueToDoList` and the 
 
 // end::checkToDo[]
 
-=== NUSmods Integration
+//tag::ModuleDatabase[]
+=== Module database feature
 ==== Current implementation
 
-Fastis uses the available `NUSmods API` to retrieve module information from the API server.
+The database feature enables Fastis to store and quickly find lesson schedules. Fastis uses the available `NUSmods API` to retrieve module information from the API server.
+
+The sequence diagram for the instantiation of DatabaseManager is shown below.
+
+image::DatabaseComponentSequenceDiagram.png[width="800"]
 
 On startup, the network component makes a connection to the API server and checks the `lastmodified` field of the `JSON` file on the server. If the `lastmodified` date is more recent that the `JSON` file held in storage, the network component will download and overwrite the existing file on disk.
 
-The `Storage` component then converts the JSON file into a hashMap of modules to be held in the `Model`
-
-When a the schedule of a `Person` is needed, the `Model` component will pass the person's `TimeTableLink` to the `Network` component. The `Network` component will make a `URLConnection` to the short URL in the `TimeTableLink` to retrieve the query of the full URL.
-
-`QueryParser` then takes the query and parses them into modules and lessons, which get passed back to the `Model` component. `ModelManager` then searches for these modules and lessons and returns a list of `Events`
+The `Storage` component then converts the JSON file into a hashMap of modules to be held in the `Database` component.
 
 ==== Design Considerations
 
 ===== Aspect: Storage of Module information
 
 * **Alternative 1 (current choice):** Store a complete dataset of all modules
-** Pros: Information still available offline
-** Cons: Requires more memory space
+** Pros: Storing a complete database allows Fastis to access information when used offline.
+** Cons: Storing a complete database requires more memory space.
 * **Alternative 2:** Store nothing, retrieve only module information of single module each time.
-** Pros: No storage and small memory needed
-** Cons: Reliant on good internet connection
+** Pros: Not storing anything means no storage space is needed.
+** Cons: Not storing anything requires Fastis to constantly download information from the web, making the app reliant on good internet connection.
+
+// end::ModuleDatabase[]
+
+//tag::showingTimetable[]
+[[showingTimetable]]
+=== Show Timetable feature
+==== Current implementation
+
+When a person is selected, either by the `select` command or by mouse click via the `UI`, a `PersonPanelSelectionChangedEvent`. The flow of operation thereafter is shown the sequence diagram below.
+
+image::nusModsSequenceDiagram.png[width="800"]
+
+Upon receiving the event, the `UI` component takes the `Person` within the `PersonPanelSelectionChangedEvent` and calls the `parseEvents()` method of `DataBaseManager`, passing the `TimetableLink` of the `Person` as an argument.
+
+The result of the `parseEvents()` is an `ArrayList` of `WeeklyEvents`. This result is used to form a `TimeTableChangedEvent`, which ultimately tells the `UI` component to display the result.
+
+The implementation of `parseEvents()` is as follows:
+
+[source,java]
+----
+public static ArrayList<WeeklyEvent> parseEvents(TimeTableLink link) {
+        ArrayList<WeeklyEvent> eventList = new ArrayList<>();
+
+        if (!isCurrentSem(link)) {
+           // ... display and log warning messages ...
+        }
+
+        String query = getQuery(link);
+
+       // ... parse query into WeeklyEvents ...
+
+        return eventList;
+    }
+----
+
+The `parseEvents()` method firsts checks if the `TimetableLink` points to a schedule that is in the same semester as Fatis' database. It then calls the `getQuery` helper method, which a `URLconnection` to the shortened URL in `TimetableLink` and returns the `query` part of the full-length URL.
+
+The method then takes the `query` and parses them into modules and lessons, which are used to form `WeeklyEvents`.
+
+==== Design Considerations
+
+===== Aspect: Storage of a person's schedule
+
+* **Alternative 1 (current choice):** Store only the link to a NUSmods page for each person
+** Pros: Storing only the link requires very little space. The schedule of a person can easily be changed by editing the `TimetableLink`.
+** Cons: Storing only the link requires Fastis to make a connection to the web each time a person is selected.
+* **Alternative 2:** Store the schedule of each person in the `AddressBook`
+** Pros: Storing every person's schedule will require much more space, and there will be a dilemma between whether to store it as `WeeklyEvent`, or `Module` and `schedule`
+** Cons: Storing ever person's schedule requires Fastis to make a connection to the web only when a person is added or edited.
+
+//end::showingTimetable[]
 
 // tag::listTagMembers[]
 === List Tag Members Feature

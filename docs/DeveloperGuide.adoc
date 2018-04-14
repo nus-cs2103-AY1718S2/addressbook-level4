@@ -16,7 +16,9 @@ By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
 == Introduction
 image:FASTIS.png[width="500"] +
-Fastis is a desktop Event Manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface). This application is for students with group projects to keep track of their teammates' timetable, in order to schedule the most suitable meetup time. Users can store person's timetables, arrange persons in groups and generate a suitable meetup time.
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos, and schedule suitable meetup time. +
+
+This Developer Guide is meant to provides the necessary information for developers who are interested in contributing to this application. The guide consists of the set-up steps to develop the application and the detailed descriptions and implementations of the application’s current features. This can help developers understand the implementation of the features and able to modify any feature for further improvements.
 
 == Setting up
 The following steps will guide you on the set up of FASTIS.
@@ -237,7 +239,7 @@ This section describes some noteworthy details on how certain features are imple
 
 // tag::undoredo[]
 === Undo/Redo feature
-==== Current Implementation
+==== Current implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -365,7 +367,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::addToDo[]
 === Add ToDo feature
-==== Current Implementation
+==== Current implementation
 
 The add to-dos mechanism is facilitated by `AddToDoCommand`, which resides inside `Logic` component. It supports adding ToDo objects to the address book. AddToDoCommand inherits from `UndoableCommand`.
 
@@ -419,7 +421,7 @@ image::AddToDoSequenceDiagram.png[width="800"]
 
 // tag::checkToDo[]
 === Check/UnCheck ToDo feature
-==== Current Implementation
+==== Current implementation
 
 The check/uncheck to-dos mechanism is facilitated by `CheckToDoCommand` and `UnCheckToDoCommand`, which resides inside `Logic` component. It supports modifying Status objects within ToDo objects. CheckToDoCommand and UnCheckToDoCommand inherit from `UndoableCommand`.
 
@@ -472,7 +474,7 @@ The existing to-do is replaced by the new to-do in the `UniqueToDoList` and the 
 // end::checkToDo[]
 
 === NUSmods Integration
-==== Current Implementation
+==== Current implementation
 
 Fastis uses the available `NUSmods API` to retrieve module information from the API server.
 
@@ -500,7 +502,7 @@ When a the schedule of a `Person` is needed, the `Model` component will pass the
 
 Fastis lists all persons in Fastis that have tags similar to input.
 
-==== Current Implementation
+==== Current implementation
 Fastis uses `ListTagMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
 tag.
 
@@ -521,7 +523,7 @@ tag and list out all members under the same  tag.
 
 //tag::Calendar[]
 === Calendar Feature
-==== Current Implementation
+==== Current implementation
 
 Fastis uses a stand-alone `Calendar` class, adapted from `javafx-calendar` by SirGoose3432 (https://github.com/SirGoose3432/javafx-calendar).
 
@@ -585,7 +587,7 @@ Fastis has a group feature that can:
 
 Fastis add a group with information that was stated by user input.
 
-===== Current Implementation
+===== Current implementation
 
 The add groups mechanism is facilitated by `AddGroupCommand`, which resides inside `Logic` component. It supports adding Group objects to the address book. AddGroupCommand inherits from `UndoableCommand`.
 
@@ -638,7 +640,7 @@ image:AddGroupSequenceDiagram.png[width="800"]
 
 Fastis adds a person from the existing contact list to an existing group.
 
-==== Current Implementation
+==== Current implementation
 
 The add member to groups mechanism is facilitated by `AddMemberToGroupCommand`, which resides inside `Logic` component.
 It supports adding a member to Group objects to the address book.
@@ -659,7 +661,7 @@ image:aGMSequenceDiagram.png[width="800"]
 
 Fastis lists all persons under the group keyed by user.
 
-=== Current Implementation
+=== Current implementation
 
 Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
 group.
@@ -679,7 +681,7 @@ group and list out all members under the group.
 
 Fastis deletes a group named by the user from input.
 
-==== Current Implementation
+==== Current implementation
 
 The delete groups mechanism is facilitated by `DeleteGroupCommand`, which resides inside `Logic` component. It supports deleting Group objects to the address book. AddGroupCommand inherits from `UndoableCommand`.
 

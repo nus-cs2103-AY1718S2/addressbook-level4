@@ -15,8 +15,14 @@ public class ViewAppointmentCommandParserTest {
     private ViewAppointmentCommandParser parser = new ViewAppointmentCommandParser();
 
     @Test
-    public void parse_invalidArgsString_returnsViewAppointmentCommand() {
+    public void parse_invalidArgsString_throwsParseException() {
         assertParseFailure(parser, "alice", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ViewAppointmentCommand.MESSAGE_USAGE_PATIENT_WITH_INDEX));
+    }
+
+    @Test
+    public void parse_invalidArgsNegativeIndex_throwsParseException() {
+        assertParseFailure(parser, "-1", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ViewAppointmentCommand.MESSAGE_USAGE_PATIENT_WITH_INDEX));
     }
 

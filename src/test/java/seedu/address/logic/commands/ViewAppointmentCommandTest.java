@@ -4,9 +4,9 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -14,11 +14,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.sun.glass.ui.View;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -41,10 +42,22 @@ public class ViewAppointmentCommandTest {
         viewAppointmentCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 
-    @Test
-    public void execute_listIsNotFiltered_showSameList() {
-        assertCommandSuccess(viewAppointmentCommand, model, ViewAppointmentCommand.MESSAGE_SUCCESS, expectedModel);
-    }
+//    @Test
+//    public void execute_listIsNotFilteredViewAppointmentWithoutIndex_showSameList() {
+//        assertCommandSuccess(viewAppointmentCommand, model, ViewAppointmentCommand.MESSAGE_SUCCESS, expectedModel);
+//    }
+//
+//    @Test
+//    public void execute_listIsFilteredViewAppointmentWithoutIndex_showsSameList() {
+//        showPersonAtIndex(model, INDEX_SECOND_PERSON);
+//        showPersonAtIndex(expectedModel, INDEX_SECOND_PERSON);
+//        assertCommandSuccess(viewAppointmentCommand, model, ViewAppointmentCommand.MESSAGE_SUCCESS, expectedModel);
+//    }
+//
+//    @Test
+//    public void execute_listIsNotFilteredViewAppointmentWithIndex_showSameList() {
+//        show
+//    }
 
     @Test
     public void equals() throws IllegalValueException {

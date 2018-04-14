@@ -616,6 +616,10 @@ A Group consists of the following:
 
 ===== Add Group Feature
 
+The add group feature adds a group with information named by user in input into Fastis.
+
+====== Current implementation
+
 The add group mechanism is facilitated by `AddGroupCommand`, which resides inside `Logic` component. It supports adding `Group` object to the address book. `AddGroupCommand` inherits from `UndoableCommand`.
 
 Hence, `AddGroupCommand` can be undone using `UndoRedoStack`.

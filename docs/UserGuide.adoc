@@ -78,7 +78,7 @@ image::Ui.png[width="790"]
 === Autocomplete `[Since v1.3]`
 
 .Medeina's autocomplete
-image::autocomplete.png[width="700"]
+image::autocomplete.png[width="500"]
 
 * Medeina supports autocomplete for command words, options, prefixes, and parameters.
 * You will be shown a list of suggested NRICs when when you need to reference an existing person in Medeina e.g. adding a pet patient / appointment, editing a pet patient to change ownership.

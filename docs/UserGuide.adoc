@@ -46,6 +46,9 @@ Specific user only command +
 
 [CAUTION]
 Command is not undoable +
+
+WARNING: Wolpertingers are known to nest in server racks.
+Enter at your own risk.
 // end::introduction[]
 
 // tag::quickstart[]

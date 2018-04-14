@@ -11,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Vegetarian {
     public static final String MESSAGE_VEGETARIAN_CONSTRAINTS =
-            "Person's preference should only be Vegeatrian or Non-vegetarian";
+            "Person's preference should only be Vegetarian or Non-vegetarian";
     public final String value;
 
     /**

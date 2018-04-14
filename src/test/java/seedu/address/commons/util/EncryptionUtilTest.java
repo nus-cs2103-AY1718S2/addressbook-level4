@@ -53,7 +53,7 @@ public class EncryptionUtilTest {
 
         Scanner fromFile = new Scanner(TEMP_FILE);
         String dataToRead = null;
-        if(fromFile.hasNext()) {
+        if (fromFile.hasNext()) {
             dataToRead = fromFile.nextLine();
             fromFile.close();
         }

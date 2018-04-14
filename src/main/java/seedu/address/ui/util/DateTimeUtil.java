@@ -1,6 +1,5 @@
 package seedu.address.ui.util;
 
-import java.time.DateTimeException;
 import java.time.format.DateTimeFormatter;
 
 import seedu.address.model.activity.DateTime;

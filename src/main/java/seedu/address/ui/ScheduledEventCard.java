@@ -55,12 +55,6 @@ public class ScheduledEventCard extends UiPart<Region> {
         String start = OAuthManager.getDateTimeAsHumanReadable(startAsDateTime);
         String end = OAuthManager.getDateTimeAsHumanReadable(endAsDateTime);
 
-        if (start == null) {
-            start = "Unable to retrieve start time";
-        }
-        if (end == null) {
-            end = "Unable to retrieve end time";
-        }
         if (location == null) {
             location = "No Location Specified";
         }
@@ -76,5 +70,9 @@ public class ScheduledEventCard extends UiPart<Region> {
         System.out.printf(eventAsString);
 
         return eventAsString;
+    }
+
+    public String getFormattedScheduledEvent() {
+        return formattedScheduledEvent;
     }
 }

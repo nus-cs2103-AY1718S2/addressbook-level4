@@ -11,8 +11,8 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarDateRequestEvent;
 import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
 /**
  * Adds a calendar entry to calendar manager.
@@ -28,7 +28,8 @@ public class AddEntryCommand extends UndoableCommand {
             + PREFIX_START_TIME + "[START_TIME] "
             + PREFIX_END_TIME + "END_TIME";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a calendar entry to the calendar.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a calendar entry to the calendar"
+            + " and displays the calendar with the entry's start date.\n"
             + "Parameters: "
             + PREFIX_ENTRY_TITLE + "ENTRY_TITLE "
             + "[" + PREFIX_START_DATE + "START_DATE] "

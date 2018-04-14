@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author SuxianAlicia
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -20,13 +20,12 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
- * {@code  DeleteEntryCommand}.
+ * {@code DeleteEntryCommand}.
  */
-//@@author SuxianAlicia
 public class DeleteEntryCommandTest {
     private Model model = new ModelManager(getTypicalAddressBookWithOrders(),
             getTypicalCalendarManagerWithEntries(), new UserPrefs());

@@ -1,16 +1,17 @@
 package guitests.guihandles;
-
+//@@author SuxianAlicia
 import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 import seedu.address.ui.CalendarEntryCard;
 
 /**
  * Provides a handle for {@code CalendarEntryListPanel} containing the list of {@code CalendarEntryCard}.
  */
 public class CalendarEntryListPanelHandle extends NodeHandle<ListView<CalendarEntryCard>> {
+
     public static final String CALENDAR_ENTRY_LIST_VIEW_ID = "#calendarEntryCardListView";
 
     public CalendarEntryListPanelHandle(ListView<CalendarEntryCard> rootNode) {
@@ -55,5 +56,4 @@ public class CalendarEntryListPanelHandle extends NodeHandle<ListView<CalendarEn
                 .findFirst();
         return handle.orElseThrow(() -> new IllegalArgumentException("Calendar Entry does not exist."));
     }
-
 }

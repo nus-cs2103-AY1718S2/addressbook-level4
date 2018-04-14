@@ -62,5 +62,4 @@ public class EditEntryCommandParser implements Parser<EditEntryCommand> {
 
         return new EditEntryCommand(index, editEntryDescriptor);
     }
-
 }

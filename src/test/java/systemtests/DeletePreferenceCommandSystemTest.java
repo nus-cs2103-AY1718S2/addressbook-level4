@@ -1,6 +1,5 @@
-//@@author SuxianAlicia
 package systemtests;
-
+//@@author SuxianAlicia
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeletePreferenceCommand.MESSAGE_DELETE_PREFERENCE_SUCCESS;

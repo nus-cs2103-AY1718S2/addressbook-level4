@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
 import seedu.address.logic.commands.AddEntryCommand;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 /**
  * A utility class for {@code CalendarEntry}.

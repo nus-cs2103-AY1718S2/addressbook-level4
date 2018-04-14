@@ -61,7 +61,7 @@ import seedu.address.logic.commands.ViewCalendarCommand;
 import seedu.address.logic.commands.ViewNextCommand;
 import seedu.address.logic.commands.ViewTodayCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.GroupsContainKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;

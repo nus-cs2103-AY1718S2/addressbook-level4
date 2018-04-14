@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET_DATE;
@@ -14,6 +14,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * Displays specified date in Calendar.
  */
 public class CalendarJumpCommand extends Command {
+
     public static final String COMMAND_WORD = "calendarjump";
     public static final String COMMAND_ALIAS = "caljump";
 

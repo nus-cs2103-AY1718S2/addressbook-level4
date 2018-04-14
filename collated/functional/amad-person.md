@@ -1,5 +1,5 @@
 # amad-person
-###### /java/seedu/address/commons/events/model/ChangeOrderStatusEvent.java
+###### \java\seedu\address\commons\events\model\ChangeOrderStatusEvent.java
 ``` java
 package seedu.address.commons.events.model;
 
@@ -39,7 +39,7 @@ public class ChangeOrderStatusEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ChangeThemeEvent.java
+###### \java\seedu\address\commons\events\ui\ChangeThemeEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -66,7 +66,7 @@ public class ChangeThemeEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/OrderPanelSelectionChangedEvent.java
+###### \java\seedu\address\commons\events\ui\OrderPanelSelectionChangedEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -94,7 +94,7 @@ public class OrderPanelSelectionChangedEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddOrderCommand.java
+###### \java\seedu\address\logic\commands\AddOrderCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -113,8 +113,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayOrderListEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.order.Order;
+import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.person.Person;
-// import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Adds an order to a person in the address book.
@@ -123,19 +123,19 @@ public class AddOrderCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "orderadd";
     public static final String COMMAND_ALIAS = "oa";
-    public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
-            + PREFIX_ORDER_INFORMATION + "ORDER INFO "
+    public static final String COMMAND_SYNTAX = COMMAND_WORD + " INDEX "
+            + PREFIX_ORDER_INFORMATION + "ORDER_INFO "
             + PREFIX_PRICE + "PRICE "
             + PREFIX_QUANTITY + "QUANTITY "
-            + PREFIX_DELIVERY_DATE + "DELIVERY DATE ";
+            + PREFIX_DELIVERY_DATE + "DELIVERY_DATE";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an order to the selected person in the "
             + "address book.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_ORDER_INFORMATION + "ORDER INFO "
+            + PREFIX_ORDER_INFORMATION + "ORDER_INFO "
             + PREFIX_PRICE + "PRICE "
             + PREFIX_QUANTITY + "QUANTITY "
-            + PREFIX_DELIVERY_DATE + "DELIVERY DATE\n"
+            + PREFIX_DELIVERY_DATE + "DELIVERY_DATE\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ORDER_INFORMATION + "Books "
             + PREFIX_PRICE + "10.00 "
@@ -166,12 +166,8 @@ public class AddOrderCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            // TODO: update model
-            // model.addOrderToPerson(person, orderToAdd);
             model.addOrderToOrderList(orderToAdd);
-        // } catch (PersonNotFoundException pnfe) {
-            // throw new AssertionError("The target person cannot be missing");
-        } catch (Exception e) { // TODO: define more specific exception
+        } catch (UniqueOrderList.DuplicateOrderException doe) {
             throw new CommandException(MESSAGE_ORDER_NOT_ADDED);
         }
 
@@ -199,7 +195,7 @@ public class AddOrderCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ChangeOrderStatusCommand.java
+###### \java\seedu\address\logic\commands\ChangeOrderStatusCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -226,7 +222,7 @@ import seedu.address.model.order.exceptions.OrderNotFoundException;
 public class ChangeOrderStatusCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "orderstatus";
     public static final String COMMAND_ALIAS = "os";
-    public static final String COMMAND_SYNTAX = COMMAND_WORD + " INDEX " + PREFIX_ORDER_STATUS + " ORDER STATUS";
+    public static final String COMMAND_SYNTAX = COMMAND_WORD + " INDEX " + PREFIX_ORDER_STATUS + "ORDER_STATUS";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Changes the order status of the order identified by the index number used in the last order listing.\n"
@@ -290,7 +286,7 @@ public class ChangeOrderStatusCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ChangeThemeCommand.java
+###### \java\seedu\address\logic\commands\ChangeThemeCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -345,7 +341,7 @@ public class ChangeThemeCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteOrderCommand.java
+###### \java\seedu\address\logic\commands\DeleteOrderCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -417,7 +413,7 @@ public class DeleteOrderCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditOrderCommand.java
+###### \java\seedu\address\logic\commands\EditOrderCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -441,6 +437,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 import seedu.address.model.order.UniqueOrderList;
@@ -530,11 +527,12 @@ public class EditOrderCommand extends UndoableCommand {
 
         OrderInformation updatedOrderInformation = editOrderDescriptor.getOrderInformation()
                 .orElse(orderToEdit.getOrderInformation());
+        OrderStatus orderStatus = orderToEdit.getOrderStatus();
         Price updatedPrice = editOrderDescriptor.getPrice().orElse(orderToEdit.getPrice());
         Quantity updatedQuantity = editOrderDescriptor.getQuantity().orElse(orderToEdit.getQuantity());
         DeliveryDate updatedDeliveryDate = editOrderDescriptor.getDeliveryDate().orElse(orderToEdit.getDeliveryDate());
 
-        return new Order(updatedOrderInformation, updatedPrice, updatedQuantity, updatedDeliveryDate);
+        return new Order(updatedOrderInformation, orderStatus, updatedPrice, updatedQuantity, updatedDeliveryDate);
     }
 
     @Override
@@ -562,6 +560,7 @@ public class EditOrderCommand extends UndoableCommand {
      */
     public static class EditOrderDescriptor {
         private OrderInformation orderInformation;
+        private OrderStatus orderStatus;
         private Price price;
         private Quantity quantity;
         private DeliveryDate deliveryDate;
@@ -573,6 +572,7 @@ public class EditOrderCommand extends UndoableCommand {
          */
         public EditOrderDescriptor(EditOrderDescriptor toCopy) {
             setOrderInformation(toCopy.orderInformation);
+            setOrderStatus(toCopy.orderStatus);
             setPrice(toCopy.price);
             setQuantity(toCopy.quantity);
             setDeliveryDate(toCopy.deliveryDate);
@@ -591,6 +591,14 @@ public class EditOrderCommand extends UndoableCommand {
 
         public Optional<OrderInformation> getOrderInformation() {
             return Optional.ofNullable(orderInformation);
+        }
+
+        public void setOrderStatus(OrderStatus orderStatus) {
+            this.orderStatus = orderStatus;
+        }
+
+        public Optional<OrderStatus> getOrderStatus() {
+            return Optional.ofNullable(orderStatus);
         }
 
         public void setPrice(Price price) {
@@ -633,6 +641,7 @@ public class EditOrderCommand extends UndoableCommand {
             EditOrderDescriptor eo = (EditOrderDescriptor) other;
 
             return getOrderInformation().equals(eo.getOrderInformation())
+                    && getOrderStatus().equals(eo.getOrderStatus())
                     && getPrice().equals(eo.getPrice())
                     && getQuantity().equals(eo.getQuantity())
                     && getDeliveryDate().equals(eo.getDeliveryDate());
@@ -640,7 +649,7 @@ public class EditOrderCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/CommandSyntaxListUtil.java
+###### \java\seedu\address\logic\CommandSyntaxListUtil.java
 ``` java
 package seedu.address.logic;
 
@@ -650,6 +659,7 @@ import java.util.Collections;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEntryCommand;
 import seedu.address.logic.commands.AddOrderCommand;
+import seedu.address.logic.commands.CalendarJumpCommand;
 import seedu.address.logic.commands.ChangeOrderStatusCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -697,6 +707,7 @@ public final class CommandSyntaxListUtil {
         commandSyntaxList.add(AddCommand.COMMAND_SYNTAX);
         commandSyntaxList.add(AddEntryCommand.COMMAND_SYNTAX);
         commandSyntaxList.add(AddOrderCommand.COMMAND_SYNTAX);
+        commandSyntaxList.add(CalendarJumpCommand.COMMAND_SYNTAX);
         commandSyntaxList.add(ChangeThemeCommand.COMMAND_WORD);
         commandSyntaxList.add(ChangeOrderStatusCommand.COMMAND_SYNTAX);
         commandSyntaxList.add(ClearCommand.COMMAND_WORD);
@@ -736,7 +747,7 @@ public final class CommandSyntaxListUtil {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddOrderCommandParser.java
+###### \java\seedu\address\logic\parser\AddOrderCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -756,6 +767,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 
@@ -791,11 +803,12 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
         try {
             OrderInformation orderInformation = ParserUtil.parseOrderInformation(argMultimap
                     .getValue(PREFIX_ORDER_INFORMATION)).get();
+            OrderStatus orderStatus = new OrderStatus(OrderStatus.ORDER_STATUS_ONGOING); // default value is ongoing
             Price price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE)).get();
             Quantity quantity = ParserUtil.parseQuantity(argMultimap.getValue(PREFIX_QUANTITY)).get();
             DeliveryDate deliveryDate = ParserUtil.parseDeliveryDate(argMultimap.getValue(PREFIX_DELIVERY_DATE)).get();
 
-            Order order = new Order(orderInformation, price, quantity, deliveryDate);
+            Order order = new Order(orderInformation, orderStatus, price, quantity, deliveryDate);
             return new AddOrderCommand(index, order);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -812,7 +825,7 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ChangeThemeCommandParser.java
+###### \java\seedu\address\logic\parser\ChangeThemeCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -843,7 +856,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/DeleteOrderCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteOrderCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -876,7 +889,7 @@ public class DeleteOrderCommandParser implements Parser<DeleteOrderCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/EditOrderCommandParser.java
+###### \java\seedu\address\logic\parser\EditOrderCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -937,7 +950,7 @@ public class EditOrderCommandParser implements Parser<EditOrderCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code String orderInformation} into a {@code OrderInformation}.
@@ -1219,9 +1232,31 @@ public class EditOrderCommandParser implements Parser<EditOrderCommand> {
                 ? Optional.of(parseEndTime(endTime.get()))
                 : Optional.empty();
     }
+
+    /**
+     * Parses {@code date} into an {@code LocalDate} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static LocalDate parseTargetDate(String date) throws IllegalValueException {
+        String trimmedDate = date.trim();
+        if (!DateUtil.isValidDate(trimmedDate)) {
+            throw new IllegalValueException(MESSAGE_INVALID_DATE_FORMAT);
+        }
+
+        LocalDate localDate;
+
+        try {
+            localDate = DateUtil.convertStringToDate(trimmedDate);
+        } catch (DateTimeParseException dtpe) {
+            throw new AssertionError("Given date should be valid for conversion.");
+        }
+
+        return localDate;
+    }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Replaces the given order {@code target} in the list with {@code editedOrder}.
@@ -1233,7 +1268,7 @@ public class EditOrderCommandParser implements Parser<EditOrderCommand> {
         orders.setOrder(target, editedOrder);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     //// order-level operations
 
@@ -1251,15 +1286,31 @@ public class EditOrderCommandParser implements Parser<EditOrderCommand> {
         orders.remove(targetOrder);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     @Override
     public ObservableList<Order> getOrderList() {
         return orders.asObservableList();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
+    @Override
+    public void updateOrder(Order target, Order editedOrder)
+        throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+        requireAllNonNull(target, editedOrder);
+
+        addressBook.updateOrder(target, editedOrder);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateOrderStatus(Order target, String orderStatus)
+            throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+        addressBook.updateOrderStatus(target, orderStatus);
+        indicateAddressBookChanged();
+    }
+
     @Override
     public void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException {
         addressBook.addOrderToOrderList(orderToAdd);
@@ -1274,18 +1325,7 @@ public class EditOrderCommandParser implements Parser<EditOrderCommand> {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public void updateOrder(Order target, Order editedOrder)
-        throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
-        requireAllNonNull(target, editedOrder);
-
-        addressBook.updateOrder(target, editedOrder);
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Returns an unmodifiable view of the list of {@code Order} backed by the internal list of
@@ -1303,7 +1343,7 @@ public class EditOrderCommandParser implements Parser<EditOrderCommand> {
         filteredOrders.setPredicate(predicate);
     }
 ```
-###### /java/seedu/address/model/order/DeliveryDate.java
+###### \java\seedu\address\model\order\DeliveryDate.java
 ``` java
 package seedu.address.model.order;
 
@@ -1374,7 +1414,7 @@ public class DeliveryDate {
 }
 
 ```
-###### /java/seedu/address/model/order/exceptions/OrderNotFoundException.java
+###### \java\seedu\address\model\order\exceptions\OrderNotFoundException.java
 ``` java
 package seedu.address.model.order.exceptions;
 
@@ -1385,12 +1425,11 @@ public class OrderNotFoundException extends Exception {
 }
 
 ```
-###### /java/seedu/address/model/order/Order.java
+###### \java\seedu\address\model\order\Order.java
 ``` java
 package seedu.address.model.order;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.order.OrderStatus.ORDER_STATUS_ONGOING;
 
 import java.util.Objects;
 
@@ -1409,10 +1448,11 @@ public class Order {
     /**
      * Every field must be present and not null.
      */
-    public Order(OrderInformation orderInformation, Price price, Quantity quantity, DeliveryDate deliveryDate) {
+    public Order(OrderInformation orderInformation, OrderStatus orderStatus, Price price,
+                 Quantity quantity, DeliveryDate deliveryDate) {
         requireAllNonNull(orderInformation, price, quantity, deliveryDate);
         this.orderInformation = orderInformation;
-        this.orderStatus = new OrderStatus(ORDER_STATUS_ONGOING); // default value is ongoing
+        this.orderStatus = orderStatus;
         this.price = price;
         this.quantity = quantity;
         this.deliveryDate = deliveryDate;
@@ -1448,7 +1488,6 @@ public class Order {
             return false;
         }
 
-        // TODO: orders can have the same information (just the person associated with them can be diff)
         Order otherOrder = (Order) other;
         return otherOrder.getOrderInformation().equals(this.getOrderInformation())
                 && otherOrder.getOrderStatus().equals(this.getOrderStatus())
@@ -1478,7 +1517,7 @@ public class Order {
     }
 }
 ```
-###### /java/seedu/address/model/order/OrderInformation.java
+###### \java\seedu\address\model\order\OrderInformation.java
 ``` java
 package seedu.address.model.order;
 
@@ -1534,7 +1573,7 @@ public class OrderInformation {
     }
 }
 ```
-###### /java/seedu/address/model/order/OrderStatus.java
+###### \java\seedu\address\model\order\OrderStatus.java
 ``` java
 package seedu.address.model.order;
 
@@ -1614,7 +1653,7 @@ public class OrderStatus {
     }
 }
 ```
-###### /java/seedu/address/model/order/Price.java
+###### \java\seedu\address\model\order\Price.java
 ``` java
 package seedu.address.model.order;
 
@@ -1678,7 +1717,7 @@ public class Price {
     }
 }
 ```
-###### /java/seedu/address/model/order/Quantity.java
+###### \java\seedu\address\model\order\Quantity.java
 ``` java
 package seedu.address.model.order;
 
@@ -1742,7 +1781,7 @@ public class Quantity {
 }
 
 ```
-###### /java/seedu/address/model/order/UniqueOrderList.java
+###### \java\seedu\address\model\order\UniqueOrderList.java
 ``` java
 package seedu.address.model.order;
 
@@ -1919,7 +1958,7 @@ public class UniqueOrderList implements Iterable<Order> {
 
 }
 ```
-###### /java/seedu/address/model/theme/Theme.java
+###### \java\seedu\address\model\theme\Theme.java
 ``` java
 package seedu.address.model.theme;
 
@@ -2034,7 +2073,7 @@ public class Theme {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedOrder.java
+###### \java\seedu\address\storage\XmlAdaptedOrder.java
 ``` java
 package seedu.address.storage;
 
@@ -2046,6 +2085,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 
@@ -2058,6 +2098,8 @@ public class XmlAdaptedOrder {
 
     @XmlElement
     private String orderInformation;
+    @XmlElement
+    private String orderStatus;
     @XmlElement
     private String price;
     @XmlElement
@@ -2073,8 +2115,10 @@ public class XmlAdaptedOrder {
     /**
      * Constructs an {@code XmlAdaptedOrder} with the given order details.
      */
-    public XmlAdaptedOrder(String orderInformation, String price, String quantity, String deliveryDate) {
+    public XmlAdaptedOrder(String orderInformation, String orderStatus, String price,
+                           String quantity, String deliveryDate) {
         this.orderInformation = orderInformation;
+        this.orderStatus = orderStatus;
         this.price = price;
         this.quantity = quantity;
         this.deliveryDate = deliveryDate;
@@ -2087,6 +2131,7 @@ public class XmlAdaptedOrder {
      */
     public XmlAdaptedOrder(Order source) {
         orderInformation = source.getOrderInformation().toString();
+        orderStatus = source.getOrderStatus().getCurrentOrderStatus();
         price = source.getPrice().toString();
         quantity = source.getQuantity().toString();
         deliveryDate = source.getDeliveryDate().toString();
@@ -2106,6 +2151,15 @@ public class XmlAdaptedOrder {
             throw new IllegalValueException(OrderInformation.MESSAGE_ORDER_INFORMATION_CONSTRAINTS);
         }
         final OrderInformation orderInformation = new OrderInformation(this.orderInformation);
+
+        if (this.orderStatus == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    OrderStatus.class.getSimpleName()));
+        }
+        if (!OrderStatus.isValidOrderStatus(this.orderStatus)) {
+            throw new IllegalValueException(OrderStatus.MESSAGE_ORDER_STATUS_CONSTRAINTS);
+        }
+        final OrderStatus orderStatus = new OrderStatus(this.orderStatus);
 
         if (this.price == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Price.class.getSimpleName()));
@@ -2136,7 +2190,7 @@ public class XmlAdaptedOrder {
         }
         final DeliveryDate deliveryDate = new DeliveryDate(this.deliveryDate);
 
-        return new Order(orderInformation, price, quantity, deliveryDate);
+        return new Order(orderInformation, orderStatus, price, quantity, deliveryDate);
     }
 
     @Override
@@ -2151,13 +2205,14 @@ public class XmlAdaptedOrder {
 
         XmlAdaptedOrder otherOrder = (XmlAdaptedOrder) other;
         return Objects.equals(orderInformation, otherOrder.orderInformation)
+                && Objects.equals(orderStatus, otherOrder.orderStatus)
                 && Objects.equals(price, otherOrder.price)
                 && Objects.equals(quantity, otherOrder.quantity)
                 && Objects.equals(deliveryDate, otherOrder.deliveryDate);
     }
 }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Handles the Tab button pressed event by updating {@code CommandBox}'s text
@@ -2177,13 +2232,13 @@ public class XmlAdaptedOrder {
         }
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     private void setTheme() {
         Theme.changeTheme(primaryStage, Theme.DARK_THEME_KEYWORD);
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
      * Changes the theme of the application.
@@ -2193,7 +2248,7 @@ public class XmlAdaptedOrder {
         Theme.changeTheme(primaryStage, event.getTheme());
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleChangeThemeEvent(ChangeThemeEvent event) {
@@ -2201,7 +2256,7 @@ public class XmlAdaptedOrder {
         handleChangeTheme(event);
     }
 ```
-###### /java/seedu/address/ui/OrderCard.java
+###### \java\seedu\address\ui\OrderCard.java
 ``` java
 package seedu.address.ui;
 
@@ -2210,6 +2265,7 @@ import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -2222,6 +2278,10 @@ import seedu.address.model.order.Quantity;
  */
 public class OrderCard extends UiPart<Region> {
     private static final String FXML = "OrderListCard.fxml";
+    private static final double ICON_WIDTH = 25;
+    private static final double ICON_HEIGHT = 25;
+    private static final String ORDER_STATUS_DONE = "DONE";
+
     public final Order order;
 
     private final Logger logger = LogsCenter.getLogger(OrderCard.class);
@@ -2230,13 +2290,13 @@ public class OrderCard extends UiPart<Region> {
     private HBox cardPane;
 
     @FXML
+    private Label id;
+
+    @FXML
     private Label orderInformation;
 
     @FXML
     private Label orderStatus;
-
-    @FXML
-    private Label id;
 
     @FXML
     private Label priceAndQuantity;
@@ -2247,6 +2307,18 @@ public class OrderCard extends UiPart<Region> {
     @FXML
     private Label deliveryDate;
 
+    @FXML
+    private ImageView orderStatusIcon;
+
+    @FXML
+    private ImageView priceAndQuantityIcon;
+
+    @FXML
+    private ImageView totalPriceIcon;
+
+    @FXML
+    private ImageView deliveryDateIcon;
+
     public OrderCard(Order order, int displayedIndex) {
         super(FXML);
         this.order = order;
@@ -2256,6 +2328,18 @@ public class OrderCard extends UiPart<Region> {
         setPriceAndQuantity(order);
         setTotalPrice(order);
         deliveryDate.setText("Deliver By: " + order.getDeliveryDate().toString());
+        setImageSizeForAllImages();
+    }
+
+    /**
+     * Returns true if order status equals done.
+     */
+    public boolean isOrderStatusDone() {
+        if (orderStatus.getText().equals(ORDER_STATUS_DONE)) {
+            return true;
+        }
+
+        return false;
     }
 
     private void setPriceAndQuantity(Order order) {
@@ -2280,6 +2364,20 @@ public class OrderCard extends UiPart<Region> {
         return String.valueOf(decimalFormat.format(totalPrice));
     }
 
+    private void setImageSizeForAllImages() {
+        orderStatusIcon.setFitWidth(ICON_WIDTH);
+        orderStatusIcon.setFitHeight(ICON_HEIGHT);
+
+        priceAndQuantityIcon.setFitWidth(ICON_WIDTH);
+        priceAndQuantityIcon.setFitHeight(ICON_HEIGHT);
+
+        totalPriceIcon.setFitWidth(ICON_WIDTH);
+        totalPriceIcon.setFitHeight(ICON_HEIGHT);
+
+        deliveryDateIcon.setFitWidth(ICON_WIDTH);
+        deliveryDateIcon.setFitHeight(ICON_HEIGHT);
+    }
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -2299,7 +2397,7 @@ public class OrderCard extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/OrderListPanel.java
+###### \java\seedu\address\ui\OrderListPanel.java
 ``` java
 package seedu.address.ui;
 
@@ -2325,6 +2423,9 @@ import seedu.address.model.order.Order;
  */
 public class OrderListPanel extends UiPart<Region> {
     private static final String FXML = "OrderListPanel.fxml";
+    private static final String ORDER_STATUS_ONGOING_CSS = "view/OrderStatusOngoing.css";
+    private static final String ORDER_STATUS_DONE_CSS = "view/OrderStatusDone.css";
+
     private final Logger logger = LogsCenter.getLogger(OrderListPanel.class);
 
     @FXML
@@ -2365,15 +2466,9 @@ public class OrderListPanel extends UiPart<Region> {
         });
     }
 
-    @FXML
-    private void handleChangeOrderStatus(ChangeOrderStatusEvent event) {
-        // TODO: change background of listcell based on order status change
-    }
-
     @Subscribe
     private void handleChangeOrderStatusEvent(ChangeOrderStatusEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleChangeOrderStatus(event);
     }
 
     /**
@@ -2391,11 +2486,90 @@ public class OrderListPanel extends UiPart<Region> {
             } else {
                 setGraphic(order.getRoot());
             }
+
+            if (order != null) {
+                this.getStylesheets().clear();
+
+                if (order.isOrderStatusDone()) {
+                    this.getStylesheets().add(ORDER_STATUS_DONE_CSS);
+                } else {
+                    this.getStylesheets().add(ORDER_STATUS_ONGOING_CSS);
+                }
+            }
         }
     }
 }
 ```
-###### /resources/view/LightTheme.css
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    private void setImageSizeForAllImages() {
+        phoneIcon.setFitWidth(ICON_WIDTH);
+        phoneIcon.setFitHeight(ICON_HEIGHT);
+
+        addressIcon.setFitWidth(ICON_WIDTH);
+        addressIcon.setFitHeight(ICON_HEIGHT);
+
+        emailIcon.setFitWidth(ICON_WIDTH);
+        emailIcon.setFitHeight(ICON_HEIGHT);
+
+        groupIcon.setFitWidth(ICON_WIDTH);
+        groupIcon.setFitHeight(ICON_HEIGHT);
+
+        prefIcon.setFitWidth(ICON_WIDTH);
+        prefIcon.setFitHeight(ICON_HEIGHT);
+    }
+
+```
+###### \java\seedu\address\ui\PersonPanel.java
+``` java
+    /**
+     * Sets all image icons to blank.
+     */
+    private void initBlankIcons() {
+        phoneIcon.setImage(null);
+        addressIcon.setImage(null);
+        emailIcon.setImage(null);
+        prefIcon.setImage(null);
+        groupIcon.setImage(null);
+    }
+```
+###### \java\seedu\address\ui\PersonPanel.java
+``` java
+    private void setIcons() {
+        Image phoneIconImage = new Image(MainApp.class.getResourceAsStream("/images/phone_icon.png"));
+        phoneIcon.setImage(phoneIconImage);
+
+        Image addressIconImage = new Image(MainApp.class.getResourceAsStream("/images/address_icon.png"));
+        addressIcon.setImage(addressIconImage);
+
+        Image emailIconImage = new Image(MainApp.class.getResourceAsStream("/images/email_icon.png"));
+        emailIcon.setImage(emailIconImage);
+
+        Image prefIconImage = new Image(MainApp.class.getResourceAsStream("/images/pref_icon.png"));
+        prefIcon.setImage(prefIconImage);
+
+        Image groupIconImage = new Image(MainApp.class.getResourceAsStream("/images/group_icon.png"));
+        groupIcon.setImage(groupIconImage);
+    }
+
+    private void setImageSizeForAllImages() {
+        phoneIcon.setFitWidth(ICON_WIDTH);
+        phoneIcon.setFitHeight(ICON_HEIGHT);
+
+        addressIcon.setFitWidth(ICON_WIDTH);
+        addressIcon.setFitHeight(ICON_HEIGHT);
+
+        emailIcon.setFitWidth(ICON_WIDTH);
+        emailIcon.setFitHeight(ICON_HEIGHT);
+
+        groupIcon.setFitWidth(ICON_WIDTH);
+        groupIcon.setFitHeight(ICON_HEIGHT);
+
+        prefIcon.setFitWidth(ICON_WIDTH);
+        prefIcon.setFitHeight(ICON_HEIGHT);
+    }
+```
+###### \resources\view\LightTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#cacaca, 20%);
@@ -2763,134 +2937,8 @@ public class OrderListPanel extends UiPart<Region> {
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
-
-#groups .teal {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
-}
-
-#groups .red {
-    -fx-text-fill: black;
-    -fx-background-color: red;
-}
-
-#groups .yellow {
-    -fx-background-color: yellow;
-    -fx-text-fill: black;
-}
-
-#groups .blue {
-    -fx-text-fill: white;
-    -fx-background-color: #2980B9;
-}
-
-#groups .orange {
-    -fx-text-fill: black;
-    -fx-background-color: orange;
-}
-
-#groups .brown {
-    -fx-text-fill: white;
-    -fx-background-color: brown;
-}
-
-#groups .green {
-    -fx-text-fill: black;
-    -fx-background-color: #27AE60;
-}
-
-#groups .pink {
-    -fx-text-fill: black;
-    -fx-background-color: pink;
-}
-
-#groups .black {
-    -fx-text-fill: white;
-    -fx-background-color: black;
-}
-
-#groups .indigo {
-    -fx-text-fill: black;
-    -fx-background-color: #8E44AD;
-}
-
-#preferences .red {
-    -fx-text-fill: black;
-    -fx-background-color: red;
-}
-
-#preferences .yellow {
-    -fx-background-color: yellow;
-    -fx-text-fill: black;
-}
-
-#preferences .blue {
-    -fx-text-fill: white;
-    -fx-background-color: #2980B9;
-}
-
-#preferences .orange {
-    -fx-text-fill: black;
-    -fx-background-color: orange;
-}
-
-#preferences .brown {
-    -fx-text-fill: white;
-    -fx-background-color: brown;
-}
-
-#groups .green {
-    -fx-text-fill: black;
-    -fx-background-color: #27AE60;
-}
-
-#preferences .pink {
-    -fx-text-fill: black;
-    -fx-background-color: pink;
-}
-
-#preferences .black {
-    -fx-text-fill: white;
-    -fx-background-color: black;
-}
-
-#preferences .indigo {
-    -fx-text-fill: black;
-    -fx-background-color: #8E44AD;
-}
-
-#cardPane {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-}
-
-#cardPane #name, #cardPane #id, #cardPane #orderInformation, #cardPane #entryTitle {
-    -fx-font-size: 15pt;
-}
-
-#personPanel #name {
-    -fx-font-size: 40pt;
-    -fx-text-fill: #000000;
-}
-
-#cardPane #tags .label {
-    -fx-font-size: 12pt;
-}
-
-#personPanel #tags .label {
-    -fx-font-size: 20pt;
-}
-
-#personPanel #address, #personPanel #email, #personPanel #phone {
-+   -fx-font-size: 15pt;
-    -fx-text-fill: #000000;
-}
-
-#personPanel .split-pane-divider {
-    -fx-background-color: derive(#e8e8e8, 50%);
-}
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
           <VBox fx:id="rightPanelList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
@@ -2899,18 +2947,19 @@ public class OrderListPanel extends UiPart<Region> {
             <StackPane fx:id="rightPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
 ```
-###### /resources/view/OrderListCard.fxml
+###### \resources\view\OrderListCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
@@ -2929,10 +2978,66 @@ public class OrderListPanel extends UiPart<Region> {
                 </Label>
                 <Label fx:id="orderInformation" styleClass="cell_big_label" text="\$orderInformation" />
             </HBox>
-            <Label fx:id="orderStatus" styleClass="cell_small_label" text="\$orderStatus" />
-            <Label fx:id="priceAndQuantity" styleClass="cell_small_label" text="\$priceAndQuantity" />
-            <Label fx:id="totalPrice" styleClass="cell_small_label" text="\$totalPrice" />
-            <Label fx:id="deliveryDate" styleClass="cell_small_label" text="\$deliveryDate" />
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <ImageView fx:id="orderStatusIcon" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="/images/order_status_icon.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="orderStatus" styleClass="cell_small_label" text="\$orderStatus">
+                    <padding>
+                        <Insets top="5" />
+                    </padding>
+                </Label>
+                <padding>
+                    <Insets top="5" />
+                </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <ImageView fx:id="priceAndQuantityIcon" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="/images/price_and_quantity_icon.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="priceAndQuantity" styleClass="cell_small_label" text="\$priceAndQuantity">
+                    <padding>
+                        <Insets top="5" />
+                    </padding>
+                </Label>
+                <padding>
+                    <Insets top="5" />
+                </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <ImageView fx:id="totalPriceIcon" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="/images/total_price_icon.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="totalPrice" styleClass="cell_small_label" text="\$totalPrice">
+                    <padding>
+                        <Insets top="5" />
+                    </padding>
+                </Label>
+                <padding>
+                    <Insets top="5" />
+                </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <ImageView fx:id="deliveryDateIcon" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="/images/delivery_date_icon.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="deliveryDate" styleClass="cell_small_label" text="\$deliveryDate">
+                    <padding>
+                        <Insets top="5" />
+                    </padding>
+                </Label>
+                <padding>
+                    <Insets top="5" />
+                </padding>
+            </HBox>
             <padding>
                 <Insets bottom="5" left="15" right="5" top="5" />
             </padding>
@@ -2946,7 +3051,7 @@ public class OrderListPanel extends UiPart<Region> {
     </padding>
 </HBox>
 ```
-###### /resources/view/OrderListPanel.fxml
+###### \resources\view\OrderListPanel.fxml
 ``` fxml
 
 <?import javafx.scene.control.ListView?>
@@ -2955,4 +3060,94 @@ public class OrderListPanel extends UiPart<Region> {
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <ListView fx:id="orderListView" VBox.vgrow="ALWAYS" />
 </VBox>
+```
+###### \resources\view\PersonListCard.fxml
+``` fxml
+      <HBox alignment="CENTER_LEFT" spacing="5">
+        <ImageView fx:id="groupIcon" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="/images/group_icon.png" />
+          </image>
+        </ImageView>
+        <FlowPane fx:id="groups">
+          <padding>
+            <Insets top="5" />
+          </padding>
+        </FlowPane>
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="5">
+        <ImageView fx:id="phoneIcon" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="/images/phone_icon.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+          <padding>
+            <Insets top="5" />
+          </padding>
+        </Label>
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="5">
+        <ImageView fx:id="addressIcon" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="/images/address_icon.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="address" styleClass="cell_small_label" text="\$address">
+          <padding>
+            <Insets top="5" />
+          </padding>
+        </Label>
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="5">
+        <ImageView fx:id="emailIcon" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="/images/email_icon.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="email" styleClass="cell_small_label" text="\$email">
+          <padding>
+            <Insets top="5" />
+          </padding>
+        </Label>
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="5">
+        <ImageView fx:id="prefIcon" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="/images/pref_icon.png" />
+          </image>
+        </ImageView>
+        <FlowPane fx:id="preferences">
+          <padding>
+            <Insets top="5" />
+          </padding>
+        </FlowPane>
+        <padding>
+          <Insets top="5" />
+        </padding>
+      </HBox>
+```
+###### \resources\view\PersonListCard.fxml
+``` fxml
+    </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+  </GridPane>
+  <padding>
+    <Insets bottom="10" left="15" right="5" top="10" />
+  </padding>
+</HBox>
 ```

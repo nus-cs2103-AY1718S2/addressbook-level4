@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author SuxianAlicia
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -24,7 +24,6 @@ import seedu.address.model.tag.Group;
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
  * {@code DeleteGroupCommand}.
  */
-//@@author SuxianAlicia
 public class DeleteGroupCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
@@ -35,14 +34,15 @@ public class DeleteGroupCommandTest {
 
         String expectedMessage = String.format(DeleteGroupCommand.MESSAGE_DELETE_GROUP_SUCCESS, groupToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(),
+                new UserPrefs());
         expectedModel.deleteGroup(groupToDelete);
 
         assertCommandSuccess(deleteGroupCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_unexistingGroup_throwsCommandException() throws Exception {
+    public void execute_nonexistentGroup_throwsCommandException() throws Exception {
         Group groupToDelete = new Group("friend");
         DeleteGroupCommand deleteGroupCommand = prepareCommand(groupToDelete);
 
@@ -56,7 +56,7 @@ public class DeleteGroupCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Group groupToDelete = FRIENDS;
         DeleteGroupCommand deleteGroupCommand = prepareCommand(groupToDelete);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(), new UserPrefs());
 
         // delete -> friends group deleted
         deleteGroupCommand.execute();
@@ -71,7 +71,7 @@ public class DeleteGroupCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_invalidPreference_failure() {
+    public void executeUndoRedo_invalidGroup_failure() {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
@@ -88,28 +88,28 @@ public class DeleteGroupCommandTest {
 
     @Test
     public void equals() throws Exception {
-        DeleteGroupCommand deleteFirstCommand = prepareCommand(FRIENDS);
-        DeleteGroupCommand deleteSecondCommand = prepareCommand(COLLEAGUES);
+        DeleteGroupCommand deleteGroupFirstCommand = prepareCommand(FRIENDS);
+        DeleteGroupCommand deleteGroupSecondCommand = prepareCommand(COLLEAGUES);
 
         // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertTrue(deleteGroupFirstCommand.equals(deleteGroupFirstCommand));
 
         // same values -> returns true
-        DeleteGroupCommand deleteFirstCommandCopy = prepareCommand(FRIENDS);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+        DeleteGroupCommand deleteGroupFirstCommandCopy = prepareCommand(FRIENDS);
+        assertTrue(deleteGroupFirstCommand.equals(deleteGroupFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        assertFalse(deleteGroupFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(deleteGroupFirstCommand.equals(null));
 
         // different preference -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        assertFalse(deleteGroupFirstCommand.equals(deleteGroupSecondCommand));
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code DeleteGroupCommand} with the parameter {@code group}.
      */
     private DeleteGroupCommand prepareCommand(Group group) {
         DeleteGroupCommand deleteGroupCommand = new DeleteGroupCommand(group);

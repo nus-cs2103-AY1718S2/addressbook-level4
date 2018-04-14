@@ -11,6 +11,7 @@ import seedu.address.commons.util.StringUtil;
  * Tests that a {@code Person} 's {@code Preference}s' names matches any of the keywords given.
  */
 public class PreferencesContainKeywordsPredicate implements Predicate<Person> {
+
     private final List<String> keywords;
 
     public PreferencesContainKeywordsPredicate(List<String> keywords) {

@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author SuxianAlicia
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -25,7 +25,6 @@ import seedu.address.model.tag.Preference;
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
  * {@code DeletePreferenceCommand}.
  */
-//@@author SuxianAlicia
 public class DeletePreferenceCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
@@ -36,14 +35,15 @@ public class DeletePreferenceCommandTest {
 
         String expectedMessage = String.format(DeletePreferenceCommand.MESSAGE_DELETE_PREFERENCE_SUCCESS, prefToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(),
+                new UserPrefs());
         expectedModel.deletePreference(prefToDelete);
 
         assertCommandSuccess(deletePrefCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_unexistingPreference_throwsCommandException() throws Exception {
+    public void execute_nonexistentPreference_throwsCommandException() throws Exception {
         Preference prefToDelete = new Preference("shoe");
         DeletePreferenceCommand deletePrefCommand = prepareCommand(prefToDelete);
 
@@ -57,7 +57,7 @@ public class DeletePreferenceCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Preference prefToDelete = SHOES;
         DeletePreferenceCommand deletePrefCommand = prepareCommand(prefToDelete);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(), new UserPrefs());
 
         // delete -> shoes preference deleted
         deletePrefCommand.execute();
@@ -89,28 +89,28 @@ public class DeletePreferenceCommandTest {
 
     @Test
     public void equals() throws Exception {
-        DeletePreferenceCommand deleteFirstCommand = prepareCommand(SHOES);
-        DeletePreferenceCommand deleteSecondCommand = prepareCommand(COMPUTERS);
+        DeletePreferenceCommand deletePrefFirstCommand = prepareCommand(SHOES);
+        DeletePreferenceCommand deletePrefSecondCommand = prepareCommand(COMPUTERS);
 
         // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertTrue(deletePrefFirstCommand.equals(deletePrefFirstCommand));
 
         // same values -> returns true
-        DeletePreferenceCommand deleteFirstCommandCopy = prepareCommand(SHOES);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+        DeletePreferenceCommand deletePrefFirstCommandCopy = prepareCommand(SHOES);
+        assertTrue(deletePrefFirstCommand.equals(deletePrefFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        assertFalse(deletePrefFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(deletePrefFirstCommand.equals(null));
 
         // different preference -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        assertFalse(deletePrefFirstCommand.equals(deletePrefSecondCommand));
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code DeletePreferenceCommand} with the parameter {@code preference}.
      */
     private DeletePreferenceCommand prepareCommand(Preference preference) {
         DeletePreferenceCommand deletePrefCommand = new DeletePreferenceCommand(preference);

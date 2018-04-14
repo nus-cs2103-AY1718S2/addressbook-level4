@@ -1,5 +1,5 @@
 package seedu.address.model;
-
+//@@author SuxianAlicia
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalCalendarEntries.GET_STOCKS;
@@ -9,10 +9,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.event.UniqueCalendarEntryList;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.UniqueCalendarEntryList;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
-//@@author SuxianAlicia
 public class UniqueCalendarEntryListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -30,7 +29,7 @@ public class UniqueCalendarEntryListTest {
         // different type -> false
         assertFalse(firstEntriesList.equals(1));
 
-        // different objects, same type -> false
+        // different calendar entries, same type -> false
         assertFalse(firstEntriesList.equals(secondEntriesList));
     }
 

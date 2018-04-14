@@ -17,6 +17,7 @@ import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
  * A utility class containing a list of {@code BaseEvent} objects to be used in tests.
  */
 public class TypicalBaseEvents {
+
     public static final ChangeCalendarViewRequestEvent CHANGE_TO_DAY_EVENT =
             new ChangeCalendarViewRequestEvent(DAY_VIEW);
     public static final ChangeCalendarViewRequestEvent CHANGE_TO_MONTH_EVENT =

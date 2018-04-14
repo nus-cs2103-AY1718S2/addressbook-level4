@@ -1,5 +1,5 @@
 package seedu.address.commons.util;
-
+//@@author SuxianAlicia
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -10,7 +10,6 @@ import java.time.format.DateTimeParseException;
  * Helper functions for handling Date related operations.
  * Ensures that strings conform to a given Date Format.
  */
-//@@author SuxianAlicia
 public class DateUtil {
     public static final String DATE_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}"; // format
     public static final String DATE_VALIDATION_FORMAT = "dd-MM-yyyy"; // legal dates
@@ -41,5 +40,4 @@ public class DateUtil {
 
         return convertedDate;
     }
-
 }

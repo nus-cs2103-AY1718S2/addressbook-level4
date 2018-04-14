@@ -12,6 +12,7 @@ import seedu.address.model.person.GroupsContainKeywordsPredicate;
  * Parses input arguments and creates a new FindGroupCommand object
  */
 public class FindGroupCommandParser implements Parser<FindGroupCommand> {
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindGroupCommand
      * and returns an FindGroupCommand object for execution.

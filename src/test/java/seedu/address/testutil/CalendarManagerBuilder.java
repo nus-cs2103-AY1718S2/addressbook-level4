@@ -1,8 +1,8 @@
 package seedu.address.testutil;
-
+//@@author SuxianAlicia
 import seedu.address.model.CalendarManager;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
 /**
  * A utility class to help with building CalendarManager objects.

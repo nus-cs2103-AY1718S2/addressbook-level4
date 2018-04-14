@@ -1,18 +1,18 @@
 package seedu.address.testutil;
 //@@author SuxianAlicia
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.EntryTitle;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
 
 /**
  * A utility class to help with building CalendarEntry objects.
  */
 public class CalendarEntryBuilder {
 
-    public static final String DEFAULT_EVENT_TITLE = "Meeting with boss";
+    public static final String DEFAULT_ENTRY_TITLE = "Meeting with boss";
     public static final String DEFAULT_START_DATE = "10-10-2018";
     public static final String DEFAULT_END_DATE = "10-10-2018";
     public static final String DEFAULT_START_TIME = "10:00";
@@ -25,7 +25,7 @@ public class CalendarEntryBuilder {
     private EndTime endTime;
 
     public CalendarEntryBuilder() {
-        entryTitle = new EntryTitle(DEFAULT_EVENT_TITLE);
+        entryTitle = new EntryTitle(DEFAULT_ENTRY_TITLE);
         startDate = new StartDate(DEFAULT_START_DATE);
         endDate = new EndDate(DEFAULT_END_DATE);
         startTime = new StartTime(DEFAULT_START_TIME);

@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
@@ -10,15 +10,13 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
 
 /**
  * Deletes a calendar entry identified using it's last displayed index from the address book.
  */
-//@@author SuxianAlicia
 public class DeleteEntryCommand extends UndoableCommand {
-
 
     public static final String COMMAND_WORD = "entrydelete";
     public static final String COMMAND_ALIAS = "ed";

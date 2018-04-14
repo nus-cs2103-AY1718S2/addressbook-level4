@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * This command will display the calendar if it is not displayed when command is executed.
  */
 public class ViewNextCommand extends Command {
+
     public static final String COMMAND_WORD = "calendarnext";
     public static final String COMMAND_ALIAS = "calnext";
 

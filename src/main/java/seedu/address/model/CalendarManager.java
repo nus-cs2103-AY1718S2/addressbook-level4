@@ -10,13 +10,14 @@ import com.calendarfx.model.Calendar;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CalendarEntryConversionUtil;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.UniqueCalendarEntryList;
-import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.UniqueCalendarEntryList;
+import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
 /**
- * Manages {@code Calendar} as defined in CalendarFX and its related data.
+ * Manages {@code Calendar} as defined in CalendarFX and {@code UniqueCalendarEntryList},
+ * which contains {@code CalendarEntry} to be added to {@code Calendar}.
  */
 public class CalendarManager implements ReadOnlyCalendarManager {
     private final Calendar calendar;

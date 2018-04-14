@@ -1,5 +1,5 @@
 package seedu.address.logic.parser;
-
+//@@author SuxianAlicia
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -11,7 +11,6 @@ import org.junit.Test;
 import seedu.address.logic.commands.FindPreferenceCommand;
 import seedu.address.model.person.PreferencesContainKeywordsPredicate;
 
-//@@author SuxianAlicia
 public class FindPreferenceCommandParserTest {
     private FindPreferenceCommandParser parser = new FindPreferenceCommandParser();
 

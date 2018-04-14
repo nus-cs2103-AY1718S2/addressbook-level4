@@ -85,6 +85,7 @@ public class CalendarJumpCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ChangeCalendarDateRequestEvent);
         ChangeCalendarDateRequestEvent lastEvent = (ChangeCalendarDateRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
         assertEquals(date, lastEvent.getDate());

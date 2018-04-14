@@ -1,4 +1,4 @@
-package seedu.address.model.event;
+package seedu.address.model.entry;
 //@@author SuxianAlicia
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -16,7 +16,6 @@ public class CalendarEntry {
     private final EndDate endDate;
     private final StartTime startTime;
     private final EndTime endTime;
-
 
     /**
      * Every field must be present, and not null.

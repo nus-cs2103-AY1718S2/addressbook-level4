@@ -14,7 +14,7 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ResetPersonPanelRequestEvent;
 
 /**
- * The Center Panel of the App that can switch between Person Panel and Calendar Panel.
+ * The Center Panel of the App that can switch between {@code Person Panel} and {@code Calendar Panel}.
  * Center Panel subscribes to Events meant for Person Panel and Calendar Panel
  * in order to handle the switching between the displays.
  */
@@ -40,7 +40,7 @@ public class CenterPanel extends UiPart<Region> {
     }
 
     /**
-     * Displays the Person Panel.
+     * Displays the Person Panel if it is not shown on CenterPanel.
      */
     public void displayPersonPanel() {
         if (!centerPlaceholder.getChildren().contains(personPanel.getRoot())) {
@@ -50,7 +50,7 @@ public class CenterPanel extends UiPart<Region> {
     }
 
     /**
-     * Displays the Calendar Panel.
+     * Displays the Calendar Panel if it is not shown on CenterPanel.
      */
     public void displayCalendarPanel() {
         if (!centerPlaceholder.getChildren().contains(calendarPanel.getRoot())) {

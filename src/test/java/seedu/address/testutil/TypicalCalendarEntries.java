@@ -6,13 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.CalendarManager;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
 /**
  * A utility class containing a list of {@code CalendarEntry} objects to be used in tests.
  */
 public class TypicalCalendarEntries {
+
     public static final CalendarEntry MEETING_BOSS = new CalendarEntryBuilder()
             .withEntryTitle("Meeting with boss")
             .withStartDate("06-06-2018")
@@ -42,7 +43,6 @@ public class TypicalCalendarEntries {
             .withEndTime("15:00").build();
 
     private TypicalCalendarEntries() {} // prevents instantiation
-
 
     public static CalendarManager getTypicalCalendarManagerWithEntries() {
         CalendarManager cm = new CalendarManager();

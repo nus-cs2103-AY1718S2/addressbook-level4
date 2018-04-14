@@ -13,7 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 

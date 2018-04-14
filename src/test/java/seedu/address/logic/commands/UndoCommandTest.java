@@ -44,12 +44,12 @@ public class UndoCommandTest {
         deleteCommandTwo.execute();
 
         // multiple commands in undoStack
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), model.getCalendarManager(), new UserPrefs());
         deleteFirstPerson(expectedModel);
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in undoStack
-        expectedModel = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
+        expectedModel = new ModelManager(getTypicalAddressBook(), model.getCalendarManager(), new UserPrefs());
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in undoStack

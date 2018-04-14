@@ -1,6 +1,12 @@
 # SuxianAlicia
-###### /java/seedu/address/commons/events/model/CalendarManagerChangedEvent.java
+###### \java\seedu\address\commons\events\model\CalendarManagerChangedEvent.java
 ``` java
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.ReadOnlyCalendarManager;
+
+/**
+ * Indicates the CalendarManager in the model has changed
+ */
 public class CalendarManagerChangedEvent extends BaseEvent {
 
     public final ReadOnlyCalendarManager data;
@@ -13,11 +19,16 @@ public class CalendarManagerChangedEvent extends BaseEvent {
     public String toString() {
         return "number of calendar entries " + data.getCalendarEntryList().size();
     }
-
 }
 ```
-###### /java/seedu/address/commons/events/ui/CalendarEntryPanelSelectionChangedEvent.java
+###### \java\seedu\address\commons\events\ui\CalendarEntryPanelSelectionChangedEvent.java
 ``` java
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.ui.CalendarEntryCard;
+
+/**
+ * Represents a selection change in the Calendar Entry List Panel
+ */
 public class CalendarEntryPanelSelectionChangedEvent extends BaseEvent {
 
     private final CalendarEntryCard newSelection;
@@ -26,18 +37,101 @@ public class CalendarEntryPanelSelectionChangedEvent extends BaseEvent {
         this.newSelection = newSelection;
     }
 
+    public CalendarEntryCard getNewSelection() {
+        return newSelection;
+    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
+}
+```
+###### \java\seedu\address\commons\events\ui\ChangeCalendarDateRequestEvent.java
+``` java
+import java.time.LocalDate;
 
-    public CalendarEntryCard getNewSelection() {
-        return newSelection;
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Represents a request to display given {@code date} in calendar.
+ */
+public class ChangeCalendarDateRequestEvent extends BaseEvent {
+
+    private final LocalDate date;
+
+    public ChangeCalendarDateRequestEvent(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/DisplayCalendarEntryListEvent.java
+###### \java\seedu\address\commons\events\ui\ChangeCalendarPageRequestEvent.java
 ``` java
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Indicates request to change page that calendar is displaying.
+ * A page represents a day, week or month, depending on the current view of the calendar.
+ */
+public class ChangeCalendarPageRequestEvent extends BaseEvent {
+
+    private final String requestType;
+
+    public ChangeCalendarPageRequestEvent(String requestType) {
+        this.requestType = requestType;
+    }
+
+    public String getRequestType() {
+        return requestType;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\ChangeCalendarViewRequestEvent.java
+``` java
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Indicates request to display calendar.
+ */
+public class ChangeCalendarViewRequestEvent extends BaseEvent {
+
+    private final String calendarView;
+
+    public ChangeCalendarViewRequestEvent(String calendarView) {
+        this.calendarView = calendarView;
+    }
+
+    public String getView() {
+        return calendarView;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\DisplayCalendarEntryListEvent.java
+``` java
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Indicates request to display calendar entry list.
+ */
 public class DisplayCalendarEntryListEvent extends BaseEvent {
     @Override
     public String toString() {
@@ -45,31 +139,7 @@ public class DisplayCalendarEntryListEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/DisplayCalendarRequestEvent.java
-``` java
-public class DisplayCalendarRequestEvent extends BaseEvent {
-
-    private final Optional<String> calendarView;
-
-    public DisplayCalendarRequestEvent(Optional<String> calendarView) {
-        if (calendarView.isPresent()) {
-            this.calendarView = calendarView;
-        } else {
-            this.calendarView = null;
-        }
-    }
-
-    public String getView() {
-        return calendarView.isPresent() ? calendarView.get() : null;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### /java/seedu/address/commons/events/ui/DisplayOrderListEvent.java
+###### \java\seedu\address\commons\events\ui\DisplayOrderListEvent.java
 ``` java
 public class DisplayOrderListEvent extends BaseEvent {
 
@@ -79,7 +149,7 @@ public class DisplayOrderListEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/util/CalendarUtil.java
+###### \java\seedu\address\commons\util\CalendarEntryConversionUtil.java
 ``` java
 import static java.util.Objects.requireNonNull;
 
@@ -90,12 +160,12 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 /**
  * Provides utilities to convert between {@code Entry} used in CalendarFX and its Model Version, {@code CalendarEntry}.
  */
-public class CalendarUtil {
+public class CalendarEntryConversionUtil {
 
     /**
      * Converts {@code CalendarEntry} to {@code Entry} used in CalendarFX.
@@ -118,15 +188,25 @@ public class CalendarUtil {
         List<Entry<?>> convertedEntries = new ArrayList<>();
 
         for (CalendarEntry ce: calendarEntries) {
-            convertedEntries.add(CalendarUtil.convertToEntry(ce));
+            convertedEntries.add(CalendarEntryConversionUtil.convertToEntry(ce));
         }
 
         return convertedEntries;
     }
 }
 ```
-###### /java/seedu/address/commons/util/DateUtil.java
+###### \java\seedu\address\commons\util\DateUtil.java
 ``` java
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+/**
+ * Helper functions for handling Date related operations.
+ * Ensures that strings conform to a given Date Format.
+ */
 public class DateUtil {
     public static final String DATE_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}"; // format
     public static final String DATE_VALIDATION_FORMAT = "dd-MM-yyyy"; // legal dates
@@ -157,10 +237,9 @@ public class DateUtil {
 
         return convertedDate;
     }
-
 }
 ```
-###### /java/seedu/address/commons/util/EntryTimeConstraintsUtil.java
+###### \java\seedu\address\commons\util\EntryTimeConstraintsUtil.java
 ``` java
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -168,10 +247,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
 
 /**
  * Helper functions for checking StartDate, EndDate, StartTime, EndTime of {@code CalendarEntry}.
@@ -239,19 +318,29 @@ public class EntryTimeConstraintsUtil {
 
         if (eventIsShorterThanFifteenMinutes(startDate, endDate, startTime, endTime)) {
             throw new IllegalValueException(ENTRY_DURATION_CONSTRAINTS);
-
         }
-
     }
-
 }
 ```
-###### /java/seedu/address/commons/util/TimeUtil.java
+###### \java\seedu\address\commons\util\TimeUtil.java
 ``` java
+import static java.util.Objects.requireNonNull;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+/**
+ * Helper functions for handling strings representing Time.
+ * Ensures that strings conform to a given Time Format.
+ */
 public class TimeUtil {
     public static final String TIME_VALIDATION_REGEX = "\\d{2}:\\d{2}"; // format
     public static final String TIME_VALIDATION_FORMAT = "HH:mm"; // legal dates
     public static final String TIME_PATTERN = "HH:mm";
+
     /**
      * Returns true if given string is a valid time.
      */
@@ -265,7 +354,6 @@ public class TimeUtil {
         } catch (ParseException e) {
             return false;
         }
-
         return test.matches(TIME_VALIDATION_REGEX);
     }
 
@@ -281,7 +369,7 @@ public class TimeUtil {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddEntryCommand.java
+###### \java\seedu\address\logic\commands\AddEntryCommand.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
@@ -290,14 +378,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ENTRY_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
-import java.util.Optional;
-
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ChangeCalendarDateRequestEvent;
 import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
-import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
 /**
  * Adds a calendar entry to calendar manager.
@@ -313,7 +399,8 @@ public class AddEntryCommand extends UndoableCommand {
             + PREFIX_START_TIME + "[START_TIME] "
             + PREFIX_END_TIME + "END_TIME";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a calendar entry to the calendar.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a calendar entry to the calendar"
+            + " and displays the calendar with the entry's start date.\n"
             + "Parameters: "
             + PREFIX_ENTRY_TITLE + "ENTRY_TITLE "
             + "[" + PREFIX_START_DATE + "START_DATE] "
@@ -345,7 +432,7 @@ public class AddEntryCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addCalendarEntry(calEntryToAdd);
-            EventsCenter.getInstance().post(new DisplayCalendarRequestEvent(Optional.empty()));
+            EventsCenter.getInstance().post(new ChangeCalendarDateRequestEvent(calEntryToAdd.getDateToDisplay()));
             EventsCenter.getInstance().post(new DisplayCalendarEntryListEvent());
             return new CommandResult(String.format(MESSAGE_ADD_ENTRY_SUCCESS, calEntryToAdd));
         } catch (DuplicateCalendarEntryException dcee) {
@@ -361,10 +448,83 @@ public class AddEntryCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteEntryCommand.java
+###### \java\seedu\address\logic\commands\CalendarJumpCommand.java
 ``` java
-public class DeleteEntryCommand extends UndoableCommand {
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET_DATE;
 
+import java.time.LocalDate;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ChangeCalendarDateRequestEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+
+/**
+ * Displays specified date in Calendar.
+ */
+public class CalendarJumpCommand extends Command {
+
+    public static final String COMMAND_WORD = "calendarjump";
+    public static final String COMMAND_ALIAS = "caljump";
+
+    public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
+            + PREFIX_TARGET_DATE + "TARGET_DATE";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Displays given date in Calendar.\n"
+            + "Parameters: " + PREFIX_TARGET_DATE + "TARGET_DATE (must be in format DD-MM-YYY)\n"
+            + "Example: " + COMMAND_WORD + " 06-06-2018";
+
+    public static final String MESSAGE_CALENDAR_JUMP_SUCCESS = "Displayed Date: %1$s in Calendar.";
+
+    private final LocalDate date;
+    private final String dateString;
+
+    /**
+     * Creates CalendarJumpCommand with specified {@code LocalDate} to display in Calendar.
+     */
+    public CalendarJumpCommand(LocalDate date, String dateString) {
+        requireAllNonNull(date, dateString);
+        this.date = date;
+        this.dateString = dateString;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(date);
+        EventsCenter.getInstance().post(new ChangeCalendarDateRequestEvent(date));
+        return new CommandResult(String.format(MESSAGE_CALENDAR_JUMP_SUCCESS, dateString));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CalendarJumpCommand // instanceof handles nulls
+                && date.equals(((CalendarJumpCommand) other).date)
+                && dateString.equals(((CalendarJumpCommand) other).dateString));
+    }
+}
+```
+###### \java\seedu\address\logic\commands\DeleteEntryCommand.java
+``` java
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+import java.util.Objects;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
+
+/**
+ * Deletes a calendar entry identified using it's last displayed index from the address book.
+ */
+public class DeleteEntryCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "entrydelete";
     public static final String COMMAND_ALIAS = "ed";
@@ -418,7 +578,7 @@ public class DeleteEntryCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteGroupCommand.java
+###### \java\seedu\address\logic\commands\DeleteGroupCommand.java
 ``` java
 import static java.util.Objects.requireNonNull;
 
@@ -443,7 +603,6 @@ public class DeleteGroupCommand extends UndoableCommand {
 
     public static final String MESSAGE_DELETE_GROUP_SUCCESS = "Deleted GROUP: %1$s";
     public static final String MESSAGE_GROUP_NOT_FOUND = "Group does not exist in address book.";
-
 
     private Group groupToDelete;
 
@@ -470,7 +629,7 @@ public class DeleteGroupCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeletePreferenceCommand.java
+###### \java\seedu\address\logic\commands\DeletePreferenceCommand.java
 ``` java
 import static java.util.Objects.requireNonNull;
 
@@ -521,7 +680,7 @@ public class DeletePreferenceCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindGroupCommand.java
+###### \java\seedu\address\logic\commands\FindGroupCommand.java
 ``` java
 import seedu.address.model.person.GroupsContainKeywordsPredicate;
 
@@ -563,7 +722,7 @@ public class FindGroupCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindPreferenceCommand.java
+###### \java\seedu\address\logic\commands\FindPreferenceCommand.java
 ``` java
 import seedu.address.model.person.PreferencesContainKeywordsPredicate;
 
@@ -572,6 +731,7 @@ import seedu.address.model.person.PreferencesContainKeywordsPredicate;
  * Keyword matching is case insensitive.
  */
 public class FindPreferenceCommand extends Command {
+
     public static final String COMMAND_WORD = "preffind";
     public static final String COMMAND_ALIAS = "pf";
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
@@ -602,10 +762,9 @@ public class FindPreferenceCommand extends Command {
                 && this.preferencesContainKeywordsPredicate.equals
                 (((FindPreferenceCommand) other).preferencesContainKeywordsPredicate)); // state check
     }
-
 }
 ```
-###### /java/seedu/address/logic/commands/ListCalendarEntryCommand.java
+###### \java\seedu\address\logic\commands\ListCalendarEntryCommand.java
 ``` java
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
@@ -615,11 +774,11 @@ import seedu.address.model.Model;
  * List and display all calendar entries in the address book to the user.
  */
 public class ListCalendarEntryCommand extends Command {
+
     public static final String COMMAND_WORD = "entrylist";
     public static final String COMMAND_ALIAS = "el";
 
     public static final String MESSAGE_SUCCESS = "Listed all calendar entries";
-
 
     @Override
     public CommandResult execute() {
@@ -627,10 +786,9 @@ public class ListCalendarEntryCommand extends Command {
         EventsCenter.getInstance().post(new DisplayCalendarEntryListEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
-
 }
 ```
-###### /java/seedu/address/logic/commands/ListOrderCommand.java
+###### \java\seedu\address\logic\commands\ListOrderCommand.java
 ``` java
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 
@@ -655,8 +813,10 @@ public class ListOrderCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewBackCommand.java
+###### \java\seedu\address\logic\commands\ViewBackCommand.java
 ``` java
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_BACK;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -668,6 +828,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * This command will display the calendar if it is not displayed when command is executed.
  */
 public class ViewBackCommand extends Command {
+
     public static final String COMMAND_WORD = "calendarback";
     public static final String COMMAND_ALIAS = "calback";
 
@@ -678,7 +839,6 @@ public class ViewBackCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_VIEW_CALENDAR_BACK_SUCCESS = "Displayed previous page in Calendar.";
-    public static final String REQUEST_BACK = "Back";
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -693,11 +853,12 @@ public class ViewBackCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewCalendarCommand.java
+###### \java\seedu\address\logic\commands\ViewCalendarCommand.java
 ``` java
 import static java.util.Objects.requireNonNull;
-
-import java.util.Optional;
+import static seedu.address.ui.util.CalendarFxUtil.DAY_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.MONTH_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.WEEK_VIEW;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
@@ -707,6 +868,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * Displays Calendar in ContactSails in 3 possible viewing formats, Day, Week or Month.
  */
 public class ViewCalendarCommand extends Command {
+
     public static final String COMMAND_WORD = "calendar";
     public static final String COMMAND_ALIAS = "cal";
 
@@ -721,10 +883,6 @@ public class ViewCalendarCommand extends Command {
             + "Example: " + COMMAND_WORD + " day";
 
     public static final String MESSAGE_SHOW_CALENDAR_SUCCESS = "Display Calendar in %1$s-View.";
-
-    public static final String MONTH_VIEW = "Month";
-    public static final String DAY_VIEW = "Day";
-    public static final String WEEK_VIEW = "Week";
 
     private final String view;
 
@@ -744,9 +902,7 @@ public class ViewCalendarCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(view);
-        Optional<String> selectedView = Optional.of(view); //Guaranteed that view cannot be null
-
-        EventsCenter.getInstance().post(new DisplayCalendarRequestEvent(selectedView));
+        EventsCenter.getInstance().post(new ChangeCalendarViewRequestEvent(view));
         return new CommandResult(String.format(MESSAGE_SHOW_CALENDAR_SUCCESS, view));
     }
 
@@ -759,8 +915,10 @@ public class ViewCalendarCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ViewNextCommand.java
+###### \java\seedu\address\logic\commands\ViewNextCommand.java
 ``` java
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_NEXT;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -772,6 +930,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * This command will display the calendar if it is not displayed when command is executed.
  */
 public class ViewNextCommand extends Command {
+
     public static final String COMMAND_WORD = "calendarnext";
     public static final String COMMAND_ALIAS = "calnext";
 
@@ -782,7 +941,6 @@ public class ViewNextCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_VIEW_CALENDAR_NEXT_SUCCESS = "Displayed next page in Calendar.";
-    public static final String REQUEST_NEXT = "Next";
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -797,8 +955,10 @@ public class ViewNextCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewTodayCommand.java
+###### \java\seedu\address\logic\commands\ViewTodayCommand.java
 ``` java
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_TODAY;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -808,6 +968,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * This command will display the calendar if it is not displayed when command is executed.
  */
 public class ViewTodayCommand extends Command {
+
     public static final String COMMAND_WORD = "calendartoday";
     public static final String COMMAND_ALIAS = "caltoday";
 
@@ -816,7 +977,6 @@ public class ViewTodayCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_VIEW_CALENDAR_TODAY_SUCCESS = "Displayed Today in Calendar.";
-    public static final String REQUEST_TODAY = "Today";
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -831,10 +991,9 @@ public class ViewTodayCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddEntryCommandParser.java
+###### \java\seedu\address\logic\parser\AddEntryCommandParser.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.util.EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ENTRY_TITLE;
@@ -844,14 +1003,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.EntryTimeConstraintsUtil;
 import seedu.address.logic.commands.AddEntryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.EntryTitle;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
 
 /**
  * Parses input arguments and creates a new AddEntryCommand object
@@ -859,7 +1019,6 @@ import seedu.address.model.event.StartTime;
 public class AddEntryCommandParser implements Parser<AddEntryCommand> {
 
     public static final String STANDARD_START_TIME = "00:00"; //Start Time of event if StartTime not given
-
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddEntryCommand
@@ -878,7 +1037,6 @@ public class AddEntryCommandParser implements Parser<AddEntryCommand> {
         }
 
         try {
-
             EntryTitle entryTitle = ParserUtil.parseEventTitle(argMultimap.getValue(PREFIX_ENTRY_TITLE)).get();
             EndDate endDate = ParserUtil.parseEndDate(argMultimap.getValue(PREFIX_END_DATE)).get();
             StartDate startDate;
@@ -900,7 +1058,7 @@ public class AddEntryCommandParser implements Parser<AddEntryCommand> {
                 startTime = ParserUtil.parseStartTime(argMultimap.getValue(PREFIX_START_TIME)).get();
             }
 
-            checkCalendarEntryTimeConstraints(startDate, endDate, startTime, endTime);
+            EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints(startDate, endDate, startTime, endTime);
 
             CalendarEntry calendarEntry = new CalendarEntry(entryTitle, startDate, endDate, startTime, endTime);
             return new AddEntryCommand(calendarEntry);
@@ -919,7 +1077,54 @@ public class AddEntryCommandParser implements Parser<AddEntryCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/DeleteEntryCommandParser.java
+###### \java\seedu\address\logic\parser\CalendarJumpCommandParser.java
+``` java
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET_DATE;
+
+import java.time.LocalDate;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.CalendarJumpCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new CalendarJumpCommand object
+ */
+public class CalendarJumpCommandParser implements Parser<CalendarJumpCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the CalendarJumpCommand
+     * and returns an CalendarJumpCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    @Override
+    public CalendarJumpCommand parse(String userInput) throws ParseException {
+        requireNonNull(userInput);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(userInput, PREFIX_TARGET_DATE);
+
+        if (!isPrefixPresent(argMultimap, PREFIX_TARGET_DATE)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarJumpCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            String dateString = argMultimap.getValue(PREFIX_TARGET_DATE).get();
+            LocalDate date = ParserUtil.parseTargetDate(dateString);
+            return new CalendarJumpCommand(date, dateString);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
+
+    private boolean isPrefixPresent(ArgumentMultimap argMultimap, Prefix prefixTargetDate) {
+        return argMultimap.getValue(prefixTargetDate).isPresent();
+    }
+}
+```
+###### \java\seedu\address\logic\parser\DeleteEntryCommandParser.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -932,6 +1137,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new DeleteEntryCommand object
  */
 public class DeleteEntryCommandParser implements Parser<DeleteEntryCommand> {
+
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteEntryCommand
      * and returns an DeleteEntryCommand object for execution.
@@ -948,7 +1154,7 @@ public class DeleteEntryCommandParser implements Parser<DeleteEntryCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/DeleteGroupCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteGroupCommandParser.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -958,13 +1164,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Group;
 
 /**
- * Parses the given {@code String} of arguments in the context of the DeleteGroupCommand
- * and returns an DeleteGroupCommand object for execution.
- * @throws ParseException if the user input does not conform the expected format
+ * Parses input arguments and creates a new DeleteGroupCommand object.
  */
 public class DeleteGroupCommandParser implements Parser<DeleteGroupCommand> {
 
-    @Override
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteGroupCommand
+     * and returns an DeleteGroupCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public DeleteGroupCommand parse(String userInput) throws ParseException {
         try {
             Group group = ParserUtil.parseGroup(userInput);
@@ -976,7 +1184,7 @@ public class DeleteGroupCommandParser implements Parser<DeleteGroupCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/DeletePreferenceCommandParser.java
+###### \java\seedu\address\logic\parser\DeletePreferenceCommandParser.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -986,12 +1194,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Preference;
 
 /**
- * Parses the given {@code String} of arguments in the context of the DeletePreferenceCommand
- * and returns an DeletePreferenceCommand object for execution.
- * @throws ParseException if the user input does not conform the expected format
+ * Parses given arguments and creates a new DeletePreferenceCommand object.
  */
 public class DeletePreferenceCommandParser implements Parser<DeletePreferenceCommand> {
-    @Override
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeletePreferenceCommand
+     * and returns an DeletePreferenceCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public DeletePreferenceCommand parse(String userInput) throws ParseException {
         try {
             Preference preference = ParserUtil.parsePreference(userInput);
@@ -1003,7 +1214,7 @@ public class DeletePreferenceCommandParser implements Parser<DeletePreferenceCom
     }
 }
 ```
-###### /java/seedu/address/logic/parser/EditEntryCommandParser.java
+###### \java\seedu\address\logic\parser\EditEntryCommandParser.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -1067,10 +1278,9 @@ public class EditEntryCommandParser implements Parser<EditEntryCommand> {
 
         return new EditEntryCommand(index, editEntryDescriptor);
     }
-
 }
 ```
-###### /java/seedu/address/logic/parser/FindGroupCommandParser.java
+###### \java\seedu\address\logic\parser\FindGroupCommandParser.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -1084,6 +1294,7 @@ import seedu.address.model.person.GroupsContainKeywordsPredicate;
  * Parses input arguments and creates a new FindGroupCommand object
  */
 public class FindGroupCommandParser implements Parser<FindGroupCommand> {
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindGroupCommand
      * and returns an FindGroupCommand object for execution.
@@ -1102,7 +1313,7 @@ public class FindGroupCommandParser implements Parser<FindGroupCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindPreferenceCommandParser.java
+###### \java\seedu\address\logic\parser\FindPreferenceCommandParser.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -1116,6 +1327,7 @@ import seedu.address.model.person.PreferencesContainKeywordsPredicate;
  * Parses input arguments and creates a new FindPreferenceCommand object
  */
 public class FindPreferenceCommandParser implements Parser<FindPreferenceCommand> {
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindPreferenceCommand
      * and returns an FindPreferenceCommand object for execution.
@@ -1132,10 +1344,9 @@ public class FindPreferenceCommandParser implements Parser<FindPreferenceCommand
 
         return new FindPreferenceCommand(new PreferencesContainKeywordsPredicate(Arrays.asList(preferenceKeywords)));
     }
-
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Removes group from all persons who has the group
@@ -1193,7 +1404,7 @@ public class FindPreferenceCommandParser implements Parser<FindPreferenceCommand
         setPreferenceTags(newList.toSet());
     }
 ```
-###### /java/seedu/address/model/CalendarManager.java
+###### \java\seedu\address\model\CalendarManager.java
 ``` java
 import static java.util.Objects.requireNonNull;
 
@@ -1205,13 +1416,14 @@ import com.calendarfx.model.Calendar;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CalendarEntryConversionUtil;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.UniqueCalendarEntryList;
-import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.UniqueCalendarEntryList;
+import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
 /**
- * Manages {@code Calendar} as defined in CalendarFX and its related data.
+ * Manages {@code Calendar} as defined in CalendarFX and {@code UniqueCalendarEntryList},
+ * which contains {@code CalendarEntry} to be added to {@code Calendar}.
  */
 public class CalendarManager implements ReadOnlyCalendarManager {
     private final Calendar calendar;
@@ -1251,7 +1463,8 @@ public class CalendarManager implements ReadOnlyCalendarManager {
      */
     private void updateCalendar() {
         calendar.clear();
-        calendar.addEntries(CalendarUtil.convertEntireListToEntries(calendarEntryList.asObservableList()));
+        calendar.addEntries(
+                CalendarEntryConversionUtil.convertEntireListToEntries(calendarEntryList.asObservableList()));
     }
 
     /**
@@ -1321,10 +1534,11 @@ public class CalendarManager implements ReadOnlyCalendarManager {
     }
 }
 ```
-###### /java/seedu/address/model/event/CalendarEntry.java
+###### \java\seedu\address\model\event\CalendarEntry.java
 ``` java
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -1338,7 +1552,6 @@ public class CalendarEntry {
     private final EndDate endDate;
     private final StartTime startTime;
     private final EndTime endTime;
-
 
     /**
      * Every field must be present, and not null.
@@ -1372,6 +1585,10 @@ public class CalendarEntry {
 
     public EndTime getEndTime() {
         return endTime;
+    }
+
+    public LocalDate getDateToDisplay() {
+        return startDate.getLocalDate();
     }
 
     @Override
@@ -1413,7 +1630,7 @@ public class CalendarEntry {
     }
 }
 ```
-###### /java/seedu/address/model/event/EndDate.java
+###### \java\seedu\address\model\event\EndDate.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -1428,6 +1645,7 @@ import java.time.format.DateTimeParseException;
  * Guarantees: immutable; is valid as declared in {@link seedu.address.commons.util.DateUtil#isValidDate(String)}
  */
 public class EndDate {
+
     public static final String MESSAGE_END_DATE_CONSTRAINTS =
             "End Date should be DD-MM-YYYY, and it should not be blank";
 
@@ -1472,7 +1690,7 @@ public class EndDate {
     }
 }
 ```
-###### /java/seedu/address/model/event/EndTime.java
+###### \java\seedu\address\model\event\EndTime.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -1505,7 +1723,7 @@ public class EndTime {
             this.endTime = convertStringToTime(endTime);
             this.endTimeString = endTime;
         } catch (DateTimeParseException dtpe) {
-            throw new AssertionError("Given start time should be valid for conversion.");
+            throw new AssertionError("Given End time should be valid for conversion.");
         }
     }
 
@@ -1531,7 +1749,7 @@ public class EndTime {
     }
 }
 ```
-###### /java/seedu/address/model/event/EntryTitle.java
+###### \java\seedu\address\model\event\EntryTitle.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -1567,7 +1785,6 @@ public class EntryTitle {
         return test.matches(ENTRY_TITLE_VALIDATION_REGEX);
     }
 
-
     @Override
     public String toString() {
         return entryTitle;
@@ -1589,7 +1806,7 @@ public class EntryTitle {
     }
 }
 ```
-###### /java/seedu/address/model/event/exceptions/CalendarEntryNotFoundException.java
+###### \java\seedu\address\model\event\exceptions\CalendarEntryNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified CalendarEntry.
@@ -1597,12 +1814,12 @@ public class EntryTitle {
 public class CalendarEntryNotFoundException extends Exception {
 }
 ```
-###### /java/seedu/address/model/event/exceptions/DuplicateCalendarEntryException.java
+###### \java\seedu\address\model\event\exceptions\DuplicateCalendarEntryException.java
 ``` java
 import seedu.address.commons.exceptions.DuplicateDataException;
 
 /**
- * Signals that an operation would have violated the 'no duplicates' property of the list.
+ * Signals that an operation would have violated the 'no duplicates' property of the {@code UniqueCalendarEntryList}.
  */
 public class DuplicateCalendarEntryException extends DuplicateDataException {
 
@@ -1611,7 +1828,7 @@ public class DuplicateCalendarEntryException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/address/model/event/StartDate.java
+###### \java\seedu\address\model\event\StartDate.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -1626,6 +1843,7 @@ import java.time.format.DateTimeParseException;
  * Guarantees: immutable; is valid as declared in {@link seedu.address.commons.util.DateUtil#isValidDate(String)}
  */
 public class StartDate {
+
     public static final String MESSAGE_START_DATE_CONSTRAINTS =
             "Start Date should be DD-MM-YYYY, and it should not be blank";
 
@@ -1670,7 +1888,7 @@ public class StartDate {
     }
 }
 ```
-###### /java/seedu/address/model/event/StartTime.java
+###### \java\seedu\address\model\event\StartTime.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -1685,6 +1903,7 @@ import java.time.format.DateTimeParseException;
  * Guarantees: immutable; is valid as declared in {@link seedu.address.commons.util.TimeUtil#isValidTime(String)}
  */
 public class StartTime {
+
     public static final String MESSAGE_START_TIME_CONSTRAINTS =
             "Start Time should be HH:mm (24Hour Format), and it should not be blank";
 
@@ -1704,7 +1923,7 @@ public class StartTime {
             this.startTime = convertStringToTime(startTime);
             this.startTimeString = startTime;
         } catch (DateTimeParseException dtpe) {
-            throw new AssertionError("Given start time should be valid for conversion.");
+            throw new AssertionError("Given Start time should be valid for conversion.");
         }
     }
 
@@ -1730,7 +1949,7 @@ public class StartTime {
     }
 }
 ```
-###### /java/seedu/address/model/event/UniqueCalendarEntryList.java
+###### \java\seedu\address\model\event\UniqueCalendarEntryList.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -1742,8 +1961,8 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
 /**
  * A list of {@code CalendarEntry} that enforces no nulls and uniqueness between its elements.
@@ -1753,6 +1972,7 @@ import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
  * @see CalendarEntry#equals(Object)
  */
 public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
+
     private final ObservableList<CalendarEntry> internalList = FXCollections.observableArrayList();
 
     /**
@@ -1764,7 +1984,6 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
         for (CalendarEntry ce: calendarEntries) {
             replacement.add(ce);
         }
-
         setCalendarEntries(replacement);
     }
 
@@ -1871,7 +2090,7 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
     }
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Adds event to list of calendar events.
@@ -1902,21 +2121,21 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
     /** Returns the CalendarManager */
     ReadOnlyCalendarManager getCalendarManager();
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public ReadOnlyCalendarManager getCalendarManager() {
         return calendarManager;
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /** Raises an event to indicate calendar manager has changed */
     private void indicateCalendarManagerChanged() {
         raise(new CalendarManagerChangedEvent(calendarManager));
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void deleteGroup(Group targetGroup) throws GroupNotFoundException {
@@ -1930,7 +2149,7 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void addCalendarEntry(CalendarEntry toAdd) throws DuplicateCalendarEntryException {
@@ -1953,9 +2172,8 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
         calendarManager.updateCalendarEntry(entryToEdit, editedEntry);
         indicateCalendarManagerChanged();
     }
-
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public ObservableList<CalendarEntry> getFilteredCalendarEntryList() {
@@ -1973,7 +2191,7 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
         return calendarManager.getCalendar();
     }
 ```
-###### /java/seedu/address/model/person/GroupsContainKeywordsPredicate.java
+###### \java\seedu\address\model\person\GroupsContainKeywordsPredicate.java
 ``` java
 import java.util.List;
 import java.util.Set;
@@ -1986,6 +2204,7 @@ import seedu.address.commons.util.StringUtil;
  * Tests that a {@code Person} 's {@code Group}s' names matches any of the keywords given.
  */
 public class GroupsContainKeywordsPredicate implements Predicate<Person> {
+
     private final List<String> keywords;
 
     public GroupsContainKeywordsPredicate(List<String> keywords) {
@@ -2020,7 +2239,7 @@ public class GroupsContainKeywordsPredicate implements Predicate<Person> {
     }
 }
 ```
-###### /java/seedu/address/model/person/PreferencesContainKeywordsPredicate.java
+###### \java\seedu\address\model\person\PreferencesContainKeywordsPredicate.java
 ``` java
 import java.util.List;
 import java.util.Set;
@@ -2033,6 +2252,7 @@ import seedu.address.commons.util.StringUtil;
  * Tests that a {@code Person} 's {@code Preference}s' names matches any of the keywords given.
  */
 public class PreferencesContainKeywordsPredicate implements Predicate<Person> {
+
     private final List<String> keywords;
 
     public PreferencesContainKeywordsPredicate(List<String> keywords) {
@@ -2069,10 +2289,10 @@ public class PreferencesContainKeywordsPredicate implements Predicate<Person> {
     }
 }
 ```
-###### /java/seedu/address/model/ReadOnlyCalendarManager.java
+###### \java\seedu\address\model\ReadOnlyCalendarManager.java
 ``` java
 import javafx.collections.ObservableList;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 /**
  * Unmodifiable view of an calendar manager.
@@ -2086,7 +2306,7 @@ public interface ReadOnlyCalendarManager {
     ObservableList<CalendarEntry> getCalendarEntryList();
 }
 ```
-###### /java/seedu/address/model/tag/Group.java
+###### \java\seedu\address\model\tag\Group.java
 ``` java
 /**
  * Represents a Group in the address book.
@@ -2099,7 +2319,7 @@ public class Group extends Tag {
     }
 }
 ```
-###### /java/seedu/address/model/tag/Preference.java
+###### \java\seedu\address\model\tag\Preference.java
 ``` java
 /**
  * Represents a Preference in the address book.
@@ -2112,7 +2332,7 @@ public class Preference extends Tag {
     }
 }
 ```
-###### /java/seedu/address/model/util/SampleDataUtil.java
+###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
     /**
      * Returns a {@code CalendarManager} with no {@code CalendarEntry} in it.
@@ -2122,7 +2342,7 @@ public class Preference extends Tag {
         return sampleCm;
     }
 ```
-###### /java/seedu/address/storage/CalendarManagerStorage.java
+###### \java\seedu\address\storage\CalendarManagerStorage.java
 ``` java
 import java.io.IOException;
 import java.util.Optional;
@@ -2166,7 +2386,7 @@ public interface CalendarManagerStorage {
 
 }
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     @Override
     public String getCalendarManagerFilePath() {
@@ -2197,7 +2417,7 @@ public interface CalendarManagerStorage {
         calendarManagerStorage.saveCalendarManager(calendarManager, filePath);
     }
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     @Override
     @Subscribe
@@ -2212,23 +2432,22 @@ public interface CalendarManagerStorage {
         }
     }
 ```
-###### /java/seedu/address/storage/XmlAdaptedCalendarEntry.java
+###### \java\seedu\address\storage\XmlAdaptedCalendarEntry.java
 ``` java
-import static seedu.address.commons.util.EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints;
-
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.DateUtil;
+import seedu.address.commons.util.EntryTimeConstraintsUtil;
 import seedu.address.commons.util.TimeUtil;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.EntryTitle;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
 
 /**
  * JAXB-friendly version of a CalendarEntry.
@@ -2334,8 +2553,7 @@ public class XmlAdaptedCalendarEntry {
 
         final EndTime endTime = new EndTime(this.endTime);
 
-        checkCalendarEntryTimeConstraints(startDate, endDate, startTime, endTime);
-
+        EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints(startDate, endDate, startTime, endTime);
 
         return new CalendarEntry(entryTitle, startDate, endDate, startTime, endTime);
     }
@@ -2357,10 +2575,9 @@ public class XmlAdaptedCalendarEntry {
                 && Objects.equals(startTime, otherCalEvent.startTime)
                 && Objects.equals(endTime, otherCalEvent.endTime);
     }
-
 }
 ```
-###### /java/seedu/address/storage/XmlCalendarManagerStorage.java
+###### \java\seedu\address\storage\XmlCalendarManagerStorage.java
 ``` java
 import static java.util.Objects.requireNonNull;
 
@@ -2441,7 +2658,7 @@ public class XmlCalendarManagerStorage implements CalendarManagerStorage {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlFileStorage.java
+###### \java\seedu\address\storage\XmlFileStorage.java
 ``` java
     public static void saveCalendarManagerDataToFile(File file, XmlSerializableCalendarManager calendarManager)
             throws FileNotFoundException {
@@ -2465,7 +2682,7 @@ public class XmlCalendarManagerStorage implements CalendarManagerStorage {
         }
     }
 ```
-###### /java/seedu/address/storage/XmlSerializableCalendarManager.java
+###### \java\seedu\address\storage\XmlSerializableCalendarManager.java
 ``` java
 import java.util.ArrayList;
 import java.util.List;
@@ -2532,13 +2749,13 @@ public class XmlSerializableCalendarManager {
     }
 }
 ```
-###### /java/seedu/address/ui/CalendarEntryCard.java
+###### \java\seedu\address\ui\CalendarEntryCard.java
 ``` java
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 /**
  * An UI component that displays information of a {@code CalendarEntry}.
@@ -2598,7 +2815,7 @@ public class CalendarEntryCard extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/CalendarEntryListPanel.java
+###### \java\seedu\address\ui\CalendarEntryListPanel.java
 ``` java
 import java.util.logging.Logger;
 
@@ -2611,7 +2828,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CalendarEntryPanelSelectionChangedEvent;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 /**
  * Panel containing calendar entries present in calendar.
@@ -2668,8 +2885,16 @@ public class CalendarEntryListPanel extends UiPart<Region> {
 
 }
 ```
-###### /java/seedu/address/ui/CalendarPanel.java
+###### \java\seedu\address\ui\CalendarPanel.java
 ``` java
+import static java.util.Objects.requireNonNull;
+import static seedu.address.ui.util.CalendarFxUtil.DAY_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.MONTH_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_BACK;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_NEXT;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_TODAY;
+import static seedu.address.ui.util.CalendarFxUtil.WEEK_VIEW;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.logging.Logger;
@@ -2684,6 +2909,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeCalendarDateRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
 import seedu.address.ui.util.CalendarFxUtil;
@@ -2694,14 +2920,6 @@ import seedu.address.ui.util.CalendarFxUtil;
  */
 public class CalendarPanel extends UiPart<Region> {
 
-    private static final String DAY_VIEW = "Day";
-    private static final String MONTH_VIEW = "Month";
-    private static final String WEEK_VIEW = "Week";
-
-    private static final String REQUEST_TODAY = "Today";
-    private static final String REQUEST_BACK = "Back";
-    private static final String REQUEST_NEXT = "Next";
-
     private static final String FXML = "CalendarPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -2710,7 +2928,7 @@ public class CalendarPanel extends UiPart<Region> {
     private final CalendarSource calendarSource;
 
     @FXML
-    private StackPane calendarPanelholder;
+    private StackPane calendarPanelHolder;
 
     public CalendarPanel(Calendar calendar) {
         super(FXML);
@@ -2757,32 +2975,34 @@ public class CalendarPanel extends UiPart<Region> {
     public void initialiseCalendar(Calendar calendar) {
         calendarSource.getCalendars().addAll(calendar);
         calendarView.getCalendarSources().setAll(calendarSource);
-        calendarPanelholder.getChildren().setAll(calendarView);
+        calendarPanelHolder.getChildren().setAll(calendarView);
     }
 
     /**
      * Handles Request to display Calendar in specific viewing format.
      */
-    public void handleDisplayCalendarRequestEvent(DisplayCalendarRequestEvent event) {
+    public void handleChangeCalendarViewRequestEvent(ChangeCalendarViewRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         String view = event.getView();
-        if (view != null) {
-            if (view.equalsIgnoreCase(MONTH_VIEW)) {
-                calendarView.showMonthPage();
-            } else if (view.equalsIgnoreCase(DAY_VIEW)) {
-                calendarView.showDayPage();
-            } else if (view.equalsIgnoreCase(WEEK_VIEW)) {
-                calendarView.showWeekPage();
-            }
+        requireNonNull(view);
+
+        if (view.equalsIgnoreCase(MONTH_VIEW)) {
+            calendarView.showMonthPage();
+        } else if (view.equalsIgnoreCase(DAY_VIEW)) {
+            calendarView.showDayPage();
+        } else if (view.equalsIgnoreCase(WEEK_VIEW)) {
+            calendarView.showWeekPage();
         }
     }
 
     /**
-     * Handles request to change the current page of the Calendar.
+     * Handles request to change the current page of the Calendar to the page in {@code event}.
      */
     public void handleChangeCalendarPageRequestEvent(ChangeCalendarPageRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         String request = event.getRequestType();
+        requireNonNull(request);
+
         if (request.equals(REQUEST_TODAY)) {
             calendarView.getSelectedPage().goToday();
         } else if (request.equals(REQUEST_BACK)) {
@@ -2791,71 +3011,81 @@ public class CalendarPanel extends UiPart<Region> {
             calendarView.getSelectedPage().goForward();
         }
     }
+
+    /**
+     * Handles request to change the current date of the Calendar to the date in {@code event}.
+     */
+    public void handleChangeCalendarDateRequestEvent(ChangeCalendarDateRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        requireNonNull(event.getDate());
+        calendarView.setDate(event.getDate());
+    }
 }
 ```
-###### /java/seedu/address/ui/CentrePanel.java
+###### \java\seedu\address\ui\CenterPanel.java
 ``` java
 import com.calendarfx.model.Calendar;
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import seedu.address.commons.events.ui.ChangeCalendarDateRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
+import seedu.address.commons.events.ui.DisplayPersonPanelRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ResetPersonPanelRequestEvent;
-import seedu.address.model.event.CalendarEntry;
-
 
 /**
- * The Centre Panel of the App that can switch between Person Panel and Calendar Panel.
- * Centre Panel subscribes to Events meant for Person Panel and Calendar Panel
+ * The Center Panel of the App that can switch between {@code Person Panel} and {@code Calendar Panel}.
+ * Center Panel subscribes to Events meant for Person Panel and Calendar Panel
  * in order to handle the switching between the displays.
  */
-public class CentrePanel extends UiPart<Region> {
+public class CenterPanel extends UiPart<Region> {
 
-    private static final String FXML = "CentrePanel.fxml";
+    private static final String FXML = "CenterPanel.fxml";
 
     private CalendarPanel calendarPanel;
 
     private PersonPanel personPanel;
-    private ObservableList<CalendarEntry> calendarEvents;
 
     @FXML
-    private StackPane centrePlaceholder;
+    private StackPane centerPlaceholder;
 
-    public CentrePanel(Calendar calendar) {
+    public CenterPanel(Calendar calendar) {
         super(FXML);
 
         personPanel = new PersonPanel();
         calendarPanel = new CalendarPanel(calendar);
-        this.calendarEvents = calendarEvents;
 
         displayPersonPanel();
         registerAsAnEventHandler(this);
     }
 
     /**
-     * Displays the Person Panel.
+     * Displays the Person Panel if it is not shown on CenterPanel.
      */
     public void displayPersonPanel() {
-        centrePlaceholder.getChildren().clear();
-        centrePlaceholder.getChildren().add(personPanel.getRoot());
+        if (!centerPlaceholder.getChildren().contains(personPanel.getRoot())) {
+            centerPlaceholder.getChildren().clear();
+            centerPlaceholder.getChildren().add(personPanel.getRoot());
+        }
     }
 
     /**
-     * Displays the Calendar Panel.
+     * Displays the Calendar Panel if it is not shown on CenterPanel.
      */
     public void displayCalendarPanel() {
-        centrePlaceholder.getChildren().clear();
-        centrePlaceholder.getChildren().add(calendarPanel.getRoot());
+        if (!centerPlaceholder.getChildren().contains(calendarPanel.getRoot())) {
+            centerPlaceholder.getChildren().clear();
+            centerPlaceholder.getChildren().add(calendarPanel.getRoot());
+        }
     }
 
     @Subscribe
-    private void handleDisplayCalendarRequestEvent(DisplayCalendarRequestEvent event) {
-        calendarPanel.handleDisplayCalendarRequestEvent(event);
+    private void handleChangeCalendarViewRequestEvent(ChangeCalendarViewRequestEvent event) {
+        calendarPanel.handleChangeCalendarViewRequestEvent(event);
         displayCalendarPanel();
     }
 
@@ -2866,28 +3096,80 @@ public class CentrePanel extends UiPart<Region> {
     }
 
     @Subscribe
+    private void handleChangeCalendarDateRequestEvent(ChangeCalendarDateRequestEvent event) {
+        calendarPanel.handleChangeCalendarDateRequestEvent(event);
+        displayCalendarPanel();
+    }
+
+    @Subscribe
+    private void handleDisplayPersonPanelRequestEvent(DisplayPersonPanelRequestEvent event) {
+        displayPersonPanel();
+    }
+
+    @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         personPanel.handlePersonPanelSelectionChangedEvent(event);
         displayPersonPanel();
     }
 
     @Subscribe
-    private void handleResetPersonPanelEvent(ResetPersonPanelEvent event) {
-        if (centrePlaceholder.getChildren().contains(personPanel.getRoot())) {
-            personPanel = new PersonPanel();
-            displayPersonPanel();
-        }
+    private void handleResetPersonPanelRequestEvent(ResetPersonPanelRequestEvent event) {
+        personPanel.handleResetPersonPanelRequestEvent(event);
+        displayPersonPanel();
     }
 }
 ```
-###### /resources/view/CalendarPanel.fxml
+###### \java\seedu\address\ui\util\CalendarFxUtil.java
+``` java
+import com.calendarfx.view.CalendarView;
+import com.calendarfx.view.page.DayPage;
+
+/**
+ * Contains helper methods and list of constants related to handling CalendarFx display.
+ * Contains methods to initialise Calendar such that unused functions are not displayed, and mouse events are not
+ * listened to.
+ */
+public class CalendarFxUtil {
+
+    public static final String MONTH_VIEW = "Month";
+    public static final String DAY_VIEW = "Day";
+    public static final String WEEK_VIEW = "Week";
+
+    public static final String REQUEST_TODAY = "Today";
+    public static final String REQUEST_BACK = "Back";
+    public static final String REQUEST_NEXT = "Next";
+
+    /**
+     * Returns modified CalendarView such that unnecessary buttons and features are not shown.
+     */
+    public static CalendarView returnModifiedCalendarView() {
+        CalendarView calendarView = new CalendarView();
+
+        calendarView.setShowPageToolBarControls(false);
+        calendarView.setShowPrintButton(false);
+        calendarView.setShowAddCalendarButton(false);
+        calendarView.setShowSearchField(false);
+        calendarView.setShowSourceTray(false);
+        calendarView.setShowSourceTrayButton(false);
+        calendarView.setShowPageSwitcher(false);
+        calendarView.setShowSearchResultsTray(false);
+        calendarView.setShowToolBar(false);
+
+        calendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
+
+        //calendarView.getDayPage().setDisable(true);
+        return calendarView;
+    }
+}
+```
+###### \resources\view\CalendarPanel.fxml
 ``` fxml
 
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="calendarPanelholder" minHeight="400.0" minWidth="640.0" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" />
+<StackPane fx:id="calendarPanelHolder" minHeight="400.0" minWidth="640.0" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" />
 ```
-###### /resources/view/CentrePanel.fxml
+###### \resources\view\CenterPanel.fxml
 ``` fxml
 
 <?import javafx.scene.layout.StackPane?>
@@ -2895,7 +3177,7 @@ public class CentrePanel extends UiPart<Region> {
 
 <StackPane prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <StackPane fx:id="centrePlaceholder" prefHeight="400.0" prefWidth="640.0" />
+      <StackPane fx:id="centerPlaceholder" prefHeight="400.0" prefWidth="640.0" />
    </children>
 </StackPane>
 ```

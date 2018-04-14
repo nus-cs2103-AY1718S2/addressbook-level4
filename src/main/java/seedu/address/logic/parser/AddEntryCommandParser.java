@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 //@@author SuxianAlicia
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.util.EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ENTRY_TITLE;
@@ -11,22 +10,22 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.EntryTimeConstraintsUtil;
 import seedu.address.logic.commands.AddEntryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.EntryTitle;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
 
 /**
  * Parses input arguments and creates a new AddEntryCommand object
  */
 public class AddEntryCommandParser implements Parser<AddEntryCommand> {
 
-    public static final String STANDARD_START_TIME = "00:00"; //Start Time of event if StartTime not given
-
+    public static final String STANDARD_START_TIME = "00:00"; //Start Time of entry if StartTime not given
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddEntryCommand
@@ -45,7 +44,6 @@ public class AddEntryCommandParser implements Parser<AddEntryCommand> {
         }
 
         try {
-
             EntryTitle entryTitle = ParserUtil.parseEventTitle(argMultimap.getValue(PREFIX_ENTRY_TITLE)).get();
             EndDate endDate = ParserUtil.parseEndDate(argMultimap.getValue(PREFIX_END_DATE)).get();
             StartDate startDate;
@@ -67,7 +65,7 @@ public class AddEntryCommandParser implements Parser<AddEntryCommand> {
                 startTime = ParserUtil.parseStartTime(argMultimap.getValue(PREFIX_START_TIME)).get();
             }
 
-            checkCalendarEntryTimeConstraints(startDate, endDate, startTime, endTime);
+            EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints(startDate, endDate, startTime, endTime);
 
             CalendarEntry calendarEntry = new CalendarEntry(entryTitle, startDate, endDate, startTime, endTime);
             return new AddEntryCommand(calendarEntry);

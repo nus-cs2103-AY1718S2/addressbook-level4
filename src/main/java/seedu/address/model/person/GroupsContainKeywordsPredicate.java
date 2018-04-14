@@ -11,6 +11,7 @@ import seedu.address.commons.util.StringUtil;
  * Tests that a {@code Person} 's {@code Group}s' names matches any of the keywords given.
  */
 public class GroupsContainKeywordsPredicate implements Predicate<Person> {
+
     private final List<String> keywords;
 
     public GroupsContainKeywordsPredicate(List<String> keywords) {

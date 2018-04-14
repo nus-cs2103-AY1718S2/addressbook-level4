@@ -1,6 +1,5 @@
-//@@author SuxianAlicia
 package seedu.address.testutil;
-
+//@@author SuxianAlicia
 import seedu.address.model.tag.Preference;
 
 /**

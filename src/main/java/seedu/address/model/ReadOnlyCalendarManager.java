@@ -1,7 +1,7 @@
 package seedu.address.model;
 //@@author SuxianAlicia
 import javafx.collections.ObservableList;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 /**
  * Unmodifiable view of an calendar manager.

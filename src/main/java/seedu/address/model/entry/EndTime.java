@@ -1,4 +1,4 @@
-package seedu.address.model.event;
+package seedu.address.model.entry;
 //@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -48,7 +48,8 @@ public class EndTime {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof EndTime // instanceof handles nulls
-                && this.endTime.equals(((EndTime) other).endTime)); // state check
+                && this.endTime.equals(((EndTime) other).endTime)
+                && this.endTimeString.equals(((EndTime) other).endTimeString)); // state check
     }
 
     @Override

@@ -1,5 +1,5 @@
 package seedu.address.model;
-
+//@@author SuxianAlicia
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalCalendarEntries.MEETING_BOSS;
 import static seedu.address.testutil.TypicalCalendarEntries.getTypicalCalendarManagerWithEntries;
@@ -15,7 +15,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 public class CalendarManagerTest {
 
@@ -43,8 +43,8 @@ public class CalendarManagerTest {
     }
 
     @Test
-    public void resetData_withDuplicatePersons_throwsAssertionError() {
-        // Repeat ALICE twice
+    public void resetData_withDuplicateCalendarEntries_throwsAssertionError() {
+        // Repeat MEETING_BOSS twice
         List<CalendarEntry> newEntries = Arrays.asList(MEETING_BOSS, MEETING_BOSS);
         CalendarManagerStub newData = new CalendarManagerStub(newEntries);
 

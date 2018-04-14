@@ -8,13 +8,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Group;
 
 /**
- * Parses the given {@code String} of arguments in the context of the DeleteGroupCommand
- * and returns an DeleteGroupCommand object for execution.
- * @throws ParseException if the user input does not conform the expected format
+ * Parses input arguments and creates a new DeleteGroupCommand object.
  */
 public class DeleteGroupCommandParser implements Parser<DeleteGroupCommand> {
 
-    @Override
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteGroupCommand
+     * and returns an DeleteGroupCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public DeleteGroupCommand parse(String userInput) throws ParseException {
         try {
             Group group = ParserUtil.parseGroup(userInput);

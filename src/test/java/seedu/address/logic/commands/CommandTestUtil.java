@@ -30,7 +30,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -141,7 +141,7 @@ public class CommandTestUtil {
     public static final String INVALID_DELIVERY_DATE_DESC = " " + PREFIX_DELIVERY_DATE + "20-45-10000"; // illegal date
 
     public static final String INVALID_ENTRY_TITLE_DESC = " "
-            + PREFIX_ENTRY_TITLE + "M@@ting with the boss, "; // '@' and ',' are not allowed in event title.
+            + PREFIX_ENTRY_TITLE + "M@@ting with the boss, "; // '@' and ',' are not allowed in entry title.
     public static final String INVALID_START_DATE_DESC = " " + PREFIX_START_DATE + "31-02-2018"; // Illegal date
     public static final String INVALID_END_DATE_DESC = " " + PREFIX_END_DATE + "23-20-20000"; // Illegal date
     public static final String INVALID_START_TIME_DESC = " " + PREFIX_START_TIME + "12-30"; //Illegal time format
@@ -218,7 +218,8 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the address book, calendar manager, filtered person list, filtered order list, filtered calendar entry list
+     *   in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can

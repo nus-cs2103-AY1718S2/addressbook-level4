@@ -26,7 +26,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 import seedu.address.testutil.CalendarEntryBuilder;
 import seedu.address.testutil.EditEntryDescriptorBuilder;
 

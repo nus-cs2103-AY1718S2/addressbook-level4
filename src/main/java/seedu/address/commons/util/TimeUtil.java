@@ -16,6 +16,7 @@ public class TimeUtil {
     public static final String TIME_VALIDATION_REGEX = "\\d{2}:\\d{2}"; // format
     public static final String TIME_VALIDATION_FORMAT = "HH:mm"; // legal dates
     public static final String TIME_PATTERN = "HH:mm";
+
     /**
      * Returns true if given string is a valid time.
      */
@@ -29,7 +30,6 @@ public class TimeUtil {
         } catch (ParseException e) {
             return false;
         }
-
         return test.matches(TIME_VALIDATION_REGEX);
     }
 

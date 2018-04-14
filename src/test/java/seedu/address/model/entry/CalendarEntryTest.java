@@ -1,10 +1,9 @@
-package seedu.address.model.event;
-
+package seedu.address.model.entry;
+//@@author SuxianAlicia
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
-//@@author SuxianAlicia
 public class CalendarEntryTest {
 
     @Test

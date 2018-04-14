@@ -11,7 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CalendarEntryPanelSelectionChangedEvent;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 /**
  * Panel containing calendar entries present in calendar.

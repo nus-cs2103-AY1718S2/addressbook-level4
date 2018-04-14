@@ -78,6 +78,7 @@ public class ViewCalendarCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ChangeCalendarViewRequestEvent);
         ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
         assertEquals(DAY_VIEW, lastEvent.getView());
@@ -98,6 +99,7 @@ public class ViewCalendarCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ChangeCalendarViewRequestEvent);
         ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
         assertEquals(WEEK_VIEW, lastEvent.getView());
@@ -118,9 +120,9 @@ public class ViewCalendarCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ChangeCalendarViewRequestEvent);
         ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
         assertEquals(MONTH_VIEW, lastEvent.getView());
     }
-
 }

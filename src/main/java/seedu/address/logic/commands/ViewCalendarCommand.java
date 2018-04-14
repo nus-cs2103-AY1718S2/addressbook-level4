@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * Displays Calendar in ContactSails in 3 possible viewing formats, Day, Week or Month.
  */
 public class ViewCalendarCommand extends Command {
+
     public static final String COMMAND_WORD = "calendar";
     public static final String COMMAND_ALIAS = "cal";
 
@@ -27,7 +28,6 @@ public class ViewCalendarCommand extends Command {
             + "Example: " + COMMAND_WORD + " day";
 
     public static final String MESSAGE_SHOW_CALENDAR_SUCCESS = "Display Calendar in %1$s-View.";
-
 
     private final String view;
 

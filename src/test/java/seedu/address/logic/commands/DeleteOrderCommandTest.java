@@ -38,7 +38,8 @@ public class DeleteOrderCommandTest {
 
         String expectedMessage = String.format(DeleteOrderCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(),
+                new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
 
         assertCommandSuccess(deleteOrderCommand, model, expectedMessage, expectedModel);
@@ -59,7 +60,7 @@ public class DeleteOrderCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         DeleteOrderCommand deleteOrderCommand = prepareCommand(INDEX_FIRST_ORDER);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(), new UserPrefs());
 
         // delete -> first order deleted
         deleteOrderCommand.execute();

@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author SuxianAlicia
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,8 +24,11 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.GroupsContainKeywordsPredicate;
 import seedu.address.model.person.Person;
 
-//@@author SuxianAlicia
+/**
+ * Contains integration tests (interaction with the Model) for {@code FindGroupCommand}.
+ */
 public class FindGroupCommandTest {
+
     private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
     @Test
@@ -51,7 +54,7 @@ public class FindGroupCommandTest {
         // null -> returns false
         assertFalse(findGroupFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different predicates -> returns false
         assertFalse(findGroupFirstCommand.equals(findGroupSecondCommand));
     }
 

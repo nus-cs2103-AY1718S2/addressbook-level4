@@ -92,6 +92,5 @@ public class XmlSerializableAddressBook {
                 && groups.equals(otherAb.groups)
                 && preferences.equals(otherAb.preferences)
                 && orders.equals(otherAb.orders);
-
     }
 }

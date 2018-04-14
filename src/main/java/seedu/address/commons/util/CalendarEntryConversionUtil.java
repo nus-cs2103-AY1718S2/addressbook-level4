@@ -9,7 +9,7 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 /**
  * Provides utilities to convert between {@code Entry} used in CalendarFX and its Model Version, {@code CalendarEntry}.

@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
 import seedu.address.commons.events.ui.DisplayOrderListEvent;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 import seedu.address.model.order.Order;
 
 /**

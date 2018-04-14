@@ -12,7 +12,6 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.tag.UniquePreferenceList;
 
-//@@author SuxianAlicia
 public class UniquePreferenceListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

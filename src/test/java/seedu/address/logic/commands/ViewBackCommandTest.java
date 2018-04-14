@@ -55,6 +55,7 @@ public class ViewBackCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ChangeCalendarPageRequestEvent);
         ChangeCalendarPageRequestEvent lastEvent = (ChangeCalendarPageRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
         assertEquals(REQUEST_BACK, lastEvent.getRequestType());

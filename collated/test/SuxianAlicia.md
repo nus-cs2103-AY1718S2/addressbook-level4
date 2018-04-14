@@ -1,28 +1,234 @@
 # SuxianAlicia
-###### /java/guitests/guihandles/CalendarPanelHandle.java
+###### \java\guitests\guihandles\CalendarEntryCardHandle.java
 ``` java
-public class CalendarPanelHandle extends NodeHandle<StackPane> {
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 
-    public static final String CALENDAR_PANEL_ID = "#calendarPanelholder";
+/**
+ * Provides a handle to a calendar entry card in the calendar entry list panel.
+ */
+public class CalendarEntryCardHandle extends NodeHandle<Node> {
 
-    private Calendar calendar;
-    private CalendarSource calendarSource;
-    private CalendarView calendarView;
+    private static final String ID_FIELD_ID = "#id";
+    private static final String ENTRY_TITLE_ID = "#entryTitle";
+    private static final String START_DATE_ID = "#startDate";
+    private static final String END_DATE_ID = "#endDate";
+    private static final String TIME_DURATION_ID = "#timeDuration";
 
-    protected CalendarPanelHandle(StackPane rootNode) {
-        super(rootNode);
-        calendarView = CalendarFxUtil.returnModifiedCalendarView();
-        calendarSource = new CalendarSource();
-        calendar = new Calendar();
-        calendar.setReadOnly(true);
-        calendarSource.getCalendars().addAll(calendar);
-        calendarView.getCalendarSources().setAll(calendarSource);
-        getRootNode().getChildren().add(calendarView);
+    private final Label idLabel;
+    private final Label entryTitleLabel;
+    private final Label startDateLabel;
+    private final Label endDateLabel;
+    private final Label timeDurationLabel;
+
+    public CalendarEntryCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.idLabel = getChildNode(ID_FIELD_ID);
+        this.entryTitleLabel = getChildNode(ENTRY_TITLE_ID);
+        this.startDateLabel = getChildNode(START_DATE_ID);
+        this.endDateLabel = getChildNode(END_DATE_ID);
+        this.timeDurationLabel = getChildNode(TIME_DURATION_ID);
     }
 
+    public String getId() {
+        return idLabel.getText();
+    }
+
+    public String getEntryTitle() {
+        return entryTitleLabel.getText();
+    }
+
+    public String getStartDate() {
+        return startDateLabel.getText();
+    }
+
+    public String getEndDate() {
+        return endDateLabel.getText();
+    }
+
+    public String getTimeDuration() {
+        return timeDurationLabel.getText();
+    }
 }
 ```
-###### /java/seedu/address/commons/util/DateUtilTest.java
+###### \java\guitests\guihandles\CalendarEntryListPanelHandle.java
+``` java
+import java.util.List;
+import java.util.Optional;
+
+import javafx.scene.control.ListView;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.ui.CalendarEntryCard;
+
+/**
+ * Provides a handle for {@code CalendarEntryListPanel} containing the list of {@code CalendarEntryCard}.
+ */
+public class CalendarEntryListPanelHandle extends NodeHandle<ListView<CalendarEntryCard>> {
+
+    public static final String CALENDAR_ENTRY_LIST_VIEW_ID = "#calendarEntryCardListView";
+
+    public CalendarEntryListPanelHandle(ListView<CalendarEntryCard> rootNode) {
+        super(rootNode);
+    }
+
+    /**
+     * Navigates the listview to display and select the calendar entry.
+     */
+    public void navigateToCard(CalendarEntry calendarEntry) {
+        List<CalendarEntryCard> entryCards = getRootNode().getItems();
+        Optional<CalendarEntryCard> matchingCard = entryCards.stream()
+                .filter(entryCard -> entryCard.calendarEntry.equals(calendarEntry)).findFirst();
+
+        if (!matchingCard.isPresent()) {
+            throw  new IllegalArgumentException("Calendar Entry does not exist.");
+        }
+
+        guiRobot.interact(() -> {
+            getRootNode().scrollTo(matchingCard.get());
+            getRootNode().getSelectionModel().select(matchingCard.get());
+        });
+
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Returns the calendar entry card handle of an calendar entry associated with the {@code index} in the list.
+     */
+    public CalendarEntryCardHandle getCalendarEntryCardHandle (int index) {
+        return getCalendarEntryCardHandle(getRootNode().getItems().get(index).calendarEntry);
+    }
+
+    /**
+     * Returns the calendar entry card handle of an calendar entry
+     * associated with the {@code calendarEntry} in the list.
+     */
+    private CalendarEntryCardHandle getCalendarEntryCardHandle(CalendarEntry calendarEntry) {
+        Optional<CalendarEntryCardHandle> handle = getRootNode().getItems().stream()
+                .filter(entryCard -> entryCard.calendarEntry.equals(calendarEntry))
+                .map(orderCard -> new CalendarEntryCardHandle(orderCard.getRoot()))
+                .findFirst();
+        return handle.orElseThrow(() -> new IllegalArgumentException("Calendar Entry does not exist."));
+    }
+}
+```
+###### \java\guitests\guihandles\CalendarPanelHandle.java
+``` java
+import java.time.LocalDate;
+
+import com.calendarfx.view.CalendarView;
+import com.calendarfx.view.page.DayPage;
+import com.calendarfx.view.page.MonthPage;
+import com.calendarfx.view.page.WeekPage;
+
+import javafx.scene.layout.StackPane;
+
+/**
+ * A handler for {@code CalendarPanel} of the Ui.
+ */
+public class CalendarPanelHandle extends NodeHandle<StackPane> {
+
+    public static final String CALENDAR_PANEL_ID = "#calendarPanelHolder";
+
+    private static final String DAY_VIEW = "Day";
+    private static final String MONTH_VIEW = "Month";
+    private static final String WEEK_VIEW = "Week";
+
+    private CalendarView calendarView;
+
+    public CalendarPanelHandle(StackPane rootNode) {
+        super(rootNode);
+
+        if (getRootNode().getChildren().get(0) instanceof CalendarView) {
+            calendarView = (CalendarView) getRootNode().getChildren().get(0);
+        } else {
+            throw new AssertionError("#calendarPanelholder should have child node of CalendarView object.");
+        }
+    }
+
+    /**
+     * Returns the current view of {@code calendarView}.
+     */
+    public String getCurrentView() {
+        if (calendarView.getSelectedPage() instanceof MonthPage) {
+            return MONTH_VIEW;
+        } else if (calendarView.getSelectedPage() instanceof WeekPage) {
+            return WEEK_VIEW;
+        } else if (calendarView.getSelectedPage() instanceof DayPage) {
+            return DAY_VIEW;
+        }
+        return null;
+    }
+
+    /**
+     * Returns the current date displayed by {@code calendarView}.
+     */
+    public LocalDate getCurrentDate() {
+        return calendarView.getDate();
+    }
+
+    /**
+     * Returns today's date as stored in {@code calendarView}.
+     */
+    public LocalDate getTodayDate() {
+        return calendarView.getToday();
+    }
+}
+```
+###### \java\guitests\guihandles\CenterPanelHandle.java
+``` java
+
+import java.time.LocalDate;
+
+import com.calendarfx.model.Calendar;
+
+import javafx.scene.layout.StackPane;
+
+/**
+ * A handler for {@code CenterPanel} of the Ui.
+ */
+public class CenterPanelHandle extends NodeHandle<StackPane> {
+
+    public static final String CENTER_PANEL_ID = "#centerPlaceholder";
+
+    private PersonPanelHandle personPanelHandle;
+    private CalendarPanelHandle calendarPanelHandle;
+
+    public CenterPanelHandle(StackPane rootNode) {
+        super(rootNode);
+    }
+
+    /**
+     * Sets Up {@code CalendarPanelHandle}.
+     * This method is only invoked only after {@code CenterPanel} adds {@code CalendarPanel} to its root node.
+     */
+    public void setUpCalendarPanelHandle(Calendar calendar) {
+        calendarPanelHandle = new CalendarPanelHandle(getChildNode(CalendarPanelHandle.CALENDAR_PANEL_ID));
+    }
+
+    /**
+     * Returns the current view of the calendar.
+     */
+    public String getCalendarCurrentView() {
+        return calendarPanelHandle.getCurrentView();
+    }
+
+    /**
+     * Returns the current date displayed in the calendar.
+     */
+    public LocalDate getCalendarCurrentDate() {
+        return calendarPanelHandle.getCurrentDate();
+    }
+
+    /**
+     * Returns the date set as today in the calendar.
+     */
+    public LocalDate getCalendarTodayDate() {
+        return calendarPanelHandle.getTodayDate();
+    }
+}
+```
+###### \java\seedu\address\commons\util\DateUtilTest.java
 ``` java
 
 import static org.junit.Assert.assertFalse;
@@ -88,7 +294,7 @@ public class DateUtilTest {
     }
 }
 ```
-###### /java/seedu/address/commons/util/EntryTimeConstraintsUtilTest.java
+###### \java\seedu\address\commons\util\EntryTimeConstraintsUtilTest.java
 ``` java
 
 import static junit.framework.TestCase.fail;
@@ -102,10 +308,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
 
 public class EntryTimeConstraintsUtilTest {
 
@@ -122,7 +328,7 @@ public class EntryTimeConstraintsUtilTest {
         try {
             EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints(startDate, endDate, startTime, endTime);
         } catch (IllegalValueException ive) {
-            fail("This test should not throw any exceptions.");
+            fail("This exception should not be thrown as the inputs are valid.");
         }
     }
 
@@ -171,7 +377,7 @@ public class EntryTimeConstraintsUtilTest {
     }
 }
 ```
-###### /java/seedu/address/commons/util/TimeUtilTest.java
+###### \java\seedu\address\commons\util\TimeUtilTest.java
 ``` java
 
 import static org.junit.Assert.assertFalse;
@@ -238,8 +444,48 @@ public class TimeUtilTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddEntryCommandTest.java
+###### \java\seedu\address\logic\commands\AddEntryCommandTest.java
 ``` java
+import static java.util.Objects.requireNonNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Predicate;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import com.calendarfx.model.Calendar;
+
+import javafx.collections.ObservableList;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCalendarManager;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.OrderNotFoundException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
+import seedu.address.model.tag.exceptions.GroupNotFoundException;
+import seedu.address.model.tag.exceptions.PreferenceNotFoundException;
+import seedu.address.testutil.CalendarEntryBuilder;
+
 public class AddEntryCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -252,7 +498,7 @@ public class AddEntryCommandTest {
 
     @Test
     public void execute_calendarEventAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingCalendarEventAdded modelStub = new ModelStubAcceptingCalendarEventAdded();
+        ModelStubAcceptingCalendarEntryAdded modelStub = new ModelStubAcceptingCalendarEntryAdded();
         CalendarEntry validEvent = new CalendarEntryBuilder().build();
 
         CommandResult commandResult = getAddEntryCommandForCalendarEvent(validEvent, modelStub).execute();
@@ -459,7 +705,7 @@ public class AddEntryCommandTest {
     /**
      * A Model stub that always accepts the calendarEvent being added.
      */
-    private class ModelStubAcceptingCalendarEventAdded extends ModelStub {
+    private class ModelStubAcceptingCalendarEntryAdded extends ModelStub {
         final ArrayList<CalendarEntry> calendarEventsAdded = new ArrayList<>();
 
         @Override
@@ -467,12 +713,6 @@ public class AddEntryCommandTest {
                 throws DuplicateCalendarEntryException {
             requireNonNull(calendarEntry);
             calendarEventsAdded.add(calendarEntry);
-        }
-
-        /* To fix later on */
-        @Override
-        public ObservableList<CalendarEntry> getFilteredCalendarEntryList() {
-            return null;
         }
 
         @Override
@@ -487,8 +727,127 @@ public class AddEntryCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteEntryCommandTest.java
+###### \java\seedu\address\logic\commands\CalendarJumpCommandTest.java
 ``` java
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalLocalDates.LEAP_YEAR_DATE;
+import static seedu.address.testutil.TypicalLocalDates.LEAP_YEAR_DATE_STRING;
+import static seedu.address.testutil.TypicalLocalDates.NORMAL_DATE;
+import static seedu.address.testutil.TypicalLocalDates.NORMAL_DATE_STRING;
+
+import java.time.LocalDate;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.commons.events.ui.ChangeCalendarDateRequestEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.ui.testutil.EventsCollectorRule;
+
+public class CalendarJumpCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void constructor_nullDate_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new CalendarJumpCommand(null, LEAP_YEAR_DATE_STRING);
+    }
+
+    @Test
+    public void constructor_nullDateString_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new CalendarJumpCommand(LEAP_YEAR_DATE, null);
+    }
+
+    @Test
+    public void execute_validDateAndDateStringGiven_success() {
+        assertSwitchDateSuccess(LEAP_YEAR_DATE, LEAP_YEAR_DATE_STRING);
+    }
+
+    @Test
+    public void equals() {
+        CalendarJumpCommand calendarJumpFirstCommand = new CalendarJumpCommand(LEAP_YEAR_DATE, LEAP_YEAR_DATE_STRING);
+        CalendarJumpCommand calendarJumpSecondCommand = new CalendarJumpCommand(NORMAL_DATE, LEAP_YEAR_DATE_STRING);
+        CalendarJumpCommand calendarJumpThirdCommand = new CalendarJumpCommand(LEAP_YEAR_DATE, NORMAL_DATE_STRING);
+
+        // same object -> returns true
+        assertTrue(calendarJumpFirstCommand.equals(calendarJumpFirstCommand));
+
+        // same values -> returns true
+        CalendarJumpCommand calendarJumpFirstCommandCopy =
+                new CalendarJumpCommand(LEAP_YEAR_DATE, LEAP_YEAR_DATE_STRING);
+        assertTrue(calendarJumpFirstCommand.equals(calendarJumpFirstCommandCopy));
+
+        // different date -> returns false
+        assertFalse(calendarJumpFirstCommand.equals(calendarJumpSecondCommand));
+
+        // different dateString -> returns false
+        assertFalse(calendarJumpFirstCommand.equals(calendarJumpThirdCommand));
+
+        // different types -> returns false
+        assertFalse(calendarJumpFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(calendarJumpFirstCommand.equals(null));
+    }
+
+    /**
+     * Executes a {@code CalendarJumpCommand},
+     * and checks that {@code ChangeCalendarDateRequestEvent} is raised with the given {@code LocalDate}.
+     */
+    private void assertSwitchDateSuccess(LocalDate date, String dateString) {
+        CalendarJumpCommand calendarJumpCommand = new CalendarJumpCommand(date, dateString);
+
+        try {
+            CommandResult commandResult = calendarJumpCommand.execute();
+            assertEquals(String.format(CalendarJumpCommand.MESSAGE_CALENDAR_JUMP_SUCCESS, dateString),
+                    commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+
+        ChangeCalendarDateRequestEvent lastEvent = (ChangeCalendarDateRequestEvent) eventsCollectorRule.eventsCollector
+                .getMostRecent();
+        assertEquals(date, lastEvent.getDate());
+    }
+}
+```
+###### \java\seedu\address\logic\commands\DeleteEntryCommandTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
+import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
+import static seedu.address.testutil.TypicalCalendarEntries.getTypicalCalendarManagerWithEntries;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ENTRY;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ENTRY;
+import static seedu.address.testutil.TypicalOrders.getTypicalAddressBookWithOrders;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.entry.CalendarEntry;
+
+/**
+ * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
+ * {@code  DeleteEntryCommand}.
+ */
 public class DeleteEntryCommandTest {
     private Model model = new ModelManager(getTypicalAddressBookWithOrders(),
             getTypicalCalendarManagerWithEntries(), new UserPrefs());
@@ -588,8 +947,32 @@ public class DeleteEntryCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteGroupCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteGroupCommandTest.java
 ``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
+import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
+import static seedu.address.testutil.TypicalGroups.COLLEAGUES;
+import static seedu.address.testutil.TypicalGroups.FRIENDS;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.CalendarManager;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.tag.Group;
+
+/**
+ * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
+ * {@code DeleteGroupCommand}.
+ */
 public class DeleteGroupCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
@@ -600,7 +983,8 @@ public class DeleteGroupCommandTest {
 
         String expectedMessage = String.format(DeleteGroupCommand.MESSAGE_DELETE_GROUP_SUCCESS, groupToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(),
+                new UserPrefs());
         expectedModel.deleteGroup(groupToDelete);
 
         assertCommandSuccess(deleteGroupCommand, model, expectedMessage, expectedModel);
@@ -621,7 +1005,7 @@ public class DeleteGroupCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Group groupToDelete = FRIENDS;
         DeleteGroupCommand deleteGroupCommand = prepareCommand(groupToDelete);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(), new UserPrefs());
 
         // delete -> friends group deleted
         deleteGroupCommand.execute();
@@ -683,8 +1067,33 @@ public class DeleteGroupCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeletePreferenceCommandTest.java
+###### \java\seedu\address\logic\commands\DeletePreferenceCommandTest.java
 ``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
+import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
+
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPreferences.COMPUTERS;
+import static seedu.address.testutil.TypicalPreferences.SHOES;
+
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.CalendarManager;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.tag.Preference;
+
+/**
+ * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
+ * {@code DeletePreferenceCommand}.
+ */
 public class DeletePreferenceCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
@@ -778,7 +1187,7 @@ public class DeletePreferenceCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditEntryCommandTest.java
+###### \java\seedu\address\logic\commands\EditEntryCommandTest.java
 ``` java
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -806,7 +1215,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 import seedu.address.testutil.CalendarEntryBuilder;
 import seedu.address.testutil.EditEntryDescriptorBuilder;
 
@@ -971,7 +1380,7 @@ public class EditEntryCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditEntryDescriptorTest.java
+###### \java\seedu\address\logic\commands\EditEntryDescriptorTest.java
 ``` java
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -1031,9 +1440,37 @@ public class EditEntryDescriptorTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindGroupCommandTest.java
+###### \java\seedu\address\logic\commands\FindGroupCommandTest.java
 ``` java
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.GroupsContainKeywordsPredicate;
+import seedu.address.model.person.Person;
+
+/**
+ * Contains integration tests (interaction with the Model) for {@code FindGroupCommand}.
+ */
 public class FindGroupCommandTest {
+
     private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
     @Test
@@ -1103,9 +1540,38 @@ public class FindGroupCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindPreferenceCommandTest.java
+###### \java\seedu\address\logic\commands\FindPreferenceCommandTest.java
 ``` java
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.PreferencesContainKeywordsPredicate;
+
+/**
+ * Contains integration tests (interaction with the Model) for {@code FindPreferenceCommand}.
+ */
 public class FindPreferenceCommandTest {
+
     private Model model = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
 
     @Test
@@ -1177,8 +1643,24 @@ public class FindPreferenceCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ListCalendarEntryCommandTest.java
+###### \java\seedu\address\logic\commands\ListCalendarEntryCommandTest.java
 ``` java
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalCalendarEntries.getTypicalCalendarManagerWithEntries;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ListCalendarEntryCommand.
+ */
 public class ListCalendarEntryCommandTest {
 
     private Model model;
@@ -1200,8 +1682,23 @@ public class ListCalendarEntryCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ListOrderCommandTest.java
+###### \java\seedu\address\logic\commands\ListOrderCommandTest.java
 ``` java
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalOrders.getTypicalAddressBookWithOrders;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.CalendarManager;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ListOrderCommand.
+ */
 public class ListOrderCommandTest {
 
     private Model model;
@@ -1223,11 +1720,12 @@ public class ListOrderCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewBackCommandTest.java
+###### \java\seedu\address\logic\commands\ViewBackCommandTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_BACK;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -1281,15 +1779,18 @@ public class ViewBackCommandTest {
 
         ChangeCalendarPageRequestEvent lastEvent = (ChangeCalendarPageRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
-        assertEquals(ViewBackCommand.REQUEST_BACK, lastEvent.getRequestType());
+        assertEquals(REQUEST_BACK, lastEvent.getRequestType());
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewCalendarCommandTest.java
+###### \java\seedu\address\logic\commands\ViewCalendarCommandTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.ui.util.CalendarFxUtil.DAY_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.MONTH_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.WEEK_VIEW;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -1327,14 +1828,14 @@ public class ViewCalendarCommandTest {
 
     @Test
     public void equals() {
-        ViewCalendarCommand viewCalendarFirstCommand = new ViewCalendarCommand(ViewCalendarCommand.DAY_VIEW);
-        ViewCalendarCommand viewCalendarSecondCommand = new ViewCalendarCommand(ViewCalendarCommand.WEEK_VIEW);
+        ViewCalendarCommand viewCalendarFirstCommand = new ViewCalendarCommand(DAY_VIEW);
+        ViewCalendarCommand viewCalendarSecondCommand = new ViewCalendarCommand(WEEK_VIEW);
 
         // same object -> returns true
         assertTrue(viewCalendarFirstCommand.equals(viewCalendarFirstCommand));
 
         // same values -> returns true
-        ViewCalendarCommand selectFirstCommandCopy = new ViewCalendarCommand(ViewCalendarCommand.DAY_VIEW);
+        ViewCalendarCommand selectFirstCommandCopy = new ViewCalendarCommand(DAY_VIEW);
         assertTrue(viewCalendarFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false
@@ -1349,27 +1850,27 @@ public class ViewCalendarCommandTest {
 
     /**
      * Executes a {@code ViewCalendarCommand} with the given {@code view},
-     * and checks that {@code DisplayCalendarRequestEvent} is raised with the day view.
+     * and checks that {@code ChangeCalendarViewRequestEvent} is raised with the day view.
      */
     private void assertShowDayViewSuccess(String view) {
         ViewCalendarCommand viewCalendarCommand = new ViewCalendarCommand(view);
 
         try {
             CommandResult commandResult = viewCalendarCommand.execute();
-            assertEquals(String.format(ViewCalendarCommand.MESSAGE_SHOW_CALENDAR_SUCCESS, ViewCalendarCommand.DAY_VIEW),
+            assertEquals(String.format(ViewCalendarCommand.MESSAGE_SHOW_CALENDAR_SUCCESS, DAY_VIEW),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        DisplayCalendarRequestEvent lastEvent = (DisplayCalendarRequestEvent) eventsCollectorRule.eventsCollector
+        ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
-        assertEquals(ViewCalendarCommand.DAY_VIEW, lastEvent.getView());
+        assertEquals(DAY_VIEW, lastEvent.getView());
     }
 
     /**
      * Executes a {@code ViewCalendarCommand} with the given {@code view},
-     * and checks that {@code DisplayCalendarRequestEvent} is raised with the week view.
+     * and checks that {@code ChangeCalendarViewRequestEvent} is raised with the week view.
      */
     private void assertShowWeekViewSuccess(String view) {
         ViewCalendarCommand viewCalendarCommand = new ViewCalendarCommand(view);
@@ -1377,19 +1878,19 @@ public class ViewCalendarCommandTest {
         try {
             CommandResult commandResult = viewCalendarCommand.execute();
             assertEquals(String.format(ViewCalendarCommand.MESSAGE_SHOW_CALENDAR_SUCCESS,
-                    ViewCalendarCommand.WEEK_VIEW), commandResult.feedbackToUser);
+                    WEEK_VIEW), commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        DisplayCalendarRequestEvent lastEvent = (DisplayCalendarRequestEvent) eventsCollectorRule.eventsCollector
+        ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
-        assertEquals(ViewCalendarCommand.WEEK_VIEW, lastEvent.getView());
+        assertEquals(WEEK_VIEW, lastEvent.getView());
     }
 
     /**
      * Executes a {@code ViewCalendarCommand} with the given {@code view},
-     * and checks that {@code DisplayCalendarRequestEvent} is raised with the month view.
+     * and checks that {@code ChangeCalendarViewRequestEvent} is raised with the month view.
      */
     private void assertShowMonthViewSuccess(String view) {
         ViewCalendarCommand viewCalendarCommand = new ViewCalendarCommand(view);
@@ -1397,23 +1898,23 @@ public class ViewCalendarCommandTest {
         try {
             CommandResult commandResult = viewCalendarCommand.execute();
             assertEquals(String.format(ViewCalendarCommand.MESSAGE_SHOW_CALENDAR_SUCCESS,
-                    ViewCalendarCommand.MONTH_VIEW), commandResult.feedbackToUser);
+                    MONTH_VIEW), commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        DisplayCalendarRequestEvent lastEvent = (DisplayCalendarRequestEvent) eventsCollectorRule.eventsCollector
+        ChangeCalendarViewRequestEvent lastEvent = (ChangeCalendarViewRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
-        assertEquals(ViewCalendarCommand.MONTH_VIEW, lastEvent.getView());
+        assertEquals(MONTH_VIEW, lastEvent.getView());
     }
-
 }
 ```
-###### /java/seedu/address/logic/commands/ViewNextCommandTest.java
+###### \java\seedu\address\logic\commands\ViewNextCommandTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_NEXT;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -1467,15 +1968,16 @@ public class ViewNextCommandTest {
 
         ChangeCalendarPageRequestEvent lastEvent = (ChangeCalendarPageRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
-        assertEquals(ViewNextCommand.REQUEST_NEXT, lastEvent.getRequestType());
+        assertEquals(REQUEST_NEXT, lastEvent.getRequestType());
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewTodayCommandTest.java
+###### \java\seedu\address\logic\commands\ViewTodayCommandTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_TODAY;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -1529,12 +2031,53 @@ public class ViewTodayCommandTest {
 
         ChangeCalendarPageRequestEvent lastEvent = (ChangeCalendarPageRequestEvent) eventsCollectorRule.eventsCollector
                 .getMostRecent();
-        assertEquals(ViewTodayCommand.REQUEST_TODAY, lastEvent.getRequestType());
+        assertEquals(REQUEST_TODAY, lastEvent.getRequestType());
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddEntryCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddEntryCommandParserTest.java
 ``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_GET_STOCKS;
+import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_GET_STOCKS;
+import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.ENTRY_TITLE_DESC_GET_STOCKS;
+import static seedu.address.logic.commands.CommandTestUtil.ENTRY_TITLE_DESC_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_DATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_TIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ENTRY_TITLE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_DATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_DATE_LATER_THAN_END_DATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_TIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_TIME_LATER_THAN_END_TIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_TIME_LESS_THAN_FIFTEEN_MINUTES_FROM_END_TIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_GET_STOCKS;
+import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_GET_STOCKS;
+import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_BOSS;
+import static seedu.address.logic.parser.AddEntryCommandParser.STANDARD_START_TIME;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.commons.util.EntryTimeConstraintsUtil;
+import seedu.address.logic.commands.AddEntryCommand;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
+import seedu.address.testutil.CalendarEntryBuilder;
+
 public class AddEntryCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
@@ -1590,6 +2133,7 @@ public class AddEntryCommandParserTest {
 
     @Test
     public void parse_optionalFieldsMissing_success() {
+
         // No start Date - Start Date should match End Date
         CalendarEntry expectedCalEvent = new CalendarEntryBuilder()
                 .withEntryTitle(VALID_ENTRY_TITLE_MEET_BOSS)
@@ -1632,6 +2176,7 @@ public class AddEntryCommandParserTest {
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
+
         // Missing Event Title prefix
         assertParseFailure(parser,  VALID_ENTRY_TITLE_MEET_BOSS
                         + START_DATE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
@@ -1659,6 +2204,7 @@ public class AddEntryCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
+
         // Invalid Event Title
         assertParseFailure(parser,  INVALID_ENTRY_TITLE_DESC
                         + START_DATE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
@@ -1708,7 +2254,47 @@ public class AddEntryCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/EditEntryCommandParserTest.java
+###### \java\seedu\address\logic\parser\CalendarJumpCommandParserTest.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATE_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET_DATE;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalLocalDates.NORMAL_DATE;
+import static seedu.address.testutil.TypicalLocalDates.NORMAL_DATE_STRING;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.CalendarJumpCommand;
+
+public class CalendarJumpCommandParserTest {
+
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarJumpCommand.MESSAGE_USAGE);
+
+    private CalendarJumpCommandParser parser = new CalendarJumpCommandParser();
+
+    @Test
+    public void parse_compulsoryFieldMissing_failure() {
+        // Missing Target Date prefix
+        assertParseFailure(parser, NORMAL_DATE_STRING,
+                MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidTargetDate_failure() {
+        assertParseFailure(parser, " " + PREFIX_TARGET_DATE + "06.06.1990", MESSAGE_INVALID_DATE_FORMAT);
+    }
+
+    @Test
+    public void parse_validTargetDate_success() {
+        assertParseSuccess(parser, " " + PREFIX_TARGET_DATE + NORMAL_DATE_STRING,
+                new CalendarJumpCommand(NORMAL_DATE, NORMAL_DATE_STRING));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\EditEntryCommandParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_GET_STOCKS;
@@ -1747,11 +2333,11 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditEntryCommand;
 import seedu.address.logic.commands.EditEntryCommand.EditEntryDescriptor;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.EntryTitle;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
 import seedu.address.testutil.EditEntryDescriptorBuilder;
 
 public class EditEntryCommandParserTest {
@@ -1931,8 +2517,19 @@ public class EditEntryCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindGroupCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindGroupCommandParserTest.java
 ``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import java.util.Arrays;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.FindGroupCommand;
+import seedu.address.model.person.GroupsContainKeywordsPredicate;
+
 public class FindGroupCommandParserTest {
 
     private FindGroupCommandParser parser = new FindGroupCommandParser();
@@ -1955,8 +2552,19 @@ public class FindGroupCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindPreferenceCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindPreferenceCommandParserTest.java
 ``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import java.util.Arrays;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.FindPreferenceCommand;
+import seedu.address.model.person.PreferencesContainKeywordsPredicate;
+
 public class FindPreferenceCommandParserTest {
     private FindPreferenceCommandParser parser = new FindPreferenceCommandParser();
 
@@ -1978,8 +2586,88 @@ public class FindPreferenceCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/event/CalendarEntryTest.java
+###### \java\seedu\address\model\CalendarManagerTest.java
 ``` java
+import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalCalendarEntries.MEETING_BOSS;
+import static seedu.address.testutil.TypicalCalendarEntries.getTypicalCalendarManagerWithEntries;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.entry.CalendarEntry;
+
+public class CalendarManagerTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private final CalendarManager calendarManager = new CalendarManager();
+
+    @Test
+    public void constructor() {
+        assertEquals(Collections.emptyList(), calendarManager.getCalendarEntryList());
+    }
+
+    @Test
+    public void resetData_null_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        calendarManager.resetData(null);
+    }
+
+    @Test
+    public void resetData_withValidReadOnlyCalendarManager_replacesData() {
+        CalendarManager newData = getTypicalCalendarManagerWithEntries();
+        calendarManager.resetData(newData);
+        assertEquals(newData, calendarManager);
+    }
+
+    @Test
+    public void resetData_withDuplicatePersons_throwsAssertionError() {
+        // Repeat ALICE twice
+        List<CalendarEntry> newEntries = Arrays.asList(MEETING_BOSS, MEETING_BOSS);
+        CalendarManagerStub newData = new CalendarManagerStub(newEntries);
+
+        thrown.expect(AssertionError.class);
+        calendarManager.resetData(newData);
+    }
+
+
+    @Test
+    public void getCalendarEntryList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        calendarManager.getCalendarEntryList().remove(0);
+    }
+
+
+    private static class CalendarManagerStub implements ReadOnlyCalendarManager {
+        private final ObservableList<CalendarEntry> calendarEntries = FXCollections.observableArrayList();
+
+        CalendarManagerStub(Collection<CalendarEntry> calendarEntries) {
+            this.calendarEntries.setAll(calendarEntries);
+        }
+
+        @Override
+        public ObservableList<CalendarEntry> getCalendarEntryList() {
+            return calendarEntries;
+        }
+    }
+}
+```
+###### \java\seedu\address\model\event\CalendarEntryTest.java
+``` java
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
+
 public class CalendarEntryTest {
 
     @Test
@@ -1990,9 +2678,18 @@ public class CalendarEntryTest {
     }
 }
 ```
-###### /java/seedu/address/model/event/EndDateTest.java
+###### \java\seedu\address\model\event\EndDateTest.java
 ``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.commons.util.DateUtil;
+import seedu.address.testutil.Assert;
+
 public class EndDateTest {
+
     @Test
     public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new EndDate(null));
@@ -2025,8 +2722,16 @@ public class EndDateTest {
     }
 }
 ```
-###### /java/seedu/address/model/event/EndTimeTest.java
+###### \java\seedu\address\model\event\EndTimeTest.java
 ``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.commons.util.TimeUtil;
+import seedu.address.testutil.Assert;
+
 public class EndTimeTest {
 
     @Test
@@ -2061,8 +2766,15 @@ public class EndTimeTest {
     }
 }
 ```
-###### /java/seedu/address/model/event/EntryTitleTest.java
+###### \java\seedu\address\model\event\EntryTitleTest.java
 ``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
+
 public class EntryTitleTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -2091,8 +2803,16 @@ public class EntryTitleTest {
     }
 }
 ```
-###### /java/seedu/address/model/event/StartDateTest.java
+###### \java\seedu\address\model\event\StartDateTest.java
 ``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.commons.util.DateUtil;
+import seedu.address.testutil.Assert;
+
 public class StartDateTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -2126,8 +2846,16 @@ public class StartDateTest {
     }
 }
 ```
-###### /java/seedu/address/model/event/StartTimeTest.java
+###### \java\seedu\address\model\event\StartTimeTest.java
 ``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.commons.util.TimeUtil;
+import seedu.address.testutil.Assert;
+
 public class StartTimeTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -2161,8 +2889,229 @@ public class StartTimeTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueCalendarEntryListTest.java
+###### \java\seedu\address\model\person\GroupsContainKeywordsPredicateTest.java
 ``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalGroups.BUDDIES;
+import static seedu.address.testutil.TypicalGroups.COLLEAGUES;
+import static seedu.address.testutil.TypicalGroups.FRIENDS;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
+
+public class GroupsContainKeywordsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Arrays.asList(COLLEAGUES.tagName, BUDDIES.tagName);
+        List<String> secondPredicateKeywordList = Collections.singletonList(FRIENDS.tagName);
+
+        GroupsContainKeywordsPredicate firstPredicate = new GroupsContainKeywordsPredicate(firstPredicateKeywordList);
+        GroupsContainKeywordsPredicate secondPredicate = new GroupsContainKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        GroupsContainKeywordsPredicate firstPredicateCopy =
+                new GroupsContainKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_groupsContainsKeywords_returnsTrue() {
+        GroupsContainKeywordsPredicate predicate;
+        // One keyword
+        predicate = new GroupsContainKeywordsPredicate(Collections.singletonList(COLLEAGUES.tagName));
+        assertTrue(predicate.test(new PersonBuilder().withGroups(COLLEAGUES.tagName).build()));
+
+        // Multiple keywords
+        predicate = new GroupsContainKeywordsPredicate(Arrays.asList(COLLEAGUES.tagName, BUDDIES.tagName));
+        assertTrue(predicate.test(new PersonBuilder().withGroups(COLLEAGUES.tagName, BUDDIES.tagName).build()));
+
+        // Only one matching keyword
+        predicate = new GroupsContainKeywordsPredicate(Arrays.asList(FRIENDS.tagName, BUDDIES.tagName));
+        assertTrue(predicate.test(new PersonBuilder().withGroups(COLLEAGUES.tagName, BUDDIES.tagName).build()));
+
+        // Mixed-case keywords
+        predicate = new GroupsContainKeywordsPredicate(Arrays.asList("COlleAGUES", "BUDDIes"));
+        assertTrue(predicate.test(new PersonBuilder().withGroups(COLLEAGUES.tagName, BUDDIES.tagName).build()));
+    }
+
+    @Test
+    public void test_groupsDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        GroupsContainKeywordsPredicate predicate =
+                new GroupsContainKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withGroups(BUDDIES.tagName).build()));
+
+        // Non-matching keyword
+        predicate = new GroupsContainKeywordsPredicate(Collections.singletonList(COLLEAGUES.tagName));
+        assertFalse(predicate.test(new PersonBuilder().withGroups(BUDDIES.tagName, FRIENDS.tagName).build()));
+    }
+}
+```
+###### \java\seedu\address\model\person\PreferencesContainKeywordsPredicateTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalPreferences.NECKLACES;
+import static seedu.address.testutil.TypicalPreferences.SHOES;
+import static seedu.address.testutil.TypicalPreferences.VIDEO_GAMES;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
+
+public class PreferencesContainKeywordsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Arrays.asList(VIDEO_GAMES.tagName, SHOES.tagName);
+        List<String> secondPredicateKeywordList = Collections.singletonList(NECKLACES.tagName);
+
+        PreferencesContainKeywordsPredicate firstPredicate =
+                new PreferencesContainKeywordsPredicate(firstPredicateKeywordList);
+        PreferencesContainKeywordsPredicate secondPredicate =
+                new PreferencesContainKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        PreferencesContainKeywordsPredicate firstPredicateCopy =
+                new PreferencesContainKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_preferencesContainsKeywords_returnsTrue() {
+        PreferencesContainKeywordsPredicate predicate;
+        // One keyword
+        predicate = new PreferencesContainKeywordsPredicate(Collections.singletonList(VIDEO_GAMES.tagName));
+        assertTrue(predicate.test(new PersonBuilder().withPreferences(VIDEO_GAMES.tagName).build()));
+
+        // Multiple keywords
+        predicate = new PreferencesContainKeywordsPredicate(Arrays.asList(NECKLACES.tagName, SHOES.tagName));
+        assertTrue(predicate.test(new PersonBuilder().withPreferences(NECKLACES.tagName, SHOES.tagName).build()));
+
+        // Only one matching keyword
+        predicate = new PreferencesContainKeywordsPredicate(Arrays.asList(NECKLACES.tagName, SHOES.tagName));
+        assertTrue(predicate.test(new PersonBuilder().withPreferences(VIDEO_GAMES.tagName, SHOES.tagName).build()));
+
+        // Mixed-case keywords
+        predicate = new PreferencesContainKeywordsPredicate(Arrays.asList("NeCkLaCes", "ShoES"));
+        assertTrue(predicate.test(new PersonBuilder().withPreferences(NECKLACES.tagName, SHOES.tagName).build()));
+    }
+
+    @Test
+    public void test_preferencesDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        PreferencesContainKeywordsPredicate predicate =
+                new PreferencesContainKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withPreferences(VIDEO_GAMES.tagName).build()));
+
+        // Non-matching keyword
+        predicate = new PreferencesContainKeywordsPredicate(Collections.singletonList(VIDEO_GAMES.tagName));
+        assertFalse(predicate.test(new PersonBuilder().withPreferences(SHOES.tagName, NECKLACES.tagName).build()));
+    }
+}
+```
+###### \java\seedu\address\model\tag\GroupTest.java
+``` java
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
+
+public class GroupTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Group(null));
+    }
+
+    @Test
+    public void constructor_invalidGroupName_throwsIllegalArgumentException() {
+        String invalidGroupName = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Group(invalidGroupName));
+    }
+
+    @Test
+    public void isValidGroupName() {
+        // null group name
+        Assert.assertThrows(NullPointerException.class, () -> Group.isValidTagName(null));
+    }
+
+}
+```
+###### \java\seedu\address\model\tag\PreferenceTest.java
+``` java
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
+
+public class PreferenceTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Preference(null));
+    }
+
+    @Test
+    public void constructor_invalidPreferenceName_throwsIllegalArgumentException() {
+        String invalidPreferenceName = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Preference(invalidPreferenceName));
+    }
+
+    @Test
+    public void isValidPreferenceName() {
+        // null preference name
+        Assert.assertThrows(NullPointerException.class, () -> Preference.isValidTagName(null));
+    }
+}
+```
+###### \java\seedu\address\model\UniqueCalendarEntryListTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalCalendarEntries.GET_STOCKS;
+import static seedu.address.testutil.TypicalCalendarEntries.MEETING_BOSS;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.model.entry.UniqueCalendarEntryList;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
+
 public class UniqueCalendarEntryListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -2216,22 +3165,22 @@ public class UniqueCalendarEntryListTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueGroupListTest.java
+###### \java\seedu\address\storage\XmlAdaptedCalendarEntryTest.java
 ``` java
-public class UniqueGroupListTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+import static org.junit.Assert.assertEquals;
+import static seedu.address.storage.XmlAdaptedCalendarEntry.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.address.testutil.TypicalCalendarEntries.MEETING_BOSS;
 
-```
-###### /java/seedu/address/model/UniquePreferenceListTest.java
-``` java
-public class UniquePreferenceListTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+import org.junit.Test;
 
-```
-###### /java/seedu/address/storage/XmlAdaptedCalendarEntryTest.java
-``` java
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
+import seedu.address.testutil.Assert;
+
 public class XmlAdaptedCalendarEntryTest {
     private static final String INVALID_EVENT_TITLE = "M&&ting wi$h b@ss";
     private static final String INVALID_START_DATE = "30-02-2019";
@@ -2332,8 +3281,26 @@ public class XmlAdaptedCalendarEntryTest {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlCalendarManagerStorageTest.java
+###### \java\seedu\address\storage\XmlCalendarManagerStorageTest.java
 ``` java
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static seedu.address.testutil.TypicalCalendarEntries.WORKSHOP;
+import static seedu.address.testutil.TypicalCalendarEntries.getTypicalCalendarManagerWithEntries;
+
+import java.io.IOException;
+import java.util.Optional;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TemporaryFolder;
+
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.FileUtil;
+import seedu.address.model.CalendarManager;
+import seedu.address.model.ReadOnlyCalendarManager;
+
 public class XmlCalendarManagerStorageTest {
     private static final String TEST_DATA_FOLDER =
             FileUtil.getPath("./src/test/data/XmlCalendarManagerStorageTest/");
@@ -2432,13 +3399,10 @@ public class XmlCalendarManagerStorageTest {
         thrown.expect(NullPointerException.class);
         saveCalendarManager(new CalendarManager(), null);
     }
-
-
 }
 ```
-###### /java/seedu/address/storage/XmlSerializableCalendarManagerTest.java
+###### \java\seedu\address\storage\XmlSerializableCalendarManagerTest.java
 ``` java
-package seedu.address.storage;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -2485,14 +3449,14 @@ public class XmlSerializableCalendarManagerTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/CalendarEntryBuilder.java
+###### \java\seedu\address\testutil\CalendarEntryBuilder.java
 ``` java
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.EntryTitle;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
 
 /**
  * A utility class to help with building CalendarEntry objects.
@@ -2575,7 +3539,7 @@ public class CalendarEntryBuilder {
     }
 }
 ```
-###### /java/seedu/address/testutil/CalendarEntryUtil.java
+###### \java\seedu\address\testutil\CalendarEntryUtil.java
 ``` java
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
@@ -2584,7 +3548,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
 import seedu.address.logic.commands.AddEntryCommand;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 /**
  * A utility class for {@code CalendarEntry}.
@@ -2612,16 +3576,56 @@ public class CalendarEntryUtil {
     }
 }
 ```
-###### /java/seedu/address/testutil/EditEntryDescriptorBuilder.java
+###### \java\seedu\address\testutil\CalendarManagerBuilder.java
+``` java
+import seedu.address.model.CalendarManager;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
+
+/**
+ * A utility class to help with building CalendarManager objects.
+ * Example usage: <br>
+ *     {@code CalendarManager cm = new CalendarManagerBuilder().withEntries("Meet Boss", "Get Stocks").build();}
+ */
+public class CalendarManagerBuilder {
+    private CalendarManager calendarManager;
+
+    public CalendarManagerBuilder() {
+        calendarManager = new CalendarManager();
+    }
+
+    public CalendarManagerBuilder(CalendarManager calendarManager) {
+        this.calendarManager = calendarManager;
+    }
+
+    /**
+     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     */
+    public CalendarManagerBuilder withEntry(CalendarEntry calendarEntry) {
+        try {
+            calendarManager.addCalendarEntry(calendarEntry);
+        } catch (DuplicateCalendarEntryException dcee) {
+            throw new IllegalArgumentException("Entry is expected to be unique.");
+        }
+        return this;
+    }
+
+    public CalendarManager build() {
+        return calendarManager;
+    }
+}
+
+```
+###### \java\seedu\address\testutil\EditEntryDescriptorBuilder.java
 ``` java
 import seedu.address.logic.commands.EditEntryCommand;
 import seedu.address.logic.commands.EditEntryCommand.EditEntryDescriptor;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.EntryTitle;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
 
 /**
  * A utility class to help with building EditEntryDescriptor objects.
@@ -2691,7 +3695,45 @@ public class EditEntryDescriptorBuilder {
     }
 }
 ```
-###### /java/seedu/address/testutil/TypicalCalendarEntries.java
+###### \java\seedu\address\testutil\TypicalBaseEvents.java
+``` java
+
+import static seedu.address.testutil.TypicalLocalDates.LEAP_YEAR_DATE;
+import static seedu.address.ui.util.CalendarFxUtil.DAY_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.MONTH_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_BACK;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_NEXT;
+import static seedu.address.ui.util.CalendarFxUtil.REQUEST_TODAY;
+import static seedu.address.ui.util.CalendarFxUtil.WEEK_VIEW;
+
+import seedu.address.commons.events.ui.ChangeCalendarDateRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarPageRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarViewRequestEvent;
+
+/**
+ * A utility class containing a list of {@code BaseEvent} objects to be used in tests.
+ */
+public class TypicalBaseEvents {
+
+    public static final ChangeCalendarViewRequestEvent CHANGE_TO_DAY_EVENT =
+            new ChangeCalendarViewRequestEvent(DAY_VIEW);
+    public static final ChangeCalendarViewRequestEvent CHANGE_TO_MONTH_EVENT =
+            new ChangeCalendarViewRequestEvent(MONTH_VIEW);
+    public static final ChangeCalendarViewRequestEvent CHANGE_TO_WEEK_EVENT =
+            new ChangeCalendarViewRequestEvent(WEEK_VIEW);
+
+    public static final ChangeCalendarPageRequestEvent CHANGE_TO_NEXT_PAGE_EVENT =
+            new ChangeCalendarPageRequestEvent(REQUEST_NEXT);
+    public static final ChangeCalendarPageRequestEvent CHANGE_TO_PREVIOUS_PAGE_EVENT =
+            new ChangeCalendarPageRequestEvent(REQUEST_BACK);
+    public static final ChangeCalendarPageRequestEvent CHANGE_TO_TODAY_EVENT =
+            new ChangeCalendarPageRequestEvent(REQUEST_TODAY);
+
+    public static final ChangeCalendarDateRequestEvent CHANGE_DATE_EVENT =
+            new ChangeCalendarDateRequestEvent(LEAP_YEAR_DATE);
+}
+```
+###### \java\seedu\address\testutil\TypicalCalendarEntries.java
 ``` java
 package seedu.address.testutil;
 
@@ -2700,13 +3742,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.CalendarManager;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
 /**
  * A utility class containing a list of {@code CalendarEntry} objects to be used in tests.
  */
 public class TypicalCalendarEntries {
+
     public static final CalendarEntry MEETING_BOSS = new CalendarEntryBuilder()
             .withEntryTitle("Meeting with boss")
             .withStartDate("06-06-2018")
@@ -2737,7 +3780,6 @@ public class TypicalCalendarEntries {
 
     private TypicalCalendarEntries() {} // prevents instantiation
 
-
     public static CalendarManager getTypicalCalendarManagerWithEntries() {
         CalendarManager cm = new CalendarManager();
 
@@ -2756,17 +3798,15 @@ public class TypicalCalendarEntries {
     }
 }
 ```
-###### /java/seedu/address/testutil/TypicalGroups.java
+###### \java\seedu\address\testutil\TypicalGroups.java
 ``` java
-package seedu.address.testutil;
-
 import seedu.address.model.tag.Group;
-
 
 /**
  * A utility class containing a list of {@code Group} Objects to be used in tests.
  */
 public class TypicalGroups {
+
     public static final Group FRIENDS = new Group("friends");
     public static final Group COLLEAGUES = new Group("colleagues");
     public static final Group BUDDIES = new Group("buddies");
@@ -2775,13 +3815,32 @@ public class TypicalGroups {
     public static final Group NEIGHBOURS = new Group("neighbours");
 
     private TypicalGroups() {}
+}
+```
+###### \java\seedu\address\testutil\TypicalLocalDates.java
+``` java
+
+import java.time.LocalDate;
+
+import seedu.address.commons.util.DateUtil;
+
+/**
+ * A utility class containing a list of {@code Preference} Objects to be used in tests.
+ */
+public class TypicalLocalDates {
+    public static final String LEAP_YEAR_DATE_STRING = "29-02-2016";
+    public static final String NORMAL_DATE_STRING = "06-06-1990";
+
+    // Conversion to LocalDate from strings should not fail.
+    public static final LocalDate LEAP_YEAR_DATE = DateUtil.convertStringToDate(LEAP_YEAR_DATE_STRING);
+    public static final LocalDate NORMAL_DATE = DateUtil.convertStringToDate(NORMAL_DATE_STRING);
+
+    private TypicalLocalDates() {}
 
 }
 ```
-###### /java/seedu/address/testutil/TypicalPreferences.java
+###### \java\seedu\address\testutil\TypicalPreferences.java
 ``` java
-package seedu.address.testutil;
-
 import seedu.address.model.tag.Preference;
 
 /**
@@ -2798,7 +3857,7 @@ public class TypicalPreferences {
 
 }
 ```
-###### /java/seedu/address/ui/CalendarEntryCardTest.java
+###### \java\seedu\address\ui\CalendarEntryCardTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -2808,7 +3867,7 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysEntry;
 import org.junit.Test;
 
 import guitests.guihandles.CalendarEntryCardHandle;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 import seedu.address.testutil.CalendarEntryBuilder;
 
 public class CalendarEntryCardTest extends GuiUnitTest {
@@ -2838,17 +3897,17 @@ public class CalendarEntryCardTest extends GuiUnitTest {
         // different types -> returns false
         assertFalse(calendarEntryCard.equals(1));
 
-        // different order, same index -> returns false
+        // different calendar entry, same index -> returns false
         CalendarEntry differentEntry = new CalendarEntryBuilder().withEntryTitle("differentTitle").build();
         assertFalse(calendarEntryCard.equals(new CalendarEntryCard(differentEntry, 0)));
 
-        // same order, different index -> returns false
+        // same calendar entry, different index -> returns false
         assertFalse(calendarEntryCard.equals(new CalendarEntryCard(calendarEntry, 1)));
 
     }
 
     /**
-     * Asserts that {@code orderCard} displays the details of {@code expectedOrder} correctly and
+     * Asserts that {@code calendarEntryCard} displays the details of {@code expectedEntry} correctly and
      * matches {@code expectedId}.
      */
     private void assertCardDisplay(CalendarEntryCard calendarEntryCard, CalendarEntry expectedEntry, int expectedId) {
@@ -2859,12 +3918,12 @@ public class CalendarEntryCardTest extends GuiUnitTest {
         // verify that id is displayed correctly
         assertEquals(Integer.toString(expectedId) + ". ", entryCardHandle.getId());
 
-        // verify order details are displayed correctly
+        // verify calendar entry details are displayed correctly
         assertCardDisplaysEntry(expectedEntry, entryCardHandle);
     }
 }
 ```
-###### /java/seedu/address/ui/CalendarEntryListPanelTest.java
+###### \java\seedu\address\ui\CalendarEntryListPanelTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalCalendarEntries.getTypicalCalendarEntries;
@@ -2877,7 +3936,7 @@ import guitests.guihandles.CalendarEntryCardHandle;
 import guitests.guihandles.CalendarEntryListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 
 public class CalendarEntryListPanelTest extends GuiUnitTest {
     private static final ObservableList<CalendarEntry> TYPICAL_CAL_ENTRIES =
@@ -2891,7 +3950,7 @@ public class CalendarEntryListPanelTest extends GuiUnitTest {
         uiPartRule.setUiPart(calendarEntryListPanel);
 
         calendarEntryListPanelHandle = new CalendarEntryListPanelHandle(getChildNode(calendarEntryListPanel.getRoot(),
-                calendarEntryListPanelHandle.CALENDAR_ENTRY_LIST_VIEW_ID));
+                CalendarEntryListPanelHandle.CALENDAR_ENTRY_LIST_VIEW_ID));
     }
 
     @Test
@@ -2907,10 +3966,112 @@ public class CalendarEntryListPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/systemtests/DeleteGroupCommandSystemTest.java
+###### \java\seedu\address\ui\CalendarPanelTest.java
 ``` java
-package systemtests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.testutil.TypicalBaseEvents.CHANGE_DATE_EVENT;
+import static seedu.address.testutil.TypicalBaseEvents.CHANGE_TO_DAY_EVENT;
+import static seedu.address.testutil.TypicalBaseEvents.CHANGE_TO_MONTH_EVENT;
+import static seedu.address.testutil.TypicalBaseEvents.CHANGE_TO_NEXT_PAGE_EVENT;
+import static seedu.address.testutil.TypicalBaseEvents.CHANGE_TO_PREVIOUS_PAGE_EVENT;
+import static seedu.address.testutil.TypicalBaseEvents.CHANGE_TO_TODAY_EVENT;
+import static seedu.address.testutil.TypicalBaseEvents.CHANGE_TO_WEEK_EVENT;
+import static seedu.address.testutil.TypicalLocalDates.LEAP_YEAR_DATE;
+import static seedu.address.ui.util.CalendarFxUtil.DAY_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.MONTH_VIEW;
+import static seedu.address.ui.util.CalendarFxUtil.WEEK_VIEW;
+
+import java.time.LocalDate;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.calendarfx.model.Calendar;
+
+import guitests.guihandles.CenterPanelHandle;
+
+/**
+ * Contains integration tests (interaction with the CenterPanel) for {@code CalendarPanel}.
+ */
+public class CalendarPanelTest extends GuiUnitTest {
+    private static final Calendar calendar = new Calendar();
+
+    private CenterPanelHandle centerPanelHandle;
+
+    @Before
+    public void setUp() {
+        calendar.setReadOnly(true);
+        calendar.setStyle(Calendar.Style.STYLE1);
+        CenterPanel centerPanel = new CenterPanel(calendar);
+        centerPanel.displayCalendarPanel();
+        uiPartRule.setUiPart(centerPanel);
+
+        centerPanelHandle = new CenterPanelHandle(getChildNode(centerPanel.getRoot(),
+                CenterPanelHandle.CENTER_PANEL_ID));
+    }
+
+    @Test
+    public void handleChangeCalendarViewRequestEvent() {
+        centerPanelHandle.setUpCalendarPanelHandle(calendar);
+
+        postNow(CHANGE_TO_MONTH_EVENT);
+        guiRobot.pauseForHuman();
+        assertEquals(MONTH_VIEW, centerPanelHandle.getCalendarCurrentView());
+
+        postNow(CHANGE_TO_WEEK_EVENT);
+        guiRobot.pauseForHuman();
+        assertEquals(WEEK_VIEW, centerPanelHandle.getCalendarCurrentView());
+
+        postNow(CHANGE_TO_DAY_EVENT);
+        guiRobot.pauseForHuman();
+        assertEquals(DAY_VIEW, centerPanelHandle.getCalendarCurrentView());
+    }
+
+    @Test
+    public void handleChangeCalendarPageRequestEvent() {
+        centerPanelHandle.setUpCalendarPanelHandle(calendar);
+
+        LocalDate originalDate = centerPanelHandle.getCalendarCurrentDate();
+        postNow(CHANGE_TO_NEXT_PAGE_EVENT);
+        guiRobot.pauseForHuman();
+
+        LocalDate expectedDate = originalDate.plusDays(1);
+        assertEquals(expectedDate, centerPanelHandle.getCalendarCurrentDate());
+
+        postNow(CHANGE_TO_TODAY_EVENT);
+        guiRobot.pauseForHuman();
+
+        expectedDate = centerPanelHandle.getCalendarTodayDate();
+        assertEquals(expectedDate, centerPanelHandle.getCalendarCurrentDate());
+
+        originalDate = centerPanelHandle.getCalendarCurrentDate();
+        postNow(CHANGE_TO_PREVIOUS_PAGE_EVENT);
+        guiRobot.pauseForHuman();
+
+        expectedDate = originalDate.minusDays(1);
+        assertEquals(expectedDate, centerPanelHandle.getCalendarCurrentDate());
+
+    }
+
+    @Test
+    public void handleChangeCalendarDateRequestEvent() {
+        centerPanelHandle.setUpCalendarPanelHandle(calendar);
+
+        LocalDate previousDate = centerPanelHandle.getCalendarCurrentDate();
+        postNow(CHANGE_DATE_EVENT);
+        guiRobot.pauseForHuman();
+
+        assertNotEquals(previousDate, LEAP_YEAR_DATE);
+        assertEquals(LEAP_YEAR_DATE, centerPanelHandle.getCalendarCurrentDate());
+    }
+
+}
+```
+###### \java\systemtests\DeleteGroupCommandSystemTest.java
+``` java
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteGroupCommand.MESSAGE_DELETE_GROUP_SUCCESS;
@@ -3080,10 +4241,8 @@ public class DeleteGroupCommandSystemTest extends AddressBookSystemTest {
 
 
 ```
-###### /java/systemtests/DeletePreferenceCommandSystemTest.java
+###### \java\systemtests\DeletePreferenceCommandSystemTest.java
 ``` java
-package systemtests;
-
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeletePreferenceCommand.MESSAGE_DELETE_PREFERENCE_SUCCESS;
@@ -3249,10 +4408,8 @@ public class DeletePreferenceCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### /java/systemtests/FindGroupCommandSystemTest.java
+###### \java\systemtests\FindGroupCommandSystemTest.java
 ``` java
-package systemtests;
-
 import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -3458,10 +4615,8 @@ public class FindGroupCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### /java/systemtests/FindPreferenceCommandSystemTest.java
+###### \java\systemtests\FindPreferenceCommandSystemTest.java
 ``` java
-package systemtests;
-
 import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -3486,6 +4641,7 @@ import seedu.address.model.Model;
 import seedu.address.model.tag.Group;
 
 public class FindPreferenceCommandSystemTest extends AddressBookSystemTest {
+
     @Test
     public void findPreference() {
         /* Case: find multiple persons in address book by their preferences,
@@ -3665,6 +4821,5 @@ public class FindPreferenceCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
-
 }
 ```

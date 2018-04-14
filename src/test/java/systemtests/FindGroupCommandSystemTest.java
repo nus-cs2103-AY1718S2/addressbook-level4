@@ -1,6 +1,5 @@
-//@@author SuxianAlicia
 package systemtests;
-
+//@@author SuxianAlicia
 import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;

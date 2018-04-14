@@ -13,7 +13,7 @@ import guitests.guihandles.OrderCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
-import seedu.address.model.event.CalendarEntry;
+import seedu.address.model.entry.CalendarEntry;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 import seedu.address.ui.PersonCard;

@@ -33,7 +33,7 @@ public class UndoableCommandTest {
 
         // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
-        expectedModel = new ModelManager(getTypicalAddressBook(), new CalendarManager(), new UserPrefs());
+        expectedModel = new ModelManager(getTypicalAddressBook(), model.getCalendarManager(), new UserPrefs());
         assertEquals(expectedModel, model);
     }
 

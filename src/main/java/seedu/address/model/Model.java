@@ -5,9 +5,9 @@ import java.util.function.Predicate;
 import com.calendarfx.model.Calendar;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
@@ -94,7 +94,7 @@ public interface Model {
 
     //@@author SuxianAlicia
     /**
-     * Adds event to list of calendar events.
+     * Adds entry to list of calendar events.
      */
     void addCalendarEntry(CalendarEntry toAdd) throws DuplicateCalendarEntryException;
 

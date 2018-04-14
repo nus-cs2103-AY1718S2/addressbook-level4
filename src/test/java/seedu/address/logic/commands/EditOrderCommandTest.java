@@ -66,7 +66,7 @@ public class EditOrderCommandTest {
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getCalendarManager(),
                 new UserPrefs());
         expectedModel.updateOrder(lastOrder, editedOrder);
 
@@ -104,7 +104,7 @@ public class EditOrderCommandTest {
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getCalendarManager(),
                 new UserPrefs());
         expectedModel.updateOrder(model.getFilteredOrderList().get(0), editedOrder);
 
@@ -139,7 +139,7 @@ public class EditOrderCommandTest {
         Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder(editedOrder).build();
         EditOrderCommand editOrderCommand = prepareCommand(INDEX_FIRST_ORDER, descriptor);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getCalendarManager(),
                 new UserPrefs());
 
         // edit -> first order edited

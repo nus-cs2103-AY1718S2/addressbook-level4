@@ -39,7 +39,8 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(),
+                new UserPrefs());
         expectedModel.deletePerson(personToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -62,7 +63,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
@@ -89,7 +90,7 @@ public class DeleteCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(), new UserPrefs());
 
         // delete -> first person deleted
         deleteCommand.execute();
@@ -132,7 +133,7 @@ public class DeleteCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());

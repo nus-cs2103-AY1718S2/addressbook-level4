@@ -8,11 +8,11 @@ import seedu.address.model.Model;
  * List and display all calendar entries in the address book to the user.
  */
 public class ListCalendarEntryCommand extends Command {
+
     public static final String COMMAND_WORD = "entrylist";
     public static final String COMMAND_ALIAS = "el";
 
     public static final String MESSAGE_SUCCESS = "Listed all calendar entries";
-
 
     @Override
     public CommandResult execute() {
@@ -20,5 +20,4 @@ public class ListCalendarEntryCommand extends Command {
         EventsCenter.getInstance().post(new DisplayCalendarEntryListEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
-
 }

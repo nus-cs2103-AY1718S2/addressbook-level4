@@ -1,4 +1,4 @@
-package seedu.address.model.event;
+package seedu.address.model.entry;
 //@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -10,8 +10,8 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
 /**
  * A list of {@code CalendarEntry} that enforces no nulls and uniqueness between its elements.
@@ -21,6 +21,7 @@ import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
  * @see CalendarEntry#equals(Object)
  */
 public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
+
     private final ObservableList<CalendarEntry> internalList = FXCollections.observableArrayList();
 
     /**
@@ -32,7 +33,6 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
         for (CalendarEntry ce: calendarEntries) {
             replacement.add(ce);
         }
-
         setCalendarEntries(replacement);
     }
 

@@ -1,4 +1,4 @@
-package seedu.address.model.event;
+package seedu.address.model.entry;
 //@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -19,7 +19,7 @@ public class EntryTitle {
     /**
      * Constructs {@code EntryTitle}.
      *
-     * @param entryTitle Valid event title.
+     * @param entryTitle Valid entry title.
      */
     public EntryTitle(String entryTitle) {
         requireNonNull(entryTitle);
@@ -28,12 +28,11 @@ public class EntryTitle {
     }
 
     /**
-     * Returns true if a given string is a valid event title.
+     * Returns true if a given string is a valid entry title.
      */
     public static boolean isValidEntryTitle(String test) {
         return test.matches(ENTRY_TITLE_VALIDATION_REGEX);
     }
-
 
     @Override
     public String toString() {

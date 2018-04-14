@@ -37,14 +37,15 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditEntryCommand;
 import seedu.address.logic.commands.EditEntryCommand.EditEntryDescriptor;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.EntryTitle;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
 import seedu.address.testutil.EditEntryDescriptorBuilder;
 
 public class EditEntryCommandParserTest {
+
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditEntryCommand.MESSAGE_USAGE);
 

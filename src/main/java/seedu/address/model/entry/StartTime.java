@@ -1,4 +1,4 @@
-package seedu.address.model.event;
+package seedu.address.model.entry;
 //@@author SuxianAlicia
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -13,6 +13,7 @@ import java.time.format.DateTimeParseException;
  * Guarantees: immutable; is valid as declared in {@link seedu.address.commons.util.TimeUtil#isValidTime(String)}
  */
 public class StartTime {
+
     public static final String MESSAGE_START_TIME_CONSTRAINTS =
             "Start Time should be HH:mm (24Hour Format), and it should not be blank";
 
@@ -49,7 +50,8 @@ public class StartTime {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof StartTime // instanceof handles nulls
-                && this.startTime.equals(((StartTime) other).startTime)); // state check
+                && this.startTime.equals(((StartTime) other).startTime)
+                && this.startTimeString.equals(((StartTime) other).startTimeString)); // state check
     }
 
     @Override

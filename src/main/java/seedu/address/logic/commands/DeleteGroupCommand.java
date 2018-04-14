@@ -24,7 +24,6 @@ public class DeleteGroupCommand extends UndoableCommand {
     public static final String MESSAGE_DELETE_GROUP_SUCCESS = "Deleted GROUP: %1$s";
     public static final String MESSAGE_GROUP_NOT_FOUND = "Group does not exist in address book.";
 
-
     private Group groupToDelete;
 
     public DeleteGroupCommand(Group targetGroup) {

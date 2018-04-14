@@ -7,6 +7,7 @@ import seedu.address.model.person.PreferencesContainKeywordsPredicate;
  * Keyword matching is case insensitive.
  */
 public class FindPreferenceCommand extends Command {
+
     public static final String COMMAND_WORD = "preffind";
     public static final String COMMAND_ALIAS = "pf";
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
@@ -37,5 +38,4 @@ public class FindPreferenceCommand extends Command {
                 && this.preferencesContainKeywordsPredicate.equals
                 (((FindPreferenceCommand) other).preferencesContainKeywordsPredicate)); // state check
     }
-
 }

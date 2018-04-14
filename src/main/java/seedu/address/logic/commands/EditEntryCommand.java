@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 //@@ author SuxianAlicia
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ENTRY_TITLE;
@@ -20,15 +19,16 @@ import seedu.address.commons.events.ui.ChangeCalendarDateRequestEvent;
 import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.commons.util.EntryTimeConstraintsUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.EndDate;
-import seedu.address.model.event.EndTime;
-import seedu.address.model.event.EntryTitle;
-import seedu.address.model.event.StartDate;
-import seedu.address.model.event.StartTime;
-import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.EndDate;
+import seedu.address.model.entry.EndTime;
+import seedu.address.model.entry.EntryTitle;
+import seedu.address.model.entry.StartDate;
+import seedu.address.model.entry.StartTime;
+import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 
 /**
  * Edits the details of an existing entry in the calendar manager.
@@ -127,7 +127,8 @@ public class EditEntryCommand extends UndoableCommand {
         StartTime updatedStartTime = editEntryDescriptor.getStartTime().orElse(entryToEdit.getStartTime());
         EndTime updatedEndTime = editEntryDescriptor.getEndTime().orElse(entryToEdit.getEndTime());
 
-        checkCalendarEntryTimeConstraints(updatedStartDate, updatedEndDate, updatedStartTime, updatedEndTime);
+        EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints(updatedStartDate, updatedEndDate,
+                updatedStartTime, updatedEndTime);
 
         return new CalendarEntry(updatedEntryTitle, updatedStartDate, updatedEndDate, updatedStartTime, updatedEndTime);
     }

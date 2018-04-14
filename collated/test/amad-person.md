@@ -1,5 +1,5 @@
 # amad-person
-###### /java/guitests/guihandles/OrderCardHandle.java
+###### \java\guitests\guihandles\OrderCardHandle.java
 ``` java
 package guitests.guihandles;
 
@@ -53,7 +53,7 @@ public class OrderCardHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### /java/guitests/guihandles/OrderListPanelHandle.java
+###### \java\guitests\guihandles\OrderListPanelHandle.java
 ``` java
 package guitests.guihandles;
 
@@ -113,7 +113,7 @@ public class OrderListPanelHandle extends NodeHandle<ListView<OrderCard>> {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddOrderCommandTest.java
+###### \java\seedu\address\logic\commands\AddOrderCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -151,9 +151,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyCalendarManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.event.CalendarEntry;
-import seedu.address.model.event.exceptions.CalendarEntryNotFoundException;
-import seedu.address.model.event.exceptions.DuplicateCalendarEntryException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
+import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.UniqueOrderList;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
@@ -412,7 +412,7 @@ public class AddOrderCommandTest {
 }
 
 ```
-###### /java/seedu/address/logic/commands/ChangeThemeCommandTest.java
+###### \java\seedu\address\logic\commands\ChangeThemeCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -476,7 +476,7 @@ public class ChangeThemeCommandTest {
                 LIGHT_THEME_KEYWORD
         );
 
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new CalendarManager(), expectedUserPrefs);
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), model.getCalendarManager(), expectedUserPrefs);
         assertCommandSuccess(changeThemeToLightCommand, model, expectedMessage, expectedModel);
 
         ChangeThemeCommand changeThemeToDarkCommand = prepareCommand(DARK_THEME_KEYWORD);
@@ -492,7 +492,7 @@ public class ChangeThemeCommandTest {
                 DARK_THEME_KEYWORD
         );
 
-        expectedModel = new ModelManager(getTypicalAddressBook(), new CalendarManager(), expectedUserPrefs);
+        expectedModel = new ModelManager(getTypicalAddressBook(), model.getCalendarManager(), expectedUserPrefs);
         assertCommandSuccess(changeThemeToDarkCommand, model, expectedMessage, expectedModel);
     }
 
@@ -535,7 +535,7 @@ public class ChangeThemeCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteOrderCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteOrderCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -576,7 +576,8 @@ public class DeleteOrderCommandTest {
 
         String expectedMessage = String.format(DeleteOrderCommand.MESSAGE_DELETE_ORDER_SUCCESS, orderToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(),
+                new UserPrefs());
         expectedModel.deleteOrder(orderToDelete);
 
         assertCommandSuccess(deleteOrderCommand, model, expectedMessage, expectedModel);
@@ -597,7 +598,7 @@ public class DeleteOrderCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Order orderToDelete = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         DeleteOrderCommand deleteOrderCommand = prepareCommand(INDEX_FIRST_ORDER);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new CalendarManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendarManager(), new UserPrefs());
 
         // delete -> first order deleted
         deleteOrderCommand.execute();
@@ -663,7 +664,7 @@ public class DeleteOrderCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditOrderCommandTest.java
+###### \java\seedu\address\logic\commands\EditOrderCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -713,7 +714,7 @@ public class EditOrderCommandTest {
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getCalendarManager(),
                 new UserPrefs());
         expectedModel.updateOrder(model.getFilteredOrderList().get(0), editedOrder);
 
@@ -750,7 +751,7 @@ public class EditOrderCommandTest {
 
         String expectedMessage = String.format(EditOrderCommand.MESSAGE_EDIT_ORDER_SUCCESS, editedOrder);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getCalendarManager(),
                 new UserPrefs());
         expectedModel.updateOrder(model.getFilteredOrderList().get(0), editedOrder);
 
@@ -785,7 +786,7 @@ public class EditOrderCommandTest {
         Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder(editedOrder).build();
         EditOrderCommand editOrderCommand = prepareCommand(INDEX_FIRST_ORDER, descriptor);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new CalendarManager(),
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getCalendarManager(),
                 new UserPrefs());
 
         // edit -> first order edited
@@ -858,7 +859,7 @@ public class EditOrderCommandTest {
     }
 }
 ```
-###### /java/seedu/address/model/order/DeliveryDateTest.java
+###### \java\seedu\address\model\order\DeliveryDateTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -903,7 +904,7 @@ public class DeliveryDateTest {
     }
 }
 ```
-###### /java/seedu/address/model/order/OrderInformationTest.java
+###### \java\seedu\address\model\order\OrderInformationTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -943,7 +944,7 @@ public class OrderInformationTest {
     }
 }
 ```
-###### /java/seedu/address/model/order/OrderTest.java
+###### \java\seedu\address\model\order\OrderTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -955,11 +956,11 @@ public class OrderTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Order(null, null, null, null));
+        Assert.assertThrows(NullPointerException.class, () -> new Order(null, null, null, null, null));
     }
 }
 ```
-###### /java/seedu/address/model/order/PriceTest.java
+###### \java\seedu\address\model\order\PriceTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -1005,7 +1006,7 @@ public class PriceTest {
     }
 }
 ```
-###### /java/seedu/address/model/order/QuantityTest.java
+###### \java\seedu\address\model\order\QuantityTest.java
 ``` java
 package seedu.address.model.order;
 
@@ -1049,7 +1050,7 @@ public class QuantityTest {
     }
 }
 ```
-###### /java/seedu/address/model/theme/ThemeTest.java
+###### \java\seedu\address\model\theme\ThemeTest.java
 ``` java
 package seedu.address.model.theme;
 
@@ -1127,7 +1128,7 @@ public class ThemeTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueGroupListTest.java
+###### \java\seedu\address\model\UniqueGroupListTest.java
 ``` java
     @Test
     public void equals() throws UniqueGroupList.DuplicateGroupException {
@@ -1146,7 +1147,7 @@ public class ThemeTest {
         assertFalse(firstGroupList.equals(secondGroupList));
     }
 ```
-###### /java/seedu/address/model/UniqueGroupListTest.java
+###### \java\seedu\address\model\UniqueGroupListTest.java
 ``` java
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -1164,7 +1165,7 @@ public class ThemeTest {
         uniqueGroupList.add(FRIENDS);
     }
 ```
-###### /java/seedu/address/model/UniqueOrderListTest.java
+###### \java\seedu\address\model\UniqueOrderListTest.java
 ``` java
 package seedu.address.model;
 
@@ -1230,7 +1231,7 @@ public class UniqueOrderListTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniquePreferenceListTest.java
+###### \java\seedu\address\model\UniquePreferenceListTest.java
 ``` java
     @Test
     public void equals() throws UniquePreferenceList.DuplicatePreferenceException {
@@ -1249,7 +1250,7 @@ public class UniqueOrderListTest {
         assertFalse(firstPrefList.equals(secondPrefList));
     }
 ```
-###### /java/seedu/address/model/UniquePreferenceListTest.java
+###### \java\seedu\address\model\UniquePreferenceListTest.java
 ``` java
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -1267,7 +1268,7 @@ public class UniqueOrderListTest {
         uniquePrefList.add(SHOES);
     }
 ```
-###### /java/seedu/address/storage/XmlAdaptedOrderTest.java
+###### \java\seedu\address\storage\XmlAdaptedOrderTest.java
 ``` java
 package seedu.address.storage;
 
@@ -1280,17 +1281,20 @@ import org.junit.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 import seedu.address.testutil.Assert;
 
 public class XmlAdaptedOrderTest {
     private static final String INVALID_ORDER_INFORMATION = "Choc0l@t3s";
+    private static final String INVALID_ORDER_STATUS = "fulfilled";
     private static final String INVALID_PRICE = "25.00.99";
     private static final String INVALID_QUANTITY = "-2";
     private static final String INVALID_DELIVERY_DATE = "50-12-2010";
 
     private static final String VALID_ORDER_INFORMATION = BOOKS.getOrderInformation().toString();
+    private static final String VALID_ORDER_STATUS = BOOKS.getOrderStatus().getCurrentOrderStatus();
     private static final String VALID_PRICE = BOOKS.getPrice().toString();
     private static final String VALID_QUANTITY = BOOKS.getQuantity().toString();
     private static final String VALID_DELIVERY_DATE = BOOKS.getDeliveryDate().toString();
@@ -1303,7 +1307,7 @@ public class XmlAdaptedOrderTest {
 
     @Test
     public void toModelType_invalidOrderInformation_throwsIllegalValueException() {
-        XmlAdaptedOrder order = new XmlAdaptedOrder(INVALID_ORDER_INFORMATION, VALID_PRICE,
+        XmlAdaptedOrder order = new XmlAdaptedOrder(INVALID_ORDER_INFORMATION, VALID_ORDER_STATUS, VALID_PRICE,
                 VALID_QUANTITY, VALID_DELIVERY_DATE);
         String expectedMessage = OrderInformation.MESSAGE_ORDER_INFORMATION_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
@@ -1311,15 +1315,31 @@ public class XmlAdaptedOrderTest {
 
     @Test
     public void toModelType_nullOrderInformation_throwsIllegalValueException() {
-        XmlAdaptedOrder order = new XmlAdaptedOrder(null, VALID_PRICE,
+        XmlAdaptedOrder order = new XmlAdaptedOrder(null, VALID_ORDER_STATUS, VALID_PRICE,
                 VALID_QUANTITY, VALID_DELIVERY_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, OrderInformation.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
     }
 
     @Test
+    public void toModelType_invalidOrderStatus_throwsIllegalValueException() {
+        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, INVALID_ORDER_STATUS, VALID_PRICE,
+                VALID_QUANTITY, VALID_DELIVERY_DATE);
+        String expectedMessage = OrderStatus.MESSAGE_ORDER_STATUS_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullOrderStatus_throwsIllegalValueException() {
+        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, null, VALID_PRICE,
+                VALID_QUANTITY, VALID_DELIVERY_DATE);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, OrderStatus.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
+    }
+
+    @Test
     public void toModelType_invalidPrice_throwsIllegalValueException() {
-        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, INVALID_PRICE,
+        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, VALID_ORDER_STATUS, INVALID_PRICE,
                 VALID_QUANTITY, VALID_DELIVERY_DATE);
         String expectedMessage = Price.MESSAGE_PRICE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
@@ -1327,7 +1347,7 @@ public class XmlAdaptedOrderTest {
 
     @Test
     public void toModelType_nullPrice_throwsIllegalValueException() {
-        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, null,
+        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, VALID_ORDER_STATUS, null,
                 VALID_QUANTITY, VALID_DELIVERY_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Price.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
@@ -1335,7 +1355,7 @@ public class XmlAdaptedOrderTest {
 
     @Test
     public void toModelType_invalidQuantity_throwsIllegalValueException() {
-        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, VALID_PRICE,
+        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, VALID_ORDER_STATUS, VALID_PRICE,
                 INVALID_QUANTITY, VALID_DELIVERY_DATE);
         String expectedMessage = Quantity.MESSAGE_QUANTITY_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
@@ -1343,7 +1363,7 @@ public class XmlAdaptedOrderTest {
 
     @Test
     public void toModelType_nullQuantity_throwsIllegalValueException() {
-        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, VALID_PRICE,
+        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, VALID_ORDER_STATUS, VALID_PRICE,
                 null, VALID_DELIVERY_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Quantity.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
@@ -1351,7 +1371,7 @@ public class XmlAdaptedOrderTest {
 
     @Test
     public void toModelType_invalidDeliveryDate_throwsIllegalValueException() {
-        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, VALID_PRICE,
+        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, VALID_ORDER_STATUS, VALID_PRICE,
                 VALID_QUANTITY, INVALID_DELIVERY_DATE);
         String expectedMessage = DeliveryDate.MESSAGE_DELIVERY_DATE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
@@ -1359,14 +1379,14 @@ public class XmlAdaptedOrderTest {
 
     @Test
     public void toModelType_nullDeliveryDate_throwsIllegalValueException() {
-        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, VALID_PRICE,
+        XmlAdaptedOrder order = new XmlAdaptedOrder(VALID_ORDER_INFORMATION, VALID_ORDER_STATUS, VALID_PRICE,
                 VALID_QUANTITY, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, DeliveryDate.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, order::toModelType);
     }
 }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBookTest.java
+###### \java\seedu\address\storage\XmlSerializableAddressBookTest.java
 ``` java
     @Test
     public void toModelType_typicalOrdersFile_success() throws Exception {
@@ -1377,7 +1397,7 @@ public class XmlAdaptedOrderTest {
         assertEquals(addressBookFromFile, typicalOrdersAddressBook);
     }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBookTest.java
+###### \java\seedu\address\storage\XmlSerializableAddressBookTest.java
 ``` java
     @Test
     public void toModelType_invalidOrderFile_throwsIllegalValueException() throws Exception {
@@ -1387,7 +1407,7 @@ public class XmlAdaptedOrderTest {
         dataFromFile.toModelType();
     }
 ```
-###### /java/seedu/address/testutil/EditOrderDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditOrderDescriptorBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -1395,6 +1415,7 @@ import seedu.address.logic.commands.EditOrderCommand.EditOrderDescriptor;
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 
@@ -1416,6 +1437,7 @@ public class EditOrderDescriptorBuilder {
     public EditOrderDescriptorBuilder(Order order) {
         descriptor = new EditOrderDescriptor();
         descriptor.setOrderInformation(order.getOrderInformation());
+        descriptor.setOrderStatus(order.getOrderStatus());
         descriptor.setPrice(order.getPrice());
         descriptor.setQuantity(order.getQuantity());
         descriptor.setDeliveryDate(order.getDeliveryDate());
@@ -1426,6 +1448,14 @@ public class EditOrderDescriptorBuilder {
      */
     public EditOrderDescriptorBuilder withOrderInformation(String orderInformation) {
         descriptor.setOrderInformation(new OrderInformation(orderInformation));
+        return this;
+    }
+
+    /**
+     * Sets the {@code OrderStatus} of the {@code EditOrderDescriptor} that we are building.
+     */
+    public EditOrderDescriptorBuilder withOrderStatus(String orderStatus) {
+        descriptor.setOrderStatus(new OrderStatus(orderStatus));
         return this;
     }
 
@@ -1458,13 +1488,14 @@ public class EditOrderDescriptorBuilder {
     }
 }
 ```
-###### /java/seedu/address/testutil/OrderBuilder.java
+###### \java\seedu\address\testutil\OrderBuilder.java
 ``` java
 package seedu.address.testutil;
 
 import seedu.address.model.order.DeliveryDate;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
+import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
 
@@ -1474,17 +1505,20 @@ import seedu.address.model.order.Quantity;
 public class OrderBuilder {
 
     public static final String DEFAULT_ORDER_INFORMATION = "Books";
+    public static final String DEFAULT_ORDER_STATUS = "ongoing";
     public static final String DEFAULT_PRICE = "15.00";
     public static final String DEFAULT_QUANTITY = "5";
     public static final String DEFAULT_DELIVERY_DATE = "10-05-2018";
 
     private OrderInformation orderInformation;
+    private OrderStatus orderStatus;
     private Price price;
     private Quantity quantity;
     private DeliveryDate deliveryDate;
 
     public OrderBuilder() {
         orderInformation = new OrderInformation(DEFAULT_ORDER_INFORMATION);
+        orderStatus = new OrderStatus(DEFAULT_ORDER_STATUS);
         price = new Price(DEFAULT_PRICE);
         quantity = new Quantity(DEFAULT_QUANTITY);
         deliveryDate = new DeliveryDate(DEFAULT_DELIVERY_DATE);
@@ -1495,6 +1529,7 @@ public class OrderBuilder {
      */
     public OrderBuilder(Order orderToCopy) {
         orderInformation = orderToCopy.getOrderInformation();
+        orderStatus = orderToCopy.getOrderStatus();
         price = orderToCopy.getPrice();
         quantity = orderToCopy.getQuantity();
         deliveryDate = orderToCopy.getDeliveryDate();
@@ -1505,6 +1540,14 @@ public class OrderBuilder {
      */
     public OrderBuilder withOrderInformation(String orderInformation) {
         this.orderInformation = new OrderInformation(orderInformation);
+        return this;
+    }
+
+    /**
+     * Sets the {@code OrderStatus} of the {@code Order} that we are building.
+     */
+    public OrderBuilder withOrderStatus(String orderStatus) {
+        this.orderStatus = new OrderStatus(orderStatus);
         return this;
     }
 
@@ -1533,11 +1576,11 @@ public class OrderBuilder {
     }
 
     public Order build() {
-        return new Order(orderInformation, price, quantity, deliveryDate);
+        return new Order(orderInformation, orderStatus, price, quantity, deliveryDate);
     }
 }
 ```
-###### /java/seedu/address/testutil/OrderUtil.java
+###### \java\seedu\address\testutil\OrderUtil.java
 ``` java
 package seedu.address.testutil;
 
@@ -1574,7 +1617,7 @@ public class OrderUtil {
     }
 }
 ```
-###### /java/seedu/address/testutil/TestUtil.java
+###### \java\seedu\address\testutil\TestUtil.java
 ``` java
     /**
      * Returns the middle index of the order in the {@code model}'s order list.
@@ -1590,7 +1633,7 @@ public class OrderUtil {
         return Index.fromOneBased(model.getAddressBook().getOrderList().size());
     }
 ```
-###### /java/seedu/address/testutil/TestUtil.java
+###### \java\seedu\address\testutil\TestUtil.java
 ``` java
 
     /**
@@ -1601,7 +1644,7 @@ public class OrderUtil {
     }
 
 ```
-###### /java/seedu/address/testutil/TestUtil.java
+###### \java\seedu\address\testutil\TestUtil.java
 ``` java
     /**
      * Returns the order in the {@code model}'s order list at {@code index}.
@@ -1610,7 +1653,7 @@ public class OrderUtil {
         return model.getAddressBook().getOrderList().get(index.getZeroBased());
     }
 ```
-###### /java/seedu/address/testutil/TypicalOrders.java
+###### \java\seedu\address\testutil\TypicalOrders.java
 ``` java
 package seedu.address.testutil;
 
@@ -1620,6 +1663,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_C
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_CHOC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_INFORMATION_COMPUTER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_STATUS_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_STATUS_CHOC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ORDER_STATUS_COMPUTER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_CHOC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRICE_COMPUTER;
@@ -1644,6 +1690,7 @@ public class TypicalOrders {
 
     public static final Order SHOES = new OrderBuilder()
             .withOrderInformation("Shoes")
+            .withOrderStatus("ongoing")
             .withPrice("129.99")
             .withQuantity("3")
             .withDeliveryDate("10-09-2018")
@@ -1651,6 +1698,7 @@ public class TypicalOrders {
 
     public static final Order FACEWASH = new OrderBuilder()
             .withOrderInformation("Face Wash")
+            .withOrderStatus("ongoing")
             .withPrice("24.75")
             .withQuantity("1")
             .withDeliveryDate("05-11-2018")
@@ -1658,6 +1706,7 @@ public class TypicalOrders {
 
     public static final Order BOOKS = new OrderBuilder()
             .withOrderInformation(VALID_ORDER_INFORMATION_BOOKS)
+            .withOrderStatus(VALID_ORDER_STATUS_BOOKS)
             .withPrice(VALID_PRICE_BOOKS)
             .withQuantity(VALID_QUANTITY_BOOKS)
             .withDeliveryDate(VALID_DELIVERY_DATE_BOOKS)
@@ -1665,6 +1714,7 @@ public class TypicalOrders {
 
     public static final Order CHOCOLATES = new OrderBuilder()
             .withOrderInformation(VALID_ORDER_INFORMATION_CHOC)
+            .withOrderStatus(VALID_ORDER_STATUS_CHOC)
             .withPrice(VALID_PRICE_CHOC)
             .withQuantity(VALID_QUANTITY_CHOC)
             .withDeliveryDate(VALID_DELIVERY_DATE_CHOC)
@@ -1672,6 +1722,7 @@ public class TypicalOrders {
 
     public static final Order COMPUTER = new OrderBuilder()
             .withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER)
+            .withOrderStatus(VALID_ORDER_STATUS_COMPUTER)
             .withPrice(VALID_PRICE_COMPUTER)
             .withQuantity(VALID_QUANTITY_COMPUTER)
             .withDeliveryDate(VALID_DELIVERY_DATE_COMPUTER)
@@ -1679,6 +1730,7 @@ public class TypicalOrders {
 
     public static final Order COMICBOOK = new OrderBuilder()
             .withOrderInformation("Comic Book")
+            .withOrderStatus("ongoing")
             .withPrice("17.99")
             .withQuantity("1")
             .withDeliveryDate("01-01-2018")
@@ -1713,7 +1765,7 @@ public class TypicalOrders {
     }
 }
 ```
-###### /java/seedu/address/ui/CommandBoxTest.java
+###### \java\seedu\address\ui\CommandBoxTest.java
 ``` java
     @Test
     public void handleKeyPress_tab() {
@@ -1730,7 +1782,7 @@ public class TypicalOrders {
         assertInputHistory(KeyCode.TAB, COMMAND_THAT_FAILS);
     }
 ```
-###### /java/seedu/address/ui/OrderCardTest.java
+###### \java\seedu\address\ui\OrderCardTest.java
 ``` java
 package seedu.address.ui;
 
@@ -1799,7 +1851,7 @@ public class OrderCardTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/ui/OrderListPanelTest.java
+###### \java\seedu\address\ui\OrderListPanelTest.java
 ``` java
 package seedu.address.ui;
 
@@ -1844,7 +1896,7 @@ public class OrderListPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/systemtests/AddOrderCommandSystemTest.java
+###### \java\systemtests\AddOrderCommandSystemTest.java
 ``` java
 package systemtests;
 
@@ -2110,7 +2162,7 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### /java/systemtests/DeleteOrderCommandSystemTest.java
+###### \java\systemtests\DeleteOrderCommandSystemTest.java
 ``` java
 package systemtests;
 
@@ -2284,7 +2336,7 @@ public class DeleteOrderCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### /java/systemtests/EditOrderCommandSystemTest.java
+###### \java\systemtests\EditOrderCommandSystemTest.java
 ``` java
 package systemtests;
 

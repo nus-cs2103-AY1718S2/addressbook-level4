@@ -70,6 +70,10 @@ public class SuggestionsPopUp extends ContextMenu {
         double anchorX = findDisplayPositionX(textInputProcessor.getCaretPositionX());
         double anchorY = findDisplayPositionY(textInputProcessor.getCaretPositionY());
 
+        if (textInputProcessor.isTextTooLong()) {
+            anchorX = anchorY = MARGIN;
+        }
+
         show(commandTextArea, Side.BOTTOM, anchorX, anchorY);
     }
 
@@ -96,7 +100,7 @@ public class SuggestionsPopUp extends ContextMenu {
      * Finds X-coordinate to display SuggestionsPopUp in CommandBox
      */
     double findDisplayPositionX(double caretPositionX) {
-        return commandBox.getRoot().getLayoutX() + commandTextArea.getInsets().getLeft() + caretPositionX;
+        return commandBox.getRoot().getLayoutX() + commandTextArea.getInsets().getLeft() + caretPositionX + MARGIN;
     }
 
     /**

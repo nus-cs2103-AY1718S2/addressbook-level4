@@ -4,10 +4,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_CS2010_QUIZ;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_MA2108_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_CS2010_QUIZ;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CS2010_QUIZ;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_CS2010_QUIZ;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MA2108;
+import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_DATE_TIME_CS2010_QUIZ;
+import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_NAME_CS2010_QUIZ;
+import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_REMARK_CS2010_QUIZ;
+import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_TAG_MA2108;
 
 import seedu.address.logic.commands.EditCommand.EditActivityDescriptor;
 import seedu.address.testutil.EditActivityDescriptorBuilder;

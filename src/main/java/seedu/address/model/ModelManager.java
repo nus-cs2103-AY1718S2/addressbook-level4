@@ -16,7 +16,6 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AccountUpdateEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.LoginEvent;
 import seedu.address.commons.events.ui.ReloadCalendarEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
@@ -157,7 +156,6 @@ public class ModelManager extends ComponentManager implements Model {
             requireNonNull(accountsManager);
             Account user = accountsManager.login(username, password);
             setUser(user);
-            raise(new LoginEvent(true));
         }
     }
 
@@ -169,7 +167,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void logout() throws UserLogoutException {
         if (user.isPresent()) {
             setUser(null);
-            raise(new LoginEvent(false));
         } else {
             throw new UserLogoutException();
         }
@@ -189,6 +186,9 @@ public class ModelManager extends ComponentManager implements Model {
     private void setUser(Account account) {
         user = user.ofNullable(account);
     }
+
+    @Override
+    public boolean isLoggedIn() { return user.isPresent(); }
 
     //@@author trafalgarandre
     @Override

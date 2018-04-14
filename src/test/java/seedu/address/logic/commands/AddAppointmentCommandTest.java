@@ -180,12 +180,18 @@ public class AddAppointmentCommandTest {
         public void login(String username, String password) throws InvalidUsernameException,
                 InvalidPasswordException, MultipleLoginException {
             fail("This method should not be called.");
-        };
+        }
 
         @Override
         public void logout() throws UserLogoutException {
             fail("This method should not be called.");
-        };
+        }
+
+        @Override
+        public boolean isLoggedIn() {
+            fail("This method should not be called.");
+            return false;
+        }
 
         @Override
         public void addJob(Job job) throws DuplicateJobException {

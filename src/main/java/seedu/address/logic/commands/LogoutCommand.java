@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.LoginEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.exception.UserLogoutException;
 
@@ -19,6 +21,7 @@ public class LogoutCommand extends Command {
         requireNonNull(model);
         try {
             model.logout();
+            EventsCenter.getInstance().post(new LoginEvent(false));
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (UserLogoutException ule) {
             throw new CommandException(MESSAGE_MULTIPLE_LOGOUT);

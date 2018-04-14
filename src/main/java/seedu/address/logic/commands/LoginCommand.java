@@ -6,8 +6,10 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 
+import seedu.address.commons.events.ui.LoginEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 import seedu.address.model.exception.InvalidPasswordException;
@@ -22,10 +24,10 @@ public class LoginCommand extends Command {
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
                 + PREFIX_USERNAME + " "
                 + PREFIX_PASSWORD;
-    public static final String MESSAGE_USAGE = COMMAND_WORD + "Logs the user into contactHero."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + "Logs the user into contactHero. \n"
                 + "Parameters: "
                 + PREFIX_USERNAME + "USERNAME "
-                + PREFIX_PASSWORD + "PASSWORD\n"
+                + PREFIX_PASSWORD + "PASSWORD \n"
                 + "Example: " + COMMAND_WORD + " "
                 + PREFIX_USERNAME + "JohnDoe "
                 + PREFIX_PASSWORD + "98765432 ";
@@ -46,6 +48,7 @@ public class LoginCommand extends Command {
         requireNonNull(model);
         try {
             model.login(username, password);
+            EventsCenter.getInstance().post(new LoginEvent(true));
             return new CommandResult(String.format(MESSAGE_SUCCESS, username));
         } catch (InvalidUsernameException iue) {
             throw new CommandException(Messages.MESSAGE_INVALID_USERNAME);

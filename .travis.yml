@@ -16,7 +16,7 @@ deploy:
 
 deploy:
   provider: gae
-  keyfile: client_secret.json
+  keyfile: gce.json
   project: spherical-realm-197214
 
 addons:

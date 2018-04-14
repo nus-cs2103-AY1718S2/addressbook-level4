@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "spherical-realm-197214",
+  "private_key_id": "eec40e528d95e075bcbcebe1e612ec9659311ecc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC6azfOSsErocnc\n0BsUr+mhHMO8PcxpWm2mROXleu4C0mhefJ6zG+cBYQXKCDU89pRD894/GfonyKkE\nSaNtWSlqlkDwkG1NIGK12H2mr66PKLXUsz8cq09q7KHBFYQzJq7nJIGRsHeWm14l\no9mi8icFtZ1mlxsDeuTdCkOVKgNIGA+N+nYzurryHW4Kwihfbol/ALL8qPCpN2hA\nXvch8RJ9V445R611MHrxAX06ZHfDkitBdhhcNyX/r0WQYqk+k8QnMvdCzkxqzI0P\ng0x2UN47A6Z4FqcOfiKF+nQ9hy8WEsvrDAXKdjYiNXUW3o38+Cw+oaX5iuNi4FB+\nOliHweR7AgMBAAECggEAE6B+O6X7OJDMJAd1EnSC8IeKxCLthpoSuVK/sa2DqaBl\nhK0yOEFTzP1eEqtSj5yWd6ERYStm/xFNWjo2jqi4h5RSOgG6wEgMnICymf4dLs1m\nd4J3vpj6v5MyZJXTWV9VQtjBG4mszZqGCwh5PYKpQRyh+c8m9PLXbb5K50WJGunf\nGBgWLEqeoprBvjog1Zg7V3aKDY0fOn7pwuECGr/x26RmdxUKZP4NhHrXIf8cj+bM\nK8Jp5Z8x5KcMcQrHwQsoH7o6YnNFTaywP5uCinrYTLB6a9oe46uz79AYc4XMcpvT\nTPa47Z4uVkKP0bQz69r6xfYNBwJNWZyb6dEuzW0XAQKBgQD9SgPwqFQDC/O6FCNx\nSpw5AB1A6rUXfQoMvsKMKU0ZFKwnYAvcitpE41/nmga9XEDnH4ZUyQtGWvkohkQS\nODA+Fgxf03IvSRH/6gIyNtBrbFsGtiazLrVaVPzVUGTVpMMu/tbt/b0+Wo+92x6j\nMma4LQqN0DHOaNzB4DLMO9OZ2wKBgQC8afw5sfUUT3q4OwoyHrmk8ys3vkhDJgNZ\nXLQgVQV0Td9p+/qcc+RwbmDk2BVcDdo98/u5L2b1BP3muDp1798aN6YkZTTxnSDh\nSBeBnPIsLvH4Mfatdp3oQ9ZIkXv80oG0C3IqfHfRxYlLCSR52jEKXm8P9bpGQCMc\nZzohpPpx4QKBgAzXwulh75iT85C80qs86Dzvp4wSGoqNWYQZ7A1lTrZ12ODKOu+8\nzqJtkQBSTAMv+U5+x7Xm176CgF2wqSTvWmrbfVcihoilQNdkCyZ2pwy7WsY1WDL/\nrExfQM6kG+jFSOxKGaXJlt3hg6ZRxPTrak/uYLmeE9hucrsV3h2C7xC/AoGARs/y\niuCWQq7oaYtO9q1TimoWCRpL4GjOA2zzCd/Kb/7Ag/2/H8PyzEq/weJwjKtsJbKo\nHd5x7I6WunrtBdxEVn8pwy4CavhqHiFRLFaHMhHmwShOFL2q9Vthkt6S4d9f/gH7\nQ3qKMd3zDq999QoLOmFpjm8FNlfumkM1tuVhdyECgYEApq3JZ7nMpP/GwFwzk50Y\nQH0/qPVIXe87PNW11f2HW4lPaNEYm+w/OFbFQKKWTECXXu9bJIBW8tzdsBaImHoW\nvYcDefj/q/rCV/gQvcbnVdXoYtYht3VvWgXcYLxByaq3+QCf+HBD6wFdzb9MQIeS\nwZn0UMT/rpYMHvsJnBoqMNE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "travis-deploy@spherical-realm-197214.iam.gserviceaccount.com",
+  "client_id": "105024918060179848472",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/travis-deploy%40spherical-realm-197214.iam.gserviceaccount.com"
+}

@@ -9,6 +9,7 @@ import static seedu.address.logic.logictestutil.ImportExportTestConstants.ASSIGN
 import static seedu.address.logic.logictestutil.ImportExportTestConstants.EXPORT_FILE_PATH;
 import static seedu.address.logic.logictestutil.ImportExportTestConstants.FILE_PATH_DESC_EXPORT;
 import static seedu.address.logic.logictestutil.ImportExportTestConstants.FILE_PATH_DESC_IMPORT;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,10 +18,12 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.EventCommand;
+import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RemoveCommand;
 import seedu.address.logic.commands.TaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.FilePath;
@@ -54,14 +57,20 @@ public class DeskBoardParserTest {
         assertTrue(command instanceof EventCommand);
     }
 
-   /* @Test
+    //@@author Kyomian
+    @Test
     public void parseCommand_remove() throws Exception {
-        RemoveCommand command = (RemoveCommand) parser.parseCommand(
-                RemoveCommand.COMMAND_WORD + " " + INDEX_FIRST_ACTIVITY.getOneBased());
-        assertEquals(new RemoveCommand("task", INDEX_FIRST_ACTIVITY), command);
-    }*/
+        assertTrue(parser.parseCommand(RemoveCommand.COMMAND_WORD + " task "
+                + INDEX_FIRST_ACTIVITY.getOneBased()) instanceof RemoveCommand);
+        assertTrue(parser.parseCommand(RemoveCommand.COMMAND_WORD + " event "
+                + INDEX_FIRST_ACTIVITY.getOneBased()) instanceof RemoveCommand);
+        assertTrue(parser.parseCommand(RemoveCommand.COMMAND_ALIAS + " task "
+                + INDEX_FIRST_ACTIVITY.getOneBased()) instanceof RemoveCommand);
+        assertTrue(parser.parseCommand(RemoveCommand.COMMAND_ALIAS + " event "
+                + INDEX_FIRST_ACTIVITY.getOneBased()) instanceof RemoveCommand);
+    }
 
-//
+
 //    public void parseCommand_edit() throws Exception {
 //        Person person = new PersonBuilder().build();
 //        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
@@ -70,24 +79,22 @@ public class DeskBoardParserTest {
 //        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
 //    }
 //
-//
-//    public void parseCommand_exit() throws Exception {
-//        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
-//        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
-//    }
-//
-//
 //    public void parseCommand_find() throws Exception {
 //        List<String> keywords = Arrays.asList("foo", "bar", "baz");
 //        FindCommand command = (FindCommand) parser.parseCommand(
 //                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
 //        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
 //    }
-//
-//
+
     //@@author jasmoon
     @Test
-    public void parseCommandPlusAlias_help() throws Exception {
+    public void parseCommand_exit() throws Exception {
+        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
+        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
+    }
+
+    @Test
+    public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_ALIAS + " task") instanceof HelpCommand);
         try {
@@ -113,17 +120,10 @@ public class DeskBoardParserTest {
 //
 //
     @Test
-    public void parseCommandPlusAlias_list() throws Exception {
+    public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " task") instanceof ListCommand);
     }
-//
-//
-//    public void parseCommand_select() throws Exception {
-//        SelectCommand command = (SelectCommand) parser.parseCommand(
-//                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-//        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
-//    }
 //
 //
 //    public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
@@ -155,12 +155,15 @@ public class DeskBoardParserTest {
 
     //@@author jasmoon
     @Test
-    public void parseCommandPlusAlias_clear() throws Exception {
+    public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " task") instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " event") instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " task") instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " event") instanceof ClearCommand);
     }
 
-    //@@author Kyomian
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);

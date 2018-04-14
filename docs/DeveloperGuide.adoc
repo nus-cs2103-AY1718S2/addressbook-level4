@@ -773,6 +773,10 @@ The list of members in the group list are facilitated by `Group` class. Each `Gr
 Address book stores all members added to the group using XmlAdaptedPersons as person object storage as shown in  the following sequence diagram where  the storage saves to file in XmlAdaptedGroups.
 Fastis will then handle `addressBookChangedEvent` and update command result.
 
+The following diagram shows the interaction of `AddMemberToGroup` Command class.
+.Class Diagram of AddMemberToGroup Command.
+image:AGMCommandClassDiagram.png[width:"600"]
+
 The `AddMemberToGroupCommand` is facilitated by `AddMemberToGroupCommandParser` to parse `AddMemberToGroupCommand`.
 The following diagram shows the flow of parsing of `AddMemberToGroupCommand` object.
 
@@ -828,6 +832,11 @@ The list of members in the group list are facilitated by `Group` class. Each `Gr
 Address book stores all members added to the group using XmlAdaptedPersons as person object storage.
 The `DeleteMemberFromGroupCommand` will retrieve the input, which is the index of the person of the last updated person list, and deletes that person from the list if the person exists in the `UniquePersonList` in the specified group.
 Fastis will then handle `addressBookChangedEvent` and update command result.
+
+The following diagram shows the interaction of `DeleteMemberFromGroup` Command class.
+.Class Diagram of `DeleteMemberFromGroup` Command.
+image:dGMCommandClassDiagram.png[width:"600"]
+
 The `DeleteMemberFromGroupCommand` is facilitated by `DeleteMemberFromGroupCommandParser` to parse `DeleteMemberFromGroupCommand`.
 The following diagram shows the flow of parsing of `DeleteMemberFromGroupCommand` object.
 
@@ -914,6 +923,10 @@ public class DeleteGroupCommand extends UndoableCommand {
 The user executes a new `DeleteGroupCommand` with `Information`, to delete a existing group with the same information to the address book.
 The group is deleted from the `UniqueGroupList` and the current state of the address book is saved.
 Fastis will then handle `addressBookChangedEvent` and update command result.
+
+The following diagram shows the interaction of `DeleteGroup` Command class.
+.Class Diagram of `DeleteGroup` Command.
+image:dGCommandClassDiagram.png[width:"600"]
 
 The `DeleteGroupCommand` is facilitated by `DeleteGroupCommandParser` to parse `DeleteGroupCommand`.
 The following diagram shows the flow of parsing of `DeleteGroupCommand` object.
@@ -1736,15 +1749,29 @@ _{More to be added}_
 [appendix]
 == Glossary
 
-[[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+[[abstraction]] Abstraction::
+In Object-oriented Programming, abstraction is the mechanism by which users are provided with only the functionality, and not the implementation details.
+So, abstraction provides users with information on what an object does, rather than how it does it.
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+[[cli]] CLI::
+Acronym for Command Line Interface. It is a purely text-based interface for software.
+User respond to visual prompts by typing single commands into the interface and receive results as text as well.
+An example of CLI would be MS-DOS.
 
 [[event]] Event::
 a set of scheduled activity that user needs to attend at a specific time
 E.g.: Interviews, parties, CCAs, talks, coding challenges, assignments, etc
+
+
+[[mainstream-os]] Mainstream OS::
+Windows, Linux, Unix, OS-X
+
+[[member]] Member::
+Person in address book.
+
+[[private-contact-detail]] Private contact detail::
+A contact detail that is not meant to be shared with others
+
 
 [appendix]
 == Product Survey
@@ -1798,6 +1825,86 @@ _{ more test cases ... }_
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
+
+=== Adding a person
+
+. Adding a person specified by command line input with required person prefixes.
+
+.. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 l/http://modsn.us/MYwiD d/Likes tennis t/friends t/owesMoney` +
+   Expected: New person John Doe is added to Fastis. Details of person added is shown in the status message.
+.. Test case: `add p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 l/http://modsn.us/MYwiD d/Likes tennis t/friends t/owesMoney` +
+   Expected: No person is added. Essential Name field is missing. Error details is displayed in status message.
+.. Other incorrect add commands to try: `add`, `add x` (where any input) +
+   Expected: Similar to previous.
+
+=== Adding a group
+
+. Adding a group with information specified by command line input.
+
+.. Prerequisites: Group with the information specified by user must not be in Fastis.
+.. Test case: `addGroup CS1010` +
+   Expected: New group with information `CS1010` will be added to Fastis. Successful adding of group `CS1010` will be reflected in status message.
+.. Test case: `addGroup CS1-1-` +
+   Expected: No group is added. Group information must be alphanumeric. Error details is displayed in s status message.
+.. Other incorrect commands: `addGroup CS!` +
+   Expected: Similar to previous.
+.. Group `CS1010` already existed. +
+   Test case:`addGroup CS1010` +
+   Expected: Error details is displayed in status bar that group already existed.
+
+=== Adding a member to group
+
+. Adding a member identified by `Index` to group identified by `Information`.
+
+.. Prerequisites: Group and Person both exist in Fastis. Person must exist on current Person List.
+.. Test case: `addGroupMember 1 g/CS1010` +
+   Expected: Member that is first on Person List will be added to group with information `CS10101. Successful addding of person will be displayed on status bar.
+.. Test case: `addGroupMember 1 CS1010` +
+   Expected: No member is added as invalid command input since group field `g/` is missing. Error details is disp;ayed in status bar.
+.. Other incorrect commands to try: `addGroupMember`, `addGroupMember 1 t/` +
+   Expected: Same as previous.
+
+=== Deleting a member from group
+
+. Deleting a person from a group specified by user. Often use after `listGroupMembers` command to see which members are in the group.
+
+.. Prerequisites: Group and Person both exist in Fastis. Person must exist on current Person List.
+.. Test case: `deleteGroupMember 1 g/CS1010` +
+   Expected: Member is successfully deleted from the group `CS1010`. Successful deletion is displayed on the status bar.
+.. Test case: `deleteGroupMember 1 CS1010` +
+   Expected: No member is deleted due to missing field in command. Error details is displayed in the status bar.
+.. Other incorrect commands to try: `deleteGroupMember`, `deleteGroupMember 1 t/` +
+   Expected: Same as previous.
+
+=== Listing group members from a group
+
+. Listing all persons from a group specified by user.
+
+.. Prerequisites: Group must exist in Fastis.
+.. Test case: `listGroupMembers CS1010` +
+   Expected: All members in group with information `CS1010` is listed on Person List. Successful listing is displayed on the status bar.
+.. Test case: `listGroupMembers !` +
+   Expected: No person is listed. Error details is displayed in the status bar.
+
+=== Deleting a group
+
+. Deleting a group with information specified by user from Fastis.
+
+.. Prerequisites: Group must exist in Fastis.
+.. Test case: `deleteGroup CS1010` +
+   Expected: Group with information `CS1010` is deleted. Successful deletion is displayed in status bar.
+.. Test case: `deleteGroup @` +
+   Expected: No group is deleted. Error details is displayed in the status bar.
+
+=== Listing members with same tag
+
+. Listing members with same tag
+
+.. Prerequisites: Tags must exist in Fastis.
+.. Test case: `listTagMembers friends` +
+   Expected: All members with tag `friends` will be listed on Person List. Number of person listed will be shown in status bar.
+.. Test case: `listTagMembers 2131` (Tag 2131 does not exist in Fastis) +
+   Expected: 0 persons listed.
 
 _{ more test cases ... }_
 

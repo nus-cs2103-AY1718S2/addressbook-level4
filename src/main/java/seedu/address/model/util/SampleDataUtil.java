@@ -59,9 +59,9 @@ public class SampleDataUtil {
 
     public static Group[] getSampleGroups() {
         return new Group[] {
-                new Group(new Information("Group A")),
-                new Group(new Information("Group B")),
-                new Group(new Information("Group C")),
+            new Group(new Information("Group A")),
+            new Group(new Information("Group B")),
+            new Group(new Information("Group C")),
         };
     }
     public static ReadOnlyAddressBook getSampleAddressBook() {

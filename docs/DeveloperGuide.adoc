@@ -904,7 +904,77 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Login/Logout
+
+*MSS*
+
+1.  User logs in with credentials
+2.  Catalogue authenticates with the credentials entered
+3.  Catalogue shows successful login message
+4.  User issues commands with privilege
+5.  Catalogue checks the privilege of the user against the command issued
+6.  Catalogue executes the command
++
+Step 4-6 are repeated until the user finishes using the application
+
+7.  User issues logout command
+8.  Catalogue change the current account to guest
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The credentials entered does not match any record in the AccountList
++
+[none]
+** 2a1. Catalogue shows an error message.
++
+Use case resumes at step 1.
+
+* 4a. The privilege level of the account logged in is lower than the required level of the command
++
+[none]
+** 4a1. Catalogue shows an error message.
++
+Use case resumes at step 4 or step 7.
+
+[discrete]
+=== Use case: List
+
+*MSS*
+
+1.  User requests to list all books
+2.  Catalogue shows a list of all books in the book list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+[discrete]
+=== Use case: Find
+
+*MSS*
+
+1.  User requests to find books with some keywords
+2.  Catalogue shows a list of books with at least one keyword in the title
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+
 
 [appendix]
 == Non Functional Requirements

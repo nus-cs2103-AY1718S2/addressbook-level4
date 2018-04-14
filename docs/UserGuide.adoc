@@ -382,13 +382,6 @@ Displays directions between the first and the second event of the day.
 
 // tag::calendar[]
 === Calendar Tools
-
-==== Opening a calendar : `calendar-launch`
-[NOTE]
-====
-Calling new `show-schedule DATE` will return different set of events which will update available navigation options.
-====
-
 ==== Opening a calendar : `calendar-launch`
 
 Opens a calendar in a webview.
@@ -408,7 +401,7 @@ Logging in to the calendar interface DOES NOT perform the Oauth authentication p
 
 Allows a user to add an event directly to their calendar.
 
-Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location>`
+Format: `calendar-add title/EVENTNAME start/STARTDATETIME end/ENDDATETIME [loc/LOCATION]`
 
 [NOTE]
 ====
@@ -421,6 +414,8 @@ two dates that they provide, then the application will use 12am as both the star
 Similarly, if no date is provided with the time, the program will assume that the desired day was the current day.
 For example, if the current time is 4am, and the start date is 12am and the end date is 6am, the created event will
 start on the current day at 12am and end at 6am on the same day.
+
+The location parameter is optional.
 
 `calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
@@ -476,11 +471,11 @@ browser (i.e. not a WebView) and ask them to select the account that they wish t
 edit. Failure to authenticate will cause the program to freeze and crash.
 ====
 
-==== List upcoming events in the command line: `show-schedule`
+==== List upcoming events on a particular day in the command line: `show-schedule`
 
-Allows a user to view their calendar events for the current day.
+Allows a user to view their calendar events for a particular day.
 
-Format: `show-schdeule d/<date>`
+Format: `show-schdeule d/DATE`
 
 [NOTE]
 ====
@@ -615,10 +610,11 @@ e.g. `find James Jake`
 * *Add Session Reports/Logs* : `add-log INDEX log/LOGCONTENT`
 * *Calendar Launch* : `calendar-launch` `[Since v1.1] [Updated v1.4]`
 * *Calendar List* : `calendar-list` `[Since v1.2]`
-* *Calendar Add* : `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)` `[Since v1.3] [Updated v1.4]`
+* *Calendar Add* : `calendar-add title/EVENTNAME start/STARTDATETIME end/ENDDATETIME [loc/LOCATION] `[Since v1.3] [Updated v1.4]`
 * *Calendar Delete* : `calendar-delete INDEX` `[Since v1.4]`
-* *Show Schedule* : `show-schedule d/<date>` `[Since v1.4]`
+* *Show Schedule* : `show-schedule d/DATE `[Since v1.4]`
 * *Error* : `errorlog` `[Since v1.2]`
+* *Reauthenticate* : `reauthenticate` `[Since v1.2]`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`

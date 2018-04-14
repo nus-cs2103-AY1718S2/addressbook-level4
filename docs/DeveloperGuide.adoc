@@ -1176,29 +1176,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+//@@author ifalluphill
+|`* * *` |social worker |add calendar events |keep track of my interactions with my contacts
 
-|`* * *` |user |add calendar events |keep track of my interactions with my contacts
+|`* * *` |social worker |view upcoming calendar events |quickly check my schedule
 
-|`* * *` |user |view calendar events |quickly check my schedule
+|`* * *` |social worker |view calendar events on a particular day |quickly check my daily schedule
 
-|`* * *` |user |edit/delete calendar events |keep my schedule up to date
+|`* * *` |social worker |delete calendar events |keep my schedule up to date
 
 |`*` |advanced user |view error logs in app |help the developer resolve the issues that I encountered
 
 |`* *` |novice user |get a command correction suggestion |easily fix my mistakes
 
-|`*` |user |have command autocomplete |enter commands faster
+|`*` |social worker |have command autocomplete |enter commands faster
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |social worker with many persons in the address book |sort persons by name |locate a person easily
 
-|`* * *` |user |edit the details of an existing contact |update a contact's information to the most current information
+|`* * *` |social worker |edit the details of an existing contact |update a contact's information to the most current information
 
-|`* *` |user with many persons in the address book |filter contacts by tags |quickly view a subset of my contacts list
+|`* *` |social worker with many persons in the address book |filter contacts by tags |quickly view a subset of my contacts list
 
-|`* *` |user |sort contacts by tags |view contacts listed in decreasing level of urgency (in terms of their case)/priority
+|`* *` |social worker |sort contacts by tags |view contacts listed in decreasing level of urgency (in terms of their case)/priority
 
-|`*` |user |get the number of contacts that I have added |see how many contacts I have
+|`* *` |social worker sharing my computer with others |automatically log out of my calendar session |other users cannot view or edit my private details
+//@@author
 
 |`*` |advanced user |change the location of my address book |more easily back it up
 
@@ -1617,3 +1619,16 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+// tag::calendarTesting[]
+JASON
+// end::calendarTesting[]
+
+// tag::showScheduleTesting[]
+JASON
+// end::showScheduleTesting[]
+
+// tag::errorLogTesting[]
+JASON
+// end::errorLogTesting[]
+

@@ -28,12 +28,12 @@ Responsibilities: Authentication/Security, Multi-user features and User Storage
 
 '''
 
-=== Jason Mason-Hing
+=== Jason Jerome Manson-Hing
 image::ifalluphill.jpg[width="150", align="left"]
-{empty}[https://github.com/ifalluphill[github]] [https://github.com[Project Portfolio Page]]
+{empty}[https://github.com/ifalluphill[github]] [https://github.com[UPDATETHIS]]
 
 Role: Project Developer +
-Responsibilities: Calendar and Todolist
+Responsibilities: Calendar, Daily Scheduler, and Error Log
 
 '''
 

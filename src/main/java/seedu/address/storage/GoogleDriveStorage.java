@@ -40,7 +40,7 @@ public class GoogleDriveStorage {
     /**
      * Directory to store user credentials.
      */
-    private static java.io.File DATA_STORE_DIR =
+    private static java.io.File dataStoreDir =
             new java.io.File(System.getProperty("user.home"), ".google-credentials/google-drive-storage");
 
     private static FileDataStoreFactory dataStoreFactory;
@@ -76,7 +76,7 @@ public class GoogleDriveStorage {
                 "Please enter the upload file path and download directory in %s", GoogleDriveStorage.class);
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-            dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+            dataStoreFactory = new FileDataStoreFactory(dataStoreDir);
 
             credential = authorize();
 
@@ -142,14 +142,14 @@ public class GoogleDriveStorage {
      * Sets data store directory for test environment
      */
     public static void setDataStoreDir() {
-        DATA_STORE_DIR = new java.io.File("./src/main/resources/json/");
+        dataStoreDir = new java.io.File("./src/test/resources/GoogleCredentials/");
     }
 
     /**
      * Resets data store directory for user environment
      */
     public static void resetDataStoreDir() {
-        DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"), ".google-credentials/google-drive-storage");
+        dataStoreDir = new java.io.File(System.getProperty("user.home"), ".google-credentials/google-drive-storage");
     }
 
     /**

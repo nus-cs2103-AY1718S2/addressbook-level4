@@ -144,7 +144,7 @@ public final class ImportContactsCommand extends UndoableCommand {
 
             printResult(name, email, phone, address);
 
-            tagSet.add(new Tag("imported"));
+            tagSet.add(new Tag("nonclient"));
 
             personToAdd = new Person(new Name(name),
                     new Phone(phone), new Email(email),

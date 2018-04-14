@@ -170,6 +170,19 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author XavierMaYuqian
+        @Override
+        public String getPassword() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        //@@author XavierMaYuqian
+        @Override
+        public void setPassword(String e) {
+            fail("This method should not be called.");
+        }
+
         @Override
         public void deleteTag(Tag tag) {
             fail("This method should not be called.");

@@ -15,33 +15,37 @@ public class PasswordCommandSystemTest extends AddressBookSystemTest {
     private static String newPassword = "new";
 
     @Test
-    public void pass(){
+    public void pass() {
         // Set Password success
         String command = PasswordCommand.COMMAND_WORD + " " + PREFIX_SET + oldPassword;
-        assertCommandSuccess(command,PasswordCommand.MESSAGE_SUCCESS);
+        assertCommandSuccess(command, PasswordCommand.MESSAGE_SUCCESS);
 
         // Set Password fail because password already present
         command = PasswordCommand.COMMAND_WORD + " " + PREFIX_SET + oldPassword;
-        assertCommandFailure(command,PasswordCommand.MESSAGE_PASSWORD_EXISTS);
+        assertCommandFailure(command, PasswordCommand.MESSAGE_PASSWORD_EXISTS);
 
         // Change Password success
         command = PasswordCommand.COMMAND_WORD + " " + PREFIX_CHANGE + newPassword;
-        assertCommandSuccess(command,PasswordCommand.MESSAGE_PASSWORD_CHANGE);
+        assertCommandSuccess(command, PasswordCommand.MESSAGE_PASSWORD_CHANGE);
 
         // Remove Password success
         command = PasswordCommand.COMMAND_WORD + " " + PREFIX_REMOVE + newPassword;
-        assertCommandSuccess(command,PasswordCommand.MESSAGE_PASSWORD_REMOVE);
+        assertCommandSuccess(command, PasswordCommand.MESSAGE_PASSWORD_REMOVE);
 
         // Remove Password fail because no password to clear
         command = PasswordCommand.COMMAND_WORD + " " + PREFIX_REMOVE + newPassword;
-        assertCommandFailure(command,PasswordCommand.MESSAGE_NO_PASSWORD_EXISTS);
+        assertCommandFailure(command, PasswordCommand.MESSAGE_NO_PASSWORD_EXISTS);
 
         // Change Password fail because no password to change
         command = PasswordCommand.COMMAND_WORD + " " + PREFIX_CHANGE + newPassword;
-        assertCommandFailure(command,PasswordCommand.MESSAGE_NO_PASSWORD_EXISTS);
+        assertCommandFailure(command, PasswordCommand.MESSAGE_NO_PASSWORD_EXISTS);
 
     }
-
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     *
+     */
     private void assertCommandFailure (String command, String expectedResultMessage) {
         Model expectedModel = getModel();
 
@@ -52,6 +56,11 @@ public class PasswordCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 
+    /**
+    * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+    * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+    *
+    */
     private void assertCommandSuccess(String command, String expectedResultMessage) {
 
         executeCommand(command);

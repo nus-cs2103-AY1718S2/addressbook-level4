@@ -34,7 +34,7 @@ Sell IT is for salesmen who prefer to use a desktop app for managing their clien
 ** Documentation:
 *** Added my own features and use cases into the developer guide and user guide.
 ** Community:
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F14-B1/main/issues/139[139])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F14-B1/main/issues/139[139], https://github.com/CS2103JAN2018-F14-B1/main/issues/149[149])
 
 == Contributions to the User Guide
 

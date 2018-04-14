@@ -46,7 +46,7 @@ public class SearchCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof SelectCommand // instanceof handles nulls
+                || (other instanceof SearchCommand // instanceof handles nulls
                 && this.targetName.equals(((SearchCommand) other).targetName)); // state check
     }
 }

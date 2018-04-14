@@ -23,7 +23,7 @@ import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Implementation follows {@code DeleteCommand}
+ * Implementation follows {@code DeleteOrderCommand}
  * Deletes n orders at the front of the queue, n is the user input.
  */
 public class CompleteOrderCommand extends Command {
@@ -37,6 +37,7 @@ public class CompleteOrderCommand extends Command {
 
     public static final String MESSAGE_COMPLETE_TASK_SUCCESS = " Order(s) Completed";
 
+    private final int nullIndex = -1;
     private final Index targetIndex;
     private final Index numberOfTimes;
 
@@ -54,7 +55,7 @@ public class CompleteOrderCommand extends Command {
 
             if (number >= taskList.size()) {
                 throw new CommandException("There are only "+taskList.size()
-                + " orders being cooking");
+                        + " orders being cooking");
             }
 
             Task taskToDelete = taskList.get(targetIndex.getZeroBased());
@@ -67,7 +68,7 @@ public class CompleteOrderCommand extends Command {
 
             List<Person> personList = model.getFilteredPersonList();
 
-            int editIndex=-1;
+            int editIndex=nullIndex;
             for (Person person:personList) {
                 if (person.getOrder().equals(taskToDelete.getOrder())
                         && person.getAddress().equals(taskToDelete.getAddress())) {
@@ -76,19 +77,20 @@ public class CompleteOrderCommand extends Command {
                 }
             }
 
-            Person personToEdit = personList.get(editIndex);
-            // labels order with tag "Cooked"
-            Person editedPerson = createNewTaggedPerson(personToEdit,"Cooked");
-
             try {
+                Person personToEdit = personList.get(editIndex);
+                // labels order with tag "Cooked"
+                Person editedPerson = createNewTaggedPerson(personToEdit,"Cooked");
+
                 model.updatePerson(personToEdit, editedPerson);
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            } catch (NullPointerException npe) {
+                throw new CommandException("No matching order in order queue");
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException(ProcessOrderCommand.MESSAGE_DUPLICATE_TASK);
             } catch (PersonNotFoundException pnfe) {
                 throw new AssertionError("The target person cannot be missing");
             }
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
         }
         return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_SUCCESS));
     }
@@ -101,16 +103,19 @@ public class CompleteOrderCommand extends Command {
                 && this.numberOfTimes.equals(((CompleteOrderCommand) other).numberOfTimes)); // state check
     }
 
+    /**
+     * Add a new tag {@code tag} to the person {@code personToEdit}
+     */
     protected Person createNewTaggedPerson(Person personToEdit,String tag) {
         assert personToEdit != null;
 
+        Halal updatedHalal = personToEdit.getHalal();
+        Vegetarian updatedVegetarian = personToEdit.getVegetarian();
+        UniqueTagList updatedTags = new UniqueTagList(personToEdit.getTags());
         Name updatedName = personToEdit.getName();
         Phone updatedPhone = personToEdit.getPhone();
         Order updatedOrder = personToEdit.getOrder();
         Address updatedAddress = personToEdit.getAddress();
-        Halal updatedHalal = personToEdit.getHalal();
-        Vegetarian updatedVegetarian = personToEdit.getVegetarian();
-        UniqueTagList updatedTags = new UniqueTagList(personToEdit.getTags());
 
         try {
             updatedTags.add(new Tag(tag));

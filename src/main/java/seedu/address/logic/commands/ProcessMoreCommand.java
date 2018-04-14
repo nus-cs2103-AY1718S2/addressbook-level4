@@ -6,7 +6,9 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * Add multiple orders to the application's processing queue
+ * Add the first multiple unprocessed order in the order queue to the application's
+ * processing queue, label the corresponding orders in the
+ * order queue as Processed
  */
 
 public class ProcessMoreCommand extends ProcessNextCommand {
@@ -19,6 +21,10 @@ public class ProcessMoreCommand extends ProcessNextCommand {
 
     private int noOfTimes;
 
+    /**
+     *
+     * @param noOfTimes number that processNext needed to perform
+     */
     public ProcessMoreCommand(int noOfTimes) {
         this.noOfTimes = noOfTimes;
     }

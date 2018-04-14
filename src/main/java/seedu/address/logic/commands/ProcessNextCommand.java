@@ -14,7 +14,9 @@ import seedu.address.commons.core.Messages;
 import seedu.address.model.person.Person;
 
 /**
- * Add an order to the application's processing queue
+ * Add the first unprocessed order in the order queue to the application's
+ * processing queue, label the corresponding order in the
+ * order queue as Processed
  */
 
 public class ProcessNextCommand extends ProcessOrderCommand {

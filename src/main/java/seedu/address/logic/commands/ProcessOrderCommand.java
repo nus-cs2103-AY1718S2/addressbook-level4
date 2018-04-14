@@ -29,7 +29,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Add an order to the application's processing queue
+ * Add an order to the application's processing queue, label the corresponding order in the
+ * order queue as Processed
  */
 
 public class ProcessOrderCommand extends Command {
@@ -50,6 +51,10 @@ public class ProcessOrderCommand extends Command {
 
     public ProcessOrderCommand() {}
 
+    /**
+     *
+     * @param targetIndex
+     */
     public ProcessOrderCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
@@ -121,7 +126,9 @@ public class ProcessOrderCommand extends Command {
                 && toAdd.equals(((ProcessOrderCommand) other).toAdd));
     }
 
-
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     */
     protected Person createNewTaggedPerson(Person personToEdit,String tag) {
         assert personToEdit != null;
 

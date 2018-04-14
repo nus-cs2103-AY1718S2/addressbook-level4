@@ -3,7 +3,10 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.rule.NotificationRule;
 import seedu.address.model.rule.exceptions.DuplicateRuleException;
 
@@ -27,6 +30,12 @@ public class NotifyCommand extends Command {
 
     public NotifyCommand(NotificationRule rule) {
         this.rule = rule;
+    }
+
+    @Override
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
+        super.setData(model, history, undoRedoStack);
+        rule.action.setData(model, history, undoRedoStack);
     }
 
     @Override

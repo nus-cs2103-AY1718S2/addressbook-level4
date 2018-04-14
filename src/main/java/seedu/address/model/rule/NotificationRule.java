@@ -11,7 +11,7 @@ import seedu.address.model.coin.Coin;
  */
 public class NotificationRule extends Rule<Coin> {
 
-    private static final ActionParser parseAction = SpawnNotificationCommand::new;
+    private static final ActionParser<Coin> parseAction = SpawnNotificationCommand::new;
     private static final ConditionParser<Coin> parseCondition = NotifyCommandParser::parseNotifyCondition;
 
     public NotificationRule(String value) {

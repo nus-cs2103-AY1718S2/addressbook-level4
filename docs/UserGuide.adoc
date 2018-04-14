@@ -381,6 +381,8 @@ Sets a condition that triggers a popup notification whenever the condition match
 ** `p/pass:[-]>500`: Current price fell more than $500
 ****
 
+You can click on the notification pop-up to jump quickly to the coin account that triggered it.
+
 .Examples
 ----
 notify h/>0

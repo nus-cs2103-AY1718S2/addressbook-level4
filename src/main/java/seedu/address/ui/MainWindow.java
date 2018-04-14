@@ -2,12 +2,13 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import org.controlsfx.control.Notifications;
+
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputControl;
@@ -17,9 +18,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.LoadingEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowNotifManRequestEvent;
@@ -231,19 +235,21 @@ public class MainWindow extends UiPart<Stage> {
     @Subscribe
     private void handleShowNotificationEvent(ShowNotificationRequestEvent nre) {
         logger.info(LogsCenter.getEventHandlingLogMessage(nre));
-        spawnNotification(nre.toString());
+        spawnNotification(nre.toString(), nre.targetIndex, nre.codeString);
     }
 
     /**
      * Spawns a popup notification with the given message.
      */
-    private void spawnNotification(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("CoinBook notification");
-        alert.setHeaderText("The following rule has triggered this notification:");
-        alert.setContentText(message);
-
-        alert.show();
+    private void spawnNotification(String message, Index index, String code) {
+        Notifications.create()
+                     .title("The following rule has triggered this notification:")
+                     .text(String.format("%1$s\nClick to jump to view %2$s", message, code))
+                     .onAction(event -> {
+                         EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+                         event.consume();
+                     })
+                     .showInformation();
     }
     //@@author
 

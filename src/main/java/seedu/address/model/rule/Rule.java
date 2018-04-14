@@ -8,8 +8,7 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.ActionCommand;
 
 /**
  * Represents a Rule in the rule book.
@@ -18,18 +17,20 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class Rule<T> {
 
     public static final String MESSAGE_RULE_INVALID = "Rule description is invalid";
+    public static final String MESSAGE_FIRED = "[Rule Match] %1$s <==> %2$s";
     private static final String RULE_FORMAT_STRING = "[%1$s]%2$s";
-    private static final String MESSAGE_FIRED = "[Rule Match] %1$s <==> %2$s";
 
     private static final Logger logger = LogsCenter.getLogger(Rule.class);
 
     public final RuleType type;
     public final String description;
 
-    private final Command action;
-    private final Predicate<T> condition;
+    public final ActionCommand<T> action;
+    public final Predicate<T> condition;
 
-    protected Rule(String description, RuleType type, ActionParser actionParser, ConditionParser<T> conditionParser) {
+    protected Rule(String description, RuleType type,
+                   ActionParser<T> actionParser,
+                   ConditionParser<T> conditionParser) {
         requireAllNonNull(description, type, actionParser, conditionParser);
         this.description = description;
         this.type = type;
@@ -45,27 +46,6 @@ public class Rule<T> {
             return parser.parse(conditionArgs);
         } catch (IllegalValueException e) {
             throw new IllegalArgumentException(MESSAGE_RULE_INVALID);
-        }
-    }
-
-    /**
-     * Checks the trigger condition against the provided object, then
-     * executes the command tied to it if it matches
-     * @param t The object to check against
-     * @return Whether the command was successful.
-     */
-    public boolean checkAndFire(T t) {
-        if (!condition.test(t)) {
-            return false;
-        }
-
-        try {
-            action.execute();
-            logger.info(String.format(MESSAGE_FIRED, this, t));
-            return true;
-        } catch (CommandException e) {
-            logger.warning(e.getMessage());
-            return false;
         }
     }
 
@@ -98,8 +78,8 @@ public class Rule<T> {
      * Represents a function type used to generate the action for this rule.
      */
     @FunctionalInterface
-    protected interface ActionParser {
-        Command parse(String args);
+    protected interface ActionParser<T> {
+        ActionCommand<T> parse(String args);
     }
 
     /**

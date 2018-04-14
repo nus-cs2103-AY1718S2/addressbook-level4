@@ -61,8 +61,6 @@ public interface Model {
 
     void sortPersons();
 
-    void sortTasks();
-
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 

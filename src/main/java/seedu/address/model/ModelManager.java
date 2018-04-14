@@ -97,7 +97,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addTask(Task task) {
         addressBook.addTask(task);
-        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_CURRENT_TASKS);
         indicateAddressBookChanged();
     }
 
@@ -128,11 +128,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updateTask(target, editedTask);
         indicateAddressBookChanged();
-    }
-
-    @Override
-    public void sortTasks() {
-        addressBook.sortTaskList();
     }
 
     //@@author

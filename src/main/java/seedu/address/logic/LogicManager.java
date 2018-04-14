@@ -78,7 +78,6 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(history.getHistory());
     }
 
-    //@@author Wu Di
     @Override
     public void setTabPane(TabPane tabPane) {
         addressBookParser.setTabPane(tabPane);

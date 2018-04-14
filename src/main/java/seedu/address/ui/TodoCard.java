@@ -44,10 +44,10 @@ public class TodoCard extends UiPart<Region> {
         super(FXML);
         this.task = task;
         id.setText(displayedIndex + ". ");
-        title.setText("Title: " + task.getTitle().value);
+        title.setText(task.getTitle().value);
         priority.setText("Priority: " + task.getPriority().toString());
         deadline.setText("Deadline: " + task.getDeadline().dateString);
-        description.setText("Description: " + task.getTaskDesc().value);
+        description.setText(task.getTaskDesc().value);
     }
 
     @Override

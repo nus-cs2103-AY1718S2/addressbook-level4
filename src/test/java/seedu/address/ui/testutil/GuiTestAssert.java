@@ -72,6 +72,7 @@ public class GuiTestAssert {
         assertEquals(expected, resultDisplayHandle.getText());
     }
 
+    //@@author jaronchan
     /**
      * Asserts that {@code personDetailsPanel} displays the details of {@code expectedPerson}.
      */

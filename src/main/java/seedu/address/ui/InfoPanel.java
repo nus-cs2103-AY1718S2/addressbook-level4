@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.AliasListEvent;
 import seedu.address.commons.events.ui.BirthdayListEvent;
 import seedu.address.commons.events.ui.GoogleMapsEvent;
+import seedu.address.commons.events.ui.InfoPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.TimeTableEvent;
 import seedu.address.commons.events.ui.VenueTableEvent;
@@ -109,6 +110,16 @@ public class InfoPanel extends UiPart<Region> {
         aliasList.init(event.getAliases());
         aliasListPlaceholder.toFront();
         aliasList.setStyle();
+    }
+
+    @Subscribe
+    private void handleInfoPanelEvent(InfoPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        venuePlaceholder.toBack();
+        mapsPlaceholder.toBack();
+        birthdayPlaceholder.toBack();
+        timetableUnionPlaceholder.toBack();
+        aliasListPlaceholder.toBack();
     }
     //@@author
 

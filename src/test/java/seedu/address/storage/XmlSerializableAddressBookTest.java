@@ -42,10 +42,7 @@ public class XmlSerializableAddressBookTest {
     public void toModelType_typicalAliasesFile_success() throws Exception {
         XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_ALIASES_FILE,
                 XmlSerializableAddressBook.class);
-        AddressBook addressBookFromFile = new AddressBook();
-        addressBookFromFile.resetAliasList();
-        addressBookFromFile = dataFromFile.toModelType();
-        addressBookFromFile.resetAliasList();
+        AddressBook addressBookFromFile = dataFromFile.toModelType();
         AddressBook typicalAliasesAddressBook = TypicalAliases.getTypicalAddressBook();
         assertEquals(addressBookFromFile, typicalAliasesAddressBook);
     }
@@ -92,7 +89,6 @@ public class XmlSerializableAddressBookTest {
                 XmlSerializableAddressBook.class);
         AddressBook addressBookFromFile = new AddressBook();
         dataFromFile.addToAddressBook(addressBookFromFile);
-        addressBookFromFile.resetAliasList();
         AddressBook typicalAliasesAddressBook = TypicalAliases.getTypicalAddressBook();
         assertEquals(addressBookFromFile, typicalAliasesAddressBook);
     }

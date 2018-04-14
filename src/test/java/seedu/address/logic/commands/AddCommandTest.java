@@ -20,7 +20,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.person.AddCommand;
-import seedu.address.model.AccountsManager;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -145,6 +144,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean isLoggedIn() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
         public void updateJob(Job target, Job editedJob)
                 throws DuplicateJobException {
             fail("This method should not be called.");
@@ -202,11 +207,6 @@ public class AddCommandTest {
         @Override
         public List<Appointment> getAppointmentList() {
             fail("This method should not be called");
-            return null;
-        }
-
-        public AccountsManager getAccountsManager() {
-            fail("This method should not be called.");
             return null;
         }
 

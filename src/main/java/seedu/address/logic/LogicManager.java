@@ -6,8 +6,12 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -40,7 +44,7 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command = addressBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
-            CommandResult result = command.execute();
+            CommandResult result = execute(command);
             undoRedoStack.push(command);
             return result;
         } finally {
@@ -48,6 +52,28 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author Jason1im
+    /**
+     * Executes the command if it can used before logging in
+     * @throws CommandException if the command is restricted.
+     */
+    private CommandResult execute(Command command) throws CommandException {
+        if (model.isLoggedIn() || isUnrestrictedCommand(command)) {
+            return command.execute();
+        } else {
+            throw new CommandException(Messages.MESSAGE_RESTRICTED_COMMMAND);
+        }
+    }
+
+    /**
+     * Checks if the command can be executed before logging in.
+     */
+    private boolean isUnrestrictedCommand(Command command) {
+        return command instanceof LoginCommand || command instanceof HelpCommand
+                || command instanceof ExitCommand;
+    }
+
+    //@@author
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getFilteredPersonList();

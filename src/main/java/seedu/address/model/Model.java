@@ -110,6 +110,12 @@ public interface Model {
      */
     void updateUsername(String oldUsername) throws InvalidUsernameException;
 
+    /**
+     * Checks if the user has logged in.
+     * @return true if user is logged in.
+     */
+    boolean isLoggedIn();
+
     //@@author
     /** Adds the given person */
     void addJob(Job job) throws DuplicateJobException;

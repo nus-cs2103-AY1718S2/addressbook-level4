@@ -97,6 +97,11 @@ public class TestApp extends MainApp {
         Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
         ModelHelper.setFilteredPersonList(copy, model.getFilteredPersonList());
         ModelHelper.setFilteredJobList(copy, model.getFilteredJobList());
+        try {
+            model.login("Admin", "ad123");
+        } catch (Exception e) {
+            //We are not interested in the exception thrown here.
+        }
         return copy;
     }
 

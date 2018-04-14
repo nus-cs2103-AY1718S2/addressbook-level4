@@ -12,6 +12,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
+:source-highlighter: rouge
 :repoURL: https://github.com/CS2103JAN2018-W09-B2/main
 
 By: `Team W09-B2`      Since: `Feb 2018`      Licence: `MIT`
@@ -52,10 +53,16 @@ Not sure how to install Java? Visit the oracle website link below for more infor
 
 .  Download the latest `contactHeRo.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for contactHeRo, i.e. where  you want to store the `contactHeRo.jar` and the subsequently generated data files.
-.  Double-click the file to start the app. The user interface should appear in a few seconds as shown below (Refer to figure 1).
+.  Double-click the file to start the app.
+.  Login using the default username,`Admin` and default password, `ad123`.
+[NOTE]
+You can change the password later using the `updatepassword` command.
+
+.  The user interface should appear in a few seconds as shown below (Refer to figure 1).
 +
-.contactHeRo on launch
-image::Ui.png[width="790", align="center"]
+.contactHeRo UI after login
+image::UIMarkup.png[align="center"]
+
 Now you can start using contactHeRo.
 
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -64,7 +71,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`delete`**`3` : deletes the 3rdo contact shown in the current list
 * *`exit`* : exits the app
 
 .  You can refer to <<Features>> for more details of each command.
@@ -75,7 +82,7 @@ Thank you for choosing us as your contact management solution!
 == Features
 contactHeRo is a *Command Line Interface(CLI) application*. Hence you need to type in the commands in order to use its features.
 
-Below is the interface(refer to figure 2) that contactHeRo provides for you to type your command.
+Below is the interface(Refer to figure 2) that contactHeRo provides for you to type your command.
 
 .Command Box in contactHeRo
 image::commandBox.png[width="790", align="center"]
@@ -143,7 +150,7 @@ This section describes the commands you can use to manage person profiles in con
 
 ==== Adding a person : `add`
 
-You can add a person to contactHero using the following format. +
+You can add a person to contactHeRo using the following format. +
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS cp/CURRENT_POSITION cc/COMPANY [pp/PROFILE_PICTURE_PATH] [s/SKILL]...`
 
@@ -169,7 +176,7 @@ On running the above command, you should see the following success message: +
 
 ==== Editing a person : `edit`
 
-You can edit an existing person in contactHero using this format. +
+You can edit an existing person in contactHeRo using this format. +
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [cp/CURRENT_POSITION] [cc/COMPANY] [pp/PROFILE_PICTURE_PATH][s/SKILL]...`
 
@@ -202,7 +209,7 @@ On running the above command, you should see the following success message: +
 You can see a list of all persons in contactHeRo using the following format. +
 Format: `list`
 
-==== Locating persons by name : `find`
+==== Locating persons by name or skill : `find`
 
 You can find all the persons whose names or skills contain any of the given keywords using the following format. +
 Format: `find n/KEYWORD [MORE_KEYWORDS]` to find by name or `find s/KEYWORD [MORE_KEYWORDS]` to find by skill
@@ -244,7 +251,7 @@ This deletes the 2nd person in contactHeRo and on running the above command, you
  Deleted Person: John Doe Phone: 98765432 Email: johnd@example.com Address: John street, block 123, #01-01 Current Position: Software Engineer Company: Google Skills:
 
 
-* `find Betsy` +
+* `find n/Betsy` +
 `delete 1` +
 This deletes the 1st person in the results of the `find` command and on running the above command, you should see the following success message: +
 
@@ -267,14 +274,14 @@ Examples:
 `select 2` +
 This selects the 2nd person in contactHeRo.
 
-* `find Betsy` +
+* `find n/Betsy` +
 `select 1` +
-This selects the 1st person in the results of the `find` command. +
+This selects the 1st person in the results of the `find` command.
 +
-On running this command, you should see a similar result as the following (refer to figure 4). Betsy is selected in the person list and her contact details are visible in the Contact Details Tab.
+On running this command, you should see a similar result as the following (Refer to figure 4). Betsy is selected in the person list and her contact details are visible in the Contact Details Tab.
 
 .Select Command Execution
-image::selectCommand.png[width="790", align="center"]
+image::selectCommand.png[align="center"]
 
 // tag::linkedIn[]
 ==== Searching a person on LinkedIn: `linkedIn`
@@ -286,9 +293,11 @@ Format: `linkedIn INDEX`
 * This loads the LinkedIn search of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
+* You will have to login to LinkedIn the first time to use this command in order to search the person.
 ****
 [NOTE]
-You will have to login to LinkedIn the first time to use this command in order to search the person.
+We do not save or log any of your LinkedIn credentials or information as we respect your privacy.
+Therefore, everytime you restart contactHeRo, you will have to login again.
 
 Examples:
 
@@ -296,14 +305,14 @@ Examples:
 `linkedIn 2` +
 This loads the LinkedIn search of the 2nd person in the contactHeRo.
 
-* `find Betsy` +
-`select 1` +
+* `find n/Betsy` +
+`linkedIn 1` +
 This loads the LinkedIn search of 1st person in the results of the `find` command. +
 +
-On running the above command and after you have logged in, you should a similar result as the following (refer to figure 5). Betsy is selected in the person list and she is searched on LinkedIn in the LinkedIn Tab.
+On running the above command and after you have logged in, you should a similar result as the following (Refer to figure 5). Betsy is selected in the person list and she is searched on LinkedIn in the LinkedIn Tab.
 
 .LinkedIn Command Execution
-image::linkedInCommand.png[width="790", align="center"]
+image::linkedInCommand.png[align="center"]
 // end::linkedIn[]
 
 // tag::jobs[]
@@ -312,8 +321,8 @@ This section describes the commands you can use to manage person profiles in con
 
 ==== Adding a job opening: `addjob`
 
-You can add a job opening to contactHero using the following format. +
-Format: `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS s/REQUIRED_SKILLS`
+You can add a job opening to contactHeRo using the following format. +
+Format: `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS s/SKILLS_REQUIRED`
 
 Examples:
 
@@ -323,15 +332,18 @@ On running the above command, you should see the following success message: +
 
  New job opening added: Software Engineer Team: Cloud Services Location: Singapore Number of Positions: 1 Skills: [Java]
 
-* `addjob p/Marketing Intern t/Social Media Marketing l/Singapore n/1 s/Excel`
+* `addjob p/Marketing Intern t/Social Media Marketing l/Singapore n/1 s/Excel s/Writing`
 +
-On running the above command, you should see the following success message: +
+On running the above command, you should see the following success message and the job opening UI(Refer to figure 6) added to the Job List Panel(Refer to figure 1): +
 
- New job opening added: Marketing Intern Team: Social Media Marketing Location: Singapore Number of Positions: 1 Skills: [Excel]
+ New job opening added: Marketing Intern Team: Social Media Marketing Location: Kuala Lampur, Malaysia Number of Positions: 1 Skills: [Excel][Writing]
+
+.A job opening in contactHeRo
+image::addjobCommand.png[align="center"]
 
 ==== Editing a job opening : `editjob`
 
-You can edit an existing job opening in contactHero using this format. +
+You can edit an existing job opening in contactHeRo using this format. +
 
 Format: `editjob INDEX [p/POSITION] [t/TEAM] [l/LOCATION] [n/NUMBER_OF_POSITIONS] [s/SKILL]...`
 
@@ -351,6 +363,34 @@ Edits the position and team of the 1st job opening to be `Hardware Engineer` and
 On running the above command, you should see the following success message: +
 
  Edited Job: Hardware Engineer Team: Hardware Products Location: Singapore Number of Positions: 1 Skills: [Java]
+
+==== Locating job opening by position, location or skill : `findjob`
+
+You can find all the persons whose names or skills contain any of the given keywords using the following format. +
+Format:
+
+	* `find p/KEYWORD [MORE_KEYWORDS]` to find by position or
+	* `find t/KEYWORD [MORE_KEYWORDS]` to find by team or
+	* `find s/KEYWORD [MORE_KEYWORDS]` to find by skill.
+
+Some things to take note of:
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name or skill is searched, depending on the prefix (n/ or s/)
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `find n/John` +
+This will show any person having the name `john` or `John`.
+* `find s/designer` +
+This will show `Jane Doe` whose skill is `designer`.
+* `find n/Betsy Tim John` +
+This will show any person having any of the names `Betsy`, `Tim`, or `John`.
 
 ==== Listing all job openings : `listjob`
 
@@ -392,6 +432,16 @@ Examples:
 * `list` +
 `matchjob 1` +
 This will show any person whose skills match any of those required for the job opening at index 1.
+
+* `findjob s/Software` +
+`matchjob 1` +
+This will show any person whose skills match any of those required for the job opening at index 1 in the results of the findjob command.
++
+On running this command, you should see a similar result as the following (Refer to figure 5). All persons having any skill as required by the job 'Software Engineer' will be shown.
+
+.MatchJob Command Execution
+image::matchjobCommand.png[align="center"]
+
 // end::jobs[]
 
 // tag::calendar[]
@@ -440,22 +490,22 @@ Format: `date [DATE]` +
 `DATE` needs to be in format YYYY-MM-DD
 
 * With `DATE`, you view the specific date +
-Example: `date 2018-03-26`
+Example: `date 2018-04-26`
 
 * Without `DATE`, you change to the date view +
 Example: `date`
 
 .Date view
-image::dateView.png[width="400"]
+image::dateView.png[width="400", align="center"]
 
-==== Viewing a specific date or switch to the date view : `datetime`
+==== Viewing a specific date and time or switch to the date and time view : `datetime`
 You can view a specifc date time by using the following format. +
 Format: `datetime [DATE_TIME]` +
 
 [NOTE]
 `DATE_TIME` needs to be in format YYYY-MM-DD HH-mm
 
-Example: `date 2018-03-26 12:00`
+Example: `date 2018-04-26 12:00`
 
 ==== Viewing a specific week or switch to the week view : `week`
 You can view a specifc week or switch to the week view by using the following format. +
@@ -473,7 +523,7 @@ Example: `week 2018 10`
 Example: `week`
 
 .Week view
-image::weekView.png[width="400"]
+image::weekView.png[width="400", align="center"]
 
 ==== Viewing a specific month or switch to the month view : `month`
 You can view a specifc month or switch to the month view by using the following format. +
@@ -489,7 +539,7 @@ Example: `month 2018-10`
 Example: `month`
 
 .Month view
-image::monthView.png[width="400"]
+image::monthView.png[width="400", align="center"]
 
 ==== Viewing a specific year or switch to the year view : `year`
 You can view a specifc year or switch to the year view by using the following format. +
@@ -505,7 +555,7 @@ Example: `year 2018`
 Example: `year`
 
 .Year view
-image::yearView.png[width="400"]
+image::yearView.png[width="400", align="center"]
 // end::calendar[]
 
 === Managing Emails
@@ -514,7 +564,7 @@ image::yearView.png[width="400"]
 ==== Login to Google : `googlelogin`
 
 You will have to login to google in order to use features like
-emailing. This process is simple and fast like how you normally login
+emailing. This process is simple and fast like how you would normally login
 using the web browser. +
 Format: `googlelogin`
 
@@ -539,7 +589,8 @@ This will open up the `Google` tab for you to login. On running the above comman
 You should also see the login screen as shown below.
 
 .The Google log in page
-image::googlelogin1.PNG[width="600"]
+image::googlelogin1.PNG[width="600", align="center"]
+
 
 [NOTE]
 Please do not go to any other webpages in the `Google` tab after you have logged in.
@@ -558,8 +609,8 @@ Format: `email INDEX [sub/EMAIL_SUBJECT]`
 * Collects the information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-* The email subject title is optional.
 * The collected information will be used to help you fill up details in the draft like the person's email address.
+* The email subject title is optional.
 ****
 
 Examples:
@@ -593,7 +644,7 @@ button to send your email. If the email is sent successfully, you should see
 a pop-up message as shown below.
 
 .Pop-up message
-image::emailSS2.PNG[width="400"]
+image::emailSS2.PNG[width="400", align="center"]
 // end::email[]
 
 === Utility Features
@@ -713,17 +764,20 @@ You do not need to save manually. contactHeRo saves the data into the hard disk 
 
 ==== Arranging meetings with Gmail calendar `[coming in v2.0]`
 
-You will soon be able to arrange meeting on Gmail calender using contactHero.
+You will soon be able to arrange meeting on Gmail calender using contactHeRo.
 
-==== Add reminders `[coming in v2.0]`
+==== Setting reminders `[coming in v2.0]`
 
 You will soon be able to set reminders for meetings, appointments or any other event and contactHeRo will remind you of the event.
 
-// tag::dataencryption[]
-==== Encrypting data files `[coming in v2.0]`
+==== Better matching of jobs `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Job matching will soon be improved wherein it will be using location-matching and Artificial Intelligence methods.
+
+==== Matching people to jobs `[coming in v2.0]`
+
+You will soon be able to match people to jobs as well to see which job opening is suitable for a particular person.
+
 
 == FAQ
 
@@ -737,50 +791,86 @@ To ask more questions, please send your email to contactHeRo@gmail.com. +
 We are willing to help you. +
 // end::faq[]
 
+// tag::commandsummary[]
 == contactHeRo Cheat Sheet
 
-These are all the commands that you can use for the latest version of contactHeRo:
+The following sections summarize the commands you can use in contactHeRo.
 
-* *<<adding-a-person-code-add-code, Add>>* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [pp/PROFILE_PICTURE_PATH]
-[s/SKILL]...` +
-e.g. `add n/John Doe p/98765432 e/johnd@example.com a/Raffles Hall
-pp//home/trafalgarandre/downloads/john.jpeg s/Java s/Designing`
-* *<<clearing-all-entries-code-clear-code, Clear>>* : `clear`
-* *<<clearing-list-of-entered-commands-code-clearhistory-code, ClearHistory>>* : `clearhistory`
-* *<<deleting-a-person-code-delete-code, Delete>>* : `delete INDEX` +
-e.g. `delete 3`
-* *<<editing-a-person-code-edit-code, Edit>>* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]
-[pp/PROFILE_PICTURE_PATH] [s/SKILL]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *<<locating-persons-by-name-code-find-code, Find>>* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *<<listing-all-persons-code-list-code, List>>* : `list`
-* *<<viewing-help-code-help-code, Help>>* : `help`
-* *<<viewing-the-contact-details-of-a-person-code-select-code, Select>>* : `select INDEX` +
-e.g.`select 2`
-* *<<listing-entered-commands-code-history-code, History>>* : `history`
-* *<<undoing-previous-command-code-undo-code, Undo>>* : `undo`
-* *<<redoing-the-previously-undone-command-code-redo-code, Redo>>* : `redo`
-* *<<viewing-the-linkedin-search-of-a-person-code-linkedin-code, LinkedIn>>*: `linkedIn INDEX` +
-e.g. `linkedIn 2`
-* *<<login-to-google-code-googlelogin-code, Login to Google>>* : `googlelogin` +
-* *<<emailing-your-contact-code-email-code, Email>>* : `email INDEX` +
-e.g. `email 1`
-* *<<adding-a-job-opening, Add job opening>>* : `addjob p/POSITION t/TEAM l/LOCATION n/NUMBER_OF_POSITIONS` +
-e.g. `addjob p/Software Engineer t/Cloud Services l/Singapore n/2`
-* *<<opening-the-calendar, Open calendar>>* : `calendar`
-* *<<viewing-calendar, View specific date or switch date view>>* : `date [DATE]` +
-e.g. `date` or `date 2018-04-04`
-* *<<viewing-calendar, View specific date time>>* : `datetime [DATE_TIME]` +
-e.g. `datetime 2018-04-04 13:00`
-* *<<viewing-calendar, View specific week or switch week view>>* : `week [YEAR WEEK]` +
-e.g. `week` or `week 2018 14`
-* *<<viewing-calendar, View specific month or switch month view>>* : `month [MONTH]` +
-e.g. `month` or `month 2018-04`
-* *<<viewing-calendar, View specific year or switch year view>>* : `year [YEAR]` +
-e.g. `year` or `year 2018`
-* *<<adding-appointment, Adding appointment>>* : `addapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME` +
-e.g `addapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
-* *<<deleting-appointment, Deleting appointment>>* : `delapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME` +
-e.g `delapp t/Meeting sdt/2018-04-05 14:00 edt/2018-04-05 15:00`
+=== Managing your contactHeRo account
+[width="99%",cols="33%,33%,33%",options="header",]
+|===
+|Function |Command |Example
+|Logging in |`login` |`login u/Admin pw/ad123`
+|Changing your password |`updatepassword pw/PASSWORD npw/NEW_PASSWORD` |`updatepassword pw/Doe123 npw/doe456`
+|Logging out |`logout` |`logout`
+|===
 
+=== Managing Persons
+[width="99%",cols="33%,33%,33%",options="header",]
+|===
+|Function |Command |Example
+|Adding a person. |`add n/NAME p/PHONE e/EMAIL a/ADDRESS cp/CURRENT_POSITION cc/COMPANY [pp/PROFILE PICTURE NAME] [s/SKILL]...` |`add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 cp/Software Engineer cc/Google pp//home/trafalgarandre/downloads/john.jpeg s/Java s/C++`
+|Editing an existing person. |`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [cp/CURRENT_POSITION] [cc/COMPANY] [pp/PROFILE PICTURE NAME] [s/SKILL]...` |`edit 1 p/91234567 e/johndoe@example.com`
+|Deleting an existing person. |`delete INDEX` |`delete 2`
+|Showing a list of all persons. |`list` |`list`
+|Finding persons by name. |`find n/KEYWORD [MORE_KEYWORDS]` |`find n/John`
+|Finding persons by skill. |`find s/KEYWORD [MORE_KEYWORDS]` |`find s/Java`
+|Seeing contact details of a person. |`select INDEX` |`select 3`
+|Searching a person on linkedIn. |`linkedIn INDEX` |`linkedIn 3`
+|===
+
+=== Managing Job Openings
+[width="99%",cols="33%,33%,33%",options="header",]
+|===
+|Function |Command |Example
+|Adding a job opening. |`addjob p/POSITION t/TEAM l/LOCATION n/NUMBER OF POSITIONS s/SKILL REQUIRED...` |`addjob p/Software Engineer t/Cloud Services l/Singapore n/1 s/Java`
+|Editing an existing job opening. |`editjob INDEX [p/POSITION] [t/TEAM] [l/LOCATION] [n/NUMBER_OF_POSITIONS] [s/SKILL]…​` |`editjob 1 p/Backend Software Engineer t/Backend Services`
+|Deleting an existing job opening. |`deletejob INDEX` |`deletejob 2`
+|Showing a list of all job openings. |`listjob` |`listjob`
+|Finding job openings by position. |`findjob p/KEYWORD [MORE_KEYWORDS]` |`findjob p/Engineer`
+|Finding job openings by location. |`findjob l/KEYWORD [MORE_KEYWORDS]` |`findjob l/Singapore`
+|Finding job openinngs by skill. |`findjob s/KEYWORD [MORE_KEYWORDS]` |`findjob s/Java s/Excel`
+|Matching a job opening to a person. |`matchjob INDEX` |`matchjob 3`
+|===
+
+=== Managing Appointments
+[width="99%",cols="33%,33%,33%",options="header",]
+|===
+|Function |Command |Example
+|Adding an appointment. |`addapp t/TITLE sdt/START_DATE_TIME edt/END_DATE_TIME` |`addapp t/Birthday sdt/2018-03-26 12:00 edt/2018-03-26 12:30`
+|Deleting an existing appoinment. |`delapp t/TITLE sdt/START DATE TIME edt/END DATE TIME` |`delapp t/Birthday sdt/2018-03-26 12:00 edt/2018-03-26 12:30`
+|===
+
+=== Viewing the Calendar
+[width="99%",cols="33%,33%,33%",options="header",]
+|===
+|Function |Command |Example
+|Opening the calendar. |`calendar` |`calendar`
+|Viewing a specific date or switch to the date view. |`date` |`date 2018-04-26`
+|Viewing a specific date and time or switch to the date and time view. |`datetime` |`date 2018-04-26 12:00`
+|Viewing a specific week or switch to the week view. |`week [YEAR WEEK]` |`week 2018 10`
+|Viewing a specific month or switch to the month view. |`month [MONTH]` |`month`
+|Viewing a specific year or switch to the year view. |`year [YEAR]` |`year 2018`
+|===
+
+=== Managing Emails
+[width="99%",cols="33%,33%,33%",options="header",]
+|===
+|Function |Command |Example
+|Login to google |`googlelogin` |`googlelogin`
+|Emailing your contact. |`email INDEX [sub/EMAIL_SUBJECT]` |`email 2 sub/Interview on 13 May 2018`
+|===
+
+=== Utility Commands
+[width="99%",cols="33%,33%,33%",options="header",]
+|===
+|Function |Command |Example
+|Viewing help. |`help` |`help`
+|Listing entered commands. |`history` |`history`
+|Clearing list of entered commands. |`clearhistory` |`clearhistory`
+|Undo previous command. |`undo` |`undo`
+|Redo previous command. |`redo` |`redo`
+|Clear all data. |`clear` |`clear`
+|Exit contactHeRo. |`exit` |`exit`
+|===
+// end::commandsummary[]

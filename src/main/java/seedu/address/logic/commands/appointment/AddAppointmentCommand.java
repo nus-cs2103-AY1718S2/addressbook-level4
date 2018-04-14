@@ -24,11 +24,11 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_START_DATE_TIME + " "
             + PREFIX_END_DATE_TIME;
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to calendar. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to calendar. \n"
             + "Parameters: "
             + PREFIX_TITLE + "TITLE "
             + PREFIX_START_DATE_TIME + "START_DATE_TIME "
-            + PREFIX_END_DATE_TIME + "END_DATE_TIME "
+            + PREFIX_END_DATE_TIME + "END_DATE_TIME \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TITLE + "Birthday "
             + PREFIX_START_DATE_TIME + "2018-03-26 12:00 "
@@ -36,7 +36,6 @@ public class AddAppointmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the calendar";
-    public static final String MESSAGE_DATE_TIME_CONSTRAINTS = "Start date time must be before end date time";
 
     private final Appointment toAdd;
 

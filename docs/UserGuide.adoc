@@ -573,6 +573,9 @@ Coming v2.0, Medeina can be used concurrently on different systems. The data wil
 *Q*: What if my questions are not answered through this user guide? +
 *A*: Post an issue in our github link:{repoURL}/issues[here]. Alternatively, email us at help@medeina.com. We will address your question as soon as possible.
 
+*Q*: There's no scroll-bar in calendar entry views, what happens when a have a long list of appointments on that week? +
+*A*: The calendar entry view is implemented by default without a scroll-bar, yet user can still scroll up and down using mouse wheel.
+
 *Q*: After switching from a year view with appointments to a year view with none, the appointment dates were still colored despite no entry, why is that? +
 *A*: The issue is embedded inside the API of CalendarFx, it has already been documented in our developer guide as well. Hopefully the issue can be resolved in future releases of CalendarFX.
 

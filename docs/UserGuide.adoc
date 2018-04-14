@@ -514,7 +514,7 @@ image::yearView.png[width="400"]
 ==== Login to Google : `googlelogin`
 
 You will have to login to google in order to use features like
-emailing. This process is simple and fast like how you normally login
+emailing. This process is simple and fast like how you would normally login
 using the web browser. +
 Format: `googlelogin`
 
@@ -541,6 +541,7 @@ You should also see the login screen as shown below.
 .The Google log in page
 image::googlelogin1.PNG[width="600"]
 
+
 [NOTE]
 Please do not go to any other webpages in the `Google` tab after you have logged in.
 
@@ -558,8 +559,8 @@ Format: `email INDEX [sub/EMAIL_SUBJECT]`
 * Collects the information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-* The email subject title is optional.
 * The collected information will be used to help you fill up details in the draft like the person's email address.
+* The email subject title is optional.
 ****
 
 Examples:

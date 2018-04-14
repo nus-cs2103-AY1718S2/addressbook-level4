@@ -60,6 +60,7 @@ public class ViewAppointmentCommand extends Command {
         if (indexArgumentIsExist) {
             targetPatient = model.getPatientFromListByIndex(targetIndex);
             EventsCenter.getInstance().post(new ShowPatientAppointmentRequestEvent(targetPatient));
+            return new CommandResult(String.format(MESSAGE_SUCCESS_PATIENT, targetPatient.getName().fullName));
         } else {
             EventsCenter.getInstance().post(new ShowCalendarViewRequestEvent(model.getAppointmentEntryList()));
         }

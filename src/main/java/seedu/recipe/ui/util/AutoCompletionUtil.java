@@ -47,7 +47,9 @@ public class AutoCompletionUtil {
 
         ArrayList<String> editPrefixes = new ArrayList<>(Arrays.asList(CliSyntax.PREFIX_NAME.toString(),
                 CliSyntax.PREFIX_INGREDIENT.toString(), CliSyntax.PREFIX_INSTRUCTION.toString(),
-                CliSyntax.PREFIX_TAG.toString(), CliSyntax.PREFIX_URL.toString()));
+                CliSyntax.PREFIX_COOKING_TIME.toString(), CliSyntax.PREFIX_PREPARATION_TIME.toString(),
+                CliSyntax.PREFIX_CALORIES.toString(), CliSyntax.PREFIX_SERVINGS.toString(),
+                CliSyntax.PREFIX_URL.toString(), CliSyntax.PREFIX_IMG.toString(), CliSyntax.PREFIX_TAG.toString()));
         prefixesForCommand.put("edit", editPrefixes);
 
         ArrayList<String> groupPrefixes = new ArrayList<>(Arrays.asList(CliSyntax.PREFIX_GROUP_NAME.toString(),

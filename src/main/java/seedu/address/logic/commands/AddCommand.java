@@ -37,9 +37,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_ORDER + "Chicken Rice "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_HALAL + "Halal "
-            + PREFIX_VEGETARIAN + "Vegetarian "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_VEGETARIAN + "Vegetarian ";
+
 
     public static final String MESSAGE_SUCCESS = "New order added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This order already exists in the address book";

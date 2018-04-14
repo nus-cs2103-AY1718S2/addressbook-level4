@@ -83,6 +83,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author XavierMaYuqian
     /**
      * Sets the {@code Comment} of the {@code EditPersonDescriptor} that we are building.
      */

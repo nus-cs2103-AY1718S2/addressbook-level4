@@ -1,6 +1,9 @@
 package seedu.address.logic;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -18,6 +21,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.alias.Alias;
 import seedu.address.network.NetworkManager;
 
 
@@ -27,6 +31,54 @@ public class LogicManagerTest {
 
     private Model model = new ModelManager();
     private Logic logic = new LogicManager(model, mock(NetworkManager.class));
+
+    @Test
+    public void isValidCommand_validCommand_true() {
+        assertTrue(logic.isValidCommand("delete 9"));
+        assertTrue(logic.isValidCommand("list s/read by/pd"));
+        assertTrue(logic.isValidCommand("   list   s/read    by/pd  "));
+    }
+
+    @Test
+    public void isValidCommand_validAlias_true() {
+        model.addAlias(new Alias("ls", "list", "s/read by/pd"));
+        model.addAlias(new Alias("d", "delete", ""));
+        assertTrue(logic.isValidCommand("ls"));
+        assertTrue(logic.isValidCommand("d 9"));
+        assertTrue(logic.isValidCommand("    ls    by/s    "));
+    }
+
+    @Test
+    public void isValidCommand_invalidCommand_false() {
+        assertFalse(logic.isValidCommand("listt"));
+        assertFalse(logic.isValidCommand("delete"));
+        assertFalse(logic.isValidCommand("del ete 9"));
+
+        model.addAlias(new Alias("d", "delete", ""));
+        assertFalse(logic.isValidCommand("d"));
+    }
+
+    @Test
+    public void parse_emptyCommandText_throwsParseException() throws ParseException {
+        thrown.expect(ParseException.class);
+        logic.parse("");
+    }
+
+    @Test
+    public void parse_aliasedCommand_aliasApplied() throws ParseException {
+        model.addAlias(new Alias("ls", "list", "s/read by/pd"));
+        model.addAlias(new Alias("d", "delete", ""));
+        assertArrayEquals(new String[]{"list", " s/read by/pd"}, logic.parse("ls"));
+        assertArrayEquals(new String[]{"list", " s/read by/pd s/unread"}, logic.parse("ls s/unread"));
+        assertArrayEquals(new String[]{"delete", ""}, logic.parse("d"));
+    }
+
+    @Test
+    public void parse_nonAliasedCommand_processed() throws ParseException {
+        assertArrayEquals(new String[]{"list", ""}, logic.parse("list"));
+        assertArrayEquals(new String[]{"list", " 123"}, logic.parse("list 123"));
+        assertArrayEquals(new String[]{"list", " 123 s/read "}, logic.parse("list 123 s/read "));
+    }
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
@@ -40,6 +92,12 @@ public class LogicManagerTest {
         String deleteCommand = "delete 9";
         assertCommandException(deleteCommand, MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         assertHistoryCorrect(deleteCommand);
+    }
+
+    @Test
+    public void execute_emptyCommandText_emptyResult() throws CommandException, ParseException {
+        CommandResult result = logic.execute("");
+        assertTrue(CommandResult.isEmptyResult(result));
     }
 
     @Test

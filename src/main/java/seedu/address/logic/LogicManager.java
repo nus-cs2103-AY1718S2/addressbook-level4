@@ -65,7 +65,7 @@ public class LogicManager extends ComponentManager implements Logic {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        String commandWord = matcher.group("commandWord");
+        final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
         return new String[] {commandWord, arguments};

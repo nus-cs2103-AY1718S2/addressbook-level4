@@ -146,19 +146,26 @@ public class HintParser {
                                                String preamble, Prefix... prefixes) {
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(arguments, prefixes);
 
+        boolean hasPrefixes = false;
         StringBuilder sb = new StringBuilder();
-        if (preamble != null && argumentMultimap.getPreamble().trim().isEmpty()) {
-            sb.append("[").append(preamble).append("] ");
-        }
-
         for (Prefix p : prefixes) {
             Optional<String> parameterOptional = argumentMultimap.getValue(p);
-            if (!parameterOptional.isPresent()) {
-                sb.append("[").append(p.getPrefix()).append(prefixIntoParameter(p)).append("] ");
+            if (parameterOptional.isPresent()) {
+                hasPrefixes = true;
+                continue;
             }
+            if (sb.length() > 0) {
+                sb.append(" ");
+            }
+            sb.append("[").append(p.getPrefix()).append(prefixIntoParameter(p)).append("]");
         }
+
+        if (!hasPrefixes && preamble != null && argumentMultimap.getPreamble().trim().isEmpty()) {
+            sb.insert(0, "[" + preamble + "] ");
+        }
+
         if (sb.length() == 0) {
-            return getHintPadding(arguments) + defaultHint;
+            return defaultHint;
         }
         return getHintPadding(arguments) + sb.toString();
     }
@@ -178,7 +185,7 @@ public class HintParser {
                 return getHintPadding(arguments) + p.getPrefix() + prefixIntoParameter(p);
             }
         }
-        return getHintPadding(arguments) + defaultHint;
+        return defaultHint;
     }
 
     /**

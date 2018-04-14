@@ -12,6 +12,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -25,7 +26,7 @@ public class LogoutCommandTest {
 
     @Before
     public void setUp() throws Exception {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new Account());
         LoginCommand login = new LoginCommand("Admin", "ad123");
         login.setData(model, new CommandHistory(), new UndoRedoStack());
         login.execute();

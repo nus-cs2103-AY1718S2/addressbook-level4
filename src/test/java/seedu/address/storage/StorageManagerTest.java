@@ -34,8 +34,8 @@ public class StorageManagerTest {
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        XmlAccountDataStorage accountDataStorage = new XmlAccountDataStorage()
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        XmlAccountDataStorage accountDataStorage = new XmlAccountDataStorage(getTempFilePath("ad"));
+        storageManager = new StorageManager(addressBookStorage, userPrefsStorage, accountDataStorage);
     }
 
     private String getTempFilePath(String fileName) {
@@ -85,11 +85,23 @@ public class StorageManagerTest {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
                                              new JsonUserPrefsStorage("dummy"),
-                                            new Account());
+                                            new XmlAccountDataStorage("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
+    @Test
+    public void accountDataReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlAccountData} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlAccountDataTest} class.
+         */
+        Account original = new Account();
+        storageManager.saveAccountData(original);
+        Account retrieved = storageManager.readAccountData().get();
+        assertEquals(original, retrieved);
+    }
 
     /**
      * A Stub class to throw an exception when the save method is called
@@ -106,5 +118,19 @@ public class StorageManagerTest {
         }
     }
 
+    /**
+     * A Stub class to throw an exception when the save method is called
+     */
+    class XmlAccountDataStorageExceptionThrowingStub extends XmlAccountDataStorage {
+
+        public XmlAccountDataStorageExceptionThrowingStub(String filePath) {
+            super(filePath);
+        }
+
+        @Override
+        public void saveAccountData(Account account, String filePath) throws IOException {
+            throw new IOException("dummy exception");
+        }
+    }
 
 }

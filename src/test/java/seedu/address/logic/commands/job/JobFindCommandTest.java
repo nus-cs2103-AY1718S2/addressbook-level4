@@ -20,6 +20,7 @@ import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -31,7 +32,7 @@ import seedu.address.model.job.PositionContainsKeywordsPredicate;
  * Contains integration tests (interaction with the Model) for {@code JobFindCommand}.
  */
 public class JobFindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new Account());
 
     @Test
     public void equals() {

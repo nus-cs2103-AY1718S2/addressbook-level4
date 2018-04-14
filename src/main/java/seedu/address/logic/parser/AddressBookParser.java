@@ -14,17 +14,22 @@ import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTaskCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListCurrentTaskCommand;
+import seedu.address.logic.commands.ListTaskCommand;
 import seedu.address.logic.commands.MarkCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SortTaskCommand;
 import seedu.address.logic.commands.SwitchTabCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UpdateDisplayCommand;
@@ -71,6 +76,15 @@ public class AddressBookParser {
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
+
+        case EditTaskCommand.COMMAND_WORD:
+        case EditTaskCommand.COMMAND_ALIAS:
+            return new EditTaskCommandParser().parse(arguments);
+
+        case DeleteTaskCommand.COMMAND_WORD:
+        case DeleteTaskCommand.COMMAND_ALIAS:
+        case DeleteTaskCommand.COMMAND_SIGN:
+            return new DeleteTaskCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
@@ -129,11 +143,24 @@ public class AddressBookParser {
         case SwitchTabCommand.COMMAND_ALIAS:
             return new SwitchTabCommand(tabPane);
 
+        case ListTaskCommand.COMMAND_WORD:
+        case ListTaskCommand.COMMAND_ALIAS:
+            return new ListTaskCommand();
+
+        case ListCurrentTaskCommand.COMMAND_WORD:
+        case ListCurrentTaskCommand.COMMAND_ALIAS:
+            return new ListCurrentTaskCommand();
+
+        case SortTaskCommand.COMMAND_WORD:
+        case SortTaskCommand.COMMAND_ALIAS:
+            return new SortTaskCommand();
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 
+    //@@author Wu Di
     public void setTabPane(TabPane tabPane) {
         this.tabPane = tabPane;
     }

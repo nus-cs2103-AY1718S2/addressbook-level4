@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.GroupCommand;
 import seedu.address.model.person.PersonContainsGroupsPredicate;
-
+//@@author limzk1994
 public class GroupCommandParserTest {
 
     private GroupCommandParser parser = new GroupCommandParser();

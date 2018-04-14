@@ -10,6 +10,8 @@ import seedu.address.logic.OAuthManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.login.User;
 
+import static java.util.Objects.requireNonNull;
+
 /**
 * Deletes a calendar event using it's last displayed index from the command result box.
 */
@@ -27,11 +29,15 @@ public class CalendarDeleteCommand extends Command {
     private final Event event;
 
     public CalendarDeleteCommand(Event event) {
+        requireNonNull(event);
         this.event = event;
     };
 
     @Override
     public CommandResult execute() throws CommandException {
+        requireNonNull(event);
+        requireNonNull(model);
+
         User user = model.getLoggedInUser();
 
         try {

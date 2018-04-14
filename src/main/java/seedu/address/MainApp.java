@@ -1,6 +1,12 @@
 package seedu.address;
 
 import java.io.IOException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
+import java.net.HttpCookie;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -39,6 +45,8 @@ import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.storage.XmlUserDatabaseStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
+
+import javax.servlet.http.Cookie;
 
 
 /**

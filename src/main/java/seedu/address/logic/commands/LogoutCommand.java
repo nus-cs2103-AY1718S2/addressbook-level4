@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.logic.OAuthManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@ author kaisertanqr
@@ -18,7 +19,11 @@ public class LogoutCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
+
         model.setLoginStatus(false);
+        //@@author ifalluphill
+        OAuthManager.clearCachedCalendarData();
+        //@@ author kaisertanqr
         return new CommandResult(MESSAGE_LOGOUT_SUCCESS);
     }
 

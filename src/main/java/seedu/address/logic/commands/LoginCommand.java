@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.logic.OAuthManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
@@ -27,15 +28,28 @@ public class LoginCommand extends Command {
     private final Password password;
 
     public LoginCommand(Username username, Password password) {
+        //@@author ifalluphill
+        requireNonNull(username);
+        requireNonNull(password);
+        //@@author kaisertanqr
+
         this.username = username;
         this.password = password;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
+        //@@author ifalluphill
+        requireNonNull(username);
+        requireNonNull(password);
+        //@@author kaisertanqr
         requireNonNull(model);
+
         try {
             if (model.checkLoginCredentials(this.username, this.password)) {
+                //@@author ifalluphill
+                OAuthManager.clearCachedCalendarData();
+                //@@author kaisertanqr
                 return new CommandResult(MESSAGE_LOGIN_SUCCESS);
             } else {
                 return new CommandResult(MESSAGE_LOGIN_FAILURE);

@@ -31,7 +31,6 @@ import seedu.address.model.Password;
  */
 public class SecurityUtil {
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-    private static final String DEFAULT_PASSWORD = "";
     private static final String XML = "xml";
 
     /**

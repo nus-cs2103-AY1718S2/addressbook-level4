@@ -2,22 +2,25 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_HELP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_HELP_COMMAND;
+import static seedu.address.testutil.TypicalAliases.ADD;
+import static seedu.address.testutil.TypicalAliases.EDIT;
+import static seedu.address.testutil.TypicalAliases.MAP_1;
+import static seedu.address.testutil.TypicalAliases.MAP_2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.commands.AliasCommand;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.UniqueAliasList;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
-import seedu.address.testutil.AliasBuilder;
 
 //@@author jingyinno
 public class UniqueAliasListTest {
@@ -25,75 +28,131 @@ public class UniqueAliasListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private UniqueAliasList uniqueAliasList;
+
+    @Before
+    public void setUp() {
+        uniqueAliasList = new UniqueAliasList();
+    }
+
+    @After
+    public void clean() throws AliasNotFoundException {
+        clearAliasList();
+    }
+
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
+        uniqueAliasList = new UniqueAliasList();
         thrown.expect(UnsupportedOperationException.class);
         uniqueAliasList.asObservableList().remove(0);
     }
 
     @Test
     public void addAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
-        Alias validAlias = new AliasBuilder().build();
+        Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
         assertEquals(Arrays.asList(validAlias), uniqueAliasList.getAliasObservableList());
-        clearAliasList();
     }
 
     @Test
     public void removeAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
-        Alias validAlias = new AliasBuilder().build();
+        Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
-        UniqueAliasList.remove(validAlias.getAlias());
+        uniqueAliasList.remove(validAlias.getAlias());
 
         UniqueAliasList expectedList = new UniqueAliasList();
         assertEquals(uniqueAliasList.getAliasObservableList(), expectedList.asObservableList());
-        clearAliasList();
     }
 
     @Test
     public void removeAlias_invalidAlias_failure() throws AliasNotFoundException {
-        Alias validAlias = new AliasBuilder().build();
+        Alias validAlias = ADD;
         thrown.expect(AliasNotFoundException.class);
-        UniqueAliasList.remove(validAlias.getAlias());
-        clearAliasList();
+        uniqueAliasList.remove(validAlias.getAlias());
     }
 
     @Test
     public void getAliasCommand_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
-        Alias validAlias = new AliasBuilder().build();
+        Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
 
         String command = uniqueAliasList.getCommandFromAlias(validAlias.getAlias());
         String expected = validAlias.getCommand();
         assertEquals(command, expected);
-        clearAliasList();
     }
 
     @Test
     public void importAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
-        Alias validAlias = new AliasBuilder().build();
+        Alias validAlias = ADD;
         uniqueAliasList.importAlias(validAlias);
         assertEquals(Arrays.asList(validAlias), uniqueAliasList.getAliasObservableList());
-        clearAliasList();
     }
 
     @Test
-    public void setAlias_validAliasSet_success() throws DuplicateAliasException, AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
-        HashSet<Alias> toBeSet = new HashSet<Alias>();
-        Alias help = new AliasBuilder().withCommand(VALID_ALIAS_HELP_COMMAND).withAlias(VALID_ALIAS_HELP).build();
-        toBeSet.add(help);
-        uniqueAliasList.add(help);
+    public void extractAliasMapping_noAliasAdded_success() throws DuplicateAliasException, AliasNotFoundException {
+        ArrayList<String> expectedList = new ArrayList<String>();
+        assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
 
-        uniqueAliasList.setAliases(toBeSet);
-        ArrayList<Alias> expectedList = new ArrayList<Alias>(toBeSet);
-        assertEquals(expectedList, uniqueAliasList.getAliasObservableList());
-        clearAliasList();
+    @Test
+    public void extractAliasMapping_validAliasAdded_success() throws DuplicateAliasException, AliasNotFoundException {
+        uniqueAliasList.add(ADD);
+
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD}});
+        assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
+
+    @Test
+    public void extractAliasMapping_differentCommandAliases_success() throws DuplicateAliasException,
+            AliasNotFoundException {
+        uniqueAliasList.add(ADD);
+        uniqueAliasList.add(EDIT);
+
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD, EDIT}});
+        assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
+
+    @Test
+    public void extractAliasMapping_sameCommandAliases_success() throws DuplicateAliasException,
+            AliasNotFoundException {
+        uniqueAliasList.add(MAP_1);
+        uniqueAliasList.add(MAP_2);
+
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{MAP_2}, {MAP_1}});
+        assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
+
+    @Test
+    public void extractAliasMapping_mixedCommandAliases_success() throws DuplicateAliasException,
+            AliasNotFoundException {
+        uniqueAliasList.add(ADD);
+        uniqueAliasList.add(MAP_1);
+        uniqueAliasList.add(MAP_2);
+
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD, MAP_2}, {MAP_1}});
+        assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
+
+    /**
+     * Generates an expected list with the aliases in the testAliasList inserted at their correct positions.
+     */
+    private ArrayList<ArrayList<String>> generateExpectedList(Alias[][] testAliasList) {
+        ArrayList<ArrayList<String>> expectedList = new ArrayList<ArrayList<String>>();
+        for (Alias[] row : testAliasList) {
+            ArrayList<String> innerList = populateEmptyAlias();
+            insertAliasAtPositions(row, innerList);
+            expectedList.add(innerList);
+        }
+        return expectedList;
+    }
+
+    /**
+     * Inserts the alias command at their respective positions in the array.
+     */
+    private void insertAliasAtPositions(Alias[] testInnerAliasList, ArrayList<String> innerList) {
+        for (Alias alias : testInnerAliasList) {
+            innerList.set(AliasCommand.getCommands().indexOf(alias.getCommand()), alias.getAlias());
+        }
     }
 
     /**
@@ -102,9 +161,20 @@ public class UniqueAliasListTest {
      * @throws AliasNotFoundException if the Alias to add is not an existing Alias in the list.
      */
     private void clearAliasList() throws AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
         for (Alias alias : uniqueAliasList.getAliasObservableList()) {
-            UniqueAliasList.remove(alias.getAlias());
+            uniqueAliasList.remove(alias.getAlias());
         }
+    }
+
+    /**
+     * Creates an empty arraylist of size number of commands.
+     */
+    private ArrayList<String> populateEmptyAlias() {
+        ArrayList<String> emptyList = new ArrayList<String>();
+        int size = AliasCommand.getCommands().size();
+        for (int i = 0; i < size; i++) {
+            emptyList.add("");
+        }
+        return emptyList;
     }
 }

@@ -5,8 +5,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 //@@author jingyinno
 /**
- * Represents a Alias in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidAliasParameter(String)}
+ * Represents an Alias in the address book.
+ * Guarantees: immutable; alias and command are valid as declared in {@link #isValidAliasParameter(String)}
  */
 public class Alias {
 
@@ -17,13 +17,14 @@ public class Alias {
     private final String aliasName;
 
     /**
-     * Constructs a {@code Alias}.
+     * Constructs an {@code Alias}.
      *
      * @param aliasName A valid alias name.
      */
     public Alias(String command, String aliasName) {
         requireNonNull(aliasName);
         checkArgument(isValidAliasParameter(aliasName), MESSAGE_ALIAS_CONSTRAINTS);
+        checkArgument(isValidAliasParameter(command), MESSAGE_ALIAS_CONSTRAINTS);
         this.aliasName = aliasName;
         this.command = command;
     }
@@ -37,16 +38,9 @@ public class Alias {
     }
 
     /**
-     * Returns true if a given string is a valid alias name.
+     * Returns true if a given string is a valid Alias parameter.
      */
     public static boolean isValidAliasParameter(String test) {
-        return test.matches(ALIAS_VALIDATION_REGEX);
-    }
-
-    /**
-     * Returns true if a given string is a valid unalias name.
-     */
-    public static boolean isValidUnaliasName(String test) {
         return test.matches(ALIAS_VALIDATION_REGEX);
     }
 

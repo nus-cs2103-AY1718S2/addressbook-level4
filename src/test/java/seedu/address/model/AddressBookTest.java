@@ -64,7 +64,8 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Alias> newAliases = new ArrayList<>();
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newAliases);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -148,9 +149,10 @@ public class AddressBookTest {
         //@@author
         private final Password password = new Password("test");
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags, Collection<Alias> aliases) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.aliases.setAll(aliases);
         }
 
         @Override
@@ -171,6 +173,11 @@ public class AddressBookTest {
 
         @Override
         public HashMap<String, String> getAliasMapping() {
+            return new HashMap<>();
+        }
+
+        @Override
+        public ArrayList<ArrayList<String>> getUiFormattedAliasList() {
             return null;
         }
 

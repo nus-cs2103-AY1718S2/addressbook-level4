@@ -8,6 +8,7 @@ import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.ui.GoogleMapsDisplay.DEFAULT_PAGE;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
+import java.io.IOException;
 import java.net.URL;
 
 import org.junit.Before;
@@ -25,7 +26,7 @@ public class GoogleMapsDisplayTest extends GuiUnitTest {
     private GoogleMapsEvent googleMapsChangedStub;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         guiRobot.interact(() -> googleMapsDisplay = new GoogleMapsDisplay());
         uiPartRule.setUiPart(googleMapsDisplay);
         googleMapsChangedStub = new GoogleMapsEvent(VALID_LOCATION_ADDRESS_1, true);

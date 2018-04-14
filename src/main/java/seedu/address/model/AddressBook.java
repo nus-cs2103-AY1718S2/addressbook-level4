@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -75,7 +76,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author jingyinno
-    public void setAliases(Set<Alias> aliases) {
+    public void setAliases(HashMap<String, String> aliases) {
         this.aliases.setAliases(aliases);
     }
     //@@author
@@ -85,8 +86,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
+        setAliases(new HashMap<>(newData.getAliasMapping()));
         setTags(new HashSet<>(newData.getTagList()));
-        setAliases(new HashSet<>(newData.getAliasList()));
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
@@ -98,13 +99,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author jingyinno
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code AddressBook} with {@code newData} and {@code newList}.
      */
     public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newList) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
-        this.aliases.replaceHashmap(newList);
+        setAliases(new HashMap<>(newList));
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
@@ -115,8 +117,9 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
     }
-    //// person-level operations
+    //@@author
 
+    //// person-level operations
     /**
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
@@ -158,6 +161,26 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addAlias(Alias alias) throws DuplicateAliasException {
         aliases.add(alias);
     }
+
+    /**
+     * Removes an alias from the address book.
+     *
+     * @throws AliasNotFoundException if alias to-be-removed does not exist.
+     */
+    public void removeAlias(String toRemove) throws AliasNotFoundException {
+        aliases.remove(toRemove);
+    }
+
+    /**
+     * Retrieve the associated commandWord from the address book.
+     * @param aliasKey the alias keyword associated to command word
+     * @return the associated command word if exists else the aliasKey
+     *
+     */
+    public String getCommandFromAlias(String aliasKey) {
+        return aliases.contains(aliasKey) ? aliases.getCommandFromAlias(aliasKey) : aliasKey;
+    }
+
     //@@author
 
     //@@author Caijun7
@@ -287,7 +310,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
-                + password + " password";
+                + password + " password, " + aliases.asObservableList().size() + " aliases";
         // TODO: refine later
     }
 
@@ -308,17 +331,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public HashMap<String, String> getAliasMapping() {
-        return aliases.getHashList();
+    public ArrayList<ArrayList<String>> getUiFormattedAliasList() {
+        return aliases.extractAliasMapping();
     }
+
+    @Override
+    public HashMap<String, String> getAliasMapping() {
+        return aliases.getAliasCommandMappings();
+    }
+
 
     @Override
     public void resetAliasList() {
         aliases.resetHashmap();
-    }
-
-    public void removeAlias(String toRemove) throws AliasNotFoundException {
-        aliases.remove(toRemove);
     }
     //@@author
 
@@ -351,6 +376,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.aliases.equals(((AddressBook) other).aliases)
                 && this.password.equals(((AddressBook) other).password);
     }
 

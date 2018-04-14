@@ -42,7 +42,7 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
+* *`list`* : lists all contacts and aliases
 * **`add`**`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/http://modsn.us/oNZLY` : adds a contact named `John Doe` to StardyTogether.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
@@ -84,10 +84,15 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/http://modsn.us/oNZLY`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/28021997 tt/http://modsn.us/ojGeu t/criminal`
 
-==== Listing all persons : `list`
+// tag::list[]
+==== Listing all persons and aliases: `list`
 
-Shows a list of all persons in StardyTogether. +
+Shows a list of all persons and a table of created aliases in StardyTogether. +
 Format: `list`
+
+image::aliasList.png[width="790"]
+
+// end::list[]
 
 ==== Editing a person : `edit`
 
@@ -236,13 +241,14 @@ Finds the vacancy status of study rooms in COM1 building.
 ==== Google maps display : `map` (since v1.4)
 
 Launches Google Maps with the specified location(s).
-Format: `map LOCATION` or `map LOCATION/LOCATION/...`
+Format: `map LOCATION` or `map LOCATION/LOCATION...` or `map current location`
 
 image::map.png[width="790"]
 
 ****
-* All locations specified cannot contains `/`. e.g. Changi/Airport is not a valid location.
-* NUS building name is case insensitive e.g. `COM1` or `com1` gets the same output
+* You are advised to keep the number of consecutive `[LOCATION]` to 4 locations.
+* All locations specified should not contain `/`. e.g. `Changi/Airport` as a location will not give the same map display as `Changi Aiport`.
+* NUS building name is case insensitive e.g. `COM1` or `com1` gives the same output
 * If only one location is provided, the location will be displayed on the map.
 * If more than one location is provided, directions to each location, starting from the first one, will be displayed.
 * Typing `map LOCATION_START to LOCATION_DESTINATION` can work as well for two locations input, only if neither locations specified are NUS buildings.
@@ -250,6 +256,8 @@ image::map.png[width="790"]
 
 Examples:
 
+* `map current location` +
+Displays your current location on the map.
 * `map BIZ1` +
 Displays the location of BIZ1 (which is an NUS building name).
 * `map Tampines Mall/COM1` +
@@ -269,16 +277,16 @@ Format: `help`
 Creates customized aliases for any valid command. +
 Format: `alias [COMMAND] [ALIAS]`
 
+****
+* `[ALIAS]` should be alpha-numeric and without spaces.
+* The recommended number of characters for `[ALIAS]` is 6 characters or less.
+****
+
 Examples:
 
 * `alias history hist`
 * `alias find f`
 * `alias alias al`
-
-==== Listing all aliases: `alias list` (since v1.4)
-
-Lists all created aliases. +
-Format: `alias list`
 
 ==== Removing a currently existing alias: `unalias` (since v1.3)
 
@@ -308,7 +316,7 @@ Format: `undo`
 
 [NOTE]
 =====
-Undoable commands: those commands that modify the StardyTogether's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the StardyTogether's content (`add`, `alias`, `unalias`, `delete`, `edit` and `clear`).
 =====
 
 Examples:
@@ -371,6 +379,10 @@ Examples:
 
 * `encrypt test` +
 Encrypts `addressbook.xml` with "test" as the password.
+
+Subsequently, when you are re-opening the app, you will be prompted to enter your password, as shown in the picture below.
+
+image::passwordBox.png[width="790"]
 
 ==== Removal of password: `decrypt` (since v1.3)
 
@@ -489,7 +501,6 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 |Command |Usage |Example
 |Add| add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`| `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/010195 t/friend t/colleague
 |Alias| alias COMMAND ALIAS|alias history hist
-|Alias List|alias list |
 |Birthday List|birthdays [todays]| birthdays todays
 |Clear| clear|
 |Delete| delete INDEX | delete 3

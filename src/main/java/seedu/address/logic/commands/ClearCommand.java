@@ -17,7 +17,6 @@ public class ClearCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         AddressBook addressbook = new AddressBook();
-        addressbook.resetAliasList();
         model.resetData(addressbook);
         return new CommandResult(MESSAGE_SUCCESS);
     }

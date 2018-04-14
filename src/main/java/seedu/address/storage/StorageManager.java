@@ -10,6 +10,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.InfoPanelEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.model.Password;
@@ -114,6 +115,7 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+            raise(new InfoPanelEvent());
         } catch (WrongPasswordException wpe) {
             logger.severe("Unable to save due to wrong password. Should not happen.");
             raise(new DataSavingExceptionEvent(wpe));

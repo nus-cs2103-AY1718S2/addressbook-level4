@@ -83,15 +83,6 @@ public class Amount implements Comparable<Amount> {
     }
 
     /**
-     * Subtracts subtractAmount to the current value.
-     *
-     * @param subtractAmount amount to be subtracted.
-     */
-    public void subtractValue(Amount subtractAmount) {
-        value = value.subtract(subtractAmount.value);
-    }
-
-    /**
      * Gets the string representation of the full value.
      * Use {@code toString} instead for display purposes.
      * @see Amount#toString

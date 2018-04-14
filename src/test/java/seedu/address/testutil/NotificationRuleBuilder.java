@@ -1,5 +1,8 @@
 package seedu.address.testutil;
 
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
 import seedu.address.model.rule.NotificationRule;
 
 /**
@@ -10,6 +13,7 @@ public class NotificationRuleBuilder {
     public static final String DEFAULT_VALUE = "h/>0";
 
     private String value;
+    private Model model;
 
     public NotificationRuleBuilder() {
         value = DEFAULT_VALUE;
@@ -30,8 +34,21 @@ public class NotificationRuleBuilder {
         return this;
     }
 
+    /**
+     * Sets the model data of the {@code Rule} action that we are building.
+     */
+    public NotificationRuleBuilder withModel(Model model) {
+        this.model = model;
+        return this;
+    }
+
+    /**
+     * Builds the notification rule.
+     */
     public NotificationRule build() {
-        return new NotificationRule(value);
+        NotificationRule rule = new NotificationRule(value);
+        rule.action.setData(model, new CommandHistory(), new UndoRedoStack());
+        return rule;
     }
 
 }

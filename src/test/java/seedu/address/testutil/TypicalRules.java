@@ -22,8 +22,8 @@ public class TypicalRules {
     public static final Rule GEO = new NotificationRuleBuilder().withValue("c/GEO").build();
 
     // Manually added
-    public static final Rule HORSE = new NotificationRuleBuilder().withValue("c/HORSE").build();
-    public static final Rule IDT = new NotificationRuleBuilder().withValue("c/IDT").build();
+    public static final Rule EQUAL = new NotificationRuleBuilder().withValue("b/=10").build();
+    public static final Rule INCR = new NotificationRuleBuilder().withValue("b/+>1").build();
 
     private TypicalRules() {} // prevents instantiation
 

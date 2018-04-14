@@ -1,8 +1,6 @@
 //@@author ewaldhew
 package seedu.address.storage;
 
-import static seedu.address.model.rule.RuleType.NOTIFICATION;
-
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -56,6 +54,10 @@ public class XmlAdaptedRule {
         if (this.type == null) {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, RuleType.class.getSimpleName()));
+        }
+        if (this.value == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Rule.class.getSimpleName()));
         }
 
         try {

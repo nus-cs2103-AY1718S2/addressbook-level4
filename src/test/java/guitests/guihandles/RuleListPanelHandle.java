@@ -11,7 +11,7 @@ import seedu.address.ui.RuleCard;
  * Provides a handle for {@code RuleListPanel} containing the list of {@code RuleCard}.
  */
 public class RuleListPanelHandle extends NodeHandle<ListView<RuleCard>> {
-    public static final String COIN_LIST_VIEW_ID = "#ruleListView";
+    public static final String RULE_LIST_VIEW_ID = "#ruleListView";
 
     private Optional<RuleCard> lastRememberedSelectedRuleCard;
 

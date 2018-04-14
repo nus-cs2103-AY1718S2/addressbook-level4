@@ -26,6 +26,7 @@ public class NotifyCommand extends Command {
     private final NotificationRule rule;
 
     public NotifyCommand(NotificationRule rule) {
+        requireNonNull(rule);
         this.rule = rule;
     }
 

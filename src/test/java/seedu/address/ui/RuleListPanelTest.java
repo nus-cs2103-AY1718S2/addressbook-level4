@@ -29,7 +29,7 @@ public class RuleListPanelTest extends GuiUnitTest {
         uiPartRule.setUiPart(ruleListPanel);
 
         ruleListPanelHandle = new RuleListPanelHandle(getChildNode(ruleListPanel.getRoot(),
-                RuleListPanelHandle.COIN_LIST_VIEW_ID));
+                RuleListPanelHandle.RULE_LIST_VIEW_ID));
     }
 
     @Test

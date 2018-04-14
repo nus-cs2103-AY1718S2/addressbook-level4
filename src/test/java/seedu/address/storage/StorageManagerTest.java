@@ -4,6 +4,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
+import static seedu.address.testutil.TypicalRules.getTypicalRuleBook;
 
 import java.io.IOException;
 
@@ -13,9 +14,12 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.CoinBookChangedEvent;
+import seedu.address.commons.events.model.RuleBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.CoinBook;
 import seedu.address.model.ReadOnlyCoinBook;
+import seedu.address.model.ReadOnlyRuleBook;
+import seedu.address.model.RuleBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -84,6 +88,30 @@ public class StorageManagerTest {
     }
 
 
+    @Test
+    public void ruleBookReadSave() throws Exception {
+        RuleBook original = getTypicalRuleBook();
+        storageManager.saveRuleBook(original);
+        ReadOnlyRuleBook retrieved = storageManager.readRuleBook().get();
+        assertEquals(original, new RuleBook(retrieved));
+    }
+
+    @Test
+    public void getRuleBookFilePath() {
+        assertNotNull(storageManager.getRuleBookFilePath());
+    }
+
+    @Test
+    public void handleRuleBookChangedEvent_exceptionThrown_eventRaised() {
+        // Create a StorageManager while injecting a stub that throws an exception when the save method is called
+        Storage storage = new StorageManager(new XmlCoinBookStorage("dummy"),
+                                             new XmlRuleBookStorageExceptionThrowingStub("dummy"),
+                                             new JsonUserPrefsStorage("dummy"));
+        storage.handleRuleBookChangedEvent(new RuleBookChangedEvent(new RuleBook()));
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
+
     /**
      * A Stub class to throw an exception when the save method is called
      */
@@ -95,6 +123,21 @@ public class StorageManagerTest {
 
         @Override
         public void saveCoinBook(ReadOnlyCoinBook addressBook, String filePath) throws IOException {
+            throw new IOException("dummy exception");
+        }
+    }
+
+    /**
+     * A Stub class to throw an exception when the save method is called
+     */
+    class XmlRuleBookStorageExceptionThrowingStub extends XmlRuleBookStorage {
+
+        public XmlRuleBookStorageExceptionThrowingStub(String filePath) {
+            super(filePath);
+        }
+
+        @Override
+        public void saveRuleBook(ReadOnlyRuleBook ruleBook, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

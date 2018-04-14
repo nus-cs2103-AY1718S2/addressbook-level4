@@ -20,6 +20,8 @@ public class AccountsManager {
         account = new Account();
     }
 
+    public AccountsManager(Account account) { this.account = account; }
+
     private boolean checkUsername(String username, Account account) {
         return account.getUsername().equals(username);
     }

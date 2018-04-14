@@ -8,12 +8,26 @@ public final class Account {
     private static final String DEFAULT_USERNAME = "Admin";
     private static final String DEFAULT_PASSWORD = "ad123";
 
+    public static final String MESSAGE_USERNAME_CONSTRAINTS = "Username should be alphanumeric"
+            + " and it should not be bank.";
+    public static final String MESSAGE_PASSWORD_CONSTRAINTS = "Password should be alphanumeric"
+            + " and it should not be bank.";
+
+    public static final String USERNAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+
+    public static final String PASSWORD_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+
     private String username;
     private String password;
 
     public Account() {
         this.username = DEFAULT_USERNAME;
         this.password = DEFAULT_PASSWORD;
+    }
+
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {
@@ -28,7 +42,11 @@ public final class Account {
      * @param newUsername should not be null
      */
     public void updateUsername(String newUsername) {
-        username = newUsername;
+        if (isValidUsername(newUsername)) {
+            username = newUsername;
+        } else {
+
+        }
     }
 
     /**
@@ -40,6 +58,14 @@ public final class Account {
 
     public void resetPassword() {
         password = DEFAULT_PASSWORD;
+    }
+
+    public static boolean isValidUsername(String username) {
+        return username.matches(USERNAME_VALIDATION_REGEX);
+    }
+
+    public static boolean isValidPassword(String password) {
+        return password.matches(PASSWORD_VALIDATION_REGEX);
     }
 
     @Override

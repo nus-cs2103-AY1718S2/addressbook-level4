@@ -1,4 +1,31 @@
 # Isaaaca
+###### \java\seedu\address\commons\util\CalendarUtilTest.java
+``` java
+public class CalendarUtilTest {
+
+    @Test
+    public void getSem() {
+        Assert.assertEquals(2, CalendarUtil.getSem(LocalDate.MIN));
+        Assert.assertEquals(1, CalendarUtil.getSem(LocalDate.MAX));
+    }
+
+    @Test
+    public void getCurrentSemester() {
+        Assert.assertEquals(CalendarUtil.getSem(LocalDate.now()), CalendarUtil.getCurrentSemester());
+    }
+
+    @Test
+    public void getAcadYear() {
+        Assert.assertEquals(2016, CalendarUtil.getAcadYear(LocalDate.of(2017, 1, 1)));
+        Assert.assertEquals(2017, CalendarUtil.getAcadYear(LocalDate.of(2017, 7, 1)));
+    }
+
+    @Test
+    public void getCurrAcadYear() {
+        Assert.assertEquals(CalendarUtil.getAcadYear(LocalDate.now()), CalendarUtil.getCurrAcadYear());
+    }
+}
+```
 ###### \java\seedu\address\commons\util\JsonUtilTest.java
 ``` java
     @Test
@@ -130,18 +157,42 @@ public class DatabaseManagerTest {
 
     @Test
     public void getQuery() {
-        String actual = test.getQuery(new TimeTableLink("http://modsn.us/MYwiD"));
+        String actual = DatabaseManager.getQuery(new TimeTableLink("http://modsn.us/MYwiD"));
         assertEquals("CS2101=SEC:3&CS2103T=TUT:T3&CS2105=LEC:1,TUT:7&CS3242=LEC:1,TUT:3&ST2334=LEC:SL1,TUT:T4",
                 actual);
-        actual = test.getQuery(new TimeTableLink("http://modsn.us/MYwid"));
+        actual = DatabaseManager.getQuery(new TimeTableLink("http://modsn.us/MYwid"));
         assertEquals(null,
                 actual);
     }
 
     @Test
-    public void parseQuery() {
-        test.parseEvents(new TimeTableLink("http://modsn.us/MYwiD"));
+    public void parseEvents_success() {
+        ArrayList<WeeklyEvent> expected = new ArrayList<>();
+        Module cs2103t = new Module("CS2103T", "Software Engineering");
+        Schedule tutT3 = new Schedule("T3", "Tutorial", "Every Week", "Wednesday",
+                "1500", "1600", "COM1-B103");
+        WeeklyEvent weeklyEvent = new WeeklyEvent(cs2103t, tutT3);
+        expected.add(weeklyEvent);
+        ArrayList<WeeklyEvent> actual = DatabaseManager.parseEvents(new TimeTableLink("http://modsn.us/Oy25S"));
+        Assert.assertArrayEquals(expected.toArray(), actual.toArray());
     }
+
+    @Test
+    public void parseEvents_invalidLink_returnsEmptyList() {
+        ArrayList<WeeklyEvent> expected = new ArrayList<>();
+        ArrayList<WeeklyEvent> actual = DatabaseManager.parseEvents(new TimeTableLink("http://modsn.us/abcde"));
+        Assert.assertArrayEquals(expected.toArray(), actual.toArray());
+    }
+
+    @Test
+    public void parseEvents_incompatibleLink_returnsEmptyList() {
+        ArrayList<WeeklyEvent> expected = new ArrayList<>();
+        ArrayList<WeeklyEvent> actual = DatabaseManager.parseEvents(new TimeTableLink("http://modsn.us/oEZ0r"));
+        Assert.assertArrayEquals(expected.toArray(), actual.toArray());
+    }
+
+
+
 }
 ```
 ###### \java\seedu\address\database\module\ModuleTest.java

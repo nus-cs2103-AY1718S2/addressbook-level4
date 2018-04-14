@@ -8,7 +8,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.group.Group;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code Group}.
  */
 public class GroupCard extends UiPart<Region> {
 

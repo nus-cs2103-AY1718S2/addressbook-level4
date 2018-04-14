@@ -1,5 +1,5 @@
 # Isaaaca-unused
-###### \main\java\seedu\address\model\AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Removes {@code tag} from all {@code persons} in the {@code AddressBook} and from the {@code AddressBook}.

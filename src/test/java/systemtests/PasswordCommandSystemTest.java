@@ -1,11 +1,14 @@
 package systemtests;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CHANGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMOVE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SET;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.PasswordCommand;
-
+import seedu.address.model.Model;
+//@@author limzk1994
 public class PasswordCommandSystemTest extends AddressBookSystemTest {
 
     private static String oldPassword = "old";
@@ -15,24 +18,45 @@ public class PasswordCommandSystemTest extends AddressBookSystemTest {
     public void pass(){
         // Set Password success
         String command = PasswordCommand.COMMAND_WORD + " " + PREFIX_SET + oldPassword;
+        assertCommandSuccess(command,PasswordCommand.MESSAGE_SUCCESS);
 
         // Set Password fail because password already present
-        String command = PasswordCommand.COMMAND_WORD + " " + PREFIX_SET + oldPassword;
+        command = PasswordCommand.COMMAND_WORD + " " + PREFIX_SET + oldPassword;
+        assertCommandFailure(command,PasswordCommand.MESSAGE_PASSWORD_EXISTS);
 
         // Change Password success
-        String command = PasswordCommand.COMMAND_WORD + " " + PREFIX_SET + newPassword;
-
-        // Change Password fail because no password to change
-        String command = PasswordCommand.COMMAND_WORD + " " + PREFIX_SET + newPassword;
+        command = PasswordCommand.COMMAND_WORD + " " + PREFIX_CHANGE + newPassword;
+        assertCommandSuccess(command,PasswordCommand.MESSAGE_PASSWORD_CHANGE);
 
         // Remove Password success
-        String command = PasswordCommand.COMMAND_WORD + " " + PREFIX_SET + newPassword;
+        command = PasswordCommand.COMMAND_WORD + " " + PREFIX_REMOVE + newPassword;
+        assertCommandSuccess(command,PasswordCommand.MESSAGE_PASSWORD_REMOVE);
 
         // Remove Password fail because no password to clear
-        String command = PasswordCommand.COMMAND_WORD + " " + PREFIX_SET + newPassword;
+        command = PasswordCommand.COMMAND_WORD + " " + PREFIX_REMOVE + newPassword;
+        assertCommandFailure(command,PasswordCommand.MESSAGE_NO_PASSWORD_EXISTS);
 
+        // Change Password fail because no password to change
+        command = PasswordCommand.COMMAND_WORD + " " + PREFIX_CHANGE + newPassword;
+        assertCommandFailure(command,PasswordCommand.MESSAGE_NO_PASSWORD_EXISTS);
 
+    }
 
+    private void assertCommandFailure (String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
 
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+
+    private void assertCommandSuccess(String command, String expectedResultMessage) {
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, getModel());
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
     }
 }

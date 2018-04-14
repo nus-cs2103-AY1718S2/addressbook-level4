@@ -19,6 +19,9 @@ public class VenueTable extends UiPart<Region> {
     private static final String OCCUPIED_STYLE_CLASS = "occupied";
     private static final String VACANT_STYLE_CLASS = "vacant";
     private static final String FXML = "VenueTable.fxml";
+    private static final int MIN_CELL_WIDTH = 75;
+    private static final int MAX_CELL_WIDTH = 100;
+    private static final int ROOM_COLUMN_INDEX = 0;
 
     private ArrayList<TableColumn<ArrayList<String>, String>> columns;
     @FXML
@@ -61,8 +64,8 @@ public class VenueTable extends UiPart<Region> {
         venueTable.setItems(schedules);
         initializeColumns();
         initializeTableColumns();
-        roomId.setMinWidth(100);
-        roomId.setMaxWidth(100);
+        roomId.setMinWidth(MAX_CELL_WIDTH);
+        roomId.setMaxWidth(MAX_CELL_WIDTH);
         venueTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
@@ -95,9 +98,9 @@ public class VenueTable extends UiPart<Region> {
             final int j = i;
             columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
             columns.get(i).impl_setReorderable(false);
-            if (j != 0) {
-                columns.get(i).setMinWidth(75);
-                columns.get(i).setMaxWidth(200);
+            if (j != ROOM_COLUMN_INDEX) {
+                columns.get(i).setMinWidth(MIN_CELL_WIDTH);
+                columns.get(i).setMaxWidth(MAX_CELL_WIDTH);
             }
 
         }

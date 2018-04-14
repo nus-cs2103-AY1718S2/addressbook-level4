@@ -17,6 +17,10 @@ import javafx.scene.paint.Color;
  */
 public class AliasList extends UiPart<Region> {
     private static final String FXML = "AliasList.fxml";
+    private static final String EMPTY_CELL = "";
+    private static final int SHORT_COMMAND_WIDTH = 75;
+    private static final int LONG_COMMAND_WIDTH = 100;
+    private static final int LONG_COMMAND_INDEX = 2;
 
     private ArrayList<TableColumn<ArrayList<String>, String>> columns;
     @FXML
@@ -118,17 +122,17 @@ public class AliasList extends UiPart<Region> {
             final int j = i;
             columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
             columns.get(i).impl_setReorderable(false);
-            if (i == 2) {
-                columns.get(i).setMinWidth(100);
+            if (i == LONG_COMMAND_INDEX) {
+                columns.get(i).setMinWidth(LONG_COMMAND_WIDTH);
             } else {
-                columns.get(i).setMinWidth(75);
+                columns.get(i).setMinWidth(SHORT_COMMAND_WIDTH);
             }
             columns.get(i).setSortable(false);
 
         }
     }
     /**
-     * Sets the command box style to indicate a vacant or occupied room.
+     * Sets the command box style to indicate an alias belonging to the command.
      */
     public void setStyle() {
         for (int i = 0; i < columns.size(); i++) {
@@ -140,10 +144,10 @@ public class AliasList extends UiPart<Region> {
 
                         if (item == null || empty) {
                             setText(null);
-                            setStyle("");
+                            setStyle(EMPTY_CELL);
                         } else {
                             setText(item);
-                            if (!getItem().equals("")) {
+                            if (!getItem().equals(EMPTY_CELL)) {
                                 setTextFill(Color.BLACK);
                                 setStyle("-fx-background-color: #E6B0AA");
                             } else {

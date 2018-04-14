@@ -18,17 +18,21 @@ public class UnaliasCommandParser implements Parser<UnaliasCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UnaliasCommand parse(String args) throws ParseException {
-        String unalias = args.trim();
-        if (unalias.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
-        }
-
+        String unalias = validateNumberOfArgs(args);
         try {
             String toBeRemoved = ParserUtil.parseUnalias(unalias);
             return new UnaliasCommand(toBeRemoved);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
+    }
+
+    private String validateNumberOfArgs(String args) throws ParseException {
+        String unalias = args.trim();
+        if (unalias.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
+        }
+        return unalias;
     }
 }

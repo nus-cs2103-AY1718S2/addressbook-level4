@@ -11,7 +11,7 @@ import java.io.IOException;
 
 //@@author jingyinno
 /**
- * Launches Google Maps with specified location(s)
+ * Launches Google Maps with the specified location(s)
  */
 public class MapCommand extends Command {
     public static final String COMMAND_WORD = "map";
@@ -23,6 +23,9 @@ public class MapCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Launching Google Maps ...";
     public static final String MESSAGE_NO_INTERNET = "Please check that you have internet connection";
+    private static final String SPLIT_TOKEN = "/";
+    private static final int TWO_LOCATIONS_WORD_LENGTH = 2;
+    private static final int FIRST_LOCATION_INDEX = 0;
 
     private String locations;
     private boolean isOneLocation;
@@ -38,26 +41,32 @@ public class MapCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
-        String[] locationsArray = locations.split("/");
-        for (int i = 0; i < locationsArray.length; i++) {
-            locationsArray[i] = locationsArray[i].trim();
-            locationsArray[i] = retrieveNusBuildingIfExist(locationsArray[i]);
-        }
-
-        if (locationsArray.length >= 2) {
-            locations = String.join("/", locationsArray);
-            isOneLocation = false;
-        } else {
-            locations = locationsArray[0];
-            isOneLocation = true;
-        }
+        String[] locationsArray = locations.split(SPLIT_TOKEN);
+        checkForAndRetrieveNusBuildings(locationsArray);
+        identifyNumberOfSpecifiedLocations(locationsArray);
         try {
             EventsCenter.getInstance().post(new GoogleMapsEvent(locations, isOneLocation));
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } catch (IOException e) {
             throw new CommandException(MESSAGE_NO_INTERNET);
         }
+    }
 
+    private void identifyNumberOfSpecifiedLocations(String[] locationsArray) {
+        if (locationsArray.length >= TWO_LOCATIONS_WORD_LENGTH) {
+            locations = String.join(SPLIT_TOKEN, locationsArray);
+            isOneLocation = false;
+        } else {
+            locations = locationsArray[FIRST_LOCATION_INDEX];
+            isOneLocation = true;
+        }
+    }
+
+    private void checkForAndRetrieveNusBuildings(String[] locationsArray) {
+        for (int i = 0; i < locationsArray.length; i++) {
+            locationsArray[i] = locationsArray[i].trim();
+            locationsArray[i] = retrieveNusBuildingIfExist(locationsArray[i]);
+        }
     }
 
     @Override

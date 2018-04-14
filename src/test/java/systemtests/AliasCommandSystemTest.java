@@ -1,11 +1,13 @@
 package systemtests;
 
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ADD;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 import static seedu.address.testutil.TypicalAliases.ADD;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.AliasCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
@@ -15,12 +17,11 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void add() throws Exception {
-        //Model model = getModel();
-
         /* Case: add an alias to a non-empty address book, command with leading spaces and trailing spaces -> added */
         Alias toAdd = ADD;
         String command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_ADD;
-        //assertCommandSuccess(command, toAdd);
+        String[][] aliases = new String[][] {{VALID_ALIAS_ADD}};
+        assertCommandSuccess(command, toAdd, aliases);
     }
 
     /**
@@ -37,16 +38,16 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandSuccess(Alias toAdd) {
-        assertCommandSuccess(AliasUtil.getAliasCommand(toAdd), toAdd);
+    private void assertCommandSuccess(Alias toAdd, String[][] expectedTable) {
+        assertCommandSuccess(AliasUtil.getAliasCommand(toAdd), toAdd, expectedTable);
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(Alias)}. Executes {@code command}
      * instead.
-     * @see AliasCommandSystemTest#assertCommandSuccess(Alias)
+     * @see AliasCommandSystemTest#assertCommandSuccess(Alias, String[][])
      */
-    private void assertCommandSuccess(String command, Alias toAdd) {
+    private void assertCommandSuccess(String command, Alias toAdd, String[][] expectedTable) {
         Model expectedModel = getModel();
         try {
             expectedModel.addAlias(toAdd);
@@ -55,7 +56,7 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         }
         String expectedResultMessage = String.format(AliasCommand.MESSAGE_SUCCESS, toAdd);
 
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedTable);
     }
 
     /**
@@ -64,15 +65,17 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
      * 1. Result display box displays {@code expectedResultMessage}.<br>
      * 2. {@code Model}, {@code Storage} and {@code AliasListPanel} equal to the corresponding components in
      * {@code expectedModel}.<br>
-     * @see AliasCommandSystemTest#assertCommandSuccess(String, Alias)
+     * @see AliasCommandSystemTest#assertCommandSuccess(String, Alias, String[][])
      */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+    private void assertCommandSuccess(String command, Model expectedModel,
+                                      String expectedResultMessage, String[][] expectedTable) {
         executeCommand(command);
-        assertEqualAlias(command, expectedResultMessage, expectedModel);
-        //assertSelectedCardUnchanged();
-        //assertCommandBoxShowsDefaultStyle();
-        //assertStatusBarUnchangedExceptSyncStatus();
-        //assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+        executeCommand(ListCommand.COMMAND_WORD);
+        assertTableDisplaysExpected("", expectedResultMessage, expectedTable);
     }
 
     /**
@@ -88,7 +91,6 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
-
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();

@@ -3,7 +3,9 @@ package seedu.address.storage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Date;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.person.customer.Customer;
@@ -30,6 +32,8 @@ public class HtmlWriter {
 
     private final List<Person> customerList;
 
+    private final SimpleDateFormat simpledate = new SimpleDateFormat("EEE, d MMM yyyy");
+
     public HtmlWriter() {
         this.name = null;
         this.phone = null;
@@ -53,7 +57,7 @@ public class HtmlWriter {
         this.address = customer.getAddress().value;
         this.amountBorrowed = String.format("%,.2f", customer.getMoneyBorrowed().value);
         this.amountCurrentlyOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
-        this.dueDate = customer.getOweDueDate().toString();
+        this.dueDate = simpledate.format(customer.getOweDueDate()).toString();
         this.runnerAssigned = customer.getRunner().getName().fullName;
         this.customerList = null;
     }

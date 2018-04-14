@@ -69,7 +69,7 @@ If you want to find out all the features, or would like to know how to do a cert
 Alias: `h` +
 Format: `help`
 
-// tag::identify[]
+// tag::add[]
 === Adding an order (order book): `add`
 
 Adds an order to the order book, which keeps track all the orders received+
@@ -96,7 +96,7 @@ Examples:
 * `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/friends f/Chicken chop h/HALAL`
 * `a n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken rice h/HALAL v/VEGETARIAN`
 * `a n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/friends f/Chicken chop h/HALAL`
-// end::identify[]
+// end::add[]
 
 === Listing all orders (order book): `list`
 

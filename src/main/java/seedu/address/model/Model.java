@@ -83,6 +83,9 @@ public interface Model {
     /** Check if the patient is in the queue */
     boolean checkIfPatientInQueue(Patient targetPatient);
 
+    /** Get Patient from the patient list by index */
+    Patient getPatientFromListByIndex(Index targetIndex);
+
     /** Delete a patient's appointment*/
     boolean deletePatientAppointment(Patient patient, Index index);
 

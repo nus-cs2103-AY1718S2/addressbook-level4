@@ -2,13 +2,11 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import java.util.Arrays;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.ViewAppointmentCommand;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
 public class ViewAppointmentCommandParserTest {
 
@@ -16,8 +14,7 @@ public class ViewAppointmentCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsViewAppointmentCommand() {
-        ViewAppointmentCommand expectedCommand = new ViewAppointmentCommand(
-                new NameContainsKeywordsPredicate(Arrays.asList("Alice")));
+        ViewAppointmentCommand expectedCommand = new ViewAppointmentCommand(INDEX_FIRST_PERSON);
         assertParseSuccess(parser, "Alice", expectedCommand);
         assertParseSuccess(parser, "\n Alice \n", expectedCommand);
     }

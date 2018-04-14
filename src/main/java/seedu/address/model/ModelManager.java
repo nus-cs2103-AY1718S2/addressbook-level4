@@ -138,6 +138,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public Patient getPatientFromListByIndex(Index targetIndex) {
+        return filteredPatients.get(targetIndex.getZeroBased());
+    }
+
+    @Override
     public int getPatientSourceIndexInList(int targetIndex) {
         return filteredPatients.getSourceIndex(targetIndex) + 1;
     }

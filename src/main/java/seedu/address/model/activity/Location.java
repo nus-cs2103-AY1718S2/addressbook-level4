@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Location {
     public static final String MESSAGE_LOCATION_CONSTRAINTS =
-            "Activity location should not be blank, or start with white space";
+            "Event location should not be blank";
 
     public static final String LOCATION_VALIDATION_REGEX = ".+";
 

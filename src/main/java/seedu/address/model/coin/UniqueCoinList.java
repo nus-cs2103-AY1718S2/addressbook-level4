@@ -9,6 +9,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.coin.exceptions.CoinNotFoundException;
 import seedu.address.model.coin.exceptions.DuplicateCoinException;
@@ -52,7 +53,7 @@ public class UniqueCoinList implements Iterable<Coin> {
      * @throws DuplicateCoinException if the replacement is equivalent to another existing coin in the list.
      * @throws CoinNotFoundException if {@code target} could not be found in the list.
      */
-    public void setCoin(Coin target, Coin editedCoin)
+    public Index setCoin(Coin target, Coin editedCoin)
             throws DuplicateCoinException, CoinNotFoundException {
         requireNonNull(editedCoin);
 
@@ -66,6 +67,8 @@ public class UniqueCoinList implements Iterable<Coin> {
         }
 
         internalList.set(index, editedCoin);
+
+        return Index.fromZeroBased(index);
     }
 
 

@@ -21,7 +21,6 @@ import seedu.address.model.rule.Rule;
 public class RuleChecker {
 
     private static final Logger logger = LogsCenter.getLogger(RuleChecker.class);
-    private static final String MESSAGE_PROCESS_RULE = "Found %1$s";
 
     private final RuleBook rules;
 
@@ -39,6 +38,8 @@ public class RuleChecker {
     @Subscribe
     public void handleCoinChangedEvent(CoinChangedEvent cce) {
         for (Rule r : rules.getRuleList()) {
+            r.action.setExtraData(cce.data, cce);
+
             switch (r.type) {
             case NOTIFICATION:
                 assert(r instanceof NotificationRule);
@@ -65,7 +66,6 @@ public class RuleChecker {
         }
 
         try {
-            rule.action.setExtraData(data);
             rule.action.execute();
             logger.info(String.format(Rule.MESSAGE_FIRED, rule, data));
             return true;

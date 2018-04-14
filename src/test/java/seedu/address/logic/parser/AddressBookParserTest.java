@@ -33,6 +33,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemovePlatformCommand;
+import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -160,6 +161,13 @@ public class AddressBookParserTest {
         assertEquals(new RemovePlatformCommand(INDEX_FIRST_PERSON, platformSet), command);
     }
 
+    @Test
+    public void parseCommand_search() throws Exception {
+        String searchName = "foo";
+        SearchCommand command = (SearchCommand) parser.parseCommand(
+                SearchCommand.COMMAND_WORD + " " + searchName);
+        assertEquals(new SearchCommand("all", searchName), command);
+    }
     //@@author
     @Test
     public void parseCommand_select() throws Exception {

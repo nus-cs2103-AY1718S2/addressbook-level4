@@ -8,7 +8,7 @@
 
 == Overview
 
-SellIT is a desktop address book application used for businessman doing his business all around the world. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Sell IT is for salesmen who prefer to use a desktop app for managing their clients. More importantly, Sell IT is optimized for those who prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Sell IT can get your contact management tasks done faster than traditional GUI apps. It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
 
@@ -31,8 +31,6 @@ SellIT is a desktop address book application used for businessman doing his busi
 
 * *Other contributions*:
 
-** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
 ** Documentation:
 *** Added my own features and use cases into the developer guide and user guide.
 ** Community:

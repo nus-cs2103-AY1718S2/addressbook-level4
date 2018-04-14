@@ -10,6 +10,9 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:caution-caption: :warning:
+:undoable-caption: :arrow_backward:
+:warning-caption: :exclamation:
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W15-B2/main
 

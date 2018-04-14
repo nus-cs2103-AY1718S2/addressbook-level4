@@ -95,7 +95,7 @@ public class SortCommandTest {
     public void callSortParser_createAddressBookParser_returnSortCommand() throws ParseException {
         AddressBookParser abp = new AddressBookParser();
         Command sc1 = abp.parseCommand("sort");
-        Command sc2 = abp.parseCommand("sort_by_name");
+        Command sc2 = abp.parseCommand("so");
 
         requireNonNull(sc1);
         requireNonNull(sc2);

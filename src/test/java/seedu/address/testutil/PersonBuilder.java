@@ -114,7 +114,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, timeZone, tags);
+        return new Person(name, phone, email, address, timeZone, comment, tags);
     }
 
 }

@@ -27,7 +27,7 @@ Responsibilities: Logic + Model + Storage
 
 '''
 
-=== Lucas Gaylord
+=== Lucas Otis Layfield Gaylord
 image::luca590.jpg[width="150", align="left"]
 {empty}[http://github.com/luca590[github]] [https://github.com/CS2103JAN2018-W10-B4/main/blob/master/docs/team/luca590.adoc[portfolio]]
 

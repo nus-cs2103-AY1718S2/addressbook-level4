@@ -33,20 +33,15 @@ management function for the address book.
 *** This enhancement requires good adherence to the existing architecture as it touches *all components*
 of the architecture. A new `Appointment` model was created to support persistent storage of appointments in the address book.
 Besides, numerous commands were implemented for this enhancement. The most challenging part of all was the integration of third party
-calendar libraries, provided by *https://github.com/dlemmermann/CalendarFX[CalendarFX 8]*, into the application.
+calendar libraries, provided by *https://github.com/dlemmermann/CalendarFX[CalendarFX 8]*, into the application. Besides, several
+Software Engineering Principles, such as SOLID, YAGNI and DRY Principles, were closely followed.
 
 === Minor enhancement
 
 Implemented a delete dated persons function which allows the user to delete persons added before a
-date who match all the tags specified by the user.
-
-==== Justification
-*** Insurance agents tend to have many obsolete contacts especially those of non-clients. With this function, insurance agents
-can delete a group of people, as indicated by some tags, that was added before a date to clear up some space in the address book.
-
-==== Highlights
-*** This enhancement requires in-depth, cross-component implementation despite being a minor enhancement. The Single Responsibility
-Principle was closely adhered to to ensure that the implementations do not violate the existing architecture.
+date who match all the tags specified by the user. As insurance agents tend to have many obsolete contacts especially those of non-clients,
+with this function, they can delete a group of people, as indicated by some tags, that was added before a date to
+clear up some space in the address book.
 
 ===== Code contributed: [https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/functional/jlks96.md[Functional Code]][https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/functional/jlks96-reused.md[Adapted Functional Code]][https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/test/jlks96.md[Test Code]][https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/test/jlks96-reused.md[Adapted Test Code]]
 

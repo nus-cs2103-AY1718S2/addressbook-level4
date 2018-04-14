@@ -80,10 +80,12 @@ public class ProcessOrderCommand extends Command {
         // labels person with tag "Processing"
         Person editedPerson = createProcessingPerson(personToEdit);
 
-        return addAndTag(toAdd, personToEdit, editedPerson);
+        addAndTag(toAdd, personToEdit, editedPerson);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
-    protected CommandResult addAndTag(Task toAdd, Person personToEdit, Person editedPerson) throws CommandException {
+    protected void addAndTag(Task toAdd, Person personToEdit, Person editedPerson) throws CommandException {
         try {
             model.addTask(toAdd);
 
@@ -96,7 +98,7 @@ public class ProcessOrderCommand extends Command {
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }

@@ -28,9 +28,9 @@ public class ProcessNextCommand extends ProcessOrderCommand {
     public static final String MESSAGE_All_PROCESSING = "All Order have been processed.";
     private static int noOrderToBeProcessed = -1;
 
-    private int targetIndex;
+    protected int targetIndex;
 
-    private Task toAdd;
+    protected Task toAdd;
 
     public ProcessNextCommand() {}
 
@@ -73,7 +73,9 @@ public class ProcessNextCommand extends ProcessOrderCommand {
         // labels person with tag "Processing"
         Person editedPerson = createProcessingPerson(personToEdit);
 
-        return addAndTag(toAdd, personToEdit, editedPerson);
+        addAndTag(toAdd, personToEdit, editedPerson);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
     @Override

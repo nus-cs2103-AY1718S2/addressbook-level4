@@ -47,9 +47,9 @@ public class SampleDataTest extends AddressBookSystemTest {
     }
 
     @Test
-    public void addressBook_dataFileDoesNotExist_loadSampleData() {
-        Person[] expectedList = SampleDataUtil.getSamplePersons();
+    public void addressBook_dataFileDoesNotExist_loadBlank() {
         //@@author emer7
+        Person[] expectedList = new Person[0];
         UnlockCommand testUnlockCommand = new UnlockCommand();
         testUnlockCommand.setTestMode();
         testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());

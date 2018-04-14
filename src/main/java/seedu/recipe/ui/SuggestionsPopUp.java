@@ -70,6 +70,7 @@ public class SuggestionsPopUp extends ContextMenu {
         double anchorX = findDisplayPositionX(textInputProcessor.getCaretPositionX());
         double anchorY = findDisplayPositionY(textInputProcessor.getCaretPositionY());
 
+        textInputProcessor.setContent(commandTextArea.getText());
         if (textInputProcessor.isTextTooLong()) {
             anchorX = anchorY = MARGIN;
         }

@@ -141,13 +141,12 @@ Examples:
 
 * `edit 1 ic/S9123456A` +
 Edits the NRIC number of the 1st student to be `S9123456A`.
-* `edit 2 n/Betsy Crower` +
-Edits the name of the 2nd student to be `Betsy Crower`.
+* `edit 2 n/Betsy Crower sub/English A1 Chinese A1` +
+Edits the name and subjects of the 2nd student to be `Betsy Crower`.
 * `e 1 ic/S9123456A` +
 Edits the NRIC number of the 1st student to be `S9123456A`.
-* `e 2 n/Betsy Crower` +
-Edits the name of the 2nd student to be `Betsy Crower`.
-
+* `e 2 n/Betsy Crower sub/English A1 Chinese A1` +
+Edits the name and subjects of the 2nd student to be `Betsy Crower`.
 *_return to <<toc,Table of Contents>>_*
 
 // tag::addsubject[]
@@ -173,9 +172,18 @@ Examples:
 * `addsub 1 sub/English A2` +
 Adds a new subject `English A2` to the student at `INDEX` 1.
 
+* `addsub 11 sub/Hist A1 EMath A1` +
+Adds subjects `Hist A1` and `EMath A1` to the student at `INDEX` 1.
 
-* `addsub 1 sub/Music A1 French A1` +
-Adds subjects `Music A1` and `French A1` to the student at `INDEX` 1.
+.Situation: When you forgot or didn't add all the subjects that the student is taking
+image::NotEnoughSubjects.png[width="800"]
+.Key in the following command
+image::AddSubjectCommand.png[width="300"]
+.You will see the name fo the student and the finalised list of subjects when the subjects are successfully added.
+image::AddSubjectCommandSuccess.png[width="500"]
+.If you want to check the subjects of the student after adding.
+image::AddSubjectCommandFinish.png[width="800"]
+
 // end::addsubject[]
 
 *_return to <<toc,Table of Contents>>_*

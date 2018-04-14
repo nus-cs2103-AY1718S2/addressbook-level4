@@ -17,6 +17,10 @@ public class MapCommandParser implements Parser<MapCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public MapCommand parse(String args) throws ParseException {
+        return validateNumberOfArgs(args);
+    }
+
+    private MapCommand validateNumberOfArgs(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(

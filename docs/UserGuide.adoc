@@ -89,6 +89,9 @@ Examples:
 
 Shows a list of all persons and a table of created aliases in StardyTogether. +
 Format: `list`
+
+image::aliasList.png[width="790"]
+
 // end::list[]
 
 ==== Editing a person : `edit`
@@ -238,13 +241,14 @@ Finds the vacancy status of study rooms in COM1 building.
 ==== Google maps display : `map` (since v1.4)
 
 Launches Google Maps with the specified location(s).
-Format: `map LOCATION` or `map LOCATION/LOCATION/...` or `map current location`
+Format: `map LOCATION` or `map LOCATION/LOCATION...` or `map current location`
 
 image::map.png[width="790"]
 
 ****
-* All locations specified cannot contains `/`. e.g. Changi/Airport is not a valid location.
-* NUS building name is case insensitive e.g. `COM1` or `com1` gets the same output
+* You are advised to keep the number of consecutive `[LOCATION]` to 4 locations.
+* All locations specified should not contain `/`. e.g. `Changi/Airport` as a location will not give the same map display as `Changi Aiport`.
+* NUS building name is case insensitive e.g. `COM1` or `com1` gives the same output
 * If only one location is provided, the location will be displayed on the map.
 * If more than one location is provided, directions to each location, starting from the first one, will be displayed.
 * Typing `map LOCATION_START to LOCATION_DESTINATION` can work as well for two locations input, only if neither locations specified are NUS buildings.
@@ -272,6 +276,11 @@ Format: `help`
 
 Creates customized aliases for any valid command. +
 Format: `alias [COMMAND] [ALIAS]`
+
+****
+* `[ALIAS]` should be alpha-numeric and without spaces.
+* The recommended number of characters for `[ALIAS]` is 6 characters or less.
+****
 
 Examples:
 
@@ -307,7 +316,7 @@ Format: `undo`
 
 [NOTE]
 =====
-Undoable commands: those commands that modify the StardyTogether's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the StardyTogether's content (`add`, `alias`, `unalias`, `delete`, `edit` and `clear`).
 =====
 
 Examples:
@@ -370,6 +379,10 @@ Examples:
 
 * `encrypt test` +
 Encrypts `addressbook.xml` with "test" as the password.
+
+Subsequently, when you are re-opening the app, you will be prompted to enter your password, as shown in the picture below.
+
+image::passwordBox.png[width="790"]
 
 ==== Removal of password: `decrypt` (since v1.3)
 

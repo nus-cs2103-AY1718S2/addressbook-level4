@@ -88,6 +88,27 @@ public class NewAppointmentAddedEventTest {
     }
 }
 ```
+###### \java\seedu\address\commons\event\UpdateAppointmentsEventTest.java
+``` java
+public class UpdateAppointmentsEventTest {
+
+    @Test
+    public void getAppointmentAdded_validAppointment_success() {
+        AddressBook addressBook = getTypicalAddressBook();
+        ObservableList<Appointment> appointments = addressBook.getAppointmentList();
+        UpdateAppointmentsEvent event = new UpdateAppointmentsEvent(appointments);
+        assert(event.getUpdatedAppointments().equals(appointments));
+    }
+
+    @Test
+    public void toString_comparedWithClassName_success() {
+        AddressBook addressBook = getTypicalAddressBook();
+        ObservableList<Appointment> appointments = addressBook.getAppointmentList();
+        UpdateAppointmentsEvent event = new UpdateAppointmentsEvent(appointments);
+        assert(event.toString().equals("UpdateAppointmentsEvent"));
+    }
+}
+```
 ###### \java\seedu\address\commons\event\ZoomInEventTest.java
 ``` java
 public class ZoomInEventTest {

@@ -397,6 +397,13 @@ public class AddTemplateCommandParser implements Parser<AddTemplateCommand> {
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
+    public void setTemplates() throws DuplicateTemplateException {
+        this.templates.setTemplates(generateTemplates());
+    }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    //// template-level operations
 
     /**
      * TBD replace with DB seed.
@@ -439,9 +446,6 @@ public class AddTemplateCommandParser implements Parser<AddTemplateCommand> {
         }
     }
 
-    public void setTemplates() throws DuplicateTemplateException {
-        this.templates.setTemplates(generateTemplates());
-    }
 
     public synchronized UniqueTemplateList getAllTemplates() {
         return this.templates;
@@ -619,8 +623,6 @@ public class UniqueTemplateList implements Iterable<Template> {
     private void indicateTemplateAdded(Template template) {
         //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
     }
-
-
 
 ```
 ###### \java\seedu\address\model\ModelManager.java

@@ -1,52 +1,93 @@
 # jlks96
 ###### \java\seedu\address\commons\events\logic\CalendarGoBackwardEvent.java
 ``` java
-/** Indicates the user is trying to make the calendar view go backward in time from the currently displaying date*/
+/**
+ * Indicates the user is trying to make the calendar view go backward in time from the currently displaying date
+ */
 public class CalendarGoBackwardEvent extends BaseEvent {
-    public CalendarGoBackwardEvent() { }
+
+    public CalendarGoBackwardEvent() {
+    }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
+
 }
 ```
 ###### \java\seedu\address\commons\events\logic\CalendarGoForwardEvent.java
 ``` java
-/** Indicates the user is trying to make the calendar view go forward in time from the currently displaying date*/
+/**
+ * Indicates the user is trying to make the calendar view go forward in time from the currently displaying date
+ */
 public class CalendarGoForwardEvent extends BaseEvent {
-    public CalendarGoForwardEvent() { }
+
+    public CalendarGoForwardEvent() {
+    }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### \java\seedu\address\commons\events\logic\UpdateAppointmentsEvent.java
+``` java
+/**
+ * Indicates that appointment list is updated.
+ */
+public class UpdateAppointmentsEvent extends BaseEvent {
+
+    private final ObservableList<Appointment> updatedAppointments;
+
+    public UpdateAppointmentsEvent(ObservableList<Appointment> updatedAppointments) {
+        this.updatedAppointments = updatedAppointments;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public ObservableList<Appointment> getUpdatedAppointments() {
+        return updatedAppointments;
     }
 }
 ```
 ###### \java\seedu\address\commons\events\logic\ZoomInEvent.java
 ``` java
-/** Indicates the user is trying to zoom in on the calendar*/
+/**
+ * Indicates the user is trying to zoom in on the calendar
+ */
 public class ZoomInEvent extends BaseEvent {
 
-    public ZoomInEvent() { }
+    public ZoomInEvent() {
+    }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
+
 }
 ```
 ###### \java\seedu\address\commons\events\logic\ZoomOutEvent.java
 ``` java
-/** Indicates the user is trying to zoom out on the calendar*/
+/**
+ * Indicates the user is trying to zoom out on the calendar
+ */
 public class ZoomOutEvent extends BaseEvent {
 
-    public ZoomOutEvent() { }
+    public ZoomOutEvent() {
+    }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
+
 }
 ```
 ###### \java\seedu\address\commons\events\model\AppointmentDeletedEvent.java
@@ -55,6 +96,7 @@ public class ZoomOutEvent extends BaseEvent {
  * Indicates that an appointment is deleted.
  */
 public class AppointmentDeletedEvent extends BaseEvent {
+
     private final ObservableList<Appointment> updatedAppointments;
 
     public AppointmentDeletedEvent(ObservableList<Appointment> updatedAppointments) {
@@ -69,6 +111,7 @@ public class AppointmentDeletedEvent extends BaseEvent {
     public ObservableList<Appointment> getUpdatedAppointments() {
         return updatedAppointments;
     }
+
 }
 ```
 ###### \java\seedu\address\commons\events\model\NewAppointmentAddedEvent.java
@@ -92,45 +135,58 @@ public class NewAppointmentAddedEvent extends BaseEvent {
     public Appointment getAppointmentAdded() {
         return appointmentAdded;
     }
+
 }
 ```
 ###### \java\seedu\address\commons\events\ui\MaxZoomInEvent.java
 ``` java
-/** Indicates that the calendar is already zoomed in to the maximum level (showing {@code DayPage})*/
+/**
+ * Indicates that the calendar is already zoomed in to the maximum level (showing {@code DayPage})
+ */
 public class MaxZoomInEvent extends BaseEvent {
 
-    public MaxZoomInEvent() { }
+    public MaxZoomInEvent() {
+    }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
+
 }
 ```
 ###### \java\seedu\address\commons\events\ui\MaxZoomOutEvent.java
 ``` java
-/** Indicates that the calendar is already zoomed out to the maximum level (showing {@code YearPage})*/
+/**
+ * Indicates that the calendar is already zoomed out to the maximum level (showing {@code YearPage})
+ */
 public class MaxZoomOutEvent extends BaseEvent {
 
-    public MaxZoomOutEvent() { }
+    public MaxZoomOutEvent() {
+    }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
+
 }
 ```
 ###### \java\seedu\address\commons\events\ui\ZoomSuccessEvent.java
 ``` java
-/** Indicates that the calendar is already zoomed in to the maximum level (showing {@code DayPage})*/
+/**
+ * Indicates that the calendar is successfully zoomed in or out
+ */
 public class ZoomSuccessEvent extends BaseEvent {
 
-    public ZoomSuccessEvent() { }
+    public ZoomSuccessEvent() {
+    }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
+
 }
 ```
 ###### \java\seedu\address\logic\commands\AddAppointmentCommand.java
@@ -147,8 +203,8 @@ public class AddAppointmentCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE + "DATE (must be in the format: dd/MM/yyyy) "
-            + PREFIX_STARTTIME + "STARTTIME (must be in the 24 format: HH:mm) "
-            + PREFIX_ENDTIME + "ENDTIME (must be in the 24 format: HH:mm) "
+            + PREFIX_STARTTIME + "STARTTIME (must be in the 24 hr format: HH:mm) "
+            + PREFIX_ENDTIME + "ENDTIME (must be in the 24 hr format: HH:mm) "
             + PREFIX_LOCATION + "LOCATION\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -162,22 +218,22 @@ public class AddAppointmentCommand extends UndoableCommand {
     public static final String MESSAGE_CLASHING_APPOINTMENT =
             "This appointment clashes with another appointment in the address book";
 
-    private final Appointment toAdd;
+    private final Appointment appointmentToAdd;
 
     /**
-     * Creates an AddAppointmentCommand to add the specified {@code Appointment}
+     * Creates an AddAppointmentCommand to add the specified {@code appointment}
      */
     public AddAppointmentCommand(Appointment appointment) {
         requireNonNull(appointment);
-        toAdd = appointment;
+        appointmentToAdd = appointment;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addAppointment(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            model.addAppointment(appointmentToAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, appointmentToAdd));
         } catch (DuplicateAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         } catch (ClashingAppointmentException e) {
@@ -189,15 +245,15 @@ public class AddAppointmentCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddAppointmentCommand // instanceof handles nulls
-                && toAdd.equals(((AddAppointmentCommand) other).toAdd)); // state check
+                && appointmentToAdd.equals(((AddAppointmentCommand) other).appointmentToAdd)); // state check
     }
 }
 ```
 ###### \java\seedu\address\logic\commands\Command.java
 ``` java
     /**
-     * Raises the event via {@link EventsCenter#post(BaseEvent)}
-     * @param event
+     * Raises the specified event via {@link EventsCenter#post(BaseEvent)}
+     * @param event the event that is being posted
      */
     protected void raise(BaseEvent event) {
         EventsCenter.getInstance().post(event);
@@ -226,8 +282,8 @@ public class DeleteAppointmentCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE + "DATE (must be in the format: dd/MM/yyyy) "
-            + PREFIX_STARTTIME + "STARTTIME (must be in the 24 format: HH:mm) "
-            + PREFIX_ENDTIME + "ENDTIME (must be in the 24 format: HH:mm) "
+            + PREFIX_STARTTIME + "STARTTIME (must be in the 24 hr format: HH:mm) "
+            + PREFIX_ENDTIME + "ENDTIME (must be in the 24 hr format: HH:mm) "
             + PREFIX_LOCATION + "LOCATION\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -267,7 +323,7 @@ public class DeleteAppointmentCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\commands\DeleteBeforeCommand.java
 ``` java
 /**
- * Deletes all persons with specified tags added before the date input by user.
+ * Deletes all persons with the specified tags added before the specified date.
  */
 public class  DeleteBeforeCommand extends UndoableCommand {
 
@@ -281,16 +337,13 @@ public class  DeleteBeforeCommand extends UndoableCommand {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DATE + "01/01/2010 "
-            + PREFIX_TAG + "non-client"
-            + PREFIX_TAG + "cash cow";
+            + PREFIX_TAG + "nonclient";
 
     public static final String MESSAGE_DELETE_PERSONS_SUCCESS = "Deleted %d persons with tags %s added before %s";
 
     private final DateAdded inputDate;
     private final Set<Tag> inputTags;
     private final PersonIsAddedBeforeDateInputAndContainsTagsPredicate predicate;
-
-    private int totalPersonsDeleted;
 
     public DeleteBeforeCommand(DateAdded inputDate, Set<Tag> inputTags) {
         this.inputDate = inputDate;
@@ -303,7 +356,7 @@ public class  DeleteBeforeCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(predicate);
         model.updateFilteredPersonList(predicate);
-        totalPersonsDeleted = model.getFilteredPersonList().size();
+        int totalPersonsDeleted = model.getFilteredPersonList().size();
 
         if (totalPersonsDeleted <= 0) {
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
@@ -372,6 +425,7 @@ public class GoForwardCommand extends Command {
  * Zooms in the calendar view to show a more detailed view
  */
 public class ZoomInCommand extends Command {
+
     public static final String COMMAND_WORD = "zoomin";
     public static final String COMMAND_ALIAS = "zi";
 
@@ -422,6 +476,7 @@ public class ZoomInCommand extends Command {
  * Zooms out the calendar view to show a more general view
  */
 public class ZoomOutCommand extends Command {
+
     public static final String COMMAND_WORD = "zoomout";
     public static final String COMMAND_ALIAS = "zo";
 
@@ -456,7 +511,7 @@ public class ZoomOutCommand extends Command {
     }
 
     /**
-     * Handles the event where the calendar is successfully zoomed in
+     * Handles the event where the calendar is successfully zoomed out
      */
     @Subscribe
     private void handleZoomSuccessEvent(ZoomSuccessEvent event) {
@@ -479,6 +534,7 @@ public class ZoomOutCommand extends Command {
  * Parses input arguments and creates a new AddAppointmentCommand object
  */
 public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddAppointmentCommand
      * and returns an AddAppointmentCommand object for execution.
@@ -522,7 +578,7 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
 ###### \java\seedu\address\logic\parser\AddCommandParser.java
 ``` java
     /**
-     * Creates and returns a {@code DateAdded} with the dateAdded attribute representing the current date
+     * Creates and returns a {@code DateAdded} representing the current date
      * @return current date in the following format: dd/MM/yyyy
      */
     public DateAdded createDate() {
@@ -581,6 +637,7 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
  * Parses input arguments and creates a new DeleteAppointmentCommand object
  */
 public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentCommand> {
+
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteAppointmentCommand
      * and returns a DeleteAppointmentCommand object for execution.
@@ -872,6 +929,7 @@ public class DeleteBeforeCommandParser implements Parser<DeleteBeforeCommand> {
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Appointment {
+
     public static final String MESSAGE_TIMES_CONSTRAINTS = "Start time must be before end time";
 
     private final PersonName personName;
@@ -914,8 +972,8 @@ public class Appointment {
 
     /**
      * Checks if a given {@code startTime} is before a given {@code endTime}.
-     * @param startTime A startTime to check.
-     * @param endTime An endTime to check.
+     * @param startTime A start time to check.
+     * @param endTime An end time to check.
      * @return {@code true} if a given start time is before a given end time.
      */
     public static boolean areValidTimes(StartTime startTime, EndTime endTime) {
@@ -1059,6 +1117,7 @@ public class Date {
  * Guarantees: immutable; is valid as declared in {@link #isValidTime(String)}
  */
 public class EndTime extends Time {
+
     /**
      * Constructs a {@code EndTime}.
      *
@@ -1074,14 +1133,16 @@ public class EndTime extends Time {
 /**
  * Signals that the operation is unable to find the specified appointment.
  */
-public class AppointmentNotFoundException extends Exception {}
+public class AppointmentNotFoundException extends Exception {
+}
 ```
 ###### \java\seedu\address\model\appointment\exceptions\ClashingAppointmentException.java
 ``` java
 /**
  * Signals that the operation will result in clashing Appointment objects.
  */
-public class ClashingAppointmentException extends IllegalArgumentException {}
+public class ClashingAppointmentException extends IllegalArgumentException {
+}
 ```
 ###### \java\seedu\address\model\appointment\exceptions\DuplicateAppointmentException.java
 ``` java
@@ -1089,6 +1150,7 @@ public class ClashingAppointmentException extends IllegalArgumentException {}
  * Signals that the operation will result in duplicate Appointment objects.
  */
 public class DuplicateAppointmentException extends DuplicateDataException {
+
     public DuplicateAppointmentException() {
         super("Operation would result in duplicate appointments");
     }
@@ -1230,6 +1292,7 @@ public class StartTime extends Time {
  * Guarantees: immutable; is valid as declared in {@link #isValidTime(String)}
  */
 public class Time {
+
     public static final String MESSAGE_TIME_CONSTRAINTS =
             "Time input should be in the format: HH:mm (24 hour format)";
     /*
@@ -1351,9 +1414,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     /**
      * Adds a appointment to the list.
      *
-     * @throws DuplicateAppointmentException if the appointment to add is a duplicate of an existing appointment
+     * @throws DuplicateAppointmentException if the appointment to be added is a duplicate of an existing appointment
      * in the list.
-     * @throws ClashingAppointmentException if the appointment to add clashes with an existing appointment
+     * @throws ClashingAppointmentException if the appointment to be added clashes with an existing appointment
      * in the list.
      */
     public void add(Appointment toAdd) throws DuplicateAppointmentException, ClashingAppointmentException {
@@ -1459,6 +1522,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
+    //=========== Appointment Mutators =============================================================
+
     @Override
     public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
         addressBook.removeAppointment(target);
@@ -1478,6 +1543,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
+    //=========== Filtered Appointment List Accessors =============================================================
+
     /**
      * Returns an unmodifiable view of the list of {@code Appointment} backed by the internal list of
      * {@code addressBook}
@@ -1553,8 +1620,8 @@ public class DateAdded {
 /**
  * Tests that a {@code Person}'s {@code DateAdded} is before the date input.
  */
-
 public class DateAddedIsBeforeDateInputPredicate implements Predicate<Person> {
+
     private final String dateInputString;
 
     public DateAddedIsBeforeDateInputPredicate(String dateInputString) {
@@ -1567,11 +1634,12 @@ public class DateAddedIsBeforeDateInputPredicate implements Predicate<Person> {
             SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
             String dateAddedString = person.getDateAdded().dateAdded;
             assert DateAdded.isValidDate(dateAddedString);
+
             Date dateAdded = dateFormatter.parse(dateAddedString);
             Date dateInput = dateFormatter.parse(dateInputString);
             return dateAdded.compareTo(dateInput) <= 0;
         } catch (ParseException e) {
-            return false; //need to resolve this part
+            return false;
         }
     }
 
@@ -1603,8 +1671,8 @@ public class DateAddedIsBeforeDateInputPredicate implements Predicate<Person> {
 ###### \java\seedu\address\model\PersonIsAddedBeforeDateInputAndContainsTagsPredicate.java
 ``` java
 /**
- * Tests that a {@code Person}'s {@code UniqueTagList} matches all of the input tags and
- * {@code DateAdded} is before the date input.
+ * Tests if a {@code Person}'s {@code UniqueTagList} matches all of the input tags and
+ * {@code DateAdded} is before the input date.
  */
 public class PersonIsAddedBeforeDateInputAndContainsTagsPredicate implements Predicate<Person> {
 
@@ -1647,10 +1715,11 @@ public class PersonIsAddedBeforeDateInputAndContainsTagsPredicate implements Pre
 ###### \java\seedu\address\model\tag\UniqueTagListContainsTagsPredicate.java
 ``` java
 /**
- * Tests that a {@code Person}'s {@code UniqueTagList} matches all of the input tags.
+ * Tests if a {@code Person}'s {@code UniqueTagList} matches all of the input tags.
  */
 
 public class UniqueTagListContainsTagsPredicate  implements Predicate<Person> {
+
     private final Set<Tag> inputTags;
 
     public UniqueTagListContainsTagsPredicate(Set<Tag> inputTags) {
@@ -1660,8 +1729,7 @@ public class UniqueTagListContainsTagsPredicate  implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         UniqueTagList personTags = new UniqueTagList(person.getTags());
-        return inputTags.stream()
-                .allMatch(personTags::contains);
+        return inputTags.stream().allMatch(personTags::contains);
     }
 
     @Override
@@ -1772,6 +1840,7 @@ public class UniqueTagListContainsTagsPredicate  implements Predicate<Person> {
  * JAXB-friendly version of the Appointment.
  */
 public class XmlAdaptedAppointment {
+
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Appointment's %s field is missing!";
 
     @XmlElement(required = true)
@@ -1784,7 +1853,6 @@ public class XmlAdaptedAppointment {
     private String endTime;
     @XmlElement(required = true)
     private String location;
-
 
     /**
      * Constructs an XmlAdaptedAppointment.
@@ -1866,7 +1934,6 @@ public class XmlAdaptedAppointment {
             throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
         }
         final Location location = new Location(this.location);
-
 
         return new Appointment(name, date, startTime, endTime, location);
     }
@@ -1979,6 +2046,16 @@ public class CalendarPanel extends UiPart<CalendarView> {
     }
 
     /**
+     * Handles the event where the appointment list is updated
+     */
+    @Subscribe
+    private void handleUpdateAppointmentsEvent(UpdateAppointmentsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendar.clear();
+        loadEntries(event.getUpdatedAppointments());
+    }
+
+    /**
      * Handles the event where a new appointment is added by loading the appointment into the calendar
      * @param event contains the newly added appointment
      */
@@ -2086,10 +2163,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
             @Override
             public void run() {
                 while (true) {
-                    Platform.runLater(() -> {
-                        calendarView.setToday(LocalDate.now());
-                        calendarView.setTime(LocalTime.now());
-                    });
+                    Platform.runLater(() -> setNow());
 
                     try {
                         // update every 10 seconds
@@ -2105,6 +2179,14 @@ public class CalendarPanel extends UiPart<CalendarView> {
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
     }
+
+    /**
+     * Sets calendar view to the current date and time
+     */
+    private void setNow() {
+        calendarView.setToday(LocalDate.now());
+        calendarView.setTime(LocalTime.now());
+    }
 }
 ```
 ###### \resources\view\CalendarPanel.fxml
@@ -2115,4 +2197,55 @@ public class CalendarPanel extends UiPart<CalendarView> {
 <StackPane xmlns:fx="http://javafx.com/fxml/1">
     <CalendarView fx:id="calendarView"/>
 </StackPane>
+```
+###### \resources\view\PersonListCard.fxml
+``` fxml
+         <HBox prefHeight="20.0" prefWidth="0.0">
+            <children>
+               <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets right="5.0" />
+                  </HBox.margin>
+                  <image>
+                     <Image url="@../images/address.png" />
+                  </image>
+               </ImageView>
+            <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
+            </children>
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin>
+         </HBox>
+         <HBox prefHeight="20.0" prefWidth="0.0">
+            <children>
+               <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets right="5.0" />
+                  </HBox.margin>
+                  <image>
+                     <Image url="@../images/email.png" />
+                  </image>
+               </ImageView>
+            <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+            </children>
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin>
+         </HBox>
+         <HBox prefHeight="20.0" prefWidth="0.0">
+            <children>
+               <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets right="5.0" />
+                  </HBox.margin>
+                  <image>
+                     <Image url="@../images/calendar_icon.png" />
+                  </image>
+               </ImageView>
+            <Label fx:id="dateAdded" styleClass="cell_small_label" text="\$dateAdded" />
+            </children>
+            <VBox.margin>
+               <Insets top="5.0" />
+            </VBox.margin>
+         </HBox>
 ```

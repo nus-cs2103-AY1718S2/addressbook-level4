@@ -14,7 +14,7 @@ endif::[]
 
 By: `Team W15-B2`      Since: `March 2018`      Licence: `MIT`
 
-== Setting up
+== Setting Up
 This section details how you can go about setting up IMDB.
 
 === Prerequisites
@@ -127,7 +127,7 @@ image::LogicClassDiagram.png[width="800"]
 
 {empty} +
 
-=== Events-Driven nature
+==== Events-driven nature
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 {empty} +
@@ -238,7 +238,7 @@ The `Storage` component:
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
-=== Undo/Redo feature
+=== Undo/redo feature
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -430,7 +430,7 @@ each implementation and the pros and cons of each implementation:
 // end::remark[]
 
 // tag::morefields[]
-=== Implement NRIC, DOB and Blood Type detail fields
+=== Implement NRIC, DOB and blood type detail fields
 ==== Current Implementation
 
 The additional fields added are managed by the `AddCommand` and the `EditCommand`.
@@ -502,7 +502,7 @@ each implementation and the pros and cons of each implementation:
 // end::addconditions[]
 
 // tag::addqremoveq[]
-=== Patient Visting Queue (waiting list for registration)
+=== Patient visiting queue (waiting list for registration)
 ==== Current Implementation
 
 The patient visiting queue mechanism is facilitated by `UniquePatientVisitingQueue`, `AddPatientQueueCommand` and `RemovePatientQueueCommand`.
@@ -577,7 +577,7 @@ each implementation and the pros and cons of each implementation:
 // end::addqremoveq
 
 // tag::addqremoveappt[]
-=== Patient Appointment
+=== Patient appointment
 ==== Current Implementation
 
 The patient appointment mechanism is facilitated by `Appointment`, `AppointmentEntry`, `DateTime`, `UniqueAppointmentEntryList`, `UniqueAppointmentList`, `AddAppointmentCommand`, `DeleteAppointmentCommand`, `ViewAppoinmentCommand`, `AddAppointmenetCommandParser`, `DeleteAppoinmentCommandParser` and `ViewAppointmentCommandParser`.
@@ -694,7 +694,7 @@ Separation of Concerns as `Patient` now needs to do two different things.
 // end::record[]
 
 // tag::login[]
-=== Login System
+=== Login system
 ==== Current Implementation
 The action of logging into IMDB is facilitated by `LoginCommand` and the static class `LoginManager`, which also contains a static attribute of class `LoginState`.
 
@@ -746,16 +746,16 @@ We use asciidoc for writing documentation.
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -772,7 +772,7 @@ image::chrome_save_as_pdf.png[width="300"]
 [[Testing]]
 == Testing
 
-=== Running Tests
+=== Running tests
 
 There are three ways to run tests.
 
@@ -813,7 +813,7 @@ e.g. `seedu.address.storage.StorageManagerTest`
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
@@ -821,22 +821,22 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 == Dev Ops
 
-=== Build Automation
+=== Build automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
-=== Continuous Integration
+=== Continuous integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Coverage Reporting
+=== Coverage reporting
 
 We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
-=== Documentation Previews
+=== Documentation previews
 When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -845,7 +845,7 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +

@@ -7,6 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -24,6 +26,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.AddRemarkCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditPersonDescriptor;
 import seedu.address.model.person.Name;
@@ -46,7 +49,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
 
         // no field specified
-        assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED);
+        assertParseFailure(parser, "1", AddRemarkCommand.MESSAGE_NOT_EDITED);
 
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);

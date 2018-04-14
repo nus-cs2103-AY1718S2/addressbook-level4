@@ -14,6 +14,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INSURANCE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMISSION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_GROUP_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_INSURANCE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -51,6 +52,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -199,7 +201,12 @@ public class AddCommandParserTest {
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INVALID_INSURANCE_DESC,
             Insurance.MESSAGE_INSURANCE_CONSTRAINTS);
-
+        //@@author limzk1994
+        // invalid group
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                        + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INVALID_GROUP_DESC,
+                Group.MESSAGE_GROUP_CONSTRAINTS);
+        //@@author
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
                 + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INSURANCE_DESC_BOB,

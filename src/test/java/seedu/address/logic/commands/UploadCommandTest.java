@@ -36,11 +36,6 @@ public class UploadCommandTest {
     private static final String TEST_DATA_FILE_ALICE_BENSON = TEST_DATA_FOLDER + "aliceBensonAddressBook.xml";
     private static final String TEST_PASSWORD = "test";
 
-    @BeforeClass
-    public static void setDataStoreDir() {
-        GoogleDriveStorage.setDataStoreDir();
-    }
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -50,6 +45,11 @@ public class UploadCommandTest {
     private Model model = new ModelManager(new AddressBook(), new UserPrefs());
 
     private final UploadCommand standardCommand = prepareCommand(TEST_DATA_FILE_ALICE_BENSON, model);
+
+    @BeforeClass
+    public static void setDataStoreDir() {
+        GoogleDriveStorage.setDataStoreDir();
+    }
 
     @Test
     public void execute_emptyAddressBookUploadIntoValidFilepathUnencrypted_success() throws Exception {

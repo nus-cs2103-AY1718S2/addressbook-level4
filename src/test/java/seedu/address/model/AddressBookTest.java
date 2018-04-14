@@ -175,6 +175,11 @@ public class AddressBookTest {
         }
 
         @Override
+        public ArrayList<ArrayList<String>> getUiFormattedAliasList() {
+            return null;
+        }
+
+        @Override
         public void resetAliasList() {
             fail("This method should not be called.");
         }

@@ -35,14 +35,14 @@ import seedu.address.storage.exceptions.RequestTimeoutException;
 public class GoogleDriveStorage {
 
     private static final String APPLICATION_NAME = "StardyTogether";
-    private static final String DIR_FOR_DOWNLOADS = "googledrive/";
 
     /**
      * Directory to store user credentials.
      */
     private static java.io.File dataStoreDir =
             new java.io.File(System.getProperty("user.home"), ".google-credentials/google-drive-storage");
-
+    private static String uploadFileFolder = "./googledrive/";
+    private static String user = "user";
     private static FileDataStoreFactory dataStoreFactory;
     private static HttpTransport httpTransport;
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -59,9 +59,43 @@ public class GoogleDriveStorage {
     private final java.io.File uploadFile;
 
     public GoogleDriveStorage(String uploadFilePath) throws GoogleAuthorizationException, RequestTimeoutException {
-        this.uploadFilePath = uploadFilePath;
+        this.uploadFilePath = uploadFileFolder + uploadFilePath;
         uploadFile = new java.io.File(uploadFilePath);
         userAuthorize();
+    }
+
+    public String getUploadFilePath() {
+        return uploadFilePath;
+    }
+
+    public static void setUploadFileFolder() {
+        uploadFileFolder = "";
+    }
+
+    public static void resetUploadFileFolder() {
+        uploadFileFolder = "./googledrive/";
+    }
+
+    public static void setUser() {
+        user = "test";
+    }
+
+    public static void resetUser() {
+        user = "user";
+    }
+
+    /**
+     * Sets data store directory for test environment
+     */
+    public static void setDataStoreDir() {
+        dataStoreDir = new java.io.File("./src/test/resources/GoogleCredentials/");
+    }
+
+    /**
+     * Resets data store directory for user environment
+     */
+    public static void resetDataStoreDir() {
+        dataStoreDir = new java.io.File(System.getProperty("user.home"), ".google-credentials/google-drive-storage");
     }
 
     /**
@@ -72,13 +106,13 @@ public class GoogleDriveStorage {
      */
     private void userAuthorize() throws GoogleAuthorizationException, RequestTimeoutException {
         Preconditions.checkArgument(
-                !uploadFilePath.startsWith("Enter ") && !DIR_FOR_DOWNLOADS.startsWith("Enter "),
-                "Please enter the upload file path and download directory in %s", GoogleDriveStorage.class);
+                !uploadFilePath.startsWith("Enter "),
+                "Please enter the upload file path in %s", GoogleDriveStorage.class);
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
             dataStoreFactory = new FileDataStoreFactory(dataStoreDir);
 
-            credential = authorize();
+            credential = authorizationRequest();
 
             drive = new Drive.Builder(httpTransport, JSON_FACTORY, credential).setApplicationName(
                     APPLICATION_NAME).build();
@@ -97,7 +131,7 @@ public class GoogleDriveStorage {
     /**
      * Authorizes the installed application to access user's protected data.
      */
-    private Credential authorize() throws IOException {
+    private Credential authorizationRequest() throws IOException {
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
                 new InputStreamReader(GoogleDriveStorage.class.getResourceAsStream("/json/client_secret.json")));
         if (clientSecrets.getDetails().getClientId().startsWith("Enter")
@@ -115,14 +149,13 @@ public class GoogleDriveStorage {
 
         CancellableServerReceiver receiver = new CancellableServerReceiver();
         try {
-            Credential credential = flow.loadCredential("user");
+            Credential credential = flow.loadCredential(user);
             if (credential != null
                     && (credential.getRefreshToken() != null
                     || credential.getExpiresInSeconds() == null
                     || credential.getExpiresInSeconds() > 60)) {
                 return credential;
             }
-            credential.setExpiresInSeconds(null);
             // open in browser
             String redirectUri = receiver.getRedirectUri();
             AuthorizationCodeRequestUrl authorizationUrl =
@@ -132,24 +165,10 @@ public class GoogleDriveStorage {
             String code = receiver.waitForCode();
             TokenResponse response = flow.newTokenRequest(code).setRedirectUri(redirectUri).execute();
             // store credential and return it
-            return flow.createAndStoreCredential(response, "user");
+            return flow.createAndStoreCredential(response, user);
         } finally {
             receiver.stop();
         }
-    }
-
-    /**
-     * Sets data store directory for test environment
-     */
-    public static void setDataStoreDir() {
-        dataStoreDir = new java.io.File("./src/test/resources/GoogleCredentials/");
-    }
-
-    /**
-     * Resets data store directory for user environment
-     */
-    public static void resetDataStoreDir() {
-        dataStoreDir = new java.io.File(System.getProperty("user.home"), ".google-credentials/google-drive-storage");
     }
 
     /**

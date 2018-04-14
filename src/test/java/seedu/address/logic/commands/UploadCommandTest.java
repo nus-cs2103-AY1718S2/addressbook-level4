@@ -47,8 +47,10 @@ public class UploadCommandTest {
     private final UploadCommand standardCommand = prepareCommand(TEST_DATA_FILE_ALICE_BENSON, model);
 
     @BeforeClass
-    public static void setDataStoreDir() {
+    public static void setTestEnvironment() {
         GoogleDriveStorage.setDataStoreDir();
+        GoogleDriveStorage.setUploadFileFolder();
+        GoogleDriveStorage.setUser();
     }
 
     @Test
@@ -154,7 +156,9 @@ public class UploadCommandTest {
     }
 
     @AfterClass
-    public static void resetDataStoreDir() {
+    public static void resetTestEnvironment() {
         GoogleDriveStorage.resetDataStoreDir();
+        GoogleDriveStorage.resetUploadFileFolder();
+        GoogleDriveStorage.resetUser();
     }
 }

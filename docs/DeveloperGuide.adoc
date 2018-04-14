@@ -225,7 +225,7 @@ image::DeleteStudentSdForLogic.png[width="800"]
 image::ModelClassDiagram.png[width="800"]
 
 .Structure of the Dashboard Class. This diagram shows finer details about the Dashboard Class.
-image::ModelComponentDashboardClassDiagram.png[width="400"]
+image::ModelComponentDashboardClassDiagram.png[width="600"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -763,7 +763,7 @@ The method `createEditedStudent` creates the student wi
 |=======================================================================
 
 
-//end::profilePage[]
+// end::profilePage[]
 
 // tag::schedule[]
 === Schedule feature
@@ -972,7 +972,7 @@ Every single input always has an *intent*, but that is not the case for *entitie
 For further clarification, refer to the screenshot below:
 
 .Example of an intention and an entity, with its corresponding value. The intention is `Select` and the entity refers to the name of a person, which takes on a value of `Jason` in this particular case.
-image::debug_message.png[width="700"]
+image::debug_message.PNG[width="700"]
 
 ===== Matching the desired command
 After identifying the *intent* and *entities* (if present) in the user's input, the corresponding features matching intent is called,
@@ -1182,63 +1182,61 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 
-|`* * *` |user |be able to view misc info of my students on a different page |have an easier viewing of them
+|`* * *` |tutor |add a new student |
 
-|`* * *` |user |view the profile pictures of each student(if it exists) |learn to recognise them
+|`* * *` |tutor | be able to edit the miscellaneous information of a student |have the most updated version of a student's information
 
-|`* * *` |user |be able to add/change a profile picture for my students |
+|`* * *` |tutor |delete a student |remove entries that I no longer need
 
-|`* * *` |user | be able to edit the miscellaneous information of a student |have the most updated version of a student's information
+|`* * *` |tutor |find a student by name |locate details of students without having to go through the entire list
 
-|`* * *` |user |have a remarks column included in the misc info for each student |add specific remarks for each particular student that may be important to note
+|`* * *` |tutor |find a student by programming language |locate details of students of a certain programming language
 
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new student |
+|`* * *` |tutor |search a student by label |
 
 |`* * *` |tutor |indicate a student's programming language when adding one |
 
-|`* * *` |user |delete a student |remove entries that I no longer need
+|`* * *` |tutor |view the address of a student in the maps |know where the student lives
 
-|`* * *` |user |find a student by name |locate details of students without having to go through the entire list
+|`* * *` |tutor |add a student to favourites |keep track of that student
 
-|`* * *` |user |find a student by programming language |locate details of students of a certain programming language
+|`* * *` |tutor |list students added to favourites |view students I'm keeping tack
 
-|`* * *` |user |view timetable of lessons by week |easily view my schedule
+|`* * *` |tutor |be able to view misc info of my students on a different page |have an easier viewing of them
 
-|`* * *` |user |add a lesson for a student |
+|`* * *` |tutor |view the profile pictures of each student(if it exists) |learn to recognise them
 
-|`* * *` |user |delete a lesson for a student |remove lessons that the student cancels
+|`* * *` |tutor |be able to add/change a profile picture for my students |
 
-|`* *` |user |edit a lesson for a student |keep track of timing changes
+|`* * *` |tutor |have a remarks column included in the misc info for each student |add specific remarks for each particular student that may be important to note
 
-|`* * *` |user with a filled timetable |check free slot |easily find a free timeslot to allocate to students
+|`* * *` |tutor |view timetable of lessons by week |easily view my schedule
 
-|`* * *` |user with a filled timetable |sync with cloud storage calenders |easily sync my timetable to my schedule
+|`* * *` |tutor |add a lesson for a student |
+
+|`* * *` |tutor |delete a lesson for a student |remove lessons that the student cancels
+
+|`* *` |tutor |edit a lesson for a student |keep track of timing changes
+
+|`* * *` |tutor with a filled timetable |check free slot |easily find a free timeslot to allocate to students
+
+|`* * *` |tutor with a filled timetable |sync with cloud storage calenders |easily sync my timetable to my schedule
+
+|`* * *` |tutor |get an overview of my student's progress |so that I can see what they don't know and tutor them better
+
+|`* * *` |tutor |type little but get the command I want |to save time
 
 |`* *` |tutor |sort the contact list by programming language | easily recognise which and how many students are taking a particular programming language
 
-|`* * *` |user |add a student to favourites |keep track of that student
+|`* *` |tutor |view hours spent teaching |see how much money I should collect
 
-|`* * *` |user |list students added to favourites |view students I'm keeping tack
+|`*` |tutor |send emails to my student |to send reminders for upcoming lessons or payments owed
 
-|`* * *` |user |search a student by label |
+|`*` |tutor |submit feedback to the developers |to improve my user experience
 
-|`* * *` |user |view the address of a student in the maps |know where the student lives
-
-|`* * *` |user |add a programming language for a student |
-
-|`* * *` |user |get an overview of my student's progress |so that I can see what they don't know and tutor them better
-
-|`* * *` |user |type little but get the command I want |to save time
-
-|`*` |user |send emails to my student |to send reminders for upcoming lessons or payments owed
-
-|`*` |user |submit feedback to the developers |to improve my user experience
-
-|`* *` |user |view hours spent teaching |see how much money I should collect
-
-|`*` |user with many students in the address book |sort students by name |locate a student easily
+|`*` |tutor with many students in the address book |sort students by name |locate a student easily
 |=======================================================================
 
 [appendix]
@@ -1652,5 +1650,17 @@ Expected
 * Timestamp in the status bar remains the same.
 //end::profilePageTest[]
 
+=== Adding a lesson
 
+. Adding a lesson while all students are listed
+.. Prerequisites: List all students using the `list` command. Multiple students in the list. Your current schedule would preferably have no lessons starting before 7am or ending after 10pm.
+.. Test case: `addLesson 1 d/mon st/10:00 et/12:00` +
+   Expected: a lesson will be added for student at index 1, starting at 10:00am, ending at 12:00pm
+.. Test case (Maximum range): `addLesson 1 d/wed st/00:00 et/23:59` +
+   Expected: a lesson will be added for student at index 1, starting at 00:00pm, ending at 23:59pm (whole day).
+   The schedule should resize to show the lesson in the whole day.
+.. Test case: `deleteLesson 0` +
+   Expected:
+*** No lesson will be added due to invalid student index. Error details shown in results screen.
+.. Other incorrect deleteLessons to try: `deleteLesson`, `deleteLesson x` where x is larger than the index of the last lesson
 

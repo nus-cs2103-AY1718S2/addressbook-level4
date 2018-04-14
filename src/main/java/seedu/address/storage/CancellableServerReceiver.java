@@ -42,7 +42,6 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
 
     /**
      * Constructor that starts the server on {@link #LOCALHOST} and an unused port.
-     * Use {@link Builder} if you need to specify any of the optional parameters.
      */
     public CancellableServerReceiver() {
         this(LOCALHOST, -1, CALLBACK_PATH, null, null);
@@ -138,58 +137,6 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
             return socket.getLocalPort();
         } finally {
             socket.close();
-        }
-    }
-
-    /**
-     * Builder class for CancellableServerReceiver. Implementation is not thread-safe.
-     */
-    public static final class Builder {
-        private String host = LOCALHOST;
-        private int port = -1;
-        private String successLandingPageUrl;
-        private String failureLandingPageUrl;
-        private String callbackPath = CALLBACK_PATH;
-
-        /**
-         * Builds the {@code CancellableServerReceiver}.
-         */
-        public CancellableServerReceiver build() {
-            return new CancellableServerReceiver(host, port, callbackPath,
-                    successLandingPageUrl, failureLandingPageUrl);
-        }
-
-        public String getHost() {
-            return host;
-        }
-
-        public Builder setHost(String host) {
-            this.host = host;
-            return this;
-        }
-
-        public int getPort() {
-            return port;
-        }
-
-        public Builder setPort(int port) {
-            this.port = port;
-            return this;
-        }
-
-        public String getCallbackPath() {
-            return callbackPath;
-        }
-
-        public Builder setCallbackPath(String callbackPath) {
-            this.callbackPath = callbackPath;
-            return this;
-        }
-
-        public Builder setLandingPages(String successLandingPageUrl, String failureLandingPageUrl) {
-            this.successLandingPageUrl = successLandingPageUrl;
-            this.failureLandingPageUrl = failureLandingPageUrl;
-            return this;
         }
     }
 

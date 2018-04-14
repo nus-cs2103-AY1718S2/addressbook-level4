@@ -39,7 +39,7 @@ The developer guide contains the design of the models that make up the program. 
 is implemented and how it interacts with the different components. We would greatly appreciate your help in fine-tuning the components and also
 welcome any suggestions or feedback to improve Your TA.
 
-== Setting up
+== Setting Up
 
 This section contains the steps needed to properly set up the required files to work on the program source code and to ensure the application runs properly.
 
@@ -160,7 +160,7 @@ Given below is a quick overview of each component.
 The classes can be found in the `seedu.addressbook.commons` package.
 
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `LogsCenter` : Used by many classes to write log messages to the app's log file.
 
 The rest of the App consists of the following five components:
 
@@ -191,7 +191,7 @@ The _Sequence Diagram_ (Figure 3) below shows how the components interact for th
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when Your TA data is changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 Figure 4 below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -375,7 +375,7 @@ This section describes some noteworthy details on how certain features are imple
 
 // tag::login[]
 === Login feature
-==== Current Implementation
+==== Current implementation
 
 The login feature is initialized upon startup of the application, through `LoginStorage` and `LoginManager` and is facilitated by the `LoginUi`. +
 It supports multiple accounts whereby one user cannot access the application content of another user by creating multiple `.xml` storage files. +
@@ -430,7 +430,7 @@ The credentials entered by the user are then checked against the HashMap to auth
 [NOTE]
 If the user is a new (username does not exist), they should simply enter their desired `Username` and `Password` into the respective fields, and the account will be created with the default data of the application.
 
-==== Design Considerations
+==== Design considerations
 
 ===== Aspect: Implementing new `User`
 * **Alternative 1 (current choice)**: Using same login window, create new `User` if `Username` entered does not exist
@@ -466,13 +466,13 @@ If the user is a new (username does not exist), they should simply enter their d
 // end::login[]
 
 === Help feature
-==== Current Implementation
+==== Current implementation
 
 The help command opens a new window, opening the user guide.
 
 // tag::undoredo[]
 === Undo/Redo feature
-==== Current Implementation
+==== Current implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -557,7 +557,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="650"]
 
-==== Design Considerations
+==== Design considerations
 
 ===== Aspect: Implementation of `UndoableCommand`
 
@@ -621,7 +621,7 @@ image::MarkCommandSequenceDiagram.png[width="700"]
 . The `preprocessUndoableCommand()` will then execute the `createUpdatedPerson()` to create a new `Person` object with a new `Participation` object containing the new total marks.
 . Finally, this new `Person` object created in step 3 will replace the original `Person` object with the old `Participation` object stored in the `Model` through the `updatePerson()` method.
 
-==== Design Considerations
+==== Design considerations
 
 ===== Aspect: How to update the marks
 
@@ -640,7 +640,7 @@ image::MarkCommandSequenceDiagram.png[width="700"]
 
 // tag::display[]
 
-=== Display Picture
+=== Display picture
 
 Users are able to add a display picture for any person within the application. The user can utilise 3 different commands (`add`, `edit` and `updateDP`) to create and specify a display image for the person.
 It fully supports the `undo` and `redo` commands as well. It adds a drop shadow around the frame to indicate the level of participation (see above section 5.3) of the person.
@@ -765,7 +765,7 @@ image::FetchDisplayPictureActivityDiagram.png[width="800"]
 
 The image file will then be utilized by JavaFX and displayed on the UI. The drop shadow of the image is determined by the `Participation` of the `Person`.
 
-==== Design Considerations
+==== Design considerations
 ===== Aspect: Filepath to the image
 * **Alternative 1 (current choice):** Copy the image file over to a designated location.
 ** Pros: The user does not need to maintain the image file, as the application does so itself.
@@ -817,7 +817,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::dataencryption[]
-=== Data Encryption (Coming in v2.0)
+=== Data encryption (Coming in v2.0)
 
 _{Explain here how the data encryption feature will be implemented}_
 
@@ -830,16 +830,16 @@ We use asciidoc for writing documentation.
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 Use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -856,7 +856,7 @@ image::chrome_save_as_pdf.png[width="300"]
 [[Testing]]
 == Testing
 
-=== Running Tests
+=== Running tests
 
 There are three ways to run tests.
 
@@ -897,7 +897,7 @@ e.g. `seedu.address.storage.StorageManagerTest`
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
@@ -905,25 +905,25 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 == Dev Ops
 
-=== Build Automation
+=== Build automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for Build Automation.
 
-=== Continuous Integration
+=== Continuous integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects.
 See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Coverage Reporting
+=== Coverage reporting
 
 We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
 See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
-=== Documentation Previews
+=== Documentation previews
 When there are changes to asciidoc files in a pull request, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. +
 See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -932,7 +932,7 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
@@ -1102,10 +1102,28 @@ Use case ends.
 
 * 3a. The given index is invalid.
 +
-[none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Your TA shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Updating the display picture
+
+*MSS*
+
+1.  User requests to update the display picture of a person with an image file filepath.
+2.  Your TA shows a list of persons that match the search query.
+3.  Your TA reads the image file, duplicates it and updates the display picture of the person.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The filepath provided does not lead to any valid image file. +
+** 3a1. Your TA shows an error message.
++
+Use case ends.
 
 [discrete]
 === Use case: Find a person by name
@@ -1135,7 +1153,7 @@ Use case ends.
 .  Should not exceed the size of 100 MB.
 .  Should respond to any requests within 3 seconds.
 .  Should not modify and copy any user's personal data on the computer.
-.  A User's data should be password protected.
+.  A user's data should be password protected.
 
 [appendix]
 == Glossary
@@ -1194,7 +1212,7 @@ Given below are instructions to test the app manually.
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
 
-=== Launch and Shutdown
+=== Launch and shutdown
 
 . Initial launch
 

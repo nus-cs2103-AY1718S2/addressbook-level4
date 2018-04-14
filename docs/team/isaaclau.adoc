@@ -1,0 +1,56 @@
+= Isaac Lau - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Fastis - MeetUp Manager
+
+---
+
+== Overview
+
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time.
+
+== Summary of contributions
+
+* *Major enhancement*: NUSmods integration
+** What it does: allows the user to add a link from a NUSmods page (e.g. http://modsn.us/MYwiD) to a person. The app uses the link to display the person's timetable.
+** Justification: This feature allows the user to see their group members' timetable easily, enabling them to better schedule plans and events.
+** Highlights: This enhancement has the potential to be expanded upon greatly. Because the feature is removed from the existing architecture, it required deep understanding of the application architecture to figure out where and how the enhancement could be added in.
+** Credits: https://github.com/nusmodifications/nusmods/tree/master/api/data[NUSmods API] was used to retrieve module information.
+
+* *Minor enhancement*: improved functionality of `find` command to work with partial words and approximate words.
+** Credits: https://github.com/xdrop/fuzzywuzzy[fuzzywuzzy] library was used to enable better string comparison functionality.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W15-B3/main/tree/master/collated/functional/Isaaaca.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B3/main/blob/master/collated/test/Isaaaca.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` on GitHub
+** Documentation:
+*** Updated class diagrams in Developer Guide
+*** Added substantial segments to Developer Guide
+** Community:
+*** Help team members fix bugs https://github.com/CS2103JAN2018-W15-B3/main/issues/167[#167]
+*** Reported bugs and suggestions https://github.com/CS2103JAN2018-W15-B3/main/issues/96[#96]
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=TimetableLinks]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=Database]
+include::../DeveloperGuide.adoc[tag=ModuleDatabase]
+include::../DeveloperGuide.adoc[tag=showingTimetable]
+
+---

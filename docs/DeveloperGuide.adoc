@@ -526,6 +526,8 @@ The `Storage` component then converts the JSON file into a hashMap of modules to
 ** Pros: Not storing anything means no storage space is needed.
 ** Cons: Not storing anything requires Fastis to constantly download information from the web, making the app reliant on good internet connection.
 
+// end::ModuleDatabase[]
+
 //tag::showingTimetable[]
 [[showingTimetable]]
 === Show Timetable feature
@@ -573,7 +575,7 @@ The method then takes the `query` and parses them into modules and lessons, whic
 ** Pros: Storing every person's schedule will require much more space, and there will be a dilemma between whether to store it as `WeeklyEvent`, or `Module` and `schedule`
 ** Cons: Storing ever person's schedule requires Fastis to make a connection to the web only when a person is added or edited.
 
-//tag::showingTimetable[]
+//end::showingTimetable[]
 
 // tag::listTagMembers[]
 === List Tag Members Feature

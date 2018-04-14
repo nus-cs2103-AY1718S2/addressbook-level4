@@ -14,7 +14,6 @@ import static seedu.address.logic.commands.ImportCommand.MESSAGE_FILE_NOT_FOUND;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_PASSWORD_WRONG;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_SUCCESS;
 
-import org.junit.AfterClass;
 import org.junit.Test;
 
 import seedu.address.commons.util.SecurityUtil;
@@ -35,7 +34,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
         String command = ImportCommand.COMMAND_WORD + " " + VALID_IMPORT_FILEPATH;
         assertCommandSuccess(command);
 
-                /* Case: undo adding Amy to the list -> Amy deleted */
+        /* Case: undo adding Amy to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);

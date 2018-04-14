@@ -34,7 +34,7 @@ public class SecurityUtil {
     private static final String XML = "xml";
 
     /**
-     * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
+     * Encrypts the given file using AES key created by the hash of the password.
      *
      * @param file Points to a valid file containing data
      * @param password Used to decrypt file
@@ -49,7 +49,7 @@ public class SecurityUtil {
     }
 
     /**
-     * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
+     * Encrypts the given file using AES key created by hashed password.
      *
      * @param file Points to a valid file containing data
      * @param password Used to decrypt file
@@ -76,7 +76,7 @@ public class SecurityUtil {
     }
 
     /**
-     * Test to see if the given file is plaintext using AES key created by DEFAULT_PASSWORD.
+     * Test to see if the given file is plaintext using the by checking if it is a xml file.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
@@ -90,7 +90,7 @@ public class SecurityUtil {
     }
 
     /**
-     * Decrypts the given file using AES key created by DEFAULT_PASSWORD.
+     * Decrypts the given file using AES key created by hashed password.
      *
      * @param file Points to a file to be decrypted
      * @param password Used to decrypt file
@@ -149,7 +149,9 @@ public class SecurityUtil {
     }
 
     /**
-     * Hashes the DEFAULT_PASSWORD to meet the required length for AES.
+     * Hashes the password provided to meet the required length for AES.
+     * @param password to be hashed.
+     * @return byte[] of the hashed password.
      */
     public static byte[] hashPassword(String password) {
         requireNonNull(password);
@@ -169,12 +171,12 @@ public class SecurityUtil {
     }
 
     /**
-     * Decrypt the given file with the current and if it fails the previous password
-     * if password is null, will not try to decrypt
-     * @param file Points to the file to be decrypted
-     * @param password Used to decrypt file
-     * @throws IOException if file cannot be opened
-     * @throws WrongPasswordException if password used is wrong
+     * Decrypt the given file with the current and if it fails the previous password.
+     * if password is null, will not try to decrypt.
+     * @param file Points to the file to be decrypted.
+     * @param password Used to decrypt file.
+     * @throws IOException if file cannot be opened.
+     * @throws WrongPasswordException if password used is wrong.
      */
     public static void decryptFile (File file, Password password) throws IOException, WrongPasswordException {
         requireNonNull(file);
@@ -190,12 +192,12 @@ public class SecurityUtil {
     }
 
     /**
-     * Encrypt the given file with the current
-     * if password is null, will not try to encrypt
-     * @param file Points to the file to be decrypted
-     * @param password Used to decrypt file
-     * @throws IOException if file cannot be opened
-     * @throws WrongPasswordException if password used is wrong
+     * Encrypt the given file with the current.
+     * if password is null, will not try to encrypt.
+     * @param file Points to the file to be decrypted.
+     * @param password Used to decrypt file.
+     * @throws IOException if file cannot be opened.
+     * @throws WrongPasswordException if password used is wrong.
      */
     public static void encryptFile (File file, Password password) throws IOException, WrongPasswordException {
         requireNonNull(file);
@@ -211,10 +213,10 @@ public class SecurityUtil {
     }
 
     /**
-     * Handles {@code BadPaddingException} by determining whether it is plain text or other case
-     * @param inputBytes Input data that caused this
-     * @param e Contains the exception details to throw with WrongPasswordException
-     * @throws WrongPasswordException if it is wrong password
+     * Handles {@code BadPaddingException} by determining whether it is plain text or other case.
+     * @param inputBytes Input data that caused this.
+     * @param e Contains the exception details to throw with WrongPasswordException.
+     * @throws WrongPasswordException if it is wrong password.
      */
     private static void handleBadPaddingException(byte[] inputBytes, BadPaddingException e)
                                                                             throws WrongPasswordException {
@@ -229,9 +231,9 @@ public class SecurityUtil {
 
     /**
      * Checks whether it is plain text by checking whether it is in the range of characters commonly used for the
-     *  the whole data
-     * @param data Contains the file data
-     * @return true if it is highly likely to be plain text
+     *  the whole data.
+     * @param data Contains the file data.
+     * @return true if it is highly likely to be plain text.
      */
     private static boolean checkXmlPlainText(byte[] data) {
         requireNonNull(data);
@@ -241,9 +243,9 @@ public class SecurityUtil {
 
     /**
      * Checks whether it is plain text by checking whether it is in the range of characters commonly used for the
-     *  the whole data
-     * @param file Points to file path
-     * @return true if it is highly likely to be plain text
+     *  the whole data.
+     * @param file Points to file path.
+     * @return true if it is highly likely to be plain text.
      */
     private static boolean checkXmlPlainText(File file) throws IOException {
         requireNonNull(file);

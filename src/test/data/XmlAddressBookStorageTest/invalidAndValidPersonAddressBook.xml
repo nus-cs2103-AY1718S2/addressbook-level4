@@ -7,8 +7,7 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <timeZone isPrivate="false">PST</timeZone>
-        <comment isPrivate="false">NIL</address>
-        <isArchived>false</isArchived>
+        <comment isPrivate="false">NIL</comment>
     </persons>
     <!-- Person with invalid phone field -->
     <persons>

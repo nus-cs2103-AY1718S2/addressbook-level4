@@ -1040,7 +1040,6 @@ import seedu.address.logic.Authentication;
 import seedu.address.logic.CreateNewCalendar;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.notification.Notification;
-import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -1076,6 +1075,7 @@ public class TestAddEventCommand extends Command {
     private final String startTime;
     private final String endTime;
     private final String description;
+    private final Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
@@ -1106,7 +1106,7 @@ public class TestAddEventCommand extends Command {
         try {
             service = Authentication.getCalendarService();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning("Couldn't authenticate Google Calendar Service");
         }
 
 
@@ -1165,7 +1165,7 @@ public class TestAddEventCommand extends Command {
 ###### \java\seedu\address\logic\commands\TestAddEventCommand.java
 ``` java
 
-        System.out.printf("Event created: %s\n", event.getHtmlLink());
+        logger.info("Event created: %s\n" + event.getHtmlLink());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
@@ -1755,9 +1755,9 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
             throw new ParseException("Invalid date/time format: " + etime);
         }
 
-        String decription = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
+        String description = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
 
-        return new TestAddEventCommand(index, title, location, stime, etime, decription);
+        return new TestAddEventCommand(index, title, location, stime, etime, description);
 
     }
 
@@ -2374,7 +2374,6 @@ class CalendarBrowser extends Region {
             raise(new SetPasswordEnteredEvent("incomplete"));
         }
     }
-
 ```
 ###### \java\seedu\address\ui\MyCalendarView.java
 ``` java

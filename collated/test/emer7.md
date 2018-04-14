@@ -715,6 +715,19 @@ public class RatingContainsKeyphrasesPredicateTest {
         assertEquals(expectedPersonCard.getName(), actualPanel.getName());
     }
 ```
+###### \java\systemtests\AddressBookSystemTest.java
+``` java
+    /**
+     * Asserts that detailPanel is empty and selected card in the person list changed.
+     * @see DetailPanelHandle#isFieldsEmpty()
+     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     */
+    protected void assertSelectedCardDeselectedDetailEmpty() {
+        assertTrue(getDetailPanel().isFieldsEmpty());
+        assertFalse(getPersonListPanel().isAnyCardSelected());
+    }
+
+```
 ###### \java\systemtests\ReviewCommandSystemTest.java
 ``` java
 package systemtests;

@@ -9,27 +9,27 @@ import java.util.Objects;
  */
 public class GuiSettings implements Serializable {
 
-    private static final double DEFAULT_HEIGHT = 600;
-    private static final double DEFAULT_WIDTH = 740;
-    private static final String DEFAULT_THEME = "/view/DarkTheme.css";
+    public static final double DEFAULT_WIDTH = 1732;
+    public static final double DEFAULT_HEIGHT = 1080;
+    private static final String DEFAULT_THEME = "/view/LightTheme.css";
 
     private Double windowWidth;
     private Double windowHeight;
     private Point windowCoordinates;
-    private String appTheme;
+    private String currentTheme;
 
     public GuiSettings() {
         this.windowWidth = DEFAULT_WIDTH;
         this.windowHeight = DEFAULT_HEIGHT;
         this.windowCoordinates = null; // null represent no coordinates
-        appTheme = DEFAULT_THEME;
+        currentTheme = DEFAULT_THEME;
     }
 
-    public GuiSettings(Double windowWidth, Double windowHeight, int xPosition, int yPosition, String appTheme) {
+    public GuiSettings(Double windowWidth, Double windowHeight, int xPosition, int yPosition, String currentTheme) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         this.windowCoordinates = new Point(xPosition, yPosition);
-        this.appTheme = appTheme;
+        this.currentTheme = currentTheme;
     }
 
     public Double getWindowWidth() {
@@ -44,8 +44,8 @@ public class GuiSettings implements Serializable {
         return windowCoordinates;
     }
 
-    public String getApplicationTheme() {
-        return appTheme;
+    public String getCurrentTheme() {
+        return currentTheme;
     }
 
     @Override
@@ -63,12 +63,12 @@ public class GuiSettings implements Serializable {
                 && Objects.equals(windowHeight, o.windowHeight)
                 && Objects.equals(windowCoordinates.x, o.windowCoordinates.x)
                 && Objects.equals(windowCoordinates.y, o.windowCoordinates.y)
-                && Objects.equals(appTheme, o.appTheme);
+                && Objects.equals(currentTheme, o.currentTheme);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(windowWidth, windowHeight, windowCoordinates, appTheme);
+        return Objects.hash(windowWidth, windowHeight, windowCoordinates, currentTheme);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class GuiSettings implements Serializable {
         sb.append("Width : " + windowWidth + "\n");
         sb.append("Height : " + windowHeight + "\n");
         sb.append("Position : " + windowCoordinates);
-        sb.append("Theme : " + appTheme);
+        sb.append("Current theme : " + currentTheme);
         return sb.toString();
     }
 }

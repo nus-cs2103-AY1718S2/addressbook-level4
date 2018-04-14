@@ -74,10 +74,11 @@ image::Ui.png[width="790"]
 
 {empty} +
 
+// tag::autocompleteUG[]
 === Autocomplete `[Since v1.3]`
 
 .Medeina's autocomplete
-image::autocomplete.png[width="500"]
+image::autocomplete.png[width="700"]
 
 * Medeina supports autocomplete for command words, options, prefixes, and parameters.
 * You will be shown a list of suggested NRICs when when you need to reference an existing person in Medeina e.g. adding a pet patient / appointment, editing a pet patient to change ownership.
@@ -85,6 +86,8 @@ image::autocomplete.png[width="500"]
 * Autocomplete matching is case-insensitive e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
 * You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the pop-up context menu.
 * Press kbd:[Enter] to select an autocomplete suggestion on the pop-up context menu.
+* You can toggle autocomplete on/off using kbd:[F2] when the command box is focused.
+// end::autocompleteUG[]
 
 {empty} +
 
@@ -97,6 +100,7 @@ If you are feeling lost, enter `help` or `h` in Medeina's command box, or press 
 
 {empty} +
 
+// tag::addcommandUG[]
 === Adding a contact, pet patient or appointment : `add` or `a` `[Since v1.2]`
 
 If you want to add contact, pet patient, and/or appointment to Medeina, simply use the `add` or `a` command.
@@ -144,14 +148,15 @@ add -o n/Viktor Nikiforov p/91237890 e/v_nikiforov@gmail.com a/27 Skating Place 
 add -p n/Makkachin s/dog b/poodle c/brown bt/DEA-1.1 -o nr/F0012345Z
 
 add -a d/2018-05-27 14:30 r/had poor appetite the last 3 days t/vaccination t/checkup -o nr/F0012345Z
--p n/Makkachin
+ -p n/Makkachin
 
 add -o n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/S1234567G -p n/jewel
  s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/surgery t/sterilization
 ----
-
+// end::addcommandUG[]
 {empty} +
 
+// tag::listcommand[]
 === Listing all contacts : `list` or `ls`
 
 Medeina will show a list of all stored Owners and PetPatients if you enter `list` or `ls` in the command box.
@@ -159,8 +164,11 @@ Medeina will show a list of all stored Owners and PetPatients if you enter `list
 .`list` command
 image::List_Command.PNG[width="800"]
 
+// end::listcommand[]
+
 {empty} +
 
+// tag::editcommandUG[]
 === Editing a contact, pet patient or appointment : `edit` or `ed` `[Since v1.4]`
 
 You can use `edit` or `ed` to do the following:
@@ -216,9 +224,11 @@ edit -p 2 n/Makkachin t/
 
 edit -a 3 d/2018-06-04 12:30
 ----
+// end::editcommandUG[]
 
 {empty} +
 
+// tag::find[]
 === Find contacts or pet patients: `find` or `f` `[Since v1.4]`
 
 You can use `find` or `f` to do the following :
@@ -276,7 +286,64 @@ find -p n/Chae s/Cat b/Russian Blue c/Grey bt/A t/Naive
 ----
 
 {empty} +
+// end::find[]
 
+// tag::listappt[]
+=== Listing appointments in a specified view requested: `listappt` or `la` `[Since v1.5rc]`
+
+You can use `listappt` or `la` to do the following :
+
+[width="100%", cols="15%,<45%a,<40%", options="header"]
+|=====
+| To list appointments
+| Command syntax
+| Notes
+
+.^a|Year
+| `listappt -y [YEAR]`
+a| * The command will list appointments based on the specified `YEAR` in the year view of CalendarFX in YYYY format.
+* The command can run without any `YEAR` keyword. This will switch the view to the year view of today's date.
+* The command will only run for past `YEAR` keywords if there exists an appointment that was made in that year.
+
+.^| Month
+| `listappt -m [YEAR-MONTH/MONTH]`
+a| * The command will list appointments based on the specified `YEAR-MONTH` in the month view of CalendarFX in YYYY-MM format.
+* The command can run without any `MONTH` keyword. This will switch the view to the month view of today's date.
+* The command can run with only the `MONTH` keyword without the `YEAR` keyword in MM format. This will list appointments of the current year with the specified `MONTH`.
+* The command will only run for past `YEAR-MONTH` keywords if there exists an appointment that was made in that year.
+
+.^| Week
+| `listappt -w [DATE]`
+a| * The command will list appointments based on the specified `DATE` in the week view of CalendarFX in YYYY-MM-DD format.
+* The command can run without any `DATE` keyword. This will switch the view to the week view of today's date.
+* The command will only run for past `DATE` keywords if there exists an appointment that was made in that year.
+
+.^| Day
+| `listappt -d [DATE]`
+a| * The command will list appointments based on the specified `DATE` in the day view of CalendarFX in YYYY-MM-DD format.
+* The command can run without any `DATE` keyword. This will switch the view to the day view of today's date.
+* The command will only run for past `DATE` keywords if there exists an appointment that was made in that year.
+|=====
+
+{empty} +
+
+.**Copy & paste to try out**
+----
+listappt -y 2018
+
+listappt -m 2018-01
+
+listappt -m
+
+listappt -w 2018-12-31
+
+listappt -d 2018-01-01
+
+----
+// end::listappt[]
+{empty} +
+
+// tag::delete[]
 === Deleting a owner, pet patient or appointment : `delete` or `d` `[Since v1.3]`
 
 You can use `delete` or `d` to do the following :
@@ -325,7 +392,7 @@ delete -fo 1
 ----
 
 {empty} +
-
+// end::delete[]
 === Listing entered commands : `history` or `his`
 
 To list all the commands that you have entered in reverse chronological order. +
@@ -459,6 +526,7 @@ This command **cannot** be undone. Please be certain that you have backed up you
 
 {empty} +
 
+// tag::changethemeUG[]
 === Changing theme : `theme` or `t` `[Since v1.1]`
 
 You can use `theme THEME_NAME` or `t THEME_NAME` to change Medeina's theme to one of the following: +
@@ -473,12 +541,12 @@ You can use `theme THEME_NAME` or `t THEME_NAME` to change Medeina's theme to on
 {empty} +
 
 .Dark theme
-image::Theme_Dark.PNG[width:800]
+image::Theme_Dark.PNG[width:790]
 {empty} +
 
 .Light theme
-image::Theme_Light.PNG[width:800]
-
+image::Ui.png[width:790]
+// end::changethemeUG[]
 {empty} +
 
 === Exiting the program : `exit` or `q`
@@ -560,6 +628,7 @@ Coming v2.0, Medeina can be used concurrently on different systems. The data wil
 
 {empty} +
 
+// tag::commandsummaryUG[]
 == Command Summary
 
 You can find a summary of all commands available in Medeina in the following sections.
@@ -706,3 +775,4 @@ You can find a summary of all commands available in Medeina in the following sec
 | `q`
 | Exits the program
 |=====
+// tag::commandsummaryUG[]

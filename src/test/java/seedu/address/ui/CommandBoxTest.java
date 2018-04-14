@@ -205,6 +205,22 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void commandBox_commandNoAutocompleteOptionAndPrefix() {
+        testAutocompleteForUserInput("clear ", -1, "n", 1, "");
+        testAutocompleteForUserInput("clear ", -1, "-", 1, "");
+        testAutocompleteForUserInput("list ", -1, " n", 1, "");
+        testAutocompleteForUserInput("list ", -1, "-", 1, "");
+        testAutocompleteForUserInput("exit ", -1, "n", 1, "");
+        testAutocompleteForUserInput("exit ", -1, "-", 1, "");
+        testAutocompleteForUserInput("help ", -1, "n", 1, "");
+        testAutocompleteForUserInput("help ", -1, "-", 1, "");
+        testAutocompleteForUserInput("history ", -1, "-", 1, "");
+        testAutocompleteForUserInput("undo ", -1, "-", 1, "");
+        testAutocompleteForUserInput("redo ", -1, "-", 1, "");
+
+    }
+
+    @Test
     public void commandBox_autocompleteOption() {
         testAutocompleteForUserInput("delete ", -1, "-", 3, "delete -fa");
         testAutocompleteForUserInput("delete ", -1, "-", 4, "delete -fo");
@@ -351,9 +367,9 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void commandBox_autocompleteColour() {
         testAutocompleteForUserInput("find -p ", -1, "c/c", 1,
-                "find -p c/Calico");
+                "find -p c/calico");
         testAutocompleteForUserInput("find -p ", -1, "c/g", 1,
-                "find -p c/Golden");
+                "find -p c/golden");
     }
 
     @Test
@@ -374,15 +390,23 @@ public class CommandBoxTest extends GuiUnitTest {
 
         // pet patient tags
         testAutocompleteForUserInput("add -p ", -1, "t/d", 1,
-                "add -p t/Depression");
+                "add -p t/depression");
         testAutocompleteForUserInput("add -p ", -1, "t/", 1,
-                "add -p t/3Legged");
+                "add -p t/3legged");
 
         // appointment tags
         testAutocompleteForUserInput("add -a ", -1, "t/", 1,
                 "add -a t/checkup");
         testAutocompleteForUserInput("add -a ", -1, "t/", 2,
                 "add -a t/vaccination");
+
+        // no option: all tags
+        testAutocompleteForUserInput("add ", -1, "t/", 2,
+                "add t/checkup");
+        testAutocompleteForUserInput("add ", -1, "t/", 3,
+                "add t/depression");
+        testAutocompleteForUserInput("add ", -1, "t/", 5,
+                "add t/owesMoney");
     }
 
     @Test
@@ -393,7 +417,7 @@ public class CommandBoxTest extends GuiUnitTest {
                 "add -a -o -p n/Joker t/");
         testAutocompleteForUserInput("add -p n/joker s/cat b/persian c/brown bt/AB -o nr/S9600666G",
                 38, " t/D", 1,
-                "add -p n/joker s/cat b/persian c/brown t/Depression bt/AB -o nr/S9600666G");
+                "add -p n/joker s/cat b/persian c/brown t/depression bt/AB -o nr/S9600666G");
     }
 
     /**

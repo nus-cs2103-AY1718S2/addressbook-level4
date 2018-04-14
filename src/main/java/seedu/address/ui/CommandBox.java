@@ -41,6 +41,8 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
     private ContextMenu suggestionBox;
+
+    private boolean isAutocompleting;
     private Autocomplete autocompleteLogic = Autocomplete.getInstance();
 
     private List<String> suggestions;
@@ -68,6 +70,7 @@ public class CommandBox extends UiPart<Region> {
             }
         };
         commandTextField.textProperty().addListener(autocompleteListener);
+        isAutocompleting = true;
         //@@author
     }
 
@@ -88,10 +91,11 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case F2:
+            toggleAutocomplete();
+            break;
         default:
-            if (suggestionBox.isShowing()) {
-                suggestionBox.hide();
-            }
+            hideSuggestionBox();
             // let JavaFx handle the keypress
         }
     }
@@ -186,7 +190,29 @@ public class CommandBox extends UiPart<Region> {
 
     //@@author aquarinte
     /**
-     * Sets and shows the elements of ContextMenu {@code suggestionBox} with autocomplete suggestions.
+     * Toggles autocomplete on or off.
+     */
+    private void toggleAutocomplete() {
+        if (isAutocompleting) {
+            commandTextField.textProperty().removeListener(getAutocompleteListener());
+            isAutocompleting = false;
+            hideSuggestionBox();
+            logger.info("Autocomplete has been toggled [OFF]");
+        } else {
+            commandTextField.textProperty().addListener(getAutocompleteListener());
+            isAutocompleting = true;
+            logger.info("Autocomplete has been toggled [ON]");
+        }
+    }
+
+    private void hideSuggestionBox() {
+        if (suggestionBox.isShowing()) {
+            suggestionBox.hide();
+        }
+    }
+
+    /**
+     * Calls Autocomplete class to process commandTextField's content.
      *
      * @param newValue New user input.
      */
@@ -197,15 +223,23 @@ public class CommandBox extends UiPart<Region> {
 
             suggestions = autocompleteLogic.getSuggestions(commandTextField);
 
-            for (String s : suggestions) {
-                MenuItem m = new MenuItem(s);
-                String autocompleteValue = StringUtil.removeDescription(s);
-                m.setOnAction(event -> handleAutocompleteSelection(autocompleteValue));
-                suggestionBox.getItems().add(m);
+            if (!suggestions.isEmpty()) {
+                setContextMenu();
             }
-
-            suggestionBox.show(commandTextField, Side.BOTTOM, 0, 0);
         }
+    }
+
+    /**
+     * Sets the context menu {@code suggestionBox} with autocomplete suggestions.
+     */
+    private void setContextMenu() {
+        for (String s : suggestions) {
+            MenuItem m = new MenuItem(s);
+            String autocompleteValue = StringUtil.removeDescription(s);
+            m.setOnAction(event -> handleAutocompleteSelection(autocompleteValue));
+            suggestionBox.getItems().add(m);
+        }
+        suggestionBox.show(commandTextField, Side.BOTTOM, 0, 0);
     }
 
     /**
@@ -239,7 +273,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Returns text in {@code commandTextField} based on {@code cursorPosition} and {@code userInputLength}.
+     * Returns remaining text in {@code commandTextField} after {@code cursorPosition}, if any.
      */
     private String getRemainingInput(int cursorPosition, int userInputLength) {
         String restOfInput = "";

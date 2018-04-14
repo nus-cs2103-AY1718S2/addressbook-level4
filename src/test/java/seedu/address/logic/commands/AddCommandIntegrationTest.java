@@ -43,11 +43,6 @@ import seedu.address.testutil.PetPatientBuilder;
  */
 public class AddCommandIntegrationTest {
 
-    private final String messageAddpetpatient = "New pet patient added: %1$s \nunder owner: %2$s";
-    private final String messageAddappointment = "New appointment made: %1$s\nunder owner: %2$s\nfor pet patient: %3$s";
-    private final String messageAddall = "New person added: %1$s\nNew pet patient added: %2$s\n"
-            + "New appointment made: %3$s";
-
     private Model model;
 
     @Before
@@ -63,7 +58,7 @@ public class AddCommandIntegrationTest {
         expectedModel.addPerson(validPerson);
 
         assertCommandSuccess(prepareCommand(validPerson, model), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, validPerson), expectedModel);
+                String.format(AddCommand.MESSAGE_SUCCESS_PERSON, validPerson), expectedModel);
     }
 
     @Test
@@ -92,7 +87,7 @@ public class AddCommandIntegrationTest {
         expectedModel.addPetPatient(validPetPatient);
 
         assertCommandSuccess(prepareCommand(validPetPatient, validPerson.getNric(), model), model,
-                String.format(messageAddpetpatient, validPetPatient, validPerson), expectedModel);
+                String.format(AddCommand.MESSAGE_SUCCESS_PETPATIENT, validPetPatient, validPerson), expectedModel);
     }
 
     @Test
@@ -125,7 +120,7 @@ public class AddCommandIntegrationTest {
         expectedModel.addAppointment(appt);
 
         assertCommandSuccess(prepareCommand(appt, existing.getOwner(), existing.getName(), model), model,
-                String.format(messageAddappointment, appt, owner, existing), expectedModel);
+                String.format(AddCommand.MESSAGE_SUCCESS_APPOINTMENT, appt, owner, existing), expectedModel);
     }
 
     @Test
@@ -194,7 +189,7 @@ public class AddCommandIntegrationTest {
         expectedModel.addAppointment(newAppt);
 
         assertCommandSuccess(prepareCommand(newPerson, newPetPatient, newAppt, model), model,
-                String.format(messageAddall, newPerson, newPetPatient, newAppt), expectedModel);
+                String.format(AddCommand.MESSAGE_SUCCESS_EVERYTHING, newPerson, newPetPatient, newAppt), expectedModel);
     }
 
     /**

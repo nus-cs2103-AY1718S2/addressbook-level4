@@ -5,8 +5,6 @@ package seedu.address.model;
  * Represents a user account.
  */
 public final class Account {
-    private static final String DEFAULT_USERNAME = "Admin";
-    private static final String DEFAULT_PASSWORD = "ad123";
 
     public static final String MESSAGE_USERNAME_CONSTRAINTS = "Username should be alphanumeric"
             + " and it should not be bank.";
@@ -16,6 +14,9 @@ public final class Account {
     public static final String USERNAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     public static final String PASSWORD_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+
+    private static final String DEFAULT_USERNAME = "Admin";
+    private static final String DEFAULT_PASSWORD = "ad123";
 
     private String username;
     private String password;

@@ -74,9 +74,6 @@ public class MainApp extends Application {
 
     /**
      * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
-     * The default user account will be used instead if any errors occur when reading {@code storage}'s account.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         ReadOnlyAddressBook initialData = initAddressBook(storage);
@@ -84,6 +81,11 @@ public class MainApp extends Application {
         return new ModelManager(initialData, userPrefs, userAccount);
     }
 
+    /**
+     * Returns a {@code ReadOnlyAddressBook} with the data from {@code storage}.
+     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
+     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     */
     private ReadOnlyAddressBook initAddressBook(Storage storage) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
@@ -103,6 +105,10 @@ public class MainApp extends Application {
         return initialData;
     }
 
+    /**
+     * Returns  a {@code Account} with the data from {@code storage}.
+     * The default user account will be used instead if any errors occur when reading {@code storage}'s account.
+     */
     private Account getUserAccount(Storage storage) {
         Optional<Account> userAccountOptional;
         Account userAccount;
@@ -113,10 +119,10 @@ public class MainApp extends Application {
             }
             userAccount = userAccountOptional.orElseGet(SampleDataUtil::getSampleAccount);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with the default accont");
+            logger.warning("Data file not in the correct format. Will be starting with the default account");
             userAccount = new Account();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with the default accont");
+            logger.warning("Problem while reading from the file. Will be starting with the default account");
             userAccount = new Account();
         }
         return userAccount;

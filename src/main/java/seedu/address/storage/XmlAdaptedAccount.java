@@ -1,11 +1,11 @@
 //@@author Jason1im
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.Account;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.Account;
 
 /**
  * JAXB-friendly version of the Account.

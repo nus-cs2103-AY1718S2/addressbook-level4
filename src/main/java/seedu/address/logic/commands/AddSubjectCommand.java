@@ -103,7 +103,7 @@ public class AddSubjectCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Subject> updatedSubjects = new HashSet<>(personToEdit.getSubjects());
         Set<Subject> newSubjects = new HashSet<>(editPersonDescriptor.getSubjectsAsSet());
-        checkIfSubjectExist(newSubjects, updatedSubjects);
+        checkIfSubjectExists(newSubjects, updatedSubjects);
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
         Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
@@ -117,7 +117,7 @@ public class AddSubjectCommand extends UndoableCommand {
      * Checks if the new subjects to be added exist in original subject list.
      * If the subject exists, the subject will not be added to the list. Else, it will be added.
      */
-    public static void checkIfSubjectExist(Set<Subject> newSubjects, Set<Subject> subjectList) {
+    public static void checkIfSubjectExists(Set<Subject> newSubjects, Set<Subject> subjectList) {
         boolean isPresent = false;
         for (Subject subToAdd : newSubjects) {
             for (Subject sub : subjectList) {

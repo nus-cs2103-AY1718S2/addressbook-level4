@@ -38,9 +38,9 @@ public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FILE = FileUtil.getPath("src/test/data/sandbox/temp.xml");
     private static final String TEST_DATA_FILE_ALICE_BENSON = TEST_DATA_FOLDER + "aliceBensonAddressBook.xml";
     private static final String TEST_DATA_FILE_ALICE_BENSON_ENCRYPTED = TEST_DATA_FOLDER
-            + "encryptedAliceBensonAddressBook";
+            + "encryptedAliceBensonAddressBook.xml";
     private static final String TEST_DATA_FILE_ALICE_BENSON_ENCRYPTED_BACKUP = TEST_DATA_FOLDER
-            + "encryptedAliceBensonAddressBookBackup";
+            + "encryptedAliceBensonAddressBookBackup.xml";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

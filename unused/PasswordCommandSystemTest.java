@@ -50,7 +50,7 @@ public class PasswordCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandFailure (String command, String expectedResultMessage) {
         executeCommand(command);
         assertEquals(command, getCommandBox().getInput());
-        //assertEquals(expectedResultMessage, getResultDisplay().getText());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
 
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();

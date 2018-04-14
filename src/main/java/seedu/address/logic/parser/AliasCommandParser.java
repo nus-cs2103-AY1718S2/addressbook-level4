@@ -36,12 +36,12 @@ public class AliasCommandParser implements Parser<AliasCommand> {
      * Returns a String Array of valid number of elements after slicing the user input.
      */
     private String[] validateNumberOfArgs(String args) throws ParseException {
-        args = args.trim();
-        String[] trimmedArgs = args.split(SPLIT_TOKEN);
-        if (trimmedArgs.length != CORRECT_ARGS_LENGTH) {
+        String trimmedArgs = args.trim();
+        String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
+        if (splitArgs.length != CORRECT_ARGS_LENGTH) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
         }
-        return trimmedArgs;
+        return splitArgs;
     }
 }

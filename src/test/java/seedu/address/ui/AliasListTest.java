@@ -19,14 +19,11 @@ import seedu.address.ui.testutil.GuiTestAssert;
 
 //@@author jingyinno
 public class AliasListTest extends GuiUnitTest {
-    private List<Alias> aliasListStub;
-    private ObservableList<ArrayList<String>> aliasObservableListStub;
     private AliasList aliasList;
-    private AliasListEvent aliasListEventStub;
     private AliasListHandle aliasListHandle;
 
     @Before
-    public void setup() {
+    public void setUp() {
         aliasList = new AliasList();
         uiPartRule.setUiPart(aliasList);
         aliasListHandle = new AliasListHandle(getChildNode(aliasList.getRoot(), aliasListHandle.ALIAS_LIST_ID));
@@ -40,7 +37,7 @@ public class AliasListTest extends GuiUnitTest {
         // Init alias list and post event
         ArrayList<ArrayList<String>> expectedList = GuiTestAssert.populateExpectedAliases(expected);
         ObservableList<ArrayList<String>> obsExpected = FXCollections.observableArrayList(expectedList);
-        aliasListEventStub = new AliasListEvent(obsExpected);
+        AliasListEvent aliasListEventStub = new AliasListEvent(obsExpected);
 
         aliasList.init(obsExpected);
         postNow(aliasListEventStub);

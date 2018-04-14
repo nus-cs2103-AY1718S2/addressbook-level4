@@ -38,9 +38,9 @@ public class VacantCommandParser implements Parser<VacantCommand> {
      */
     private String[] validateNumberOfArgs(String args) throws ParseException {
         int length;
-        args = args.trim();
-        String[] buildingName = args.split(SPLIT_TOKEN);
-        if (EMPTY_STRING.equals(args) || SPLIT_TOKEN.equals(args)) {
+        String trimmedArgs = args.trim();
+        String[] buildingName = trimmedArgs.split(SPLIT_TOKEN);
+        if (EMPTY_STRING.equals(trimmedArgs) || SPLIT_TOKEN.equals(trimmedArgs)) {
             length = NO_ARGS_LENGTH;
         } else {
             length = buildingName.length;

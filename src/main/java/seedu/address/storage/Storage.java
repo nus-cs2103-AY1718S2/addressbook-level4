@@ -3,6 +3,7 @@ package seedu.address.storage;
 import java.io.IOException;
 import java.util.Optional;
 
+import seedu.address.commons.events.model.AccountUpdateEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -42,4 +43,11 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, AccountDa
 
     @Override
     void saveAccountData(Account account) throws IOException;
+
+    /**
+     * Saves the current user account to the hard disk.
+     *   Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleAccountUpdateEvent(AccountUpdateEvent event);
 }

@@ -36,4 +36,5 @@ public interface AccountDataStorage {
      * @see #saveAccountData(Account)
      */
     void saveAccountData(Account accountData, String filePath) throws IOException;
+
 }

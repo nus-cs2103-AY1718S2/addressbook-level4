@@ -3,6 +3,7 @@ package seedu.address.model.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.job.Job;
@@ -92,4 +93,10 @@ public class SampleDataUtil {
         return skills;
     }
 
+    /**
+     * Returns the deafult user account.
+     */
+    public static Account getSampleAccount() {
+        return new Account();
+    }
 }

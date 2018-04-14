@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AccountUpdateEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -27,11 +28,13 @@ public class StorageManager extends ComponentManager implements Storage {
     private AccountDataStorage accountDataStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage,
+                          AccountDataStorage accountDataStorage) {
         super();
         createProfilePicturesFolder();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.accountDataStorage = accountDataStorage;
     }
 
     private void createProfilePicturesFolder() {
@@ -122,6 +125,18 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+
+    @Override
+    @Subscribe
+    public void handleAccountUpdateEvent(AccountUpdateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Account data changed, saving to file"));
+        try {
+            saveAccountData(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         addressBookStorage.backupAddressBook(addressBook);

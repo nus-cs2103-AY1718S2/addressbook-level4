@@ -33,6 +33,8 @@ public class UserPrefs {
         return addressBookFilePath;
     }
 
+    public String getAccounDataFilePath() { return addressBookFilePath; }
+
     public void setAddressBookFilePath(String addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
     }

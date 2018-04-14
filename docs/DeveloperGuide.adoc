@@ -471,27 +471,6 @@ The existing to-do is replaced by the new to-do in the `UniqueToDoList` and the 
 
 // end::checkToDo[]
 
-
-=== Logging
-
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
-
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
-
-*Logging Levels*
-
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
-[[Implementation-Configuration]]
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
 === NUSmods Integration
 ==== Current Implementation
 
@@ -592,11 +571,21 @@ The weekly component of the `Calendar` is dependent on the `NUSMods` component f
 ** Cons: There is likely a lot of code to write.
 
 // tag::addGroup[]
-=== Add Group feature
+=== Group feature
 
-Fastis adds a group named by the user from input.
+Fastis has a group feature that can:
 
-==== Current Implementation
+* add a group with information that was stated by user input.
+* delete a group with information that was stated  by user input.
+* add a person into the group with information that was stated by user input.
+* delete a person from the group with information that was stated by user input.
+* list all the members in the group with information that was stated by user input.
+
+==== Add Group Feature
+
+Fastis add a group with information that was stated by user input.
+
+===== Current Implementation
 
 The add groups mechanism is facilitated by `AddGroupCommand`, which resides inside `Logic` component. It supports adding Group objects to the address book. AddGroupCommand inherits from `UndoableCommand`.
 
@@ -715,12 +704,6 @@ public class AddGroupCommand extends UndoableCommand {
 }
 ----
 
-The groups in the group list are facilitated by `Group` class. Each `Group` object have a `Information` object, representing the information of the group.
-Address book stores all groups in `UniqueGroupList`.
-`Group`,`Information` and `UniqueGroupList` class reside inside `Model` component. The following is the class diagram showing the relationship between `Group` and `Information`:
-
-image:GroupInformationClassDiagram.png[width ="800"]
-
 The user executes a new `DeleteGroupCommand` with `Information`, to delete a existing group with the same information to the address book.
 The new group is deleted from the `UniqueGroupList` and the current state of the address book is saved.
 The following sequence diagram shows how the deleteGroup operation works:
@@ -737,6 +720,26 @@ image:dGSequenceDiagram.png[width="800"]
 ** Cons: It is hard for new developers to understand the template pattern.
 
 // end::addGroup[]
+
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+[[Implementation-Configuration]]
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

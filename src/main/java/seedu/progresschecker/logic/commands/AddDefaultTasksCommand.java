@@ -6,13 +6,14 @@ import static seedu.progresschecker.model.task.TaskListUtil.clearTaskList;
 import static seedu.progresschecker.model.task.TaskListUtil.copyTaskList;
 import static seedu.progresschecker.model.task.TaskListUtil.createTaskList;
 import static seedu.progresschecker.model.task.TaskListUtil.setTaskListTitle;
-import static seedu.progresschecker.model.task.TaskUtil.createTask;
+import static seedu.progresschecker.model.task.TaskUtil.addMultipleTask;
+import static seedu.progresschecker.storage.DefaultTasks.getDefaultTasks;
+import static seedu.progresschecker.storage.TestTasks.getTestTasks;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
+import seedu.progresschecker.commons.core.EventsCenter;
+import seedu.progresschecker.commons.events.ui.NewResultAvailableEvent;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
+import seedu.progresschecker.model.task.SimplifiedTask;
 
 //@@author EdwardKSG
 /**
@@ -24,6 +25,7 @@ public class AddDefaultTasksCommand extends Command {
     public static final String COMMAND_ALIAS = "nl"; // short for "new list"
     public static final String SOURCE_FILE_FOLDER = "/view";
     public static final String SOURCE_FILE = "/defaultTasks.txt";
+    public static final String TEST_FILE = "/testTasks.txt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a new task list. "
             + "Parameters: "
@@ -37,6 +39,10 @@ public class AddDefaultTasksCommand extends Command {
     public static final String DEFAULT_LIST_ID = "@default";
     public static final String CREATE_FAILURE = "Failed to create task list "
             + "due to unexpected interrupt or API error: ";
+    public static final String START_MASSEGE = "We have a lot of tasks to initialize. "
+            + "The preparation may take a long time, please be patient :) Thank you!";
+    public static final String LIST_FINISH_MASSEGE = "Task List created. Now pushing tasks into it: 0/";
+    public static final String PUSH_TASK_ONGOING = "Pushing tasks into your task list: ";
 
     private String listTitle;
 
@@ -51,32 +57,22 @@ public class AddDefaultTasksCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         try {
-            setTaskListTitle(DEFAULT_LIST_ID, listTitle);
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(START_MASSEGE));
+            setTaskListTitle(DEFAULT_LIST_ID, DEFAULT_LIST_TITLE);
             createTaskList(FIRST_LIST_TITLE);
             copyTaskList(FIRST_LIST_TITLE, DEFAULT_LIST_ID);
             clearTaskList(DEFAULT_LIST_ID);
 
-            InputStream in =
-                    AddDefaultTasksCommand.class.getResourceAsStream(SOURCE_FILE);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String title = line;
-
-                if (title.equals((""))) {
-                    break;
-                } else {
-                    String notes = reader.readLine();
-                    String due = reader.readLine();
-                    createTask(title, DEFAULT_LIST_ID, notes, due);
-                }
+            SimplifiedTask[] tasklist;
+            if (!listTitle.equals(DEFAULT_LIST_TITLE)) {
+                tasklist = getTestTasks();
+            } else {
+                tasklist = getDefaultTasks();
             }
 
-            reader.close();
-            in.close();
+            addMultipleTask(tasklist, DEFAULT_LIST_ID);
 
-            return new CommandResult(String.format(MESSAGE_SUCCESS, listTitle));
+            return new CommandResult(String.format(MESSAGE_SUCCESS, DEFAULT_LIST_TITLE));
         } catch (CommandException ce) {
             throw ce;
         } catch (Exception e) {

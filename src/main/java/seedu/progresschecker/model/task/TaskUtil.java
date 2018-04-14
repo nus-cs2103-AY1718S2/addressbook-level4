@@ -111,6 +111,42 @@ public class TaskUtil {
     }
 
     /**
+     * Adds a group of tasks to a Google Task List with Id {@code String listId}
+     *
+     * @param simpleList a list of {@code SimplifiedTask}
+     * @param listId the identifier of the list to which the task will be added
+     */
+    public static void addMultipleTask(SimplifiedTask[] simpleList, String listId)
+            throws CommandException {
+        ConnectTasksApi connection = new ConnectTasksApi();
+
+        try {
+            connection.authorize();
+        } catch (Exception e) {
+            throw new CommandException(AUTHORIZE_FAILURE);
+        }
+
+        com.google.api.services.tasks.Tasks service = connection.getTasksService();
+
+        try {
+            for (SimplifiedTask simpleTask: simpleList) {
+                Task task = service.tasks().insert(
+                        listId,
+                        new Task().setTitle(simpleTask.getTitle())
+                                .setDue(getDate(simpleTask.getDue()))
+                                .setNotes(simpleTask.getNotes())
+                                .setStatus(NEEDS_ACTION)
+                ).execute();
+            }
+
+
+        } catch (IOException ioe) {
+            throw new CommandException(LOAD_FAILURE);
+        }
+
+    }
+
+    /**
      * Converts a string in format "MM/dd/yyyy HH:mm" to a DateTime object
      *
      * @param s string in format "MM/dd/yyyy HH:mm", representing a date

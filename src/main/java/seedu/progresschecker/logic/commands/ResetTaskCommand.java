@@ -71,4 +71,11 @@ public class ResetTaskCommand extends Command {
             throw new CommandException(RESET_FAILURE + index);
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ResetTaskCommand // instanceof handles nulls
+                && index == (((ResetTaskCommand) other).index));
+    }
 }

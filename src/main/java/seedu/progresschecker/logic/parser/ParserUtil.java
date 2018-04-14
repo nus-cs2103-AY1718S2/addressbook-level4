@@ -158,7 +158,7 @@ public class ParserUtil {
     public static String parseTaskTitle(String title) throws IllegalValueException {
         requireNonNull(title);
         String trimmedTitle = title.trim();
-        if (title.length() > MAX_TITLE_LENGTH) {
+        if (trimmedTitle.length() > MAX_TITLE_LENGTH) {
             throw new IllegalValueException(MESSAGE_TITLE_CONSTRAINTS);
         }
         return trimmedTitle;

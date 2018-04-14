@@ -6,6 +6,29 @@ import static org.junit.Assert.assertTrue;
 
 import static seedu.progresschecker.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.progresschecker.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.ASTERISK;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.ASTERISK_INT;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.COM;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.COMPULSORY;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.COM_INT;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.DEFAULT_LIST_TITLE;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.FIRST_WEEK;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.FIRST_WEEK_INT;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.INDEX_FIRST_TASK;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.INDEX_FIRST_TASK_INT;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.INVALID_CHARSET;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.INVALID_DOUBLE;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.INVALID_MULTIPLE_ARGS;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.INVALID_NEGATIVE;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.INVALID_TITLE;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.INVALID_ZERO;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.LAST_WEEK;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.LAST_WEEK_INT;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.OUT_OF_BOUND_WEEK;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.SUB;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.SUBMISSION;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.SUB_INT;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.VALID_TITLE_EDGE;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -68,6 +91,158 @@ public class ParserUtilTest {
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
     }
+
+    //@@author EdwardKSG
+    @Test
+    public void parseTaskIndex_invalidInputZero_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskIndex(INVALID_ZERO);
+    }
+
+    @Test
+    public void parseTaskIndex_invalidInputNegative_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskIndex(INVALID_NEGATIVE);
+    }
+
+    @Test
+    public void parseTaskIndex_invalidInputNotInteger_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskIndex(INVALID_DOUBLE);
+    }
+
+    @Test
+    public void parseTaskIndex_invalidInputNotNumber_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskIndex(INVALID_CHARSET);
+    }
+
+    @Test
+    public void parseTaskIndex_invalidInputMultipleArgs_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskIndex(INVALID_MULTIPLE_ARGS);
+    }
+
+    @Test
+    public void parseTaskIndex_validInput_success() throws Exception {
+        // No whitespaces
+        assertEquals(INDEX_FIRST_TASK_INT, ParserUtil.parseTaskIndex(INDEX_FIRST_TASK));
+
+        // Leading and trailing whitespaces
+        assertEquals(INDEX_FIRST_TASK_INT, ParserUtil.parseTaskIndex(" " + INDEX_FIRST_TASK + " "));
+    }
+
+    @Test
+    public void parseTaskWeek_invalidInputOutOfBound_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskWeek(OUT_OF_BOUND_WEEK);
+    }
+
+    @Test
+    public void parseTaskWeek_invalidInputZero_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskWeek(INVALID_ZERO);
+    }
+
+    @Test
+    public void parseTaskWeek_invalidInputNegative_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskWeek(INVALID_NEGATIVE);
+    }
+
+    @Test
+    public void parseTaskWeek_invalidInputNotInteger_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskWeek(INVALID_DOUBLE);
+    }
+
+    @Test
+    public void parseTaskWeek_invalidInputNotNumber_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskWeek(INVALID_CHARSET);
+    }
+
+    @Test
+    public void parseTaskWeek_invalidInputMultipleArgs_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskWeek(INVALID_MULTIPLE_ARGS);
+    }
+
+    @Test
+    public void parseTaskWeek_validInputFirstWeek_success() throws Exception {
+        // No whitespaces
+        assertEquals(FIRST_WEEK_INT, ParserUtil.parseTaskWeek(FIRST_WEEK));
+
+        // Leading and trailing whitespaces
+        assertEquals(FIRST_WEEK_INT, ParserUtil.parseTaskWeek(" " + FIRST_WEEK + " "));
+    }
+
+    @Test
+    public void parseTaskWeek_validInputLastWeek_success() throws Exception {
+        // No whitespaces
+        assertEquals(LAST_WEEK_INT, ParserUtil.parseTaskWeek(LAST_WEEK));
+
+        // Leading and trailing whitespaces
+        assertEquals(LAST_WEEK_INT, ParserUtil.parseTaskWeek(" " + LAST_WEEK + " "));
+    }
+
+    @Test
+    public void parseTaskWeek_validInputAsterisk_success() throws Exception {
+        // No whitespaces
+        assertEquals(ASTERISK_INT, ParserUtil.parseTaskWeek(ASTERISK));
+
+        // Leading and trailing whitespaces
+        assertEquals(ASTERISK_INT, ParserUtil.parseTaskWeek(" " + ASTERISK + " "));
+    }
+
+    @Test
+    public void parseTaskWeek_validInputCom_success() throws Exception {
+        // No whitespaces
+        assertEquals(COM_INT, ParserUtil.parseTaskWeek(COMPULSORY));
+
+        // Leading and trailing whitespaces
+        assertEquals(COM_INT, ParserUtil.parseTaskWeek(" " + COMPULSORY + " "));
+
+        // No whitespaces-alias
+        assertEquals(COM_INT, ParserUtil.parseTaskWeek(COM));
+
+        // Leading and trailing whitespaces-alias
+        assertEquals(COM_INT, ParserUtil.parseTaskWeek(" " + COM + " "));
+    }
+
+    @Test
+    public void parseTaskWeek_validInputSub_success() throws Exception {
+        // No whitespaces
+        assertEquals(SUB_INT, ParserUtil.parseTaskWeek(SUBMISSION));
+
+        // Leading and trailing whitespaces
+        assertEquals(SUB_INT, ParserUtil.parseTaskWeek(" " + SUBMISSION + " "));
+
+        // No whitespaces-alias
+        assertEquals(SUB_INT, ParserUtil.parseTaskWeek(SUB));
+
+        // Leading and trailing whitespaces-alias
+        assertEquals(SUB_INT, ParserUtil.parseTaskWeek(" " + SUB + " "));
+    }
+
+    @Test
+    public void parseTaskTitle_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskTitle(INVALID_TITLE);
+    }
+
+    @Test
+    public void parseTaskTitle_validInput_success() throws Exception {
+        // No whitespaces
+        assertEquals(DEFAULT_LIST_TITLE, ParserUtil.parseTaskTitle(DEFAULT_LIST_TITLE));
+
+        // Leading and trailing whitespaces
+        assertEquals(DEFAULT_LIST_TITLE, ParserUtil.parseTaskTitle(" " + DEFAULT_LIST_TITLE + " "));
+
+        // Valid length without leading and trailing whitespaces, but exceeds limit after having these spaces
+        assertEquals(VALID_TITLE_EDGE, ParserUtil.parseTaskTitle(" " + VALID_TITLE_EDGE + " "));
+    }
+    //@@author
 
     @Test
     public void parseName_null_throwsNullPointerException() {

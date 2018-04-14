@@ -81,6 +81,6 @@ public class ConnectTasksApi {
                 this.transport,
                 this.jsonFactory,
                 this.credentials
-        ).build();
+        ).setApplicationName("ProgressChecker").build();
     }
 }

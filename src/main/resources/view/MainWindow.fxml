@@ -62,6 +62,7 @@
                   </items>
                  </SplitPane>
                  <!-- @@author -->
+                 <!-- @@author Livian1107 -->
              </Tab>
                <Tab fx:id="exercisePlaceholder" text="Exercise">
                    <StackPane fx:id="exerciseListPanelPlaceholder" VBox.vgrow="ALWAYS"/>

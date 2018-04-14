@@ -28,4 +28,22 @@ public class WebViewUtil {
     public static void waitUntilBrowserLoaded(BrowserPanelHandle browserPanelHandle) {
         new GuiRobot().waitForEvent(browserPanelHandle::isLoaded);
     }
+
+    /**
+     * If the {@code browser2PanelHandle}'s {@code WebView} is loading, sleeps the thread
+     * till it is successfully loaded.
+     */
+    public static void waitUntilBrowser2Loaded(Browser2PanelHandle browser2PanelHandle) {
+        new GuiRobot().waitForEvent(browser2PanelHandle::isLoaded);
+    }
+
+
+    //@@author EdwardKSG
+    /**
+     * Returns the {@code String} of the currently loaded page in the {@code webView}.
+     */
+    public static String getLoadedTitle(WebView webView) {
+        return webView.getEngine().getTitle();
+    }
+    //@@author
 }

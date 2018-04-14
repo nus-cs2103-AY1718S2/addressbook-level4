@@ -71,4 +71,11 @@ public class CompleteTaskCommand extends Command {
             throw new CommandException(COMPLETE_FAILURE + index);
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CompleteTaskCommand // instanceof handles nulls
+                && index == (((CompleteTaskCommand) other).index));
+    }
 }

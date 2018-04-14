@@ -66,4 +66,11 @@ public class GoToTaskUrlCommand extends Command {
             throw new CommandException(VIEW_URL_FAILURE + index);
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof GoToTaskUrlCommand // instanceof handles nulls
+                && index == (((GoToTaskUrlCommand) other).index));
+    }
 }

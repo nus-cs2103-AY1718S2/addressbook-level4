@@ -9,17 +9,17 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 /**
- * A handler for the {@code BrowserPanel} of the UI.
+ * A handler for the {@code Browser2Panel} of the UI.
  */
-public class BrowserPanelHandle extends NodeHandle<Node> {
+public class Browser2PanelHandle extends NodeHandle<Node> {
 
-    public static final String BROWSER_ID = "#browser";
+    public static final String BROWSER_ID = "#browser2";
 
     private boolean isWebViewLoaded = true;
 
     private URL lastRememberedUrl;
 
-    public BrowserPanelHandle(Node browserPanelNode) {
+    public Browser2PanelHandle(Node browserPanelNode) {
         super(browserPanelNode);
 
         WebView webView = getChildNode(BROWSER_ID);
@@ -33,14 +33,12 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
         }));
     }
 
-    //@@author EdwardKSG
     /**
      * Returns the {@code String title} of the currently loaded page.
      */
     public String getLoadedTitle() {
         return WebViewUtil.getLoadedTitle(getChildNode(BROWSER_ID));
     }
-    //@@author
 
     /**
      * Returns the {@code URL} of the currently loaded page.
@@ -71,3 +69,4 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
         return isWebViewLoaded;
     }
 }
+

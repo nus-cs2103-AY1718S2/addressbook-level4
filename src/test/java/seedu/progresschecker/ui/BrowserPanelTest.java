@@ -14,10 +14,25 @@ import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.progresschecker.MainApp;
+import seedu.progresschecker.commons.events.ui.LoadTaskEvent;
+import seedu.progresschecker.commons.events.ui.LoadUrlEvent;
 import seedu.progresschecker.commons.events.ui.PersonPanelSelectionChangedEvent;
 
 public class BrowserPanelTest extends GuiUnitTest {
+    //@@author EdwardKSG
+    private static final String webpage = "<!DOCTYPE html>\n"
+            + "<html>\n"
+            + "<head>\n"
+            + "    <!-- <link rel=\"stylesheet\" href=\"DarkTheme.css\"> -->\n"
+            + "</head>\n"
+            + "\n"
+            + "<body class=\"background\">\n"
+            + "</body>\n"
+            + "</html>";
+
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
+    private LoadUrlEvent loadUrlEventStub;
+    private LoadTaskEvent loadTaskEventStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
@@ -25,6 +40,11 @@ public class BrowserPanelTest extends GuiUnitTest {
     @Before
     public void setUp() {
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+
+        loadTaskEventStub = new LoadTaskEvent(webpage);
+        String expectedUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE).toString();
+
+        loadUrlEventStub = new LoadUrlEvent(expectedUrl);
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -44,5 +64,17 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+
+        postNow(loadTaskEventStub);
+        String expectedTitle = null;
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedTitle, browserPanelHandle.getLoadedTitle());
+
+        postNow(loadUrlEventStub);
+        URL expectedUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);;
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedUrl, browserPanelHandle.getLoadedUrl());
     }
 }

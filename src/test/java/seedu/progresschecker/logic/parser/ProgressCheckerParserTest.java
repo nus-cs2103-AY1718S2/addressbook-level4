@@ -7,6 +7,12 @@ import static seedu.progresschecker.commons.core.Messages.MESSAGE_INVALID_COMMAN
 import static seedu.progresschecker.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.progresschecker.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.progresschecker.testutil.TypicalTabTypes.TYPE_EXERCISE;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.COMPULSORY;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.COM_INT;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.FIRST_WEEK;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.FIRST_WEEK_INT;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.INDEX_FIRST_TASK;
+import static seedu.progresschecker.testutil.TypicalTaskArgs.INDEX_FIRST_TASK_INT;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,19 +23,24 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.progresschecker.logic.commands.AddCommand;
+import seedu.progresschecker.logic.commands.AddDefaultTasksCommand;
 import seedu.progresschecker.logic.commands.ClearCommand;
+import seedu.progresschecker.logic.commands.CompleteTaskCommand;
 import seedu.progresschecker.logic.commands.DeleteCommand;
 import seedu.progresschecker.logic.commands.EditCommand;
 import seedu.progresschecker.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.progresschecker.logic.commands.ExitCommand;
 import seedu.progresschecker.logic.commands.FindCommand;
+import seedu.progresschecker.logic.commands.GoToTaskUrlCommand;
 import seedu.progresschecker.logic.commands.HelpCommand;
 import seedu.progresschecker.logic.commands.HistoryCommand;
 import seedu.progresschecker.logic.commands.ListCommand;
 import seedu.progresschecker.logic.commands.RedoCommand;
+import seedu.progresschecker.logic.commands.ResetTaskCommand;
 import seedu.progresschecker.logic.commands.SelectCommand;
 import seedu.progresschecker.logic.commands.UndoCommand;
 import seedu.progresschecker.logic.commands.ViewCommand;
+import seedu.progresschecker.logic.commands.ViewTaskListCommand;
 import seedu.progresschecker.logic.parser.exceptions.ParseException;
 import seedu.progresschecker.model.person.NameContainsKeywordsPredicate;
 import seedu.progresschecker.model.person.Person;
@@ -42,6 +53,58 @@ public class ProgressCheckerParserTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final ProgressCheckerParser parser = new ProgressCheckerParser();
+
+    //@@author EdwardKSG
+    @Test
+    public void parseCommand_addDefaultTasks() throws Exception {
+        assertTrue(parser.parseCommand(AddDefaultTasksCommand.COMMAND_WORD) instanceof AddDefaultTasksCommand);
+        assertTrue(parser.parseCommand(AddDefaultTasksCommand.COMMAND_WORD
+                + " 3") instanceof AddDefaultTasksCommand);
+        assertTrue(parser.parseCommand(AddDefaultTasksCommand.COMMAND_ALIAS) instanceof AddDefaultTasksCommand);
+        assertTrue(parser.parseCommand(AddDefaultTasksCommand.COMMAND_ALIAS
+                + " 3") instanceof AddDefaultTasksCommand);
+    }
+
+    @Test
+    public void parseCommand_completeTask() throws Exception {
+        CompleteTaskCommand command = (CompleteTaskCommand) parser.parseCommand(
+                CompleteTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK);
+        assertEquals(new CompleteTaskCommand(INDEX_FIRST_TASK_INT), command);
+        CompleteTaskCommand command2 = (CompleteTaskCommand) parser.parseCommand(
+                CompleteTaskCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TASK);
+        assertEquals(new CompleteTaskCommand(INDEX_FIRST_TASK_INT), command2);
+    }
+
+    @Test
+    public void parseCommand_resetTask() throws Exception {
+        ResetTaskCommand command = (ResetTaskCommand) parser.parseCommand(
+                ResetTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK);
+        assertEquals(new ResetTaskCommand(INDEX_FIRST_TASK_INT), command);
+        ResetTaskCommand command2 = (ResetTaskCommand) parser.parseCommand(
+                ResetTaskCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TASK);
+        assertEquals(new ResetTaskCommand(INDEX_FIRST_TASK_INT), command2);
+    }
+
+    @Test
+    public void parseCommand_goToTaskUrl() throws Exception {
+        GoToTaskUrlCommand command = (GoToTaskUrlCommand) parser.parseCommand(
+                GoToTaskUrlCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK);
+        assertEquals(new GoToTaskUrlCommand(INDEX_FIRST_TASK_INT), command);
+        GoToTaskUrlCommand command2 = (GoToTaskUrlCommand) parser.parseCommand(
+                GoToTaskUrlCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TASK);
+        assertEquals(new GoToTaskUrlCommand(INDEX_FIRST_TASK_INT), command2);
+    }
+
+    @Test
+    public void parseCommand_viewTaskList() throws Exception {
+        ViewTaskListCommand command = (ViewTaskListCommand) parser.parseCommand(
+                ViewTaskListCommand.COMMAND_WORD + " " + FIRST_WEEK);
+        assertEquals(new ViewTaskListCommand(FIRST_WEEK_INT), command);
+        ViewTaskListCommand command2 = (ViewTaskListCommand) parser.parseCommand(
+                ViewTaskListCommand.COMMAND_ALIAS + " " + COMPULSORY);
+        assertEquals(new ViewTaskListCommand(COM_INT), command2);
+    }
+    //@@author
 
     @Test
     public void parseCommand_add() throws Exception {

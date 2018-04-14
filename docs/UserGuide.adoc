@@ -394,6 +394,7 @@ delete -fo 1
 
 {empty} +
 // end::delete[]
+
 === Listing entered commands : `history` or `his`
 
 To list all the commands that you have entered in reverse chronological order. +

@@ -96,22 +96,13 @@ public class DisplayPicStorage {
      */
     public static String generateDisplayPicName(String name, String filePath, String fileType)
             throws IllegalValueException {
-        try {
-            File input = new File(filePath);
-            String uniqueFileName = HashUtil.generateUniqueName(name);
-            File toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
-            while (FileUtil.isFileExists(toSave)) {
-                if (FileUtil.isSameFile(input, toSave)) {
-                    break;
-                }
-                uniqueFileName = HashUtil.generateUniqueName(uniqueFileName);
-                toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
-            }
-            return uniqueFileName;
-
-        } catch (IOException ioe) {
-            throw new IllegalValueException("Unable to open input file");
+        String uniqueFileName = HashUtil.generateUniqueName(name);
+        File toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
+        while (FileUtil.isFileExists(toSave)) {
+            uniqueFileName = HashUtil.generateUniqueName(uniqueFileName);
+            toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
         }
+        return uniqueFileName;
     }
 
     /**

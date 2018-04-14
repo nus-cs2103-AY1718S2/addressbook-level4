@@ -427,6 +427,102 @@ image::UndoRedoActivityDiagram.png[width="650" align="center"]
 ** Cons: This requires dealing with commands that have already been undone, in which we must remember to skip these commands. This violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+//tag::Person Panel[]
+=== Person Panel
+The `PersonPanel` replaces the previous `BrowserPanel`, and is called upon using the methods in `CenterPanel`.
+`PersonPanel` will be used to display contact's information, groups and preferences depending on user's actions.
+
+==== Layout Implementation
+The specifications for the layout of PersonPanel is in `PersonPanel.fxml`. Figure 19 shows the visual layout of the `PersonPanel`.
+
+.Visual layout of PersonPanel
+image::PersonPanelLayout.png[width="800" align="center"]
+
+Notably, the contact's group and preferences are coloured as these are important information to the user.
+We plan to implement more features for v2.0, such as a profile picture for the contact.
+
+==== Current Implementation
+By utilising the `EventsCenter`, PersonPanel is able to display contact's particulars, its
+groups and preferences when its respective `PersonCard` is selected.
+
+The following 2 code snippets will show its implementation.
+
+Code Snippet 1 : handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event)
+[source,java]
+----
+public void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    loadBlankPersonPage();
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    selectedPersonCard = event.getNewSelection();
+    person = selectedPersonCard.person;
+    loadPersonPage(person);
+}
+----
+Whenever a contact is selected, the event `handlePersonPanelSelectionChangedEvent` is triggered. Once the event is triggered,
+the method will obtain its respective `PersonCard` variable and a `Person` variable, which
+contains the information of the contact. The `person` variable will be passed
+into the method `loadPersonPage(Person person)`, which is code snippet 2.
+
+Code Snippet 2: loadPersonPage(Person person)
+[source,java]
+----
+private void loadPersonPage(Person person) {
+    name.setText(person.getName().fullName);
+    phone.setText(person.getPhone().toString());
+    address.setText(person.getAddress().toString());
+    email.setText(person.getEmail().toString());
+    person.getGroupTags().forEach(tag -> {
+        Label tagLabel = new Label(tag.tagName);
+        tagLabel.getStyleClass().add(PersonCard.getGroupTagColorStyleFor(tag.tagName));
+        groups.getChildren().add(tagLabel);
+    });
+    person.getPreferenceTags().forEach(tag -> {
+        Label tagLabel = new Label(tag.tagName);
+        tagLabel.getStyleClass().add(PersonCard.getPrefTagColorStyleFor(tag.tagName));
+        preferences.getChildren().add(tagLabel);
+    });
+    setIcons();
+    setImageSizeForAllImages();
+}
+----
+The `Person` variable that is passed into `loadPersonPage` will be used to extract the
+contact's information for display. After which, the UI of the `PersonPanel` will be updated
+accordingly to reflect the changes.
+
+[NOTE]
+No contact information will be displayed upon opening the application as no contact is selected.
+
+To better illustrate the code snippets, the following is a high level sequence diagram when the user
+selects a contact found in `PersonListPanel`.
+
+.Sequence diagram for selection
+image::SelectionPersonPanelSequenceDiagram.png[width="800" align="center"]
+When a contact is selected using a mouse or a command in `PersonListPanel`, this will result in `EventsCenter`
+returning a `Person` of the selected contact, which then displays the contact information in `PersonPanel`.
+
+
+==== Design Considerations
+
+===== Aspect: Display of tags in PersonPanel (and PersonCard)
+* **Alternative 1 (current choice):** Tags are coloured randomly.
+** Pros: It is easier to differentiate between tags through the colours.
+** Cons: It may be confusing as tag colours will be changed for each new instance of the application.
+
+* **Alternative 2:** Tags to be kept the same colour as intended.
+** Pros: There is no work to be done.
+** Cons: Users will take a longer time to differentiate the tags.
+
+===== Aspect: Display of contact's information
+* **Alternative 1 (current choice):** It is to replace BrowserPanel with a PersonPanel which displays all information of the chosen contact.
+** Pros: We can add more features into PersonPanel that the BrowserPanel is unable to achieve.
+** Cons: PersonPanel will not be able to display web pages, for instance the contact's social media web page.
+
+* **Alternative 2:** It is to keep the BrowserPanel and use HTML files to display contact's information.
+** Pros: There isn't a need to modify the existing code but to edit the HTML files to display contact's information.
+** Cons: It may take a long time to implement and there are other important issues.
+
+//end::Person Panel[]
+
 // tag::orders[]
 === Orders
 

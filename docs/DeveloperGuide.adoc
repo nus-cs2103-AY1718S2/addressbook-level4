@@ -35,6 +35,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
+If this is your first time running IMDB, please follow the following steps to ensure a successful setup of IMDB:
+
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
@@ -48,6 +50,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
+
+To verify if you have set up IMDB correctly, please do the following:
 
 . Run `seedu.address.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass
@@ -63,7 +67,7 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 . Click on the `Imports` tab to set the order
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Import Layout`: Use the following order: `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -79,14 +83,17 @@ You are now ready to start coding. You may wish to refer to the links below for 
 [[Design-Architecture]]
 === Architecture
 
+The *_Architecture Diagram_* given below explains the high-level design of the App. +
+
 .Architecture Diagram
 image::Architecture.png[width="600"]
 
 {empty} +
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+
+Given below is a quick overview of each component. +
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for the following:
 
@@ -95,13 +102,14 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `EventsCenter` : Used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+This class is written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library].
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
 The rest of the App consists of the following components:
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
+* <<Design-Ui,*`UI`*>>: Acts as the UI of the App.
+* <<Design-Logic,*`Logic`*>>: Acts as the command executor.
 * <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
@@ -119,9 +127,7 @@ image::LogicClassDiagram.png[width="800"]
 
 {empty} +
 
-[discrete]
-
-==== Events-Driven nature of the design
+=== Events-Driven nature
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 {empty} +
@@ -131,7 +137,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `IMDBChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -151,17 +157,17 @@ The diagram below is an overview of the structure of the `UI` component. +
 image::UiClassDiagram.png[width="800"]
 
 {empty} +
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+You may wish to refer to the following for more information about the API of the `UI`: link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`UI.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. The layout of these `UI` parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component:
 
 * executes user commands using the `Logic` component.
-* binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* responds to events raised from various parts of the App and updates the UI accordingly.
+* binds itself to some data in the `Model` so that the `UI` can auto-update when data in the `Model` change.
+* responds to events raised from various parts of the App and updates the `UI` accordingly.
 
 [[Design-Logic]]
 === Logic component
@@ -181,7 +187,9 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+The `Logic` component works as follows:
+
+.  `Logic` uses the `IMDBParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a patient) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
@@ -332,7 +340,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Will be hard for new developers to understand the template pattern.
 * **Alternative 2:** Override `execute()`
 ** Pros: Does not involve the template pattern and is easier for new developers to understand.
-** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or they will lose the ability to undo/redo.
 
 ===== Aspect: How undo & redo executes
 
@@ -348,7 +356,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 * **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
 ** Pros: Only need to revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+** Cons: Might result in user thinking that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
 ** Pros: Might be more intuitive for the user.
 ** Cons: No way of skipping commands if user just wants to reset the state of the address * book and not the view.
@@ -358,10 +366,10 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ===== Aspect: Data structure to support the undo/redo commands
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
+** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
+** Cons: Will result in `Logic` being duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: Not necessary to maintain a separate stack, and just reuse what is already in the codebase.
+** Pros: Not necessary to maintain a separate stack, just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
@@ -374,7 +382,7 @@ It supports editing the remarks of a `Patient` to match the user input. `RemarkC
 
 The edit remarks mechanism functions like that of the `EditCommand`. It searches for the patient to be edited based on the index provided
 by the user. It then creates a new patient with the same attributes as the patient to be edited, changing the remarks attribute to
-match the user input. The `RemarkCommand` then calls for the utility method updatePerson under `Model`, to replace the patient to be
+match the user input. The `RemarkCommand` then calls for the utility method `updatePerson` under `Model`, to replace the patient to be
 edited with the edited patient.
 
 Suppose that the user has just launched the application. The current patient queue is shown in the figure below.
@@ -391,7 +399,7 @@ which will be based on the user input. This new patient will be stored as the ed
 .The patient before and after editing
 image::Figure 3.2.1.2.png[width="800"]
 
-`RemarkCommand` will finally call the for the utility method updatePerson under `Model`, to replace the patient to be edited with the edited patient,
+`RemarkCommand` will finally call the for the utility method `updatePerson` under `Model`, to replace the patient to be edited with the edited patient,
 the new list will be as shown in the figure below.
 
 .The queue with updated details
@@ -404,7 +412,7 @@ each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Implementation of `RemarkCommand`
 
-* **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise updatePerson to replace the `Patient`
+* **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise `updatePerson` to replace the `Patient`
 ** Pros: Will be easy to implement due to existing utility methods.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Create a public method in `Remark` for updating the remark which will be called by `Patient`
@@ -425,7 +433,7 @@ each implementation and the pros and cons of each implementation:
 === Implement NRIC, DOB and Blood Type detail fields
 ==== Current Implementation
 
-The additional fields added is managed by the `AddCommand` and the `EditCommand`.
+The additional fields added are managed by the `AddCommand` and the `EditCommand`.
 They are included as fields to be filled in when adding a new `Patient` or when editing an existing `Patient`.
 
 Both `AddCommand` and `EditCommand` have been modified to accept new inputs corresponding with the new fields implemented.
@@ -438,13 +446,13 @@ image::Figure3-3-1-1.png[width="800"]
 The user now decides to edit the blood type of the first person in the list (he got a blood transfusion).
 
 `EditCommand` will search for the first person in the list and store it as the person to be edited.
-`EditCommand` will then create a new patient with the same attributes as the patient to be edited, except the remarks attribute
+`EditCommand` will then create a new patient with the same attributes as the patient to be edited, except the `BloodType` attribute
 which will be based on the user input. This new patient will be stored as the edited patient as shown in Figure 23 below.
 
 .The patient before and after editing
 image::Figure3-3-1-2.png[width="800"]
 
-`EditCommand` will finally call the for the utility method updatePerson under `Model`, to replace the patient to be edited with the edited patient,
+`EditCommand` will finally call the for the utility method `updatePerson` under `Model`, to replace the patient to be edited with the edited patient,
 the new list will be as shown in Figure 24 below.
 
 .The queue with updated details
@@ -466,13 +474,13 @@ image::Figure3-4-1-1.png[width="800"]
 The user now adds a `seafood` allergy to `David`{empty}'s list of medical conditions.
 
 `AddConditionCommand` will select the person in the list based on the index provided and store it as the person to be edited.
-`AddConditionCommand` will then create a new patient with the same attributes as the patient to be edited, except the with additional conditions
-which will be based on the user input. This new patient will be stored as the edited patient as shown in Figure 26 below.
+`AddConditionCommand` will then create a new patient with the same attributes as the patient to be edited, except the `Condition` attribute which now has additional conditions
+based on the user input. This new patient will be stored as the edited patient as shown in Figure 26 below.
 
 .The patient before and after editing
 image::Figure3-4-1-2.png[width="800"]
 
-`EditCommand` will finally call the for the utility method updatePerson under `Model`, to replace the patient to be edited with the edited patient,
+`EditCommand` will finally call the for the utility method `updatePerson` under `Model`, to replace the patient to be edited with the edited patient,
 the new list will be as shown in Figure 27 below.
 
 .The queue with updated details
@@ -485,7 +493,7 @@ each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Implementation of `AddConditionCommand`
 
-* **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise updatePerson to replace the `Patient`
+* **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise `updatePerson` to replace the `Patient`
 ** Pros: Will be easy to implement due to existing utility methods.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Create a public method in `UniqueTagList` for updating the remark which will be called by `Patient`
@@ -500,7 +508,9 @@ each implementation and the pros and cons of each implementation:
 The patient visiting queue mechanism is facilitated by `UniquePatientVisitingQueue`, `AddPatientQueueCommand` and `RemovePatientQueueCommand`.
 It supports adding and removing a patient from the visiting queue. `AddPatientQueueCommand` and `RemovePatientQueueCommand` inherit from `Command`.
 
-The add patient into visiting queue mechanism functions like that of the `AddCommand` but using the index only. It store the actual index of patient in the patient list. User can find patients with certain keywords in patients' name using `FindCommand` then add patient into queue according to the list index displayed. The `AddPatientQueueCommand` then calls for the utility method addPatientToQueue under `Model`, to update the visiting queue and trigger a IMDBChangedEvent to the `UI` to update VisitingQueuePanel.
+The add patient into visiting queue mechanism functions like that of the `AddCommand` but uses only the index of the patient. It stores the actual index of the patient in the patient list.
+The user can find patients with certain keywords in their name using `FindCommand` then add them into queue according to the list index displayed.
+The `AddPatientQueueCommand` then calls for the utility method `addPatientToQueue` under `Model`, to update the visiting queue and triggers an `IMDBChangedEvent` to the `UI` to update VisitingQueuePanel.
 
 Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure 3.4.1.1 below.
 
@@ -509,13 +519,15 @@ image::emptyVisitQueue.png[width="800"]
 
 The user now decides to add a patient into the queue.
 
-`AddPatientQueueCommand` will check if the index given is valid and is in the bound of the current list displayed. If the given index is valid and in the bound, `AddPatientQueueCommand` will then call the for the utility method addPatientToQueue under `Model`, to add the patient index into the visiting queue.
+`AddPatientQueueCommand` will check if the index given is valid and is in the bound of the current list displayed. If the given index is valid and in the bound, `AddPatientQueueCommand` will then call the for the utility method `addPatientToQueue` under `Model`, to add the patient index into the visiting queue.
 The updated queue is shown in the figure below.
 
 .The updated queue
 image::patientInQueue.png[width="800"]
 
-The remove patient from visiting queue mechanism functions like that of the `DeleteCommand` with and without parameter. It removes the first patient of the queue if user do not provide any parameters. If user want to remove specific patient in the queue, the user can provide the patient index as parameter in the command. The `RemovePatientQueueCommand` then calls for the utility method removePatientFromQueue under `Model`, to update the visiting queue and trigger a IMDBChangedEvent to `UI` to update VisitingQueuePanel.
+The remove patient from visiting queue mechanism functions like that of the `DeleteCommand`. If no parameters are provided, it removes the first patient of the queue.
+If the user wants to remove specific patient in the queue, the user can provide the patient index as parameter in the command.
+The `RemovePatientQueueCommand` then calls for the utility method `removePatientFromQueue` under `Model`, to update the visiting queue and trigger an `IMDBChangedEvent` to `UI` to update the `VisitingQueuePanel`.
 
 Suppose that the queue contains patients as shown in the figure below.
 
@@ -525,7 +537,7 @@ image::patientsInQueue.png[width="800"]
 
 The user now decides to remove the first patient from the queue.
 
-`RemovePatientQueueCommand` will then call the for the utility method removePatientFromQueue under `Model`, to remove the patient from the visiting queue.
+`RemovePatientQueueCommand` will then call the for the utility method `removePatientFromQueue` under `Model`, to remove the patient from the visiting queue.
 The updated queue is shown in the figure below.
 
 .The queue after a patient is removed
@@ -538,10 +550,10 @@ each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Data structure to support the AddPatientQueue and RemovePatientQueue command
 
-* **Alternative 1 (current choice):** Using LinkedList as queue to store patient index only
+* **Alternative 1 (current choice):** Using LinkedList as a queue to store the patient index only
 ** Pros: Will be easy to implement due to existing utility methods.
 ** Cons: May have utility limitation and have to take care how other commands affect the patient index in the list for example DeleteCommand
-* **Alternative 2:** Create a data structure class like linked list to store patient in a queue
+* **Alternative 2:** Create a data structure class like linked list to store a patient in a queue
 ** Pros: Can customise functionalities of the data structure.
 ** Cons: Will require time and more knowledge to do.
 
@@ -549,18 +561,18 @@ each implementation and the pros and cons of each implementation:
 
 * **Alternative 1 (current choice):** Patient will only added at the back of the list
 ** Pros: Easy to implement.
-** Cons: User cannot add patient in the position they want in the queue.
+** Cons: Does not allow user to add a patient in the position they want in the queue.
 * **Alternative 2:** Patient can be added in any position in the queue
 ** Pros: Will improve the functionality of AddPatientQueue command.
-** Cons: Will require another implentation to add patient in the specified position in the queue.
+** Cons: Will require another implementation to add patient in the specified position in the queue.
 
 ===== Aspect: Implementation of `RemovePatientQueueCommand`
 
 * **Alternative 1 (current choice):** Patient can be removed from the queue regardless which position he or she is in the queue.
 ** Pros: Easy to implement.
-** Cons: Removing patient based on their index can be error prone since list index is flexible with the operation that user typed in.
+** Cons: Will be error prone since list index is flexible with the operation that user typed in.
 * **Alternative 2:** Patient can be removed from the queue by their NRIC
-** Pros: Get rid of the error caused by removing patient from queue by index.
+** Pros: Will remove any errors caused by removing a patient from the queue by their index.
 ** Cons: Will require extra checking and verification.
 // end::addqremoveq
 
@@ -569,17 +581,20 @@ each implementation and the pros and cons of each implementation:
 ==== Current Implementation
 
 The patient appointment mechanism is facilitated by `Appointment`, `AppointmentEntry`, `DateTime`, `UniqueAppointmentEntryList`, `UniqueAppointmentList`, `AddAppointmentCommand`, `DeleteAppointmentCommand`, `ViewAppoinmentCommand`, `AddAppointmenetCommandParser`, `DeleteAppoinmentCommandParser` and `ViewAppointmentCommandParser`.
-It supports adding, deleteting and viewing patient appointments. `AddAppointmentCommand`, `DeleteAppointmentCommand` and `ViewAppoinmentCommand` inherit from `Command`.
+It supports adding, deleting and viewing patient appointments. `AddAppointmentCommand`, `DeleteAppointmentCommand` and `ViewAppoinmentCommand` inherit from `Command`.
 
-The add new patient appointment mechanism functions like that of the `AddCommand` with patient index, date, and time as parameters. It create a new appointment object with date time and stored in patient's list of appointments record. User can find patients with certain keywords in patients' name using `FindCommand` then add a new appointment according to the list index displayed. The `AddPatientQueueCommand` then calls for the utility method addPatientAppointment under `Model`, to add a new patient appointment and trigger a IMDBChangedEvent to the `UI` to update PatientAppointmentPanel or CalendarPanel.
+The add new patient appointment mechanism functions like that of the `AddCommand` with patient index, date, and time as parameters.
+It creates a new appointment object with date time and stored in patient's list of appointments record.
+The user can find patients with certain keywords in patients' name using `FindCommand` then add a new appointment according to the list index displayed.
+The `AddPatientQueueCommand` then calls for the utility method addPatientAppointment under `Model`, to add a new patient appointment and trigger an `IMDBChangedEvent` to the `UI` to update PatientAppointmentPanel or CalendarPanel.
 
 Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure below.
 
 
-The delete appointment mechanism functions like that of the `DeleteCommand` with patient index and appointment index in list of appointment for the particular patient.  The `RemovePatientQueueCommand` then calls for the utility method deletePatientAppointment under `Model`, to update the remove the patient appointment and trigger a IMDBChangedEvent to `UI` to update PatientAppointmentPanel or CalendarPanel.
+The delete appointment mechanism functions like that of the `DeleteCommand` with patient index and appointment index in list of appointment for the particular patient.  The `RemovePatientQueueCommand` then calls for the utility method deletePatientAppointment under `Model`, to update the remove the patient appointment and trigger an `IMDBChangedEvent` to `UI` to update PatientAppointmentPanel or CalendarPanel.
 
 
-The view appointment mechanism functions like that of the `findCommand` and `listCommand` depends on whether patient index is provided.  If patient index is provided, the `viewAppointmentCommand` then calls for the utility method getPatientFromList by patient index under `Model`, to get the patient and trigger a IMDBChangedEvent to `UI` to update PatientAppointmentPanel to display list of past and future appoinments made by this patient. If patient index is not provided, the `viewAppointmentCommand` then calls for the utility method getAppointmentEntryList under `Model`, to get ta list of appointments made by all patients and trigger a IMDBChangedEvent to `UI` to update CalendarPanel.
+The view appointment mechanism functions like that of the `findCommand` and `listCommand` depends on whether patient index is provided.  If patient index is provided, the `viewAppointmentCommand` then calls for the utility method getPatientFromList by patient index under `Model`, to get the patient and trigger an `IMDBChangedEvent` to `UI` to update PatientAppointmentPanel to display list of past and future appoinments made by this patient. If patient index is not provided, the `viewAppointmentCommand` then calls for the utility method getAppointmentEntryList under `Model`, to get ta list of appointments made by all patients and trigger an `IMDBChangedEvent` to `UI` to update CalendarPanel.
 
 ==== Design Considerations
 
@@ -613,7 +628,7 @@ It supports editing the records of a `Patient` to match the user input. `RecordC
 
 The edit records mechanism functions like that of the `EditCommand`. It searches for the patient to be edited and the record to be edited based on the indexes provided
 by the user. It then creates a new patient with the same attributes as the patient to be edited, changing the records attribute to
-match the user input. The `RecordCommand` then calls for the utility method updatePerson under `Model`, to replace the patient to be
+match the user input. The `RecordCommand` then calls for the utility method `updatePerson` under `Model`, to replace the patient to be
 edited with the edited patient.
 
 Suppose that the user has just launched the application. The current patient queue is shown in the figure below.
@@ -634,7 +649,7 @@ which will be edited based on the user's input into the medical record window. T
 .The patient before and after editing
 image::Figure 3.5.1.3.png[width="800"]
 
-`RecordCommand` will finally call the for the utility method updatePerson under `Model`, to replace the patient to be edited with the edited patient,
+`RecordCommand` will finally call the for the utility method `updatePerson` under `Model`, to replace the patient to be edited with the edited patient,
 the new list will be as shown in the figure below.
 
 .The queue with updated details
@@ -647,7 +662,7 @@ each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Implementation of `RecordCommand`
 
-* **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise updatePerson to replace the `Patient`
+* **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise `updatePerson` to replace the `Patient`
 ** Pros: Will be easy to implement due to existing utility methods.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Create a public method in `Record` for updating the record which will be called by `Patient`
@@ -683,6 +698,25 @@ Separation of Concerns as `Patient` now needs to do two different things.
 ==== Current Implementation
 The action of logging into IMDB is facilitated by `LoginCommand` and the static class `LoginManager`, which also contains a static attribute of class `LoginState`.
 
+The static class `LoginManager` is implemented by a final class as follows:
+
+[source,java]
+----
+
+public final class LoginManager {
+    private static LoginState currLoginState = new LoginState(NO_USER_STATE, NO_USER_STRING);
+    private static String passwordPath = "/data/passwords.csv";
+
+    private LoginManager() {
+            currLoginState = new LoginState(NO_USER_STATE, NO_USER_STRING);
+    }
+
+    public static boolean authenticate (String username, String password) {
+        // Check if username and password match and are in the passwords list and updates currLoginState
+    }
+
+----
+
 `LoginCommand` takes in username and password input from the user, then calls the static class `LoginManager` to authenticate the given username and password, meaning that it will check through a csv file of correct usernames and passwords. If the given username and password are found in that file, then the value stored in `LoginState` will be changed to reflect the role of the user who logged in (doctor or medical staff).
 
 If `LoginState` shows that no user is currently logged in, certain commands that access the database such as `AddCommand` and `ListCommand` will throw an exception telling the user to log in. Once logged in, the user can perform those commands.
@@ -703,6 +737,29 @@ each implementation and the pros and cons of each implementation:
 ** Pros: Can store login state as an int instead of an object instance.
 ** Cons: Will require a method in LoginCommand to update login state and verify username and password. Violates Single Responsibility Principle and Separation of Concerns as `LoginCommand` now needs to do two different things. Also, there is a need to somehow pass the login state to IMDBParser.
 // end::login[]
+
+// tag::print[]
+=== Print Medical Records
+==== Current Implementation
+When `PrintCommand` is called, an instance of `PrintFormatter` is created, and a reference to the target `Patient` is passed to it.
+
+`PrintFormatter` retrieves medical records and other information of the `Patient`, then uses iText (an external library) to format and print the records on a PDF.
+
+After the PDF is created, `PrintFormatter` will try to use an existing application to open it. If that fails, an exception is thrown.
+
+==== Design Considerations
+
+The following is an exploration of possible alternative implementations, the various aspects of
+each implementation and the pros and cons of each implementation:
+
+===== Aspect: File format of printed document
+* **Alternative 1 (current choice):** Print records onto a PDF
+** Pros: PDF files are compatible across multiple platform. Also, PDFs cannot be altered without leaving an electronic footprint, so they are secure, which is important when there is confidential patient data.
+** Cons: It is difficult to write on a pdf with basic Java methods, so an external library will have to be used.
+* **Alternative 2:** Print records onto a txt file
+** Pros: Simple to implement using basic Java methods.
+** Cons: Document would not look visually appealing. Also, txt files do not support pictures, which might be needed in the future (e.g. for X-ray photos).
+// end::print[]
 
 === Logging
 

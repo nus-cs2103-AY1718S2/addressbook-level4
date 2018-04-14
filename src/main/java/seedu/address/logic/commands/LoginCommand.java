@@ -13,6 +13,7 @@ public class LoginCommand extends Command {
     public static final String COMMAND_ALIAS = "lg";
 
     public static final String MESSAGE_ALREADY_LOGGED_IN = "Already logged in";
+    public static final String MESSAGE_LOGIN_CANCEL = "Login cancelled.";
     public static final String MESSAGE_LOGIN_SUCCESS = "Successfully logged in as ";
 
     public static final String MESSAGE_NOT_LOGGED_IN = "Not logged in!\n%1$s";
@@ -48,6 +49,8 @@ public class LoginCommand extends Command {
             userRole = "Doctor";
         } else if (LoginManager.getUserState() == LoginManager.MEDICAL_STAFF_LOGIN) {
             userRole = "Staff";
+        } else {
+            return MESSAGE_LOGIN_CANCEL;
         }
 
         return MESSAGE_LOGIN_SUCCESS + LoginManager.getUserName() + " (" + userRole + ")";

@@ -221,18 +221,16 @@ If that `.xml` file already exists (`Username` entered is existing `Username`), 
 [[Design-Ui]]
 === UI component
 
+The UI component handles to interaction between Your TA and the user. It itself contains other smaller components that build up to form the entire UI.
+
+The figure below shows what makes up the structure of the UI component.
+
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 As seen in Figure 6, the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `TodoListPanel`, `StatusBarFooter`, `CalendarView` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
-
-
-.Layout of the UI
-image::UiLayout.png[width="800"]
-
-As seen above in Figure 7 is the current layout of the UI of the program.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -251,13 +249,15 @@ The `UI` component:
 [[Design-Logic]]
 === Logic component
 
-Figure 8 below shows how the `LogicManager` functions in the application.
+The logic component controls how Your TA functions upon the different commands that it supports.
+
+Figure 7 below shows how the `LogicManager` functions in the application.
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
-Figure 9 below shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+Figure 8 below shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>.
 
 [[fig-LogicCommandClassDiagram]]
 .Logic Command Class Diagram
@@ -266,12 +266,14 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+The following steps are a brief overview of how a command is handled by the logic component.
 
-Figure 10 below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  This results in the creation of a `Command` object which is executed by the `LogicManager`. The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
+.  The `UI` then displays to the user the changes and the result of the command.
+
+Figure 9 below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
@@ -279,7 +281,9 @@ image::DeletePersonSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model component
 
-Figure 11 shows the different components and interfaces that make up the `Model` component.
+The model component tackles how Your TA maintains the data it holds and how the data is communicated between each major component.
+
+Figure 10 shows the different components and interfaces that make up the `Model` component.
 
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
@@ -289,25 +293,29 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`:
 
 * Stores a `UserPref` object that represents the user's preferences.
-* Stores the Address Book data.
-* Exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* Does not depend on any of the other three components.
+* Stores the data used by Your TA.
+* Exposes an unmodifiable `ObservableList<Person>` and `ObservableList<Task>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* Does not depend on any of the other four major components.
+
+The following are details of the purpose and function of the different classes that make up the entire `Model`.
 
 The `Person` Class:
 
-* Stores the information of a specific person (student) in the AddressBook
-* Information includes: Name, Matriculation Number, Phone Number, Email, Address and different tags to associate with that person.
+* Stores the information of a specific person (student) in Your TA.
+* Information includes: Name, Matriculation Number, Phone Number, Email, Address, DisplayPic, Participation and different tags to associate with that person.
 * Implements `UniquePersonList` that enforces uniqueness of its elements and disallows nulls.
-* `Name`: Object that stores the name of the `Person` Object.
+* `Name`: Object that stores the name of the `Person` object.
 [NOTE]
 Person's name should only contain alphanumeric characters, and should not be null.
-* `Matriculation Number`: Object that stores the matriculation number of the `Person` Object.
+* `Matriculation Number`: Object that stores the matriculation number of the `Person` object.
 [NOTE]
 Matriculation number should start with either 'A' or 'U', followed by 7 digits and ending with an alphabet (A-Z).
-* `Phone Number`: Object that stores the phone number of the `Person` Object.
-* `Email`: Object that stores the email address of the `Person` Object.
+* `Phone Number`: Object that stores the phone number of the `Person` object.
+* `Email`: Object that stores the email address of the `Person` object.
 [NOTE]
 Email address should be of the format _local-part@domain_.
+* `DisplayPic`: Object that contains the filepath to the display picture used by the `Person` object.
+* `Participation`: Object that stores the participation marks of the `Person` object.
 
 The `User` Class:
 
@@ -321,27 +329,12 @@ User's username should only contain alphanumeric characters, be between 3 and 15
 [NOTE]
 User's password should only contain alphanumeric characters, be between 8 and 30 characters long and should not be null.
 
-The `Tag` Class,
+The `Tag` Class:
 
 * An immutable object that has to be valid.
 * Checks are implemented to guarantee validity.
 [TIP]
 For every `Person` object, there can be multiple (or zero) tags.
-
-The `Task` Class:
-
-* Stores the information of a specific task in the AddressBook
-* Information includes: Task Description, Deadline, Priority.
-* Implements `UniqueTaskList` that enforces uniqueness of its elements and disallows nulls.
-* `Task Description`: Object that stores the task description of the `Task` Object.
-[NOTE]
-Task's name can contain any alphanumeric characters, but should not be null.
-* `Deadline`: Object that stores the deadline of the `Task` Object.
-[NOTE]
-Deadline should not be dates of the past and should only be in the format dd-mm-yyyy.
-* `Priority`: Object that stores the priority of the `Task` Object.
-[NOTE]
-Priority should only be a value from 1 to 3, 1 being the lowest and 3 being the highest.
 
 The `Task` Class:
 
@@ -361,6 +354,8 @@ Priority value input can only be a value from 1 to 3. 1 being lowest priority an
 [[Design-Storage]]
 === Storage component
 
+The storage component maintains the reading and writing of data used by Your TA. It allows the application to save and read files on the user's computer.
+
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
@@ -369,7 +364,8 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component:
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save data used by Your TA in xml format and read it back.
+* can save images used by Your TA.
 * can save the user data in xml format and read it back.
 * can save list of `User` objects for login authentication.
 
@@ -612,7 +608,7 @@ This feature allows the user to keep track of participation marks of a `Person`.
 
 The user uses this feature by inputting a command, `markPart INDEX marks/DIGITS`, to the application.
 
-The following figure 13 and paragraph below shows the sequence of how the `MarkCommand` command functions:
+The following figure 12 and paragraph below shows the sequence of how the `MarkCommand` command functions:
 
 .MarkCommand Sequence Diagram
 image::MarkCommandSequenceDiagram.png[width="700"]
@@ -653,7 +649,8 @@ This feature allows the user to enter a path to their selected image file when e
 
 It utilises the `DisplayPicStorage` class to handle all image storage related operations.
 
-It also makes use of the `Participation` feature to display a colored shadow around the display picture. This image will be shown in the application next to the details of the person as seen in figure 14 below.
+It also makes use of the `Participation` feature to display a colored shadow around the display picture.
+This image will be shown in the application next to the details of the person as seen in figure 13 below.
 
 .Display Picture example
 image::displaypic_personcard.PNG[width="250"]
@@ -680,7 +677,7 @@ For persons that were not specified a `dp/` during the `add` command, the `Displ
 The display picture can also be changed by using the `edit` or `updateDP` commands.
 The implementation of the UpdateDisplayCommand (`updateDP`) command closely follows the `edit` command, hence we will only showcase the implementation of the `UpdateDP` command.
 
-The following figure 15 is the sequence diagram of the `updateDP` command to show how it functions:
+The following figure 14 is the sequence diagram of the `updateDP` command to show how it functions:
 
 .UpdateDisplayCommand Sequence Diagram
 image::UpdateDisplayCommandSequenceDiagram.png[width="700"]
@@ -694,7 +691,7 @@ image::UpdateDisplayCommandSequenceDiagram.png[width="700"]
 
 To fully support the `undo` and `redo` commands, image files cannot be immediately deleted when it is not in use by the `UI`.
 
-To work around this, a new class `UniqueItemList` was added to the model of the `AddressBook` as seen below in Figure 16.
+To work around this, a new class `UniqueItemList` was added to the model of the `AddressBook` as seen below in Figure 15.
 
 .AddressBook Class Diagram
 image::AddressBookClass.png[width="600"]
@@ -735,7 +732,7 @@ which is stored in `src/resources/images/displayPic` as `default.png`.
 If a valid path to an image is provided, the image will be processed and copied over to the `data` folder where the`addressbook.xml` is stored as well.
 
 The image copied over will be stored with a SHA-256 hash name. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.
-The following activity diagram in Figure 15 shows how the files are saved:
+The following activity diagram in Figure 16 shows how the files are saved:
 
 .Activity diagram for storing image files
 image::StoreDisplayPictureActivityDiagram.png[width="700"]

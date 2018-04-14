@@ -45,7 +45,7 @@ public class UserPrefs {
     //@@author
     //@@author ZacZequn
     public String getMenuFilePath() {
-        return customerStatsFilePath;
+        return menuFilePath;
     }
 
     //@@author

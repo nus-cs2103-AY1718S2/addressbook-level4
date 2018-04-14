@@ -201,12 +201,7 @@ public class AddCommandParserTest {
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INVALID_INSURANCE_DESC,
             Insurance.MESSAGE_INSURANCE_CONSTRAINTS);
-        //@@author limzk1994
-        // invalid group
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                        + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INVALID_GROUP_DESC,
-                Group.MESSAGE_GROUP_CONSTRAINTS);
-        //@@author
+
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
                 + BIRTHDAY_DESC_BOB + APPOINTMENT_DESC_BOB + GROUP_DESC_BOB + INSURANCE_DESC_BOB,

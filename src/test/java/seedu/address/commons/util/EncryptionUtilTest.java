@@ -52,8 +52,11 @@ public class EncryptionUtilTest {
         EncryptionUtil.encrypt(TEMP_FILE);
 
         Scanner fromFile = new Scanner(TEMP_FILE);
-        String dataToRead = fromFile.nextLine();
-        fromFile.close();
+        String dataToRead = null;
+        if(fromFile.hasNext()) {
+            dataToRead = fromFile.nextLine();
+            fromFile.close();
+        }
 
         assertNotEquals(dataToWrite, dataToRead);
     }

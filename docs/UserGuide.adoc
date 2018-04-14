@@ -32,11 +32,20 @@ The symbols which are used in the User Guide as well as their meaning are listed
 ⚠: Specific user only command +
 CAUTION: Command is not undoable +
 
-[INFO]: Information +
-[TIPS]: Tips +
-[IMPORTANT]: Warning +
-[WARNING]: Specific user only command +
-[CAUTION]: Command is not undoable +
+[NOTE]
+Having any Java 8 version is not enough. +
+
+[TIP]
+Tips +
+
+[IMPORTANT]
+Warning +
+
+[WARNING]
+Specific user only command +
+
+[CAUTION]
+Command is not undoable +
 // end::introduction[]
 
 // tag::quickstart[]

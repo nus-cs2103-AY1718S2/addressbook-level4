@@ -112,6 +112,10 @@ public class EventBuilder implements ActivityBuilder {
     }
 
     //@@author Kyomian
+    /**
+     * Overloaded method.
+     * Sets the {@code Location} of the {@code Activity} to null.
+     */
     public EventBuilder withLocation() {
         this.location = null;
         return this;

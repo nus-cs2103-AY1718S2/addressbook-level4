@@ -11,11 +11,6 @@ import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_REMARK_C
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_REMARK_MA2108_HOMEWORK;
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_TAG_CS2010;
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_TAG_MA2108;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_FILE_PATH;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.io.File;
 import java.io.IOException;

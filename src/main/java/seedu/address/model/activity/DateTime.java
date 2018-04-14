@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 //@@author Kyomian
 /**
  * Represents an Activity's datetime in the desk board.

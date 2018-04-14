@@ -51,11 +51,15 @@ public class ScheduleGroupCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         Group groupToShow = new Group(toShow.getInformation());
+        boolean groupNotFound = true;
         for (Group group : model.getFilteredGroupList()) {
             if (toShow.getInformation().equals(group.getInformation())) {
                 groupToShow = group;
+                groupNotFound = false;
                 break;
             }
+        }
+        if (groupNotFound) {
             throw new CommandException(String.format(MESSAGE_GROUP_NOT_FOUND, toShow.getInformation()));
         }
         fillTimeSlots(groupToShow);

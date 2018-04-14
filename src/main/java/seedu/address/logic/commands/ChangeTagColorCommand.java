@@ -65,7 +65,6 @@ public class ChangeTagColorCommand extends UndoableCommand {
                 return;
             }
         }
-        throw new CommandException(MESSAGE_TAG_NOT_IN_LIST);
     }
 
     @Override

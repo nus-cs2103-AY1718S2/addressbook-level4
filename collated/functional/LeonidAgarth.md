@@ -190,7 +190,6 @@ public class ChangeTagColorCommand extends UndoableCommand {
                 return;
             }
         }
-        throw new CommandException(MESSAGE_TAG_NOT_IN_LIST);
     }
 
     @Override
@@ -264,11 +263,15 @@ public class ScheduleGroupCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         Group groupToShow = new Group(toShow.getInformation());
+        boolean groupNotFound = true;
         for (Group group : model.getFilteredGroupList()) {
             if (toShow.getInformation().equals(group.getInformation())) {
                 groupToShow = group;
+                groupNotFound = false;
                 break;
             }
+        }
+        if (groupNotFound) {
             throw new CommandException(String.format(MESSAGE_GROUP_NOT_FOUND, toShow.getInformation()));
         }
         fillTimeSlots(groupToShow);
@@ -1820,6 +1823,40 @@ public class Timetable extends UiPart<Region> {
                 node.setColor(color);
             }
         }
+    }
+
+    /**
+     * Ensure that every {@code mod} displayed on the timetable has a unique color
+     *
+     * @param used usedColor HashMap to determine which color has been used
+     * @param node the node on the timetable to display the mod on
+     * @param modStyle the style of the mod
+     * @return
+     */
+    private int setUnusedColor(HashMap<Integer, String> used, TimetableSlot node, WeeklyEvent mod, String modStyle) {
+        int color = node.setModule(modStyle, mod);
+        if (used.containsValue(mod.getName())) {
+            for (Integer k : used.keySet()) {
+                if (used.get(k).equals(mod.getName())) {
+                    color = k;
+                    node.setColor(color);
+                    return color;
+                }
+            }
+        }
+        if (!used.containsKey(color)) {
+            used.put(color, mod.getName());
+            return color;
+        }
+        String module = used.get(color);
+        if (mod.getName().equals(module)) {
+            return color;
+        }
+        while (used.containsKey(color)) {
+            color = node.randomizeColor(modStyle);
+        }
+        used.put(color, mod.getName());
+        return color;
     }
 
     /**

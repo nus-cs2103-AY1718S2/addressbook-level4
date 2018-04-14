@@ -166,6 +166,15 @@ public class Timetable extends UiPart<Region> {
      */
     private int setUnusedColor(HashMap<Integer, String> used, TimetableSlot node, WeeklyEvent mod, String modStyle) {
         int color = node.setModule(modStyle, mod);
+        if (used.containsValue(mod.getName())) {
+            for (Integer k : used.keySet()) {
+                if (used.get(k).equals(mod.getName())) {
+                    color = k;
+                    node.setColor(color);
+                    return color;
+                }
+            }
+        }
         if (!used.containsKey(color)) {
             used.put(color, mod.getName());
             return color;
@@ -177,6 +186,7 @@ public class Timetable extends UiPart<Region> {
         while (used.containsKey(color)) {
             color = node.randomizeColor(modStyle);
         }
+        used.put(color, mod.getName());
         return color;
     }
 

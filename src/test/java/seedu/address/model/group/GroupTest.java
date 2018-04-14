@@ -16,6 +16,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.GroupBuilder;
 
 public class GroupTest {
+    //@@author LeonidAgarth
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 

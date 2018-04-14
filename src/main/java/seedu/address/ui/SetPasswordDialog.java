@@ -41,7 +41,7 @@ public class SetPasswordDialog extends Dialog<String> {
         hBox.setMaxWidth(350.0);
 
 
-        HBox.setHgrow(oldPsw, Priority.ALWAYS);
+        HBox.setHgrow(newPsw, Priority.ALWAYS);
 
         getDialogPane().setContent(hBox);
 

@@ -19,17 +19,14 @@ public class SetPasswordCommandParserTest {
 
     @Test
     public void parse_invalidArgs() {
-        // no agrs provided command
+        // extra args provided.
         assertParseFailure(parser, " 1", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                SetPasswordCommand.MESSAGE_USAGE));
-
-        //only old password provided
-        assertParseFailure(parser, " qqq  aaa", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 SetPasswordCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsSetPasswordCommand() {
+        //trailing spaces, success.
         assertParseSuccess(parser, " ",
                 new SetPasswordCommand());
     }

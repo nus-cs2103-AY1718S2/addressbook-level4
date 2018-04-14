@@ -19,7 +19,6 @@ import seedu.address.logic.Authentication;
 import seedu.address.logic.CreateNewCalendar;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.notification.Notification;
-import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -46,13 +45,13 @@ public class TestAddEventCommand extends Command {
     public static final String MESSAGE_FAILURE = "Unable to add event, please try again later.";
 
 
-
     private final Index targetIndex;
     private final String title;
     private final String location;
     private final String startTime;
     private final String endTime;
     private final String description;
+    private final Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
@@ -76,17 +75,14 @@ public class TestAddEventCommand extends Command {
         Person personToAddEvent = lastShownList.get(targetIndex.getZeroBased());
 
         // Build a new authorized API client service.
-        // Note: Do not confuse this class with the
-        //   com.google.api.services.calendar.model.Calendar class.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
         try {
             service = Authentication.getCalendarService();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning("Couldn't authenticate Google Calendar Service");
         }
 
-
+        //Solution below adpated from https://developers.google.com/calendar/quickstart/java
         Event event = new Event()
                 .setSummary(title)
                 .setLocation(location)
@@ -106,24 +102,6 @@ public class TestAddEventCommand extends Command {
                 .setTimeZone("Asia/Singapore");
         event.setEnd(end);
 
-        String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
-        //event.setRecurrence(Arrays.asList(recurrence));
-
-        /*EventAttendee[] attendees = new EventAttendee[] {
-                new EventAttendee().setEmail("jjjsss@example.com"),
-                new EventAttendee().setEmail("dzzzssss@example.com"),
-        };
-        event.setAttendees(Arrays.asList(attendees));
-
-        EventReminder[] reminderOverrides = new EventReminder[] {
-                new EventReminder().setMethod("email").setMinutes(24 * 60),
-                new EventReminder().setMethod("popup").setMinutes(10),
-        };
-        Event.Reminders reminders = new Event.Reminders()
-                .setUseDefault(false)
-                .setOverrides(Arrays.asList(reminderOverrides));
-        event.setReminders(reminders);*/
-
         String calendarId = personToAddEvent.getCalendarId();
         Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
         //@@author IzHoBX
@@ -133,7 +111,6 @@ public class TestAddEventCommand extends Command {
                 calendarId = CreateNewCalendar.execute(personToAddEvent.getName().fullName);
                 logger.info("calendar created successfully");
             } catch (IOException e) {
-                e.printStackTrace();
                 logger.info("unable to create calendar");
                 return new CommandResult(MESSAGE_FAILURE);
             }
@@ -158,6 +135,7 @@ public class TestAddEventCommand extends Command {
         }
         //@@author crizyli
 
+        assert calendarId.endsWith("@group.calendar.google.com");
         try {
             event = service.events().insert(calendarId, event).execute();
         } catch (IOException e) {
@@ -169,14 +147,11 @@ public class TestAddEventCommand extends Command {
         //@@author IzHoBX
         Notification notification = new Notification(title, calendarId, event.getId(), event.getEnd().toString(),
                 model.getPerson(targetIndex.getZeroBased()).getId().toString());
-        try {
-            model.addNotification(notification);
-        } catch (DuplicateTimetableEntryException e) {
-            throw new CommandException("Duplicated event");
-        }
+        model.addNotification(notification);
         //@@author crizyli
 
-        System.out.printf("Event created: %s\n", event.getHtmlLink());
+        logger.info("Event created: " + event.getHtmlLink());
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

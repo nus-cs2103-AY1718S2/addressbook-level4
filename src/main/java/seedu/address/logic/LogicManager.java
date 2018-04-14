@@ -34,6 +34,8 @@ import seedu.address.ui.NotificationCenter;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
+    public static final String MESSAGE_LOCKED = "Employees Tracker has been locked,"
+            + "please unlock it first!";
     private static boolean isLocked = false;
     private static String password;
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
@@ -87,7 +89,7 @@ public class LogicManager extends ComponentManager implements Logic {
                     UnlockCommand unlockCommand = (UnlockCommand) command;
                     result = unlockCommand.execute();
                 } else {
-                    result = new CommandResult("Employees Tracker has been locked, please unlock it first!");
+                    result = new CommandResult(MESSAGE_LOCKED);
                 }
             } else {
                 command.setData(model, history, undoRedoStack);
@@ -157,12 +159,12 @@ public class LogicManager extends ComponentManager implements Logic {
                     raise(new ShowNotificationEvent(ownerName, notification));
                 } catch (NullPointerException e) {
                     logger.info("Corresponding employee is deleted. Ignoring this notification");
-                    raise(new RequestToDeleteNotificationEvent(notification.getId(), true));
+                    raise(new RequestToDeleteNotificationEvent(notification.getEventId(), true));
                 }
             }
         };
         timetableEntriesStatus.put(task, true);
-        scheduledTimerTasks.put(event.notification.getId(), task);
+        scheduledTimerTasks.put(event.notification.getEventId(), task);
         timerTaskToTimetableEntryMap.put(task, event.notification);
         System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
                 .currentTimeMillis()));

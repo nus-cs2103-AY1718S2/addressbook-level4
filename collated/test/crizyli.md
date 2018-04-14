@@ -90,6 +90,9 @@ public class DeleteEventCommandTest {
         model = new ModelManager(ab, new UserPrefs());
     }
 
+    /**
+     *  This test can be tested locally, and can not be executed on travis because it requires authentication.
+     */
     /*@Test
     public void execute_addEvent_success() throws Exception {
         TestAddEventCommand addEventCommand = new TestAddEventCommand(INDEX_FIRST_PERSON, "Test Event",
@@ -283,7 +286,7 @@ public class SetPasswordCommandTest {
     }
 
     @Test
-    public void setPasswordFail() {
+    public void setPasswordFail_incorrectPassword() {
         //incorrect old password entered.
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         LogicManager logicManager = new LogicManager(model);
@@ -359,6 +362,9 @@ public class TestAddEventCommandTest {
         model = new ModelManager(ab, new UserPrefs());
     }
 
+    /**
+     *  This test can be tested locally, and can not be executed on travis because it requires authentication.
+     */
     /*@Test
     public void execute_addEvent_success() throws Exception {
         TestAddEventCommand command = new TestAddEventCommand(INDEX_FIRST_PERSON, "Test Event",
@@ -373,7 +379,6 @@ public class TestAddEventCommandTest {
 ```
 ###### \java\seedu\address\logic\commands\TodoListCommandTest.java
 ``` java
-
 //import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -409,6 +414,9 @@ public class TodoListCommandTest {
         assertFalse(todoListCommand.equals(null));
     }
 
+    /**
+     *  This test can be tested locally, and can not be executed on travis because it requires authentication.
+     */
     /*@Test
     public void showSuccess() {
         TodoListCommand command = new TodoListCommand();
@@ -467,7 +475,7 @@ public class UnlockCommandTest {
         testLockCommand.execute();
         UnlockCommand testUnlockCommand = new UnlockCommand();
         testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        testUnlockCommand.setTestMode();
+        testUnlockCommand.setTestMode(true);
         String expectedMessage = UnlockCommand.MESSAGE_SUCCESS;
         CommandResult commandResult = testUnlockCommand.execute();
 
@@ -475,7 +483,7 @@ public class UnlockCommandTest {
     }
 
     @Test
-    public void unlockFail() {
+    public void unlockFail_incorrectPassword() {
         model.setPassword("qwer");
         LogicManager logicManager = new LogicManager(model);
         LockCommand testLockCommand = new LockCommand();
@@ -483,14 +491,68 @@ public class UnlockCommandTest {
         testLockCommand.execute();
         UnlockCommand testUnlockCommand = new UnlockCommand();
         testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        testUnlockCommand.setTestMode();
+        testUnlockCommand.setTestMode(true);
         String expectedMessage = UnlockCommand.MESSAGE_INCORRECT_PASSWORD;
         CommandResult commandResult = testUnlockCommand.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
     }
 
+    @Test
+    public void unlockFail_missingPassword() {
+        model.setPassword("qwer");
+        LogicManager logicManager = new LogicManager(model);
+        LockCommand testLockCommand = new LockCommand();
+        testLockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        testLockCommand.execute();
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        testUnlockCommand.setTestMode(false);
+        String expectedMessage = UnlockCommand.MESSAGE_MISSING_PASSWORD;
+        CommandResult commandResult = testUnlockCommand.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void unlockFail_alreadyUnlocked() {
+        model.setPassword("admin");
+        LogicManager logicManager = new LogicManager(model);
+        LogicManager.unLock();
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        testUnlockCommand.setTestMode(true);
+        String expectedMessage = UnlockCommand.MESSAGE_ALREADY_UNLOCKED;
+        CommandResult commandResult = testUnlockCommand.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+    }
+
+
 }
+```
+###### \java\seedu\address\logic\LogicManagerTest.java
+``` java
+    @Test
+    public void execute_applicationLocked() {
+        String validCommand = "list";
+        LogicManager.lock();
+        assertUnlockRequired(validCommand, LogicManager.MESSAGE_LOCKED);
+    }
+```
+###### \java\seedu\address\logic\LogicManagerTest.java
+``` java
+    /**
+     * Asserts that the feedback to user is the same as the message showed when application is locked.
+     */
+    private void assertUnlockRequired(String command, String expectedMessage) {
+        try {
+            CommandResult result = logic.execute(command);
+            assertEquals(expectedMessage, result.feedbackToUser);
+        } catch (ParseException | CommandException e) {
+            throw new AssertionError("ParseException and CommandException should not be thrown.");
+        }
+    }
 ```
 ###### \java\seedu\address\logic\parser\AddPhotoCommandParserTest.java
 ``` java
@@ -629,12 +691,14 @@ public class LockCommandParserTest {
     private LockCommandParser parser = new LockCommandParser();
 
     @Test
-    public void parse_invalidArgs() {
+    public void parse_extraArgs() {
+        //extra args provided
         assertParseFailure(parser, " 2", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsLockCommand() {
+        //trailing spaces, success.
         assertParseSuccess(parser, "   ", new LockCommand());
     }
 }
@@ -660,17 +724,14 @@ public class SetPasswordCommandParserTest {
 
     @Test
     public void parse_invalidArgs() {
-        // no agrs provided command
+        // extra args provided.
         assertParseFailure(parser, " 1", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                SetPasswordCommand.MESSAGE_USAGE));
-
-        //only old password provided
-        assertParseFailure(parser, " qqq  aaa", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 SetPasswordCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsSetPasswordCommand() {
+        //trailing spaces, success.
         assertParseSuccess(parser, " ",
                 new SetPasswordCommand());
     }
@@ -730,6 +791,10 @@ public class TestAddEventCommandParserTest {
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, TestAddEventCommand.MESSAGE_USAGE);
 
+        //missing person index
+        assertParseFailure(parser, VALID_EVENT_TITLE + EVENT_LOCATION + EVENT_STARTTIME
+                + EVENT_ENDTIME + EVENT_DESCRIPTION, expectedMessage);
+
         //missing title prefix
         assertParseFailure(parser, "1" + VALID_EVENT_TITLE + EVENT_LOCATION + EVENT_STARTTIME
                 + EVENT_ENDTIME + EVENT_DESCRIPTION, expectedMessage);
@@ -774,8 +839,6 @@ public class TestAddEventCommandParserTest {
 ```
 ###### \java\seedu\address\logic\parser\UnlockCommandParserTest.java
 ``` java
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
@@ -791,8 +854,9 @@ public class UnlockCommandParserTest {
     private UnlockCommandParser parser = new UnlockCommandParser();
 
     @Test
-    public void parse_invalidArgs() {
-        assertParseFailure(parser, " 2", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
+    public void parse_extraArgs() {
+        //extra args provided
+        assertParseFailure(parser, " 123", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
     }
 
     @Test

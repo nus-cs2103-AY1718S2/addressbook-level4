@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import org.junit.Rule;
@@ -24,6 +25,15 @@ public class LogicManagerTest {
     private Model model = new ModelManager();
     private Logic logic = new LogicManager(model, false);
 
+    //@@author crizyli
+    @Test
+    public void execute_applicationLocked() {
+        String validCommand = "list";
+        LogicManager.lock();
+        assertUnlockRequired(validCommand, LogicManager.MESSAGE_LOCKED);
+    }
+    //@@author
+
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
         String invalidCommand = "uicfhmowqewca";
@@ -33,9 +43,9 @@ public class LogicManagerTest {
 
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
-        String deleteCommand = "deleteNotification 9";
-        //assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        //assertHistoryCorrect(deleteCommand);
+        String deleteCommand = "delete 9";
+        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertHistoryCorrect(deleteCommand);
     }
 
     @Test
@@ -120,4 +130,18 @@ public class LogicManagerTest {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
     }
+
+    //@@author crizyli
+    /**
+     * Asserts that the feedback to user is the same as the message showed when application is locked.
+     */
+    private void assertUnlockRequired(String command, String expectedMessage) {
+        try {
+            CommandResult result = logic.execute(command);
+            assertEquals(expectedMessage, result.feedbackToUser);
+        } catch (ParseException | CommandException e) {
+            throw new AssertionError("ParseException and CommandException should not be thrown.");
+        }
+    }
+    //@@author
 }

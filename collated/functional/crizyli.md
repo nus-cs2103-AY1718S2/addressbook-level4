@@ -297,6 +297,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -310,13 +311,16 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.TestAddEventCommand;
 
 /**
  * To create an authorized google calendar service to be used in commands that require this service.
- *
+ * Solution below adpated from https://developers.google.com/calendar/quickstart/java
  */
 public class Authentication {
+
+    private static final Logger logger = LogsCenter.getLogger(Authentication.class);
 
     /** Directory to store user credentials for this application. */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
@@ -332,10 +336,8 @@ public class Authentication {
     /** Global instance of the HTTP transport. */
     private static HttpTransport httpTransport;
 
-    /** Global instance of the scopes required by this quickstart.
-     *
-     * If modifying these scopes, deleteNotification your previously saved credentials
-     * at ~/.credentials/calendar-java-quickstart
+    /**
+     *  Global instance of the scopes.
      */
     private static final List<String> SCOPES =
             Arrays.asList(CalendarScopes.CALENDAR);
@@ -374,8 +376,8 @@ public class Authentication {
                         .build();
         Credential credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver()).authorize("user");
-        System.out.println(
-                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+
+        logger.info("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
 
@@ -398,15 +400,14 @@ public class Authentication {
      * @return authentication success or not
      */
     public static boolean authen() {
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
         try {
             service = getCalendarService();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
-
+        assert service != null;
         return true;
     }
 }
@@ -443,10 +444,6 @@ public class AddPhotoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addPhoto";
 
-    public static final String IMAGE_FOLDER_WINDOWS = "src\\main\\resources\\images\\personphoto\\";
-
-    public static final String IMAGE_FOLDER_OTHER = "src/main/resources/images/personphoto/";
-
     public static final String IMAGE_FOLDER = "data/personphoto/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a photo to an employee.\n"
@@ -459,6 +456,9 @@ public class AddPhotoCommand extends UndoableCommand {
     public static final String MESSAGE_INVALID_PHOTO_TYPE = "The photo type is unacceptable!";
 
     public static final String MESSAGE_PHOTO_NOT_CHOSEN = "You have not chosen one photo!";
+
+    public static final String MESSAGE_SAME_PHOTO = "You are adding a photo with same name, please rename"
+            + "it and retry!";
 
     private final Index targetIndex;
 
@@ -493,6 +493,8 @@ public class AddPhotoCommand extends UndoableCommand {
             String currentDir = System.getProperty("user.dir");
             path = currentDir + "/src/main/java/resources/images/personphoto/DefaultPerson.png";
         }
+        //make sure path is initialized.
+        assert path != null;
 
         //check if the photo is chosen.
         if (path.equals("NoFileChoosed")) {
@@ -525,7 +527,7 @@ public class AddPhotoCommand extends UndoableCommand {
         try {
             model.updatePerson(targetPerson, editedPerson);
         } catch (DuplicatePersonException e) {
-            e.printStackTrace();
+            return new CommandResult(MESSAGE_SAME_PHOTO);
         } catch (PersonNotFoundException e) {
             e.printStackTrace();
         }
@@ -616,6 +618,9 @@ public class AddPhotoCommand extends UndoableCommand {
         this.path = event.getFilePath();
     }
 
+    /**
+     *  set this command to test mode.
+     */
     public void setTestMode() {
         this.isTestMode = true;
     }
@@ -632,13 +637,15 @@ public class AuthenCommand extends Command {
 
     public static final String COMMAND_WORD = "authenET";
 
+    public static final String COMMAND_USAGE = "Authorize ET with your google calendar.";
+
     public static final String MESSAGE_SUCCESS = "You have authorized ET!";
 
     public static final String MESSAGE_FAILURE = "You haven't authorized ET successfully,"
             + " please try it again later";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Exports employees from Employees Tracker.\n"
+            + ": Authorize ET with your google calendar service.\n"
             + "Example: " + COMMAND_WORD;
 
     @Override
@@ -703,10 +710,7 @@ public class DeleteEventCommand extends Command {
         Person targetPerson = lastShownList.get(targetIndex.getZeroBased());
 
         // Build a new authorized API client service.
-        // Note: Do not confuse this class with the
-        //   com.google.api.services.calendar.model.Calendar class.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
         try {
             service = Authentication.getCalendarService();
         } catch (IOException e) {
@@ -789,7 +793,7 @@ public class ExportEmployeesCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports current employees to a csv file.\n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_SUCCESS = "All Employees Exported to employees.csv!";
+    public static final String MESSAGE_SUCCESS = "All Employees Exported to employees.csv! Check it in data folder.";
 
     public static final String MESSAGE_FAIL = "Export fail! Make sure you haven't opened employees.csv and try again!";
 
@@ -1038,7 +1042,6 @@ import seedu.address.logic.Authentication;
 import seedu.address.logic.CreateNewCalendar;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.notification.Notification;
-import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -1067,13 +1070,13 @@ public class TestAddEventCommand extends Command {
     public static final String MESSAGE_FAILURE = "Unable to add event, please try again later.";
 
 
-
     private final Index targetIndex;
     private final String title;
     private final String location;
     private final String startTime;
     private final String endTime;
     private final String description;
+    private final Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
@@ -1097,17 +1100,14 @@ public class TestAddEventCommand extends Command {
         Person personToAddEvent = lastShownList.get(targetIndex.getZeroBased());
 
         // Build a new authorized API client service.
-        // Note: Do not confuse this class with the
-        //   com.google.api.services.calendar.model.Calendar class.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
         try {
             service = Authentication.getCalendarService();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning("Couldn't authenticate Google Calendar Service");
         }
 
-
+        //Solution below adpated from https://developers.google.com/calendar/quickstart/java
         Event event = new Event()
                 .setSummary(title)
                 .setLocation(location)
@@ -1127,30 +1127,13 @@ public class TestAddEventCommand extends Command {
                 .setTimeZone("Asia/Singapore");
         event.setEnd(end);
 
-        String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=1"};
-        //event.setRecurrence(Arrays.asList(recurrence));
-
-        /*EventAttendee[] attendees = new EventAttendee[] {
-                new EventAttendee().setEmail("jjjsss@example.com"),
-                new EventAttendee().setEmail("dzzzssss@example.com"),
-        };
-        event.setAttendees(Arrays.asList(attendees));
-
-        EventReminder[] reminderOverrides = new EventReminder[] {
-                new EventReminder().setMethod("email").setMinutes(24 * 60),
-                new EventReminder().setMethod("popup").setMinutes(10),
-        };
-        Event.Reminders reminders = new Event.Reminders()
-                .setUseDefault(false)
-                .setOverrides(Arrays.asList(reminderOverrides));
-        event.setReminders(reminders);*/
-
         String calendarId = personToAddEvent.getCalendarId();
         Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
 ```
 ###### \java\seedu\address\logic\commands\TestAddEventCommand.java
 ``` java
 
+        assert calendarId.endsWith("@group.calendar.google.com");
         try {
             event = service.events().insert(calendarId, event).execute();
         } catch (IOException e) {
@@ -1163,7 +1146,8 @@ public class TestAddEventCommand extends Command {
 ###### \java\seedu\address\logic\commands\TestAddEventCommand.java
 ``` java
 
-        System.out.printf("Event created: %s\n", event.getHtmlLink());
+        logger.info("Event created: " + event.getHtmlLink());
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
@@ -1203,7 +1187,7 @@ public class TodoListCommand extends Command {
     public static final String COMMAND_WORD = "todoList";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Displays the To Do List in a separate window.\n"
+            + ": Displays the To-Do List in a new window.\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "To do list window is loaded.";
@@ -1220,10 +1204,7 @@ public class TodoListCommand extends Command {
     public CommandResult execute() {
 
         // Build a new authorized API client service.
-        // Note: Do not confuse this class with the
-        //   com.google.api.services.calendar.model.Calendar class.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
         try {
             service = Authentication.getCalendarService();
         } catch (IOException e) {
@@ -1278,11 +1259,15 @@ public class UnlockCommand extends Command {
 
     public static final String MESSAGE_INCORRECT_PASSWORD = "Incorrect unlock password!";
 
-    public static final String MESSAGE_MISSING_PASSWORD = "Password is missing!";
+    public static final String MESSAGE_MISSING_PASSWORD = "Password cannot be missing!";
+
+    public static final String MESSAGE_ALREADY_UNLOCKED = "Employees Tracker is already unlocked!";
 
     private String password;
 
     private boolean isTestMode;
+
+    private boolean hasInput;
 
     public UnlockCommand() {
         isTestMode = false;
@@ -1292,13 +1277,13 @@ public class UnlockCommand extends Command {
     @Override
     public CommandResult execute() {
         if (!LogicManager.isLocked()) {
-            return new CommandResult("Employees Tracker is already unlocked!");
+            return new CommandResult(MESSAGE_ALREADY_UNLOCKED);
         }
 
         if (!isTestMode) {
             EventsCenter.getInstance().post(new ShowPasswordFieldEvent());
         } else {
-            this.password = "admin";
+            this.password = hasInput ? "admin" : "nopassword";
         }
 
         if (this.password.equals("nopassword")) {
@@ -1331,13 +1316,17 @@ public class UnlockCommand extends Command {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    /**
+     * handle the event to get the input password.
+     */
     @Subscribe
     private void handlePasswordEnteredEvent(PasswordEnteredEvent event) {
         this.password = event.getPassword();
     }
 
-    public void setTestMode() {
+    public void setTestMode(boolean hasInput) {
         isTestMode = true;
+        this.hasInput = hasInput;
     }
 }
 ```
@@ -1358,8 +1347,7 @@ public class CreateNewCalendar {
      */
     public static String execute(String personName) throws IOException {
         // Build a new authorized API client service.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
 
         service = Authentication.getCalendarService();
 
@@ -1379,6 +1367,7 @@ public class CreateNewCalendar {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert calendarId != null;
         return calendarId;
     }
 
@@ -1400,8 +1389,7 @@ public class DeleteCalendar {
      */
     public static void execute(String calendarId) throws IOException {
         // Build a new authorized API client service.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
 
         service = Authentication.getCalendarService();
 
@@ -1445,7 +1433,7 @@ public class DeleteCalendar {
                     UnlockCommand unlockCommand = (UnlockCommand) command;
                     result = unlockCommand.execute();
                 } else {
-                    result = new CommandResult("Employees Tracker has been locked, please unlock it first!");
+                    result = new CommandResult(MESSAGE_LOCKED);
                 }
             } else {
                 command.setData(model, history, undoRedoStack);
@@ -1504,6 +1492,7 @@ public class DeleteCalendar {
             } else {
                 calendarId = "";
             }
+            assert calendarId != null;
 ```
 ###### \java\seedu\address\logic\parser\AddCommandParser.java
 ``` java
@@ -1616,9 +1605,9 @@ public class DeleteEventCommandParser implements Parser<DeleteEventCommand> {
         if (!sc.hasNextLine()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteEventCommand.MESSAGE_USAGE));
         }
-        String tilte = sc.nextLine().trim();
+        String title = sc.nextLine().trim();
 
-        return new DeleteEventCommand(index, tilte);
+        return new DeleteEventCommand(index, title);
     }
 }
 ```
@@ -1739,23 +1728,23 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
 
         String title = argMultimap.getValue(PREFIX_TITLE).get();
         String location = argMultimap.getValue(PREFIX_LOCATION).get();
-        String stime = argMultimap.getValue(PREFIX_STARTTIME).get();
-        String etime = argMultimap.getValue(PREFIX_ENDTIME).get();
+        String sTime = argMultimap.getValue(PREFIX_STARTTIME).get();
+        String eTime = argMultimap.getValue(PREFIX_ENDTIME).get();
         try {
-            DateTime.parseRfc3339(stime);
+            DateTime.parseRfc3339(sTime);
         } catch (NumberFormatException n) {
-            throw new ParseException("Invalid date/time format: " + stime);
+            throw new ParseException("Invalid date/time format: " + sTime);
         }
 
         try {
-            DateTime.parseRfc3339(etime);
+            DateTime.parseRfc3339(eTime);
         } catch (NumberFormatException n) {
-            throw new ParseException("Invalid date/time format: " + etime);
+            throw new ParseException("Invalid date/time format: " + eTime);
         }
 
-        String decription = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
+        String description = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
 
-        return new TestAddEventCommand(index, title, location, stime, etime, decription);
+        return new TestAddEventCommand(index, title, location, sTime, eTime, decription);
 
     }
 
@@ -1771,7 +1760,6 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
 ```
 ###### \java\seedu\address\logic\parser\UnlockCommandParser.java
 ``` java
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -1787,9 +1775,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UnlockCommand parse(String args) throws ParseException {
-        if (!args.trim().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
-        }
 
         return new UnlockCommand();
     }
@@ -1878,7 +1863,7 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 import com.google.api.client.util.DateTime;
 
 /**
- * Represents a event that is to be loaded in to do list window.
+ * Represents a event that is to be loaded in to-do list window.
  */
 public class ListEvent {
 
@@ -2385,7 +2370,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * View the pop-uped browser window of user's calendar.
+ * View the pop-up browser window of user's calendar.
  */
 public class MyCalendarView extends Application {
 
@@ -2511,7 +2496,7 @@ public class SetPasswordDialog extends Dialog<String> {
         hBox.setMaxWidth(350.0);
 
 
-        HBox.setHgrow(oldPsw, Priority.ALWAYS);
+        HBox.setHgrow(newPsw, Priority.ALWAYS);
 
         getDialogPane().setContent(hBox);
 

@@ -17,12 +17,14 @@ public class LockCommandParserTest {
     private LockCommandParser parser = new LockCommandParser();
 
     @Test
-    public void parse_invalidArgs() {
+    public void parse_extraArgs() {
+        //extra args provided
         assertParseFailure(parser, " 2", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsLockCommand() {
+        //trailing spaces, success.
         assertParseSuccess(parser, "   ", new LockCommand());
     }
 }

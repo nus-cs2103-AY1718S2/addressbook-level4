@@ -9,15 +9,13 @@ public class AuthenCommand extends Command {
 
     public static final String COMMAND_WORD = "authenET";
 
-    public static final String COMMAND_USAGE = "Authorize ET with your google calendar.";
-
     public static final String MESSAGE_SUCCESS = "You have authorized ET!";
 
     public static final String MESSAGE_FAILURE = "You haven't authorized ET successfully,"
             + " please try it again later";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Exports employees from Employees Tracker.\n"
+            + ": Authorize ET with your google calendar service.\n"
             + "Example: " + COMMAND_WORD;
 
     @Override

@@ -60,6 +60,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 calendarId = "";
             }
+            assert calendarId != null;
             //@@author
 
             Person person = new Person(name, phone, email, address, tagList, calendarId);

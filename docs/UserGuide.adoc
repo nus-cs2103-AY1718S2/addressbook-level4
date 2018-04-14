@@ -48,6 +48,9 @@ image::Ui_locked.png[width="790"]
 . If it is your first time to use ET, you are supposed to authorize ET to access your Google Calendar. Type this command `authenET`, a web page will be opened in your default browser,
 and you need to log in with your working google account and give the permission. Refer to Figure 2 below.
 +
+[NOTE]
+You need to connect to Internet when using E.T., because some commands need to access Internet.
++
 .Authorizing ET
 image::authorize_ET.png[width="790"]
 +
@@ -240,11 +243,13 @@ the photo is copied, you should not delete it from that folder manually.
 ====
 // end::addphoto[]
 
-=== Authorizes Employees Tracker : `authenET`
+// tag::auth[]
+=== Authorizing Employees Tracker : `authenET`
 
 Get the permission to allow E.T. to access your google calendar. +
 
 Format: `authenET`
+// end::auth[]
 
 === Listing all employees : `list`
 
@@ -556,8 +561,9 @@ Format: `setPassword`
 
 [NOTE]
 ====
+* You can press kbd:[Tab] to switch the selection between the dialog elements.
 * You need to enter both old and new password in a pop-up dialog, and old password must match current application's unlock password.
-* The new password can contain any character EXCEPT comma(,).
+* The new password can contain any character *except comma(,)*.
 ====
 
 Examples:

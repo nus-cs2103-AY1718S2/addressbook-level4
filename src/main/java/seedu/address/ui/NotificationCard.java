@@ -26,6 +26,7 @@ public class NotificationCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
+    protected boolean isFirstStage;
     @FXML
     private Label title;
     @FXML
@@ -42,10 +43,8 @@ public class NotificationCard extends UiPart<Region> {
     private GridPane content;
 
     private String ownerId;
-    private boolean isFirstStage;
     private boolean isForCenter;
     private String id;
-
 
     public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId,
                             boolean isFirstStage, String id) {
@@ -80,7 +79,6 @@ public class NotificationCard extends UiPart<Region> {
         this.isForCenter = isForCenter;
         setStyle();
     }
-
 
     @Override
     public boolean equals(Object other) {

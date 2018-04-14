@@ -3,7 +3,7 @@ package seedu.address.model.listevent;
 import com.google.api.client.util.DateTime;
 
 /**
- * Represents a event that is to be loaded in to do list window.
+ * Represents a event that is to be loaded in to-do list window.
  */
 public class ListEvent {
 

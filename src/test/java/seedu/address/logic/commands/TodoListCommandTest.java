@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 //@@author crizyli
-
 //import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -36,6 +35,9 @@ public class TodoListCommandTest {
         assertFalse(todoListCommand.equals(null));
     }
 
+    /**
+     *  This test can be tested locally, and can not be executed on travis because it requires authentication.
+     */
     /*@Test
     public void showSuccess() {
         TodoListCommand command = new TodoListCommand();

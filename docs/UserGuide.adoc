@@ -33,7 +33,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Fastis.
 .  Double-click the file to start the app. The GUI should appear in a few seconds. The GUI and its components are displayed in Figure 1 below.
 +
-image:Ui.png[width="790"] +
+image:Ui.png[width="800"] +
 *Figure 1:* GUI upon start and its components.
 +
 .  Type any command in the command box and press kbd:[Enter] to execute it. +
@@ -91,7 +91,8 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK d/DETAIL [
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 l/http://modsn.us/MYwiD d/Likes tennis` +
-Adds a person named John Doe with the attributes listed. Refer to Figure 2 for results of this command.
+Adds a person named John Doe with the attributes listed. +
+Refer to Figure 2 for results of this command.
 +
 image:personAdded.png[width="800"] +
 *Figure 2:* Example of `add` command.
@@ -191,7 +192,8 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in Fastis. Refer to Figure 3 for results of this command.
+Selects the 2nd person in Fastis. +
+Refer to Figure 3 for results of this command.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
@@ -297,7 +299,8 @@ Format: `addEvent n/NAME v/VENUE d/DATE st/STARTTIME et/ENDTIME`
 Examples:
 
 * `addEvent n/CS2103 Meetup v/School of Computing d/07/04/2018 st/1000 et/1300` +
-Adds an event called CS2103 Meetup to the calendar. Refer to Figure 4 for results of the command
+Adds an event called CS2103 Meetup to the calendar. +
+Refer to Figure 4 for results of this command.
 +
 image:AddEventCommandExample.png[width="800"] +
 *Figure 4:* Example of an event added on the calendar
@@ -335,7 +338,8 @@ Format: `check INDEX`
 Examples:
 
 * `check 1` +
-Marks the first to-do in the list as done. Refer to Figure 6 for results of this command.
+Marks the first to-do in the list as done. +
+Refer to Figure 6 for results of this command.
 
 === Marking a to-do as undone: `uncheck`
 
@@ -353,7 +357,8 @@ Format: `uncheck INDEX`
 Examples:
 
 * `uncheck 2` +
-Marks the second to-do in the list as done. Refer to Figure 6 for results of this command.
+Marks the second to-do in the list as done. +
+Refer to Figure 6 for results of this command.
 +
 image:CheckToDoExample.png[width="250"] +
 *Figure 6:* Example of checking/unchecking to-dos
@@ -417,8 +422,8 @@ Format: `listTagMembers TAG [MORE_TAGS]...`
 Examples:
 
 * `listTagMembers CS3230 CS1010` +
-Returns any person having group tags `CS3230`, `CS1010`. Refer to Figure 7 for results of this command.
-+
+Returns any person having group tags `CS3230`, `CS1010`. +
+Refer to Figure 7 for results of this command. +
 image:ListTagMembersCommandExample.png[width="500"] +
 *Figure 7:* Example of ListTagMembers +
 
@@ -440,7 +445,8 @@ Format: `addGroup NAME`
 Examples:
 
 * `addGroup CS2101 Oral Presentation` +
-Adds a group named `CS2101 Oral Presentation` to Fastis. Refer to Figure 8 for results of this command. +
+Adds a group named `CS2101 Oral Presentation` to Fastis. +
+Refer to Figure 8 for results of this command. +
 +
 image:addGroupExample.png[width ="500"] +
 *Figure 8:* Example of adding a group
@@ -464,7 +470,8 @@ Format: `addGroupMember INDEX g/GROUP`
 Examples:
 
 * `addGroupMember 4 g/CS2101 Oral Presentation` +
-Adds 4th person in the list into group `CS2101 Oral Presentation`. Refer to Figure 9 for results of this command. +
+Adds the 4th person in the list into group `CS2101 Oral Presentation`. +
+Refer to Figure 9 for results of this command. +
 +
 image:addGroupMembersToGroupExample.png[width ="500"] +
 *Figure 9:* Example of addMembersToGroup +
@@ -504,7 +511,8 @@ Format: `listGroupMembers GROUP`
 Examples:
 
 * `listGroupMembers CS2101 Oral Presentation`  +
-Lists all members of group CS2101 Oral Presentation. Refer to Figure 10 for results of this command.
+Lists all members of group CS2101 Oral Presentation. +
+Refer to Figure 10 for results of this command.
 +
 image:listGroupMembersExample.png[width = "500"] +
 *Figure 10:* Example of ListGroupMembers. +
@@ -543,7 +551,8 @@ Format: `scheduleGroup GROUP`
 Examples:
 
 * `scheduleGroup CS2101 Oral Presentation`  +
-Displays all free time slots for group CS2101 Oral Presentation. Refer to Figure 11 for results of this command.
+Displays all free time slots for group CS2101 Oral Presentation. +
+Refer to Figure 11 for results of this command.
 +
 image:scheduleGroupExample.png[width = "800"] +
 *Figure 11:* Example of scheduleGroup. +
@@ -612,15 +621,15 @@ Format: `modify INDEX`
 
 [big]#*Timetable Links*#
 
-Timetable links can be retrieved from the https://nusmods.com/[NUSMods Website]. To retrieve it simply go the website and click the *Share/Sync* button, circled in Figure 12.
-+
+Timetable links can be retrieved from the https://nusmods.com/[NUSMods Website]. To retrieve it simply go the website and click the *Share/Sync* button, circled in Figure 12. +
+
 image:nusModsShare.PNG[width ="500"] +
 *Figure 12:* Share/Sync button on NUSMods website. +
 
-The link in the box indicated in Figure 13 below is the TimetableLink for Fastis. Copy it into your commands.
-+
+The link in the box indicated in Figure 13 below is the TimetableLink for Fastis. Copy it into your commands. +
+
 image:nusModsLinkResult.PNG[width ="500"] +
-*Figure 13:* The TimetableLink to copy to Fastis commands. +
+*Figure 13:* The TimetableLink to copy to Fastis commands.
 
 == Command Summary
 
@@ -640,7 +649,7 @@ image:nusModsLinkResult.PNG[width ="500"] +
 
 |`changeTagColor` |Changes a specific group color to one of the supported colors |`color` |`changeTagColor TAG COLOR` |X
 
-|`check` |Marks a to-do in Fastis as done |N/A |`check INDEX` |X
+|`check` |Marks a to-do in Fastis as done |{nbsp} |`check INDEX` |X
 
 |`clear` |Clears all entries from Fastis |`c` |`clear` |X
 
@@ -656,11 +665,11 @@ image:nusModsLinkResult.PNG[width ="500"] +
 
 |`editToDo` |Edits an existing to-do's content in Fastis |`eTD` |`editToDo INDEX c/CONTENT` |X
 
-|`exit` |Exits the program |N/A |`exit` |{nbsp}
+|`exit` |Exits the program |{nbsp} |`exit` |{nbsp}
 
 |`find` |Finds persons whose name contains any of the given keywords |`f` |`find KEYWORD [MORE_KEYWORDS]` |{nbsp}
 
-|`help` |Displays the help window |N/A |`help` |{nbsp}
+|`help` |Displays the help window |{nbsp} |`help` |{nbsp}
 
 |`history` |Lists all the commands that you have entered in reverse chronological order |`h` |`history` |{nbsp}
 
@@ -678,7 +687,7 @@ image:nusModsLinkResult.PNG[width ="500"] +
 
 |`switch` |Switches between Calendar view and Timetable view |`sw` |`switch` |{nbsp}
 
-|`uncheck` |Marks a to-do in Fastis as undone |N/A |`uncheck INDEX` |X
+|`uncheck` |Marks a to-do in Fastis as undone |{nbsp} |`uncheck INDEX` |X
 
 |`undo` |Restores Fastis to the state before the previous _undoable_ command was executed |`u` |`undo` |{nbsp}
 |=========================================================

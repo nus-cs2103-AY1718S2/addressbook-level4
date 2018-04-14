@@ -159,15 +159,25 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     /**
-     * Returns true if the element is deleted..
+     * Returns true if the appointment is not the past appointment
+     * Returns false if the appointment is past appointment
      */
-    public boolean remove(Index index) {
+    public boolean remove(Index index) throws ParseException {
         requireNonNull(index);
         Appointment appointmentToDelete = getAppointmentByIndex(index);
+        boolean isPastAppointment = getPastAppointmentObservableList().contains(appointmentToDelete);
+
+        if (isPastAppointment) {
+            return false;
+        }
         return internalList.remove(appointmentToDelete);
     }
 
-    public Appointment getAppointmentByIndex(Index index) {
+    public Appointment getAppointmentByIndex(Index index) throws ParseException {
+
+//        if (index.getZeroBased() >= getPastAppointmentObservableList().size()) {
+//            return getUpcomingAppointmentObservableList().get();
+//        }
         return (Appointment) internalList.get(index.getZeroBased());
     }
 

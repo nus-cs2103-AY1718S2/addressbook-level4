@@ -1,9 +1,12 @@
 //@@author Kyholmes
 package seedu.address.logic.commands;
 
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -16,44 +19,63 @@ public class DeleteAppointmentCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a patient's appointment."
             + "Parameters: "
-            + "NAME"
-            + "INDEX_NO";
+            + "INDEX (must be a positive integer) "
+            + "APPOINTMENT INDEX (must be a positive integer)\n "
+            + "Example: " + COMMAND_WORD + "1 1";
 
     public static final String MESSAGE_DELETE_SUCCESS = "The appointment is canceled";
 
-    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database";
+    public static final String MESSAGE_APPOINTMENT_INDEX_INVALID = "The appointment index provided is invalid";
 
-    public static final String MESSAGE_APPOINTMENT_NOT_FOUND = "The appointment cannot be found";
+    public static final String MESSAGE_DELETE_PAST_APPOINTMENT = "Past appointments cannot be deleted.";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final Index targetPatientIndex;
 
-    private final Index targetIndex;
+    private final Index targetAppointmentIndex;
 
-    public DeleteAppointmentCommand(NameContainsKeywordsPredicate predicate, Index targetIndex) {
-        this.predicate = predicate;
-        this.targetIndex = targetIndex;
+    public DeleteAppointmentCommand(Index targetPatientIndex, Index targetAppointmentIndex) {
+        this.targetPatientIndex = targetPatientIndex;
+        this.targetAppointmentIndex = targetAppointmentIndex;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        Patient patientFound = model.getPatientFromList(predicate);
 
-        if (patientFound == null) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
+        preprocess();
+
+        Patient patientFound = model.getPatientFromListByIndex(targetPatientIndex);
+
+        if (targetAppointmentIndex.getZeroBased() >= patientFound.getAppointments().size()) {
+            throw new CommandException(MESSAGE_APPOINTMENT_INDEX_INVALID);
         }
 
-        if (model.deletePatientAppointment(patientFound, targetIndex)) {
-            return new CommandResult(MESSAGE_DELETE_SUCCESS);
+        try {
+            if (!model.deletePatientAppointment(patientFound, targetAppointmentIndex)) {
+                throw new CommandException(MESSAGE_DELETE_PAST_APPOINTMENT);
+            }
+        } catch (ParseException e) {
+            throw new AssertionError("The appointment object should have correct format");
         }
 
-        throw new CommandException(MESSAGE_APPOINTMENT_NOT_FOUND);
+        return new CommandResult(MESSAGE_DELETE_SUCCESS);
+    }
+
+    /**
+     * Preprocess checking if index is valid and not out of bound of the patient list
+     */
+    private void preprocess() throws CommandException {
+        List<Patient> lastShownList = model.getFilteredPersonList();
+
+        if (targetPatientIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof DeleteAppointmentCommand)
-                && predicate.equals(((DeleteAppointmentCommand) other).predicate)
-                && targetIndex.equals(((DeleteAppointmentCommand) other).targetIndex);
+                && this.targetPatientIndex.equals(((DeleteAppointmentCommand) other).targetPatientIndex)
+                && this.targetAppointmentIndex.equals(((DeleteAppointmentCommand) other).targetAppointmentIndex);
     }
 }

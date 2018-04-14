@@ -15,6 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
@@ -198,7 +199,7 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Appointment List Accessors =============================================================
 
     @Override
-    public synchronized boolean deletePatientAppointment(Patient patient, Index index) {
+    public synchronized boolean deletePatientAppointment(Patient patient, Index index) throws ParseException {
         requireAllNonNull(patient, index);
         boolean isDeleteSuccess = patient.deletePatientAppointment(index);
         indicateAppointmentChanged(patient);

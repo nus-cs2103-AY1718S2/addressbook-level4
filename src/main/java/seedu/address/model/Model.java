@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
@@ -87,7 +88,7 @@ public interface Model {
     Patient getPatientFromListByIndex(Index targetIndex);
 
     /** Delete a patient's appointment*/
-    boolean deletePatientAppointment(Patient patient, Index index);
+    boolean deletePatientAppointment(Patient patient, Index index) throws ParseException;
 
     /** Get appointment entries*/
     ObservableList<AppointmentEntry> getAppointmentEntryList();

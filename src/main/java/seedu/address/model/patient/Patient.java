@@ -126,7 +126,7 @@ public class Patient {
         return appointments.getUpcomingAppointmentObservableList();
     }
 
-    public boolean deletePatientAppointment(Index index) {
+    public boolean deletePatientAppointment(Index index) throws ParseException {
         return appointments.remove(index);
     }
 

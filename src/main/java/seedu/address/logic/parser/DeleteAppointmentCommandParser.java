@@ -4,13 +4,10 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.Arrays;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new DeleteAppointmentCommand object
@@ -30,17 +27,15 @@ public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentC
                     DeleteAppointmentCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s");
-
-        Index index;
+        String[] argsArray = trimmedArgs.split("\\s");
 
         try {
-            index = ParserUtil.parseIndex(nameKeywords[nameKeywords.length - 1]);
+            Index targetPatientIndex = ParserUtil.parseIndex(argsArray[0]);
+            Index targetAppointmentIndex = ParserUtil.parseIndex(argsArray[1]);
+            return new DeleteAppointmentCommand(targetPatientIndex, targetAppointmentIndex);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     DeleteAppointmentCommand.MESSAGE_USAGE));
         }
-
-        return new DeleteAppointmentCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)), index);
     }
 }

@@ -57,3 +57,5 @@ include::../UserGuide.adoc[tag=print]
 |===
 
 include::../DeveloperGuide.adoc[tag=login]
+
+include::../DeveloperGuide.adoc[tag=print]

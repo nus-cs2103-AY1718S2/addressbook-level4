@@ -44,6 +44,8 @@ public class LogicManager extends ComponentManager implements Logic {
     private HashMap<TimerTask, Boolean> timetableEntriesStatus;
     private HashMap<TimerTask, Notification> timerTaskToTimetableEntryMap;
     private HashMap<String, TimerTask> scheduledTimerTasks;
+    public static final String MESSAGE_LOCKED = "Employees Tracker has been locked,"
+            + "please unlock it first!";
 
     public LogicManager(Model model) {
         this.model = model;
@@ -87,7 +89,7 @@ public class LogicManager extends ComponentManager implements Logic {
                     UnlockCommand unlockCommand = (UnlockCommand) command;
                     result = unlockCommand.execute();
                 } else {
-                    result = new CommandResult("Employees Tracker has been locked, please unlock it first!");
+                    result = new CommandResult(MESSAGE_LOCKED);
                 }
             } else {
                 command.setData(model, history, undoRedoStack);

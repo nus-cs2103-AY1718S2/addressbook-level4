@@ -14,11 +14,6 @@ deploy:
   on:
     branch: master
 
-deploy:
-  provider: gae
-  keyfile: gce.json
-  project: spherical-realm-197214
-
 addons:
   apt:
     packages:

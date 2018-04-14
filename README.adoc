@@ -10,7 +10,7 @@ image::docs/images/UI.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
-image::images/UIMockup.png[width="600"]
+image::docs/images/UI.png[width="600"]
 endif::[]
 
 == Introduction

@@ -23,7 +23,7 @@ public class EncryptionUtilTest {
 
     //test that decryption works
     @Test
-    public void encrypt_decrypt_result_original() throws Exception{
+    public void encryptDecryptResult() throws Exception {
         TEMP_FILE.createNewFile();
         String dataToWrite = "This is the string to write";
         FileWriter fileWriter = new FileWriter(TEMP_FILE);
@@ -37,12 +37,12 @@ public class EncryptionUtilTest {
         String dataToRead = fromFile.nextLine();
         fromFile.close();
 
-        assertEquals(dataToWrite,dataToRead);
+        assertEquals(dataToWrite, dataToRead);
     }
 
     // test that encryption works
     @Test
-    public void encrypt_result_not_equal() throws Exception {
+    public void encryptResultNotEqual() throws Exception {
         TEMP_FILE.createNewFile();
         String dataToWrite = "This is the string to write";
         FileWriter fileWriter = new FileWriter(TEMP_FILE);
@@ -55,6 +55,6 @@ public class EncryptionUtilTest {
         String dataToRead = fromFile.nextLine();
         fromFile.close();
 
-        assertNotEquals(dataToWrite,dataToRead);
+        assertNotEquals(dataToWrite, dataToRead);
     }
 }

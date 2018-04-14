@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.COMMENT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMENT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -50,6 +51,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.CustTimeZone;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -201,6 +203,13 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY + TIMEZONE_DESC_AMY + COMMENT_DESC_AMY
                 + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
+
+         //@@author XavierMaYuqian
+        /* Case: blank comment -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + TIMEZONE_DESC_AMY + INVALID_COMMENT_DESC
+                + TAG_DESC_FRIEND;
+        assertCommandFailure(command, Comment.MESSAGE_COMMENT_CONSTRAINTS);
 
         //@@author glorialaw
         /* Case: blank timezone -> rejected */

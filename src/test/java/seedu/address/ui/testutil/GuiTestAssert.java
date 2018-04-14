@@ -1,7 +1,6 @@
 package seedu.address.ui.testutil;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -47,6 +46,7 @@ public class GuiTestAssert {
 
         assertTagsEqual(expectedPerson, actualCard);
     }
+
     //@@author Sebry9
     /**
      * Return the color style for {@code tagName}'s label.

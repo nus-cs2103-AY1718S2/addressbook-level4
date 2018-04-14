@@ -14,6 +14,7 @@ import seedu.address.commons.events.logic.CalendarGoForwardEvent;
 import seedu.address.commons.events.logic.ZoomInEvent;
 import seedu.address.commons.events.logic.ZoomOutEvent;
 
+//@@author jlks96
 public class CalendarPanelTest extends GuiUnitTest {
     private CalendarPanel calendarPanel;
 

@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_AMY;
@@ -29,35 +30,35 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline").withNric("S8535525Z")
             .withTags("friends").withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
-            .withRemark("").withCca("", "").withInjuriesHistory("").withNameOfKin("Betty",
-                     "98763451", "betty@gmail.com", "Mother").build();
+            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("")
+            .withNameOfKin("Betty", "98763451", "betty@gmail.com", "Mother").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier").withNric("S9123456X")
             .withTags("owesMoney", "friends").withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1",
-                    "Chem A1", "Phy A2").withRemark("").withCca("", "").withInjuriesHistory("")
+                    "Chem A1", "Phy A2").withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("")
             .withNameOfKin("Ben", "90875674", "ben@gmail.com", "Father").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withNric("S9535256J")
-            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("")
-            .withCca("",  "").withInjuriesHistory("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
+            .withRemark(VALID_REMARK).withCca("",  "").withInjuriesHistory("").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withNric("S8765253I")
             .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
-            .withRemark("").withCca("", "").withInjuriesHistory("").build();
+            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withNric("S9482224A")
-            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("")
-            .withCca("", "").withInjuriesHistory("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
+            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withNric("S9482427J")
-            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("")
-            .withCca("", "").withInjuriesHistory("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
+            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withNric("S9482442U")
-            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("")
-            .withCca("", "").withInjuriesHistory("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
+            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withNric("S8482424Z")
-            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("")
-            .withCca("", "").withInjuriesHistory("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
+            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withNric("S8482131K")
-            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1").withRemark("")
-            .withCca("", "").withInjuriesHistory("").build();
+            .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
+            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)

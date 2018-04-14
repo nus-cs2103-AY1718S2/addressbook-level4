@@ -8,8 +8,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
- * SortCommand is called from AddressBookParser and implements the a sorting mechanism
- * so that the user may sort contacts in the addressBook by name, alphabetically
+ * Implements sorting mechanism so that the user may sort contacts in the addressBook by name,
+ * alphabetically
  */
 public class SortCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sort_by_name";

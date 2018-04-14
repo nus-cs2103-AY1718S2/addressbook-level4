@@ -15,6 +15,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.util.DeleteUtil;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -48,12 +49,23 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
         filteredDeleteItems = new ArrayList<>(this.addressBook.getItemList());
         calendarTaskLists = this.addressBook.getCalendarList();
+        clearRedundantImages();
     }
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
     }
 
+    //@@author Alaru
+    /**
+     * Clears the data folder of redundant images
+     */
+    public void clearRedundantImages() {
+        logger.info("Deleting any unused display pictures");
+        DeleteUtil.clearImageFiles(getItemList(), getFilteredPersonList());
+        clearDeleteItems();
+    }
+    //@@author
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {

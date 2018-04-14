@@ -121,10 +121,10 @@ public class DisplayPicStorage {
             File input = new File(filePath);
             if (!FileUtil.isSameFile(toSave, input)) {
                 FileUtil.copyImage(filePath, toSave);
-                logger.info("Successfully saved " + uniqueName + '.' + fileType + " to disk.");
+                logger.fine("Successfully saved " + uniqueName + '.' + fileType + " to disk.");
             }
         } catch (IOException ioe) {
-            logger.info("Error saving display picture: " + ioe.getMessage());
+            logger.fine("Error saving display picture: " + ioe.getMessage());
             throw new IllegalValueException("Unable to save display picture");
         }
     }
@@ -140,7 +140,7 @@ public class DisplayPicStorage {
         } else {
             String filePath = dp.toString();
             if (!DisplayPicStorage.isValidPath(filePath) || !DisplayPicStorage.isValidImage(filePath)) {
-                logger.info("Unable to open image at : " + dp.toString()
+                logger.fine("Unable to open image at : " + dp.toString()
                         + ", retrieving default display picture.");
                 return AppUtil.getImage(INTERNAL_DEFAULT_PIC_SAVE_LOCATION);
             }

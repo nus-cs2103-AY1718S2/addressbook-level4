@@ -35,7 +35,7 @@ public class DeleteUtil {
                 if (deleteFile(item)) {
                     logger.info("Successfully deleted image at " + item + " from disk.");
                 } else {
-                    logger.info("Unsuccessful in deleting " + item + " from disk.");
+                    logger.info("Unsuccessful in deleting image at " + item + " from disk.");
                 }
             }
         }

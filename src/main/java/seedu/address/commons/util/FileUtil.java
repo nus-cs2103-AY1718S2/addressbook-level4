@@ -130,11 +130,15 @@ public class FileUtil {
         bisN.read(bufferN);
         while (fileBytes1 != -1) {
             if (!Arrays.equals(bufferO, bufferN)) {
+                bisO.close();
+                bisN.close();
                 return false;
             }
             fileBytes1 = bisO.read(bufferO);
             bisN.read(bufferN);
         }
+        bisO.close();
+        bisN.close();
         return true;
     }
 

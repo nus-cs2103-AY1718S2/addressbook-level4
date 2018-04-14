@@ -75,13 +75,13 @@ Format: `add n/NAME ic/NRIC nok/NAME_OF_KIN [t/CLASS] [r/REMARK] [sub/SUBJECT_NA
 Abbreviation Format: `a n/NAME ic/NRIC nok/NAME_OF_KIN [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]`
 
 [NOTE]
-* For more examples on what subjects and subject grades can be added, please refer to the <<FAQ>> section below.
-* If you want to change the students' details later, you can use the `Edit` feature at <<Editing a student : `edit` or `e`>>.
-* If you want to add additional subjects later, you can use the the `AddSubject` feature at <<Adding subjects to a student : `addsub` [since v1.5]>>
+-For more examples on what subjects and subject grades can be added, please refer to the <<FAQ>> section below. +
+-If you want to change the students' details later, you can use the `Edit` feature at <<Editing a student : `edit` or `e`>>. +
+-If you want to add additional subjects later, you can use the the `AddSubject` feature at <<Adding subjects to a student : `addsub` [since v1.5]>>
 
 [IMPORTANT]
-* When adding a student, at least a `NAME`, a `NRIC` and a `NAME_OF_KIN` should be provided. +
-* A `SPACE` should be inserted between each `SUBJECT_NAME` and `SUBJECT_GRADE`. +
+-When adding a student, at least a `NAME`, a `NRIC` and a `NAME_OF_KIN` should be provided. +
+-A `SPACE` should be inserted between each `SUBJECT_NAME` and `SUBJECT_GRADE`.
 
 Examples:
 
@@ -133,9 +133,9 @@ Abbreviation Format: `e INDEX [n/NAME] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [s
 Edits the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
 
 [IMPORTANT]
-* At least one of the optional fields must be provided. +
-* `INDEX` *must be a positive integer*: 1, 2, 3, ... +
-* When editing the fields, for example: subjects, the previous information will be overwritten by the new subjects.
+-At least one of the optional fields must be provided. +
+-`INDEX` *must be a positive integer*: 1, 2, 3, ... +
+-When editing the fields, for example: subjects, the previous information will be overwritten by the new subjects.
 
 Examples:
 
@@ -157,15 +157,15 @@ You just need to follow the format below and replace the words in "[ ]" with the
 Format: `addsub INDEX sub/[SUBJECT_NAME SUBJECT_GRADE ...]` +
 
 [NOTE]
-* Adds subject(s) the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
-* If you want to view the subjects of the student, please refer to <<Selecting a person : `select` or `s`>>
-* This feature is undoable, so if you need to restore the _EduBuddy_ to the state before you enter this command, type in `undo`.
+-Adds subject(s) the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
+-If you want to view the subjects of the student, please refer to <<Selecting a person : `select` or `s`>> +
+-This feature is undoable, so if you need to restore the _EduBuddy_ to the state before you enter this command, type in `undo`.
 
 [IMPORTANT]
-* `INDEX` *must be a positive integer*: 1, 2, 3, ... +
-* There should be a `SPACE` between each `SUBJECT_NAME` and `SUBJECT_GRADE`.
-* If the student is already assigned to the subject that you want to add, that subject will not be overwritten.
-* If you have typed in duplicate subjects, for example, `addsub 1 sub/English A1 English A1`, the system will return an error message as shown in Figure... +
+-`INDEX` *must be a positive integer*: 1, 2, 3, ... +
+-There should be a `SPACE` between each `SUBJECT_NAME` and `SUBJECT_GRADE`. +
+-If the student is already assigned to the subject that you want to add, that subject will not be overwritten. +
+-If you have typed in duplicate subjects, for example, `addsub 1 sub/English A1 English A1`, the system will return an error message.
 You can remove the duplicate subject (`addsub 1 sub/English A1`) and press `Enter` to add the subject(s).
 
 Examples:
@@ -196,9 +196,9 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Abbreviation Format: `f KEYWORD [MORE_KEYWORDS]`
 
 [NOTE]
-The search is case insensitive. e.g `hans` will match `Hans`. +
-The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`. +
-Students matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+-The search is case insensitive. e.g `hans` will match `Hans`. +
+-The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`. +
+-Students matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
 [IMPORTANT]
 Only the name is searched and only exact words will be matched e.g. `Han` will not match `Hans`.
@@ -219,8 +219,8 @@ Format: `delete INDEX` +
 Abbreviation Format: `d INDEX`
 
 [NOTE]
-* Deletes the student at the specified `INDEX`. +
-* The index refers to the index number shown in the most recent listing.
+-Deletes the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
 `INDEX` *must be a positive integer*: 1, 2, 3, ...
@@ -341,8 +341,8 @@ Format: `select INDEX` +
 Abbreviation Format: `s INDEX`
 
 [NOTE]
-* Selects the student and loads the student profile of the student at the specified `INDEX`. +
-* The index refers to the index number shown in the most recent listing.
+-Selects the student and loads the student profile of the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
 The index *must be a positive integer*: 1, 2, 3, ...
@@ -449,9 +449,9 @@ Format: `appointment INDEX d/DATE s/START_TIME e/END_TIME` +
 Abbreviation Format: `appt INDEX d/DATE s/START_TIME e/END_TIME`
 
 [IMPORTANT]
-* `DATE` should be in *DDMMYYYY* format e.g. 25th Dec 2018 would be 25122018. +
-* `START_TIME` and `END_TIME` should be in *24 hour* format e.g. 3:30p.m. would be 1530. +
-* `INDEX` *must be a positive integer*: 1, 2, 3, ...
+-`DATE` should be in *DDMMYYYY* format e.g. 25th Dec 2018 would be 25122018. +
+-`START_TIME` and `END_TIME` should be in *24 hour* format e.g. 3:30p.m. would be 1530. +
+-`INDEX` *must be a positive integer*: 1, 2, 3, ...
 
 [NOTE]
 After the appointment is successfully created, right click on the calendar and select
@@ -475,8 +475,8 @@ Format: `stream INDEX STREAM_TYPE`
 You will be able to see a success message in the CommandBox, For example: `Student: John Doe. L1R5 Score: 8`.
 
 [NOTE]
-* Selects the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
-* `STREAM_TYPE` refers to the different streaming categories.
+-Selects the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
+-`STREAM_TYPE` refers to the different streaming categories.
 [width="85%",cols="<23%,<23%",options="header",]
 |=======================================================================
 |STREAM_TYPE|Streaming categories
@@ -488,11 +488,11 @@ You will be able to see a success message in the CommandBox, For example: `Stude
 |=======================================================================
 
 [IMPORTANT]
-* `INDEX` *must be a positive integer*: 1, 2, ...
-* `STREAM_TYPE` *must be a positive integer*: 1, 2, 3, 4, 5.
-* The `Student` should have the right subject combination to calculate the respective score, else you will see that the score is 0.
-* If you want to change the subject details, you can use the `Edit` feature at <<Editing a student : `edit` or `e`>>.
-* If you want to add additional subjects later, you can use the the `AddSubject` feature at <<Add subjects to a student : `addsub`>>.
+-`INDEX` *must be a positive integer*: 1, 2, ...
+-`STREAM_TYPE` *must be a positive integer*: 1, 2, 3, 4, 5.
+-The `Student` should have the right subject combination to calculate the respective score, else you will see that the score is 0.
+-If you want to change the subject details, you can use the `Edit` feature at <<Editing a student : `edit` or `e`>>.
+-If you want to add additional subjects later, you can use the the `AddSubject` feature at <<Add subjects to a student : `addsub`>>.
 
 Examples:
 
@@ -513,8 +513,8 @@ You will be able to see the success message, +
 `Person: NAME`
 
 [NOTE]
-Adds a CCA and the student's position in the CCA to the student at the specified `INDEX`. +
-The index refers to the index number shown in the most recent listing.
+-Adds a CCA and the student's position in the CCA to the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
 `INDEX` *must be a positive integer*: 1, 2, 3, ...
@@ -538,8 +538,8 @@ You will be able to see the success message, +
 `Person: NAME`
 
 [NOTE]
-Deletes a CCA and the student's position in the CCA from the student at the specified `INDEX`. +
-The index refers to the index number shown in the most recent listing.
+-Deletes a CCA and the student's position in the CCA from the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
 `INDEX` *must be a positive integer*: 1, 2, 3, ...
@@ -565,8 +565,8 @@ You will be able to see the success message, +
 `Person: NAME`
 
 [NOTE]
-Adds an injury history to the student at the specified `INDEX`. +
-The index refers to the index number shown in the most recent listing.
+-Adds an injury history to the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
 `INDEX` *must be a positive integer*: 1, 2, 3, ...
@@ -591,8 +591,8 @@ You will be able to see the success message, +
 `Person: NAME`
 
 [NOTE]
-Deletes a injury history from the student at the specified `INDEX`. +
-The index refers to the index number shown in the most recent listing.
+-Deletes a injury history from the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
 `INDEX` *must be a positive integer*: 1, 2, 3, ...

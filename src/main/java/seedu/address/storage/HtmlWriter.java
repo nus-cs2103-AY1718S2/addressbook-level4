@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Date;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.person.customer.Customer;
@@ -27,7 +26,8 @@ public class HtmlWriter {
     private final String address;
     private final String amountBorrowed;
     private final String amountCurrentlyOwed;
-    private final String dueDate;
+    private final String oweStartDate;
+    private final String oweDueDate;
     private final String runnerAssigned;
 
     private final List<Person> customerList;
@@ -41,7 +41,8 @@ public class HtmlWriter {
         this.address = null;
         this.amountBorrowed = null;
         this.amountCurrentlyOwed = null;
-        this.dueDate = null;
+        this.oweStartDate = null;
+        this.oweDueDate = null;
         this.runnerAssigned = null;
         this.customerList = null;
     }
@@ -57,7 +58,8 @@ public class HtmlWriter {
         this.address = customer.getAddress().value;
         this.amountBorrowed = String.format("%,.2f", customer.getMoneyBorrowed().value);
         this.amountCurrentlyOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
-        this.dueDate = simpledate.format(customer.getOweDueDate()).toString();
+        this.oweStartDate = simpledate.format(customer.getOweStartDate());
+        this.oweDueDate = simpledate.format(customer.getOweDueDate());
         this.runnerAssigned = customer.getRunner().getName().fullName;
         this.customerList = null;
     }
@@ -73,7 +75,8 @@ public class HtmlWriter {
         this.address = runner.getAddress().value;
         this.amountBorrowed = "";
         this.amountCurrentlyOwed = "";
-        this.dueDate = "";
+        this.oweStartDate = "";
+        this.oweDueDate = "";
         this.runnerAssigned = "";
         this.customerList = runner.getCustomers();
     }
@@ -95,7 +98,8 @@ public class HtmlWriter {
             printWriter.println("<tr><td>address: </td><td>" + address + "</td></tr>");
             printWriter.println("<tr><td>amount borrowed: </td><td>$" + amountBorrowed + "</td></tr>");
             printWriter.println("<tr><td>amount owed: </td><td>$" + amountCurrentlyOwed + "</td></tr>");
-            printWriter.println("<tr><td>due date: </td><td>" + dueDate + "</td></tr>");
+            printWriter.println("<tr><td>start date: </td><td>" + oweStartDate + "</td></tr>");
+            printWriter.println("<tr><td>due date: </td><td>" + oweDueDate + "</td></tr>");
             printWriter.println("<tr><td>runner assigned: </td><td>" + runnerAssigned + "</td></tr>");
             printWriter.println("</table></body></html>");
             printWriter.close();
@@ -123,10 +127,7 @@ public class HtmlWriter {
             printWriter.println("<tr><td style=\"width: 120px;\">phone: </td><td>" + phone + "</td></tr>");
             printWriter.println("<tr><td>email: </td><td>" + email + "</td></tr>");
             printWriter.println("<tr><td>address: </td><td>" + address + "</td></tr>");
-            printWriter.println("</table>");
-            printWriter.println("<br><br>");
-            printWriter.println("<table>");
-            printWriter.println("<tr><th align=\"left\">");
+            printWriter.println("</table><br><br><table><tr><th align=\"left\">");
             printWriter.println("Customers Assigned [" + customerListSize + "]");
             printWriter.println("</th></tr>");
             for (Person eachCustomer: customerList) {

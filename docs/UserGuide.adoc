@@ -710,7 +710,7 @@ Format: `entrylist` +
 
 Command Alias: `el`
 
-==== Clearing all entries in list of entries : `entryclear` `coming in v1.5`
+==== Clearing all entries in list of entries : `entryclear` `since v1.5`
 
 Description: Clears all entry list entries from ContactSails. +
 

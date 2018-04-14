@@ -43,6 +43,7 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.EditEntryCommand;
 import seedu.address.logic.commands.EditEntryCommand.EditEntryDescriptor;
 import seedu.address.logic.commands.EditOrderCommand;
+import seedu.address.logic.commands.EntryListClearCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindGroupCommand;
@@ -315,6 +316,20 @@ public class AddressBookParserTest {
         EditEntryCommand command = (EditEntryCommand) parser.parseCommand(EditEntryCommand.COMMAND_ALIAS + " "
                 + INDEX_FIRST_ENTRY.getOneBased() + " " + CalendarEntryUtil.getCalendarEntryDetails(entry));
         assertEquals(new EditEntryCommand(INDEX_FIRST_ENTRY, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_entryListClear() throws Exception {
+        assertTrue(parser.parseCommand(EntryListClearCommand.COMMAND_WORD) instanceof EntryListClearCommand);
+        assertTrue(parser.parseCommand(EntryListClearCommand.COMMAND_WORD + " abc")
+                instanceof EntryListClearCommand);
+    }
+
+    @Test
+    public void parseCommand_entryListClearAlias() throws Exception {
+        assertTrue(parser.parseCommand(EntryListClearCommand.COMMAND_ALIAS) instanceof EntryListClearCommand);
+        assertTrue(parser.parseCommand(EntryListClearCommand.COMMAND_ALIAS + " abc")
+                instanceof EntryListClearCommand);
     }
 
     @Test

@@ -22,6 +22,7 @@ import seedu.address.logic.commands.DeletePreferenceCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditEntryCommand;
 import seedu.address.logic.commands.EditOrderCommand;
+import seedu.address.logic.commands.EntryListClearCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindGroupCommand;
@@ -102,6 +103,10 @@ public class AddressBookParser {
         case EditOrderCommand.COMMAND_WORD:
         case EditOrderCommand.COMMAND_ALIAS:
             return new EditOrderCommandParser().parse(arguments);
+
+        case EntryListClearCommand.COMMAND_WORD:
+        case EntryListClearCommand.COMMAND_ALIAS:
+            return new EntryListClearCommand();
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:

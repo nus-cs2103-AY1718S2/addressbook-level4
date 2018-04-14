@@ -204,7 +204,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
 
-         //@@author XavierMaYuqian
+        //@@author XavierMaYuqian
         /* Case: blank comment -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TIMEZONE_DESC_AMY + INVALID_COMMENT_DESC

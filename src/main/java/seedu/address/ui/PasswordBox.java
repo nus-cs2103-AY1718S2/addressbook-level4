@@ -45,7 +45,7 @@ public class PasswordBox extends UiPart<Region> {
         this.storage = storage;
         this.model = model;
 
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
+        // calls #setStyleToDefault() whenever there is a change to the text of the Passowrd box.
         passwordTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
     }
 

@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new SearchCommand object
  */
-public class SearchCommandParser {
+public class SearchCommandParser implements Parser<SearchCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the SearchCommand

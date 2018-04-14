@@ -30,7 +30,7 @@ public class GroupCommand extends UndoableCommand {
             + PREFIX_GROUP_NAME + "Best "
             + PREFIX_INDEX + "1 "
             + PREFIX_INDEX + "3 ";
-    public static final String MESSAGE_SUCCESS = "Created New Recipe Group: %s";
+    public static final String MESSAGE_SUCCESS = "Created new recipe group: %s";
 
     private GroupName groupName;
     private Set<Index> targetIndices;

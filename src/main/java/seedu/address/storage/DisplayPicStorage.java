@@ -113,17 +113,9 @@ public class DisplayPicStorage {
      */
     public static void saveDisplayPic(String uniqueName, String filePath, String fileType)
             throws IllegalValueException {
-        try {
-            File toSave = new File(SAVE_LOCATION + uniqueName + '.' + fileType);
-            File input = new File(filePath);
-            if (!FileUtil.isSameFile(toSave, input)) {
-                FileUtil.copyImage(filePath, toSave);
-                logger.fine("Successfully saved " + uniqueName + '.' + fileType + " to disk.");
-            }
-        } catch (IOException ioe) {
-            logger.fine("Error saving display picture: " + ioe.getMessage());
-            throw new IllegalValueException("Unable to save display picture");
-        }
+        File toSave = new File(SAVE_LOCATION + uniqueName + '.' + fileType);
+        FileUtil.copyImage(filePath, toSave);
+        logger.info("Successfully saved " + uniqueName + '.' + fileType + " to disk.");
     }
 
     /**

@@ -26,20 +26,19 @@ The implementation was challenging as it requires changes to how the application
 * *Minor enhancement*: added a sort command that allows users to sort clients according to their names in lexicographical order
 * *Minor enhancement*: added a Group attribute that allows users to group their clients and sort them according to groups
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/tree/master/collated/functional[Functional code]] [https://github.com[Test code]]
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/tree/master/collated/functional[Functional code]] [https://github.com/CS2103JAN2018-T11-B3/main/tree/master/collated/test[Test code]]
 
 * *Other contributions*:
 
 ** Project management:
 *** Collated code from releases `v1.4` - `v1.5` (3 releases) on GitHub
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33])
 *** Updated the application icon (Pull requests https://github.com/CS2103JAN2018-T11-B3/main/pull/135[#135])
 *** Updated the storage component to include a backup API(Pull requests https://github.com/CS2103JAN2018-T11-B3/main/pull/8[#8])
 ** Documentation:
 *** Updated the User Guide to remove unnecessary documentation: https://github.com/CS2103JAN2018-T11-B3/main/pull/58[#58]
+*** Added Instructions for manual testing: https://github.com/CS2103JAN2018-T11-B3/main/pull/170[#170]
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W13-B1/main/issues/149[1], https://github.com/CS2103JAN2018-W13-B1/main/issues/153[2], https://github.com/CS2103JAN2018-W13-B1/main/issues/168[3])
 
 == Contributions to the User Guide

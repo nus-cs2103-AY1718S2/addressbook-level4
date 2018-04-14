@@ -48,9 +48,7 @@ public class UploadCommandTest {
 
     @BeforeClass
     public static void setTestEnvironment() {
-        GoogleDriveStorage.setDataStoreDir();
-        GoogleDriveStorage.setUploadFileFolder();
-        GoogleDriveStorage.setUser();
+        GoogleDriveStorage.setTestEnvironment();
     }
 
     @Test
@@ -157,8 +155,6 @@ public class UploadCommandTest {
 
     @AfterClass
     public static void resetTestEnvironment() {
-        GoogleDriveStorage.resetDataStoreDir();
-        GoogleDriveStorage.resetUploadFileFolder();
-        GoogleDriveStorage.resetUser();
+        GoogleDriveStorage.resetTestEnvironment();
     }
 }

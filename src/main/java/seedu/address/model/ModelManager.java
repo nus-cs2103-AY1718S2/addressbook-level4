@@ -209,8 +209,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void uploadAddressBook(String filepath, Password password) throws IOException,
             GoogleAuthorizationException, RequestTimeoutException {
         GoogleDriveStorage googleDriveStorage = new GoogleDriveStorage(filepath);
-        filepath = googleDriveStorage.getUploadFilePath();
-        exportAddressBook(filepath, password);
+        String exportFilePath = googleDriveStorage.getUploadFilePath();
+        exportAddressBook(exportFilePath, password);
         googleDriveStorage.uploadFile();
     }
     //@@author

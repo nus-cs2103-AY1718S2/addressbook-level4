@@ -60,7 +60,7 @@ public class GoogleDriveStorage {
 
     public GoogleDriveStorage(String uploadFilePath) throws GoogleAuthorizationException, RequestTimeoutException {
         this.uploadFilePath = uploadFileFolder + uploadFilePath;
-        uploadFile = new java.io.File(uploadFilePath);
+        uploadFile = new java.io.File(this.uploadFilePath);
         userAuthorize();
     }
 
@@ -68,33 +68,21 @@ public class GoogleDriveStorage {
         return uploadFilePath;
     }
 
-    public static void setUploadFileFolder() {
-        uploadFileFolder = "";
-    }
-
-    public static void resetUploadFileFolder() {
-        uploadFileFolder = "./googledrive/";
-    }
-
-    public static void setUser() {
-        user = "test";
-    }
-
-    public static void resetUser() {
-        user = "user";
-    }
-
     /**
-     * Sets data store directory for test environment
+     * Sets the variables for test environment
      */
-    public static void setDataStoreDir() {
+    public static void setTestEnvironment() {
+        uploadFileFolder = "";
+        user = "test";
         dataStoreDir = new java.io.File("./src/test/resources/GoogleCredentials/");
     }
 
     /**
-     * Resets data store directory for user environment
+     * Resets the variables for user environment
      */
-    public static void resetDataStoreDir() {
+    public static void resetTestEnvironment() {
+        uploadFileFolder = "./googledrive/";
+        user = "user";
         dataStoreDir = new java.io.File(System.getProperty("user.home"), ".google-credentials/google-drive-storage");
     }
 

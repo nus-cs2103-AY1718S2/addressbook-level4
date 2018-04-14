@@ -50,7 +50,7 @@ public class BookCard extends UiPart<Region> {
         title.setText(book.getTitle().fullTitle);
         author.setText(book.getAuthor().value);
         isbn.setText(book.getIsbn().value);
-        avail.setText(book.getAvail().getValue());
+        avail.setText(book.getAvail().toString());
         colorTags(book);
     }
 

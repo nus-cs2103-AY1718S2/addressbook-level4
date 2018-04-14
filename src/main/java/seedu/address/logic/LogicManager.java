@@ -39,8 +39,8 @@ public class LogicManager extends ComponentManager implements Logic {
      * Clears the data folder of redundant images
      */
     public void clearRedundantImages() {
-        DeleteUtil.clearImageFiles(model.getItemList(), model.getFilteredPersonList());
         logger.info("Deleting unused display pictures");
+        DeleteUtil.clearImageFiles(model.getItemList(), model.getFilteredPersonList());
         model.clearDeleteItems();
     }
 

@@ -2,16 +2,20 @@ package seedu.address.commons.util;
 
 import java.io.File;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Person;
 
 /**
- * A class for deleting and managing unwanted storage files
+ * A class for deleting unwanted storage files
  */
 //@@author Alaru
 public class DeleteUtil {
+
+    private static final Logger logger = LogsCenter.getLogger(DeleteUtil.class);
 
     /**
      * Goes through the list of files to be deleted and only deletes those that are not in use
@@ -28,7 +32,11 @@ public class DeleteUtil {
                 }
             }
             if (notUsed) {
-                deleteFile(item);
+                if (deleteFile(item)) {
+                    logger.info("Successfully deleted image at " + item + " from disk.");
+                } else {
+                    logger.info("Unsuccessful in deleting " + item + " from disk.");
+                }
             }
         }
     }
@@ -37,8 +45,8 @@ public class DeleteUtil {
      * Delete a file at the given filepath.
      * @param filepath where the file is located.
      */
-    public static void deleteFile(String filepath) {
+    public static boolean deleteFile(String filepath) {
         File toDelete = new File(filepath);
-        toDelete.delete();
+        return toDelete.delete();
     }
 }

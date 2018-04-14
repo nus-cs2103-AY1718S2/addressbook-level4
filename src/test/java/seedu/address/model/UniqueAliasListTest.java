@@ -118,7 +118,7 @@ public class UniqueAliasListTest {
         uniqueAliasList.add(MAP_1);
         uniqueAliasList.add(MAP_2);
 
-        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{MAP_2}, {MAP_1}});
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{MAP_1}, {MAP_2}});
         assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
     }
 
@@ -129,7 +129,7 @@ public class UniqueAliasListTest {
         uniqueAliasList.add(MAP_1);
         uniqueAliasList.add(MAP_2);
 
-        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD, MAP_2}, {MAP_1}});
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD, MAP_1}, {MAP_2}});
         assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
     }
 

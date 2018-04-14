@@ -3,6 +3,7 @@ package seedu.address.model.alias;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javafx.collections.FXCollections;
@@ -192,7 +193,10 @@ public class UniqueAliasList {
         for (String command : AliasCommand.getCommands()) {
             aliases.add(new ArrayList<>());
         }
-        for (String key: aliasCommandMap.keySet()) {
+
+        String[] sortedKeys = aliasCommandMap.keySet().toArray(new String[0]);
+        Arrays.sort(sortedKeys);
+        for (String key: sortedKeys) {
             String command = aliasCommandMap.get(key);
             aliases.get(AliasCommand.getCommands().indexOf(command)).add(key);
         }

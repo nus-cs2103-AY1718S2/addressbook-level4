@@ -1,5 +1,7 @@
 package seedu.address.commons.util;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,6 +43,8 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void encrypt(String file, String password)throws IOException, WrongPasswordException {
+        requireNonNull(file);
+        requireNonNull(password);
         byte[] hashedPassword = hashPassword(password);
         encrypt(new File(file), hashedPassword);
     }
@@ -54,6 +58,8 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void encrypt(File file, byte[] password)throws IOException, WrongPasswordException {
+        requireNonNull(file);
+        requireNonNull(password);
         try {
             logger.info("Encrypting...");
             Key secretAesKey = createKey(password);
@@ -62,7 +68,7 @@ public class SecurityUtil {
             processFile(cipher, file);
             logger.info("Encrypted");
         } catch (InvalidKeyException ike) {
-            logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
+            logger.warning("ERROR: Wrong key length " + StringUtil.getDetails(ike));
             throw new AssertionError("Wrong key length");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             logger.severe("ERROR: Cannot find AES or padding in library.");
@@ -78,7 +84,8 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void decrypt(File file)throws IOException, WrongPasswordException {
-        if (!checkPlainText(file)) {
+        requireNonNull(file);
+        if (!checkXmlPlainText(file)) {
             throw new WrongPasswordException("File Encrypted!");
         }
     }
@@ -92,6 +99,8 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void decrypt(File file, byte[] password) throws IOException, WrongPasswordException {
+        requireNonNull(file);
+        requireNonNull(password);
         try {
             logger.info("Decrypting...");
             Key secretAesKey = createKey(password);
@@ -100,7 +109,7 @@ public class SecurityUtil {
             processFile(cipher, file);
             logger.info("Decrypted");
         } catch (InvalidKeyException ike) {
-            logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
+            logger.warning("ERROR: Wrong key length " + StringUtil.getDetails(ike));
             throw new AssertionError("Wrong key length");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             logger.severe("ERROR: Cannot find AES or padding in library.");
@@ -117,7 +126,9 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     private static void processFile(Cipher cipher, File file) throws IOException, WrongPasswordException {
-        byte[] inputBytes = "Dummy".getBytes();
+        requireNonNull(file);
+        requireNonNull(cipher);
+        byte[] inputBytes = null;
         try {
 
             FileInputStream inputStream = new FileInputStream(file);
@@ -127,7 +138,7 @@ public class SecurityUtil {
 
             FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(outputBytes);
-            checkPlainText(outputBytes);
+            checkXmlPlainText(outputBytes);
             inputStream.close();
             outputStream.close();
 
@@ -142,6 +153,7 @@ public class SecurityUtil {
      * Hashes the DEFAULT_PASSWORD to meet the required length for AES.
      */
     public static byte[] hashPassword(String password) {
+        requireNonNull(password);
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             try {
@@ -166,6 +178,8 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void decryptFile (File file, Password password) throws IOException, WrongPasswordException {
+        requireNonNull(file);
+        requireNonNull(password);
         if (password.getPassword() != null) {
             try {
                 decrypt(file, password.getPassword());
@@ -185,6 +199,7 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void encryptFile (File file, Password password) throws IOException, WrongPasswordException {
+        requireNonNull(file);
         if (password != null && password.getPassword() != null) {
             encrypt(file, password.getPassword());
         }
@@ -204,7 +219,7 @@ public class SecurityUtil {
      */
     private static void handleBadPaddingException(byte[] inputBytes, BadPaddingException e)
                                                                             throws WrongPasswordException {
-        if (!checkPlainText(inputBytes)) {
+        if (!checkXmlPlainText(inputBytes)) {
             logger.severe("ERROR: Wrong PASSWORD length used ");
             throw new WrongPasswordException("Wrong PASSWORD.");
 
@@ -219,7 +234,8 @@ public class SecurityUtil {
      * @param data Contains the file data
      * @return true if it is highly likely to be plain text
      */
-    private static boolean checkPlainText(byte[] data) {
+    private static boolean checkXmlPlainText(byte[] data) {
+        requireNonNull(data);
         String string = new String(data);
         return string.contains(XML);
     }
@@ -230,11 +246,12 @@ public class SecurityUtil {
      * @param file Points to file path
      * @return true if it is highly likely to be plain text
      */
-    private static boolean checkPlainText(File file) throws IOException {
+    private static boolean checkXmlPlainText(File file) throws IOException {
+        requireNonNull(file);
         FileInputStream inputStream = new FileInputStream(file);
         byte[] inputBytes = new byte[(int) file.length()];
         inputStream.read(inputBytes);
         inputStream.close();
-        return checkPlainText(inputBytes);
+        return checkXmlPlainText(inputBytes);
     }
 }

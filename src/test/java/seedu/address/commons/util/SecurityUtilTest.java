@@ -15,6 +15,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.model.Password;
+import seedu.address.testutil.Assert;
 
 //@@author yeggasd
 public class SecurityUtilTest {
@@ -141,6 +142,27 @@ public class SecurityUtilTest {
 
         thrown.expect(AssertionError.class);
         SecurityUtil.decrypt(TEST_DATA_FILE, truncatedHashedPassword);
+    }
+
+    @Test
+    public void decryptEncrypt_null_throwsNullPointerExceptionError() throws Exception {
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.encrypt(null, hashedPassword));
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.encrypt(TEST_DATA_FILE, null));
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.decrypt(null));
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.decrypt(null, hashedPassword));
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.decrypt(TEST_DATA_FILE, null));
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.hashPassword(null));
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.decryptFile(TEST_DATA_FILE, null));
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.decryptFile(null, new Password("asd")));
+
+        Assert.assertThrows(NullPointerException.class, () ->  SecurityUtil.encryptFile(null, new Password("asd")));
+
     }
 
     @After

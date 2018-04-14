@@ -30,7 +30,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_DISPLAY_PIC + "[IMAGE TO DISPLAY PICTURE] "
+            + PREFIX_DISPLAY_PIC + "[IMAGE TO DISPLAY PICTURE] \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_MATRIC_NUMBER + "A1234567J "

@@ -250,6 +250,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.sortList();
     }
 
+    public void sortTaskList() {
+        tasks.sortList();
+    }
+
     @Override
     public ObservableList<Task> getTaskList() {
         return tasks.asObservableList();

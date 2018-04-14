@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -94,11 +95,22 @@ public class UploadCommandTest {
     }
 
     @Test
-    public void execute_emptyAddressBookUploadIntoInvalidFilepath_throwsCommandException() throws Exception {
+    public void execute_addressBookUploadIntoInvalidFilepath_throwsCommandException() throws Exception {
         String invalidFilepath = "";
         UploadCommand uploadCommand = prepareCommand(invalidFilepath, model, null);
 
         assertCommandFailure(uploadCommand, model, UploadCommand.MESSAGE_FILE_UNABLE_TO_SAVE);
+    }
+
+    @Test
+    public void execute_addressBookUploadNoUserResponse_throwsCommandException() throws Exception {
+        String filepath = TEST_DATA_FILE;
+        ModelManager model = new ModelManager(addressBookWithAliceAndBenson, new UserPrefs());
+        UploadCommand uploadCommand = prepareCommand(filepath, model, TEST_PASSWORD);
+
+        GoogleDriveStorage.resetTestEnvironment();
+        assertCommandFailure(uploadCommand, model, UploadCommand.MESSAGE_REQUEST_TIMEOUT);
+        GoogleDriveStorage.setTestEnvironment();
     }
 
     @Test

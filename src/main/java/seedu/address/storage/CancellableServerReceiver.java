@@ -49,15 +49,6 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
     }
 
     /**
-     * Constructor that starts the server on {@code "localhost"} selects an unused port.
-     * Use {@link Builder} if you need to specify any of the optional parameters.
-     */
-    public CancellableServerReceiver(String host, int port,
-                                     String successLandingPageUrl, String failureLandingPageUrl) {
-        this(host, port, CALLBACK_PATH, successLandingPageUrl, failureLandingPageUrl);
-    }
-
-    /**
      * Constructor.
      *
      * @param host Host name to use
@@ -138,14 +129,6 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
             }
             server = null;
         }
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public int getPort() {
-        return port;
     }
 
     private static int getUnusedPort() throws IOException {

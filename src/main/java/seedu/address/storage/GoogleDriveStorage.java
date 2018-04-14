@@ -99,9 +99,7 @@ public class GoogleDriveStorage {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
             dataStoreFactory = new FileDataStoreFactory(dataStoreDir);
-
             credential = authorizationRequest();
-
             drive = new Drive.Builder(httpTransport, JSON_FACTORY, credential).setApplicationName(
                     APPLICATION_NAME).build();
             return;
@@ -120,6 +118,20 @@ public class GoogleDriveStorage {
      * Authorizes the installed application to access user's protected data.
      */
     private Credential authorizationRequest() throws IOException {
+        GoogleClientSecrets clientSecrets = retrieveClientSecrets();
+        GoogleAuthorizationCodeFlow flow = buildFlow(clientSecrets);
+        CancellableServerReceiver receiver = new CancellableServerReceiver();
+
+        Credential credential = getUserCredential(flow, receiver);
+        return credential;
+    }
+
+    /**
+     * Retrieves application's client secrets in resource file folder
+     *
+     * @throws IOException When client secrets is not found
+     */
+    private GoogleClientSecrets retrieveClientSecrets() throws IOException {
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
                 new InputStreamReader(GoogleDriveStorage.class.getResourceAsStream("/json/client_secret.json")));
         if (clientSecrets.getDetails().getClientId().startsWith("Enter")
@@ -128,14 +140,34 @@ public class GoogleDriveStorage {
                     "Enter Client ID and Secret from https://code.google.com/apis/console/?api=drive "
                             + "into /src/main/resources/json/client_secret.json");
         }
+        return clientSecrets;
+    }
+
+    /**
+     * Builds {@code GoogleAuthorizationCodeFlow} object from client secrets
+     *
+     * @param clientSecrets Application's client secrets
+     * @throws IOException
+     */
+    private GoogleAuthorizationCodeFlow buildFlow(GoogleClientSecrets clientSecrets) throws IOException {
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 httpTransport, JSON_FACTORY, clientSecrets,
                 Collections.singleton(DriveScopes.DRIVE_FILE)).setDataStoreFactory(dataStoreFactory)
                 .setAccessType("offline")
                 .setApprovalPrompt("force")
                 .build();
+        return flow;
+    }
 
-        CancellableServerReceiver receiver = new CancellableServerReceiver();
+    /**
+     * Creates user's {@code Credential} by redirecting user to authorization request url and get access token
+     *
+     * @param flow          Authorization request flow
+     * @param receiver      Server receiver to receive access token
+     * @throws IOException  If user rejects access to his/her Google Drive
+     */
+    private Credential getUserCredential(GoogleAuthorizationCodeFlow flow, CancellableServerReceiver receiver)
+            throws IOException {
         try {
             Credential credential = flow.loadCredential(user);
             if (credential != null

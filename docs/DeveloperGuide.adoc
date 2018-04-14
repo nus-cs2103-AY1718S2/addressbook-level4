@@ -643,9 +643,9 @@ Given below is are the activity diagram (Refer to figurue 20) for the mechanism.
 .UML class diagram for Job Opening
 image::Auto-CompleteActivityDiagram.png[width="800", align="center"]
 
-The `previous input` and `tab Counter` are recorded to account for cases where more than one command share the same 
+The `previous input` and `tab Counter` are recorded to account for cases where more than one command share the same
 prefix. For e.g. the `add`, `addjob` and `addapp` commands share the common `add`. In such a case, the user can just
-type `a` or `ad` or `add` and press `Tab` multiple times to cycle between these commands which will keep incrementing 
+type `a` or `ad` or `add` and press `Tab` multiple times to cycle between these commands which will keep incrementing
 the Tab counter, `tabNumber` in a cyclic manner.
 
 // end::autoComplete[]

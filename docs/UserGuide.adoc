@@ -614,17 +614,17 @@ Format: `modify INDEX`
 
 Timetable links can be retrieved from the https://nusmods.com/[NUSMods Website]. To retrieve it simply go the website and click the *Share/Sync* button, circled in Figure 12.
 +
-image:nusModsShare.png[width ="500"] +
+image:nusModsShare.PNG[width ="500"] +
 *Figure 12:* Share/Sync button on NUSMods website. +
 
 The link in the box indicated in Figure 13 below is the TimetableLink for Fastis. Copy it into your commands.
 +
-image:nusModsLinkResult.png[width ="500"] +
+image:nusModsLinkResult.PNG[width ="500"] +
 *Figure 13:* The TimetableLink to copy to Fastis commands. +
 
 == Command Summary
 
-[width="80%",cols="3,10,2,10,3",options="header"]
+[width="80%",cols="2,10,2,10,2",options="header"]
 |=========================================================
 |Command |Usage |Alias |Format |Undoable?
 

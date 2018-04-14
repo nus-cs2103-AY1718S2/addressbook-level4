@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.LogicManager;
+import seedu.address.model.appointment.HideAllAppointment;
 import seedu.address.model.person.HideAllPerson;
 
 //@@author XavierMaYuqian
@@ -17,11 +18,14 @@ public class LockCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Address book has been locked!";
 
-    private final HideAllPerson predicate = new HideAllPerson();
+    private final HideAllPerson predicate1 = new HideAllPerson();
+
+    private final HideAllAppointment predicate2 = new HideAllAppointment();
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
+        model.updateFilteredPersonList(predicate1);
+        model.updateFilteredAppointmentList(predicate2);
         LogicManager.lock();
 
         return new CommandResult(MESSAGE_SUCCESS);

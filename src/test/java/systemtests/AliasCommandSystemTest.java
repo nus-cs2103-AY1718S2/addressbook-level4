@@ -1,6 +1,7 @@
 package systemtests;
 
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ADD;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_HISTORY;
 import static seedu.address.testutil.TypicalAliases.ADD;
 import static seedu.address.testutil.TypicalAliases.HISTORY;
 

@@ -37,7 +37,7 @@ public class VacantCommand extends Command {
     private final Building building;
 
     /**
-     * Creates a VacantCommand to retrieve all vacant rooms in a given building
+     * Creates a VacantCommand to retrieve all the rooms in a given building
      */
     public VacantCommand(Building building) {
         requireNonNull(building);

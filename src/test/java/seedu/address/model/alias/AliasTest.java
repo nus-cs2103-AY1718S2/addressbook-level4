@@ -41,7 +41,7 @@ public class AliasTest {
 
         // valid alias
         assertTrue(Alias.isValidAliasParameter(VALID_ALIAS_ADD));
-        assertTrue(Alias.isValidUnaliasName(VALID_ALIAS_NUMBER));
+        assertTrue(Alias.isValidAliasParameter(VALID_ALIAS_NUMBER));
     }
 
     @Test
@@ -50,13 +50,13 @@ public class AliasTest {
         Assert.assertThrows(NullPointerException.class, () -> new Alias(null, null));
 
         // invalid unalias
-        assertFalse(Alias.isValidUnaliasName("")); // empty string
-        assertFalse(Alias.isValidUnaliasName(" ")); // spaces only
-        assertFalse(Alias.isValidUnaliasName(INVALID_ALIAS)); // only non-alphanumeric characters
+        assertFalse(Alias.isValidAliasParameter("")); // empty string
+        assertFalse(Alias.isValidAliasParameter(" ")); // spaces only
+        assertFalse(Alias.isValidAliasParameter(INVALID_ALIAS)); // only non-alphanumeric characters
 
         // valid unalias
-        assertTrue(Alias.isValidUnaliasName(VALID_ALIAS_ADD));
-        assertTrue(Alias.isValidUnaliasName(VALID_ALIAS_NUMBER));
+        assertTrue(Alias.isValidAliasParameter(VALID_ALIAS_ADD));
+        assertTrue(Alias.isValidAliasParameter(VALID_ALIAS_NUMBER));
     }
 
     @Test

@@ -248,7 +248,7 @@ public class ParserUtil {
      */
     public static String parseUnalias(String unalias) throws IllegalValueException {
         requireNonNull(unalias);
-        if (!Alias.isValidUnaliasName(unalias)) {
+        if (!Alias.isValidAliasParameter(unalias)) {
             throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
 
         }
@@ -256,10 +256,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String tag} into a {@code Tag}.
+     * Parses a {@code String building} into a {@code Building}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code tag} is invalid.
+     * @throws IllegalValueException if the given {@code building} is invalid.
      */
     public static Building parseBuilding(String building) throws IllegalValueException {
         requireNonNull(building);

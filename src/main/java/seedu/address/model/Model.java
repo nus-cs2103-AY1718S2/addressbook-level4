@@ -20,7 +20,7 @@ public interface Model {
 
     /** {@code Predicate} Predicate that shows all persons */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
-    
+
     /** {@code Predicate} Predicate that shows all appointment */
     Predicate<Appointment> PREDICATE_SHOW_ALL_APPOINTMENTS = unused -> true;
 

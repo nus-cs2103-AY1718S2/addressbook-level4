@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -53,8 +55,8 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
     private LoginStatusBar loginStatusBar;
-    private ErrorsWindow errorsWindow;
-    private CalendarWindow calendarWindow;
+    private List<ErrorsWindow> errorsWindowsOpened = new ArrayList<>();
+    private List<CalendarWindow> calendarWindowsOpened = new ArrayList<>();
 
 
     @FXML
@@ -217,14 +219,7 @@ public class MainWindow extends UiPart<Stage> {
         calendarPlaceholder.setVisible(false);
         //@@author ifalluphill
         calendarPanel.reloadDefaultPage();
-        if (calendarWindow != null) {
-            calendarWindow.close();
-        }
-        calendarWindow = new CalendarWindow(logic);
-        if (errorsWindow != null) {
-            errorsWindow.close();
-        }
-        errorsWindow = new ErrorsWindow(logic);
+        cleanOpenedWindows();
         //@@author kaisertanqr
         dailySchedulerPlaceholder.setVisible(false);
         personListPanelPlaceholder.setVisible(false);
@@ -234,23 +229,38 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Unhide browser and person list panel.
      */
-    public void showAfterLogin() throws IOException {
+    public void showAfterLogin() {
         loginStatusBar.updateLoginStatus(true, logic.getLoggedInUser());
         featuresTabPane.setVisible(true);
         beneficiariesPane.setVisible(true);
         personDetailsPlaceholder.setVisible(true);
         calendarPlaceholder.setVisible(true);
-        //@@author ifalluphill
-        calendarWindow.close();
-        calendarWindow = new CalendarWindow(logic);
-        errorsWindow.close();
-        errorsWindow = new ErrorsWindow(logic);
-        //@@author kaisertanqr
         dailySchedulerPlaceholder.setVisible(true);
         personListPanelPlaceholder.setVisible(true);
         logger.fine("Displaying panels after login.");
 
     }
+
+    //@@author ifalluphill
+    /**
+     * Closes all opened WebViews left open during a logged in session.
+     */
+    private void cleanOpenedWindows() {
+        if (calendarWindowsOpened != null) {
+            for (CalendarWindow cw : calendarWindowsOpened) {
+                cw.close();
+            }
+        }
+        if (errorsWindowsOpened != null) {
+            for (ErrorsWindow ew : errorsWindowsOpened) {
+                ew.close();
+            }
+        }
+
+        calendarWindowsOpened = new ArrayList<>();
+        errorsWindowsOpened = new ArrayList<>();
+    }
+
     //@@author jaronchan
     /**
      * Disables the selection of tabs and persons cards by mouse click.
@@ -307,11 +317,9 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleViewErrors() {
-        if (errorsWindow == null) {
-            errorsWindow = new ErrorsWindow(logic);
-        }
-
-        errorsWindow.show();
+        ErrorsWindow errorsWindowInstance = new ErrorsWindow(logic);
+        errorsWindowsOpened.add(errorsWindowInstance);
+        errorsWindowInstance.show();
     }
 
     /**
@@ -319,11 +327,9 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleViewCalendar() throws IOException {
-        if (calendarWindow == null) {
-            calendarWindow = new CalendarWindow(logic);
-        }
-
-        calendarWindow.show();
+        CalendarWindow calendarWindowInstance = new CalendarWindow(logic);
+        calendarWindowsOpened.add(calendarWindowInstance);
+        calendarWindowInstance.show();
     }
     //@@author
 

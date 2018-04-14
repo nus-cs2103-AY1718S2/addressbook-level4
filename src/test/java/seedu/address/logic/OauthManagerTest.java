@@ -2,19 +2,19 @@
 
 package seedu.address.logic;
 
-import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -84,6 +84,10 @@ public class OauthManagerTest {
         assertNull(OAuthManager.getMostRecentDailyEventListDate());
     }
 
+    /**
+     * Created a valid event with a location.
+     * @returns Event
+     */
     private Event generateValidEventWithLocation() {
         Event validEvent = new Event()
                 .setSummary("Test Calendar Event")
@@ -104,6 +108,10 @@ public class OauthManagerTest {
         return validEvent;
     }
 
+    /**
+     * Created a valid event without a location.
+     * @returns Event
+     */
     private Event generateValidEventWithoutLocation() {
         Event validEvent = new Event()
                 .setSummary("Test Calendar Event");
@@ -122,7 +130,6 @@ public class OauthManagerTest {
         return validEvent;
     }
 
-
-    }
+}
 
 //@@author

@@ -2,6 +2,8 @@
 
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 
 import com.google.api.services.calendar.model.Event;
@@ -9,8 +11,6 @@ import com.google.api.services.calendar.model.Event;
 import seedu.address.logic.OAuthManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.login.User;
-
-import static java.util.Objects.requireNonNull;
 
 /**
 * Deletes a calendar event using it's last displayed index from the command result box.

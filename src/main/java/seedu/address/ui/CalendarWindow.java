@@ -10,12 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 
@@ -84,11 +82,6 @@ public class CalendarWindow extends UiPart<Stage> {
     public void show() {
         logger.fine("Showing calendar window.");
         getRoot().show();
-        getRoot().setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                System.out.println("Calendar window is closing");
-            }
-        });
     }
 
     /**

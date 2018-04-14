@@ -11,11 +11,7 @@ public class Location {
     public static final String MESSAGE_LOCATION_CONSTRAINTS =
             "Activity location should not be blank, or start with white space";
 
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String LOCATION_VALIDATION_REGEX = "[^\\s].*";
+    public static final String LOCATION_VALIDATION_REGEX = ".+";
 
     public final String value;
 

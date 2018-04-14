@@ -6,10 +6,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.model.person.Name.MESSAGE_NAME_CONSTRAINTS;
 import static seedu.address.model.person.NextOfKin.MESSAGE_EMAIL_CONSTRAINTS;
 import static seedu.address.model.person.NextOfKin.MESSAGE_PHONE_CONSTRAINTS;
 import static seedu.address.model.person.NextOfKin.MESSAGE_REMARK_CONSTRAINTS;
 import static seedu.address.model.person.NextOfKin.isValidEmail;
+import static seedu.address.model.person.NextOfKin.isValidName;
 import static seedu.address.model.person.NextOfKin.isValidPhone;
 import static seedu.address.model.person.NextOfKin.isValidRemark;
 
@@ -61,6 +63,10 @@ public class NextOfKinCommandParser implements Parser<NextOfKinCommand> {
         if (argMultimap.getValue(PREFIX_NAME).get().isEmpty() && argMultimap.getValue(PREFIX_PHONE).get().isEmpty()
                 && argMultimap.getValue(PREFIX_NAME).get().isEmpty()) {
             throw new ParseException(NextOfKinCommand.MESSAGE_NOT_EDITED);
+        }
+
+        if (!isValidName(argMultimap.getValue(PREFIX_NAME).get())) {
+            throw new ParseException(MESSAGE_NAME_CONSTRAINTS);
         }
 
         if (!isValidPhone(argMultimap.getValue(PREFIX_PHONE).get())) {

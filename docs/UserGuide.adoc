@@ -168,6 +168,9 @@ Reverses the `delete 1` command. +
 Reverses the most recent `undo` command. +
 Format: `redo` or `r`
 
+[IMPORTANT]
+This command is undoable.
+
 Examples:
 
 * `delete 1` +
@@ -192,7 +195,7 @@ Reapplies the `delete 1` command. +
 Reapplies the `clear` command. +
 // end::undoredo[]
 
-==== Clearing all entries : `clear` or `c` ◀️
+==== Clearing all entries : `clear` or `c`
 
 Clears all entries from the IMDB. +
 Format: `clear` or `c`
@@ -416,14 +419,13 @@ Selects the 1st patient in the results of the `find` command.
 ==== Viewing and editing the medical records for a patient : `record` [since in v1.4]
 
 Views the medical record at the specified record index for a patient specified by the index number used in the last patient listing. +
-*This command is only accessible to doctors.* +
 Format: `record INDEX in/[RECORD INDEX]` or `rec INDEX in/[RECORD INDEX]`
 
 [IMPORTANT]
 This command is undoable.
 
 [CAUTION]
-This command is only for doctors.
+This command is only accessible to doctors.
 
 ****
 * The medical record for that patient will be opened in a separate window.
@@ -442,14 +444,13 @@ Displays the first medical record for the first person in the result of the list
 ==== Deleting the medical records for a patient : `remover` [since in v1.4]
 
 Deletes the medical record specified by the record index for a patient specified by the index number used in the last patient listing. +
-*This command is only accessible to doctors.* +
 Format: `remover INDEX in/[RECORD INDEX]` or `rr INDEX in/[RECORD INDEX]`
 
 [IMPORTANT]
 This command is undoable.
 
 [CAUTION]
-This command is only for doctors.
+This command is only accessible to doctors.
 
 ****
 * Deleting a medical record will shift all other medical records up the medical record list.
@@ -469,11 +470,10 @@ Deletes the first medical record for the first person in the result of the list 
 ==== Printing a patient's formatted medical records : `print` or `p` [since v1.4]
 
 Formats and prints a patient's medical records into a pdf file. This pdf file is located in the same directory as the IMDB application. +
-*This command is only accessible to doctors.* +
 Format: `print INDEX` or `p INDEX`
 
 [CAUTION]
-This command is only for doctors.
+This command is only accessible to doctors.
 // end::print[]
 
 ==== Attaching and viewing the X-ray scans for a patient `[coming in v2.0]`
@@ -488,15 +488,13 @@ The commands listed in this section are used to enable the management of the vis
 
 Adds a patient into the end of the visiting queue (registration). +
 
-*This command is only accessible to medical staff and is not undoable.* +
-
 Format: `addq INDEX` or `aq INDEX`
 
 [IMPORTANT]
 This command is undoable.
 
 [CAUTION]
-This command is only for medical staff.
+This command is only accessible to medical staff.
 
 Examples:
 
@@ -516,15 +514,13 @@ image::addq_duplicate.PNG[width="990"]
 
 Removes the first patient from the visiting queue (check-out). +
 
-*This command is only accessible to medical staff and is not undoable.* +
-
 Format: `removeq` or `rq`
 
 [IMPORTANT]
 This command is undoable.
 
 [CAUTION]
-This command is only for medical staff.
+This command is only accessible to medical staff.
 
 Examples:
 
@@ -538,15 +534,13 @@ Removes the first patient in the queue.
 
 Removes a patient from the visiting queue specified by the index number used in the last patient listing. (check-out). +
 
-*This command is only accessible to medical staff and is not undoable.* +
-
 Format: `removeq INDEX` or `rq INDEX`
 
 [IMPORTANT]
 This command is undoable.
 
 [CAUTION]
-This command is only for medical staff.
+This command is only accessible to medical staff.
 
 ****
 * The index refers to the index number shown in the most recent listing.
@@ -570,8 +564,6 @@ The commands listed in this section are used to enable the management of patient
 
 Adds a medical appointment to a patient specified by their name, with the appointment's date and time.
 
-*This command is only accessible to medical staff and is not undoable.* +
-
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
 
 [CAUTION]
@@ -594,8 +586,6 @@ Adds a medical appointment for John on 23/3/2018 at 2:30pm.
 
 Shows the list of medical appointments of a patient specified by their name.
 
-*This command is only accessible to medical staff.* +
-
 Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
 
 Examples:
@@ -609,8 +599,6 @@ Lists the medical appointments made by John.
 ==== Deleting a medical appointment by patient name and appointment index number: `delappt` [since v1.3]
 
 Deletes the medical appointment at the given index of a patient specified by their name.
-
-*This command is only accessible to medical staff and is not undoable.* +
 
 Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
 
@@ -630,8 +618,6 @@ Deletes the medical appointment made by John with index number 1.
 ==== Viewing medical appointments in calendar: `viewappt` [since v1.4]
 
 Shows the list of medical appointments in a calendar month view.
-
-*This command is only accessible to medical staff.* +
 
 Format: `viewappt` or `va`
 

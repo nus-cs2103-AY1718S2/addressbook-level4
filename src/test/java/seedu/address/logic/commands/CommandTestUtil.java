@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXTOFKINNAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXTOFKINPHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PICTURE_PATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROGRAMMING_LANGUAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -53,9 +54,14 @@ public class CommandTestUtil {
     public static final String VALID_NOKNAME_BOB = "Sam";
     public static final String VALID_NOKNAME_AMY = "Sam";
     public static final String VALID_NOKPHONE_AMY = "12345678";
-    public static final String VALID_NOKPHONE_BOB = "12345678";
+    public static final String VALID_NOKPHONE_BOB = "87654321";
     public static final String VALID_REMARKS_AMY = "well behaved";
     public static final String VALID_REMARKS_BOB = "naughty";
+    public static final String VALID_PROFILEPICTUREPATH_AMY = "src/main/resource/view/profile_photo_placeholder.png";
+    public static final String VALID_PROFILEPICTUREPATH_BOB = "src/main/resource/view/test.png";
+    public static final String PROFILEPICTUREPATH_DESC_AMY = PREFIX_PICTURE_PATH + VALID_PROFILEPICTUREPATH_AMY;
+    public static final String PROFILEPICTUREPATH_DESC_BOB = PREFIX_PICTURE_PATH + VALID_PROFILEPICTUREPATH_AMY;
+    public static final String INVALID_PROFILEPICTUREPATH_DESC = " " + PREFIX_PICTURE_PATH + "invalid";
 
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";

@@ -60,10 +60,10 @@ public class EditMiscCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + VALID_ALLERGIES_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + ALLERGIES_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
         // zero index
-        assertParseFailure(parser, "0" + VALID_ALLERGIES_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + ALLERGIES_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);

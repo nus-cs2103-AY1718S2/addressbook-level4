@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PICTURE_PATH;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.core.Messages;
@@ -42,7 +43,7 @@ public class EditPictureCommand extends UndoableCommand {
             + PREFIX_INDEX + "INDEX (must be a positive integer) "
             + PREFIX_PICTURE_PATH + "URL OF NEW PICTURE.\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_INDEX + "1 "
-            + PREFIX_INDEX + "C:\\example.jpg";
+            + PREFIX_PICTURE_PATH + "C:\\example.jpg";
 
     public static final String MESSAGE_EDIT_STUDENT_SUCCESS = "Edited profile picture of Student: %1$s";
     private final Index index;
@@ -137,6 +138,24 @@ public class EditPictureCommand extends UndoableCommand {
                 tags, isFavourite, dashboard, profilePicturePath, miscellaneousInfo);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EditPictureCommand)) {
+            return false;
+        }
+
+        // state check
+        EditPictureCommand e = (EditPictureCommand) other;
+        return index.equals(e.index)
+                && newProfilePicturePath.equals(e.newProfilePicturePath)
+                && Objects.equals(studentToEditPicture, e.studentToEditPicture);
+    }
 
 }
 //@@author

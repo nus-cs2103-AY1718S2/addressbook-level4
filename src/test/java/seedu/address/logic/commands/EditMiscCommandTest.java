@@ -40,7 +40,7 @@ import seedu.address.testutil.StudentBuilder;
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
  * and unit tests for EditMiscCommand.
  */
-public class editMiscCommandTest {
+public class EditMiscCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new Schedule());
 
@@ -215,9 +215,7 @@ public class editMiscCommandTest {
         // same values -> returns true
         EditMiscDescriptor copyDescriptor = new EditMiscDescriptor(DESC_MISC_AMY);
         EditMiscCommand commandWithSameValues = prepareCommand(INDEX_FIRST, copyDescriptor);
-        if (standardCommand.equals(commandWithSameValues)) {
 
-        }
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -242,7 +240,7 @@ public class editMiscCommandTest {
 
 
     /**
-     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code EditMiscCommand} with parameters {@code index} and {@code descriptor}
      */
     private EditMiscCommand prepareCommand(Index index, EditMiscDescriptor descriptor) {
         EditMiscCommand editMiscCommand = new EditMiscCommand(index, descriptor);

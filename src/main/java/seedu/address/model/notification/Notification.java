@@ -9,16 +9,16 @@ import seedu.address.model.person.Person;
 public class Notification {
     private String title;
     private String calendarId;
-    private String id;
+    private String eventId;
     private String endDate;
     private String ownerId;
 
-    public Notification(String title, String calendarId, String id, String endDate, String ownerId) {
-        assert(title != null && id != null && endDate != null && ownerId != null && !ownerId.equals(Person
+    public Notification(String title, String calendarId, String eventId, String endDate, String ownerId) {
+        assert(title != null && eventId != null && endDate != null && ownerId != null && !ownerId.equals(Person
                 .UNINITIALISED_ID + ""));
         this.title = title;
         this.calendarId = calendarId;
-        this.id = id;
+        this.eventId = eventId;
         this.endDate = endDate;
         this.ownerId = ownerId;
     }
@@ -27,8 +27,8 @@ public class Notification {
         return calendarId;
     }
 
-    public String getId() {
-        return id;
+    public String getEventId() {
+        return eventId;
     }
 
     public String getEndDate() {

@@ -1,6 +1,7 @@
 //@@author IzHoBX
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -36,7 +37,7 @@ public class DismissCommand extends UndoableCommand {
             toDelete = model.deleteNotificationByIndex(targetIndex);
         } catch (NotificationNotFoundException e) {
             //should not happen, because id is obtained from NotificationCenter
-            e.printStackTrace();
+            LogsCenter.getLogger(DismissCommand.class).info("No local copy of notification in AddressBook");
             return new CommandResult(MESSAGE_ERROR);
         }
         return new CommandResult(String.format(MESSAGE_DISMISS_SUCCESS, toDelete));

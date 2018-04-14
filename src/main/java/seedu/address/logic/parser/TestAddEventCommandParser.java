@@ -77,9 +77,9 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
             throw new ParseException("Invalid date/time format: " + etime);
         }
 
-        String decription = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
+        String description = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
 
-        return new TestAddEventCommand(index, title, location, stime, etime, decription);
+        return new TestAddEventCommand(index, title, location, stime, etime, description);
 
     }
 

@@ -17,7 +17,6 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ModelManager;
 import seedu.address.model.notification.Notification;
-import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -73,31 +72,27 @@ public class NotificationSystemTest {
                 "wasccas", person2.getId() + "");
         Notification notification4 = new Notification("TEST4", person2.getCalendarId(), "ascca",
                 "wasccas", person2.getId() + "");
-        try {
-            addressbookStub.addNotification(notification1);
-            addressbookStub.addNotification(notification2);
-            addressbookStub.addNotification(notification3);
-            addressbookStub.addNotification(notification4);
-        } catch (DuplicateTimetableEntryException e) {
-            assertTrue(false);
-        }
+        addressbookStub.addNotification(notification1);
+        addressbookStub.addNotification(notification2);
+        addressbookStub.addNotification(notification3);
+        addressbookStub.addNotification(notification4);
 
         notificationCenterStub.add(new NotificationCardStub(notification1.getTitle(), (
                 notificationCenterStub.getTotalUndismmissedNotificationCards() + 1) + "",
                 "Alex", notification1.getEndDate(), notification1.getOwnerId(), true,
-                notification1.getId()));
+                notification1.getEventId()));
         notificationCenterStub.add(new NotificationCardStub(notification2.getTitle(), (
                 notificationCenterStub.getTotalUndismmissedNotificationCards() + 1) + "",
                 "David", notification1.getEndDate(), notification2.getOwnerId(), true,
-                notification2.getId()));
+                notification2.getEventId()));
         notificationCenterStub.add(new NotificationCardStub(notification3.getTitle(), (
                 notificationCenterStub.getTotalUndismmissedNotificationCards() + 1) + "",
                 "David", notification1.getEndDate(), notification3.getOwnerId(), true,
-                notification3.getId()));
+                notification3.getEventId()));
         notificationCenterStub.add(new NotificationCardStub(notification4.getTitle(), (
                 notificationCenterStub.getTotalUndismmissedNotificationCards() + 1) + "",
                 "David", notification1.getEndDate(), notification4.getOwnerId(), true,
-                notification4.getId()));
+                notification4.getEventId()));
         assertTrue(notificationCenterStub.getTotalUndismmissedNotificationCards() == 4);
 
         //email command test
@@ -146,7 +141,7 @@ class ModelStub extends ModelManager {
     private LinkedList<Person> persons = new LinkedList<>();
 
     @Override
-    public void addNotification(Notification e) throws DuplicateTimetableEntryException {
+    public void addNotification(Notification e) {
 
     }
 

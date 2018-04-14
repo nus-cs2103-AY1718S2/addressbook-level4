@@ -19,7 +19,6 @@ import seedu.address.logic.Authentication;
 import seedu.address.logic.CreateNewCalendar;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.notification.Notification;
-import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -169,14 +168,10 @@ public class TestAddEventCommand extends Command {
         //@@author IzHoBX
         Notification notification = new Notification(title, calendarId, event.getId(), event.getEnd().toString(),
                 model.getPerson(targetIndex.getZeroBased()).getId().toString());
-        try {
-            model.addNotification(notification);
-        } catch (DuplicateTimetableEntryException e) {
-            throw new CommandException("Duplicated event");
-        }
+        model.addNotification(notification);
         //@@author crizyli
 
-        System.out.printf("Event created: %s\n", event.getHtmlLink());
+        logger.info("Event created: %s\n" + event.getHtmlLink());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

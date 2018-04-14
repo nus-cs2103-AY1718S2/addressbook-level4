@@ -53,7 +53,7 @@ public class XmlSerializableAddressBook {
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         photos.addAll(src.getPhotoList().stream().map(XmlAdaptedPhoto::new).collect(Collectors.toList()));
         for (Notification t: src.getNotificationsList()) {
-            notifications.add(new XmlAdaptedNotification(t.getTitle(), t.getCalendarId(), t.getId(), t
+            notifications.add(new XmlAdaptedNotification(t.getTitle(), t.getCalendarId(), t.getEventId(), t
                     .getEndDate(),
                     t.getOwnerId()));
         }

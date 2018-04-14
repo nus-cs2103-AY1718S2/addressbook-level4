@@ -19,7 +19,7 @@ public class XmlAdaptedNotification {
     @XmlElement(required = true)
     private String ownerId;
     @XmlElement(required = true)
-    private String id;
+    private String eventId;
 
     /**
      * Constructs an XmlAdaptedNotification.
@@ -30,10 +30,10 @@ public class XmlAdaptedNotification {
     /**
      * Constructs a {@code XmlAdaptedNotification} with the given timetable entry details.
      */
-    public XmlAdaptedNotification(String title, String calendarId, String id, String endDate, String ownerId) {
+    public XmlAdaptedNotification(String title, String calendarId, String eventId, String endDate, String ownerId) {
         this.title = title;
         this.calendarId = calendarId;
-        this.id = id;
+        this.eventId = eventId;
         this.endDate = endDate;
         this.ownerId = ownerId;
     }
@@ -48,7 +48,7 @@ public class XmlAdaptedNotification {
         this.calendarId = source.getCalendarId();
         this.endDate = source.getEndDate();
         this.ownerId = source.getOwnerId();
-        this.id = source.getId();
+        this.eventId = source.getEventId();
     }
 
     /**
@@ -56,6 +56,6 @@ public class XmlAdaptedNotification {
      *
      */
     public Notification toModelType() {
-        return new Notification(title, calendarId, id, endDate, ownerId);
+        return new Notification(title, calendarId, eventId, endDate, ownerId);
     }
 }

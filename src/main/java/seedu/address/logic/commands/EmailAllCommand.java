@@ -5,6 +5,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 
 /**
@@ -28,6 +29,7 @@ public class EmailAllCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        //notificationCards in notification center is 1-based
         for (int i = 1; i < model.getNotificationCenter().getTotalUndismmissedNotificationCards(); i++) {
             Index targetIndex = Index.fromOneBased(i);
             String ownerId = model.getNotificationCenter().getOwnerIdByIndex(targetIndex);
@@ -41,22 +43,9 @@ public class EmailAllCommand extends Command {
         try {
             desktop.mail(uri);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogsCenter.getLogger(EmailAllCommand.class).info("IOException");
             return new CommandResult(MESSAGE_ERROR);
         }
         return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    /**
-     * Replaces all space characters with URI space character
-     */
-    public String replaceSpaceWithHexa(String input) {
-        String[] parts = input.split(" ");
-        String toReturn = "";
-        for (int i = 0; i < parts.length; i++) {
-            toReturn += parts[i];
-            toReturn += "%20";
-        }
-        return toReturn;
     }
 }

@@ -5,6 +5,9 @@ import java.util.Set;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.Information;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Detail;
 import seedu.address.model.person.Email;
@@ -54,6 +57,13 @@ public class SampleDataUtil {
         };
     }
 
+    public static Group[] getSampleGroups() {
+        return new Group[] {
+                new Group(new Information("Group A")),
+                new Group(new Information("Group B")),
+                new Group(new Information("Group C")),
+        };
+    }
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
@@ -63,11 +73,16 @@ public class SampleDataUtil {
             for (ToDo sampleToDo : getSampleToDos()) {
                 sampleAb.addToDo(sampleToDo);
             }
+            for (Group sampleGroup : getSampleGroups()) {
+                sampleAb.addGroup(sampleGroup);
+            }
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         } catch (DuplicateToDoException e) {
             throw new AssertionError("sample data cannot contain duplicate todos", e);
+        } catch (DuplicateGroupException e) {
+            throw new AssertionError("sample data cannot contain duplicate groups", e);
         }
     }
 

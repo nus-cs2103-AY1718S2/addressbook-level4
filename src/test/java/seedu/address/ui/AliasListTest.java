@@ -9,6 +9,7 @@ import org.junit.Test;
 import seedu.address.commons.events.ui.AliasListEvent;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.model.alias.Alias;
+import seedu.address.ui.testutil.GuiTestAssert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +35,11 @@ public class AliasListTest extends GuiUnitTest {
     @Test
     public void checkTable() {
         // Populate expectedAliases
-        ArrayList<ArrayList<String>> expected = populateExpectedAliases(new String[][] {{"add1", "alias1"}, {"add2"}});
+        String[][] expected = new String[][] {{"add1", "alias1"}, {"add2"}};
 
         // Init alias list and post event
-        ObservableList<ArrayList<String>> obsExpected = FXCollections.observableArrayList(expected);
+        ArrayList<ArrayList<String>> expectedList = GuiTestAssert.populateExpectedAliases(expected);
+        ObservableList<ArrayList<String>> obsExpected = FXCollections.observableArrayList(expectedList);
         aliasListEventStub = new AliasListEvent(obsExpected);
 
         aliasList.init(obsExpected);
@@ -45,13 +47,14 @@ public class AliasListTest extends GuiUnitTest {
         guiRobot.pauseForHuman();
 
         // Assert content of the table
-        assertTableContent(aliasListHandle.getTables(), expected);
+        GuiTestAssert.assertTableContent(aliasListHandle.getTables(), expected);
 
         // Populate expectedAliases
-        expected = populateExpectedAliases(new String[][] {{"add1"}});
+        expected = new String[][] {{"add1"}};
+        expectedList = GuiTestAssert.populateExpectedAliases(expected);
 
         // Init alias list and post event
-        obsExpected = FXCollections.observableArrayList(expected);
+        obsExpected = FXCollections.observableArrayList(expectedList);
         aliasListEventStub = new AliasListEvent(obsExpected);
 
         aliasList.init(obsExpected);
@@ -59,39 +62,6 @@ public class AliasListTest extends GuiUnitTest {
         guiRobot.pauseForHuman();
 
         // Assert content of the table
-        assertTableContent(aliasListHandle.getTables(), expected);
-    }
-
-    private ArrayList<ArrayList<String>> populateExpectedAliases(String[][] expected) {
-        ArrayList<ArrayList<String>> expectedList = new ArrayList<>();
-        for (String[] inner : expected) {
-            ArrayList<String> innerList = new ArrayList<>();
-            // Add expected alias for command
-            for (String alias : inner) {
-                innerList.add(alias);
-            }
-            // Generate empty alias ("") for no alias command
-            while(innerList.size() < AliasCommand.getCommands().size()) {
-                innerList.add("");
-            }
-            expectedList.add(innerList);
-        }
-        return expectedList;
-    }
-
-    private void assertTableContent(ObservableList<TableColumn> aliasListTable, ArrayList<ArrayList<String>> expected) {
-        System.out.println(expected);
-        for (int i = 0; i < expected.size(); i ++) {
-            for (int j = 0; j < expected.get(i).size(); j++) {
-                System.out.println("Current Row : " + i + ", Current column " + j);
-                TableColumn column = aliasListTable.get(j);
-
-                // Current Row value at column
-                System.out.println(column.getCellObservableValue(i).getValue());
-                System.out.println("Expected value : |" + expected.get(i).get(j) + "|");
-                System.out.println("Table value : |" + column.getCellObservableValue(i).getValue() + "|");
-                assertEquals(expected.get(i).get(j), column.getCellObservableValue(i).getValue());
-            }
-        }
+        GuiTestAssert.assertTableContent(aliasListHandle.getTables(), expected);
     }
 }

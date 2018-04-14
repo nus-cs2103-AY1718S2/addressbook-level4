@@ -3,12 +3,16 @@ package seedu.address.ui.testutil;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+import seedu.address.logic.commands.AliasCommand;
 import seedu.address.model.person.Person;
 import seedu.address.ui.PersonCard;
 
@@ -89,6 +93,38 @@ public class GuiTestAssert {
         expectedTags.forEach(tag ->
                 assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, PersonCard.getColorStyleFor(tag)),
                         actualCard.getTagStyleClasses(tag)));
+    }
+    //@@author
+
+    //@@author jingyinno
+
+    public static void assertTableContent(ObservableList<TableColumn> aliasListTable, String[][] expected) {
+        ArrayList<ArrayList<String>> expectedList = populateExpectedAliases(expected);
+        for (int i = 0; i < expectedList.size(); i ++) {
+            for (int j = 0; j < expectedList.get(i).size(); j++) {
+                TableColumn column = aliasListTable.get(j);
+
+                // Current Row value at column
+                assertEquals(expectedList.get(i).get(j), column.getCellObservableValue(i).getValue());
+            }
+        }
+    }
+
+    public static ArrayList<ArrayList<String>> populateExpectedAliases(String[][] expected) {
+        ArrayList<ArrayList<String>> expectedList = new ArrayList<>();
+        for (String[] inner : expected) {
+            ArrayList<String> innerList = new ArrayList<>();
+            // Add expected alias for command
+            for (String alias : inner) {
+                innerList.add(alias);
+            }
+            // Generate empty alias ("") for no alias command
+            while(innerList.size() < AliasCommand.getCommands().size()) {
+                innerList.add("");
+            }
+            expectedList.add(innerList);
+        }
+        return expectedList;
     }
     //@@author
 }

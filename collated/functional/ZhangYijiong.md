@@ -1,4 +1,32 @@
 # ZhangYijiong
+###### \java\seedu\address\commons\events\ui\LoadPageChangedEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Represents a
+ */
+public class LoadPageChangedEvent extends BaseEvent {
+
+    private final String url;
+
+    public LoadPageChangedEvent(String url) {
+        this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+}
+
+```
 ###### \java\seedu\address\commons\events\ui\OrderPanelSelectionChangedEvent.java
 ``` java
 package seedu.address.commons.events.ui;
@@ -35,7 +63,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.PersonCard;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a change in the browser Panel
  */
 public class PersonPanelPathChangedEvent extends BaseEvent {
 
@@ -56,90 +84,33 @@ public class PersonPanelPathChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddOrderCommand.java
-``` java
-package seedu.address.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_COUNT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DISTANCE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
-
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.task.Task;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
-
-/**
- * Add an order to the application's order queue
- */
-
-public class AddOrderCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "addOrder";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an order to the processing queue. \n"
-            + "Parameters: "
-            + PREFIX_ORDER + "ORDER "
-            + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_PRICE + "PRICE (of the order) "
-            + PREFIX_DISTANCE + "DISTANCE (to the address) "
-            + PREFIX_COUNT + "COUNT (past order count) "
-            + PREFIX_DESCRIPTION + "[" + "DESCRIPTION]\n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_ORDER + "CHICKEN RICE "
-            + PREFIX_ADDRESS + "NUS "
-            + PREFIX_PRICE + "3 "
-            + PREFIX_DISTANCE + "5 "
-            + PREFIX_COUNT + "1 "
-            + PREFIX_DESCRIPTION + "CHILI SAUCE REQUIRED";
-
-    public static final String MESSAGE_SUCCESS = "New Order added: %1$s";
-    public static final String MESSAGE_DUPLICATE_TASK = "This order already exists in the address book";
-
-    private final Task toAdd;
-
-    public AddOrderCommand(Task task) {
-        requireNonNull(task);
-        toAdd = task;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.addTask(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateTaskException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_TASK);
-        }
-
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddOrderCommand // instanceof handles nulls
-                && toAdd.equals(((AddOrderCommand) other).toAdd));
-    }
-
-}
-```
 ###### \java\seedu\address\logic\commands\CompleteOrderCommand.java
 ``` java
 package seedu.address.logic.commands;
+
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Halal;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Vegetarian;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Implementation follows {@code DeleteCommand}
+ * Implementation follows {@code DeleteOrderCommand}
  * Deletes n orders at the front of the queue, n is the user input.
  */
 public class CompleteOrderCommand extends Command {
@@ -153,6 +124,7 @@ public class CompleteOrderCommand extends Command {
 
     public static final String MESSAGE_COMPLETE_TASK_SUCCESS = " Order(s) Completed";
 
+    private final int nullIndex = -1;
     private final Index targetIndex;
     private final Index numberOfTimes;
 
@@ -166,18 +138,45 @@ public class CompleteOrderCommand extends Command {
         int number = numberOfTimes.getOneBased();
         while (number-- != 0) {
 
-            List<Task> lastShownList = model.getFilteredTaskList();
+            List<Task> taskList = model.getFilteredTaskList();
 
-            if (number >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+            if (number >= taskList.size()) {
+                throw new CommandException("There are only "+taskList.size()
+                        + " orders being cooking");
             }
 
-            Task taskToDelete = lastShownList.get(targetIndex.getZeroBased());
+            Task taskToDelete = taskList.get(targetIndex.getZeroBased());
 
             try {
                 model.deleteTask(taskToDelete);
             } catch (TaskNotFoundException tnfe) {
                 assert false : "The target task cannot be missing";
+            }
+
+            List<Person> personList = model.getFilteredPersonList();
+
+            int editIndex=nullIndex;
+            for (Person person:personList) {
+                if (person.getOrder().equals(taskToDelete.getOrder())
+                        && person.getAddress().equals(taskToDelete.getAddress())) {
+                    editIndex = personList.indexOf(person);
+                    break;
+                }
+            }
+
+            try {
+                Person personToEdit = personList.get(editIndex);
+                // labels order with tag "Cooked"
+                Person editedPerson = createNewTaggedPerson(personToEdit,"Cooked");
+
+                model.updatePerson(personToEdit, editedPerson);
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            } catch (NullPointerException npe) {
+                throw new CommandException("No matching order in order queue");
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(ProcessOrderCommand.MESSAGE_DUPLICATE_TASK);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
             }
         }
         return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_SUCCESS));
@@ -189,6 +188,29 @@ public class CompleteOrderCommand extends Command {
                 || (other instanceof CompleteOrderCommand // instanceof handles nulls
                 && this.targetIndex.equals(((CompleteOrderCommand) other).targetIndex)
                 && this.numberOfTimes.equals(((CompleteOrderCommand) other).numberOfTimes)); // state check
+    }
+
+    /**
+     * Add a new tag {@code tag} to the person {@code personToEdit}
+     */
+    protected Person createNewTaggedPerson(Person personToEdit,String tag) {
+        assert personToEdit != null;
+
+        Halal updatedHalal = personToEdit.getHalal();
+        Vegetarian updatedVegetarian = personToEdit.getVegetarian();
+        UniqueTagList updatedTags = new UniqueTagList(personToEdit.getTags());
+        Name updatedName = personToEdit.getName();
+        Phone updatedPhone = personToEdit.getPhone();
+        Order updatedOrder = personToEdit.getOrder();
+        Address updatedAddress = personToEdit.getAddress();
+
+        try {
+            updatedTags.add(new Tag(tag));
+        } catch (UniqueTagList.DuplicateTagException dte){
+            //does not add tag "processing" if already exists
+        }
+        return new Person(updatedName, updatedPhone, updatedOrder, updatedAddress,
+                updatedHalal, updatedVegetarian, updatedTags);
     }
 }
 
@@ -207,7 +229,7 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Implementation follows {@code DeleteCommand}
- * Deletes an order identified using it's last displayed index from the address book.
+ * Deletes an order in the processing queue identified by its index
  */
 public class DeleteOrderCommand extends UndoableCommand {
 
@@ -254,6 +276,53 @@ public class DeleteOrderCommand extends UndoableCommand {
                 && this.targetIndex.equals(((DeleteOrderCommand) other).targetIndex)); // state check
     }
 }
+```
+###### \java\seedu\address\logic\commands\LoadCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.LoadPageChangedEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+
+/**
+ * Selects a person identified using it's last displayed index from the address book
+ * and show the path to the address of the person identified
+ */
+public class LoadCommand extends Command {
+
+    public static final String COMMAND_WORD = "load";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Load the inputted web page "
+            + "Parameters: web page link\n"
+            + "Example: " + COMMAND_WORD + " www.google.com.sg";
+
+    public static final String MESSAGE_LOAD_PAGE_SUCCESS = "Load Successful: %1$s";
+
+    private final String url;
+
+    public LoadCommand(String url) {
+        this.url = url;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        EventsCenter.getInstance().post(new LoadPageChangedEvent(url));
+        return new CommandResult(String.format(MESSAGE_LOAD_PAGE_SUCCESS,url));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof LoadCommand // instanceof handles nulls
+                && this.url.equals(((LoadCommand) other).url)); // state check
+    }
+}
+
+
 ```
 ###### \java\seedu\address\logic\commands\PathCommand.java
 ``` java
@@ -316,75 +385,421 @@ public class PathCommand extends Command {
 }
 
 ```
-###### \java\seedu\address\logic\parser\AddOrderCommandParser.java
+###### \java\seedu\address\logic\commands\ProcessMoreCommand.java
 ``` java
-package seedu.address.logic.parser;
+package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_COUNT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DISTANCE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static java.util.Objects.requireNonNull;
 
-import java.util.stream.Stream;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddOrderCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.dish.Price;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Order;
-import seedu.address.model.task.Count;
-import seedu.address.model.task.Distance;
-import seedu.address.model.task.Task;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * Parses input arguments and creates a new AddEventCommand object
+ * Add the first multiple unprocessed order in the order queue to the application's
+ * processing queue, label the corresponding orders in the
+ * order queue as Processed
  */
-public class AddOrderCommandParser implements Parser<AddOrderCommand> {
+
+public class ProcessMoreCommand extends ProcessNextCommand {
+    public static final String COMMAND_WORD = "processMore";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds first n unprocessed order into the processing queue.\n"
+            + "Parameters: Number (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 3";
+
+    private int noOfTimes;
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddOrderCommand
-     * and returns an AddOrderCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     *
+     * @param noOfTimes number that processNext needed to perform
      */
-    public AddOrderCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_ORDER, PREFIX_ADDRESS, PREFIX_PRICE,
-                        PREFIX_DISTANCE, PREFIX_COUNT, PREFIX_DESCRIPTION);
+    public ProcessMoreCommand(int noOfTimes) {
+        this.noOfTimes = noOfTimes;
+    }
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_ORDER, PREFIX_ADDRESS, PREFIX_PRICE,
-                PREFIX_DISTANCE, PREFIX_COUNT, PREFIX_DESCRIPTION)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrderCommand.MESSAGE_USAGE));
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+
+        while (noOfTimes-- >0 ) {
+            super.execute();
         }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ProcessMoreCommand // instanceof handles nulls
+                && noOfTimes==((ProcessMoreCommand) other).noOfTimes);
+    }
+}
+
+```
+###### \java\seedu\address\logic\commands\ProcessNextCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.queue.TaskList;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Task;
+
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.model.person.Person;
+
+/**
+ * Add the first unprocessed order in the order queue to the application's
+ * processing queue, label the corresponding order in the
+ * order queue as Processed
+ */
+
+public class ProcessNextCommand extends ProcessOrderCommand {
+    public static final String COMMAND_WORD = "processNext";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds the first unprocessed order into the processing queue\n"
+            + "No parameter needed\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_All_PROCESSING = "All Order have been processed.";
+    private static int noOrderToBeProcessed = -1;
+
+    protected int targetIndex;
+
+    protected Task toAdd;
+
+    public ProcessNextCommand() {}
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+
+        targetIndex = noOrderToBeProcessed;
+
+        List<Person> lastShownList = model.getFilteredPersonList();
+        for (Person person:lastShownList) {
+            if (person.getTagList().contains(new Tag("Processed")) == false) {
+                targetIndex = lastShownList.indexOf(person);
+                break;
+            }
+        }
+
+        if (targetIndex==noOrderToBeProcessed) {
+            throw new CommandException(MESSAGE_All_PROCESSING);
+        }
+
+        // inception time of the order will be shown in description
+        String orderTime = getCurrentTime();
+
+        List<Task> taskList = model.getFilteredTaskList();
+
+        if (targetIndex >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+
+        if (taskList.size() >= TaskList.maxCapacity) {
+            throw new CommandException(MESSAGE_FULL_CAPACITY);
+        }
+
+        Person personToAdd = lastShownList.get(targetIndex);
+
+        toAdd = new Task(personToAdd, orderTime);
+
+        Person personToEdit = personToAdd;
+        // labels person with tag "Processing"
+        Person editedPerson = createNewTaggedPerson(personToEdit,"Processed");
+
+        addAndTag(toAdd, personToEdit, editedPerson);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ProcessNextCommand // instanceof handles nulls
+                && toAdd.equals(((ProcessNextCommand) other).toAdd));
+    }
+}
+
+```
+###### \java\seedu\address\logic\commands\ProcessOrderCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Halal;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Vegetarian;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.queue.TaskList;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+/**
+ * Add an order to the application's processing queue, label the corresponding order in the
+ * order queue as Processed
+ */
+
+public class ProcessOrderCommand extends Command {
+    public static final String COMMAND_WORD = "process";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds the order identified by the index number into the processing queue\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_SUCCESS = "New Order added: %1$s";
+    public static final String MESSAGE_DUPLICATE_TASK = "This order already exists in the processing queue";
+    public static final String MESSAGE_FULL_CAPACITY = "Kitchen is at full capacity. No available chef.";
+
+    protected Index targetIndex;
+
+    protected Task toAdd;
+
+    public ProcessOrderCommand() {}
+
+    /**
+     *
+     * @param targetIndex
+     */
+    public ProcessOrderCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+
+        // inception time of the order will be shown in description
+        String orderTime = getCurrentTime();
+
+        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Task> taskList = model.getFilteredTaskList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+
+        if (taskList.size() >= TaskList.maxCapacity) {
+            throw new CommandException(MESSAGE_FULL_CAPACITY);
+        }
+
+        Person personToAdd = lastShownList.get(targetIndex.getZeroBased());
+
+        toAdd = new Task(personToAdd, orderTime);
+
+        Person personToEdit = personToAdd;
+        // labels person with tag "Processing"
+        Person editedPerson = createNewTaggedPerson(personToEdit,"Processed");
+
+        addAndTag(toAdd, personToEdit, editedPerson);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+    }
+
+    protected void addAndTag(Task toAdd, Person personToEdit, Person editedPerson) throws CommandException {
+        try {
+            model.addTask(toAdd);
+
+            try {
+                model.updatePerson(personToEdit, editedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_TASK);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+
+        } catch (DuplicateTaskException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        }
+    }
+
+    protected String getCurrentTime() {
+        Date date = new Date();
+        date.getTime();
+
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.HOUR_OF_DAY)+":"
+                +cal.get(Calendar.MINUTE)+":"
+                +cal.get(Calendar.SECOND);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ProcessOrderCommand // instanceof handles nulls
+                && toAdd.equals(((ProcessOrderCommand) other).toAdd));
+    }
+
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     */
+    protected Person createNewTaggedPerson(Person personToEdit,String tag) {
+        assert personToEdit != null;
+
+        Name updatedName = personToEdit.getName();
+        Phone updatedPhone = personToEdit.getPhone();
+        Order updatedOrder = personToEdit.getOrder();
+        Address updatedAddress = personToEdit.getAddress();
+        Halal updatedHalal = personToEdit.getHalal();
+        Vegetarian updatedVegetarian = personToEdit.getVegetarian();
+        UniqueTagList updatedTags = new UniqueTagList(personToEdit.getTags());
 
         try {
-            Order order = ParserUtil.parseOrder(argMultimap.getValue(PREFIX_ORDER)).get();
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            Price price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE)).get();
-            Distance distance = ParserUtil.parseDistance(argMultimap.getValue(PREFIX_DISTANCE)).get();
-            Count count = ParserUtil.parseCount(argMultimap.getValue(PREFIX_COUNT)).get();
-            String description = argMultimap.getValue(PREFIX_DESCRIPTION).orElse("");
-
-            Task task = new Task(order, address, price, distance, count, description);
-
-            return new AddOrderCommand(task);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+            updatedTags.add(new Tag(tag));
+        } catch (UniqueTagList.DuplicateTagException dte){
+            //does not add tag "processing" if already exists
         }
+        return new Person(updatedName, updatedPhone, updatedOrder, updatedAddress,
+                updatedHalal, updatedVegetarian, updatedTags);
     }
+}
+```
+###### \java\seedu\address\logic\commands\TagOrderCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Halal;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Vegetarian;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+/**
+ * Tag an existing order in the order queue with given word
+ */
+
+public class TagOrderCommand extends Command {
+    public static final String COMMAND_WORD = "tag";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Tags the order identified by the index number with given tag\n"
+            + "Parameters: String (description)\n"
+            + "Example: " + COMMAND_WORD + " Delivering";
+
+    public static final String MESSAGE_TAGGED_ORDER_SUCCESS = "Order tagged: %1$s";
+    public static final String MESSAGE_DUPLICATE_TASK = "This order already exists in the processing queue";
+    public static final String MESSAGE_ONE_TAG_ONLY = "Please enter one tag at a time";
+
+    private Index targetIndex;
+    private String tagWord;
 
     /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
+     * @param index of the order in the filtered order list to edit
+     * @param tagWord word the user wants to tag on the order
      */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    public TagOrderCommand(Index index, String tagWord) {
+        requireNonNull(index);
+        requireNonNull(tagWord);
+
+        this.targetIndex = index;
+        this.tagWord = tagWord;
     }
 
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+
+        Person personToEdit = lastShownList.get(targetIndex.getZeroBased());
+
+        // labels person with tag "Processing"
+        Person editedPerson = createNewTaggedPerson(personToEdit, tagWord);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        return new CommandResult(String.format(MESSAGE_TAGGED_ORDER_SUCCESS, editedPerson));
+    }
+
+
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TagOrderCommand // instanceof handles nulls
+                && tagWord.equals(((TagOrderCommand) other).tagWord));
+    }
+
+
+    protected Person createNewTaggedPerson(Person personToEdit,String tag) {
+        assert personToEdit != null;
+
+        Name updatedName = personToEdit.getName();
+        Phone updatedPhone = personToEdit.getPhone();
+        Order updatedOrder = personToEdit.getOrder();
+        Address updatedAddress = personToEdit.getAddress();
+        Halal updatedHalal = personToEdit.getHalal();
+        Vegetarian updatedVegetarian = personToEdit.getVegetarian();
+        UniqueTagList updatedTags = new UniqueTagList(personToEdit.getTags());
+
+        try {
+            updatedTags.add(new Tag(tag));
+        } catch (UniqueTagList.DuplicateTagException dte){
+            //does not add tag "processing" if already exists
+        } catch (IllegalArgumentException iae) {
+
+        }
+        return new Person(updatedName, updatedPhone, updatedOrder, updatedAddress,
+                updatedHalal, updatedVegetarian, updatedTags);
+    }
 }
+
 ```
 ###### \java\seedu\address\logic\parser\CompleteOrderCommandParser.java
 ``` java
@@ -458,6 +873,31 @@ public class DeleteOrderCommandParser implements Parser<DeleteOrderCommand> {
 }
 
 ```
+###### \java\seedu\address\logic\parser\LoadCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.logic.commands.LoadCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new ProcessOrderCommand object
+ */
+public class LoadCommandParser implements Parser<LoadCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context
+     * of the ProcessOrderCommand and returns an ProcessOrderCommand object for execution.
+     */
+    public LoadCommand parse(String args) throws ParseException {
+        return new LoadCommand(args.trim());
+    }
+}
+
+
+```
 ###### \java\seedu\address\logic\parser\PathCommandParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -486,6 +926,102 @@ public class PathCommandParser implements Parser<PathCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, PathCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ProcessMoreCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.logic.commands.ProcessMoreCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new ProcessMoreCommand object
+ */
+public class ProcessMoreCommandParser implements Parser<ProcessMoreCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the CompleteOrderCommand
+     * and returns an CompleteOrderCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ProcessMoreCommand parse(String args) throws ParseException {
+        try
+        {
+            int numberOfTimes = Integer.parseInt(args.trim());
+            if (numberOfTimes <=0) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProcessMoreCommand.MESSAGE_USAGE));
+            }
+            return new ProcessMoreCommand(numberOfTimes);
+        } catch (NumberFormatException nfe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, "Number must be numerical"));
+        }
+    }
+}
+
+
+
+```
+###### \java\seedu\address\logic\parser\ProcessNextCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.ProcessNextCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new ProcessOrderCommand object
+ */
+public class ProcessNextCommandParser implements Parser<ProcessNextCommand> {
+
+    /**
+     * Parses the given {@code String} (String is none in this case)of arguments in the context
+     * of the ProcessOrderCommand and returns an ProcessOrderCommand object for execution.
+     */
+    public ProcessNextCommand parse(String args) throws ParseException {
+            return new ProcessNextCommand();
+    }
+}
+
+```
+###### \java\seedu\address\logic\parser\ProcessOrderCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.ProcessOrderCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new ProcessOrderCommand object
+ */
+public class ProcessOrderCommandParser implements Parser<ProcessOrderCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ProcessOrderCommand
+     * and returns an ProcessOrderCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ProcessOrderCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new ProcessOrderCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProcessOrderCommand.MESSAGE_USAGE));
         }
     }
 }
@@ -630,6 +1166,13 @@ public class Distance {
                 + "/" + person.getAddress().getGoogleMapSearchForm());
     }
 
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    private void loadUserInputPage(String url) {
+        loadPage(url);
+    }
+
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -666,7 +1209,17 @@ public class Distance {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadGoogleMapPathPage(event.getNewSelection().person);
     }
+
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    @Subscribe
+    private void handleLoadPageChangedEvent(LoadPageChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadUserInputPage(event.getUrl());
+    }
 }
+
 ```
 ###### \java\seedu\address\ui\OrderCard.java
 ``` java

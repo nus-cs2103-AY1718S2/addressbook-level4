@@ -27,6 +27,7 @@ import seedu.address.model.account.PrivilegeLevel;
 import seedu.address.model.account.UniqueAccountList;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 import seedu.address.testutil.AccountBuilder;
 
@@ -127,7 +128,27 @@ public class AddAccountCommandTest {
         }
 
         @Override
+        public void returnBook(Book target, Book returnedBook) throws BookNotFoundException {
+        }
+
+        @Override
+        public void borrowBook(Book target, Book borrowedBook) throws BookNotFoundException {
+
+        }
+
+        @Override
+        public void reserveBook(Book target, Book reservedBook) throws BookNotFoundException {
+
+        }
+
+        @Override
         public ObservableList<Book> getFilteredBookList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public UniqueAccountList getAccountList() {
             fail("This method should not be called.");
             return null;
         }

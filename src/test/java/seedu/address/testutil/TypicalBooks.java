@@ -37,16 +37,16 @@ public class TypicalBooks {
     public static final Book CALIFORNIA = new BookBuilder().withTitle("California Girl")
         .withAuthor("Jefferson Parker")
         .withIsbn("9780060562373")
-        .withAvail("Available")
+        .withAvail("Borrowed")
         .withTags("unlabelled").build();
     public static final Book DELIRIUM = new BookBuilder().withTitle("Delirium")
         .withAuthor("Lauren Oliver")
         .withIsbn("9780061726835")
-        .withAvail("Available").build();
+        .withAvail("Borrowed").build();
     public static final Book EMMA = new BookBuilder().withTitle("Emma")
         .withAuthor("Jane Austen")
         .withIsbn("9780141439587")
-        .withAvail("Available").build();
+        .withAvail("Borrowed").build();
     public static final Book FATEFUL = new BookBuilder().withTitle("Fateful")
         .withAuthor("Claudia Gray")
         .withIsbn("9780062006202")

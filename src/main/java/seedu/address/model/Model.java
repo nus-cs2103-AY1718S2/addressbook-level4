@@ -62,10 +62,21 @@ public interface Model {
     void updateBook(Book target, Book editedBook)
         throws DuplicateBookException, BookNotFoundException;
 
+    void returnBook(Book target, Book returnedBook) throws BookNotFoundException;
+
+    void borrowBook(Book target, Book borrowedBook) throws BookNotFoundException;
+
+    void reserveBook(Book target, Book reservedBook) throws BookNotFoundException;
+
     /**
      * Returns an unmodifiable view of the filtered book list
      */
     ObservableList<Book> getFilteredBookList();
+
+    /**
+     * Returns an unmodifiable view of the account list
+     */
+    UniqueAccountList getAccountList();
 
     /**
      * Updates the filter of the filtered book list to filter by the given {@code predicate}.

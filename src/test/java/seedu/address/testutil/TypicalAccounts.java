@@ -7,6 +7,7 @@ import java.util.List;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.account.Account;
+import seedu.address.model.account.UniqueAccountList;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 
 /**
@@ -69,6 +70,18 @@ public class TypicalAccounts {
             }
         }
         return model;
+    }
+
+    public static UniqueAccountList getTypicalAccountListUniqueAccountList() {
+        UniqueAccountList uniqueAccountList = new UniqueAccountList();
+        for (Account account : getTypicalAccounts()) {
+            try {
+                uniqueAccountList.add(account);
+            } catch (DuplicateAccountException e) {
+                throw new AssertionError("not possible");
+            }
+        }
+        return uniqueAccountList;
     }
 
 

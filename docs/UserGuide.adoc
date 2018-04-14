@@ -29,11 +29,21 @@ If your clinic has medical staff who can type fast, IMDB can get your patient ma
 Head to <<Quick Start>> to get started.
 
 The symbols which are used in the User Guide as well as their meaning are listed below: +
-ℹ️: Information +
-💡: Tips +
-❗: Warning +
-⚠: Specific user only command +
-◀️: Command is undoable +
+
+[NOTE]
+Information. +
+
+[TIP]
+Tips. +
+
+[WARNING]
+Warning.
+
+[CAUTION]
+Specific user only command +
+
+[IMPORTANT]
+Command is undoable +
 // end::introduction[]
 
 // tag::quickstart[]

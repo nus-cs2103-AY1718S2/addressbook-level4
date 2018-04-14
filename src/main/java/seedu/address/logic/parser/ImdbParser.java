@@ -181,7 +181,24 @@ public class ImdbParser {
             case RemarkCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
-            //@@author Kyholmes
+
+            case RecordCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
+            case RecordCommand.COMMAND_ALIAS:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
+            case RemoveRecordCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
+            case RemoveRecordCommand.COMMAND_ALIAS:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
+                    //@@author Kyholmes
             case ViewAppointmentCommand.COMMAND_WORD:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
@@ -501,6 +518,18 @@ public class ImdbParser {
 
             case DeleteConditionCommand.COMMAND_ALIAS:
                 return new DeleteConditionCommandParser().parse(arguments);
+
+            case RecordCommand.COMMAND_WORD:
+                throw new ParseException(MESSAGE_NO_PERMISSION);
+
+            case RecordCommand.COMMAND_ALIAS:
+                throw new ParseException(MESSAGE_NO_PERMISSION);
+
+            case RemoveRecordCommand.COMMAND_WORD:
+                throw new ParseException(MESSAGE_NO_PERMISSION);
+
+            case RemoveRecordCommand.COMMAND_ALIAS:
+                throw new ParseException(MESSAGE_NO_PERMISSION);
 
             case PrintCommand.COMMAND_WORD:
                 throw new ParseException(MESSAGE_NO_PERMISSION);

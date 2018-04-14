@@ -16,8 +16,8 @@ import seedu.address.model.person.runner.Runner;
  */
 public class HtmlWriter {
     public static final String OPENING_LINE = "<!DOCTYPE html><html><head>\n"
-            + "<body style=\"background-color:#383838;\"\n>"
-            + "<font face=\"Segoe UI\" size=\"5\" color=\"white\">"
+            + "<body style=\"background-color:#CEDBFB;\"\n>"
+            + "<font face=\"Segoe UI\" size=\"5\" color=\"black\">"
             + "<table><tr><th align=\"left\" colspan=\"2\">";
 
     private final String name;

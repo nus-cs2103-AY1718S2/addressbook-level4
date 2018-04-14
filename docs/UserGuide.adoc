@@ -21,9 +21,9 @@ By: `Team W15-B2`      Since: `March 2018`      Licence: `MIT`
 // tag::introduction[]
 == Introduction
 
-Integrated Medical DataBase (IMDB) is an application for the management of health records digitally.
-Of note is the fact that IMDB is *optimized for those who prefer to work with a Command Line Interface* (CLI)
-while still having the benefits of a Graphical User Interface (GUI).
+Integrated Medical DataBase (IMDB) is a desktop records management application targeted at private clinics that may have multiple branches.
+It aims to replace how private clinics handle the management of patient records, making the process much more easier and efficient.
+IMDB is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
 This makes it perfect for doctors or staff who can type faster than they can navigate with a mouse.
 If your clinic has medical staff who can type fast, IMDB can get your patient management tasks done faster than traditional pen and paper or even normal GUI apps.
 Head to <<Quick Start>> to get started.
@@ -31,13 +31,13 @@ Head to <<Quick Start>> to get started.
 The symbols which are used in the User Guide as well as their meaning are listed below: +
 
 [NOTE]
-Information. +
+Information +
 
 [TIP]
-Tips. +
+Tips +
 
 [WARNING]
-Warning.
+Warning +
 
 [CAUTION]
 Specific user only command +
@@ -69,11 +69,12 @@ image::Ui_new.PNG[width="990"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Try out the commands below to get a feel of the app:
 
-* *`login`*: Launches the login GUI. Enter "bob" for username and "password456" for password. This will log you into the IMDB as Bob. Note that some commands will not work unless you are logged in.
-* *`list`* : lists all patients
-* **`add`**`n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dob/11/11/1991 b/B+` : adds a patient named `John Doe` to the IMDB.
-* **`delete`**`3` : deletes the 3rd patient shown in the current list
-* *`exit`* : exits the app
+* *`login`*: launches the login GUI. Enter "bob" for username and "password456" for password. This will log you into the IMDB as Bob. Note that some commands will not work unless you are logged in.
+* *`list`* : lists all patients.
+* **`select` **`2`* : displays the information of the 2nd patient shown in the current list.
+* **`add` **`n/John Doe ic/S1234567A p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dob/11/11/1991 b/B+` : adds a patient named `John Doe` to the IMDB.
+* **`delete` **`3` : deletes the 3rd patient shown in the current list.
+* *`exit`* : exits the app.
 
 For more information on the various commands,  refer to <<Features>> for the specific details of each command.
 // end::quickstart[]
@@ -85,7 +86,7 @@ For more information on the various commands,  refer to <<Features>> for the spe
 ====
 *UI Walkthrough*
 
-*Before introducing the commands, a brief walkthrough of the user interface is shown in Figure 2 below.
+Before introducing the commands, a brief walkthrough of the user interface is shown in Figure 2 below.
 
 .User Interface Walkthrough of IMDB
 [caption="Figure 2: "]
@@ -107,7 +108,7 @@ image::ui_walkthrough.png[width="990"]
 
 === General Commands
 
-The commands listed in this section are used to enable the management of IMDB.
+The commands listed in this section are related to the general usage of IMDB.
 
 ==== Viewing help : `help` or `h`
 
@@ -151,7 +152,7 @@ Format: `undo` or `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the IMDB's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the IMDB's content (`add`, `addc`, `clear`, `delete`, `delc`, and `edit`).
 ====
 
 Examples:
@@ -254,7 +255,7 @@ There will be an administrator role which can add a new username and password to
 
 === Patient Commands
 
-The commands listed in this section are used to enable the management of patients’ records/details.
+The commands listed in this section enables the management of patients’ records and details.
 
 ==== Listing all patients : `list` or `ls`
 
@@ -290,13 +291,14 @@ Format: `delete INDEX` or `d`
 [IMPORTANT]
 This command is undoable.
 
+[WARNING]
+If the specified patient is in the queue, you have to remove the patient from the queue before deleting the patient.
+
+
 ****
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
-
-[WARNING]
-If the specified patient is in the queue, you have to remove the patient from the queue before deleting the patient.
 
 Examples:
 
@@ -351,8 +353,8 @@ This command is undoable.
 Examples:
 
 * `list` +
-`remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first patient to Likes to drink coffee.
+`remark 1 r/has a pacemaker` +
+Edits the remark for the first patient to `has a pacemaker`.
 * `find Betsy` +
 `remark 1 r/` +
 Removes the remark for the first patient.
@@ -387,8 +389,8 @@ This command is undoable.
 
 Examples:
 
-* `delc 1 c/aspirin` +
-Removes `aspirin` from the list of conditions that the patient at index `1` has.
+* `delc 1 c/aspirin c/asthma` +
+Removes `aspirin` and `asthma` from the list of conditions that the patient at index `1` has.
 
 * `dc 2 c/asthma` +
 Removes `asthma` from the list of conditions that the patient at index `2` has.
@@ -436,7 +438,7 @@ Selects the 1st patient in the results of the `find` command.
 // end::select[]
 
 // tag::record[]
-==== Viewing and editing the medical records for a patient : `record` [since in v1.4]
+==== Viewing and editing the medical records for a patient : `record` [since v1.4]
 
 Views the medical record at the specified record index for a patient specified by the index number used in the last patient listing. +
 Format: `record INDEX in/[RECORD INDEX]` or `rec INDEX in/[RECORD INDEX]`
@@ -461,7 +463,7 @@ Examples:
 `record 1 in/1` +
 Displays the first medical record for the first person in the result of the list command.
 
-==== Deleting the medical records for a patient : `remover` [since in v1.4]
+==== Deleting the medical records for a patient : `remover` [since v1.4]
 
 Deletes the medical record specified by the record index for a patient specified by the index number used in the last patient listing. +
 Format: `remover INDEX in/[RECORD INDEX]` or `rr INDEX in/[RECORD INDEX]`
@@ -502,11 +504,11 @@ IMDB will be able to attach images(X-ray scans) to a patient and retrieve the im
 
 === Visiting Queue Commands
 
-The commands listed in this section are used to enable the management of the visiting queue of the clinic.
+The commands listed in this section are realted to the management of the visiting queue of the clinic.
 
 ==== Adding a patient into the visiting queue with index: `addq` [since v1.2]
 
-Adds a patient into the end of the visiting queue (registration). +
+Adds a patient to the end of the visiting queue (registration). +
 
 Format: `addq INDEX` or `aq INDEX`
 
@@ -552,7 +554,7 @@ Removes the first patient in the queue.
 
 ==== Removing a patient from the visiting queue by index: `removeq` [since v1.5rc]
 
-Removes a patient from the visiting queue specified by the index number used in the last patient listing. (check-out). +
+Removes a patient from the visiting queue by the index number of the current list view (check-out). +
 
 Format: `removeq INDEX` or `rq INDEX`
 
@@ -571,18 +573,18 @@ This command is only accessible to medical staff.
 Examples:
 
 * `removeq 4` +
-Removes the fourth patient in the patient list from the visiting queue if this patient is in the visiting queue.
+Removes the fourth patient in the patient list from the visiting queue.
 
 * `rq 2` +
-Removes the second patient in the patient list from the visiting queue if this patient is in the visiting queue.
+Removes the second patient in the patient list from the visiting queue.
 
 === Appointment Commands
 
-The commands listed in this section are used to enable the management of patients’ appointments.
+The commands listed in this section are related to the management of patients’ appointments.
 
 ==== Adding a medical appointment with: `addappt` [since v1.4]
 
-Adds a medical appointment to a patient specified by their name, with the appointment's date and time.
+Adds a medical appointment to a patient.
 
 Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
 
@@ -604,7 +606,7 @@ Adds a medical appointment for John on 23/3/2018 at 2:30pm.
 
 ==== Viewing medical appointments by patient name: `viewappt` [since v1.3]
 
-Shows the list of medical appointments of a patient specified by their name.
+Shows the list of medical appointments of a patient.
 
 Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
 
@@ -615,6 +617,20 @@ Lists the medical appointments made by Betsy.
 
 * `va John` +
 Lists the medical appointments made by John.
+
+==== Viewing medical appointments in calendar: `viewappt` [since v1.4]
+
+Shows the list of medical appointments in a calendar month view.
+
+Format: `viewappt` or `va`
+
+Examples:
+
+* `viewappt` +
+Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month.
+
+* `va` +
+Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month.
 
 ==== Deleting a medical appointment by patient name and appointment index number: `delappt` [since v1.3]
 
@@ -635,20 +651,6 @@ Deletes the medical appointment made by Betsy with index number 2.
 `da John 1` +
 Deletes the medical appointment made by John with index number 1.
 
-==== Viewing medical appointments in calendar: `viewappt` [since v1.4]
-
-Shows the list of medical appointments in a calendar month view.
-
-Format: `viewappt` or `va`
-
-Examples:
-
-* `viewappt` +
-Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month.
-
-* `va` +
-Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month.
-
 ==== Viewing the schedule for a patient across all specialists `[coming in v2.0]`
 
 IMDB will be able to view the schedule for a patient across all specialists so that medical staff can arrange non-conflicting appointments.
@@ -657,7 +659,7 @@ IMDB will be able to view the schedule for a patient across all specialists so t
 
 IMDB will be able to view the duty schedule for doctors across all specialists so that medical staff can make arrangements if patient specifies which doctor he or she would like to visit for the appointment.
 
-=== Saving the data
+=== Saving Data
 
 IMDB data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.

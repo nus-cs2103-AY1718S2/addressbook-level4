@@ -67,7 +67,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (!arePrefixesPresent(argMultimapOwner, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_NRIC)
             || !argMultimapOwner.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
+            throw new ParseException(String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_PERSON));
         }
 
         try {
@@ -79,8 +79,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Tag> ownerTagList = ParserUtil.parseTags(argMultimapOwner.getAllValues(PREFIX_TAG));
 
             Person owner = new Person(ownerName, phone, email, address, nric, ownerTagList);
-
             return owner;
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -98,12 +98,11 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (!arePrefixesPresent(argMultimap, PREFIX_DATE, PREFIX_REMARK, PREFIX_TAG)
             || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
-                String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_APPOINTMENT));
+                String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_APPOINTMENT));
         }
 
         try {
             LocalDateTime localDateTime = ParserUtil.parseDateTime(argMultimap.getValue(PREFIX_DATE)).get();
-
             if (localDateTime.isBefore(LocalDateTime.now())) {
                 throw new PastAppointmentException();
             }
@@ -112,8 +111,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Tag> type = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Appointment appointment = new Appointment(remark, localDateTime, type);
-
             return appointment;
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
 
@@ -132,7 +131,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (!arePrefixesPresent(
             argMultimap, PREFIX_NAME, PREFIX_BREED, PREFIX_SPECIES, PREFIX_COLOUR, PREFIX_BLOODTYPE)
             || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT));
+            throw new ParseException(String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
+                    AddCommand.MESSAGE_ERROR_PETPATIENT));
         }
 
         try {
@@ -167,8 +167,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         try {
             Nric validNric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC)).get();
-
             return validNric;
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -190,8 +190,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         try {
             PetPatientName petPatientName = ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_NAME)).get();
-
             return petPatientName;
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -302,7 +302,6 @@ public class AddCommandParser implements Parser<AddCommand> {
         //add a new person
         final Matcher matcherForNewPerson = ADD_COMMAND_FORMAT_OWNER_ONLY.matcher(trimmedArgs);
         if (matcherForNewPerson.matches()) {
-            System.out.println("MATCHES HERE");
             String ownerInfo = matcherForNewPerson.group("ownerInfo");
             return parseNewOwnerOnly(ownerInfo);
         }

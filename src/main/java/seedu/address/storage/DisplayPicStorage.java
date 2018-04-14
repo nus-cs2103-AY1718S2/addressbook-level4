@@ -24,10 +24,10 @@ import seedu.address.model.person.DisplayPic;
 //@@author Alaru
 public class DisplayPicStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(DisplayPicStorage.class);
-
     public static final String SAVE_LOCATION = "data/displayPic/";
     public static final String INTERNAL_DEFAULT_PIC_SAVE_LOCATION = "/images/displayPic/default.png";
+
+    private static final Logger logger = LogsCenter.getLogger(DisplayPicStorage.class);
 
     /**
      * Returns true if a given string points to a valid file.
@@ -59,6 +59,12 @@ public class DisplayPicStorage {
         }
     }
 
+
+    /**
+     * Attempts to open a file to see if it is an image
+     * @param filepath is the path to a file
+     * @return whether the file located at the specified filepath is a valid image file
+     */
     private static boolean openImage(String filepath) {
         try {
             BufferedImage image = ImageIO.read(new File(filepath));

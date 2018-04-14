@@ -269,11 +269,9 @@ Format: `updateDP INDEX dp/[IMAGE PATH]`
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
-* The aspect ratio of the image will be used to fill a circle, thus using an image with a ratio close to 1:1 pixels would be optimal.
+* The aspect ratio of the image will be used to fill a circle for the display picture, thus using an image with an aspect ratio close to 1:1 pixels would be optimal.
 ****
 
-[WARNING]
-The application does not support reading image files from a folder named `dp` due to the nature of how the application parses the prefixes.
 
 Examples:
 

@@ -24,10 +24,6 @@ public class GroupTest {
     private Group groupA2 = new GroupBuilder().withInformation("Group A").build();
     private Group groupB = new GroupBuilder().withInformation("Group B").build();
 
-    @Test
-    public void compare_equalGroups() throws Exception {
-        assertEquals(groupA, groupA2);
-    }
 
     @Test
     public void hashCodeAndString_test() {
@@ -94,8 +90,15 @@ public class GroupTest {
         groupA.removePerson(BENSON);
     }
 
+    //@@author jas5469
     @Test
     public void compare_notEqualGroups() throws Exception {
         assertNotEquals(groupA, groupB);
     }
+
+    @Test
+    public void compare_equalGroups() throws Exception {
+        assertEquals(groupA, groupA2);
+    }
+    //@@author
 }

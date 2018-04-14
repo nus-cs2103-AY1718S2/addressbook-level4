@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
 import java.util.stream.Stream;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddAccountCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.account.Account;

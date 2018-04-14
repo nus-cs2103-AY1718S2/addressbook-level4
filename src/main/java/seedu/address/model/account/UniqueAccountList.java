@@ -70,7 +70,7 @@ public class UniqueAccountList implements Serializable, Iterable<Account> {
      */
     public boolean remove(Account toRemove) throws AccountNotFoundException {
         //if (model.getAccountList().searchIfUsernameExist(new Username(username))) {
-          //  throw new AccountNotFoundException("Account not found!");
+        //  throw new AccountNotFoundException("Account not found!");
         //}
         requireNonNull(toRemove);
         final boolean accountFoundAndDeleted = internalList.remove(toRemove);

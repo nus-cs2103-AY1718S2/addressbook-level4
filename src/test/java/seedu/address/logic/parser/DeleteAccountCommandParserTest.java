@@ -1,15 +1,11 @@
 package seedu.address.logic.parser;
 
-import static org.junit.Assert.*;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalAccounts.EMMA;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.DeleteAccountCommand;
-import seedu.address.logic.commands.DeleteCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -24,13 +20,9 @@ public class DeleteAccountCommandParserTest {
     private DeleteAccountCommandParser parser = new DeleteAccountCommandParser();
 
     @Test
-    public void parse_validArgs_returnsDeleteAccountCommand() {
-        assertParseSuccess(parser, "emma123", new DeleteAccountCommand(EMMA.getCredential().getUsername().toString()));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAccountCommand.MESSAGE_USAGE));
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAccountCommand
+                .MESSAGE_USAGE));
     }
 
 }

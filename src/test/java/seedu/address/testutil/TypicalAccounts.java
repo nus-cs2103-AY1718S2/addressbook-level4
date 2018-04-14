@@ -72,7 +72,7 @@ public class TypicalAccounts {
         return model;
     }
 
-    public static UniqueAccountList getTypicalAccountListUAL() {
+    public static UniqueAccountList getTypicalAccountListUniqueAccountList() {
         UniqueAccountList uniqueAccountList = new UniqueAccountList();
         for (Account account : getTypicalAccounts()) {
             try {

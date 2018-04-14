@@ -1,51 +1,41 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.*;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalAccounts.HARRY;
 import static seedu.address.testutil.TypicalAccounts.getTypicalAccountList;
+import static seedu.address.testutil.TypicalBooks.getTypicalCatalogue;
 
 import org.junit.Test;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.testutil.TypicalAccounts.getTypicalAccountListUAL;
-
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.DeleteAccountCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.account.Account;
-import seedu.address.model.account.UniqueAccountList;
-import seedu.address.testutil.AccountBuilder;
+import seedu.address.model.UserPrefs;
 
 public class DeleteAccountCommandTest {
 
+    private Model model = new ModelManager(getTypicalCatalogue(), new UserPrefs());
+
     @Test
-    public void execute_validUsername_success() throws Exception {
-        Model model = new ModelManager();
-//        model = getTypicalAccountList();
-//        String validUsername = "harry123";
-//        assertCommandSuccess(prepareCommand(validUsername, model), model,
-//                DeleteAccountCommand.MESSAGE_DELETE_ACCOUNT_SUCCESS, model);
-        UniqueAccountList uniqueAccountList = new UniqueAccountList();
-        uniqueAccountList = getTypicalAccountListUAL();
-        Account validAccount = new AccountBuilder().build();
-        model.addAccount(validAccount);
-        assertCommandSuccess(prepareCommand(validAccount.getCredential().getUsername().toString(), model), model,
-                DeleteAccountCommand.MESSAGE_DELETE_ACCOUNT_SUCCESS, model);
+    public void execute_foundUsername_success() throws Exception {
+        Model actualModel = new ModelManager();
+        actualModel = getTypicalAccountList();
+        Model expectedModel = new ModelManager();
+        expectedModel = getTypicalAccountList();
+        expectedModel.deleteAccount(HARRY);
+        assertCommandSuccess(prepareCommand("harry123", actualModel), actualModel,
+                String.format(DeleteAccountCommand.MESSAGE_DELETE_ACCOUNT_SUCCESS, HARRY), expectedModel);
+
     }
 
     @Test
-    public void execute_invalidUserName5character() {
+    public void execute_usernameNotFound_failure()  throws Exception {
         Model model = new ModelManager();
         model = getTypicalAccountList();
-        String unvalidUsername = "ab12";
-        assertCommandFailure(prepareCommand(unvalidUsername, model), model, String.format(MESSAGE_INVALID_COMMAND_FORMAT
-                , DeleteAccountCommand.MESSAGE_USAGE));
-
+        assertCommandFailure(prepareCommand("harry1234", model), model,
+                "Account does not exist");
     }
 
 

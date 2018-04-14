@@ -36,18 +36,16 @@ public class DeleteAccountCommand extends UndoableCommand {
         try {
             model.deleteAccount(accountToDelete);
         } catch (AccountNotFoundException anfe) {
-            //anfe.printStackTrace();
             throw new CommandException("Account does not exist");
-            //throw new AssertionError("The account is missing from the Account List");
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_ACCOUNT_SUCCESS, accountToDelete));
     }
 
-        @Override
-        protected void preprocessUndoableCommand() throws CommandException {
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
         accountToDelete = model.getAccountList().searchByUsername(new Username(username));
-        }
+    }
 
     @Override
     public boolean equals(Object other) {

@@ -1,11 +1,11 @@
 package seedu.address.logic;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 public class CommandHistoryTest {
     private CommandHistory history;

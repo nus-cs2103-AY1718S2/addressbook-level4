@@ -1,12 +1,8 @@
 package seedu.address.model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import seedu.address.model.book.Book;
-import seedu.address.model.tag.Tag;
+import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalBooks.ANIMAL;
+import static seedu.address.testutil.TypicalBooks.getTypicalCatalogue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,15 +10,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalBooks.ANIMAL;
-import static seedu.address.testutil.TypicalBooks.getTypicalCatalogue;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-public class CatalogueTest {
-    private final Catalogue catalogue = new Catalogue();
-    @Rule
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.book.Book;
+import seedu.address.model.tag.Tag;
+
+public class CatalogueTest { @Rule
     public ExpectedException thrown = ExpectedException.none();
-
+    private final Catalogue catalogue = new Catalogue();
     @Test
     public void constructor() {
         assertEquals(Collections.emptyList(), catalogue.getBookList());

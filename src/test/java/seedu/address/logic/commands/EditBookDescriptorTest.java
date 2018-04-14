@@ -1,9 +1,5 @@
 package seedu.address.logic.commands;
 
-import org.junit.Test;
-import seedu.address.logic.commands.EditCommand.EditBookDescriptor;
-import seedu.address.testutil.EditBookDescriptorBuilder;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_XVI;
@@ -13,6 +9,11 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAIL_YOU;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ISBN_YOU;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FICTION;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_YOU;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.EditCommand.EditBookDescriptor;
+import seedu.address.testutil.EditBookDescriptorBuilder;
 
 public class EditBookDescriptorTest {
 

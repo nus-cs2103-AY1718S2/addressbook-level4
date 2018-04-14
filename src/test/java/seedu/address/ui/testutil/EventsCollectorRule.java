@@ -1,14 +1,16 @@
 package seedu.address.ui.testutil;
 
-import com.google.common.eventbus.Subscribe;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+
+import com.google.common.eventbus.Subscribe;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Sets up an {@code EventsCollector} and tears it down after each test.

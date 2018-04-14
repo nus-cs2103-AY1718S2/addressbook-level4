@@ -1,10 +1,12 @@
 //@@author QiuHaohao
 package seedu.address.model.account;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-import static java.util.Objects.requireNonNull;
+
 
 /**
  * Represents an account in the accountBook

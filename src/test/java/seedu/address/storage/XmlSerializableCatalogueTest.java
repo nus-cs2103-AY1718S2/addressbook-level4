@@ -1,18 +1,18 @@
 package seedu.address.storage;
 
+import static org.junit.Assert.assertNotSame;
+
+import java.io.File;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.Catalogue;
 import seedu.address.testutil.TypicalBooks;
-
-import java.io.File;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
 
 public class XmlSerializableCatalogueTest {
 

@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -13,8 +15,6 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-import java.util.logging.Logger;
 
 
 /**

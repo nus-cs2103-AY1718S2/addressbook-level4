@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import java.util.function.Predicate;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.account.Account;
 import seedu.address.model.account.Credential;
@@ -9,8 +11,6 @@ import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
-
-import java.util.function.Predicate;
 
 
 /**

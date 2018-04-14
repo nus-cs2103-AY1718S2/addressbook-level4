@@ -1,6 +1,22 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
+import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
+import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
+import static seedu.address.model.book.Avail.BORROWED;
+import static seedu.address.testutil.TypicalBooks.getTypicalCatalogue;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
+
+import java.util.Set;
+
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -15,20 +31,9 @@ import seedu.address.model.book.Isbn;
 import seedu.address.model.book.Title;
 import seedu.address.model.tag.Tag;
 
-import java.util.Set;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
-import static seedu.address.model.book.Avail.BORROWED;
-import static seedu.address.testutil.TypicalBooks.getTypicalCatalogue;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
+
+
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -36,7 +41,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
  */
 public class BorrowCommandTest {
 
-    public Model model = new ModelManager(getTypicalCatalogue(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalCatalogue(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -186,6 +191,10 @@ public class BorrowCommandTest {
         assertTrue(model.getFilteredBookList().isEmpty());
     }
 
+    /**
+     *
+     * @return duplicated book with Borrowed Availability
+     */
     public Book createBorrowedBook(Book bookToBorrow) {
         assert bookToBorrow != null;
 

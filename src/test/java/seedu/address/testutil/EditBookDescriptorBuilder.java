@@ -1,5 +1,9 @@
 package seedu.address.testutil;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import seedu.address.logic.commands.EditCommand.EditBookDescriptor;
 import seedu.address.model.book.Author;
 import seedu.address.model.book.Avail;
@@ -7,10 +11,6 @@ import seedu.address.model.book.Book;
 import seedu.address.model.book.Isbn;
 import seedu.address.model.book.Title;
 import seedu.address.model.tag.Tag;
-
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * A utility class to help with building EditBookDescriptor objects.

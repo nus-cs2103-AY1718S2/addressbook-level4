@@ -1,9 +1,7 @@
 //@@author QiuHaohao
 package seedu.address.storage;
 
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.account.UniqueAccountList;
+import static java.util.Objects.requireNonNull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +12,9 @@ import java.io.ObjectOutputStream;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import static java.util.Objects.requireNonNull;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.account.UniqueAccountList;
 
 /**
  * A class to access AccountList data stored as an .ser file on the hard disk.

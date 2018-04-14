@@ -1,12 +1,13 @@
 package seedu.address.ui;
 
-import guitests.guihandles.ResultDisplayHandle;
-import org.junit.Before;
-import org.junit.Test;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
-
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class ResultDisplayTest extends GuiUnitTest {
 

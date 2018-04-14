@@ -1,15 +1,16 @@
 package seedu.address.ui;
 
-import guitests.guihandles.HelpWindowHandle;
-import javafx.stage.Stage;
+import static org.junit.Assert.assertEquals;
+import static seedu.address.ui.HelpWindow.USERGUIDE_FILE_PATH;
+
+import java.net.URL;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.api.FxToolkit;
 
-import java.net.URL;
-
-import static org.junit.Assert.assertEquals;
-import static seedu.address.ui.HelpWindow.USERGUIDE_FILE_PATH;
+import guitests.guihandles.HelpWindowHandle;
+import javafx.stage.Stage;
 
 public class HelpWindowTest extends GuiUnitTest {
 

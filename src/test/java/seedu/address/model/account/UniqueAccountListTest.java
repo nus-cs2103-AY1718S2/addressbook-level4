@@ -1,11 +1,12 @@
 //@@author QiuHaohao
 package seedu.address.model.account;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
+
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.testutil.Assert;
-
-import static org.junit.Assert.assertEquals;
 
 public class UniqueAccountListTest {
     @Test

@@ -1,19 +1,19 @@
 package seedu.address.model.book;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.book.exceptions.BookNotFoundException;
-import seedu.address.model.book.exceptions.DuplicateBookException;
-
-import java.util.Iterator;
-import java.util.List;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.book.Avail.AVAILABLE;
 import static seedu.address.model.book.Avail.BORROWED;
 import static seedu.address.model.book.Avail.RESERVED;
+
+import java.util.Iterator;
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
  * A list of books that enforces uniqueness between its elements and does not allow nulls.
@@ -125,6 +125,11 @@ public class UniqueBookList implements Iterable<Book> {
         setBooks(replacement);
     }
 
+    /**
+     * @param target select the index book to be returned
+     * @param returnedBook duplicated book that will replace original book
+     * @throws BookNotFoundException
+     */
     public void replaceReturnedBook(Book target, Book returnedBook) throws BookNotFoundException {
         requireNonNull(returnedBook);
         int index = internalList.indexOf(target);
@@ -142,6 +147,11 @@ public class UniqueBookList implements Iterable<Book> {
         }
     }
 
+    /**
+     * @param target select the index book to be borrowed
+     * @param borrowedBook duplicated book that will replace original book
+     * @throws BookNotFoundException
+     */
     public void replaceBorrowedBook(Book target, Book borrowedBook) throws BookNotFoundException {
         requireNonNull(borrowedBook);
 
@@ -157,6 +167,11 @@ public class UniqueBookList implements Iterable<Book> {
         }
     }
 
+    /**
+     * @param target select the index book to be reserved
+     * @param reservedBook duplicated book that will replace original book
+     * @throws BookNotFoundException
+     */
     public void replaceReservedBook(Book target, Book reservedBook) throws BookNotFoundException {
 
         requireNonNull(reservedBook);

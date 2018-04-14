@@ -1,12 +1,6 @@
 package seedu.address.model;
 
-import javafx.collections.ObservableList;
-import seedu.address.model.book.Book;
-import seedu.address.model.book.UniqueBookList;
-import seedu.address.model.book.exceptions.BookNotFoundException;
-import seedu.address.model.book.exceptions.DuplicateBookException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,7 +10,13 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.requireNonNull;
+import javafx.collections.ObservableList;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.UniqueBookList;
+import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.model.book.exceptions.DuplicateBookException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Wraps all data at the catalogue level
@@ -27,13 +27,13 @@ public class Catalogue implements ReadOnlyCatalogue {
     private final UniqueBookList books;
     private final UniqueTagList tags;
 
-    /*
+        /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */ {
+        */ {
         books = new UniqueBookList();
         tags = new UniqueTagList();
     }
@@ -152,8 +152,11 @@ public class Catalogue implements ReadOnlyCatalogue {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
-    }
-
+    } /**
+     * @param target book that is selected by index to return
+     * @param returnedBook duplicated book that will replace the original book
+     * @throws BookNotFoundException
+     */
     public void returnBook(Book target, Book returnedBook)
         throws BookNotFoundException {
         requireNonNull(returnedBook);
@@ -165,6 +168,11 @@ public class Catalogue implements ReadOnlyCatalogue {
         books.replaceReturnedBook(target, syncedEditedBook);
     }
 
+    /**
+     * @param target book that is selected by index to borrow
+     * @param borrowedBook duplicated book that will replace the original book
+     * @throws BookNotFoundException
+     */
     public void borrowBook(Book target, Book borrowedBook)
         throws BookNotFoundException {
         requireNonNull(borrowedBook);
@@ -176,6 +184,11 @@ public class Catalogue implements ReadOnlyCatalogue {
         books.replaceBorrowedBook(target, syncedEditedBook);
     }
 
+    /**
+     * @param target book that is selected by index to reserve
+     * @param reservedBook duplicated book that will replace the original book
+     * @throws BookNotFoundException
+     */
     public void reserveBook(Book target, Book reservedBook)
         throws BookNotFoundException {
         requireNonNull(reservedBook);

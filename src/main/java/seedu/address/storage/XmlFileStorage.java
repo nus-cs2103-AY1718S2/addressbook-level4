@@ -1,12 +1,12 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.commons.util.XmlUtil;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.XmlUtil;
 
 /**
  * Stores catalogue data in an XML file

@@ -1,12 +1,5 @@
 package systemtests;
 
-import org.junit.Test;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -15,6 +8,14 @@ import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_BOOK_SUC
 import static seedu.address.testutil.TypicalBooks.KEYWORD_MATCHING_GIRL;
 import static seedu.address.testutil.TypicalBooks.getTypicalBooks;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.Model;
 
 public class SelectCommandSystemTest extends CatalogueSystemTest {
     @Test

@@ -1,5 +1,8 @@
 package seedu.address.model.util;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import seedu.address.model.Catalogue;
 import seedu.address.model.ReadOnlyCatalogue;
 import seedu.address.model.book.Author;
@@ -9,9 +12,6 @@ import seedu.address.model.book.Isbn;
 import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 import seedu.address.model.tag.Tag;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Contains utility methods for populating {@code Catalogue} with sample data.

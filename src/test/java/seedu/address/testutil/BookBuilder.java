@@ -1,5 +1,8 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import seedu.address.model.book.Author;
 import seedu.address.model.book.Avail;
 import seedu.address.model.book.Book;
@@ -7,9 +10,6 @@ import seedu.address.model.book.Isbn;
 import seedu.address.model.book.Title;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A utility class to help with building Book objects.

@@ -1,5 +1,18 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTHOR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ISBN;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -10,19 +23,6 @@ import seedu.address.model.book.Book;
 import seedu.address.model.book.TitleContainsKeywordsPredicate;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.testutil.EditBookDescriptorBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTHOR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ISBN;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 /**
  * Contains helper methods for testing commands.

@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
@@ -14,8 +16,6 @@ import seedu.address.logic.parser.CatalogueParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
-
-import java.util.logging.Logger;
 
 /**
  * The main LogicManager of the app.

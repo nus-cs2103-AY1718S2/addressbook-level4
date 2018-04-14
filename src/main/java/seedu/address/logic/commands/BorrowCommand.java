@@ -1,5 +1,12 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.model.book.Avail.BORROWED;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -12,13 +19,6 @@ import seedu.address.model.book.Isbn;
 import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.tag.Tag;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.model.book.Avail.BORROWED;
 
 /**
  * Borrows a book
@@ -45,6 +45,10 @@ public class BorrowCommand extends UndoableCommand {
         this.targetIndex = targetIndex;
     }
 
+    /**
+     * @param bookToBorrow
+     * @return duplicated book with Borrowed Availability
+     */
     public Book createBorrowedBook(Book bookToBorrow) {
         assert bookToBorrow != null;
 

@@ -20,7 +20,7 @@ public class ProcessMoreCommandParser implements Parser<ProcessMoreCommand> {
         try
         {
             int numberOfTimes = Integer.parseInt(args.trim());
-            if (numberOfTimes <=0) {
+            if (numberOfTimes <= 0) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProcessMoreCommand.MESSAGE_USAGE));
             }

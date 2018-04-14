@@ -3,7 +3,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
@@ -11,18 +18,9 @@ import seedu.address.model.person.Order;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Vegetarian;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
-
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
-import java.util.List;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Tag an existing order in the order queue with given word
@@ -91,24 +89,26 @@ public class TagOrderCommand extends Command {
                 && tagWord.equals(((TagOrderCommand) other).tagWord));
     }
 
-
-    protected Person createNewTaggedPerson(Person personToEdit,String tag) {
+    /**
+     * @param personToEdit
+     * @param tag word to be tagged on the person
+     * @return a updated person with tag attached
+     */
+    protected Person createNewTaggedPerson(Person personToEdit, String tag) {
         assert personToEdit != null;
 
-        Name updatedName = personToEdit.getName();
-        Phone updatedPhone = personToEdit.getPhone();
-        Order updatedOrder = personToEdit.getOrder();
         Address updatedAddress = personToEdit.getAddress();
         Halal updatedHalal = personToEdit.getHalal();
         Vegetarian updatedVegetarian = personToEdit.getVegetarian();
+        Name updatedName = personToEdit.getName();
+        Phone updatedPhone = personToEdit.getPhone();
+        Order updatedOrder = personToEdit.getOrder();
         UniqueTagList updatedTags = new UniqueTagList(personToEdit.getTags());
 
         try {
             updatedTags.add(new Tag(tag));
-        } catch (UniqueTagList.DuplicateTagException dte){
+        } catch (UniqueTagList.DuplicateTagException dte) {
             //does not add tag "processing" if already exists
-        } catch (IllegalArgumentException iae) {
-
         }
         return new Person(updatedName, updatedPhone, updatedOrder, updatedAddress,
                 updatedHalal, updatedVegetarian, updatedTags);

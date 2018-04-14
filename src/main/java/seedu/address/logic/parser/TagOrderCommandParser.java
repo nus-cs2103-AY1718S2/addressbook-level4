@@ -12,7 +12,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Parses input arguments and creates a new TagOrderCommand object
  */
-    public class TagOrderCommandParser implements Parser<TagOrderCommand> {
+public class TagOrderCommandParser implements Parser<TagOrderCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the TagOrderCommand
@@ -22,13 +22,14 @@ import seedu.address.model.tag.Tag;
     public TagOrderCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        String[] splittedArgs = SplitStrings(args.trim());
+        String[] splittedArgs = splitStrings(args.trim());
 
         Index index;
         String tagWord;
 
         if (splittedArgs.length > 2) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagOrderCommand.MESSAGE_ONE_TAG_ONLY));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    TagOrderCommand.MESSAGE_ONE_TAG_ONLY));
         }
 
         try {
@@ -46,7 +47,7 @@ import seedu.address.model.tag.Tag;
         return new TagOrderCommand(index, tagWord);
     }
 
-    private String[] SplitStrings(String args) {
+    private String[] splitStrings(String args) {
         return args.split("\\s+");
     }
 }

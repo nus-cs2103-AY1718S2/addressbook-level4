@@ -3,20 +3,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Halal;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Order;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Vegetarian;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.queue.TaskList;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.task.Task;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
-
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Calendar;
@@ -25,8 +11,21 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Halal;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Vegetarian;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.queue.TaskList;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
  * Add an order to the application's processing queue, label the corresponding order in the
@@ -53,7 +52,7 @@ public class ProcessOrderCommand extends Command {
 
     /**
      *
-     * @param targetIndex
+     * @param targetIndex index of order to be processed in the order queue
      */
     public ProcessOrderCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -73,7 +72,7 @@ public class ProcessOrderCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        if (taskList.size() >= TaskList.maxCapacity) {
+        if (taskList.size() >= TaskList.getMaxCapacity()) {
             throw new CommandException(MESSAGE_FULL_CAPACITY);
         }
 
@@ -83,13 +82,20 @@ public class ProcessOrderCommand extends Command {
 
         Person personToEdit = personToAdd;
         // labels person with tag "Processing"
-        Person editedPerson = createNewTaggedPerson(personToEdit,"Processed");
+        Person editedPerson = createNewTaggedPerson(personToEdit, "Processed");
 
         addAndTag(toAdd, personToEdit, editedPerson);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
+    /**
+     *
+     * @param toAdd task to be added
+     * @param personToEdit original person
+     * @param editedPerson replacement
+     * @throws CommandException
+     */
     protected void addAndTag(Task toAdd, Person personToEdit, Person editedPerson) throws CommandException {
         try {
             model.addTask(toAdd);
@@ -114,9 +120,9 @@ public class ProcessOrderCommand extends Command {
         date.getTime();
 
         Calendar cal = Calendar.getInstance();
-        return cal.get(Calendar.HOUR_OF_DAY)+":"
-                +cal.get(Calendar.MINUTE)+":"
-                +cal.get(Calendar.SECOND);
+        return cal.get(Calendar.HOUR_OF_DAY) + ":"
+                + cal.get(Calendar.MINUTE) + ":"
+                + cal.get(Calendar.SECOND);
     }
 
     @Override

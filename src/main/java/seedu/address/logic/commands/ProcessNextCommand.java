@@ -3,15 +3,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.queue.TaskList;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.task.Task;
-
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
+import seedu.address.model.queue.TaskList;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Task;
 
 /**
  * Add the first unprocessed order in the order queue to the application's
@@ -27,7 +26,7 @@ public class ProcessNextCommand extends ProcessOrderCommand {
             + "No parameter needed\n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_All_PROCESSING = "All Order have been processed.";
+    private static final String MESSAGE_All_PROCESSING = "All Order have been processed.";
     private static int noOrderToBeProcessed = -1;
 
     protected int targetIndex;
@@ -50,7 +49,7 @@ public class ProcessNextCommand extends ProcessOrderCommand {
             }
         }
 
-        if (targetIndex==noOrderToBeProcessed) {
+        if (targetIndex == noOrderToBeProcessed) {
             throw new CommandException(MESSAGE_All_PROCESSING);
         }
 
@@ -63,7 +62,7 @@ public class ProcessNextCommand extends ProcessOrderCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        if (taskList.size() >= TaskList.maxCapacity) {
+        if (taskList.size() >= TaskList.getMaxCapacity()) {
             throw new CommandException(MESSAGE_FULL_CAPACITY);
         }
 
@@ -73,7 +72,7 @@ public class ProcessNextCommand extends ProcessOrderCommand {
 
         Person personToEdit = personToAdd;
         // labels person with tag "Processing"
-        Person editedPerson = createNewTaggedPerson(personToEdit,"Processed");
+        Person editedPerson = createNewTaggedPerson(personToEdit, "Processed");
 
         addAndTag(toAdd, personToEdit, editedPerson);
 

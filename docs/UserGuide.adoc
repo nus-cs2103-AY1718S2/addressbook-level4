@@ -37,18 +37,17 @@ image:Ui.png[width="790"] +
 *Figure 1:* GUI upon start and its components.
 +
 .  Type any command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-[NOTE]
-====
+*_E.g._* typing *`help`* and pressing kbd:[Enter] will open the help window.
+****
 Some example commands you can try:
 
 * *`list`* : lists all contacts.
 * *`add`*`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Fastis.
 * *`delete`*`3` : deletes the 3rd contact shown in the current person list panel.
 * *`exit`* : exits the app.
-====
+****
 
-.  Refer to <<Features>> for details of each command.
+Refer to <<Features>> below for details of each command.
 
 [[Features]]
 == Features
@@ -57,7 +56,7 @@ Some example commands you can try:
 *Command Format*
 
 * Most commands have an alias, which is just the acronym of the command. You can use either the command's name or its alias to execute any command. +
-*_E.g._* Alias of 'add' command is 'a'. To add a person named John Doe to Fastis, you can type either `add n/John Doe` or `a n/John Doe`.
+*_E.g._* Alias of `add` command is `a`. To add a person named John Doe to Fastis, you can type either `add n/John Doe` or `a n/John Doe`.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user. +
 *_E.g._* in the command `add n/NAME p/PHONE`, `NAME` and `PHONE` are parameters which you can supply to add a person to Fastis.
 * Items in square brackets are optional. +
@@ -94,7 +93,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 l/http://modsn.us/MYwiD d/Likes tennis` +
 Adds a person named John Doe with the attributes listed. Refer to Figure 2 for results of this command.
 +
-image:personAdded.png[width="600"] +
+image:personAdded.png[width="800"] +
 *Figure 2:* Example of `add` command.
 +
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 l/http://modsn.us/56Dn9 d/Likes chocolate t/criminal` +
@@ -197,9 +196,9 @@ Selects the 2nd person in Fastis. Refer to Figure 3 for results of this command.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 +
-image:SelectCommandExample.png[width="700"] +
+image:SelectCommandExample.png[width="800"] +
 *Figure 3:* Example of showing the timetable when selecting the 2nd person
-+
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -285,7 +284,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Adding an event: `addEvent`
 
-Adds an event to Fastis and display it on the calendar. +
+Adds an event to Fastis and displays it on the calendar. +
 [blue yellow-background]#*Undoable*# +
 Alias: `aE` +
 Format: `addEvent n/NAME v/VENUE d/DATE st/STARTTIME et/ENDTIME`
@@ -300,9 +299,9 @@ Examples:
 * `addEvent n/CS2103 Meetup v/School of Computing d/07/04/2018 st/1000 et/1300` +
 Adds an event called CS2103 Meetup to the calendar. Refer to Figure 4 for results of the command
 +
-image:AddEventCommandExample.png[width="500"] +
+image:AddEventCommandExample.png[width="800"] +
 *Figure 4:* Example of an event added on the calendar
-+
+
 // group::toDoList[]
 === Adding a to-do: `addToDo`
 
@@ -311,14 +310,15 @@ Adds a to-do to Fastis. +
 Alias: `aTD` +
 Format: `addToDo CONTENT`
 
-Examples:
+Examples: +
+Refer to Figure 5 for results of the following 2 commands. +
 
 * `addToDo Do homework before next Wednesday`
 * `aTD Swim like a fish`
 +
-image:AddToDoCommandExample.png[width="500"] +
+image:AddToDoCommandExample.png[width="250"] +
 *Figure 5:* Example of adding to-dos
-+
+
 === Marking a to-do as done: `check`
 
 Marks a to-do in Fastis as done. +
@@ -352,12 +352,12 @@ Format: `uncheck INDEX`
 
 Examples:
 
-* `uncheck 2`
+* `uncheck 2` +
 Marks the second to-do in the list as done. Refer to Figure 6 for results of this command.
 +
-image:CheckToDoExample.png[width="500"] +
+image:CheckToDoExample.png[width="250"] +
 *Figure 6:* Example of checking/unchecking to-dos
-+
+
 === Editing a to-do's content : `editToDo`
 
 Edits an existing to-do's content in Fastis. +
@@ -392,7 +392,7 @@ Format: `deleteToDo INDEX`
 
 Examples:
 
-`deleteToDo 2` +
+* `deleteToDo 2` +
 Deletes the 2nd to-do in Fastis.
 // end::toDoList[]
 
@@ -421,7 +421,7 @@ Returns any person having group tags `CS3230`, `CS1010`. Refer to Figure 7 for r
 +
 image:ListTagMembersCommandExample.png[width="500"] +
 *Figure 7:* Example of ListTagMembers +
-+
+
 // end::listTag[]
 
 // tag::addGroup[]
@@ -488,7 +488,7 @@ Format: `deleteGroupMember INDEX g/GROUP`
 Examples:
 
 * `deleteGroupMember 2 g/CS2101 Oral Presentation` +
-Adds 2nd person shown in the person list from group `CS2101 Oral Presentation`.
+Adds the 2nd person shown in the person list from group `CS2101 Oral Presentation`.
 
 === Listing Group Members : `listGroupMembers`
 
@@ -582,9 +582,9 @@ Shows all events in list in Fastis in chronological order. +
 Alias: `d` +
 Format: `display`
 
-=== Edit a person's group : `modify` `[coming in v2.0]`
+=== Editing a person's group : `modify` `[coming in v2.0]`
 
-Modify the group that the person belongs to. +
+Modifies the group that the person belongs to. +
 Alias: `m` +
 Format: `modify INDEX`
 
@@ -656,29 +656,29 @@ image:nusModsLinkResult.png[width ="500"] +
 
 |`editToDo` |Edits an existing to-do's content in Fastis |`eTD` |`editToDo INDEX c/CONTENT` |X
 
-|`exit` |Exits the program |N/A |`exit` |`{nbsp}`
+|`exit` |Exits the program |N/A |`exit` |{nbsp}
 
-|`find` |Finds persons whose name contains any of the given keywords |`f` |`find KEYWORD [MORE_KEYWORDS]` |`{nbsp}`
+|`find` |Finds persons whose name contains any of the given keywords |`f` |`find KEYWORD [MORE_KEYWORDS]` |{nbsp}
 
-|`help` |Displays the help window |N/A |`help` |`{nbsp}`
+|`help` |Displays the help window |N/A |`help` |{nbsp}
 
-|`history` |Lists all the commands that you have entered in reverse chronological order |`h` |`history` |`{nbsp}`
+|`history` |Lists all the commands that you have entered in reverse chronological order |`h` |`history` |{nbsp}
 
-|`list` |Shows a list of all persons in Fastis |`l` |`list` |`{nbsp}`
+|`list` |Shows a list of all persons in Fastis |`l` |`list` |{nbsp}
 
-|`listGroupMembers` |Lists all the members in the group that already exists in Fastis |`lGM` |`listGroupMembers GROUP` |`{nbsp}`
+|`listGroupMembers` |Lists all the members in the group that already exists in Fastis |`lGM` |`listGroupMembers GROUP` |{nbsp}
 
-|`listTagMembers` |Lists out all persons with the given tags |`lTM` |`listTagMembers TAG [MORE_TAGS]...` |`{nbsp}`
+|`listTagMembers` |Lists out all persons with the given tags |`lTM` |`listTagMembers TAG [MORE_TAGS]...` |{nbsp}
 
-|`redo` |Reverses the most recent `undo` command |`r` |`redo` |`{nbsp}`
+|`redo` |Reverses the most recent `undo` command |`r` |`redo` |{nbsp}
 
-|`scheduleGroup` |Finds all common free time slots for all group members to meet |`sG` |`scheduleGroup GROUP` |`{nbsp}`
+|`scheduleGroup` |Finds all common free time slots for all group members to meet |`sG` |`scheduleGroup GROUP` |{nbsp}
 
-|`select` |Selects the person identified by the index number used in the last person listing |`s` |`select INDEX` |`{nbsp}`
+|`select` |Selects the person identified by the index number used in the last person listing |`s` |`select INDEX` |{nbsp}
 
-|`switch` |Switches between Calendar view and Timetable view |`sw` |`switch` |`{nbsp}`
+|`switch` |Switches between Calendar view and Timetable view |`sw` |`switch` |{nbsp}
 
 |`uncheck` |Marks a to-do in Fastis as undone |N/A |`uncheck INDEX` |X
 
-|`undo` |Restores Fastis to the state before the previous _undoable_ command was executed |`u` |`undo` |`{nbsp}`
+|`undo` |Restores Fastis to the state before the previous _undoable_ command was executed |`u` |`undo` |{nbsp}
 |=========================================================

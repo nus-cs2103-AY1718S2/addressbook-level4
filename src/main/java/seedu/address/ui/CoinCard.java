@@ -63,6 +63,9 @@ public class CoinCard extends UiPart<Region> {
     }
 
     /**
+
+
+
      * Retrieve a color for the specified tag's label.
      * @param tag
      * @return Label style as a CSS class name string.

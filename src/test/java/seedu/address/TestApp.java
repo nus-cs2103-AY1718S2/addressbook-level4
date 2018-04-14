@@ -36,11 +36,8 @@ public class TestApp extends MainApp {
     protected Supplier<ReadOnlyCoinBook> initialDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
-    public TestApp() {
-    }
-
     public TestApp(Supplier<ReadOnlyCoinBook> initialDataSupplier, String saveFileLocation) {
-        super();
+        super(true);
         this.initialDataSupplier = initialDataSupplier;
         this.saveFileLocation = saveFileLocation;
 

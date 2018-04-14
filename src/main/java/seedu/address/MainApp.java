@@ -21,6 +21,9 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.SyncCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -56,6 +59,15 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    private final boolean isTest;
+
+    public MainApp() {
+        this.isTest = false;
+    }
+
+    public MainApp(boolean isTest) {
+        this.isTest = isTest;
+    }
 
     @Override
     public void init() throws Exception {
@@ -79,7 +91,15 @@ public class MainApp extends Application {
 
         initEventsCenter();
 
+        syncDataOnStartup();
+
         CoinSubredditList.initialize();
+    }
+
+    private void syncDataOnStartup() throws CommandException, ParseException {
+        if (!this.isTest) {
+            logic.execute(SyncCommand.COMMAND_WORD);
+        }
     }
 
     private String getApplicationParameter(String parameterName) {

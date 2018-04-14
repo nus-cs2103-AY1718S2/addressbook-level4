@@ -1,8 +1,9 @@
 package systemtests;
 
 import static seedu.address.logic.commands.CommandTestUtil.*;
-import static seedu.address.testutil.TypicalAliases.ADD;
 import static seedu.address.testutil.TypicalAliases.HISTORY;
+import static seedu.address.testutil.TypicalAliases.MAP_1;
+import static seedu.address.testutil.TypicalAliases.MAP_2;
 
 import org.junit.Test;
 
@@ -23,33 +24,50 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
 
         /* ------------------------ Perform add operations on the alias list ----------------------------- */
 
-
         /* Case: add an alias to a non-empty address book, command with leading spaces and trailing spaces -> added */
-        Alias toAdd_add = ADD;
-        String command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_ADD;
-        Alias[][] expectedAliases = new Alias[][] {{toAdd_add}};
-        assertCommandSuccess(command, toAdd_add, expectedAliases);
+        Alias toAdd_map1 = MAP_1;
+        String command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_MAP1;
+        Alias[][] expectedAliases = new Alias[][] {{toAdd_map1}};
+        assertCommandSuccess(command, toAdd_map1, expectedAliases);
 
-        /* Case: undo adding ADD to the list -> ADD deleted */
+        /* Case: undo adding MAP_1 to the list -> MAP_1 deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         expectedAliases = new Alias[][] {};
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo adding ADD to the list -> ADD added again */
+        /* Case: redo adding MAP_1 to the list -> MAP_1 added again */
         command = RedoCommand.COMMAND_WORD;
-        model.addAlias(toAdd_add);
+        model.addAlias(toAdd_map1);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        expectedAliases = new Alias[][] {{toAdd_add}};
+        expectedAliases = new Alias[][] {{toAdd_map1}};
         assertCommandSuccess(command, model, expectedResultMessage, expectedAliases);
 
-        /* Case: add 2 aliases of different commands -> added */
+        /* Case: add an alias of a different command -> added */
         Alias toAdd_history = HISTORY;
         command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_HISTORY;
-        expectedAliases = new Alias[][] {{toAdd_add, toAdd_history}};
+        expectedAliases = new Alias[][] {{toAdd_map1, toAdd_history}};
         assertCommandSuccess(command, toAdd_history, expectedAliases);
 
+        /* Case: add another alias of MAP command -> added */
+        Alias toAdd_map2 = MAP_2;
+        command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_MAP2;
+        expectedAliases = new Alias[][] {{toAdd_map2, toAdd_history}, {toAdd_map1}};
+        assertCommandSuccess(command, toAdd_map2, expectedAliases);
+
+        /* Case: add to empty address book -> added */
+        deleteAllPersonsAndAliases();
+        command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_HISTORY;
+        expectedAliases = new Alias[][] {{toAdd_history}};
+        assertCommandSuccess(toAdd_history,expectedAliases);
+
+
         /* --------------------------------- Perform invalid alias operations ------------------------------------- */
+
+        /* Case: add a duplicate alias -> rejected */
+        //Alias toAdd_history2 = HISTORY;
+        command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_HISTORY;
+        assertCommandFailure(command, AliasCommand.MESSAGE_DUPLICATE_ALIAS);
 
     }
 

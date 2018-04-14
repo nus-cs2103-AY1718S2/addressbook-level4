@@ -93,7 +93,8 @@ public class CommandTestUtil {
     public static final String VALID_ALIAS_IMPORT = "import1";
     public static final String VALID_ALIAS_LIST_COMMAND = ListCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_LIST = "list1";
-    public static final String VALID_ALIAS_MAP = "map1";
+    public static final String VALID_ALIAS_MAP1 = "map1";
+    public static final String VALID_ALIAS_MAP2 = "map2";
     public static final String VALID_ALIAS_ENCRYPT = "encrypt1";
     public static final String VALID_ALIAS_REDO = "redo1";
     public static final String VALID_ALIAS_DECRYPT = "decrypt1";
@@ -117,7 +118,8 @@ public class CommandTestUtil {
     public static final String ALIAS_DESC_HISTORY = HistoryCommand.COMMAND_WORD + " " + VALID_ALIAS_HISTORY;
     public static final String ALIAS_DESC_IMPORT = ImportCommand.COMMAND_WORD + " " + VALID_ALIAS_IMPORT;
     public static final String ALIAS_DESC_LIST = ListCommand.COMMAND_WORD + " " + VALID_ALIAS_LIST;
-    public static final String ALIAS_DESC_MAP = MapCommand.COMMAND_WORD + " " + VALID_ALIAS_MAP;
+    public static final String ALIAS_DESC_MAP1 = MapCommand.COMMAND_WORD + " " + VALID_ALIAS_MAP1;
+    public static final String ALIAS_DESC_MAP2 = MapCommand.COMMAND_WORD + " " + VALID_ALIAS_MAP2;
     public static final String ALIAS_DESC_PASSWORD = PasswordCommand.COMMAND_WORD + " " + VALID_ALIAS_ENCRYPT;
     public static final String ALIAS_DESC_REDO = RedoCommand.COMMAND_WORD + " " + VALID_ALIAS_REDO;
     public static final String ALIAS_DESC_REMOVEPASSWORD = RemovePasswordCommand.COMMAND_WORD + " "

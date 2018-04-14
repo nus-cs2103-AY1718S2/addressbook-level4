@@ -174,6 +174,10 @@ public class CommandTestUtil {
     public static final String VALID_THREE_LOCATIONS = VALID_LOCATION_ADDRESS_1 + "/"
             + VALID_LOCATION_BUILDING_LOWERCASE + "/" + VALID_LOCATION_POSTAL_2;
 
+    public static final String VALID_PASSWORD = "test";
+    public static final String MIXED_CASE_PASSWORD_COMMAND_WORD = "EnCrYpT";
+
+
     //@@author
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;

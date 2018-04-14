@@ -76,7 +76,7 @@ public class TestApp extends MainApp {
      */
     public AddressBook readStorageAddressBook() {
         try {
-            return new AddressBook(storage.readAddressBook().get());
+            return new AddressBook(storage.readAddressBook(getModel().getAddressBook().getPassword()).get());
         } catch (WrongPasswordException wpe) {
             throw new AssertionError("Data encrypted with wrong password.");
         } catch (DataConversionException dce) {

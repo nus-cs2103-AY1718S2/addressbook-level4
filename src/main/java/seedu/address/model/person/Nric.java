@@ -8,7 +8,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidNRIC(String)}
  */
 public class Nric {
-    public static final String MESSAGE_NRIC_CONSTRAINTS = "Person NRIC should be of the format #0000000@ "
+    public static final String MESSAGE_NRIC_CONSTRAINTS = "Contact NRIC should be of the format #0000000@ "
         + "where # is a letter that can be S T F or G,\n"
         + "0000000 represents 7 digits which can be any number from 0-9,\n"
         + "@ can be any alphabet A-Z.\n"

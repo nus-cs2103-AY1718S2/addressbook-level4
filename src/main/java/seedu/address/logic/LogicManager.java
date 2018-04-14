@@ -35,14 +35,16 @@ public class LogicManager extends ComponentManager implements Logic {
         clearRedundantImages();
     }
 
+    //@@author Alaru
     /**
      * Clears the data folder of redundant images
      */
     public void clearRedundantImages() {
+        logger.info("Deleting any unused display pictures");
         DeleteUtil.clearImageFiles(model.getItemList(), model.getFilteredPersonList());
-        logger.info("Deleting unused display pictures");
         model.clearDeleteItems();
     }
+    //@@author
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {

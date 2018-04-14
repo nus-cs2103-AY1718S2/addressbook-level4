@@ -38,8 +38,8 @@ public class HtmlWriter {
     public HtmlWriter() {
         this.name = null;
         this.phone = null;
-        this.email = null;
         this.address = null;
+        this.email = null;
         this.amountBorrowed = null;
         this.interestRate = null;
         this.amountCurrentlyOwed = null;
@@ -56,8 +56,8 @@ public class HtmlWriter {
     public HtmlWriter(Customer customer) {
         this.name = customer.getName().fullName;
         this.phone = customer.getPhone().value;
-        this.email = customer.getEmail().value;
         this.address = customer.getAddress().value;
+        this.email = customer.getEmail().value;
         this.amountBorrowed = String.format("%,.2f", customer.getMoneyBorrowed().value);
         this.interestRate = customer.getStandardInterest().toString();
         this.amountCurrentlyOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
@@ -98,10 +98,10 @@ public class HtmlWriter {
             printWriter.print(OPENING_LINE);
             printWriter.println(name + "</th></tr>");
             printWriter.println("<tr><td style=\"width: 240px;\">phone: </td><td>" + phone + "</td></tr>");
-            printWriter.println("<tr><td>email: </td><td>" + email + "</td></tr>");
             printWriter.println("<tr><td>address: </td><td>" + address + "</td></tr>");
+            printWriter.println("<tr><td>email: </td><td>" + email + "</td></tr>");
             printWriter.println("<tr><td>amount borrowed: </td><td>$" + amountBorrowed + "</td></tr>");
-            printWriter.println("<tr><td>interest rate: </td><td>" + interestRate + "%</td></tr>");
+            printWriter.println("<tr><td>interest (weekly): </td><td>" + interestRate + "%</td></tr>");
             printWriter.println("<tr><td>amount owed: </td><td>$" + amountCurrentlyOwed + "</td></tr>");
             printWriter.println("<tr><td>start date: </td><td>" + oweStartDate + "</td></tr>");
             printWriter.println("<tr><td>due date: </td><td>" + oweDueDate + "</td></tr>");

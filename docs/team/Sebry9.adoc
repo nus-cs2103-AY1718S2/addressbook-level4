@@ -20,7 +20,7 @@ reInsurance is a desktop client tracking application used for insurance agent to
 
 * *Minor enhancement*: added alias command for most existing commands such as add, edit, redo, undo etc.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/Sebry9.md[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/Sebry9.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/test/Sebry9.md[Test code]] _{give links to collated code files}_
 
 * *Other contributions*:
 
@@ -30,10 +30,6 @@ reInsurance is a desktop client tracking application used for insurance agent to
 *** Project's time keeper.
 ** Enhancements to existing features:
 *** Updated the Tag color scheme (Pull requests https://github.com/CS2103JAN2018-T11-B3/main/pull/6[#6])
-** Documentation:
-** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-** Tools:
 
 == Contributions to the User Guide
 

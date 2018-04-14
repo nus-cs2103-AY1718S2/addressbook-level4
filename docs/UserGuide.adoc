@@ -24,7 +24,12 @@ while still having the benefits of a Graphical User Interface (GUI).
 This makes it perfect for doctors or staff who can type faster than they can navigate with a mouse.
 If your clinic has medical staff who can type fast, IMDB can get your patient management tasks done faster than traditional pen and paper or even normal GUI apps.
 Head to <<Quick Start>> to get started.
-// end::undoredo[]
+
+The symbols which are used in the User Guide as well as their meaning are listed below: +
+ℹ️: Information +
+💡: Tips +
+
+// end::introduction[]
 
 // tag::quickstart[]
 == Quick Start
@@ -187,7 +192,7 @@ Reapplies the `clear` command. +
 Clears all entries from the IMDB. +
 Format: `clear` or `c`
 
-[WARNING]
+[WARNING:]
 This command will clear *all the patient entries* in IMDB. +
 Please proceed with caution.
 

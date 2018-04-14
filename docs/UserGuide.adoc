@@ -329,9 +329,29 @@ All entries under the group friends will be returned to the user as a list.
 // tag::password[]
 === Password : `password`
 
-Set a password for reInsurance as desired. No password required to access the program. +
-Format: `password` Alias: `pw`
-// end::group[]
+Set a password for reInsurance as desired. No password required to access the program when using for the first time. +
+Format: `password`
+
+Examples:
+
+* `password set/yourpassword` +
+Password will be set as yourpassword.
+
+* `password change/yournewpassword` +
+Password will be changed to yournewpassword.
+
+* `password remove/yourexistingpassword` +
+Password will be removed.
+
+[NOTE]
+====
+* Currently, there are no password recovery mechanism in place.
+* If users forget their password, please delete the password.txt file in the data folder to remove the password.
+* Coming in v2.0, there will be an option to retrieve your lost password via email.
+* Default destination file is at the data folder.
+====
+
+// end::password[]
 
 === Exiting the program : `exit`
 

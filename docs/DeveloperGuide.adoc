@@ -459,6 +459,89 @@ image::SortCommandSequenceDiagram.png[width="800"]
 ** Cons: Current list is replaced by showing all persons.
 // end::sort[]
 
+// tag::addplatform[]
+=== Add Platform feature
+==== Current Implementation
+
+The add platform function makes use of a factory to facilitate the creation of various social media platforms.
+A platform is created only when users provide a valid profile link; this object will be associated to the particular
+person found in the list as specified by the user. Currently, only the `Facebook` and `Twitter` platforms are available.
+
+The structure of the class diagram is as shown:
+
+image::SocialMediaPlatformFactoryClassDiagram.png[width="650"]
+
+As seen, a client can make use of the `SocialMediaPlatformFactory` to deal with the creation of social media platform
+objects without the need of specifying the concrete class to construct.
+Thus, it follows the https://www.tutorialspoint.com/design_pattern/factory_pattern.htm[factory pattern] since the
+creation logic is abstracted away by the factory. The difference here to other implementations of the pattern is the
+use of an _abstract_ class, `SocialMediaPlatform`, instead of the usual _interface_.
+
+In order to properly utilise the factory, a client needs to provide some form of specification:
+[source, java]
+----
+public final class SocialMediaPlatformFactory {
+    // ... class variables, constructor ...
+
+    public static SocialMediaPlatform getSocialMediaPlatform(String type, Link link) throws IllegalValueException {
+        // ... social media platform instance creation logic ...
+    }
+}
+----
+From the extract, a `String` data type and a `Link` object need to be provided by the caller when using the
+`getSocialMediaPlatform` method. The method will then return an instance of the available concrete classes.
+
+The `AddPlatformCommand` makes use of the implementation of `EditCommand` as the foundation, editing the `Person` model
+to include the newly created social media platforms. Each platform is stored as an entry to the person's platform map,
+with the key being the name of the platform. An example is shown below as an illustration:
+
+image::SocialMediaPlatformMapObjectDiagram.png[width="650"]
+
+{empty}
+
+The links provided by the user will be parsed within the `AddPlatformCommandParser` to convert them into `Link`
+objects. From there, `AddPlatformCommand` will create a new map and add the relevant social media platforms by
+calling the `getSocialMediaPlatform` method of `SocialMediaPlatformFactory` for object creation. To merge the updates
+with the targeted person, the command would also retrieve all of its information in order to create a new `Person`
+object before replacement is done. The sequence of the events is as follows:
+
+image::AddPlatformCommandSequenceDiagram.png[width="850"]
+
+{empty}
+
+In the UI Component, the `PersonCard` will be updated to show the icons of the platforms added. Suppose the user want
+to add a `Facebook` profile to the first person. The `AddPlatformCommand` would be executed using the `addplatform`
+command word. As illustration, the user has successfully added a `Facebook` platform to the targeted person by typing
+`addplatform 4 l/www.facebook.com/david`:
+
+image::AddPlatformToPersonDiagram.png[width="750"]
+
+{empty}
+
+Since the basis of `AddPlatformCommand` is heavily inspired by the `EditCommand`, interactions between the various
+components is exactly the same:
+
+image::AddPlatformCommandHighLevelSequenceDiagrams.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Storing of Links in Person Model
+* **Alternative 1 (current choice):** Create social media platform objects with the links as attributes and store into a map
+** Pros: High potential of implementing methods for interactions between the actual profile page using the corresponding API.
+** Cons: Accessing and inputting of data will be more complex.
+* **Alternative 2:** Store using a set of links
+** Pros: Ease of access to data.
+** Cons: Can only be used for the displaying of pages, no room for other implementations.
+
+===== Aspect: Usage of Interface or Abstract Class
+* **Alternative 1 (current choice):** Have `SocialMediaPlatform` be an abstract class
+** Pros: Allows common methods to be used by classes that extends from it and still provide a means of ensuring critical methods that are abstract be implemented.
+** Cons: Classes that want to make use of the implementations can only extend from it.
+* **Alternative 2:** Have `SocialMediaPlatform` be an interface
+** Pros: Higher flexibility for classes since they can implement many interfaces.
+** Cons: Limitations in sharing and utilisation of default methods between classes.
+// end::addplatform[]
+
 // tag::search[]
 === Search feature
 ==== Current Implementation

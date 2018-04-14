@@ -34,7 +34,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.smplatform.Facebook;
 import seedu.address.model.smplatform.Link;
 import seedu.address.model.smplatform.SocialMediaPlatform;
-import seedu.address.model.smplatform.SocialMediaPlatformBuilder;
+import seedu.address.model.smplatform.SocialMediaPlatformFactory;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.PersonBuilder;
 
@@ -52,7 +52,7 @@ public class AddPlatformCommandTest {
 
         AddPlatformCommand addPlatformCommand = prepareCommand(INDEX_THIRD_PERSON, smpMap);
 
-        assertCommandFailure(addPlatformCommand, model, SocialMediaPlatformBuilder.MESSAGE_BUILD_ERROR);
+        assertCommandFailure(addPlatformCommand, model, SocialMediaPlatformFactory.MESSAGE_BUILD_ERROR);
     }
 
     @Test

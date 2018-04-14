@@ -1,6 +1,7 @@
-= John Doe - Project Portfolio
+= Neil Mehta - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+:repoLinkBase: https://github.com/CS2103JAN2018-F09-B3/main
 
 == PROJECT: AddressBook - Level 4
 
@@ -17,18 +18,22 @@ with managing their cryptocurrency portfolio.
 == Summary of contributions
 
 * *Major enhancement*: added the *ability to sort Coin List*
-** What it does: allows the user to sort list of coins by alphabetical order.
+** What it does: allows the user to sort list of coins by lexicographical order.
 ** Justification: This feature improves the product significantly because a user can make arrange his coins in such a way that is easier for him to view and find the desired coin he wants to interact with, especially if said user has a diverse and big portfolio to deal with.
 ** Highlights: This enhancement does not affect any existing commands and is a standalone feature. It did not require in-depth analysis however the implementation was relatively challenging as some understanding of the inter-link between the ParserUtil, CoinBookParser, ModelManager and Model classes was essential in figuring out how to eventually make the SortCommand function come to fruition.
 ** Credits: _Required some help to search other implementations of other sort functions in order to understand how to apply it for our own CoinBook_
 * *Minor enhancement*: added an additional option that allows for sorting by reverse alphabetical order by adding another case.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [{repoLinkBase}/tree/master/collated/functional/neilish3re.md[Functional code]] [{repoLinkBase}/tree/master/collated/test/neilish3re.md[Test code]]
 
 * *Other contributions*:
 
 ** Documentation:
 *** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+** Tools:
+*** Used PlantUML for generating diagrams for the Developer Guide
+** Project management:
+*** Helping to note down minutes for group meetings
 
 == Contributions to the User Guide
 
@@ -36,9 +41,7 @@ with managing their cryptocurrency portfolio.
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo] //haven't added in my tag yet
-
-include::../UserGuide.adoc[tag=dataencryption] //haven't added in my tag yet
+include::../UserGuide.adoc[tag=order]
 
 == Contributions to the Developer Guide
 
@@ -47,5 +50,3 @@ include::../UserGuide.adoc[tag=dataencryption] //haven't added in my tag yet
 |===
 
 include::../DeveloperGuide.adoc[tag=organisation]
-
-include::../DeveloperGuide.adoc[tag=dataencryption]

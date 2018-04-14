@@ -669,25 +669,29 @@ We want to keep `Model` as an interface for just the coin data itself.
 ==== Sorting
 
 The sorting mechanism is facilitated by `Collections.sort`. It supports sorting the coin list passed into the sort method to arrange the coins in a manner that the user chooses.
-
 The way `Collections.sort` works is that it takes the collection's underlying array and calls its sort method to sort the actual elements. The sorting algorithm used by Java is Timsort.
-
 This sorts the collection in-place, i.e., it modifies the given collection by sorting its elements directly. As a result, a sorted copy need not be made, saving resources.
 
-Following are some example sort procedures:
+The diagram (Fig. 24) below is the Sequence Diagram for interactions that occur from when the sort command is first called by the user to when the Coin List is sorted.
 
-* Sort by coin value
+.Sequence Diagram for SortCommand
+image::SortCommand_SequenceDiagram.png[width="800"]
 
-** We can use `Comparator.comparingDouble()` for comparing double values. For _CoinBook_, we want to order our list of coins by value, from the highest to the lowest.
-** We can use the `reversed` function on `Comparator` to invert the default and arrange coins from lowest to highest instead.
-** `Double` is used because coin values have several decimal places and so the `comparingInt()` function would not suffice.
+The order mechanism is facilitated by the SortCommand which is also an UndoableCommand.
+The SortCommandParser checks for the sort order (a or z parameter) to decide the relevant SortCommand to call.
+The internalList is then sorted using Java's sort method.
 
-* Sort by string field (e.g. coin code)
+How the sort procedure works:
 
-** If we want to sort our `CoinList` by coin code, we can use `Comparator.comparing()` and pass a function that extracts the 3 letter coin code.
+* Sort by lexicographical order
+
+** We can use compareTo() for comparing coin code names. For _CoinBook_, we want to order our list of coins lexicographically, based on the alphabetical order of their component letters.
+This is done by passing the internalList into the sort function which then uses getCode() to compare each of the component letters of the coin code, which will then arrange coins based on the lexicographical value of the code string.
+The coin code strings with the lowest lexicographical value will appear first followed by coin code strings with higher lexicographical values as you go further down the list.
+** We can either use the `reversed` function on `Comparator` or change the compare condition of compareTo() to invert the default setting and arrange the coins from highest to lowest lexicographical value instead.
 ** We do not have to pass in any comparator for the list to be correctly sorted because the 3-letter coin code is a `String` which implements the `Comparable` _interface_, and hence guarantees its own implementation of the sort comparator.
 
-==== Grouping
+==== Grouping `[Coming in v2.0]`
 
 The group feature can use the `Collectors` class, which provides methods for grouping data stored in collections. Grouping would permit the user to organise coin data based on a common field, e.g coins prices equal to or over 1000 dollars per coin.
 
@@ -709,9 +713,9 @@ By default, elements with the same key are inserted into a `List<T>`, although t
 * **Alternative 2:** Add a new sorting function (e.g. Selection Sort)
 
 ** Pros: This possibly allows us to reduce the time required to execute the sorting command.
-** Cons: This takes more time to incorporate into the App since we are not using Java’s in-built sorting method.
+** Cons: This would take more time and a considerable amount of effort to incorporate into our CoinBook since we would not be using Java’s in-built sorting method.
 
-===== Aspect: Implementation of Groups function
+===== Aspect: Implementation of Groups function `[Coming in v2.0]`
 
 * **Alternative 1 (current choice):** Use `GroupingBy` method
 
@@ -721,7 +725,7 @@ By default, elements with the same key are inserted into a `List<T>`, although t
 * **Alternative 2:** Add additional tags in lieu of grouping
 
 ** Pros: The codebase already has support for tags and so not a lot of changes will be required.
-** Cons: Commands will not be executable at a group level because tags merely depict the attribute of the coins, but groups act as a tool to manage several coins at the same time.
+** Cons: Commands will not be executable at a group level because tags merely depict the attribute of the coins, but groups act as a tool to manage several coins at the same time. I.e.: Grouping would add more functionality to the CoinBook for mass coin management.
 
 // end::organisation[]
 

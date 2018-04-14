@@ -11,9 +11,9 @@ public class SortCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Displays all the coins the user has input into the Coin Book as a list"
-            + " sorted by alphabetical order of cryptocurrency coin name\n";
+            + " sorted by lexicographical order of cryptocurrency coin name\n";
 
-    public static final String MESSAGE_SUCCESS = "Sorted all coins alphabetically";
+    public static final String MESSAGE_SUCCESS = "Sorted all coins lexicographically";
 
     private final boolean isSort;
 

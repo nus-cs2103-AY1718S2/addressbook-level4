@@ -2,13 +2,14 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD;
 import static seedu.address.logic.commands.CommandTestUtil.MIXED_CASE_PASSWORD_COMMAND_WORD;
-import static seedu.address.logic.commands.PasswordCommand.MESSAGE_SUCCESS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD;
 import static seedu.address.logic.commands.PasswordCommand.INVALID_PASSWORD;
+import static seedu.address.logic.commands.PasswordCommand.MESSAGE_SUCCESS;
 import static seedu.address.logic.commands.PasswordCommand.MESSAGE_USAGE;
 
 import org.junit.Test;
+
 import seedu.address.commons.util.SecurityUtil;
 import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -46,7 +47,7 @@ public class PasswordCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* ----------------------------------- Perform invalid password operations ----------------------------------- */
+        /* ----------------------------------- Perform invalid password operations ---------------------------------- */
 
         /* Case: no parameters -> rejected */
         assertCommandFailure(PasswordCommand.COMMAND_WORD + " ",

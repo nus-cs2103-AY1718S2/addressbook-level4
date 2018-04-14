@@ -73,6 +73,7 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
+    //@@author melvintzw
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
 
@@ -116,6 +117,7 @@ public class FindCommandTest {
         command = prepareCommand(new AddressContainsKeywordsPredicate(list));
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, ELLE));
     }
+    //@@author
 
     /**
      * Parses {@code userInput} into a {@code FindCommand}.

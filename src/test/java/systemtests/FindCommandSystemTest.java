@@ -19,9 +19,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -31,8 +31,6 @@ import seedu.address.model.tag.Tag;
 
 //@@author melvintzw
 public class FindCommandSystemTest extends AddressBookSystemTest {
-    private final GuiRobot guiRobot = new GuiRobot();
-
     @Test
     public void find() {
         /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
@@ -79,6 +77,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         command = FindCommand.COMMAND_WORD + " Daniel Benson NonMatchingKeyWord";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
+
+        //TODO: implement test cases for specifiers: -n -p -e -a -t
+        //ModelHelper.setFilteredList()
+        //refer to TypicalPersons.java and test.data.sandbox.sampleData.xml for fields to check
+
+        //-------------INVALID CASES--------------------------------------------------------------------------------->
 
         /* Case: undo previous find command -> rejected */
         command = UndoCommand.COMMAND_WORD;
@@ -171,25 +175,36 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateFindCommandTemplate() {
+    public void focusOnCommandBox_populateFindCommandTemplate_usingAccelerator() {
         //use accelerator
         getCommandBox().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnResultDisplay_populateFindCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateFindCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateFindCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateFindCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateFindCommandTemplate_usingMenuButton() {
         populateFindCommandUsingMenu();
         assertPopulationSuccess();
     }
@@ -203,6 +218,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
      * selected card updated accordingly, depending on {@code cardStatus}.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
@@ -222,6 +238,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
@@ -235,14 +252,15 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
     }
 
     //@@author jonleeyz
+
     /**
      * Asserts that population of the {@code CommandBox} with the AddCommand
      * template was successful.
      */
     private void assertPopulationSuccess() {
-        FindCommand findCommand = new FindCommand();
-        assertEquals(findCommand.getTemplate(), getCommandBox().getInput());
-        assertEquals(findCommand.getUsageMessage(), getResultDisplay().getText());
+        assertEquals(FindCommand.COMMAND_TEMPLATE, getCommandBox().getInput());
+        assertEquals(FindCommand.MESSAGE_USAGE, getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

@@ -23,6 +23,7 @@ public class DeleteCommand extends UndoableCommand implements PopulatableCommand
 
     public static final String COMMAND_WORD = "delete";
     public static final String COMMAND_ALIAS = "d";
+    public static final String COMMAND_TEMPLATE = COMMAND_WORD + " ";
 
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + " | Deletes the person associated with the index number used in the last person listing. "
@@ -36,7 +37,7 @@ public class DeleteCommand extends UndoableCommand implements PopulatableCommand
             + "\n\t"
             + "Example:\t\t" + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person:\n\n%1$s";
 
     private final Index targetIndex;
 
@@ -174,7 +175,7 @@ public class DeleteCommand extends UndoableCommand implements PopulatableCommand
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + " ";
+        return COMMAND_TEMPLATE;
     }
 
     @Override

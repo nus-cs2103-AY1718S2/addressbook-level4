@@ -13,10 +13,10 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -25,10 +25,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
-
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-    private final GuiRobot guiRobot = new GuiRobot();
 
     @Test
     public void delete() {
@@ -118,25 +116,35 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateDeleteCommandTemplate() {
-        //use accelerator
+    public void focusOnCommandBox_populateDeleteCommandTemplate_usingAccelerator() {
         getCommandBox().click();
         populateDeleteCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnResultDisplay_populateDeleteCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateDeleteCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateDeleteCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateDeleteCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateDeleteCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateDeleteCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateDeleteCommandTemplate_usingMenuButton() {
         populateDeleteCommandUsingMenu();
         assertPopulationSuccess();
     }
@@ -234,9 +242,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * template was successful.
      */
     private void assertPopulationSuccess() {
-        DeleteCommand deleteCommand = new DeleteCommand();
-        assertEquals(deleteCommand.getTemplate(), getCommandBox().getInput());
-        assertEquals(deleteCommand.getUsageMessage(), getResultDisplay().getText());
+        assertEquals(DeleteCommand.COMMAND_TEMPLATE, getCommandBox().getInput());
+        assertEquals(DeleteCommand.MESSAGE_USAGE, getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEYOWED;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY_BORROWED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWEDUEDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OWESTARTDATE;
@@ -22,7 +22,10 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class AddCommand extends UndoableCommand implements PopulatableCommand {
 
     public static final String COMMAND_WORD = "add";
-    public static final String COMMAND_ALIAS = "a";
+    public static final String COMMAND_ALIAS = "i";
+    public static final String COMMAND_TEMPLATE = COMMAND_WORD + " " + PREFIX_TYPE + "  " + PREFIX_NAME + "  "
+            + PREFIX_PHONE + "  " + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  " + PREFIX_OWESTARTDATE + "  "
+            + PREFIX_OWEDUEDATE + "  " + PREFIX_MONEY_BORROWED + "  " + PREFIX_INTEREST + "  " + PREFIX_TAG + " ";
 
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + " | Adds a Customer or Runner with the specified details. "
@@ -37,7 +40,7 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
             + "[" + PREFIX_ADDRESS + " ADDRESS] "
             + "[" + PREFIX_OWESTARTDATE + " OWE_START_DATE] "
             + "[" + PREFIX_OWEDUEDATE + " OWE_DUE_DATE] "
-            + "[" + PREFIX_MONEYOWED + " MONEY_OWED] "
+            + "[" + PREFIX_MONEY_BORROWED + " MONEY_OWED] "
             + "[" + PREFIX_INTEREST + " INTEREST_RATE] "
             + "[" + PREFIX_TAG + " TAG] ..."
 
@@ -52,12 +55,14 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
             + PREFIX_NAME + " Xiao Ming "
             + PREFIX_PHONE + " 88888888 "
             + PREFIX_EMAIL + " xiao@ming.com "
-            + PREFIX_ADDRESS + " W Hotel "
+            + PREFIX_ADDRESS + " The Fullerton "
             + PREFIX_OWESTARTDATE + " today "
-            + PREFIX_OWEDUEDATE + " 5 May 2018 "
-            + PREFIX_MONEYOWED + " 314159265 "
+            + PREFIX_OWEDUEDATE + " 7 June 2018 "
+            + PREFIX_MONEY_BORROWED + " 314159265 "
             + PREFIX_INTEREST + " 9.71 "
-            + PREFIX_TAG + " richxiaoming";
+            + PREFIX_TAG + " richxiaoming "
+            + PREFIX_TAG + " HighSES "
+            + PREFIX_TAG + " mingdynasty";
 
     public static final String MESSAGE_INVALID_PREFIX = "You have entered a prefix applicable only to Customers"
             + " (ty: c)";
@@ -109,10 +114,7 @@ public class AddCommand extends UndoableCommand implements PopulatableCommand {
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + " " + PREFIX_TYPE + "  " + PREFIX_NAME + "  "
-                + PREFIX_PHONE + "  " + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  "
-                + PREFIX_OWESTARTDATE + "  " + PREFIX_OWEDUEDATE + "  "
-                + PREFIX_MONEYOWED + "  " + PREFIX_INTEREST + "  " + PREFIX_TAG + " ";
+        return COMMAND_TEMPLATE;
     }
 
     @Override

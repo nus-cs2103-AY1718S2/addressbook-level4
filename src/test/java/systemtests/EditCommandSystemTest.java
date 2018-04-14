@@ -37,6 +37,7 @@ import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -195,25 +196,35 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateEditCommandTemplate() {
-        //use accelerator
+    public void focusOnCommandBox_populateEditCommandTemplate_usingAccelerator() {
         getCommandBox().click();
         populateEditCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnResultDisplay_populateEditCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateEditCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateEditCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateEditCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateEditCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateEditCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateEditCommandTemplate_usingMenuButton() {
         populateEditCommandUsingMenu();
         assertPopulationSuccess();
     }
@@ -320,9 +331,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * template was successful.
      */
     private void assertPopulationSuccess() {
-        EditCommand editCommand = new EditCommand();
-        assertEquals(editCommand.getTemplate(), getCommandBox().getInput());
-        assertEquals(editCommand.getUsageMessage(), getResultDisplay().getText());
+        assertEquals(EditCommand.COMMAND_TEMPLATE, getCommandBox().getInput());
+        assertEquals(EditCommand.MESSAGE_USAGE, getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

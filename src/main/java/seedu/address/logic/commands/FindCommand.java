@@ -14,6 +14,7 @@ public class FindCommand extends Command implements PopulatableCommand {
 
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
+    public static final String COMMAND_TEMPLATE = COMMAND_WORD + " -";
 
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + " | Finds all persons whose fields contain any of the specified keywords (case-insensitive) "
@@ -23,7 +24,7 @@ public class FindCommand extends Command implements PopulatableCommand {
             + "\n\t"
             + "Parameters:\t"
             + COMMAND_WORD + " "
-            + "[SPECIFIER] KEYWORD [MORE_KEYWORDS]..."
+            + "[SPECIFIER] KEYWORD [KEYWORD] ..."
             + "\n\t"
             + "Specifiers:\t\t"
             + "-all, -n, -p, -e, -a, -t : ALL, NAME, PHONE, EMAIL, ADDRESS and TAGS respectively."
@@ -66,7 +67,7 @@ public class FindCommand extends Command implements PopulatableCommand {
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + " -";
+        return COMMAND_TEMPLATE;
     }
 
     @Override

@@ -39,10 +39,10 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
 import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -57,8 +57,6 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
-    private final GuiRobot guiRobot = new GuiRobot();
-
     @Test
     public void add() throws Exception {
         Model model = getModel();
@@ -188,25 +186,35 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
     //@@author jonleeyz
     @Test
-    public void populateAddCommandTemplate() {
-        //use accelerator
+    public void focusOnCommandBox_populateAddCommandTemplate_usingAccelerator() {
         getCommandBox().click();
         populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnResultDisplay_populateAddCommandTemplate_usingAccelerator() {
         getResultDisplay().click();
         populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnPersonListPanel_populateAddCommandTemplate_usingAccelerator() {
         getPersonListPanel().click();
         populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
+    @Test
+    public void focusOnBrowserPanel_populateAddCommandTemplate_usingAccelerator() {
         getBrowserPanel().click();
         populateAddCommandUsingAccelerator();
         assertPopulationSuccess();
+    }
 
-        //use menu button
+    @Test
+    public void populateAddCommandTemplate_usingMenuButton() {
         populateAddCommandUsingMenu();
         assertPopulationSuccess();
     }
@@ -290,9 +298,10 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * template was successful.
      */
     private void assertPopulationSuccess() {
-        AddCommand addCommand = new AddCommand();
-        assertEquals(addCommand.getTemplate(), getCommandBox().getInput());
-        assertEquals(addCommand.getUsageMessage(), getResultDisplay().getText());
+        assertEquals(AddCommand.COMMAND_TEMPLATE, getCommandBox().getInput());
+        assertEquals(AddCommand.MESSAGE_USAGE, getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
+        // assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
         guiRobot.pauseForHuman();
 
         executeCommand("invalid command");

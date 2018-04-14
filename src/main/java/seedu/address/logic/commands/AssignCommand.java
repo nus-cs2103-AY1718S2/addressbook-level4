@@ -44,7 +44,7 @@ import seedu.address.model.tag.Tag;
 public class AssignCommand extends UndoableCommand implements PopulatableCommand {
 
     public static final String COMMAND_WORD = "assign";
-    public static final String COMMAND_ALIAS = "as";
+    public static final String COMMAND_ALIAS = "a";
 
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + " | assigns customers to a runner associated with the index number used in the last "
@@ -68,6 +68,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             + COMMAND_WORD + " 1 " + PREFIX_CUSTOMERS + " 2 5 8";
 
     public static final String MESSAGE_ASSIGN_PERSON_SUCCESS = "Successfully assigned!\nUpdated Runner Info:\n%1$s";
+    public static final String MESSAGE_PERSON_NOT_FOUND = "The target person cannot be missing";
     // message
 
     private final Index runnerIndex;
@@ -118,7 +119,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError(MESSAGE_PERSON_NOT_FOUND);
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_ASSIGN_PERSON_SUCCESS, editedPerson));

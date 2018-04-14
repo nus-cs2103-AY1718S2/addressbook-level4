@@ -21,7 +21,6 @@ import com.google.api.services.calendar.CalendarScopes;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.TestAddEventCommand;
-import seedu.address.storage.StorageManager;
 
 /**
  * To create an authorized google calendar service to be used in commands that require this service.

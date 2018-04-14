@@ -48,7 +48,7 @@ public class UnlockCommand extends Command {
         if (!isTestMode) {
             EventsCenter.getInstance().post(new ShowPasswordFieldEvent());
         } else {
-            this.password = hasInput ? "admin": "nopassword";
+            this.password = hasInput ? "admin" : "nopassword";
         }
 
         if (this.password.equals("nopassword")) {

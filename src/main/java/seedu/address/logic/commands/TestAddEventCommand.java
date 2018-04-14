@@ -23,7 +23,6 @@ import seedu.address.model.notification.exceptions.DuplicateTimetableEntryExcept
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.storage.StorageManager;
 
 //@@author crizyli
 /**

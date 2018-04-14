@@ -87,6 +87,9 @@ public class AddressBookParser {
         case ListAllCommand.COMMAND_WORD: case ListAllCommand.COMMAND_ALIAS:
             return new ListAllCommand();
 
+        case ListAppointmentCommand.COMMAND_WORD: case ListAppointmentCommand.COMMAND_ALIAS:
+            return new ListAppointmentCommand();
+
         case SortCommand.COMMAND_WORD: case SortCommand.COMMAND_ALIAS:
             return new SortCommand();
 
@@ -107,6 +110,15 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
+
+        case LockCommand.COMMAND_WORD: case LockCommand.COMMAND_ALIAS:
+            return new LockCommand();
+
+        case UnlockCommand.COMMAND_WORD: case UnlockCommand.COMMAND_ALIAS:
+            return new UnlockCommandParser().parse(arguments);
+
+        case SetPasswordCommand.COMMAND_WORD: case SetPasswordCommand.COMMAND_ALIAS:
+            return new SetPasswordCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

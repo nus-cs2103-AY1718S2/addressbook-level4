@@ -33,7 +33,8 @@ Medeina, your all-in-one solution to curb your data nightmare.
 
 === Using this Guide
 
-This document provides detailed information pertaining to Medeina's set-up and usage instructions for the various features it offers. The user guide can be accessed any time through the `help` command in Medeina. +
+This document provides detailed information pertaining to Medeina's set-up and usage instructions for the various features it offers. The user guide can be accessed any time through the `help` command in Medeina.
+
 Do take note of the following colours and their representation, as they will be used to better illustrate Medeina's commands in <<CLI>>.
 
 * Blue -> information related to a contact
@@ -80,9 +81,8 @@ image::Ui.png[width="790"]
 .Medeina's autocomplete
 image::autocomplete.png[width="500"]
 
-* Medeina supports autocomplete for command words, options, prefixes, and parameters.
-* You will be shown a list of suggested NRICs when when you need to reference an existing person in Medeina e.g. adding a pet patient / appointment, editing a pet patient to change ownership.
-* You will also be shown a list of suggested pet patients names when you need to reference them in `*-p* n/PET_PATIENT_NAME`.
+* Medeina supports autocomplete for command words, options, prefixes, and parameters such as tags, NRIC, pet patient name, species, breed, colour and blood type.
+* You will be shown a list of suggested NRICs when when you need to reference an existing contact in Medeina e.g. adding a pet patient or appointment, and editing a pet patient to change point of contact.
 * Autocomplete matching is case-insensitive e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
 * You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the pop-up context menu.
 * Press kbd:[Enter] to select an autocomplete suggestion on the pop-up context menu.
@@ -126,7 +126,7 @@ a| * NRIC must belong to an existing contact.
 `**-o** nr/NRIC **-p** n/PET_PATIENT_NAME`
 a| * NRIC must belong to an existing contact.
 * PET_PATIENT_NAME must belong to an existing pet patient.
-* Appointment time HH:MM must be in 30-minute blocks.
+* The duration of each appointment is 30 minutes by default. Take note that HH:MM must be at least 30 minutes before/after appointments on the same day.
 * Type '-' or 'nil' if you have no REMARK to record.
 * Compulsory tag (minimum 1).
 
@@ -143,7 +143,6 @@ Options are in order. For example, the add command for pet patient will have an 
 ====
 
 image::add_examples.PNG[width="800"]
-{empty} +
 
 .**Copy & paste to try out**
 ----

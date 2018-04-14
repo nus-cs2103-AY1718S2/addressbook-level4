@@ -3,7 +3,6 @@ package seedu.address.ui;
 import static seedu.address.testutil.EventsUtil.postNow;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +13,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import seedu.address.commons.events.ui.AliasListEvent;
-import seedu.address.model.alias.Alias;
 import seedu.address.ui.testutil.GuiTestAssert;
 
 //@@author jingyinno

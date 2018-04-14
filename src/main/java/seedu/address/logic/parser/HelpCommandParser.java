@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import java.util.ArrayList;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CompleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EventCommand;
@@ -45,6 +46,8 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         availableCommands.add(UndoCommand.COMMAND_ALIAS);
         availableCommands.add(RedoCommand.COMMAND_WORD);
         availableCommands.add(RedoCommand.COMMAND_ALIAS);
+        availableCommands.add(ClearCommand.COMMAND_WORD);
+        availableCommands.add(ClearCommand.COMMAND_ALIAS);
         availableCommands.add(ImportCommand.COMMAND_WORD);
         availableCommands.add(ExportCommand.COMMAND_WORD);
     }

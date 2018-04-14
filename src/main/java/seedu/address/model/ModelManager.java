@@ -67,6 +67,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateDeskBoardChanged();
     }
 
+    //@@author Kyomian
+    @Override
+    public synchronized void clearActivities(String activityTypeToClear) {
+        deskBoard.clearActivities(activityTypeToClear);
+        indicateDeskBoardChanged();
+    }
+
+    //@@author
     @Override
     public synchronized void addActivity(Activity activity) throws DuplicateActivityException {
         deskBoard.addActivity(activity);

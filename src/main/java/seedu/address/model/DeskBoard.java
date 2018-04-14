@@ -158,6 +158,7 @@ public class DeskBoard implements ReadOnlyDeskBoard {
         return activity.copy(correctTagReferences);
     }
 
+    //@@author Kyomian
     /**
      * Removes {@code key} from this {@code DeskBoard}.
      * @throws ActivityNotFoundException if the {@code key} is not in this {@code DeskBoard}.
@@ -170,8 +171,13 @@ public class DeskBoard implements ReadOnlyDeskBoard {
         }
     }
 
+    public void clearActivities(String activityTypeToClear) {
+        activities.clear(activityTypeToClear);
+    }
+
     //// tag-level operations
 
+    //@@author
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }

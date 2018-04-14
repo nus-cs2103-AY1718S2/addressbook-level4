@@ -89,6 +89,12 @@ public class HelpCommand extends Command {
             case RedoCommand.COMMAND_ALIAS:
                 return new CommandResult(RedoCommand.MESSAGE_USAGE);
 
+            case ClearCommand.COMMAND_WORD:
+                return new CommandResult(ClearCommand.MESSAGE_USAGE);
+
+            case ClearCommand.COMMAND_ALIAS:
+                return new CommandResult(ClearCommand.MESSAGE_USAGE);
+
             default:
                 throw new CommandException(MESSAGE_USAGE);
             }

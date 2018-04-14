@@ -54,12 +54,6 @@ public class DeskBoardParserTest {
         assertTrue(command instanceof EventCommand);
     }
 
-    @Test
-    public void parseCommandPlusAlias_clear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
-    }
-
    /* @Test
     public void parseCommand_remove() throws Exception {
         RemoveCommand command = (RemoveCommand) parser.parseCommand(
@@ -159,7 +153,14 @@ public class DeskBoardParserTest {
         assertEquals(new ExportCommand(filePath), command);
     }
 
-    //@@author
+    //@@author jasmoon
+    @Test
+    public void parseCommandPlusAlias_clear() throws Exception {
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
+    }
+
+    //@@author Kyomian
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);

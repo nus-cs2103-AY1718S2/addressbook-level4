@@ -38,8 +38,11 @@ public class HelpCommandTest {
 
     @Test
     public void execute_helpForRemove_success()    {
-        HelpCommand command = new HelpCommand("rm");
+        HelpCommand command = new HelpCommand("remove");
         assertCommandSuccess(command, RemoveCommand.MESSAGE_USAGE);;
+
+        command = new HelpCommand("rm");
+        assertCommandSuccess(command, RemoveCommand.MESSAGE_USAGE);
     }
 
     @Test
@@ -68,6 +71,39 @@ public class HelpCommandTest {
 
         command = new HelpCommand("ls");
         assertCommandSuccess(command, ListCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void execute_helpForOverdue_success() {
+        HelpCommand command = new HelpCommand("overdue");
+        assertCommandSuccess(command, OverdueCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void execute_helpForClear_success() {
+        HelpCommand command = new HelpCommand("clear");
+        assertCommandSuccess(command, ClearCommand.MESSAGE_USAGE);
+
+        command = new HelpCommand("c");
+        assertCommandSuccess(command, ClearCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void execute_helpForUndo_success() {
+        HelpCommand command = new HelpCommand("undo");
+        assertCommandSuccess(command, UndoCommand.MESSAGE_USAGE);
+
+        command = new HelpCommand("u");
+        assertCommandSuccess(command, UndoCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void execute_helpForRedo_success() {
+        HelpCommand command = new HelpCommand("redo");
+        assertCommandSuccess(command, RedoCommand.MESSAGE_USAGE);
+
+        command = new HelpCommand("r");
+        assertCommandSuccess(command, RedoCommand.MESSAGE_USAGE);
     }
 
     @Test

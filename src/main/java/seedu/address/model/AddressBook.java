@@ -94,7 +94,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //@@author jingyinno
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code AddressBook} with {@code newData} and {@code newList}.
      */
     public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newList) {
         requireNonNull(newData);
@@ -153,6 +153,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addAlias(Alias alias) throws DuplicateAliasException {
         aliases.add(alias);
+    }
+
+    /**
+     * Removes an alias from the address book.
+     *
+     * @throws AliasNotFoundException if alias to-be-removed does not exist.
+     */
+    public void removeAlias(String toRemove) throws AliasNotFoundException {
+        aliases.remove(toRemove);
     }
     //@@author
 
@@ -317,10 +326,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public void resetAliasList() {
         aliases.resetHashmap();
-    }
-
-    public void removeAlias(String toRemove) throws AliasNotFoundException {
-        aliases.remove(toRemove);
     }
     //@@author
 

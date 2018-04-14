@@ -33,13 +33,13 @@ public interface ReadOnlyAddressBook {
     ObservableList<Alias> getAliasList();
 
     /**
-     * Returns hash map of the aliases list.
+     * Returns the HashMap of alias list.
      * This list will not contain any duplicate aliases.
      */
     HashMap<String, String> getAliasMapping();
 
     /**
-     * Returns an arraylist of arraylist of alias strings.
+     * Returns an ArrayList of ArrayList of alias strings.
      * This list will not contain any duplicate aliases.
      */
     ArrayList<ArrayList<String>> getUiFormattedAliasList();

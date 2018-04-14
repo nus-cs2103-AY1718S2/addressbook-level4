@@ -33,7 +33,7 @@ public interface Model {
     void resetData(ReadOnlyAddressBook newData);
 
     //@@author jingyinno
-    /** Resets alias list in addressbook with new alias list */
+    /** Clears existing backing model and replaces with the provided new data and new list. */
     void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList);
     //@@author
 
@@ -50,10 +50,10 @@ public interface Model {
     /** Adds the given alias */
     void addAlias(Alias alias) throws DuplicateAliasException;
 
-    /** Returns a hashmap of command mapped to alias */
+    /** Returns a HashMap of alias-command mappings */
     HashMap<String, String> getAliasList();
 
-    /** Returns an arraylist of arraylist of alias strings formatted for the UI */
+    /** Returns an ArrayList of ArrayList of alias strings formatted for the UI */
     ArrayList<ArrayList<String>> getUiFormattedAliasList();
     //@@author
 

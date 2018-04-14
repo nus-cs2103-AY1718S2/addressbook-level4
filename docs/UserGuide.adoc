@@ -54,11 +54,14 @@ Not sure how to install Java? Visit the oracle website link below for more infor
 .  Download the latest `contactHeRo.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for contactHeRo, i.e. where  you want to store the `contactHeRo.jar` and the subsequently generated data files.
 .  Double-click the file to start the app.
-.  Login using the default username,`Admin` and default password, `ad123`.
+.  The contactHeRo welcome window should appear in a few seconds as shown below (Refer to figure 1).
++
+.contactHeRo UI on launch
+image::UiOnStartup.png[width="800", align="center"]
+
+.  Login using the default username,`Admin` and default password, `ad123`. You should see the user interface as shown below (Refer to figure 2) in a few seconds.
 [NOTE]
 You can change the password later using the `updatepassword` command.
-
-.  The user interface should appear in a few seconds as shown below (Refer to figure 1).
 +
 .contactHeRo UI after login
 image::UIMarkup.png[width="800", align="center"]

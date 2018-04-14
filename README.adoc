@@ -9,7 +9,7 @@ image::docs/images/Ui.png[width="600", align="center"]
 endif::[]
 
 ifndef::env-github[]
-.contactHeRo on launch
+.The contactHeRo User Interface
 image::docs/images/Ui.png[width="600", align="center"]
 endif::[]
 

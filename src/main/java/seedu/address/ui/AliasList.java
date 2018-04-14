@@ -9,7 +9,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 
 //@@author jingyinno
 /**
@@ -18,6 +17,8 @@ import javafx.scene.paint.Color;
 public class AliasList extends UiPart<Region> {
     private static final String FXML = "AliasList.fxml";
     private static final String EMPTY_CELL = "";
+    private static final String ODD_COLUMN_STYLE_CLASS = "alias-column-odd";
+    private static final String EVEN_COLUMN_STYLE_CLASS = "alias-column-even";
     private static final int SHORT_COMMAND_WIDTH = 75;
     private static final int LONG_COMMAND_WIDTH = 100;
     private static final int LONG_COMMAND_INDEX = 2;
@@ -119,8 +120,8 @@ public class AliasList extends UiPart<Region> {
      */
     private void initializeTableColumns() {
         for (int i = 0; i < columns.size(); i++) {
-            final int j = i;
-            columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
+            final int index = i;
+            columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(index)));
             columns.get(i).impl_setReorderable(false);
             if (i == LONG_COMMAND_INDEX) {
                 columns.get(i).setMinWidth(LONG_COMMAND_WIDTH);
@@ -136,6 +137,7 @@ public class AliasList extends UiPart<Region> {
      */
     public void setStyle() {
         for (int i = 0; i < columns.size(); i++) {
+            final int index = i;
             columns.get(i).setCellFactory(column -> {
                 return new TableCell<ArrayList<String>, String>() {
                     @Override
@@ -146,17 +148,32 @@ public class AliasList extends UiPart<Region> {
                             setText(null);
                             setStyle(EMPTY_CELL);
                         } else {
+                            removeAllStyle(this);
                             setText(item);
-                            if (!getItem().equals(EMPTY_CELL)) {
-                                setTextFill(Color.BLACK);
-                                setStyle("-fx-background-color: #E6B0AA");
-                            } else {
-                                setStyle("-fx-background-color: black");
+                            if (!EMPTY_CELL.equals(getItem())) {
+                                fillOddAndEvenIndexedCells();
                             }
+                        }
+                    }
+
+                    private void fillOddAndEvenIndexedCells() {
+                        if (index % 2 == 0) {
+                            getStyleClass().add(EVEN_COLUMN_STYLE_CLASS);
+                        } else {
+                            getStyleClass().add(ODD_COLUMN_STYLE_CLASS);
                         }
                     }
                 };
             });
         }
+    }
+
+    /**
+     * Removes all styles present in cell
+     * @param tableCell Cell with its style to be removed
+     */
+    private static void removeAllStyle(TableCell<ArrayList<String>, String> tableCell) {
+        tableCell.getStyleClass().remove(ODD_COLUMN_STYLE_CLASS);
+        tableCell.getStyleClass().remove(EVEN_COLUMN_STYLE_CLASS);
     }
 }

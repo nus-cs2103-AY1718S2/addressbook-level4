@@ -16,9 +16,12 @@ import javafx.scene.paint.Color;
  * A ui for the info panel that is displayed when the vacant command is called.
  */
 public class VenueTable extends UiPart<Region> {
-    private static final String OCCUPIED_STYLE_CLASS = "occupied";
-    private static final String VACANT_STYLE_CLASS = "vacant";
     private static final String FXML = "VenueTable.fxml";
+    private static final String EMPTY_CELL = "";
+    private static final String OCCUPIED_LABEL = "occupied";
+    private static final String VACANT_LABEL = "vacant";
+    private static final String OCCUPIED_STYLE_CLASS = "venueTable-cell-occupied";
+    private static final String VACANT_STYLE_CLASS = "venueTable-cell-vacant";
     private static final int MIN_CELL_WIDTH = 75;
     private static final int MAX_CELL_WIDTH = 100;
     private static final int ROOM_COLUMN_INDEX = 0;
@@ -118,20 +121,29 @@ public class VenueTable extends UiPart<Region> {
 
                         if (item == null || empty) {
                             setText(null);
-                            setStyle("");
+                            setStyle(EMPTY_CELL);
                         } else {
+                            removeAllStyle(this);
                             setText(item);
-                            if (getItem().equals(OCCUPIED_STYLE_CLASS)) {
-                                setTextFill(Color.BLACK);
-                                setStyle("-fx-background-color: #F08080");
-                            } else if (getItem().equals(VACANT_STYLE_CLASS)) {
-                                setTextFill(Color.BLACK);
-                                setStyle("-fx-background-color: #17A589");
+                            if (getItem().equals(OCCUPIED_LABEL)) {
+                                getStyleClass().add(OCCUPIED_STYLE_CLASS);
+                            } else if (getItem().equals(VACANT_LABEL)) {
+                                getStyleClass().add(VACANT_STYLE_CLASS);
+
                             }
                         }
                     }
                 };
             });
         }
+    }
+
+    /**
+     * Removes all styles present in cell
+     * @param tableCell Cell with its style to be removed
+     */
+    private static void removeAllStyle(TableCell<ArrayList<String>, String> tableCell) {
+        tableCell.getStyleClass().remove(OCCUPIED_STYLE_CLASS);
+        tableCell.getStyleClass().remove(VACANT_STYLE_CLASS);
     }
 }

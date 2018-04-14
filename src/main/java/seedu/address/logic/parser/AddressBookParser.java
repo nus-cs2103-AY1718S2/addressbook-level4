@@ -11,9 +11,13 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ArchiveCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTagCommand;
+import seedu.address.logic.commands.EditAppointmentCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportPersonCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -67,11 +71,20 @@ public class AddressBookParser {
         case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
+        case EditAppointmentCommand.COMMAND_WORD: case EditAppointmentCommand.COMMAND_ALIAS:
+            return new EditAppointmentCommandParser().parse(arguments);
+
         case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
+
+        case DeleteTagCommand.COMMAND_WORD: case DeleteTagCommand.COMMAND_ALIAS:
+            return new DeleteTagCommandParser().parse(arguments);
+
+        case DeleteAppointmentCommand.COMMAND_WORD: case DeleteAppointmentCommand.COMMAND_ALIAS:
+            return new DeleteAppointmentCommandParser().parse(arguments);
 
         case ArchiveCommand.COMMAND_WORD: case ArchiveCommand.COMMAND_ALIAS:
             return new ArchiveCommandParser().parse(arguments);
@@ -123,6 +136,9 @@ public class AddressBookParser {
 
         case SetPasswordCommand.COMMAND_WORD: case SetPasswordCommand.COMMAND_ALIAS:
             return new SetPasswordCommandParser().parse(arguments);
+
+        case ExportPersonCommand.COMMAND_WORD: case ExportPersonCommand.COMMAND_ALIAS:
+            return new ExportPersonCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

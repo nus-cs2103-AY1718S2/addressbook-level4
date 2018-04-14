@@ -30,6 +30,7 @@ import seedu.address.model.ReadOnlyCustomerStats;
 import seedu.address.model.ReadOnlyMenu;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.util.SampleMenuDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.CustomerStatsStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -138,12 +139,12 @@ public class MainApp extends Application {
             if (!menuOptional.isPresent()) {
                 logger.info("Data file for menu not found. Will be starting with an empty file");
             }
-            initialMenu = new Menu();
+            initialMenu = menuOptional.orElseGet(SampleMenuDataUtil::getSampleMenu);
         } catch (DataConversionException e) {
-            logger.warning("Data file for menu in wrong format. Will be starting with an empty file");
+            logger.warning("Data file for menu in wrong format. Menu will be starting with an empty file");
             initialMenu = new Menu();
         }  catch (IOException e) {
-            logger.warning("Problem while reading from the menu file. Will be starting with an empty file");
+            logger.warning("Problem while reading from the menu file. Menu will be starting with an empty file");
             initialMenu = new Menu();
         }
         //@@author

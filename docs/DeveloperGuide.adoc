@@ -127,7 +127,7 @@ image::LogicClassDiagram.png[width="800"]
 
 {empty} +
 
-==== Events-driven nature
+=== Events-driven Nature
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 {empty} +
@@ -163,11 +163,9 @@ The `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `
 
 The `UI` component uses JavaFx UI framework. The layout of these `UI` parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component:
-
-* executes user commands using the `Logic` component.
-* binds itself to some data in the `Model` so that the `UI` can auto-update when data in the `Model` change.
-* responds to events raised from various parts of the App and updates the `UI` accordingly.
+The `UI` component executes user commands using the `Logic` component.
+The `UI` component also binds itself to some data in the `Model` so that the it can auto-update when data in the `Model` change.
+The `UI` component responds to events raised from various parts of the App and updates the itself accordingly.
 
 [[Design-Logic]]
 === Logic component
@@ -187,12 +185,10 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-The `Logic` component works as follows:
-
-.  `Logic` uses the `IMDBParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a patient) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+The `Logic` component first uses the `IMDBParser` class to parse the user command.
+This results in a `Command` object which is executed by the `LogicManager`.
+The command execution can then affect the `Model` (e.g. adding a patient) and/or raise events.
+Lastly, the result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 

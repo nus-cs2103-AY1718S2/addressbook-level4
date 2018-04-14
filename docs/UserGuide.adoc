@@ -220,6 +220,13 @@ Please proceed with caution.
 [TIP]
 If you have accidentally entered this command, you can revert IMDB back to its previous state with the undo command.
 
+// tag::logout[]
+==== Logout : `logout`
+
+Logs the user out of the IMDB. +
+Format: `logout`
+// end::logout[]
+
 ==== Exiting the program : `exit` or `x`
 
 Exits the program. This also logs the user out of the IMDB. +
@@ -287,6 +294,9 @@ This command is undoable.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
+
+[WARNING]
+If the specified patient is in the queue, you have to remove the patient from the queue before deleting the patient.
 
 Examples:
 

@@ -1,8 +1,6 @@
 //@@author Kyholmes
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
@@ -12,17 +10,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.QueueChangedEvent;
+import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.model.patient.Patient;
 
 /**
- * Panel containing the queue.
+ * Panel containing the visiting queue.
  */
 public class QueuePanel extends UiPart<Region> {
 
     private static final String FXML = "QueueListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(QueuePanel.class);
 
     @FXML
     private ListView<QueueCard> queueCardListView;
@@ -42,8 +38,8 @@ public class QueuePanel extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleQueueChangedEvent(QueueChangedEvent qce) {
-        setConnections(qce.data.getUniquePatientQueue(), qce.data.getUniquePatientQueueNo());
+    public void handleImdbChangedEvent(ImdbChangedEvent ice) {
+        setConnections(ice.data.getUniquePatientQueue(), ice.data.getUniquePatientQueueNo());
     }
 
     /**

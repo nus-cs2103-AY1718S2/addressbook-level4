@@ -24,6 +24,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.PrintCommand;
 import seedu.address.logic.commands.RecordCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -241,11 +242,15 @@ public class ImdbParser {
 
             case DeleteConditionCommand.COMMAND_WORD:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
-                        DeleteConditionCommand.MESSAGE_USAGE));
+                        LoginCommand.MESSAGE_USAGE));
 
             case DeleteConditionCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
-                        DeleteConditionCommand.MESSAGE_USAGE));
+                        LoginCommand.MESSAGE_USAGE));
+
+            case LogoutCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -380,6 +385,9 @@ public class ImdbParser {
 
             case PrintCommand.COMMAND_ALIAS:
                 return new PrintCommandParser().parse(arguments);
+
+            case LogoutCommand.COMMAND_WORD:
+                return new LogoutCommand();
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -536,6 +544,9 @@ public class ImdbParser {
 
             case PrintCommand.COMMAND_ALIAS:
                 throw new ParseException(MESSAGE_NO_PERMISSION);
+
+            case LogoutCommand.COMMAND_WORD:
+                return new LogoutCommand();
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

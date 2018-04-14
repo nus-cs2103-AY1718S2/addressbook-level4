@@ -2,7 +2,6 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -19,7 +18,6 @@ public class UniquePatientVisitingQueueTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private UniquePatientVisitingQueue queueToTest = new UniquePatientVisitingQueue();
 
     @Test

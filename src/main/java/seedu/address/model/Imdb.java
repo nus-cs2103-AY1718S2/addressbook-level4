@@ -102,7 +102,6 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     //// patient-level operations
-    //@@author
     /**
      * Adds a patient to the address book.
      * Also checks the new patient's tags and updates {@link #tags} with any new tags found,
@@ -214,22 +213,28 @@ public class Imdb implements ReadOnlyImdb {
         appointments.add(appointmentEntry);
     }
 
+    //// visiting queue-level operations
     /**
      * Adds a patient to the visiting queue.
-     * Also checks the new patient's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the patient to point to those in {@link #tags}.
-     *
-     * @throws DuplicatePatientException if an equivalent patient already exists.
+     * @throws DuplicatePatientException if an equivalent patient index already exists.
      */
     public void addPatientToQueue(int p) throws DuplicatePatientException {
         requireNonNull(p);
         visitingQueue.add(p);
     }
 
+    /**
+     * Removes the first patient from the visiting queue.
+     * @throws PatientNotFoundException if visiting queue is empty.
+     */
     public int removePatientFromQueue() throws PatientNotFoundException {
         return visitingQueue.removePatient();
     }
 
+    /**
+     * Removes a specific patient from the visiting queue by their index in the patient list.
+     * @throws PatientNotFoundException if visiting queue is empty or the patient is not in the visiting queue.
+     */
     public void removePatientFromQueueByIndex(int p) throws PatientNotFoundException {
         visitingQueue.removePatient(p);
     }

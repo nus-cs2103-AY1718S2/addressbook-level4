@@ -14,7 +14,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
-import seedu.address.commons.events.model.QueueChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
@@ -33,7 +32,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final Imdb imdb;
     private final FilteredList<Patient> filteredPatients;
-    private final FilteredList<Integer> patientVisitingQueue;
     private final FilteredList<AppointmentEntry> appointmentEntries;
 
     /**
@@ -47,7 +45,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.imdb = new Imdb(addressBook);
         filteredPatients = new FilteredList<>(this.imdb.getPersonList());
-        patientVisitingQueue = new FilteredList<>(this.imdb.getUniquePatientQueueNo());
         appointmentEntries = new FilteredList<>(this.imdb.getAppointmentEntryList());
     }
 
@@ -78,11 +75,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void indicateCalendarChanged() {
         raise(new ShowCalendarViewRequestEvent(imdb.getAppointmentEntryList()));
-    }
-
-
-    private void indicateQueueChanged() {
-        raise(new QueueChangedEvent(imdb));
     }
 
     //@@author
@@ -134,6 +126,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author Kyholmes
+    @Override
     public Patient getPatientFromList(Predicate<Patient> predicate) {
         filteredPatients.setPredicate(predicate);
         if (filteredPatients.size() > 0) {
@@ -143,6 +136,61 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return null;
     }
+
+    @Override
+    public int getPatientSourceIndexInList(int targetIndex) {
+        return filteredPatients.getSourceIndex(targetIndex) + 1;
+    }
+
+    //=========== Visiting Queue Accessors =============================================================
+
+    @Override
+    public boolean checkIfPatientInQueue(Patient patientToDelete) {
+        int targetIndex = filteredPatients.getSourceIndex(filteredPatients.indexOf(patientToDelete));
+        if (imdb.getUniquePatientQueueNo().contains(targetIndex)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public ObservableList<Integer> getPatientListIndexInQueue() {
+        return imdb.getUniquePatientQueueNo();
+    }
+
+    @Override
+    public synchronized Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException {
+        requireNonNull(targetIndex);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        int patientIndex = filteredPatients.getSourceIndex(targetIndex.getZeroBased());
+        imdb.addPatientToQueue(patientIndex);
+        indicateAddressBookChanged();
+
+        return filteredPatients.get(targetIndex.getZeroBased());
+    }
+
+    @Override
+    public synchronized Patient removePatientFromQueue() throws PatientNotFoundException {
+        int patientIndexToRemove = imdb.removePatientFromQueue();
+        indicateAddressBookChanged();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return filteredPatients.get(patientIndexToRemove);
+    }
+
+    @Override
+    public Patient removePatientFromQueueByIndex(Index targetIndex) throws PatientNotFoundException {
+        imdb.removePatientFromQueueByIndex(targetIndex.getZeroBased());
+        indicateAddressBookChanged();
+        return filteredPatients.get(targetIndex.getZeroBased());
+    }
+
+    @Override
+    public ObservableList<Patient> getVisitingQueue() {
+        return imdb.getUniquePatientQueue();
+    }
+
+    //=========== Appointment List Accessors =============================================================
 
     @Override
     public synchronized boolean deletePatientAppointment(Patient patient, Index index) {
@@ -165,41 +213,6 @@ public class ModelManager extends ComponentManager implements Model {
         imdb.addAppointment(patient, dateTimeString);
         indicateAppointmentChanged(patient);
     }
-
-    @Override
-    public ObservableList<Integer> getPatientListIndexInQueue() {
-        return imdb.getUniquePatientQueueNo();
-    }
-
-    @Override
-    public synchronized Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException {
-        requireNonNull(targetIndex);
-        int patientIndex = filteredPatients.getSourceIndex(targetIndex.getZeroBased());
-        imdb.addPatientToQueue(patientIndex);
-        indicateQueueChanged();
-
-        return filteredPatients.get(targetIndex.getZeroBased());
-    }
-
-    @Override
-    public synchronized Patient removePatientFromQueue() throws PatientNotFoundException {
-        int patientIndexToRemove = imdb.removePatientFromQueue();
-        indicateQueueChanged();
-        return filteredPatients.get(patientIndexToRemove);
-    }
-
-    @Override
-    public Patient removePatientFromQueueByIndex(Index targetIndex) throws PatientNotFoundException {
-        imdb.removePatientFromQueueByIndex(targetIndex.getZeroBased());
-        indicateQueueChanged();
-        return filteredPatients.get(targetIndex.getZeroBased());
-    }
-
-    @Override
-    public ObservableList<Patient> getVisitingQueue() {
-        return imdb.getUniquePatientQueue();
-    }
-
     //@@author
     @Override
     public boolean equals(Object obj) {

@@ -36,7 +36,7 @@ import seedu.address.ui.testutil.EventsCollectorRule;
  */
 public class ScheduleGroupCommandTest {
 
-    public ExpectedException thrown = ExpectedException.none();
+    private ExpectedException thrown = ExpectedException.none();
 
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
@@ -113,8 +113,8 @@ public class ScheduleGroupCommandTest {
     }
 
     /**
-     * Executes a {@code ScheduleGroupCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
-     * is raised with the correct index.
+     * Executes a {@code ScheduleGroupCommand} with the given {@code index},
+     * and checks that {@code JumpToListRequestEvent} is raised with the correct index.
      */
     private void assertExecutionSuccess(Group group, ArrayList<WeeklyEvent> freeSlots) {
         ScheduleGroupCommand scheduleGroupCommand = prepareCommand(group);

@@ -6,6 +6,7 @@ import org.controlsfx.control.Notifications;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -260,13 +261,34 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleLoading(boolean isLoading) {
-        if (isLoading) {
-            //Scene scene = new Scene(loadingAnimation, Color.TRANSPARENT);
-            //primaryStage.initStyle(StageStyle.TRANSPARENT);
-            //primaryStage.setScene(scene);
-        } else {
-            //primaryStage.setScene(new Scene(null));
-        }
+        toggleLoadingAnimation(isLoading);
+    }
+
+    /**
+     * Adds or remove the loading animation from {@code coinListPanelPlaceholder}
+     * depending on the loading status
+     * @param isLoading the loading status of the application
+     */
+    private void toggleLoadingAnimation(boolean isLoading) {
+        Platform.runLater(() -> {
+            if (isLoading) {
+                activateLoadingAnimation();
+            } else {
+                deactivateLoadingAnimation();
+            }
+        });
+    }
+
+    private void activateLoadingAnimation() {
+        loadingAnimation.setVisible(true);
+        coinListPanelPlaceholder.getChildren().add(loadingAnimation);
+        setTitle("Syncing...");
+    }
+
+    private void deactivateLoadingAnimation() {
+        loadingAnimation.setVisible(false);
+        coinListPanelPlaceholder.getChildren().remove(loadingAnimation);
+        setTitle(config.getAppTitle());
     }
 
     @Subscribe

@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -150,7 +149,6 @@ public class RemovePatientQueueCommandTest {
         RemovePatientQueueCommand command = prepareCommandMorePatient(INDEX_THIRD_PERSON.getOneBased() + "");
         Model expectedModel = new ModelManager(model.getImdb(), new UserPrefs());
 
-        Patient patientToRemove = model.getFilteredPersonList().get(INDEX_THIRD_PERSON.getZeroBased());
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         //removePatientQueue -> remove third patient in unfiltered patient from queue
@@ -159,9 +157,6 @@ public class RemovePatientQueueCommandTest {
 
         //undo -> reverts imdb back to previous state
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        expectedModel.removePatientFromQueueByIndex(INDEX_THIRD_PERSON);
-        assertNotEquals(patientToRemove, model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
 
         //redo -> remove same third patient in unfiltered patient list from queue
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);

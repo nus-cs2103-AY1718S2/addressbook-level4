@@ -46,9 +46,19 @@ image::ContactSails_Interface_StartUp.PNG[width="790" align="center"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 *  Some example commands you can try:
 
+* *`list`* : lists all contacts
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to ContactSails.
+* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`calendar month`**: displays the calendar at the center of ContactSails
+* *`exit`* : exits the app
+
+
+.  Commands also have alias words so you can execute the same commands in a quicker way.
+.  Some example command aliases you can try:
 ** `list` : lists all contacts
 ** `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 ** `delete 3` : deletes the 3rd contact shown in the current list
+* **`cal month`**: displays the calendar at the center of ContactSails
 ** `exit` : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -114,6 +124,9 @@ Command Alias: `?`
 === Managing Persons
 
 This section describes commands you can use to manage person entries in ContactSails.
+The figure below shows how ContactSails look currently.
+
+image::Start.png[width = "790"]
 
 ==== Adding a person : `add`
 
@@ -135,6 +148,8 @@ Examples:
 Adds a contact `John Doe`, with `98765432` as phone number, `johnd@example.com` as email, `John street, block 123, #01-01` as address,
 and `notebooks` as a preference tag.
 
+image::add.png[width = "790"]
+
 ==== Editing a person : `edit`
 
 Description: Edits an existing person in ContactSails. +
@@ -153,15 +168,17 @@ Command Alias: `e`
 * You can remove all the person's groups and preferences by typing `g/` and `pr/` without specifying any groups and preferences after it respectively.
 ****
 
-Examples:
+Here's a picture of current ContactSails
 
-* `edit 1 p/91234567 e/johndoe@example.com` OR +
-`e 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+image::add.png[width = "790"]
+
+Example:
 
 * `edit 2 n/Betsy Crower g/` OR +
 `e 2 n/Betsy Crower g/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing groups.
+
+image::edit.png[width = "790"]
 
 ==== Deleting a person : `delete`
 
@@ -334,9 +351,24 @@ Command Alias: `gd`
 
 Examples:
 
+Here's a picture of the contacts in ContactSails.
+
+image::BeforeContacts.png[width = "790"]
+
+* `groupdelete friends` OR `gd friends`
 * `groupdelete friends` OR +
 `gd friends` +
+
 All persons in ContactSails with the group `friends` will have the group removed.
+
+At first, it will show the following, where the group friends still
+appear at the person panel.
+
+image::Warning1.png[width = "790"]
+
+Now, click on another contact. Then, click back 1. Alex Yeoh to see the change.
+
+image::Warning2.png[width = "790"]
 
 ==== Deleting a preference : `prefdelete` `since v1.2`
 
@@ -355,6 +387,23 @@ Command Alias: `pd`
 ****
 
 Examples:
+
+Here's a picture of the contacts in ContactSails.
+
+image::Warning3.png[width = "790"]
+
+* `prefdelete shoes` OR
+`pd shoes`.
+All persons in ContactSails with the preference [shoes] will have the preference removed.
+
+At first, it will show the following, where the preference shoes still appear
+at the person panel.
+
+image::PreferenceWarning1.png[width = "790"]
+
+Now, click on another contact. Then, click back 2. Bernice Yu to see the change.
+
+image::PreferenceWarning2.png[width = "790"]
 
 * `prefdelete computers` OR +
 `pd computers` +

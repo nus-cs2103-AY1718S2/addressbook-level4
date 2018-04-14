@@ -65,8 +65,14 @@ public class HelpCommand extends Command {
             case ListCommand.COMMAND_ALIAS:
                 return new CommandResult(ListCommand.MESSAGE_USAGE);
 
-            //case FindCommand.COMMAND_WORD:
-                //return new CommandResult(FindCommand.MESSAGE_USAGE);
+            case FindCommand.COMMAND_WORD:
+                return new CommandResult(FindCommand.MESSAGE_USAGE);
+
+            case ImportCommand.COMMAND_WORD:
+                return new CommandResult(ImportCommand.MESSAGE_USAGE);
+
+            case ExportCommand.COMMAND_WORD:
+                return new CommandResult(ExportCommand.MESSAGE_USAGE);
 
             default:
                 throw new CommandException(MESSAGE_USAGE);

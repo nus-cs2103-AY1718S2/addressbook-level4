@@ -54,12 +54,13 @@ public class DateTimeSchedulerTest {
         }
 
         @Override
-        public void updateActivity(Activity target, Activity editedActivity)
-                throws DuplicateActivityException, ActivityNotFoundException {
+        public void addActivities(ReadOnlyDeskBoard deskBoard) {
 
         }
+
         @Override
-        public void addActivities(ReadOnlyDeskBoard deskBoard) {
+        public void updateActivity(Activity target, Activity editedActivity)
+                throws DuplicateActivityException, ActivityNotFoundException {
 
         }
         @Override

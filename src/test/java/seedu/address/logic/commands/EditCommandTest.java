@@ -19,6 +19,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
 
 //import org.junit.Test;
 
+import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -39,10 +40,7 @@ public class EditCommandTest {
 
     private Model model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Activity editedActivity = new TaskBuilder().build();
         EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder(editedActivity).build();
@@ -51,18 +49,15 @@ public class EditCommandTest {
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
 
         Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
-        expectedModel.updateActivity(model.getFilteredActivityList().get(0), editedActivity);
+        expectedModel.updateActivity(model.getFilteredTaskList().get(0), editedActivity);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredActivityList().size());
-        Activity lastActivity = model.getFilteredActivityList().get(indexLastPerson.getZeroBased());
+        Index indexLastPerson = Index.fromOneBased(model.getFilteredTaskList().size());
+        Activity lastActivity = model.getFilteredTaskList().get(indexLastPerson.getZeroBased());
 
         TaskBuilder personInList = new TaskBuilder(lastActivity);
         Activity editedActivity = personInList.withName(VALID_NAME_CS2010_QUIZ)
@@ -81,13 +76,10 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, new EditCommand.EditTaskDescriptor());
-        Activity editedActivity = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
+        Activity editedActivity = model.getFilteredTaskList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
 
@@ -143,10 +135,7 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_ACTIVITY);
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
         EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder()
@@ -155,12 +144,8 @@ public class EditCommandTest {
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
     }
-    //TODO: TEST
-    /**
-     * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
 
+    @Test
     public void execute_invalidPersonIndexFilteredList_failure() {
         showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
         Index outOfBoundIndex = INDEX_SECOND_ACTIVITY;
@@ -173,16 +158,13 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Activity editedActivity = new TaskBuilder().build();
-        Activity activityToEdit = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
+        Activity activityToEdit = model.getFilteredTaskList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
         EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder(editedActivity).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
         Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
@@ -199,10 +181,7 @@ public class EditCommandTest {
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
@@ -252,10 +231,7 @@ public class EditCommandTest {
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
-    //TODO: TEST
-    /**
-     * Test
-     */
+    @Test
     public void equals() throws Exception {
         final EditCommand standardCommand = prepareCommand(INDEX_FIRST_ACTIVITY, DESC_MA2108_HOMEWORK);
 

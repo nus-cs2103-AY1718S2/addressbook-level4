@@ -14,6 +14,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.Event;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
 import seedu.address.testutil.EventBuilder;
 
 //@@author Kyomian
@@ -23,10 +25,12 @@ import seedu.address.testutil.EventBuilder;
 public class EventCommandIntegrationTest {
 
     private Model model;
+    private Storage storage;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+        storage = new StorageManager(null, null);
     }
 
     @Test
@@ -36,7 +40,7 @@ public class EventCommandIntegrationTest {
         Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
         expectedModel.addActivity(validEvent);
 
-        assertCommandSuccess(prepareCommand(validEvent, model), model,
+        assertCommandSuccess(prepareCommand(validEvent, model, storage), model,
                 String.format(EventCommand.MESSAGE_SUCCESS, validEvent), expectedModel);
     }
 
@@ -44,16 +48,16 @@ public class EventCommandIntegrationTest {
     // Questionable - does the app check for duplicate?
     public void execute_duplicateEvent_throwsCommandException() {
         Activity activityInList = model.getDeskBoard().getActivityList().get(0);
-        assertCommandFailure(prepareCommand((Event) activityInList, model), model,
+        assertCommandFailure(prepareCommand((Event) activityInList, model, storage), model,
                 EventCommand.MESSAGE_DUPLICATE_EVENT);
     }
 
     /**
      * Generates a new {@code EventCommand} which upon execution, adds {@code event} into the {@code model}.
      */
-    private EventCommand prepareCommand(Event event, Model model) {
+    private EventCommand prepareCommand(Event event, Model model, Storage storage) {
         EventCommand command = new EventCommand(event);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, storage, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 }

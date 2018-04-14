@@ -9,6 +9,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +24,10 @@ import seedu.address.model.Model;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.NameContainsKeywordsPredicate;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
+import seedu.address.storage.XmlDeskBoardStorage;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 /**
@@ -64,14 +70,20 @@ public class CommandTestUtil {
 
     //@@author karenfrilya97
     // ============================= IMPORT ============================================
-    public static final String TEST_DATA_FOLDER = "src\\test\\data\\ImportCommandTest\\";
-    public static final String ASSIGNMENT3_DEMO1_FILE_PATH = TEST_DATA_FOLDER + "validImportFile.xml";
-    public static final String MISSING_FILE_PATH = TEST_DATA_FOLDER + "missing.xml";
-    public static final String ILLEGAL_VALUES_FILE_PATH = TEST_DATA_FOLDER + "illegalValues.xml";
-    public static final String DUPLICATE_ACTIVITY_FILE_PATH = TEST_DATA_FOLDER + "duplicateActivity.xml";
-    public static final String FILE_PATH_DESC_VALID = " " + PREFIX_FILE_PATH + ASSIGNMENT3_DEMO1_FILE_PATH;
+    public static final String IMPORT_TEST_DATA_FOLDER = "src\\test\\data\\ImportCommandTest\\";
+    public static final String ASSIGNMENT3_DEMO1_FILE_PATH = IMPORT_TEST_DATA_FOLDER + "validImportFile.xml";
+    public static final String MISSING_FILE_PATH = IMPORT_TEST_DATA_FOLDER + "missing.xml";
+    public static final String ILLEGAL_VALUES_FILE_PATH = IMPORT_TEST_DATA_FOLDER + "illegalValues.xml";
+    public static final String DUPLICATE_ACTIVITY_FILE_PATH = IMPORT_TEST_DATA_FOLDER + "duplicateActivity.xml";
+    public static final String FILE_PATH_DESC_IMPORT = " " + PREFIX_FILE_PATH + ASSIGNMENT3_DEMO1_FILE_PATH;
     public static final String FILE_PATH_DESC_DUPLICATE = " " + PREFIX_FILE_PATH + DUPLICATE_ACTIVITY_FILE_PATH;
     public static final String INVALID_FILE_PATH_DESC = " " + PREFIX_FILE_PATH + "no.xmlAtTheEnd";
+
+    // ============================= EXPORT ============================================
+    public static final String EXPORT_TEST_DATA_FOLDER = "src\\test\\data\\ExportCommandTest\\";
+    public static final String EXPORT_FILE_PATH = EXPORT_TEST_DATA_FOLDER + "validExportFile.xml";
+    public static final String EXISTING_FILE_PATH = EXPORT_TEST_DATA_FOLDER + "existingFile.xml";
+    public static final String FILE_PATH_DESC_EXPORT = " " + PREFIX_FILE_PATH + EXPORT_FILE_PATH;
 
     //@@author
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
@@ -213,5 +225,23 @@ public class CommandTestUtil {
         RedoCommand redoCommand = new RedoCommand();
         redoCommand.setData(model, new CommandHistory(), undoRedoStack);
         return redoCommand;
+    }
+
+    //@@author karenfrilya97
+    /**
+     * Generates file to be imported containing activities in the {@code activityList}
+     * and in the directory {@code filePath}.
+     */
+    public static void createXmlFile(List<Activity> activityList, String filePath) throws IOException {
+        if (new File(filePath).exists()) {
+            new File(filePath).delete();
+        }
+
+        DeskBoard deskBoard = new DeskBoard();
+        deskBoard.addActivities(activityList);
+
+        Storage storage = new StorageManager(new XmlDeskBoardStorage(""),
+                new JsonUserPrefsStorage(""));
+        storage.exportDeskBoard(deskBoard, filePath);
     }
 }

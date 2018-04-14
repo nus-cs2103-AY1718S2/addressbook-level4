@@ -23,7 +23,7 @@ public class ImportCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_FILE_PATH + "FILE PATH\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_FILE_PATH + "C:\\Users\\Karen\\IdeaProjects\\main\\data\\deskboard.xml";
+            + PREFIX_FILE_PATH + "C:\\data\\deskBoard.xml";
 
     public static final String MESSAGE_SUCCESS = "Data imported from: %1$s";
     public static final String MESSAGE_FILE_NOT_FOUND = "Desk board file %s not found";
@@ -51,7 +51,7 @@ public class ImportCommand extends UndoableCommand {
         } catch (IOException ioe) {
             throw new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePath));
         } catch (DataConversionException dce) {
-            throw new CommandException(String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, dce.getMessage()));
+            throw new CommandException(String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, filePath.value));
         }
     }
 

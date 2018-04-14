@@ -89,7 +89,7 @@ public class EditCommand extends UndoableCommand {
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
         List<Activity> lastShownList;
-        if(editActivityDescriptor instanceof EditTaskDescriptor) {
+        if (editActivityDescriptor instanceof EditTaskDescriptor) {
             lastShownList = model.getFilteredTaskList();
         } else {
             lastShownList = model.getFilteredEventList();
@@ -143,7 +143,7 @@ public class EditCommand extends UndoableCommand {
         /**
          * Returns true if at least one field is edited.
          */
-        public boolean isAnyFieldEdited() ;
+        public boolean isAnyFieldEdited();
 
         public EditActivityDescriptor getCopy();
         /**
@@ -155,7 +155,10 @@ public class EditCommand extends UndoableCommand {
         public Activity createEditedActivity(Activity activityToEdit);
     }
 
-
+    /**
+     * Stores the details to edit the task with. Each non-empty field value will replace the
+     * corresponding field value of the activity.
+     */
     public static class EditTaskDescriptor implements EditActivityDescriptor {
         private Name name;
         private DateTime dateTime;
@@ -268,8 +271,10 @@ public class EditCommand extends UndoableCommand {
         }
     }
 
-
-
+    /**
+     * Stores the details to edit the event with. Each non-empty field value will replace the
+     * corresponding field value of the event.
+     */
     public static class EditEventDescriptor implements EditActivityDescriptor {
         private Name name;
         private DateTime startDateTime;
@@ -297,7 +302,7 @@ public class EditCommand extends UndoableCommand {
          * Get a copy of this object
          */
         public EditActivityDescriptor getCopy() {
-            return new EditEventDescriptor((EditEventDescriptor)this);
+            return new EditEventDescriptor(this);
         }
 
         /**

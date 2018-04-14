@@ -11,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class FilePath {
 
     public static final String MESSAGE_FILE_PATH_CONSTRAINTS =
-            "Desk Board file path should not be blank.";
+            "Desk Board file path should end with '.xml'.";
 
     public static final String FILE_PATH_VALIDATION_REGEX = ".+" + ".xml";
 

@@ -18,8 +18,8 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.address.logic.commands.EditCommand.EditEventDescriptor;
+import seedu.address.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
@@ -38,10 +38,10 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         String trimmedargs = args.trim();
-        if(trimmedargs.startsWith(TYPE_TASK)) {
+        if (trimmedargs.startsWith(TYPE_TASK)) {
             String taskargs = trimmedargs.substring(TYPE_TASK.length() + 1).trim();
             return getEditTaskCommand(taskargs);
-        } else if(trimmedargs.startsWith(TYPE_EVENT)) {
+        } else if (trimmedargs.startsWith(TYPE_EVENT)) {
             String taskargs = trimmedargs.substring(TYPE_EVENT.length() + 1).trim();
             return getEditEventCommand(taskargs);
         }

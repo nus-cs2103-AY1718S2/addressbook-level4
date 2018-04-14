@@ -6,7 +6,9 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.ASSIGNMENT3_DEMO1_FILE_PATH;
-import static seedu.address.logic.commands.CommandTestUtil.FILE_PATH_DESC_VALID;
+import static seedu.address.logic.commands.CommandTestUtil.EXPORT_FILE_PATH;
+import static seedu.address.logic.commands.CommandTestUtil.FILE_PATH_DESC_EXPORT;
+import static seedu.address.logic.commands.CommandTestUtil.FILE_PATH_DESC_IMPORT;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,6 +17,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.EventCommand;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -145,8 +148,15 @@ public class DeskBoardParserTest {
     @Test
     public void parseCommand_import() throws Exception {
         FilePath filePath = new FilePath(ASSIGNMENT3_DEMO1_FILE_PATH);
-        ImportCommand command = (ImportCommand) parser.parseCommand(ImportCommand.COMMAND_WORD + FILE_PATH_DESC_VALID);
+        ImportCommand command = (ImportCommand) parser.parseCommand(ImportCommand.COMMAND_WORD + FILE_PATH_DESC_IMPORT);
         assertEquals(new ImportCommand(filePath), command);
+    }
+
+    @Test
+    public void parseCommand_export() throws Exception {
+        FilePath filePath = new FilePath(EXPORT_FILE_PATH);
+        ExportCommand command = (ExportCommand) parser.parseCommand(ExportCommand.COMMAND_WORD + FILE_PATH_DESC_EXPORT);
+        assertEquals(new ExportCommand(filePath), command);
     }
 
     //@@author

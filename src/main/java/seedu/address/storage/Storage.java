@@ -35,4 +35,7 @@ public interface Storage extends DeskBoardStorage, UserPrefsStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleDeskBoardChangedEvent(DeskBoardChangedEvent dbce);
+
+    //@@author karenfrilya97
+    void exportDeskBoard(ReadOnlyDeskBoard deskBoard, String filePath) throws IOException;
 }

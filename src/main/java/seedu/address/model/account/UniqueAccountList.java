@@ -70,6 +70,9 @@ public class UniqueAccountList implements Serializable, Iterable<Account> {
      * @throws AccountNotFoundException if no such account could be found in the list.
      */
     public boolean remove(Account toRemove) throws AccountNotFoundException {
+        //if (model.getAccountList().searchIfUsernameExist(new Username(username))) {
+        //  throw new AccountNotFoundException("Account not found!");
+        //}
         requireNonNull(toRemove);
         final boolean accountFoundAndDeleted = internalList.remove(toRemove);
         if (!accountFoundAndDeleted) {
@@ -144,6 +147,20 @@ public class UniqueAccountList implements Serializable, Iterable<Account> {
             }
         }
         return null;
+    }
+    /**
+     * Returns true if account exists with such username provided
+     *
+     * @param u
+     * @return
+     */
+    public boolean searchIfUsernameExist (Username u) {
+        for (Account a : internalList) {
+            if (a.usernameMatches(u)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

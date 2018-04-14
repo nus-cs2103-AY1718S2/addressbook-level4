@@ -34,6 +34,8 @@ import seedu.address.ui.NotificationCenter;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
+    public static final String MESSAGE_LOCKED = "Employees Tracker has been locked,"
+            + "please unlock it first!";
     private static boolean isLocked = false;
     private static String password;
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
@@ -44,8 +46,6 @@ public class LogicManager extends ComponentManager implements Logic {
     private HashMap<TimerTask, Boolean> timetableEntriesStatus;
     private HashMap<TimerTask, Notification> timerTaskToTimetableEntryMap;
     private HashMap<String, TimerTask> scheduledTimerTasks;
-    public static final String MESSAGE_LOCKED = "Employees Tracker has been locked,"
-            + "please unlock it first!";
 
     public LogicManager(Model model) {
         this.model = model;

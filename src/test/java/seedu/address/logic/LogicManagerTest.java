@@ -30,7 +30,7 @@ public class LogicManagerTest {
     public void execute_applicationLocked() {
         String validCommand = "list";
         LogicManager.lock();
-        assertTerminate(validCommand, LogicManager.MESSAGE_LOCKED);
+        assertUnlockRequired(validCommand, LogicManager.MESSAGE_LOCKED);
     }
     //@@author crizyli
 
@@ -131,7 +131,11 @@ public class LogicManagerTest {
         }
     }
 
-    private void assertTerminate(String command, String expectedMessage) {
+    //@@author crizyli
+    /**
+     * Asserts that the feedback to user is the same as the message showed when application is locked.
+     */
+    private void assertUnlockRequired(String command, String expectedMessage) {
         try {
             CommandResult result = logic.execute(command);
             assertEquals(expectedMessage, result.feedbackToUser);
@@ -139,4 +143,5 @@ public class LogicManagerTest {
             throw new AssertionError("ParseException and CommandException should not be thrown.");
         }
     }
+    //@@author crizyli
 }

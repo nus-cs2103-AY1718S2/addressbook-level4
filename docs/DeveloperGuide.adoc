@@ -775,7 +775,7 @@ Fastis will then handle `addressBookChangedEvent` and update command result.
 
 The following diagram shows the interaction of `AddMemberToGroup` Command class.
 .Class Diagram of AddMemberToGroup Command.
-image:AGMCommandClassDiagram.png[width:"600"]
+image:aGMCommandClassDiagram.png[width:"600"]
 
 The `AddMemberToGroupCommand` is facilitated by `AddMemberToGroupCommandParser` to parse `AddMemberToGroupCommand`.
 The following diagram shows the flow of parsing of `AddMemberToGroupCommand` object.

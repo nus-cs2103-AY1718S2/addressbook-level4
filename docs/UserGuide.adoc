@@ -671,6 +671,8 @@ There is no need to save manually.
 
 == Command Summary
 
+This section provides a summary of command syntax and aliases.
+
 * *Add* `add` or `a n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...` +
 e.g. `add` or `a n/James Ho ic/S1234567A p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 dob/11/11/1991 b/A+ c/peanuts c/aspirin`
 

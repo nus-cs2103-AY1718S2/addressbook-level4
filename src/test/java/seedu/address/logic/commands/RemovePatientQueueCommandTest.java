@@ -37,8 +37,7 @@ public class RemovePatientQueueCommandTest {
     }
 
     @Test
-    public void execute_patientExist_removeSuccessful() throws CommandException, IllegalValueException,
-            PatientNotFoundException {
+    public void execute_patientExist_removeSuccessful() throws CommandException, IllegalValueException {
         RemovePatientQueueCommand command = prepareCommand();
         CommandResult commandResult = command.execute();
         assertEquals(String.format(RemovePatientQueueCommand.MESSAGE_REMOVE_SUCCESS,
@@ -47,7 +46,7 @@ public class RemovePatientQueueCommandTest {
 
     @Test
     public void execute_patientExist_removeByIndexSuccessful() throws CommandException,
-            IllegalValueException, PatientNotFoundException {
+            IllegalValueException {
         RemovePatientQueueCommand command = prepareCommandMorePatient("2");
         CommandResult commandResult = command.execute();
         assertEquals(String.format(RemovePatientQueueCommand.MESSAGE_REMOVE_SUCCESS,
@@ -65,7 +64,7 @@ public class RemovePatientQueueCommandTest {
 
     @Test
     public void execute_patientNotExistInQueue_throwsCommandException() throws CommandException,
-            IllegalValueException, PatientNotFoundException {
+            IllegalValueException {
         RemovePatientQueueCommand command = prepareCommandMorePatientNotExist("2");
         thrown.expect(CommandException.class);
         thrown.expectMessage(RemovePatientQueueCommand.MESSAGE_PERSON_NOT_FOUND_QUEUE);

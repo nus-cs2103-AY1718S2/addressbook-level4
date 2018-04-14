@@ -46,8 +46,8 @@ public class AddPatientQueueCommandTest {
 
     @Test
     public void equals() throws IllegalValueException {
-        Index firstIndex = ParserUtil.parseIndex("1");
-        Index secondIndex = ParserUtil.parseIndex("2");
+        Index firstIndex = ParserUtil.parseIndex(INDEX_FIRST_PERSON.getOneBased() + "");
+        Index secondIndex = ParserUtil.parseIndex(INDEX_SECOND_PERSON.getOneBased() + "");
 
         AddPatientQueueCommand addQueueFirstCommand = new AddPatientQueueCommand(firstIndex);
         AddPatientQueueCommand addQueueSecondCommand = new AddPatientQueueCommand(secondIndex);
@@ -71,9 +71,9 @@ public class AddPatientQueueCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_addSuccessful() throws Exception {
-        AddPatientQueueCommand command = prepareCommand("6");
+        AddPatientQueueCommand command = prepareCommand(INDEX_SECOND_PERSON.getOneBased() + "");
         CommandResult commandResult = command.execute();
-        assertEquals(String.format(AddPatientQueueCommand.MESSAGE_SUCCESS, TypicalPatients.FIONA.getName()),
+        assertEquals(String.format(AddPatientQueueCommand.MESSAGE_SUCCESS, TypicalPatients.BENSON.getName()),
                 commandResult.feedbackToUser);
     }
 
@@ -87,7 +87,7 @@ public class AddPatientQueueCommandTest {
     @Test
     public void execute_validIndexUnfilteredListDuplicatePatient_throwsCommandException() throws Exception {
         prepareForDuplicatePatient();
-        AddPatientQueueCommand duplicateCommand = prepareCommand("6");
+        AddPatientQueueCommand duplicateCommand = prepareCommand(INDEX_SECOND_PERSON.getOneBased() + "");
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddPatientQueueCommand.MESSAGE_DUPLICATE_PERSON);
         duplicateCommand.execute();
@@ -193,7 +193,7 @@ public class AddPatientQueueCommandTest {
         return command;
     }
     private void prepareForDuplicatePatient() throws Exception {
-        AddPatientQueueCommand duplicateCommand = prepareCommand("6");
+        AddPatientQueueCommand duplicateCommand = prepareCommand(INDEX_SECOND_PERSON.getOneBased() + "");
         duplicateCommand.execute();
     }
 }

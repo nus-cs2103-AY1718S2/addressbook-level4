@@ -59,10 +59,15 @@ public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
 
+    private final int COMMAND_INDEX = 0;
+    private final int ARG_INDEX = 1;
+    private final String EMPTY_ARG = "";
+
     @Test
     public void parseCommand_add() throws Exception {
         Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
+        String[] input = parser.extractCommandArgs(PersonUtil.getAddCommand(person));
+        AddCommand command = (AddCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new AddCommand(person), command);
     }
 
@@ -70,7 +75,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_alias() throws Exception {
         Alias alias = new AliasBuilder().build();
-        AliasCommand command = (AliasCommand) parser.parseCommand(AliasUtil.getAliasCommand(alias));
+        String[] input = parser.extractCommandArgs(AliasUtil.getAliasCommand(alias));
+        AliasCommand command = (AliasCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new AliasCommand(alias), command);
     }
 
@@ -78,58 +84,69 @@ public class AddressBookParserTest {
     public void parseCommand_unalias() throws Exception {
         Alias toUnalias = new AliasBuilder().build();
         String unalias = toUnalias.getAlias();
-        UnaliasCommand command = (UnaliasCommand) parser.parseCommand(AliasUtil.getUnliasCommand(unalias));
+        String[] input = parser.extractCommandArgs(AliasUtil.getUnliasCommand(unalias));
+        UnaliasCommand command = (UnaliasCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new UnaliasCommand(unalias), command);
     }
 
     @Test
     public void parseCommand_vacant() throws Exception {
         Building building = new BuildingBuilder().build();
-        VacantCommand command = (VacantCommand) parser.parseCommand(VacantCommand.COMMAND_WORD
-                + " " + building.getBuildingName());
+        String vacant = VacantCommand.COMMAND_WORD + " " + building.getBuildingName();
+        String[] input = parser.extractCommandArgs(vacant);
+        VacantCommand command = (VacantCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new VacantCommand(building), command);
     }
 
     @Test
     public void parseCommand_map() throws Exception {
         String locations = "com1";
-        MapCommand command = (MapCommand) parser.parseCommand(MapCommand.COMMAND_WORD + " " + locations);
+        String map = MapCommand.COMMAND_WORD+ " " + locations;
+        String[] input = parser.extractCommandArgs(map);
+        MapCommand command = (MapCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new MapCommand(locations), command);
     }
     //@@author
 
     @Test
     public void parseCommand_clear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD, EMPTY_ARG) instanceof ClearCommand);
+        String clear = ClearCommand.COMMAND_WORD + " 3";
+        String[] input = parser.extractCommandArgs(clear);
+        assertTrue(parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]) instanceof ClearCommand);
     }
 
     @Test
     public void parseCommand_delete() throws Exception {
-        DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        String delete = DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased();
+        String[] input = parser.extractCommandArgs(delete);
+        DeleteCommand command = (DeleteCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
     //@@author yeggasd
     @Test
     public void parseCommand_password() throws Exception {
-        PasswordCommand command = (PasswordCommand) parser.parseCommand(
-                PasswordCommand.COMMAND_WORD + " test");
+        String password = PasswordCommand.COMMAND_WORD + " test";
+        String[] input = parser.extractCommandArgs(password);
+        PasswordCommand command = (PasswordCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new PasswordCommand("test"), command);
     }
 
     @Test
     public void parseCommand_nopassword() throws Exception {
-        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD) instanceof RemovePasswordCommand);
-        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD + " 3")
+        String removePassword = RemovePasswordCommand.COMMAND_WORD + " 3";
+        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD, EMPTY_ARG) instanceof RemovePasswordCommand);
+        String[] input = parser.extractCommandArgs(removePassword);
+        assertTrue(parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX])
                 instanceof RemovePasswordCommand);
     }
 
     @Test
     public void parseCommand_import() throws Exception {
-        ImportCommand command = (ImportCommand) parser.parseCommand(
-                ImportCommand.COMMAND_WORD + " /data/addressbook.xml test");
+        String importFile = ImportCommand.COMMAND_WORD + " /data/addressbook.xml test";
+        String[] input = parser.extractCommandArgs(importFile);
+        ImportCommand command = (ImportCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new ImportCommand("/data/addressbook.xml", "test"), command);
     }
     //@@author
@@ -138,21 +155,24 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_birthdays() throws Exception {
         BirthdaysCommand command = (BirthdaysCommand) parser.parseCommand(
-                BirthdaysCommand.COMMAND_WORD);
+                BirthdaysCommand.COMMAND_WORD, EMPTY_ARG);
         assertEquals(new BirthdaysCommand(false), command);
     }
 
     @Test
     public void parseCommand_birthdaysToday() throws Exception {
-        BirthdaysCommand command = (BirthdaysCommand) parser.parseCommand(
-                BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER);
+        String birthday = BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER;
+        String[] input = parser.extractCommandArgs(birthday);
+        BirthdaysCommand command = (BirthdaysCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new BirthdaysCommand(true), command);
     }
 
     @Test
     public void parseCommand_timeTableUnion() throws Exception {
-        TimetableUnionCommand command = (TimetableUnionCommand) parser
-                .parseCommand(TimetableUnionCommand.COMMAND_WORD + " Odd 1 2");
+        String timetableUnion = TimetableUnionCommand.COMMAND_WORD + " Odd 1 2";
+        String[] input = parser.extractCommandArgs(timetableUnion);
+        TimetableUnionCommand command = (TimetableUnionCommand) parser.parseCommand(input[
+                COMMAND_INDEX], input[ARG_INDEX]);
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
@@ -165,38 +185,49 @@ public class AddressBookParserTest {
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
+        String edit = EditCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person);
+        String[] input = parser.extractCommandArgs(edit);
+        EditCommand command = (EditCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
     @Test
     public void parseCommand_exit() throws Exception {
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
+        String exit = ExitCommand.COMMAND_WORD + " 3";
+        String[] input = parser.extractCommandArgs(exit);
+        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD, EMPTY_ARG) instanceof ExitCommand);
+        assertTrue(parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]) instanceof ExitCommand);
     }
 
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        String find = FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" "));
+        String[] input = parser.extractCommandArgs(find);
+        FindCommand command = (FindCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
     public void parseCommand_help() throws Exception {
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD, EMPTY_ARG) instanceof HelpCommand);
+        String help = HelpCommand.COMMAND_WORD + " 3";
+        String[] input = parser.extractCommandArgs(help);
+        assertTrue(parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]) instanceof HelpCommand);
     }
 
     @Test
     public void parseCommand_history() throws Exception {
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD) instanceof HistoryCommand);
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD + " 3") instanceof HistoryCommand);
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD, EMPTY_ARG) instanceof HistoryCommand);
+        String history = HistoryCommand.COMMAND_WORD + " 3";
+        String[] input = parser.extractCommandArgs(history);
+        assertTrue(parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]) instanceof HistoryCommand);
 
         try {
-            parser.parseCommand("histories");
+            history = "histories";
+            input = parser.extractCommandArgs(history);
+            parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
             fail("The expected ParseException was not thrown.");
         } catch (ParseException pe) {
             assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
@@ -205,40 +236,49 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_list() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD, EMPTY_ARG) instanceof ListCommand);
+        String list = ListCommand.COMMAND_WORD + " 3";
+        String[] input = parser.extractCommandArgs(list);
+        assertTrue(parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]) instanceof ListCommand);
     }
 
     @Test
     public void parseCommand_select() throws Exception {
-        SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + EVEN);
+        String select = SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + EVEN;
+        String[] input = parser.extractCommandArgs(select);
+        SelectCommand command = (SelectCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON, EVEN), command);
     }
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
-        assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD, EMPTY_ARG) instanceof RedoCommand);
+        String redo = RedoCommand.COMMAND_WORD + " 1";
+        String[] input = parser.extractCommandArgs(redo);
+        assertTrue(parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]) instanceof RedoCommand);
     }
 
     @Test
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD, EMPTY_ARG) instanceof UndoCommand);
+        String undo = UndoCommand.COMMAND_WORD + " 3";
+        String[] input = parser.extractCommandArgs(undo);
+        assertTrue(parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]) instanceof UndoCommand);
     }
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        parser.parseCommand("");
+        String invalid = EMPTY_ARG;
+        String[] input = parser.extractCommandArgs(invalid);
+        parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
     }
 
     @Test
     public void parseCommand_unknownCommand_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.parseCommand("unknownCommand");
+        parser.parseCommand("unknownCommand", EMPTY_ARG);
     }
 }

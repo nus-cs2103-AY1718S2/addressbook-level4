@@ -16,7 +16,7 @@ import seedu.address.testutil.AliasUtil;
 public class AliasCommandSystemTest extends AddressBookSystemTest {
 
     @Test
-    public void add() throws Exception {
+    public void alias() throws Exception {
         /* Case: add an alias to a non-empty address book, command with leading spaces and trailing spaces -> added */
         Alias toAdd = ADD;
         String command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_ADD;

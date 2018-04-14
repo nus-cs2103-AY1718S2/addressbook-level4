@@ -20,6 +20,7 @@ import seedu.address.logic.commands.InterviewCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.commands.RatingDeleteCommand;
+import seedu.address.logic.commands.RatingEditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ShowCommand;
@@ -102,6 +103,9 @@ public class AddressBookParser {
 
         case RatingDeleteCommand.COMMAND_WORD:
             return new RatingDeleteCommandParser().parse(arguments);
+
+        case RatingEditCommand.COMMAND_WORD:
+            return new RatingEditCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);

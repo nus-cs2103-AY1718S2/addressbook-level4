@@ -198,7 +198,7 @@ public class ImdbParser {
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
 
-                    //@@author Kyholmes
+            //@@author Kyholmes
             case ViewAppointmentCommand.COMMAND_WORD:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));

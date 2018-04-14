@@ -6,8 +6,10 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 
+import seedu.address.commons.events.ui.LoginEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 import seedu.address.model.exception.InvalidPasswordException;
@@ -46,6 +48,7 @@ public class LoginCommand extends Command {
         requireNonNull(model);
         try {
             model.login(username, password);
+            EventsCenter.getInstance().post(new LoginEvent(true));
             return new CommandResult(String.format(MESSAGE_SUCCESS, username));
         } catch (InvalidUsernameException iue) {
             throw new CommandException(Messages.MESSAGE_INVALID_USERNAME);

@@ -739,43 +739,31 @@ and `ZoomOutCommand` will then handle these events raised by throwing a `Command
 The actual implementation of the `ZoomInCommand` is as follows:
 [source,java]
 ----
-public class ZoomInCommand extends Command {
-    public static final String COMMAND_WORD = "zoomin";
-    public static final String COMMAND_ALIAS = "zi";
+@Override
+public CommandResult execute() throws CommandException {
+    registerAsAnEventHandler(this);
+    raise(new ZoomInEvent());
+    while (!receivedFeedback);
 
-    public static final String MESSAGE_SUCCESS = "Calendar zoomed in";
-    public static final String MESSAGE_MAX_ZOOM_IN = "The calendar is already zoomed in to the maximum level";
-
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-    private boolean receivedFeedback = false;
-    private boolean isSuccessful = false;
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        registerAsAnEventHandler(this);
-        raise(new ZoomInEvent());
-        while (!receivedFeedback);
-
-        if (isSuccessful) {
-            return new CommandResult(MESSAGE_SUCCESS);
-        } else {
-            throw new CommandException(MESSAGE_MAX_ZOOM_IN);
-        }
+    if (isSuccessful) {
+        return new CommandResult(MESSAGE_SUCCESS);
+    } else {
+        throw new CommandException(MESSAGE_MAX_ZOOM_IN);
     }
+}
 
-    @Subscribe
-    private void handleMaxZoomInEvent(MaxZoomInEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        receivedFeedback = true;
-        isSuccessful = false;
-    }
+@Subscribe
+private void handleMaxZoomInEvent(MaxZoomInEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    receivedFeedback = true;
+    isSuccessful = false;
+}
 
-    @Subscribe
-    private void handleZoomSuccessEvent(ZoomSuccessEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        receivedFeedback = true;
-        isSuccessful = true;
-    }
+@Subscribe
+private void handleZoomSuccessEvent(ZoomSuccessEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    receivedFeedback = true;
+    isSuccessful = true;
 }
 ----
 

@@ -21,6 +21,8 @@ public class ReopenIssueCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Issue #%1$s was reopened successfully";
     public static final String MESSAGE_FAILURE = "Issue wasn't reopened. Enter correct index number.";
+    public static final String MESSAGE_AUTHENTICATION_FAILURE = "Github isn't authenticated. "
+           + "Use 'gitlogin' command to authenticate first";
 
     private final Index targetIndex;
 
@@ -34,6 +36,8 @@ public class ReopenIssueCommand extends Command {
             model.reopenIssueOnGithub(targetIndex);
         } catch (IOException ie) {
             throw new CommandException(MESSAGE_FAILURE);
+        } catch (CommandException ce) {
+            throw new CommandException(MESSAGE_AUTHENTICATION_FAILURE);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex.getOneBased()));

@@ -3,11 +3,19 @@ package seedu.progresschecker.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_ASSIGNEES;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_BODY;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_PASSCODE;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_REPO;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_GIT_USERNAME;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_LABEL;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MAJOR;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_MILESTONE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_USERNAME;
 import static seedu.progresschecker.logic.parser.CliSyntax.PREFIX_YEAR;
 
@@ -73,9 +81,55 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_PATH_DESC = "/images/ "; // prefix of path is not completed
 
+    public static final String VALID_TITLE_ONE = "This is a github issue one";
+    public static final String VALID_TITLE_TWO = "This is a github issue two";
+    public static final String VALID_ASSIGNEE_BOB = "bob";
+    public static final String VALID_ASSIGNEE_AMY = "amy";
+    public static final String VALID_ASSIGNEE_ANMIN = "anminkang";
+    public static final String VALID_BODY_ONE = "This is issue one's body";
+    public static final String VALID_BODY_TWO = "This is issue two's body";
+    public static final String VALID_MILESTONE_ONE = "v1.2";
+    public static final String VALID_MILESTONE_TWO = "v1.3";
+    public static final String VALID_LABEL_TASK = "type.task";
+    public static final String VALID_LABEL_STORY = "type.story";
+
+    public static final String TITLE_DESC_ONE = " " + PREFIX_TITLE + VALID_TITLE_ONE;
+    public static final String TITLE_DESC_TWO = " " + PREFIX_TITLE + VALID_TITLE_TWO;
+    public static final String BODY_DESC_ONE = " " + PREFIX_BODY + VALID_BODY_ONE;
+    public static final String BODY_DESC_TWO = " " + PREFIX_BODY + VALID_BODY_TWO;
+    public static final String ASSIGNEE_DESC_BOB = " " + PREFIX_ASSIGNEES + VALID_ASSIGNEE_BOB;
+    public static final String ASSIGNEE_DESC_AMY = " " + PREFIX_ASSIGNEES + VALID_ASSIGNEE_AMY;
+    public static final String ASSIGNEE_DESC_ANMIN = " " + PREFIX_ASSIGNEES + VALID_ASSIGNEE_ANMIN;
+    public static final String MILESTONE_DESC_ONE = " " + PREFIX_MILESTONE + VALID_MILESTONE_ONE;
+    public static final String MILESTONE_DESC_TWO = " " + PREFIX_MILESTONE + VALID_MILESTONE_TWO;
+    public static final String LABEL_DEC_TASK = " " + PREFIX_LABEL + VALID_LABEL_TASK;
+    public static final String LABEL_DEC_STORY = " " + PREFIX_LABEL + VALID_LABEL_STORY;
+
+    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + "";
+    public static final String INVALID_BODY_DESC = " " + PREFIX_BODY + "";
+    public static final String INVALID_LABEL_DESC = " " + PREFIX_LABEL + "";
+    public static final String INVALID_ASSIGNEE_DESC = " " + PREFIX_ASSIGNEES + "";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
+
+    public static final String VALID_GITHUB_REPO_ONE = "adityaa1998/addressbook-level4";
+    public static final String VALID_GITHUB_REPO_TWO = "adityaa1998/samplerepo-pr-practice";
+    public static final String VALID_GITHUB_USERNAME_ONE = "anminkang";
+    public static final String VALID_GITHUB_USERNAME_TWO = "adityaa1998";
+    public static final String VALID_GITHUB_PASSCODE_ONE = "Github1";
+    public static final String VALID_GITHUB_PASSCODE_TWO = "Github2";
+
+    public static final String GITHUB_DESC_REPO_ONE = " " + PREFIX_GIT_REPO + VALID_GITHUB_REPO_ONE;
+    public static final String GITHUB_DESC_REPO_TWO = " " + PREFIX_GIT_REPO + VALID_GITHUB_REPO_TWO;
+    public static final String GITHUB_DESC_USERNAME_ONE = " " + PREFIX_GIT_USERNAME + VALID_GITHUB_USERNAME_ONE;
+    public static final String GITHUB_DESC_USERNAME_TWO = " " + PREFIX_GIT_USERNAME + VALID_GITHUB_USERNAME_TWO;
+    public static final String GITHUB_DESC_PASSCODE_ONE = " " + PREFIX_GIT_PASSCODE + VALID_GITHUB_PASSCODE_ONE;
+    public static final String GITHUB_DESC_PASSCODE_TWO = " " + PREFIX_GIT_PASSCODE + VALID_GITHUB_PASSCODE_TWO;
+
+    public static final String INVALID_GITHUB_REPO_DESC = " " + PREFIX_GIT_REPO + "";
+    public static final String INVALID_GITHUB_USERNAME_DESC = " " + PREFIX_GIT_USERNAME + "";
+    public static final String INVALID_GITHUB_PASSCODE_DESC = " " + PREFIX_GIT_PASSCODE + "";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

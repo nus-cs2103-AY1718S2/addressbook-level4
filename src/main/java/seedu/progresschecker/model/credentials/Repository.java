@@ -1,6 +1,7 @@
 package seedu.progresschecker.model.credentials;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.progresschecker.commons.util.AppUtil.checkArgument;
 
 //@@author aditya1998
 /**
@@ -8,13 +9,15 @@ import static java.util.Objects.requireNonNull;
  */
 public class Repository {
 
-    public static final String MESSAGE_ASSIGNEES_CONSTRAINTS =
+    public static final String MESSAGE_REPOSITORY_CONSTRAINTS =
             "Repository address cannot start from /";
 
     /*
      * The first character of the repository must not be a forward-slash,
      * otherwise " " (a blank string) becomes a valid input.
      */
+    public static final String REPO_VALIDATION_REGEX = "^[-a-zA-Z0-9+&@#/%?=~_|!:,.;*]*[-a-zA-Z0-9+&@#/%=~_|*]";
+
 
     public final String gitRepo;
 
@@ -25,7 +28,15 @@ public class Repository {
      */
     public Repository(String gitRepo) {
         requireNonNull(gitRepo);
+        checkArgument(isValidRepository(gitRepo), MESSAGE_REPOSITORY_CONSTRAINTS);
         this.gitRepo = gitRepo;
+    }
+
+    /**
+     * Returns true if a given string is a valid github repository.
+     */
+    public static boolean isValidRepository(String test) {
+        return test.matches(REPO_VALIDATION_REGEX);
     }
 
     @Override

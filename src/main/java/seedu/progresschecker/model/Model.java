@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
+import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.exercise.Exercise;
@@ -56,6 +57,9 @@ public interface Model {
 
     /** closes an issue issue on github */
     void closeIssueOnGithub(Index index) throws IOException, CommandException;
+
+    /**viwes issues of the specified state */
+    void listIssues(String state) throws IllegalValueException, IOException, CommandException;
 
     /**
      * Replaces the fields in Issue {@code index} with {@code editedIssue}.

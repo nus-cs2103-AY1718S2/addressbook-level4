@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
@@ -12,44 +13,61 @@
 <?import javafx.scene.text.Text?>
 
 <!-- @@author adityaa1998 -->
-<HBox id="cardPane" fx:id="cardPane" prefHeight="140.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" prefHeight="140.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" styleClass="main-box">
     <GridPane prefHeight="140.0" prefWidth="380.0" HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
-        <HBox prefHeight="140.0" prefWidth="216.0">
+        <HBox prefHeight="140.0" prefWidth="380.0">
             <children>
-                <VBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="140.0" prefWidth="216.0">
+                <VBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="140.0" prefWidth="380.0">
                     <padding>
                         <Insets bottom="5" left="15" right="5" top="5" />
                     </padding>
-                    <HBox alignment="CENTER_LEFT" spacing="5">
+                    <HBox alignment="CENTER_LEFT" spacing="5" prefWidth="380.0">
                         <Label fx:id="id" styleClass="cell_big_label">
                             <minWidth>
                                 <!-- Ensures that the label text is never truncated -->
                                 <Region fx:constant="USE_PREF_SIZE" />
                             </minWidth>
                         </Label>
-                        <Label fx:id="title" styleClass="cell_big_label" text="\$first" />
+                        <Label fx:id="title" prefWidth="380.0" styleClass="title-issue" text="\$first" wrapText="true">
+                            <minWidth>
+                                <!-- Ensures that the label text is never truncated -->
+                                <Region fx:constant="USE_PREF_SIZE" />
+                            </minWidth>
+                        </Label>
                     </HBox>
                     <FlowPane fx:id="labelled" />
                     <GridPane prefHeight="80.0" prefWidth="332.0">
                         <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="74.0" />
-                            <ColumnConstraints hgrow="ALWAYS" maxWidth="300.0" minWidth="10.0" prefWidth="200.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="0.0" prefWidth="78.0" />
+                            <ColumnConstraints hgrow="ALWAYS" maxWidth="360.0" minWidth="10.0" prefWidth="282.0" />
                         </columnConstraints>
                         <rowConstraints>
-                            <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="21.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="23.0" minHeight="7.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="20.0" vgrow="ALWAYS" />
+                            <RowConstraints maxHeight="32.0" minHeight="0.0" prefHeight="32.0" vgrow="ALWAYS" />
+                            <RowConstraints maxHeight="23.0" minHeight="7.0" prefHeight="17.0" vgrow="ALWAYS" />
                         </rowConstraints>
                         <children>
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Body: " />
-                            <Label fx:id="body" styleClass="cell_small_label" text="\$body" GridPane.columnIndex="1" />
+                            <Label fx:id="body" styleClass="cell_small_label" text="\$body" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" wrapText="true"/>
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Assignees: " GridPane.rowIndex="2" />
-                            <FlowPane fx:id="assignees" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <FlowPane fx:id="assignees" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <GridPane.margin>
+                           <Insets bottom="-1.0" top="1.0" />
+                        </GridPane.margin>
+                        <padding>
+                           <Insets top="3.0" />
+                        </padding></FlowPane>
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Milestone: " GridPane.rowIndex="1" />
-                            <Label fx:id="milestone" styleClass="cell_small_label" text="\$milestone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <Label fx:id="milestone" styleClass="cell_small_label" text="\$milestone" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <rotationAxis>
+                           <Point3D />
+                        </rotationAxis>
+                        <GridPane.margin>
+                           <Insets top="1.0" />
+                        </GridPane.margin></Label>
                         </children>
                     </GridPane>
                 </VBox>

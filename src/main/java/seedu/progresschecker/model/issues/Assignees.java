@@ -1,6 +1,7 @@
 package seedu.progresschecker.model.issues;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.progresschecker.commons.util.AppUtil.checkArgument;
 
 //@@author adityaa1998
 /**
@@ -15,6 +16,7 @@ public class Assignees {
      * The first character of the Assignee must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
+    public static final String ASSIGNEE_VALIDATION_REGEX = ".*\\w.*|[$&+,:;=?@#|'<>.^*()%!-]";
 
     public final String fullAssignees;
 
@@ -25,8 +27,17 @@ public class Assignees {
      */
     public Assignees(String assignees) {
         requireNonNull(assignees);
+        checkArgument(isValidAssignee(assignees), MESSAGE_ASSIGNEES_CONSTRAINTS);
         this.fullAssignees = assignees;
     }
+
+    /**
+     * Returns true if a given string is a valid github issue.
+     */
+    public static boolean isValidAssignee(String test) {
+        return test.matches(ASSIGNEE_VALIDATION_REGEX);
+    }
+
 
     @Override
     public String toString() {

@@ -32,72 +32,73 @@ import seedu.progresschecker.model.person.exceptions.DuplicatePersonException;
 import seedu.progresschecker.model.person.exceptions.PersonNotFoundException;
 import seedu.progresschecker.model.photo.PhotoPath;
 import seedu.progresschecker.model.photo.exceptions.DuplicatePhotoException;
-import seedu.progresschecker.testutil.PersonBuilder;
+import seedu.progresschecker.testutil.IssueBuilder;
 
-public class AddCommandTest {
+//@@author adityaa1998
+public class CreateIssueCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullIssue_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
-    }
-
-    @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
-
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
-
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
-    }
-
-    @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
-
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
-
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        new CreateIssueCommand(null);
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        Issue one = new IssueBuilder().withTitle("one").build();
+        Issue two = new IssueBuilder().withTitle("two").build();
+        CreateIssueCommand createOneIssue = new CreateIssueCommand(one);
+        CreateIssueCommand createTwoIssue = new CreateIssueCommand(two);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(createOneIssue.equals(createOneIssue));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        CreateIssueCommand createOneIssueCopy = new CreateIssueCommand(one);
+        assertTrue(createOneIssue.equals(createOneIssue));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(createOneIssue.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(createOneIssue.equals(null));
 
         // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        assertFalse(createOneIssue.equals(createTwoIssue));
+    }
+
+    @Test
+    public void execute_authenticationError_throwsCommandException() throws Exception {
+        ModelStub modelStub = new CreateIssueCommandTest.ModelStubCommandExceptionException();
+        Issue validIssue = new IssueBuilder().build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(CreateIssueCommand.MESSAGE_FAILURE);
+
+        getCreateIssueCommandForIssue(validIssue, modelStub).execute();
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new CreateIssueCommand with the details of the given issue.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private CreateIssueCommand getCreateIssueCommandForIssue(Issue issue, ModelStub model) {
+        CreateIssueCommand command = new CreateIssueCommand(issue);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
+    }
+
+    @Test
+    public void execute_issueAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingIssueAdded modelStub = new ModelStubAcceptingIssueAdded();
+        Issue validIssue = new IssueBuilder().build();
+
+        CommandResult commandResult = getCreateIssueCommandForIssue(validIssue, modelStub).execute();
+
+        assertEquals(CreateIssueCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validIssue), modelStub.issueAdded);
     }
 
     /**
@@ -116,7 +117,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void createIssueOnGitHub(Issue issue) throws IOException {
+        public void createIssueOnGitHub(Issue issue) throws IOException, CommandException {
             fail("This method should not be called. ");
         }
 
@@ -223,30 +224,26 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a CommandException when trying to create a new issue.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubCommandExceptionException extends ModelStub {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void createIssueOnGitHub(Issue issue) throws IOException, CommandException {
+            throw new CommandException("");
         }
 
-        @Override
-        public ReadOnlyProgressChecker getProgressChecker() {
-            return new ProgressChecker();
-        }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the issue being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingIssueAdded extends ModelStub {
+        final ArrayList<Issue> issueAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void createIssueOnGitHub(Issue issue) throws IOException, CommandException {
+            requireNonNull(issue);
+            issueAdded.add(issue);
         }
 
         @Override

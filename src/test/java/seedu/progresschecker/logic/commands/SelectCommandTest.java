@@ -17,6 +17,7 @@ import org.junit.Test;
 import seedu.progresschecker.commons.core.Messages;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.events.ui.JumpToListRequestEvent;
+import seedu.progresschecker.commons.events.ui.TabLoadChangedEvent;
 import seedu.progresschecker.logic.CommandHistory;
 import seedu.progresschecker.logic.UndoRedoStack;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
@@ -110,8 +111,11 @@ public class SelectCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getSecondLast();
         assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+        TabLoadChangedEvent previousEvent = (TabLoadChangedEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(selectCommand.tabType, "profile");
+
     }
 
     /**

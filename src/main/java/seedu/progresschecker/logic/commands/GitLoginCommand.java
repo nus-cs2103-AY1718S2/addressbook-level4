@@ -53,7 +53,16 @@ public class GitLoginCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (IOException e) {
             throw new CommandException(MESSAGE_FAILURE);
+        } catch (CommandException ce) {
+            throw new CommandException(ce.getMessage());
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof GitLoginCommand // instanceof handles nulls
+                && toAuthenticate.equals(((GitLoginCommand) other).toAuthenticate));
     }
 
 }

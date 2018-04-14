@@ -15,6 +15,7 @@ import seedu.progresschecker.commons.core.ComponentManager;
 import seedu.progresschecker.commons.core.LogsCenter;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.events.model.ProgressCheckerChangedEvent;
+import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.exercise.Exercise;
@@ -107,6 +108,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void logoutGithub() throws CommandException {
         progressChecker.logoutGithub();
+        indicateProgressCheckerChanged();
+    }
+
+    @Override
+    public synchronized void listIssues(String state) throws IllegalValueException, IOException, CommandException {
+        progressChecker.listIssues(state);
         indicateProgressCheckerChanged();
     }
     //@@author

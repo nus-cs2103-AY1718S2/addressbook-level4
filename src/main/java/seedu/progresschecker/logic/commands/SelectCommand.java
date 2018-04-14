@@ -6,6 +6,7 @@ import seedu.progresschecker.commons.core.EventsCenter;
 import seedu.progresschecker.commons.core.Messages;
 import seedu.progresschecker.commons.core.index.Index;
 import seedu.progresschecker.commons.events.ui.JumpToListRequestEvent;
+import seedu.progresschecker.commons.events.ui.TabLoadChangedEvent;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.person.Person;
 
@@ -24,6 +25,7 @@ public class SelectCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
+    public static final String tabType = "profile";
 
     private final Index targetIndex;
 
@@ -41,6 +43,7 @@ public class SelectCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        EventsCenter.getInstance().post(new TabLoadChangedEvent(tabType));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }

@@ -76,6 +76,19 @@ public class EventsCollectorRule implements TestRule {
             return events.get(events.size() - 1);
         }
 
+        //@@author adityaa1998
+        /**
+         * Returns the second last event collected
+         */
+        public BaseEvent getSecondLast() {
+            if (events.isEmpty()) {
+                return null;
+            }
+
+            return events.get(events.size() - 2);
+        }
+        //@@author
+
         /**
          * Returns true if the collector did not receive any events
          */

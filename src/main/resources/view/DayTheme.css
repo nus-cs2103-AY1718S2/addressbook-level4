@@ -473,3 +473,17 @@
 .exercise .suggested-answer {
     -fx-text-fill: #0099C7;
 }
+
+.main-box {
+    -fx-border-color: #28a43f;
+    -fx-border-radius: 0;
+    -fx-border-width: 0 0 0 5;
+    /*-fx-effect: dropshadow(gaussian, black, 0, 16, 2, 8); */
+    -fx-padding: 0 0 0 0;
+    /*-fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);*/
+}
+
+.main-box .title-issue {
+    /*-fx-font-weight: 10;*/
+    -fx-font-size: 10;
+}

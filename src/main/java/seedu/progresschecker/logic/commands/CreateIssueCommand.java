@@ -41,7 +41,7 @@ public class CreateIssueCommand extends Command {
             + PREFIX_BODY + "This is a test issue "
             + PREFIX_LABEL + "bug";
     public static final String MESSAGE_SUCCESS = "Issue successfully created on Github";
-    public static final String MESSAGE_FAILURE = "There is some error in the parameter or authentication";
+    public static final String MESSAGE_FAILURE = "Please log into github first";
 
     private final Issue toCreate;
 
@@ -58,9 +58,15 @@ public class CreateIssueCommand extends Command {
         try {
             model.createIssueOnGitHub(toCreate);
             return new CommandResult(MESSAGE_SUCCESS);
-        } catch (IOException e) {
+        } catch (IOException | CommandException e) {
             throw new CommandException(MESSAGE_FAILURE);
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CreateIssueCommand // instanceof handles nulls
+                && toCreate.equals(((CreateIssueCommand) other).toCreate));
+    }
 }

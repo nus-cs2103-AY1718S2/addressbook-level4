@@ -21,6 +21,7 @@ import org.kohsuke.github.GitHub;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
+import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.commons.util.CollectionUtil;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.credentials.GitDetails;
@@ -46,6 +47,7 @@ public class GitIssueList implements Iterable<Issue> {
     private GHIssueBuilder issueBuilder;
     private GHIssue issue;
     private GHIssue toEdit;
+    private GHIssueState issueState;
 
     /**
      * Initialises github credentials
@@ -86,7 +88,7 @@ public class GitIssueList implements Iterable<Issue> {
      */
     private void updateInternalList() throws IOException {
         internalList.remove(0, internalList.size());
-        List<GHIssue> gitIssues = repository.getIssues(GHIssueState.OPEN);
+        List<GHIssue> gitIssues = repository.getIssues(issueState);
         for (GHIssue issueOnGit : gitIssues) {
             Issue toBeAdded = convertToIssue(issueOnGit);
             internalList.add(toBeAdded);
@@ -222,6 +224,22 @@ public class GitIssueList implements Iterable<Issue> {
     }
 
     /**
+     * Updates the GHIssueState according to mentioned state and updates the list
+     */
+    public void listIssue(String state) throws IllegalValueException, IOException, CommandException {
+        if (github == null) {
+            throw new CommandException("");
+        } else if (state.equalsIgnoreCase("OPEN")) {
+            issueState = GHIssueState.OPEN;
+        } else if (state.equalsIgnoreCase("CLOSED")) {
+            issueState = GHIssueState.CLOSED;
+        } else {
+            throw new IllegalValueException("Enter correct state");
+        }
+        updateInternalList();
+
+    }
+    /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws IOException if the replacement is equivalent to another existing person in the list.
@@ -237,6 +255,7 @@ public class GitIssueList implements Iterable<Issue> {
         ArrayList<GHUser> listOfUsers = new ArrayList<>();
         ArrayList<String> listOfLabels = new ArrayList<>();
         MilestoneMap obj = new MilestoneMap();
+        obj.setRepository(getRepository());
         HashMap<String, GHMilestone> milestoneMap = obj.getMilestoneMap();
 
         for (Assignees assignee : assigneesList) {
@@ -254,7 +273,10 @@ public class GitIssueList implements Iterable<Issue> {
         toEdit.setTitle(editedIssue.getTitle().toString());
         toEdit.setBody(editedIssue.getBody().toString());
         toEdit.setAssignees(listOfUsers);
-        toEdit.setLabels(listOfLabels.toArray(new String[0]));
+        if (listOfLabels.size() != 0) {
+            toEdit.setLabels(listOfLabels.toArray(new String[0]));
+        }
+        updateInternalList();
 
     }
 

@@ -8,6 +8,9 @@ import static java.util.Objects.requireNonNull;
  */
 public class Body {
 
+    public static final String MESSAGE_BODY_CONSTRAINTS =
+            "Issue should only contain non-null body";
+
     public final String fullBody;
 
     /**
@@ -18,6 +21,13 @@ public class Body {
     public Body(String body) {
         requireNonNull(body);
         this.fullBody = body;
+    }
+
+    /**
+     * Returns true if a given string is a valid github body.
+     */
+    public static boolean isValidBody(String test) {
+        return (test != null) ? true : false;
     }
 
     @Override

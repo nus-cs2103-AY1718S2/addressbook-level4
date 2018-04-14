@@ -1,6 +1,8 @@
 package seedu.progresschecker.model.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.progresschecker.model.ProgressChecker;
@@ -12,6 +14,8 @@ import seedu.progresschecker.model.exercise.QuestionIndex;
 import seedu.progresschecker.model.exercise.QuestionType;
 import seedu.progresschecker.model.exercise.StudentAnswer;
 import seedu.progresschecker.model.exercise.exceptions.DuplicateExerciseException;
+import seedu.progresschecker.model.issues.Assignees;
+import seedu.progresschecker.model.issues.Labels;
 import seedu.progresschecker.model.person.Email;
 import seedu.progresschecker.model.person.GithubUsername;
 import seedu.progresschecker.model.person.Major;
@@ -49,6 +53,9 @@ public class SampleDataUtil {
         };
     }
 
+    //@@author adityaa1998
+    //@@author adityaa1998
+
     public static ReadOnlyProgressChecker getSampleProgressChecker() {
         try {
             ProgressChecker sampleAb = new ProgressChecker();
@@ -58,13 +65,19 @@ public class SampleDataUtil {
             for (Exercise sampleExercise : getSampleExercises()) {
                 sampleAb.addExercise(sampleExercise);
             }
+            /*for (Issue sampleIssue : getSampleIssues()) {
+                sampleAb.createIssueOnGitHub(sampleIssue);
+            }*/
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         } catch (DuplicateExerciseException e) {
             throw new AssertionError("sample data cannot contain duplicate exercises", e);
-        }
+        } /* catch (IOException ie) {
+            throw new AssertionError("first login to github", ie);
+        } */
     }
+
 
     /**
      * Returns a tag set containing the list of strings given.
@@ -77,6 +90,32 @@ public class SampleDataUtil {
 
         return tags;
     }
+
+    //@@author adityaa1998
+    /**
+     * Returns an label list containing the list of strings given.
+     */
+    public static List<Labels> getLabelsList(String... strings) {
+        ArrayList<Labels> labels = new ArrayList<>();
+        for (String s : strings) {
+            labels.add(new Labels(s));
+        }
+
+        return labels;
+    }
+
+    /**
+     * Returns an Assignee list containing the list of strings given.
+     */
+    public static List<Assignees> getAssigneeList(String... strings) {
+        ArrayList<Assignees> assignees = new ArrayList<>();
+        for (String s : strings) {
+            assignees.add(new Assignees(s));
+        }
+
+        return assignees;
+    }
+    //@@author
 
     //@@author iNekox3
     public static Exercise[] getSampleExercises() {

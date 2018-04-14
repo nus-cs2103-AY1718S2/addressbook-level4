@@ -200,6 +200,9 @@ public class ParserUtil {
     public static Title parseTitle(String title) throws IllegalValueException {
         requireNonNull(title);
         String trimmedTitle = title.trim();
+        if (!Title.isValidTitle(trimmedTitle)) {
+            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        }
         return new Title(trimmedTitle);
     }
 
@@ -217,9 +220,12 @@ public class ParserUtil {
      * Leading and trailing whitespaces will be trimmed.
      */
 
-    public static Assignees parseAssignees(String assignees) {
+    public static Assignees parseAssignees(String assignees) throws IllegalValueException {
         requireNonNull(assignees);
         String trimmedAssignees = assignees.trim();
+        if (!Assignees.isValidAssignee(trimmedAssignees)) {
+            throw new IllegalValueException(Assignees.MESSAGE_ASSIGNEES_CONSTRAINTS);
+        }
         return new Assignees(trimmedAssignees);
     }
 
@@ -240,9 +246,12 @@ public class ParserUtil {
      * Leading and trailing whitespaces will be trimmed.
      */
 
-    public static Labels parseLabels(String labels) {
+    public static Labels parseLabels(String labels) throws IllegalValueException {
         requireNonNull(labels);
         String trimmedLabels = labels.trim();
+        if (!Labels.isValidLabel(trimmedLabels)) {
+            throw new IllegalValueException(Labels.MESSAGE_LABEL_CONSTRAINTS);
+        }
         return new Labels(trimmedLabels);
     }
 
@@ -286,9 +295,12 @@ public class ParserUtil {
      * Leading and trailing whitespaces will be trimmed.
      */
 
-    public static Body parseBody(String body) {
+    public static Body parseBody(String body) throws IllegalValueException {
         requireNonNull(body);
         String trimmedBody = body.trim();
+        if (!Body.isValidBody(trimmedBody)) {
+            throw new IllegalValueException(Body.MESSAGE_BODY_CONSTRAINTS);
+        }
         return new Body(trimmedBody);
     }
 
@@ -305,9 +317,12 @@ public class ParserUtil {
      * Parses a {@code String username} into a {@code Username}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static Username parseGitUsername(String username) {
+    public static Username parseGitUsername(String username) throws IllegalValueException {
         requireNonNull(username);
         String trimmedUsername = username.trim();
+        if (!Username.isValidUsername(trimmedUsername)) {
+            throw new IllegalValueException(Username.MESSAGE_GITUSERNAME_CONSTRAINTS);
+        }
         return new Username(trimmedUsername);
     }
 
@@ -323,8 +338,11 @@ public class ParserUtil {
     /**
      * Parses a {@code String passcode} into a {@code Passcode}.
      */
-    public static Passcode parsePasscode(String passcode) {
+    public static Passcode parsePasscode(String passcode) throws IllegalValueException {
         requireNonNull(passcode);
+        if (!Passcode.isValidPasscode(passcode)) {
+            throw new IllegalValueException(Passcode.MESSAGE_PASSCODE_CONSTRAINTS);
+        }
         return new Passcode(passcode);
     }
 
@@ -341,9 +359,12 @@ public class ParserUtil {
      * Parses a {@code String repositroy} into a {@code Repository}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static Repository parseRepository(String repository) {
+    public static Repository parseRepository(String repository) throws IllegalValueException {
         requireNonNull(repository);
         String trimmedRepository = repository.trim();
+        if (!Repository.isValidRepository(trimmedRepository)) {
+            throw new IllegalValueException(Repository.MESSAGE_REPOSITORY_CONSTRAINTS);
+        }
         return new Repository(trimmedRepository);
     }
 
@@ -354,6 +375,16 @@ public class ParserUtil {
     public static Optional<Repository> parseRepository(Optional<String> repository) throws IllegalValueException {
         requireNonNull(repository);
         return repository.isPresent() ? Optional.of(parseRepository(repository.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String state} into a trimmed string.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseStateType(String state) throws IllegalValueException {
+        requireNonNull(state);
+        String trimmedState = state.trim();
+        return trimmedState;
     }
     //@@author
 

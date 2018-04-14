@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.progresschecker.commons.core.index.Index;
+import seedu.progresschecker.commons.exceptions.IllegalValueException;
 import seedu.progresschecker.logic.commands.exceptions.CommandException;
 import seedu.progresschecker.model.credentials.GitDetails;
 import seedu.progresschecker.model.exercise.Exercise;
@@ -222,6 +223,14 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
     public void updateIssue(Index index, Issue editedIssue) throws IOException, CommandException {
         requireNonNull(editedIssue);
         issues.setIssue(index, editedIssue);
+    }
+
+    /**
+     * Lists all the issues of the specified state
+     */
+    public void listIssues(String state) throws IllegalValueException, IOException, CommandException {
+        requireNonNull(state);
+        issues.listIssue(state);
     }
 
     //@@author

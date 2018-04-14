@@ -2,7 +2,6 @@
 
 package guitests.guihandles;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.TextArea;
 
 /**
@@ -17,26 +16,18 @@ public class ReviewInputHandle extends NodeHandle<TextArea> {
     }
 
     /**
-     * Returns the text in the reviewer input box.
+     * Returns the text in the review input box.
      */
     public String getInput() {
         return getRootNode().getText();
     }
 
     /**
-     * Enters the given command in the Command Box and presses enter.
-     * @return true if the command succeeded, false otherwise.
+     * Enters the given value in the text area and presses enter.
      */
     public void run(String command) {
         click();
         guiRobot.interact(() -> getRootNode().setText(command));
         guiRobot.pauseForHuman();
-    }
-
-    /**
-     * Returns the list of style classes present in the command box.
-     */
-    public ObservableList<String> getStyleClass() {
-        return getRootNode().getStyleClass();
     }
 }

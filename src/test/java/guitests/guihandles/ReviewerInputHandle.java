@@ -2,7 +2,6 @@
 
 package guitests.guihandles;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
@@ -25,21 +24,13 @@ public class ReviewerInputHandle extends NodeHandle<TextField> {
     }
 
     /**
-     * Enters the given command in the Command Box and presses enter.
-     * @return true if the command succeeded, false otherwise.
+     * Enters the given value in the text field and presses enter.
      */
-    public void run(String command) {
+    public void run(String value) {
         click();
-        guiRobot.interact(() -> getRootNode().setText(command));
+        guiRobot.interact(() -> getRootNode().setText(value));
         guiRobot.pauseForHuman();
 
         guiRobot.type(KeyCode.ENTER);
-    }
-
-    /**
-     * Returns the list of style classes present in the command box.
-     */
-    public ObservableList<String> getStyleClass() {
-        return getRootNode().getStyleClass();
     }
 }

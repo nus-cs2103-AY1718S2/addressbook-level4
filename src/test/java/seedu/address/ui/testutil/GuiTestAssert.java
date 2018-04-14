@@ -37,7 +37,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getCustTimeZone().timeZone, actualCard.getCustTimeZone());
-        assertEquals(expectedCard.getComment(), actualCard.getComment());
+        assertEquals(expectedPerson.getComment().value, actualCard.getComment());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }

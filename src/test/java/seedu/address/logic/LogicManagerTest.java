@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SyncCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -46,6 +47,14 @@ public class LogicManagerTest {
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
         assertHistoryCorrect(listCommand);
     }
+
+    //@@author laichengyu
+    @Test
+    public void execute_syncCommandError_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        assertSyncCorrect();
+    }
+    //@@author
 
     @Test
     public void getFilteredCoinList_modifyList_throwsUnsupportedOperationException() {
@@ -122,4 +131,20 @@ public class LogicManagerTest {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
     }
+
+    //@@author laichengyu
+    /**
+     * Asserts that the result display shows {@code SyncCommand.MESSAGE_SUCCESS} upon the execution of
+     * {@code SyncCommand}.
+     */
+    private void assertSyncCorrect() {
+        try {
+            CommandResult result = logic.execute(SyncCommand.COMMAND_WORD);
+            String expectedMessage = SyncCommand.MESSAGE_SUCCESS;
+            assertEquals(expectedMessage, result.feedbackToUser);
+        } catch (ParseException | CommandException e) {
+            throw new AssertionError("Parsing and execution of SyncCommand.COMMAND_WORD should succeed.", e);
+        }
+    }
+    //@@author
 }

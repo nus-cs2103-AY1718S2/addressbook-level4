@@ -35,6 +35,10 @@ public class LocateCommandParserTest {
     }
 
     // @Test
+    /**
+     * PLACEHOLDEER: to address checkstyle violation
+     * @TODO remove after test is fixed
+     */
     public void parse_validArgs_returnsLocateCommand() {
         // no leading and trailing whitespaces
         LocateCommand expectedLocateCommand =

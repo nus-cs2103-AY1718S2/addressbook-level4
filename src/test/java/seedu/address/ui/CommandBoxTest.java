@@ -3,9 +3,9 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
 import java.util.ArrayList;
 
@@ -232,9 +232,13 @@ public class CommandBoxTest extends GuiUnitTest {
         assertShiftBackspacePressBehaviour(" " + PREFIX_NAME + " ");
 
         // test deleting command word and first prefix
-       assertShiftBackspacePressBehaviour(AddCommand.COMMAND_WORD + " " + PREFIX_TYPE + " ");
+        assertShiftBackspacePressBehaviour(AddCommand.COMMAND_WORD + " " + PREFIX_TYPE + " ");
     }
 
+    /**
+     * Presses the keyboard shortcut Shift + Tab, then ensures <br>
+     *      - the command box's caret position is expected.
+     */
     private int assertShiftTabPressBehaviour(int lastCaretPosition, String stringLiteralSkipped) {
         guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
         int expectedCaretPosition = lastCaretPosition - stringLiteralSkipped.length();
@@ -242,6 +246,10 @@ public class CommandBoxTest extends GuiUnitTest {
         return expectedCaretPosition;
     }
 
+    /**
+     * Presses the keyboard shortcut Tab, then ensures <br>
+     *      - the command box's caret position is expected.
+     */
     private int assertTabPressBehaviour(int lastCaretPosition, String stringLiteralSkipped) {
         guiRobot.push(KeyCode.TAB);
         int expectedCaretPosition = lastCaretPosition + stringLiteralSkipped.length();
@@ -249,6 +257,10 @@ public class CommandBoxTest extends GuiUnitTest {
         return expectedCaretPosition;
     }
 
+    /**
+     * Presses the keyboard shortcut Shift + Backspace, then ensures <br>
+     *      - the command box's input is updated as expected.
+     */
     private void assertShiftBackspacePressBehaviour(String stringLiteralDeleted) {
         String inputBeforePush = commandBoxHandle.getInput();
         guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);

@@ -19,7 +19,7 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 ** Highlights:
 ** Credits:
 
-* *Minor enhancement*: Created subject database and added L1R5 calculation support
+* *Minor enhancement*: Created subject database and added L1R5 and L1B4 calculation support
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-T09-B1/main/blob/master/collated/functional/TeyXinHui.md[Functional code]] [https://github.com/CS2103JAN2018-T09-B1/main/blob/master/collated/test/TeyXinHui.md[Test code]]
 
@@ -28,8 +28,10 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 ** Project management:
 
 ** Enhancements to existing features:
+*** Allow `AddCommand` and `EditCommand` to support the `Subject` attribute of the students.
 
 ** Documentation:
+*** Did revisions to existing contents of the User Guide and Developer Guide
 
 ** Community:
 
@@ -53,7 +55,10 @@ include::../UserGuide.adoc[tag = stream]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag = subject]
+include::../DeveloperGuide.adoc[tag = addsubjects]
 
 include::../DeveloperGuide.adoc[tag = masstagremoval]
+
+include::../DeveloperGuide.adoc[tag = subject]
+
 

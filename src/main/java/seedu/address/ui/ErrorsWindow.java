@@ -8,9 +8,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 
@@ -108,6 +110,20 @@ public class ErrorsWindow extends UiPart<Stage> {
     public void show() {
         logger.fine("Showing error log within the application.");
         getRoot().show();
+        getRoot().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                System.out.println("Error log window is closing");
+            }
+        });
+    }
+
+    /**
+     * Hides the calendar window.
+     * @throws IllegalStateException
+     */
+    public void close() {
+        logger.fine("Hiding error log.");
+        getRoot().close();
     }
 }
 

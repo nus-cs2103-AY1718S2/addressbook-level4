@@ -53,6 +53,8 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
     private LoginStatusBar loginStatusBar;
+    private ErrorsWindow errorsWindow;
+    private CalendarWindow calendarWindow;
 
 
     @FXML
@@ -205,13 +207,25 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Hides browser and person list panel.
+     * @throws IOException
      */
-    public void hideBeforeLogin() {
+    public void hideBeforeLogin() throws IOException {
         loginStatusBar.updateLoginStatus(false, null);
         featuresTabPane.setVisible(false);
         beneficiariesPane.setVisible(false);
         personDetailsPlaceholder.setVisible(false);
         calendarPlaceholder.setVisible(false);
+        //@@author ifalluphill
+        calendarPanel.reloadDefaultPage();
+        if (calendarWindow != null) {
+            calendarWindow.close();
+        }
+        calendarWindow = new CalendarWindow(logic);
+        if (errorsWindow != null) {
+            errorsWindow.close();
+        }
+        errorsWindow = new ErrorsWindow(logic);
+        //@@author kaisertanqr
         dailySchedulerPlaceholder.setVisible(false);
         personListPanelPlaceholder.setVisible(false);
         logger.fine("Hiding panels before login.");
@@ -220,12 +234,18 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Unhide browser and person list panel.
      */
-    public void showAfterLogin() {
+    public void showAfterLogin() throws IOException {
         loginStatusBar.updateLoginStatus(true, logic.getLoggedInUser());
         featuresTabPane.setVisible(true);
         beneficiariesPane.setVisible(true);
         personDetailsPlaceholder.setVisible(true);
         calendarPlaceholder.setVisible(true);
+        //@@author ifalluphill
+        calendarWindow.close();
+        calendarWindow = new CalendarWindow(logic);
+        errorsWindow.close();
+        errorsWindow = new ErrorsWindow(logic);
+        //@@author kaisertanqr
         dailySchedulerPlaceholder.setVisible(true);
         personListPanelPlaceholder.setVisible(true);
         logger.fine("Displaying panels after login.");
@@ -287,7 +307,10 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleViewErrors() {
-        ErrorsWindow errorsWindow = new ErrorsWindow(logic);
+        if (errorsWindow == null) {
+            errorsWindow = new ErrorsWindow(logic);
+        }
+
         errorsWindow.show();
     }
 
@@ -296,7 +319,10 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleViewCalendar() throws IOException {
-        CalendarWindow calendarWindow = new CalendarWindow(logic);
+        if (calendarWindow == null) {
+            calendarWindow = new CalendarWindow(logic);
+        }
+
         calendarWindow.show();
     }
     //@@author

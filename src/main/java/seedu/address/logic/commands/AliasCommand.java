@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -35,7 +36,7 @@ public class AliasCommand extends UndoableCommand {
             UndoCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, AliasCommand.COMMAND_WORD, ImportCommand.COMMAND_WORD,
             PasswordCommand.COMMAND_WORD, BirthdaysCommand.COMMAND_WORD, ExportCommand.COMMAND_WORD,
             MapCommand.COMMAND_WORD, RemovePasswordCommand.COMMAND_WORD, UnaliasCommand.COMMAND_WORD,
-            VacantCommand.COMMAND_WORD);
+            VacantCommand.COMMAND_WORD, TimetableUnionCommand.COMMAND_WORD, UploadCommand.COMMAND_WORD);
 
     private final Alias toAdd;
 
@@ -47,19 +48,9 @@ public class AliasCommand extends UndoableCommand {
         toAdd = alias;
     }
 
-    /**
-     * Creates a default AliasCommand
-     */
-    public AliasCommand() {
-        toAdd = null;
-    }
-
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        if (toAdd == null) {
-            return new CommandResult(model.getAliasList().toString());
-        }
         if (!commands.contains(toAdd.getCommand())) {
             throw new CommandException(String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
                             AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION));
@@ -78,6 +69,7 @@ public class AliasCommand extends UndoableCommand {
     }
 
     public static List<String> getCommands() {
+        Collections.sort(commands);
         return commands;
     }
 

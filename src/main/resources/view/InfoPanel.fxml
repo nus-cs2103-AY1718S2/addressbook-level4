@@ -5,6 +5,7 @@
     <StackPane fx:id="placeholder" prefHeight="150.0" prefWidth="200.0" styleClass="background" />
     <StackPane fx:id="birthdayPlaceholder" prefHeight="150.0" prefWidth="200.0" />
     <StackPane fx:id="venuePlaceholder" prefHeight="150.0" prefWidth="200.0" />
+    <StackPane fx:id="aliasListPlaceholder" prefHeight="150.0" prefWidth="200.0" />
     <StackPane fx:id="userDetailsPlaceholder" prefHeight="150.0" prefWidth="200.0" />
     <StackPane fx:id="timetableUnionPlaceholder" prefHeight="150.0" prefWidth="200.0" />
     <StackPane fx:id="mapsPlaceholder" prefHeight="150.0" prefWidth="200.0" />

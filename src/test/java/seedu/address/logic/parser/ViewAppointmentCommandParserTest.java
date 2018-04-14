@@ -15,7 +15,7 @@ public class ViewAppointmentCommandParserTest {
     @Test
     public void parse_validArgs_returnsViewAppointmentCommand() {
         ViewAppointmentCommand expectedCommand = new ViewAppointmentCommand(INDEX_FIRST_PERSON);
-        assertParseSuccess(parser, "Alice", expectedCommand);
-        assertParseSuccess(parser, "\n Alice \n", expectedCommand);
+        assertParseSuccess(parser, "1", expectedCommand);
+        assertParseSuccess(parser, "\n 1 \n", expectedCommand);
     }
 }

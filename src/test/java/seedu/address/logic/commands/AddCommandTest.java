@@ -206,6 +206,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return false;
         }
+
+        @Override
+        public Patient getPatientFromListByIndex(Index targetIndex) {
+            fail("This method should not be called.");
+            return null;
+        }
     }
 
     /**

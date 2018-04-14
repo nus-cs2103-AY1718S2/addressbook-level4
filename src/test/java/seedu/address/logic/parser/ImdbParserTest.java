@@ -319,21 +319,17 @@ public class ImdbParserTest {
     @Test
     public void parseCommand_viewAppointment() throws Exception {
         LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
         ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
-                ViewAppointmentCommand.COMMAND_WORD + " " + keywords.stream()
-                        .collect(Collectors.joining(" ")));
-        assertEquals(new ViewAppointmentCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                ViewAppointmentCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new ViewAppointmentCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
     public void parseCommand_viewAppointmentCommandAlias() throws Exception {
         LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
         ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
-                ViewAppointmentCommand.COMMAND_ALIAS + " " + keywords.stream()
-                        .collect(Collectors.joining(" ")));
-        assertEquals(new ViewAppointmentCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                ViewAppointmentCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new ViewAppointmentCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test

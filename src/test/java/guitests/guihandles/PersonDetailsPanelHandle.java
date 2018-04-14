@@ -1,64 +1,47 @@
+//@@author jaronchan
 package guitests.guihandles;
 
-import java.net.URL;
-
-import guitests.GuiRobot;
-import javafx.concurrent.Worker;
 import javafx.scene.Node;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import javafx.scene.control.Label;
 
 /**
  * A handler for the {@code BrowserPanel} of the UI.
  */
 public class PersonDetailsPanelHandle extends NodeHandle<Node> {
 
-    public static final String BROWSER_ID = "#browser";
+    public static final String PERSON_DETAILS_PANEL_PLACEHOLDER = "#personDetailsPlaceholder";
+    private static final String NAME_FIELD_ID = "#nameLabel";
+    private static final String ADDRESS_FIELD_ID = "#addressLabel";
+    private static final String PHONE_FIELD_ID = "#phoneNumberLabel";
+    private static final String EMAIL_FIELD_ID = "#emailLabel";
 
-    private boolean isWebViewLoaded = true;
+    private final Label nameLabel;
+    private final Label phoneNumberLabel;
+    private final Label emailLabel;
+    private final Label addressLabel;
 
-    private URL lastRememberedUrl;
+    public PersonDetailsPanelHandle(Node personDetailsPanelNode) {
+        super(personDetailsPanelNode);
 
-    public PersonDetailsPanelHandle(Node browserPanelNode) {
-        super(browserPanelNode);
-
-        WebView webView = getChildNode(BROWSER_ID);
-        WebEngine engine = webView.getEngine();
-        new GuiRobot().interact(() -> engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
-            if (newState == Worker.State.RUNNING) {
-                isWebViewLoaded = false;
-            } else if (newState == Worker.State.SUCCEEDED) {
-                isWebViewLoaded = true;
-            }
-        }));
+        this.nameLabel = getChildNode(NAME_FIELD_ID);
+        this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
+        this.phoneNumberLabel = getChildNode(PHONE_FIELD_ID);
+        this.emailLabel = getChildNode(EMAIL_FIELD_ID);
     }
 
-    /**
-     * Returns the {@code URL} of the currently loaded page.
-     */
-    public URL getLoadedUrl() {
-        return WebViewUtil.getLoadedUrl(getChildNode(BROWSER_ID));
+    public String getName() {
+        return nameLabel.getText();
     }
 
-    /**
-     * Remembers the {@code URL} of the currently loaded page.
-     */
-    public void rememberUrl() {
-        lastRememberedUrl = getLoadedUrl();
+    public String getAddress() {
+        return addressLabel.getText();
     }
 
-    /**
-     * Returns true if the current {@code URL} is different from the value remembered by the most recent
-     * {@code rememberUrl()} call.
-     */
-    public boolean isUrlChanged() {
-        return !lastRememberedUrl.equals(getLoadedUrl());
+    public String getPhone() {
+        return phoneNumberLabel.getText();
     }
 
-    /**
-     * Returns true if the browser is done loading a page, or if this browser has yet to load any page.
-     */
-    public boolean isLoaded() {
-        return isWebViewLoaded;
+    public String getEmail() {
+        return emailLabel.getText();
     }
 }

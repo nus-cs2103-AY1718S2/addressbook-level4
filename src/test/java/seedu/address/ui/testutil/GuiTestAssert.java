@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import guitests.guihandles.PersonCardHandle;
+import guitests.guihandles.PersonDetailsPanelHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.person.Person;
@@ -69,5 +70,24 @@ public class GuiTestAssert {
      */
     public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
         assertEquals(expected, resultDisplayHandle.getText());
+    }
+
+    //@@author jaronchan
+    /**
+     * Asserts that {@code personDetailsPanel} displays the details of {@code expectedPerson}.
+     */
+    public static void assertTableDisplaysPerson(Person expectedPerson,
+            PersonDetailsPanelHandle actualPersonDetailsPanelHandle) {
+        if (expectedPerson != null) {
+            assertEquals(expectedPerson.getName().fullName, actualPersonDetailsPanelHandle.getName());
+            assertEquals(expectedPerson.getPhone().value, actualPersonDetailsPanelHandle.getPhone());
+            assertEquals(expectedPerson.getEmail().value, actualPersonDetailsPanelHandle.getEmail());
+            assertEquals(expectedPerson.getAddress().value, actualPersonDetailsPanelHandle.getAddress());
+        } else {
+            assertEquals("", actualPersonDetailsPanelHandle.getName());
+            assertEquals("", actualPersonDetailsPanelHandle.getPhone());
+            assertEquals("", actualPersonDetailsPanelHandle.getEmail());
+            assertEquals("", actualPersonDetailsPanelHandle.getAddress());
+        }
     }
 }

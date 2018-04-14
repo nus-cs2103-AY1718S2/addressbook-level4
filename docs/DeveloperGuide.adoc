@@ -382,6 +382,78 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::autocompleteDG[]
+=== Autocomplete
+
+The autocomplete feature serves to enhance user experience in using the Command Line Interface (CLI). It currently supports command words, options, prefixes, and parameters such as tags, contact's NRIC, pet patient's name, breed, species, colour and blood type.
+
+==== Current Implementation
+
+The implementation logic of the autocomplete feature resides in the UI component. The autocomplete feature is driven by a `ChangeListener` attached to the `commandTextField.textProperty()` in `CommandBox.java`. Once `ChangeListener` registers any changes in the content of `commandTextField`, `triggerAutocomplete()` will be executed. The following diagram illustrates a sequence of method calls to initialize the `Autocomplete` class and get autocomplete suggestions for command words in a drop down menu.
+
+.Sequence diagram for autocompleting Nric (include initialization of Autocomplete class)
+image::autocompleteSequenceDiagram.png[width="700"]
+
+`Autocomplete.java` encompasses the logic for parsing user input in the CLI and determining what autocomplete suggestions are to be passed back to `CommandBox.java`. Data required for autocomplete, such as a list of command words, prefixes, options and parameters in Medeina, are all retrieved from the Logic component. 
+
+For example, data for autocompleting Nric and person tags are consolidated this way in the Logic component:
+[source,java]
+----
+public void setAttributesForPersonObjects() {
+    nricInModel = new HashSet<>();
+    personTagsInModel = new HashSet<>();
+
+    for (Person p : model.getAddressBook().getPersonList()) {
+        nricInModel.add(p.getNric().toString());
+        personTagsInModel.addAll(p.getTags());
+    }
+}
+
+public Set<String> getAllNric() {
+    return nricInModel;
+}
+
+public Set<String> getAllPersonTags() {
+    Set<String> personTags = personTagsInModel.stream()
+            .map(pt -> pt.tagName)
+            .collect(Collectors.toSet());
+    return personTags;
+}
+----
+
+You may have noticed in the sequence diagram above, `Autocomplete` is a singleton class that is initialized only once, and there is only be 1 instance of `CommandBox` in the application. You may be wondering "are the 3 set attribute methods in the logic component only called once?". If you are not, imagine the user is constantly adding new contacts to Medeina, but `Autocomplete` uses only data from when Medeina was started up. The answer to the question is definitely no. The set attributes methods have to be called whenever there is a change in Medeina's data, otherwise the autocomplete suggestions will not be up to date.
+
+The following code snippet will ensure that `Autocomplete` data is kept updated.
+[source,java]
+----
+public void handleAddressBookChangedEvent(AddressBookChangedEvent a) {
+    init(this.logic); // calls the 3 set attributes methods
+    logger.info(LogsCenter.getEventHandlingLogMessage(a, "Local data has changed, update autocomplete data"));
+}
+----
+
+==== Design considerations
+
+===== Aspect: Event-driven or user-driven
+
+* **Alternative 1 (current choice):** Implement change listener to automatically track user input and provide autocomplete suggestions.
+** Pros: Great improvement in user experience, as Medeina has complex and long command syntax.
+** Cons: Logic for handling caret position and command syntax parsing is complicated and can be prone to bugs.
+* **Alternative 2:** User has to press a specific key e.g. tab to invoke autocompletion.
+** Pros: Less logic to account for, and is thus easier to implement.
+** Cons: User experience is compromised.
+
+===== Aspect: Updating autocomplete data
+
+* **Alternative 1 (current choice):** Data is updated only when AddressBookChangedEvent is raised.
+** Pros: Less resource-intensive.
+** Cons: Implementation is less straight-forward.
+* **Alternative 2:** Data is updated whenever autocomplete is triggered.
+** Pros: Easy to implement.
+** Cons: Running for-loops in the Logic component for every character the user type is resource-intensive.
+
+// end::autocompleteDG[]
+
 // tag::addcommandDG[]
 === Add Command
 
@@ -496,79 +568,6 @@ After the appointment class being finished, we'll be able to implement `setAppoi
 
 We may also make enhancements to the Medeina's UI such as changing theme colour to match the UI colour of CalendarFX.
 // end::calendar[]
-
-// tag::autocompleteDG[]
-=== Autocomplete
-==== Current Implementation
-
-Attach a change listener to command box to detect user input.
-[source,java]
-----
-public CommandBox() {
-	// ...logic for CommandBox...
-
-	autocompleteListener = new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            Platform.runLater(new Runnable() {
-                public void run() {
-                    triggerAutocomplete(newValue);
-                }
-            });
-        }
-    };
-
-	commandTextField.textProperty().addListener(autocompleteListener);
-}
-----
-
-How descriptions in the autocomplete suggestions are handled:
-[source,java]
-----
-private void triggerAutocomplete(String newValue) {
-	// ...logic for context menu "suggestionBox"...
-
-	for (String s : suggestions) {
-        MenuItem m = new MenuItem(s);
-        String autocompleteValue = StringUtil.removeDescription(s);
-        m.setOnAction(event -> handleAutocompleteSelection(autocompleteValue));
-        suggestionBox.getItems().add(m);
-    }
-
-	// ...logic for context menu "suggestionBox"...
-}
-----
-
-Toggle autocomplete on/off using kbd:[F2] when command box is focused.
-[source,java]
-----
-@FXML
-private void handleKeyPress(KeyEvent keyEvent) {
-	// ...logic for handling key press...
-	 case F2:
-        if (isAutocompleting) {
-            commandTextField.textProperty().removeListener(getAutocompleteListener());
-            isAutocompleting = false;
-        } else {
-            commandTextField.textProperty().addListener(getAutocompleteListener());
-            isAutocompleting = true;
-        }
-        break;
-	// ...logic for handling key press...
-}
-----
-
-===== Aspect: Improving user-friendliness
-
-image::autocomplete.png[width="500"]
-
-* Command syntax auto-complete suggestions
-** Auto-complete suggestions of command words, options and prefixes shown on a ContextMenu.
-** User can traverse through the suggestions in the ContextMenu using kbd:[Up] and kbd:[Down], or kbd:[Tab].
-** Press kbd:[Enter] to select the suggestion in the ContextMenu and the command box will be updated.
-** Provide experienced users with the option of toggling autocomplete off in the event that they find the context menu distracting.
-
-// end::autocompleteDG[]
 
 // tag::addappointment[]
 === Adding & Storing Appointments

@@ -21,7 +21,7 @@ import seedu.address.model.alias.exceptions.DuplicateAliasException;
  */
 public class UniqueAliasList {
 
-    private static HashMap<String, String> aliasCommandMap = new HashMap<String, String>();
+    private HashMap<String, String> aliasCommandMap = new HashMap<String, String>();
 
     /**
      * Constructs empty AliasList.
@@ -31,7 +31,7 @@ public class UniqueAliasList {
     /**
      * Returns true if the list contains an equivalent Alias as the given argument.
      */
-    public static boolean contains(String toCheck) {
+    public boolean contains(String toCheck) {
         requireNonNull(toCheck);
         return aliasCommandMap.containsKey(toCheck);
     }
@@ -39,7 +39,7 @@ public class UniqueAliasList {
     /**
      * Returns the command of the alias.
      */
-    public static String getCommandFromAlias(String alias) {
+    public String getCommandFromAlias(String alias) {
         requireNonNull(alias);
         return aliasCommandMap.get(alias);
     }
@@ -49,7 +49,7 @@ public class UniqueAliasList {
      *
      * @throws DuplicateAliasException if the Alias to add is a duplicate of an existing Alias in the list.
      */
-    public static void add(Alias toAdd) throws DuplicateAliasException {
+    public void add(Alias toAdd) throws DuplicateAliasException {
         requireNonNull(toAdd);
         if (contains(toAdd.getAlias())) {
             throw new DuplicateAliasException();
@@ -62,7 +62,7 @@ public class UniqueAliasList {
      *
      * @throws AliasNotFoundException if the Alias to remove is a does not exist in the list.
      */
-    public static void remove(String toRemove) throws AliasNotFoundException {
+    public void remove(String toRemove) throws AliasNotFoundException {
         requireNonNull(toRemove);
         if (!contains(toRemove)) {
             throw new AliasNotFoundException();
@@ -78,6 +78,16 @@ public class UniqueAliasList {
         if (!contains(toAdd.getAlias())) {
             aliasCommandMap.put(toAdd.getAlias(), toAdd.getCommand());
         }
+    }
+
+    /**
+     * Add in all the aliases in the given {@code aliases}
+     * if the Alias is not a duplicate of an existing Alias in the list.
+     */
+    public void setAliases(HashMap<String, String> aliases) {
+        requireNonNull(aliases);
+        this.aliasCommandMap.clear();
+        this.aliasCommandMap.putAll(aliases);
     }
 
     /**
@@ -117,7 +127,7 @@ public class UniqueAliasList {
      * Clears aliasCommandMap, for clear command.
      */
     public void resetHashmap() {
-        aliasCommandMap.clear();
+        this.aliasCommandMap = new HashMap<>();
     }
 
     /**
@@ -127,6 +137,13 @@ public class UniqueAliasList {
         ObservableList<Alias> internalList = FXCollections.observableArrayList();
         convertToList(internalList);
         return FXCollections.unmodifiableObservableList(internalList);
+    }
+    
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniqueAliasList // instanceof handles nulls
+                && this.aliasCommandMap.equals(((UniqueAliasList) other).aliasCommandMap));
     }
 
     /**

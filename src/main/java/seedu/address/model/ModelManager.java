@@ -109,8 +109,19 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateAliasesMapping(HashMap<String, String> aliases) {
+        requireNonNull(aliases);
+        addressBook.setAliases(aliases);
+    }
+
+    @Override
     public synchronized HashMap<String, String> getAliasList() {
         return addressBook.getAliasMapping();
+    }
+
+    @Override
+    public synchronized String getCommandFromAlias(String aliasKey) {
+        return addressBook.getCommandFromAlias(aliasKey);
     }
 
     @Override

@@ -75,11 +75,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author jingyinno
+    public void setAliases(HashMap<String, String> aliases) {
+        this.aliases.setAliases(aliases);
+    }
+    //@@author
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
+        setAliases(new HashMap<>(newData.getAliasMapping()));
         setTags(new HashSet<>(newData.getTagList()));
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
@@ -99,7 +106,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newList) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
-        this.aliases.replaceHashmap(newList);
+        setAliases(new HashMap<>(newList));
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
@@ -154,6 +161,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addAlias(Alias alias) throws DuplicateAliasException {
         aliases.add(alias);
     }
+
+    /**
+     * Retrieve the associated commandWord from the address book.
+     * @param aliasKey the alias keyword associated to command word
+     * @return the associated command word if exists else the aliasKey
+     *
+     */
+    public String getCommandFromAlias(String aliasKey) {
+        return aliases.contains(aliasKey) ? aliases.getCommandFromAlias(aliasKey) : aliasKey;
+    }
+
     //@@author
 
     //@@author Caijun7
@@ -283,7 +301,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
-                + password + " password";
+                + password + " password, " + aliases.asObservableList().size() + " aliases" ;
         // TODO: refine later
     }
 
@@ -353,6 +371,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.aliases.equals(((AddressBook) other).aliases)
                 && this.password.equals(((AddressBook) other).password);
     }
 

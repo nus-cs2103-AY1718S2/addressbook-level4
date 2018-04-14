@@ -8,10 +8,10 @@ import static seedu.address.logic.commands.CommandTaskTestUtil.VALID_DEADLINE_EX
 import static seedu.address.logic.commands.CommandTaskTestUtil.VALID_TASK_DESC_EXAM;
 import static seedu.address.logic.commands.CommandTaskTestUtil.VALID_TITLE_EXAM;
 import static seedu.address.logic.commands.CommandTaskTestUtil.VALID_TITLE_MARK;
+import static seedu.address.logic.commands.CommandTaskTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTaskTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTaskTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTaskTestUtil.prepareUndoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.address.testutil.TypicalTasks.getTypicalAddressBook;

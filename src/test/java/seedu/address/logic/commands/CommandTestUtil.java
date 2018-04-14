@@ -25,6 +25,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.InfoContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.Task;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -154,6 +155,7 @@ public class CommandTestUtil {
 
         assertEquals(1, model.getFilteredPersonList().size());
     }
+
 
     /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.

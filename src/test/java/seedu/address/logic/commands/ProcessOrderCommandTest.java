@@ -35,7 +35,7 @@ import seedu.address.testutil.TaskBuilder;
  * Implementation follows {@code AddCommandTest}
  */
 
-public class AddOrderCommandTest {
+public class ProcessOrderCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -43,7 +43,7 @@ public class AddOrderCommandTest {
     @Test
     public void constructor_nullTask_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddOrderCommand(null);
+        new ProcessOrderCommand(null);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class AddOrderCommandTest {
 
         CommandResult commandResult = getAddOrderCommandForTask(validTask, modelStub).execute();
 
-        assertEquals(String.format(AddOrderCommand.MESSAGE_SUCCESS, validTask), commandResult.feedbackToUser);
+        assertEquals(String.format(ProcessOrderCommand.MESSAGE_SUCCESS, validTask), commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validTask), modelStub.tasksAdded);
     }
 
@@ -63,7 +63,7 @@ public class AddOrderCommandTest {
         Task validTask = new TaskBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddOrderCommand.MESSAGE_DUPLICATE_TASK);
+        thrown.expectMessage(ProcessOrderCommand.MESSAGE_DUPLICATE_TASK);
 
         getAddOrderCommandForTask(validTask, modelStub).execute();
     }
@@ -72,14 +72,14 @@ public class AddOrderCommandTest {
     public void equals() {
         Task chickenRice = new TaskBuilder().withOrder("Chicken Rice").build();
         Task charSiuRice = new TaskBuilder().withOrder("Char Siu Rice").build();
-        AddOrderCommand addOrderChickenRiceCommand = new AddOrderCommand(chickenRice);
-        AddOrderCommand addOrderCharSiuRiceCommand = new AddOrderCommand(charSiuRice);
+        ProcessOrderCommand addOrderChickenRiceCommand = new ProcessOrderCommand(chickenRice);
+        ProcessOrderCommand addOrderCharSiuRiceCommand = new ProcessOrderCommand(charSiuRice);
 
         // same object -> returns true
         assertTrue(addOrderChickenRiceCommand.equals(addOrderChickenRiceCommand));
 
         // same values -> returns true
-        AddOrderCommand addOrderChickenRiceCommandCopy = new AddOrderCommand(chickenRice);
+        ProcessOrderCommand addOrderChickenRiceCommandCopy = new ProcessOrderCommand(chickenRice);
         assertTrue(addOrderChickenRiceCommand.equals(addOrderChickenRiceCommand));
 
         // different types -> returns false
@@ -93,10 +93,10 @@ public class AddOrderCommandTest {
     }
 
     /**
-     * Generates a new AddOrderCommand with the details of the given task.
+     * Generates a new ProcessOrderCommand with the details of the given task.
      */
-    private AddOrderCommand getAddOrderCommandForTask(Task task, Model model) {
-        AddOrderCommand command = new AddOrderCommand(task);
+    private ProcessOrderCommand getAddOrderCommandForTask(Task task, Model model) {
+        ProcessOrderCommand command = new ProcessOrderCommand(task);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

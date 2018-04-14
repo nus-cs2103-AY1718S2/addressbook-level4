@@ -109,11 +109,11 @@ public class Task implements Comparable<Task> {
 
         // state check
         Task t = (Task) other;
-        return order.equals(t.order)
-                && address.equals(t.address)
-                && price.equals(t.price)
-                && distance.equals(t.distance)
-                && count.equals(t.count);
+        return t.getOrder().equals(this.getOrder())
+                && t.getAddress().equals(this.getAddress())
+                && t.getPrice().equals(this.getPrice())
+                && t.getDistance().equals(this.getDistance())
+                && t.getCount().equals(this.getCount());
     }
 
     @Override

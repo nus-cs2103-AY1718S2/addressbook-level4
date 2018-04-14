@@ -40,6 +40,23 @@ public class Person {
         this.tags = new UniqueTagList(tags);
     }
 
+    /**
+     * Every field must be present and not null.
+     * This method is only used in AddOrder command
+     */
+    public Person(Name name, Phone phone, Order order, Address address,
+                  Halal halal, Vegetarian vegetarian, UniqueTagList tags) {
+        requireAllNonNull(name, phone, order, address, halal, vegetarian, tags);
+        this.name = name;
+        this.phone = phone;
+        this.order = order;
+        this.address = address;
+        this.halal = halal;
+        this.vegetarian = vegetarian;
+        // here input tags is a UniqueTagList
+        this.tags = tags;
+    }
+
     public Name getName() {
         return name;
     }
@@ -75,6 +92,14 @@ public class Person {
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
     }
+
+    /**
+     * Returns a UniqueTagList of the person
+     */
+    public UniqueTagList getTagList() {
+        return tags;
+    }
+
 
     @Override
     public boolean equals(Object other) {

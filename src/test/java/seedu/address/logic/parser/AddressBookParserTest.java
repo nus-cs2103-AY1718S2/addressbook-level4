@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddOrderCommand;
+import seedu.address.logic.commands.ProcessOrderCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -57,9 +57,9 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_addOrder() throws Exception {
         Task task = new TaskBuilder().build();
-        AddOrderCommand command = (AddOrderCommand) parser.parseCommand(TaskUtil.getAddOrderCommand(task));
+        ProcessOrderCommand command = (ProcessOrderCommand) parser.parseCommand(TaskUtil.getAddOrderCommand(task));
         //test fails
-        //assertEquals(new AddOrderCommand(task), command);
+        //assertEquals(new ProcessOrderCommand(task), command);
     }
 
 

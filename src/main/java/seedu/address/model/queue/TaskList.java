@@ -28,6 +28,9 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
  */
 public class TaskList implements Iterable<Task> {
 
+    // represents no. of chefs total, can be changed by user
+    public static int maxCapacity = 5;
+
     private final ObservableList<Task> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<Task> mappedList = EasyBind.map(internalList, (task) -> task);

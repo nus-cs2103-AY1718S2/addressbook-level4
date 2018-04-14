@@ -138,7 +138,7 @@ public class XmlAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Comment.class.getSimpleName()));
         }
         if (!Comment.isValidComment(this.comment)) {
-            throw new IllegalValueException(Comment.MESSAGE_ADDRESS_CONSTRAINTS);
+            throw new IllegalValueException(Comment.MESSAGE_COMMENT_CONSTRAINTS);
         }
         final Comment comment = new Comment(this.comment);
 

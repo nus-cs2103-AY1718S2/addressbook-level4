@@ -697,7 +697,7 @@ private Double validate(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> t
 `Update Results`: +
 The implementation of updating follows closed to that of Edit command. The actual updating
 takes place in the model itself instead of `GradientDescent` class. Again, `GradientDescent`
-does not need to be concerned with how the model is updated. 
+does not need to be concerned with how the model is updated.
 
 [source,java]
 ----

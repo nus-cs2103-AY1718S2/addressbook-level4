@@ -142,7 +142,7 @@ public class RemovePatientQueueCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_removeWithIndexFilteredList_success() throws Exception {
+    public void executeUndoRedo_removeWithValidIndexFilteredList_success() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);

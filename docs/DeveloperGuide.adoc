@@ -598,10 +598,10 @@ tag and list out all members under the same  tag.
 
 ==== Design Considerations
 * **Alternative 1 (current choice):** Use a command to list out the members with same tag.
-** Pros: Easy to change the methods called by command.
+** Pros: It is easy to change the methods called by command.
 ** Cons: Unable to link to group class.
-* **Alternative 2:** Add a new abstract method `ListTagMembersCommand(`
-** Pros: Edit `ListTagMembersCommand()` easily to suit our needs
+* **Alternative 2:** Add a new abstract method `ListTagMembersCommand()`.
+** Pros: It is easy to follow the abstract method to implement essential methods in `ListTagMembersCommand()`.
 ** Cons: Hard for new developers to understand the template pattern.
 
 // end::listTagMembers[]
@@ -659,7 +659,7 @@ The weekly component of the `Calendar` is dependent on the `NUSMods` component f
 ** Cons: There is likely a lot of code to write.
 
 // tag::addGroup[]
-=== Group feature
+=== Add Group feature
 
 Fastis has a group feature that can:
 
@@ -686,12 +686,8 @@ A Group consists of the following:
 * Information: Represents the information of the group.
 * PersonList: Represents the list of persons in a group.
 
-===== Add Group Feature
-
 The add group feature adds a group with information named by user in input into Fastis.
 
-
-====== Current implementation
 
 The add group mechanism is facilitated by `AddGroupCommand`, which resides inside `Logic` component. It supports adding `Group` object to the address book. `AddGroupCommand` inherits from `UndoableCommand`.
 
@@ -716,6 +712,7 @@ public class AddGroupCommand extends UndoableCommand {
 }
 ----
 
+The following diagram shows the interaction of `AddGroup` Command class.
 .Class Diagram of add group Command.
 image:AddGroupCommandClassDiagram.png[width:"600"]
 
@@ -733,12 +730,20 @@ The following sequence diagram shows how the add group operation works:
 .AddGroup Sequence Diagram.
 image:AddGroupSequenceDiagram.png[width="800"]
 
+==== Design Considerations
 
-===== Add Member To Group feature
+====== Aspect: Implementation of `AddGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `AddGroupCommand()`
+** Pros: It is easy for developers to modify method to suit what they want
+* **Alternative 2:** Add a new abstract method `executeAddGroupCommand()`
+** Pros: It is not able to lose any addGroup functionality as it is now part of the default behaviour. Classes that deal with `AddGroupCommand` do not have to know that `executeAddGroupCommand()` exist.
+** Cons: It is hard for new developers to understand the template pattern.
+
+=== Add Member To Group feature
 
 Fastis adds a person from the existing contact list to an existing group.
 
-====== Current implementation
+==== Current implementation
 
 The add member to group mechanism is facilitated by `AddMemberToGroupCommand`, which resides inside `Logic` component.
 It supports adding a member to `Group` objects to the address book. `AddMemberToGroupCommand` inherits from `UndoableCommand`.
@@ -779,11 +784,21 @@ The following sequence diagram shows how the addMembersToGroup operates.
 .AddMemberToGroup sequence diagram.
 image:aGMSequenceDiagram.png[width="800"]
 
-==== Delete Member From Group feature
+==== Design Considerations
+
+====== Aspect: Implementation of `AddMemberToGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `AddMemberToGroupCommand()`.
+** Pros: It is easy for developers to modify method to suit what they want.
+** Cons: There are  more commands required to be remembered.
+* **Alternative 2 :** Add a new interface `EditGroupMemberCommand()` to handle adding members to group.
+** Pros: It is not required to create a new command.
+** Cons: It is less flexible.
+
+=== Delete Member From Group feature
 
 Fastis deletes a person from the existing contact list to an existing group.
 
-====== Current implementation
+==== Current implementation
 
 The delete member from groups mechanism is facilitated by `DeleteMemberFromGroupCommand`, which resides inside `Logic` component.
 It supports deleting a member to Group objects to the address book. `DeleteMemberFromGroupCommand` from `UndoableCommand`.
@@ -824,12 +839,21 @@ The following sequence diagram shows how the deleteMembersFromGroup operates.
 .Sequence diagram for DeleteMemberFromGroupCommand.
 image:dGMSequenceDiagram.png[width="800"]
 
+==== Design Considerations
 
-===== List Group Members Feature
+====== Aspect: Implementation of `DeleteMemberToGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `DeleteMemberFromGroupCommand()`
+** Pros: It is easy for developers to modify method to suit what they want.
+** Cons: There are more commands that are required to be remembered by users and developers.
+* **Alternative 2 :** Add a new interface `EditGroupMemberCommand()`.
+** Pros: It is not required to create a new command.
+** Cons: It is less flexible.
+
+=== List Group Members Feature
 
 Fastis lists all persons under the group keyed by user.
 
-====== Current implementation
+==== Current implementation
 
 Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
 group.
@@ -848,11 +872,21 @@ The following sequence diagram shows how `ListGroupMembersCommand` operates.
 .Sequence diagram for ListGroupMembers.
 image:lGMSequenceDiagram.png[width="800"]
 
-===== Delete Group Feature
+
+==== Design Considerations
+
+====== Aspect: Implementation of `ListGroupMembersCommand`
+* **Alternative 1 (current choice):** Use a command to list out the members with same group.
+** Pros: Easy to change the methods called by command.
+* **Alternative 2:** Add a new abstract method `ListGroupMembersCommand(`
+** Pros: Edit `ListGroupMembersCommand()` easily to suit our needs
+** Cons: Hard for new developers to understand the template pattern.
+
+=== Delete Group Feature
 
 Fastis deletes a group named by the user from input.
 
-====== Current implementation
+==== Current implementation
 
 The delete groups mechanism is facilitated by `DeleteGroupCommand`, which resides inside `Logic` component. It supports deleting Group objects to the address book. DeleteGroupCommand inherits from `UndoableCommand`.
 
@@ -892,31 +926,7 @@ The following sequence diagram shows how the deleteGroup operation works:
 .Sequence diagram for DeleteGroupCommand.
 image:dGSequenceDiagram.png[width="800"]
 
-
 ==== Design Considerations
-
-====== Aspect: Implementation of `AddGroupCommand`
-* **Alternative 1 (current choice):** Add a new command method `AddGroupCommand()`
-** Pros: It is easy for developers to modify method to suit what they want
-* **Alternative 2:** Add a new abstract method `executeAddGroupCommand()`
-** Pros: It is not able to lose any addGroup functionality as it is now part of the default behaviour. Classes that deal with `AddGroupCommand` do not have to know that `executeAddGroupCommand()` exist.
-** Cons: It is hard for new developers to understand the template pattern.
-
-
-====== Aspect: Implementation of `AddMemberToGroupCommand`
-* **Alternative 1 (current choice):** Add a new command method `AddMemberToGroupCommand()`
-** Pros: It is easy for developers to modify method to suit what they want.
-
-====== Aspect: Implementation of `DeleteMemberToGroupCommand`
-* **Alternative 1 (current choice):** Add a new command method `DeleteMemberFromGroupCommand()`
-** Pros: It is easy for developers to modify method to suit what they want.
-
-====== Aspect: Implementation of `ListGroupMembersCommand`
-* **Alternative 1 (current choice):** Use a command to list out the members with same group.
-** Pros: Easy to change the methods called by command.
-* **Alternative 2:** Add a new abstract method `ListGroupMembersCommand(`
-** Pros: Edit `ListGroupMembersCommand()` easily to suit our needs
-** Cons: Hard for new developers to understand the template pattern.
 
 ===== Aspect: Implementation of `DeleteGroupCommand`
 * **Alternative 1 (current choice):** Add a new command method `deleteGroupCommand()`

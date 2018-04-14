@@ -31,7 +31,7 @@ public class ExportContactsCommand extends UndoableCommand {
 
     public static final String FS = File.separator;
     public static final String MESSAGE_SUCCESS = "Contacts successfully exported.\n";
-    public static final String COMMAND_WORD = "export_contacts";
+    public static final String COMMAND_WORD = "exportcontacts";
     public static final String COMMAND_ALIAS = "ec";
 
     private Path writeToPath;

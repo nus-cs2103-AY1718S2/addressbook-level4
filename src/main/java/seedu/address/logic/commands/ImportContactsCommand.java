@@ -36,7 +36,7 @@ import seedu.address.model.tag.Tag;
  * and https://github.com/callicoder/java-read-write-csv-file
  */
 public final class ImportContactsCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "import_contacts";
+    public static final String COMMAND_WORD = "importcontacts";
     public static final String COMMAND_ALIAS = "ic";
     public static final String MESSAGE_SUCCESS = "Contacts successfully imported.\n";
     public static final String MESSAGE_FILE_SUCCESS_OPEN = "File was successfully opened.\n";

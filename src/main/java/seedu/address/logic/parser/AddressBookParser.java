@@ -24,6 +24,7 @@ import seedu.address.logic.commands.EditEntryCommand;
 import seedu.address.logic.commands.EditOrderCommand;
 import seedu.address.logic.commands.EntryListClearCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportToCsvCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindGroupCommand;
 import seedu.address.logic.commands.FindPreferenceCommand;
@@ -195,6 +196,10 @@ public class AddressBookParser {
         case ViewTodayCommand.COMMAND_WORD:
         case ViewTodayCommand.COMMAND_ALIAS:
             return new ViewTodayCommand();
+
+        case ExportToCsvCommand.COMMAND_WORD:
+        case ExportToCsvCommand.COMMAND_ALIAS:
+            return new ExportToCsvCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

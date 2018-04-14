@@ -46,6 +46,10 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_FILENAME_CONSTRAINTS = "\"Filename should be of the format nameOfFile \"\n"
+            + "and adhere to the following constraints:\\n\"\n"
+            + "1. The nameOfFile should only contain characters from digits 0-9 and alphabets a-z or A-Z\"\n"
+            + "2. The nameOfFile should be 30 characters or less.\"\n";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -490,6 +494,34 @@ public class ParserUtil {
         return endTime.isPresent()
                 ? Optional.of(parseEndTime(endTime.get()))
                 : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String filename} into an {@code filename}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code filename} is invalid.
+     */
+    public static String parseFilename(String filename) throws IllegalValueException {
+        //requireNonNull(filename);
+        filename = filename.trim();
+        String filenameVerified = "";
+        int filenameLength = filename.length();
+
+        for (int i = 0; i < filenameLength; i++) {
+            char charI = filename.charAt(i);
+
+            //if ((charI >= 48 && charI <= 57) || (charI >= 65 && charI <= 90) || (charI >= 97 && charI <= 122)) {
+            if (Character.isDigit(charI) || Character.isLetter(charI)) {
+                filenameVerified = filenameVerified + charI;
+            }
+        }
+
+        if (filenameLength < 1 || filenameLength > 30 || !(filename.equals(filenameVerified))) {
+            throw new IllegalValueException(MESSAGE_FILENAME_CONSTRAINTS);
+        }
+
+        return filename;
     }
 
     /**

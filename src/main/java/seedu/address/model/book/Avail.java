@@ -45,8 +45,7 @@ public class Avail {
 
     public String getValue() {
         return value;
-    }
-
+  
     //@@author
     @Override
     public String toString() {

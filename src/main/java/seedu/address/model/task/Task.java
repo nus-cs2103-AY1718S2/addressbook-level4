@@ -90,8 +90,30 @@ public class Task implements Comparable<Task> {
                 .append(getPriority());
         return builder.toString();
     }
+
+    //@@author Wu Di
     @Override
     public int compareTo(Task task) {
-        return task.getPriority().value - this.getPriority().value;
+        int yearDiff = this.getDeadlineYear() - task.getDeadlineYear();
+        int monthDiff = this.getDeadlineMonth() - task.getDeadlineMonth();
+        int dayDiff = this.getDeadlineDay() - task.getDeadlineDay();
+
+        return compareDate(yearDiff, monthDiff, dayDiff);
+    }
+
+    /**
+     * Compares the dates
+     * @param yearDiff difference in year
+     * @param monthDiff difference in month
+     * @param dayDiff difference in day
+     */
+    private int compareDate (int yearDiff, int monthDiff, int dayDiff) {
+        if (yearDiff != 0) {
+            return yearDiff;
+        }
+        if (monthDiff != 0) {
+            return monthDiff;
+        }
+        return dayDiff;
     }
 }

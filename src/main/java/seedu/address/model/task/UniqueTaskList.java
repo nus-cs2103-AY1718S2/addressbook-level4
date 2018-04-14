@@ -96,7 +96,16 @@ public class UniqueTaskList implements Iterable<Task> {
         return taskFoundAndDeleted;
     }
 
-    //@@author
+    /**
+     * Sorts the tasks in the list in date order
+     */
+    public void sortList() {
+        requireNonNull(internalList);
+
+        FXCollections.sort(internalList);
+    }
+
+    //@@author JoonKai1995
     public void setTasks(UniqueTaskList replacement) {
         this.internalList.setAll(replacement.internalList);
         for (int i = 0; i < 7; i++) {

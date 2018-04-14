@@ -18,7 +18,7 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
 public class AddEventCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addEvent";
-    public static final String COMMAND_ALIAS = "ae";
+    public static final String COMMAND_ALIAS = "aE";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the address book. "
             + "Parameters: "

@@ -26,7 +26,8 @@ public class MainWindowHandle extends StageHandle {
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
-        personDetailsPanel = new PersonDetailsPanelHandle(getChildNode(PersonDetailsPanelHandle.BROWSER_ID));
+        personDetailsPanel =
+                new PersonDetailsPanelHandle(getChildNode(PersonDetailsPanelHandle.PERSON_DETAILS_PANEL_PLACEHOLDER));
         calendarPanel = new CalendarPanelHandle(getChildNode(CalendarPanelHandle.BROWSER_ID));
         dailySchedulerPanel = new DailySchedulerPanelHandle(getChildNode(DailySchedulerPanelHandle.BROWSER_ID));
     }

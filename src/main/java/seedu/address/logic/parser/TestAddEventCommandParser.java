@@ -63,23 +63,23 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
 
         String title = argMultimap.getValue(PREFIX_TITLE).get();
         String location = argMultimap.getValue(PREFIX_LOCATION).get();
-        String stime = argMultimap.getValue(PREFIX_STARTTIME).get();
-        String etime = argMultimap.getValue(PREFIX_ENDTIME).get();
+        String sTime = argMultimap.getValue(PREFIX_STARTTIME).get();
+        String eTime = argMultimap.getValue(PREFIX_ENDTIME).get();
         try {
-            DateTime.parseRfc3339(stime);
+            DateTime.parseRfc3339(sTime);
         } catch (NumberFormatException n) {
-            throw new ParseException("Invalid date/time format: " + stime);
+            throw new ParseException("Invalid date/time format: " + sTime);
         }
 
         try {
-            DateTime.parseRfc3339(etime);
+            DateTime.parseRfc3339(eTime);
         } catch (NumberFormatException n) {
-            throw new ParseException("Invalid date/time format: " + etime);
+            throw new ParseException("Invalid date/time format: " + eTime);
         }
 
         String decription = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
 
-        return new TestAddEventCommand(index, title, location, stime, etime, decription);
+        return new TestAddEventCommand(index, title, location, sTime, eTime, decription);
 
     }
 

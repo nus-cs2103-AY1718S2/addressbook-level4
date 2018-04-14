@@ -23,6 +23,7 @@ import seedu.address.model.notification.exceptions.DuplicateTimetableEntryExcept
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.storage.StorageManager;
 
 //@@author crizyli
 /**
@@ -44,7 +45,6 @@ public class TestAddEventCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Event added!";
     public static final String MESSAGE_FAILURE = "Unable to add event, please try again later.";
-
 
 
     private final Index targetIndex;
@@ -76,15 +76,14 @@ public class TestAddEventCommand extends Command {
         Person personToAddEvent = lastShownList.get(targetIndex.getZeroBased());
 
         // Build a new authorized API client service.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
         try {
             service = Authentication.getCalendarService();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
+        //Solution below adpated from https://developers.google.com/calendar/quickstart/java
         Event event = new Event()
                 .setSummary(title)
                 .setLocation(location)
@@ -138,6 +137,7 @@ public class TestAddEventCommand extends Command {
         }
         //@@author crizyli
 
+        assert calendarId.endsWith("@group.calendar.google.com");
         try {
             event = service.events().insert(calendarId, event).execute();
         } catch (IOException e) {
@@ -156,7 +156,7 @@ public class TestAddEventCommand extends Command {
         }
         //@@author crizyli
 
-        System.out.printf("Event created: %s\n", event.getHtmlLink());
+        logger.info("Event created: " + event.getHtmlLink());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

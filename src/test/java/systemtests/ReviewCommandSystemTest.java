@@ -26,7 +26,7 @@ public class ReviewCommandSystemTest extends AddressBookSystemTest {
     public void openReviewDialog() {
         String password = getModel().getPassword();
         UnlockCommand testUnlockCommand = new UnlockCommand();
-        testUnlockCommand.setTestMode();
+        testUnlockCommand.setTestMode(true);
         testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
         showAllPersons();

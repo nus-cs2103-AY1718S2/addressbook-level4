@@ -30,10 +30,6 @@ public class AddPhotoCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addPhoto";
 
-    public static final String IMAGE_FOLDER_WINDOWS = "src\\main\\resources\\images\\personphoto\\";
-
-    public static final String IMAGE_FOLDER_OTHER = "src/main/resources/images/personphoto/";
-
     public static final String IMAGE_FOLDER = "data/personphoto/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a photo to an employee.\n"
@@ -46,6 +42,9 @@ public class AddPhotoCommand extends UndoableCommand {
     public static final String MESSAGE_INVALID_PHOTO_TYPE = "The photo type is unacceptable!";
 
     public static final String MESSAGE_PHOTO_NOT_CHOSEN = "You have not chosen one photo!";
+
+    public static final String MESSAGE_SAME_PHOTO = "You are adding a photo with same name, please rename"
+            + "it and retry!";
 
     private final Index targetIndex;
 
@@ -80,6 +79,8 @@ public class AddPhotoCommand extends UndoableCommand {
             String currentDir = System.getProperty("user.dir");
             path = currentDir + "/src/main/java/resources/images/personphoto/DefaultPerson.png";
         }
+        //make sure path is initialized.
+        assert path != null;
 
         //check if the photo is chosen.
         if (path.equals("NoFileChoosed")) {
@@ -112,7 +113,7 @@ public class AddPhotoCommand extends UndoableCommand {
         try {
             model.updatePerson(targetPerson, editedPerson);
         } catch (DuplicatePersonException e) {
-            e.printStackTrace();
+            return new CommandResult(MESSAGE_SAME_PHOTO);
         } catch (PersonNotFoundException e) {
             e.printStackTrace();
         }
@@ -203,6 +204,9 @@ public class AddPhotoCommand extends UndoableCommand {
         this.path = event.getFilePath();
     }
 
+    /**
+     *  set this command to test mode.
+     */
     public void setTestMode() {
         this.isTestMode = true;
     }

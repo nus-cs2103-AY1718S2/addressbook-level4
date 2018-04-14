@@ -17,7 +17,7 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <timeZone isPrivate="false">PST</timeZone>
-        <comment isPrivate="false">NIL</address>
+        <comment isPrivate="false">NIL</comment>
         <isArchived>false</isArchived>
     </persons>
 </addressbook>

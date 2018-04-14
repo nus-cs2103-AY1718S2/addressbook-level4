@@ -11,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Title {
 
     public static final String MESSAGE_TITLE_CONSTRAINTS =
-            "Task title can contain any characters but it should not be blank";
+            "Task title should contain alphanumeric characters and it should not be blank.";
 
     /*
      * The first character of the title must not be a whitespace,
@@ -33,7 +33,7 @@ public class Title {
     }
 
     /**
-     * Returns true if a given string is a valid person name.
+     * Returns true if a given string is a valid task title.
      */
     public static boolean isValidTitle(String test) {
         return test.matches(TITLE_VALIDATION_REGEX);

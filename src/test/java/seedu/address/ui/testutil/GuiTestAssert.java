@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.CalendarTaskCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -50,7 +51,7 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     * Asserts that {@code actualCard} displays the details of {@code expectedTask}.
      */
     public static void assertCardDisplaysTask(Task expectedTask, TodoCardHandle actualCard) {
         assertEquals(expectedTask.getTitle().value, actualCard.getTitle());
@@ -58,6 +59,14 @@ public class GuiTestAssert {
         assertEquals(expectedTask.getDeadline().value, actualCard.getDeadline());
         assertEquals(expectedTask.getPriority().toString(), actualCard.getPriority());
     }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedTask} on the calendar.
+     */
+    public static void assertCalendarCardTask(Task expectedTask, CalendarTaskCardHandle actualCard) {
+        assertEquals(expectedTask.getTitle().value, actualCard.getTitle());
+    }
+
 
     /**
      * Returns the color style for {@code tagName}'s label. The tag's color is determined by looking up the color

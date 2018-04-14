@@ -37,7 +37,7 @@ public class TaskDescriptionTest {
         assertTrue(TaskDescription.isValidDescription("12345")); // numbers only
         assertTrue(TaskDescription.isValidDescription("peter the 2nd")); // alphanumeric characters
         assertTrue(TaskDescription.isValidDescription("Capital Tan")); // with capital letters
-        assertTrue(TaskDescription.isValidDescription("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(TaskDescription.isValidDescription("David Roger Jackson Ray Jr 2nd")); // long desc
     }
 }
 

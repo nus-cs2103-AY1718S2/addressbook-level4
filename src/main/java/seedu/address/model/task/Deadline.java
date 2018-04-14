@@ -1,6 +1,7 @@
 package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +34,7 @@ public class Deadline {
      */
     public Deadline(String deadline) {
         requireNonNull(deadline);
+        checkArgument(isValidDeadline(deadline), MESSAGE_DEADLINE_CONSTRAINTS);
         dateString = deadline;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate deadlineDate = LocalDate.parse(deadline, formatter);

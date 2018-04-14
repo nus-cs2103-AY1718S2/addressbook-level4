@@ -33,20 +33,21 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         /* Case: undo adding ADD to the list -> ADD deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        expectedAliases = new String[][]{};
-        assertCommandSuccess(command, model, expectedResultMessage, expectedAliases);
+        expectedAliases = new String[][] {};
+        assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo adding ADD to the list -> ADD added again */
-//        command = RedoCommand.COMMAND_WORD;
-//        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-//        expectedAliases = new String[][] {{VALID_ALIAS_ADD}};
-//        assertCommandSuccess(command, model, expectedResultMessage, expectedAliases);
+        command = RedoCommand.COMMAND_WORD;
+        model.addAlias(toAdd_add);
+        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        expectedAliases = new String[][] {{VALID_ALIAS_ADD}};
+        assertCommandSuccess(command, model, expectedResultMessage, expectedAliases);
 
         /* Case: add 2 aliases of different commands -> added */
-//        Alias toAdd_history = HISTORY;
-//        command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_HISTORY;
-//        expectedAliases = new String[][] {{VALID_ALIAS_ADD, VALID_ALIAS_HISTORY}};
-//        assertCommandSuccess(command, toAdd_history, expectedAliases);
+        Alias toAdd_history = HISTORY;
+        command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_HISTORY;
+        expectedAliases = new String[][] {{VALID_ALIAS_ADD, VALID_ALIAS_HISTORY}};
+        assertCommandSuccess(command, toAdd_history, expectedAliases);
 
         /* --------------------------------- Perform invalid alias operations ------------------------------------- */
 
@@ -103,6 +104,14 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
         assertAliasTable(expectedTable);
+    }
+
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 
     private void assertAliasTable(String[][] expectedTable) {

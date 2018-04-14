@@ -389,14 +389,18 @@ The autocomplete feature serves to enhance user experience in using the Command 
 
 ==== Current Implementation
 
-The implementation logic of the autocomplete feature resides in the UI component. The autocomplete feature is driven by a `ChangeListener` attached to the `commandTextField.textProperty()` in `CommandBox.java`. Once `ChangeListener` registers any changes in the content of `commandTextField`, `triggerAutocomplete()` will be executed. The following diagram illustrates a sequence of method calls to initialize the `Autocomplete` class and get autocomplete suggestions for command words in a drop down menu.
+The implementation logic of the autocomplete feature resides in the `UI` component. The autocomplete feature is driven by a `ChangeListener` attached to `commandTextField.textProperty()` in `CommandBox.java`. Once the `ChangeListener` registers any changes in the content of `commandTextField`, `triggerAutocomplete()` will be executed. +
 
-.Sequence diagram for autocompleting Nric (include initialization of Autocomplete class)
-image::autocompleteSequenceDiagram.png[width="700"]
+The following diagram illustrates a sequence of method calls to initialize the `Autocomplete` class and get autocomplete suggestions for command words in a drop down menu.
 
-`Autocomplete.java` encompasses the logic for parsing user input in the CLI and determining what autocomplete suggestions are to be passed back to `CommandBox.java`. Data required for autocomplete, such as a list of command words, prefixes, options and parameters in Medeina, are all retrieved from the Logic component. 
+.Sequence diagram for autocompleting NRIC (include initialization of Autocomplete class)
+image::autocompleteSequenceDiagram.png[width="800"]
 
-For example, data for autocompleting Nric and person tags are consolidated this way in the Logic component:
+ +
+
+`Autocomplete.java` encompasses the logic for parsing user input in the CLI and determining what autocomplete suggestions are to be passed back to `CommandBox.java`. Data required for autocomplete, such as a list of command words, prefixes, options and parameters in Medeina, are retrieved from the `Logic` component. All data required by `Autocomplete` are consolidated in a similar way in the `Logic` component.
+
+The following code shows how contact's NRIC and tags are consolidated:
 [source,java]
 ----
 public void setAttributesForPersonObjects() {
@@ -421,9 +425,11 @@ public Set<String> getAllPersonTags() {
 }
 ----
 
-You may have noticed in the sequence diagram above, `Autocomplete` is a singleton class that is initialized only once, and there is only be 1 instance of `CommandBox` in the application. You may be wondering "are the 3 set attribute methods in the logic component only called once?". If you are not, imagine the user is constantly adding new contacts to Medeina, but `Autocomplete` uses only data from when Medeina was started up. The answer to the question is definitely no. The set attributes methods have to be called whenever there is a change in Medeina's data, otherwise the autocomplete suggestions will not be up to date.
+You may have noticed that in sequence diagram above (Figure 12), `Autocomplete` is a singleton class that is initialized only once, and there is only 1 instance of `CommandBox` in the application. You may be wondering "are the 3 set attribute methods in the `Logic` component only called once?". If you are currently unsure, imagine the user is constantly adding new contacts to Medeina. However, `Autocomplete` uses only data from when Medeina was started up. +
 
-The following code snippet will ensure that `Autocomplete` data is kept updated.
+The answer to the question is definitely no. The set attributes methods have to be called whenever there is a change in Medeina's data, otherwise the autocomplete suggestions will not be up to date.
+
+The following code snippet ensures that the data used by `Autocomplete` is kept updated.
 [source,java]
 ----
 public void handleAddressBookChangedEvent(AddressBookChangedEvent a) {
@@ -434,6 +440,15 @@ public void handleAddressBookChangedEvent(AddressBookChangedEvent a) {
 
 ==== Design considerations
 
+===== Aspect: Updating autocomplete data
+
+* **Alternative 1 (current choice):** Data is updated only when `AddressBookChangedEvent` is raised.
+** Pros: Less resource-intensive.
+** Cons: Implementation is less straight-forward.
+* **Alternative 2:** Data is updated whenever autocomplete is triggered.
+** Pros: Easy to implement.
+** Cons: Running for-loops in the `Logic` component for every character the user types, is resource-intensive.
+
 ===== Aspect: Event-driven or user-driven
 
 * **Alternative 1 (current choice):** Implement change listener to automatically track user input and provide autocomplete suggestions.
@@ -442,15 +457,6 @@ public void handleAddressBookChangedEvent(AddressBookChangedEvent a) {
 * **Alternative 2:** User has to press a specific key e.g. tab to invoke autocompletion.
 ** Pros: Less logic to account for, and is thus easier to implement.
 ** Cons: User experience is compromised.
-
-===== Aspect: Updating autocomplete data
-
-* **Alternative 1 (current choice):** Data is updated only when AddressBookChangedEvent is raised.
-** Pros: Less resource-intensive.
-** Cons: Implementation is less straight-forward.
-* **Alternative 2:** Data is updated whenever autocomplete is triggered.
-** Pros: Easy to implement.
-** Cons: Running for-loops in the Logic component for every character the user type is resource-intensive.
 
 // end::autocompleteDG[]
 

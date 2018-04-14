@@ -344,8 +344,12 @@ Password will be changed to yournewpassword.
 Password will be removed.
 
 [NOTE]
-Currently, there are no password recovery mechanism in place.
-If users forget their password, please delete the password.txt file in the data folder to remove the password.
+====
+* Currently, there are no password recovery mechanism in place.
+* If users forget their password, please delete the password.txt file in the data folder to remove the password.
+* Coming in v2.0, there will be an option to retrieve your lost password via email.
+* Default destination file is at the data folder.
+====
 
 // end::password[]
 

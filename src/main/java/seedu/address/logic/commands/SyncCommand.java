@@ -8,15 +8,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.asynchttpclient.Response;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.LoadingEvent;
 import seedu.address.commons.util.FetchUtil;
 import seedu.address.commons.util.UrlBuilderUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -140,7 +144,9 @@ public class SyncCommand extends Command {
             String commaSeparatedCodes = concatenateByComma(model.getCodeList());
             List<NameValuePair> currentPriceParams = buildParams(commaSeparatedCodes, "current");
             String currentPriceUrl = buildApiUrl(cryptoCompareApiUrl, currentPriceParams);
-            JsonObject currentPriceData = FetchUtil.asyncFetch(currentPriceUrl);
+            Future<Response> promise = FetchUtil.asyncFetch(currentPriceUrl);
+            Response response = waitForResponse(promise);
+            JsonObject currentPriceData = FetchUtil.parseStringToJsonObj(response.getResponseBody());
             HashMap<String, Price> newPriceMetrics = createPriceObjects(getRawData(currentPriceData));
             model.syncAll(newPriceMetrics);
         } catch (DuplicateCoinException dpe) {
@@ -153,5 +159,21 @@ public class SyncCommand extends Command {
             logger.warning("Data fetching error");
         }
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Dispatches a {@code LoadingEvent} while waiting for the Response object from the Future object
+     * @param promise that returns the desired data
+     * @return Response object retrieved from the Future
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    private Response waitForResponse(Future<Response> promise) throws InterruptedException, ExecutionException {
+        //Set loading UI
+        EventsCenter.getInstance().post(new LoadingEvent(true));
+        Response response = promise.get();
+        //Return UI to normal
+        EventsCenter.getInstance().post(new LoadingEvent(false));
+        return response;
     }
 }

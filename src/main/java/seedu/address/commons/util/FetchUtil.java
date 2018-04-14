@@ -6,7 +6,6 @@ import static org.asynchttpclient.Dsl.asyncHttpClient;
 
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.asynchttpclient.AsyncHandler;
@@ -22,8 +21,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import io.netty.handler.codec.http.HttpHeaders;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.LoadingEvent;
 
 /**
  * Retrieves data in JSON format from a specified URL
@@ -36,22 +33,12 @@ public class FetchUtil {
      * Asynchronously fetches data from the specified url and returns it as a JsonObject
      * @param url cannot be null
      * @return data received as a JsonObject
-     * @throws InterruptedException when there is a thread interrupt
-     * @throws ExecutionException when there is an error in data fetching
      */
-    public static JsonObject asyncFetch(String url)
-            throws InterruptedException, ExecutionException {
+    public static Future<Response> asyncFetch(String url) {
         //Send HTTP request asynchronously
         BoundRequestBuilder boundReqBuilder = myAsyncHttpClient.prepareGet(url);
         AsyncHandler<Response> asyncHandler = getResponseAsyncHandler();
-        Future<Response> whenResponse = boundReqBuilder.execute(asyncHandler);
-
-        //Set loading UI
-        EventsCenter.getInstance().post(new LoadingEvent(true));
-        Response response = whenResponse.get();
-        //Return UI to normal
-        EventsCenter.getInstance().post(new LoadingEvent(false));
-        return parseStringToJsonObj(response.getResponseBody());
+        return boundReqBuilder.execute(asyncHandler);
     }
 
     /**
@@ -95,7 +82,7 @@ public class FetchUtil {
      * @param str cannot be null
      * @return JsonObject converted from String
      */
-    private static JsonObject parseStringToJsonObj(String str) {
+    public static JsonObject parseStringToJsonObj(String str) {
         JsonObject jsonObject;
 
         JsonParser parser = new JsonParser();

@@ -50,7 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             CustTimeZone timeZone = ParserUtil.parseCustTimeZone(argMultimap.getValue(PREFIX_TIMEZONE)).get();
-            Comment comment = ParserUtil.parserComment(argMultimap.getValue(PREFIX_COMMENT)).get();
+            Comment comment = ParserUtil.parseComment(argMultimap.getValue(PREFIX_COMMENT)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Person person = new Person(name, phone, email, address, timeZone, comment, tagList);

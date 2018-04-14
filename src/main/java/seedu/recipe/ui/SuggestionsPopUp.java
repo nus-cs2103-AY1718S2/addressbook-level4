@@ -50,9 +50,11 @@ public class SuggestionsPopUp extends ContextMenu {
         textInputProcessor.setContent(prefix);
         textInputProcessor.setFont(commandTextArea.getFont());
         String lastWord = textInputProcessor.getLastWord();
+
         // finds suggestions and displays
         ArrayList<String> suggestionList = new ArrayList<>();
 
+        // decides to show commands or field prefixes as suggestions
         String firstWord = textInputProcessor.getFirstWord();
         if (APPLICATION_COMMANDS.contains(firstWord)) {
             if (firstWord.equals(lastWord)) {
@@ -70,6 +72,7 @@ public class SuggestionsPopUp extends ContextMenu {
         double anchorX = findDisplayPositionX(textInputProcessor.getCaretPositionX());
         double anchorY = findDisplayPositionY(textInputProcessor.getCaretPositionY());
 
+        // shows at bottom of input area if text is too long
         if (textInputProcessor.isTextTooLong()) {
             anchorX = anchorY = MARGIN;
         }
@@ -78,8 +81,8 @@ public class SuggestionsPopUp extends ContextMenu {
     }
 
     /**
-     * Finds possible suggestions from {@code word} and
-     * list of valid suggestions {@code textList}.
+     * Finds possible suggestions from {@code prefix} and
+     * list of valid suggestions {@code dictionary}.
      */
     private void findSuggestions(String prefix, List<String> dictionary) {
         getItems().clear();

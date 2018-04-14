@@ -1,5 +1,6 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CHANGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMOVE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SET;
@@ -48,7 +49,9 @@ public class PasswordCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandFailure (String command, String expectedResultMessage) {
         executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, getModel());
+        assertEquals(command, getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
@@ -62,7 +65,9 @@ public class PasswordCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, String expectedResultMessage) {
 
         executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, getModel());
+        assertEquals(command, getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
     }

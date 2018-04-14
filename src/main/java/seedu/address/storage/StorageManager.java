@@ -42,6 +42,7 @@ public class StorageManager extends ComponentManager implements Storage {
         dir.mkdir();
     }
 
+    //@@author Jason1im
     // ================ AccountData methods ==============================
 
     @Override
@@ -67,6 +68,7 @@ public class StorageManager extends ComponentManager implements Storage {
         accountDataStorage.saveAccountData(account);
     }
 
+    //@@author
     // ================ UserPrefs methods ==============================
 
     @Override

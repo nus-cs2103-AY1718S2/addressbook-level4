@@ -514,15 +514,32 @@ to add a `Facebook` profile to the first person. The `AddPlatformCommand` would 
 command word. As illustration, the user has successfully added a `Facebook` platform to the targeted person by typing
 `addplatform 4 l/www.facebook.com/david`:
 
-image::AddPlatformToPersonDiagram.png[width="650"]
+image::AddPlatformToPersonDiagram.png[width="750"]
 
 {empty}
 
 Since the basis of `AddPlatformCommand` is heavily inspired by the `EditCommand`, interactions between the various
 components is exactly the same:
 
-image::AddPlatformCommandHighLevelSequenceDiagram.png[width="800"]
+image::AddPlatformCommandHighLevelSequenceDiagrams.png[width="800"]
 
+==== Design Considerations
+
+===== Aspect: Storing of Links in Person Model
+* **Alternative 1 (current choice):** Create social media platform objects with the links as attributes and store into a map
+** Pros: High potential of implementing methods for interactions between the actual profile page using the corresponding API.
+** Cons: Accessing and inputting of data will be more complex.
+* **Alternative 2:** Store using a set of links
+** Pros: Ease of access to data.
+** Cons: Can only be used for the displaying of pages, no room for other implementations.
+
+===== Aspect: Usage of Interface or Abstract Class
+* **Alternative 1 (current choice):** Have `SocialMediaPlatform` be an abstract class
+** Pros: Allows common methods to be used by classes that extends from it and still provide a means of ensuring critical methods that are abstract be implemented.
+** Cons: Classes that want to make use of the implementations can only extend from it.
+* **Alternative 2:** Have `SocialMediaPlatform` be an interface
+** Pros: Higher flexibility for classes since they can implement many interfaces.
+** Cons: Limitations in sharing and utilisation of default methods between classes.
 // end::addplatform[]
 
 // tag::search[]

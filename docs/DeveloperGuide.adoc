@@ -2085,6 +2085,82 @@ _{More to be added}_
 _{More to be added}_
 
 [appendix]
+== Instructions for manual testing
+
+Given below are instructions to test the app manually. Each test will have several steps to follow and an expected test outcome.
+
+[NOTE]
+These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
+
+=== Launch and shutdown
+
+. Initial launch:
+* Steps:
+.. Download the jar file and copy into an empty folder.
+.. Double-click the jar file.
+* Expected output: The GUI appears with 12 sample recipes. The window size may not be optimum. The GUI may not appear if JRE on the tester's machine doesn't work properly. In that case, the tester should launch the app using command line.
+
+. Initial launch without Internet connection:
+* Steps:
+.. Delete all files in the folder except for the jar file.
+.. Launch the app without Internet connection.
+* Expected output: Each sample recipe will have a null image reference for the image field instead of an image as the app cannot connect to the Internet.
+
+. Initial launch with Internet connection:
+* Steps:
+.. Delete all files in the folder except for the jar file.
+.. Launch the app with Internet connection.
+* Expected output: 12 images will be downloaded and displayed for the sample recipes.
+
+. Saving window preferences:
+* Steps:
+.. Resize the window to an optimum size. Move the window to a different location. Close the window.
+.. Re-launch the app.
+* Expected output: The most recent window size and location is retained.
+
+=== Commands
+
+Sample commands can be found in the cheatsheet in the User Guide. Here are some corner cases for some of the commands:
+
+. Searching without Internet connection:
+* Steps:
+.. Disconnect your machine from the Internet.
+.. Execute a `search` command, for example, `*search chicken rice*`.
+* Expected output: The result box will say that ReciRecipé failed to search and ask for confirmation that the tester is connected to the Internet.
+
+. Searching without any arguments:
+* Steps:
+.. Type `*search*` in the command box then press kbd:[Enter].
+* Expected output: The result box will say that it is an invalid command and show the correct command format.
+
+. Adding an online image without Internet connection:
+* Steps:
+.. Run `search hainanese chicken rice`, select the first result, run `parse` *but do not submit the `add` command*.
+.. Disconnect your machine from the Internet.
+.. Now execute the `add` command.
+* Expected output: The recipe will still be added normally as it should but the image field will take a null reference instead of the image URL as the app cannot download the image.
+
+=== Missing/corrupted data
+
+. Dealing with missing data:
+* Steps:
+.. Delete the data folder.
+.. Re-launch the app.
+* Expected output: The app will be initialized with 12 sample recipes.
+
+. Dealing with corrupted data:
+* Steps:
+.. Open data/recipebook.xml, remove line 5, save the file.
+.. Re-launch the app.
+* Expected output: The app will be initialized with 12 sample recipes.
+
+. Dealing with missing images:
+* Steps:
+.. Delete the data/images folder.
+.. Re-launch the app.
+* Expected output: All images will not display and all recipes will have a null image reference for the image field instead of the old file path.
+
+[appendix]
 == Glossary
 
 include::./Glossary.adoc[]

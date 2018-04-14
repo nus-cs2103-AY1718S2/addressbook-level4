@@ -119,7 +119,7 @@ Below are various contributions I have made to ReciRecipé, some of which were c
 * Miscellaneous code contributions:
 ** Morphed the application from AddressBook to RecipeBook, which required changing *the whole code base* while maintaining the interaction of the components as well as the correctness of the whole project (PR https://github.com/CS2103JAN2018-F09-B2/main/pull/32[#32]).
 ** Wrote additional tests for existing features to increase coverage to 93% (PR https://github.com/CS2103JAN2018-F09-B2/main/pull/51[#51]).
-** Add new fields (`CookingTime`, `PreparationTime`, `Calories`, `Servings`) and fix the formatting for the old fields (PR https://github.com/CS2103JAN2018-F09-B2/main/pull/50[#50]).
+** Added new fields (`CookingTime`, `PreparationTime`, `Calories`, `Servings`) and fix old fields formatting (PR https://github.com/CS2103JAN2018-F09-B2/main/pull/50[#50]).
 
 * Project management:
 ** Managed the milestones on GitHub.
@@ -132,6 +132,7 @@ https://app.codacy.com/app/kokonguyen191/main/dashboard[Codacy] (commits link:ht
 ** Overhauled the guides (PR https://github.com/CS2103JAN2018-F09-B2/main/pull/81[#81]).
 ** Added a navigation bar to GitHub pages for ease of navigation (PR link:https://github.com/CS2103JAN2018-F09-B2/main/pull/77[#77]). (Credits: https://github.com/CS2103AUG2017-W11-B2/main[CS2103AUG2017-W11-B2])
 ** Added and maintained the link:{repoURL}/docs/Glossary.adoc[glossary].
+** Rewrote the UG for non-tech users, added manual testing (PR link:https://github.com/CS2103JAN2018-F09-B2/main/pull/161[#161]).
 
 ---
 

@@ -15,13 +15,14 @@ each employee.
 Its User Interface (UI) is a hybrid of Command Line Interface (CLI) while still having the benefits of a Graphical User
 Interface (GUI). That said, ET will suit you better if you can type fast and are familiar with CLI.
 
+.UI page
 image::Ui.png[width="600"]
 
 == Summary of contributions
 
 *Code contributed*: [https://github.com/CS2103JAN2018-W15-B1/main/blob/master/collated/functional/crizyli.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B1/main/blob/master/collated/test/crizyli.md[Test code]] {links to collated code files}
 
-=== Enhancement Added: Lock and Unlock Command
+=== Enhancement Added: Lock and Unlock System
 
 ==== External behavior
 
@@ -55,13 +56,17 @@ include::../DeveloperGuide.adoc[tag=lockunlock]
 
 ---
 
-=== Enhancement Added: Add Calendars for Each Employee
+=== Enhancement Added: Calendars and Operations on Calendars
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=addevent]
+include::../UserGuide.adoc[tag=deleteevent]
+include::../UserGuide.adoc[tag=ct]
+include::../UserGuide.adoc[tag=auth]
 
 #End of Extract#
 
@@ -85,51 +90,6 @@ include::../DeveloperGuide.adoc[tag=calendar]
 
 ---
 
-=== Enhancement Added: Add and Delete Event on Calendars
-
-==== External behavior
-
----
-#Start of Extract [from: User Guide]#
-
-include::../UserGuide.adoc[tag=addevent]
-include::../UserGuide.adoc[tag=deleteevent]
-
-#End of Extract#
-
----
-
-==== Justification
-As stated, manager can manage employees' calendars through these commands.
-
-==== Implementation
-
-(Pull request https://github.com/CS2103JAN2018-W15-B1/main/pull/61[#61],
-https://github.com/CS2103JAN2018-W15-B1/main/pull/133[#133])
-
----
-
-=== Enhancement Added: My Calendar and Todo List
-
-==== External behavior
-
----
-#Start of Extract [from: User Guide]#
-
-include::../UserGuide.adoc[tag=ct]
-
-#End of Extract#
-
----
-==== Justification
-Manager can have his own calendar too, and can view the events on his calendar.
-
-==== Implementation
-
-(Pull requests https://github.com/CS2103JAN2018-W15-B1/main/pull/136[#136],
-https://github.com/CS2103JAN2018-W15-B1/main/pull/143[#143])
-
-
 === Enhancement Added: AddPhotoCommand
 
 ==== External behavior
@@ -152,7 +112,16 @@ Employees have a photo field, and manager can update this field for every employ
 https://github.com/CS2103JAN2018-W15-B1/main/pull/166[#166],
 https://github.com/CS2103JAN2018-W15-B1/main/pull/169[#169],
 https://github.com/CS2103JAN2018-W15-B1/main/pull/173[#173],
-https://github.com/CS2103JAN2018-W15-B1/main/pull/197[#197],)
+https://github.com/CS2103JAN2018-W15-B1/main/pull/197[#197])
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
 
 === Enhancement Added: Export Employees Data
 
@@ -172,30 +141,46 @@ Manager can export the information of employees to an excel file.
 
 ==== Implementation
 
-(Pull request )
+(Pull request https://github.com/CS2103JAN2018-W15-B1/main/pull/208[#208])
 
+---
+#Start of Extract [from: Developer Guide]#
 
-=== Enhancement Proposed: Edit Events on Calendars
+include::../DeveloperGuide.adoc[tag=exportcom]
 
+#End of Extract#
 
+---
+
+=== Enhancement Proposed: Data Encryption
+
+For now, the application's password and employees' information are in plaintext and visible to others besides the user. It is crucial to
+to do data encryption to secure the data from leaking. I am proposing to add a new class `Crypto` which is used to encrypt and decrypt the
+data. Refer to the diagram below:
+
+.Data encryption precess
+image::dataencrypt.png[width="600"]
 
 ---
 
 === Other enhancements and contributions
 
+* Bugs found and fixed: (https://github.com/CS2103JAN2018-W15-B1/main/issues/171[#171],
+https://github.com/CS2103JAN2018-W15-B1/main/issues/118[#118],
+https://github.com/CS2103JAN2018-W15-B1/main/issues/22[#22],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/222[#222],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/197[#197],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/187[#187],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/127[#127],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/122[#122],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/112[#112],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/60[#60],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/43[#43])
 
-== Contributions to the User Guide
+* Bugs found or suggestions during acceptance testing for other group: (https://github.com/CS2103JAN2018-F11-B1/main/issues/167[#167],
+https://github.com/CS2103JAN2018-F11-B1/main/issues/172[#172],
+https://github.com/CS2103JAN2018-F11-B1/main/issues/174[#174],
+https://github.com/CS2103JAN2018-F11-B1/main/issues/183[#183],
+https://github.com/CS2103JAN2018-F11-B1/main/issues/191[#191])
 
 
-
-
-== Contributions to the Developer Guide
-
-
-
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

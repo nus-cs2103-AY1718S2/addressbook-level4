@@ -585,6 +585,7 @@ public class RateCommand extends UndoableCommand {
                 } catch (NullPointerException e) {
                     logger.info("Corresponding employee is deleted. Ignoring this notification");
                     raise(new RequestToDeleteNotificationEvent(notification.getEventId(), true));
+                    raise(new RequestToDeleteNotificationEvent(notification.getId(), true));
                 }
             }
         };
@@ -759,6 +760,7 @@ public class RateCommandParser implements Parser<RateCommand> {
     /**
      * Adds a notification to the address book.
      */
+
     public void addNotification(Notification notification) {
         try {
             semaphore.acquire();
@@ -942,7 +944,6 @@ public class RateCommandParser implements Parser<RateCommand> {
     public NotificationCenter getNotificationCenter() {
         return  notificationCenter;
     }
-
 ```
 ###### \java\seedu\address\model\notification\exceptions\NotificationNotFoundException.java
 ``` java
@@ -1851,6 +1852,7 @@ public class NotificationCenter {
             + NotificationCard.NOTIFICATION_CARD_X_OFFSET * 3;
     private static final int NOTIFICATION_CARD_HEIGHT_IN_CENTER = NotificationCard.NOTIFICATION_CARD_HEIGHT;
     private static final int NOTIFICATION_CARD_WIDTH_IN_CENTER = NotificationCard.NOTIFICATION_CARD_WIDTH;
+
     protected LinkedList<javafx.scene.layout.Region> notificationCards;
     protected LinkedList<NotificationCard> notificationCardCopy;
     protected HashMap<String, LinkedList<javafx.scene.layout.Region>> idToCard;
@@ -2013,6 +2015,7 @@ public class NotificationCenter {
         for (NotificationCard nc: toDelete) {
             notificationCardCopy.remove(nc);
         }
+
     }
 }
 ```

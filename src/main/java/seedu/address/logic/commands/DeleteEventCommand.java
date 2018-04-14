@@ -47,8 +47,6 @@ public class DeleteEventCommand extends Command {
         Person targetPerson = lastShownList.get(targetIndex.getZeroBased());
 
         // Build a new authorized API client service.
-        // Note: Do not confuse this class with the
-        //   com.google.api.services.calendar.model.Calendar class.
         com.google.api.services.calendar.Calendar service =
                 null;
         try {

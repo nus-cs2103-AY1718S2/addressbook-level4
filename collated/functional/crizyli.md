@@ -2374,6 +2374,7 @@ class CalendarBrowser extends Region {
             raise(new SetPasswordEnteredEvent("incomplete"));
         }
     }
+
 ```
 ###### \java\seedu\address\ui\MyCalendarView.java
 ``` java

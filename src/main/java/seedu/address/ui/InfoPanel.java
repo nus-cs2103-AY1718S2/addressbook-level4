@@ -106,8 +106,7 @@ public class InfoPanel extends UiPart<Region> {
     private void handleAliasListEvent(AliasListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         aliasListPlaceholder.getChildren().removeAll();
-        aliasList = new AliasList(event.getAliases());
-        aliasListPlaceholder.getChildren().add(aliasList.getRoot());
+        aliasList.init(event.getAliases());
         aliasListPlaceholder.toFront();
         aliasList.setStyle();
     }

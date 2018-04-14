@@ -74,15 +74,7 @@ public class AliasList extends UiPart<Region> {
     private TableColumn<ArrayList<String>, String> uploadCommand;
 
     public AliasList()  {
-        this(null);
-    }
-
-    public AliasList(ObservableList<ArrayList<String>> aliases) {
         super(FXML);
-        aliasList.setItems(aliases);
-        initializeColumns();
-        initializeTableColumns();
-        aliasList.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
     /**
@@ -113,6 +105,16 @@ public class AliasList extends UiPart<Region> {
         columns.add(unionCommand);
         columns.add(uploadCommand);
         columns.add(vacantCommand);
+    }
+
+    /**
+     * Initializes alias list Ui
+     */
+    public void init(ObservableList<ArrayList<String>> aliases) {
+        aliasList.setItems(aliases);
+        initializeColumns();
+        initializeTableColumns();
+        aliasList.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
     /**

@@ -53,8 +53,16 @@ public interface Model {
     /** Returns a HashMap of alias-command mappings */
     HashMap<String, String> getAliasList();
 
+    /** Returns a the associated command word that is mapped to aliasKey */
+    String getCommandFromAlias(String aliasKey);
+
     /** Returns an ArrayList of ArrayList of alias strings formatted for the UI */
     ArrayList<ArrayList<String>> getUiFormattedAliasList();
+
+    /**
+     * Replaces the alias mapping by the given {@code aliases}.
+     */
+    void updateAliasesMapping(HashMap<String, String> aliases);
     //@@author
 
     /**

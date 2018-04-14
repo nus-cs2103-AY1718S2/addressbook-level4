@@ -182,6 +182,7 @@ public class Autocomplete {
      * Returns false if the command input is to add a new person.
      */
     private boolean hasAddCommandReferNric() {
+        // adding a new owner will not have autocomplete for Nric
         if (commandWord.equals(AddCommand.COMMAND_WORD)
                 && trimmedCommandInputArray[2].equals(OPTION_OWNER)) {
             return false;
@@ -270,7 +271,13 @@ public class Autocomplete {
      */
     private void setOption() {
         option = "nil";
-        int index = trimmedCommandInput.lastIndexOf("-");
+
+        int o = trimmedCommandInput.lastIndexOf("-o");
+        int p = trimmedCommandInput.lastIndexOf("-p");
+        int a = trimmedCommandInput.lastIndexOf("-a");
+
+        int index = (a > p) ? a : p;
+        index = (index > o) ? index : o;
 
         if (index > -1 && (trimmedCommandInput.length() >= index + 2)) {
             option = trimmedCommandInput.substring(index, index + 2); // (inclusive, exclusive)

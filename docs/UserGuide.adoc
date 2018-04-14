@@ -210,7 +210,7 @@ Reapplies the `delete 1` command. +
 Reapplies the `clear` command. +
 // end::undoredo[]
 
-==== Clearing all entries : `clear` or `c`
+==== Clearing all entries : `clear` or `c` ◀️
 
 Clears all entries from the IMDB. +
 Format: `clear` or `c`

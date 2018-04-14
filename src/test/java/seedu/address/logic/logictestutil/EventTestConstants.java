@@ -23,8 +23,9 @@ public class EventTestConstants {
     public static final String VALID_LOCATION_CAMP = "NUS School of Computing";
     public static final String VALID_REMARK_CCA = "Bring flute";
     public static final String VALID_REMARK_CAMP = "Arrive earlier for briefing";
-    public static final String VALID_TAG_CCA = "Important";
+    public static final String VALID_TAG_CCA = "Band";
     public static final String VALID_TAG_CAMP = "Orientation";
+    public static final String VALID_TAG_IMPORTANT = "Important";
 
     public static final String NAME_DESC_CCA = " " + PREFIX_NAME + VALID_NAME_CCA;
     public static final String NAME_DESC_CAMP = " " + PREFIX_NAME + VALID_NAME_CAMP;
@@ -42,11 +43,16 @@ public class EventTestConstants {
     public static final String REMARK_DESC_CAMP = " " + PREFIX_REMARK + VALID_REMARK_CAMP;
     public static final String TAG_DESC_CCA = " " + PREFIX_TAG + VALID_TAG_CCA;
     public static final String TAG_DESC_CAMP = " " + PREFIX_TAG + VALID_TAG_CAMP;
+    public static final String TAG_DESC_IMPORTANT = " " + PREFIX_TAG + VALID_TAG_IMPORTANT;
+
+    public static final String AFTEREND_START_DATETIME_CCA = "16/5/2018 8:00";
+    public static final String AFTEREND_START_DATETIME_DESC_CCA = " " + PREFIX_START_DATETIME
+            + AFTEREND_START_DATETIME_CCA;
 
     public static final String INVALID_EVENT_NAME_DESC = " " + PREFIX_NAME + "Orbital&"; // '&' not allowed
     public static final String INVALID_EVENT_START_DATETIME_DESC = " " + PREFIX_START_DATETIME + "2018-03-04 17:00";
     public static final String INVALID_EVENT_END_DATETIME_DESC = " " + PREFIX_END_DATETIME + "2018-03-10 17:00";
-    public static final String INVALID_EVENT_LOCATION_DESC = " " + PREFIX_LOCATION + " NUS";
+    public static final String INVALID_EVENT_LOCATION_DESC = " " + PREFIX_LOCATION + ""; // '' not allowed
     // whitespace in front not allowed
 
     public static final String INVALID_EVENT_REMARK_DESC = " " + PREFIX_REMARK + ""; // '' not allowed

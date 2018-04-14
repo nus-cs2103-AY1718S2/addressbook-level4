@@ -76,6 +76,17 @@ public class TaskBuilder implements ActivityBuilder {
         return this;
     }
 
+    //@@author Kyomian
+    /**
+     * Overloaded method.
+     * Sets the {@code Remark} of the {@code Activity} to null.
+     */
+    public TaskBuilder withRemark() {
+        this.remark = null;
+        return this;
+    }
+
+    //@@author YuanQLLer
     /**
      * Sets the {@code DateTime} of the {@code Activity} that we are building.
      */

@@ -252,9 +252,7 @@ Deletes all non-clients added before 12/12/2017 in the address book.
 // end::deletebefore[]
 
 // tag::emailing[]
-
 ==== Emailing a person : `email` or `em`
-
 
 Emails a person based on the specified name.
 Format: `email n/NAME pu/PURPOSE`
@@ -269,7 +267,6 @@ Format: `email n/NAME pu/PURPOSE`
 // end::emailing[]
 
 // tag::templating[]
-
 ==== Creating a new template : `addtemplate` or `at`
 
 Creates a new template based on the specified purpose, subject and message.
@@ -299,7 +296,7 @@ Deletes the template with the purpose greeting.
 // end::templating[]
 
 //tag::sort[]
-==== Sorting contacts in address book : `sort_by_name` or `sort`
+==== Sorting contacts in address book : `sort` or `so`
 
 Sorts the contacts in the address book in alphabetical order by name. Sorting will not distinguish between first and last names, but will sort by the full text entered for a contacts name.
 
@@ -308,31 +305,31 @@ Currently only sorting alphabetically by name is supported.
 [NOTE]
 No arguments are necessary, can simply enter `sort` in CLI
 
-Format: `sort` or `sort_by_name`
+Format: `sort` or `so`
 
 Examples:
 
 * `sort`
-* `sort_by_name`
+* `so`
 //end::sort[]
 
 //tag::import[]
-==== Importing contacts from CSV : `import_contacts` or `ic`
+==== Importing contacts from CSV : `importcontacts` or `ic`
 
 Imports contacts from a csv file that contains the header (Name, Email, Phone, Address) +
 
-Format: `import_contacts PATH.csv`
+Format: `importcontacts PATH.csv`
 
-For example `import_contacts ~/PATH/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv` at `PATH`.
+For example `importcontacts ~/PATH/examplefile.csv` will import the contacts contained in the .csv file `examplefile.csv` at `PATH`.
 
-[Note]
+[NOTE]
 *The _command_ should meet the following conditions:*
 
 * Include the file extension `.csv` at the end of the file path
 * Use the *full* (not the _relative_) file path
 * _No need_ to include quotations ("...") around the file path
 
-[Note]
+[NOTE]
 *The `.csv` file from which you are importing the contacts should:*
 
 * Have 4 headers in the following order: Name, Email, Phone, Address. The header is simply the first row of the .csv
@@ -344,8 +341,8 @@ An example of a suitable import file format is shown below.
 image::import_file_example.png[width="700"]
 //end::import[]
 
-//tag:export[]
-==== Exporting contacts to CSV: `export_contacts` or `ec`
+//tag::export[]
+==== Exporting contacts to CSV: `exportcontacts` or `ec`
 
 Export all contacts to a .csv file.
 
@@ -391,12 +388,12 @@ Selects the 2nd person in the address book and shows the profile page of the per
 Selects the 1st person in the results of the `find` command and shows the profile page of the person.
 // end::select[]
 
-// tag::scheduling[]
+// tag::appointment[]
 === Scheduling Features
 
 TIP: The calendar view is optimized for fullscreen mode.
 
-NOTE: Currently, there is a glitch in the scaling of the calendar Year Page. We are working with the
+NOTE: Currently, there is a glitch in the scaling of the calendar Year Page. We are working very hard with the
 third party provider to resolve this issue.
 
 ==== Adding an appointment : `addappointment` or `aa`
@@ -443,7 +440,9 @@ Examples:
 image::daScreenshot.png[width="800"]
 * `da n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate` +
 Deletes the appointment previously arranged with Betsy on 12/12/2017 from 12:30pm to 1:30pm at Gold Park Estate.
+// end::appointment[]
 
+// tag::zoomin[]
 ==== Zooming in calendar view : `zoomin` or `zi`
 
 Zooms in the calendar panel to show a more detailed calendar view  +
@@ -458,6 +457,7 @@ Examples:
 image::ziScreenshot.png[width="800"]
 * `zi` +
 If the calendar panel is previously showing the Month View, it will now be showing the Week View.
+// end::zoomin[]
 
 ==== Zooming out calendar view : `zoomout` or `zo`
 
@@ -474,6 +474,7 @@ image::zoScreenshot.png[width="800"]
 * `zo` +
 If the calendar panel is previously showing the Day View, it will now be showing the Week View.
 
+// tag::gobackward[]
 ==== Going backward on calendar view : `gobackward` or `gb`
 
 Makes the calendar view go backward in time from the currently displaying date. +
@@ -484,6 +485,7 @@ Examples:
 image::gbScreenshot.png[width="800"]
 * `gb` +
 If the calendar panel is currently displaying Day View for 02/02/2018, it will change the Day View to 01/02/2018
+// end::gobackward[]
 
 ==== Going forward on calendar view : `goforward` or `gf`
 
@@ -496,6 +498,7 @@ image::gfScreenshot.png[width="800"]
 * `gf` +
 If the calendar panel is currently displaying Day View for 02/02/2018, it will change the Day View to 03/02/2018
 
+// tag::schedulingv2.0[]
 ==== Finding an appointment : `findappointment` or `fa` `[Coming in v2.0]`
 
 Finds appointments with details containing any of the given keywords or part thereof. +
@@ -569,7 +572,7 @@ Examples:
 
 * `cc s/STYLE_2` +
 Set the calendar theme to the predefined `STYLE_2`.
-// end::scheduling[]
+// end::schedulingv2.0[]
 
 == FAQ
 
@@ -583,7 +586,7 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Add Appointment* : `addappointment n/NAME d/DATE st/STARTTIME et/ENDTIME l/LOCATION` +
 e.g. `addappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estate`
 * *Add Template* : `addtemplate pu/PURPOSE s/SUBJECT m/MESSAGE` +
-e.g. `addTemplate pu/holiday s/Merry Christmas m/Santa Claus is coming to town!`
+e.g. `addtemplate pu/holiday s/Merry Christmas m/Santa Claus is coming to town!`
 * *Calendar Go Back* : `gobackward`
 * *Calendar Go Forward* : `goforward`
 * *Clear* : `clear`
@@ -597,7 +600,7 @@ e.g. `deleteappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estat
 e.g. `deleteappointment 3`
 * *Delete Before* : `deletebefore d/DATE [t/TAG]...` +
 e.g. `deletebefore d/12/12/2017 t/friends`
-* *Delete Template* : `deleteTemplate pu/PURPOSE` +
+* *Delete Template* : `deletetemplate pu/PURPOSE` +
 e.g. `deletetemplate pu. greeting`
 * *Email* : `email n/KEYWORD pu/TEMPLATE` +
 e.g. `email n/James pu/followup`
@@ -605,7 +608,7 @@ e.g. `email n/James pu/followup`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit Appointment `[Coming in v2.0]`* : `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]` +
 e.g. `editappointment 1 d/25/12/2017 l/Parkway Parade`
-* *Export Contacts* : `export_contacts PATH`
+* *Export Contacts* : `exportcontacts PATH`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Find Appointment `[Coming in v2.0]`* : `findappointment KEYWORD...` +
@@ -614,8 +617,8 @@ e.g. `findappointment 12/12/2018`
 * *Go Forward* : `goforward`
 * *Help* : `help`
 * *History* : `history`
-* *Import Contacts* : `import_contacts PATH.csv` +
-e.g. `import_contacts ~/PATH/examplefile.csv`
+* *Import Contacts* : `importcontacts PATH.csv` +
+e.g. `importcontacts ~/PATH/examplefile.csv`
 * *List* : `list`
 * *Redo* : `redo`
 * *Select `[Coming in v2.0]`* : `select INDEX` +

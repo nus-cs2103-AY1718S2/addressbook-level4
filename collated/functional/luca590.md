@@ -26,44 +26,39 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 
 /**
- * Class provides main functionality for ExportContactsCommand,
- * specifically executeUndoableCommand() provides main functionality
+ * Provides main functionality for ExportContactsCommand,
+ * specifically executeUndoableCommand() is the primary function
  */
 public class ExportContactsCommand extends UndoableCommand {
 
     public static final String FS = File.separator;
-    public static final String SUCCESS = "Contacts successfully exported.\n";
+    public static final String MESSAGE_SUCCESS = "Contacts successfully exported.\n";
     public static final String COMMAND_WORD = "export_contacts";
     public static final String COMMAND_ALIAS = "ec";
 
-    private Path writeToPath; // This path must include filename at end
+    private Path writeToPath;
 
-    /*
-     * Constructor, one constructor takes no arguments (default file path)
-     * The other constructor takes the file path provided by user as argument
-     */
     public ExportContactsCommand() {
-        //System.out.println("Contstructor called without argument");
         writeToPath = getDefaultPath();
         System.out.println(writeToPath);
     }
 
     public ExportContactsCommand(String filePath) {
-        //System.out.println("Contstructor called WTIH argument");
         requireNonNull(filePath);
         writeToPath = FileSystems.getDefault().getPath(filePath.trim());
     }
 
-    /*
-     * Takes a valid input file (if invalid getCsvToWriteTo will throw error)
-     * and loops through the Persons in current address book, exporting
-     * each one to file specified
+    /**
+     * Returns a CommandResult object which will be notify the calling function
+     * of the status of execution (success or fail)
+     *
+     * @return CommandResult if function is successfully executed and throws no error
+     * @throws CommandException if csvPrinter is unable to write to file
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         CSVPrinter csvPrinter;
 
-        //Write file to path and specify name
         try {
             requireNonNull(model);
             csvPrinter = getCsvToWriteTo();
@@ -75,7 +70,7 @@ public class ExportContactsCommand extends UndoableCommand {
             ReadOnlyAddressBook myBook = model.getAddressBook();
             ObservableList<Person> myPersonList = myBook.getPersonList();
             Iterator personIterator = myPersonList.iterator();
-            //iterator over the Persons in AddressBook and write them to csv
+
             Person p;
             while (personIterator.hasNext()) {
                 p = (Person) personIterator.next();
@@ -83,17 +78,21 @@ public class ExportContactsCommand extends UndoableCommand {
             }
 
             csvPrinter.flush();
+            csvPrinter.close();
 
         } catch (Exception e) {
             throw new CommandException("Failed in exporting Persons.\n"
                     + e.getStackTrace());
         }
 
-        return new CommandResult(SUCCESS);
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     /**
+     * Returns a CSVPrinter object which can be used to write contacts to
+     *
      * @return gives the csv file to write to. The exported contacts will be in this file
+     * @throws IOException if cannot write create CSVPrinter to write to 'writeToPath'
      */
     public CSVPrinter getCsvToWriteTo() throws IOException {
         CSVPrinter csvPrinter;
@@ -145,14 +144,14 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.tag.Tag;
 
 
 /**
- * This class borrows from.
- *https://www.callicoder.com/java-read-write-csv-file-apache-commons-csv/
- *and https://github.com/callicoder/java-read-write-csv-file
+ * Imports contacts from a .csv file
+ *
+ * https://www.callicoder.com/java-read-write-csv-file-apache-commons-csv/
+ * and https://github.com/callicoder/java-read-write-csv-file
  */
 public final class ImportContactsCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "import_contacts";
@@ -165,29 +164,38 @@ public final class ImportContactsCommand extends UndoableCommand {
     public static final String MESSAGE_FILE_NOT_FOUND = "No file was found at the address provided. "
             + "Please provide anotehr address.\n";
     public static final String MESSAGE_NO_ADDRESS =
-            "No address was provided, please provide an address to a csv, from which to import the file\n";
-    /*
-     * private global variables used for reading CSV
-     */
+            "No address was provided, please provide an address to a csv, "
+                    + "from which to import the file\n";
+
     private String fileAddress;
     private CSVParser csvParser;
 
     /**
-     * Constructor takes file to read (@param fa)
+     * Takes in an address to set to the global, private variable 'fileAddress'
+     * checks to make sure the address passed in is non-null and trims whitespace
+     *
+     * @param fileAddressArg is the the file address passed into constructor
+     *                       fileAddress is set to fileAddressArg after taking out
+     *                       whitespaces and checking it is non-null
+     * @throws Exception if fileAddressArg is null
      */
-    public ImportContactsCommand(final String fa) throws Exception {
-        //This throws IOException if _fileAddress is null
+    public ImportContactsCommand(final String fileAddressArg) throws Exception {
         try {
-            requireNonNull(fa);
+            requireNonNull(fileAddressArg);
         } catch (Exception e) {
             throw new Exception("Address passed to "
                     + "ImportContactsCommand constructor is null");
         }
-        fileAddress = fa.trim();
+        fileAddress = fileAddressArg.trim();
     }
 
     /**
-     * Tries to open csv file, throws exception if problem
+     * Function to isolate opening a file. If there is a problem with user input
+     * will likely be caught by this function
+     *
+     * @return CommandResult object if successful
+     * @throws Exception if cannot open file path, in this case
+     * there is likely a problem with the user input file path
      */
     public CommandResult openFile() throws Exception {
         Reader reader;
@@ -201,11 +209,19 @@ public final class ImportContactsCommand extends UndoableCommand {
                     .withFirstRecordAsHeader()
                     .withIgnoreHeaderCase()
                     .withTrim());
-        return new CommandResult(MESSAGE_FILE_SUCCESS_OPEN + "from : " + fileAddress);
+        return new CommandResult(MESSAGE_FILE_SUCCESS_OPEN
+                + "from : " + fileAddress);
     }
 
     /**
-     * Used for printing to console when contacts are added
+     * Prints to the console as Persons are imported
+     * Important for users to verify all correct contacts have been imported,
+     * and helpful for debugging
+     *
+     * @param n is person's name
+     * @param e is person's email
+     * @param p is person's phone
+     * @param a is person's address
      */
     public void printResult(final String n, final String e, final String p, final String a) {
         System.out.println("---------------");
@@ -217,72 +233,95 @@ public final class ImportContactsCommand extends UndoableCommand {
     }
 
     /**
-     * If file has been opened successfully, it iterates
-     * over the rows of the csv after finding the headers
-     * "Name", "Email", etc
-     * Makes a Person out of each row
-     * calls executeUndoableCommand() on new Person
+     * Creates and writes Person contacts referenced by the csvRecords iterable
+     *
+     * The below parameters are declared in executeUndoableCommand
+     * and initialized in writeContactsToFile
+     * @param name
+     * @param email
+     * @param phone
+     * @param address
+     * @param addDate
+     * @param formatter
+     * @param tagSet
+     * @param date
+     * @param personToAdd
+     * @param csvRecords
+     * @throws CommandException
+     */
+    private void writeContactsToFile(String name, String email, String phone, String address,
+                                     DateAdded addDate, SimpleDateFormat formatter, Set<Tag> tagSet,
+                                     Date date, Person personToAdd, Iterable<CSVRecord> csvRecords)
+            throws CommandException {
+        for (CSVRecord csvRecord : csvRecords) {
+            name = csvRecord.get("Name");
+            email = csvRecord.get("Email");
+            phone = csvRecord.get("Phone");
+            address = csvRecord.get("Address");
+            addDate = new DateAdded(formatter.format(date));
+
+            printResult(name, email, phone, address);
+
+            tagSet.add(new Tag("nonclient"));
+
+            personToAdd = new Person(new Name(name),
+                    new Phone(phone), new Email(email),
+                    new Address(address), addDate, tagSet);
+
+            try {
+                requireNonNull(model);
+            } catch (Exception e) {
+                throw new CommandException("Model is null in ImportContactsCommand"
+                        + " -> executeUndoableCommand");
+            }
+
+            try {
+                model.addPerson(personToAdd);
+                model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+            } catch (Exception e) {
+                throw new CommandException("Failed to add person in ImportContactsCommand, execute()\n"
+                        + e);
+            }
+
+        }
+    }
+
+    /**
+     * Checks conditions before calling writeContactsToFile
+     * initializes variables to null that are set in for-loop in writeContactsToFile
+     *
+     * @return CommandResult with success message if no exception is thrown
+     * @throws CommandException if file cannot be opened (openFile will throw exception first)
+     * or (more importantly) if Persons cannot be added to model
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        Person personToAdd;
-        String name;
-        String email;
-        String phone;
-        String address;
+        Person personToAdd = null;
+        String name = null;
+        String email = null;
+        String phone = null;
+        String address = null;
         Set<Tag> tagSet = new HashSet<>();
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
-        DateAdded addDate;
+        DateAdded addDate = null;
 
         try {
             System.out.println("Opening... " + fileAddress);
-            openFile(); //open the file to add users
+            openFile();
         } catch (Exception e) {
-            throw new CommandException("Cannot open file in executeUndoableCommand in "
-                    + "ImportContactsCommand Class\n"
-                    + "Make sure the path is not in quotations and contains .csv at the end"
-                    + e.getMessage());
+            throw new CommandException("We were not able to open your file.\n"
+                    + "Make sure the file path contains \".csv\" at the end and is not in quotations.");
         }
 
         try {
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
             requireNonNull(csvRecords);
 
-            for (CSVRecord csvRecord : csvRecords) { //iterate through the
-                // Accessing values by Header names
-                name = csvRecord.get("Name");
-                email = csvRecord.get("Email");
-                phone = csvRecord.get("Phone");
-                address = csvRecord.get("Address");
-                addDate = new DateAdded(formatter.format(date));
+            writeContactsToFile(name, email, phone, address, addDate,
+                    formatter, tagSet, date, personToAdd, csvRecords);
 
-                printResult(name, email, phone, address); //mainly for debugging
-
-                tagSet.add(new Tag("friend")); //temporary tag, fix later
-
-                personToAdd = new Person(new Name(name),
-                        new Phone(phone), new Email(email),
-                        new Address(address), addDate, tagSet);
-
-                UniquePersonList upl = new UniquePersonList(); //need to change this later to get current model
-
-                try {
-                    requireNonNull(model);
-                } catch (Exception e) {
-                    throw new CommandException("Model is null in ImportContactsCommand -> executeUndoableCommand");
-                }
-
-                try {
-                    model.addPerson(personToAdd);
-                    model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
-                } catch (Exception e) {
-                    throw new CommandException("Failed to add person in ImportContactsCommand, execute()\n"
-                            + e);
-                }
-
-            }
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (IOException ioe) {
             throw new CommandException(
@@ -306,8 +345,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
- * SortCommand is called from AddressBookParser and implements the a sorting mechanism
- * so that the user may sort contacts in the addressBook by name, alphabetically
+ * Implements sorting mechanism so that the user may sort contacts in the addressBook by name,
+ * alphabetically
  */
 public class SortCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sort_by_name";
@@ -429,7 +468,6 @@ public class ImportContactsCommandParser implements Parser<ImportContactsCommand
         setPersons((List<Person>) list);
 
     }
-
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java

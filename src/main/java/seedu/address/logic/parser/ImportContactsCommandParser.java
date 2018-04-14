@@ -9,14 +9,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 
 /**
- * Class to parse the import_contacts command
+ * Class to parse the importcontacts command
  */
 public class ImportContactsCommandParser implements Parser<ImportContactsCommand> {
     /**
      * Self explanitory.
      */
     public static final String FAILED_TO_PARSE =
-            "Failed to parse import_contacts command";
+            "Failed to parse importcontacts command";
 
     /**
      * Parses the given {@code String} of arguments in the context of the ImportContactsCommand

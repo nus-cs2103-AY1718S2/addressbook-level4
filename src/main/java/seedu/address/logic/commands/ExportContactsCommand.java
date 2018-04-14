@@ -24,22 +24,18 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 
 /**
- * Class provides main functionality for ExportContactsCommand,
- * specifically executeUndoableCommand() provides main functionality
+ * Provides main functionality for ExportContactsCommand,
+ * specifically executeUndoableCommand() is the primary function
  */
 public class ExportContactsCommand extends UndoableCommand {
 
     public static final String FS = File.separator;
-    public static final String SUCCESS = "Contacts successfully exported.\n";
-    public static final String COMMAND_WORD = "export_contacts";
+    public static final String MESSAGE_SUCCESS = "Contacts successfully exported.\n";
+    public static final String COMMAND_WORD = "exportcontacts";
     public static final String COMMAND_ALIAS = "ec";
 
-    private Path writeToPath; // This path must include filename at end
+    private Path writeToPath;
 
-    /*
-     * Constructor, one constructor takes no arguments (default file path)
-     * The other constructor takes the file path provided by user as argument
-     */
     public ExportContactsCommand() {
         writeToPath = getDefaultPath();
         System.out.println(writeToPath);
@@ -50,16 +46,17 @@ public class ExportContactsCommand extends UndoableCommand {
         writeToPath = FileSystems.getDefault().getPath(filePath.trim());
     }
 
-    /*
-     * Takes a valid input file (if invalid getCsvToWriteTo will throw error)
-     * and loops through the Persons in current address book, exporting
-     * each one to file specified
+    /**
+     * Returns a CommandResult object which will be notify the calling function
+     * of the status of execution (success or fail)
+     *
+     * @return CommandResult if function is successfully executed and throws no error
+     * @throws CommandException if csvPrinter is unable to write to file
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         CSVPrinter csvPrinter;
 
-        //Write file to path and specify name
         try {
             requireNonNull(model);
             csvPrinter = getCsvToWriteTo();
@@ -71,7 +68,7 @@ public class ExportContactsCommand extends UndoableCommand {
             ReadOnlyAddressBook myBook = model.getAddressBook();
             ObservableList<Person> myPersonList = myBook.getPersonList();
             Iterator personIterator = myPersonList.iterator();
-            //iterator over the Persons in AddressBook and write them to csv
+
             Person p;
             while (personIterator.hasNext()) {
                 p = (Person) personIterator.next();
@@ -86,11 +83,14 @@ public class ExportContactsCommand extends UndoableCommand {
                     + e.getStackTrace());
         }
 
-        return new CommandResult(SUCCESS);
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     /**
+     * Returns a CSVPrinter object which can be used to write contacts to
+     *
      * @return gives the csv file to write to. The exported contacts will be in this file
+     * @throws IOException if cannot write create CSVPrinter to write to 'writeToPath'
      */
     public CSVPrinter getCsvToWriteTo() throws IOException {
         CSVPrinter csvPrinter;

@@ -46,7 +46,7 @@ public class ExportContactsCommandTest {
     public void addressBookParser_inputCommandAndAlias_returnsExportContactsCommand() throws Exception {
         AddressBookParser ap = new AddressBookParser();
         ExportContactsCommand e1 = (ExportContactsCommand) ap.parseCommand ("ec");
-        ExportContactsCommand e2 = (ExportContactsCommand) ap.parseCommand("export_contacts");
+        ExportContactsCommand e2 = (ExportContactsCommand) ap.parseCommand("exportcontacts");
 
         assertNotNull(e1);
         assertNotNull(e2);

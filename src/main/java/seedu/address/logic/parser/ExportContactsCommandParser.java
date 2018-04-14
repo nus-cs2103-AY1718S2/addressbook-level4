@@ -6,12 +6,12 @@ import seedu.address.logic.commands.ExportContactsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Class to parse the export_contacts command
+ * Class to parse the exportcontacts command
  */
 public class ExportContactsCommandParser implements Parser<ExportContactsCommand> {
 
     public static final String FAILED_TO_PARSE =
-            "Failed to parse import_contacts command";
+            "Failed to parse importcontacts command";
 
     /**
      * Parses the given {@code String} of arguments in the context of the ExportContactsCommand

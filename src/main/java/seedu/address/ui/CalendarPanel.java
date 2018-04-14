@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.CalendarGoBackwardEvent;
 import seedu.address.commons.events.logic.CalendarGoForwardEvent;
+import seedu.address.commons.events.logic.UpdateAppointmentsEvent;
 import seedu.address.commons.events.logic.ZoomInEvent;
 import seedu.address.commons.events.logic.ZoomOutEvent;
 import seedu.address.commons.events.model.AppointmentDeletedEvent;
@@ -112,6 +113,16 @@ public class CalendarPanel extends UiPart<CalendarView> {
         entry.setLocation(appointment.getLocation().value);
         entry.setTitle(ENTRY_TITLE + appointment.getName() + " " + appointment.getLocation());
         entry.setCalendar(calendar);
+    }
+
+    /**
+     * Handles the event where the appointment list is updated
+     */
+    @Subscribe
+    private void handleUpdateAppointmentsEvent(UpdateAppointmentsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendar.clear();
+        loadEntries(event.getUpdatedAppointments());
     }
 
     /**

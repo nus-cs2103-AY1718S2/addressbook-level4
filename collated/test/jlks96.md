@@ -88,6 +88,27 @@ public class NewAppointmentAddedEventTest {
     }
 }
 ```
+###### \java\seedu\address\commons\event\UpdateAppointmentsEventTest.java
+``` java
+public class UpdateAppointmentsEventTest {
+
+    @Test
+    public void getAppointmentAdded_validAppointment_success() {
+        AddressBook addressBook = getTypicalAddressBook();
+        ObservableList<Appointment> appointments = addressBook.getAppointmentList();
+        UpdateAppointmentsEvent event = new UpdateAppointmentsEvent(appointments);
+        assert(event.getUpdatedAppointments().equals(appointments));
+    }
+
+    @Test
+    public void toString_comparedWithClassName_success() {
+        AddressBook addressBook = getTypicalAddressBook();
+        ObservableList<Appointment> appointments = addressBook.getAppointmentList();
+        UpdateAppointmentsEvent event = new UpdateAppointmentsEvent(appointments);
+        assert(event.toString().equals("UpdateAppointmentsEvent"));
+    }
+}
+```
 ###### \java\seedu\address\commons\event\ZoomInEventTest.java
 ``` java
 public class ZoomInEventTest {
@@ -1148,6 +1169,17 @@ public class DeleteBeforeCommandParserTest {
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
+
+    @Test
+    public void resetData_withClashingAppointments_throwsAssertionError() {
+        List<Person> newPersons = Arrays.asList(ALICE);
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<Appointment> newAppointments = Arrays.asList(ALICE_APPT, HALEM_APPT); // Repeat ALICE_APPT twice
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newAppointments);
+
+        thrown.expect(AssertionError.class);
+        addressBook.resetData(newData);
+    }
 ```
 ###### \java\seedu\address\model\AddressBookTest.java
 ``` java
@@ -1380,7 +1412,7 @@ public class TimeTest {
         assertFalse(Time.isValidTime("1234")); // invalid time
         assertFalse(Time.isValidTime("time")); // non-numeric
         assertFalse(Time.isValidTime("eleven 30")); // alphabets within time
-        assertFalse(Time.isValidTime("12 /12/2018")); // spaces within time
+        assertFalse(Time.isValidTime("12 :30")); // spaces within time
         assertFalse(Time.isValidTime("25:00")); // invalid hour
 
         // valid time
@@ -1892,6 +1924,9 @@ public class TypicalDates {
             .withDate("06/06/2018").withStartTime("10:30").withEndTime("11:30").withLocation("little tokyo").build();
     public static final Appointment GEORGE_APPT = new AppointmentBuilder().withPersonName("George Best")
             .withDate("07/07/2018").withStartTime("10:30").withEndTime("11:30").withLocation("4th street").build();
+    public static final Appointment HALEM_APPT = new AppointmentBuilder().withPersonName("Halem Brooke")
+            .withDate("01/01/2018").withStartTime("10:30").withEndTime("11:30")
+            .withLocation("Diamond Park").build();
 ```
 ###### \java\seedu\address\testutil\TypicalPersonsAndAppointments.java
 ``` java
@@ -2009,6 +2044,103 @@ public class TypicalTags {
 
 }
 ```
+###### \java\seedu\address\ui\CalendarPanelTest.java
+``` java
+public class CalendarPanelTest extends GuiUnitTest {
+    private CalendarPanel calendarPanel;
+
+    @Before
+    public void setUp() {
+        guiRobot.interact(() -> calendarPanel = new CalendarPanel(getTypicalAddressBook().getAppointmentList()));
+    }
+
+    @Test
+    public void zoomInAndOut() throws Exception {
+
+        //starts with Month Page
+        assertEquals(calendarPanel.getCalendarView().getMonthPage(), calendarPanel.getPageBase());
+
+        //zoom in to Week Page
+        raiseZoomInEvent();
+        assertEquals(calendarPanel.getCalendarView().getWeekPage(), calendarPanel.getPageBase());
+
+        //zoom in to Day Page
+        raiseZoomInEvent();
+        assertEquals(calendarPanel.getCalendarView().getDayPage(), calendarPanel.getPageBase());
+
+        //can't zoom in anymore, stays at Day Page
+        raiseZoomInEvent();
+        assertEquals(calendarPanel.getCalendarView().getDayPage(), calendarPanel.getPageBase());
+
+        //zoom out to Week Page
+        raiseZoomOutEvent();
+        assertEquals(calendarPanel.getCalendarView().getWeekPage(), calendarPanel.getPageBase());
+
+        //zoom out to Month Page
+        raiseZoomOutEvent();
+        assertEquals(calendarPanel.getCalendarView().getMonthPage(), calendarPanel.getPageBase());
+
+        //zoom out to Year Page
+        raiseZoomOutEvent();
+        assertEquals(calendarPanel.getCalendarView().getYearPage(), calendarPanel.getPageBase());
+
+        //can't zoom out anymore, stays at Year Page
+        raiseZoomOutEvent();
+        assertEquals(calendarPanel.getCalendarView().getYearPage(), calendarPanel.getPageBase());
+
+        //zoom in to Month Page
+        raiseZoomInEvent();
+        assertEquals(calendarPanel.getCalendarView().getMonthPage(), calendarPanel.getPageBase());
+    }
+
+    @Test
+    public void handleCalendarGoBackwardEvent_valid_success() {
+        calendarPanel.getPageBase().goBack();
+        PageBase pageBase = calendarPanel.getPageBase();
+        calendarPanel.getPageBase().goForward();
+        raiseCalendarGoBackwardEvent();
+        assertEquals(pageBase, calendarPanel.getPageBase());
+    }
+
+    @Test
+    public void handleCalendarGoForwardEvent_valid_success() {
+        calendarPanel.getPageBase().goForward();
+        PageBase pageBase = calendarPanel.getPageBase();
+        calendarPanel.getPageBase().goBack();
+        raiseCalendarGoForwardEvent();
+        assertEquals(pageBase, calendarPanel.getPageBase());
+    }
+
+    /**
+     * Raises a {@code ZoomInEvent}
+     */
+    private void raiseZoomInEvent() {
+        EventsCenter.getInstance().post(new ZoomInEvent());
+    }
+
+    /**
+     * Raises a {@code ZoomOutEvent}
+     */
+    private void raiseZoomOutEvent() {
+        EventsCenter.getInstance().post(new ZoomOutEvent());
+    }
+
+    /**
+     * Raises a {@code CalendarGoBackwardEvent}
+     */
+    private void raiseCalendarGoBackwardEvent() {
+        EventsCenter.getInstance().post(new CalendarGoBackwardEvent());
+    }
+
+    /**
+     * Raises a {@code CalendarGoForwardEvent}
+     */
+    private void raiseCalendarGoForwardEvent() {
+        EventsCenter.getInstance().post(new CalendarGoForwardEvent());
+    }
+
+}
+```
 ###### \java\systemtests\DeleteBeforeAliasSystemTest.java
 ``` java
 public class DeleteBeforeAliasSystemTest extends AddressBookSystemTest {
@@ -2099,7 +2231,7 @@ public class DeleteBeforeAliasSystemTest extends AddressBookSystemTest {
      * 1. Asserts that the command box displays {@code command}.<br>
      * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to the current model.<br>
-     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 4. Asserts that the selected card and status bar remain unchanged.<br>
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
@@ -2206,7 +2338,7 @@ public class DeleteBeforeCommandSystemTest extends AddressBookSystemTest {
      * 1. Asserts that the command box displays {@code command}.<br>
      * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to the current model.<br>
-     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 4. Asserts that the selected card and status bar remain unchanged.<br>
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>

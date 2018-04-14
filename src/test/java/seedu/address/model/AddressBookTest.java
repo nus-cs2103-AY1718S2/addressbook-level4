@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE;
 import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE_APPT;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.HALEM_APPT;
 import static seedu.address.testutil.TypicalPersonsAndAppointments.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -88,6 +89,17 @@ public class AddressBookTest {
         List<Person> newPersons = Arrays.asList(ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<Appointment> newAppointments = Arrays.asList(ALICE_APPT, ALICE_APPT); // Repeat ALICE_APPT twice
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newAppointments);
+
+        thrown.expect(AssertionError.class);
+        addressBook.resetData(newData);
+    }
+
+    @Test
+    public void resetData_withClashingAppointments_throwsAssertionError() {
+        List<Person> newPersons = Arrays.asList(ALICE);
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<Appointment> newAppointments = Arrays.asList(ALICE_APPT, HALEM_APPT); // Repeat ALICE_APPT twice
         AddressBookStub newData = new AddressBookStub(newPersons, newTags, newAppointments);
 
         thrown.expect(AssertionError.class);

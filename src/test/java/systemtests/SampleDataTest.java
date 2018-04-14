@@ -13,7 +13,6 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
-import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
 public class SampleDataTest extends AddressBookSystemTest {
@@ -47,9 +46,9 @@ public class SampleDataTest extends AddressBookSystemTest {
     }
 
     @Test
-    public void addressBook_dataFileDoesNotExist_loadSampleData() {
-        Person[] expectedList = SampleDataUtil.getSamplePersons();
+    public void addressBook_dataFileDoesNotExist_loadBlank() {
         //@@author emer7
+        Person[] expectedList = new Person[0];
         UnlockCommand testUnlockCommand = new UnlockCommand();
         testUnlockCommand.setTestMode();
         testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());

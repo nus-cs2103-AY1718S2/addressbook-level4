@@ -116,11 +116,5 @@ public class XmlSerializableAddressBookTest {
         thrown.expect(IllegalValueException.class);
         dataFromFile.addToAddressBook(new AddressBook());
     }
-
-    @AfterClass
-    public static void resetAliasList() {
-        AddressBook addressBook = new AddressBook();
-        addressBook.resetAliasList();
-    }
     //@@author
 }

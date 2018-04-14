@@ -396,7 +396,6 @@ The following diagram illustrates a sequence of method calls to initialize the `
 .Sequence diagram for autocompleting NRIC (include initialization of Autocomplete class)
 image::autocompleteSequenceDiagram.png[width="800"]
 
- +
 
 `Autocomplete.java` encompasses the logic for parsing user input in the CLI and determining what autocomplete suggestions are to be passed back to `CommandBox.java`. Data required for autocomplete, such as a list of command words, prefixes, options and parameters in Medeina, are retrieved from the `Logic` component. All data required by `Autocomplete` are consolidated in a similar way in the `Logic` component.
 

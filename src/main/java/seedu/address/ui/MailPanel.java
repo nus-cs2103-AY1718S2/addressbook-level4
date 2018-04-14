@@ -57,13 +57,12 @@ public class MailPanel extends UiPart<VBox> {
 
             @Override
             protected void succeeded() {
-                MailPanel.this.getRoot().getChildren().remove(0);
+                MailPanel.this.getRoot().getChildren().remove(loading);
             }
 
         };
 
         new Thread(fetchEmails).start();
-        setConnections();
         ScheduledExecutorService runChecks = Executors.newScheduledThreadPool(1);
         Runnable rc = new Runnable() {
             @Override

@@ -3,16 +3,18 @@ package seedu.address.storage;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Account;
 
-import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * JAXB-friendly version of the Account.
  */
+@XmlRootElement(name = "accountData")
 public class XmlAdaptedAccount {
 
-    @XmlValue
+    @XmlAttribute(name = "username")
     private String username;
-    @XmlValue
+    @XmlAttribute(name = "password")
     private String password;
 
     /**

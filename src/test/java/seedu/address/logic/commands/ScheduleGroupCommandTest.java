@@ -36,12 +36,11 @@ import seedu.address.ui.testutil.EventsCollectorRule;
  */
 public class ScheduleGroupCommandTest {
 
-    private ExpectedException thrown = ExpectedException.none();
-
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private Model model;
+    private ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {

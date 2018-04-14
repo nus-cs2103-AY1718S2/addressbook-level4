@@ -597,10 +597,10 @@ e.g. `deleteappointment n/Betsy d/12/12/2017 st/12:30 et/13:30 l/Gold Park Estat
 e.g. `deleteappointment 3`
 * *Delete Before* : `deletebefore d/DATE [t/TAG]...` +
 e.g. `deletebefore d/12/12/2017 t/friends`
-* *Delete Template* : `deleteTemplate PURPOSE` +
-e.g. `deletetemplate greeting`
-* *Email* : `email KEYWORD TEMPLATE` +
-e.g. `email James followup`
+* *Delete Template* : `deleteTemplate pu/PURPOSE` +
+e.g. `deletetemplate pu. greeting`
+* *Email* : `email n/KEYWORD pu/TEMPLATE` +
+e.g. `email n/James pu/followup`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit Appointment `[Coming in v2.0]`* : `editappointment INDEX [n/NAME] [d/DATE] [st/STARTTIME] [et/ENDTIME] [l/LOCATION]` +

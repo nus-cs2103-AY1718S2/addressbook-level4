@@ -1,8 +1,11 @@
 package seedu.organizer.logic.commands;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.fail;
+import static seedu.organizer.logic.commands.ForgotPasswordCommand.MESSAGE_USER_DOES_NOT_EXIST;
 import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -10,6 +13,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.organizer.logic.CommandHistory;
 import seedu.organizer.logic.UndoRedoStack;
+import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.user.UserWithQuestionAnswer;
@@ -59,14 +63,14 @@ public class ForgotPasswordCommandTest {
     @Test
     public void execute_nonexistingUser_noSuchUserFound() {
         forgotPasswordCommand = new ForgotPasswordCommand("noSuchUser");
-        assertCommandFailure(forgotPasswordCommand);
+        assertCommandFailure(forgotPasswordCommand, String.format(MESSAGE_USER_DOES_NOT_EXIST, "noSuchUser"));
     }
 
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      * - the command feedback is equal to {@code expectedMessage}<br>
      */
-    protected void assertCommandSuccess(ForgotPasswordCommand command, String expectedMessage) {
+    protected void assertCommandSuccess(ForgotPasswordCommand command, String expectedMessage) throws CommandException {
         forgotPasswordCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         CommandResult commandResult = command.execute();
         assertEquals(expectedMessage, commandResult.feedbackToUser);
@@ -76,10 +80,14 @@ public class ForgotPasswordCommandTest {
      * Asserts that {@code command} is successfully executed, and<br>
      * - Exception is thrown
      */
-    protected void assertCommandFailure(ForgotPasswordCommand command) {
+    protected void assertCommandFailure(ForgotPasswordCommand command, String expectedMessage) {
         forgotPasswordCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        exception.expect(AssertionError.class);
-        command.execute();
+        try {
+            command.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            Assert.assertEquals(expectedMessage, e.getMessage());
+        }
     }
 }
 

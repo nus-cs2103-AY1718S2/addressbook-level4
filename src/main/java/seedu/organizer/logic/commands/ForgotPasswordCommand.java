@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_USERNAME;
 
+import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.user.User;
 import seedu.organizer.model.user.UserWithQuestionAnswer;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
@@ -24,6 +25,7 @@ public class ForgotPasswordCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Question: %1$s";
     public static final String MESSAGE_NO_QUESTION = "User %1$s does not have a question";
+    public static final String MESSAGE_USER_DOES_NOT_EXIST = "User %1$s does not exist";
 
     private String username;
 
@@ -38,13 +40,13 @@ public class ForgotPasswordCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         requireAllNonNull(username, model);
         User user;
         try {
             user = model.getUserByUsername(username);
         } catch (UserNotFoundException unf) {
-            throw new AssertionError("User does not exist");
+            throw new CommandException(String.format(MESSAGE_USER_DOES_NOT_EXIST, username));
         }
         if (user instanceof UserWithQuestionAnswer) {
             String question = ((UserWithQuestionAnswer) user).question;

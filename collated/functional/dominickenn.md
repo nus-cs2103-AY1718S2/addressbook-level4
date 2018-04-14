@@ -183,6 +183,7 @@ public class ForgotPasswordCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Question: %1$s";
     public static final String MESSAGE_NO_QUESTION = "User %1$s does not have a question";
+    public static final String MESSAGE_USER_DOES_NOT_EXIST = "User %1$s does not exist";
 
     private String username;
 
@@ -197,13 +198,13 @@ public class ForgotPasswordCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         requireAllNonNull(username, model);
         User user;
         try {
             user = model.getUserByUsername(username);
         } catch (UserNotFoundException unf) {
-            throw new AssertionError("User does not exist");
+            throw new CommandException(String.format(MESSAGE_USER_DOES_NOT_EXIST, username));
         }
         if (user instanceof UserWithQuestionAnswer) {
             String question = ((UserWithQuestionAnswer) user).question;
@@ -431,6 +432,10 @@ public class AddQuestionAnswerCommandParser implements Parser<AddQuestionAnswerC
                     AddQuestionAnswerCommand.MESSAGE_USAGE));
         }
 
+        if (arePrefixesRepeated(argMultimap, PREFIX_QUESTION, PREFIX_ANSWER)) {
+            throw new ParseException(String.format(MESSAGE_REPEATED_SAME_PREFIXES, AddQuestionAnswerCommand
+                    .MESSAGE_USAGE));
+        }
         try {
             String question = ParserUtil.parseQuestion(argMultimap.getValue(PREFIX_QUESTION)).get();
             String answer = ParserUtil.parseAnswer(argMultimap.getValue(PREFIX_ANSWER)).get();
@@ -447,7 +452,6 @@ public class AddQuestionAnswerCommandParser implements Parser<AddQuestionAnswerC
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-}
 
 ```
 ###### \java\seedu\organizer\logic\parser\AnswerCommandParser.java
@@ -472,6 +476,10 @@ public class AnswerCommandParser implements Parser<AnswerCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AnswerCommand.MESSAGE_USAGE));
         }
 
+        if (arePrefixesRepeated(argMultimap, PREFIX_USERNAME, PREFIX_ANSWER)) {
+            throw new ParseException(String.format(MESSAGE_REPEATED_SAME_PREFIXES, AnswerCommand.MESSAGE_USAGE));
+        }
+
         try {
             String username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
             String answer = ParserUtil.parseAnswer(argMultimap.getValue(PREFIX_ANSWER)).get();
@@ -488,7 +496,7 @@ public class AnswerCommandParser implements Parser<AnswerCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-}
+
 ```
 ###### \java\seedu\organizer\logic\parser\ForgotPasswordCommandParser.java
 ``` java
@@ -552,6 +560,10 @@ public class LoginCommandParser implements Parser<LoginCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
         }
 
+        if (arePrefixesRepeated(argMultimap, PREFIX_USERNAME, PREFIX_PASSWORD)) {
+            throw new ParseException(String.format(MESSAGE_REPEATED_SAME_PREFIXES, LoginCommand.MESSAGE_USAGE));
+        }
+
         try {
             String username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
             String password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD)).get();
@@ -570,7 +582,6 @@ public class LoginCommandParser implements Parser<LoginCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
-}
 ```
 ###### \java\seedu\organizer\logic\parser\ParserUtil.java
 ``` java
@@ -717,6 +728,10 @@ public class SignUpCommandParser implements Parser<SignUpCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SignUpCommand.MESSAGE_USAGE));
         }
 
+        if (arePrefixesRepeated(argMultimap, PREFIX_USERNAME, PREFIX_PASSWORD)) {
+            throw new ParseException(String.format(MESSAGE_REPEATED_SAME_PREFIXES, SignUpCommand.MESSAGE_USAGE));
+        }
+
         try {
             String username = ParserUtil.parseUsername(argMultimap.getValue(PREFIX_USERNAME)).get();
             String password = ParserUtil.parsePassword(argMultimap.getValue(PREFIX_PASSWORD)).get();
@@ -734,7 +749,7 @@ public class SignUpCommandParser implements Parser<SignUpCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-}
+
 ```
 ###### \java\seedu\organizer\logic\UndoRedoStack.java
 ``` java
@@ -1063,8 +1078,8 @@ public class Priority {
         return new Comparator<Task>() {
             @Override
             public int compare(Task task1, Task task2) {
-                return (task2.getPriority().value)
-                        .compareTo(task1.getPriority().value);
+                return (task2.getUpdatedPriority().value)
+                        .compareTo(task1.getUpdatedPriority().value);
             }
         };
     }
@@ -1132,7 +1147,7 @@ public class Priority {
         LocalDate currentDate = LocalDate.now();
         LocalDate dateAdded = task.getDateAdded().date;
         LocalDate deadline = task.getDeadline().date;
-        Priority curPriority = task.getPriority();
+        Priority curPriority = task.getUpdatedPriority();
 
         int priorityDifferenceFromMax = Integer.parseInt(Priority.HIGHEST_SETTABLE_PRIORITY_LEVEL)
                                         - Integer.parseInt(curPriority.value);
@@ -1141,21 +1156,22 @@ public class Priority {
         long dayDifferenceAddedToDeadline = Duration.between(dateAdded.atStartOfDay(),
                                                             deadline.atStartOfDay()).toDays();
 
-        if (dateAdded.isEqual(LocalDate.now()) && dayDifferenceCurrentToDeadline >= 0) {
-            newTask = new Task(task.getName(), task.getPriority(), task.getDeadline(), task.getDateAdded(),
-                    task.getDateCompleted(), task.getDescription(), task.getStatus(), task.getTags(),
-                    task.getSubtasks(), task.getUser());
+        if (dateAdded.isEqual(currentDate) && dayDifferenceCurrentToDeadline >= 0) {
+            newTask = new Task(task.getName(), task.getUpdatedPriority(), task.getBasePriority(), task.getDeadline(),
+                    task.getDateAdded(), task.getDateCompleted(), task.getDescription(), task.getStatus(),
+                    task.getTags(), task.getSubtasks(), task.getUser(), task.getRecurrence());
+
         } else if (currentDate.isBefore(deadline)) {
             newPriority = calculateNewPriority(curPriority,
                     priorityDifferenceFromMax, dayDifferenceCurrentToDeadline, dayDifferenceAddedToDeadline);
-            newTask = new Task(task.getName(), newPriority, task.getDeadline(), task.getDateAdded(),
-                    task.getDateCompleted(), task.getDescription(), task.getStatus(), task.getTags(),
-                    task.getSubtasks(), task.getUser());
+            newTask = new Task(task.getName(), newPriority, task.getBasePriority(), task.getDeadline(),
+                    task.getDateAdded(), task.getDateCompleted(), task.getDescription(), task.getStatus(),
+                    task.getTags(), task.getSubtasks(), task.getUser(), task.getRecurrence());
         } else {
             newPriority = new Priority(Priority.HIGHEST_SETTABLE_PRIORITY_LEVEL);
-            newTask = new Task(task.getName(), newPriority, task.getDeadline(), task.getDateAdded(),
-                    task.getDateCompleted(), task.getDescription(), task.getStatus(), task.getTags(),
-                    task.getSubtasks(), task.getUser());
+            newTask = new Task(task.getName(), newPriority, task.getBasePriority(), task.getDeadline(),
+                    task.getDateAdded(), task.getDateCompleted(), task.getDescription(), task.getStatus(),
+                    task.getTags(), task.getSubtasks(), task.getUser(), task.getRecurrence());
         }
 
         requireNonNull(newTask);

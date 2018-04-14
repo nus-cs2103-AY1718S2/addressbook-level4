@@ -75,16 +75,22 @@ public class EditPictureCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
+        studentToEditPicture = getStudentToEdit();
+        pictureEditedStudent = createPictureEditedStudent(studentToEditPicture);
+        finalPictureEditedStudent = createFinalEditedStudent(pictureEditedStudent);
+    }
+
+    /**
+     * Gets the student with the required index from the last shown student list.
+     */
+    private Student getStudentToEdit() throws CommandException {
         List<Student> lastShownList = model.getFilteredStudentList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }
-
         studentToEditPicture = lastShownList.get(index.getZeroBased());
-        pictureEditedStudent = createPictureEditedStudent(studentToEditPicture);
-        finalPictureEditedStudent = createFinalEditedStudent(pictureEditedStudent);
-
+        return studentToEditPicture;
     }
     /**
      * Creates and returns a {@code Student} with the details of {@code studentToEdit}

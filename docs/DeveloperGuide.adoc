@@ -555,24 +555,32 @@ The editedStudent will have the new programming language attribute and will henc
 
 ==== Design Considerations
 
-===== Aspect: How to store `ProgrammingLanguage` for a `Student`
+[width="100%", cols="2, 2,4 ,2 ,4 "options="header",]
+|=======================================================================
+| Aspect | Alternative 1 (Current choice) | Pros (+)/ Cons(-) | Alternative 2 | Pros(+) / Cons(-)
+|*How to store `ProgrammingLanguage` for a `Student`*
+| Store as an attribute of Student. | + Easy to keep track of as well as modify.  +
+{empty} +
+- Coupling increases as more classes (`ProgrammingLanguage` and `Student`) are associated with each other.
+| Store as a separate list and have each student index in the UniqueStudentsList be mapped to each item in the list.
 
-* **Alternative 1 (current choice):** Store as an attribute of Student.
-** Pros: Easy to keep track of as well as modify.
-** Cons: Coupling increases as more classes (`ProgrammingLanguage` and `Student`) are associated with each other.
-* **Alternative 2:** Store as a separate list and have each student index in the UniqueStudentsList be mapped to each item in the list.
-** Pros: Less coupling so less need to refactor code
-** Cons: Might be messier to implement, especially if the UniqueStudentsList have it's students swapping indexes.
+| +  Less coupling so less need to refactor code +
+{empty} +
+- Might be messier to implement, especially if the UniqueStudentsList have it's students swapping indexes.
 
-===== Aspect: What command to add `ProgrammingLanguage` to `Student`
+|*What command to add `ProgrammingLanguage` to `Student`*
+| Implement it through the existing `add` command.
+| + Intuitive and the user does not have to learn an additional command +
+{empty} +
+- User will have to type a longer string for add command to include the programming language used by the student.
 
-* **Alternative 1 (current choice):** Implement it through the existing `add` command.
-** Pros: Intuitive and the user does not have to learn an additional command
-** Cons: User will have to type a longer string for add command to include the programming language used by the student.
-* **Alternative 2:** Implement it as a new command.
-** Pros: User will be able to add or modify `ProgrammingLanguage` one or possibly even a few students at their own discretion.
-** Cons: User will have to learn a new specific command and might also be slightly difficult to implement.
-//end::programmingLanguage[]
+| Implement it as a new command.
+| + User will be able to add or modify `ProgrammingLanguage` one or possibly even a few students at their own discretion. +
+{empty} +
+- User will have to learn a new specific command and might also be slightly difficult to implement.
+
+|=======================================================================
+
 
 //tag:profilePage[]
 === Profile Page feature
@@ -688,6 +696,9 @@ The code snippet below shows how the `studentToEdit` is created when the `editMi
 
 After that, the student will be updated with the new details for his/her miscellaneous information.
 
+
+[large]*`editPicture` Command*
+
 For the command `editPicture`, the student's index will have to be provided by the user again. The next parameter for this is the required file path of the picture file.
 This can be in the form of an absolute file path (starting from a hardrive like `C:/Users/.../picture.png`) or relative to the folder that the jar application is in.
 
@@ -718,25 +729,39 @@ The code below shows how the saving of the file is done:
 
 Thus, the HTML file for displaying the student's profile page will be able to show the new image, which is copied to the local jar folder.
 
+The following sequence diagram illustrates the process of calling the `editPicture` command.
+
+.Sequence diagram showing the important details of the process of the `editPicture` command
+image::editPictureCommandSD.png[width:800]
+
+As seen from the above diagram, the `createFinalEditedStudent()` method ensures that the correct profile picture path is saved onto the student's XML data in order to be read by the HTML file which displays the student profile page.
+The method `createEditedStudent` creates the student wi
+
 ==== Design Considerations
 
-===== Aspect: Displaying and styling the profile page of a student
+[width="100%", cols="2, 2,4 ,2 ,4 "options="header",]
+|=======================================================================
+| Aspect | Alternative 1 (Current choice) | Pros (+)/ Cons(-) | Alternative 2 | Pros(+) / Cons(-)
+|*Displaying and styling the profile page of a student*
+| Have it as a JavaScript function in the HTML file of the student's profile page. | + Able to directly read the XML data of students from the file.  +
+{empty} +
+- Have to export the required files and folder out of the jar file as the JavaScript is unable to retrieve files outside of the Jar folder.
+|  Have it as a JavaFX file.
+| + Able to read the student's data from the UniqueStudentList. +
+{empty} +
+- Might be more difficult and messy to implement in code.
+|*Editing the profile picture*
+| Copy the picture file into the local jar directory.
+| + Ensures that the picture can still be loaded even when the original picture file is deleted. +
+{empty} +
+- Requires more code to copy the files over and ensure their validity
+| Read from the direct location of the original picture file.
+| + Less code of copying is required and any modifications to the original photo is immediately updated. +
+{empty} +
+- If the picture is deleted or corrupted, the profile picture would not be able to display.
 
-* **Alternative 1 (current choice):** Have it as a JavaScript function in the HTML file of the student's profile page.
-** Pros: Able to directly read the XML data of students from the file.
-** Cons: Have to export the required files and folder out of the jar file as the JavaScript is unable to retrieve files outside of the Jar folder.
-* **Alternative 2:** Have it as a JavaFX file.
-** Pros: Able to read the student's data from the UniqueStudentList.
-** Cons: Might be more difficult and messy to implement in code.
+|=======================================================================
 
-===== Aspect: Editing the profile picture.
-
-* **Alternative 1 (current choice):** Copy the picture file into the local jar directory.
-** Pros: Ensures that the picture can still be loaded even when the original picture file is deleted.
-** Cons: Requires more code to copy the files over and ensure their validity.
-* **Alternative 2:** Read from the direct location of the original picture file.
-** Pros: Less code of copying is required and any modifications to the original photo is immediately updated.
-** Cons: If the picture is deleted or corrupted, the profile picture would not be able to display.
 
 // end::profilePage[]
 
@@ -1216,8 +1241,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |`*` |user with many students in the address book |sort students by name |locate a student easily
 |=======================================================================
 
-_{More to be added}_
-
 [appendix]
 == Use Cases
 
@@ -1301,23 +1324,6 @@ Windows, Linux, Unix, OS-X
 
 [[timetable]] Timetable::
 A weekly timetable that shows status of all timeslots in one hour divisions
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing
@@ -1555,6 +1561,97 @@ Expected:
 
 //end::dashboardTest[]
 
+//tag::profilePageTest[]
+=== Displaying the profile page of a student
+. Showing the profile page of a student with the student list on the left and the browser panel is showing currently.
+.. Prerequisites: There is at least 1 student in the contacts data and the last shown filtered list. There exists XML data of that particular student.
+.. Test case: `moreInfo 1` +
+Expected:
+* The profile page of a student is shown.
+* The student's main information is shown, including `Name`, `Phone`, `Address` , `Email`, `ProgrammingLanguage` and `tags`.
+* The student's miscellaneous information is shown, including `Allergies`, `Next Of Kin Name`, `Next Of Kin Phone` and `Remarks`.
+* The student's profile picture is displayed. Note: if he/she does not have a custom profile picture, they are assigned a placeholder picture in its place.
+.. Test case: `moreInfo 0` +
+Expected:
+* There is no student whose index is 0. Thus the main panel on the right remains unchanged.
+* An error message is shown in the command box.
+.. Test case: `moreInfo 1` with no XML data of Students +
+Expected:
+* No profile page will be shown as this command only works when there is existing XML data( as mentioned in the prerequisites)
+* An error message is shown in the command box.
+
+. Showing the profile page of a student with the student list on the left and the dashboard panel is showing currently
+.. Test case: `moreInfo 1` +
+Expected:
+* The dashboard panel is switched with the browser panel.
+* The profile page of a student is loaded.
+* The student's main information is shown, including `Name`, `Phone`, `Address` , `Email`, `ProgrammingLanguage` and `tags`.
+* The student's miscellaneous information is shown, including `Allergies`, `Next Of Kin Name`, `Next Of Kin Phone` and `Remarks`.
+* The student's profile picture is displayed. Note: if he/she does not have a custom profile picture, they are assigned a placeholder picture in its place.
+.. Test case: `moreInfo 0` +
+Expected:
+* There is no student whose index is 0. Thus, the dashboard panel will still be on display and will not switch with the browser panel.
+* An error message is shown in the command box.
+.. Test case: `moreInfo 1` with no XML data of Students +
+Expected:
+* No profile page will be shown as this command only works when there is existing XML data( as mentioned in the prerequisites)
+* The dashboard panel will still be on display and will not switch with the browser panel.
+* An error message is shown in the command box.
+
+=== Editing the miscellaneous information of a student
+. Editing the miscellaneous information of a student while the student's profile page is being shown on the main browser panel.
+
+.. Test case: `editMisc 1 al/Nuts` +
+Expected
+* The student's allergies portion of his/her miscellaneous information is overwritten with the string "Nuts".
+* The profile page refreshes and displays the latest updated information of the student.
+* Timestamp in the status bar is updated.
+.. Test case: `editMisc 1 al/Nuts r/Naughty`
+Expected
+* The student's allergies portion, as well as the remarks portion, of his/her miscellaneous information is overwritten with "Nuts" and "Naughty" respectively.
+* The profile page refreshes and displays the latest updated information of the student.
+* Timestamp in the status bar is updated.
+.. Test case: `editMisc 0 al/Nuts` +
+Expected
+* There is no student whose index is 0. Thus, the miscellaneous information of the student is not changed.
+* Information of the student on the browser panel is not changed.
+* An error message is shown in the command box.
+* Timestamp in the status bar remains the same.
+.. Test case: `editMisc 1 al/ `
+Expected
+* Fields entered cannot take in empty values. Thus, the miscellaneous information of the student is not changed.
+* Information of the student on the browser panel is not changed.
+* An error message is shown in the command box.
+* Timestamp in the status bar remains the same.
+
+=== Editing the profile picture of a student
+. Editing the profile picture of a student while his/her profile page is on display on the browser panel.
+.. Test case: `editPicture i/1 pa/test.jpg` given "test.jpg" is a valid picture file that exists
+Expected
+* The student's profile picture is overwritten with the new profile picture.
+* The picture from the filepath indicated by the user is copied onto the local data folder.
+* The profile page refreshes and displays the latest updated information of the student.
+* Timestamp in the status bar is updated.
+.. Test case: `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg` given the file path is a valid picture file that exists
+Expected
+* The student's profile picture is overwritten with the new profile picture.
+* The picture from the filepath indicated by the user is copied onto the local data folder.
+* The profile page refreshes and displays the latest updated information of the student.
+* Timestamp in the status bar is updated.
+.. Test case: `editPicture i/1 pa/missingFile.jpg` given the file path is a picture file that *does not* exists
+Expected
+* As the file does not exist, the profile picture of the student will not be modified.
+* The profile picture of the student displayed on the browser panel is not changed.
+* An error message is shown in the command box.
+* Timestamp in the status bar remains the same.
+.. Test case: `editPicture i/1 pa/wrongFile.exe` given the file path is a *not* a picture file but it does exist.
+Expected
+* As the file does not end with an extension of `.jpg` or `png`, the profile picture of the student will not be modified.
+* The profile picture of the student displayed on the browser panel is not changed.
+* An error message is shown in the command box.
+* Timestamp in the status bar remains the same.
+//end::profilePageTest[]
+
 === Adding a lesson
 
 . Adding a lesson while all students are listed
@@ -1568,3 +1665,4 @@ Expected:
    Expected:
 *** No lesson will be added due to invalid student index. Error details shown in results screen.
 .. Other incorrect deleteLessons to try: `deleteLesson`, `deleteLesson x` where x is larger than the index of the last lesson
+

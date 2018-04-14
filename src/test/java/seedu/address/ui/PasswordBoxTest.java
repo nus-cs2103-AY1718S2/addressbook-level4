@@ -44,15 +44,15 @@ public class PasswordBoxTest extends GuiUnitTest {
         Storage storageManager = setUpStorage();
         Model model = new ModelManager(storageManager.readAddressBook(new Password(CORRECT_PASSWORD)).get());
 
-        PasswordBox commandBox = new PasswordBox(storageManager, model);
-        passwordBoxHandle = new PasswordBoxHandle(getChildNode(commandBox.getRoot(),
+        PasswordBox passwordBox = new PasswordBox(storageManager, model);
+        passwordBoxHandle = new PasswordBoxHandle(getChildNode(passwordBox.getRoot(),
                 PasswordBoxHandle.PASSWORD_INPUT_FIELD_ID));
-        uiPartRule.setUiPart(commandBox);
+        uiPartRule.setUiPart(passwordBox);
 
         defaultStyleOfPasswordBox = new ArrayList<>(passwordBoxHandle.getStyleClass());
 
         errorStyleOfPasswordBox = new ArrayList<>(defaultStyleOfPasswordBox);
-        errorStyleOfPasswordBox.add(CommandBox.ERROR_STYLE_CLASS);
+        errorStyleOfPasswordBox.add(PasswordBox.ERROR_STYLE_CLASS);
     }
 
     private String getTestFilePath(String fileName) {

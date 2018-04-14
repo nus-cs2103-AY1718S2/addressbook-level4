@@ -136,6 +136,14 @@ Shows a list of all persons (including archived) in the address book. +
 Format: `listall`
 Alias: `la`
 
+//tag::listappointment[]
+=== Listing all appointments : `listappointment`
+
+Shows a list of all appointments in the address book. +
+Format: `listappointment`
+Alias: `lap`
+//end::listappointment[]
+
 //tag::sort[]
 === Sorting all persons : `sort`
 
@@ -436,6 +444,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *List all* : `listall`
+* *List appointment* : `listappointment`
 * *listtag* : `listtag TAG...`
 * *Help* : `help`
 * *History* : `history`

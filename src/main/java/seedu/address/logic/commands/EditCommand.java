@@ -23,7 +23,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Order;
@@ -50,7 +49,6 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_ORDER + "ORDER] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_HALAL + "HALAL] "
             + "[" + PREFIX_VEGETARIAN + "VEGETARIAN] "
@@ -116,13 +114,12 @@ public class EditCommand extends UndoableCommand {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Order updatedOrder = editPersonDescriptor.getOrder().orElse(personToEdit.getOrder());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Halal updatedHalal = editPersonDescriptor.getHalal().orElse(personToEdit.getHalal());
         Vegetarian updatedVegetarian = editPersonDescriptor.getVegetarian().orElse(personToEdit.getVegetarian());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedOrder, updatedEmail, updatedAddress,
+        return new Person(updatedName, updatedPhone, updatedOrder, updatedAddress,
                 updatedHalal, updatedVegetarian, updatedTags);
     }
 
@@ -153,7 +150,6 @@ public class EditCommand extends UndoableCommand {
         private Name name;
         private Phone phone;
         private Order order;
-        private Email email;
         private Address address;
         private Halal halal;
         private Vegetarian vegetarian;
@@ -169,7 +165,6 @@ public class EditCommand extends UndoableCommand {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setOrder(toCopy.order);
-            setEmail(toCopy.email);
             setAddress(toCopy.address);
             setHalal(toCopy.halal);
             setVegetarian(toCopy.vegetarian);
@@ -180,7 +175,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.order, this.email, this.address,
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.order, this.address,
                     this.halal, this.vegetarian, this.tags);
         }
 
@@ -209,14 +204,6 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(order);
         }
         //@@author
-
-        public void setEmail(Email email) {
-            this.email = email;
-        }
-
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
-        }
 
         public void setAddress(Address address) {
             this.address = address;
@@ -279,7 +266,6 @@ public class EditCommand extends UndoableCommand {
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
                     && getOrder().equals(e.getOrder())
-                    && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getHalal().equals(e.getHalal())
                     && getVegetarian().equals(e.getVegetarian())

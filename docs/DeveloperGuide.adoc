@@ -391,12 +391,12 @@ The autocomplete feature serves to enhance user experience in using the Command 
 
 The implementation logic of the autocomplete feature resides in the `UI` component. The autocomplete feature is driven by a `ChangeListener` attached to `commandTextField.textProperty()` in `CommandBox.java`. Once the `ChangeListener` registers any changes in the content of `commandTextField`, `triggerAutocomplete()` will be executed. +
 
-The following diagram illustrates a sequence of method calls to initialize the `Autocomplete` class and get autocomplete suggestions for command words in a drop down menu.
+Suppose that the user is launching Medeina. Before the Graphical User Interface (GUI) is ready, a `CommandBox` object will be initialized for the user to enter commands. The following diagram illustrates a sequence of method calls, starting with the initialization of `CommandBox`, followed by the initialization of an instance of `Autocomplete`, and then calling 3 set attribute methods in the `Logic` component. Subsequently, suppose the user has typed `add -p n/Happy s/Cat b/Persian c/Calico bt/A -o nr/`. The diagram shows a sequence of method calls, starting with triggerAutocomplete(), to get autocomplete suggestions for NRIC to be shown in a context menu.
 
-.Sequence diagram for autocompleting NRIC (include initialization of Autocomplete class)
+.Sequence diagram for autocomplete feature
 image::autocompleteSequenceDiagram.png[width="800"]
 
-
+{empty} +
 `Autocomplete.java` encompasses the logic for parsing user input in the CLI and determining what autocomplete suggestions are to be passed back to `CommandBox.java`. Data required for autocomplete, such as a list of command words, prefixes, options and parameters in Medeina, are retrieved from the `Logic` component. All data required by `Autocomplete` are consolidated in a similar way in the `Logic` component.
 
 The following code shows how contact's NRIC and tags are consolidated:
@@ -424,7 +424,7 @@ public Set<String> getAllPersonTags() {
 }
 ----
 
-You may have noticed that in sequence diagram above (Figure 12), `Autocomplete` is a singleton class that is initialized only once, and there is only 1 instance of `CommandBox` in the application. You may be wondering "are the 3 set attribute methods in the `Logic` component only called once?". If you are currently unsure, imagine the user is constantly adding new contacts to Medeina. However, `Autocomplete` uses only data from when Medeina was started up. +
+You may have noticed that in sequence diagram above (Figure 11), `Autocomplete` is a singleton class that is initialized only once, and there is only 1 instance of `CommandBox` in the application. You may be wondering "can the 3 set attribute methods in the `Logic` component be called only once?". If you are currently unsure, imagine that the user is constantly adding new contacts to Medeina. However, `Autocomplete` uses only data from when Medeina was launched. +
 
 The answer to the question is definitely no. The set attributes methods have to be called whenever there is a change in Medeina's data, otherwise the autocomplete suggestions will not be up to date.
 
@@ -441,17 +441,20 @@ public void handleAddressBookChangedEvent(AddressBookChangedEvent a) {
 
 ===== Aspect: Updating autocomplete data
 
-* **Alternative 1 (current choice):** Data is updated only when `AddressBookChangedEvent` is raised.
-** Pros: Less resource-intensive.
+* **Alternative 1 (current choice):** All Data is updated only when `AddressBookChangedEvent` is raised.
+** Pros: Efficient and with minimal redundant updates.
 ** Cons: Implementation is less straight-forward.
-* **Alternative 2:** Data is updated whenever autocomplete is triggered.
+* **Alternative 2 :** Updates the specific required data e.g. NRIC, whenever autocomplete is triggered.
 ** Pros: Easy to implement.
-** Cons: Running for-loops in the `Logic` component for every character the user types, is resource-intensive.
+** Cons: Redundant updates. Required data will remain the same, except only when add, delete, or edit commands are executed. 
+* **Alternative 3:** All Data is updated whenever autocomplete is triggered.
+** Pros: Easy to implement.
+** Cons: Many redundant data updates. Running for-loops in the `Logic` component for every character the user types, is resource-intensive.
 
 ===== Aspect: Event-driven or user-driven
 
 * **Alternative 1 (current choice):** Implement change listener to automatically track user input and provide autocomplete suggestions.
-** Pros: Great improvement in user experience, as Medeina has complex and long command syntax.
+** Pros: Great improvement in user experience, as Medeina has long and complex command syntax.
 ** Cons: Logic for handling caret position and command syntax parsing is complicated and can be prone to bugs.
 * **Alternative 2:** User has to press a specific key e.g. tab to invoke autocompletion.
 ** Pros: Less logic to account for, and is thus easier to implement.
@@ -1425,8 +1428,62 @@ These instructions only provide a starting point for testers to work on; testers
 .. Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
+   
+=== Change theme
 
-_{ more test cases ... }_
+. dark theme
+
+.. Type "theme dark" in the command box to switch to dark theme. +
+.. Re-launch the app by double-clicking the jar file. +
+   Expected: The app is using dark theme. The change of theme persists beyond app restart. 
+
+=== Autocomplete
+
+. Command word
+
+.. In an empty command box (with no user input), type a space. You should see a drop down list of commands supported by Medeina.
+.. Continue typing spaces in the command box. The same drop down list of command words will be suggested.
+
+. Prefixes
+.. Type "add " you should see a list of prefixes supported by Medeina.
+.. Type "edit " you should see a list of prefixes supported by Medeina.
+.. Type "find " you should see a list of prefixes supported by Medeina.
+.. Type "delete " you should see a list of prefixes supported by Medeina.
+.. Type "listappt " you should see a list of prefixes supported by Medeina.
+.. There will be no prefixes suggested for all other preceeding words e.g. "sdfkljsdlkfjs ", "help ".
+
+. Options
+
+.. Type "add -" you should see a list of options (starting with "-") supported by Medeina.
+.. Type "edit -" you should see a list of options (starting with "-") supported by Medeina.
+.. Type "find -" you should see a list of options (starting with "-") supported by Medeina.
+.. Type "delete -" you should see a list of options (starting with "-") supported by Medeina.
+.. Type "listappt -" you should see a list of options (starting with "-") supported by Medeina.
+.. There will be no options suggested for all other preceeding words e.g. "sdfkljsdlkfjs -", "help -".
+
+. Species, breed, colour and blood type
+
+.. Typing s/, b/, c/ and bt/ after a word (and a space) in the command box, will show their respective suggestions.
+
+. Pet patient names
+
+.. Type "add -a -o -p n/" and you will see a list of pet patient name suggestions (cap at 13).
+.. Type "add -p n/" and there will be no pet patient name suggestions.
+
+. NRIC
+
+.. Type "add -p -o nr/" and you will see a list of NRIC suggestions (cap at 13).
+.. Type "add -p n/Mikey s/Cat b/Persian c/Calico bt/A -o nr/" and you will see a list of NRIC suggestions (cap at 13).
+.. Type "add -p n/Mikey s/Cat b/Persian c/Calico bt/A -o nr/T" and you will see a list of NRIC suggestions starting with "T" (cap at 13).
+.. Type "edit 1 -p nr/" to see a list of NRIC suggestions (cap at 13).
+.. Type "edit 1 -p n/hello nr/" to see a list of NRIC suggestions (cap at 13).
+.. Type "find -o nr/" to see a list of NRIC suggestions (cap at 13).
+
+. Toggle on/off
+
+.. Press F2 when the command box is in focus to off/on autocomplete.
+
+=== Adding contact, pet patient, appointment
 
 === Deleting a person
 

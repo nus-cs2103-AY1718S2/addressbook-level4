@@ -117,14 +117,14 @@ You can learn more about this command in the following table:
 a| * Tag is optional.
 
 .^| Pet patient
-| `add **-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOR bt/BLOOD_TYPE [t/TAG]... **-o** nr/OWNER_NRIC`
-a| * OWNER_NRIC must belong to an existing contact.
+| `add **-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOR bt/BLOOD_TYPE [t/TAG]... **-o** nr/NRIC`
+a| * NRIC must belong to an existing contact.
 * Tag is optional.
 
 .^| Appointment
 | `add **-a** d/YYYY-MM-DD HH:MM r/REMARK t/TAG...` +
-`**-o** nr/OWNER_NRIC **-p** n/PET_PATIENT_NAME`
-a| * OWNER_NRIC must belong to an existing contact.
+`**-o** nr/NRIC **-p** n/PET_PATIENT_NAME`
+a| * NRIC must belong to an existing contact.
 * PET_PATIENT_NAME must belong to an existing pet patient.
 * Appointment time HH:MM must be in 30-minute blocks.
 * Type '-' or 'nil' if you have no REMARK to record.
@@ -136,7 +136,11 @@ a| * OWNER_NRIC must belong to an existing contact.
 `**-a** d/YYYY-MM-DD HH:MM r/REMARK [t/TAG]...`
 a|
 |=====
-{empty} +
+
+[WARNING]
+====
+Options are in order. For example, the add command for pet patient will have an error message if the option order is not preserved e.g. `add **-o** nr/CONTACT_NRIC **-p** ...`
+====
 
 image::add_examples.PNG[width="800"]
 {empty} +

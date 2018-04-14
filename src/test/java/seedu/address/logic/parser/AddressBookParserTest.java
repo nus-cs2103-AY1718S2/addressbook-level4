@@ -67,6 +67,11 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
+
+        //@@author Nethergale
+        AddCommand commandAlias = (AddCommand) parser.parseCommand(PersonUtil.getAddCommandAlias(person));
+        assertEquals(new AddCommand(person), commandAlias);
+        //@@author
     }
 
     @Test

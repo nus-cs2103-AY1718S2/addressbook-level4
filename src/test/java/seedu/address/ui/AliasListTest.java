@@ -93,6 +93,5 @@ public class AliasListTest extends GuiUnitTest {
                 assertEquals(expected.get(i).get(j), column.getCellObservableValue(i).getValue());
             }
         }
-
     }
 }

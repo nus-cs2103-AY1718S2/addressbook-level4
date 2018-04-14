@@ -1,6 +1,7 @@
 package systemtests;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -21,6 +22,13 @@ public class ModelHelper {
         Optional<Predicate<Person>> predicate =
                 toDisplay.stream().map(ModelHelper::getPredicateMatching).reduce(Predicate::or);
         model.updateFilteredPersonList(predicate.orElse(PREDICATE_MATCHING_NO_PERSONS));
+    }
+
+    /**
+     * Updates {@code model}'s aliases list to display only {@code aliases}.
+     */
+    public static void setAliases(Model model, HashMap<String, String> aliases) {
+        model.updateAliasesMapping(aliases);
     }
 
     /**

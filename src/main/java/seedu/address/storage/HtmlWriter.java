@@ -25,6 +25,7 @@ public class HtmlWriter {
     private final String email;
     private final String address;
     private final String amountBorrowed;
+    private final String interestRate;
     private final String amountCurrentlyOwed;
     private final String oweStartDate;
     private final String oweDueDate;
@@ -40,6 +41,7 @@ public class HtmlWriter {
         this.email = null;
         this.address = null;
         this.amountBorrowed = null;
+        this.interestRate = null;
         this.amountCurrentlyOwed = null;
         this.oweStartDate = null;
         this.oweDueDate = null;
@@ -57,6 +59,7 @@ public class HtmlWriter {
         this.email = customer.getEmail().value;
         this.address = customer.getAddress().value;
         this.amountBorrowed = String.format("%,.2f", customer.getMoneyBorrowed().value);
+        this.interestRate = customer.getStandardInterest().toString();
         this.amountCurrentlyOwed = String.format("%,.2f", customer.getMoneyCurrentlyOwed());
         this.oweStartDate = simpledate.format(customer.getOweStartDate());
         this.oweDueDate = simpledate.format(customer.getOweDueDate());
@@ -74,6 +77,7 @@ public class HtmlWriter {
         this.email = runner.getEmail().value;
         this.address = runner.getAddress().value;
         this.amountBorrowed = "";
+        this.interestRate = "";
         this.amountCurrentlyOwed = "";
         this.oweStartDate = "";
         this.oweDueDate = "";
@@ -97,6 +101,7 @@ public class HtmlWriter {
             printWriter.println("<tr><td>email: </td><td>" + email + "</td></tr>");
             printWriter.println("<tr><td>address: </td><td>" + address + "</td></tr>");
             printWriter.println("<tr><td>amount borrowed: </td><td>$" + amountBorrowed + "</td></tr>");
+            printWriter.println("<tr><td>interest rate: </td><td>" + interestRate + "%</td></tr>");
             printWriter.println("<tr><td>amount owed: </td><td>$" + amountCurrentlyOwed + "</td></tr>");
             printWriter.println("<tr><td>start date: </td><td>" + oweStartDate + "</td></tr>");
             printWriter.println("<tr><td>due date: </td><td>" + oweDueDate + "</td></tr>");

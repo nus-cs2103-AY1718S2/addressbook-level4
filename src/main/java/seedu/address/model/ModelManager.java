@@ -82,7 +82,9 @@ public class ModelManager extends ComponentManager implements Model {
         int targetId = target.getId();
         addressBook.removePerson(target);
         ensureNotificationCenterNonNull();
-        notificationCenter.removeNotificationForPerson(targetId);
+        if (notificationCenter != null) {
+            notificationCenter.removeNotificationForPerson(targetId);
+        }
         indicateAddressBookChanged();
     }
 
@@ -94,9 +96,6 @@ public class ModelManager extends ComponentManager implements Model {
     private void ensureNotificationCenterNonNull() {
         if (notificationCenter == null) {
             raise(new RequestForNotificationCenterEvent());
-        }
-        while (notificationCenter == null) {
-            for (int i = 0; i < 1000; i++);
         }
     }
     @Override

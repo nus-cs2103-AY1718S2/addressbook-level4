@@ -409,7 +409,32 @@ There is no need to save manually.
 === Count the number of orders a customer has placed in the past
 
 The statistics of customers will be stored in the hard disk as an XML file.
-When a customer places an order, it accumulates to the number of his/her past orders.
+When a customer places an order, it accumulates (add 1) to the number of his/her past orders.
+
+Examples:
+
+* Initially no order has been placed so the output XML file is empty.
+
+* `add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+The customer with phone number "91111111" has accumulated 1 order. +
+The result will be updated and stored in the XML file.
+
+image::UG1.png[width="800"]
+
+* `add n/Zequn p/92222222 f/Chicken Rice a/NUS` +
+Another customer with a different phone number "92222222" has accumulated 1 order. +
+The result will be updated and stored in the XML file.
+
+image::UG2.png[width="800"]
+
+* `delete 1` +
+`add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+`delete 1` +
+`add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+Now the first customer with phone number "91111111" has placed 3 orders in total in the past. +
+The results are reflected in the XML file.
+
+image::UG3.png[width="800"]
 // end::count[]
 
 // tag::querycount[]

@@ -40,10 +40,10 @@ Tips. +
 Warning.
 
 [CAUTION]
-Specific user only command +
+Specific user only command. +
 
 [IMPORTANT]
-Command is undoable +
+Command is undoable. +
 // end::introduction[]
 
 // tag::quickstart[]

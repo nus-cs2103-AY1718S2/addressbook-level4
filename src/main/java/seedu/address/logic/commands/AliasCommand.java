@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -11,7 +12,7 @@ import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
 //@@author jingyinno
 /**
- * Adds an alias pair to the address book.
+ * Adds an alias-command pair to the address book.
  */
 public class AliasCommand extends UndoableCommand {
 
@@ -19,7 +20,6 @@ public class AliasCommand extends UndoableCommand {
     public static final String LIST_ALIAS_COMMAND_WORD = "list";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows list of alias or creates new alias. "
             + "Parameters for creating new alias: [COMMAND] [NEW_ALIAS] \n"
-            + "Parameters for listing aliases: list \n"
             + "Example: " + COMMAND_WORD + " add a";
 
     public static final String MESSAGE_SUCCESS = "New alias added";
@@ -35,7 +35,7 @@ public class AliasCommand extends UndoableCommand {
             UndoCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD, AliasCommand.COMMAND_WORD, ImportCommand.COMMAND_WORD,
             PasswordCommand.COMMAND_WORD, BirthdaysCommand.COMMAND_WORD, ExportCommand.COMMAND_WORD,
             MapCommand.COMMAND_WORD, RemovePasswordCommand.COMMAND_WORD, UnaliasCommand.COMMAND_WORD,
-            VacantCommand.COMMAND_WORD);
+            VacantCommand.COMMAND_WORD, TimetableUnionCommand.COMMAND_WORD, UploadCommand.COMMAND_WORD);
 
     private final Alias toAdd;
 
@@ -47,19 +47,22 @@ public class AliasCommand extends UndoableCommand {
         toAdd = alias;
     }
 
-    /**
-     * Creates a default AliasCommand
-     */
-    public AliasCommand() {
-        toAdd = null;
-    }
-
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        if (toAdd == null) {
-            return new CommandResult(model.getAliasList().toString());
+        checkForValidCommandAndAlias();
+        try {
+            model.addAlias(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateAliasException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_ALIAS);
         }
+    }
+
+    /**
+     * Checks if the command specified is valid command and the alias specified is not a command word.
+     */
+    private void checkForValidCommandAndAlias() throws CommandException {
         if (!commands.contains(toAdd.getCommand())) {
             throw new CommandException(String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
                             AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION));
@@ -67,23 +70,16 @@ public class AliasCommand extends UndoableCommand {
             throw new CommandException(String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
                             AliasCommand.MESSAGE_INVALID_ALIAS_DESCRIPTION));
         }
-
-        try {
-            model.addAlias(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateAliasException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_ALIAS);
-        }
-
     }
 
     public static List<String> getCommands() {
+        Collections.sort(commands);
         return commands;
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == (this)
+        return other == this
                 || (other instanceof AliasCommand // instanceof handles nulls
                 && toAdd.equals(((AliasCommand) other).toAdd));
     }

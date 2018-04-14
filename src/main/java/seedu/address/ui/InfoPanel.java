@@ -8,8 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.AliasListEvent;
 import seedu.address.commons.events.ui.BirthdayListEvent;
 import seedu.address.commons.events.ui.GoogleMapsEvent;
+import seedu.address.commons.events.ui.InfoPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.TimeTableEvent;
 import seedu.address.commons.events.ui.VenueTableEvent;
@@ -26,6 +28,7 @@ public class InfoPanel extends UiPart<Region> {
 
     private BirthdayList birthdayList;
     private VenueTable venueTable;
+    private AliasList aliasList;
     private GoogleMapsDisplay mapsDisplay;
     private PersonDetailsCard personDetailsCard;
     private TimetableUnionPanel timetableUnionPanel;
@@ -36,6 +39,8 @@ public class InfoPanel extends UiPart<Region> {
     private StackPane birthdayPlaceholder;
     @FXML
     private StackPane venuePlaceholder;
+    @FXML
+    private StackPane aliasListPlaceholder;
     @FXML
     private StackPane userDetailsPlaceholder;
     @FXML
@@ -51,6 +56,8 @@ public class InfoPanel extends UiPart<Region> {
         userDetailsPlaceholder.getChildren().add(personDetailsCard.getRoot());
         venueTable = new VenueTable();
         venuePlaceholder.getChildren().add(venueTable.getRoot());
+        aliasList = new AliasList();
+        aliasListPlaceholder.getChildren().add(aliasList.getRoot());
         mapsDisplay = new GoogleMapsDisplay();
         mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
         birthdayList = new BirthdayList();
@@ -69,9 +76,7 @@ public class InfoPanel extends UiPart<Region> {
     private void handleBirthdayListEvent(BirthdayListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        birthdayPlaceholder.getChildren().removeAll();
         birthdayList.loadList(event.getBirthdayList());
-        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
         birthdayPlaceholder.toFront();
     }
     //@@author
@@ -79,6 +84,7 @@ public class InfoPanel extends UiPart<Region> {
     //@@author jingyinno
     @Subscribe
     private void handleVenueTableEvent(VenueTableEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         venuePlaceholder.getChildren().removeAll();
         venueTable = new VenueTable(event.getSchedule());
         venuePlaceholder.getChildren().add(venueTable.getRoot());
@@ -96,6 +102,25 @@ public class InfoPanel extends UiPart<Region> {
         }
         mapsPlaceholder.toFront();
     }
+
+    @Subscribe
+    private void handleAliasListEvent(AliasListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        aliasListPlaceholder.getChildren().removeAll();
+        aliasList.init(event.getAliases());
+        aliasListPlaceholder.toFront();
+        aliasList.setStyle();
+    }
+
+    @Subscribe
+    private void handleInfoPanelEvent(InfoPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        venuePlaceholder.toBack();
+        mapsPlaceholder.toBack();
+        birthdayPlaceholder.toBack();
+        timetableUnionPlaceholder.toBack();
+        aliasListPlaceholder.toBack();
+    }
     //@@author
 
     //@@author yeggasd
@@ -106,6 +131,7 @@ public class InfoPanel extends UiPart<Region> {
         mapsPlaceholder.toBack();
         birthdayPlaceholder.toBack();
         timetableUnionPlaceholder.toBack();
+        aliasListPlaceholder.toBack();
         Person person = event.getNewSelection().person;
         int oddEvenIndex = event.getOddEvenIndex();
 

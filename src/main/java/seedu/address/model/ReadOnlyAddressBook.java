@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.collections.ObservableList;
@@ -32,10 +33,16 @@ public interface ReadOnlyAddressBook {
     ObservableList<Alias> getAliasList();
 
     /**
-     * Returns hash map of the aliases list.
+     * Returns the HashMap of alias list.
      * This list will not contain any duplicate aliases.
      */
     HashMap<String, String> getAliasMapping();
+
+    /**
+     * Returns an ArrayList of ArrayList of alias strings.
+     * This list will not contain any duplicate aliases.
+     */
+    ArrayList<ArrayList<String>> getUiFormattedAliasList();
 
     /**
      * Resets the alias list to an empty list

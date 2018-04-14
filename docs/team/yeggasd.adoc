@@ -8,7 +8,7 @@
 
 == Overview
 
-StardyTogether is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+StardyTogether is a desktop contacts and venues manager application specially for National University of Singapore (NUS) usestudents to help them find free time and rooms to study together with their friends.
 
 == Summary of contributions
 
@@ -56,9 +56,3 @@ include::../DeveloperGuide.adoc[tag=dataencryption]
 include::../DeveloperGuide.adoc[tag=timetable]
 
 
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

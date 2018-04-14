@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import java.util.Objects;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -23,7 +25,7 @@ public class XmlAdaptedAlias {
     public XmlAdaptedAlias() {}
 
     /**
-     * Constructs a {@code XmlAdaptedAlias} with the given {@code aliasName}.
+     * Constructs a {@code XmlAdaptedAlias} with the given {@code command} and {@code aliasName}.
      */
     public XmlAdaptedAlias(String command, String aliasName) {
         this.command = command;
@@ -33,7 +35,7 @@ public class XmlAdaptedAlias {
     /**
      * Converts a given Alias into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created
+     * @param source future changes to this will not affect the created XmlAdaptedAlias.
      */
     public XmlAdaptedAlias(Alias source) {
         command = source.getCommand();
@@ -43,6 +45,7 @@ public class XmlAdaptedAlias {
     /**
      * Converts this jaxb-friendly adapted alias object into the model's Alias object.
      *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted alias.
      */
     public Alias toModelType() throws IllegalValueException {
         if (this.command == null) {
@@ -74,7 +77,8 @@ public class XmlAdaptedAlias {
             return false;
         }
 
-        return aliasName.equals(((XmlAdaptedAlias) other).aliasName)
-                && command.equals(((XmlAdaptedAlias) other).command);
+        XmlAdaptedAlias otherAlias = (XmlAdaptedAlias) other;
+        return Objects.equals(aliasName, otherAlias.aliasName)
+                && Objects.equals(command, otherAlias.command);
     }
 }

@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -21,8 +22,11 @@ public class TimeTablePanel extends UiPart<Region> {
     private static final String TABLECELL_STYLE_CLASS = "table-cell";
     private static final String EMPTY_STYLE_CLASS = "timetable-cell-empty";
     private static final String[] MOD_COLOR_STYLES = { "modteal", "modsandybrown", "modplum", "modyellow",
-                                                         "modyellow"};
+                                                         "modyellow", "modcyan", "modpink", "modlightblue", "modpurple",
+                                                         "modindigo", "modlightgreen", "modorange", "modgoldbrown"};
     private static final String FXML = "TimeTablePanel.fxml";
+    private static final HashMap<Integer, String> TAKEN_COLOR = new HashMap<>();
+    private static final int MODNAME_LENGTH = 6;
 
     private ArrayList<TableColumn<ArrayList<String>, String>> columns;
     @FXML
@@ -64,6 +68,7 @@ public class TimeTablePanel extends UiPart<Region> {
 
     public TimeTablePanel(ObservableList<ArrayList<String>> schedules) {
         super(FXML);
+        TAKEN_COLOR.clear();
         timeTable.setItems(schedules);
         timeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         initializeColumns();
@@ -105,7 +110,7 @@ public class TimeTablePanel extends UiPart<Region> {
                 columns.get(i).setMinWidth(75);
                 columns.get(i).setMaxWidth(200);
             }
-
+            columns.get(i).setSortable(false);
         }
     }
 
@@ -155,10 +160,19 @@ public class TimeTablePanel extends UiPart<Region> {
 
     /**
      * Returns a Color Style for the Module based on its hashcode.
-     * @param modName
+     * @param lessonName
      * @return colorStyle for {@code modName}'s label.
      */
-    private static String getColorStyleFor(String modName) {
-        return MOD_COLOR_STYLES[Math.abs(modName.hashCode()) % MOD_COLOR_STYLES.length];
+    private static String getColorStyleFor(String lessonName) {
+        String modName = lessonName.substring(0, MODNAME_LENGTH);
+        int colorIndex = Math.abs(modName.hashCode()) % MOD_COLOR_STYLES.length;
+        int index = 0;
+        while (index < MOD_COLOR_STYLES.length && TAKEN_COLOR.get(colorIndex) != null
+                && !TAKEN_COLOR.get(colorIndex).equals(modName)) {
+            colorIndex = (colorIndex + 1) % MOD_COLOR_STYLES.length;
+            index++;
+        }
+        TAKEN_COLOR.put(colorIndex, modName);
+        return MOD_COLOR_STYLES[colorIndex];
     }
 }

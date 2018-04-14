@@ -23,7 +23,7 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Address("Blk 30 Geylang Street 29, #06-40"),
-                    new Birthday("01011995"), new Timetable("http://modsn.us/phiZF"), getTagSet("friends")),
+                    new Birthday("01011995"), new Timetable("http://modsn.us/RY8zU"), getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
                     new Birthday("01011993"), new Timetable("http://modsn.us/7CXrQ"),

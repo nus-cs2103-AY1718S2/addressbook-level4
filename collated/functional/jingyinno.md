@@ -60,8 +60,10 @@ public class VenueTableEvent extends BaseEvent {
 public class AliasCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "alias";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows list of alias or creates new alias.\n"
-            + "Parameters: [COMMAND] [NEW_ALIAS]\n"
+    public static final String LIST_ALIAS_COMMAND_WORD = "list";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows list of alias or creates new alias. "
+            + "Parameters for creating new alias: [COMMAND] [NEW_ALIAS] \n"
+            + "Parameters for listing aliases: list \n"
             + "Example: " + COMMAND_WORD + " add a";
 
     public static final String MESSAGE_SUCCESS = "New alias added";
@@ -89,18 +91,27 @@ public class AliasCommand extends UndoableCommand {
         toAdd = alias;
     }
 
+    /**
+     * Creates a default AliasCommand
+     */
+    public AliasCommand() {
+        toAdd = null;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
+        if (toAdd == null) {
+            return new CommandResult(model.getAliasList().toString());
+        }
         if (!commands.contains(toAdd.getCommand())) {
-            throw new CommandException(
-                    String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
+            throw new CommandException(String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
                             AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION));
         } else if (commands.contains(toAdd.getAlias())) {
-            throw new CommandException(
-                    String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
+            throw new CommandException(String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
                             AliasCommand.MESSAGE_INVALID_ALIAS_DESCRIPTION));
         }
+
         try {
             model.addAlias(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
@@ -130,9 +141,8 @@ public class AliasCommand extends UndoableCommand {
 public class MapCommand extends Command {
     public static final String COMMAND_WORD = "map";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the location of the specified address(es) \n"
-            + "Parameters: [ADDRESS] or \n"
-            + "Parameters: [ADDRESS_START]/[ADDRESS_DESTINATION] \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the location of the specified address(es). "
+            + "Parameters: [ADDRESS] or [ADDRESS_START]/[ADDRESS_DESTINATION] \n"
             + "Example: " + COMMAND_WORD + " Tampines Mall/COM2 \n"
             + "Example: " + COMMAND_WORD + " 119077/117417 ";
 
@@ -162,7 +172,7 @@ public class MapCommand extends Command {
             locations = String.join("/", locationsArray);
             isOneLocation = false;
         } else {
-            locations = Arrays.toString(locationsArray);
+            locations = locationsArray[0];
             isOneLocation = true;
         }
 
@@ -187,7 +197,7 @@ public class MapCommand extends Command {
 public class UnaliasCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "unalias";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes alias for previously aliased command.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes alias for previously aliased command. "
             + "Parameters: [CURRENT_ALIAS]\n"
             + "Example: " + COMMAND_WORD + " a";
 
@@ -232,7 +242,7 @@ public class UnaliasCommand extends UndoableCommand {
 public class VacantCommand extends Command {
     public static final String COMMAND_WORD = "vacant";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds vacant study rooms in a building \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds vacant study rooms in a building. "
             + "Parameters: [BUILDING_NAME]\n"
             + "Example: " + COMMAND_WORD + " COM1";
 
@@ -242,6 +252,7 @@ public class VacantCommand extends Command {
             + Arrays.toString(Building.NUS_BUILDINGS);
     public static final String MESSAGE_CORRUPTED_VENUE_INFORMATION_FILE =
             "Unable to read from venueinformation.json, file is corrupted. Please re-download the file.";
+    public static final String MESSAGE_NO_ROOMS_IN_BUILDING = "Building has no rooms available";
 
     private final Building building;
 
@@ -265,6 +276,8 @@ public class VacantCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_BUILDING);
         } catch (CorruptedVenueInformationException e) {
             throw new CommandException(MESSAGE_CORRUPTED_VENUE_INFORMATION_FILE);
+        } catch (NoRoomsInBuildingException e) {
+            throw new CommandException(MESSAGE_NO_ROOMS_IN_BUILDING);
         }
 
     }
@@ -292,6 +305,9 @@ public class AliasCommandParser implements Parser<AliasCommand> {
     public AliasCommand parse(String args) throws ParseException {
         args = args.trim();
         String[] trimmedArgs = args.split("\\s+");
+        if (trimmedArgs.length == 1 && trimmedArgs[0].equals(AliasCommand.LIST_ALIAS_COMMAND_WORD)) {
+            return new AliasCommand();
+        }
         if (trimmedArgs.length != 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
@@ -338,7 +354,7 @@ public class MapCommandParser implements Parser<MapCommand> {
      */
     public static Alias parseAlias(String command, String alias) throws IllegalValueException {
         requireNonNull(command, alias);
-        if (!Alias.isValidAliasName(command) || !Alias.isValidAliasName(alias)) {
+        if (!Alias.isValidAliasParameter(command) || !Alias.isValidAliasParameter(alias)) {
             throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
 
         }
@@ -463,6 +479,11 @@ public class VacantCommandParser implements Parser<VacantCommand> {
     }
 
     @Override
+    public HashMap<String, String> getAliasMapping() {
+        return aliases.getHashList();
+    }
+
+    @Override
     public void resetAliasList() {
         aliases.resetHashmap();
     }
@@ -475,7 +496,7 @@ public class VacantCommandParser implements Parser<VacantCommand> {
 ``` java
 /**
  * Represents a Alias in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidAliasName(String)}
+ * Guarantees: immutable; name is valid as declared in {@link #isValidAliasParameter(String)}
  */
 public class Alias {
 
@@ -492,7 +513,7 @@ public class Alias {
      */
     public Alias(String command, String aliasName) {
         requireNonNull(aliasName);
-        checkArgument(isValidAliasName(aliasName), MESSAGE_ALIAS_CONSTRAINTS);
+        checkArgument(isValidAliasParameter(aliasName), MESSAGE_ALIAS_CONSTRAINTS);
         this.aliasName = aliasName;
         this.command = command;
     }
@@ -508,7 +529,7 @@ public class Alias {
     /**
      * Returns true if a given string is a valid alias name.
      */
-    public static boolean isValidAliasName(String test) {
+    public static boolean isValidAliasParameter(String test) {
         return test.matches(ALIAS_VALIDATION_REGEX);
     }
 
@@ -637,7 +658,7 @@ public class UniqueAliasList {
     }
 
     /**
-     * Converts HashMap into an observable list
+     * Converts HashMap of alias and command pairing into an observable list of Alias objects
      */
     public void convertToList() {
         for (String key : hashList.keySet()) {
@@ -655,6 +676,12 @@ public class UniqueAliasList {
         return internalList;
     }
 
+    /**
+     * Getter for hashlist
+     */
+    public HashMap<String, String> getHashList() {
+        return hashList;
+    }
 
     /**
      * Replaces the Aliases in this list with those in the argument alias list.
@@ -663,6 +690,13 @@ public class UniqueAliasList {
         requireAllNonNull(aliases);
         internalList.setAll(aliases);
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Replaces the aliases in this hashlist with those.
+     */
+    public void replaceHashmap(HashMap<String, String> aliases) {
+        hashList = aliases;
     }
 
     /**
@@ -682,8 +716,16 @@ public class UniqueAliasList {
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
+    /** Resets alias list in addressbook with new alias list */
+    void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList);
+```
+###### \java\seedu\address\model\Model.java
+``` java
     /** Adds the given alias */
     void addAlias(Alias alias) throws DuplicateAliasException;
+
+    /** Returns a hashmap of command mapped to alias */
+    HashMap<String, String> getAliasList();
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
@@ -698,6 +740,11 @@ public class UniqueAliasList {
     public synchronized void addAlias(Alias alias) throws DuplicateAliasException {
         addressBook.addAlias(alias);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized HashMap<String, String> getAliasList() {
+        return addressBook.getAliasMapping();
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -715,6 +762,12 @@ public class UniqueAliasList {
      * This list will not contain any duplicate aliases.
      */
     ObservableList<Alias> getAliasList();
+
+    /**
+     * Returns hash map of the aliases list.
+     * This list will not contain any duplicate aliases.
+     */
+    HashMap<String, String> getAliasMapping();
 
     /**
      * Resets the alias list to an empty list
@@ -762,9 +815,22 @@ public class XmlAdaptedAlias {
      *
      */
     public Alias toModelType() throws IllegalValueException {
-        if (!Alias.isValidAliasName(aliasName)) {
+        if (this.command == null) {
             throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
         }
+        if (!Alias.isValidAliasParameter(command)) {
+            throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
+        }
+        final String command = this.command;
+
+        if (this.aliasName == null) {
+            throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
+        }
+        if (!Alias.isValidAliasParameter(aliasName)) {
+            throw new IllegalValueException(Alias.MESSAGE_ALIAS_CONSTRAINTS);
+        }
+        final String aliasName = this.aliasName;
+
         return new Alias(command, aliasName);
     }
 
@@ -794,26 +860,28 @@ public class GoogleMapsDisplay extends UiPart<Region> {
     public static final String MAP_SEARCH_URL_PREFIX = "https://www.google.com/maps/search/";
     public static final String MAP_DIRECTIONS_URL_PREFIX = "https://www.google.com/maps/dir/";
     private static final String FXML = "GoogleMapsDisplay.fxml";
-    private String locations;
 
     @FXML
     private WebView maps;
 
+    public GoogleMapsDisplay() {
+        this(null);
+    }
+
     public GoogleMapsDisplay(String locations) {
         super(FXML);
 
-        this.locations = locations;
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
         loadDefaultPage();
     }
 
-    public void loadMapPage() {
-        loadPage(MAP_SEARCH_URL_PREFIX + locations);
+    public void loadMapPage(String location) {
+        loadPage(MAP_SEARCH_URL_PREFIX + location);
     }
 
-    public void loadMapDirections() {
+    public void loadMapDirections(String locations) {
         loadPage(MAP_DIRECTIONS_URL_PREFIX + locations);
     }
 
@@ -850,14 +918,11 @@ public class GoogleMapsDisplay extends UiPart<Region> {
 
     @Subscribe
     private void handleGoogleMapsDisplayEvent(GoogleMapsEvent event) {
-        mapsPlaceholder.getChildren().removeAll();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mapsDisplay = new GoogleMapsDisplay(event.getLocations());
-        mapsPlaceholder.getChildren().add(mapsDisplay.getRoot());
         if (event.getIsOneLocationEvent()) {
-            mapsDisplay.loadMapPage();
+            mapsDisplay.loadMapPage(event.getLocations());
         } else {
-            mapsDisplay.loadMapDirections();
+            mapsDisplay.loadMapDirections(event.getLocations());
         }
         mapsPlaceholder.toFront();
     }
@@ -865,7 +930,7 @@ public class GoogleMapsDisplay extends UiPart<Region> {
 ###### \java\seedu\address\ui\VenueTable.java
 ``` java
 /**
- * A ui for the info panal that is displayed when the vacant command is called.
+ * A ui for the info panel that is displayed when the vacant command is called.
  */
 public class VenueTable extends UiPart<Region> {
     private static final String OCCUPIED_STYLE_CLASS = "occupied";
@@ -903,6 +968,10 @@ public class VenueTable extends UiPart<Region> {
     private TableColumn<ArrayList<String>, String> sevenPm;
     @FXML
     private TableColumn<ArrayList<String>, String> eightPm;
+
+    public VenueTable() {
+        this(null);
+    }
 
     public VenueTable(ObservableList<ArrayList<String>> schedules) {
         super(FXML);

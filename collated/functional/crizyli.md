@@ -637,6 +637,8 @@ public class AuthenCommand extends Command {
 
     public static final String COMMAND_WORD = "authenET";
 
+    public static final String COMMAND_USAGE = "Authorize ET with your google calendar.";
+
     public static final String MESSAGE_SUCCESS = "You have authorized ET!";
 
     public static final String MESSAGE_FAILURE = "You haven't authorized ET successfully,"
@@ -1040,7 +1042,6 @@ import seedu.address.logic.Authentication;
 import seedu.address.logic.CreateNewCalendar;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.notification.Notification;
-import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -1075,6 +1076,7 @@ public class TestAddEventCommand extends Command {
     private final String startTime;
     private final String endTime;
     private final String description;
+    private final Logger logger = LogsCenter.getLogger(TestAddEventCommand.class);
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
@@ -1102,7 +1104,7 @@ public class TestAddEventCommand extends Command {
         try {
             service = Authentication.getCalendarService();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning("Couldn't authenticate Google Calendar Service");
         }
 
         //Solution below adpated from https://developers.google.com/calendar/quickstart/java
@@ -1145,6 +1147,7 @@ public class TestAddEventCommand extends Command {
 ``` java
 
         logger.info("Event created: " + event.getHtmlLink());
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
@@ -1739,7 +1742,7 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
             throw new ParseException("Invalid date/time format: " + eTime);
         }
 
-        String decription = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
+        String description = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
 
         return new TestAddEventCommand(index, title, location, sTime, eTime, decription);
 
@@ -1757,7 +1760,6 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
 ```
 ###### \java\seedu\address\logic\parser\UnlockCommandParser.java
 ``` java
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -1773,9 +1775,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UnlockCommand parse(String args) throws ParseException {
-        if (!args.trim().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
-        }
 
         return new UnlockCommand();
     }

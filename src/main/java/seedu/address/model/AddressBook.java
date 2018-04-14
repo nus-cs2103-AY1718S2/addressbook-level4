@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.notification.Notification;
-import seedu.address.model.notification.exceptions.DuplicateTimetableEntryException;
 import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniqueEmployeeList;
@@ -222,14 +221,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Adds a notification to the address book.
      */
-    public void addNotification(Notification notification) throws DuplicateTimetableEntryException {
+    public void addNotification(Notification notification) {
         try {
             semaphore.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        if (notifications.contains(notification)) {
-            throw new DuplicateTimetableEntryException();
         }
         notifications.add(notification);
         semaphore.release();
@@ -242,7 +238,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         boolean found = false;
         LinkedList<Notification> toDelete = new LinkedList<>();
         for (Notification n: notifications) {
-            if (n.getId().equals(notificationId)) {
+            if (n.getEventId().equals(notificationId)) {
                 toDelete.add(n);
                 found = true;
             }

@@ -157,6 +157,67 @@ public class ToggleNotificationCenterEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\DismissCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.notification.exceptions.NotificationNotFoundException;
+import seedu.address.ui.NotificationCard;
+
+/**
+ * Deletes a person identified using it's last displayed index from the address book.
+ */
+public class DismissCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "dismiss";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Dismisses the notification card identified by the index number used in Notification Center.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_DISMISS_SUCCESS = "Dismissed notification card: %1$s";
+    public static final String MESSAGE_ERROR = "Error occurred. Please try again later.";
+
+    private final Index targetIndex;
+
+    public DismissCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        NotificationCard toDelete;
+        try {
+            toDelete = model.deleteNotificationByIndex(targetIndex);
+        } catch (NotificationNotFoundException e) {
+            //should not happen, because id is obtained from NotificationCenter
+            LogsCenter.getLogger(DismissCommand.class).info("No local copy of notification in AddressBook");
+            return new CommandResult(MESSAGE_ERROR);
+        }
+        return new CommandResult(String.format(MESSAGE_DISMISS_SUCCESS, toDelete));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        if (targetIndex.getZeroBased() >= model.getNotificationCenter().getTotalUndismmissedNotificationCards() - 1) {
+            throw new CommandException(Messages.MESSAGE_INVALID_NOTIFICATION_CARD_INDEX);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DismissCommand // instanceof handles nulls
+                && this.targetIndex.equals(((DismissCommand) other).targetIndex)); // state check
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         public void setRating(Rating rating) {
@@ -166,6 +227,156 @@ public class ToggleNotificationCenterEvent extends BaseEvent {
         public Optional<Rating> getRating() {
             return Optional.ofNullable(rating);
         }
+```
+###### \java\seedu\address\logic\commands\EmailAllCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
+
+/**
+ * Email to the person associated with the notification card identified using index in Notification Center.
+ */
+public class EmailAllCommand extends Command {
+
+    public static final String COMMAND_WORD = "emailall";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Emails to remind about all notification cards.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "Directing to email app...";
+    public static final String MESSAGE_ERROR = "Error occurred. Please try again later.";
+
+    public static final String EMAIL_TEMPLATE = "Dear%20all,"
+            + "%0D%0A%0D%0AThis%20email%20is%20to%20remind%20you%20that%20you%20have%20a%20task%20expired.%0D%0A%0D%0A";
+
+    private String allEmails = "";
+
+    @Override
+    public CommandResult execute() {
+        //notificationCards in notification center is 1-based
+        for (int i = 1; i < model.getNotificationCenter().getTotalUndismmissedNotificationCards(); i++) {
+            Index targetIndex = Index.fromOneBased(i);
+            String ownerId = model.getNotificationCenter().getOwnerIdByIndex(targetIndex);
+            allEmails += model.getAddressBook().findPersonById(Integer.parseInt(ownerId)).getEmail().toString() + ",";
+        }
+
+        Desktop desktop = Desktop.getDesktop();
+        String message = "mailto:" + allEmails + "?subject=" + "Reminder%20for%20Task%20Expiry"
+                + "&body=" + EMAIL_TEMPLATE;
+        URI uri = URI.create(message);
+        try {
+            desktop.mail(uri);
+        } catch (IOException e) {
+            LogsCenter.getLogger(EmailAllCommand.class).info("IOException");
+            return new CommandResult(MESSAGE_ERROR);
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\EmailCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
+import seedu.address.ui.NotificationCard;
+
+/**
+ * Email to the person associated with the notification card identified using index in Notification Center.
+ */
+public class EmailCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "email";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Emails to remind the corresponding employee "
+            + "about the notification card identified by the index number "
+            + "used in Notification Center.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_SUCCESS = "Directing to email app...";
+    public static final String MESSAGE_ERROR = "Error occurred. Please try again later.";
+
+    public static final String[] EMAIL_TEMPLATE = {"Dear%20",
+        ",%0D%0A%0D%0AThis%20email%20is%20to%20remind%20you%20about%20",
+        "%20happening%20at%20",
+        ".%0D%0A%0D%0A"};
+
+    private final Index targetIndex;
+
+    private Person owner;
+
+    private NotificationCard notificationCard;
+
+    public EmailCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        Desktop desktop = Desktop.getDesktop();
+        String message = "mailto:" + owner.getEmail().toString() + "?subject=" + "Reminder%20for%20"
+                + replaceSpaceWithHexa(notificationCard.getTitle()) + "&body="
+                + EMAIL_TEMPLATE[0] + replaceSpaceWithHexa(notificationCard.getOwnerName())
+                + EMAIL_TEMPLATE[1] + replaceSpaceWithHexa(notificationCard.getTitle())
+                + EMAIL_TEMPLATE[2] + replaceSpaceWithHexa(notificationCard.getEndTime())
+                + EMAIL_TEMPLATE[3];
+        URI uri = URI.create(message);
+        try {
+            desktop.mail(uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new CommandResult(MESSAGE_ERROR);
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        if (targetIndex.getZeroBased() >= model.getNotificationCenter().getTotalUndismmissedNotificationCards() - 1) {
+            throw new CommandException(Messages.MESSAGE_INVALID_NOTIFICATION_CARD_INDEX);
+        }
+        notificationCard = model.getNotificationCenter().getNotificationCard(targetIndex);
+        String ownerId = model.getNotificationCenter().getOwnerIdByIndex(targetIndex);
+        owner = model.getAddressBook().findPersonById(Integer.parseInt(ownerId));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailCommand // instanceof handles nulls
+                && this.targetIndex.equals(((EmailCommand) other).targetIndex)); // state check
+    }
+
+    /**
+     * Replaces all space characters with URI space character
+     */
+    public String replaceSpaceWithHexa(String input) {
+        String[] parts = input.split(" ");
+        String toReturn = "";
+        for (int i = 0; i < parts.length; i++) {
+            toReturn += parts[i];
+            toReturn += "%20";
+        }
+        return toReturn;
+    }
+}
 ```
 ###### \java\seedu\address\logic\commands\NotiCommand.java
 ``` java
@@ -317,7 +528,6 @@ public class RateCommand extends UndoableCommand {
                 calendarId = CreateNewCalendar.execute(personToAddEvent.getName().fullName);
                 logger.info("calendar created successfully");
             } catch (IOException e) {
-                e.printStackTrace();
                 logger.info("unable to create calendar");
                 return new CommandResult(MESSAGE_FAILURE);
             }
@@ -345,11 +555,7 @@ public class RateCommand extends UndoableCommand {
 ``` java
         Notification notification = new Notification(title, calendarId, event.getId(), event.getEnd().toString(),
                 model.getPerson(targetIndex.getZeroBased()).getId().toString());
-        try {
-            model.addNotification(notification);
-        } catch (DuplicateTimetableEntryException e) {
-            throw new CommandException("Duplicated event");
-        }
+        model.addNotification(notification);
 ```
 ###### \java\seedu\address\logic\LogicManager.java
 ``` java
@@ -378,12 +584,13 @@ public class RateCommand extends UndoableCommand {
                     raise(new ShowNotificationEvent(ownerName, notification));
                 } catch (NullPointerException e) {
                     logger.info("Corresponding employee is deleted. Ignoring this notification");
+                    raise(new RequestToDeleteNotificationEvent(notification.getEventId(), true));
                     raise(new RequestToDeleteNotificationEvent(notification.getId(), true));
                 }
             }
         };
         timetableEntriesStatus.put(task, true);
-        scheduledTimerTasks.put(event.notification.getId(), task);
+        scheduledTimerTasks.put(event.notification.getEventId(), task);
         timerTaskToTimetableEntryMap.put(task, event.notification);
         System.out.println("An event scheduled at " + c.getTime() + " " + (c.getTimeInMillis() - System
                 .currentTimeMillis()));
@@ -410,6 +617,69 @@ public class RateCommand extends UndoableCommand {
         this.model.setNotificationCenter(notificationCenter);
     }
 
+```
+###### \java\seedu\address\logic\parser\DismissCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_NOTIFICATION_CARD_INDEX_NON_POSITIVE;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.DismissCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new DismissCommand object
+ */
+public class DismissCommandParser implements Parser<DismissCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DismissCommand
+     * and returns an DismissCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DismissCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new DismissCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(MESSAGE_INVALID_NOTIFICATION_CARD_INDEX_NON_POSITIVE);
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\EmailCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.EmailCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new DismissCommand object
+ */
+public class EmailCommandParser implements Parser<EmailCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the EmailCommand
+     * and returns an EmailCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public EmailCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new EmailCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
+        }
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\RateCommandParser.java
 ``` java
@@ -469,22 +739,6 @@ public class RateCommandParser implements Parser<RateCommand> {
 
         return new RateCommand(index, editPersonDescriptor);
     }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
-    }
-
 }
 ```
 ###### \java\seedu\address\model\AddressBook.java
@@ -506,14 +760,12 @@ public class RateCommandParser implements Parser<RateCommand> {
     /**
      * Adds a notification to the address book.
      */
-    public void addNotification(Notification notification) throws DuplicateTimetableEntryException {
+
+    public void addNotification(Notification notification) {
         try {
             semaphore.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        if (notifications.contains(notification)) {
-            throw new DuplicateTimetableEntryException();
         }
         notifications.add(notification);
         semaphore.release();
@@ -526,7 +778,7 @@ public class RateCommandParser implements Parser<RateCommand> {
         boolean found = false;
         LinkedList<Notification> toDelete = new LinkedList<>();
         for (Notification n: notifications) {
-            if (n.getId().equals(notificationId)) {
+            if (n.getEventId().equals(notificationId)) {
                 toDelete.add(n);
                 found = true;
             }
@@ -543,23 +795,15 @@ public class RateCommandParser implements Parser<RateCommand> {
     /**
      * Removes all notifications associated with a person id.
      */
-    private void removeNotificationsWithOwnerId(Integer id) {
-        boolean deletedSuccessfully = false;
-        while (!deletedSuccessfully) {
-            try {
-                for (Notification n : notifications) {
-                    if (Integer.parseInt(n.getOwnerId()) == id) {
-                        notifications.remove(n);
-                    }
-                }
-                deletedSuccessfully = true;
-            } catch (ConcurrentModificationException e) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
+    private void removeNotificationsWithOwnerId (Integer id) {
+        LinkedList<Notification> toDelete = new LinkedList<>();
+        for (Notification n: notifications) {
+            if (n.getOwnerId().equals(id + "")) {
+                toDelete.add(n);
             }
+        }
+        for (Notification n: toDelete) {
+            notifications.remove(n);
         }
     }
 ```
@@ -602,7 +846,7 @@ public class RateCommandParser implements Parser<RateCommand> {
     void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws NotificationNotFoundException;
 
     /** Adds the given person */
-    void addNotification(Notification e) throws DuplicateTimetableEntryException;
+    void addNotification(Notification e);
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
@@ -610,6 +854,18 @@ public class RateCommandParser implements Parser<RateCommand> {
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
+
+    /**
+     * Ensures Notification Center is non-null. Attempts to assign notification center if so.
+     */
+    private void ensureNotificationCenterNonNull() {
+        if (notificationCenter == null) {
+            raise(new RequestForNotificationCenterEvent());
+        }
+        while (notificationCenter == null) {
+            for (int i = 0; i < 1000; i++);
+        }
+    }
     @Override
     public synchronized void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws
             NotificationNotFoundException {
@@ -620,6 +876,7 @@ public class RateCommandParser implements Parser<RateCommand> {
         }
         if (!deleteFromAddressBookOnly) {
             try {
+                ensureNotificationCenterNonNull();
                 notificationCenter.deleteNotification(id);
             } catch (NullPointerException e) {
                 logger.info("NullPointerException encountered when deleting notification for deleted employee");
@@ -630,6 +887,7 @@ public class RateCommandParser implements Parser<RateCommand> {
 
     @Override
     public NotificationCard deleteNotificationByIndex(Index targetIndex) throws NotificationNotFoundException {
+        ensureNotificationCenterNonNull();
         addressBook.deleteNotification(notificationCenter.getIdByIndex(targetIndex));
         indicateAddressBookChanged();
         NotificationCard toDelete = notificationCenter.deleteNotificationByIndex(targetIndex);
@@ -643,7 +901,7 @@ public class RateCommandParser implements Parser<RateCommand> {
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
-    public void addNotification(Notification e) throws DuplicateTimetableEntryException {
+    public void addNotification(Notification e) {
         addressBook.addNotification(e);
         indicateAddressBookChanged();
         indicateNotificationAdded(e);
@@ -664,6 +922,7 @@ public class RateCommandParser implements Parser<RateCommand> {
             deleteNotification(event.id, event.deleteFromAddressbookOnly);
         } catch (NotificationNotFoundException e) {
             e.printStackTrace();
+            logger.info("Notification is not stored locally");
         }
     }
 
@@ -678,18 +937,13 @@ public class RateCommandParser implements Parser<RateCommand> {
     }
 
     public void setNotificationCenter(NotificationCenter notificationCenter) {
+        assert(notificationCenter != null);
         this.notificationCenter = notificationCenter;
     }
 
     public NotificationCenter getNotificationCenter() {
         return  notificationCenter;
     }
-
-    @Override
-    public void deletePerson(Person target) throws PersonNotFoundException {
-
-    }
-
 ```
 ###### \java\seedu\address\model\notification\exceptions\NotificationNotFoundException.java
 ``` java
@@ -704,20 +958,24 @@ public class NotificationNotFoundException extends Exception {}
 ``` java
 package seedu.address.model.notification;
 
+import seedu.address.model.person.Person;
+
 /**
  * Represents a timetable entry added to Employees Tracker
  */
 public class Notification {
     private String title;
     private String calendarId;
-    private String id;
+    private String eventId;
     private String endDate;
     private String ownerId;
 
-    public Notification(String title, String calendarId, String id, String endDate, String ownerId) {
+    public Notification(String title, String calendarId, String eventId, String endDate, String ownerId) {
+        assert(title != null && eventId != null && endDate != null && ownerId != null && !ownerId.equals(Person
+                .UNINITIALISED_ID + ""));
         this.title = title;
         this.calendarId = calendarId;
-        this.id = id;
+        this.eventId = eventId;
         this.endDate = endDate;
         this.ownerId = ownerId;
     }
@@ -726,8 +984,8 @@ public class Notification {
         return calendarId;
     }
 
-    public String getId() {
-        return id;
+    public String getEventId() {
+        return eventId;
     }
 
     public String getEndDate() {
@@ -847,6 +1105,7 @@ public class Rating {
     public static final int DEFAULT_NULL_RATING = -1;
     public static final String INVALID_RATING_DISPLAY = "-";
     public static final String RATING_DISPLAY = ":star2: ";
+    public static final int MAX_RATING = 5;
 
     public final Integer value;
 
@@ -878,7 +1137,7 @@ public class Rating {
      * Returns true if a given string is a valid input of person rating.
      */
     public static boolean isValidInputRating(int test) {
-        return test > 0 && test <= 5;
+        return test > 0 && test <= MAX_RATING;
     }
 
     @Override
@@ -931,6 +1190,7 @@ public class Rating {
 ``` java
 package seedu.address.storage;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.notification.NotificationTime;
 
 /**
@@ -958,16 +1218,18 @@ public class NotificationTimeParserUtil {
     /**
      * Parses the input time string into time fields.
      *
-     * @params input that a string containing time information in the format
-     * {"dateTime":"YYYY-MM-DDTHH:MM:SS.000+08:00",
-     * "timeZone":"Asia/Singapore"}<
+     * @params input that a string containing time information in the format:
+     * Default format: {"dateTime":"YYYY-MM-DDTHH:MM:SS.000+08:00timeZone:"Asia/Singapore"}
+     * Acceptable format: YYYY-MM-DDTHH:MM:SS
      *
      * @return NotificationTime containing the parsed time fields.
      */
     public static NotificationTime parseTime(String input) {
         int firstIntegerOffset = findFirstIntegerOffset(input);
-        NotificationTime tet = new NotificationTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX
-                        + firstIntegerOffset,
+        assert(firstIntegerOffset != -1 && SECOND_END_INDEX + firstIntegerOffset <= input.length());
+        try {
+            NotificationTime tet = new NotificationTime(Integer.parseInt(input.substring(YEAR_BEGIN_INDEX
+                            + firstIntegerOffset,
                     YEAR_END_INDEX + firstIntegerOffset)),
                     Integer.parseInt(input.substring(MONTH_BEGIN_INDEX + firstIntegerOffset, MONTH_END_INDEX
                             + firstIntegerOffset)) + MONTH_INDEX_OFFSET,
@@ -979,7 +1241,13 @@ public class NotificationTimeParserUtil {
                             MINUTE_END_INDEX + firstIntegerOffset)),
                     Integer.parseInt(input.substring(SECOND_BEGIN_INDEX + firstIntegerOffset,
                             SECOND_END_INDEX + firstIntegerOffset)));
-        return tet;
+            return tet;
+        } catch (NumberFormatException e) {
+            LogsCenter.getLogger(NotificationTimeParserUtil.class).info("Time format in notification mismatch");
+            assert(false);
+        }
+        //should not be returned
+        return null;
     }
 
     /**
@@ -1017,7 +1285,7 @@ public class XmlAdaptedNotification {
     @XmlElement(required = true)
     private String ownerId;
     @XmlElement(required = true)
-    private String id;
+    private String eventId;
 
     /**
      * Constructs an XmlAdaptedNotification.
@@ -1028,10 +1296,10 @@ public class XmlAdaptedNotification {
     /**
      * Constructs a {@code XmlAdaptedNotification} with the given timetable entry details.
      */
-    public XmlAdaptedNotification(String title, String calendarId, String id, String endDate, String ownerId) {
+    public XmlAdaptedNotification(String title, String calendarId, String eventId, String endDate, String ownerId) {
         this.title = title;
         this.calendarId = calendarId;
-        this.id = id;
+        this.eventId = eventId;
         this.endDate = endDate;
         this.ownerId = ownerId;
     }
@@ -1046,7 +1314,7 @@ public class XmlAdaptedNotification {
         this.calendarId = source.getCalendarId();
         this.endDate = source.getEndDate();
         this.ownerId = source.getOwnerId();
-        this.id = source.getId();
+        this.eventId = source.getEventId();
     }
 
     /**
@@ -1054,7 +1322,7 @@ public class XmlAdaptedNotification {
      *
      */
     public Notification toModelType() {
-        return new Notification(title, calendarId, id, endDate, ownerId);
+        return new Notification(title, calendarId, eventId, endDate, ownerId);
     }
 }
 ```
@@ -1283,7 +1551,7 @@ public class XmlAdaptedNotification {
                 notificationCenter.getTotalUndismmissedNotificationCards() + "",
                 event.getOwnerName(),
                 event.getNotification().getEndDateDisplay(),
-                event.getNotification().getOwnerId(), event.isFirstSatge(), event.getNotification().getId());
+                event.getNotification().getOwnerId(), event.isFirstSatge(), event.getNotification().getEventId());
         Region notificationCard = x.getRoot();
         notificationCard.setMaxHeight(NOTIFICATION_CARD_HEIGHT);
         notificationCard.setMaxWidth(NOTIFICATION_CARD_WIDTH);
@@ -1386,6 +1654,11 @@ public class XmlAdaptedNotification {
     public void deleteNotificationCard(String id) {
         notificationCenter.deleteNotification(id);
     }
+
+    @Subscribe
+    protected void provideNotificationCenter(RequestForNotificationCenterEvent event) {
+        logic.setNotificationCenter(notificationCenter);
+    }
 ```
 ###### \java\seedu\address\ui\NotificationCard.java
 ``` java
@@ -1416,6 +1689,7 @@ public class NotificationCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
+    protected boolean isFirstStage;
     @FXML
     private Label title;
     @FXML
@@ -1432,10 +1706,8 @@ public class NotificationCard extends UiPart<Region> {
     private GridPane content;
 
     private String ownerId;
-    private boolean isFirstStage;
     private boolean isForCenter;
     private String id;
-
 
     public NotificationCard(String title, String displayedIndex, String ownerName, String endTime, String ownerId,
                             boolean isFirstStage, String id) {
@@ -1470,7 +1742,6 @@ public class NotificationCard extends UiPart<Region> {
         this.isForCenter = isForCenter;
         setStyle();
     }
-
 
     @Override
     public boolean equals(Object other) {
@@ -1581,15 +1852,20 @@ public class NotificationCenter {
             + NotificationCard.NOTIFICATION_CARD_X_OFFSET * 3;
     private static final int NOTIFICATION_CARD_HEIGHT_IN_CENTER = NotificationCard.NOTIFICATION_CARD_HEIGHT;
     private static final int NOTIFICATION_CARD_WIDTH_IN_CENTER = NotificationCard.NOTIFICATION_CARD_WIDTH;
-    private LinkedList<javafx.scene.layout.Region> notificationCards;
-    private LinkedList<NotificationCard> notificationCardCopy;
-    private HashMap<String, LinkedList<javafx.scene.layout.Region>> idToCard;
+
+    protected LinkedList<javafx.scene.layout.Region> notificationCards;
+    protected LinkedList<NotificationCard> notificationCardCopy;
+    protected HashMap<String, LinkedList<javafx.scene.layout.Region>> idToCard;
 
     @FXML
     private VBox notificationCardsBox;
 
     @FXML
     private ScrollPane notificationCenterPlaceHolder;
+
+    public NotificationCenter() {
+
+    }
 
     public NotificationCenter(VBox notificationCardsBox,
                               javafx.scene.control.ScrollPane notificationCenterPlaceHolder) {
@@ -1725,21 +2001,21 @@ public class NotificationCenter {
     public void removeNotificationForPerson(int targetId) {
         System.out.println("TargetId: targetId");
         int totalRemoved = 0;
-        Iterator<NotificationCard> iterator = notificationCardCopy.iterator();
-        //to bypass null at index 0
-        iterator.next();
-        for (int i = 1; i <= notificationCardCopy.size(); i++) {
-            NotificationCard curr = iterator.next();
-            System.out.println("Checking id:" + curr.getOwnerId());
-            if (Integer.parseInt(curr.getOwnerId()) == targetId) {
-                iterator.remove();
-                notificationCardsBox.getChildren().remove(notificationCards.remove(i - 1));
+        LinkedList<NotificationCard> toDelete = new LinkedList<>();
+        for (NotificationCard nc: notificationCardCopy) {
+            if (nc != null && nc.getOwnerId().equals(targetId + "")) {
+                toDelete.add(nc);
+                notificationCards.remove(nc.getRoot());
+                notificationCardsBox.getChildren().remove(nc.getRoot());
                 totalRemoved++;
             } else if (totalRemoved > 0) {
-                System.out.println("Total removed: " + totalRemoved);
-                curr.decreaseIndex(totalRemoved);
+                nc.decreaseIndex(totalRemoved);
             }
         }
+        for (NotificationCard nc: toDelete) {
+            notificationCardCopy.remove(nc);
+        }
+
     }
 }
 ```
@@ -2005,12 +2281,15 @@ public class PersonCard extends UiPart<Region> {
 
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="300" />
         </columnConstraints>
+          <padding>
+              <Insets bottom="0" left="0" right="0" top="-10" />
+          </padding>
         <VBox alignment="CENTER_LEFT" minHeight="75" GridPane.columnIndex="0">
           <padding>
-            <Insets bottom="5" left="15" right="5" top="5" />
+            <Insets bottom="5" left="15" right="5" top="0" />
           </padding>
           <HBox alignment="CENTER_LEFT" spacing="5">
-            <Label fx:id="index" text="a">
+            <Label fx:id="index" text="a" styleClass="cell_big_label">
               <minWidth>
                 <!-- Ensures that the label text is never truncated -->
                 <Region fx:constant="USE_PREF_SIZE" />
@@ -2019,13 +2298,21 @@ public class PersonCard extends UiPart<Region> {
                       <Font size="20.0" />
                    </font>
             </Label>
-            <Label fx:id="title" text="\$title">
+            <Label fx:id="title" text="\$title" styleClass="cell_big_label">
                    <font>
                       <Font size="20.0" />
                    </font></Label>
           </HBox>
-          <Label fx:id="ownerName" text="\$ownerName" />
-          <Label fx:id="endTime" text="\$endTime" />
+          <Label fx:id="ownerName" text="\$ownerName" styleClass="cell_big_label">
+            <padding>
+                <Insets top="5" />
+            </padding>
+          </Label>
+          <Label fx:id="endTime" text="\$endTime" styleClass="cell_big_label">
+            <padding>
+                <Insets top="5" />
+            </padding>
+          </Label>
         </VBox>
           <rowConstraints>
              <RowConstraints />

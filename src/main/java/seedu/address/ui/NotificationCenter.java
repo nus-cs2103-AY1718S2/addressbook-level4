@@ -20,15 +20,19 @@ public class NotificationCenter {
             + NotificationCard.NOTIFICATION_CARD_X_OFFSET * 3;
     private static final int NOTIFICATION_CARD_HEIGHT_IN_CENTER = NotificationCard.NOTIFICATION_CARD_HEIGHT;
     private static final int NOTIFICATION_CARD_WIDTH_IN_CENTER = NotificationCard.NOTIFICATION_CARD_WIDTH;
-    private LinkedList<javafx.scene.layout.Region> notificationCards;
-    private LinkedList<NotificationCard> notificationCardCopy;
-    private HashMap<String, LinkedList<javafx.scene.layout.Region>> idToCard;
+    protected LinkedList<javafx.scene.layout.Region> notificationCards;
+    protected LinkedList<NotificationCard> notificationCardCopy;
+    protected HashMap<String, LinkedList<javafx.scene.layout.Region>> idToCard;
 
     @FXML
     private VBox notificationCardsBox;
 
     @FXML
     private ScrollPane notificationCenterPlaceHolder;
+
+    public NotificationCenter() {
+
+    }
 
     public NotificationCenter(VBox notificationCardsBox,
                               javafx.scene.control.ScrollPane notificationCenterPlaceHolder) {

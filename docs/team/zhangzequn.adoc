@@ -47,9 +47,9 @@ Delivery is a desktop application designed for restaurants who want to maintain 
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=count]
+include::../UserGuide.adoc[tag=add]
 
-include::../UserGuide.adoc[tag=identify]
+include::../UserGuide.adoc[tag=menu]
 
 == Contributions to the Developer Guide
 
@@ -57,7 +57,7 @@ include::../UserGuide.adoc[tag=identify]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=count]
+include::../DeveloperGuide.adoc[tag=menu]
 
 
 

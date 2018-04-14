@@ -24,7 +24,11 @@ public class Halal {
             this.value = "Non-halal";
         } else {
             checkArgument(isValidHalal(halal), MESSAGE_HALAL_CONSTRAINTS);
-            this.value = halal;
+            if (halal.equalsIgnoreCase("Halal")) {
+                this.value = "Halal";
+            } else {
+                this.value = "Non-halal";
+            }
         }
     }
 

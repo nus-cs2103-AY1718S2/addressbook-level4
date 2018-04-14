@@ -26,12 +26,16 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
+<<<<<<< HEAD
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
+=======
+        <Label fx:id="order" text="\$first" styleClass="cell_big_label" />
+>>>>>>> 7edde338803f5ffd669a14657244a493010f7877
       </HBox>
-      <FlowPane fx:id="tags" />
+      <Label fx:id="name" styleClass="cell_small_label" text="\$name" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+      <FlowPane fx:id="tags" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

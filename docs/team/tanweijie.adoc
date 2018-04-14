@@ -8,7 +8,7 @@
 
 == Overview
 
-Media Socializer is a desktop address book application used to help social media users to keep track of all the social media platforms their contacts are using. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Media Socializer is a one-stop social media desktop application used to help social media users keep track of all the social media platforms their contacts are using. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
 
@@ -24,7 +24,7 @@ Media Socializer is a desktop address book application used to help social media
 * *Other contributions*: Assisted team members in fulfilling certain requirements for the milestones (Pull requests https://github.com/CS2103JAN2018-F12-B3/main/pull/70[#70], https://github.com/CS2103JAN2018-F12-B3/main/pull/99[#99])
 
 ** Project management:
-*** Managed releases `v1.0` - `v1.5rc` (6 releases) on GitHub
+*** Managed releases `v1.5rc` - `v1.5` (2 releases) on GitHub
 *** Identified the deliverables for each release to keep track of
 ** Enhancements to existing features:
 *** Updated the GUI to show social media icons for each person (Pull request https://github.com/CS2103JAN2018-F12-B3/main/pull/85[#85])
@@ -61,3 +61,5 @@ include::../DeveloperGuide.adoc[tag=product-scope]
 include::../DeveloperGuide.adoc[tag=user-stories]
 
 include::../DeveloperGuide.adoc[tag=sort]
+
+include::../DeveloperGuide.adoc[tag=addplatform]

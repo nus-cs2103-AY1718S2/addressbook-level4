@@ -465,7 +465,7 @@ image::SortCommandSequenceDiagram.png[width="800"]
 
 The add platform function makes use of a factory to facilitate the creation of various social media platforms.
 A platform is created only when users provide a valid profile link; this object will be associated to the particular
-person found in the list. Currently, only the `Facebook` and `Twitter` platforms available.
+person found in the list as specified by the user. Currently, only the `Facebook` and `Twitter` platforms are available.
 
 The structure of the class diagram is as shown:
 
@@ -488,7 +488,7 @@ public final class SocialMediaPlatformFactory {
     }
 }
 ----
-From the extract, a `String` data type and a `Link` object needs to be provided by the caller when using the
+From the extract, a `String` data type and a `Link` object need to be provided by the caller when using the
 `getSocialMediaPlatform` method. The method will then return an instance of the available concrete classes.
 
 The `AddPlatformCommand` makes use of the implementation of `EditCommand` as the foundation, editing the `Person` model
@@ -499,8 +499,8 @@ image::SocialMediaPlatformMapObjectDiagram.png[width="650"]
 
 {empty}
 
-The links provided by the user will be parsed within the `AddPlatformCommandParser` to convert them into a `Link`
-object type. From there, `AddPlatformCommand` will create a new map and add the relevant social media platforms by
+The links provided by the user will be parsed within the `AddPlatformCommandParser` to convert them into `Link`
+objects. From there, `AddPlatformCommand` will create a new map and add the relevant social media platforms by
 calling the `getSocialMediaPlatform` method of `SocialMediaPlatformFactory` for object creation. To merge the updates
 with the targeted person, the command would also retrieve all of its information in order to create a new `Person`
 object before replacement is done. The sequence of the events is as follows:

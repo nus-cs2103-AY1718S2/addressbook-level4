@@ -420,6 +420,6 @@ public class PetPatientListPanelTest extends GuiUnitTest {
 ``` java
         /* Case: invalid nric -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + OPTION_OWNER + " "
-                + INDEX_FIRST_PERSON.getOneBased() + INVALID_NRIC_DESC,
+                        + INDEX_FIRST_PERSON.getOneBased() + INVALID_NRIC_DESC,
                 Nric.MESSAGE_NRIC_CONSTRAINTS);
 ```

@@ -25,12 +25,10 @@ import seedu.address.testutil.EventBuilder;
 public class EventCommandIntegrationTest {
 
     private Model model;
-    private Storage storage;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
-        storage = new StorageManager(null, null);
     }
 
     @Test
@@ -40,7 +38,7 @@ public class EventCommandIntegrationTest {
         Model expectedModel = new ModelManager(model.getDeskBoard(), new UserPrefs());
         expectedModel.addActivity(validEvent);
 
-        assertCommandSuccess(prepareCommand(validEvent, model, storage), model,
+        assertCommandSuccess(prepareCommand(validEvent, model), model,
                 String.format(EventCommand.MESSAGE_SUCCESS, validEvent), expectedModel);
     }
 
@@ -48,16 +46,16 @@ public class EventCommandIntegrationTest {
     // Questionable - does the app check for duplicate?
     public void execute_duplicateEvent_throwsCommandException() {
         Activity activityInList = model.getDeskBoard().getActivityList().get(0);
-        assertCommandFailure(prepareCommand((Event) activityInList, model, storage), model,
+        assertCommandFailure(prepareCommand((Event) activityInList, model), model,
                 EventCommand.MESSAGE_DUPLICATE_EVENT);
     }
 
     /**
      * Generates a new {@code EventCommand} which upon execution, adds {@code event} into the {@code model}.
      */
-    private EventCommand prepareCommand(Event event, Model model, Storage storage) {
+    private EventCommand prepareCommand(Event event, Model model) {
         EventCommand command = new EventCommand(event);
-        command.setData(model, storage, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 }

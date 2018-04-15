@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<deskboard>
+<deskBoard>
     <tasks>
         <name>CS2101Assignment</name>
         <dateTime>04/03/2018 23:59</dateTime>
@@ -50,4 +50,4 @@
     <tags>CS2101</tags>
     <tags>CS2102</tags>
     <tags>CIP</tags>
-</deskboard>
+</deskBoard>

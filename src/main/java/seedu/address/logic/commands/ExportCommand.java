@@ -50,7 +50,7 @@ public class ExportCommand extends Command {
 
         try {
             ReadOnlyDeskBoard deskBoard = model.getDeskBoard();
-            storage.exportDeskBoard(deskBoard, filePath.value);
+            storage.saveDeskBoard(deskBoard, filePath.value);
             return new CommandResult(String.format(MESSAGE_SUCCESS, filePath.value));
         } catch (IOException ioe) {
             throw new CommandException(ioe.getMessage());

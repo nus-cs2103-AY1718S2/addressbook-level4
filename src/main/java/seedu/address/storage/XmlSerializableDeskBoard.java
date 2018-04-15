@@ -16,9 +16,9 @@ import seedu.address.model.activity.Task;
 
 //@@author karenfrilya97
 /**
- * An Immutable DeskBoard that is serializable to XML format
+ * An immutable {@link DeskBoard} that is serializable to XML format
  */
-@XmlRootElement(name = "deskboard")
+@XmlRootElement(name = "deskBoard")
 public class XmlSerializableDeskBoard {
 
     @XmlElement

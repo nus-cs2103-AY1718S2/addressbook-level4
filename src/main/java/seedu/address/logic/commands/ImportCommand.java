@@ -3,9 +3,11 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FILE_PATH;
 
+import java.io.File;
 import java.io.IOException;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.FilePath;
 import seedu.address.model.ReadOnlyDeskBoard;
@@ -42,8 +44,10 @@ public class ImportCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
+        requireNonNull(storage);
+
         try {
-            ReadOnlyDeskBoard toImport = new XmlDeskBoardStorage(filePath.value).readDeskBoard()
+            ReadOnlyDeskBoard toImport = storage.readDeskBoard(filePath.value)
                     .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePath)));
 
             model.addActivities(toImport);

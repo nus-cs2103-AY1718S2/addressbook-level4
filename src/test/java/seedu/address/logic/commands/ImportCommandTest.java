@@ -37,6 +37,8 @@ public class ImportCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+
     @Test
     public void constructor_nullFilePath_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
@@ -51,7 +53,6 @@ public class ImportCommandTest {
         expectedModel.addActivity(DEMO1);
 
         createXmlFile(Arrays.asList(ASSIGNMENT3, DEMO1), ASSIGNMENT3_DEMO1_FILE_PATH);
-        Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
         ImportCommand importCommand = getImportCommandForGivenFilePath(ASSIGNMENT3_DEMO1_FILE_PATH, actualModel);
 
         assertCommandSuccess(importCommand, actualModel, expectedMessage, expectedModel);
@@ -61,7 +62,6 @@ public class ImportCommandTest {
     public void execute_nonexistentFilePath_throwsCommandException() {
         String expectedMessage = String.format(MESSAGE_FILE_NOT_FOUND, MISSING_FILE_PATH);
 
-        Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
         ImportCommand importCommand = getImportCommandForGivenFilePath(MISSING_FILE_PATH, actualModel);
 
         assertCommandFailure(importCommand, expectedMessage);
@@ -73,7 +73,6 @@ public class ImportCommandTest {
     public void execute_illegalValuesInFile_throwsCommandException() throws Throwable {
         String expectedMessage = String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, ILLEGAL_VALUES_FILE_PATH);
 
-        Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
         ImportCommand importCommand = getImportCommandForGivenFilePath(ILLEGAL_VALUES_FILE_PATH, actualModel);
 
         assertCommandFailure(importCommand, expectedMessage);
@@ -92,7 +91,6 @@ public class ImportCommandTest {
         expectedModel.addActivity(DEMO1);
 
         createXmlFile(Arrays.asList(ASSIGNMENT3, DEMO1, ASSIGNMENT1, CIP), DUPLICATE_ACTIVITY_FILE_PATH);
-        Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
         ImportCommand importCommand = getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, actualModel);
 
         assertCommandSuccess(importCommand, actualModel, expectedMessage, expectedModel);

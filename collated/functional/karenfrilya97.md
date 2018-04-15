@@ -375,7 +375,7 @@ public class XmlAdaptedTask extends XmlAdaptedActivity {
 /**
  * An Immutable DeskBoard that is serializable to XML format
  */
-@XmlRootElement(name = "deskboard")
+@XmlRootElement(name = "deskBoard")
 public class XmlSerializableDeskBoard {
 
     @XmlElement

@@ -22,6 +22,10 @@ public class LocateRequestEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\AddCommand.java
+``` java
+    public static final String COMMAND_ALIAS = "i";
+```
 ###### \java\seedu\address\logic\commands\LocateCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -52,7 +56,7 @@ public class LocateCommand extends Command implements PopulatableCommand {
                     + "\n\t"
                     + "Parameters:\t"
                     + COMMAND_WORD + " "
-                    + "[SPECIFIER] KEYWORD [MORE_KEYWORDS]..."
+                    + "[SPECIFIER] KEYWORD [KEYWORD] ..."
 
                     + "\n\t"
                     + "Specifiers:\t\t"
@@ -65,6 +69,7 @@ public class LocateCommand extends Command implements PopulatableCommand {
     public static final String MESSAGE_NO_PERSON = "Locate Command unsuccessful: "
             + "No such person with those keyword(s) found!";
     public static final String MESSAGE_LOCATE_SELECT = "More than one person found! ";
+    public static final String MESSAGE_NOADDRESS_PERSON = "This person has no address!";
 
     private final int target = 0;
     private final int targetOne = 1;
@@ -89,25 +94,38 @@ public class LocateCommand extends Command implements PopulatableCommand {
             throw new CommandException(String.format(MESSAGE_NO_PERSON));
         } else if (model.getFilteredPersonList().size() == 1) {
 
-            Person location = lastShownList.get(target);
+            Person person = lastShownList.get(target);
+            String address = person.getAddress().toString();
 
-            // Open Google Map on BrowserPanel
-            MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
-                    + location.getAddress().toString());
+            if (address.length() == 0) {
+                throw new CommandException(String.format(MESSAGE_NOADDRESS_PERSON));
+            } else {
+                // Open Google Map on BrowserPanel
+                MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
+                        + address);
 
-            EventsCenter.getInstance().post(new LocateRequestEvent(target));
+                EventsCenter.getInstance().post(new LocateRequestEvent(target));
 
-            return new CommandResult(String.format(MESSAGE_LOCATE_SUCCESS));
+                return new CommandResult(String.format(MESSAGE_LOCATE_SUCCESS));
+            }
+
         } else {
 
-            Person location = lastShownList.get(target);
+            Person person = lastShownList.get(target);
+            String address = person.getAddress().toString();
 
-            // Open Google Map on BrowserPanel
-            MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
-                    + location.getAddress().toString());
+            if (address.length() == 0) {
+                throw new CommandException(String.format(MESSAGE_NOADDRESS_PERSON));
+            } else {
+                // Open Google Map on BrowserPanel
+                MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
+                        + address);
 
-            EventsCenter.getInstance().post(new LocateRequestEvent(target));
-            return new CommandResult(String.format(MESSAGE_LOCATE_SELECT, targetOne));
+                EventsCenter.getInstance().post(new LocateRequestEvent(target));
+
+                return new CommandResult(String.format(MESSAGE_LOCATE_SELECT, targetOne));
+
+            }
 
         }
     }

@@ -1,4 +1,129 @@
 # melvintzw
+###### \java\seedu\address\logic\commands\FindCommandTest.java
+``` java
+    @Test
+    public void execute_multipleKeywords_multiplePersonsFound() {
+
+        //test FindCommand object that uses the PersonContainsKeyWordsPredicate
+        String arguments = "carl daniel elle";
+        String[] splitArguments = arguments.split("\\s+");
+        List<String> list = Arrays.asList(splitArguments);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand(new PersonContainsKeywordsPredicate(list));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, ELLE));
+
+        //test FindCommand object that uses the NameContainsKeyWordsPredicate
+        arguments = "carl daniel elle";
+        splitArguments = arguments.split("\\s+");
+        list = Arrays.asList(splitArguments);
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        command = prepareCommand(new NameContainsKeywordsPredicate(list));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, ELLE));
+
+        //test Command object that uses the PhoneContainsKeyWordsPredicate
+        arguments = "95352563 87652533 9482224";
+        splitArguments = arguments.split("\\s+");
+        list = Arrays.asList(splitArguments);
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        command = prepareCommand(new PhoneContainsKeywordsPredicate(list));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, ELLE));
+
+        //test FindCommand object that uses the EmailContainsKeyWordsPredicate
+        arguments = "heinz@example.com cornelia@example.com werner@example.com";
+        splitArguments = arguments.split("\\s+");
+        list = Arrays.asList(splitArguments);
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        command = prepareCommand(new EmailContainsKeywordsPredicate(list));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, ELLE));
+
+        //test FindCommand object that uses the AddressContainsKeyWordsPredicate
+        arguments = "wall 10th michegan";
+        splitArguments = arguments.split("\\s+");
+        list = Arrays.asList(splitArguments);
+        expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        command = prepareCommand(new AddressContainsKeywordsPredicate(list));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, ELLE));
+    }
+```
+###### \java\seedu\address\logic\parser\AssignCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.AssignCommand;
+
+public class AssignCommandParserTest {
+
+    private AssignCommandParser parser = new AssignCommandParser();
+
+    @Test
+    public void parse_validArgsAndOneCustomer_returnsAssignCommand() {
+        assertParseSuccess(parser, "1 c: 2", new AssignCommand(Index.fromOneBased(1), Index.fromOneBased(2)));
+    }
+
+    @Test
+    public void parse_validArgsAndTwoCustomers_returnsAssignCommand() {
+        assertParseSuccess(parser, "1 c: 2 3", new AssignCommand(Index.fromOneBased(1), Index.fromOneBased(2),
+                Index.fromOneBased(3)));
+    }
+
+    @Test
+    public void parse_alphabet_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AssignCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_negativeIndex_throwsParseException() {
+        assertParseFailure(parser, "-1 c: 2 3", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AssignCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\FindCommandParserTest.java
+``` java
+    @Test
+    public void parse_validArgs_returnsFindCommand() {
+        // no leading and trailing whitespaces
+        FindCommand expectedFindCommand =
+                new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+
+        //-all specifier
+        expectedFindCommand = new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "-all Alice Bob", expectedFindCommand);
+
+        //-n specifier
+        expectedFindCommand = new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "-n Alice Bob", expectedFindCommand);
+
+        //-p specifier
+        expectedFindCommand = new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "-p Alice Bob", expectedFindCommand);
+
+        //-a specifier
+        expectedFindCommand = new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "-a Alice Bob", expectedFindCommand);
+
+        //-t specifier
+        expectedFindCommand = new FindCommand(new TagsContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "-t Alice Bob", expectedFindCommand);
+
+        //-e specifier
+        expectedFindCommand = new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList("alice@example.com",
+                "bob@example.com")));
+        assertParseSuccess(parser, "-e alice@example.com bob@example.com", expectedFindCommand);
+    }
+```
 ###### \java\seedu\address\model\person\PersonContainsKeywordsPredicateTest.java
 ``` java
 public class PersonContainsKeywordsPredicateTest {
@@ -75,33 +200,16 @@ public class PersonContainsKeywordsPredicateTest {
 ```
 ###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
-/**
- * A utility class to help with building Person objects.
- */
-public class PersonBuilder {
-
-    public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "alice@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_TAGS = "friends";
-
-    private Name name;
-    private Phone phone;
-    private Email email;
-    private Address address;
-    private Set<Tag> tags;
-
     //Customer fields
     private MoneyBorrowed moneyBorrowed;
     private Date oweStartDate;
     private Date oweDueDate;
     private StandardInterest standardInterest;
     private LateInterest lateInterest;
-    private Runner runner;
+    private Person runner;
 
     //Runner fields:
-    private List<Customer> customers;
+    private List<Person> customers;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -132,15 +240,18 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
 
-        //TODO: change the instantiation of below variables according to instanceof
-        moneyBorrowed = new MoneyBorrowed();
-        oweStartDate = new Date(0);
-        oweDueDate = new Date(0);
-        standardInterest = new StandardInterest();
-        lateInterest = new LateInterest();
-        runner = new Runner();
+        if (personToCopy instanceof Customer) {
+            moneyBorrowed = ((Customer) personToCopy).getMoneyBorrowed();
+            oweStartDate = ((Customer) personToCopy).getOweStartDate();
+            oweDueDate = ((Customer) personToCopy).getOweDueDate();
+            standardInterest = ((Customer) personToCopy).getStandardInterest();
+            lateInterest = ((Customer) personToCopy).getLateInterest();
+            runner = ((Customer) personToCopy).getRunner();
+        }
 
-        customers = new ArrayList<>();
+        if (personToCopy instanceof Runner) {
+            customers = new ArrayList<>();
+        }
     }
 
     /**
@@ -232,6 +343,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code customers} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCustomers(List<Person> customers) {
+        this.customers = customers;
+        return this;
+    }
+
+    /**
      * Constructs a Person
      */
     public Person build() {
@@ -246,14 +365,60 @@ public class PersonBuilder {
                 oweStartDate, oweDueDate, standardInterest, lateInterest, runner);
     }
 
+    public Runner buildRunner() {
+        return new Runner(name, phone, email, address, tags, customers);
+    }
+
 }
 
+```
+###### \java\systemtests\AssignCommandSystemTest.java
+``` java
+public class AssignCommandSystemTest extends AddressBookSystemTest {
+    private static final String MESSAGE_INVALID_ASSIGN_COMMAND_FORMAT =
+            String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE);
+
+
+    /* ----------------- Performing assign operation while an unfiltered list is being shown -------------------- */
+    /* Case: assign first person in the list to sixth person in the list, command with leading spaces and
+        trailing spaces -> sixth person (customer) assigned to first person (runner)*/
+    @Test
+    public void execute_assignOneCustomerToOneRunnerWithExtraWhiteSpaces_success() throws Exception {
+        Model expectedModel = getModel(); //data is from TypicalPersons.java
+        String command = "     " + AssignCommand.COMMAND_WORD + "      " + INDEX_SIXTH_PERSON.getOneBased() + " "
+                + PREFIX_CUSTOMERS + " " + INDEX_FIRST_PERSON.getOneBased();
+
+        //get runner
+        Person runner = expectedModel.getFilteredPersonList().get(INDEX_SIXTH_PERSON.getZeroBased());
+        Index[] customerIndexes = {INDEX_FIRST_PERSON};
+        //get customers
+        List<Person> customers = new ArrayList<>();
+        for (Index index : customerIndexes) {
+            Person customer = expectedModel.getFilteredPersonList().get(index.getZeroBased());
+            customers.add(customer);
+        }
+
+        //build editedRunner (assigned with customers)
+        Person editedRunner = new PersonBuilder(runner).withCustomers(customers).buildRunner();
+
+        //update expected model
+        expectedModel.updatePerson(runner, editedRunner);
+
+        //build editedCustomers (assigned with runner)
+        List<Person> editedCustomers = new ArrayList<>();
+        for (Person c : customers) {
+            Person editedCustomer = new PersonBuilder(c).withRunner((Runner) runner).buildCustomer();
+            editedCustomers.add(editedCustomer);
+            expectedModel.updatePerson(c, editedCustomer);
+        }
+
+        String expectedResultMessage = String.format(MESSAGE_ASSIGN_PERSON_SUCCESS, editedRunner);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+    }
 ```
 ###### \java\systemtests\FindCommandSystemTest.java
 ``` java
 public class FindCommandSystemTest extends AddressBookSystemTest {
-    private final GuiRobot guiRobot = new GuiRobot();
-
     @Test
     public void find() {
         /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
@@ -300,6 +465,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         command = FindCommand.COMMAND_WORD + " Daniel Benson NonMatchingKeyWord";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
+
+        //TODO: implement test cases for specifiers: -n -p -e -a -t
+        //ModelHelper.setFilteredList()
+        //refer to TypicalPersons.java and test.data.sandbox.sampleData.xml for fields to check
+
+        //-------------INVALID CASES--------------------------------------------------------------------------------->
 
         /* Case: undo previous find command -> rejected */
         command = UndoCommand.COMMAND_WORD;

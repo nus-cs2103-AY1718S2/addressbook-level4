@@ -13,7 +13,7 @@ public class SetPasswordCommand extends Command {
     public static final String COMMAND_ALIAS = "sp";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set new application password, and old "
-            + "password requeired."
+            + "password required."
             + "Parameters: "
             + "oldPassword" + " newPassword ";
 

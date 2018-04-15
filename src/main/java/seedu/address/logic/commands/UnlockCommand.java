@@ -12,7 +12,9 @@ public class UnlockCommand extends Command {
 
     public static final String COMMAND_ALIAS = "ulk";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlock the address book. ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlock the address book. "
+            + "Parameters: "
+            + "Password ";
 
     public static final String MESSAGE_SUCCESS = "Address book has been unlocked!";
 

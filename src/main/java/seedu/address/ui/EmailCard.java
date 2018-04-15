@@ -21,7 +21,7 @@ public class EmailCard extends UiPart<Region> {
     private static final String FXML = "EmailCard.fxml";
 
     @FXML
-    private HBox cardPane;
+    private HBox emailCardPane;
 
     @FXML
     private Label email;

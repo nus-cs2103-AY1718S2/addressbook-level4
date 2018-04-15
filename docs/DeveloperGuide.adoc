@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W10-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -231,9 +231,9 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 //tag::Login/Logout[]
-=== Login/logout & reset password feature
-====Current Implementation
-The login/logout command feature requires the sales person to enter password whenever he/she starts to use the addressbook. This will allow for a safer address book.
+=== Lock/unlock & reset password feature
+==== Current Implementation
+The lock/unlock command feature requires the sales person to enter password whenever he/she starts to modify the addressbook. This will allow for a safer address book.
 
 To lock the adress book, simply type 'lock' or the command alias 'lk'.
 
@@ -241,7 +241,7 @@ An example of the sort command would be: lock
 
 An example of the sort command alias would be: lk
 
-To unlock the adress book, simply type 'unlock [PASSWORD]' or the command alias 'ulk [PASSWORD]'.
+To unlock the adress book, simply type 'unlock PASSWORD' or the command alias 'ulk PASSWORD'.
 
 An example of the sort command would be: unlock 123456
 
@@ -249,12 +249,12 @@ An example of the sort command alias would be: ulk 123456
 
 The reset password command feature allows the sales person to change password. This will allow for a safer address book.
 
-To change the password, simply type 'setPassword [OLD_PASSWORD] [NEW_PASSWORD]' or the command alias 'sp [OLD_PASSWORD] [NEW_PASSWORD]'.
+To change the password, simply type 'setPassword OLD_PASSWORD NEW_PASSWORD' or the command alias 'sp OLD_PASSWORD NEW_PASSWORD'.
 
 An example of the change password command would be: setPassword 123456 123
 
 An example of the sort command alias would be: sp 123456 123
-//end::Login/logout[]
+//end::Login/Logout[]
 
 //tag::SortCommand[]
 === SortCommand feature
@@ -280,6 +280,18 @@ An example of the sort command would be: export
 An example of the sort command alias would be: ep
 //end::ExportCommand[]
 
+//tag::ListAppointment[]
+=== ListAppointment feature
+==== Current Implementation
+The listappointment command feature allows the sales person to list all the appointments in his addressbook. This will allow for a more simple way to fina an appointment.
+
+To list the appointment in the adress book, simply type 'listappointment' or the command alias 'lap'.
+
+An example of the sort command would be: listappointment
+
+An example of the sort command alias would be: lap
+//end::ListAppointment[]
+
 // tag::DeleteTag[]
 === DeleteTag feature
 ==== Current Implementation
@@ -300,12 +312,6 @@ The current codebase has a flaw in tags management. Tags no longer in use by any
 ** Pros: Less time consuming.
 ** Cons: More complex inplementation.
 //end::DeleteTag[]
-
-// tag::TotalPersonStatusBar[]
-=== TotalPersonStatusBar feature
-==== Current Implementation
-This feature will allow user to see how many contacts he or she has in his/her address book in a straight way, so that I can call it straightforward when I need the information.
-//end::TotalPersonStatusBar[]
 
 // tag::AddComment[]
 === AddComment feature
@@ -333,7 +339,7 @@ An example of the edit command would be: edit 1 cm/interested in bascketball
 //tag::archive[]
 === Archive feature
 ==== Current Implementation
-The archive feature allows the salesperson to archive clients that he no longer contacts, but does not want to delete as he possible might want to contact him/her again. Once archived, the client is not shown in the list. To display the client, either `find` or `listall` command has to be used. The client is then displayed in a red font with strikethrough, indicating that he/she is archived.
+The archive feature allows the salesperson to archive clients that he no longer contacts, but does not want to delete as he possibly might want to contact him/her again. Once archived, the client is not shown in the list. To display the client, either `find` or `listall` command has to be used. The client is then displayed in a red font with strikethrough, indicating that he/she is archived.
 
 The archival feature is implemented by adding a boolean variable `isArchived` in the Person model. Listing is filtered through the use of a predicate, `PREDICATE_SHOW_UNARCHIVED_PERSONS`, that will filter for those clients that are unarchived
 
@@ -357,6 +363,67 @@ The archival feature is implemented by adding a boolean variable `isArchived` in
 ** Pros: Uses less space than the alternative.
 ** Cons: Harder to implement, more changes have to be made to existing codebase.
 // end::archive[]
+
+//tag::switchtheme[]
+=== Switch theme feature
+==== Current Implementation
+image::SwitchSequenceDiagram.png[width="400"]
+The switch theme feature allows the salesperson to switch between dark and light thenmes as he might have to work under different lighting conditions. The theme that is in used persists across restarts
+
+See sequence diagram. The archival feature is implemented by triggering an `SwitchThemeRequestEvent()` which is then handled in `MainWindow`.
+The theme switching in done in two ways. For the main window, it is done by changing the CSS stylesheet used. For the calendar, because the stylesheet is complicated and is provided by an external library, we use a JavaFX effect to invert all colors.
+
+==== Design Considerations
+
+===== Aspect: Theme switching is triggered by an event
+
+* **Alternative 1 (current choice):** Theme switching is triggered by an event
+** Pros: Preserves modularity, and Separation of Concerns.
+** Cons: More code.
+* **Alternative 2:** Theme switching happens directly in switch theme command
+** Pros: Simpler.
+** Cons: Breaks modularity and Separations of Concerns. UI should be handled in the UI section not the Logic section.
+
+===== Aspect: Calendar theme switching is handled by a JavaFX effect
+
+* **Alternative 1 (current choice):** Calender theme swithing is handled by JavaFX effect
+** Pros: Simple to implement
+** Cons: Potentially ugly and less flexible, as cannot configure the individual colours.
+* **Alternative 2:** Create another calendar CSS for the dark theme
+** Pros: More flexible in choice of colors, resulting in more beautiful UI.
+** Cons: Difficult to implement, due to complexity of CSS stylesheet.
+** Cons: Loses color consistency of simply inverting colors.
+** Cons: Any future change in colors have to update two stylesheets.
+// end::switchtheme[]
+
+//tag::appointment[]
+=== Appointments feature
+==== Current Implementation
+The appointments feature allows the salesperson to add and edit appointments that he have with clients in the contact list. He can also view the appointments in a calendar.
+
+The edit appointment feature is interesting in that editing persons check whether the person is already in the appointment. If so, the person is removed. Otherwise, the person is added.
+This differs from the behaviour of editing tags of a person, which is destructive and overwrite all tags.
+
+==== Design Considerations
+
+===== Aspect: Editing an appointment's person list is non-destructive
+
+* **Alternative 1 (current choice):** Editing an appointment's person list adds the person if not present and removes the person otherwise.
+** Pros: Fits the usual use case of a person saying he is/is unable to make it for the appointment
+** Cons: Cannot overwrite the person list with a new set of persons directly.
+* **Alternative 2:** Destructively edit the person list, replacing it with the new list.
+** Pros: Easier to overwrite the person list.
+** Cons: Does not fit the expected use case
+
+===== Aspect: Calendar is handled by an external library, CalendarFX
+
+* **Alternative 1 (current choice):** Calender is handled by external library, CalendarFX
+** Pros: Less effort, make good use of existing code to reduce duplication of effort.
+** Cons: Calendar is less customisable. Limited to what is already implemented.
+* **Alternative 2:** Create our own calendar
+** Pros: More flexible terms of how the calendar will work
+** Cons: More effort. Time could be used on other features.
+// end::appointment[]
 
 //tag::timezone[]
 === TimeZone feature
@@ -962,10 +1029,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 === Feature Contribution
 
 ==== Ong Kuan Yang
-* *Major*: A calendar or appointment scheduling feature allows the salesperson to record down when he has appointments with his clients and to see at a glance his future appointments for the days/month ahead.
+* *Major*: A calendar or appointment scheduling feature that allows the salesperson to record down when he has appointments with his clients and to see at a glance his future appointments for the days/month ahead.
 * *Minor*: An archival feature for clients that the salesperson is no longer in contact with so that they do not clutter up the interface as the salesperson has to manage a lot of clients.
 * *Minor*: A switch theme command to switch between dark and light themes.
 * *Minor*: Command alias feature so that user does not have to type long commands.
+* *Minor*: A loading screen for emails so that the app does not become unresponsive
 
 ==== Gloria Law
 * *Major*: An email feature comprised of an email inbox panel and the ability to compose, reply and forward emails.
@@ -988,6 +1056,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |Login/logout to my Addressbook to modify my contacts and appointments |protect my data
 
 |`* * *` |user |schedule meetings with my clients |remember when I am supposed to meet them
 
@@ -1012,6 +1082,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |delete a certain tag for all persons |remove certain tags if the relationship is not there anymore
+
+|`* *` |user |export my contacts to a file |export the data to somewhere else if I need it
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
@@ -1179,6 +1251,131 @@ _{ more test cases ... }_
    Expected: Similar to previous.
 
 _{ more test cases ... }_
+
+//tag::OngKuanYangTestCases[]
+=== Add appointment
+
+. Adding an appointment
+
+.. Test case: Run `addappointment` with valid parameters. +
+   Expected: Appointment added.
+.. Test case: Run `addappointment` with invalid parameters. +
+   Expected: Error message displayed showing the required format.
+
+=== Delete appointment
+
+. Deleting an appointment
+
+.. Test case: Run `deleteappointment 1` +
+   Expected: The first appointment is deleted
+.. Test case: Run `deleteappointment InvalidIndex` +
+   Expected: Error message displayed.
+
+=== Edit appointment
+
+. Editing an appointment
+
+.. Test case: Run `editappointment` with valid parameters. +
+   Expected: Appointment edited.
+.. Test case: Run `editappointment` without any edit information. +
+   Expected: Error message displayed.
+
+=== Archive client
+
+. Archiving a client
+
+.. Test case: Run `archive INDEX` where INDEX is a valid person index. +
+   Expected: Person disappears from list.
+
+=== List all clients
+
+. Listing all clients including archived
+
+.. Prerequisite: Archive some client as in the archive client test.
+.. Test case: Run `listall` . +
+   Expected: Archived person is listed with red font and strikethrough.
+
+=== Unarchive client
+
+. Unarchiving a client
+
+.. Prerequisite: Some person archived and listed as in List all clients test.
+.. Test case: Run `unarchive INDEX` where INDEX is the index of an archived person. +
+   Expected: Person becomes unarchived and is listed in a normal font.
+
+=== Switch theme
+
+. Switching theme
+
+.. Test case: Run `switch` . +
+   Expected: Theme is switched from dark to light and vice-versa.
+.. Test case: Close and open the application. +
+   Expected: Theme is saved across restarts.
+// end::OngKuanYangTestCases[]
+
+//tag::XavierMaYuqianTestCases[]
+=== Lock
+
+. Lock the addressbook to prevent further modification on contacts or appointment
+
+.. Test case: Run `lock` . +
+   Expected: All the contacts and appointments are gone. And further commands are not accepted
+
+=== Unlock
+
+. Unlock the addressbook for further modification on contacts or appointment
+
+.. Prerequisite: The addressbook is already locked.
+.. Test case: Run `unlock PASSWORD` . +
+   Expected: The addressbook is unlock and starts to accept more commands. Please note that the contatcs and appointments will not be shown automatically, please use list and listappointment command to see.
+
+=== Change Password
+
+. Change the lock password
+
+.. Test case: Run `setPassword OLD_PASSWORD NEW_PASSWORD` . +
+   Expected: The password is changed.
+
+=== List all appointments
+
+. Listing all appointments
+
+.. Test case: Run `listappointment` . +
+   Expected: All the appointments are listed.
+
+=== Sort all contacts
+
+. Sorting all contacts
+
+.. Test case: Run `sort` . +
+   Expected: All the contacts in addressbook are sorted based on alphabetical order.
+
+=== Remove tags from all contacts
+
+. Removing tags from all contatcs
+
+.. Prerequisite: There are already some tags in the addressbook.
+.. Test case: Run `removetag TAGNAME` . +
+   Expected: The specified tag is removed from all the contacts in addressbook.
+
+=== Export all contacts
+
+. Export all contatcs
+
+.. Prerequisite: There are already some contactss in the addressbook.
+.. Test case: Run `export` . +
+   Expected: All the contacts in the addressbook are exported to a csv file.
+
+=== Add comments to contacts
+
+. Add comments to contacts
+
+.. Prerequisite: There are already some contactss in the addressbook.
+.. Test case: Run `add n/David p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 tz/PST c/interested in football t/friends t/owesMoney` . +
+   Expected: A contact is created with comment interested in football.
+.. Test case: Run `edit 1 c/interested in basketball` . +
+   Expected: The first contact's comment is modified to interested in basketball.
+//end::XavierMaYuqianTestCases[]
 
 === Saving data
 

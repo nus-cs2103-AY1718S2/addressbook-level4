@@ -4,9 +4,11 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author yeggasd
 /**
  * Parses input arguments and creates a new SelectCommand object
  */
@@ -19,8 +21,20 @@ public class SelectCommandParser implements Parser<SelectCommand> {
      */
     public SelectCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new SelectCommand(index);
+            String trimmedArgs = args.trim();
+            String[] argsArray = trimmedArgs.split("\\s+");
+            if (argsArray.length != 2) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+            }
+
+            Index index = ParserUtil.parseIndex(argsArray[0]);
+            if (!StringUtil.isOddEven(argsArray[1])) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+            }
+            String oddEven = argsArray[1];
+            return new SelectCommand(index, oddEven);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));

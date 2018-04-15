@@ -17,6 +17,9 @@ import seedu.address.model.person.Person;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
+    public static final int COMMAND_INDEX = 0;
+    public static final int ARGS_INDEX = 1;
+
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
@@ -35,7 +38,9 @@ public class LogicManager extends ComponentManager implements Logic {
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
-            Command command = addressBookParser.parseCommand(commandText);
+            String[] userInputs = addressBookParser.extractCommandArgs(commandText);
+            userInputs[COMMAND_INDEX] = model.getCommandFromAlias(userInputs[COMMAND_INDEX]);
+            Command command = addressBookParser.parseCommand(userInputs[COMMAND_INDEX], userInputs[ARGS_INDEX]);
             command.setData(model, history, undoRedoStack);
             CommandResult result = command.execute();
             undoRedoStack.push(command);

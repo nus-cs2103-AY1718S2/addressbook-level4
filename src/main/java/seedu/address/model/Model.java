@@ -1,11 +1,26 @@
 package seedu.address.model;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.WrongPasswordException;
+import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.AliasNotFoundException;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.building.Building;
+import seedu.address.model.building.exceptions.BuildingNotFoundException;
+import seedu.address.model.building.exceptions.CorruptedVenueInformationException;
+import seedu.address.model.building.exceptions.NoRoomsInBuildingException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.storage.exceptions.GoogleAuthorizationException;
+import seedu.address.storage.exceptions.RequestTimeoutException;
 
 /**
  * The API of the Model component.
@@ -17,6 +32,11 @@ public interface Model {
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
+    //@@author jingyinno
+    /** Clears existing backing model and replaces with the provided new data and new list. */
+    void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList);
+    //@@author
+
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
@@ -25,6 +45,25 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
+
+    //@@author jingyinno
+    /** Adds the given alias */
+    void addAlias(Alias alias) throws DuplicateAliasException;
+
+    /** Returns a HashMap of alias-command mappings */
+    HashMap<String, String> getAliasList();
+
+    /** Returns a the associated command word that is mapped to aliasKey */
+    String getCommandFromAlias(String aliasKey);
+
+    /** Returns an ArrayList of ArrayList of alias strings formatted for the UI */
+    ArrayList<ArrayList<String>> getUiFormattedAliasList();
+
+    /**
+     * Replaces the alias mapping by the given {@code aliases}.
+     */
+    void updateAliasesMapping(HashMap<String, String> aliases);
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -45,4 +84,65 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    //@@author Caijun7-reused
+    /**
+     * Remove {@code tag} from all {@code person}s in the {@code AddressBook}.
+     * @param tag
+     */
+    void deleteTag(Tag tag);
+    //@@author
+
+    //@@author Caijun7
+    /**
+     * Imports the specified {@code AddressBook} from the filepath to the current {@code AddressBook}.
+     * And decrypts the imported file with the {@code password} if password is not null.
+     *
+     * @param filepath
+     * @param password
+     */
+    void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException,
+                                                                    WrongPasswordException;
+
+    /**
+     * Exports the current view of {@code AddressBook} to the filepath.
+     * And encrypts the exported file with the {@code password} if the password is not null
+     *
+     * @param filepath
+     * @param password
+     */
+    void exportAddressBook(String filepath, Password password) throws IOException;
+
+    /**
+     * Exports the current view of {@code AddressBook} to the googledrive folder of local storage.
+     * And encrypts the exported file with the {@code password} if the password is not null.
+     * Uploads the exported file to the specified filepath in Google Drive.
+     *
+     * @param filepath
+     * @param password
+     */
+    void uploadAddressBook(String filepath, Password password) throws IOException,
+            GoogleAuthorizationException, RequestTimeoutException;
+    //@@author
+
+    //@@author yeggasd
+    /**
+     * Updates the password with the given password.
+     */
+    void updatePassword(byte[] password);
+    //@@author
+
+    //@@author jingyinno
+    /**
+     * Removes alias given the alias string to remove.
+     */
+    void removeAlias(String toRemove) throws AliasNotFoundException;
+    //@@author
+
+    //@@author Caijun7
+    /**
+     * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList
+     */
+    ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
+            throws BuildingNotFoundException, CorruptedVenueInformationException, NoRoomsInBuildingException;
+    //@@author
 }

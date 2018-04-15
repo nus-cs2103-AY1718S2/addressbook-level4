@@ -15,11 +15,13 @@ import org.junit.rules.TemporaryFolder;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class StorageManagerTest {
+    private static final String TEST_PASSWORD = "test";
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
@@ -32,7 +34,8 @@ public class StorageManagerTest {
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        ReadOnlyJsonVenueInformation venueInformationStorage = new ReadOnlyJsonVenueInformation("vi");
+        storageManager = new StorageManager(addressBookStorage, userPrefsStorage, venueInformationStorage);
     }
 
     private String getTempFilePath(String fileName) {
@@ -67,6 +70,39 @@ public class StorageManagerTest {
         assertEquals(original, new AddressBook(retrieved));
     }
 
+    //@@author yeggasd
+    @Test
+    public void addressBookEncryptedReadSaveWithPassword() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlAddressBookStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlAddressBookStorageTest} class.
+         */
+        AddressBook original = getTypicalAddressBook();
+        Password testPassword = new Password(TEST_PASSWORD);
+        original.updatePassword(testPassword);
+        storageManager.saveAddressBook(original);
+        ReadOnlyAddressBook retrieved = storageManager.readAddressBook(testPassword).get();
+        assertEquals(original, new AddressBook(retrieved));
+    }
+
+    @Test
+    public void addressBookEncryptedReadSaveWithFilePath() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlAddressBookStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlAddressBookStorageTest} class.
+         */
+        AddressBook original = getTypicalAddressBook();
+        Password testPassword = new Password(TEST_PASSWORD);
+        original.updatePassword(testPassword);
+        storageManager.saveAddressBook(original);
+        ReadOnlyAddressBook retrieved = storageManager.readAddressBook(storageManager.getAddressBookFilePath(),
+                                                                        testPassword).get();
+        assertEquals(original, new AddressBook(retrieved));
+    }
+    //@@author
+
     @Test
     public void getAddressBookFilePath() {
         assertNotNull(storageManager.getAddressBookFilePath());
@@ -76,7 +112,8 @@ public class StorageManagerTest {
     public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
-                                             new JsonUserPrefsStorage("dummy"));
+                                             new JsonUserPrefsStorage("dummy"),
+                                             new ReadOnlyJsonVenueInformation("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }

@@ -1,0 +1,115 @@
+{
+  "buildingsAndRooms": {
+    "COM2": [
+      "COM2-0108"
+    ]
+  },
+  "nusRooms": {
+    "COM2-0108": {
+      "weekSchedule": [
+        {
+          "weekDaySchedule": {
+            "0800": "vacant",
+            "0900": "vacant",
+            "1000": "vacant",
+            "1100": "vacant",
+            "1200": "vacant",
+            "1300": "vacant",
+            "1400": "vacant",
+            "1500": "vacant",
+            "1600": "vacant",
+            "1700": "vacant",
+            "1800": "vacant",
+            "1900": "vacant",
+            "2000": "vacant"
+          }
+        },
+        {
+          "weekDaySchedule": {
+            "0800": "vacant",
+            "0900": "vacant",
+            "1000": "vacant",
+            "1100": "vacant",
+            "1200": "vacant",
+            "1300": "vacant",
+            "1400": "vacant",
+            "1500": "vacant",
+            "1600": "vacant",
+            "1700": "vacant",
+            "1800": "vacant",
+            "1900": "vacant",
+            "2000": "vacant"
+          }
+        },
+        {
+          "weekDaySchedule": {
+            "0800": "vacant",
+            "0900": "vacant",
+            "1000": "vacant",
+            "1100": "vacant",
+            "1200": "vacant",
+            "1300": "vacant",
+            "1400": "vacant",
+            "1500": "vacant",
+            "1600": "vacant",
+            "1700": "vacant",
+            "1800": "vacant",
+            "1900": "vacant",
+            "2000": "vacant"
+          }
+        },
+        {
+          "weekDaySchedule": {
+            "0800": "vacant",
+            "0900": "vacant",
+            "1000": "vacant",
+            "1100": "vacant",
+            "1200": "vacant",
+            "1300": "vacant",
+            "1400": "vacant",
+            "1500": "vacant",
+            "1600": "vacant",
+            "1700": "vacant",
+            "1800": "vacant",
+            "1900": "vacant",
+            "2000": "vacant"
+          }
+        },
+        {
+          "weekDaySchedule": {
+            "0800": "vacant",
+            "0900": "vacant",
+            "1000": "vacant",
+            "1100": "vacant",
+            "1200": "vacant",
+            "1300": "vacant",
+            "1400": "vacant",
+            "1500": "vacant",
+            "1600": "vacant",
+            "1700": "vacant",
+            "1800": "vacant",
+            "1900": "vacant",
+            "2000": "vacant"
+          }
+        },
+        {
+          "weekDaySchedule": {
+            "0800": "vacant",
+            "0900": "vacant",
+            "1000": "vacant",
+            "1100": "vacant",
+            "1200": "vacant",
+            "1300": "vacant",
+            "1400": "vacant",
+            "1500": "vacant",
+            "1600": "vacant",
+            "1700": "vacant",
+            "1800": "vacant",
+            "1900": "vacant",
+            "2000": "vacant"
+          }
+        }
+      ]
+    }
+  }
+}

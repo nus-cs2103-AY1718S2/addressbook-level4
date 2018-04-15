@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Password;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
@@ -46,6 +47,17 @@ public class AddressBookBuilder {
         }
         return this;
     }
+
+    //@@author yeggasd
+    /**
+     * Parses {@code password} into a {@code Password} and updates the {@code AddressBook} 's password
+     * that we are building.
+     */
+    public AddressBookBuilder withPassword(String password) {
+        addressBook.updatePassword(new Password(password));
+        return this;
+    }
+    //@@author
 
     public AddressBook build() {
         return addressBook;

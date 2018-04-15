@@ -1,0 +1,5 @@
+{
+  "appTitle" : "StardyTogether",
+  "logLevel" : "INFO",
+  "userPrefsFilePath" : "preferences.json"
+}

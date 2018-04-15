@@ -1,7 +1,8 @@
-= AddressBook Level 4 - User Guide
+= StardyTogether - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
+:toclevels: 3
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -10,14 +11,19 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W11-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B4`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+* Stardy Together (ST) is for *NUS Students* who prefer to use a *desktop app* for managing NUS friends' contacts.
+* More importantly, ST is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+* If you can type fast, ST can get your contact management tasks done faster than traditional GUI apps.
+* This guide provides a list of features that are available on ST and their usage.
+* Interested? Jump to the next section, <<Quick Start>>, to get started. Enjoy!
 
 == Quick Start
 
@@ -27,8 +33,8 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `StardyTogether.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your StardyTogether.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -37,70 +43,82 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all friends and aliases
+* **`add`**`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/http://modsn.us/oNZLY` : adds a friend named `John Doe` to ST.
+* **`delete`**`3` : deletes the 3rd friend shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+.  Refer to the next section, <<Features>>, for details of each command, or refer to <<Command Summary>> for the summary of all the commands.
 
 [[Features]]
 == Features
 
-====
+=====
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+=====
+=== Contact Commands
+==== Adding a friend: `add`
 
-=== Viewing help : `help`
-
-Format: `help`
-
-=== Adding a person: `add`
-
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+To add a friend to ST, you can enter the command `add` followed by the various parameters +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY tt/TIMETABLE [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A friend can have any number of tags (including 0)
+
+[WARNING]
+=====
+* Birthday must be in DDMMYYYY format
+* Timetable must either be a valid NUSMods shortened link or left empty
+=====
+
+[NOTE]
+If timetable is invalid, left empty or there is no internet access, an empty timetable will be created for you
+
+For more information on how to get a valid link, refer to <<FAQ>>.
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/http://modsn.us/oNZLY`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/28021997 tt/http://modsn.us/ojGeu t/criminal`
 
-=== Listing all persons : `list`
+// tag::list[]
+==== Listing all friends and aliases: `list`
 
-Shows a list of all persons in the address book. +
+To show a list of all your friends and a table of created aliases in ST, you can enter the command `list` +
 Format: `list`
 
-=== Editing a person : `edit`
+image::aliasList.png[width="790"]
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+// end::list[]
+
+==== Editing a friend : `edit`
+
+To edit a friend's particulars, you can enter the command `edit` followed by the respective parameters you wish to edit. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tt/TIMETABLE] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the friend at the specified `INDEX`. The index refers to the index number shown in the last friend listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the friend will be removed i.e adding of tags is not cumulative.
+* You can remove all the tags tagged to the friend by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st friend to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd friend to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+==== Locating friends by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+To find specific friends by their names, you can enter the command `find`, followed by KEYWORD. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -108,7 +126,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Friends matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
@@ -116,15 +134,15 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any friend having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+==== Deleting a friend : `delete`
 
-Deletes the specified person from the address book. +
+To remove a specified friend from ST :cry: , you can enter the command `delete` followed by his INDEX.+
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the friend at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -133,18 +151,18 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd friend in ST.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st friend in the results of the `find` command.
 
-=== Selecting a person : `select`
+==== Selecting a friend : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+To select a friend, you can identify his/her index number used in the last friend listing and enter the command `select` followed by his/her index+
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the friend and opens the detail card of the friend at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -153,31 +171,163 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd friend in ST.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st friend in the results of the `find` command.
 
-=== Listing entered commands : `history`
+// tag::birthdays[]
+==== Viewing a collated birthday list/notification: `birthdays` _(since v1.3)_
 
-Lists all the commands that you have entered in reverse chronological order. +
+To get a list that contains all the birthdays of all your friends (ordered by date) +
+Or to know whose birthday is it today, you can enter the following commands +
+Format: `birthdays [ADDITIONAL_PARAMETER]`
+
+The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field +
+****
+* `todays`: Shows a notification of the birthdays occurring today +
+****
+
+Examples:
+
+* `birthdays` +
+Displays a list of all your friends' birthdays +
+
+image::birthdaysList.PNG[width="790"]
+
+* `birthdays today` +
+Displays a window with the birthdays occuring today +
+
+image::birthdaysToday.png[width="790"]
+
+// end::birthdays[]
+
+=== NUS Commands
+
+// tag::union[]
+==== Viewing common time slots in timetable: `union` _(since v1.5rc)_
+
+To know your free slots together with your friends, you can use `union` to display the common free time of multiple friends in ST. (Minimum: 2) +
+Format: `union ODD/EVEN INDEX INDEX [INDEX]...`
+
+[TIP]
+ODD/EVEN is case-insensitive
+
+[NOTE]
+Only indexes of the current filtered list are valid
+
+Examples:
+
+* `union Odd 1 2 3` +
+Displays the combined odd timetable for friends at Index 1, 2 and 3. +
+
+image::timetableUnion.PNG[width="790"]
+
+* `union Even 1 2` +
+Displays the combined even timetable for friends at Index 1 and 2.
+// end::union[]
+
+// tag::vacant[]
+==== Vacant study rooms finder : `vacant` _(since v1.3)_
+
+To get a list of study rooms in the specified building and their vacancy (in blocks of 1 hours), you can enter `vacant` follwed by the BUILDING code. +
+Format: `vacant BUILDING`
+
+image::vacant.png[width="790"]
+
+[WARNING]
+The building must be in NUS venue format, e.g. `COM1`, `S17`, `E2`
+
+Examples:
+
+* `vacant COM1` +
+Finds the vacancy status of study rooms in COM1 building.
+// end::vacant[]
+
+// tag::maps[]
+==== Google maps display : `map` _(since v1.4)_
+
+To find locations or a path from one place to another, you can enter the command `map` along with the locations to launch Google Maps with the specified location(s). +
+Format: `map LOCATION` or `map LOCATION/LOCATION...` or `map current location`
+
+image::map.png[width="790"]
+
+****
+* You are advised to keep the number of consecutive `[LOCATION]` to 4 locations.
+* All locations specified should not contain `/`. e.g. `Changi/Airport` as a location will not give the same map display as `Changi Aiport`.
+* NUS building name is case insensitive e.g. `COM1` or `com1` gives the same output
+* If only one location is provided, the location will be displayed on the map.
+* If more than one location is provided, directions to each location, starting from the first one, will be displayed.
+* Typing `map LOCATION_START to LOCATION_DESTINATION` can work as well for two locations input, only if neither locations specified are NUS buildings.
+****
+
+Examples:
+
+* `map current location` +
+Displays your current location on the map.
+* `map BIZ1` +
+Displays the location of BIZ1 (which is an NUS building name).
+* `map Tampines Mall/COM1` +
+Displays the directions from `Tampines Mall` to `COM1`.
+* `map Tampines Mall/COM1/Airport Blvd` +
+Displays the directions from `Tampines Mall` to `COM1` to `Airport Blvd`.
+// end::maps[]
+
+=== Utility Commands
+==== Viewing help : `help`
+
+If you find yourself lost on what to do in ST, you can enter the command `help`!
+
+Format: `help`
+
+// tag::alias[]
+==== Adding a command alias: `alias` _(since v1.1)_
+
+To create customized aliases for any valid command, you can enter the command `alias` followed by your desired command and your very own alias. +
+Format: `alias [COMMAND] [ALIAS]`
+
+****
+* `[ALIAS]` should be alpha-numeric and without spaces.
+* The recommended number of characters for `[ALIAS]` is 6 characters or less.
+****
+
+Examples:
+
+* `alias find f`
+* `alias alias al`
+
+==== Removing a currently existing alias: `unalias` _(since v1.3)_
+
+To remove a previously created alias, you can enter the command `unalias` followed by the alias you wish to remove. +
+Format: `unalias [CURRENT_ALIAS]`
+
+Examples:
+
+* `unalias f`
+// end::alias[]
+
+==== Listing entered commands : `history`
+
+To list all the commands that you have entered in reverse chronological order, you can enter `history`. +
+This will be particularly useful if you wish to `undo` or `redo` commands.
 Format: `history`
 
 [NOTE]
-====
+=====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+=====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+To revert a command you executed previously (in case you accidentally changed something), you can enter the command `undo`.
+This will restore the ST instance to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+=====
+Undoable commands: those commands that modify the ST's content (`add`, `alias`, `unalias`, `delete`, `edit` and `clear`).
+=====
 
 Examples:
 
@@ -195,9 +345,9 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+To reverse the most recent `undo` command, you can enter the command `redo`. +
 Format: `redo`
 
 Examples:
@@ -218,47 +368,244 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+==== Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+To clear all entries of your friends from ST :sob: , you can enter the command `clear`. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+// tag::dataencryption[]
+==== Encrypting data files : `encrypt` _(since v1.2)_
 
-Exits the program. +
+To encrypt ST and protect your data, you can enter the command `encrypt` followed by your password. +
+Format: `encrypt PASSWORD`
+
+[WARNING]
+=====
+* Passwords are case-sensitive.
+* The password string can only contain characters in the UTF-8 format.
+=====
+
+Examples:
+
+* `encrypt test` +
+Encrypts `addressbook.xml` with "test" as the password.
+
+Subsequently, when you are re-opening the app, you will be prompted to enter your password, as shown in the picture below.
+
+image::passwordBox.png[width="790"]
+
+==== Removal of password: `decrypt` (since v1.3)
+
+To remove the password protection of ST and decrypt `addressbook.xml`, you can enter the command `decrypt`. +
+Format: `decrypt`
+
+// end::dataencryption[]
+
+// tag::datatransfer[]
+==== Importing data : `import` _(since v1.1)_
+
+To import your friend's ST to your own ST, you can enter the command `import` followed by the various parameters.
+An encrypted or unencrypted ST instance from filepath to the existing ST application. Friends, Tags, and Aliases that are not in your ST will be added. +
+Format: `import FILEPATH PASSWORD`
+
+****
+* Imports an instance of ST from the specified `FILEPATH`.
+* Decrypt that instance using the `PASSWORD` provided.
+* The filepath refers to the filepath where the instance file is stored.
+****
+
+[WARNING]
+=====
+* If no `PASSWORD` is provided, the instance will be read without decryption.
+* The instance file *must be in XML file format* after decryption.
+=====
+
+Example:
+
+* `import data/addressBook.xml testpassword` +
+Imports `addressBook.xml` file at data folder using "testpassword" as the password.
+
+==== Exporting data : `export` _(since v1.4)_
+
+To export your ST for your friends' ST to import, you can enter `export` with the various parameters.
+The current view of the existing ST application with or without password encryption to the specified filepath. +
+Format: `export FILEPATH PASSWORD`
+
+****
+* Exports an instance of ST to the specified `FILEPATH`.
+* Encrypt that instance using the `PASSWORD` provided.
+* If no `PASSWORD` is provided, the instance will be exported without encryption.
+* The filepath refers to the filepath where the instance file will be stored.
+****
+
+[TIP]
+Execute `find` command before `export` to select the students' contact details you want to export
+
+Example:
+
+* `export data/addressBookBackUp.xml testpassword` +
+Exports the current list of ST application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption. +
+
+==== Uploading data : `upload` _(since v1.5rc)_
+
+To upload your ST to Google Drive, you can enter the command `upload` with the various parameters.
+The current view of the existing ST application with or without password encryption to the specified filename in Google Drive.
+Format: `upload FILENAME PASSWORD`
+
+****
+* Application will redirect you to a browser url to request for access to Google Drive
+* Uploads an instance of ST with the specified `FILENAME`.
+* Encrypt that instance using the `PASSWORD` provided.
+* If no `PASSWORD` is provided, the instance will be exported without encryption.
+* The filepath refers to the filepath where the instance file will be stored.
+****
+
+[NOTE]
+Application will be blocked from executing another command while waiting for authorization response +
+Authorization request will timed out after 20 seconds
+
+Example:
+
+* `upload addressBook.xml testpassword` +
+Uploads the current list of ST application to the `addressBook.xml` file in Google Drive using "testpassword" as the password for encryption.
+// end::datatransfer[]
+
+==== Exiting the program : `exit`
+
+To exit the program, you can enter the command `exit` +
+
+[TIP]
+Or you can simply press the 'X' located at the top right hand corner
+
 Format: `exit`
 
-=== Saving the data
+==== Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+ST data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+== Upcoming Features
+We have a few exciting ideas to further improve ST for you!
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+=== Use current location to find vacant rooms _(coming in v2.0)_
+
+You will be able to find vacant rooms in nearest building just by providing your current location. +
+Format: `vacant current location`
+
+Examples:
+
+* `vacant current location` +
+Displays the list of rooms schedule for the day in the nearest building
+
+// tag::module[]
+=== Modules Tag _(coming in v2.0)_
+
+Each friend will be able to have their own list of modules they have taken. +
+To find out which friends have not taken a module (so as to plan with them to take), you can enter the command `module` followed by the module code
+Format: `module MODULE_CODE`
+
+****
+* Searches ST's friends for the same module code
+* Parses the information and displays it as a list
+****
+
+[NOTE]
+Module code follows the traditional case-sensitive naming conventions used by NUS (Example: CS2103T or CS2101)
+
+Examples:
+
+* `module CS2103` +
+Displays the list of friends who have not taken the module CS2103
+
+// end::module[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*:
+*Method 1*: Replaces the other computer's data completely
+****
+.  In the folder that `StardyTogether.jar` is in, find the `data` folder
+.  Copy the `addressbook.xml` storage file inside
+.  Transfer that file to the other computer
+.  Place it in the `data` folder of `StardyTogether.jar`, on the other computer
+****
+*Method 2*: Merges the contacts of both computers
+****
+.  In the folder that `StardyTogether.jar` is in, find the `data` folder
+.  Copy the `addressbook.xml` storage file inside
+.  Transfer that file to the other computer
+.  Rename that file to avoid overwriting the existing `addressbook.xml`
+.  Place it in the `data` folder of `StardyTogether.jar`, on the other computer
+.  Type `import [fileName]` into the command box, where [fileName] is the new name from Step 4
+.  Press Enter
+****
+
+*Q*: How do I import my timetable from NUSMods? +
+*A*: When adding or editing a friend, you can input his/her NUSMods shortened link in the tt/TIMETABLE field
+****
+.   Go to NUSMods
+.   Click `Share/Sync` at the bottom right hand corner
++
+image::NUSMods_Screenshot_First.PNG[width="790"]
++
+.   Copy the link in the window that appeared
++
+image::NUSMods_Screenshot_Second.PNG[width="790"]
++
+.   Paste it in ST at the tt/TIMETABLE field
+****
+
+*Q*: How do I upload StardyTogether file to Google Drive? +
+*A*: Input upload command and accept the authorization request
+****
+.   Input upload command, example `upload stardyTogether.xml`
+.   The redirect url will open in default browser like this:
++
+image::Redirect_First.PNG[width="790"]
+.   Click your Gmail or login your Gmail account and click accept:
++
+image::Redirect_Second.PNG[width="790"]
+.   File should be uploaded to your Google Drive
++
+image::Redirect_Third.PNG[width="790"]
+****
+
+
+== Troubleshooting
+[width="790",cols="<15%,75%",options="header",]
+|=======================================================================
+|Problem |How to solve
+|The timetable I entered is empty!|Do check the validity of your NUSMods link by inputting it in your internet browser, and your internet connection.
+|I am having trouble accessing the Google Drive functions!|
+1)  Go to your user directory (Example: C:/users/USER) +
+2)  Delete .googlecredentials folder (if it doesn't appear, show hidden files in Settings)
+|=======================================================================
 
 == Command Summary
-
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="790",cols="<15%,<23%, 45%",options="header",]
+|=======================================================================
+|Command |Usage |Example
+|Add| add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`| `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/010195 t/friend t/colleague
+|Alias| alias COMMAND ALIAS|alias history hist
+|Birthday List|birthdays [todays]| birthdays todays
+|Clear| clear|
+|Delete| delete INDEX | delete 3
+|Edit|edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]... |edit 2 n/James Lee e/jameslee@example.com
+|Export|Export FILEPATH PASSWORD| export data/addressBookBackUp.xml testpassword
+|Find|find KEYWORD [MORE_KEYWORDS]|find James Jake
+|Help|help|
+|History|history|
+|Import|import FILEPATH PASSWORD|import data/addressBook.xml testpassword
+|List|list|
+|Map|map LOCATION|map COM2
+|Encrypt|encrypt PASSWORD|encrypt test
+|Decrypt|decrypt|
+|Redo|redo|
+|Select|select INDEX|select 2
+|Unalias|unalias CURRENT_ALIAS|unalias hist
+|Undo|undo|
+|Union|union EVEN/ODD INDEX INDEX [INDEX]|union Odd 1 2 3
+|Upload|upload FILENAME PASSWORD|upload addressBook.xml testpassword
+|Vacant|vacant BUILDING|vacant COM1
+|=======================================================================

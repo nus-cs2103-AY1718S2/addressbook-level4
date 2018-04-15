@@ -21,6 +21,10 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedAlias> aliases;
+    @XmlElement
+    private XmlAdaptedPassword password;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -29,6 +33,8 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        aliases = new ArrayList<>();
+        password = new XmlAdaptedPassword();
     }
 
     /**
@@ -38,6 +44,8 @@ public class XmlSerializableAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        aliases.addAll(src.getAliasList().stream().map(XmlAdaptedAlias::new).collect(Collectors.toList()));
+        password = new XmlAdaptedPassword(src.getPassword());
     }
 
     /**
@@ -54,8 +62,33 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
+        for (XmlAdaptedAlias a : aliases) {
+            addressBook.addAlias(a.toModelType());
+        }
+        addressBook.updatePassword(password.toModelType());
         return addressBook;
     }
+
+    //@@author Caijun7
+    /**
+     * Adds {@code person}s and {@code tag}s from this addressbook into the existing {@code AddressBook}.
+     *
+     * @throws IllegalValueException if there were any data constraints violated or duplicates in the
+     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     */
+    public AddressBook addToAddressBook(AddressBook addressBook) throws IllegalValueException {
+        for (XmlAdaptedTag t : tags) {
+            addressBook.importTag(t.toModelType());
+        }
+        for (XmlAdaptedPerson p : persons) {
+            addressBook.importPerson(p.toModelType());
+        }
+        for (XmlAdaptedAlias a : aliases) {
+            addressBook.importAlias(a.toModelType());
+        }
+        return addressBook;
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -68,6 +101,7 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && aliases.equals(otherAb.aliases)
+                && password.equals(otherAb.password);
     }
 }

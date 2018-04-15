@@ -1,5 +1,6 @@
 package guitests.guihandles;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import guitests.GuiRobot;
@@ -7,24 +8,44 @@ import javafx.concurrent.Worker;
 import javafx.scene.Node;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import seedu.address.model.smplatform.Link;
+import seedu.address.ui.BrowserPanel;
 
 /**
  * A handler for the {@code BrowserPanel} of the UI.
  */
 public class BrowserPanelHandle extends NodeHandle<Node> {
 
-    public static final String BROWSER_ID = "#browser";
+    //@@author Nethergale
+    public static final String FACEBOOK_BROWSER_ID = "#facebookBrowser";
+    public static final String TWITTER_BROWSER_ID = "#twitterBrowser";
+    public static final String TAB_PANE_ID = "#tabPane";
 
     private boolean isWebViewLoaded = true;
 
     private URL lastRememberedUrl;
 
+    private WebView facebookWebView;
+    private WebView twitterWebView;
+
     public BrowserPanelHandle(Node browserPanelNode) {
         super(browserPanelNode);
 
-        WebView webView = getChildNode(BROWSER_ID);
-        WebEngine engine = webView.getEngine();
-        new GuiRobot().interact(() -> engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+        facebookWebView = getChildNode(FACEBOOK_BROWSER_ID); // browser for facebookTab
+        WebEngine facebookEngine = facebookWebView.getEngine();
+        new GuiRobot().interact(() -> facebookEngine.getLoadWorker().stateProperty().addListener((
+                obs, oldState, newState) -> {
+            if (newState == Worker.State.RUNNING) {
+                isWebViewLoaded = false;
+            } else if (newState == Worker.State.SUCCEEDED) {
+                isWebViewLoaded = true;
+            }
+        }));
+
+        twitterWebView = getChildNode(TWITTER_BROWSER_ID); // browser for twitterTab
+        WebEngine twitterEngine = twitterWebView.getEngine();
+        new GuiRobot().interact(() -> twitterEngine.getLoadWorker().stateProperty().addListener((
+                obs, oldState, newState) -> {
             if (newState == Worker.State.RUNNING) {
                 isWebViewLoaded = false;
             } else if (newState == Worker.State.SUCCEEDED) {
@@ -34,12 +55,42 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Returns the {@code URL} of the currently loaded page.
+     * Returns the {@code URL} of the currently loaded page for the default browser tab (i.e. facebookTab).
      */
     public URL getLoadedUrl() {
-        return WebViewUtil.getLoadedUrl(getChildNode(BROWSER_ID));
+        URL loadedUrl = WebViewUtil.getLoadedUrl(twitterWebView);
+        if (Link.isValidLink(loadedUrl.toExternalForm())) {
+            String completeUrl = BrowserPanel.parseUrl(loadedUrl.toExternalForm());
+            try {
+                loadedUrl = new URL(completeUrl);
+                return loadedUrl;
+            } catch (MalformedURLException mue) {
+                throw new AssertionError("URL expected to be valid.");
+            }
+        }
+        return WebViewUtil.getLoadedUrl(facebookWebView);
     }
 
+    /**
+     * Returns the {@code URL} of the currently loaded page for the specified {@code browserTab}.
+     */
+    public URL getLoadedUrl(String browserTab) {
+        if (browserTab.equals(Link.TWITTER_LINK_TYPE)) {
+            URL loadedUrl = WebViewUtil.getLoadedUrl(twitterWebView);
+            if (Link.isValidLink(loadedUrl.toExternalForm())) {
+                String completeUrl = BrowserPanel.parseUrl(loadedUrl.toExternalForm());
+                try {
+                    loadedUrl = new URL(completeUrl);
+                    return loadedUrl;
+                } catch (MalformedURLException mue) {
+                    throw new AssertionError("URL expected to be valid.");
+                }
+            }
+        }
+        return getLoadedUrl();
+    }
+
+    //@@author
     /**
      * Remembers the {@code URL} of the currently loaded page.
      */

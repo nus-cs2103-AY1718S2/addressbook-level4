@@ -1,0 +1,65 @@
+= Tan Wei Jie - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Media Socializer
+
+---
+
+== Overview
+
+Media Socializer is a one-stop social media desktop application used to help social media users keep track of all the social media platforms their contacts are using. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Added *the ability to manage the social media platforms of each person*
+** What it does: Allows the user to add the associated social media platforms to the specified person by typing in the links to the relevant profile pages or remove them by entering the names of the platforms.
+** Justification: This feature improves the product significantly because a user can have the application keep track of all the social media profiles of their contacts.
+** Highlights: This enhancement affects the overall feel of the product, since it is a core feature of the application. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required touching upon multiple components to properly realise such a feature.
+
+* *Minor enhancement*: Added a sort command that allows the user to alphabetically sort the people in the list.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F12-B3/main/blob/master/collated/functional/Nethergale.md[Functional code]] [https://github.com/CS2103JAN2018-F12-B3/main/blob/master/collated/test/Nethergale.md[Test code]]
+
+* *Other contributions*: Assisted team members in fulfilling certain requirements for the milestones (Pull requests https://github.com/CS2103JAN2018-F12-B3/main/pull/70[#70], https://github.com/CS2103JAN2018-F12-B3/main/pull/99[#99])
+
+** Project management:
+*** Managed releases `v1.5rc` - `v1.5` (2 releases) on GitHub
+*** Identified the deliverables for each release to keep track of
+** Enhancements to existing features:
+*** Updated the GUI to show social media icons for each person (Pull request https://github.com/CS2103JAN2018-F12-B3/main/pull/85[#85])
+*** Wrote tests for existing features to maintain coverage above 90% (Pull requests https://github.com/CS2103JAN2018-F12-B3/main/pull/87[#87], https://github.com/CS2103JAN2018-F12-B3/main/pull/140[#140])
+** Documentation:
+*** Updated appendix of the Developer Guide to match the goals of the application: https://github.com/CS2103JAN2018-F12-B3/main/pull/45[#45]
+*** Added tags to the User Guide and Developer Guide to link portfolios to their associated sections: https://github.com/CS2103JAN2018-F12-B3/main/pull/69[#69]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-F12-B3/main/pull/56[#56], https://github.com/CS2103JAN2018-F12-B3/main/pull/32[#32]
+*** Bug reports followed up with testers (examples:  https://github.com/CS2103JAN2018-F12-B3/main/issues/108[1], https://github.com/CS2103JAN2018-F12-B3/main/issues/110[2])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W15-B3/main/issues/128[1], https://github.com/CS2103JAN2018-W15-B3/main/issues/123[2])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=sort]
+
+include::../UserGuide.adoc[tag=addplatform]
+
+include::../UserGuide.adoc[tag=removeplatform]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=product-scope]
+
+include::../DeveloperGuide.adoc[tag=user-stories]
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+include::../DeveloperGuide.adoc[tag=addplatform]

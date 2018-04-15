@@ -21,6 +21,15 @@ public class PersonUtil {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
 
+    //@@author Nethergale
+    /**
+     * Returns an add command alias string for adding the {@code person}.
+     */
+    public static String getAddCommandAlias(Person person) {
+        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
+    }
+
+    //@@author
     /**
      * Returns the part of command string for the given {@code person}'s details.
      */

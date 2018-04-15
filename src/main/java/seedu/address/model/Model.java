@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.account.Account;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -20,6 +21,15 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    //@@author shadow2496
+    /** Logs in with the given account */
+    void loginAccount(Account account);
+
+    /** Sets the verification code in an account. */
+    void setVerificationCode(String code);
+
+    //@@author
+
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
 
@@ -35,6 +45,11 @@ public interface Model {
      */
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+
+    /**
+     * Sorts all persons alphabetically.
+     */
+    void sortAllPersons();
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();

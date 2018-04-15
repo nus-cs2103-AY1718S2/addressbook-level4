@@ -12,9 +12,11 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -38,9 +40,11 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.smplatform.Link;
+import seedu.address.model.smplatform.SocialMediaPlatform;
 import seedu.address.testutil.TypicalPersons;
-import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.ResultDisplay;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -53,6 +57,10 @@ public abstract class AddressBookSystemTest {
     private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
+    private static final List<String> RESULT_DISPLAY_DEFAULT_STYLE =
+            Arrays.asList("text-input", "text-area", "result-display");
+    private static final List<String> RESULT_DISPLAY_ERROR_STYLE =
+            Arrays.asList("text-input", "text-area", "result-display", ResultDisplay.ERROR_STYLE_CLASS);
 
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
@@ -204,6 +212,7 @@ public abstract class AddressBookSystemTest {
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
+    //@@author Nethergale
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
@@ -211,18 +220,29 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
+        String selectedBrowserLink = "";
+        Map<String, SocialMediaPlatform> selectedPersonSmpMap = getModel().getFilteredPersonList().get(
+                expectedSelectedCardIndex.getZeroBased()).getSocialMediaPlatformMap();
+        List<String> keyList = new ArrayList<>(selectedPersonSmpMap.keySet());
+        if (!keyList.isEmpty()) {
+            selectedBrowserLink = selectedPersonSmpMap.get(keyList.get(0)).getLink().value;
+        }
+
         URL expectedUrl;
+        URL actualUrl;
+
         try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
+            expectedUrl = getExpectedUrl(selectedBrowserLink);
+            actualUrl = getBrowserPanel().getLoadedUrl(Link.getLinkType(selectedBrowserLink));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
+        assertEquals(expectedUrl, actualUrl);
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
+    //@@author
     /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()
@@ -246,6 +266,23 @@ public abstract class AddressBookSystemTest {
     protected void assertCommandBoxShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
     }
+
+    //@@author shadow2496
+    /**
+     * Asserts that the result display's shows the default style.
+     */
+    protected void assertResultDisplayShowsDefaultStyle() {
+        assertEquals(RESULT_DISPLAY_DEFAULT_STYLE, getResultDisplay().getStyleClass());
+    }
+
+    /**
+     * Asserts that the result display's shows the error style.
+     */
+    protected void assertResultDisplayShowsErrorStyle() {
+        assertEquals(RESULT_DISPLAY_ERROR_STYLE, getResultDisplay().getStyleClass());
+    }
+
+    //@@author
 
     /**
      * Asserts that the entire status bar remains the same.
@@ -284,6 +321,22 @@ public abstract class AddressBookSystemTest {
         }
     }
 
+    //@@author Nethergale
+    /**
+     * Returns the expected URL in the correct format when provided with a String type {@code url}.
+     * {@code personName} is utilised when no URLs of the available platforms can be constructed.
+     */
+    protected URL getExpectedUrl(String url) throws MalformedURLException {
+        if (Link.getLinkType(url).equals(Link.FACEBOOK_LINK_TYPE)) {
+            return new URL("https://m." + url.substring(url.indexOf(Link.FACEBOOK_LINK_TYPE)));
+        } else if (Link.getLinkType(url).equals(Link.TWITTER_LINK_TYPE)) {
+            return new URL("https://" + url);
+        }
+
+        return MainApp.class.getResource(FXML_FILE_FOLDER + "default.html");
+    }
+
+    //@@author
     /**
      * Returns a defensive copy of the current model.
      */

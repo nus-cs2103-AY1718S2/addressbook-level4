@@ -15,6 +15,11 @@ import org.junit.Test;
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.smplatform.Link;
 
 public class BrowserPanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
@@ -24,9 +29,12 @@ public class BrowserPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
+        Model model = new ModelManager();
+        Logic logic = new LogicManager(model);
+
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
 
-        guiRobot.interact(() -> browserPanel = new BrowserPanel());
+        guiRobot.interact(() -> browserPanel = new BrowserPanel(logic));
         uiPartRule.setUiPart(browserPanel);
 
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
@@ -40,7 +48,9 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getName().fullName.replaceAll(" ", "%20"));
+        String storedLink = ALICE.getSocialMediaPlatformMap().get(Link.FACEBOOK_LINK_TYPE).getLink().value;
+        URL expectedPersonUrl = new URL("https://m."
+                + storedLink.substring(storedLink.indexOf(Link.FACEBOOK_LINK_TYPE)));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());

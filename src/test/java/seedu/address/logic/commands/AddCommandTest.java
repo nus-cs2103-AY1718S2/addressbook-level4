@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.account.Account;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -112,6 +113,19 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author shadow2496
+        @Override
+        public void loginAccount(Account account) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void setVerificationCode(String code) {
+            fail("This method should not be called.");
+        }
+
+        //@@author
+
         @Override
         public void deletePerson(Person target) throws PersonNotFoundException {
             fail("This method should not be called.");
@@ -120,6 +134,11 @@ public class AddCommandTest {
         @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortAllPersons() {
             fail("This method should not be called.");
         }
 

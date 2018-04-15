@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Media Socializer - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F12-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F12-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -358,10 +358,238 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::findtag[]
+=== Findtag feature
+==== Current Implementation
+
+The 'findtag' feature is implemented with the same mechanism as the 'find' feature. It is used for finding stored persons with their tags instead of names. The key components of the feature are 'FindWithTagCommand', 'FindWithTagCommandParser', and 'TagContainsKeywordsPredicate'.
+
+The main component of 'findtag' is the 'FindWithTagCommand' which resides inside the logic component. It inherit from 'Command', as such, similar to 'find', 'findtag' is not an undoable command. From the class diagram of Logic class, we can see inheritance  of 'FindWithTagCommand' in comparison with other types of commands:
+
+image::FindTagInLogicClassDiagram.png[width="800"]
+
+The user execute the FindWithTagCommand with the keyword ‘findtag’ following by the tag keywords, separated by whitespace. When the command is executed, the current list of persons shown in the GUI will only contain the persons with the tags same as the tag keywords. The following image shows the result of a 'findtag' execution:
+
+image::FindtagExecution.png[width="800"]
+
+Note that the tag keywords are not case sensitive; however, the command keyword is. For example, both 'findtag friends' and 'findtag FrIeNdS' can be executed and return a list of persons with the tag 'friends'. However 'FiNdTaG friends' cannot be executed and will result in a 'Unknown Command' feedback, as shown in the following:
+
+image::DifferentCaseSize.png[width="800"]
+
+Since the application does not recognize the command, the list of person displayed will not be changed.
+
+The 'findtag' command can handle multiple input tag keywords and, similar to 'find', 'findtag' is an ‘or’ search. For example, 'findtag friends owesMoney' will find any person with the tag ‘friends’ or ‘owesMoney’ or both.
+
+image::FindMultipleTags.png[width="800"]
+
+The following sequence diagram shows how the findtag operation works:
+
+image::FindTagSequenceDiagram.png[width="900"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `FindWithTagCommand`
+
+* **Alternative 1 (current choice):** Follow the mechanism of `FindCommand`
+** Pros: 'findtag' works in the same mechanism as 'find', thus will not deviate from the overall architecture of the address book (i.e. Event Driven design).
+** Cons: May generate classes/ methods that are implemented with very similar style, or in the worse case, we may have duplicate codes. Thus, additional attention needds to be given to ensure that the implementation of 'findtag' will not result in duplicate codes.
+* **Alternative 2:** Implement new mechanism specifically for `FindWithTagCommand`
+** Pros: Does not generate similar classes/ methods.
+** Cons: Hard to implement, risk deviating away from the overall architecture of the address book.
+// end::findtag[]
+
+// tag::sort[]
+=== Sort feature
+==== Current Implementation
+
+The sort mechanism is facilitated by the `SortCommand` and is used for sorting all persons found in the address book by name alphabetically.
+It inherits from `UndoableCommand` and thus supports the undo/redo mechanism, enabling the ability to reverse the command and return the address book to its previous unsorted state.
+
+When the user executes the `SortCommand` using the command word `sort`, the current list of persons shown in the GUI will be retained.
+As illustrated, a filtered list of persons will be displayed in a sorted manner once the command is executed:
+
+image::SortFilteredListDiagram.png[width="850"]
+
+{empty}
+
+The command can also handle multiple persons with similar names (i.e. different letter-casings) as shown below:
+
+image::SortSimilarNamesDiagram.png[width="650"]
+
+{empty}
+
+During sorting, names of two different persons are compared using the static method, `nameComparator`, found in the person class:
+[source, java]
+----
+public static Comparator<Person> nameComparator() {
+    return Comparator.comparing((Person p) -> p.getName().toString(), (
+        s1, s2) -> (s1.compareToIgnoreCase(s2) == 0) ? s1.compareTo(s2) : s1.compareToIgnoreCase(s2));
+}
+----
+As seen, casing is ignored when names are first compared with each other. The usual lexicographical order will instead be used when encountering identical names.
+
+The following sequence diagram shows how the sort operation works:
+
+image::SortCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SortCommand`
+* **Alternative 1 (current choice):** Create a custom sorting method for person names
+** Pros: Allows list to be displayed in a uniform manner, such that similar names are also sorted.
+** Cons: Requires extra work to write custom method.
+* **Alternative 2:** Utilise `String.CASE_INSENSITIVE_ORDER` for sorting
+** Pros: Does not require additional work to write or override compare methods.
+** Cons: List may be inconsistent when sorting multiple persons with similar names.
+
+===== Aspect: Implementation of Custom Sorting Method
+* **Alternative 1 (current choice):** Use comparators and create one for person names called `nameComparator`
+** Pros: Potentially enabling the ability to sort different fields other than names.
+** Cons: May be more difficult to write.
+* **Alternative 2:** Implement comparable and override the `compareTo` method in person class
+** Pros: Simpler to understand.
+** Cons: Can only define a single sorting sequence when comparing two different persons.
+
+===== Aspect: Display of person list in GUI
+* **Alternative 1 (current choice):** Retain the current list of persons as shown in GUI but shown in a sorted manner
+** Pros: User would not have to key in the command to filter the list after sorting.
+** Cons: User may think that only the current list is sorted.
+* **Alternative 2:** Displays the list of all persons found in the address book sorted alphabetically
+** Pros: More properly describes what `sort` actually does by showing the full list of persons sorted.
+** Cons: Current list is replaced by showing all persons.
+// end::sort[]
+
+// tag::addplatform[]
+=== Add Platform feature
+==== Current Implementation
+
+The add platform function makes use of a factory to facilitate the creation of various social media platforms.
+A platform is created only when users provide a valid profile link; this object will be associated to the particular
+person found in the list as specified by the user. Currently, only the `Facebook` and `Twitter` platforms are available.
+
+The structure of the class diagram is as shown:
+
+image::SocialMediaPlatformFactoryClassDiagram.png[width="650"]
+
+As seen, a client can make use of the `SocialMediaPlatformFactory` to deal with the creation of social media platform
+objects without the need of specifying the concrete class to construct.
+Thus, it follows the https://www.tutorialspoint.com/design_pattern/factory_pattern.htm[factory pattern] since the
+creation logic is abstracted away by the factory. The difference here to other implementations of the pattern is the
+use of an _abstract_ class, `SocialMediaPlatform`, instead of the usual _interface_.
+
+In order to properly utilise the factory, a client needs to provide some form of specification:
+[source, java]
+----
+public final class SocialMediaPlatformFactory {
+    // ... class variables, constructor ...
+
+    public static SocialMediaPlatform getSocialMediaPlatform(String type, Link link) throws IllegalValueException {
+        // ... social media platform instance creation logic ...
+    }
+}
+----
+From the extract, a `String` data type and a `Link` object need to be provided by the caller when using the
+`getSocialMediaPlatform` method. The method will then return an instance of the available concrete classes.
+
+The `AddPlatformCommand` makes use of the implementation of `EditCommand` as the foundation, editing the `Person` model
+to include the newly created social media platforms. Each platform is stored as an entry to the person's platform map,
+with the key being the name of the platform. An example is shown below as an illustration:
+
+image::SocialMediaPlatformMapObjectDiagram.png[width="650"]
+
+{empty}
+
+The links provided by the user will be parsed within the `AddPlatformCommandParser` to convert them into `Link`
+objects. From there, `AddPlatformCommand` will create a new map and add the relevant social media platforms by
+calling the `getSocialMediaPlatform` method of `SocialMediaPlatformFactory` for object creation. To merge the updates
+with the targeted person, the command would also retrieve all of its information in order to create a new `Person`
+object before replacement is done. The sequence of the events is as follows:
+
+image::AddPlatformCommandSequenceDiagram.png[width="850"]
+
+{empty}
+
+In the UI Component, the `PersonCard` will be updated to show the icons of the platforms added. Suppose the user want
+to add a `Facebook` profile to the first person. The `AddPlatformCommand` would be executed using the `addplatform`
+command word. As illustration, the user has successfully added a `Facebook` platform to the targeted person by typing
+`addplatform 4 l/www.facebook.com/david`:
+
+image::AddPlatformToPersonDiagram.png[width="750"]
+
+{empty}
+
+Since the basis of `AddPlatformCommand` is heavily inspired by the `EditCommand`, interactions between the various
+components is exactly the same:
+
+image::AddPlatformCommandHighLevelSequenceDiagrams.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Storing of Links in Person Model
+* **Alternative 1 (current choice):** Create social media platform objects with the links as attributes and store into a map
+** Pros: High potential of implementing methods for interactions between the actual profile page using the corresponding API.
+** Cons: Accessing and inputting of data will be more complex.
+* **Alternative 2:** Store using a set of links
+** Pros: Ease of access to data.
+** Cons: Can only be used for the displaying of pages, no room for other implementations.
+
+===== Aspect: Usage of Interface or Abstract Class
+* **Alternative 1 (current choice):** Have `SocialMediaPlatform` be an abstract class
+** Pros: Allows common methods to be used by classes that extends from it and still provide a means of ensuring critical methods that are abstract be implemented.
+** Cons: Classes that want to make use of the implementations can only extend from it.
+* **Alternative 2:** Have `SocialMediaPlatform` be an interface
+** Pros: Higher flexibility for classes since they can implement many interfaces.
+** Cons: Limitations in sharing and utilisation of default methods between classes.
+// end::addplatform[]
+
+// tag::search[]
+=== Search feature
+==== Current Implementation
+
+The implementation of the search feature follows very closely to the Event-Driven architecture. It is used for searching profiles on the social media platforms available in the application. The key components of the feature is the 'SearchPersonEvent' and its handler method.
+
+The 'SearchCommand' class is located within the logic component. It is not an undoable command, hence it inherit from 'Command'.
+
+The search feature is able to perform search on either the input platform or all the available platforms. To execute the search feature, simply input the command keyword "search" followed by an optional declaration of platform to perform the search on, and lastly followed by the profile name to be searched for.
+
+image::SearchFunction.png[width="1000"]
+
+Similar to most of the other feature in the application, the command keyword is case sensitive while the search name is not. As for platform declaration, only predefined inputs are allowed. These predefined inputs are the names of the platform as well as the aliases. (e.g. facebook, fb, twitter...) An invalid command format prompt will be shown if the input platform is not one of the predefined inputs, or has a different case size.
+
+image::InvalidPlatformCases.png[width="1000"]
+
+Upon execution of the search feature with the keyword "search", the validation of input arguments are first checked by the parser, then a SearchPersonEvent will be posted to the event bus. This event is handled by the handleSearchPersonEvent method, which determine the platform to perform the search on and choose the tabs to display.
+
+image::SearchPersonEvent.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SearchCommand` `SearchPersonEvent` and the handler method
+
+* **Alternative 1:** Implement multiple Command class, Event class, and handler method to facilitate searching on different social media platforms.
+** Pros: Easier to implement since each class only need to handle search on one platform.
+** Cons: High chance of generating similar/duplicated codes.
+* **Alternative 2 (current choice):** Have a common 'SearchCommand' class for search.
+** Pros: Reduce repeated/similar code.
+** Cons: Harder to implement since the feature now has to determine the platform to search on base on the input form the user.
+
+===== Aspect: Link to the search functions of different social media platforms
+
+* **Alternative 1 (current choice):** Use the search URL of different platform to perfom the search.
+** Pros: Much easier to implement since we are simply loading the search URL into our browser.
+** Cons: Direct use of search URL uses a lot of resources.
+* **Alternative 2:** Use a third party code to perform the search.
+** Pros: May consume less resources.
+** Cons: May have to program the UI to display the search result.
+
+// end::search[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
+We are currently looking into the `javax.cipher` and `javax.security` packages for encryption of sensitive data.
+The `Apache Commons Crypto` library has also been considered. Potentially, data encryption would be used for storing
+personal profile information, such as social feeds and friend lists of contacts.
 
 // end::dataencryption[]
 
@@ -777,19 +1005,65 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+// tag::product-scope[]
 [appendix]
 == Product Scope
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has a need to keep track a significant number of social media platforms of contacts
+* has a need to view the latest scoop of various people's social life
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: one-stop access to multiple social media platforms
 
+*Feature Contribution*:
+
+[options="header"]
+|=======================================================================
+|Assignee |Major | Minor
+|Seunghwan Choi
+a|
+* Updating the UI to show multiple social pages on the application window:
+** With all the links to the different social media pages of a person stored in the user's address book, the user can
+view all of the pages in a single window under collapsible tabs (to distinguish the different social media platform
+pages) when he/she selects the particular person.
+This simplifies the process of providing the user with his/her daily social media fix.
+a|
+* `login` function:
+** Allows the user to login to all the available social media platforms as given by the application.
+This feature is essential so that users can perform their required tasks, such as accessing their friends list and
+viewing the social feeds of friends.
+
+|Chuang Cheng Heng
+a|
+* `search` function:
+** Allows user to perform the search action on all the social media platforms available with a single command.
+This feature improves the product significantly because a user can do search on the application instead of going to
+the individual social media platform and repeatedly perform the search.
+a|
+* `findtag` command:
+** Allows the user to find persons whose tags contain the input keywords.
+This can assist users in filtering out people who only use a certain social media platform if they are tagged.
+
+|Tan Wei Jie
+a|
+* Manage social media platforms of persons function:
+** Allows user to manage the social media platforms of each person through the `addplatform` and `removeplatform`
+commands.
+This feature allows a user to have the application keep track of all the links to the social media profiles of
+each person in the address book so that he/she can easily access their profile pages when selected.
+a|
+* `sort` command:
+** Allows the user to sort the address book list alphabetically.
+This feature organises and arranges the list for easier viewing and searching.
+|=======================================================================
+// end::product-scope[]
+
+// tag::user-stories[]
 [appendix]
 == User Stories
 
@@ -806,12 +1080,70 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |see the page of the specified platform of a person |get information of the person with my preferred social media platform
+
+|`* * *` |user |delete one of social media platforms of a person |remove entries that I no longer need
+
+|`* * *` |user |find a person by name with the specified platforms |locate details of persons who have the social media platforms without having to go through the entire list
+
+|`* * *` |user |apply the filter of a social media platform |have a list of persons who are on the platform shown
+
+|`* * *` |user |apply multiple filters regarding social media platforms |have a list of persons who satisfy the filters shown
+
+|`* * *` |user |clear filters applied |get information regardless of them
+
+|`* * *` |social media user |select a person and see the social media platforms they are using |have the option not to go to the various platforms to check
+
+|`* * *` |social media user |store the links to the profiles of a person (friend) |have the app keep track of it for me
+
+|`* * *` |social media user |view the latest feed/status of a person |get up-to-date information about them
+
+|`* * *` |lazy social media user |log out from all my social media account with one command |remove potential unauthorised access effectively
+
+|`* * *` |social media user |log in to my account |access private profiles in my friend list
+
+|`* * *` |social media user |search for profile in all social media platforms with the same command |
+
+|`* * *` |social media user |send friend request from the app |
+
+|`* * *` |social media user |be able to react to a post (like, comment, etc) from the app directly |
+
+|`* * *` |lazy user |be able to remain logged in to my account |
+
+|`* * *` |social media user |post and update my statuses |let people know what I'm up to
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+
+|`* *` |advanced user |use shorter versions of a command |type a command faster
+
+|`* *` |user |have the information of my social media accounts encrypted |keep my personal information safe
+
+|`* *` |user |add a new person with private contact details |keep them in secret
+
+|`* *` |user |search a person with the tags |
+
+|`* *` |careless user |logout from all my account remotely |ensure my account security will not be compromised in case I lose my device
+
+|`* *` |social media user |be able to customize what is displayed (profile, social media in use, or latest feed/status) when I select a person |personalise the app to my liking
+
+|`* *` |careful user |have an additional authentication system for editing my profile setting |
+
+|`* *` |social media user |be able to download files (e.g. images or documents) posted by others |keep a copy and view them offline
+
+|`* *` |social media user |send messages to the people on my friends list |communicate with them
+
+|`* *` |social media user |add people found in my friends list on social media to my address book |create contacts of them and communicate through other means
+
+|`* *` |social media user |find my friends that are near my location |meet up and have fun with them
+
+|`* *` |user |set up planned events with a group of my friends |remember their details and be punctual for them
+
+|`* *` |user |be reminded of important events (e.g. movie outings, birthday celebrations) |be prompted not to miss them
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
-_{More to be added}_
+// end::user-stories[]
 
 [appendix]
 == Use Cases
@@ -844,16 +1176,54 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: See the page of person
+
+*MSS*
+
+1.  User requests to apply the filter of <<social-media-platform,a social media platform>>
+2.  User requests to list persons
+3.  AddressBook shows a list of persons with the filter applied
+4.  User requests to see the page of a specific person in the list
+5.  AddressBook shows the page of the specified platform
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no filter available.
++
+Use case ends.
+
+* 3a. The list is empty.
++
+Use case ends.
+
+* 4a. The given index is invalid.
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case resumes at step 3.
+
+
 _{More to be added}_
 
+// tag::non-functional-requirements[]
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should display the social media used by the selected person fast.
+.  The login information of the user should be stored in a secure manner.
+.  Login to the user's account through the application should be equally fast as to directly login to the social media platform.
+.  The application should have an user friendly interface so that even users that are not familiar with CLI will have minimal problem navigating through the application.
 
 _{More to be added}_
+// end::non-functional-requirements[]
 
 [appendix]
 == Glossary
@@ -863,6 +1233,9 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[social-media-platform]] Social media platform::
+A platform that makes people distribute information and encourages them to connect with others
 
 [appendix]
 == Product Survey

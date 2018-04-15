@@ -7,9 +7,17 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class NewResultAvailableEvent extends BaseEvent {
 
+    //@@author shadow2496
+    public final boolean hasError;
+
+    //@@author
     public final String message;
 
-    public NewResultAvailableEvent(String message) {
+    public NewResultAvailableEvent(String message, boolean hasError) {
+        //@@author shadow2496
+        this.hasError = hasError;
+
+        //@@author
         this.message = message;
     }
 

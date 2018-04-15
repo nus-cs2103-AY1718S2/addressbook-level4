@@ -19,8 +19,10 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Password;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.alias.Alias;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.tag.Tag;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -99,9 +101,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         File file = new File(filePath);
         SecurityUtil.decryptFile(file, password);
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(file);
-        if (password.getPassword() != null) {
-            SecurityUtil.encrypt(file, password.getPassword());
-        }
+        SecurityUtil.encryptFile(file, password);
+
         try {
             return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {
@@ -150,20 +151,33 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * @throws WrongPasswordException   If password is in wrong format
      * @throws DuplicatePersonException Impossible since AddressBook is newly created
      */
-    public void exportAddressBook(String filePath, Password password, ObservableList<Person> filteredPersons)
-            throws IOException, WrongPasswordException, DuplicatePersonException {
+    public void exportAddressBook(String filePath, Password password, ObservableList<Person> filteredPersons,
+                                  ObservableList<Alias> aliases, ObservableList<Tag> tags)
+            throws IOException {
         requireNonNull(filePath);
 
         if (UserPrefs.getUserAddressBookFilePath().equals(filePath)) {
             logger.warning("Filepath is same as AddressBook storage filepath, storage file should not be overwritten!");
             throw new IOException();
         }
-        File file = new File(filePath);
-        FileUtil.createIfMissing(file);
-        AddressBook addressBook = new AddressBook();
-        addressBook.setPersons(filteredPersons);
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
-        SecurityUtil.encryptFile(file, password);
+        try {
+            File file = new File(filePath);
+            FileUtil.createIfMissing(file);
+            AddressBook addressBook = new AddressBook();
+            addressBook.setPersons(filteredPersons);
+            for (Alias alias : aliases) {
+                addressBook.importAlias(alias);
+            }
+            for (Tag tag : tags) {
+                addressBook.importTag(tag);
+            }
+            XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+            SecurityUtil.encryptFile(file, password);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("New AddressBook should not contain duplicate persons");
+        } catch (WrongPasswordException e) {
+            throw new AssertionError("There should not be any decryption");
+        }
     }
     //@@author
 

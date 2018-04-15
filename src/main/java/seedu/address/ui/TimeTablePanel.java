@@ -18,6 +18,8 @@ import seedu.address.commons.util.StringUtil;
  * A ui for the info panel that is displayed when the timetable command is called.
  */
 public class TimeTablePanel extends UiPart<Region> {
+    private static final int MAX_COLUMN_WIDTH = 200;
+    private static final int MIN_COLUMN_WIDTH = 75;
     private static final String COLUMNHEADER_STYLE_CLASS = "column-header";
     private static final String TABLECELL_STYLE_CLASS = "table-cell";
     private static final String EMPTY_STYLE_CLASS = "timetable-cell-empty";
@@ -107,43 +109,59 @@ public class TimeTablePanel extends UiPart<Region> {
             columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
             columns.get(i).impl_setReorderable(false);
             if (j != 0) {
-                columns.get(i).setMinWidth(75);
-                columns.get(i).setMaxWidth(200);
+                columns.get(i).setMinWidth(MIN_COLUMN_WIDTH);
+                columns.get(i).setMaxWidth(MAX_COLUMN_WIDTH);
             }
             columns.get(i).setSortable(false);
         }
     }
 
     /**
-     * Sets the command box style to indicate free or having lesson
+     * Sets the columns to the style for each value.
      */
     public void setStyle() {
         for (int i = 0; i < columns.size(); i++) {
-            columns.get(i).setCellFactory(column -> {
-                return new TableCell<ArrayList<String>, String>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (item == null || empty) {
-                            setText(null);
-                            setStyle("");
-                        } else {
-
-                            setText(item);
-                            removeAllStyle(this);
-                            if ("".equals(getItem())) {
-                                getStyleClass().add(EMPTY_STYLE_CLASS);
-                            } else if (StringUtil.isDay(getItem())) {
-                                getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
-                            } else {
-                                getStyleClass().add(getColorStyleFor(getItem()));
-                            }
-                        }
-                    }
-                };
-            });
+            TableColumn<ArrayList<String>, String> columnToBeSet = columns.get(i);
+            setStyleForColumn(columnToBeSet);
         }
+    }
+
+    /**
+     * Sets the style of each column.
+     * @param columnToBeSet is the column that would be set
+     */
+    private void setStyleForColumn (TableColumn<ArrayList<String>, String> columnToBeSet) {
+        columnToBeSet.setCellFactory(column -> {
+            return setStyleForCell();
+        });
+    }
+
+    /**
+     * Sets the style of the cell given the data and return it
+     * @return the tablecell with its style set.
+     */
+    private TableCell<ArrayList<String>, String> setStyleForCell () {
+        return new TableCell<ArrayList<String>, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    removeAllStyle(this);
+                    if ("".equals(getItem())) {
+                        getStyleClass().add(EMPTY_STYLE_CLASS);
+                    } else if (StringUtil.isDay(getItem())) {
+                        getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
+                    } else {
+                        getStyleClass().add(getColorStyleFor(getItem()));
+                    }
+                }
+            }
+        };
     }
 
     /**
@@ -167,6 +185,7 @@ public class TimeTablePanel extends UiPart<Region> {
         String modName = lessonName.substring(0, MODNAME_LENGTH);
         int colorIndex = Math.abs(modName.hashCode()) % MOD_COLOR_STYLES.length;
         int index = 0;
+        //finds the next avaliable index that is not taken.
         while (index < MOD_COLOR_STYLES.length && TAKEN_COLOR.get(colorIndex) != null
                 && !TAKEN_COLOR.get(colorIndex).equals(modName)) {
             colorIndex = (colorIndex + 1) % MOD_COLOR_STYLES.length;

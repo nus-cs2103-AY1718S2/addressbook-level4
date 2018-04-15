@@ -26,7 +26,6 @@ import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_VACANT;
 
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_SYNTAX_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_SYNTAX_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_WORD_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR;

@@ -117,11 +117,7 @@ public class InfoPanel extends UiPart<Region> {
     private void handleInfoPanelEvent(InfoPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
-            venuePlaceholder.toBack();
-            mapsPlaceholder.toBack();
-            birthdayPlaceholder.toBack();
-            timetableUnionPlaceholder.toBack();
-            aliasListPlaceholder.toBack();
+        	hideAllPanel();
         });
     }
     //@@author
@@ -130,16 +126,26 @@ public class InfoPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        venuePlaceholder.toBack();
-        mapsPlaceholder.toBack();
-        birthdayPlaceholder.toBack();
-        timetableUnionPlaceholder.toBack();
-        aliasListPlaceholder.toBack();
+
+        hideAllPanel();
+
         Person person = event.getNewSelection().person;
         int oddEvenIndex = event.getOddEvenIndex();
 
         personDetailsCard.update(person, oddEvenIndex);
         userDetailsPlaceholder.toFront();
+    }
+
+    /**
+     * Hides all the panels
+     */
+    private void hideAllPanel() {
+    	userDetailsPlaceholder.toBack();
+    	venuePlaceholder.toBack();
+    	mapsPlaceholder.toBack();
+    	birthdayPlaceholder.toBack();
+    	timetableUnionPlaceholder.toBack();
+    	aliasListPlaceholder.toBack();
     }
     //@@author
 
@@ -151,7 +157,6 @@ public class InfoPanel extends UiPart<Region> {
         timetableUnionPlaceholder.getChildren().add(timetableUnionPanel.getRoot());
         timetableUnionPlaceholder.toFront();
         timetableUnionPanel.setStyle();
-
     }
     //@@author
 }

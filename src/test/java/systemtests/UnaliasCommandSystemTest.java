@@ -1,13 +1,15 @@
 package systemtests;
 
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_UNALIAS;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_UNALIAS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_MAP2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_NUMBER;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_UNALIAS;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_UNALIAS_DESC;
 import static seedu.address.testutil.TypicalAliases.ADD;
 import static seedu.address.testutil.TypicalAliases.MAP_2;
 import static seedu.address.testutil.TypicalAliases.UPLOAD;
+
+import java.util.List;
 
 import org.junit.Test;
 
@@ -19,11 +21,8 @@ import seedu.address.model.Model;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
-import seedu.address.testutil.AliasBuilder;
 import seedu.address.testutil.AliasUtil;
 import seedu.address.testutil.TypicalAliases;
-
-import java.util.List;
 
 //@@author jingyinno
 public class UnaliasCommandSystemTest extends AddressBookSystemTest {
@@ -37,18 +36,16 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
         /* Case: remove an alias from a non-empty address book, command with leading spaces and trailing spaces
         * -> removed
         * */
-        String toDelete_add = VALID_ALIAS_ADD;
+        String toDeleteAdd = VALID_ALIAS_ADD;
         generateAliases(model);
         String command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_ADD + "   ";
         Alias[] expectedAliasArray = getRemainingAliases(new Alias[] {ADD});
         Alias[][] expectedAliases = new Alias[][] {expectedAliasArray};
-        assertCommandSuccess(command, toDelete_add, expectedAliases);
+        assertCommandSuccess(command, toDeleteAdd, expectedAliases);
 
         /* Case: undo removing ADD from the list -> ADD added */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        List<Alias> aliases = TypicalAliases.getTypicalAliases();
-        expectedAliases = new Alias[][] {aliases.toArray(new Alias[aliases.size()])};
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo removing ADD from the list -> ADD removed again */
@@ -61,34 +58,34 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
         /* Case: remove another alias from a non-empty address book, command with leading and trailing spaces
          * -> removed
          * */
-        String toDelete_map = VALID_ALIAS_MAP2;
+        String toDeleteMap = VALID_ALIAS_MAP2;
         command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_MAP2 + "  ";
         expectedAliasArray = getRemainingAliases(new Alias[] {MAP_2, ADD});
         expectedAliases = new Alias[][] {expectedAliasArray};
-        assertCommandSuccess(command, toDelete_map, expectedAliases);
+        assertCommandSuccess(command, toDeleteMap, expectedAliases);
 
         /* Case: remove another alias from a non-empty address book, command with leading and trailing spaces
          * -> removed
          * */
-        String toDelete_upload = VALID_ALIAS_NUMBER;
+        String toDeleteUpload = VALID_ALIAS_NUMBER;
         command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_NUMBER + "  ";
         expectedAliasArray = getRemainingAliases(new Alias[] {MAP_2, ADD, UPLOAD});
         expectedAliases = new Alias[][] {expectedAliasArray};
-        assertCommandSuccess(command, toDelete_upload, expectedAliases);
+        assertCommandSuccess(command, toDeleteUpload, expectedAliases);
 
         /* --------------------------------- Perform invalid unalias operations ------------------------------------- */
 
         /* Case: remove nonexistent alias from a non-empty address book, command with leading and trailing spaces
          * -> rejected
          * */
-        String toDelete_nonExistent = INVALID_UNALIAS;
+        String toDeleteNonExistent = INVALID_UNALIAS;
         command = "   " + UnaliasCommand.COMMAND_WORD + "  " + INVALID_UNALIAS + "  ";
         assertCommandFailure(command, UnaliasCommand.MESSAGE_UNKNOWN_UNALIAS);
 
         /* Case: remove alias with symbols from a non-empty address book, command with leading and trailing spaces
          * -> rejected
          * */
-        String toDelete_symbols = INVALID_UNALIAS_DESC;
+        String toDeleteSymbols = INVALID_UNALIAS_DESC;
         command = "   " + UnaliasCommand.COMMAND_WORD + "  " + INVALID_UNALIAS_DESC + "  ";
         assertCommandFailure(command, Alias.MESSAGE_ALIAS_CONSTRAINTS);
     }
@@ -102,6 +99,7 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
      * the current model without {@code toDelete}.<br>
      * 5. Browser url and selected card remain unchanged.<br>
      * 6. Status bar's sync status changes.<br>
+     * 7. Info panel's AliasList changes <br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -145,6 +143,14 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
         assertAliasTable(expectedTable);
     }
 
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Alias)} except asserts that
+     * the,<br>
+     * 1. Result display box displays {@code expectedResultMessage}.<br>
+     * 2. {@code Model}, {@code Storage} and {@code AliasListPanel} equal to the corresponding components in
+     * {@code expectedModel}.<br>
+     * @see UnaliasCommandSystemTest#assertCommandSuccess(String, String, Alias[][])
+     */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
@@ -158,6 +164,10 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
         assertTableDisplaysExpected("", ListCommand.MESSAGE_SUCCESS, expectedTable);
     }
 
+    /**
+     * To add new alias into {@code model} with typicalAliases
+     * @param model the current model of the testing stage
+     */
     private void generateAliases(Model model) {
         List<Alias> aliases = TypicalAliases.getTypicalAliases();
         for (Alias alias : aliases) {
@@ -170,6 +180,11 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
         }
     }
 
+    /**
+     * To generate a new expected aliases list with typicalAliases excluding {@code aliases}
+     * @param aliases the aliases to be excluded from typicalAlias list
+     * @return the expected aliases excuding {@code aliases}
+     */
     private Alias[] getRemainingAliases(Alias[] aliases) {
         List<Alias> expectedAliases = TypicalAliases.getTypicalAliases();
         for (Alias alias : aliases) {
@@ -177,7 +192,7 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
         }
         return expectedAliases.toArray(new Alias[expectedAliases.size()]);
     }
-    
+
     /**
      * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays {@code command}.<br>

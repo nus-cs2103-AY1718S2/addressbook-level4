@@ -64,6 +64,12 @@ public class ParserUtilTest {
     private static final Alias ADD_ALIAS = new Alias(AddCommand.COMMAND_WORD, VALID_ALIAS);
     //@@author
 
+    //@@author yeggasd
+    private static final String VALID_ODD = "odd";
+    private static final String VALID_EVEN = "even";
+    private static final String INVALID_ODDEVEN = "ord";
+    //@@author
+
     private static final String WHITESPACE = " \t\r\n";
 
     @Rule
@@ -427,6 +433,28 @@ public class ParserUtilTest {
     @Test
     public void parseLocations_invalidLocation_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseLocations(null));
+    }
+    //@@author
+
+    //@@author yeggasd
+    @Test
+    public void parseOddEven_validOddEven() throws Exception {
+        assertEquals(VALID_ODD, ParserUtil.parseOddEven(VALID_ODD));
+        assertEquals(VALID_EVEN, ParserUtil.parseOddEven(VALID_EVEN));
+
+        //with trailing and leading spaces
+        assertEquals(VALID_ODD, ParserUtil.parseOddEven(" " + VALID_ODD + " "));
+        assertEquals(VALID_EVEN, ParserUtil.parseOddEven(" " + VALID_EVEN + " "));
+    }
+
+    @Test
+    public void  parseOddEven_nullGive_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseOddEven(null));
+    }
+
+    @Test
+    public void  parseOddEven_invalidOddEven_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseOddEven(INVALID_ODDEVEN));
     }
     //@@author
 }

@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.building.Building.retrieveNusBuildingIfExist;
 
 import java.io.IOException;
 

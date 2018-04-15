@@ -1,9 +1,9 @@
 package seedu.address.model.alias;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
@@ -12,6 +12,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR_COM
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_LIST_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_MAP1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_NUMBER;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -71,13 +72,13 @@ public class AliasTest {
     }
 
     @Test
-    public void getCommand_validAliases_Success() {
+    public void getCommand_validAliases_success() {
         assertEquals(add.getCommand(), AddCommand.COMMAND_WORD);
         assertEquals(map.getCommand(), MapCommand.COMMAND_WORD);
     }
 
     @Test
-    public void getAlias_validAliases_Success() {
+    public void getAlias_validAliases_success() {
         assertEquals(add.getAlias(), VALID_ALIAS_ADD);
         assertEquals(map.getAlias(), VALID_ALIAS_MAP1);
     }
@@ -90,7 +91,7 @@ public class AliasTest {
 
     @Test
     public void toString_equals() {
-        String expectedString = String.format("[%s]",add.getAlias());
+        String expectedString = String.format("[%s]", add.getAlias());
         assertEquals(add.toString(), expectedString);
     }
 }

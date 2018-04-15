@@ -194,6 +194,7 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     //@@author Kyholmes
+    ////appointment-level operations
     /**
      * remove a patient appointment
      * @throws UniqueAppointmentList.DuplicatedAppointmentException

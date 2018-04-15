@@ -8,17 +8,17 @@
 
 == Overview
 
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+reInsurance is the premier organizational tool for insurance agents around the world. Allowing easy access and management of client information, reInsurance sets out to simplify the mundane administrative tasks of an insurance agent.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to export data from the reInsurance application*
-** What it does: allows the user to export the data from the application to an outside source. The two major pieces of data to export are the calendar events and the portfolio of clients.
-** Justification: This feature is crucial to the application since it allows for the reInsurance users to access data from the application when they are unable to use the application (i.e. when using a mobile phone or computer with reInsurance application).
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands. The enhancement also allows for more robust features of exporting.
+* *Major enhancement*: added an export feature to the reInsurance application
+** What it does: the newly added export feature allows the user to export internal data from the application to an outside source. More specifically, the two major pieces of data to export are the calendar events and the portfolio of clients.
+** Justification: This feature is crucial to the application since it allows for the reInsurance users to access important data stored in the application when they are unable to use the actual application itself (i.e. when using a mobile phone or computer with reInsurance application).
+** Highlights: This enhancement builds off already existing features of the reInsurance application and its data. Other parts of the application were fairly unaffected by the enhancement. However, as the reInsurance application grows and stores more information, there are many possible upgrades to be made to the export feature.
 ** Credits: _https://developers.google.com/calendar/[Google Calendar API]_
 
-* *Minor enhancement*: added a count command to see the total number of persons in the reInsurance application.
+* *Minor enhancement*: added a count command to view the total number of persons in the reInsurance application.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/daviddalmaso.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/test/daviddalmaso.md[Test code]]
 
@@ -26,9 +26,9 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 ** Project management:
 *** Set up initial team organization and repository.
-*** Managed release `v1.4 - v1.5rc` on GitHub
-*** Created jar for release `v1.4` on Github
-*** Set up Travis CI for team repository to check for build errors.
+*** Managed release `v1.4` and `v1.5rc` on GitHub
+*** Created jar for release `v1.4` and `v1.5rc` on Github
+*** Set up Travis CI for team repository to check for build errors: https://github.com/CS2103JAN2018-T11-B3/main/pull/92[#92]
 *** Set up auto publishing of docs for team repository.
 *** Set up Coveralls for team repository to check for code coverage.
 ** Enhancements to existing features:
@@ -36,10 +36,11 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 ** Documentation:
 *** Continually updated UserGuide and DeveloperGuide to stay up to date with changes made at every release.
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-T11-B3/main/pull/22, https://github.com/CS2103JAN2018-T11-B3/main/pull/21
-*** PRs approved of: https://github.com/CS2103JAN2018-T11-B3/main/pull/17
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-T11-B3/main/pull/22[#22], https://github.com/CS2103JAN2018-T11-B3/main/pull/21[#21]
+*** PRs approved of: https://github.com/CS2103JAN2018-T11-B3/main/pull/17[#17]
+*** Help with build issues in code outside of my own: https://github.com/CS2103JAN2018-T11-B3/main/pull/26[#26]
 ** Tools:
-*** Integrated Google Calendar API to the project https://github.com/CS2103JAN2018-T11-B3/main/pull/152[#152]
+*** Integrated Google Calendar API to the project https://github.com/CS2103JAN2018-T11-B3/main/pull/96[#96]
 
 == Contributions to the User Guide
 
@@ -50,6 +51,8 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 include::../UserGuide.adoc[tag=export]
 
+include::../UserGuide.adoc[tag=count]
+
 == Contributions to the Developer Guide
 
 |===
@@ -58,9 +61,4 @@ include::../UserGuide.adoc[tag=export]
 
 include::../DeveloperGuide.adoc[tag=export]
 
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
+include::../DeveloperGuide.adoc[tag=count]

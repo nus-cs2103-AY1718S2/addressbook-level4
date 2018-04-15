@@ -445,6 +445,28 @@ Birthday prefix "b/" has been added to the add command so that users can add the
 ** Cons: Pop ups might be unwelcome as they can interrupt current user tasks
 // end::appointments[]
 
+// tag::count[]
+=== Count command
+
+*Since V1.5*
+
+==== Current Implementation
+* The count command allows the users to view the current number of clients stored in the reInsurance application.
+
+==== Design Considerations
+
+===== Aspect: Implementation of CountCommand
+
+ *  *Alternative 1 (current)*: Return length of stored `Person` array
+ ** Pros: Simple implementation. Little room for bugs.
+ ** Cons: Does not allow for easy enhancements to be made to the command
+ *  *Alternative 2 (coming in V2.0)*: Implementation of a more robust `Statistics` command
+ ** Pros: Allows the user to specify different statistics to return about the reInsurance data other than just the number of clients
+ ** Cons: May be a difficult implementation for a feature that could possibly not get very used.
+
+// end::count[]
+
+
 // tag::sort[]
 === Sort command
 
@@ -507,7 +529,7 @@ Users will be required to add their clients to a group when adding a new user. U
 
 // end::group[]
 
-// tag::insurance[]
+// tag::insurance1[]
 === Insurance with information of commission
 
 *Since V1.4*
@@ -521,8 +543,10 @@ Users will be required to add their clients to a group when adding a new user. U
 ==== Design Considerations
 
 ===== Aspect: Implementation of Insurance
+// end::insurance1[]
 
 image::InsuranceClassInModel.png[width="790"]
+// tag::insurance2[]
 
  *  **Alternative 1(current choice):** Create an Insurance class
  ** Pros: Distinction between insurance and person, Insurance can exist without person.
@@ -533,13 +557,30 @@ image::InsuranceClassInModel.png[width="790"]
 
 ===== Aspect: Calculating the total commission per client
 
- * **Alternative 1(current choice):** Commission is tagged to person, everytime a insurance is added it will add to existing commission
+ * **Alternative 1(current choice):** Commission is tagged to person, when a insurance is added it will add to existing commission
  ** Pros: Easier to calculate client based commission
  ** Cons: May be difficult to get overall total commission
  * **Alternative 2:**Create a storage to keep all commission
  ** Pros: Easy to calculate overall total commission
  ** Cons: Difficult to allocate commission to their respective client.
-// end::insurance[]
+
+===== Aspect: Editing and Removing of Insurance
+
+* **Alternative 1(current choice):** Use current edit command and add on the capability to replace the new set of insurance
+** Pros: Increase usability as user do not need to learn how to use a new function and just make use of existing commands
+** Cons: User lose the ability to edit individual insurance plan as the current edit implementation simply remove old insurance and add in the new set
+* **Alternative 2:** Add in another command specifically just for editing of insurance
+** Pros: Individual insurance plan can now be edited.
+** Cons: User need to know another set of command and may prove to be confusing since it share the same nature as a current command(edit).
+
+===== Aspect: Storing Insurance
+
+* **Alternative 1(current choice):** An XML file is created for insurance plan to be stored
+** Pros: Easily managed as the behavior is similar to tag
+** Cons: Unsure of usage apart from storing the data and checking duplicate.
+
+
+// end::insurance2[]
 
 // tag::encryption[]
 === Data Encryption
@@ -641,26 +682,34 @@ In terms of implementation, the export command works in similar fashion to most 
 
 ==== Design Considerations
 
-* Separate the export functionality away from the rest of the commands.
-* Create a button that exports the data for the user
+==== Aspect: Implementation of Export Command
 
-==== Aspect: Parameters of export
+* *Alternative 1 (Current)*: Accepts and handles individual export types
+** Pros: Requests can be made without the user needing to craft complicated commands
+** Cons: Little flexibly in the ability to specify what data is wanted outside of provided export types
+* *Alternative 2*: General `ExportData` class
+** Pros: Can more flexibly specify export types and what pieces of data to export
+** Cons: More cumbersome to make the export request
 
-*Since v1.5rc*
 
-* The application will handle the `export` command with one argument (Format: `export EXPORT_TYPE`).
-* If the `EXPORT_TYPE` is `portfolio`, then another argument is allowed to specify output filename (Format: `export portfolio FILENAME`).
-* The export types are from an enum class at `seedu.address.model.export.ExportType`.
-* To add another export type to be caught by the user's input, simply add another value to the enum class mentioned above.
-** After adding an export type, an export function for that specific type should be created in the `seedu.address.model.AddressBook` class.
-** After adding the method in `AddressBook` class, a case should be added to the `seedu.address.model.ModelManager` class to handle when the export type is equivalent to the newly added one.
+==== Aspect: Portfolio export location
 
-*Coming in v2.0*
+* *Alternative 1 (Current)*: .csv File
+** Pros: Common file type that can be uploaded to different applications (i.e. Microsoft Excel)
+** Cons: Ugly file when viewed without application to format the data nicely
+* *Alternative 2*: .pdf File
+** Pros: Ability to layout the data in a way produce a clean looking report of the portfolio
+** Cons: Cannot easily edit contents of the file after it has been created
 
-* The `export` function will need to be abstracted out in a way that it can handle all the types of exports allowed by the command.
-* The export file type should be controlled by the arguments of the command.
-** Example: `export portfolio csv`
-*** Should download a portfolio as a csv file onto the user's computer
+===== Aspect: Calendar export location
+
+* *Alternative 1 (Current)*: Google Calendar
+** Pros: More practical place to store and view calendar events
+** Cons: Difficulty of set up and room for connectivity errors
+* *Alernative 2*: .ics file
+** Pros: Can be uploaded to calendar services other than just Google Calendar
+** Cons: Longer process to get the calendar uploaded (need to go specific service and import the file)
+
 // end::export[]
 
 === Logging
@@ -1119,17 +1168,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |exit my application |exit the application once I am done with it
 
 |`* * *` |user |add remarks of my client |remember my personal comment of the client
+// tag::sebryStory1[]
 
 |`* * *` |user |add the insurance plans that my clients are committed |track what plans he/she has
+
+|`* * *` |user |edit my client's insurance plan |keep the latest plan updated
+
+|`* * *` |user |delete my client's insurance plan |remove undesired plans yet keeping his/her contacts available
 
 |`* * *` |user |add in how much commission I am getting off my client’s insurance plan|calculate my commission
 
 |`* * *` |user |view the commission I get off a client |see how much I am earning off them
 
-|`* * *` |user |view the total commission I am getting |view my total earning
+|`* * *` |user |edit the commission I get off a client |update how much I am earning off them
+
+|`* * *` |user |erase the commission I get off a client |remove the amount I am getting off that insurance plan
 
 |`* * *` |user |rank my clients |to serve them better
 
+// end::sebryStory1[]
 |`* * *` |user |group my clients|to manage the different groups differently
 
 |`* * *` |user |add the birthday date of my client |keep track of my client's birthday
@@ -1146,7 +1203,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |view appointment on the calendar |have a more organized view of my schedule and at the same time plan for future appointment
 
-|`* * *` |user |secure my address book by having a password in place
+|`* * *` |user |secure my address book by having a password in place| keep my clients data protected
 
 |`* *` |user |export a calendar of my appointments and client birthdays |can use the data on a calendar outside of the application
 
@@ -1171,7 +1228,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |add in password access to my address book |be viewed/edited only by allowed users
 
 |`* *` |user |change my password |further secure my address book
-
+// tag::sebryStory2[]
+|`* *` |user |use alias for my commands |increase my efficiency in using the app
+// end::sebryStory2[]
 |`*` |user |request access to other address book |seek potential customer from leaving colleague
 
 

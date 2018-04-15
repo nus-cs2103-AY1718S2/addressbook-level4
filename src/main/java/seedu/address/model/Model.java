@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.export.exceptions.CalendarAccessDeniedException;
 import seedu.address.model.export.exceptions.ConnectivityIssueException;
+import seedu.address.model.export.exceptions.InvalidFileNameException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -50,7 +51,7 @@ public interface Model {
     void exportCalendar() throws CalendarAccessDeniedException, ConnectivityIssueException;
 
     /** Exports the portfolio to a given filePath */
-    void exportPortfolio(String filePath);
+    void exportPortfolio(String filePath) throws InvalidFileNameException;
 
     ObservableList<Person> sortFilteredPersonList(ObservableList<Person> unSortedList);
 }

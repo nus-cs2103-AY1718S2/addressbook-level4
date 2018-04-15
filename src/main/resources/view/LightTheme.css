@@ -350,8 +350,8 @@
 
 
 #tags .teal {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+    -fx-text-fill: black;
+    -fx-background-color: #ffffff;
 }
 
 #tags .red {

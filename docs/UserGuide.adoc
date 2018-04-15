@@ -80,8 +80,8 @@ Format: `help`
 === Adding a student: `add` or `a`
 When students are enrolled in the Secondary School you are teaching and you want to keep track of their information,
 this feature allows you to add a student and his/her details to _EduBuddy_. +
-Format: `add n/NAME ic/NRIC nok/NAME_OF_KIN [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]` +
-Abbreviation Format: `a n/NAME ic/NRIC nok/NAME_OF_KIN [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]`
+Format: `add n/NAME ic/NRIC [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]` +
+Abbreviation Format: `a n/NAME ic/NRIC [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]`
 
 [NOTE]
 -For more examples on what subjects and subject grades can be added, please refer to the <<FAQ>> section below. +
@@ -89,16 +89,16 @@ Abbreviation Format: `a n/NAME ic/NRIC nok/NAME_OF_KIN [t/CLASS] [r/REMARK] [sub
 -If you want to add additional subjects later, you can use the the `AddSubject` feature at <<Adding subjects to a student : `addsub` [since v1.5]>>
 
 [IMPORTANT]
--When adding a student, at least a `NAME`, a `NRIC` and a `NAME_OF_KIN` should be provided. +
+-When adding a student, at least a `NAME` and a `NRIC` should be provided. +
 -A `SPACE` should be inserted between each `SUBJECT_NAME` and `SUBJECT_GRADE`.
 
 Examples:
 
-* `add n/John Doe ic/S9500186H nok/Jonathan t/1A r/English Rep
+* `add n/John Doe ic/S9500186H t/1A r/English Rep
 sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
-* `add n/Betsy Crowe ic/S9511111I nok/Betty Crowe`
-* `a n/John Doe ic/S9500186H nok/Jonathan t/1A r/English Rep sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
-* `a n/Betsy Crowe ic/S9511111I nok/Betty`
+* `add n/Betsy Crowe ic/S9511111I`
+* `a n/John Doe ic/S9500186H t/1A r/English Rep sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
+* `a n/Betsy Crowe ic/S9511111I`
 
 *_return to <<toc,Table of Contents>>_*
 
@@ -278,8 +278,8 @@ Deletes the '4A' tag from every student in the _EduBuddy_.
 === Replacing a tag : `tagreplace` or `tr` [since v1.2]
 
 Replaces the specified tag from every student in _EduBuddy_ with a specific tag. +
-Format: `tagreplace t/TAGNAME t/TAGNAME`
-Abbreviation Format: `tr t/TAGNAME t/TAGNAME`
+Format: `tagreplace t/OLD_TAGNAME t/NEW_TAGNAME`
+Abbreviation Format: `tr t/OLD_TAGNAME t/NEW_TAGNAME`
 
 ****
 * Replaces the specified tag from every student in Edubuddy with a specific tag.
@@ -317,8 +317,8 @@ Format: `addremark INDEX r/REMARK`
 
 Examples:
 * `list` +
-`addremark 2 r/Class Monitor` +
-Adds a remark, Class Monitor, to the 2nd student in EduBuddy.
+`addremark 3 r/Geo Rep` +
+Adds a remark, Geo Rep, to the 3rd student in EduBuddy.
 
 image::AddRemarkCommand.png[width="650"]
 
@@ -335,9 +335,10 @@ Format: `deleteremark INDEX r/REMARK`
 ****
 
 Examples:
-`list` +
-`deleteremark 2 r/Class Monitor` +
-Deletes the remark, Class Monitor, from the 2nd student in EduBuddy.
+
+* `list` +
+`deleteremark 3 r/Geo Rep` +
+Deletes the remark, Geo Rep, from the 3rd student in EduBuddy.
 
 image::DeleteRemarkCommand.png[width="650"]
 // end::remarks[]
@@ -578,15 +579,17 @@ Returns the L1B4-A score obtained by the student based on his/her grades.
 *_return to <<toc,Table of Contents>>_*
 
 // tag::cca[]
-=== Adding a CCA to a student : `addcca` [since v1.5]
-Adds a CCA and the student's position in the CCA into the student records in _EduBuddy_. +
-Format: `addcca INDEX cca/CCA pos/POSITION` +
+=== Editing the details of CCA of a student : `cca` [since v1.5]
+edits the CCA details of the student in _EduBuddy_. +
+Format: `cca INDEX cca/CCA pos/POSITION` +
 You will be able to see the success message, +
 `CCA added: CCA: POSITION` +
 `Person: NAME`
 
 [NOTE]
--Adds a CCA and the student's position in the CCA to the student at the specified `INDEX`. +
+-Adds the CCA details to the student at the specified `INDEX`
+if the student does not have any cca details. +
+-Edits the CCA details of the student at the specified `INDEX.` +
 -The index refers to the index number shown in the most recent listing.
 
 [IMPORTANT]
@@ -595,39 +598,14 @@ You will be able to see the success message, +
 Examples:
 
 * `list` +
-`addcca 2 cca/Basketball pos/Member` +
-Adds the cca basketball with the position member to the 2nd student in _EduBuddy_.
+`cca 2 cca/Basketball pos/Member` +
+Adds the cca details(cca basketball with the position member) to the 2nd student in _EduBuddy_.
 * `find Betsy` +
-`addcca 1 cca/Choir pos/Member` +
-Adds the cca Choir with the position member to the 1st student in the results of the `find` command.
+`cca 1 cca/Choir pos/Member` +
+Adds the cca details(cca Choir with the position member) to the 1st student in the results of the `find` command.
 
 *_return to <<toc,Table of Contents>>_*
-
-=== Deleting a CCA from a student : `deletecca` [since v1.5]
-Deletes a CCA and the student's position in the CCA from the student records in _EduBuddy_. +
-Format: `deletecca INDEX cca/CCA pos/POSITION` +
-You will be able to see the success message, +
-`CCA deleted: CCA: POSITION` +
-`Person: NAME`
-
-[NOTE]
--Deletes a CCA and the student's position in the CCA from the student at the specified `INDEX`. +
--The index refers to the index number shown in the most recent listing.
-
-[IMPORTANT]
-`INDEX` *must be a positive integer*: 1, 2, 3, ...
-
-Examples:
-
-* `list` +
-`deletecca 2 cca/Basketball pos/Member` +
-Deletes the cca basketball with the position member from the 2nd student in _EduBuddy_.
-* `find Betsy` +
-`addcca 1 cca/Choir pos/Member` +
-Deletes the cca Choir with the position member from the 1st student in the results of the `find` command.
-
-//end::cca[]
-*_return to <<toc,Table of Contents>>_*
+// tag::cca[]
 
 // tag::injuries[]
 === Adding a injury history to a student : `addinjuries` [since v1.5]
@@ -681,6 +659,36 @@ Deletes the injury history from the 1st student in the results of the `find` com
 // end::injuries[]
 
 *_return to <<toc,Table of Contents>>_*
+
+// tag::NextofKin[]
+=== Editing the details of the next of kin of a student : `nok` [since v1.5]
+Edits a next of kin details of the student in _EduBuddy_. +
+Format: `nok INDEX n/NAME p/PHONE [e/EMAIL] r/RELATIONSHIP` +
+You will be able to see the success message, +
+`Next of Kin: NAME Phone: PHONE Email: EMAIL REMARK: Father` +
+`Person: NAME`
+
+[NOTE]
+-Adds the next of kin details to the student at the specified `INDEX` if the student does not have any next of kin
+details. +
+-Edits the next of kin details from the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`nok 2 n/Dave p/96784561 r/Father` +
+Edits the next of kin details(name, phone number and relationship)
+of the 2nd student in _EduBuddy_.
+* `find Betsy` +
+`nok 1 n/Dave p/96784561 r/Father` +
+Edits the next of kin details(name, phone number and relationship)
+of the 1st student in the results of the `find` command.
+
+// tag::NextofKin[]
 
 // tag::theme[]
 === Changing theme of _EduBuddy_ : `theme` [since v1.5]
@@ -931,11 +939,17 @@ OR +
 OR +
 `addappt n/John Doe i/Remedial d/25122018 s/1200 e/1300`
 
-|*AddRemark* |Adds a remark to a specific student|`addremark 1 r/REMARK` |addremark 1 r/English Rep
+|*AddInjuries* |Adds a injury history to a specified student |`addinjuries INDEX injuries/INJURY` +
+|`addinjuries 2 injuries/Torn Ligament` +
+
+|*AddRemark* |Adds a remark to a specific student|`addremark 1 r/REMARK` |addremark 2 r/Hardworking
 
 |*AddSubject* |Adds subject(s) to a specified student |`addsub INDEX sub/SUBJECT_NAME SUBJECT_GRADE` +
 
 |`addsub 2 sub/English A2 EMath A1` +
+
+|*Cca* |Edits a student's cca details |`cca INDEX cca/CCA pos/POSITION` +
+|`cca 1 cca/Basketball pos/Member`
 
 |*Clear* |Clears all student entries |`clear` +
 OR +
@@ -958,7 +972,10 @@ OR +
 OR +
 `deleteappt 3`
 
-|*DeleteRemark* |Deletes a remark from a specific student|`deleteremark 1 r/REMARK` |deleteremark 1 r/English Rep
+|*DeleteInjuries* |Deletes a injury history from a specific student|`deleteinjuries INDEX injuries/INJURY` +
+|`deleteinjuries 1 injuries/Torn Ligament`
+
+|*DeleteRemark* |Deletes a remark from a specific student|`deleteremark 1 r/REMARK` |`deleteremark 1 r/Hardworking`
 
 |*Edit* |Edits a student entry |`edit INDEX [n/NAME] [ic/NRIC] [t/CLASS] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
 OR +
@@ -992,6 +1009,10 @@ OR +
 OR +
 `l`
 
+|*NextofKin* |Edits a student's next of kin details|
+`nok INDEX n/NAME p/PHONE [e/EMAIL] r/RELATIONSHIP` +
+|`nok 1 n/Dave p/95672341 r/Father` +
+
 |*Redo* |Redo previous undo command |`redo` +
 OR +
 `r`
@@ -1021,12 +1042,12 @@ OR +
 OR +
 `td CLASS2A`
 
-|*TagReplace* |Replaces a tag for every student|`tagreplace t/TAGNAME t/TAGNAME` +
+|*TagReplace* |Replaces a tag for every student|`tagreplace t/OLD_TAGNAME t/NEW_TAGNAME` +
 OR +
-`tr t/TAGNAME t/TAGNAME`
-|`tagreplace t/CLASS2A t/CLASS3A` +
+`tr t/OLD_TAGNAME t/NEW_TAGNAME`
+|`tagreplace t/2A t/3A` +
 OR +
-`tr t/CLASS2A t/CLASS3A`
+`tr t/2A t/3A`
 
 |*Theme* |Changes theme of _EduBuddy_ |`theme COLOR`|`theme dark`
 

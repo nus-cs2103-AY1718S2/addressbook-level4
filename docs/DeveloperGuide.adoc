@@ -25,15 +25,16 @@ This section details how you can go about setting up IMDB.
 
 === Prerequisites
 Please ensure the following are installed before setting up IMDB: +
+
 . *JDK `1.8.0_60`* or later
-+
+
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
-+
+
 
 . *IntelliJ* IDE
-+
+
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.

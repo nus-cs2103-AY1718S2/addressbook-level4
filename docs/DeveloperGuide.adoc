@@ -625,6 +625,162 @@ image::FilterCommandSequenceDiagram.png[width="800"]
 ** Cons: It is user unfriendly. The only way for user to filter the persons who is in Computer Science, graduating in 2020 and has a GPA greater than 4.6 is to use 3 filter commands.
 //end::filtercommand[]
 
+
+
+// tag::interview[]
+=== Interview Command
+
+==== Current Implementation
+
+The `interview` command allows Talent Acquisition Specialists to schedule an interview for candidates. The format of this command is `interview INDEX DATE_TIME_EXPRESSION`.
+
+This command make use of Natty, a natural language date parser library written in Java. When given a date expression, it will apply standard language recognition and translation techniques to produce `LocalDateTime` which represents the result.
+
+In our current implementation, the `interview` command inherits from the `UndoableCommand` class. Two components, `Logic` and `Model`, are involved in the execution of this command. The `Logic` component is responsible for parsing user inputs while the `Model` component deals with updating of filtered person list.
+
+Below is a sequence diagram that illustrates how these two components interact when the `interview` command is executed:
+
+image::InterviewCommandSequenceDiagram.png[width="800"]
+Figure 3.6.1.1 Sequence diagram to illustrate component interactions for the `interview` command
+
+As shown above, execution of the `interview` command comprises the following steps:
+
+. `LogicManager` invokes `parseCommand` method of `AddressbookParser`, taking user inputs as arguments.
+. During the `parseCommand` method call, an instance of `InterviewCommandParser` will be created when the keyword "interview" is matched. `InterviewCommandParser` then extracts the remaining user inputs and a `InterviewCommand` instance `i` will be returned provided that the format of user's input is correct.
+. `LogicManager` then calls `executeUndoableCommand` of the `InterviewCommand`, `i`, instantiated in step 2. Another component, `Model`, will be involved as the `InterviewCommand` requests to update the interview date of the person.
+. The `Model` component gets the filtered persons list and replaces `Person` p1 with `Person` p2 which is identical to p2 except interview date. A `CommandResult` will be generated and returned to `LogicManager`.
+
+==== Design Considerations
+
+===== Aspect: Usage of natural language parser
+
+* **Alternative 1 (current choice):** Use the natural language parser library by Natty to specify date and time
+** Pros: Users are able to enter the date and time in more natural tone without looking at calendar (For example, schedule an interview next Friday at 3pm)
+** Cons: Natural language parser doesn't have 100% reliability due to the complexity of human language
+
+* **Alternative 2:** Use the typical DD/MM/YYYY HH:MM format to specify date and time
+** Pros: Users are able to specify the date and time precisely
+** Cons: Users have to be certain on the date and time, which have to refer to the calendar at the same time
+
+===== Aspect: Implementation of scheduling and editing interview date
+
+* **Alternative 1 (current choice):** Implement a new command class `InterviewCommand` that supports both scheduling and editing of interview date.
+** Pros: Results in more customisable and modular command that can be easily modified
+** Cons: Complicates the system as users need to familiarise themselves with more commands
+
+* **Alternative 2:** Extend the original `EditCommand` to allow it to schedule and modify interview date of a candidate
+** Pros: Minimises the number of commands users have to remember to execute tasks, making the application more user-friendly
+** Cons: Requires substantial changes to `EditCommandParser` and hence harder to implement
+// end::interview[]
+
+
+
+// tag::userinterface[]
+=== User Interface
+
+Our user interface is specially designed to maximise HR+’s usability and improve user experience. We take into account minor details and ensure that data is presented clearly so that it appeals to our users.
+
+The following sections discuss the different aspects we have considered to make sure HR+ follows industry standards in user interface design. Our implementation follows https://material.io[Material Design] principles created by a leading technology company Google.
+
+==== Responsive Design
+
+Responsive design is an approach to provide optimal viewing experience of an application regardless of the screen size of the user’s device. To incorporate responsive design into HR+, we use `AnchorPane` , a built-in JavaFX container component, to support relative positioning for all four directions (left, right, top and down) between parent and child components.
+
+All UI components have a minimum size requirement. Therefore, every container component in HR+ has a `minWidth` property.
+
+Besides `AnchorPane` , we also set a listener on the size of `InfoPanel` - a panel that displays detailed information about a student in HR+. The following code snippets illustrate how this listener is implemented:
+
+[source,java]
+----
+// SPLIT_MIN_WIDTH is a constant to define when to trigger the merge
+
+infoPaneWrapper.widthProperty().addListener((obs, old, newValue) -> {
+    int width = newValue.intValue();
+    if (width >= SPLIT_MIN_WIDTH) {
+        // Split into two parts
+    } else {
+        // Merge into one part
+    }
+});
+----
+
+When a user runs HR+ on a device with a bigger screen size, the `InfoPanel` will be split into two parts. The left panel will display student’s information while the right panel shows the student’s rating scores and a View resume button. The figure below (Figure 3.7.1.1) shows an example of our interface on devices with larger screens:
+
+image::userinterface/responsive_split.png[width="500"]
+Figure 3.7.1.1 InfoPanel on devices with larger screens
+
+On the other hand, if the device has a smaller screen size, the two components of `InfoPanel` will collapse into one. The student’s information is on top of the student’s ratings. `ScrollPane` in `InfoPanel` allows the user to scroll through the single merged panel. The figure below (Figure 3.7.1.2) shows our sample interface on devices with smaller screens:
+
+image::userinterface/responsive_merge.png[width="300"]
+Figure 3.7.1.2 InfoPanel on devices with smaller screens
+
+==== Consistency
+
+Consistency is another principle that is important in life and in design. Not only it brings up the professional feel and look, users will feel that the app is more reliable and robust. Besides that, it is easier for users to get started as the app follows a consistent pattern.
+
+In order to follow this principle, we have used consistent color, layout and also fonts throughout the whole app. It will be discussed the in details below:
+
+===== Color
+
+The primary color in HR+ is blue, with 10 shades of blue in the figure illustrated below (Figure 3.7.2.1). Other than the primary color, different shades of grey are also being used to show the level of significance of an information. Besides that, the colors that are being used are harmonized such that it brings up an unified feeling while users are using the app.
+
+image::userinterface/blue_shades.png[width="300"]
+Figure 3.7.2.1 10 shades of blue used in HR+
+
+===== Layout
+
+The spacing and layout inside HR+ is consistent and balanced. We make good use of spacing to achieve grouping of elements so that legibility is improved. This allow users to have a sense of which information are relevant to each other.
+
+For example, it is easy to separate between the applicant's information, contact information and interview information at a glance without the need of boxes. Examples are shown in the figure below (Figure 3.7.2.2)
+
+image::userinterface/spacing_group.png[width="300"]
+Figure 3.7.2.2 Grouping with spacing
+
+===== Fonts
+
+The font family that is being used is Roboto. It follows a natural width that allows text to be read more fluently. Moreover, this font featured 6 different weights (thin, light, regular, medium, bold and black) which will allow text to be represented depending on the different level of importance. All different weights are shown in the figure below. (Figure 3.7.2.3)
+
+image::userinterface/roboto_weight.png[width="300"]
+Figure 3.7.2.3 Different weights of Roboto font
+
+Important information is usually shown with a higher weight whereas trivial information is shown with a lower weight. This allow users to skim through the information to process data easily. The fonts are stored in `resources/fonts` folder and embedded into the packaged app so that it can be loaded on all devices.
+
+==== Familiarity
+
+Familiarity is another aspect that is useful when designing an app. It can reduce the cognitive load of a user so that users will not feel overwhelmed by the information that is being displayed.
+
+In HR+, icons are used to represent some of the fields. For example, stars are used to represent average rating of an applicant in the PersonCard list on the left (Figure 3.7.3.1, pointed with red arrow).
+
+image::userinterface/familiar_star.png[width="300"]
+Figure 3.7.3.1 Rating icon in PersonCard
+
+Besides that, contact information fields such as e-mail, address and mobile phone number uses a familiar icon. (Figure 3.7.3.2)
+
+image::userinterface/familiar_icons.png[width="300"]
+Figure 3.7.3.2 Contact information icons in InfoPanel
+
+==== Visual Feedback
+
+Visual Feedback is also essential for users to identify the current state of the app. This is because user might get interrupted while using the app and have to resume the session at any time.
+
+In HR+, when an applicant is selected in the PersonCard list on the left panel, it will be highlighted in blue border and shadow so that users know who they are currently selecting. (Figure 3.7.4.1)
+
+image::userinterface/list_active.png[width="300"]
+Figure 3.7.4.1 Highlighting of selected PersonCard
+
+Besides that, there is an indication when a panel is selected. This allows users to traverse between panel using keyboard only. (Figure 3.7.4.2)
+
+image::userinterface/panel_active.png[width="500"]
+Figure 3.7.4.2 Highlighting of selected Panel
+
+Moreover, when a command entered in `CommandBox` is invalid, the text color will be changed into red to indicate that there is an error in the command itself. (Figure 3.7.4.3)
+
+image::userinterface/feedback_error.png[width="250"]
+Figure 3.7.4.3 Invalid command indicator
+// end::userinterface[]
+
+
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

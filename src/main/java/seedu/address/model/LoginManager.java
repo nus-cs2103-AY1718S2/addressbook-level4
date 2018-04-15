@@ -26,6 +26,7 @@ import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
+//@@author Pearlissa
 /**
  * Represents the in-memory model of the login data.
  * All changes to any model should be synchronized.

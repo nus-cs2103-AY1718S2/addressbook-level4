@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
+//@@author Pearlissa
 /**
  * A list of users that enforces uniqueness between its elements and does not allow nulls.
  *

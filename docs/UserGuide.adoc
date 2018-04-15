@@ -1168,7 +1168,7 @@ image::editMiscCommand.png[width 400]
 image::editPictureSuccess.png[][width:400]
 
 [start=3]
-= . By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated allergies information as shown below:
+. By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated allergies information as shown below:
 
 .The profile page of the selected student is shown with the newly updated allergies information!
 image::editMiscSuccess.png[width:600]

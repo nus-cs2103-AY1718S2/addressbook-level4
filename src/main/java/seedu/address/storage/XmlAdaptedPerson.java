@@ -114,7 +114,6 @@ public class XmlAdaptedPerson {
                 customers.add(new XmlAdaptedPerson(person));
             }
         }
-
     }
 
     /**

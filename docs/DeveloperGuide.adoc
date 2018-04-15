@@ -1588,3 +1588,29 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+
+=== Logging in to Google
+
+. Logging in to Google using the command
+
+.. Type `googlelogin` into the command box.
+.. The display panel should switch to the `Google` tab and the Google Account Login page should be displayed.
+.. Login using your Google account, click `Allow` to allow contactHeRo some access to your Gmail account.
+.. After you have logged in, you should be redirected to the Google homepage.
+
+=== Sending an email
+
+. Sending Email to contact
+
+.. Prerequisites: Logged in to Google using the command `googlelogin`.
+.. Test case: `email 1` +
+   Expected: First contact's email address is displayed in the `To:` textbox.
+   First Contact's name is used in the template "Dear [NAME]" in the `Body:` textbox.
+.. Test case: `email 1 sub/Interview on 13 May` +
+   Expected: First contact's email address is displayed in the `To:` textbox.
+   First Contact's name is used in the template "Dear [NAME]" in the `Body:` textbox.
+   The subject title "Interview on 13 May" is displayed in the `Subject:` textbox.
+.. Test case: clicking `Send` +
+   Expected: Email should be sent to the correct email address, a pop-up box should
+   be displayed to show that you have sent the email successfully.

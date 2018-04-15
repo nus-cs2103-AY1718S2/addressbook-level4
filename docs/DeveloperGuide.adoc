@@ -675,7 +675,7 @@ image::MarkCommandSequenceDiagram.png[width="700"]
 === Display picture
 
 Users are able to add a display picture for any person within the application. The user can utilise 3 different commands (`add`, `edit` and `updateDP`) to create and specify a display image for the person.
-It fully supports the `undo` and `redo` commands as well. It adds a drop shadow around the frame to indicate the level of participation (see above section 5.3) of the person.
+It fully supports the `undo` and `redo` commands as well. It adds a drop shadow around the frame to indicate the level of participation (see above <<Participation, section 5.4 Participation>>) of the person.
 
 This feature allows the user to enter a path to their selected image file when entering any of the above 3 commands and copies the image into the `data/displayPic` folder.
 

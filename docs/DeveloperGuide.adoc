@@ -631,7 +631,6 @@ The upload StardyTogether mechanism is facilitated by using https://developers.g
 
 The uploaded StardyTogether file is the same as exported StardyTogether file stored.
 
-
 The following sequence diagram shows how the upload operation works:
 
 .Upload Command Sequence Diagram for Model and Storage Component
@@ -704,21 +703,19 @@ To avoid reading the data from Venue Information JSON file whenever the `vacant`
 
 The following sequence diagram shows how the vacant command is parsed:
 
-
 `ModelManager` will checks if the building is in the list of NUS Buildings, and will throw `BuildingNotFoundException` if the building is not in the list of NUS Buildings.
 
 We have created `Building`, `Room`, `Week`, and `WeekDay` in `Model` to read and store all weekday schedule of all NUS Rooms.
 
-The following architecture diagram shows the model and storage component:
+The following architecture diagram shows the model component:
 
-.Model Componenet
+.Model Component
 image::ModelClassDiagram.png[width="800"]
-
-.Storage Component
-image::StorageClassDiagram.png[width="800"]
 
 The following sequence diagram shows how the logic component of Vacant Room Finder works:
 
+.Vacant Command Sequence Diagram for Model Component
+image::ModelComponentVacantSequenceDiagram.png[width="800"]
 
 As shown in diagram above, all Rooms weekday schedule will be return in an `ArrayList<ArrayList<String>>` data structure. This result will be shown to the UI on the `InfoPanel`
 

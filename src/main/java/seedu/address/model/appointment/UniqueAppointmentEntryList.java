@@ -102,13 +102,30 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
         for (Appointment appt : alreadyInside) {
             AppointmentEntry newEntry = new AppointmentEntry(appt, patientName);
 
-            if (!contains(newEntry)) {
+            boolean sameAppointment = checkIfAnotherAppointmentSameValueExist(appt);
+
+            if (!contains(newEntry) && !sameAppointment) {
                 add(newEntry);
             }
         }
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
+
+    /**
+     * Checks if there is appointment in the list has same values as the given appointment
+     */
+    public boolean checkIfAnotherAppointmentSameValueExist(Appointment toCheck) {
+        for (Object apptEntry : internalList) {
+            AppointmentEntry current = (AppointmentEntry) apptEntry;
+            if (current.getAppointment().equals(toCheck)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);

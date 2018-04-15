@@ -1,25 +1,5 @@
 # Alaru
-###### /resources/view/PersonListCard.fxml
-``` fxml
-  <Circle fx:id="displayPic" fill="chartreuse" pickOnBounds="true" radius = "55.0" >
-      <HBox.margin>
-         <Insets left="15.0" />
-      </HBox.margin>
-   </Circle>
-```
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-    private void initDisplay() {
-        Image image = DisplayPicStorage.fetchDisplay(person.getDisplayPic());
-        displayPic.setFill(new ImagePattern(image));
-        if (this.person.getParticipation().overThreshold()) {
-            displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.CHARTREUSE));
-        } else {
-            displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.MAROON));
-        }
-    }
-```
-###### /java/seedu/address/commons/util/DeleteUtil.java
+###### \java\seedu\address\commons\util\DeleteUtil.java
 ``` java
 public class DeleteUtil {
 
@@ -59,7 +39,7 @@ public class DeleteUtil {
     }
 }
 ```
-###### /java/seedu/address/commons/util/FileUtil.java
+###### \java\seedu\address\commons\util\FileUtil.java
 ``` java
     public static String getFileType(String filePath) throws IllegalValueException {
         requireNonNull(filePath);
@@ -104,7 +84,7 @@ public class DeleteUtil {
 
 }
 ```
-###### /java/seedu/address/commons/util/HashUtil.java
+###### \java\seedu\address\commons\util\HashUtil.java
 ``` java
 public class HashUtil {
 
@@ -129,148 +109,94 @@ public class HashUtil {
      * @return A hex encode of a byte array
      */
 ```
-###### /java/seedu/address/logic/parser/UpdateDisplayCommandParser.java
+###### \java\seedu\address\logic\commands\MarkCommand.java
 ``` java
-public class UpdateDisplayCommandParser implements Parser<UpdateDisplayCommand> {
+public class MarkCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "markPart";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the participation for a student "
+            + "Parameters: [INDEX] (must be a positive integer) "
+            + PREFIX_MARK_PARTICIPATION + "[MARKS]\n"
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_MARK_PARTICIPATION + "50";
+
+    public static final String MESSAGE_SUCCESS = "Participation marked for %1$s!";
+    public static final String MESSAGE_INVALID_PARAMETER_VALUE =
+            "The marks/ field cannot be empty and it must be an integer from 0 to 100 inclusive";
+
+    private final Index targetIndex;
+    private final Integer marks;
+
+    private Person personToMark;
+    private Person updatedPerson;
 
     /**
-     * Parses the given {@code String} of arguments in the context of the MarkCommand
-     * and returns an MarkCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Creates an MarkCommand to add the participation marks of {@code marks}
      */
-    public UpdateDisplayCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DISPLAY_PIC);
-
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateDisplayCommand.MESSAGE_USAGE));
-        }
-
-        try {
-            DisplayPic dp = ParserUtil.parseEditDisplayPic(argMultimap.getValue(PREFIX_DISPLAY_PIC)).get();
-            return new UpdateDisplayCommand(index, dp);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        } catch (NoSuchElementException nsee) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateDisplayCommand.MESSAGE_USAGE));
-        }
-
-
-    }
-
-}
-
-```
-###### /java/seedu/address/logic/parser/ParserUtil.java
-``` java
-    /**
-     * Parses a {@code String displayPic} into an {@code DisplayPic}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code displayPic} is invalid.
-     */
-    public static DisplayPic parseDisplayPic(String displayPic)
-            throws IllegalValueException {
-        if (displayPic.equals("")) {
-            return new DisplayPic();
-        } else {
-            String trimmedDisplayPath = displayPic.trim();
-            if (!DisplayPicStorage.isValidPath(trimmedDisplayPath)) {
-                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
-            }
-            if (!DisplayPicStorage.isValidImage(trimmedDisplayPath)) {
-                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
-            }
-            return new DisplayPic(displayPic);
-        }
-    }
-
-    /**
-     * Parses a {@code Optional<String> displayPic} into an {@code Optional<DisplayPic>}
-     * if {@code displayPic} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<DisplayPic> parseDisplayPic(Optional<String> displayPic) throws IllegalValueException {
-        if (displayPic.isPresent()) {
-            return Optional.of(parseDisplayPic(displayPic.get()));
-        } else {
-            return Optional.empty();
-        }
-    }
-
-    /**
-     * Parses a {@code Optional<String> displayPic} into an {@code Optional<DisplayPic>}
-     * if {@code displayPic} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<DisplayPic> parseEditDisplayPic(Optional<String> displayPic) throws IllegalValueException {
-        requireNonNull(displayPic);
-        return displayPic.isPresent() ? Optional.of(parseDisplayPic(displayPic.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses {@code String marks} into a {@code Integer marks}
-     *
-     * @throws IllegalValueException if the given {@code name} is invalid.
-     */
-    public static Integer parseMarks(String marks) throws IllegalValueException {
+    public MarkCommand(Index index, Integer marks) {
+        requireNonNull(index);
         requireNonNull(marks);
-        return Integer.parseInt(marks);
+        this.targetIndex = index;
+        this.marks = marks;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.updatePerson(personToMark, updatedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("There cannot be a duplicate when adding participation");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, personToMark.getName().toString()));
+
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        personToMark = lastShownList.get(targetIndex.getZeroBased());
+        updatedPerson = createUpdatedPerson(personToMark);
+
     }
 
     /**
-     * Parses a {@code Optional<String> marks} into an {@code Optional<Integer>} if {@code marks} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     * @param marks are the marks to add
+     * Creates and returns a {@code Person} with the details of {@code personToMark}
+     * edited with the new marks.
      */
-    public static Optional<Integer> parseMarks(Optional<String> marks) throws IllegalValueException {
-        requireNonNull(marks);
-        return marks.isPresent() ? Optional.of(parseMarks(marks.get())) : Optional.empty();
-    }
-```
-###### /java/seedu/address/logic/parser/MarkCommandParser.java
-``` java
-public class MarkCommandParser implements Parser<MarkCommand> {
+    private Person createUpdatedPerson(Person personToMark) {
+        assert personToMark != null;
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the MarkCommand
-     * and returns an MarkCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public MarkCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_MARK_PARTICIPATION);
+        Integer newMarks = marks + personToMark.getParticipation().getMarks();
 
-        Index index;
+        newMarks = (newMarks > 100) ? 100 : newMarks;
 
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
-        }
+        Participation updatedPart = new Participation(newMarks);
 
-        try {
-            Integer marks = ParserUtil.parseMarks(argMultimap.getValue(PREFIX_MARK_PARTICIPATION).get());
-            checkArgument(Participation.isValidParticipation(Integer.toString(marks)),
-                    Participation.MESSAGE_PARTICIPATION_CONSTRAINTS);
-            return new MarkCommand(index, marks);
-        } catch (IllegalArgumentException | IllegalValueException ie) {
-            throw new ParseException(MarkCommand.MESSAGE_INVALID_PARAMETER_VALUE);
-        } catch (NoSuchElementException nsee) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
-        }
+        return new Person(personToMark.getName(), personToMark.getMatricNumber(),
+                personToMark.getPhone(), personToMark.getEmail(), personToMark.getAddress(),
+                personToMark.getDisplayPic(), updatedPart, personToMark.getTags());
+
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof MarkCommand // instanceof handles nulls
+                && targetIndex.equals(((MarkCommand) other).targetIndex)
+                && marks.equals(((MarkCommand) other).marks));
+    }
 }
-
 ```
-###### /java/seedu/address/logic/commands/UpdateDisplayCommand.java
+###### \java\seedu\address\logic\commands\UpdateDisplayCommand.java
 ``` java
 public class UpdateDisplayCommand extends UndoableCommand {
 
@@ -361,94 +287,7 @@ public class UpdateDisplayCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/MarkCommand.java
-``` java
-public class MarkCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "markPart";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the participation for a student "
-            + "Parameters: [INDEX] (must be a positive integer) "
-            + PREFIX_MARK_PARTICIPATION + "[MARKS]\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_MARK_PARTICIPATION + "50";
-
-    public static final String MESSAGE_SUCCESS = "Participation marked for %1$s!";
-    public static final String MESSAGE_INVALID_PARAMETER_VALUE =
-            "The marks/ field cannot be empty and it must be an integer from 0 to 100 inclusive";
-
-    private final Index targetIndex;
-    private final Integer marks;
-
-    private Person personToMark;
-    private Person updatedPerson;
-
-    /**
-     * Creates an MarkCommand to add the participation marks of {@code marks}
-     */
-    public MarkCommand(Index index, Integer marks) {
-        requireNonNull(index);
-        requireNonNull(marks);
-        this.targetIndex = index;
-        this.marks = marks;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.updatePerson(personToMark, updatedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("There cannot be a duplicate when adding participation");
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, personToMark.getName().toString()));
-
-    }
-
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        personToMark = lastShownList.get(targetIndex.getZeroBased());
-        updatedPerson = createUpdatedPerson(personToMark);
-
-    }
-
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToMark}
-     * edited with the new marks.
-     */
-    private Person createUpdatedPerson(Person personToMark) {
-        assert personToMark != null;
-
-        Integer newMarks = marks + personToMark.getParticipation().getMarks();
-
-        newMarks = (newMarks > 100) ? 100 : newMarks;
-
-        Participation updatedPart = new Participation(newMarks);
-
-        return new Person(personToMark.getName(), personToMark.getMatricNumber(),
-                personToMark.getPhone(), personToMark.getEmail(), personToMark.getAddress(),
-                personToMark.getDisplayPic(), updatedPart, personToMark.getTags());
-
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof MarkCommand // instanceof handles nulls
-                && targetIndex.equals(((MarkCommand) other).targetIndex)
-                && marks.equals(((MarkCommand) other).marks));
-    }
-}
-```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     /**
      * Clears the data folder of redundant images
@@ -459,7 +298,432 @@ public class MarkCommand extends UndoableCommand {
         model.clearDeleteItems();
     }
 ```
-###### /java/seedu/address/storage/DisplayPicStorage.java
+###### \java\seedu\address\logic\parser\MarkCommandParser.java
+``` java
+public class MarkCommandParser implements Parser<MarkCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the MarkCommand
+     * and returns an MarkCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public MarkCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_MARK_PARTICIPATION);
+
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Integer marks = ParserUtil.parseMarks(argMultimap.getValue(PREFIX_MARK_PARTICIPATION).get());
+            checkArgument(Participation.isValidParticipation(Integer.toString(marks)),
+                    Participation.MESSAGE_PARTICIPATION_CONSTRAINTS);
+            return new MarkCommand(index, marks);
+        } catch (IllegalArgumentException | IllegalValueException ie) {
+            throw new ParseException(MarkCommand.MESSAGE_INVALID_PARAMETER_VALUE);
+        } catch (NoSuchElementException nsee) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+
+```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code String displayPic} into an {@code DisplayPic}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code displayPic} is invalid.
+     */
+    public static DisplayPic parseDisplayPic(String displayPic)
+            throws IllegalValueException {
+        if (displayPic.equals("")) {
+            return new DisplayPic();
+        } else {
+            String trimmedDisplayPath = displayPic.trim();
+            if (!DisplayPicStorage.isValidPath(trimmedDisplayPath)) {
+                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+            }
+            if (!DisplayPicStorage.isValidImage(trimmedDisplayPath)) {
+                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+            }
+            return new DisplayPic(displayPic);
+        }
+    }
+
+    /**
+     * Parses a {@code Optional<String> displayPic} into an {@code Optional<DisplayPic>}
+     * if {@code displayPic} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DisplayPic> parseDisplayPic(Optional<String> displayPic) throws IllegalValueException {
+        if (displayPic.isPresent()) {
+            return Optional.of(parseDisplayPic(displayPic.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Parses a {@code Optional<String> displayPic} into an {@code Optional<DisplayPic>}
+     * if {@code displayPic} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DisplayPic> parseEditDisplayPic(Optional<String> displayPic) throws IllegalValueException {
+        requireNonNull(displayPic);
+        return displayPic.isPresent() ? Optional.of(parseDisplayPic(displayPic.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code String marks} into a {@code Integer marks}
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static Integer parseMarks(String marks) throws IllegalValueException {
+        requireNonNull(marks);
+        return Integer.parseInt(marks);
+    }
+
+    /**
+     * Parses a {@code Optional<String> marks} into an {@code Optional<Integer>} if {@code marks} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * @param marks are the marks to add
+     */
+    public static Optional<Integer> parseMarks(Optional<String> marks) throws IllegalValueException {
+        requireNonNull(marks);
+        return marks.isPresent() ? Optional.of(parseMarks(marks.get())) : Optional.empty();
+    }
+```
+###### \java\seedu\address\logic\parser\UpdateDisplayCommandParser.java
+``` java
+public class UpdateDisplayCommandParser implements Parser<UpdateDisplayCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the MarkCommand
+     * and returns an MarkCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public UpdateDisplayCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_DISPLAY_PIC);
+
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateDisplayCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            DisplayPic dp = ParserUtil.parseEditDisplayPic(argMultimap.getValue(PREFIX_DISPLAY_PIC)).get();
+            return new UpdateDisplayCommand(index, dp);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        } catch (NoSuchElementException nsee) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateDisplayCommand.MESSAGE_USAGE));
+        }
+
+
+    }
+
+}
+
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * Adds an item to be scheduled to be deleted to the address book.
+     */
+    public void addDeleteItem(String filepath) {
+        itemList.add(filepath);
+    }
+
+    /**
+     * Removes all items to be scheduled to be deleted to the address book.
+     */
+    public void clearItems() {
+        itemList.clear();
+    }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    @Override
+    public List<String> getItemList() {
+        return itemList.getItemList();
+    }
+```
+###### \java\seedu\address\model\item\UniqueItemList.java
+``` java
+public class UniqueItemList {
+
+    private final ArrayList<String> internalList = new ArrayList<>();
+
+    /**
+     * Returns true if the list contains an equivalent item/filepath as the given argument.
+     */
+    public boolean contains(String toCheck) {
+        requireNonNull(toCheck);
+        return internalList.contains(toCheck);
+    }
+
+    /**
+     * Adds a filepath to the list.
+     *
+     */
+    public void add(String toAdd) {
+        requireNonNull(toAdd);
+        if (!contains(toAdd)) {
+            internalList.add(toAdd);
+        }
+    }
+
+    /**
+     * Removes the equivalent item/filepath from the list.
+     *
+     */
+    public void remove(String toRemove) {
+        requireNonNull(toRemove);
+        internalList.remove(toRemove);
+    }
+
+    public void setItemList(List<String> replacement) {
+        for (String item : replacement) {
+            if (!this.internalList.contains(item)) {
+                this.internalList.add(item);
+            }
+        }
+    }
+
+    /**
+     * Puts all the display picture paths into the UniqueItemList
+     * @param persons is a UniquePersonList which contains all the people in the application
+     */
+    public void updateItemList(ObservableList<Person> persons) {
+        for (Person p : persons) {
+            add(p.getDisplayPic().toString());
+        }
+    }
+
+    public void clear() {
+        this.internalList.clear();
+    }
+
+    public List<String> getItemList() {
+        List<String> toReturn = new ArrayList<>(internalList);
+        return Collections.unmodifiableList(toReturn);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniqueItemList // instanceof handles nulls
+                && this.internalList.equals(((UniqueItemList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
+    }
+}
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void clearDeleteItems() {
+        addressBook.clearItems();
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    //=========== Item List Accessors ======================================================================
+    public List<String> getItemList() {
+        return Collections.unmodifiableList(filteredDeleteItems);
+    }
+```
+###### \java\seedu\address\model\person\DisplayPic.java
+``` java
+public class DisplayPic {
+
+    public static final String DEFAULT_DISPLAY_PIC = "/images/displayPic/default.png";
+    public static final String DEFAULT_IMAGE_LOCATION = "data/displayPic/";
+    public static final String MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS =
+            "The filepath should lead to a file that exists.";
+    public static final String MESSAGE_DISPLAY_PIC_NOT_IMAGE =
+            "The filepath should point to a valid image file.";
+    public static final String MESSAGE_DISPLAY_PIC_NO_EXTENSION =
+            "The filepath should point to a file with an extension.";
+
+    public final String originalFilePath;
+    private String value;
+
+    public DisplayPic() {
+        value = originalFilePath = DEFAULT_DISPLAY_PIC;
+    }
+
+    /**
+     * Constructs an {@code DisplayPic}.
+     *
+     * @param filePath A valid string containing the path to the file.
+     */
+    public DisplayPic(String filePath) {
+        requireNonNull(filePath);
+        checkArgument(DisplayPicStorage.isValidPath(filePath), MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+        checkArgument(DisplayPicStorage.hasValidExtension(filePath), MESSAGE_DISPLAY_PIC_NO_EXTENSION);
+        checkArgument(DisplayPicStorage.isValidImage(filePath), MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+        value = originalFilePath = filePath;
+    }
+
+    /**
+     * Creates the duplicated image filename.
+     */
+    public String getSaveDisplay(String personDetails) throws IllegalValueException {
+        if (value.equals(DEFAULT_DISPLAY_PIC)) {
+            return value;
+        }
+        String fileType = FileUtil.getFileType(value);
+        String uniqueFileName = DisplayPicStorage.generateDisplayPicName(personDetails, value, fileType);
+        value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
+        return uniqueFileName;
+    }
+
+    /**
+     * Saves the display picture to the specified storage location.
+     */
+    public void saveDisplay(String uniqueName) throws IllegalValueException {
+        if (value.equals(DEFAULT_DISPLAY_PIC)) {
+            return;
+        }
+        String fileType = FileUtil.getFileType(value);
+        DisplayPicStorage.saveDisplayPic(uniqueName, originalFilePath, fileType);
+        value = DEFAULT_IMAGE_LOCATION + uniqueName + '.' + fileType;
+    }
+
+    public void updateToDefault() {
+        this.value = DEFAULT_DISPLAY_PIC;
+    }
+
+    public boolean isDefault() {
+        return value.equals(DEFAULT_DISPLAY_PIC);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DisplayPic // instanceof handles nulls
+                && this.value.equals(((DisplayPic) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+}
+```
+###### \java\seedu\address\model\person\exceptions\IllegalMarksException.java
+``` java
+public class IllegalMarksException extends IllegalArgumentException {
+    public IllegalMarksException() {
+        super("Mark values are not allowed");
+    }
+}
+```
+###### \java\seedu\address\model\person\Participation.java
+``` java
+public class Participation {
+
+    public static final String MESSAGE_PARTICIPATION_CONSTRAINTS =
+            "Participation marks cannot be negative or over 100!";
+    public static final String UI_DISPLAY_HEADER = "Participation marks: ";
+
+    public final Integer threshold;
+    private Integer value;
+
+    /**
+     * Constructs a {@code Participation}.
+     */
+    public Participation() {
+        this.value = 0;
+        threshold = 50;
+    }
+
+    public Participation(String value) {
+        requireNonNull(value);
+        checkArgument(isValidParticipation(value), MESSAGE_PARTICIPATION_CONSTRAINTS);
+        this.value = Integer.parseInt(value);
+        threshold = 50;
+    }
+
+    public Participation(Integer value) {
+        requireNonNull(value);
+        checkArgument(isValidParticipation(Integer.toString(value)), MESSAGE_PARTICIPATION_CONSTRAINTS);
+        this.value = value;
+        threshold = 50;
+    }
+
+    public Integer getMarks() {
+        return value;
+    }
+
+    public boolean overThreshold() {
+        return (value >= threshold);
+    }
+
+    /**
+     * Validates the participation mark
+     * @param value
+     * @return true if it is valid
+     */
+    public static boolean isValidParticipation(String value) {
+        requireNonNull(value);
+        try {
+            return Integer.parseInt(value) <= 100 && Integer.parseInt(value) > -1;
+        } catch (NumberFormatException nfe) {
+            throw new IllegalMarksException();
+        }
+    }
+
+    public String toDisplay() {
+        return UI_DISPLAY_HEADER + Integer.toString(value);
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toString(value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Participation // instanceof handles nulls
+                && this.value.equals(((Participation) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+}
+```
+###### \java\seedu\address\storage\DisplayPicStorage.java
 ``` java
 public class DisplayPicStorage {
 
@@ -597,7 +861,7 @@ public class DisplayPicStorage {
 
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedItem.java
+###### \java\seedu\address\storage\XmlAdaptedItem.java
 ``` java
 public class XmlAdaptedItem {
 
@@ -648,280 +912,23 @@ public class XmlAdaptedItem {
     }
 }
 ```
-###### /java/seedu/address/model/person/DisplayPic.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
-public class DisplayPic {
-
-    public static final String DEFAULT_DISPLAY_PIC = "/images/displayPic/default.png";
-    public static final String DEFAULT_IMAGE_LOCATION = "data/displayPic/";
-    public static final String MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS =
-            "The filepath should lead to a file that exists.";
-    public static final String MESSAGE_DISPLAY_PIC_NOT_IMAGE =
-            "The filepath should point to a valid image file.";
-    public static final String MESSAGE_DISPLAY_PIC_NO_EXTENSION =
-            "The filepath should point to a file with an extension.";
-
-    public final String originalFilePath;
-    private String value;
-
-    public DisplayPic() {
-        value = originalFilePath = DEFAULT_DISPLAY_PIC;
-    }
-
-    /**
-     * Constructs an {@code DisplayPic}.
-     *
-     * @param filePath A valid string containing the path to the file.
-     */
-    public DisplayPic(String filePath) {
-        requireNonNull(filePath);
-        checkArgument(DisplayPicStorage.isValidPath(filePath), MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
-        checkArgument(DisplayPicStorage.hasValidExtension(filePath), MESSAGE_DISPLAY_PIC_NO_EXTENSION);
-        checkArgument(DisplayPicStorage.isValidImage(filePath), MESSAGE_DISPLAY_PIC_NOT_IMAGE);
-        value = originalFilePath = filePath;
-    }
-
-    /**
-     * Creates the duplicated image filename.
-     */
-    public String getSaveDisplay(String personDetails) throws IllegalValueException {
-        if (value.equals(DEFAULT_DISPLAY_PIC)) {
-            return value;
-        }
-        String fileType = FileUtil.getFileType(value);
-        String uniqueFileName = DisplayPicStorage.generateDisplayPicName(personDetails, value, fileType);
-        value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
-        return uniqueFileName;
-    }
-
-    /**
-     * Saves the display picture to the specified storage location.
-     */
-    public void saveDisplay(String uniqueName) throws IllegalValueException {
-        if (value.equals(DEFAULT_DISPLAY_PIC)) {
-            return;
-        }
-        String fileType = FileUtil.getFileType(value);
-        DisplayPicStorage.saveDisplayPic(uniqueName, originalFilePath, fileType);
-        value = DEFAULT_IMAGE_LOCATION + uniqueName + '.' + fileType;
-    }
-
-    public void updateToDefault() {
-        this.value = DEFAULT_DISPLAY_PIC;
-    }
-
-    public boolean isDefault() {
-        return value.equals(DEFAULT_DISPLAY_PIC);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DisplayPic // instanceof handles nulls
-                && this.value.equals(((DisplayPic) other).value)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-}
-```
-###### /java/seedu/address/model/person/Participation.java
-``` java
-public class Participation {
-
-    public static final String MESSAGE_PARTICIPATION_CONSTRAINTS =
-            "Participation marks cannot be negative or over 100!";
-    public static final String UI_DISPLAY_HEADER = "Participation marks: ";
-
-    public final Integer threshold;
-    private Integer value;
-
-    /**
-     * Constructs a {@code Participation}.
-     */
-    public Participation() {
-        this.value = 0;
-        threshold = 50;
-    }
-
-    public Participation(String value) {
-        requireNonNull(value);
-        checkArgument(isValidParticipation(value), MESSAGE_PARTICIPATION_CONSTRAINTS);
-        this.value = Integer.parseInt(value);
-        threshold = 50;
-    }
-
-    public Participation(Integer value) {
-        requireNonNull(value);
-        checkArgument(isValidParticipation(Integer.toString(value)), MESSAGE_PARTICIPATION_CONSTRAINTS);
-        this.value = value;
-        threshold = 50;
-    }
-
-    public Integer getMarks() {
-        return value;
-    }
-
-    public boolean overThreshold() {
-        return (value >= threshold);
-    }
-
-    /**
-     * Validates the participation mark
-     * @param value
-     * @return true if it is valid
-     */
-    public static boolean isValidParticipation(String value) {
-        requireNonNull(value);
-        try {
-            return Integer.parseInt(value) <= 100 && Integer.parseInt(value) > -1;
-        } catch (NumberFormatException nfe) {
-            throw new IllegalMarksException();
+    private void initDisplay() {
+        Image image = DisplayPicStorage.fetchDisplay(person.getDisplayPic());
+        displayPic.setFill(new ImagePattern(image));
+        if (this.person.getParticipation().overThreshold()) {
+            displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.CHARTREUSE));
+        } else {
+            displayPic.setEffect(new DropShadow(+25d, 0d, +2d, Color.MAROON));
         }
     }
-
-    public String toDisplay() {
-        return UI_DISPLAY_HEADER + Integer.toString(value);
-    }
-
-    @Override
-    public String toString() {
-        return Integer.toString(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Participation // instanceof handles nulls
-                && this.value.equals(((Participation) other).value)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-}
 ```
-###### /java/seedu/address/model/person/exceptions/IllegalMarksException.java
-``` java
-public class IllegalMarksException extends IllegalArgumentException {
-    public IllegalMarksException() {
-        super("Mark values are not allowed");
-    }
-}
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-    /**
-     * Adds an item to be scheduled to be deleted to the address book.
-     */
-    public void addDeleteItem(String filepath) {
-        itemList.add(filepath);
-    }
-
-    /**
-     * Removes all items to be scheduled to be deleted to the address book.
-     */
-    public void clearItems() {
-        itemList.clear();
-    }
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-    @Override
-    public List<String> getItemList() {
-        return itemList.getItemList();
-    }
-```
-###### /java/seedu/address/model/item/UniqueItemList.java
-``` java
-public class UniqueItemList {
-
-    private final ArrayList<String> internalList = new ArrayList<>();
-
-    /**
-     * Returns true if the list contains an equivalent item/filepath as the given argument.
-     */
-    public boolean contains(String toCheck) {
-        requireNonNull(toCheck);
-        return internalList.contains(toCheck);
-    }
-
-    /**
-     * Adds a filepath to the list.
-     *
-     */
-    public void add(String toAdd) {
-        requireNonNull(toAdd);
-        if (!contains(toAdd)) {
-            internalList.add(toAdd);
-        }
-    }
-
-    /**
-     * Removes the equivalent item/filepath from the list.
-     *
-     */
-    public void remove(String toRemove) {
-        requireNonNull(toRemove);
-        internalList.remove(toRemove);
-    }
-
-    public void setItemList(List<String> replacement) {
-        for (String item : replacement) {
-            if (!this.internalList.contains(item)) {
-                this.internalList.add(item);
-            }
-        }
-    }
-
-    /**
-     * Puts all the display picture paths into the UniqueItemList
-     * @param persons is a UniquePersonList which contains all the people in the application
-     */
-    public void updateItemList(ObservableList<Person> persons) {
-        for (Person p : persons) {
-            add(p.getDisplayPic().toString());
-        }
-    }
-
-    public void clear() {
-        this.internalList.clear();
-    }
-
-    public List<String> getItemList() {
-        List<String> toReturn = new ArrayList<>(internalList);
-        return Collections.unmodifiableList(toReturn);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UniqueItemList // instanceof handles nulls
-                && this.internalList.equals(((UniqueItemList) other).internalList));
-    }
-
-    @Override
-    public int hashCode() {
-        return internalList.hashCode();
-    }
-}
-
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public synchronized void clearDeleteItems() {
-        addressBook.clearItems();
-        indicateAddressBookChanged();
-    }
+###### \resources\view\PersonListCard.fxml
+``` fxml
+  <Circle fx:id="displayPic" fill="chartreuse" pickOnBounds="true" radius = "55.0" >
+      <HBox.margin>
+         <Insets left="15.0" />
+      </HBox.margin>
+   </Circle>
 ```

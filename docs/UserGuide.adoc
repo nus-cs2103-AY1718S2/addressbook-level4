@@ -529,6 +529,9 @@ Sends and receives emails within HR+.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: What is HR+'s behaviour if the XML file is corrupted?
+*A*: HR+ will then start up empty, i.e., no person is inside. This empty HR+ alerts to the user that the XML file is corrupted.
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS u/UNIVERSITY y/EXPECTED_GRADUATION_YEAR m/MAJOR g/GRADE_POINT_AVERAGE j/JOB_APPLIED [r/RESUME] [i/IMAGE] [c/COMMENT] [t/TAG]...` +
@@ -542,6 +545,8 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *Filter* : `filter [y/KEYWORD] [r/RATING]` +
 e.g. `filter y/2019`
+* *Status* : `status INDEX STATUS_INDEX` +
+e.g. `status 1 2`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +

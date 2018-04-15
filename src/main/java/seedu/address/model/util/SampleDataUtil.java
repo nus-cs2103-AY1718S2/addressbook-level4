@@ -275,6 +275,19 @@ public class SampleDataUtil {
                 new ProfileImage(null),
                 new Comment(null), new InterviewDate(),
                 new Status(5), getTagSet("referredbyBoss")),
+
+            new Person(new Name("Tauto Loggi"), new Phone("11111111"), new Email("tautology@always.true"),
+                new Address("1 Truth Lane"),
+                new University("NTU"),
+                new ExpectedGraduationYear("2022"),
+                new Major("Computer Science and Philosophy"), new GradePointAverage("1.00"),
+                new JobApplied("Software Tester"),
+                new Rating(4.5, 3.5,
+                        4.5, 4.5),
+                new Resume(null),
+                new ProfileImage(null),
+                new Comment(null), new InterviewDate(),
+                new Status(2), getTagSet("referredbyBoss")),
         };
     }
 

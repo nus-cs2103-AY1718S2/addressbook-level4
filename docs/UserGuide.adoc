@@ -159,10 +159,10 @@ add -o n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/
 // tag::listcommand[]
 === Listing all contacts : `list` or `ls`
 
-Medeina will show a list of all stored Owners and PetPatients if you enter `list` or `ls` in the command box.
+If you want to list out all Contacts and PetPatients stored in Medeina for a better overview, enter `list` or `ls` in the command box.
 
 .`list` command
-image::List_Command.PNG[width="800"]
+image::List_Command.PNG[width="500"]
 
 // end::listcommand[]
 
@@ -409,8 +409,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `ud`
-
-To restore Medeina to the state before the previous _undoable_ command was executed, enter `undo` or `ud` in the command box. +
+When you realise you've entered a command by mistake (e.g. accidentally deleted a petPatient) and want to undo that action? Simply enter `undo` or `ud` in the command box.
 
 [NOTE]
 ====
@@ -419,16 +418,19 @@ Undoable commands: those commands that modify Medeina's content (`add`, `delete`
 
 **Examples:**
 
+.Before any command
+image::List_Command.PNG[width:500]
+
 * `delete **-fo** 1` +
 `list` +
 `ud` (The command will reverse the `delete **-fo** 1` command) +
 
-.After `delete **-fo** 1` and `list`
-image::After_Delete.PNG[width:800]
+.After `delete **-fo** 1` and `list`. Note that Alex Yeoh and his pet Ane have been deleted.
+image::After_Delete.PNG[width:500]
 {empty} +
 
-.After `ud`
-image::After_Undo.PNG[width:800]
+.After `ud` Alex and Ane are back in the lists.
+image::After_Undo.PNG[width:500]
 
 * `find **-o** n/Joe` +
 `list` +
@@ -436,7 +438,7 @@ image::After_Undo.PNG[width:800]
 The `undo` command fails as there are no undoable commands executed previously.
 
 .`undo` fails
-image::Undo_Fail.PNG[width:800]
+image::Undo_Fail.PNG[width:500]
 
 * `delete **-fo** 1` +
 `clear` +
@@ -444,42 +446,47 @@ image::Undo_Fail.PNG[width:800]
 `ud` (This command reverses the `delete **-fo** 1`) +
 
 .Executed `delete **-fo** 1` and `clear`
-image::After_Clear.PNG[width:800]
+image::After_Clear.PNG[width:500]
 {empty} +
 
 .After `undo`
-image::Undo_Clear.PNG[width:800]
+image::Undo_Clear.PNG[width:500]
 {empty} +
 
 .After `ud`
-image::After_Undo.PNG[width:800]
+image::After_Undo.PNG[width:500]
 
 {empty} +
 
 === Redoing the previously undone command : `redo` or `rd`
 
-To reverse the most recent `undo` command. +
-The command format should be: `redo` or `rd`
+What happens when you accidentally typed `undo` command and want to re-enter that same command? +
+Simply type `redo` or `rd`, this will reverse the most recent `undo` command.
+
 
 Examples:
+
+.Before any command
+image::List_Command.PNG[width:500]
+
 
 * `delete **-fo** 1` +
 `undo` (This command reverses `delete **-fo** 1`) +
 `redo` (This command reapplies `delete **-fo** 1`) +
 
-.After `delete **-fo** 1` + `undo`
-image::After_Undo.PNG[width:800]
+.After `delete **-fo** 1` + `undo`. Alex and pet Ane were deleted then added back.
+image::After_Undo.PNG[width:500]
 {empty} +
 
-.After `redo`
-image::Redo_Success.PNG[width:800]
+.After `redo`. `delete **-fo** 1` was applied again. Alex and pet Ane were once again deleted.
+image::Redo_Success.PNG[width:500]
 
 * `delete **-fo** 1` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
 .`redo` fails
-image::Redo_Fail.PNG[width:800]
+image::Redo_Fail.PNG[width:500]
 
 * `delete **-fo** 1` +
 `clear` +
@@ -490,24 +497,24 @@ image::Redo_Fail.PNG[width:800]
 // end::undoredo[]
 
 .After `delete **-fo** 1` + `clear`
-image::After_Clear.PNG[width:800]
+image::After_Clear.PNG[width:500]
 
 {empty} +
 
 .After first `ud`
-image::Undo_Clear.PNG[width:800]
+image::Undo_Clear.PNG[width:500]
 {empty} +
 
-.After second `ud`
-image::After_Undo.PNG[width:800]
+.After second `ud` Alex and pet Ane were added back.
+image::After_Undo.PNG[width:500]
 {empty} +
 
-.After first `rd`:
-image::Redo_Success.PNG[width:800]
+.After first `rd`: `delete **-fo** 1` was applied again. Alex and pet Ane were once again deleted.
+image::Redo_Success.PNG[width:500]
 {empty} +
 
-.After second `rd`:
-image::Redo_Clear.PNG[width:800]
+.After second `rd`: `clear` command was applied again.
+image::Redo_Clear.PNG[width:500]
 
 {empty} +
 

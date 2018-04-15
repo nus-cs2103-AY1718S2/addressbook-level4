@@ -593,6 +593,10 @@ public class LoginCommandTest {
                 loginAttempt.getPassword(), modelStub).execute();
 
         assertEquals(LoginCommand.MESSAGE_LOGIN_SUCCESS, commandResult.feedbackToUser);
+
+```
+###### /java/seedu/address/logic/commands/LoginCommandTest.java
+``` java
     }
 
     @Test
@@ -604,6 +608,9 @@ public class LoginCommandTest {
                 invalidloginAttempt.getPassword(), modelStub).execute();
 
         assertEquals(LoginCommand.MESSAGE_LOGIN_SUCCESS, commandResult.feedbackToUser);
+```
+###### /java/seedu/address/logic/commands/LoginCommandTest.java
+``` java
     }
 
     @Test
@@ -1219,6 +1226,10 @@ public class LogoutCommandTest {
         CommandResult commandResult = getLogoutCommand(modelStub).execute();
 
         assertEquals(LogoutCommand.MESSAGE_LOGOUT_SUCCESS, commandResult.feedbackToUser);
+
+```
+###### /java/seedu/address/logic/commands/LogoutCommandTest.java
+``` java
     }
 
     /**

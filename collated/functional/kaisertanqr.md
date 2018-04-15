@@ -46,12 +46,17 @@ public class LoginStatusBar extends UiPart<Region> {
 
     /**
      * Hides browser and person list panel.
+     * @throws IOException
      */
-    public void hideBeforeLogin() {
+    public void hideBeforeLogin() throws IOException {
         loginStatusBar.updateLoginStatus(false, null);
         featuresTabPane.setVisible(false);
+        beneficiariesPane.setVisible(false);
         personDetailsPlaceholder.setVisible(false);
         calendarPlaceholder.setVisible(false);
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
         dailySchedulerPlaceholder.setVisible(false);
         personListPanelPlaceholder.setVisible(false);
         logger.fine("Hiding panels before login.");
@@ -63,6 +68,7 @@ public class LoginStatusBar extends UiPart<Region> {
     public void showAfterLogin() {
         loginStatusBar.updateLoginStatus(true, logic.getLoggedInUser());
         featuresTabPane.setVisible(true);
+        beneficiariesPane.setVisible(true);
         personDetailsPlaceholder.setVisible(true);
         calendarPlaceholder.setVisible(true);
         dailySchedulerPlaceholder.setVisible(true);
@@ -70,6 +76,7 @@ public class LoginStatusBar extends UiPart<Region> {
         logger.fine("Displaying panels after login.");
 
     }
+
 ```
 ###### /java/seedu/address/commons/events/model/UserDatabaseChangedEvent.java
 ``` java
@@ -391,15 +398,26 @@ public class LoginCommand extends Command {
     private final Password password;
 
     public LoginCommand(Username username, Password password) {
+```
+###### /java/seedu/address/logic/commands/LoginCommand.java
+``` java
+
         this.username = username;
         this.password = password;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
+```
+###### /java/seedu/address/logic/commands/LoginCommand.java
+``` java
         requireNonNull(model);
+
         try {
             if (model.checkLoginCredentials(this.username, this.password)) {
+```
+###### /java/seedu/address/logic/commands/LoginCommand.java
+``` java
                 return new CommandResult(MESSAGE_LOGIN_SUCCESS);
             } else {
                 return new CommandResult(MESSAGE_LOGIN_FAILURE);
@@ -432,13 +450,17 @@ public class ChangeUserPasswordCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Password updated for %1$s";
     public static final String MESSAGE_UPDATE_FAILURE = "Password update failed. Username or password is incorrect.";
-    public static final String MESSAGE_NOT_LOGGED_OUT = "You are not logged out.Please logout to execute this command.";
+    public static final String MESSAGE_NOT_LOGGED_OUT = "You are not logged out. "
+            + "Please logout to execute this command.";
 
     private final Username username;
     private final Password password;
     private final Password newPassword;
 
     public ChangeUserPasswordCommand(Username username, Password password, Password newPassword) {
+        requireNonNull(username);
+        requireNonNull(password);
+        requireNonNull(newPassword);
         this.username = username;
         this.password = password;
         this.newPassword = newPassword;
@@ -493,7 +515,7 @@ public class AddSessionLogCommand extends UndoableCommand {
 
     public static final String MESSAGE_ADD_SESSION_LOG_SUCCESS = "Added new log to %1$s";
 
-    public static final String SESSION_LOG_DIVIDER = "\n\n=============================================";
+    public static final String SESSION_LOG_DIVIDER = "\n\n===========================================";
     public static final String SESSION_LOG_DATE_PREFIX = "\nSession log date added: ";
 
 
@@ -524,6 +546,7 @@ public class AddSessionLogCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         EventsCenter.getInstance().post(new ShowUpdatedSessionLogEvent(editedPerson));
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
         return new CommandResult(String.format(MESSAGE_ADD_SESSION_LOG_SUCCESS, editedPerson));
     }
 
@@ -605,6 +628,8 @@ public class DeleteUserCommand extends Command {
     private final Password password;
 
     public DeleteUserCommand(Username username, Password password) {
+        requireNonNull(username);
+        requireNonNull(password);
         this.username = username;
         this.password = password;
     }
@@ -1349,9 +1374,19 @@ public interface ReadOnlyUserDatabase {
         raise(new UserDeletedEvent(user));
     }
 
+    /** Clears the user's Oauth cert if it exists */
+    private void clearOauthCert(User user) {
+        try {
+            OAuthManager.deleteOauthCert(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public synchronized void deleteUser(User target) throws UserNotFoundException {
         userDatabase.removeUser(target);
+        clearOauthCert(target);
         indicateUserDatabaseChanged();
         indicateUserDeleted(target);
     }

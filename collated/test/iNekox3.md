@@ -1,4 +1,40 @@
 # iNekox3
+###### \java\seedu\progresschecker\logic\commands\AnswerCommandTest.java
+``` java
+public class AnswerCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void constructor_nullExercise_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new AnswerCommand(null, null);
+    }
+
+    @Test
+    public void equals() {
+        Exercise exercise1 = new ExerciseBuilder().withStudentAnswer("a b c").build();
+        Exercise exercise2 = new ExerciseBuilder().withStudentAnswer("d e f").build();
+        AnswerCommand answerExercise1Command = new AnswerCommand(exercise1.getQuestionIndex(),
+                new StudentAnswer("a b c"));
+        AnswerCommand answerExercise2Command = new AnswerCommand(exercise2.getQuestionIndex(),
+                new StudentAnswer("d e f"));
+
+        // same object -> returns true
+        assertTrue(answerExercise1Command.equals(answerExercise1Command));
+
+        // different types -> returns false
+        assertFalse(answerExercise1Command.equals(1));
+
+        // null -> returns false
+        assertFalse(answerExercise1Command.equals(null));
+
+        // different person -> returns false
+        assertFalse(answerExercise1Command.equals(answerExercise2Command));
+    }
+}
+```
 ###### \java\seedu\progresschecker\logic\commands\ViewCommandTest.java
 ``` java
 /**
@@ -28,6 +64,19 @@ public class ViewCommandTest {
     }
 }
 ```
+###### \java\seedu\progresschecker\logic\parser\AnswerCommandParserTest.java
+``` java
+public class AnswerCommandParserTest {
+
+    private AnswerCommandParser parser = new AnswerCommandParser();
+
+    @Test
+    public void parse_invalidArgsIndex_throwsParseException() {
+        assertParseFailure(parser, "ans 11.50.80 b", MESSAGE_INVALID_WEEK_NUMBER
+                + " \n" + AnswerCommand.MESSAGE_USAGE);
+    }
+}
+```
 ###### \java\seedu\progresschecker\logic\parser\ProgressCheckerParserTest.java
 ``` java
     @Test
@@ -38,10 +87,41 @@ public class ViewCommandTest {
     }
 
 ```
+###### \java\seedu\progresschecker\logic\parser\ViewCommandParserTest.java
+``` java
+public class ViewCommandParserTest {
+
+    private ViewCommandParser parser = new ViewCommandParser();
+
+    @Test
+    public void parse_validArgsType_returnsViewCommand() {
+        assertParseSuccess(parser, "exercise", new ViewCommand(TYPE_EXERCISE, -1,
+                false));
+    }
+
+    @Test
+    public void parse_validArgsWeekNumber_returnsViewCommand() {
+        assertParseSuccess(parser, "exercise 5", new ViewCommand(TYPE_EXERCISE, 5,
+                true));
+    }
+
+    @Test
+    public void parse_invalidArgsType_throwsParseException() {
+        assertParseFailure(parser, "invalid type", MESSAGE_INVALID_TAB_TYPE
+                + " \n" + ViewCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void parse_invalidArgsWeekNumber_throwsParseException() {
+        assertParseFailure(parser, "exercise 0", MESSAGE_INVALID_WEEK_NUMBER
+                + " \n" + ViewCommand.MESSAGE_USAGE);
+    }
+}
+```
 ###### \java\seedu\progresschecker\testutil\ExerciseBuilder.java
 ``` java
 /**
- * A utility class to help with building Person objects.
+ * A utility class to help with building Exercise objects.
  */
 public class ExerciseBuilder {
 
@@ -107,5 +187,6 @@ public class TypicalTabTypes {
     public static final String TYPE_PROFILE = "profile";
     public static final String TYPE_TASK = "task";
     public static final String TYPE_EXERCISE = "exercise";
+    public static final String TYPE_ISSUES = "issues";
 }
 ```

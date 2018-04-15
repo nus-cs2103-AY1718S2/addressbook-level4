@@ -21,6 +21,82 @@ public class ChangeThemeEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\progresschecker\commons\util\FileUtil.java
+``` java
+    /**
+     * Copies all the contents from the file in original path to the one in destination path.
+     * @param oriPath of the file to be copied
+     * @param destPath of the file to be pasted
+     * @return true if the file is successfully copied to the specified place.
+     */
+    public static boolean copyFile(String oriPath, String destPath) throws IOException {
+
+        //create a buffer to store content
+        byte[] buffer = new byte[3072];
+
+        //bufferedInputStream
+        FileInputStream fis = new FileInputStream(oriPath);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+
+        //bufferedOutputStream
+        FileOutputStream fos = new FileOutputStream(destPath);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+        int numBytes = bis.read(buffer);
+        while (numBytes > 0) {
+            bos.write(buffer, 0, numBytes);
+            numBytes = bis.read(buffer);
+        }
+
+        //close input,output stream
+        bis.close();
+        bos.close();
+
+        return true;
+    }
+```
+###### \java\seedu\progresschecker\commons\util\FileUtil.java
+``` java
+    /**
+     * Returns the extension information from the file path
+     * @param filePath
+     * @return extension String
+     */
+    public static String getFileExtension(String filePath) {
+        return "." + filePath.split("\\.")[1];
+    }
+
+    /**
+     * Creates a new file if it does not exist
+     * @param file to created
+     * @throws IOException if the file cannot be created
+     */
+    public static void createMissing(File file) throws IOException {
+        if (!file.exists()) {
+            createFile(file);
+        }
+    }
+
+    /**
+     * Returns whether the uploaded file is a valid image file
+     * Valid image file should have extension: '.jpg', '.jepg' or 'png'.
+     * @param path of the uploaded image file
+     * @return true if the uploaded file has valid extension
+     */
+    public static boolean isValidImageFile(String path) {
+        return path.matches(REGEX_VALID_IMAGE);
+    }
+
+    /**
+     * Returns whether the path of uploaded file is under the specific folder
+     * @param path of the uploaded file
+     * @param parentFolder of the specific folder
+     * @return true if the file is under this specific folder
+     */
+    public static boolean isUnderFolder(String path, String parentFolder) {
+        return path.startsWith(parentFolder);
+    }
+```
 ###### \java\seedu\progresschecker\logic\commands\SortCommand.java
 ``` java
 /**
@@ -353,7 +429,7 @@ public class PhotoPath {
     /**
      * Validates the given photo path
      */
-    public boolean isValidPhotoPath (String path) {
+    public static boolean isValidPhotoPath (String path) {
         if (path.isEmpty()) { //empty path
             return true;
         }
@@ -566,6 +642,20 @@ public class UniquePhotoList implements Iterable<PhotoPath> {
         primaryStage.setMinWidth(MIN_WIDTH);
     }
 
+    @Subscribe
+    private  void handleChangeThemeEvent(ChangeThemeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switch (event.getTheme()) {
+        case "day":
+            handleDayTheme();
+            break;
+        case "night":
+            handleNightTheme();
+            break;
+        default:
+            handleDayTheme();
+        }
+    }
 ```
 ###### \java\seedu\progresschecker\ui\ProfilePanel.java
 ``` java
@@ -640,7 +730,7 @@ public class ProfilePanel extends UiPart<Region>  {
     /**
      * Loads the info of the selected person
      */
-    private void loadPerson(Person person) {
+    public void loadPerson(Person person) {
         this.person = person;
         tags.getChildren().clear();
         name.setText(person.getName().fullName);
@@ -689,7 +779,7 @@ public class ProfilePanel extends UiPart<Region>  {
     @Subscribe
     private void handlePersonPanelSelectionChangeEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPerson(event.getNewSelection().person);
+        this.loadPerson(event.getNewSelection().person);
     }
 }
 ```
@@ -705,42 +795,58 @@ public class ProfilePanel extends UiPart<Region>  {
          <TabPane fx:id="tabPlaceholder" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
            <tabs>
              <Tab fx:id="profilePlaceholder" text="Profile">
-                 <StackPane fx:id="profilePanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                 <StackPane fx:id="profilePanelPlaceholder" VBox.vgrow="ALWAYS" />
              </Tab>
              <Tab fx:id="taskPlaceholder" text="Task">
+```
+###### \resources\view\MainWindow.fxml
+``` fxml
+             </Tab>
+               <Tab fx:id="exercisePlaceholder" text="Exercise">
+                   <StackPane fx:id="exerciseListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+               </Tab>
+               <Tab fx:id="issuePlaceholder" text="Issues">
+                   <StackPane fx:id="issuePanelPlaceholder" />
+               </Tab>
+           </tabs>
+         </TabPane>
 ```
 ###### \resources\view\ProfilePanel.fxml
 ``` fxml
 
-<Pane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="500.0" prefWidth="731.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="profileBackground" fitHeight="500.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="profileBackground" fitHeight="500.0" fitWidth="1000.0" layoutX="-127.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/profile_background.png" />
+            <Image url="@../images/profile_background0008.png" />
          </image>
       </ImageView>
-      <Ellipse fx:id="profile" centerX="300.0" centerY="100.0" fill="WHITE" layoutX="200.0" radiusX="100.0" radiusY="80.0" stroke="BLACK" strokeType="INSIDE" />
-      <GridPane layoutX="400.0" layoutY="180.0">
+      <Ellipse fx:id="profile" centerX="300.0" centerY="100.0" fill="WHITE" layoutX="87.0" layoutY="14.0" radiusX="100.0" radiusY="80.0" stroke="BLACK" strokeType="INSIDE" />
+      <GridPane layoutX="28.0" layoutY="59.0" prefHeight="28.0" prefWidth="254.0" styleClass="profile">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="65.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="135.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="34.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="55.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="168.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Text>
-            <Label fx:id="name" prefHeight="17.0" prefWidth="136.0" text="\$name" GridPane.columnIndex="1" />
+            <Label fx:id="name" prefHeight="17.0" prefWidth="164.0" text="\$name" GridPane.columnIndex="2" />
+            <Label text="Name:" GridPane.columnIndex="1" />
+            <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/name.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
       <FlowPane fx:id="tags" layoutX="28.0" layoutY="20.0" prefHeight="28.0" prefWidth="135.0" />
-      <GridPane layoutX="400.0" layoutY="250.0">
+      <GridPane layoutX="260.0" layoutY="214.0" prefHeight="144.0" prefWidth="307.0" styleClass="profile">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="69.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="10.0" prefWidth="131.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="20.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="79.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="197.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints />
@@ -751,16 +857,41 @@ public class ProfilePanel extends UiPart<Region>  {
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="phone" prefHeight="17.0" prefWidth="128.0" text="\$phone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="email" prefHeight="17.0" prefWidth="134.0" text="\$email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="username" prefHeight="17.0" prefWidth="132.0" text="\$username" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="major" prefHeight="17.0" prefWidth="135.0" text="\$major" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="year" prefHeight="17.0" prefWidth="130.0" text="\$year" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone:" GridPane.rowIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" GridPane.rowIndex="2" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GitHub:" GridPane.rowIndex="3" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Major:" GridPane.rowIndex="4" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year:" GridPane.rowIndex="5" />
+            <Label fx:id="phone" prefHeight="17.0" prefWidth="226.0" text="\$phone" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="email" prefHeight="17.0" prefWidth="215.0" text="\$email" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="username" prefHeight="17.0" prefWidth="262.0" text="\$username" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="major" prefHeight="17.0" prefWidth="197.0" text="\$major" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label fx:id="year" prefHeight="17.0" prefWidth="130.0" text="\$year" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label text="Phone:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label prefHeight="17.0" prefWidth="56.0" text="Email:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="61.0" text="Github:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Major:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Year:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ImageView fitHeight="19.0" fitWidth="19.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/phone.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="19.0" fitWidth="19.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../images/email.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="19.0" fitWidth="19.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../images/github.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="19.0" fitWidth="19.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@../images/major.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@../images/year.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
    </children>

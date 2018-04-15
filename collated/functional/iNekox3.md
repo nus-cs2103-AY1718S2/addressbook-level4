@@ -304,9 +304,6 @@ public class AnswerCommandParser implements Parser<AnswerCommand> {
         return new QuestionIndex(trimmedQuestionIndex);
     }
 
-```
-###### \java\seedu\progresschecker\logic\parser\ParserUtil.java
-``` java
     /**
      * Parses a {@code String studentAnswer} into a {@code StudentAnswer}.
      * Leading and trailing whitespaces will be trimmed.
@@ -743,8 +740,6 @@ public class UniqueExerciseList implements Iterable<Exercise> {
      * Replaces the given exercise {@code target} in the list with {@code editedExercise}.
      *
      * @throws ExerciseNotFoundException if {@code target} could not be found in the list.
-     *
-     * @see #syncWithMasterTagList(Person)
      */
     public void updateExercise(Exercise target, Exercise editedExercise)
             throws ExerciseNotFoundException {
@@ -1846,7 +1841,6 @@ public class ExerciseListPanel extends UiPart<Region> {
         }
         return sum;
     }
-
 ```
 ###### \java\seedu\progresschecker\ui\ProfilePanel.java
 ``` java

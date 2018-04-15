@@ -18,14 +18,18 @@ public final class CommandFormatListUtil {
      */
     private static void createCommandFormatList() {
         commandFormatList.add(AddCommand.COMMAND_FORMAT);
+        commandFormatList.add(AnswerCommand.COMMAND_FORMAT);
         commandFormatList.add(ClearCommand.COMMAND_WORD);
         commandFormatList.add(DeleteCommand.COMMAND_FORMAT);
+        commandFormatList.add(CompleteTaskCommand.COMMAND_WORD);
         commandFormatList.add(EditCommand.COMMAND_FORMAT);
         commandFormatList.add(ExitCommand.COMMAND_WORD);
         commandFormatList.add(FindCommand.COMMAND_FORMAT);
+        commandFormatList.add(GoToTaskUrlCommand.COMMAND_WORD);
         commandFormatList.add(HelpCommand.COMMAND_WORD);
         commandFormatList.add(ListCommand.COMMAND_WORD);
         commandFormatList.add(RedoCommand.COMMAND_WORD);
+        commandFormatList.add(ResetTaskCommand.COMMAND_WORD);
         commandFormatList.add(SelectCommand.COMMAND_FORMAT);
         commandFormatList.add(SortCommand.COMMAND_WORD);
         commandFormatList.add(UndoCommand.COMMAND_WORD);
@@ -62,6 +66,8 @@ public class CloseIssueCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Issue #%1$s closed successfully";
     public static final String MESSAGE_FAILURE = "Issue wasn't closed. Enter correct index number.";
+    public static final String MESSAGE_AUTHENTICATION_FAILURE = "Github isn't authenticated. "
+            + "Use 'gitlogin' command to authenticate first";
 
     private final Index targetIndex;
 
@@ -75,6 +81,8 @@ public class CloseIssueCommand extends Command {
             model.closeIssueOnGithub(targetIndex);
         } catch (IOException ie) {
             throw new CommandException(MESSAGE_FAILURE);
+        } catch (CommandException ce) {
+            throw new CommandException(MESSAGE_AUTHENTICATION_FAILURE);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex.getOneBased()));
@@ -118,7 +126,7 @@ public class CreateIssueCommand extends Command {
             + PREFIX_BODY + "This is a test issue "
             + PREFIX_LABEL + "bug";
     public static final String MESSAGE_SUCCESS = "Issue successfully created on Github";
-    public static final String MESSAGE_FAILURE = "There is some error in the parameter or authentication";
+    public static final String MESSAGE_FAILURE = "Please log into github first";
 
     private final Issue toCreate;
 
@@ -135,11 +143,17 @@ public class CreateIssueCommand extends Command {
         try {
             model.createIssueOnGitHub(toCreate);
             return new CommandResult(MESSAGE_SUCCESS);
-        } catch (IOException e) {
+        } catch (IOException | CommandException e) {
             throw new CommandException(MESSAGE_FAILURE);
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CreateIssueCommand // instanceof handles nulls
+                && toCreate.equals(((CreateIssueCommand) other).toCreate));
+    }
 }
 ```
 ###### \java\seedu\progresschecker\logic\commands\EditIssueCommand.java
@@ -149,7 +163,7 @@ public class CreateIssueCommand extends Command {
  */
 public class EditIssueCommand extends Command {
     public static final String COMMAND_WORD = "editissue";
-    public static final String COMMAND_ALIAS = "edI";
+    public static final String COMMAND_ALIAS = "edi";
     public static final String COMMAND_FORMAT = COMMAND_WORD + " " + "INDEX "
             + "[" + PREFIX_TITLE + "TITLE] "
             + "[" + PREFIX_ASSIGNEES + "ASSIGNEES] "
@@ -448,7 +462,16 @@ public class GitLoginCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (IOException e) {
             throw new CommandException(MESSAGE_FAILURE);
+        } catch (CommandException ce) {
+            throw new CommandException(ce.getMessage());
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof GitLoginCommand // instanceof handles nulls
+                && toAuthenticate.equals(((GitLoginCommand) other).toAuthenticate));
     }
 
 }
@@ -481,6 +504,56 @@ public class GitLogoutCommand extends Command {
 
 }
 ```
+###### \java\seedu\progresschecker\logic\commands\ListIssuesCommand.java
+``` java
+/**
+ * Finds and lists all issues from github with the specified state in the argument.
+ * Keyword matching is case insensitive.
+ */
+public class ListIssuesCommand extends Command {
+
+    public static final String COMMAND_WORD = "listissue";
+    public static final String COMMAND_ALIAS = "lis";
+    public static final String COMMAND_FORMAT = COMMAND_WORD + " STATE";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all the issues "
+            + "of the specified state with the respective github issue index.\n"
+            + "Parameters: KEYWORD\n"
+            + "Example: " + COMMAND_WORD + " CLOSE";
+    private static final String MESSAGE_INVALID_STATE = "Please enter correct issue state";
+    private static final String MESSAGE_VALIDATION_FAILURE = "Please log into github first";
+    private static final String tabType = "issues";
+    private static final String MESSAGE_SUCCESS = "All the %s issues are being viewed";
+
+    private static String state;
+
+    public ListIssuesCommand(String state) {
+        this.state = state;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        try {
+            model.listIssues(state);
+            EventsCenter.getInstance().post(new TabLoadChangedEvent(tabType));
+            return new CommandResult(String.format(MESSAGE_SUCCESS, state));
+        } catch (IllegalValueException ie) {
+            throw new CommandException(MESSAGE_INVALID_STATE);
+        } catch (IOException ie) {
+            throw new CommandException(MESSAGE_INVALID_STATE);
+        } catch (CommandException ce) {
+            throw new CommandException(MESSAGE_VALIDATION_FAILURE);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ListIssuesCommand // instanceof handles nulls
+                && this.state.equals(((ListIssuesCommand) other).state)); // state check
+    }
+}
+```
 ###### \java\seedu\progresschecker\logic\commands\ReopenIssueCommand.java
 ``` java
 /**
@@ -498,6 +571,8 @@ public class ReopenIssueCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Issue #%1$s was reopened successfully";
     public static final String MESSAGE_FAILURE = "Issue wasn't reopened. Enter correct index number.";
+    public static final String MESSAGE_AUTHENTICATION_FAILURE = "Github isn't authenticated. "
+           + "Use 'gitlogin' command to authenticate first";
 
     private final Index targetIndex;
 
@@ -511,6 +586,8 @@ public class ReopenIssueCommand extends Command {
             model.reopenIssueOnGithub(targetIndex);
         } catch (IOException ie) {
             throw new CommandException(MESSAGE_FAILURE);
+        } catch (CommandException ce) {
+            throw new CommandException(MESSAGE_AUTHENTICATION_FAILURE);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex.getOneBased()));
@@ -736,6 +813,29 @@ public class GitLoginCommandParser implements Parser<GitLoginCommand> {
 
 }
 ```
+###### \java\seedu\progresschecker\logic\parser\ListIssuesCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ListIssuesCommand object
+ */
+public class ListIssuesCommandParser implements Parser<ListIssuesCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ListIssueCommand
+     * and returns an ListIssueCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ListIssuesCommand parse(String args) throws ParseException {
+        try {
+            String issueState = ParserUtil.parseStateType(args);
+            return new ListIssuesCommand(issueState);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListIssuesCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
 ###### \java\seedu\progresschecker\logic\parser\ParserUtil.java
 ``` java
     /**
@@ -748,6 +848,9 @@ public class GitLoginCommandParser implements Parser<GitLoginCommand> {
     public static Title parseTitle(String title) throws IllegalValueException {
         requireNonNull(title);
         String trimmedTitle = title.trim();
+        if (!Title.isValidTitle(trimmedTitle)) {
+            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        }
         return new Title(trimmedTitle);
     }
 
@@ -765,9 +868,12 @@ public class GitLoginCommandParser implements Parser<GitLoginCommand> {
      * Leading and trailing whitespaces will be trimmed.
      */
 
-    public static Assignees parseAssignees(String assignees) {
+    public static Assignees parseAssignees(String assignees) throws IllegalValueException {
         requireNonNull(assignees);
         String trimmedAssignees = assignees.trim();
+        if (!Assignees.isValidAssignee(trimmedAssignees)) {
+            throw new IllegalValueException(Assignees.MESSAGE_ASSIGNEES_CONSTRAINTS);
+        }
         return new Assignees(trimmedAssignees);
     }
 
@@ -788,9 +894,12 @@ public class GitLoginCommandParser implements Parser<GitLoginCommand> {
      * Leading and trailing whitespaces will be trimmed.
      */
 
-    public static Labels parseLabels(String labels) {
+    public static Labels parseLabels(String labels) throws IllegalValueException {
         requireNonNull(labels);
         String trimmedLabels = labels.trim();
+        if (!Labels.isValidLabel(trimmedLabels)) {
+            throw new IllegalValueException(Labels.MESSAGE_LABEL_CONSTRAINTS);
+        }
         return new Labels(trimmedLabels);
     }
 
@@ -834,9 +943,12 @@ public class GitLoginCommandParser implements Parser<GitLoginCommand> {
      * Leading and trailing whitespaces will be trimmed.
      */
 
-    public static Body parseBody(String body) {
+    public static Body parseBody(String body) throws IllegalValueException {
         requireNonNull(body);
         String trimmedBody = body.trim();
+        if (!Body.isValidBody(trimmedBody)) {
+            throw new IllegalValueException(Body.MESSAGE_BODY_CONSTRAINTS);
+        }
         return new Body(trimmedBody);
     }
 
@@ -853,9 +965,12 @@ public class GitLoginCommandParser implements Parser<GitLoginCommand> {
      * Parses a {@code String username} into a {@code Username}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static Username parseGitUsername(String username) {
+    public static Username parseGitUsername(String username) throws IllegalValueException {
         requireNonNull(username);
         String trimmedUsername = username.trim();
+        if (!Username.isValidUsername(trimmedUsername)) {
+            throw new IllegalValueException(Username.MESSAGE_GITUSERNAME_CONSTRAINTS);
+        }
         return new Username(trimmedUsername);
     }
 
@@ -871,8 +986,11 @@ public class GitLoginCommandParser implements Parser<GitLoginCommand> {
     /**
      * Parses a {@code String passcode} into a {@code Passcode}.
      */
-    public static Passcode parsePasscode(String passcode) {
+    public static Passcode parsePasscode(String passcode) throws IllegalValueException {
         requireNonNull(passcode);
+        if (!Passcode.isValidPasscode(passcode)) {
+            throw new IllegalValueException(Passcode.MESSAGE_PASSCODE_CONSTRAINTS);
+        }
         return new Passcode(passcode);
     }
 
@@ -889,9 +1007,12 @@ public class GitLoginCommandParser implements Parser<GitLoginCommand> {
      * Parses a {@code String repositroy} into a {@code Repository}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static Repository parseRepository(String repository) {
+    public static Repository parseRepository(String repository) throws IllegalValueException {
         requireNonNull(repository);
         String trimmedRepository = repository.trim();
+        if (!Repository.isValidRepository(trimmedRepository)) {
+            throw new IllegalValueException(Repository.MESSAGE_REPOSITORY_CONSTRAINTS);
+        }
         return new Repository(trimmedRepository);
     }
 
@@ -902,6 +1023,16 @@ public class GitLoginCommandParser implements Parser<GitLoginCommand> {
     public static Optional<Repository> parseRepository(Optional<String> repository) throws IllegalValueException {
         requireNonNull(repository);
         return repository.isPresent() ? Optional.of(parseRepository(repository.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String state} into a trimmed string.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseStateType(String state) throws IllegalValueException {
+        requireNonNull(state);
+        String trimmedState = state.trim();
+        return trimmedState;
     }
 ```
 ###### \java\seedu\progresschecker\logic\parser\ReopenIssueCommandParser.java
@@ -1005,6 +1136,16 @@ public class GitDetails {
  */
 public class Passcode {
 
+    public static final String MESSAGE_PASSCODE_CONSTRAINTS =
+            "Passcode must contain atleast one lower case character, one numeral "
+                    + "and should be atleast 7 characters long";
+
+    /*
+     * Password must contain one lowercase character,
+     * one number and minimum 7 characters
+     */
+    public static final String PASSCODE_VALIDATION_REGEX = "((?=.*\\d)(?=.*[a-z]).{7,100})";
+
     public final String passcode;
 
     /**
@@ -1014,7 +1155,15 @@ public class Passcode {
      */
     public Passcode(String passcode) {
         requireNonNull(passcode);
+        checkArgument(isValidPasscode(passcode), MESSAGE_PASSCODE_CONSTRAINTS);
         this.passcode = passcode;
+    }
+
+    /**
+     * Returns true if a given string is a valid github passcode.
+     */
+    public static boolean isValidPasscode(String test) {
+        return test.matches(PASSCODE_VALIDATION_REGEX);
     }
 
     @Override
@@ -1043,6 +1192,14 @@ public class Passcode {
  * Represents the username of a user on github
  */
 public class Username {
+    public static final String MESSAGE_GITUSERNAME_CONSTRAINTS =
+            "Username should only contain alphanumeric characters, and it should not be blank";
+
+    /*
+     * The github username can only contain alphanumeric characters,
+     * with no continuous special characters.
+     */
+    public static final String USERNAME_VALIDATION_REGEX = "^[-a-zA-Z0-9+&@#/%?=~_|!:,.;*]*[-a-zA-Z0-9+&@#/%=~_|*]";
 
     public final String username;
 
@@ -1053,7 +1210,15 @@ public class Username {
      */
     public Username(String username) {
         requireNonNull(username);
+        checkArgument(isValidUsername(username), MESSAGE_GITUSERNAME_CONSTRAINTS);
         this.username = username;
+    }
+
+    /**
+     * Returns true if a given string is a valid github issue.
+     */
+    public static boolean isValidUsername(String test) {
+        return test.matches(USERNAME_VALIDATION_REGEX);
     }
 
     @Override
@@ -1089,6 +1254,7 @@ public class Assignees {
      * The first character of the Assignee must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
+    public static final String ASSIGNEE_VALIDATION_REGEX = ".*\\w.*|[$&+,:;=?@#|'<>.^*()%!-]";
 
     public final String fullAssignees;
 
@@ -1099,8 +1265,17 @@ public class Assignees {
      */
     public Assignees(String assignees) {
         requireNonNull(assignees);
+        checkArgument(isValidAssignee(assignees), MESSAGE_ASSIGNEES_CONSTRAINTS);
         this.fullAssignees = assignees;
     }
+
+    /**
+     * Returns true if a given string is a valid github issue.
+     */
+    public static boolean isValidAssignee(String test) {
+        return test.matches(ASSIGNEE_VALIDATION_REGEX);
+    }
+
 
     @Override
     public String toString() {
@@ -1128,6 +1303,9 @@ public class Assignees {
  */
 public class Body {
 
+    public static final String MESSAGE_BODY_CONSTRAINTS =
+            "Issue should only contain non-null body";
+
     public final String fullBody;
 
     /**
@@ -1138,6 +1316,13 @@ public class Body {
     public Body(String body) {
         requireNonNull(body);
         this.fullBody = body;
+    }
+
+    /**
+     * Returns true if a given string is a valid github body.
+     */
+    public static boolean isValidBody(String test) {
+        return (test != null) ? true : false;
     }
 
     @Override
@@ -1180,6 +1365,7 @@ public class GitIssueList implements Iterable<Issue> {
     private GHIssueBuilder issueBuilder;
     private GHIssue issue;
     private GHIssue toEdit;
+    private GHIssueState issueState;
 
     /**
      * Initialises github credentials
@@ -1220,7 +1406,7 @@ public class GitIssueList implements Iterable<Issue> {
      */
     private void updateInternalList() throws IOException {
         internalList.remove(0, internalList.size());
-        List<GHIssue> gitIssues = repository.getIssues(GHIssueState.OPEN);
+        List<GHIssue> gitIssues = repository.getIssues(issueState);
         for (GHIssue issueOnGit : gitIssues) {
             Issue toBeAdded = convertToIssue(issueOnGit);
             internalList.add(toBeAdded);
@@ -1356,6 +1542,22 @@ public class GitIssueList implements Iterable<Issue> {
     }
 
     /**
+     * Updates the GHIssueState according to mentioned state and updates the list
+     */
+    public void listIssue(String state) throws IllegalValueException, IOException, CommandException {
+        if (github == null) {
+            throw new CommandException("");
+        } else if (state.equalsIgnoreCase("OPEN")) {
+            issueState = GHIssueState.OPEN;
+        } else if (state.equalsIgnoreCase("CLOSED")) {
+            issueState = GHIssueState.CLOSED;
+        } else {
+            throw new IllegalValueException("Enter correct state");
+        }
+        updateInternalList();
+
+    }
+    /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws IOException if the replacement is equivalent to another existing person in the list.
@@ -1371,6 +1573,7 @@ public class GitIssueList implements Iterable<Issue> {
         ArrayList<GHUser> listOfUsers = new ArrayList<>();
         ArrayList<String> listOfLabels = new ArrayList<>();
         MilestoneMap obj = new MilestoneMap();
+        obj.setRepository(getRepository());
         HashMap<String, GHMilestone> milestoneMap = obj.getMilestoneMap();
 
         for (Assignees assignee : assigneesList) {
@@ -1388,7 +1591,10 @@ public class GitIssueList implements Iterable<Issue> {
         toEdit.setTitle(editedIssue.getTitle().toString());
         toEdit.setBody(editedIssue.getBody().toString());
         toEdit.setAssignees(listOfUsers);
-        toEdit.setLabels(listOfLabels.toArray(new String[0]));
+        if (listOfLabels.size() != 0) {
+            toEdit.setLabels(listOfLabels.toArray(new String[0]));
+        }
+        updateInternalList();
 
     }
 
@@ -1536,6 +1742,15 @@ public class Issue {
  */
 public class Labels {
 
+    public static final String MESSAGE_LABEL_CONSTRAINTS =
+            "Labels should only contain alphanumeric characters and spaces, and it should not be blank";
+
+    /*
+     * The first character of the label must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String LABEL_VALIDATION_REGEX = ".*\\w.*|[$&+,:;=?@#|'<>.^*()%!-]";
+
     public final String fullLabels;
 
     /**
@@ -1545,7 +1760,15 @@ public class Labels {
      */
     public Labels(String labels) {
         requireNonNull(labels);
+        checkArgument(isValidLabel(labels), MESSAGE_LABEL_CONSTRAINTS);
         this.fullLabels = labels;
+    }
+
+    /**
+     * Returns true if a given string is a valid github label.
+     */
+    public static boolean isValidLabel(String test) {
+        return test.matches(LABEL_VALIDATION_REGEX);
     }
 
     @Override
@@ -1642,10 +1865,23 @@ public final class MilestoneMap {
 ```
 ###### \java\seedu\progresschecker\model\issues\Title.java
 ``` java
+
+import static java.util.Objects.requireNonNull;
+import static seedu.progresschecker.commons.util.AppUtil.checkArgument;
+
 /**
  * Represents an issue's name and description
  */
 public class Title {
+
+    public static final String MESSAGE_TITLE_CONSTRAINTS =
+            "Issue should only contain alphanumeric characters and spaces, and it should not be blank";
+
+    /*
+     * The first character of the title must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String TITLE_VALIDATION_REGEX = ".*\\w.*|[$&+,:;=?@#|'<>.^*()%!-]";
 
     public final String fullMessage;
 
@@ -1655,7 +1891,16 @@ public class Title {
      * @param title A valid description.
      */
     public Title(String title) {
+        requireNonNull(title);
+        checkArgument(isValidTitle(title), MESSAGE_TITLE_CONSTRAINTS);
         this.fullMessage = title;
+    }
+
+    /**
+     * Returns true if a given string is a valid github issue.
+     */
+    public static boolean isValidTitle(String test) {
+        return test.matches(TITLE_VALIDATION_REGEX);
     }
 
     @Override
@@ -1693,6 +1938,9 @@ public class Title {
 
     /** closes an issue issue on github */
     void closeIssueOnGithub(Index index) throws IOException, CommandException;
+
+    /**viwes issues of the specified state */
+    void listIssues(String state) throws IllegalValueException, IOException, CommandException;
 
     /**
      * Replaces the fields in Issue {@code index} with {@code editedIssue}.
@@ -1809,6 +2057,40 @@ public class Title {
         issues.setIssue(index, editedIssue);
     }
 
+    /**
+     * Lists all the issues of the specified state
+     */
+    public void listIssues(String state) throws IllegalValueException, IOException, CommandException {
+        requireNonNull(state);
+        issues.listIssue(state);
+    }
+
+```
+###### \java\seedu\progresschecker\model\util\SampleDataUtil.java
+``` java
+    /**
+     * Returns an label list containing the list of strings given.
+     */
+    public static List<Labels> getLabelsList(String... strings) {
+        ArrayList<Labels> labels = new ArrayList<>();
+        for (String s : strings) {
+            labels.add(new Labels(s));
+        }
+
+        return labels;
+    }
+
+    /**
+     * Returns an Assignee list containing the list of strings given.
+     */
+    public static List<Assignees> getAssigneeList(String... strings) {
+        ArrayList<Assignees> assignees = new ArrayList<>();
+        for (String s : strings) {
+            assignees.add(new Assignees(s));
+        }
+
+        return assignees;
+    }
 ```
 ###### \java\seedu\progresschecker\storage\XmlAdaptedIssue.java
 ``` java
@@ -2111,44 +2393,62 @@ public class IssueListPanel extends UiPart<Region> {
 ```
 ###### \resources\view\IssueListCard.fxml
 ``` fxml
-<HBox id="cardPane" fx:id="cardPane" prefHeight="140.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+
+<HBox id="cardPane" fx:id="cardPane" prefHeight="140.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" styleClass="main-box">
     <GridPane prefHeight="140.0" prefWidth="380.0" HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
-        <HBox prefHeight="140.0" prefWidth="216.0">
+        <HBox prefHeight="140.0" prefWidth="380.0">
             <children>
-                <VBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="140.0" prefWidth="216.0">
+                <VBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="140.0" prefWidth="510.0">
                     <padding>
                         <Insets bottom="5" left="15" right="5" top="5" />
                     </padding>
-                    <HBox alignment="CENTER_LEFT" spacing="5">
+                    <HBox alignment="CENTER_LEFT" spacing="5" prefWidth="380.0">
                         <Label fx:id="id" styleClass="cell_big_label">
                             <minWidth>
                                 <!-- Ensures that the label text is never truncated -->
                                 <Region fx:constant="USE_PREF_SIZE" />
                             </minWidth>
                         </Label>
-                        <Label fx:id="title" styleClass="cell_big_label" text="\$first" />
+                        <Label fx:id="title" prefWidth="380.0" styleClass="title-issue" text="\$first" wrapText="true">
+                            <minWidth>
+                                <!-- Ensures that the label text is never truncated -->
+                                <Region fx:constant="USE_PREF_SIZE" />
+                            </minWidth>
+                        </Label>
                     </HBox>
                     <FlowPane fx:id="labelled" />
-                    <GridPane prefHeight="80.0" prefWidth="332.0">
+                    <GridPane prefHeight="80.0" prefWidth="301.0">
                         <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="74.0" />
-                            <ColumnConstraints hgrow="ALWAYS" maxWidth="300.0" minWidth="10.0" prefWidth="200.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="0.0" prefWidth="78.0" />
+                            <ColumnConstraints hgrow="ALWAYS" maxWidth="360.0" minWidth="10.0" prefWidth="282.0" />
                         </columnConstraints>
                         <rowConstraints>
-                            <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="21.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="23.0" minHeight="7.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="20.0" vgrow="ALWAYS" />
+                            <RowConstraints maxHeight="32.0" minHeight="0.0" prefHeight="32.0" vgrow="ALWAYS" />
+                            <RowConstraints maxHeight="23.0" minHeight="7.0" prefHeight="17.0" vgrow="ALWAYS" />
                         </rowConstraints>
                         <children>
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Body: " />
-                            <Label fx:id="body" styleClass="cell_small_label" text="\$body" GridPane.columnIndex="1" />
+                            <Label fx:id="body" styleClass="cell_small_label" text="\$body" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" wrapText="true"/>
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Assignees: " GridPane.rowIndex="2" />
-                            <FlowPane fx:id="assignees" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <FlowPane fx:id="assignees" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <GridPane.margin>
+                           <Insets bottom="-1.0" top="1.0" />
+                        </GridPane.margin>
+                        <padding>
+                           <Insets top="3.0" />
+                        </padding></FlowPane>
                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Milestone: " GridPane.rowIndex="1" />
-                            <Label fx:id="milestone" styleClass="cell_small_label" text="\$milestone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <Label fx:id="milestone" styleClass="cell_small_label" text="\$milestone" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <rotationAxis>
+                           <Point3D />
+                        </rotationAxis>
+                        <GridPane.margin>
+                           <Insets top="1.0" />
+                        </GridPane.margin></Label>
                         </children>
                     </GridPane>
                 </VBox>

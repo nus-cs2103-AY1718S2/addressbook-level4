@@ -30,7 +30,7 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_START_DATE_TIME + "START_DATE_TIME "
             + PREFIX_END_DATE_TIME + "END_DATE_TIME \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_TITLE + "Birthday "
+            + PREFIX_TITLE + "Interview "
             + PREFIX_START_DATE_TIME + "2018-03-26 12:00 "
             + PREFIX_END_DATE_TIME + "2018-03-26 12:30 ";
 

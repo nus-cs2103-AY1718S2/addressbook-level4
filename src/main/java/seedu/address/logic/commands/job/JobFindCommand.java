@@ -23,7 +23,8 @@ public class JobFindCommand extends Command {
             + " POSITION or SKILL or LOCATION "
             + "contains any of the specified keywords (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: p/POSITION_KEYWORDS [MORE_POSITION_KEYWORDS] or s/SKILL_KEYWORDS [MORE_SKILL_KEYWORDS]\n"
+            + "Parameters: p/POSITION_KEYWORDS [MORE_POSITION_KEYWORDS] or s/SKILL_KEYWORDS [MORE_SKILL_KEYWORDS] "
+            + "or l/LOCATION_KEYWORDS [MORE_LOCATION_KEYWORDS]\n"
             + "Example: " + COMMAND_WORD + " p/Alice Bob\n"
             + "Example: " + COMMAND_WORD + " s/Java\n"
             + "Example: " + COMMAND_WORD + " l/Singapore";

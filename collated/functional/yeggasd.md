@@ -29,7 +29,7 @@ public class PasswordWrongEvent extends BaseEvent {
 ###### \java\seedu\address\commons\events\ui\TimeTableEvent.java
 ``` java
 /**
- * Represents the TimeTable
+ * Represents a call for the TimeTable to be displayed
  */
 public class TimeTableEvent extends BaseEvent {
 
@@ -309,14 +309,18 @@ public class SecurityUtil {
 
     /**
      * @param s The string to be checked
-     * @return 0 is string is even else 1.
+     * @return 0 if string is even
+     *         1 if string is odd
+     *         null otherwise.
      */
     public static Index getOddEven(String s) {
         requireNonNull(s);
         if (s.equalsIgnoreCase("even")) {
             return Index.fromZeroBased(0);
-        } else {
+        } else if (s.equalsIgnoreCase("odd")) {
             return Index.fromZeroBased(1);
+        } else {
+            return null;
         }
     }
 
@@ -343,7 +347,7 @@ public class SecurityUtil {
      */
     public static String capitalize(String s) {
         requireNonNull(s);
-        return s.substring(0, 1).toUpperCase() + s.substring(1);
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 ```
 ###### \java\seedu\address\logic\commands\PasswordCommand.java
@@ -502,8 +506,8 @@ public class SelectCommandParser implements Parser<SelectCommand> {
 
         checkPasswordChanged();
 
-        ui.start(primaryStage);
-        autoOpenBirthdayNotification();
+        ui.start(primaryStage); (
+                (UiManager) ui).openBirthdayNotification();
     }
 
     /**
@@ -515,44 +519,6 @@ public class SelectCommandParser implements Parser<SelectCommand> {
             ui = new PasswordUiManager(storage, model, ui);
         }
     }
-    //author
-
-    @Override
-    public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
-        ui.stop();
-        try {
-            storage.saveUserPrefs(userPrefs);
-        } catch (IOException e) {
-            logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
-        }
-        Platform.exit();
-        System.exit(0);
-    }
-
-    @Subscribe
-    public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        this.stop();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    /**
-     * Opens birthday notification
-     * Called after UI is called
-     */
-    private void autoOpenBirthdayNotification() {
-        LocalDate currentDate = LocalDate.now();
-
-        if (model != null && !passwordChanged) {
-            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand
-                    .parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate), currentDate));
-        }
-    }
-}
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -606,11 +572,9 @@ public class SelectCommandParser implements Parser<SelectCommand> {
 ``` java
 /**
  * Represents the password of the address book
- * Guarantees: current and previous password are present and not null.
+ * Guarantees: current and previous password are present.
  */
 public class Password {
-    private static final String DEFAULT_PASSWORD = "test";
-
     private byte[] currentPassword;
     private byte[] prevPassword;
 
@@ -632,8 +596,8 @@ public class Password {
     }
 
     /**
-     * Getter for previous password
-     * @return previousPassword
+     * Getter for previous password.
+     * @return prevPassword.
      */
     public byte[] getPrevPassword() {
         return prevPassword;
@@ -641,7 +605,7 @@ public class Password {
 
     /**
      * Updates the password.
-     * @param password is the password to be used. Cannot be null
+     * @param password is the password to be used. Cannot be null.
      */
     public void updatePassword(Password password) {
         requireNonNull(password);
@@ -651,8 +615,8 @@ public class Password {
     }
 
     /**
-     * Similar to {@link #updatePassword(Password)}
-     * @param password is the password to be used. Cannot be null
+     * Similar to {@link #updatePassword(Password)}.
+     * @param password is the password to be used.
      */
     public void updatePassword(byte[] password) {
         prevPassword = currentPassword;
@@ -797,16 +761,26 @@ public class XmlAdaptedPassword {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        venuePlaceholder.toBack();
-        mapsPlaceholder.toBack();
-        birthdayPlaceholder.toBack();
-        timetableUnionPlaceholder.toBack();
-        aliasListPlaceholder.toBack();
+
+        hideAllPanel();
+
         Person person = event.getNewSelection().person;
         int oddEvenIndex = event.getOddEvenIndex();
 
         personDetailsCard.update(person, oddEvenIndex);
         userDetailsPlaceholder.toFront();
+    }
+
+    /**
+     * Hides all the panels
+     */
+    private void hideAllPanel() {
+        userDetailsPlaceholder.toBack();
+        venuePlaceholder.toBack();
+        mapsPlaceholder.toBack();
+        birthdayPlaceholder.toBack();
+        timetableUnionPlaceholder.toBack();
+        aliasListPlaceholder.toBack();
     }
 ```
 ###### \java\seedu\address\ui\PasswordBox.java
@@ -984,8 +958,8 @@ public class PasswordUiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         primaryStage.setResizable(true);
         primaryStage.setMaxHeight(MAX_WINDOW_SIZE);
-        ui.start(primaryStage);
-        autoOpenBirthdayNotification();
+        ui.start(primaryStage); (
+                (UiManager) ui).openBirthdayNotification();
     }
 
     @Subscribe
@@ -995,6 +969,7 @@ public class PasswordUiManager extends ComponentManager implements Ui {
                 WRONG_PASSWORD_ERROR_DIALOG_CONTENT_MESSAGE);
     }
 
+}
 ```
 ###### \java\seedu\address\ui\PasswordWindow.java
 ``` java
@@ -1195,6 +1170,8 @@ public class PersonDetailsCard extends UiPart<Region> {
  * A ui for the info panel that is displayed when the timetable command is called.
  */
 public class TimeTablePanel extends UiPart<Region> {
+    private static final int MAX_COLUMN_WIDTH = 200;
+    private static final int MIN_COLUMN_WIDTH = 75;
     private static final String COLUMNHEADER_STYLE_CLASS = "column-header";
     private static final String TABLECELL_STYLE_CLASS = "table-cell";
     private static final String EMPTY_STYLE_CLASS = "timetable-cell-empty";
@@ -1284,43 +1261,59 @@ public class TimeTablePanel extends UiPart<Region> {
             columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
             columns.get(i).impl_setReorderable(false);
             if (j != 0) {
-                columns.get(i).setMinWidth(75);
-                columns.get(i).setMaxWidth(200);
+                columns.get(i).setMinWidth(MIN_COLUMN_WIDTH);
+                columns.get(i).setMaxWidth(MAX_COLUMN_WIDTH);
             }
             columns.get(i).setSortable(false);
         }
     }
 
     /**
-     * Sets the command box style to indicate free or having lesson
+     * Sets the columns to the style for each value.
      */
     public void setStyle() {
         for (int i = 0; i < columns.size(); i++) {
-            columns.get(i).setCellFactory(column -> {
-                return new TableCell<ArrayList<String>, String>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (item == null || empty) {
-                            setText(null);
-                            setStyle("");
-                        } else {
-
-                            setText(item);
-                            removeAllStyle(this);
-                            if ("".equals(getItem())) {
-                                getStyleClass().add(EMPTY_STYLE_CLASS);
-                            } else if (StringUtil.isDay(getItem())) {
-                                getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
-                            } else {
-                                getStyleClass().add(getColorStyleFor(getItem()));
-                            }
-                        }
-                    }
-                };
-            });
+            TableColumn<ArrayList<String>, String> columnToBeSet = columns.get(i);
+            setStyleForColumn(columnToBeSet);
         }
+    }
+
+    /**
+     * Sets the style of each column.
+     * @param columnToBeSet is the column that would be set
+     */
+    private void setStyleForColumn (TableColumn<ArrayList<String>, String> columnToBeSet) {
+        columnToBeSet.setCellFactory(column -> {
+            return setStyleForCell();
+        });
+    }
+
+    /**
+     * Sets the style of the cell given the data and return it
+     * @return the tablecell with its style set.
+     */
+    private TableCell<ArrayList<String>, String> setStyleForCell () {
+        return new TableCell<ArrayList<String>, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    removeAllStyle(this);
+                    if ("".equals(getItem())) {
+                        getStyleClass().add(EMPTY_STYLE_CLASS);
+                    } else if (StringUtil.isDay(getItem())) {
+                        getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
+                    } else {
+                        getStyleClass().add(getColorStyleFor(getItem()));
+                    }
+                }
+            }
+        };
     }
 
     /**
@@ -1344,6 +1337,7 @@ public class TimeTablePanel extends UiPart<Region> {
         String modName = lessonName.substring(0, MODNAME_LENGTH);
         int colorIndex = Math.abs(modName.hashCode()) % MOD_COLOR_STYLES.length;
         int index = 0;
+        //finds the next avaliable index that is not taken.
         while (index < MOD_COLOR_STYLES.length && TAKEN_COLOR.get(colorIndex) != null
                 && !TAKEN_COLOR.get(colorIndex).equals(modName)) {
             colorIndex = (colorIndex + 1) % MOD_COLOR_STYLES.length;

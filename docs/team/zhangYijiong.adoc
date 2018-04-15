@@ -53,7 +53,10 @@ user can roughly estimate how long does it take to deliver the food.
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.
 |===
 
-include::../UserGuide.adoc[tag=PriorityQueue]
+include::../UserGuide.adoc[tag=ProcessingQueue]
+include::../UserGuide.adoc[tag=AddTag]
+include::../UserGuide.adoc[tag=Load]
+include::../UserGuide.adoc[tag=Path]
 
 == Contributions to the Developer Guide
 

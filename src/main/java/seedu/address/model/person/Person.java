@@ -180,7 +180,7 @@ public class Person implements Comparable<Person> {
             valueOwn -= 4;
         }
         if (tagsOwn.contains(delivered)) {
-            valueOwn += 5;
+            valueOwn += 10;
         }
         return valueOwn;
     }

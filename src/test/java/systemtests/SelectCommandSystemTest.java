@@ -59,7 +59,7 @@ public class SelectCommandSystemTest extends DeskBoardSystemTest {
         /* Case: filtered activity list, select index within bounds of address book but out of bounds of activity list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showActivitiesWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getDeskBoard().getActivityList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 
@@ -96,11 +96,12 @@ public class SelectCommandSystemTest extends DeskBoardSystemTest {
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: select from empty address book -> rejected */
-        deleteAllPersons();
+        deleteAllActivities();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_ACTIVITY.getOneBased(),
                 MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
     }
 
+    //TODO:
     /**
      * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays an empty string.<br>
@@ -119,7 +120,7 @@ public class SelectCommandSystemTest extends DeskBoardSystemTest {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_ACTIVITY_SUCCESS, expectedSelectedCardIndex.getOneBased());
-        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        int preExecutionSelectedCardIndex = getTaskListPanel().getSelectedCardIndex();
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);

@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -37,7 +38,6 @@ public class CalendarPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
         configureCalendar();
         syncCalendarWithActivities(activityList);
-
     }
 
     /**
@@ -50,6 +50,8 @@ public class CalendarPanel extends UiPart<Region> {
         calendarView.setShowSearchResultsTray(false);
         calendarView.setShowPrintButton(false);
         calendarView.showMonthPage();
+        calendarView.prefWidth(calendarView.computeAreaInScreen());
+        calendarView.prefHeight(calendarView.computeAreaInScreen());
     }
 
     /**
@@ -60,6 +62,7 @@ public class CalendarPanel extends UiPart<Region> {
         resetCalendar();
         CalendarSource activityCalendarSource = new CalendarSource("Activity Calendar");
         Calendar taskCalendar = new Calendar("Task Calendar");
+        taskCalendar.setLookAheadDuration(Duration.ofDays(365));
         taskCalendar.setStyle(Calendar.Style.getStyle(1));
         activityCalendarSource.getCalendars().add(taskCalendar);
 
@@ -75,6 +78,8 @@ public class CalendarPanel extends UiPart<Region> {
 
         Calendar eventCalendar = new Calendar("Event Calendar");
         eventCalendar.setStyle(Calendar.Style.getStyle(4));
+        eventCalendar.setLookAheadDuration(Duration.ofDays(365));
+
         activityCalendarSource.getCalendars().add(eventCalendar);
 
         for (Activity activity: activityList)    {

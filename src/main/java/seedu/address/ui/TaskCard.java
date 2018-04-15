@@ -65,4 +65,5 @@ public class TaskCard extends UiPart<Region> {
     public Task getTask() {
         return task;
     }
+
 }

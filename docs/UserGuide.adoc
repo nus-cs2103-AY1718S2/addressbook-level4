@@ -681,9 +681,10 @@ Figure 10. The success message when command is successfully entered.
 
 image::AfterAddingCca.png[width="800"]
 Figure 11. After the command is successfully entered.
+// end::cca[]
 
 *_return to <<toc,Table of Contents>>_*
-// tag::cca[]
+
 
 // tag::NextofKin[]
 === Editing the details of the next of kin of a student : `nok` [since v1.5]
@@ -721,8 +722,10 @@ Figure 10. The success message when command is successfully entered.
 
 image::AfterAddingNOK.png[width="800"]
 Figure 11. After the command is successfully entered.
+// end::NextofKin[]
 
-// tag::NextofKin[]
+*_return to <<toc,Table of Contents>>_*
+
 
 // tag::theme[]
 === Changing theme of _EduBuddy_ : `theme` [since v1.5]

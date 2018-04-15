@@ -729,55 +729,73 @@ By default, elements with the same key are inserted into a `List<T>`, although t
 
 // end::organisation[]
 
+// tag::sync[]
+=== Sync Feature
+
+The sync mechanism is facilitated by `FetchUtil`, which uses a 3rd party library `AsyncHttpClient` that supports asynchronous dispatching of HTTP requests.
+
+Suppose the user wants to update the prices of all coins owned with the latest data.
+
+The user executes the sync command using `SyncCommand`, i.e. `sync`, which first builds the API URL. The API URL is built using `UrlBuilderUtil`, which first retrieves the coin code of every coin account that the user has, then concatenates to CryptoCompare API URL as HTTP parameters.
+
+`FetchUtil` is then used to send a HTTP GET request to CryptoCompare using this built URL via `AsyncHTTPClient` and returns a `Future<Response>` to `SyncCommand`. When the response data from the `Future<Response>` object is received, this data is then deserialized into `Price` objects to be passed to the `ModelManager` for updating.
+
+Once the `ModelManager` receives the new `Price` objects, it passes them to the `CoinBook` to carry out price updates for each coin via `CoinChangedEvent`.
+
+==== Design Considerations
+
+===== Aspect: Asynchronous vs synchronous fetching
+
+* **Alternative 1 (current choice):** Asynchronous fetching
+** Pros: This allows background processes to still continue, such as a loading animation to provide visual feedback to the user that data fetching is in progress and the application has not hanged.
+** Cons: This is more tedious to implement and requires the use of 3rd party libraries that may have bugs.
+* **Alternative 2:** Synchronous fetching.
+** Pros: This is easier to implement and only uses Java API which is much more robust and less susceptible to unforeseen bugs.
+** Cons: This leads to a worse user experience as the user may not know if the sync command is actually running or the application has hanged.
+
+// end::sync[]
+
 // tag::autocomplete[]
 === Autocomplete Feature
 
-The autocomplete mechanism is facilitated by a `RadixTree`, which resides inside `LogicManager`. It supports the predicting of a word or phrase that the user may type based on a partial text query.
+The autocomplete mechanism is facilitated by `LogicManager`, which exposes `COMMAND_LIST` from `CommandList` for `CommandBox` to use. It supports the predicting of a word or phrase that the user may type based on a partial text query.
 
-Suppose the user has 3 coins added to his account currently, namely `BTC`, `ETH`, `BCG` and `BCH` in that order.
+Suppose the user is trying to use the `sell` command.
 
-Say the user is trying to use the `find` command to look up `BCH`.
-
-The user will first type `find` into the command line followed by a whitespace and `B`.
+The user will first type `s` into the command line.
 ```
-find c/B
+s
 ```
 
-Now, when the user presses kbd:[Tab], the autocomplete feature will then complete the query by suggesting the first matching item it finds.
-```
-find c/BTC
-```
+Now, the autocomplete feature will then auto-suggest inputs to complete the query by displaying a pop-up of all commands that contain the letter `s`.
+image::AutocompleteBefore.png[width="100"]
 
-When the user then presses kbd:[C] to complete his query, the autocomplete feature will suggest the next matching item of the input `BC` so far.
-```
-find c/BCG
-```
+When the user then presses kbd:[DOWN] twice to reach his desired `sell` command, the selected suggestion will be highlighted light grey.
+image::AutocompleteNav.png[width="100"]
 
-The user can then press kbd:[Tab] again to cycle through the other items that match the current input `BC`.
+The user can then press kbd:[Enter] to confirm his selection of the `sell` command.
 ```
-find c/BCH
+sell
 ```
-
-At this point the user has found `BCH`, which is the coin that the user wanted to look up. The user can now press kbd:[Enter] to execute his command.
 
 ==== Design Considerations
 
 ===== Aspect: The fields which autocomplete works on
 
-* **Alternative 1 (current choice):** Apply only for command parameters.
+* **Alternative 1 (current choice):** Apply only for command word
 ** Pros: This reduces the implementation cost.
 ** Cons: The reduced functionality may not satisfy every user.
 * **Alternative 2:** Apply for both command word and command parameters.
 ** Pros: User experience will be slightly improved over the alternative.
-** Cons: This has a lower value to effort ratio to implement given that aliases are already implemented.
+** Cons: This has a lower value to effort ratio to implement due to restrictions of the ControlsFX and JavaFX libraries.
 
-===== Aspect: Data structure to support the autocomplete feature
+===== Aspect: Data structure to store the list of commands
 
-* **Alternative 1 (current choice):** Use a Radix Tree
+* **Alternative 1 :** Use a Radix Tree
 ** Pros: This is easier to understand for new Computer Science undergraduates, who represent the majority of incoming developers to the project.
 ** Cons: The implementation could be non-trivial.
-* **Alternative 2:** Use a linear data structure
-** Pros: This is much easier to implement.
+* **Alternative 2 (current choice):** Use a linear data structure
+** Pros: This is much easier to implement and integrates nicely with ControlsFX.
 ** Cons: The solution will be inefficient, with a higher time complexity incurred.
 
 // end::autocomplete[]
@@ -978,8 +996,8 @@ A project often depends on third-party libraries. For example, _CoinBook_ depend
 
 *Lai Cheng Yu*
 
-* Major: User experience. Create smoother workflow via GUI hints, view modes, command autocompletion, and data visualization. This helps users manage their portfolio quickly and efficiently, and lets them focus on the more important tasks.
-* Minor: Data fetching system. Updates the price data, etc., in the model from a source. This lets users keep up to date on latest developments.
+* Major: Data fetching system. Syncs and updates the price data, etc., in the model from a source. This lets users keep up to date on latest developments.
+* Minor: User experience and user interface. Create smoother workflow via GUI hints, autocompletion and vibrant GUI with coin icons. This helps users manage their portfolio quickly and efficiently, lets them focus on the more important tasks and attracts/keeps users.
 
 *Neil Mehta*
 

@@ -1,7 +1,6 @@
 = Lai Cheng Yu - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
-:repoLinkBase: https://github.com/CS2103JAN2018-F09-B3/main
 
 == PROJECT: CoinBook
 
@@ -19,7 +18,7 @@ CoinBook is a desktop accounting application written in Java. It is targeted at 
 ** Highlights: This enhancement demonstrates live updating of data from external web APIs. It required analysis of design alternatives between synchronous and asynchronous data fetching. The implementation too was challenging as it required many utilities to be built such as UrlBuilderUtil to adhere to HTTP request formats and FetchUtil to perform API calls.
 ** Credits: External libraries used include: [http://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/overview-summary.html[Apache HttpClient]], [https://github.com/google/gson/[GSON]] and [https://github.com/AsyncHttpClient/async-http-client[AsyncHttpClient]]
 
-* *Minor enhancement*: added a autocomplete feature that allows users to quickly enter in command.
+* *Minor enhancement*: added a autocomplete feature that allows users to quickly enter in commands.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-F09-B3/main/blob/master/collated/functional/laichengyu.md[Functional code]] [https://github.com/CS2103JAN2018-F09-B3/main/blob/master/collated/test/laichengyu.md[Test code]]
 
@@ -28,13 +27,15 @@ CoinBook is a desktop accounting application written in Java. It is targeted at 
 ** Project management:
 *** Managed releases `v1.1` (1 release) on GitHub
 ** Enhancements to existing features:
+*** Improve GUI by adding coin icons to each coin panel (Pull requests https://github.com/CS2103JAN2018-F09-B3/main/pull/233[#233])
+*** Improve UX by overlaying a loading animation when asynchronous operations are carried out (Pull requests https://github.com/CS2103JAN2018-F09-B3/main/pull/241[#241])
 *** Add API for backup storage (Pull requests https://github.com/CS2103JAN2018-F09-B3/main/pull/17[#17])
 *** Refactored existing tests for existing features to suit new code base (Pull requests https://github.com/CS2103JAN2018-F09-B3/main/pull/110[#110])
 ** Documentation:
 *** Enable experimental attributes such as keyboard macros for the Developer Guide: https://github.com/CS2103JAN2018-F09-B3/main/pull/124[#124]
 ** Community:
 *** PRs reviewed: https://github.com/CS2103JAN2018-F09-B3/main/pull/15[#15], https://github.com/CS2103JAN2018-F09-B3/main/pull/29[#29], https://github.com/CS2103JAN2018-F09-B3/main/pull/35[#35], https://github.com/CS2103JAN2018-F09-B3/main/pull/112[#112], https://github.com/CS2103JAN2018-F09-B3/main/pull/118[#118], https://github.com/CS2103JAN2018-F09-B3/main/pull/208[208]
-*** Contributed to forum discussions, reported bugs and raised issues (examples:  https://github.com/CS2103JAN2018-F09-B3/main/issues/50[50], https://github.com/CS2103JAN2018-F09-B3/main/issues/51[51], https://github.com/CS2103JAN2018-F09-B3/main/issues/69[69], https://github.com/CS2103JAN2018-F09-B3/main/issues/123[123], https://github.com/CS2103JAN2018-F09-B3/main/issues/125[125], https://github.com/CS2103JAN2018-F09-B3/main/issues/127[127])
+*** Contributed to forum discussions, reported bugs and raised issues (examples:  https://github.com/CS2103JAN2018-F09-B3/main/issues/50[50], https://github.com/CS2103JAN2018-F09-B3/main/issues/51[51], https://github.com/CS2103JAN2018-F09-B3/main/issues/69[69], https://github.com/CS2103JAN2018-F09-B3/main/issues/123[123], https://github.com/CS2103JAN2018-F09-B3/main/issues/125[125], https://github.com/CS2103JAN2018-F09-B3/main/issues/127[127], https://github.com/CS2103JAN2018-F09-B3/main/issues/225[225], https://github.com/CS2103JAN2018-F09-B3/main/issues/226[226])
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T15-B1/main/issues/52[52], https://github.com/CS2103JAN2018-T15-B1/main/issues/55[55], https://github.com/CS2103JAN2018-T15-B1/main/issues/60[60], https://github.com/CS2103JAN2018-T15-B1/main/issues/65[65], https://github.com/CS2103JAN2018-T15-B1/main/issues/68[68])
 ** Tools:
 *** Integrated a third party library (GSON) to the project (https://github.com[#42])

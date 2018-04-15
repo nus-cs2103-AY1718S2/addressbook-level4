@@ -437,15 +437,11 @@ As you can see from the diagram below, these are the interactions among the comp
 
 image::menu_fig_1.png[width="800"]
 
-To achieve this enhancement, the following modifications are made for Model and Storage components.
+To achieve this enhancement, the following modifications are made for Model and Storage components. For Model components, besides AddressBook, UserPref and CustomerStats, now ModelManager has an additional Menu class. It consists a Data field with all the available food provided by the restaurant. In the Storage component, there is an additional MenuStorage interface and it is implemented by a XmlMenuStorage class to read the XML file on local machine.
 
 image::menu_fig_2.png[width="800"]
 
-As the diagram shown above, besides AddressBook, UserPref and CustomerStats, now ModelManager has an additional Menu class. It consists a Data field with all the available food provided by the restaurant.
-
 image::menu_fig_3.png[width="800"]
-
-In the Storage component, there is an additional MenuStorage interface and it is implemented by a XmlMenuStorage class to read the XML file on local machine.
 
 ==== Design Considerations
 
@@ -456,16 +452,16 @@ In the Storage component, there is an additional MenuStorage interface and it is
 ** Cons: User may key in wrongly for names of dishes.
 * **Alternative 2:** Use a HashMap. Dishes will be the key, prices will be the value.
 ** Pros: It is easy to retrieve the price for each dishes.
-** Cons: When the user key in the names of dishes, conversions are required to build a Dish object from the name of the dish. In this case, price of the dish is also required in order to build a Dish object, hence, we need another HashMap to store the prices of every dish.
-
+** Cons: When the user key in the names of dishes, conversions are required to build a Dish object from the name of the dish(String). More information is required e.g. prices of all dishes.
 ===== Aspect: Restriction for ordering
 
 * **Alternative 1 (current choice):** Allow user to input the names for dishes and drinks
 ** Pros: No extra information is required e.g. a index reference.
 ** Cons: It could be time-consuming for typing all the names. There might be typos which make dishes can not be recognised.
 * **Alternative 2:** Allow user to input the indexes for dishes and drinks
-** Pros: It can be efficient if the user is familiar with the index reference for dishes and drinks, as the user only need to key in the indexes.
+** Pros: It can be efficient if the user is familiar with the index reference for all food, as the user can just key in indexes.
 ** Cons: It requires a index reference. Extra work needs to be done for creating and maintaining the index reference.
+// end::menu[]
 
 ===== Aspect: Maintaining the menu （Coming in v2.0)
 
@@ -475,7 +471,6 @@ In the Storage component, there is an additional MenuStorage interface and it is
 * **Alternative 2:** Delete the dish object.
 ** Pros: Save memory space
 ** Cons: While adding back those pre-existing dishes, more work need to be done.
-// end::menu[]
 
 // tag::PriorityQueue[]
 === PriorityQueue feature

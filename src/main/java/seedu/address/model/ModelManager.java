@@ -52,6 +52,19 @@ public class ModelManager extends ComponentManager implements Model {
         this.username = username;
     }
 
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+        super();
+        requireAllNonNull(addressBook, userPrefs);
+
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+
+        this.addressBook = new AddressBook(addressBook);
+        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
+        filteredDeleteItems = new ArrayList<>(this.addressBook.getItemList());
+        calendarTaskLists = this.addressBook.getCalendarList();
+    }
+
     public ModelManager() {
         this(new AddressBook(), new UserPrefs(), "");
     }

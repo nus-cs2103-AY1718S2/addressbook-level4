@@ -15,7 +15,7 @@ Fastis is a desktop application that aims to help students who are studying at N
 * *Major enhancement*: added *the to-do list*
 ** What it does: allows the user to add to-dos and manage the to-dos with various commands: check/uncheck to-dos as done/undone, edit content of to-dos and delete to-dos. The percentage of completed to-dos is shown with a pie chart.
 ** Justification: This feature helps the user keep track of deliverable and agendas in group meetings, which aims to improve team management.
-** Highlights: This enhancement makes the application be more customised and focused towards group meetings. It required an in-depth understanding of the model component. The implementation too was challenging as it required changes to the existing model component.
+** Highlights: This enhancement makes the application be more customised and focused towards group meetings. It required an in-depth understanding of the four main components of Fastis, which are `Model`, `UI`, `Logic` and `Storage`.
 
 * *Minor enhancement*: added a detail field for a person, which displays additional information and remark for the person.
 
@@ -42,15 +42,249 @@ Fastis is a desktop application that aims to help students who are studying at N
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=toDoList]
+=== Adding a to-do: `addToDo`
+
+Adds a to-do to Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `aTD` +
+Format: `addToDo CONTENT`
+
+Examples: +
+Refer to Figure 5 for results of the following 2 commands. +
+
+* `addToDo Do homework before next Wednesday`
+* `aTD Swim like a fish`
++
+image:AddToDoCommandExample.png[width="250"] +
+*Figure 5:* Example of adding to-dos
+
+=== Marking a to-do as done: `check`
+
+Marks a to-do in Fastis as done. +
+[blue yellow-background]#*Undoable*# +
+Format: `check INDEX`
+
+****
+* Marks the to-do at the specified `INDEX` as done.
+* The to-do progress will update accordingly
+* The index refers to the index number shown in to-do list panel.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `check 1` +
+Marks the first to-do in the list as done. +
+Refer to Figure 6 for results of this command.
+
+=== Marking a to-do as undone: `uncheck`
+
+Marks a to-do in Fastis as undone. +
+[blue yellow-background]#*Undoable*# +
+Format: `uncheck INDEX`
+
+****
+* Marks the to-do at the specified `INDEX` as undone.
+* The to-do progress will update accordingly
+* The index refers to the index number shown in to-do list panel.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `uncheck 2` +
+Marks the second to-do in the list as done. +
+Refer to Figure 6 for results of this command.
++
+image:CheckToDoExample.png[width="250"] +
+*Figure 6:* Example of checking/unchecking to-dos
+
+=== Editing a to-do's content : `editToDo`
+
+Edits an existing to-do's content in Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `eTD` +
+Format: `editToDo INDEX c/CONTENT`
+
+****
+* Edits the to-do's content at the specified `INDEX`.
+* Existing content will be updated to the input value.
+* The index refers to the index number shown in the last to-do listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `editToDo 1 c/Swim like a fish` +
+Edits the content of the 1st to-do to be `Swim like a fish`.
+
+=== Deleting a to-do : `deleteToDo`
+
+Deletes the specified to-do from Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `dTD` +
+Format: `deleteToDo INDEX`
+
+****
+* Deletes the to-do at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `deleteToDo 2` +
+Deletes the 2nd to-do in Fastis.
 
 == Contributions to the Developer Guide
 
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
+=== Add ToDo feature
 
-include::../DeveloperGuide.adoc[tag=addToDo]
-include::../DeveloperGuide.adoc[tag=checkToDo]
+Adds a to-do.
+
+==== Current implementation
+
+The add to-dos mechanism is facilitated by `AddToDoCommand`, which resides inside `Logic` component. It supports adding ToDo objects to the address book. AddToDoCommand inherits from `UndoableCommand`.
+
+Hence, AddToDoCommand can be undone using `UndoRedoStack`.
+With the extra layer, the AddToDoCommand that is undoable is implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class AddToDoCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... add to-do logic ...
+    }
+}
+----
+
+The to-dos in the to-do list are facilitated by `ToDo` class. Each `ToDo` object have a `Content` object and a `Status` object, representing the content and status of the to-do.
+Address book stores all to-dos in `UniqueToDoList`.
+`ToDo`,`Content` and `UniqueToDoList` class reside inside `AddressBook`. <<fig43,Figure 43>> is the class diagram showing the relationship between `ToDo`,`Content`, `Status`, `UniqueToDoList` and `AddressBook`:
+[[fig43]]
+.Class Diagram for UniqueToDoList.
+image::AddressBookUniqueToDoListToDoClassDiagram.png[width="800"]
+
+On a smaller scale, <<fig44, Figure 44>> is a class diagram showing the relationship between `ToDo`,`Content` and `Status`:
+
+[[fig44]]
+.Class Diagram for To-Do.
+image::ToDoStatusContentClassDiagram.png[width="800"]
+
+Suppose that the user has just launched the application. The `UniqueToDoList` in the address book will be empty if no to-dos have been added previously.
+
+The user executes a new `AddToDoCommand` with `Content`, to add a new to-do to the address book.
+The `Status` of the to-do is "undone" by default.
+The new to-do with content and status is added to the `UniqueToDoList` and the current state of the address book is saved.
+<<fig45, Figure 45>> shows how the addToDo operation works:
+
+[[fig45]]
+.Sequence Diagram for addToDo.
+image::AddToDoSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddToDoCommand`
+
+* **Alternative 1 (current choice):** Restrict the constructor of ToDo to be ToDo(Content content, Status status)`
+** Pros: This implementation allows ToDo class to be easier to maintain and debug.
+** Cons: This implementation requires extensive refactor of existing tests.
+// end::addToDo[]
+
+// tag::checkToDo[]
+=== Check/UnCheck ToDo feature
+
+Checks or unchecks a To-do
+
+==== Current implementation
+
+The check/uncheck to-dos mechanism is facilitated by `CheckToDoCommand` and `UnCheckToDoCommand`, which resides inside `Logic` component. It supports modifying Status objects within ToDo objects. CheckToDoCommand and UnCheckToDoCommand inherit from `UndoableCommand`.
+
+Hence, CheckToDoCommand and UnCheckToDoCommand can be undone using `UndoRedoStack`.
+
+Similar to `Content` object, each `ToDo` object have a `Status` object, representing the status of the to-do.
+The status of a to-do can be either `done` or `undone`.
+
+When user check/uncheck an existing to-do of specific `Index`, a new `ToDo` is created, with the existing `ToDo`'s `Content` and appropriate new `Status`.
+
+The existing to-do is replaced by the new to-do in the `UniqueToDoList` and the current state of the address book is saved.
+<<fig46, Figure 46>> shows how the checkToDo operation works:
+[[fig46]]
+.Sequence Diagram for checkToDo.
+image::CheckToDoSequenceDiagram.png[width="800"]
+
+<<fig47, Figure 47>> shows how the unCheckToDo operation works:
+[[fig47]]
+.Sequence Diagram for unCheckToDo.
+image::UnCheckToDoSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `CheckToDoCommand` and `UnCheckToDoCommand`
+
+* **Alternative 1 (current choice):** Add a new method `setStatus(Status newStatus)` in `ToDo`
+** Pros: This implementation do not require a new `ToDo` object to be created to replace the existing to-do.
+** Cons: This implementation does not follow the Single Responsibility Principle.
+
+// end::checkToDo[]
+
+// tag::editToDo[]
+=== Edit ToDo feature
+
+Edits a To-do.
+
+==== Current implementation
+
+The edit to-dos mechanism is facilitated by `EditToDoCommand`, which resides inside `Logic` component. It supports modifying Content objects within ToDo objects. EditToDoCommand inherit from `UndoableCommand`.
+
+Hence, EditToDoCommand can be undone using `UndoRedoStack`.
+
+When user edit an existing to-do of specific `Index`, a new `ToDo` is created, with the new `Content` and a new `Status` of "undone" value.
+
+The existing to-do is replaced by the new to-do in the `UniqueToDoList` and the current state of the address book is saved.
+<<fig48, Figure 48>> shows how the editToDo operation works:
+[[fig48]]
+.Sequence Diagram for EditToDo.
+image::EditToDoSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `EditToDoCommand`
+
+* **Alternative 1 (current choice):** Add a new method `setContentAndStatus(Content content, Status newStatus)` in `ToDo`
+** Pros: This implementation do not require a new `ToDo` object to be created to replace the existing to-do.
+** Cons: This implementation does not follow the Single Responsibility Principle.
+
+// end::editToDo[]
+
+// tag::deleteToDo[]
+=== Delete ToDo feature
+
+Deletes a To-Do.
+
+==== Current implementation
+
+The delete to-dos mechanism is facilitated by `DeleteToDoCommand`, which resides inside `Logic` component. It supports deleting ToDo objects. DeleteToDoCommand inherit from `UndoableCommand`.
+
+Hence, DeleteToDoCommand can be undone using `UndoRedoStack`.
+
+When user delete an existing to-do of specific `Index`, the `UniqueToDoList` within `AddressBook` is updated and stored in the `StorageManager`.
+
+<<fig49, Figure 49>> shows how the deleteToDo operation works:
+[[fig49]]
+.Sequence Diagram for DeleteToDo.
+image::DeleteToDoSequenceDiagram.png[width="800"]
 
 ---

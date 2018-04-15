@@ -50,6 +50,9 @@ public class CalendarPanel extends UiPart<Region> {
         calendar.setStyle(Calendar.Style.STYLE2);
         calendarSource.getCalendars().add(calendar);
 
+        diabledEventHandlerForEntrySelectionEvent();
+        disabledCreateEntryWithDoubleClicked();
+
         setConnections(entries);
         registerAsAnEventHandler(this);
     }
@@ -63,19 +66,25 @@ public class CalendarPanel extends UiPart<Region> {
         for (AppointmentEntry entry : entries) {
             calendar.addEntry(entry.getAppointmentEntry());
         }
+        calendarView.getCalendarSources().add(calendarSource);
+    }
 
+    /**
+     * Disabled double click to add new entry in calendar
+     */
+    public void disabledCreateEntryWithDoubleClicked() {
         calendarView.setEntryFactory(new Callback<DateControl.CreateEntryParameter, Entry<?>>() {
             @Override
             public Entry<?> call(DateControl.CreateEntryParameter param) {
                 return null;
             }
         });
-
-        calendarView.getCalendarSources().add(calendarSource);
-        setEventHandlerForEntrySelectionEvent();
     }
 
-    public void setEventHandlerForEntrySelectionEvent() {
+    /**
+     * Disable pop over when clicked on the appointment entry
+     */
+    public void diabledEventHandlerForEntrySelectionEvent() {
         calendarView.setEntryDetailsPopOverContentCallback(new Callback<DateControl.EntryDetailsPopOverContentParameter,
                 Node>() {
             @Override

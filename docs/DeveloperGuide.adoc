@@ -392,6 +392,25 @@ by the user. It then creates a new patient with the same attributes as the patie
 match the user input. The `RemarkCommand` then calls for the utility method `updatePerson` under `Model`, to replace the patient to be
 edited with the edited patient.
 
+The `Patient` is updated in the following manner:
+[source,java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(patientToEdit);
+        requireNonNull(editedPatient);
+
+        try {
+            model.updatePerson(patientToEdit, editedPatient);
+        } catch (DuplicatePatientException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PatientNotFoundException pnfe) {
+            throw new AssertionError("The target patient cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(generateSuccessMessage(editedPatient));
+    }
+----
+
 Suppose that the user has just launched the application. The current patient queue is shown in the figure below.
 
 .The current queue
@@ -640,6 +659,59 @@ The edit records mechanism functions like that of the `EditCommand`. It searches
 by the user. It then creates a new patient with the same attributes as the patient to be edited, changing the records attribute to
 match the user input. The `RecordCommand` then calls for the utility method `updatePerson` under `Model`, to replace the patient to be
 edited with the edited patient.
+
+The inputs from the user are handled in the following manner:
+[source,java]
+----
+private void closeWindow(String date, String symptom, String illness, String treatment) {
+        if (date.equals("") || symptom.equals("") || illness.equals("") || treatment.equals("")) {
+            messageText.setText("Please fill in all fields.");
+        } else {
+            if (RecordManager.authenticate(date, symptom, illness, treatment)) {
+                messageText.setText("Success! Please close this window.");
+                closeButtonAction();
+            } else {
+                if (!DateOfBirth.isValidDob(date)) {
+                    messageText.setText("Date should only contain digits and"
+                            + "slashes, in the following format DD/MM/YYYY");
+                } else {
+                    messageText.setText("Text field should only contain"
+                            + "visible characters and spaces, and it should not be blank");
+                }
+            }
+        }
+    }
+----
+
+The `editedPatient` is created in the following manner:
+[source,java]
+----
+protected void preprocessUndoableCommand() throws CommandException {
+        List<Patient> lastShownList = model.getFilteredPersonList();
+
+        if (patientIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        patientToEdit = lastShownList.get(patientIndex.getZeroBased());
+
+        //creating medical record window here and obtaining user input
+        if (!isTest) { //only execute if it is not a test
+            RecordWindow recordWindow = new RecordWindow();
+            Stage stage = new Stage();
+            recordWindow.start(stage, patientToEdit.getRecord(recordIndex.getZeroBased()));
+        }
+
+        Record editedRecord = RecordManager.getRecord();
+
+        if (editedRecord == null) {
+            editedPatient = patientToEdit;
+        } else {
+            editedPatient = createEditedPatient(patientToEdit, recordIndex.getZeroBased(), editedRecord);
+        }
+    }
+----
+
 
 Suppose that the user has just launched the application. The current patient queue is shown in the figure below.
 

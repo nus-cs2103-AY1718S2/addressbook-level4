@@ -1481,26 +1481,65 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Adding a student
 
-=== Deleting a person
+. Adding a student into HR+
 
-. Deleting a person while all persons are listed
+.. Prerequisites: No student contact in HR+ has the same name, phone number, email, address, university, expected graduation year, major and grade point average as the student contacts to be added.
+.. Command: `add n/Damith p/98765432 e/damith@nus.edu.sg a/311, Clementi Ave 2, #02-25 u/NUS y/2018 m/Computer Science g/2.74 j/Software Developer c/Extraordinary Regex skill` +
+   Expected: A student named Damith with the above particulars will be added into HR+. The student will be shown in the persons list panel.
+.. Add a resume pdf file named resume.pdf to the same folder as the jar file. It also must be valid PDF and smaller than 1MB. +
+   Add an image named image.jpg to the same folder as the jar file. It also must be valid image file and smaller than 1MB. +
+   Command: `add n/Irene Bae p/83627133 e/irene@sm.com a/341, Woodlands Drive 20, #22-15 u/SNU y/2020 m/Computer Engineering g/4.87 j/Software Tester r/resume.pdf i/image.jpg +
+   Expected: A student named Irene is added with the above particulars. A resume and a profile image will be added.
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
-   Expected: Similar to previous.
+=== Showing info panel or resume
 
-_{ more test cases ... }_
+. Showing either student info or resume in the right panel
 
-=== Saving data
+.. Prerequisites: A student is selected using the `select` command.
+.. Command: `show resume` +
+   Expected: The resume of the student is displayed when it is available.
+   Command: `show info` +
+   Expected: The information of the student is displayed in the right panel.
 
-. Dealing with missing/corrupted data files
+=== Scheduling an interview
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
-_{ more test cases ... }_
+=== Rating a student
+
+. Adding rating scores to a student without ratings
+
+.. Prerequisites: Student at index 2 must not have ratings yet.
+.. Command: `rate 2 t/3.45 c/4.5 p/3.25 e/4` +
+            `select 2` +
+   Expected: Ratings of the second person updated to the above scores. Overall rating is updated to 3.8.
+
+=== Editing a rating
+
+. Editing rating scores assigned to a student whom you have already rated
+
+.. Prerequisites: Student at index 2 must have rating scores assigned already.
+.. Command: `rating-edit 2 t/4.2` +
+            `select 2` +
+   Expected: Technical skills score of the second student is updated to 4.2.
+
+=== Deleting a rating
+
+. Deleting rating scores assigned to a student whom you have already rated
+
+.. Prerequisites: Student at index 2 must have rating scores assigned already.
+.. Command: `rating-delete 2` +
+   Expected: Rating scores of the second student is cleared.
+
+=== Sorting the students list
+
+. Sorting the list of students in the left panel according to some order
+
+.. Command: `sort rating o/desc` +
+   Expected: List of students in the left panel are arranged based on their overall rating in descending order.
+.. Command: `sort name o/asc` +
+   Expected: List of students in the left panel are listed in alphabetical order with cases ignored.
+
+
+

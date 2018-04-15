@@ -59,7 +59,7 @@ public class ReviewCommandSystemTest extends AddressBookSystemTest {
     public void review() throws Exception {
         Model model = getModel();
         UnlockCommand testUnlockCommand = new UnlockCommand();
-        testUnlockCommand.setTestMode();
+        testUnlockCommand.setTestMode(true);
         testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
         showAllPersons();

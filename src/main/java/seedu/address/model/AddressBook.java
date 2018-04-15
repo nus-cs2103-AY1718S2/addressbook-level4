@@ -207,21 +207,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         StringBuilder sb = new StringBuilder();
         sb.append("Name,Phone,Email,Address,Group,Total Commission,Insurances,Tags\n");
         for (Person person : persons) {
-            String group, insurance, tags;
+            String group = "";
+            String insurance = "";
+            String tags = "";
             if (person.getGroup() != null) {
                 group = person.getGroup().toString();
-            } else {
-                group = "";
             }
             if (person.getInsurance() != null) {
                 insurance = person.getInsurance().toString();
-            } else {
-                insurance = "";
             }
             if (person.getTags() != null) {
                 tags = person.getTags().toString();
-            } else {
-                tags = "";
             }
             sb.append("\"" + person.getName().toString() + "\",");
             sb.append("\"" + person.getPhone().toString() + "\",");

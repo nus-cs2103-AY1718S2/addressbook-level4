@@ -489,6 +489,14 @@ We have a few exciting ideas to further improve ST for you!
 
 === Use current location to find vacant rooms _(coming in v2.0)_
 
+You will be able to find vacant rooms in nearest building just by providing your current location. +
+Format: `vacant current location`
+
+Examples:
+
+* `vacant current location` +
+Displays the list of rooms schedule for the day in the nearest building
+
 === Modules Tag _(coming in v2.0)_
 
 Each friend will be able to have their own list of modules they have taken. +

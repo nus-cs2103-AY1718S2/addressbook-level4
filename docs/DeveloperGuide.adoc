@@ -510,10 +510,12 @@ private void checkPasswordChanged() {
 ----
 This change would cause the `PasswordWindow` to display instead of the `MainWindow`, requesting for a password input by the user.
 
+.Passard Box UI
 image::passwordBox.png[width="800"]
 
 If the password the user input is unable to decrypt `addressbook.xml`, a `WrongPasswordEvent` is raised which will cause the `PasswordUiManager` to display the following dialog to the user:
 
+.Wrong Password Popup
 image::wrongPasswordDialog.png[width="800"]
 
 If the password the user input successfully decrypts `addressbook.xml`, a `CorrectPasswordEvent` is raised. This event is handled by the `PasswordUiManager` which will start the `UiManager`.
@@ -569,23 +571,6 @@ The import StardyTogether mechanism is facilitated by `XmlSerializableAddressBoo
 The imported StardyTogether must be a XML file that follows `XmlAdaptedPerson`, `XmlAdaptedTag`, and `XmlAdaptedAlias` format.
 
 `Person`,`Tag`, and `Alias` from imported StardyTogether file that are not a duplicate of existing `Person`, `Tag`, and `Alias` in the user's StardyTogether will be added.
-
-The following code shows how `Person`,`Tag`, and `Alias` are imported into StardyTogether:
-
-----
-public AddressBook addToAddressBook(AddressBook addressBook) throws IllegalValueException {
-    for (XmlAdaptedTag t : tags) {
-        addressBook.importTag(t.toModelType());
-    }
-    for (XmlAdaptedPerson p : persons) {
-        addressBook.importPerson(p.toModelType());
-    }
-    for (XmlAdaptedAlias a : aliases) {
-        addressBook.importAlias(a.toModelType());
-    }
-    return addressBook;
-}
-----
 
 The following sequence diagram shows how the import operation works:
 
@@ -742,8 +727,6 @@ We have added the list of NUS buildings and the list of rooms in each building i
 We use `ReadOnlyJsonVenueInformation`, which resides inside `Storage` to read and store the room timetable data inside `nusVenues` in `Room` class, and also store NUS Buildings and their respective rooms inside `nusBuildingsAndRooms` in `Building` class.
 
 To avoid reading the data from Venue Information JSON file whenever the `vacant` command is executed, we only read the data once when the `MainApp` starts.
-
-The following sequence diagram shows how the vacant command is parsed:
 
 `ModelManager` will checks if the building is in the list of NUS Buildings, and will throw `BuildingNotFoundException` if the building is not in the list of NUS Buildings.
 
@@ -1143,8 +1126,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
-_{More to be added}_
-
 [appendix]
 == Use Cases
 
@@ -1243,9 +1224,6 @@ Steps 4a1-4a2 are repeated until the command and alias entered are valid.
 +
 Use case ends
 
-
-_{More to be added}_
-
 [appendix]
 == Non Functional Requirements
 
@@ -1261,8 +1239,6 @@ _{More to be added}_
 .  Should work in both 32-bit and 64-bit environments.
 .  Should be usable by a new user who has not used command line interface before.
 
-_{More to be added}_
-
 [appendix]
 == Glossary
 
@@ -1271,23 +1247,6 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing
@@ -1311,8 +1270,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed
@@ -1322,10 +1279,8 @@ _{ more test cases ... }_
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
-
-_{ more test cases ... }_
 
 === Saving data
 
@@ -1334,6 +1289,55 @@ _{ more test cases ... }_
 .. Test case: Delete `addressbook.xml` +
    Expected: Application opens with an address book with dummy data.
 .. Test case: Corrupt `addressbook.xml` by editing it +
-   Expected: Application opens with an address book with dummy data.
+   Expected: Application opens with an address book with empty data.
 
-_{ more test cases ... }_
+=== Importing a file
+
+. Importing a file from filepath
+
+.. Prerequisites: a valid filepath with valid format
+.. Test case: `import VALID_FILE_PATH` +
+   Expected: All students, tags, and aliases from the imported file are added to StardyTogether.
+.. Test case: `import INVALID_FILE_PATH` +
+   Expected: Invalid filepath error message will be shown
+.. Other incorrect import commands to try: `import`, `import filepath wrongPassword` (where wrongPassword is wrong), `import INVALID_FILE_FORMAT` (where file is in invalid format) +
+   Expected: Invalid command error message will be shown
+
+=== Exporting a file
+
+. Exporting a file to filepath
+
+.. Prerequisites: a valid filepath
+.. Test case: `list` then `export VALID_FILE_PATH` +
+   Expected: All persons, tags, and alias from StardyTogether are exported to filepath.
+.. Test case: `find alex` then `export VALID_FILE_PATH` +
+   Expected: All persons with `Alex` in his/her name, tags, and aliases from StardyTogether are exported to filepath.
+.. Test case: `find nonExistentName` then `upload VALID_FILE_PATH` +
+   Expected: All tags, and aliases from StardyTogether are exported to filepath. No persons are exported.
+.. Test case: `export INVALID_FILE_PATH` +
+   Expected: error message will be shown
+.. Other incorrect export commands to try: `export`, `export filepath password  ` (notice the spaces) +
+   Expected: Invalid command error message will be shown
+
+=== Uploading a file
+
+. Uploading a file to Google Drive
+
+.. Prerequisites: user granted StardyTogether access to Google Drive
+.. Test case: `list` then `upload VALID_FILE_NAME` +
+   Expected: All persons, tags, and alias from StardyTogether are uploaded to Google Drive.
+.. Test case: `find alex` then `upload VALID_FILE_NAME` +
+   Expected: All persons with `Alex` in his/her name, tags, and aliases from StardyTogether are uploaded to Google Drive.
+.. Test case: `find nonExistentName` then `upload VALID_FILE_NAME` +
+   Expected: All tags, and aliases from StardyTogether are uploaded to Google Drive. No persons are uploaded.
+
+.. Prerequisites: user does not grant StardyTogether access to Google Drive
+.. Test case: `upload VALID_FILE_NAME` +
+   Expected: No authorization error message will be shown
+.. Prerequisites: user does not respond to authorization request
+.. Test case: `upload VALID_FILE_NAME` +
+   Expected: Authorization request timed out error message will be shown
+.. Other incorrect upload commands to try: `upload`, `upload filename   password  ` (notice the spaces) +
+   Expected: Invalid command error message will be shown
+
+

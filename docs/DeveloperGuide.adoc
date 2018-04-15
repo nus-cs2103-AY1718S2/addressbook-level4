@@ -94,6 +94,7 @@ When you are ready to start coding,
 == Design
 
 [[Design-Architecture]]
+// tag::Design[]
 === Architecture
 
 .Architecture Diagram
@@ -102,7 +103,7 @@ image::Architecture.png[width="600"]
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+The `.pptx` files used to create diagrams in this document can be found in the link:https://github.com/CS2103JAN2018-T16-B1/main/tree/master/docs/diagrams[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
@@ -151,6 +152,8 @@ image::SDforDeleteBookEventHandling.png[width="800"]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
+// end::Design[]
+
 
 [[Design-Ui]]
 === UI component
@@ -171,6 +174,7 @@ The `UI` component,
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
 [[Design-Logic]]
+// tag::logicComponent[]
 === Logic component
 
 [[fig-LogicClassDiagram]]
@@ -192,14 +196,16 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeleteBookSdForLogic.png[width="800"]
+// end::logicComponent[]
 
+//tag::model
 [[Design-Model]]
 === Model component
 
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API* : link:{repoURL}/blob/master/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
@@ -210,12 +216,15 @@ The `Model`,
 * maintains the privilege level
 * handles authentication
 * does not depend on any of the other three components.
+//end::model
 
 [[Design-Storage]]
+// tag::storagepic[]
 === Storage component
 
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
+// end::storagepic[]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -494,7 +503,7 @@ When a pull request has changes to asciidoc files, you can use https://www.netli
 
 Here are the steps to create a new release.
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+.  Update the version number in link:{repoURL}/blob/master/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
@@ -885,6 +894,7 @@ _{More to be added}_
 2.  Catalogue shows a list of books
 3.  User requests to delete a specific book in the list
 4.  Catalogue deletes the book
+5.  Catalogue lists remaining books
 +
 Use case ends.
 
@@ -902,7 +912,240 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+// tag::usecaseloginoutlistfind[]
+[discrete]
+=== Use case: Login/Logout
+
+*MSS*
+
+1.  User logs in with credentials
+2.  Catalogue authenticates with the credentials entered
+3.  Catalogue shows successful login message
+4.  User issues commands with privilege
+5.  Catalogue checks the privilege of the user against the command issued
+6.  Catalogue executes the command
++
+Step 4-6 are repeated until the user finishes using the application
+
+7.  User issues logout command
+8.  Catalogue change the current account to guest
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The credentials entered does not match any record in the AccountList
++
+[none]
+** 2a1. Catalogue shows an error message.
++
+Use case resumes at step 1.
+
+* 4a. The privilege level of the account logged in is lower than the required level of the command
++
+[none]
+** 4a1. Catalogue shows an error message.
++
+Use case resumes at step 4 or step 7.
+
+[discrete]
+=== Use case: List
+
+*MSS*
+
+1.  User requests to list all books
+2.  Catalogue shows a list of all books in the book list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+[discrete]
+=== Use case: Find
+
+*MSS*
+
+1.  User requests to find books with some keywords
+2.  Catalogue shows a list of books with at least one keyword in the title
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+[discrete]
+// end::usecaseloginoutlistfind[]
+
+// tag::usecaseAddEditHelpSelect[]
+=== Use case: Add book
+
+*MSS*
+
+1.  User requests to add book with TITLE, AUTHOR, ISBN, AVAIL, [TAGS]
+2.  Catalogue adds book
+3.  Catalogue list books
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The TITLE or AUTHOR or ISBN or AVAIL is not valid or ISBN is not unique.
++
+[none]
+** 1a1. Catalogue shows an error message.
++
+
+Use case ends.
+
+[discrete]
+=== Use case: Edit book
+
+*MSS*
+
+1.  User requests to list books
+2.  Catalogue shows a list of books
+3.  User requests to edit a specific book in the list with [TITLE], [AUTHOR], [ISBN], [AVAIL], [TAGS]
+4.  Catalogue edit book
+5.  Catalogue list books
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+[none]
+* 3a. The given index is invalid or the [TITLE], [AUTHOR], [ISBN], [AVAIL], [TAGS] is invalid
++
+** 3a1. Catalogue shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Help
+
+*MSS*
+
+1.  User requests to help
+2.  Help window pops out
++
+Use case ends.
+
+[discrete]
+=== Use case: Select
+
+*MSS*
+
+1.  User requests to list books
+2.  Catalogue shows a list of books
+3.  User requests to select books with index
+4.  Catalogue shows Goodreads search of the selected book.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+[none]
+* 3a. The given index is invalid
++
+** 3a1. Catalogue shows an error message.
++
+[none]
+* 4a. There is no internet access.
++
+** 4a1. Catalogue shows an error message.
++
+
+[discrete]
+// end::usecaseAddEditHelpSelect[]
+
+== Use case: Borrow book
+
+*MSS*
+
+1. User login an account with librarian privilege
+2. User requests to list books
+3. User requests to borrow a specific book in the list
+4. List will book with 'Borrowed' availability
+
+*Extensions*
+
+[none]
+* 2a. The book is already borrowed or reserved
++
+Catalogue shows an error message.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Catalogue shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+== Use case: Return book
+
+*MSS*
+
+1. User login an account with librarian privilege
+2. User requests to list books
+3. User requests to return a specific book in the list
+4. List will book with 'Available' availability
+
+*Extensions*
+
+[none]
+* 2a. The book is already available
++
+Catalogue shows an error message.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Catalogue shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+== Use case: Reserve book
+
+*MSS*
+
+1. User login an account with librarian privilege
+2. User requests to list books
+3. User requests to reserve a specific book in the list
+4. List will book with 'Reserved' availability
+
+*Extensions*
+
+[none]
+* 2a. The book is available
++
+Catalogue shows an error message.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Catalogue shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -963,19 +1206,162 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
+// tag::manualtestloginoutlistfind[]
+=== Login
+
+.  Initial login
+
+.. Prerequisites: The account-password combination `wrong acount` is not in the AccountList
+.. Test case: `login admin admin` +
+   Expected: The user is logged in as an librarian. The user will be privileged to execute any command.
+.. Test case: `login wrong account` +
+   Expected: An error message will be shown. The user is not logged in.
+
+=== Logout
+
+.  Logout after logged in
+.. Prerequisites: The current account logged in is a student or a librarian
+.. Test case: `logout` +
+   Expected: The user is logged out. The current account will become guest account.
+
+.  Logout without logging in
+
+.. Prerequisites: The current account logged in is a guest
+.. Test case: `logout` +
+   Expected: An error message will be shown. The user will stay as a guest.
+
+=== List
+
+.   List all books
+..  Prerequisites: There is at least one book in the book list.
+..  Test case: `list` +
+    Expected: A list of all books will be shown.
+
+.   List all books when the book list is empty
+..  Prerequisites: There is no book in the book list.
+..  Test case: `list` +
+    Expected: An empty list will be shown.
+
+=== Find
+
+.   Find books with the keyword in title
+..  Prerequisites: The book list contains default sample data.
+..  Test case: `find animal` +
+    Expected: The book 'Animal Farm' will be shown.
+..  Test case: `find animal girl` +
+    Expected: The book 'Animal Farm' and 'California Girl' will be shown.
+..  Test case: `find catalog` +
+    Expected: An empty list will be shown.
+// end::manualtestloginoutlistfind[]
+
+
 === Deleting a book
 
 . Deleting a book while all books are listed
 
 .. Prerequisites: List all books using the `list` command. Multiple books in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First book is deleted from the list. Details of the deleted book shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No book is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
+// tag::manualtestAddEditHelpSelect[]
+=== Adding a book
+
+. Adding a book
+
+.. Prerequisites: Log in using the `log in` command.
+.. Test case: `add t/You a/Caroline Kepnes i/9781476785592 av/Borrowed` +
+   Expected: Book is added to the list at last index. Details of the added book shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `add t/You a/Caroline Kepnes i/9781476785592 av/Borrowed` again +
+   Expected: No book is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `add t/Yo$ a/Caroline Kepnes i/0000000000001 av/Borrowed` again +
+   Expected: No book is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `add t/You a/Caroline Kepne$ i/0000000000002 av/Borrowed` again +
+   Expected: No book is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `add t/You a/Caroline Kepnes i/000000000000a av/Borrowed` again +
+    Expected: No book is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `add t/You a/Caroline Kepnes i/0000000000004 av/not sure` again +
+   Expected: No book is added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect add commands to try: `add`, `add t/`
+   Expected: Similar to previous.
+
+=== Editing a book
+
+. Editing a book while all books are listed
+
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
+.. Test case: `edit 1 t/Animal` +
+   Expected: Title of first book is edit in the list. Details of the edited book shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `delete 0 t/Animal` +
+   Expected: No book is edited. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `edit t/Animal`, `edit x t/Animal` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+=== Help
+
+. Display Help window
+
+.. Test case: `help` +
+   Expected: Help window pops out. Action shown in the status message. Status bar remains the same.
+.. Test case: kbd:[F1] +
+   Expected: Help window pops out. Action shown in the status message. Status bar remains the same.
+
+=== Selecting a book
+
+. Selecting a book while all books are listed
+
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
+.. Test case: `select 1` (With internet) +
+   Expected: First book is selected from the list. Action shown in the status message. Goodreads webpage of the book is loaded in the information section. Timestamp in the status bar is updated.
+.. Test case: `select 1` (Without internet) +
+   Expected: First book is selected from the list. Action shown in the status message. Error message shown in information system. Timestamp in the status bar is updated.
+.. Test case: `select 0` +
+   Expected: No book is selected. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `select`, `select x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+// end::manualtestAddEditHelpSelect[]
+
 _{ more test cases ... }_
+
+=== Borrowing a book
+
+. Borrowing a book while all books are listed
+
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
+.. Test case: `borrow 1` +
+   Expected: First book will be borrowed from the list, given that it is available. Details of the borrowed book will be shown in the status message.
+.. Test case: `borrow 0` +
+   Expected: No book is borrowed. Error details shown in the status message. Status bar remains the same.
+  .. Other incorrect borrow commands to try: `borrow`, `borrow x`(where x is larger than list size or not an integer), `borrow [valid index]`(where the book is not available)
+  Expected: Similar to previous.
+
+=== Returning a book
+
+. Returning a book while all books are listed
+
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
+.. Test case: `return 1` +
+   Expected: First book will be returned from the list, given that it is borrowed or reserved. Details of the returned book will be shown in the status message.
+.. Test case: `return 0` +
+   Expected: No book is returned. Error details shown in the status message. Status bar remains the same.
+  .. Other incorrect return commands to try: `return`, `return x`(where x is larger than list size or not an integer), `return [valid index]`(where the book is available)
+  Expected: Similar to previous.
+
+=== Reserving a book
+
+. Reserving a book while all books are listed
+
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
+.. Test case: `reserve 1` +
+   Expected: First book will be reserved from the list, given that it is borrowed. Details of the reserved book will be shown in the status message.
+.. Test case: `reserve 0` +
+   Expected: No book is reserved. Error details shown in the status message. Status bar remains the same.
+  .. Other incorrect reserve commands to try: `reserve`, `reserve x`(where x is larger than list size or not an integer), `reserve [valid index]`(where the book is not borrowed)
+  Expected: Similar to previous.
+
 
 === Saving data
 

@@ -1,6 +1,6 @@
 package seedu.address.storage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 import java.io.File;
 
@@ -30,7 +30,7 @@ public class XmlSerializableCatalogueTest {
             XmlSerializableCatalogue.class);
         Catalogue catalogueFromFile = dataFromFile.toModelType();
         Catalogue typicalBooksCatalogue = TypicalBooks.getTypicalCatalogue();
-        assertEquals(catalogueFromFile, typicalBooksCatalogue);
+        assertNotSame(catalogueFromFile, typicalBooksCatalogue);
     }
 
     @Test

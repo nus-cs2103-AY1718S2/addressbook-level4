@@ -4,9 +4,7 @@ import seedu.address.model.account.Account;
 import seedu.address.model.account.Credential;
 import seedu.address.model.account.MatricNumber;
 import seedu.address.model.account.Name;
-import seedu.address.model.account.Password;
 import seedu.address.model.account.PrivilegeLevel;
-import seedu.address.model.account.Username;
 
 //@@author victortardieu
 /**
@@ -19,17 +17,14 @@ public class AccountBuilder {
     public static final String DEFAULT_PRIVILEGE_LEVEL = "2";
     public static final String DEFAULT_USERNAME = "victor";
     public static final String DEFAULT_PASSWORD = "victor123";
-    public static final String DEFAULT_CREDENTIAL = null;
 
     private Name name;
     private Credential credential;
     private MatricNumber matricNumber;
     private PrivilegeLevel privilegeLevel;
-    private Username username;
-    private Password password;
 
     /**
-     *  Constructor for account with default values
+     * Constructor for account with default values
      */
     public AccountBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -40,6 +35,7 @@ public class AccountBuilder {
 
     /**
      * Sets the {@code Name} of the {@code Account} that we are building.
+     *
      * @param name
      * @return
      */
@@ -50,6 +46,7 @@ public class AccountBuilder {
 
     /**
      * Sets the {@code Credential} of the {@code Account} that we are building.
+     *
      * @param username
      * @param password
      * @return
@@ -61,6 +58,7 @@ public class AccountBuilder {
 
     /**
      * Sets the {@code MatricNumber} of the {@code Account} that we are building.
+     *
      * @param matricNumber
      * @return
      */
@@ -71,16 +69,18 @@ public class AccountBuilder {
 
     /**
      * Sets the {@code PrivilegeLevel} of the {@code Account} that we are building.
+     *
      * @param privilegeLevel
      * @return
      */
-    public AccountBuilder withPrivilegeLevel (String privilegeLevel) {
+    public AccountBuilder withPrivilegeLevel(String privilegeLevel) {
         this.privilegeLevel = new PrivilegeLevel(Integer.parseInt(privilegeLevel));
         return this;
     }
 
     /**
      * Create an account
+     *
      * @return
      */
     public Account build() {

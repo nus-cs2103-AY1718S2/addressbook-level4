@@ -32,6 +32,7 @@ public class Title {
         this.fullTitle = title;
     }
     //@@author
+
     /**
      * Returns true if a given string is a valid book name.
      */

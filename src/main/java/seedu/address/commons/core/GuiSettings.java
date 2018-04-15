@@ -1,6 +1,7 @@
 package seedu.address.commons.core;
 
 import java.awt.Point;
+
 import java.io.Serializable;
 import java.util.Objects;
 

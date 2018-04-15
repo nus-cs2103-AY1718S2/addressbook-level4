@@ -8,9 +8,11 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddAccountCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.commands.ClearAccountCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteAccountCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -21,6 +23,8 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ReserveCommand;
+import seedu.address.logic.commands.ReturnCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -97,8 +101,20 @@ public class CatalogueParser {
         case AddAccountCommand.COMMAND_WORD:
             return new AddAccountCommandParser().parse(arguments);
 
+        case BorrowCommand.COMMAND_WORD:
+            return new BorrowCommandParser().parse(arguments);
+
+        case ReturnCommand.COMMAND_WORD:
+            return new ReturnCommandParser().parse(arguments);
+
+        case ReserveCommand.COMMAND_WORD:
+            return new ReserveCommandParser().parse(arguments);
+
         case ClearAccountCommand.COMMAND_WORD:
             return new ClearAccountCommand();
+
+        case DeleteAccountCommand.COMMAND_WORD:
+            return new DeleteAccountCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

@@ -19,12 +19,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.book.Book;
 import seedu.address.model.tag.Tag;
 
-public class CatalogueTest {
-    @Rule
+public class CatalogueTest { @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     private final Catalogue catalogue = new Catalogue();
-
     @Test
     public void constructor() {
         assertEquals(Collections.emptyList(), catalogue.getBookList());

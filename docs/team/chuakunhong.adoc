@@ -26,7 +26,7 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 ** Project management:
 
 ** Enhancements to existing features:
-
+*** Extracted out EditPersonDescriptor as a class on it's own as it is shared by many other commands. This is to better edit the commands in the future as we add more commands.
 ** Documentation:
 
 ** Community:

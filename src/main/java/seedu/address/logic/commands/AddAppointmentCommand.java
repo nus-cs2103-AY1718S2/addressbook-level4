@@ -25,7 +25,7 @@ public class AddAppointmentCommand extends Command {
             + "INDEX (must be a positive integer) "
             + "DATE TIME (24-hour clock) \n "
             + "*DATE must be after today's date \n"
-            + "Example: " + COMMAND_WORD + "1 2/4/2018 1300";
+            + "Example: " + COMMAND_WORD + " 1 2/4/2018 1300";
 
     public static final String MESSAGE_SUCCESS = "A new appointment is added.\n"
             + "Enter view appointment command to get updated calendar view.";

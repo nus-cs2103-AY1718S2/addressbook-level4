@@ -15,10 +15,10 @@ Integrated Medical DataBase (IMDB) is a desktop health records application which
 * *Major enhancement*: added new command to allow medical staffs *add/remove patient into/from visiting queue during registration*
 ** What it does: allows the user to manage the order of consultations of patient effectively.
 ** Justification: This feature improves the product significantly because a user can make mistakes if they do manual management of visiting queue.
-** Highlights: This enhancement affects commands to be added in future. It required an in-depth analysis of design alternatives.
+** Highlights: This enhancement affects commands to be added in future such as a new medical record will be created once a patient is added into queue. It required an in-depth analysis of design alternatives.
 ** Credits: none
 
-* *Minor enhancement*: added new commands *to manage patient appointments*.
+* *Minor enhancement*: added new commands *to manage patient appointments*. Medical staffs can manage patient appointments effectively. This enhancement affect commands to be added in future such as managing doctors' schedule
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-W15-B2/main/blob/master/collated/functional/Kyholmes.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B2/main/blob/master/collated/test/Kyholmes-test.md[Test code]]
 
@@ -32,12 +32,10 @@ Integrated Medical DataBase (IMDB) is a desktop health records application which
 *** Modified style for different feedback message (https://github.com/CS2103JAN2018-W15-B2/main/pull/4[#4])
 *** Added status bar in status bar footer to display number of records (https://github.com/CS2103JAN2018-W15-B2/main/pull/5[#5])
 *** Updated Application name and icon (https://github.com/CS2103JAN2018-W15-B2/main/pull/186[#186])
-** Documentation:
-***
+
 ** Community:
-***
+
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F12-B4/main/issues/140[#140], https://github.com/CS2103JAN2018-F12-B4/main/issues/137[#137], https://github.com/CS2103JAN2018-F12-B4/main/issues/135[#135])
-*** Some parts of the history feature I added was adopted by several other class mates
 ** Tools:
 *** Integrated a third party library (CalendarFX) to the project (https://github.com/CS2103JAN2018-W15-B2/main/pull/144[#144])
 ***
@@ -50,9 +48,11 @@ Integrated Medical DataBase (IMDB) is a desktop health records application which
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=Features]
 
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=visitingQueue]
+
+include::../UserGuide.adoc[tag=patientAppointment]
 
 == Contributions to the Developer Guide
 
@@ -60,7 +60,6 @@ include::../UserGuide.adoc[tag=dataencryption]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=addqremoveq]
 
-include::../DeveloperGuide.adoc[tag=dataencryption]
-
+include::../DeveloperGuide.adoc[tag=addqremoveappt]

@@ -679,7 +679,7 @@ each implementation and the pros and cons of each implementation:
 * **Alternative 2:** Remove the patient from the queue using their NRIC
 ** Pros: Will remove any errors caused by removing a patient from the queue by their index.
 ** Cons: Will require extra checking and verification.
-// end::addqremoveq
+// end::addqremoveq[]
 
 // tag::addqremoveappt[]
 === Patient appointment features
@@ -803,7 +803,7 @@ each implementation and the pros and cons of each implementation:
 ** Cons: Will require implementation to maintain the appointment index.
 
 
-// end::addqremoveappt
+// end::addqremoveappt[]
 
 // tag::record[]
 === Edit records feature

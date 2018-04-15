@@ -22,7 +22,7 @@ public class DeleteAppointmentCommand extends Command {
             + "Parameters: "
             + "INDEX (must be a positive integer) "
             + "DATE TIME (24-hour clock) \n "
-            + "Example: " + COMMAND_WORD + "1 2/4/2018 1300";
+            + "Example: " + COMMAND_WORD + " 1 2/4/2018 1300";
 
     public static final String MESSAGE_DELETE_SUCCESS = "The appointment is canceled. \n "
             + "Enter view appointment command to get updated calendar view.";

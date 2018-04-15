@@ -29,7 +29,7 @@ Depending on whether the Person is a Customer or Runner, their respective fields
 ** Project management:
 *** Managed and reviewed pull requests
 ** Enhancements to existing features:
-*** Tweaked the defaultpage to show a summary of keyboard shortcuts instead of a blank page (Pull requests https://github.com[tbc])
+*** Tweaked the defaultpage to show a summary of keyboard shortcuts instead of a blank page.
 ** Documentation:
 *** Added a section on manual testing in the Developer Guide.
 ** Community:

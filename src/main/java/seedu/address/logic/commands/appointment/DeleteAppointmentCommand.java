@@ -30,7 +30,7 @@ public class DeleteAppointmentCommand extends Command {
             + PREFIX_START_DATE_TIME + "START DATE TIME "
             + PREFIX_END_DATE_TIME + "END DATE TIME \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_TITLE + "Birthday "
+            + PREFIX_TITLE + "Interview "
             + PREFIX_START_DATE_TIME + "2018-03-26 12:00 "
             + PREFIX_END_DATE_TIME + "2018-03-26 12:30 ";
 

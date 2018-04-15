@@ -64,7 +64,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_CURRENT_POSITION + "CURRENT_POSITION] "
             + "[" + PREFIX_COMPANY + "COMPANY] "
-            + "[" + PREFIX_PROFILE_PICTURE + "PROFILE PICTURE NAME] "
+            + "[" + PREFIX_PROFILE_PICTURE + "PROFILE_PICTURE_PATH] "
             + "[" + PREFIX_SKILL + "SKILL]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "

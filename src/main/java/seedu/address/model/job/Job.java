@@ -94,7 +94,7 @@ public class Job {
                 .append(getLocation())
                 .append(" Number of Positions: ")
                 .append(getNumberOfPositions())
-                .append(" Tags: ");
+                .append(" Skills: ");
         getSkills().forEach(builder::append);
         return builder.toString();
     }

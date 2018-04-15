@@ -83,6 +83,10 @@ public class CliSyntax {
             PREFIX_REMARK_DESC, PREFIX_TAG_DESC)
             .collect(Collectors.toSet());
 
+    private static final Set<String> commandWordsWithOptionPrefix = Stream.of(
+            AddCommand.COMMAND_WORD, EditCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
+            ListAppointmentCommand.COMMAND_WORD).collect(Collectors.toSet());
+
     private static final Set<String> commandWords = Stream.of(
             AddCommand.COMMAND_WORD, EditCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
             FindCommand.COMMAND_WORD, ChangeThemeCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD,
@@ -105,6 +109,10 @@ public class CliSyntax {
 
     public Set<String> getCommandWords() {
         return CliSyntax.commandWords;
+    }
+
+    public Set<String> getCommandWordsWithOptionPrefix() {
+        return CliSyntax.commandWordsWithOptionPrefix;
     }
 
     public Set<String> getPrefixes() {

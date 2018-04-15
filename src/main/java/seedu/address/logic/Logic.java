@@ -47,6 +47,9 @@ public interface Logic {
     /** Returns a set of all command words. */
     Set<String> getAllCommandWords();
 
+    /** Returns a set of command words that require prefixes and options in syntax */
+    Set<String> getCommandWordsWithOptionPrefix();
+
     /** Returns a set of all prefixes. */
     Set<String> getAllPrefixes();
 

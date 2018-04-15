@@ -174,8 +174,6 @@ public class EditCommand extends UndoableCommand {
             case EDIT_PERSON:
                 resolvePersonDependencies();
                 model.updatePerson(personToEdit, editedPerson);
-                System.out.println(personToEdit.getNric().toString());
-                System.out.println(editedPerson.getNric().toString());
                 break;
             case EDIT_PET_PATIENT:
                 resolvePetPatientDependencies();
@@ -237,7 +235,7 @@ public class EditCommand extends UndoableCommand {
         Nric newNric = editedPerson.getNric();
 
         if (!oldNric.equals(newNric)) {
-            updatePetPatienstByOwnerNric(oldNric, newNric);
+            updatePetPatientsByOwnerNric(oldNric, newNric);
             updateAppointmentByOwnerNric(oldNric, newNric);
         }
     }
@@ -259,7 +257,10 @@ public class EditCommand extends UndoableCommand {
             if (newOwner == null) {
                 throw new CommandException("New owner must exist first before updating pet patient's owner NRIC!");
             }
-            updateAppointmentByOwnerNric(oldNric, newNric);
+            // we only update nric for appointments for that specific pet patient!
+            // this is because it might be an owner transfer. If there are some other pets under the previous owner,
+            // he/she may still be holding on to these pets.
+            updateAppointmentByOwnerNricForSpecificPetName(oldNric, newNric, oldPetName);
         }
         if (!oldPetName.equals(newPetName)) { // name edited
             updateAppointmentByPetPatientName(newNric, oldPetName, newPetName);
@@ -288,18 +289,8 @@ public class EditCommand extends UndoableCommand {
         LocalDateTime oldDateTime = appointmentToEdit.getDateTime();
         LocalDateTime newDateTime = editedAppointment.getDateTime();
 
-        for (Appointment a : model.getFilteredAppointmentList()) {
-            LocalDateTime dateTime = a.getDateTime();
-            if (newDateTime.isAfter(dateTime)
-                    && newDateTime.isBefore(dateTime.plusMinutes(30))
-                    && !dateTime.equals(oldDateTime)) {
-                throw new ConcurrentAppointmentException();
-            }
-            if (newDateTime.isBefore(dateTime)
-                    && newDateTime.plusMinutes(30).isAfter(dateTime)
-                    && !dateTime.equals(oldDateTime)) {
-                throw new ConcurrentAppointmentException();
-            }
+        if (model.hasConcurrentAppointment(oldDateTime, newDateTime)) {
+            throw new ConcurrentAppointmentException();
         }
     }
 
@@ -329,7 +320,7 @@ public class EditCommand extends UndoableCommand {
     /**
      * Helper function to update pet patient's owner from an old nric to new nric
      */
-    private void updatePetPatienstByOwnerNric(Nric oldNric, Nric newNric) throws
+    private void updatePetPatientsByOwnerNric(Nric oldNric, Nric newNric) throws
             PetPatientNotFoundException, DuplicatePetPatientException {
 
         ArrayList<PetPatient> petPatientArrayList = model.getPetPatientsWithNric(oldNric);
@@ -371,6 +362,24 @@ public class EditCommand extends UndoableCommand {
                 model.getAppointmentsWithNricAndPetName(ownerNric, oldPetName);
         EditAppointmentDescriptor ead = new EditAppointmentDescriptor();
         ead.setPetPatientName(newPetName);
+
+        for (Appointment currAppointment : appointmentArrayList) {
+            Appointment modifiedAppointment = createEditedAppointment(currAppointment, ead);
+            model.updateAppointment(currAppointment, modifiedAppointment);
+            model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        }
+    }
+
+    /**
+     * Helper function to update the pet patient owner's NRIC for all its appointment
+     */
+    private void updateAppointmentByOwnerNricForSpecificPetName(Nric oldNric, Nric newNric, PetPatientName oldPetName)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+
+        ArrayList<Appointment> appointmentArrayList =
+                model.getAppointmentsWithNricAndPetName(oldNric, oldPetName);
+        EditAppointmentDescriptor ead = new EditAppointmentDescriptor();
+        ead.setOwnerNric(newNric);
 
         for (Appointment currAppointment : appointmentArrayList) {
             Appointment modifiedAppointment = createEditedAppointment(currAppointment, ead);

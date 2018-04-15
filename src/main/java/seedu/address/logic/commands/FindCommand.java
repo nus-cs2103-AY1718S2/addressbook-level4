@@ -28,7 +28,7 @@ public class FindCommand extends Command {
             + "Accepted Options: -o (CONTACT-RELATED), -p (PET-PATIENT-RELATED)\n"
             + "Accepted Prefixes for Contacts: n/NAME, nr/NRIC, t/TAG\n"
             + "Accepted Prefixes for Pet Patient: n/NAME, s/SPECIES, b/BREED, c/COLOUR, bt/BLOODTYPE, t/TAG\n"
-            + "Example: " + COMMAND_WORD + "-o n/alice bob charlie";
+            + "Example: " + COMMAND_WORD + " -o n/alice bob charlie";
 
     private HashMap<String, String[]> hashMap;
     private int type = 0;

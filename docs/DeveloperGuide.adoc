@@ -715,6 +715,7 @@ private void changeWeekView(LocalDate date) {
 As the week view in calendarFX is different from the obtaining the week of year in the original Java API, there was a need to switch the week `value` obtained from `LocalDate` to fit the week `value` in the Calendar. Above illustrates the snippet of code used to convert from the `value` of the week obtained from `LocalDate` to fit the Calendar.
 
 Upon a successful listing, a `CommandResult(...)` class is called with a success message of the specified view.
+//end::listappt[]
 
 ==== Design Consideration
 
@@ -735,7 +736,6 @@ Upon a successful listing, a `CommandResult(...)` class is called with a success
 * **Alternative 2:** Use buttons and clicks to switch a calendar than to manually input a command
 ** Pros: There will be no need to implement any functions pertaining to `ListAppointment`.
 ** Cons: Defeats the purpose of a CLI-based application.
-//end::listappt[]
 
 // tag::delete[]
 === Deletion and Force Deletion of Contact, Pet Patient and Appointment
@@ -815,13 +815,14 @@ For each dependency deleted, it is stored in `List<...>` so that the `CommandRes
 * **Alternative 2 (current choice):** Have a force delete function that will delete all dependencies along with the element to be deleted.
 ** Pros: Easier to use. Users do not need to manually find and delete all dependencies, it just gets deleted immediately if required.
 ** Cons: Need to delete dependencies upon calling a force function. In addition, the dependencies deleted must be shown as well to inform users of all deleted elements.
+//end::delete[]
 
 ==== Current Limitations
 As of now, users are only capable of deleting an element based on its `Index` displayed in Medeina. This may pose as difficult for users if they want to delete an element based on the list displayed through the `list` command, especially if there is alot of data in Medeina.
 
 ==== Future Considerations
 In the coming future, the `Delete` function can be altered such that it allows users to input other fields other than just `Index`, so that users do not need to get a list before deleting a particular element, especially if the user wants to delete an element that is not in the current listing (i.e. not on the listing after a `find` command).
-//end::delete[]
+
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

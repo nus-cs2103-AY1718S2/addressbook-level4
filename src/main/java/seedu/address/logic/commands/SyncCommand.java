@@ -165,8 +165,12 @@ public class SyncCommand extends Command {
      */
     private JsonObject getCurrentPriceRawData(String commaSeparatedCodes) {
         List<NameValuePair> currentPriceParams = buildParams(commaSeparatedCodes, CURRENT);
-        JsonObject currentPriceData = getJsonObject(cryptoCompareApiUrl, currentPriceParams);
-        return currentPriceData.get("RAW").getAsJsonObject();
+        JsonElement currentPriceData = getJsonObject(cryptoCompareApiUrl, currentPriceParams).get("RAW");
+        if (currentPriceData == null) {
+            return new JsonObject();
+        } else {
+            return currentPriceData.getAsJsonObject();
+        }
     }
 
     /**
@@ -186,7 +190,7 @@ public class SyncCommand extends Command {
         } catch (ExecutionException ee) {
             logger.warning("Data fetching error");
         }
-        return null;
+        return new JsonObject();
     }
 
     /**

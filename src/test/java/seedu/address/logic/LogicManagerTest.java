@@ -50,8 +50,8 @@ public class LogicManagerTest {
 
     //@@author laichengyu
     @Test
-    public void execute_syncCommandError_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
+    public void execute_syncCommand_success() {
+        thrown = ExpectedException.none();
         assertSyncCorrect();
     }
     //@@author

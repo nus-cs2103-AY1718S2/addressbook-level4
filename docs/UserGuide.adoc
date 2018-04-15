@@ -1,3 +1,4 @@
+= image:CodeducatorTitle.png[width=60px] Codeducator - User Guide
 :imagesDir: images
 :toc:
 :toc-title:
@@ -16,9 +17,7 @@ endif::[]
 :contactsURL: https://contacts.google.com/
 :calendarURL: https://calendar.google.com/calendar/r/week
 
-= image:CodeducatorTitle.png[width=60px] Codeducator - User Guide
 By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
-
 
 == Welcome to Codeducator!
 

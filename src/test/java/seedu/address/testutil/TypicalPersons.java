@@ -36,7 +36,8 @@ public class TypicalPersons {
             .withNameOfKin("Betty", "98763451", "betty@gmail.com", "Mother").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier").withNric("S9123456X")
             .withTags("owesMoney", "friends").withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1",
-                    "Chem A1", "Phy A2").withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("")
+                    "Chem A1", "Phy A2").withRemark(VALID_REMARK).withCca("", "")
+            .withInjuriesHistory(VALID_INJURIES_HISTORY)
             .withNameOfKin("Ben", "90875674", "ben@gmail.com", "Father").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withNric("S9535256J")
             .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
@@ -52,7 +53,7 @@ public class TypicalPersons {
             .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withNric("S9482442U")
             .withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
-            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("").build();
+            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory(VALID_INJURIES_HISTORY).build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withNric("S8482424Z")

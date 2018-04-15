@@ -97,12 +97,12 @@ public class AddInjuriesHistoryCommand extends UndoableCommand {
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
-        Name updatedName = personToEdit.getName();
-        Nric updatedNric = personToEdit.getNric();
-        Set<Tag> updatedTags = personToEdit.getTags();
-        Set<Subject> updatedSubjects = personToEdit.getSubjects();
-        Remark updatedRemark = personToEdit.getRemark();
-        Cca updatedCca = personToEdit.getCca();
+        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
         InjuriesHistory updatedInjuriesHistory = ParserUtil.parseInjuriesHistory(personToEdit
                 .getInjuriesHistory().toString() + "\n" + editPersonDescriptor.getInjuriesHistory().get().toString());
         NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());

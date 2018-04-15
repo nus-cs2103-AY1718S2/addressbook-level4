@@ -43,7 +43,7 @@ public class DeleteInjuriesHistoryCommandParser implements Parser<DeleteInjuries
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         if (ParserUtil.parseInjuriesHistory(argMultimap.getValue(PREFIX_INJURIES_HISTORY)).get().toString().isEmpty()) {
             throw new ParseException((String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                                                    DeleteRemarkCommand.MESSAGE_USAGE)));
+                                                    DeleteInjuriesHistoryCommand.MESSAGE_USAGE)));
         } else {
             ParserUtil.parseInjuriesHistory(argMultimap.getValue(PREFIX_INJURIES_HISTORY))
                     .ifPresent(editPersonDescriptor::setInjuriesHistory);

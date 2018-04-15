@@ -84,11 +84,12 @@ public class CommandTestUtil {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)
                 .withTags(VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS, VALID_SUBJECT_PHYSICS,
                         VALID_SUBJECT_ENGLISH, VALID_SUBJECT_MALAY, VALID_SUBJECT_BIOLOGY, VALID_SUBJECT_HISTORY)
-                .withRemark(REMARK_DESC_AMY).build();
+                .withRemark(REMARK_DESC_AMY).withInjuriesHistory(INJURIES_HISTORY_DESC).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).withNric(VALID_NRIC_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS,
                         VALID_SUBJECT_PHYSICS, VALID_SUBJECT_ENGLISH, VALID_SUBJECT_MALAY, VALID_SUBJECT_BIOLOGY,
-                        VALID_SUBJECT_HISTORY).withRemark(REMARK_DESC_BOB).build();
+                        VALID_SUBJECT_HISTORY).withRemark(REMARK_DESC_BOB).withInjuriesHistory(VALID_INJURIES_HISTORY)
+                        .build();
     }
 
     /**

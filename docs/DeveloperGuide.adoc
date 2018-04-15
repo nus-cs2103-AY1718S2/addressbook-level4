@@ -1229,6 +1229,7 @@ This section describes various design considerations related to the implementati
 ** Cons: This requires dealing with commands that have already been undone: We must remember to skip these commands. This violates SRP and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::overdue[]
 === Overdue Feature
 The overdue feature will automatically tag tasks as "overdue" once their due date times have passed and tag events as "finished" once their end date times have passed.
 The current implementation and design considerations for this feature are explained in this section.
@@ -1289,7 +1290,7 @@ This section describes various design considerations related to the overdue feat
 * *Alternative 2:* Use `ScheduledExecutorService` to check for overdue tasks and finished events every 1 hour.
 ** Pros: CLIndar would be less memory-intensive as the checker is conducted at a longer interval.
 ** Cons: Overdue tasks and finished events will not be identified promptly.
-
+// end::overdue[]
 
 === Logging
 

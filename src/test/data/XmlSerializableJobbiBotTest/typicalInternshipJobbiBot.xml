@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- JobbiBot save file which contains the same Internship values as in
+{@code TypicalInternships#getTypicalInternshipBook()}-->
+<InternshipBook>
+    <internships>
+        <name>Grab</name>
+        <salary>1500</salary>
+        <email>Grab@example.com</email>
+        <address>Grab Building</address>
+        <industry>Tech</industry>
+        <region>Town</region>
+        <role>Data Scientist</role>
+    </internships>
+    <internships>
+        <name>ST Engineering</name>
+        <salary>1000</salary>
+        <email>STEngineering@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <industry>Manufacturing</industry>
+        <region>Jurong</region>
+        <role>Safety Officer</role>
+    </internships>
+    <internships>
+        <name>ABC Engineering</name>
+        <salary>999</salary>
+        <email>ABCEngineering@example.com</email>
+        <address>311, Jurong Ave 2</address>
+        <industry>Manufacturing</industry>
+        <region>Jurong</region>
+        <role>Product Engineer</role>
+    </internships>
+    <internships>
+        <name>Sembcorp</name>
+        <salary>1001</salary>
+        <email>Sembcorp@example.com</email>
+        <address>111 Tuas Street</address>
+        <industry>Engineering</industry>
+        <region>Tuas</region>
+        <role>Project Manager</role>
+    </internships>
+    <internships>
+        <name>PwC</name>
+        <salary>1200</salary>
+        <email>AdvisoryIntern@example.com</email>
+        <address>Raffles Place</address>
+        <industry>Business</industry>
+        <region>Raffles Place</region>
+        <role>Advisory Intern</role>
+    </internships>
+    <internships>
+        <name>Deloitte</name>
+        <salary>750</salary>
+        <email>AuditIntern@Deloitte.com</email>
+        <address>Tanjong Pagar</address>
+        <industry>Business</industry>
+        <region>Tanjong Pagar</region>
+        <role>Audit Intern</role>
+    </internships>
+    <internships>
+        <name>KPMG</name>
+        <salary>1000</salary>
+        <email>ConsultingIntern@example.com</email>
+        <address>Raffles Boulevard</address>
+        <industry>Business</industry>
+        <region>Raffles Place</region>
+        <role>Consulting Intern</role>
+        <tagged>saved</tagged>
+    </internships>
+    <internships>
+        <name>PwC</name>
+        <salary>761</salary>
+        <email>AuditIntern@PwC.com</email>
+        <address>Raffles Place</address>
+        <industry>Business</industry>
+        <region>Raffles Place</region>
+        <role>Audit Intern</role>
+    </internships>
+</InternshipBook>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<internship>
+    <salary>1000</salary>
+    <name>ABC Company</name>
+    <email>ABC@example</email>
+    <address>4th street</address>
+    <industry>Engineering</industry>
+    <region>Geylang</region>
+    <role>Safety Officer</role>
+    <tagged>saved</tagged>
+</internship>

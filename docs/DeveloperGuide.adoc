@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= JobbiBot - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F11-B3/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103-F11-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -68,7 +68,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `se-edu/InternshipBook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/InternshipBook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -140,7 +140,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `InternshipBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -153,14 +153,20 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 The sections below give more details of each component.
 
 [[Design-Ui]]
+// tag::ui[]
 === UI component
 
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiClassDiagramv1.5.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `BrowserPanel`, `ChatBotListPanel`, `InternshipListPanel`, `HelpWindow` and `StatusBarFooter`.
+
+All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+
+The `ChatBotPanel` displays the full message thread between Jobbi and the end user in a JavaFX list view . Each `ChatBotCard` is a single message either from Jobbi or the user. Messages will alternate between Jobbi and user, which means that for every user command entered, Jobbi will respond to it.
+// end::ui[]
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -183,29 +189,25 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  `Logic` uses the `InternshipBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a internship) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
-
-.Interactions Inside the Logic Component for the `delete 1` Command
-image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
 
 .Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
+image::ModelComponentClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the Internship Book data.
+* exposes an unmodifiable `ObservableList<Internship>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
@@ -219,16 +221,411 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Internship Book data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.InternshipBook.commons` package.
 
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::filter[]
+=== Filter Feature
+==== Implementation
+
+The search and filter command are two complementary features of the JobbiBot.
+
+The search command takes in one or more keywords and returns all internships that contains *ANY* of the keyword(s).
+
+The filter command takes in one or more keywords and returns all internships that contains *ALL* of the keyword(s) from the last searched internship list or the full internship list if the users has not used the search command feature.
+
+
+==== Design Considerations
+
+===== Aspect: Old Implementation of `Filter Command`
+
+* Saved the list searched keyword argument(s) into a List<String> and add these arguments into the filter command arguments.
+
+** Example: `search marketing`, then `filter singapore` is essentially `filter marketing singapore` since filter only returns arguments that contains all the given keywords
+** Rationale 1: Provides two unique function, one to union find all the keyword arguments, whereas the other is a inner join / intersect find of all the keyword arguments.
+** Rationale 2: More intuitive for the user to only key in `filter singapore` to get `filter singapore marketing` results after he/she have `search marketing`
+** Pros: Easy to implement, only need to create a List<String> to store the last searched arguments and add them to the filter command arguments when filter commmand is executed
+** Cons: Fatal design error in the following example: `search marketing analytics`, then `filter singapore` will only return results that contain marketing analytics and singapore.
+Whereas the desired output should be internships that either contain marketing singapore or analytics singapore. It was not feasible/easy to change the filter command to produce this desired outcome
+
+===== Aspect: Alternative Implementation 'Filter Command'
+
+* Alternative implementation to solve the above problem was to add a tag called CurrentList whatever is being currently searched.
+Regardless of how many search arguments were given in the initial search command, the list will all have the CurrentList tag which allows for easy filtering
+as we can simply add CurrentList tag to the filter keywords.
+
+** Example: `Search marketing analytics data engineering` followed by a `filter singapore` will result in `filter singapore CurrentList`
+which returns all internships that contains (marketing or analytics or data or engineering) and singapore.
+** Pros: Make use of existing Tag Feature. Supposedly easier to implement than changing the model component to save the last searched internship list somewhere and apply filter on it.
+** Cons: Will be distracting as the CurrentList tag is applied to the entire list
+** Cons: Was harder to implement than expected because the tag had to be cleared
+** Note: This add tag feature (done by Ci Kang) is now used to distinguish between search keywords.
+E.g `search marketing analytics` will display marketing tag for internship that contain marketing and display analytics tag for internship that contains analytics.
+
+
+===== Aspect: Current Implementation 'Filter Command'
+* Current implementation makes use of the Java FXCollections filteredList.
+We created a separate FilteredList<Internship> called SearchedInternshipList and used it together with the existing FilteredList<Internship> FilteredIntership.
+Thus we have an InternshipBook , a filteredList (called searchedInternships) which wraps around the InternshipBook, and a filteredList (called filteredInternships) which wraps around the searchedInternship. See code snippet below
+
+----
+public class ModelManager extends ComponentManager implements Model {
+	...
+    private final InternshipBook jobbiBot;
+    private final FilteredList<Internship> searchedInternships;
+    private final FilteredList<Internship> filteredInternships;
+    ...
+
+    public ModelManager(ReadOnlyInternshipBook jobbiBot, UserPrefs userPrefs) {
+    	....
+    	....
+        this.jobbiBot = new InternshipBook(jobbiBot);
+        searchedInternships = new FilteredList<>()
+        filteredInternships = new FilteredList<>(searchedInternships);
+        ...
+    }
+
+----
+
+Due to the java wrapper functionality (in the FilteredList<T>), any changes in InternshipBook is propagated down to searchedInternship and then to filteredInternship. This allows us to maintain two different list of internships according to whatever keyword arguments (predicate) have been applied to it.
+
+Additional helper methods were then created to differentiate between updating of the searchedInternship and filteredInternship. See code snippet 2 below
+
+
+	// For Filter function
+    @Override
+    public void updateFilteredInternshipList(Predicate<Internship> predicate) {
+        requireNonNull(predicate);
+        filteredInternships.setPredicate(predicate);
+    }
+
+    // For Search Function
+    @Override
+    public void updateSearchedInternshipList(Predicate<Internship> predicate) {
+        requireNonNull(predicate);
+        searchedInternships.setPredicate(predicate);
+        filteredInternships.setPredicate(predicate);
+    }
+---
+
+With this, the search and filter function can now work as intended. `search marketing analytics` and `filter singapore` will return results containing (marketing or analytics) and singapore
+
+See Diagram below: <Insert Diagram to show how the propagation works here>
+
+** Pros: Design feature solved in relatively "easy" way without having to change the existing code significantly
+** Cons: Was harder to implement as it required knowledge of how the model interacts and worked as well as how the filteredList Java FXCollection worked.
+
+
+// end::filter[]
+
+// tag::chatbot[]
+=== Chatbot Feature
+The Chatbot is the key UI feature of this application. Through the Chatbot, JobbiBot, students will receive guidance
+and step-by-step prompts on how to narrow down their internship search. They are able to communicate with JobbiBot using the CLI.
+This is an important feature for our target users because they may not always know how to begin their search or what to look for.
+
+==== Current (Main) Implementation
+Each message is displayed within a ListCell, otherwise named as a `ChatBotCard` in JobbiBot. A `ChatBotCard` is made up of a JavaFX HBox class that consists of a Label class.
+The Label is used to either display a Jobbi message or an user command input. This mechanism inherits from UiPart and is executed by the UiManager.
+
+When a new event is raised, typically when a user keys in a command, there are three main methods that handle Jobbi and user responses in order to render the conversation between Jobbi and the user on the ListView.
+
+The first method to handle each user input in the command box is `handleUserResponse`.
+----
+    public ObservableList<String> handleUserResponse(ObservableList<String> listToUpdateWithUserResponse) {
+        ...
+
+        // Checks if user has typed the `start` command and adds the current element in the history snapshot list to the ObservableList<String>
+        if (historySnapshot.hasElement("start")) {
+            listToUpdateWithUserResponse.add("USER:   " + historySnapshot.current());
+
+        // ... Checks if user has restarted conversation if Jobbi ...
+
+        // Returns the updated list which is used in the `buildConversation` method to render the updated ListView
+        return listToUpdateWithUserResponse;
+    }
+----
+The second method to handle each Jobbi's response is `handleJobbiResponse`.
+
+----
+    public ObservableList<String> handleJobbiResponse(ObservableList<String> listToUpdateWithJobbiResponse,
+                                                      String message) {
+        ...
+        // Checks if the user has typed in `start` command to initiate conversation and add the message returned from the EventBus
+        if (historySnapshot.hasElement("start")) {
+            listToUpdateWithJobbiResponse.add("JOBBI:  " + message);
+
+        // ... Checks if user has restarted conversation if Jobbi ...
+
+          // Returns the updated list which is used in the `buildConversation` method to render the updated ListView
+        return listToUpdateWithJobbiResponse;
+    }
+----
+
+Finally, the last method takes an ObservableList of strings which has been updated with the both latest Jobbi and user response to an event
+and renders a new ListView of the message thread.
+----
+    public void buildConversation(ObservableList<String> listToBuild) {
+
+        // Maps each message in the updated ObservableList<String> to a ChatBotCard
+        ObservableList<ChatBotCard> mappedList = EasyBind.map(
+                updatedMessages, (msg) -> new ChatBotCard(msg));
+
+        // ... Recreates the ListView with the new user input ...
+    }
+----
+
+==== Design Considerations
+A JavaFX ListView class was specifically chosen because it allows for the vertical display of items, such a message thread.
+A ListView instance is buildable with many ListCell objects so a message thread between Jobbi and user can grow extensively.
+It also enables scrolling so that the user is able to scroll up and down to view his or her chat history.
+
+However, two main aspects of the ListView class was altered so that it resembles a message thread:
+
+* The ability to select a list cell was disabled since users should not be able to to select individual messages.
+* Auto-scrolling to the latest message was added so that users will always see the latest message on the ListView first.
+
+// end::chatbot[]
+
+// tag::saveunsave[]
+=== Save/Unsave Feature
+==== Current Implementation
+
+The save/unsave mechanism is facilitated by the addition of a `saved` tag or removal of the `saved` tag
+respectively. Inspired by the Instagram saved feature, it allows our users to personally curate specific
+internships that they would like to save for a quick reference in the future as opposed to re-searching for
+a particular internship again.
+
+However, the special part of this feature is that users do not add or remove the `saved` tags in the CLI.
+Instead, they simply type in the command `save` or `unsave` followed by an index number and the command internally
+adds a new "saved" tag to the internship or remove the tag. This mechanism inherits from `UndoableCommand` and is
+executed by the `LogicManager`.
+
+To achieve the internal addition of a saved tag, we added an `addSavedTagToInternship` method
+within the SaveCommand object. This method is self-invocated by the object's other methods, such as `preprocessUndoableCommand`.
+----
+private Internship addSavedTagToInternship(Internship internship) throws CommandException {
+
+        //Creates a UniqueTagList of the specific internship's tags only
+        final UniqueTagList internshipTags = new UniqueTagList(internshipToSave.getTags());
+
+        //Adds a 'saved' tag only to internships that do not already possess the 'saved' tag or else an exception is thrown
+        try {
+            personTags.add(new Tag(SAVED_TAG));
+        } catch (UniqueTagList.DuplicateTagException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_SAVED_INTERNSHIP);
+        }
+
+        // ... rebuilds the updated list of tags ...
+
+        // returns an internship with all the same information except for an additional "saved" tag
+        return new Internship(
+                internship.getName(), internship.getPhone(), internship.getEmail(), internship.getAddress(), correctTagReferences);
+    }
+----
+The execution of this method in the `SaveCommand` object affects
+the `Model` and `UI` by adding a visible `saved` tag to a specific internship. The result of the `SaveCommand`
+execution is encapsulated as a `CommandResult` object which is passed back to UI.
+
+Below is a Sequence Diagram that demonstrates the interaction within the `Logic` component for the
+`execute("saved 1")`.
+
+image::SaveCommandSequenceDiagram.png[width="800"]
+
+Similarly, to achieve the internal removal of a saved tag, we added a `removeSavedTagToInternship` method
+within the UnsaveCommand object. The implementation of this method and its concept is exactly the opposite of
+the SaveCommand since the `saved` tag is being removed.
+
+----
+    private Internship removeSavedTagToInternship(Internship internship) {
+
+        //Creates a UniqueTagList of the specific internship's tags only
+        final UniqueTagList internshipTags = new UniqueTagList(internshipToUnsave.getTags());
+
+        //Checks for an existing "saved" tag and removes it from the UniqueTagList
+        internshipTags.delete(new Tag(SAVED_TAG));
+
+        // ... rebuilds the new list of tags and returns same person object without "saved" tag  ...
+    }
+
+----
+
+==== Design Considerations
+
+With the `saved` tag, users are able to identify the internships they have saved in their personal collection in the `InternshipCardPanel`.
+When users want to remove the internship from their collection, they can type the `unsave` command to remove the tag.
+To view the entire collection, they can type `find saved` or `filter saved` into the CLI that basically searches for all the
+internships with "saved" tags and displays the filtered list.
+
+We chose to use the addition and removal of tags for two main reasons:
+
+* It is visible to the user which internship has been saved or unsaved.
+* It is more straightforward in terms of implementation to do a search by a specific tag to display the Saved Collection.
+* Users are able to further narrow down on their search from the Saved Collection. For example, `find saved business` will return a filtered list of internships
+in the Saved Collection that are related to the business industry.
+
+===== Alternative Solution 1: Readapt the existing Implementation of the `edit` Command
+The `edit` command allowed users to edit the tags of a specific existing internship. We could have potentially used it to add the `saved` tag to specific internships
+
+*** Pros: Much simpler implementation since the `edit` command has been provided by the Address Book 4.
+*** Cons 1: Editing tags with the `edit` command erase previous tags from the internship but we want to add the `saved` tag to the existing tags.
+*** Cons 2: The command line input is relatively less user-friendly. For example, the user had to input `edit 1 t/saved` to add `saved` tag to the first internship of the filtered list.
+On the other hand, the `save` command only requires the user to type in `save 1` for the same outcome.
+
+===== Alternative Solution 2: Create an additional model
+Another idea was to create separate Internship Book Model and its own storage for the Saved Collections
+
+*** Pros: Able to save in hard disk storage
+*** Cons: May have performance issues in terms of memory usage and may have to significantly change the architecture
+
+// end::saveunsave[]
+
+
+// tag::findwithfeatures[]
+
+=== Find Command with Adding Tag Feature
+
+==== Rationale
+As the current find command work like a union search, users are able to key in multiple keywords at one go and JobbiBot will show
+all the internships that matches at least one of the keywords. However, users will not be able to differentiate which
+internships matches which keywords they have keyed in. As such this new feature enables them to have a clearer picture of
+which internship suits them more and enable them to further filter from the list.
+
+==== Current Implementation
+
+The add tag feature is implemented as part of the find command. However, as models will be change due to the addition of tags,
+some codes are implemented within ModelManager.
+
+image::FindCommandSequenceDiagram.png[width="800"]
+
+As it can be seen from the diagram, `Logic` uses the `InternshipBookParser` class to parse the user command.
+After which, `FindCommandParser` is created and use to parse the keyword. The keyword is then set in `ModelManager` via the
+setKeywords() method.
+
+In the second phase, the command is being executed in `FindCommand`. The first updateSearchedInternshipList() update the
+searchedInternship with all the internships available and remove all tags from them apart from `saved` tags. Following which
+the second updateSearchedInternshipList() update the searchedInternshipList with the internships that matches the keywords
+use as the argument in `FindCommand`. Those keywords are then added to the respective internships that matches it through the
+addTagsToFilteredList(). `FindCommand` then execute getCommandResult() and return the result of the command execution encapsulated
+as a `CommandResult` object and returns it to the `LogicManager` and subsequently to the UI and displayed to the user.
+
+==== Design Considerations
+
+Initial: Adding the addition and removal of tags from internship method under `FindCommand` since it is ultimately used when executing FindCommand.
+
+Refinement: Since the addition and removal of tags to internship involves modifying of internship, these methods are added to the
+internship class as shown below. An additional check for `saved` tag was added as well as from the users perspective, they would
+want to search for other internship while keeping those that are searched before with the `saved` tag.
+
+----
+    public Internship removeTagsFromInternship() {
+        final UniqueTagList internshipTags = new UniqueTagList(getTags());
+
+        for (Tag tagToBeRemoved : tags) {
+            if (!tagToBeRemoved.toString().equals(SAVED_TAG_NAME)) {
+                try {
+                    internshipTags.delete(tagToBeRemoved);
+                } catch (TagNotFoundException e) {
+                    assert false;
+                    throw new AssertionError("Impossible! Should not have TagNotFoundException");
+                }
+            }
+        }
+        ...
+        ...
+        return new Internship(getName(), getSalary(), getEmail(), getAddress(),
+                getIndustry(), getRegion(), getRole(), correctTagReferences);
+    }
+----
+
+----
+
+    public Internship addTagsToInternship(String keyword) {
+        final UniqueTagList internshipTags = new UniqueTagList(getTags());
+
+        try {
+            internshipTags.add(new Tag(keyword));
+        } catch (UniqueTagList.DuplicateTagException e) {
+            throw new AssertionError("Operation would result in duplicate tags");
+        }
+        ...
+        ...
+        return new Internship(     getName(), getSalary(), getEmail(), getAddress(),
+                getIndustry(), getRegion(), getRole(), correctTagReferences);
+    }
+----
+
+Implementation of the codes
+
+Initial: To implement the addTagsToFilteredList method, a double for loop was used to loop through both keywords and internships
+in order to find the match and proceed with the addition of tags to the internship.
+
+----
+    public static void addTagsToFilteredList (List<String> filterKeywords,
+                                              ObservableList<Internship> filteredInternships, Model model)
+            throws CommandException {
+
+        for (String keywords : filterKeywords) {
+            for (Internship filteredInternship : filteredInternships) {
+                if (StringUtil.containsWordIgnoreCase(filteredInternship.toString(), keywords)) {
+                    try {
+                        model.updateInternship(filteredInternship,
+                                addTagsToInternshipWithMatch(keywords, filteredInternship));
+                    } catch (DuplicateInternshipException e) {
+                        throw new CommandException(MESSAGE_DUPLICATE_INTERNSHIP);
+                    } catch (InternshipNotFoundException e) {
+                        throw new AssertionError("The target internship cannot be missing");
+                    }
+                }
+            }
+        }
+    }
+----
+
+Code Refinement: However, there were SRP violation there as the method was used to find internship that is matching the keyword,
+add the keyword tag and also update the internship. Furthermore, the code was deeply nested as well. As such, concept of abstraction
+was used to separate the functions into individual methods as shown below.
+----
+    public CommandResult execute() {
+        model.removeTagsFromAllInternshipList();
+        model.updateSearchedInternshipList(predicate);
+        model.addTagsToFilteredList();
+        return getCommandResult();
+    }
+----
+
+==== Additional Enhancement
+
+From the users perspective, they might want to find again if the result was not up to their satisfaction.
+As such, the implementation was designed in such a way that subsequent find will reset the tags from the internship.
+
+Since List command is used to show the entire list in the display, a feature is added to it such that all the tags are removed from the internships
+to allow the user to see the entire internship list.
+----
+    public void removeTagsFromFilteredList() {
+        for (Internship internship : getFilteredInternshipList()) {
+            try {
+                updateInternship(internship, internship.removeTagsFromInternship());
+            } catch (DuplicateInternshipException e) {
+                throw new AssertionError(MESSAGE_DUPLICATE_SAVED_INTERNSHIP);
+            } catch (InternshipNotFoundException e) {
+                throw new AssertionError("The target internship cannot be missing");
+            }
+        }
+    }
+----
+Rather than throwing exception, assertion is used instead because users do not key in the value but instead, downloads
+the internship book and insert it into the program. As such, there should not be any duplicate internship. Any duplicate internships
+will result in the program malfunctioning and no internship being listed on the left panel.
+// end::findwithfeatures[]
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -275,18 +672,18 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th internship in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new internship.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the internship was a mistake, and decides to undo that action using `undo`.
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
@@ -333,7 +730,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+** Pros: Will use less memory (e.g. for `delete`, just save the internship being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 
@@ -345,7 +742,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 * **Alternative 2:** Include all commands.
 ** Pros: Might be more intuitive for the user.
 ** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
+**Additional Info:** See our discussion  https://github.com/se-edu/InternshipBook-level4/issues/390#issuecomment-298936672[here].
 
 
 ===== Aspect: Data structure to support the undo/redo commands
@@ -357,13 +754,6 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
-
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
 
 === Logging
 
@@ -497,298 +887,40 @@ A project often depends on third-party libraries. For example, Address Book depe
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
-[[GetStartedProgramming]]
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+=== Features Contribution
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+[width="59%",cols="22%,<23%,<15%,<50%",options="header",]
+|=======================================================================
+|Contributor |Feature | Major/Minor | Remarks
+| Colin | Sorting/Filtering| Major | Designed and implemented a complete set of sorting/filtering/searching commands. Searching implemented by TanCiKang
+
+| Colin | Model Enhancement | Minor | Modify list view to work with new commands. Allow filtering / sorting from existing list instead of new list
+
+| Ci Kang | Enhance Find Command | Major | Add tags to internship that matches keywords in find command and enable find command to search for multiple attributes
+
+| Ci Kang | Preview and Enhance view | Minor | Show preview of the important attributes of the internship on the left panel and full details on the right panel
+
+| Wyin | GUI Revamp | Major | Revamp UI to incorporate a Chatbot in the CLI
+
+| Wyin | Save and Unsave Command | Minor | Enable user to add and remove "saved" tags for specific internships into a Saved Collection
+
+|=======================================================================
+
+=== Target user profile
+
+* are university students looking for internships
+* but not sure how to start or what to look for
+* prefers to an interactive application to source for internships rather than a normal and static web application
+* wants to narrow down the list of internships with guidance
+* prefers typing rather than clicking on internship portals
 * can type fast
-* prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+=== Value proposition
+* A guided and interactive way to find jobs and internships
 
 [appendix]
 == User Stories
@@ -798,35 +930,65 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` | experienced student | filter internship by details (industries/role/location/salary) |narrow down on the list of internship to apply for efficiently
 
-|`* * *` |user |add a new person |
+|`* * *` | student | be able view a sorted list of internship (sorted according to my preferences) | know which internship to focus on
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` | tech-savvy student | have a user-friendly and clean application interface | use the app easily to communicate my preferences and needs
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` | tech-savvy student | have an interactive interface to source for internships | have a more engaging and personal experience when searching for development opportunities
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` | student | given a list of potential industries, jobs, skills and related information | better informed of the available options I can explore
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` | lazy student | save specific internships I am interested it and access it anytime | further narrow down on my interested internships conveniently
+
+|`* *`| organised student | split up my saved internships into personalised collections | categorise and organise my interested internship in various folders
+
+|`* *` | new student  | input my relevant skill sets/interests | explore internships that are suitable and interesting for me
+
+|`* *` | curious student | given data analysis about successful internships and job search within a faculty or in a given year | overview of the job prospects in that year and understand the market competitiveness
+
+|`* *` |lazy student | be able to upload my files / details somewhere | reuse these information for my applications
+
+|`* *` |lazy student | track the internships I have search and applied for | better keep track of them
+
+|`*` | student | know when companies will reply me | know whether I am rejected or not
+
 |=======================================================================
 
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
-
+(For all use cases below, the *System* is the `JobbiBot` and the *Actor* is the `user`, unless specified otherwise)
 [discrete]
-=== Use case: Delete person
+=== Use case: Start conversation with Jobbi
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to start conversation with JobbiBot
+2.  JobbiBot replies with the next prompt to indicate conversation has started
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User requests to start conversation again after the conversation has begun.
++
+[none]
+** 2a1. JobbiBot shows an error message.
+** Use case resumes at step 2.
+
+[discrete]
+=== Use case: Save internship
+
+*MSS*
+
+1.  User requests to list internships
+2.  JobbiBot shows a list of all the internships
+3.  User requests to save a specific internship in the list
+4.  JobbiBot saves the internship
 +
 Use case ends.
 
@@ -835,52 +997,165 @@ Use case ends.
 [none]
 * 2a. The list is empty.
 +
-Use case ends.
+[none]
+** Use case ends.
 
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. JobbiBot shows an error message.
 +
-Use case resumes at step 2.
+** Use case resumes at step 2.
+[none]
+* 4a. Users saves an internship that has been saved
++
+[none]
+** 4a1. JobbiBot shows an error message
+** Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Unsave internship
 
+*MSS*
+
+1.  User requests to list the Saved Collection
+2.  JobbiBot shows a list of the Saved Collection
+3.  User requests to remove a specific internship from the Saved Collection
+4.  JobbiBot removes the internship from the Saved Collection
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The Saved Collection is empty.
++
+[none]
+** Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. JobbiBot shows an error message.
++
+** Use case resumes at step 2.
+[none]
+* 4a. Users removes an internship that has been removed
++
+[none]
+** 4a1. JobbiBot shows an error message
+** Use case resumes at step 2.
+
+[discrete]
+
+// tag::usecase1[]
+
+=== Use case: Finding Internship
+
+*MSS*
+
+1. User keys in a list of keywords to search  for internship by
+2. JobbiBot returns user the list of internships which contains the keywords
+3. User can choose to re-search again if not satisfied
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. JobbiBot returns no found internships
++
+[none]
+** 2a1. JobbiBot will recommend user to re-search using other keywords
++
+Use case resumes at step 3.
+
+[discrete]
+=== Use case: Filtering Internship
+
+*MSS*
+
+1. User keys in a list of keywords to filter the currently searched internship list (from the finding internship use case above)
+2. JobbiBot returns user the list of internships which contains all the keywords entered from the searched list
+3. User can choose to re-filter in another set of keywords to narrow the searched internship list (from the finding internship use case)
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. JobbiBot returns no found internships
++
+[none]
+** 2a1. JobbiBot will recommend user to re-filter using other keywords
+** 2a2. User can also use undo function to return back to last searched or filtered internship list
+
+// end::usecase1[]
+
+[discrete]
+=== Use case: Sorting Internship
+
+*MSS*
+
+1. User keys in keywords to sort the currently searched or filtered internship list by
+2. JobbiBot returns user the list of internships sorted according to the keyword matching the internship attributes (e.g name, industry, role).
+3. User can choose to sort up to three keyword attributes
+4. JobbiBot will sort the internship by the first keyword attribute, followed by the next two keyword attribute
+
++
+Use case ends.
+
+// tag::nonfunctionalrequirements[]
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 internships without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should respond to commands within 5 seconds.
+.  Should be usable by a novice who is using the system for the first time.
+.  A user looking for internship should not need to key in more than 19 commands.
+.  An expert or regular user should be able to have the alternative to use command line instead of the chat bot.
+.  Should have a clean and easy to use interface.
+.  Should be designed for a British-English speaking user.
+.  Should be current and up to date (i.e. companies recruitment status).
+// end::nonfunctionalrequirements[]
 
-_{More to be added}_
-
+// tag::glossary[]
 [appendix]
 == Glossary
+
+[[chatbot]] Chat Bot::
+A computer program that stimulates a human conversation by communicating with a real internship.
+In this project, our chat bot will guide the user to find his ideal internships.
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+// end::glossary[]
 
+// tag::productsurvey[]
 [appendix]
-== Product Survey
+== ProductSurvey
 
-*Product Name*
+*Symplicity*
 
-Author: ...
+Used by: National University of Singapore (NUS) and Yale-NUS College.
 
 Pros:
 
-* ...
-* ...
+* Provides a list of potential internships, research opportunities, full-time job applications,
+on-campus jobs for students
+* Ability to filter according to job type, company, region, etc.
+* Ability to apply for an opportunity via the platform
 
 Cons:
 
-* ...
-* ...
-
+* Does not have a chat bot that interacts and guides its end users so users have to browse through extensively
+to find their ideal internships on their own.
+// end::productsurvey[]
 [appendix]
 == Instructions for Manual Testing
 
@@ -899,30 +1174,177 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Saving window preferences
 
-.. Resize the window to an optimum size. Move the window to a different location. Close the window.
+.. Resize the window to an optimum size. Move the window to a different region. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
-   Expected: The most recent window size and location is retained.
+   Expected: The most recent window size and region is retained.
 
-_{ more test cases ... }_
+// tag::startmanualtestwyin[]
+=== Starting a conversation with JobbiBot
 
-=== Deleting a person
+Starting a conversation with JobbiBot when the application is launched .
 
-. Deleting a person while all persons are listed
+.. Test case: `start` +
+    Expected: JobbiBot prints a response message in the message thread that prompts the user to find preferred industries and roles.
+.. Test case: `start x` (where x is an integer, alphabet or non alphanumerical character) +
+    Expected: Conversation not started. Error details shown in the message thread.
+.. Test case: Subsequent `start` commands after entering the initial `start` commands +
+    Expected: JobbiBot says that the conversation has already started and subsequent `start` commands has no effect on initiating the conversation again.
+// end::startmanualtestwyin[]
+=== Clearing a previous conversation with JobbiBot
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+Restarting a conversation with JobbiBot after typing more than 4 commands in the CLI.
+
+.. Test case: `new x` (where x is an integer, alphabet or non alphanumerical character) +
+    Expected: Previous conversation is not cleared. Error details shown in the message thread.
+.. Test case: `new` +
+    Expected: Clears entire previous message thread and user only sees the JobbiBot welcome message left.
+.. Test case: `list` +
+    Expected: Error detail is shown in the message thread. JobbiBot prompts the user to type the `start` command to restart the conversation.
+
+// tag::savemanualtestwyin[]
+=== Saving an internship to Saved Collection
+
+. Saving an internship while all internships are listed.
+
+.. Prerequisites: List all internships using the `list` command. Multiple internships in the list.
+.. Test case: `save 1` +
+   Expected: First internship is saved from the list as visible from the `saved` tag added to the internship. Details of the successful saved internship are shown as a JobbiBot response in the message thread.
+.. Test case: `save 1` to save the same internship from the same list again +
+    Expected: Internship cannot be saved twice. Error details shown in the message thread.
+.. Test case: `save 0` +
+   Expected: No internship is saved. Error details shown in the message thread.
+.. Test case: `save -2` +
+  Expected: No internship is saved. Error details shown in the message thread.
+.. Other incorrect save commands to try: `save`, `save x` or `x save` (where x is larger than the list size or x is not an alphanumerical character
+ or x is a mathematical expression that evaluates to an positive integer),  +
+   Expected: No internship is saved. Error details shown in the message thread.
+// end::savemanualtestwyin[]
+
+=== Removing an internship to Saved Collection
+
+. Removing an internship while all internships are listed.
+
+.. Prerequisites: List all internships from the Saved Internship Collection using the `find saved` or `filter saved` command. Multiple internships in the Saved Collection.
+.. Test case: `unsave 1` +
+   Expected: First internship is removed from the Saved Collection as visible from the `saved` tag being removed from the internship and the internship is removed from the Saved Collection. Details of the successful removal are shown as a JobbiBot response in the message thread.
+.. Test case: `unsave 0` +
+   Expected: No internship is removed from Saved Collection. Error details shown in the message thread.
+.. Test case: `save -2` +
+  Expected: No internship is removed from Saved Collection. Error details shown in the message thread.
+.. Other incorrect save commands to try: `unsave`, `unsave x` or `x unsave` (where x is larger than the list size or x is not an alphanumerical character
+ or x is a mathematical expression that evaluates to an positive integer),  +
+   Expected: No internship is removed from Saved Collection. Error details shown in the message thread.
+
+
+
+// tag::manualtestcikang[]
+
+=== Finding an internship
+
+. Find internships using keyword/s
+
+.. Prerequisites: Nil
+.. Test case: `find KEYWORD` +
+   Expected: Internships matching the keyword are all listed on the left panel. Keywords matching the internship are added as tags to the internships.
+.. Test case: `find KEYWORD1 KEYWORD2` +
+   Expected: Searched internship list on the left is replaced with the new list matching KEYWORD1 and/or KEYWORD2.
+.. Test case: `find ` +
+   Expected: Invalid command format. Error details shown in the message thread.
+
+=== Finding saved internships
+
+. Find saved internships
+
+.. Prerequisites: Have saved at least one internship with the save command.
+.. Test case: `find saved` +
+   Expected: Saved Internships matching are all listed on the left panel.
+.. Test case: `find KEYWORD1 saved` +
+   Expected: Internships matching keyword1 and/or saved are showed, internships matching keyword1 have keyword tags added.
+
+=== List internships
+
+. List internships
+
+.. Prerequisites: Have saved at least one internship, have executed find command such that the list on the left panel is not the full list.
+.. Test case: `list` +
+   Expected: Left panel display full internships, keyword tags attached during find command are removed.
+.. Test case: `list KEYWORD` +
+   Expected: Invalid command format. Error details shown in the message thread.
+.. Other incorrect list commands to try: `list 0`, `list 1` or `list abc` +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Select internship
 
-=== Saving data
+   . Select internship
 
-. Dealing with missing/corrupted data files
+   .. Prerequisites: Have saved at least one internship available in the left panel.
+   .. Test case: `select 1` +
+      Expected: Right panel display full details of internship from internsg.
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+// end::manualtestcikang[]
 
-_{ more test cases ... }_
+
+// tag::manualtestcolin[]
+
+=== Filtering the JobbiBot Internship List
+
+. Should only apply filter to the current searched(find command) list. Use `list command` before the start of each test case
+
+.. Test case: `filter business` +
+    Expected: JobbiBot returns all internship containing 'business' in the current internship list. There should be no tags unlike the case of find command
+
+.. Test case: `filter business development` +
+    Expected: JobbiBot returns all internship containing the keywords 'business' and 'development' in the current internship list. There should be no tags unlike the case of find command
+
+.. Test case: `find google` then `filter development` +
+    Expected: JobbiBot returns no internship found as there is no internships that contains 'google' and 'development'.
+
+.. Test case: `find google business` then `filter development` +
+    Expected: JobbiBot returns only the internship containing both 'business' and 'development' as there are internship that contains both 'google' and 'development'. There should be a `business` tag on the internship shown.
+
+.. Test case: `find google` then `list` then `filter development` +
+    Expected: Jobbibot return all internships containing 'development' as list command resets the searched list that the filter command works on. No searched tags on the internship.
+
+.. Test case: `filter business` then `filter development` +
+    Expected: JobbiBot returns all internship that contains development. Filtering only works on last searched or default list (cannot filter from a filtered list). No searched tags on the internships.
+
+
+=== Sorting the JobbiBot Internship List
+
+. Should sort according to keyword(s) entered +
+Valid keyword attributes are: `name` `role` `region` `salary` `industry` , and  `-name` `-role` `-region` `-salary` `-industry` +
+Attributes are sorted from A-Z by default (case insensitive). Salary is sorted from highest to lowest by default. +
+Keyword attribute with '-' are sorted in reverse order. +
+
+.. Test case: `sort [keyword]` +
+    Expected: JobbiBot should return a list of internship sorted according to that keyword, sorted from A-Z (case insensitive)
+
+.. Test case: `sort salary` +
+    Expected: JobbiBot should return a list of internship sorted according by salary from highest to lowest
+
+.. Test case: `sort -salary` +
+    Expected: JobbiBot should return a list of internship sorted according by salary from lowest to highest
+
+.. Test case: `sort [-keyword]` +
+    Expected: JobbiBot should return a list of internship sorted according to that keyword, sorted from Z-A (case insensitive)
+
+.. Test case: `sort [keyword1] [keyword2] [keyword3]` +
+    Expected: JobbiBot should return a list of internship sorted according to that keyword1 first, and if there is a tie, keyword2, and if there is a tie again, keyword3
+
+.. Test case: `sort [keyword1] [keyword2] [keyword3] [moreKeyword]` +
+    Expected: Jobbibot should only sort according to the first three keywords. Subsequent arguments are ignored.
+
+. Should should only show internships from the current searched/filtered list. Use `list command` before the start of each test case
+
+.. Test case: `sort role` +
+    Expected: JobbiBot should show a list of ALL internships, sorted by role from A-Z (case insensitive).
+
+.. Test case: `find business` then `sort role` +
+    Expected: JobbiBot should show a list of internships that contains business, sorted by role from A-Z (case insensitive).
+
+.. Test case: `find business` then `filter seragoon` then `sort role` +
+        Expected: JobbiBot should show a list of internships that contains both business and serangoon, sorted by role from A-Z (case insensitive).
+
+// end::manualtestcolin[]
+
+

@@ -16,6 +16,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+//import seedu.address.commons.events.ui.ShowGlossaryRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -35,7 +36,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private InternshipListPanel internshipListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -49,10 +50,13 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private MenuItem glossaryMenuItem;
 
     @FXML
-    private StackPane resultDisplayPlaceholder;
+    private StackPane internshipListPanelPlaceholder;
+
+    @FXML
+    private StackPane chatBotPanelPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -119,13 +123,13 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        internshipListPanel = new InternshipListPanel(logic.getFilteredInternshipList());
+        internshipListPanelPlaceholder.getChildren().add(internshipListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
-        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        ChatBotPanel chatBotPanel = new ChatBotPanel(logic);
+        chatBotPanelPlaceholder.getChildren().add(chatBotPanel.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getJobbiBotFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -169,6 +173,18 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author wyinkok-unused
+    /**
+     * Opens the glossary window
+
+    @FXML
+    public void handleGlossary() {
+        GlossaryWindow glossaryWindow = new GlossaryWindow();
+        glossaryWindow.show();
+    }
+    */
+
+    //@@author
     void show() {
         primaryStage.show();
     }
@@ -181,10 +197,6 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
-    }
-
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -194,4 +206,14 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author wyinkok-unused
+    /*
+    @Subscribe
+    private void handleShowGlossaryEvent(ShowGlossaryRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleGlossary();
+    }
+    */
+
 }

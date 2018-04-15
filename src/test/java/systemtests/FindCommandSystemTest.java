@@ -1,72 +1,100 @@
 package systemtests;
 
 import static org.junit.Assert.assertFalse;
-import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.commons.core.Messages.MESSAGE_INTERNSHIPS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalInternships.BUSINESS1;
+import static seedu.address.testutil.TypicalInternships.BUSINESS2;
+import static seedu.address.testutil.TypicalInternships.BUSINESS3;
+import static seedu.address.testutil.TypicalInternships.BUSINESS4;
+import static seedu.address.testutil.TypicalInternships.DATASCIENCE;
+import static seedu.address.testutil.TypicalInternships.ENGINEERING1;
+import static seedu.address.testutil.TypicalInternships.ENGINEERING2;
+import static seedu.address.testutil.TypicalInternships.ENGINEERING3;
+import static seedu.address.testutil.TypicalInternships.KEYWORD_MATCHING_AUDIT;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.internship.Internship;
+import seedu.address.model.internship.exceptions.DuplicateInternshipException;
+import seedu.address.model.internship.exceptions.InternshipNotFoundException;
+import seedu.address.model.internship.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
-public class FindCommandSystemTest extends AddressBookSystemTest {
+//@@author TanCiKang
+public class FindCommandSystemTest extends JobbiBotSystemTest {
 
     @Test
-    public void find() {
-        /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
-         * -> 2 persons found
+    public void find() throws CommandException, DuplicateInternshipException, InternshipNotFoundException,
+            UniqueTagList.DuplicateTagException {
+        /* Case: find multiple internships in internship book, command with leading spaces and trailing spaces
+         * -> 2 internships found
          */
-        String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER + "   ";
+        String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_AUDIT + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
+        expectedModel.updateInternship(BUSINESS2, addTag(getInternshipWithoutTags(BUSINESS2), KEYWORD_MATCHING_AUDIT));
+        expectedModel.updateInternship(BUSINESS4, addTag(getInternshipWithoutTags(BUSINESS4), KEYWORD_MATCHING_AUDIT));
+        ModelHelper.setSearchedList(expectedModel, BUSINESS2, BUSINESS4);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: repeat previous find command where person list is displaying the persons we are finding
-         * -> 2 persons found
+        /* Case: repeat previous find command where internship list is displaying the internships we are finding
+         * -> 2 internships found
          */
-        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
+        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_AUDIT;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person where person list is not displaying the person we are finding -> 1 person found */
-        command = FindCommand.COMMAND_WORD + " Carl";
-        ModelHelper.setFilteredList(expectedModel, CARL);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 keywords -> 2 persons found */
-        command = FindCommand.COMMAND_WORD + " Benson Daniel";
-        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 keywords in reversed order -> 2 persons found */
-        command = FindCommand.COMMAND_WORD + " Daniel Benson";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 keywords with 1 repeat -> 2 persons found */
-        command = FindCommand.COMMAND_WORD + " Daniel Benson Daniel";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 matching keywords and 1 non-matching keyword
-         * -> 2 persons found
+        /* Case: find internship where internship list is not displaying the internship we are finding -> 1 internship
+         * found
          */
-        command = FindCommand.COMMAND_WORD + " Daniel Benson NonMatchingKeyWord";
+        command = FindCommand.COMMAND_WORD + " Data";
+        expectedModel.updateInternship(DATASCIENCE, addTag(getInternshipWithoutTags(DATASCIENCE), "Data"));
+        ModelHelper.setSearchedList(expectedModel, DATASCIENCE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find internship with 1 repeated keyword entered -> 1 internship found */
+        command = FindCommand.COMMAND_WORD + " Data Data";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple internships in internship book, 2 keywords -> 2 internships found */
+        command = FindCommand.COMMAND_WORD + " Data Consulting";
+        expectedModel.updateInternship(DATASCIENCE, addTag(getInternshipWithoutTags(DATASCIENCE), "Data"));
+        expectedModel.updateInternship(BUSINESS3, addTag(getInternshipWithoutTags(BUSINESS3), "Consulting"));
+        ModelHelper.setSearchedList(expectedModel, DATASCIENCE, BUSINESS3);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple internships in internship book, 2 keywords in reversed order -> 2 internships found */
+        command = FindCommand.COMMAND_WORD + " Consulting Data";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+
+        /* Case: find multiple internships in internship book, 2 keywords with 1 repeat -> 2 internships found */
+        command = FindCommand.COMMAND_WORD + " Consulting Data Data";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple internships in internship book, 2 matching keywords and 1 non-matching keyword
+         * -> 2 internships found
+         */
+        command = FindCommand.COMMAND_WORD + " Data Consulting NonMatchingKeyWord";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -80,108 +108,142 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: find same persons in address book after deleting 1 of them -> 1 person found */
-        executeCommand(DeleteCommand.COMMAND_WORD + " 1");
-        assertFalse(getModel().getAddressBook().getPersonList().contains(BENSON));
-        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
-        expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        /* Case: find salary of internship in internship book -> 1 internships found */
+        command = FindCommand.COMMAND_WORD + " " + "999";
+        expectedModel.updateInternship(ENGINEERING2, addTag(getInternshipWithoutTags(ENGINEERING2), "999"));
+        ModelHelper.setSearchedList(expectedModel, ENGINEERING2);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person in address book, keyword is same as name but of different case -> 1 person found */
-        command = FindCommand.COMMAND_WORD + " MeIeR";
+        /* Case: find address of internship in internship book -> 0 internships found */
+        command = FindCommand.COMMAND_WORD + " " + "Boulevard";
+        ModelHelper.setSearchedList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person in address book, keyword is substring of name -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " Mei";
-        ModelHelper.setFilteredList(expectedModel);
+        /* Case: find email of internship in internship book -> 0 internships found */
+        command = FindCommand.COMMAND_WORD + " " + BUSINESS3.getEmail().value;
+        ModelHelper.setSearchedList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person in address book, name is substring of keyword -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " Meiers";
-        ModelHelper.setFilteredList(expectedModel);
+        /* Case: find internship in internship book, keyword is same as name but of different case -> 3 internships
+         found */
+        command = FindCommand.COMMAND_WORD + " EnGinEeRing";
+        expectedModel.updateInternship(ENGINEERING1, addTag(getInternshipWithoutTags(ENGINEERING1),
+                "EnGinEeRing"));
+        expectedModel.updateInternship(ENGINEERING2, addTag(getInternshipWithoutTags(ENGINEERING2),
+                "EnGinEeRing"));
+        expectedModel.updateInternship(ENGINEERING3, addTag(getInternshipWithoutTags(ENGINEERING3),
+                "EnGinEeRing"));
+        ModelHelper.setSearchedList(expectedModel, ENGINEERING1, ENGINEERING2, ENGINEERING3);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person not in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " Mark";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find phone number of person in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find address of person in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find email of person in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find tags of person in address book -> 0 persons found */
-        List<Tag> tags = new ArrayList<>(DANIEL.getTags());
+        /* Case: find a tag in internship in internship book -> 1 internship found */
+        List<Tag> tags = new ArrayList<>(BUSINESS1.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
+        ModelHelper.setSearchedList(expectedModel, BUSINESS1);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find while a person is selected -> selected card deselected */
-        showAllPersons();
-        selectPerson(Index.fromOneBased(1));
-        assertFalse(getPersonListPanel().getHandleToSelectedCard().getName().equals(DANIEL.getName().fullName));
-        command = FindCommand.COMMAND_WORD + " Daniel";
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        /* Case: find multiple keywords from the same internship in internship book -> 1 internships found */
+        command = FindCommand.COMMAND_WORD + " " + "Deloitte Pagar";
+        expectedModel.updateInternship(BUSINESS2, addTag(getInternshipWithoutTags(BUSINESS2),
+                "Deloitte Pagar"));
+        ModelHelper.setSearchedList(expectedModel, BUSINESS2);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find single keyword that is in multiple internships in internship book -> 2 internship found */
+        command = FindCommand.COMMAND_WORD + " " + "Manufacturing";
+        expectedModel.updateInternship(ENGINEERING1, addTag(getInternshipWithoutTags(ENGINEERING1),
+                "Manufacturing"));
+        expectedModel.updateInternship(ENGINEERING2, addTag(getInternshipWithoutTags(ENGINEERING2),
+                "Manufacturing"));
+        ModelHelper.setSearchedList(expectedModel, ENGINEERING1, ENGINEERING2);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple keywords that is in multiple internships in internship book -> 3 internships found */
+        command = FindCommand.COMMAND_WORD + " " + "PwC Audit";
+        expectedModel.updateInternship(BUSINESS1, addTag(getInternshipWithoutTags(BUSINESS1),
+                "PwC saved"));
+        expectedModel.updateInternship(BUSINESS2, addTag(getInternshipWithoutTags(BUSINESS2),
+                "Audit"));
+        expectedModel.updateInternship(BUSINESS4, addTag(getInternshipWithoutTags(BUSINESS4),
+                "PwC Audit"));
+        ModelHelper.setSearchedList(expectedModel, BUSINESS1, BUSINESS2, BUSINESS4);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find internship in internship book, keyword is substring of name -> 0 internships found */
+        command = FindCommand.COMMAND_WORD + " Engin";
+        ModelHelper.setSearchedList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find internship in internship book, name is substring of keyword -> 0 internships found */
+        command = FindCommand.COMMAND_WORD + " Engineerings";
+        ModelHelper.setSearchedList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find internship not in internship book -> 0 internships found */
+        command = FindCommand.COMMAND_WORD + " Analytics";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find while a internship is selected -> selected card deselected */
+        showAllInternships();
+        selectInternship(Index.fromOneBased(1));
+        assertFalse(getInternshipListPanel().getHandleToSelectedCard().getName().equals(BUSINESS3.getName().fullName));
+        command = FindCommand.COMMAND_WORD + " Consulting";
+        expectedModel.updateInternship(BUSINESS3, addTag(getInternshipWithoutTags(BUSINESS3), "Consulting"));
+        ModelHelper.setSearchedList(expectedModel, BUSINESS3);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
-        /* Case: find person in empty address book -> 0 persons found */
-        deleteAllPersons();
-        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
-        expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        /* Case: mixed case command word -> 3 internships found with Engineering tags added to them */
+        command = "FiNd Engineering";
+        expectedModel.updateInternship(ENGINEERING1, addTag(getInternshipWithoutTags(ENGINEERING1),
+                "Engineering"));
+        expectedModel.updateInternship(ENGINEERING2, addTag(getInternshipWithoutTags(ENGINEERING2),
+                "Engineering"));
+        expectedModel.updateInternship(ENGINEERING3, addTag(getInternshipWithoutTags(ENGINEERING3),
+                "Engineering"));
+        ModelHelper.setSearchedList(expectedModel, ENGINEERING1, ENGINEERING2, ENGINEERING3);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-
-        /* Case: mixed case command word -> rejected */
-        command = "FiNd Meier";
-        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
-     * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,
-     * and the model related components equal to {@code expectedModel}.
+     * box displays {@code Messages#MESSAGE_INTERNSHIPS_LISTED_OVERVIEW} with the number of internship in the filtered
+     * list, and the model related components equal to {@code expectedModel}.
      * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * {@code JobbiBotSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
      * selected card updated accordingly, depending on {@code cardStatus}.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see JobbiBotSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
         String expectedResultMessage = String.format(
-                MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
+                MESSAGE_INTERNSHIPS_LISTED_OVERVIEW, expectedModel.getFilteredInternshipList().size());
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
     }
 
     /**
      * Executes {@code command} and verifies that the command box displays {@code command}, the result display
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.
      * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * {@code JobbiBotSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see JobbiBotSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
@@ -192,4 +254,71 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
+
+    /**
+     * Remove all tags from internship
+     * @param internshipToCopy
+     * @return Intership without tags
+     * @throws CommandException
+     */
+    public Internship getInternshipWithoutTags(Internship internshipToCopy)throws CommandException {
+        final UniqueTagList internshipTags = new UniqueTagList(internshipToCopy.getTags());
+        final UniqueTagList internshipTagsCopy = new UniqueTagList(internshipToCopy.getTags());
+
+        for (Tag nameTag : internshipTagsCopy) {
+            try {
+                internshipTags.delete(new Tag(nameTag.getTagName()));
+            } catch (TagNotFoundException e) {
+                throw new CommandException("Tag to be deleted not found");
+            }
+        }
+
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        internshipTags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        internshipTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+
+        return new Internship(
+                internshipToCopy.getName(),
+                internshipToCopy.getSalary(),
+                internshipToCopy.getEmail(),
+                internshipToCopy.getAddress(),
+                internshipToCopy.getIndustry(),
+                internshipToCopy.getRegion(),
+                internshipToCopy.getRole(),
+                correctTagReferences);
+    }
+
+    /**
+     * Add tag to internship
+     * @param internshipToCopy
+     * @param tagNames
+     * @return internship with tag
+     * @throws UniqueTagList.DuplicateTagException
+     */
+    public Internship addTag(Internship internshipToCopy, String tagNames)throws UniqueTagList.DuplicateTagException {
+        final UniqueTagList internshipTags = new UniqueTagList(internshipToCopy.getTags());
+
+        for (String tagName : tagNames.split("\\s+")) {
+            internshipTags.add(new Tag(tagName));
+        }
+
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        internshipTags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        internshipTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+
+        return new Internship(
+                internshipToCopy.getName(),
+                internshipToCopy.getSalary(),
+                internshipToCopy.getEmail(),
+                internshipToCopy.getAddress(),
+                internshipToCopy.getIndustry(),
+                internshipToCopy.getRegion(),
+                internshipToCopy.getRole(),
+                correctTagReferences);
+    }
 }
+

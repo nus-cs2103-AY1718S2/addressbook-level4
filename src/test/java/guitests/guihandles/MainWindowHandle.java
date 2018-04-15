@@ -7,8 +7,8 @@ import javafx.stage.Stage;
  */
 public class MainWindowHandle extends StageHandle {
 
-    private final PersonListPanelHandle personListPanel;
-    private final ResultDisplayHandle resultDisplay;
+    private final InternshipListPanelHandle internshipListPanel;
+    private final ChatBotListPanelHandle chatBotListPanel;
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
@@ -17,22 +17,26 @@ public class MainWindowHandle extends StageHandle {
     public MainWindowHandle(Stage stage) {
         super(stage);
 
-        personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
-        resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
+        internshipListPanel = new InternshipListPanelHandle(getChildNode(InternshipListPanelHandle
+                .INTERNSHIP_LIST_VIEW_ID));
+        chatBotListPanel = new ChatBotListPanelHandle(getChildNode(ChatBotListPanelHandle
+                .CHAT_BOT_LIST_VIEW_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
     }
 
-    public PersonListPanelHandle getPersonListPanel() {
-        return personListPanel;
+    public InternshipListPanelHandle getInternshipListPanel() {
+        return internshipListPanel;
     }
 
-    public ResultDisplayHandle getResultDisplay() {
-        return resultDisplay;
+    //@@author wyinkok
+    public ChatBotListPanelHandle getChatBotListPanel() {
+        return chatBotListPanel;
     }
 
+    //@@author
     public CommandBoxHandle getCommandBox() {
         return commandBox;
     }

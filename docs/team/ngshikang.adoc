@@ -131,9 +131,14 @@ such that each user (Pigeon/Delivery Driver) can have a personalised list of cus
 * provides an interface for managing the entire login process with usernames and passwords
 in a paired structure `UserPass` stored in a json file in the implemented class `JsonUserPassStorage`
 which implements `UserPassStorage`.
-* `UserPass` consists of two Strings, the first being the username and the second being the password.
+
+With regards to the implementation of the structures described above, `UserPass` consists of two Strings, the first being the username and the second being the password.
 The password is automatically hashed by the SHA-256 algorithm upon `UserPass` creation. A static `hash` method
 is provided in the `UserPass` class if SHA-256 hashing is required for any password verification.
+
+A class diagram depicting the behaviours and relationships for `UserPass`, `UserPassStorage` and `JsonUserPassStorage` are shown below.
+
+image::login_class_diagram.png[width="800"]
 
 === Login feature
 ==== Current Implementation

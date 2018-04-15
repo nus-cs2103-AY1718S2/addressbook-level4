@@ -74,7 +74,6 @@ A person can have any number of tags (including 0)
 =====
 * Birthday must be in DDMMYYYY format
 * Timetable must either be a valid NUSMods shortened link or left empty
-* If the computer has no internet access, a empty timetable will be created instead
 =====
 
 [NOTE]
@@ -194,8 +193,10 @@ Examples:
 * `birthdays` +
 Displays a list of all birthdays
 * `birthdays today` +
-Displays a window with the birthdays today
+Displays a window with the birthdays today +
+
 image::birthdaysToday.png[width="790"]
+
 // end::birthdays[]
 
 === NUS Commands
@@ -496,8 +497,8 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 ****
 // end::FAQ[]
 
-==Troubleshooting
-[width="790",cols="<15%,<23%, 45%",options="header",]
+== Troubleshooting
+[width="790",cols="<15%,75%",options="header",]
 |=======================================================================
 |Problem |How to solve
 |The timetable I entered is empty!|Do check the validity of your NUSMods link by inputting in your internet browser, and your internet connection.

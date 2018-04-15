@@ -715,7 +715,7 @@ so that they are accessible by people who are color blind and obvious for everyo
 
 //end::report[]
 
-//tag:tagcolor[]
+//tag::tagcolor[]
 === Tag colors [since v1.0]
 
 ==== Current Implementation
@@ -735,7 +735,7 @@ Pre-defined colors are included in `DarkTheme.css`, `LightTheme.css` and `Mornin
 **Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
 **Cons:** The color for each tag value might be different between app launchs +
 
-//end:tagcolor[]
+//end::tagcolor[]
 
 //tag::viewcommand[]
 === Display relevant Github or resume page. (Since v1.3)

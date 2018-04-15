@@ -541,9 +541,7 @@ Current implementation can work in a similar way that makes it easier to delete 
 === Find by Tag Command
 ==== Current Implementation
 When the Find command is called, FindCommandParser will look for the tag and/or name prefixes (t/ and n/ respectively).
-The arguments following each prefix will be made into a list. A mapping is then generated with the prefixes as the keys
- and the argument-lists as values. The name search portion will run like before, the tag search will follow a similar
- approach; creating a new predicate instance and return matching results if they exist.
+The arguments following each prefix will be made into a list. A mapping is then generated between prefixes/values and new predicate instances are created.
 
 image::FindCommand_sequence.png[Width="550"]
 
@@ -573,7 +571,6 @@ image::FindCommand_sequence.png[Width="550"]
 The PrisonBook calendar commands will instantiate a calendar class to interact with the Google Calendar API.
 The initial step is to obtain valid credentials authorized from the API side to access its resources, then
 the calendar class will send HTTPS requests to the server, whether it is calling the listEvents, addEvents or delEvents API command.
-Upon receiving a success confirmation from the API, the change will be reflected next time any calendar commands are called.
 
 Calendar Commands that are supported are:
 * listing upcoming events

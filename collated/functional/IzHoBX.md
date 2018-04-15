@@ -571,10 +571,10 @@ public class RateCommand extends UndoableCommand {
             @Override
             public void run() {
                 if (timetableEntriesStatus.get(this)) {
-                    System.out.println("An event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format
+                    logger.info("An event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format
                             (Calendar.getInstance().getTimeInMillis()));
                 } else {
-                    System.out.println("A cancelled event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
+                    logger.info("A cancelled event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
                 Notification notification = timerTaskToTimetableEntryMap.get(this);
@@ -585,7 +585,6 @@ public class RateCommand extends UndoableCommand {
                 } catch (NullPointerException e) {
                     logger.info("Corresponding employee is deleted. Ignoring this notification");
                     raise(new RequestToDeleteNotificationEvent(notification.getEventId(), true));
-                    raise(new RequestToDeleteNotificationEvent(notification.getId(), true));
                 }
             }
         };
@@ -688,11 +687,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
 import java.util.Scanner;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -700,7 +695,6 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Rating;
-import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new RateCommand object
@@ -760,7 +754,6 @@ public class RateCommandParser implements Parser<RateCommand> {
     /**
      * Adds a notification to the address book.
      */
-
     public void addNotification(Notification notification) {
         try {
             semaphore.acquire();
@@ -862,9 +855,6 @@ public class RateCommandParser implements Parser<RateCommand> {
         if (notificationCenter == null) {
             raise(new RequestForNotificationCenterEvent());
         }
-        while (notificationCenter == null) {
-            for (int i = 0; i < 1000; i++);
-        }
     }
     @Override
     public synchronized void deleteNotification(String id, boolean deleteFromAddressBookOnly) throws
@@ -931,7 +921,6 @@ public class RateCommandParser implements Parser<RateCommand> {
 
         //schedule all notification
         for (Notification n: getAddressBook().getNotificationsList()) {
-            System.out.println("Scheduling all notification");
             indicateNotificationAdded(n);
         }
     }
@@ -944,6 +933,7 @@ public class RateCommandParser implements Parser<RateCommand> {
     public NotificationCenter getNotificationCenter() {
         return  notificationCenter;
     }
+
 ```
 ###### \java\seedu\address\model\notification\exceptions\NotificationNotFoundException.java
 ``` java
@@ -1852,7 +1842,6 @@ public class NotificationCenter {
             + NotificationCard.NOTIFICATION_CARD_X_OFFSET * 3;
     private static final int NOTIFICATION_CARD_HEIGHT_IN_CENTER = NotificationCard.NOTIFICATION_CARD_HEIGHT;
     private static final int NOTIFICATION_CARD_WIDTH_IN_CENTER = NotificationCard.NOTIFICATION_CARD_WIDTH;
-
     protected LinkedList<javafx.scene.layout.Region> notificationCards;
     protected LinkedList<NotificationCard> notificationCardCopy;
     protected HashMap<String, LinkedList<javafx.scene.layout.Region>> idToCard;
@@ -2015,7 +2004,6 @@ public class NotificationCenter {
         for (NotificationCard nc: toDelete) {
             notificationCardCopy.remove(nc);
         }
-
     }
 }
 ```

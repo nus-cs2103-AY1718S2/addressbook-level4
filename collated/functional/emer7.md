@@ -1009,8 +1009,10 @@ public class ReviewDialog {
 
         reviewer = new TextField();
         reviewer.setPromptText("Enter your email address here");
+        reviewer.setId("reviewerInputTextField");
         review = new TextArea();
         review.setPromptText("Enter your review here");
+        review.setId("reviewInputTextField");
 
         grid.add(new Label("Reviewer:"), 0, 0);
         grid.add(reviewer, 1, 0);
@@ -1050,6 +1052,7 @@ public class ReviewDialog {
 ```
 ###### \resources\view\DetailPanel.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>

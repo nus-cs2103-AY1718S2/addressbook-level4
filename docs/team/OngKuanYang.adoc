@@ -2,7 +2,7 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: SellIt
+== PROJECT: Sell It
 
 == Overview
 

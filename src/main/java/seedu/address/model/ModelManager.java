@@ -201,12 +201,12 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Appointment List Accessors =============================================================
 
     @Override
-    public synchronized boolean deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) throws ParseException {
+    public synchronized void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) throws
+            UniqueAppointmentList.AppoinmentNotFoundException {
         requireAllNonNull(patient, targetAppointmentDateTime);
         Appointment targetAppointment = new Appointment(targetAppointmentDateTime.toString());
-        boolean isDeleteSuccess = patient.deletePatientAppointment(targetAppointment);
+        patient.deletePatientAppointment(targetAppointment);
         indicateAppointmentChanged(patient);
-        return isDeleteSuccess;
     }
 
     @Override

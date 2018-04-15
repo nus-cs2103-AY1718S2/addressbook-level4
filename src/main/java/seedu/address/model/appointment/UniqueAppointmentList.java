@@ -159,10 +159,10 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     /**
-     * Returns true if the appointment is not the past appointment
-     * Returns false if the appointment is past appointment
+     * Removes an appointment from the appointment list
+     * @throws AppoinmentNotFoundException if the appointment does not exist in the list
      */
-    public boolean remove(Appointment targetAppointment) throws ParseException {
+    public void remove(Appointment targetAppointment) throws AppoinmentNotFoundException {
         requireNonNull(targetAppointment);
 //        Appointment appointmentToDelete = getAppointmentByIndex(index);
 //        boolean isPastAppointment = getPastAppointmentObservableList().contains(appointmentToDelete);
@@ -171,7 +171,11 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 //            return false;
 //        }
 
-        return internalList.remove(targetAppointment);
+        if (!contains(targetAppointment)) {
+            throw new AppoinmentNotFoundException();
+        }
+
+        internalList.remove(targetAppointment);
     }
 
     public Appointment getAppointmentByIndex(Index index) throws ParseException {
@@ -189,5 +193,11 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         protected DuplicatedAppointmentException() {
             super("Operation would result in duplicate appointments.");
         }
+    }
+
+    /**
+     * Signals that an operation cannot be performed object that is not found
+     */
+    public static class AppoinmentNotFoundException extends Exception {
     }
 }

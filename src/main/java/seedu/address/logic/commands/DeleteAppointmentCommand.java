@@ -6,8 +6,8 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.DateTime;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -49,14 +49,11 @@ public class DeleteAppointmentCommand extends Command {
         Patient patientFound = model.getPatientFromListByIndex(targetPatientIndex);
 
         try {
-            if (!model.deletePatientAppointment(patientFound, targetAppointmentDateTime)) {
-                throw new CommandException(MESSAGE_APPOINTMENT_CANNOT_BE_FOUND);
-            }
-        } catch (ParseException e) {
-            throw new AssertionError("The appointment object should have correct format");
+            model.deletePatientAppointment(patientFound, targetAppointmentDateTime);
+            return new CommandResult(MESSAGE_DELETE_SUCCESS);
+        } catch (UniqueAppointmentList.AppoinmentNotFoundException e) {
+            throw new CommandException(MESSAGE_APPOINTMENT_CANNOT_BE_FOUND);
         }
-
-        return new CommandResult(MESSAGE_DELETE_SUCCESS);
     }
 
     /**

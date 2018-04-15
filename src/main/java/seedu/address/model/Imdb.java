@@ -323,11 +323,11 @@ public class Imdb implements ReadOnlyImdb {
 
     /**
      * Remove a patient's appointment
-     * @return true if the appointment is deleted successfully
      */
-    public boolean deletePatientAppointment(Patient patient, Appointment targetAppointment) throws ParseException {
+    public void deletePatientAppointment(Patient patient, Appointment targetAppointment) throws
+            UniqueAppointmentList.AppoinmentNotFoundException {
         requireAllNonNull(patient, targetAppointment);
-        return patient.deletePatientAppointment(targetAppointment);
+       patient.deletePatientAppointment(targetAppointment);
     }
 
     //@@author

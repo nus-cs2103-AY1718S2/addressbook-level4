@@ -125,8 +125,9 @@ public class Patient {
         return appointments.getUpcomingAppointmentObservableList();
     }
 
-    public boolean deletePatientAppointment(Appointment targetAppointment) throws ParseException {
-        return appointments.remove(targetAppointment);
+    public void deletePatientAppointment(Appointment targetAppointment) throws
+            UniqueAppointmentList.AppoinmentNotFoundException {
+        appointments.remove(targetAppointment);
     }
 
     public void addAppointment(Appointment appointment) throws UniqueAppointmentList.DuplicatedAppointmentException {

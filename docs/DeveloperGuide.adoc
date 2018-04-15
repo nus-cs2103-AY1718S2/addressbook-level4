@@ -490,6 +490,8 @@ Below is a sequence diagram detailing the interaction between the various classe
 .Sequence Diagram for Edit Command
 image::EditCommandSequenceDiagram.png[width="800"]
 
+{empty} +
+
 We examine the flow of events, starting when the command goes through `EditCommandParser` for parsing. The type of information provided by the user will be
 identified through the use of regular expression `Pattern` objects. +
 

@@ -940,7 +940,7 @@ The user executes the sync command using `SyncCommand`, i.e. `sync`, which first
 
 Once the `ModelManager` receives the new `Price` objects, it passes them to the `CoinBook` to carry out price updates for each coin via `CoinChangedEvent`.
 
-The following sequence diagram (Fig. 25) is a visual representation of the above described process.
+The following sequence diagram (Fig. 26) is a visual representation of the above described process.
 
 .Sequence Diagram for Sync
 image::SyncCommandSequenceDiagram.png[width="800"]

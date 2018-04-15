@@ -92,7 +92,7 @@ You can obtain the latest version [ext]#http://www.oracle.com/technetwork/java/j
 +
 .  Download the latest `coinbook.jar` [exref]#link:{repoURL}/releases[here]#.
 .  Copy the file to the folder you want to use as the home folder for your _CoinBook_.
-.  Double-click the file to start the app. The GUI should appear in a few seconds (Fig. 1).
+.  Double-click the file to start the app. The GUI should appear in a few seconds (Fig. 2).
 +
 .Startup Window
 image::Ui.png[width="790"]
@@ -453,7 +453,7 @@ Lists all the commands that you have entered previously, in reverse chronologica
 
 [NOTE]
 ====
-Pressing the UP and DOWN arrow keys will also display the previous and next input respectively in the command box.
+Pressing the kbd:[UP] and kbd:[DOWN] arrow keys will also display the previous and next input respectively in the command box.
 ====
 
 // tag::undoredo[]
@@ -553,7 +553,9 @@ Obtains the latest price data to update price metrics of all owned coins.
 
 Pressing any key will auto-suggest the field with all possible matching inputs.
 
-Pressing the UP and DOWN arrow keys will allow navigation the input suggestions.
+Pressing the kbd:[UP] and kbd:[DOWN] arrow keys will allow navigation of the input suggestions.
+
+Once the desired command is selected as indicated by light grey highlight, pressing the kbd:[ENTER] key will input the command into the command box.
 //end::autocomplete[]
 
 === Exit the program : `exit` | `q`

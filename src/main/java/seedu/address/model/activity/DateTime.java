@@ -42,7 +42,6 @@ public class DateTime {
             LocalDateTime.parse(value, formatter);
             return true;
         } catch (DateTimeParseException dtpe) {
-            dtpe.printStackTrace();
             return false;
         }
     }

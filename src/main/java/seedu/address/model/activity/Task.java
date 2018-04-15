@@ -102,8 +102,8 @@ public class Task extends Activity {
         return new Task(getName(), getDueDateTime(), getRemark(), tags, isCompleted());
     }
 
-    @Override
     //@@author Kyomian
+    @Override
     /**
      * Gets a completely copy of task.
      * Removes the overdue tag, if any.

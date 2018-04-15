@@ -23,6 +23,10 @@ public interface Model {
     /** Deletes the given activity. */
     void deleteActivity(Activity target) throws ActivityNotFoundException;
 
+    //@@author Kyomian
+    /** Clear all tasks or all events */
+    void clearActivities(String activityTypeToClear);
+
     /** Adds the given activity */
     void addActivity(Activity activity) throws DuplicateActivityException;
 

@@ -23,11 +23,13 @@ import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 
 //@@author Kyomian
-
 /**
  * Parses input arguments and creates a new EventCommand object
  */
 public class EventCommandParser implements Parser<EventCommand> {
+
+    public static final String MESSAGE_INVALID_TIME_RANGE = "Start Datetime cannot be after end Datetime";
+
     /**
      * Parses the given {@code String} of arguments in the context of the EventCommand
      * and returns a EventCommand object for execution.
@@ -51,6 +53,8 @@ public class EventCommandParser implements Parser<EventCommand> {
             Optional<Remark> remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK));
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
+            isTimeRangeValid(startDateTime, endDateTime);
+
             Event event = new Event(name, startDateTime, endDateTime,
                     location.isPresent() ? location.get() : null,
                     remark.isPresent() ? remark.get() : null, tagList);
@@ -67,5 +71,14 @@ public class EventCommandParser implements Parser<EventCommand> {
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Throws {@code IllegalValueException} if start datetime is after end datetime.
+     */
+    private static void isTimeRangeValid(DateTime startDateTime, DateTime endDateTime) throws IllegalValueException {
+        if (startDateTime.getLocalDateTime().isAfter(endDateTime.getLocalDateTime())) {
+            throw new IllegalValueException(MESSAGE_INVALID_TIME_RANGE);
+        }
     }
 }

@@ -24,7 +24,7 @@ public class XmlAdaptedEventTest {
 
     private static final String INVALID_NAME = "Rachel's Bday";
     private static final String INVALID_DATE_TIME = "23 April 2018";
-    private static final String INVALID_LOCATION = " ";
+    private static final String INVALID_LOCATION = "";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = CIP_EVENT.getName().toString();

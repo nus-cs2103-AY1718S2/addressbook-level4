@@ -14,8 +14,7 @@ public class DeleteCalendar {
      */
     public static void execute(String calendarId) throws IOException {
         // Build a new authorized API client service.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
 
         service = Authentication.getCalendarService();
 

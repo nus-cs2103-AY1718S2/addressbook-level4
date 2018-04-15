@@ -62,7 +62,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         Model model = getModel();
         String password = model.getPassword();
         UnlockCommand testUnlockCommand = new UnlockCommand();
-        testUnlockCommand.setTestMode();
+        testUnlockCommand.setTestMode(true);
         testUnlockCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
 

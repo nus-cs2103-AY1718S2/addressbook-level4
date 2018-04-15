@@ -50,6 +50,10 @@ public class TestAddEventCommandParserTest {
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, TestAddEventCommand.MESSAGE_USAGE);
 
+        //missing person index
+        assertParseFailure(parser, VALID_EVENT_TITLE + EVENT_LOCATION + EVENT_STARTTIME
+                + EVENT_ENDTIME + EVENT_DESCRIPTION, expectedMessage);
+
         //missing title prefix
         assertParseFailure(parser, "1" + VALID_EVENT_TITLE + EVENT_LOCATION + EVENT_STARTTIME
                 + EVENT_ENDTIME + EVENT_DESCRIPTION, expectedMessage);

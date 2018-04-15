@@ -38,6 +38,7 @@ If you are using ET for the first time, please set up ET by following the instru
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
+. Ensure that you have access to the internet.
 .  Download the latest `et-employeestracker.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Employees Tracker.
 .  Double-click the file to start the app. The GUI should appear in a few seconds, as shown in _Figure 1_.
@@ -52,6 +53,7 @@ image::password_box.png[width="790"]
 +
 . Type default password `admin` in the pop-up window and press kbd:[Enter] or the left-click on the `Unlock` button at the bottom right corner of the pop-up window. The pop-up window will then disappear.
 . Type `authenET` and press kbd:[Enter]. You will be directed to an authorizing web page as shown in _Figure 3_.
+
 +
 .Authorizing web page
 image::authorize_ET.png[width="790"]
@@ -212,7 +214,7 @@ the photo is copied, you should not delete it from that folder manually.
 // end::addphoto[]
 
 // tag::auth[]
-=== Authorizes Employees Tracker : `authenET`
+=== Authorizing Employees Tracker : `authenET`
 
 Get the permission to allow E.T. to access your google calendar. +
 
@@ -531,8 +533,9 @@ Format: `setPassword`
 
 [NOTE]
 ====
+* You can press kbd:[Tab] to switch the selection between the dialog elements.
 * You need to enter both old and new password in a pop-up dialog, and old password must match current application's unlock password.
-* The new password can contain any character EXCEPT comma(,).
+* The new password can contain any character *except comma(,)*.
 ====
 
 Examples:

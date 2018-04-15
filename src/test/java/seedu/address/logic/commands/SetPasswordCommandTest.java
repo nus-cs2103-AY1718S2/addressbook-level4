@@ -35,7 +35,7 @@ public class SetPasswordCommandTest {
     }
 
     @Test
-    public void setPasswordFail() {
+    public void setPasswordFail_incorrectPassword() {
         //incorrect old password entered.
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         LogicManager logicManager = new LogicManager(model);

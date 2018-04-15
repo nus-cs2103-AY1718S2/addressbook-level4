@@ -37,8 +37,8 @@ public class DeleteEventCommandParser implements Parser<DeleteEventCommand> {
         if (!sc.hasNextLine()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteEventCommand.MESSAGE_USAGE));
         }
-        String tilte = sc.nextLine().trim();
+        String title = sc.nextLine().trim();
 
-        return new DeleteEventCommand(index, tilte);
+        return new DeleteEventCommand(index, title);
     }
 }

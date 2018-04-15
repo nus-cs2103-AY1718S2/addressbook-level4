@@ -158,4 +158,3 @@ all the contents of the script.
    Expected: Error details shown in the command result panel. Status bar remains the same.
 .. Other incorrect distance commands to try: `distance`, `distance 0 x`, `distance x y` (where x and y are larger than the list size) +
    Expected: Similar to previous.
-

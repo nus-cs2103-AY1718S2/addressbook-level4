@@ -104,7 +104,7 @@ image::DeveloperGettingStarted5.png[width="600"]
 . Locate the `build.gradle` file and select it. Click `OK`. You will be directed to the `Import Module from Gradle` window (refer to <<fig-GettingStarted6>>).
 
 [[fig-GettingStarted6]]
-.`Import Module from Gradle` Window
+.`Import Module from Gradle` window
 image::DeveloperGettingStarted6.png[width="600"]
 
 [start=12]
@@ -238,7 +238,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 The following sections will provide more details on each of the 4 secondary components.
 
 [[Design-Ui]]
-=== UI component
+=== UI Component
 
 `UI` consists of a `MainWindow` that is made up of numerous parts (e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `StatusBarFooter`, `CalendarPanel`, etc.).
 These parts, including the `MainWindow`, inherit from the abstract `UiPart` class.
@@ -261,7 +261,7 @@ The layout of these UI parts are defined in matching `.fxml` files that are in t
 * Responds to events raised from various parts of the application and updates the UI accordingly.
 
 [[Design-Logic]]
-=== Logic component
+=== Logic Component
 
 `Logic` consists of the commands and their respective parsers (if necessary).
 Parser classes are defined in `.java` files suffixed with _'Parser'_, and are found in the `src/main/java/logic/parser` folder.
@@ -303,7 +303,7 @@ The command execution can affect the `Model` (e.g. adding a task) and/or raise e
 .  `CommandResult` object is passed to `UI`.
 
 [[Design-Model]]
-=== Model component
+=== Model Component
 
 `Model` consists of a `UniqueTaskList`, `UniqueTagList`, and `UniqueUserList` that contains and manipulates the data within the application using an `ObservableList`. The component also includes `Task`, and its respective parameters (e.g. `Name`, `Priority`, `Date Added`, etc.).
 
@@ -325,7 +325,7 @@ The `Model`:
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
-=== Storage component
+=== Storage Component
 
 `Storage` consists of the `XmlOrganizerStorage`, which reads data from, and writes data to, the hard disk.
 Data is stored in XML format, and can be retrieved from `data` > `organizer.xml`.
@@ -350,13 +350,13 @@ image::StorageClassDiagram.png[width="800"]
 
 PrioriTask consists of many different features. This section describes some noteworthy details on how certain features are implemented.
 
-=== Undo/Redo feature
+=== Undo/Redo Feature
 
 The `undo` feature restores PrioriTask to the state before the previous undoable command was executed. Undoable commands are defined as commands that modify PrioriTask’s content (e.g. `add`, `delete`, `edit` and `clear`).
 
 The `redo` feature does the opposite - it reverses the most recent `undo` command.
 
-==== Current implementation
+==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the organizer (e.g. `add`, `edit`). Such commands inherit from `UndoableCommand`.
 
@@ -954,12 +954,12 @@ Open a console and run the command `gradlew clean headless allTests` (Mac/Linux:
 [NOTE]
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library, GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. This means that the developer is free to do something else while the tests are running.
 
-=== Types of tests
+=== Types of Tests
 
 There are two types of tests:
 
 .  *GUI Tests* - Tests involving the GUI. They include:
-.. _System Tests_ that tests the entire App by simulating user actions on the GUI. These are found in the `systemtests` package.
+.. _System Tests_ that tests the entire application by simulating user actions on the GUI. These are found in the `systemtests` package.
 .. _Unit tests_ that test individual components. These are found in `seedu.organizer.ui` package.
 .  *Non-GUI Tests* - Tests not involving the GUI. They include:
 ..  _Unit tests_ targeting the lowest level methods/classes. +
@@ -1047,9 +1047,9 @@ Help busy university students keep track of their tasks and priorities.
 *** Allows users to view what date the task has been completed on.
 * Yeo Guek Ling
 ** Major : Calendar
-*** Allows users to be able to have a more concise view of task deadlines.
-** Minor : Find deadline / description command
-*** Allows users to be able to search the organizer for tasks even when they have forgotten the task's name.
+*** Allows users to be able to have a chronological overview of the deadlines of all their tasks.
+** Minor : Find deadline / description commands
+*** Allows users to be search for tasks using keywords in the deadline and / or description parameters.
 
 [appendix]
 == User Stories
@@ -1254,10 +1254,10 @@ These instructions only provide a starting point for testers to work on; testers
 [NOTE]
 If the window size is smaller than the default height and width, the window size will be reset to default upon app re-launch.
 
-=== User management
+=== User Management
 
 . Signing up
-.. Prerequisites: App is not currently logged in.
+.. Prerequisites: Application is not currently logged in.
 .. Test case: `signup u/dave p/dave` +
    Expected: No user account is created. Error details shown in the status message. Status bar remains the same.
 .. Test case: `signup u/admin p/admin` +
@@ -1273,21 +1273,21 @@ If the window size is smaller than the default height and width, the window size
    Expected: Login attempt is successful. Username of currently logged in user is shown in the status message. Timestamp in the status bar is updated. Currently logged in user in status bar is updated.
 
 . Adding a question answer set
-.. Prerequisites: App is currently logged in.
+.. Prerequisites: Application is currently logged in.
 .. Test case: `addqa q/ a/` +
    Expected: No question answer set is added. Error details shown in the status message. Status bar remains the same.
 .. Test case: `addqa q/are cats cool? a/yes` +
    Expected: Question answer set is added. Username of the currently logged in user and the command success is shown in the status message. Timestamp in the status bar is updated.
 
 . Retrieving a question for password retrieval
-.. Prerequisites: App is not currently logged in. User account with username 'admin' and password 'admin' has been created. UserQuestion answer set has been added to user : 'admin'.
+.. Prerequisites: Application is not currently logged in. User account with username 'admin' and password 'admin' has been created. UserQuestion answer set has been added to user : 'admin'.
 .. Test case: `forgotpassword u/admin123` +
    Expected: Question retrieval fails. Error details shown in the status message. Status bar remains the same.
 .. Test case: `forgotpassword u/admin` +
    Expected: Question retrieval successful. Question of 'admin` shown in the status message. Status bar reminas the same.
 
 . Answering a question for password retrieval
-.. Prerequisites: App is not currently logged in. User account with username 'admin' and password 'admin' has been created. UserQuestion answer set with answer 'yes' has been added to user : 'admin'.
+.. Prerequisites: Application is not currently logged in. User account with username 'admin' and password 'admin' has been created. UserQuestion answer set with answer 'yes' has been added to user : 'admin'.
 .. Test case: `answer u/admin123 a/yes` +
    Expected: Password retrieval fails. Error details shown in the status message. Status bar remains the same.
 .. Test case: `answer u/admin a/no` +
@@ -1303,4 +1303,28 @@ If the window size is smaller than the default height and width, the window size
 
 === Calendar
 
-. Guek Ling add your calendar testing here.
+. Adding a task
+.. Prerequisites: Application is logged in.
+.. Test case: `add n/CS2101 OP1 d/2018-03-23` +
+Expected: Task added successfully. A success message will be shown in the results display box. Task is reflected on the calendar on the `2018-03-23` date.
+
+. Editing a task
+.. Prerequisites: Application is logged in. At least one task is present in the organizer.
+.. Test case: `edit 1 n/Prepare for OP1` +
+Expected: Task updated successfully. A success message will be shown in the results display box. Calendar will be updated with the task's new name.
+.. Test case: `edit 1 p/3` +
+Expected: Task updated successfully. A success message will be shown in the results display box. No changes will be made on the calendar because the task's name and deadline was not changed.
+
+. Deleting a task
+.. Prerequisites: Application is logged in. At least one task is present in the organizer.
+.. Test case: `delete 1` +
+Expected: Task deleted successfully. A success message will be shown in the results display box. Calendar will remove the deleted task.
+
+. Switching between months
+.. Prerequisites: Application is logged in.
+.. Test case: `pmonth` +
+Expected: Calendar view changed successfully. A success message will be shown in the results display box. If the currently viewed month on the application is `April 2018`, calendar will show `March 2018` after execution of command.
+.. Test case: `nmonth` +
+Expected: Calendar view changed successfully. A success message will be shown in the results display box. If the currently viewed month on the application is `April 2018`, calendar will show `May 2018` after execution of command.
+.. Test case: `cmonth` +
+Expected: Calendar view changed successfully. A success message will be shown in the results display box. If the currently viewed month on the application is `December 2018` and current month is `April 2018`, calendar will show `April 2018` after execution of command.

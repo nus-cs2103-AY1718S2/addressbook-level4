@@ -32,12 +32,16 @@ This application is based on the https://github.com/se-edu/addressbook-level4[Ad
 *** Change existing `Email` field to `Deadline` field. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/75[#75], https://github.com/CS2103JAN2018-W13-B4/main/pull/114[#114])
 *** Change existing `Address` field to `Description` field. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/79[#79], https://github.com/CS2103JAN2018-W13-B4/main/pull/94[#94])
 ** Fix bugs:
+*** Fix Calendar feature bugs (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/237[#237], https://github.com/CS2103JAN2018-W13-B4/main/pull/260[#260])
+*** Fix Deadline parameter bug (PR https://github.com/CS2103JAN2018-W13-B4/main/pull/240[#240])
+*** Fix multiple similar prefixes for several commands, including `add`, `edit`, etc. (PR https://github.com/CS2103JAN2018-W13-B4/main/pull/249[#249])
 ** Documentation:
 *** Did cosmetic tweaks to existing contents of the User Guide. (PR https://github.com/CS2103JAN2018-W13-B4/main/pull/146[#146])
 *** Made changes to existing sections of the Developer Guide to fix mistakes and to reflect our current product. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/18[#18], https://github.com/CS2103JAN2018-W13-B4/main/pull/82[#82], https://github.com/CS2103JAN2018-W13-B4/main/pull/150[#150], https://github.com/CS2103JAN2018-W13-B4/main/pull/172[#172], https://github.com/CS2103JAN2018-W13-B4/main/pull/198[#198], https://github.com/CS2103JAN2018-W13-B4/main/pull/207[#207])
 *** Made changes to existing sections of the User Guide to reflect our current product. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/16[#16], https://github.com/CS2103JAN2018-W13-B4/main/pull/96[#96])
 *** Updated README and About Us to reflect our current team and our current product. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/69[#69], https://github.com/CS2103JAN2018-W13-B4/main/pull/70[#70])
 *** Modified the User Guide so that it is more organised, and more information is provided for first-time users. (e.g. how to install the application, how to sign up and login, etc.) (PR https://github.com/CS2103JAN2018-W13-B4/main/pull/190[#190])
+*** Fix mistakes in the User Guide. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/244[#244], https://github.com/CS2103JAN2018-W13-B4/main/pull/267[#267])
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W13-B4/main/pull/93[#93], https://github.com/CS2103JAN2018-W13-B4/main/pull/101[#101], https://github.com/CS2103JAN2018-W13-B4/main/pull/123[#123], https://github.com/CS2103JAN2018-W13-B4/main/pull/159[#159]
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T11-B2/main/issues/82[1], https://github.com/CS2103JAN2018-T11-B2/main/issues/87[2], https://github.com/CS2103JAN2018-T11-B2/main/issues/92[3], https://github.com/CS2103JAN2018-T11-B2/main/issues/94[4], https://github.com/CS2103JAN2018-T11-B2/main/issues/95[5], https://github.com/CS2103JAN2018-T11-B2/main/issues/98[6], https://github.com/CS2103JAN2018-T11-B2/main/issues/104[7], https://github.com/CS2103JAN2018-T11-B2/main/issues/109[8], https://github.com/CS2103JAN2018-T11-B2/main/issues/113[9])

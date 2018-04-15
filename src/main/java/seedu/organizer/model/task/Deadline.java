@@ -6,7 +6,6 @@ import static seedu.organizer.commons.util.AppUtil.checkArgument;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.logging.Logger;
 
 import seedu.organizer.commons.core.LogsCenter;
@@ -59,11 +58,7 @@ public class Deadline {
             String format = "yyyy-MM-dd";
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             sdf.setLenient(false);
-            Date date = sdf.parse(test);
-
-            if (date.compareTo(new Date()) < 0) {
-                return true;
-            }
+            sdf.parse(test);
 
             return true;
 

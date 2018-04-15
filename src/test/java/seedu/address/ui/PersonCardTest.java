@@ -5,6 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
@@ -14,11 +17,13 @@ import seedu.address.testutil.PersonBuilder;
 public class PersonCardTest extends GuiUnitTest {
 
     @Test
+
     public void display() {
         // no tags
         Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
         PersonCard personCard = new PersonCard(personWithNoTags, 1);
         uiPartRule.setUiPart(personCard);
+
         assertCardDisplay(personCard, personWithNoTags, 1);
 
         // with tags
@@ -69,4 +74,15 @@ public class PersonCardTest extends GuiUnitTest {
         // verify person details are displayed correctly
         assertCardDisplaysPerson(expectedPerson, personCardHandle);
     }
+
+    //@@author kengsengg
+    /**
+     * Asserts that {@code personCard} matches the tag details and color of {@code expectedPerson} correctly
+     */
+    private static void assertTagsMatching(Person expectedPerson, PersonCardHandle personCard) {
+        List<String> expectedTags = expectedPerson.getTags().stream()
+                .map(tag -> tag.tagName).collect(Collectors.toList());
+        assertEquals(expectedTags, personCard.getTags());
+    }
+    //@@author
 }

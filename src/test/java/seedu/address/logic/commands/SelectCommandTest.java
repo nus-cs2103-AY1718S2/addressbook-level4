@@ -5,10 +5,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.io.IOException;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,6 +27,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -40,7 +45,7 @@ public class SelectCommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_success() {
+    public void execute_validIndexUnfilteredList_success() throws IOException {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
         assertExecutionSuccess(INDEX_FIRST_PERSON);
@@ -49,21 +54,21 @@ public class SelectCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_failure() {
+    public void execute_invalidIndexUnfilteredList_failure() throws IOException {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() {
+    public void execute_validIndexFilteredList_success() throws IOException {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         assertExecutionSuccess(INDEX_FIRST_PERSON);
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_failure() {
+    public void execute_invalidIndexFilteredList_failure() throws IOException {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Index outOfBoundsIndex = INDEX_SECOND_PERSON;
@@ -99,12 +104,14 @@ public class SelectCommandTest {
      * Executes a {@code SelectCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
      * is raised with the correct index.
      */
-    private void assertExecutionSuccess(Index index) {
+    private void assertExecutionSuccess (Index index) throws IOException {
         SelectCommand selectCommand = prepareCommand(index);
+        List<Person> lastShownList = model.getFilteredPersonList();
+        Person selectedPerson = lastShownList.get(index.getZeroBased());
 
         try {
             CommandResult commandResult = selectCommand.execute();
-            assertEquals(String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, index.getOneBased()),
+            assertEquals(String.format(MESSAGE_SELECT_PERSON_SUCCESS, selectedPerson.getName()),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
@@ -118,7 +125,7 @@ public class SelectCommandTest {
      * Executes a {@code SelectCommand} with the given {@code index}, and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
-    private void assertExecutionFailure(Index index, String expectedMessage) {
+    private void assertExecutionFailure(Index index, String expectedMessage) throws IOException {
         SelectCommand selectCommand = prepareCommand(index);
 
         try {

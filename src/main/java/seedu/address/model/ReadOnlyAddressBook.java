@@ -1,7 +1,9 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -16,9 +18,21 @@ public interface ReadOnlyAddressBook {
     ObservableList<Person> getPersonList();
 
     /**
+     * Returns an unmodifiable view of the appointments list.
+     * This list will not contain any duplicate appointments.
+     */
+    ObservableList<Appointment> getAppointmentList();
+
+    /**
      * Returns an unmodifiable view of the tags list.
      * This list will not contain any duplicate tags.
      */
     ObservableList<Tag> getTagList();
+
+    /**
+     * Returns an unmodifiable view of the subjects list.
+     * This list will not contain any duplicate subjects.
+     */
+    ObservableList<Subject> getSubjectList();
 
 }

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= EduBuddy - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,9 +12,19 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018-T09-B1`      Since: `Mar 2018`      Licence: `MIT`
+
+== Introduction
+Welcome to _EduBuddy_! This application is based on a Command Line Interface(CLI),
+and is designed for secondary school teachers to manage student profiles in
+a simple and efficient manner.
+
+This developer guide will help to provide you with a detailed walk-through of _EduBuddy_,
+from the application set up procedure, to the explanation of the features and
+troubleshooting methods.
 
 == Setting up
+This section helps to guide you through the necessary steps to launch our application.
 
 === Prerequisites
 
@@ -89,9 +99,13 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 When you are ready to start coding,
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
-2. Take a look at <<GetStartedProgramming>>.
+2. Read up on the individual design parts from Model, Storage, UI and Logic.
+
+*_return to <<toc,Table of Contents>>_*
 
 == Design
+This section illustrates the overall design of our application and provides
+the details of its individual components.
 
 [[Design-Architecture]]
 === Architecture
@@ -164,6 +178,10 @@ The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `Re
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
+The UI Browser window uses HTML's w3.css framework. The layout of the Browser Panel is defined from `src/main/resources/StudentPage/template.html`.
+
+The UI Browser window then reflects the user profile's respective HTML file when a user is selected, found in {user.home}/StudentPage.
+
 The `UI` component,
 
 * Executes user commands using the `Logic` component.
@@ -225,6 +243,8 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+*_return to <<toc,Table of Contents>>_*
 
 == Implementation
 
@@ -358,12 +378,378 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+*_return to <<toc,Table of Contents>>_*
+
+// tag::Sorting[]
+=== Sort feature
+
+==== Current Implementation
+
+The sorting feature allows the user to sort the list of students according to certain
+parameters like name and tag. After the sorting process has completed, the user will be
+presented with a read only view of the sorted list on the `UI`, and the state of the
+list will not be modified.
+
+The figure below shows the Sequence Diagram for the interactions within the `Logic`
+component when "sort name" is typed into the `CommandBox` by the user.
+
+image::SortCommandSequenceDiagram.png[width="650"]
+
+. `Logic` uses `AddressBookParser` class to parse the user command,
+. A `SortCommand` object is created which is then executed by the `LogicManager`.
+. The command executes and calls the `sortPersonList(parameter)` method, which then affects
+  the `Model`.
+. After the sorting process has been completed, the result is encapsulated as a
+  `CommandResult` object, which is then passed back to the `Ui` as a message shown
+  to the user.
+
+Below is an example of how the list looks like before and after the command "sort name"
+is executed.
+
+image::SortCommandByName.png[width="650"]
+
+==== Design Considerations
+
+===== Aspect: How the list appears after sorting is done and the app is restarted
+* ** Alternative 1 (current choice): ** List remains in its initial state after each
+                                        restart of the app
+** Pros: Some users might prefer the default list that was created by themselves e.g. the need
+         to track which student was added last.
+** Cons: It will be a hassle to sort the list every time the app starts up if there
+         are not many changes to the list.
+* ** Alternative 2: ** List is in the sorted form after the app is restarted every time
+** Pros: Reduces the time taken to sort the list for each start up of the app.
+** Cons: If the default list is required, `SortCommand` will have to be implemented
+         as an `UndoableCommand` as well.
+// end::Sorting[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::TagReplace[]
+=== TagReplace feature
+
+==== Current Implementation
+The tag replace is a command that replaces the target tag with the tag that we want.
+The tags would be passed in via the argument multimap which would extract the tags with t/ prefix.
+It would then be separated into two different tags, tag to be replaced and the tag to be placed.
+Then the Addressbook would proceed to look for the persons with the unwanted tag to remove the unwanted
+tag and to add the new tag to the person.
+
+The figure below shows the Sequence Diagram for the interactions within the `Logic`
+component when "tagreplace t/TAGNAME t/TAGNAME" is typed into the `CommandBox` by the user.
+
+image::TagReplaceCommandSequenceDiagram.png[width="650"]
+
+.  `Logic` uses the `AddressBookParser` class to parse the  command.
+.  This results in a `TagReplaceCommand` object which is executed by the `LogicManager`.
+.  The command execution calls the `replaceTag` method which then affects the `Model`.
+.  The tag is then replaced and the result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+
+Below is an example of how the list looks like before and after the command "tagreplace t/3G t/4G"
+is executed.
+
+image::TagReplaceCommand.png[width="650"]
+
+==== Design Considerations.
+===== Aspect: Data structure to support the tag replace command
+* ** Alternative 1: ** Reuse the set that exist in the Addressbook.
+** Pros: Need not introduce a new data structure to store the tags that are passed in.
+** Cons: A set arranges its elements in alphabetical order. This disrupts the order in which the user has entered,
+         and it would cause the wanted tag to be removed instead of the unwanted one.
+
+// end::TagReplace[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::subject[]
+=== Subject streaming calculation feature
+==== Current Implementation
+The subject streaming calculation features will be supported by calculation algorithms, `calculateL1R5`, `calculateL1B4A`, `calculateL1B4B, `calculateL1B4C` and `calculateL1B4D, which will be located in `Person.java`. The calculation algorithm will be called by the `SelectCommand`.
+It will help to analyse the subjects that are assigned to the student, and determine which combination of subjects will produce the lowest `L1R5`, `L1B4A`, `L1B4B`, `L1B4C` or `L1B4D` score respectively. The score will then be projected in the `Command Box`.
+
+.Sequence Diagram of implementation of Subject streaming calculation
+image::StreamCommand.png[width="700"]
+
+** In `StreamCommandParser`
+. The user will key in the necessary command, `stream INDEX STREAM_TYPE` to call the `StreamCommand`.
+. The Logic uses the AddressBookParser to parse the command to `StreamCommandParser`.
+. The `StreamCommandParser` will take in the values and return a new `StreamCommand` object, with the parameters, `index` and `type`.
+** In `StreamCommand`
+. When the `StreamCommand` is executing, it retrieves the `Person` object that the user was referencing to using the `index` parameter
+ and pass in the `Person` object and `type` parameter into a `scoreCalculation()` method.
+. In the `scoreCalculation` method, the method will determine what type of streaming score the user wants to get using the `type` paramter.
+. Then the necessary calculation algorithm in the `Person.java` will be called.
+** In `Person.java`
+. In the calculation algorithm, it will store the subject list of the student in `List<Subject> subjects` and loop through the list according to the `L1` subject category.
+. The relevant subjects of the subject category will be saved in a temporary `List<Subject> subjectsToCheck` and the list will be passed into a `checkLowest()` method.
+. In `checkLowest()`, the subject grades will be compared and the best subject will be removed from the list `subjects`.
+. The best grade will be returned back to `calculateL1R5/L1B4` and stored in a temporary `int` variable, `score`. The function will then move on to check the other subject categories.
+. After the calculation, `score` will be returned to the `SelectCommand` which will project the result in the `Command Box`.
+
+[NOTE]
+The subjects and their respective grades can be assigned to the students by the `AddCommand`, `EditCommand` or `AddSubjectCommand`, with a subject prefix `sub/` followed by the `Subject Name` and `Subject Grade`.
+As the students are required to take at least 6 subjects, the subjects will be stored in as a parameter of each individual student as a `List<Subject>`.
+
+===== Aspect: Implementation of command to call `calculateL1R5` and `calculateL1B4`
+
+* **Alternative 1 (current choice):** Add new command class `StreamCommand`
+** Pros: It would be easy to implement as there is no need to worry about affecting other classes.
+** Cons: More commands for the user to remember.
+* **Alternative 2 :** Just override `execute()` of `SelectCommand`
+** Pros: Easier to update the `Display Panel` later on when the user wants to access the `Student's` details.
+** Cons: Need to update the test cases accordingly due to the change in the `execute()` function.
+
+===== Aspect: Implementation of calculation function `L1R5` and `L1B4`
+
+* **Alternative 1 (current choice):** Add the calculation function in `Person.java`
+** Pros: Easier to understand as the function needs to access the subject list of the student for calculation.
+** Cons:
+* **Alternative 2 :** Implement the calculation function in `execute()` of `SelectCommand`
+** Pros: Reduce the amount of coupling between `SelectCommand` and `Model`.
+** Cons: Makes the `SelectCommand` more complicated as it is performing more than it should.
+// end::subject[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::masstagremoval[]
+=== Mass Tag Removal feature
+==== Current Implementation
+
+The Mass Tag Removal feature is supported through the suggested Tag Removal feature in the Model Component.
+The command `TagDeleteCommand` is implemented to call the `deleteTag()` function in the `Model` interface.
+The `deleteTag()` function will loop through the students in the `AddressBook` and will remove the specified Tag from every student that has the specified Tag and the students' `Tag List` will be updated.
+
+A `TagDeleteCommand` is where the user inputs `tagdelete [TAG_NAME]` or `td [TAG_NAME]` in the `Command Box`. When the user input fulfils the criteria of the expected input format, the command will execute.
+The `deleteTag()` function will be called and loops through the students in the `AddressBook`.
+
+* If the specified tag is not found tagged to any student, a `TagNotFoundException` will be thrown and a error message will be returned to the user.
+* Else, the `Tag List` of each student will be loaded and stored in a temporary `List` variable and the specified tag will be removed from it.
+Then a new student object with the updated `Tag List` will be replace the original student object. Thus the `AddressBook` will eventually have the updated list of students where the specified tag have been removed.
+
+** `Parser`
+. Logic uses the AddressBookParser class to parse the command into `TagDeleteCommandParser`.
+. The parser will then return a new TagDeleteCommand object with the parameter `tagName` which is executed by the LogicManager.
+. The command execution calls the deleteTag method which then cycle through the list of students in the _EduBuddy_ and removes the tags containing the `tagName` from the students.
+. The tag is then deleted and the result of the command execution will be returned as a CommandResult object which is passed back to the Ui.
+. The user will see a message on the `Command Box` in the format: `Deleted Tag: [TAG_NAME]` and the `Tag` will be removed.
+
+.Sequence Diagram of TagDeleteCommand if the specified tag exists.
+image::TagDeleteCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `TagDeleteCommand`
+
+* **Alternative 1:** Create a new method in `TagDeleteCommand` to delete tag
+** Pros: Easier to understand the structure of `TagDeleteCommand`.
+** Cons: The `deleteTag()` function that was implemented would be redundant.
+* **Alternative 2 (current choice):** Call the `deleteTag()` function
+** Pros: Implementation of the command would be easier as the main algorithm to delete the tag is within the code.
+** Cons: Increases coupling between `Model` and `TagDeleteCommand`.
+
+// end::masstagremoval[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::addsubjects[]
+=== AddSubjectCommand feature
+==== Current Implementation
+
+The AddSubjectCommand feature is located in the `Logic` component.
+The `AddSubjectCommand` can be used when the user inputs `addsub INDEX sub/[SUBJECT_NAME SUBJECT_GRADE...]` in the `Command Box`. When the user input fulfils the criteria of the expected input format, the command will execute.
+The command will then find the student located at the specified `INDEX` and creates a new student with the previous details of the selected student.
+The new student will have the updated `Set<Subject>` and will replace the selected student in the _EduBuddy_.
+
+* If the student already possess the subject that was keyed in, the subject will not be added to the subject list of the student. This is to prevent the student having duplicate subjects assigned to him/her.
+* If the user typed in duplicate subjects in the input, for example: `addsub 1 sub/English A1 English A1`, an `IllegalValueException` will be thrown and an error message, "There should not be duplicate subject(s) assigned to student."
+
+** `Parser`
+. Logic uses the `AddressBookParser` class to parse the command into `AddSubjectCommandParser`.
+. The parser will first parse the `INDEX` and `subjects` using the `parseIndex` and `parseSubjects` in the `ParserUtil` class, to check if they are valid inputs.
+. The parser will then creates a new `AddSubjectCommand` object with the attributes `index` and `editPersonDescriptor`, which is executed by the LogicManager.
+** In `AddSubjectCommand`
+. The command execution of `AddSubjectCommand` will create a new student object using a `createEditedPerson()` method, which will call `checkIfSubjectExists()` method.
+. The method will check if the subjects to be added exist in the original list of subjects assigned to the student. A boolean variable `isPresent` will keep be used to indicate if the subjects exist.
+. If `isPresent` is false, the subjects will be added to a new `Set<Subject>` object which contains the both the new and old subjects of the student.
+. A new student containing the previous details and the updated subject list will be created and replace the selected student in the _EduBuddy_.
+. The result of the command execution will be returned as a CommandResult object which is passed back to the Ui.
+. The user will see a message on the `Command Box` in the format: `Edited Person: [NAME]. Updated Subjects: [SUBJECT_NAME SUBJECT_GRADE]...` will be removed.
+
+.Sequence Diagram of AddSubjectCommand
+image::AddSubjectCommandActivityDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddSubjectCommand`
+
+* **Alternative 1:** The user continues to use the `AddCommand` to add all the subjects at one time or use `EditCommand` to change the subjects details.
+** Pros: More intuitive for the user as the commands do what the user expects from their names.
+** Cons: The user have to key in a long command line as each student has to be assigned to at least 6 subjects.
+* **Alternative 2 (current choice):** Create a new `AddSubjectCommand`
+** Pros: The user just needs to type in the subjects that he/she did not add earlier.
+** Cons: More commands for the user to remember.
+
+===== Aspect: The number of people that the user can add subjects to using the command
+
+* **Alternative 1:** The command can be implemented as a mass adding command, where the subjects keyed in can be added to all the students in _EduBuddy_.
+** Pros: It would be convenient as the teacher do not need to key in similar subjects for everyone.
+** Cons: The students may have different subject combination and different grades for different subjects, and this consideration neglects this fact.
+* **Alternative 2 (current choice):** The command can only add to one specified student at a time.
+** Pros: The algorithm will be slightly less complicated and easier to implement.
+** Cons: Depending on the situation, the user may want a mass adding feature implemented as it would be more convenient.
+
+// end::addsubjects[]
+
+*_return to <<toc,Table of Contents>>_*
+
 // tag::dataencryption[]
+
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
+
+// tag::browserpanel[]
+=== Browser Panel Revamp
+
+.First Half of Browser Panel
+image::browser1.png[width="600"]
+.Second Half of Browser Panel
+image::browser2.png[width="600"]
+
+We will use a html page with w3.css framework support to implement the new Browser Panel.
+The browser panel can be controlled from the CLI interface, which manipulates the data in the browser panel.
+
+The browser will be invoked by the selection of a student from ui/BrowserPanel. loadPersonPage() invokes the html file
+of the student selected stored in resources/StudentPage.
+
+Creation of a html StudentPage file:
+
+After add command is called successfully, a template file from StudentPage will be duplicated as a backup,
+and renamed as the name that is called from the add command.
+
+Editing StudentPage file:
+After any command that changes the data in the BrowserPanel is called, the HTML file will be stored as a string and edited accordingly.
+The file is then output to {user.home}/StudentPage.
+
+ When a user inputs new data, the selected 'logic' command invokes the addPage and deletePage method from ModelManager.
+ From the 'model''s addPage command, 'template.html' from resources/StudentPage is called.
+ A new folder is created in {user.home}/StudentPage which creates a 'storage' for the user profile pages.
+ These user-profile pages are updated in real time when called by the UI BrowserPanel object.
+
+// end::browserpanel[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::theme[]
+=== Theme Feature
+==== Current Implementation
+The theme command is a command that changes the theme of the program.
+The input from the user would be parsed with a dedicated parser class 'ChangeThemeCommandParser'.
+We will implement a HashMap to choose the right theme to use from the user input.
+The themes are found in resources/view.
+
+.  `Logic` uses the `ChangeThemeCommandParser` class to parse the command.
+.  This results in a `ChangeThemeCommand` object which is executed by the `LogicManager`.
+.  The command execution calls the `ThemeColourUtil` method which then affects the `Model`, which calls the appropriate theme from /view/.
+.  The theme is then changed, passed back to the ChangeThemeCommand object which changes the 'UI'.
+
+
+==== Design Considerations.
+===== Aspect: Data structure to support the tag replace command
+* ** Alternative 1: ** Reuse the set that exist in the Addressbook.
+** Pros: Need not introduce a new data structure to store the tags that are passed in.
+** Cons: A set arranges its elements in alphabetical order. This disrupts the order in which the user has entered,
+         and it would cause the wanted tag to be removed instead of the unwanted one.
+
+// end::Theme[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::remark[]
+=== Remark Feature
+==== Current Implementation
+
+A new remark component is added to the person model.
+
+This remark feature allows the user to add remarks to the student profile of the specified student.
+
+image::RemarkClassSequenceDiagram.png[width="800"]
+
+Figure 15. Sequence Diagram of AddRemarkCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `Remark` feature
+* ** Alternative 1:** Using just one method to add and delete the remark.
+** Pros: Need not create 2 command just to add and delete the remarks.
+** Cons: The remark attached to the student in our student profile would not be able to exceed one line.
+
+*_return to <<toc,Table of Contents>>_*
+// end::remark[]
+
+// tag::InjuriesHistory[]
+=== Injuries History Feature
+==== Current Implementation
+
+A new injuries history component is added to the person model.
+
+This injuries history feature allows the user to add injuries history to the student profile of the specified student.
+
+image::InjuriesHistoryClassSequenceDiagram.png[width="800"]
+
+Figure 16. Sequence Diagram of AddInjuriesCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `Injuries History` feature
+* ** Alternative 1:** Using just one method to add and delete the injuries history.
+** Pros: Need not create 2 command just to add and delete the injuries history.
+** Cons: The injuries history attached to the student in our student profile would not be able to exceed one line.
+
+*_return to <<toc,Table of Contents>>_*
+// end::InjuriesHistory[]
+
+// tag::Cca[]
+=== Cca Feature
+==== Current Implementation
+
+A new cca component is added to the person model.
+
+This cca feature allows the user to add cca and the position to the student profile of the specified student.
+
+image::CcaClassSequenceDiagram.png[width="800"]
+
+Figure 17. Sequence Diagram of CcaCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `Cca` feature
+* ** Alternative 1:** Using just two methods to add and delete the details of the cca.
+** Pros: More than 1 details of the student cca can be added.
+** Cons: The user has to type separate commands just to add or delete the details.
+
+*_return to <<toc,Table of Contents>>_*
+// end::Cca[]
+
+// tag::NOK[]
+=== NextOfKin Feature
+==== Current Implementation
+
+A new next of kin component is added to the person model.
+
+This NextOfKin feature allows the user to add the details of the student's next of kin into the student profile of the specified student.
+
+image::NextOfKinClassSequenceDiagram.png[width="800"]
+
+Figure 18. Sequence Diagram of NextOfKinCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `NextOfKin` feature
+* ** Alternative 1:** Using just two methods to add and delete the details of the next of kin of the student.
+** Pros: More than 1 details of the student's next of kin can be added.
+** Cons: The user has to type separate commands just to add or delete the details.
+
+*_return to <<toc,Table of Contents>>_*
+// end::NOK[]
 
 === Logging
 
@@ -384,6 +770,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+*_return to <<toc,Table of Contents>>_*
 
 == Documentation
 
@@ -415,8 +803,12 @@ Here are the steps to convert the project documentation files to PDF format.
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
 
+*_return to <<toc,Table of Contents>>_*
+
 [[Testing]]
 == Testing
+This section explains the various testing methods available in our application
+and also provides some troubleshooting techniques.
 
 === Running Tests
 
@@ -465,6 +857,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+*_return to <<toc,Table of Contents>>_*
+
 == Dev Ops
 
 === Build Automation
@@ -497,6 +891,8 @@ A project often depends on third-party libraries. For example, Address Book depe
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
+*_return to <<toc,Table of Contents>>_*
+
 [[GetStartedProgramming]]
 [appendix]
 == Suggested Programming Tasks to Get Started
@@ -508,287 +904,43 @@ Suggested path for new programmers:
 2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
 
 [[GetStartedProgramming-EachComponent]]
-=== Improving each component
 
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == Product Scope
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* is a secondary school teacher
+* needs to know more about the students that they have taught
+* has a need to track results
+* has a need to manage a significant number of students
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+
+*_return to <<toc,Table of Contents>>_*
+
+[appendix]
+== Feature Contribution
+
+[width="85%",cols="22%,<23%,<40%",options="header",]
+|=======================================================================
+|Name | Major |Minor
+|Johnny  |Display Panel: Add display panel functionalities to UI window | Data Integration: Integrate data input from user into display window
+
+|Xin Hui |Academic Section: Help teachers to view and manage students' academic information | Subject Class Database: Create subject class and integrate input into command. Add L1R5 calculation support into subject inputs.
+
+|Kun Hong |Administrative Information: Add student administrative information into EduBuddy | Tag Support: Enhance tag functionalities in EduBuddy
+
+
+
+|Keng Seng |Calendar: Add calendar features which supports different administrative tasks | Sorting feature: Add sorting functionalities based on various parameters
+
+|=======================================================================
+
+*_return to <<toc,Table of Contents>>_*
 
 [appendix]
 == User Stories
@@ -800,28 +952,49 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |teacher |update students' classes |know which classes they are in easily
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |teacher |update students' academic results |view and obtain students' streaming score (eg.L1R5)
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |teacher |access student's academic and non-academic achievements |stream the students properly (e.g. Normal Academic, Normal Technical, Express)
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |teacher |access student profiles easily  | have first hand information on all my students without going through a lot of documentation
+
+|`* * *` |teacher |edit remarks of each individual student |update the students' individual needs that occur during class
+
+|`* *` |teacher |filter and group students |access information of specific students
+
+|`* *` |teacher |update student's marks |track the student's improvement in a certain subject
+
+|`* *` |teacher |know the students' emergency contact information |know who to contact when something happens to the student
+
+|`* *` |teacher |update student's attendance records |know if a student has been absent too frequently
+
+|`*` |teacher |look up on student's identity |recognize who the student is
+
+|`*` |teacher |know which subjects that I have taught them before |customize my teaching methods for different students
+
+|`*` |teacher |can track the student's progress in the CCA |decide whether to involve the student more
+
+|`*` |teacher |key in the levels attained by the students in the various domains in L.E.A.P.S system
+|calculate the Co-Curricular Attainment achieved by the student.
+
+|`*` |teacher |view the student's injuries history |to know the need of my students.
+
 |=======================================================================
 
-_{More to be added}_
+*_return to <<toc,Table of Contents>>_*
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `EduBuddy` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
 
-*MSS*
+*Main Success Scenario*
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
@@ -844,42 +1017,321 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Retrieve information of selected person
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to select a specific person in the list
+4.  AddressBook loads the information of the selected person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add remarks for person
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to add remarks for a specific person in the list
+4.  AddressBook shows the updated information of the selected person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add an appointment
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to add an appointment for a specific person in the list by typing in a date and time
+4.  AddressBook shows the updated details of the appointment
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given date or time is in a invalid format.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The given date or time is already booked by another appointment.
++
+[none]
+** 3c1. AddressBook prompts user to input another date or time.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add students' academic results
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to update students' academic results using `AddCommand`
+4.  AddressBook shows updated details of academic results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+* 3b. The given subject(s) is/are invalid, for example, the name or the grade.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: View students' academic results
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to view students' academic results using `SelectCommand`
+4.  AddressBook shows updated details of academic results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+* 3b. No subjects are assigned to the student.
++
+[none]
+** 3b1. UI shows an empty list of subjects.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: View students' streaming results
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to view students' streaming results using `SelectCommand` or `StreamCommand`
+4.  AddressBook shows updated details of streaming results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index or parameter is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+* 3b. No subjects are assigned to the student.
++
+[none]
+** 3b1. Streaming results will be shown as zero.
++
+* 3c. Not enough subjects are assigned to the student.
++
+[none]
+** 3c1. Streaming results will be shown as zero.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Update students' academic results
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to update students' academic results using `EditCommand` or `AddSubjectCommand`
+4.  AddressBook shows updated details of academic results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+* 3b. The given subject(s) is/are invalid, for example, the name or the grade.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+* 3c. There are duplicate subjects in the user input.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+*_return to <<toc,Table of Contents>>_*
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1,200 students
+ without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
-_{More to be added}_
+*_return to <<toc,Table of Contents>>_*
 
 [appendix]
 == Glossary
 
+[[CCA}} CCA::
+CCA stands for Co-Curricular Activities. It functions as a non-academic activity where students can have a more enriching experience in school. Find out more by clicking https://www.moe.gov.sg/education/programmes/co-curricular-activities[here].
+
+[[Grade]] Grade::
+The grading of the subjects by the level of competence the students show during the "O-Level examination".
+The level of achievement in each subject is indicated by the grade obtained, with A1 being the highest achievable grade and F9 the lowest:
+[width="30%",cols="22%,<23%",options="header",]
+|=======================================================================
+|Grade|Percentage of Competency
+|A1| 75% - 100%
+|A2| 70% - 74%
+|B3| 65% - 69%
+|B4| 60% - 64%
+|C5| 55% - 59%
+|C6| 50% - 54%
+|D7| 45% - 49%
+|E8| 40% - 44%
+|F9| 0% - 39%
+|=======================================================================
+
+[[L1B4]] L1B4::
+A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
+The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
+`L1` represents the First language subject and `B4` represents 2 relevant subjects, according to the polytechnic course applied, and 2 other best subjects.
+The category the relevant subject is under(for example: L1B4-A, L1B4-B, L1B4-C, L1B4D), will determine which subjects are the relevant subjects.
+The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
+
+If you want to find out more about the subject categories (L1B4-A, L1B4-B, L1B4-C, L1B4D),
+please visit:
+
+* https://www.sp.edu.sg/wps/portal/vp-spws/!ut/p/a0/04_Sj9CPykssy0xPLMnMz0vMAfGjzOJDPUxdjdxMTQws3J1cDDwt_MJMXZxDDE3cDfQLsh0VAYY7oWE!/?PC_Z7_UH5E2F540G6P00IO8K5AU61JM5027774_WCM_CONTEXT=/wps/wcm/connect/lib-spws/site-spwebsite/future+students/admissions/selection+criteria+for+gce+o+level+holders+-+aggregate+computation++%28admissions+-+course+intakes+and+cut-off+points%29[Singapore Polytechnic]
+* http://www.tp.edu.sg/admissions/gce-o-level-aggregate-scores-computation[Temasek Polytechnic]
+* https://www.moe.gov.sg/education/post-secondary#polytechnics[Other Polytechnics]
+
+[[L1R5]] L1R5::
+1R5 is a grading system used in Singapore to determine the secondary school students' proficiency in the subjects taken for "O-Level Examination".
+The score is used for the students to enroll into Junior Colleges, which is the next higher level of education. "L1" refers to the first language subject taken by the student, while "R5" refers to the 5 relevant subjects that are examinable by the students.
+The grade of L1R5 is then determined by taking the best grades of each category and summing them up, for example, if a student scores A1 for all 6 subjects are from each category, the score will be 6. Each subject can only be considered once.
+For more information, please click https://www.moe.gov.sg/admissions/direct-admissions/dsa-jc/eligibility[here]
+
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
+
+[[NRIC]] NRIC::
+It stands for National Registration Identity Card, and it is an identification document for the residents in Singapore.
+The `NRIC` that we are referring to in the _EduBuddy_ refers to the unique identification number that comes with each `NRIC`.
+Please visit https://www.ica.gov.sg/[this website] for more details.
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
-[appendix]
-== Product Survey
+[[Subject]] Subject::
+These are the following subjects that are examinable in O-level Examinations in Singapore (as of Year 2018).
+[NOTE]
+The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing. +
+For example, type in: `Hist A1` *not* `History A1`
+[width="85%",cols="22%,<23%",options="header",]
+|=======================================================================
+|Subject Category|Subjects
+|L1| English, HTamil(Higher Tamil), HChi(Higher Chinese), HMalay(Higher Malay)
+|R1| Hist(History), Geog(Geography), ComHum(Combined Humanities), ELit(English Literature), CLit(Chinese Literature),
+     MLit(Malay Literature), TLit(Tamil Literature), HArt(Higher Art), HMusic(Higher Music), BIndo(Bahasa Indonesia),
+     CSP(Chinese Special Programme), MSP(Malay Special Programme)
+|R2| EMath(Elementary Mathematics), AMath(Additional Mathematics), Phy(Physics), Chem(Chemistry), Bio(Biology), Sci(Combined Science)
+|R3| Consist of both R1 and R2 subjects
+|R4| Consist of L1, R1 and R2 subjects. French, German, Spanish, Hindi, Urdu, Gujarati, Panjabi, Bengali, Burmese,
+     Thai, Jap(Japanese), Tamil, Chinese, Malay, DnT(Design and Technology), Comp(Computing), FnN(Food and Nutrition), PoA(Principles of Accounting),
+     Econs(Economics), Drama, PE(Physical Education), Biz(Business Studies), Biotech(Biotechnology), Design(Design Studies)
+|R5| Consist of R4 subjects
+|=======================================================================
 
-*Product Name*
+* The following subjects can be assigned to students but cannot be contributed to the results: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
 
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+*_return to <<toc,Table of Contents>>_*
 
 [appendix]
 == Instructions for Manual Testing
@@ -903,8 +1355,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed
@@ -917,12 +1367,10 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
-
 === Saving data
 
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
-_{ more test cases ... }_
+*_return to <<toc,Table of Contents>>_*

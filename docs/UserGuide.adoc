@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= EduBuddy - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,172 +11,401 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T09-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018-T09-B1`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+_EduBuddy_ is a desktop application designed for secondary school teachers *to store and manage student records*.
+More importantly, _EduBuddy_ is *optimized for those who prefer to work with a
+Command Line Interface(CLI)* while still having the benefits of a Graphical User Interface (GUI).
+If you can type fast, _EduBuddy_ can get your student profile management tasks done faster
+than traditional GUI apps. Interested? Proceed on to <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
+Not quite sure how to get started? This section helps to guide you through the necessary steps
+to get _EduBuddy_ up and running.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
-[NOTE]
+[IMPORTANT]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `EduBuddy.jar` link:https://github.com/CS2103JAN2018-T09-B1/main/releases[here].
+.  Copy the downloaded jar file to the folder you want to use as the home folder for _EduBuddy_.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
-+
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
++
+image::Ui.png[width="800"]
++
+
+[NOTE]
+A EduBuddy folder will be created in your operating system's home directory to facilitate debugging for advanced users.
+
+At this point, _EduBuddy_ should be successfully set up. Here are some example commands that you can try:
+
+* *`list` or `l`* : lists all students
+* *`sort` `name`* : sorts the list of students by name
+* **`delete` or `d`** `3` : deletes the 3rd student shown in the current list
 * *`exit`* : exits the app
 
+
+[IMPORTANT]
+-The person must be re-selected for the information in the profile to be updated!!
+
 .  Refer to <<Features>> for details of each command.
+
+-Type the command in the command box and press kbd:[Enter] to execute it. +
+e.g. typing *`help`* and pressing kbd:[Enter] will open the help window. +
+-Refer to <<Features>> for details of each command.
+
 
 [[Features]]
 == Features
 
-====
+This section provides the information of all the useful and interesting features that _EduBuddy_ has to offer.
+
+Here are the guidelines that you may wish to follow when typing in commands. +
+
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`. +
+* Parameters can be in *any order* e.g. if the command specifies `n/NAME ic/S9500186H`, `ic/S9500186H n/NAME` is also acceptable. +
+* Items in square brackets are *optional*. e.g `n/NAME [t/CLASS]` can be used as `n/John Doe t/1A` or as `n/John Doe`. +
+* Command input is *case insensitive*, e.g `fInD Alex` and `find Alex` works the same. +
 
 === Viewing help : `help`
 
+If you are unsure about the features of the _EduBuddy_, or require any technical assistance, type `help` and you will be shown with the help page. +
 Format: `help`
 
-=== Adding a person: `add`
+*_return to <<toc,Table of Contents>>_*
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+=== Adding a student: `add` or `a`
+When students are enrolled in the Secondary School you are teaching and you want to keep track of their information,
+this feature allows you to add a student and his/her details to _EduBuddy_. +
+Format: `add n/NAME ic/NRIC [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]` +
+Abbreviation Format: `a n/NAME ic/NRIC [t/CLASS] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE ...]`
 
-[TIP]
-A person can have any number of tags (including 0)
+[NOTE]
+-For more examples on what subjects and subject grades can be added, please refer to the <<FAQ>> section below. +
+-If you want to change the students' details later, you can use the `Edit` feature at <<Editing a student : `edit` or `e`>>. +
+-If you want to add additional subjects later, you can use the the `AddSubject` feature at <<Adding subjects to a student : `addsub` [since v1.5]>>
 
-Examples:
-
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
-=== Listing all persons : `list`
-
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Editing a person : `edit`
-
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+[IMPORTANT]
+-When adding a student, at least a `NAME` and a `NRIC` should be provided. +
+-A `SPACE` should be inserted between each `SUBJECT_NAME` and `SUBJECT_GRADE`.
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `add n/John Doe ic/S9500186H t/1A r/English Rep
+sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
+* `add n/Betsy Crowe ic/S9511111I`
+* `a n/John Doe ic/S9500186H t/1A r/English Rep sub/English B3 EMath A2 Chinese A1 Phy A1 AMath A1 Hist A2`
+* `a n/Betsy Crowe ic/S9511111I`
 
-=== Locating persons by name: `find`
+*_return to <<toc,Table of Contents>>_*
 
-Finds persons whose names contain any of the given keywords. +
+=== Listing all students : `list` or `l`
+After you have used the `find` feature in <<Finding students by name: `find` or `f`>>, the list only shows the filtered students' list.
+Therefore you want to be able to view the list of all the students again.
+You can just follow the format below and you will be able to see the full list. +
+
+Format: `list` +
+Abbreviation Format: `l`
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::sort[]
+=== Sorting all students : `sort` [since v1.2]
+
+Having trouble finding the student contact in the never ending list?
+Fret not, as this feature helps you to sort the list of all students in _EduBuddy_ according to different parameters. +
+Format: `sort PARAMETER`
+
+[NOTE]
+List of available PARAMETER: name, tag
+
+Examples:
+
+* `sort name` +
+Sorts the list of students by name in alphabetical order (case insensitive).
+* `sort tag` +
+Sorts the list of students by tag in alphabetical and numerical order (case insensitive)
+// end::sort[]
+
+*_return to <<toc,Table of Contents>>_*
+
+
+=== Editing a student : `edit` or `e`
+When you forgot to add in some details regarding the student, or the student has updated his/her information,
+you can use this feature to edit an existing student in _EduBuddy_.The existing fields will then be updated accordingly. +
+Format: `edit INDEX [n/NAME] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE ...]` +
+Abbreviation Format: `e INDEX [n/NAME] [ic/NRIC] [t/CLASS] [t/CLASS_REGISTER] [sub/SUBJECT_NAME SUBJECT_GRADE ...]`
+
+[NOTE]
+Edits the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
+
+[IMPORTANT]
+-At least one of the optional fields must be provided. +
+-`INDEX` *must be a positive integer*: 1, 2, 3, ... +
+-When editing the fields, for example: subjects, the previous information will be overwritten by the new subjects.
+
+Examples:
+
+* `edit 1 ic/S9123456A` +
+Edits the NRIC number of the 1st student to be `S9123456A`.
+* `edit 2 n/Betsy Crower sub/English A1 Chinese A1` +
+Edits the name and subjects of the 2nd student to be `Betsy Crower`.
+* `e 1 ic/S9123456A` +
+Edits the NRIC number of the 1st student to be `S9123456A`.
+* `e 2 n/Betsy Crower sub/English A1 Chinese A1` +
+Edits the name and subjects of the 2nd student to be `Betsy Crower`. +
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::addsubject[]
+=== Adding subjects to a student : `addsub` [since v1.5]
+If you forgot to add a subject/some subjects to a student earlier and do not want to retype all the subjects using <<Editing a student : `edit` or `e`>>,
+you can use this feature to save your troubles. +
+You just need to follow the format below and replace the words in "[ ]" with the corresponding subject(s) details. +
+Format: `addsub INDEX sub/[SUBJECT_NAME SUBJECT_GRADE ...]` +
+
+[NOTE]
+-Adds subject(s) the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
+-If you want to view the subjects of the student, please refer to <<Selecting a person : `select` or `s`>> +
+-This feature is undoable, so if you need to restore the _EduBuddy_ to the state before you enter this command, type in `undo`.
+
+[IMPORTANT]
+-`INDEX` *must be a positive integer*: 1, 2, 3, ... +
+-There should be a `SPACE` between each `SUBJECT_NAME` and `SUBJECT_GRADE`. +
+-If the student is already assigned to the subject that you want to add, that subject will not be overwritten. +
+-If you have typed in duplicate subjects, for example, `addsub 1 sub/English A1 English A1`, the system will return an error message.
+You can remove the duplicate subject (`addsub 1 sub/English A1`) and press `Enter` to add the subject(s).
+
+Examples:
+
+* `addsub 1 sub/English A2` +
+Adds a new subject `English A2` to the student at `INDEX` 1.
+
+* `addsub 11 sub/Hist A1 EMath A1` +
+Adds subjects `Hist A1` and `EMath A1` to the student at `INDEX` 11.
+
+.Situation: When you forgot or didn't add all the subjects that the student is taking
+image::NotEnoughSubjects.png[width="800"]
+.Key in the following command
+image::AddSubjectCommand.png[width="300"]
+.You will see the name fo the student and the finalised list of subjects when the subjects are successfully added.
+image::AddSubjectCommandSuccess.png[width="500"]
+.If you want to check the subjects of the student after adding.
+image::AddSubjectCommandFinish.png[width="800"]
+
+// end::addsubject[]
+
+*_return to <<toc,Table of Contents>>_*
+
+=== Finding students by name: `find` or `f`
+
+Finds a list of students whose name contains any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
+Abbreviation Format: `f KEYWORD [MORE_KEYWORDS]`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+[NOTE]
+-The search is case insensitive. e.g `hans` will match `Hans`. +
+-The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`. +
+-Students matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+
+[IMPORTANT]
+Only the name is searched and only exact words will be matched e.g. `Han` will not match `Hans`.
 
 Examples:
 
-* `find John` +
+* `find John` or `f John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find Betsy Tim John` or `f Betsy Tim John` +
+Returns any student having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+*_return to <<toc,Table of Contents>>_*
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+=== Deleting a student : `delete` or `d`
+If the student is not taught by you anymore, and you do not need to keep track of his/her information,
+you can remove the student's details from _EduBuddy_ using this feature. +
+Format: `delete INDEX` +
+Abbreviation Format: `d INDEX`
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+[NOTE]
+-Deletes the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent student listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+`d 2` +
+Deletes the 2nd student in _EduBuddy_.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st student in the results of the `find` command.
 
-=== Selecting a person : `select`
+*_return to <<toc,Table of Contents>>_*
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+// tag::tagdelete[]
+=== Deleting a tag : `tagdelete` or `td` [since v1.1]
+
+When you have added the wrong `Class tag`,
+or when the secondary 4 students have moved to the next higher education level,
+and you want to remove the `Class tag` from every student who has the `Class tag` assigned to them.
+
+This command deletes the specified tag from every student in _EduBuddy_. +
+Format: `tagdelete TAGNAME` +
+Abbreviation Format: `td TAGNAME`
+
+[NOTE]
+This feature is undoable, so if you need to restore the _EduBuddy_ to the state before you enter this command, type in `undo`.
+
+[IMPORTANT]
+The tag must be a valid tag name that is assigned to at least one student in the _EduBuddy_.
+
+Examples:
+
+image::TagDeleteResult.png[width="650"]
+
+* `tagdelete 4A` or `td 4A` +
+Deletes the '4A' tag from every student in the _EduBuddy_.
+// end::tagdelete[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::tags[]
+=== Replacing a tag : `tagreplace` or `tr` [since v1.2]
+
+Replaces the specified tag from every student in _EduBuddy_ with a specific tag. +
+Format: `tagreplace t/OLD_TAGNAME t/NEW_TAGNAME`
+Abbreviation Format: `tr t/OLD_TAGNAME t/NEW_TAGNAME`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Replaces the specified tag from every student in Edubuddy with a specific tag.
+* The tag must be a valid tag name that is assigned to at least one student in the Edubuddy.
+****
+
+[NOTE]
+The tag refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+The tag must be a valid tag name that is assigned to at least one student in the _EduBuddy_.
+
+Examples:
+
+image::TagReplaceCommand.png[width="650"]
+* `tagreplace t/3G t/4G` or `tr t/3G t/4G` +
+Replaces the '3G' tag from every student in _EduBuddy_ with 'Class 4G'.
+// end::tags[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::remarks[]
+=== Adding a remark : `addremark` [since v1.4]
+
+Adds a remark to a specified student in EduBuddy.
+Format: `addremark INDEX r/REMARK`
+
+****
+* Adds a remark to the the student at the specified `INDEX`.
+* The remark refers to anything that the teachers wants to comment
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* 1, 2, 3, ...`
+****
+
+Examples:
+
+image::AddRemarkCommand.png[width="650"]
+* `list` +
+`addremark 3 r/Geo Rep` +
+Adds a remark, Geo Rep, to the 3rd student in EduBuddy.
+
+=== Deleting a remark : `deleteremark` [since v1.4]
+
+Delete a remark to a specified student in EduBuddy.
+Format: `deleteremark INDEX r/REMARK`
+
+****
+* Deletes a remark from the the student at the specified `INDEX`.
+* The remark refers to any part of the existing remark that is in the student profile for the student that you want.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...`
 ****
 
 Examples:
 
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`deleteremark 3 r/Geo Rep` +
+Deletes the remark, Geo Rep, from the 3rd student in EduBuddy.
 
-=== Listing entered commands : `history`
+image::DeleteRemarkCommand.png[width="650"]
+// end::remarks[]
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+// tag::select[]
+=== Selecting a person : `select` or `s`
+
+When you want to view a student's personal details like academic grades, cca grades etc, you can view it by selecting the student.
+
+Selects the student identified by the index number used in the last student listing. +
+Format: `select INDEX` +
+Abbreviation Format: `s INDEX`
+
+[NOTE]
+-Selects the student and loads the student profile of the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+The index *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`select 11` +
+Selects the 11th student in _EduBuddy_.
+
+image::selectcommand.png[width="800"]
+
+// end::select[]
+
+*_return to <<toc,Table of Contents>>_*
+
+=== Listing entered commands : `history` or `h`
+If you want to view what commands/actions you have made using the _EduBuddy_,
+you can use this command as it lists all the commands that you have entered in reverse chronological order. +
+Format: `history` +
+Abbreviation Format: `h`
+You will be able to see a success message and the list of commands you have entered before in the CommandBox, For example: `Entered commands (from most recent to earliest):`.
 
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+*_return to <<toc,Table of Contents>>_*
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+// tag::undoredo[]
+=== Undoing previous command : `undo` or `u`
+
+Restores _EduBuddy_ to the state before the previous _undoable_ command was executed. +
+Format: `undo` +
+Abbreviation Format: `u`
+You will be able to see a success message in the CommandBox, `Undo Success!`.
+
+[IMPORTANT]
+====
+Use select command after undo command to update Student Profile Page.
+====
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify EduBuddy's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -192,13 +421,16 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`u` (reverses the `clear` command) +
+`u` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+*_return to <<toc,Table of Contents>>_*
+
+=== Redoing the previously undone command : `redo` or `r`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Abbreviation Format: `r`
 
 Examples:
 
@@ -214,24 +446,344 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`r` (reapplies the `delete 1` command) +
+`r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+*_return to <<toc,Table of Contents>>_*
 
-Clears all entries from the address book. +
-Format: `clear`
+// tag::appointment[]
+=== Creating an appointment: `addappointment` or `addappt` [since v1.4]
+
+If you are too busy with work and want to keep track of your schedule,
+this feature will definitely come in handy. It helps to create an appointment
+with the student identified by the index number used in the last student listing.
+
+Format: `addappointment n/NAME i/INFO d/DATE s/START_TIME e/END_TIME` +
+Abbreviation Format: `addappt n/NAME i/INFO d/DATE s/START_TIME e/END_TIME`
+
+[IMPORTANT]
+For first time users of _EduBuddy_, a Google authentication is required so as to sync your
+appointment data with your own Google Calendar. Please refer to <<Google Calendar Authentication>>
+on how to set it up first.
+
+[IMPORTANT]
+-`DATE` should be in *DDMMYYYY* format e.g. 25th Dec 2018 would be 25122018. +
+-`START_TIME` and `END_TIME` should be in *24 hour* format e.g. 3:30p.m. would be 1530. +
+
+[NOTE]
+After the appointment is successfully created, use the `view` command to see it display on
+your Google Calendar page if it is enabled.
+
+Examples:
+
+* `addappointment` OR `addappt` `n/Bernice Yu i/Consultation d/03042018 s/1500 e/1600` +
+Creates a consultation appointment with Bernice Yu on 3rd Apr 2018 from 3p.m. to 4p.m.
+
+image::addapptcommandsuccess.png[width="650"]
+// end::appointment[]
+*_return to <<toc,Table of Contents>>_*
+
+// tag::delappointment[]
+=== Deleting an appointment: `deleteappointment` or `deleteappt` [since v1.5]
+
+This feature helps you to delete an appointment if
+the appointments are already over or you accidentally added wrong details for the appointment
+
+Format: `deleteappointment INDEX` +
+Abbreviation Format: `deleteappt INDEX`
+
+[IMPORTANT]
+For first time users of _EduBuddy_, a Google authentication is required so as to sync your
+appointment data with your own Google Calendar. Please refer to <<Google Calendar Authentication>>
+on how to set it up first.
+
+[NOTE]
+-Deletes the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent appointment listing. +
+-After the appointment is successfully created, use the `view` command to see it display on
+your Google Calendar page if it is enabled.
+
+Examples:
+
+* `deleteappointment` OR `deleteappt` `3` +
+Deletes a consultation appointment with Bernice Yu on 3rd Apr 2018 from 3p.m. to 4p.m.
+
+image::deleteapptcommandsuccess.png[width="650"]
+
+// end::delappointment[]
+*_return to <<toc,Table of Contents>>_*
+
+// tag::view[]
+=== Displaying calendar view: `view` [since v1.5]
+
+If you want to view your own Google Calendar to keep track of your appointments, then this
+is the feature for you.
+
+Format: `view GMAIL_ID` +
+
+[IMPORTANT]
+In order to succesfully view your own Google calendar, `GMAIL_ID` must be from a valid gmail account and
+access to the calendar must be made public. Please refer to <<Setting up Google Calendar Permissions>>
+on how to configure the settings.
+
+Examples:
+
+* `view nusedubuddy` +
+If your gmail account is nusedubuddy@gmail.com, the `GMAIL_ID` will be nusedubuddy
+
+image::viewcommandbefore.png[width="650"]
+The above image displays the calendar with an appointment before its deleted.
+
+image::viewcommandafter.png[width="650"]
+The above image displays the calendar after the appointment is deleted.
+
+[NOTE]
+To refresh the calendar page after an appointment is added or deleted, type in the exact `view`
+command again or right click on the calendar and press `Reload page`
+
+// end::view[]
+*_return to <<toc,Table of Contents>>_*
+
+// tag::stream[]
+=== Viewing streaming score: `stream` [since v1.5]
+
+If you want to know if the student is qualified to enter the next education level, Junior College or Polytechnic, you can view the respective streaming score using this command.
+
+Format: `stream INDEX STREAM_TYPE`
+You will be able to see a success message in the CommandBox, For example: `Student: John Doe. L1R5 Score: 8`.
+
+[NOTE]
+-Selects the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. +
+-`STREAM_TYPE` refers to the different streaming categories.
+[width="85%",cols="<23%,<23%",options="header",]
+|=======================================================================
+|STREAM_TYPE|Streaming categories
+|1| L1R5
+|2| L1B4-A or L1R2B2-A
+|3| L1B4-B or L1R2B2-B
+|4| L1B4-C or L1R2B2-C
+|5| L1B4-D or L1R2B2-D
+|=======================================================================
+
+[IMPORTANT]
+-`INDEX` *must be a positive integer*: 1, 2, ...
+-`STREAM_TYPE` *must be a positive integer*: 1, 2, 3, 4, 5.
+-The `Student` should have the right subject combination to calculate the respective score, else you will see that the score is 0.
+-If you want to change the subject details, you can use the `Edit` feature at <<Editing a student : `edit` or `e`>>.
+-If you want to add additional subjects later, you can use the the `AddSubject` feature at <<Add subjects to a student : `addsub`>>.
+
+Examples:
+
+* `stream 1 1` +
+Returns the L1R5 score obtained by the student based on his/her grades.
+* `stream 1 2` +
+Returns the L1B4-A score obtained by the student based on his/her grades.
+// end::stream[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::injuries[]
+=== Adding a injury history to a student : `addinjuries` [since v1.5]
+Adds an injury history to the student of the specified index, in the student records in _EduBuddy_. +
+Format: `addinjuries INDEX injuries/INJURY` +
+You will be able to see the success message, +
+`Injuries History added: INJURY` +
+`Person: NAME`
+
+[NOTE]
+-Adds an injury history to the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`addinjuries 2 injuries/Dislocated Right Shoulder` +
+Adds the injury, dislocated right shoulder to the 2nd student in _EduBuddy_.
+* `find Betsy` +
+`addinjuries 1 injuries/Right Ligament Tear` +
+Adds the injury, right ligament tear to the 1st student in the results of the `find` command.
+
+image::InjuriesBeforeAdd.png[width="800"]
+Figure 5. Before the command `addinjuries 1 injuries/Right Ligament Tear` was entered.
+
+image::AddInjuriesSuccessMessage.png[width="800"]
+Figure 6. Success message when the command is entered successfully.
+
+image::InjuriesAfterAdd.png[width="800"]
+
+Figure 7. After the command is successfully entered.
+
+*_return to <<toc,Table of Contents>>_*
+
+
+=== Deleting a injuries history from a student : `deleteinjuries` [since v1.5]
+Deletes a injury history from the student records in _EduBuddy_. +
+Format: `deleteinjuries INDEX injuries/INJURIES` +
+You will be able to see the success message, +
+`Injuries deleted: INJURIES` +
+`Person: NAME`
+
+[NOTE]
+-Deletes a injury history from the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`deleteinjuries 2 injuries/Torn Ligament` +
+Deletes the injury history,torn ligament from the 2nd student in _EduBuddy_.
+* `find Betsy` +
+`deleteinjuries 1 injuries/Dislocated Shoulder` +
+Deletes the injury history from the 1st student in the results of the `find` command.
+
+image::DeleteInjuriesSuccessMessage.png[width="400"]
+Figure 8. The success message when command is successfully entered.
+
+image::DeleteInjuriesCommand.png[width="800"]
+Figure 9. After the command is successfully entered.
+
+// end::injuries[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::cca[]
+=== Editing the details of CCA of a student : `cca` [since v1.5]
+edits the CCA details of the student in _EduBuddy_. +
+Format: `cca INDEX cca/CCA pos/POSITION` +
+You will be able to see the success message, +
+`CCA added: CCA: POSITION` +
+`Person: NAME`
+
+[NOTE]
+-Adds the CCA details to the student at the specified `INDEX`
+if the student does not have any cca details. +
+-Edits the CCA details of the student at the specified `INDEX.` +
+-The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`cca 2 cca/Basketball pos/Member` +
+Adds the cca details(cca basketball with the position member) to the 2nd student in _EduBuddy_.
+* `find Betsy` +
+`cca 1 cca/Choir pos/Member` +
+Adds the cca details(cca Choir with the position member) to the 1st student in the results of the `find` command.
+
+image::BeforeAddingCca.png[width="400"]
+Figure 10. Before adding CCA to Betsy.
+
+image::AddCcaSuccessMessage.png[width="400"]
+Figure 10. The success message when command is successfully entered.
+
+image::AfterAddingCca.png[width="800"]
+Figure 11. After the command is successfully entered.
+// end::cca[]
+
+*_return to <<toc,Table of Contents>>_*
+
+
+// tag::NextofKin[]
+=== Editing the details of the next of kin of a student : `nok` [since v1.5]
+Edits a next of kin details of the student in _EduBuddy_. +
+Format: `nok INDEX n/NAME p/PHONE [e/EMAIL] r/RELATIONSHIP` +
+You will be able to see the success message, +
+`Next of Kin: NAME Phone: PHONE Email: EMAIL Remark: Father` +
+`Person: NAME`
+
+[NOTE]
+-Adds the next of kin details to the student at the specified `INDEX` if the student does not have any next of kin
+details. +
+-Edits the next of kin details from the student at the specified `INDEX`. +
+-The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`nok 2 n/Dave p/96784561 r/Father` +
+Edits the next of kin details(name, phone number and relationship)
+of the 2nd student in _EduBuddy_.
+* `find Betsy` +
+`nok 1 n/Dave p/96784561 r/Father` +
+Edits the next of kin details(name, phone number and relationship)
+of the 1st student in the results of the `find` command.
+
+image::BeforeAddingNOK.png[width="400"]
+Figure 10. Before adding the next of kin details to Betsy.
+
+image::AddNOKSuccessMessage.png[width="400"]
+Figure 10. The success message when command is successfully entered.
+
+image::AfterAddingNOK.png[width="800"]
+Figure 11. After the command is successfully entered.
+// end::NextofKin[]
+
+*_return to <<toc,Table of Contents>>_*
+
+
+// tag::theme[]
+=== Changing theme of _EduBuddy_ : `theme` [since v1.5]
+Changes colour theme of  _EduBuddy_ to dark or light theme. +
+Format: `theme colour` +
+You will be able to see the success message, +
+`Theme Changed!`
+
+
+[IMPORTANT]
+`colour` *must be 'dark' or 'light'
+
+Examples:
+
+* `theme` dark +
+Changes visual theme to dark theme.
+* `theme` light +
+Changes visual theme to light theme.
+// end::theme[]
+
+*_return to <<toc,Table of Contents>>_*
+
+=== Clearing all entries : `clear` or `c`
+
+Clears all student entries from _EduBuddy_. +
+Format: `clear` +
+Abbreviation Format: `c`
+
+*_return to <<toc,Table of Contents>>_*
+
+=== Saving the data
+
+EduBuddy data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+*_return to <<toc,Table of Contents>>_*
 
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+*_return to <<toc,Table of Contents>>_*
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+// tag::L.E.A.P.S System[]
+=== L.E.A.P.S System `[coming in v2.0]`
+
+_{Allows the teachers to key in the levels attained by the student for the various domains in L.E.A.P.S
+  to calculate the Co-Curricular Attainment of the student.}_
+
+// end::L.E.A.P.S System[]
+*_return to <<toc,Table of Contents>>_*
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
@@ -239,26 +791,315 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+*_return to <<toc,Table of Contents>>_*
+
 == FAQ
 
+// tag::googlecalendar[]
+=== Google Calendar Authentication
+For first time users, when you attempt to add an appointment to _EduBuddy_, you will be redirected
+to a new window or tab in your default web browser, as shown in the diagram below.
+
+image::googlelogin.png[width="650"]
+
+To complete the authentication, you may follow the steps below:
+
+Step 1:Input your gmail ID and password to proceed.
+
+[IMPORTANT]
+If you accidentally closed the pop-up browser at this point, the authentication will terminate and it will cause _EduBuddy_
+to stop responding. Close _EduBuddy_ and restart it again.
+
+[NOTE]
+If you currently do not have a Gmail account, but wish to try our appointment feature, you may use
+the following test account to proceed instead. +
+-Gmail ID: edubuddytest +
+-Gmail PW: edubuddy123
+
+Step 2: After successfully logging in to you Gmail account, you will be prompted access. Click `ALLOW`
+to proceed.
+
+image::googleaccess.png[width="650"]
+
+Step 3: Once that is done, the following message will be displayed at the top left corner
+of your browser page.
+
+image::googlesuccess.png[width="650"]
+
+The authentication is successful and you may close the browser and continue
+with the application.
+
+[NOTE]
+This authentication will only be done once and subsequent execution of _EduBuddy_ will not show the
+prompt again.
+
+*_return to <<toc,Table of Contents>>_*
+
+=== Setting up Google Calendar Permissions
+
+To allow your own Google Calender to be viewed on _EduBuddy_, you may follow these steps:
+
+Step 1: Login to your Google Calendar and click on the `Settings`.
+
+image::googlesettings.png[width="650"]
+
+Step 2: At the left hand side panel, under "Settings for my calendars", click on your own calendar.
+
+image::googlesettings2.png[width="300"]
+
+Step 3: Check the "Make available to public" box
+
+image::googlepermissions.png[width="650"]
+// end::googlecalendar[]
+*_return to <<toc,Table of Contents>>_*
+
+=== Others
+
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous EduBuddy folder.
+
+*Q*: What is L1B4 (as known as L1R2B2)? +
+*A*: A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
+     The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
+     `L1` represents the First language subject and `B4` represents 2 relevant subjects, according to the polytechnic course applied, and 2 other best subjects.
+     The category the relevant subject is under(for example: L1B4-A, L1B4-B, L1B4-C, L1B4D), will determine which subjects are the relevant subjects.
+The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
+
+If you want to find out more about the subject categories (L1B4-A, L1B4-B, L1B4-C, L1B4D),
+please visit:
+
+* https://www.sp.edu.sg/wps/portal/vp-spws/!ut/p/a0/04_Sj9CPykssy0xPLMnMz0vMAfGjzOJDPUxdjdxMTQws3J1cDDwt_MJMXZxDDE3cDfQLsh0VAYY7oWE!/?PC_Z7_UH5E2F540G6P00IO8K5AU61JM5027774_WCM_CONTEXT=/wps/wcm/connect/lib-spws/site-spwebsite/future+students/admissions/selection+criteria+for+gce+o+level+holders+-+aggregate+computation++%28admissions+-+course+intakes+and+cut-off+points%29[Singapore Polytechnic]
+* http://www.tp.edu.sg/admissions/gce-o-level-aggregate-scores-computation[Temasek Polytechnic]
+* https://www.moe.gov.sg/education/post-secondary#polytechnics[Other Polytechnics]
+
+*Q*: What is L1R5? +
+*A*: L1R5 is a grading system used in Singapore to determine the secondary school students' proficiency in the subjects taken for "O-Level Examination".
+The score is used for the students to enroll into Junior Colleges, which is the next higher level of education. "L1" refers to the first language subject taken by the student, while "R5" refers to the 5 relevant subjects that are examinable by the students.
+The grade of L1R5 is then determined by taking the best grades of each category and summing them up, for example, if a student scores A1 for all 6 subjects are from each category, the score will be 6. Each subject can only be considered once.
+For more information, please click https://www.moe.gov.sg/admissions/direct-admissions/dsa-jc/eligibility[here]
+
+*Q*: How are the grades for the subjects determined? +
+*A*: The level of achievement in each subject is indicated by the grade obtained, with A1 being the highest achievable grade and F9 the lowest:
+[width="85%",cols="22%,<23%",options="header",]
+|=======================================================================
+|Grade|Percentage of Competency
+|A1| 75% - 100%
+|A2| 70% - 74%
+|B3| 65% - 69%
+|B4| 60% - 64%
+|C5| 55% - 59%
+|C6| 50% - 54%
+|D7| 45% - 49%
+|E8| 40% - 44%
+|F9| 0% - 39%
+|=======================================================================
+
+*Q*: What are the subjects are in the L1R5 category? +
+*A*: These are the following subjects that are examinable in "O-level Examinations" in Singapore (as of Year 2018).
+[NOTE]
+The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing. +
+For example, type in: `Hist A1` *not* `History A1`
+
+[width="85%",cols="22%,<23%",options="header",]
+|=======================================================================
+|Subject Category|Subjects
+|L1| English, HTamil(Higher Tamil), HChi(Higher Chinese), HMalay(Higher Malay)
+|R1| Hist(History), Geog(Geography), ComHum(Combined Humanities), ELit(English Literature), CLit(Chinese Literature),
+     MLit(Malay Literature), TLit(Tamil Literature), HArt(Higher Art), HMusic(Higher Music), BIndo(Bahasa Indonesia),
+     CSP(Chinese Special Programme), MSP(Malay Special Programme)
+|R2| EMath(Elementary Mathematics), AMath(Additional Mathematics), Phy(Physics), Chem(Chemistry), Bio(Biology), Sci(Combined Science)
+|R3| Consist of both R1 and R2 subjects
+|R4| Consist of L1, R1 and R2 subjects. French, German, Spanish, Hindi, Urdu, Gujarati, Panjabi, Bengali, Burmese,
+     Thai, Jap(Japanese), Tamil, Chinese, Malay, DnT(Design and Technology), Comp(Computing), FnN(Food and Nutrition), PoA(Principles of Accounting),
+     Econs(Economics), Drama, PE(Physical Education), Biz(Business Studies), Biotech(Biotechnology), Design(Design Studies)
+|R5| Consist of R4 subjects
+|=======================================================================
+
+* The following subjects can be assigned to students but cannot be contributed to the results: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
+
+*Q*: What is CCA? +
+*A*: CCA stands for Co-Curricular Activities. It functions as a non-academic activity where students can have a more enriching experience in school. Find out more by clicking https://www.moe.gov.sg/education/programmes/co-curricular-activities[here]. +
+
+*Q*: What is NRIC? +
+*A*: It stands for National Registration Identity Card, and it is an identification document for the residents in Singapore.
+The `NRIC` that we are referring to in the _EduBuddy_ refers to the unique identification number that comes with each `NRIC`.
+Please visit https://www.ica.gov.sg/[this website] for more details.
+
+*Q*: What comprises the post-secondary education? +
+*A*: There are many different platforms of post-secondary education. We are currently focusing on Polytechnics and Junior Colleges.
+For more information about the platforms, please visit:
+https://www.moe.gov.sg/education/post-secondary[this website]
+
+*Q*: Why the information in the User Guide is not updated? +
+*A*: The _EduBuddy_ is created in the Year 2018, so the information are all based in 2018. And, we are not part of the Ministry of Education so we may be lacking in expertise in this area.
+If you want to see the latest update on the education system, you can visit https://www.moe.gov.sg/home[the Ministry of Education's website].
+
+* If you want us to update the _EduBuddy_, you can post issues on our https://github.com/CS2103JAN2018-T09-B1/main/issues[issues website].
+Please go through the following 2 steps to post an issue:
+
+[[IMPORTANT]]
+You should have a `GitHub` account to post an issue. If you don't, you can create one https://github.com/join[here].
+
+.Step 1: Create new issue
+image::NewIssueStep1.png[width="800"]
+.Step 2: Submit new issue
+image::NewIssueStep2.png[width="800"]
+
+* If you want to see that your issue is posted, you can follow the next 2 steps.
+
+.Step 3: Return to main issue page
+image::NewIssueStep3.png[width="800"]
+or you can go back to our https://github.com/CS2103JAN2018-T09-B1/main/issues[issue website].
+
+.Step 4: View issue
+image::NewIssueStep4.png[width="800"]
+
+We will let you know through your `GitHub` account or the email linked to your `GitHub` account once we have address your issue.
+
+*_return to <<toc,Table of Contents>>_*
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+The table below provides a quick summary of all the commands available in EduBuddy.
+
+[width="90%",cols="20%,<22%,<23%,<25%",options="header",]
+|=======================================================================
+|Command |Function |Format |Example
+|*Add* |Adds a student entry |`add n/NAME ic/NRIC [t/TAG] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE...]` +
+OR +
+`a n/NAME ic/NRIC [t/TAG] [r/REMARK] [sub/SUBJECT_NAME SUBJECT_GRADE...]`
+|`add n/John Doe ic/S9876543H t/3A r/English Rep sub/English A2 Tamil A2 AMath B3 Phy A1 EMath A2 Hist A2` +
+OR +
+`a n/John Doe ic/S9876543H t/3A r/English Rep sub/English A2 Tamil A2 AMath B3 Phy A1 EMath A2 Hist A2`
+
+|*AddAppointment* |Adds an appointment |`addappointment n/NAME i/INFO d/DATE s/START_TIME e/END_TIME` +
+OR +
+`addappt n/NAME i/INFO d/DATE s/START_TIME e/END_TIME`
+|`addappointment n/John Doe i/Remedial d/25122018 s/1200 e/1300` +
+OR +
+`addappt n/John Doe i/Remedial d/25122018 s/1200 e/1300`
+
+|*AddInjuries* |Adds a injury history to a specified student |`addinjuries INDEX injuries/INJURY` +
+|`addinjuries 2 injuries/Torn Ligament` +
+
+|*AddRemark* |Adds a remark to a specific student|`addremark 1 r/REMARK` |addremark 2 r/Hardworking
+
+|*AddSubject* |Adds subject(s) to a specified student |`addsub INDEX sub/SUBJECT_NAME SUBJECT_GRADE` +
+
+|`addsub 2 sub/English A2 EMath A1` +
+
+|*Cca* |Edits a student's cca details |`cca INDEX cca/CCA pos/POSITION` +
+|`cca 1 cca/Basketball pos/Member`
+
+|*Clear* |Clears all student entries |`clear` +
+OR +
+`c`
+|`clear` +
+OR +
+`c`
+
+|*Delete* |Deletes a student entry |`delete INDEX` +
+OR +
+`d INDEX`
+|`delete 3` +
+OR +
+`d 3`
+
+|*DeleteAppointment* |Deletes an appointment |`deleteappointment INDEX` +
+OR +
+`deleteappt INDEX`
+|`deleteappointment 3` +
+OR +
+`deleteappt 3`
+
+|*DeleteInjuries* |Deletes a injury history from a specific student|`deleteinjuries INDEX injuries/INJURY` +
+|`deleteinjuries 1 injuries/Torn Ligament`
+
+|*DeleteRemark* |Deletes a remark from a specific student|`deleteremark 1 r/REMARK` |`deleteremark 1 r/Hardworking`
+
+|*Edit* |Edits a student entry |`edit INDEX [n/NAME] [ic/NRIC] [t/CLASS] [sub/SUBJECT_NAME SUBJECT_GRADE]` +
+OR +
+`e INDEX [n/NAME] [ic/NRIC] [t/CLASS] [sub/SUBJECT_NAME SUBJECT_GRADE]`
+|`edit 2 n/James Lee` +
+OR +
+`e 2 n/James Lee`
+
+|*Exit* |Exits _EduBuddy_ |`exit` |`exit`
+
+|*Find* |Finds student by name |`find KEYWORD [MORE_KEYWORDS]` +
+OR +
+`f KEYWORD [MORE_KEYWORDS]`
+|`find James Jake` +
+OR +
+`f James Jake`
+
+|*Help* |Shows the help page |`help` |`help`
+
+|*History* |Lists the past commands entered |`history` +
+OR +
+`h`
+|`history` +
+OR +
+`h`
+
+|*List* |Lists all student entries |`list` +
+OR +
+`l`
+|`list` +
+OR +
+`l`
+
+|*NextofKin* |Edits a student's next of kin details|
+`nok INDEX n/NAME p/PHONE [e/EMAIL] r/RELATIONSHIP` +
+|`nok 1 n/Dave p/95672341 r/Father` +
+
+|*Redo* |Redo previous undo command |`redo` +
+OR +
+`r`
+|`redo` +
+OR +
+`r`
+
+|*Select* |Selects the student entry |`select INDEX` +
+OR +
+`s INDEX`
+|`select 2` +
+OR +
+`s 2`
+
+|*Sort* |Sorts student entries by parameters |`sort PARAMETER`|`sort name` +
+OR +
+`sort tag`
+
+|*Stream* |Returns a specific streaming score of a student |`stream INDEX STREAM_TYPE`|`stream 1 1` +
+OR +
+`stream 1 2`
+
+|*TagDelete* |Deletes a tag from every student|`tagdelete TAGNAME` +
+OR +
+`td TAGNAME`
+|`tagdelete CLASS2A` +
+OR +
+`td CLASS2A`
+
+|*TagReplace* |Replaces a tag for every student|`tagreplace t/OLD_TAGNAME t/NEW_TAGNAME` +
+OR +
+`tr t/OLD_TAGNAME t/NEW_TAGNAME`
+|`tagreplace t/2A t/3A` +
+OR +
+`tr t/2A t/3A`
+
+|*Theme* |Changes theme of _EduBuddy_ |`theme COLOR`|`theme dark`
+
+|*Undo* |Undo previous command |`undo` +
+OR +
+`u`
+|`undo` +
+OR +
+`u`
+
+|*View* |Displays calendar view |`view GMAIL_ID` |`view nusedubuddy`
+
+|=======================================================================
+
+*_return to <<toc,Table of Contents>>_*

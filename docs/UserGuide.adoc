@@ -291,7 +291,6 @@ Format: `alias [COMMAND] [ALIAS]`
 
 Examples:
 
-* `alias history hist`
 * `alias find f`
 * `alias alias al`
 
@@ -302,7 +301,7 @@ Format: `unalias [CURRENT_ALIAS]`
 
 Examples:
 
-* `unalias hist`
+* `unalias f`
 // end::alias[]
 
 ==== Listing entered commands : `history`
@@ -562,7 +561,7 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 |History|history|
 |Import|import FILEPATH PASSWORD|import data/addressBook.xml testpassword
 |List|list|
-|Map|map LOCATION/...|map S16/COM1
+|Map|map LOCATION|map COM2
 |Encrypt|encrypt PASSWORD|encrypt test
 |Decrypt|decrypt|
 |Redo|redo|

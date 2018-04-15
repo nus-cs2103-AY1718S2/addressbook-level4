@@ -177,7 +177,7 @@ Selects the 2nd friend in ST.
 Selects the 1st friend in the results of the `find` command.
 
 // tag::birthdays[]
-==== Viewing a collated birthday list: `birthdays` _(since v1.3)_
+==== Viewing a collated birthday list/notification: `birthdays` _(since v1.3)_
 
 To get a list that contains all the birthdays of all your friends (ordered by date) +
 Or to know whose birthday is it today, you can enter the following commands +
@@ -191,12 +191,12 @@ The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field +
 Examples:
 
 * `birthdays` +
-Displays a list of all birthdays +
+Displays a list of all your friends' birthdays +
 
 image::birthdaysList.PNG[width="790"]
 
 * `birthdays today` +
-Displays a window with the birthdays today +
+Displays a window with the birthdays occuring today +
 
 image::birthdaysToday.png[width="790"]
 
@@ -215,7 +215,6 @@ ODD/EVEN is case-insensitive
 
 [NOTE]
 Only indexes of the current filtered list are valid
-
 
 Examples:
 

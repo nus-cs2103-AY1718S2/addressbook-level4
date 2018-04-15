@@ -1,10 +1,12 @@
 package seedu.address.testutil;
 
 import seedu.address.model.user.Password;
-import seedu.address.model.user.Username;
 import seedu.address.model.user.User;
-import seedu.address.model.util.SampleLoginDataUtil;
+import seedu.address.model.user.Username;
 
+/**
+ * A utility class to help with building User objects.
+ */
 public class UserBuilder {
 
     public static final String DEFAULT_USERNAME = "JOHNDOE";

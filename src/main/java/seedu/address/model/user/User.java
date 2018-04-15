@@ -10,8 +10,6 @@ import java.util.Objects;
  */
 public class User implements Comparable<User> {
 
-    private static String xmlFilepath;
-
     private final Username username;
     private final Password password;
 

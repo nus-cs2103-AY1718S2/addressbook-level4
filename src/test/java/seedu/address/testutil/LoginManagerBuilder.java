@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.LoginManager;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;

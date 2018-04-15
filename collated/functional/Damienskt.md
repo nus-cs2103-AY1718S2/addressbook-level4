@@ -16,9 +16,13 @@ public class ViewAppointmentCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + "1";
 
+    public static final String MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS = "List of appointments must be shown "
+            + "before viewing an appointment";
     public static final String MESSAGE_SUCCESS = "Selected appointment details:\n";
 
-    private Appointment selectedAppointment;
+    public static final String MESSAGE_NO_LOCATION = "No location for selected appointment!";
+
+    private static Appointment selectedAppointment;
     private int chosenIndex;
 
     /**
@@ -30,7 +34,15 @@ public class ViewAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        selectedAppointment = model.getChosenAppointment(chosenIndex);
+        if (!model.getIsListingAppointments()) {
+            throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+        }
+        try {
+            selectedAppointment = model.getChosenAppointment(chosenIndex);
+        } catch (IndexOutOfBoundsException iobe) {
+            throw new CommandException(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        }
+
         try {
             ShowLocationCommand showLocation = new ShowLocationCommand(
                     new MapAddress(selectedAppointment.getLocation()));
@@ -41,13 +53,25 @@ public class ViewAppointmentCommand extends Command {
         }
     }
 
-    private String getAppointmentDetailsResult () {
+    public static String getAppointmentDetailsResult () {
+        String displayedLocation = (selectedAppointment.getLocation() == null)
+                ? MESSAGE_NO_LOCATION
+                : selectedAppointment.getLocation();
         return "Appointment Name: " + selectedAppointment.getTitle() + "\n"
                 + "Start Date: " + selectedAppointment.getStartDate() + "\n"
                 + "Start Time: " + selectedAppointment.getStartTime() + "\n"
                 + "End Date: " + selectedAppointment.getEndDate() + "\n"
                 + "End Time: " + selectedAppointment.getEndTime() + "\n"
-                + "Location: " + selectedAppointment.getLocation();
+                + "Location: " + displayedLocation + "\n"
+                + "Celebrities attending: " + selectedAppointment.getCelebritiesAttending() + "\n"
+                + "Points of Contact: " + selectedAppointment.getPointsOfContact();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof ViewAppointmentCommand
+                && this.chosenIndex == (((ViewAppointmentCommand) other).chosenIndex));
     }
 }
 ```
@@ -82,8 +106,10 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
     private static MapAddress endLocation = null;
     private static String distOfTravel;
     private static String timeOfTravel;
+
     private final LatLng endLatLng;
     private final LatLng startLatLng;
+
     private DirectionsService directionService;
 
     /**
@@ -98,28 +124,16 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
         this.endLocation = end;
         this.startLatLng = getLatLong(startLocation);
         this.endLatLng = getLatLong(endLocation);
-        Map.removeExistingMarker();
-        Map.clearRoute();
-        directionService = Map.getDirectionService();
+        setDistAndTimeOfTravel();
     }
 
     @Override
     public CommandResult execute() {
+        directionService = Map.getDirectionService();
+        Map.removeExistingMarker();
+        Map.clearRoute();
         addRouteToMap();
-        setDistAndTimeOfTravel();
         return new CommandResult(MESSAGE_SUCCESS + getStringOfDistanceAndTime());
-    }
-
-    /**
-     * Retrieves information of {@startLocation}, {@endLocation}, {@distOfTravel} and {@code timeOfTravel}
-     * which is then converted to string format to be shown to user
-     * @return information of distance and time of travel
-     */
-    public static String getStringOfDistanceAndTime() {
-        return "Start Location: " + startLocation.toString() + "\n"
-                + "End Location: " + endLocation.toString() + "\n"
-                + "Estimated Distance of travel: " + distOfTravel + "\n"
-                + "Estimated Time of travel: " + timeOfTravel;
     }
 
     @Override
@@ -153,24 +167,54 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
     private void setDistAndTimeOfTravel() {
         DistanceEstimate distEstimate = new DistanceEstimate();
         distEstimate.calculateDistanceMatrix(startLatLng, endLatLng, TravelMode.DRIVING);
-        distOfTravel = distEstimate.getDistOriginDest();
+        distOfTravel = distEstimate.getDistBetweenOriginDest();
         timeOfTravel = distEstimate.getTravelTime();
     }
 
     /**
      * Converts {@code address} into LatLng form
+     * @return LatLng of address
      */
     private LatLng getLatLong(MapAddress address) {
         Geocoding convertToLatLng = new Geocoding();
         convertToLatLng.initialiseLatLngFromAddress(address.toString());
         return convertToLatLng.getLatLng();
     }
+
+    /**
+     * Retrieves information of {@code startLocation}, {@code endLocation}, {@code distOfTravel} and
+     * {@code timeOfTravel}
+     * which is then converted to string format to be shown to user
+     * @return information of distance and time of travel
+     */
+    public static String getStringOfDistanceAndTime() {
+        return "Start Location: " + startLocation.toString() + "\n"
+                + "End Location: " + endLocation.toString() + "\n"
+                + "Estimated Distance of travel: " + distOfTravel + "\n"
+                + "Estimated Time of travel: " + timeOfTravel;
+    }
+
+    public static MapAddress getStartLocation() {
+        return startLocation;
+    }
+
+    public static MapAddress getEndLocation() {
+        return endLocation;
+    }
+
+    public static String getDistOfTravel() {
+        return distOfTravel;
+    }
+
+    public static String getTimeOfTravel() {
+        return timeOfTravel;
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\map\ShowLocationCommand.java
 ``` java
 /**
- * Update the Map by adding a marker to the location of map address
+ * Update the Map by adding a marker to the location of map selectedLocation
  * and delete existing marker if it exist
  */
 public class ShowLocationCommand extends Command {
@@ -179,7 +223,7 @@ public class ShowLocationCommand extends Command {
     public static final String COMMAND_ALIAS = "sl";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Shows the location of address in the Map.\n"
+            + ": Shows the location of selectedLocation in the Map.\n"
             + "Parameters: "
             + PREFIX_MAP_ADDRESS + "LOCATION (Name of location or postal code)\n"
             + "Example: " + COMMAND_WORD + " "
@@ -189,7 +233,7 @@ public class ShowLocationCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Location is being shown in Map (identified by marker)!";
 
-    private final MapAddress address;
+    private MapAddress selectedLocation;
 
     /**
      * Creates an AddAppointmentCommand with the following parameters
@@ -197,13 +241,13 @@ public class ShowLocationCommand extends Command {
      */
     public ShowLocationCommand (MapAddress address) {
         requireNonNull(address);
-        this.address = address;
-        Map.removeExistingMarker();
-        Map.clearRoute();
+        this.selectedLocation = address;
     }
 
     @Override
     public CommandResult execute() {
+        Map.removeExistingMarker();
+        Map.clearRoute();
         addNewMarkerToMap();
         return new CommandResult(MESSAGE_SUCCESS);
     }
@@ -212,11 +256,11 @@ public class ShowLocationCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ShowLocationCommand // instanceof handles nulls
-                && this.address.equals(((ShowLocationCommand) other).address));
+                && this.selectedLocation.equals(((ShowLocationCommand) other).selectedLocation));
     }
 
     /**
-     * Remove any existing marker and adds new marker {@code location} to Map
+     * Remove any existing marker and add new marker {@code location} to Map
      */
     public void addNewMarkerToMap() {
 
@@ -227,6 +271,10 @@ public class ShowLocationCommand extends Command {
         Map.setMarkerOnMap(center);
     }
 
+    /**
+     * Initialise new marker with selected location {@code center} options
+     * @return Marker with initialised options
+     */
     private Marker getMarkerOptions(LatLong center) {
         MarkerOptions markOptions = new MarkerOptions();
         markOptions.animation(Animation.DROP)
@@ -235,10 +283,18 @@ public class ShowLocationCommand extends Command {
         return new Marker(markOptions);
     }
 
+    /**
+     * Converts selected location {@code selectedLocation} to LatLng form
+     * @return LatLong
+     */
     private LatLong getLatLong() {
         Geocoding convertToLatLng = new Geocoding();
-        convertToLatLng.initialiseLatLngFromAddress(address.toString());
+        convertToLatLng.initialiseLatLngFromAddress(selectedLocation.toString());
         return new LatLong(convertToLatLng.getLat(), convertToLatLng.getLong());
+    }
+
+    public MapAddress getLocation() {
+        return this.selectedLocation;
     }
 }
 ```
@@ -247,26 +303,10 @@ public class ShowLocationCommand extends Command {
 /**
  * Calculates distance and travel duration between two location.
  */
-public class DistanceEstimate {
+public class DistanceEstimate extends GoogleWebServices {
 
-    /**
-     * API Key required for requesting service from google server
-     */
-    //public static final String API_KEY = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
-    public static final String API_KEY = "AIzaSyDdJMB6Jug8D_45K72FpbEL8S5XQF_98Oc";
-
-    private GeoApiContext context;
-    private String distOriginDest;
+    private String distBetweenOriginDest;
     private String travelTime;
-
-    /**
-     * Initialises access to google server
-     */
-    public DistanceEstimate() {
-        context = new GeoApiContext.Builder()
-                .apiKey(API_KEY)
-                .build();
-    }
 
     /**
      * Extract time duration details from {@code matrixDetails}
@@ -301,10 +341,10 @@ public class DistanceEstimate {
     /**
      * Initialises the calculation of time and distance between two location by sending request with
      * {@code startPostalCode},{@code endPostalCode} and {@code modeOfTravel} to google server, details
-     * extracted from result {@code estimate} and stored into {@code distOriginDest} and {@code travelTime}
+     * extracted from result {@code estimate} and stored into {@code distBetweenOriginDest} and {@code travelTime}
      */
     public void calculateDistanceMatrix(LatLng startLocation, LatLng endLocation, TravelMode modeOfTravel) {
-        DistanceMatrixApiRequest request = getApprovalForRequest(context);
+        DistanceMatrixApiRequest request = getApprovalForRequest(GoogleWebServices.getGeoApiContext());
         DistanceMatrix estimate = null;
         try {
             estimate = request.origins(startLocation)
@@ -319,7 +359,7 @@ public class DistanceEstimate {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        distOriginDest = String.valueOf(extractDistanceDetailsToString(estimate));
+        distBetweenOriginDest = String.valueOf(extractDistanceDetailsToString(estimate));
         travelTime = String.valueOf(extractDurationDetailsToString(estimate));
     }
 
@@ -327,8 +367,8 @@ public class DistanceEstimate {
         return travelTime;
     }
 
-    public String getDistOriginDest() {
-        return distOriginDest;
+    public String getDistBetweenOriginDest() {
+        return distBetweenOriginDest;
     }
 }
 ```
@@ -337,25 +377,9 @@ public class DistanceEstimate {
 /**
  * Converts address to LatLng form.
  */
-public class Geocoding {
-
-    /**
-     * API Key required for requesting service from google server
-     */
-    //public static final String API_KEY = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
-    public static final String API_KEY = "AIzaSyDdJMB6Jug8D_45K72FpbEL8S5XQF_98Oc";
+public class Geocoding extends GoogleWebServices {
 
     private static LatLng location;
-    private GeoApiContext context;
-
-    /**
-     * Initialises access to google server
-     */
-    public Geocoding() {
-        context = new GeoApiContext.Builder()
-                .apiKey(API_KEY)
-                .build();
-    }
 
     /**
      * Send request to google server to obtain {@code results}
@@ -364,7 +388,7 @@ public class Geocoding {
      */
     public void initialiseLatLngFromAddress(String address) {
         try {
-            GeocodingResult[] results = GeocodingApi.geocode(context,
+            GeocodingResult[] results = GeocodingApi.geocode(GoogleWebServices.getGeoApiContext(),
                     address).await();
             getLocation(results);
         } catch (ApiException e) {
@@ -397,14 +421,15 @@ public class Geocoding {
     }
 
     /**
-     * Checks if the {@code address} can be found in google server
+     * Checks if the {@code address} can
+     * be found in google server
      * @param address
      * @return boolean
      */
     public boolean checkIfAddressCanBeFound(String address) {
 
         try {
-            GeocodingResult[] results = GeocodingApi.geocode(context,
+            GeocodingResult[] results = GeocodingApi.geocode(GoogleWebServices.getGeoApiContext(),
                     address).await();
             getLocation(results);
         } catch (ApiException e) {
@@ -420,10 +445,64 @@ public class Geocoding {
     }
 }
 ```
+###### \java\seedu\address\logic\map\GoogleWebServices.java
+``` java
+/**
+ * Initialise connection to google server to use its API
+ */
+public class GoogleWebServices {
+
+    // 6 API keys for accessing google server
+    public static final String API_KEY_1 = "AIzaSyB78sjE5UtuPn9T7u1WHowRkWj2KFo92rI";
+    public static final String API_KEY_2 = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
+    public static final String API_KEY_3 = "AIzaSyDdJMB6Jug8D_45K72FpbEL8S5XQF_98Oc";
+    public static final String API_KEY_4 = "AIzaSyA-gBgtvaQU4NMEmO37UJEyx5YHnuFU30E";
+    public static final String API_KEY_5 = "AIzaSyAD8_oIBJlzOp30VA9mOvQKp6GZe8SFsYY";
+    public static final String API_KEY_6 = "AIzaSyBKemZo4WFMDaJ1q_vWxquZxTyYF24skCI";
+
+    public static final String MESSAGE_FAIL_CONNECTION = "Api key reached max daily usage, "
+            + "please wait till 3pm SGT for it to be reset";
+
+    private static GeoApiContext context;
+    private boolean isInitialised;
+
+    /**
+     * Initialises access to google server using Api keys
+     */
+    public GoogleWebServices() {
+        initialiseConnection();
+    }
+
+    /**
+     * Initialise with valid Api key and test connection to google server
+     */
+    private void initialiseConnection() {
+        isInitialised = true;
+        context = new GeoApiContext.Builder()
+                .apiKey(API_KEY_2)
+                .build();
+        try {
+            GeocodingResult[] results = GeocodingApi.geocode(context,
+                    "Punggol").await();
+            LatLng location = results[0].geometry.location;
+        } catch (ApiException | InterruptedException | IOException | IndexOutOfBoundsException e) {
+            isInitialised = false;
+        }
+    }
+
+    public boolean checkInitialisedConnection() {
+        return isInitialised;
+    }
+
+    public static GeoApiContext getGeoApiContext() {
+        return context;
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\calendar\ViewAppointmentCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new ViewAppointmentCommand object
+ * Reads {@code args} and checks if the input has all the necessary values
  */
 public class ViewAppointmentCommandParser implements Parser<ViewAppointmentCommand> {
 
@@ -439,6 +518,8 @@ public class ViewAppointmentCommandParser implements Parser<ViewAppointmentComma
             Index index = ParserUtil.parseIndex(args);
             return new ViewAppointmentCommand(index.getZeroBased());
         } catch (IllegalValueException ive) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(ive.getMessage(), ive);
         }
     }
@@ -450,6 +531,8 @@ public class ViewAppointmentCommandParser implements Parser<ViewAppointmentComma
  * Reads {@code args} and checks if the input has all the necessary values
  */
 public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> {
+
+    private GoogleWebServices initialiseConnection;
     /**
      * Parses the given {@code String} of arguments in the context of the EstimateRouteCommand
      * and returns an EstimateRouteCommand object for execution
@@ -458,10 +541,18 @@ public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> 
     @Override
     public EstimateRouteCommand parse(String args) throws ParseException {
 
+        initialiseConnection = new GoogleWebServices();
+
+        if (!initialiseConnection.checkInitialisedConnection()) {
+            throw new ParseException(GoogleWebServices.MESSAGE_FAIL_CONNECTION);
+        }
+
         ArgumentMultimap argMultiMap =
                 ArgumentTokenizer.tokenize(args, PREFIX_START_MAP_ADDRESS, PREFIX_END_MAP_ADDRESS);
         if (!arePrefixesPresent(argMultiMap, PREFIX_START_MAP_ADDRESS, PREFIX_END_MAP_ADDRESS)
                 || !argMultiMap.getPreamble().isEmpty()) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         EstimateRouteCommand.MESSAGE_USAGE));
         }
@@ -470,12 +561,18 @@ public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> 
             MapAddress start = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_START_MAP_ADDRESS)).get();
             MapAddress end = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_END_MAP_ADDRESS)).get();
             if (!MapAddress.isValidAddressForEstimatingRoute(start.toString(), end.toString())) {
+                Map.removeExistingMarker();
+                Map.clearRoute();
                 throw new InvalidAddress("");
             }
             return new EstimateRouteCommand(start, end);
         } catch (IllegalValueException ive) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS);
         } catch (InvalidAddress ia) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS_ROUTE_ESTIMATION);
         }
     }
@@ -487,6 +584,7 @@ public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> 
  * Reads {@code args} and checks if the input has all the necessary values
  */
 public class ShowLocationCommandParser implements Parser<ShowLocationCommand> {
+    private GoogleWebServices initialiseConnection;
     /**
      * Parses the given {@code String} of arguments in the context of the ShowLocationCommand
      * and returns an ShowLocationCommand object for execution
@@ -494,11 +592,16 @@ public class ShowLocationCommandParser implements Parser<ShowLocationCommand> {
      */
     @Override
     public ShowLocationCommand parse(String args) throws ParseException {
-
+        initialiseConnection = new GoogleWebServices();
+        if (!initialiseConnection.checkInitialisedConnection()) {
+            throw new ParseException(GoogleWebServices.MESSAGE_FAIL_CONNECTION);
+        }
         ArgumentMultimap argMultiMap =
                 ArgumentTokenizer.tokenize(args, PREFIX_MAP_ADDRESS);
         if (!arePrefixesPresent(argMultiMap, PREFIX_MAP_ADDRESS)
                 || !argMultiMap.getPreamble().isEmpty()) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ShowLocationCommand.MESSAGE_USAGE));
         }
@@ -507,6 +610,8 @@ public class ShowLocationCommandParser implements Parser<ShowLocationCommand> {
             MapAddress address = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_MAP_ADDRESS)).get();
             return new ShowLocationCommand(address);
         } catch (IllegalValueException ive) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS);
         }
     }
@@ -536,6 +641,37 @@ public class ShowLocationCommandParser implements Parser<ShowLocationCommand> {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(parseMapAddress(address.get())) : Optional.empty();
     }
+```
+###### \java\seedu\address\model\appointment\Appointment.java
+``` java
+    /**
+     * Returns list of celebrities attending the appointment in string format.
+     */
+    public String getCelebritiesAttending () {
+        if (celebrityList.size() == 0) {
+            return "No celebrities attending";
+        }
+        String celebritiesAttending = new String(celebrityList.get(0).getName().toString());
+        for (int i = 1; i < celebrityList.size(); i++) {
+            celebritiesAttending = celebritiesAttending + ", " + celebrityList.get(i).getName().toString();
+        }
+        return celebritiesAttending;
+    }
+
+    /**
+     * Returns list of points of contact for the appointment in string format.
+     */
+    public String getPointsOfContact () {
+        if (pointOfContactList.size() == 0) {
+            return "No point of contact";
+        }
+        String pointOfContacts = new String(pointOfContactList.get(0).getName().toString());
+        for (int i = 1; i < pointOfContactList.size(); i++) {
+            pointOfContacts = pointOfContacts + ", " + pointOfContactList.get(i).getName().toString();
+        }
+        return pointOfContacts;
+    }
+}
 ```
 ###### \java\seedu\address\model\map\Map.java
 ``` java
@@ -584,6 +720,10 @@ public class Map extends MapPanel {
         }
     }
 
+    /**
+     * Set new marker with {@code center} LatLong on map
+     * @param center
+     */
     public static void setMarkerOnMap(LatLong center) {
         actualMap.addMarker(Map.location);
         actualMap.setCenter(center);
@@ -646,13 +786,18 @@ public class MapAddress {
         boolean isValid = true;
         LatLng startLatLng;
         LatLng endLatLng;
+
         DistanceEstimate checkValid = new DistanceEstimate();
         Geocoding latLong = new Geocoding();
+
         latLong.initialiseLatLngFromAddress(start);
-        startLatLng = latLong.getLatLng();
+        startLatLng = latLong.getLatLng(); //Get LatLong of start location
+
         latLong.initialiseLatLngFromAddress(end);
-        endLatLng = latLong.getLatLng();
+        endLatLng = latLong.getLatLng(); //Get LatLong of end location
+
         checkValid.calculateDistanceMatrix(startLatLng, endLatLng, TravelMode.DRIVING);
+
         if (checkValid.getTravelTime().equals("null")) {
             isValid = false;
         }
@@ -689,12 +834,15 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
     public static final double LATITUDE_SG = 1.3607962;
     public static final double LONGITUDE_SG = 103.8109208;
     public static final int DEFAULT_ZOOM_LEVEL = 10;
+
     protected static DirectionsPane directions;
     protected static DirectionsRenderer renderer;
     protected static DirectionsService directionService;
     protected static DirectionsRequest directionRequest;
     protected static GoogleMap actualMap;
+
     private static final String FXML = "MapsPanel.fxml";
+
     protected GoogleMapView mapView;
 
     public MapPanel() {
@@ -746,415 +894,6 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
     }
 }
 ```
-###### \resources\view\DarkTheme.css
-``` css
-.background {
-    -fx-background-color: derive(#e8e8e8, 20%);
-    background-color: #e8e8e8; /* Used in the default.html file */
-}
-
-.label {
-    -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #555555;
-    -fx-opacity: 0.9;
-}
-
-.label-bright {
-    -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
-    -fx-opacity: 1;
-}
-
-.label-header {
-    -fx-font-size: 32pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
-    -fx-opacity: 1;
-}
-
-.text-field {
-    -fx-font-size: 12pt;
-    -fx-font-family: "Segoe UI Semibold";
-}
-
-.tab-pane {
-    -fx-padding: 0 0 0 1;
-}
-
-.tab-pane .tab-header-area {
-    -fx-padding: 0 0 0 0;
-    -fx-min-height: 0;
-    -fx-max-height: 0;
-}
-
-.table-view {
-    -fx-base: #e8e8e8;
-    -fx-control-inner-background: #e8e8e8;
-    -fx-background-color: #e8e8e8;
-    -fx-table-cell-border-color: transparent;
-    -fx-table-header-border-color: transparent;
-    -fx-padding: 5;
-}
-
-.table-view .column-header-background {
-    -fx-background-color: transparent;
-}
-
-.table-view .column-header, .table-view .filler {
-    -fx-size: 35;
-    -fx-border-width: 0 0 1 0;
-    -fx-background-color: transparent;
-    -fx-border-color:
-        transparent
-        transparent
-        derive(-fx-base, 80%)
-        transparent;
-    -fx-border-insets: 0 10 1 0;
-}
-
-.table-view .column-header .label {
-    -fx-font-size: 20pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: black;
-    -fx-alignment: center-left;
-    -fx-opacity: 1;
-}
-
-.table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
-}
-
-.split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#e8e8e8, 20%);
-    -fx-border-color: transparent transparent transparent #4d4d4d;
-}
-
-.split-pane {
-    -fx-border-radius: 1;
-    -fx-border-width: 1;
-    -fx-background-color: derive(#e8e8e8, 20%);
-}
-
-.list-view {
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-    -fx-background-color: derive(#e8e8e8, 20%);
-}
-
-.list-cell {
-    -fx-label-padding: 0 0 0 0;
-    -fx-graphic-text-gap : 0;
-    -fx-padding: 0 0 0 0;
-}
-
-.list-cell:filled:even {
-    -fx-background-color: #bababa;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #e8e8e8;
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #ffefd5;
-}
-
-.list-cell:filled:selected #cardPane {
-    -fx-border-color: black;
-    -fx-border-width: 3;
-}
-
-.list-cell .label {
-    -fx-text-fill: black;
-}
-
-.cell_big_label {
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 16px;
-    -fx-text-fill: black;
-}
-
-.cell_small_label {
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
-    -fx-text-fill: black;
-}
-
-.anchor-pane {
-     -fx-background-color: derive(#fcfcfc, 20%);
-}
-
-.pane-with-border {
-     -fx-background-color: derive(#e8e8e8, 20%);
-     -fx-border-color: derive(black, 10%);
-     -fx-border-top-width: 1px;
-}
-
-.pane-with-thick-border {
-     -fx-background-color: derive(#e8e8e8, 20%);
-     -fx-border-color: derive(#4f4f4f, 10%);
-     -fx-border-top-width: 20px;
-}
-
-.status-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-text-fill: black;
-}
-
-.result-display {
-    -fx-background-color: #fcfcfc;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: black;
-}
-
-.result-display .label {
-    -fx-text-fill: black !important;
-}
-
-.status-bar .label {
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: black;
-}
-
-.status-bar-with-border {
-    -fx-background-color: derive(#1d1d1d, 30%);
-    -fx-border-color: derive(#1d1d1d, 25%);
-    -fx-border-width: 1px;
-}
-
-.status-bar-with-border .label {
-    -fx-text-fill: black;
-}
-
-.grid-pane {
-    -fx-background-color: derive(#e8e8e8, 30%);
-    -fx-border-color: derive(#1d1d1d, 30%);
-    -fx-border-width: 1px;
-}
-
-.grid-pane .anchor-pane {
-    -fx-background-color: derive(#e8e8e8, 30%);
-}
-
-.context-menu {
-    -fx-background-color: derive(#e8e8e8, 50%);
-}
-
-.context-menu .label {
-    -fx-text-fill: black;
-}
-
-.menu-bar {
-    -fx-background-color: derive(#e8e8e8, 20%);
-}
-
-.menu-bar .label {
-    -fx-font-size: 14pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: black;
-    -fx-opacity: 0.9;
-}
-
-.menu .left-container {
-    -fx-background-color: black;
-}
-
-/*
- * Metro style Push Button
- * Author: Pedro Duque Vieira
- * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
- */
-.button {
-    -fx-padding: 5 22 5 22;
-    -fx-border-color: #e2e2e2;
-    -fx-border-width: 2;
-    -fx-background-radius: 0;
-    -fx-background-color: #1d1d1d;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11pt;
-    -fx-text-fill: #1d1d1d;
-    -fx-background-insets: 0 0 0 0, 0, 1, 2;
-}
-
-.button:hover {
-    -fx-background-color: #3a3a3a;
-}
-
-.button:pressed, .button:default:hover:pressed {
-  -fx-background-color: white;
-  -fx-text-fill: #1d1d1d;
-}
-
-.button:focused {
-    -fx-border-color: white, white;
-    -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
-    -fx-border-insets: 1 1 1 1, 0;
-}
-
-.button:disabled, .button:default:disabled {
-    -fx-opacity: 0.4;
-    -fx-background-color: #1d1d1d;
-    -fx-text-fill: white;
-}
-
-.button:default {
-    -fx-background-color: -fx-focus-color;
-    -fx-text-fill: #ffffff;
-}
-
-.button:default:hover {
-    -fx-background-color: derive(-fx-focus-color, 30%);
-}
-
-.dialog-pane {
-    -fx-background-color: #1d1d1d;
-}
-
-.dialog-pane > *.button-bar > *.container {
-    -fx-background-color: #1d1d1d;
-}
-
-.dialog-pane > *.label.content {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-}
-
-.dialog-pane:header *.header-panel {
-    -fx-background-color: derive(#1d1d1d, 25%);
-}
-
-.dialog-pane:header *.header-panel *.label {
-    -fx-font-size: 18px;
-    -fx-font-style: italic;
-    -fx-fill: white;
-    -fx-text-fill: white;
-}
-
-.scroll-bar {
-    -fx-background-color: derive(#e8e8e8, 20%);
-}
-
-.scroll-bar .thumb {
-    -fx-background-color: derive(#bababa, 50%);
-    -fx-background-insets: 3;
-}
-
-.scroll-bar .increment-button, .scroll-bar .decrement-button {
-    -fx-background-color: transparent;
-    -fx-padding: 0 0 0 0;
-}
-
-.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
-    -fx-shape: " ";
-}
-
-.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
-}
-
-.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
-}
-
-#cardPane {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-}
-
-#commandTypeLabel {
-    -fx-font-size: 11px;
-    -fx-text-fill: #F70D1A;
-}
-
-#commandTextField {
-    -fx-background-color: transparent #383838 transparent #383838;
-    -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
-    -fx-border-insets: 0;
-    -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: black;
-}
-
-#filterField, #personListPanel, #personWebpage {
-    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
-}
-
-#resultDisplay .content {
-    -fx-background-color: transparent, #fcfcfc, transparent, #fcfcfc;
-    -fx-background-radius: 0;
-}
-
-#tags {
-    -fx-hgap: 7;
-    -fx-vgap: 3;
-}
-
-#tags .label {
-    -fx-padding: 1 3 1 3;
-    -fx-border-radius: 2;
-    -fx-background-radius: 2;
-    -fx-font-size: 11;
-}
-
-#tags .teal {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
-}
-
-#tags .red {
-    -fx-text-fill: black;
-    -fx-background-color: red;
-}
-
-#tags .green {
-    -fx-text-fill: black;
-    -fx-background-color: green;
-}
-
-#tags .pink {
-    -fx-text-fill: black;
-    -fx-background-color: pink;
-}
-
-#tags .black {
-    -fx-text-fill: white;
-    -fx-background-color: black;
-}
-
-#tags .purple {
-    -fx-text-fill: white;
-    -fx-background-color: purple;
-}
-
-#tags .brown {
-    -fx-text-fill: white;
-    -fx-background-color: brown;
-}
-
-#tags .grey {
-    -fx-text-fill: black;
-    -fx-background-color: grey;
-}
-
-#tags .blue {
-    -fx-text-fill: white;
-    -fx-background-color: blue;
-}
-
-#tags .orange {
-    -fx-text-fill: black;
-    -fx-background-color: orange;
-
-}
-```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
@@ -1177,6 +916,8 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
 ```
 ###### \resources\view\MapsPanel.fxml
 ``` fxml
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <Pane fx:id="mapView" prefWidth="248.0" VBox.vgrow="ALWAYS" />
 </VBox>

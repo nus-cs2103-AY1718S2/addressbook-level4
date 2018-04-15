@@ -48,15 +48,16 @@ public class AddAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "addAppointment";
     public static final String COMMAND_ALIAS = "aa";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment.\n"
             + "Parameters: "
             + PREFIX_NAME + "APPOINTMENT NAME "
             + "[" + PREFIX_START_TIME + "START TIME] "
             + "[" + PREFIX_START_DATE + "START DATE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_END_TIME + "END TIME] "
-            + "[" + PREFIX_END_DATE + "END DATE]"
-            + "[" + PREFIX_CELEBRITY + "CELEBRITY_INDEX]...\n"
+            + "[" + PREFIX_END_DATE + "END DATE] "
+            + "[" + PREFIX_CELEBRITY + "CELEBRITY_INDEX]... "
+            + "[" + PREFIX_POINT_OF_CONTACT + "POINT_OF_CONTACT_INDEX]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Oscars 2018 "
             + PREFIX_START_TIME + "18:00 "
@@ -65,25 +66,31 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_END_TIME + "20:00 "
             + PREFIX_END_DATE + "23-04-2018 "
             + PREFIX_CELEBRITY + "1 "
-            + PREFIX_CELEBRITY + "2";
+            + PREFIX_CELEBRITY + "2 "
+            + PREFIX_POINT_OF_CONTACT + "3 "
+            + PREFIX_POINT_OF_CONTACT + "4 ";
+
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the application";
 
     public static final String MESSAGE_NOT_IN_COMBINED_CALENDAR = "Can only add appointment when "
             + "viewing combined calendar\n"
             + "currently viewing %1$s's calendar";
-    public static final String MESSAGE_SUCCESS = "Added appointment successfully";
+    public static final String MESSAGE_SUCCESS = "Added appointment: %1$s";
 
     private final Appointment appt;
     private final Set<Index> celebrityIndices;
+    private final Set<Index> pointOfContactIndices;
 
     /**
      * Creates an AddAppointmentCommand with the following parameter
      * @param appt The created appointment
      * @param celebrityIndices The indices of the celebrities who are part of this appointment
      */
-    public AddAppointmentCommand(Appointment appt, Set<Index> celebrityIndices) {
+    public AddAppointmentCommand(Appointment appt, Set<Index> celebrityIndices, Set<Index> pointOfContactIndices) {
         requireNonNull(appt);
         this.appt = appt;
         this.celebrityIndices = celebrityIndices;
+        this.pointOfContactIndices = pointOfContactIndices;
     }
 
 
@@ -95,24 +102,32 @@ public class AddAppointmentCommand extends Command {
                             model.getCurrentCelebCalendarOwner().getName().toString()));
         }
 
-        appt.updateEntries(model.getCelebritiesChosen(celebrityIndices));
-        model.addAppointmentToStorageCalendar(appt);
+        List<Celebrity> celebrityList =  model.getCelebritiesChosen(celebrityIndices);
+        List<Person> pointOfContactList = model.getPointsOfContactChosen(pointOfContactIndices);
+        try {
+            model.addAppointmentToStorageCalendar(appt);
+        } catch (DuplicateAppointmentException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
+        }
+        appt.updateEntries(celebrityList, pointOfContactList);
 
-        // reset calendar view to day view
+        // reset calendar view to day view and set base date to the day when appointment starts
+        model.setBaseDate(appt.getStartDate());
+        EventsCenter.getInstance().post(new ShowCalendarBasedOnDateEvent(appt.getStartDate()));
         model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
         EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
         if (model.getIsListingAppointments()) {
             model.setIsListingAppointments(false);
             EventsCenter.getInstance().post(new ShowCalendarEvent());
         }
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, appt.getTitle()));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof AddAppointmentCommand
-                && appt.equalsValue(((AddAppointmentCommand) other).appt));
+                && appt.equals(((AddAppointmentCommand) other).appt));
     }
 
 
@@ -125,18 +140,19 @@ public class AddAppointmentCommand extends Command {
  */
 public class EditAppointmentCommand extends Command {
 
-    public static final String COMMAND_WORD = "editap";
+    public static final String COMMAND_WORD = "editAppointment";
     public static final String COMMAND_ALIAS = "ea";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits an appointment. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits an appointment.\n"
             + "Parameters: APPOINTMENT_INDEX (must be a positive integer)"
             + "[" + PREFIX_NAME + "APPOINTMENT NAME] "
             + "[" + PREFIX_START_TIME + "START TIME] "
             + "[" + PREFIX_START_DATE + "START DATE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_END_TIME + "END TIME] "
-            + "[" + PREFIX_END_DATE + "END DATE]"
-            + "[" + PREFIX_CELEBRITY + "CELEBRITY_INDEX]...\n"
+            + "[" + PREFIX_END_DATE + "END DATE] "
+            + "[" + PREFIX_CELEBRITY + "CELEBRITY_INDEX]... "
+            + "[" + PREFIX_POINT_OF_CONTACT + "POINT_OF_CONTACT_INDEX]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "Oscars 2018 "
             + PREFIX_START_TIME + "18:00 "
@@ -145,13 +161,19 @@ public class EditAppointmentCommand extends Command {
             + PREFIX_END_TIME + "20:00 "
             + PREFIX_END_DATE + "23-04-2018 "
             + PREFIX_CELEBRITY + "1 "
-            + PREFIX_CELEBRITY + "2";
+            + PREFIX_CELEBRITY + "2 "
+            + PREFIX_POINT_OF_CONTACT + "3 "
+            + PREFIX_POINT_OF_CONTACT + "4 ";
 
-    public static final String MESSAGE_SUCCESS = "Edited appointment successfully";
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the application,"
+            + " or the edited fields are the same as the original.";
+    public static final String MESSAGE_SUCCESS = "Edited appointment: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided";
 
     private final Index appointmentIndex;
     private final EditAppointmentDescriptor editAppointmentDescriptor;
+
+    private Appointment appointmentToEdit;
 
     public EditAppointmentCommand(Index appointmentIndex, EditAppointmentDescriptor editAppointmentDescriptor) {
         requireNonNull(appointmentIndex);
@@ -163,33 +185,49 @@ public class EditAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        Appointment appointmentToEdit = model.getChosenAppointment(appointmentIndex.getZeroBased());
-        Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
-
-        // either use existing celebrity list or get new one
-        List<Celebrity> celebrityList = (editAppointmentDescriptor.getCelebrityIndices().isPresent())
-                ? model.getCelebritiesChosen(editAppointmentDescriptor.getCelebrityIndices().get())
-                : appointmentToEdit.getCelebrities();
-
-        appointmentToEdit.removeAppointment();
-        editedAppointment.updateEntries(celebrityList);
-        model.addAppointmentToStorageCalendar(editedAppointment);
-
-        // reset calendar view to day view
-        model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
-        EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
-        if (model.getIsListingAppointments()) {
-            model.setIsListingAppointments(false);
-            EventsCenter.getInstance().post(new ShowCalendarEvent());
+        if (!model.getIsListingAppointments()) {
+            throw new CommandException(Messages.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS));
+        try {
+            appointmentToEdit = model.getChosenAppointment(appointmentIndex.getZeroBased());
+            Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
+
+            // either use existing celebrity list or get new one
+            List<Celebrity> celebrityList = (editAppointmentDescriptor.getCelebrityIndices().isPresent())
+                    ? model.getCelebritiesChosen(editAppointmentDescriptor.getCelebrityIndices().get())
+                    : appointmentToEdit.getCelebrities();
+
+            List<Person> pointOfContactList = (editAppointmentDescriptor.getPointOfContactIndices().isPresent())
+                    ? model.getPointsOfContactChosen(editAppointmentDescriptor.getPointOfContactIndices().get())
+                    : appointmentToEdit.getPointOfContactList();
+            model.addAppointmentToStorageCalendar(editedAppointment);
+            appointmentToEdit.removeAppointment();
+            editedAppointment.updateEntries(celebrityList, pointOfContactList);
+
+            // reset calendar view to day view
+            model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
+            EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+            if (model.getIsListingAppointments()) {
+                model.setIsListingAppointments(false);
+                EventsCenter.getInstance().post(new ShowCalendarEvent());
+            }
+            return new CommandResult(String.format(MESSAGE_SUCCESS, editedAppointment.getTitle()));
+        } catch (IndexOutOfBoundsException iobe) {
+            throw new CommandException(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        } catch (ParseException pe) {
+            throw new CommandException(MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME);
+        } catch (DuplicateAppointmentException dae) {
+            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
+        }
+
     }
 
     /**
      * Creates and returns a {@code Appointment} with the details of {@code apptToEdit}
      * edited with {@code ead}.
      */
-    public static Appointment createEditedAppointment(Appointment apptToEdit, EditAppointmentDescriptor ead) {
+    public static Appointment createEditedAppointment(Appointment apptToEdit, EditAppointmentDescriptor ead)
+            throws ParseException {
         assert apptToEdit != null;
 
         String apptName = ead.getAppointmentName().orElse(apptToEdit.getTitle());
@@ -199,6 +237,9 @@ public class EditAppointmentCommand extends Command {
         LocalDate endDate = ead.getEndDate().orElse(apptToEdit.getEndDate());
         MapAddress location = ead.getLocation().orElse(apptToEdit.getMapAddress());
 
+        if (isDateTimeNotValid(startDate, endDate, startTime, endTime)) {
+            throw new ParseException(MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME);
+        }
         return new Appointment(apptName, startTime, startDate, location, endTime, endDate);
     }
 
@@ -214,6 +255,11 @@ public class EditAppointmentCommand extends Command {
         private LocalDate endDate;
         private MapAddress location;
         private Set<Index> celebrityIndices;
+        private Set<Index> pointOfContactIndices;
+
+        // for JUnit Tests
+        private List<Long> celebIds;
+        private List<Long> pointOfContactIds;
 
         public EditAppointmentDescriptor() {}
 
@@ -229,11 +275,14 @@ public class EditAppointmentCommand extends Command {
             setEndTime(toCopy.endTime);
             setEndDate(toCopy.endDate);
             setCelebrityIndices(toCopy.celebrityIndices);
+            setPointOfContactIndices(toCopy.pointOfContactIndices);
+            setCelebIds(toCopy.celebIds);
+            setPointOfContactIds(toCopy.pointOfContactIds);
         }
 
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.appointmentName, this.startTime, this.startDate,
-                    this.endTime, this.endDate, this.location, this.celebrityIndices);
+                    this.endTime, this.endDate, this.location, this.celebrityIndices, this.pointOfContactIndices);
         }
 
         public void setAppointmentName(String appointmentName) {
@@ -301,6 +350,99 @@ public class EditAppointmentCommand extends Command {
             return (celebrityIndices != null) ? Optional.of(Collections.unmodifiableSet(celebrityIndices))
                                               : Optional.empty();
         }
+
+        /**
+         * Sets {@code pointOfContactIndices} to this object's {@code pointOfContactIndices}.
+         * A defensive copy of {@code pointOfContactIndices} is used internally.
+         */
+        public void setPointOfContactIndices(Set<Index> pointOfContactIndices) {
+            this.pointOfContactIndices = (pointOfContactIndices != null) ? new HashSet<>(pointOfContactIndices) : null;
+        }
+
+        /**
+         * Returns an unmodifiable points of contact set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code pointOfContactIndices} is null.
+         */
+        public Optional<Set<Index>> getPointOfContactIndices() {
+            return (pointOfContactIndices != null) ? Optional.of(Collections.unmodifiableSet(pointOfContactIndices))
+                    : Optional.empty();
+        }
+
+        /**
+         * Sets {@code celebIds} to this object's {@code celebIds}.
+         * A defensive copy of {@code celebIds} is used internally.
+         */
+        public void setCelebIds(List<Long> celebIds) {
+            this.celebIds = (celebIds != null) ? new ArrayList<>(celebIds) : null;
+        }
+
+        /**
+         * Returns an unmodifiable celebrities id list, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code celebIds} is null.
+         */
+        public Optional<List<Long>> getCelebIds() {
+            return (this.celebIds != null)
+                    ? Optional.of(Collections.unmodifiableList(celebIds))
+                    : Optional.empty();
+        }
+
+        /**
+         * Sets {@code pointOfContactIds} to this object's {@code pointOfContactIds}.
+         * A defensive copy of {@code pointOfContactIds} is used internally.
+         */
+        public void setPointOfContactIds(List<Long> pointOfContactIds) {
+            this.pointOfContactIds = (pointOfContactIds != null) ? new ArrayList<>(pointOfContactIds) : null;
+        }
+
+        /**
+         * Returns an unmodifiable points of contact id list, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code pointOfContactIds} is null.
+         */
+        public Optional<List<Long>> getPointOfContactIds() {
+            return (this.pointOfContactIds != null)
+                    ? Optional.of(Collections.unmodifiableList(pointOfContactIds))
+                    : Optional.empty();
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other == this) {
+                return true;
+            } else if (!(other instanceof EditAppointmentDescriptor)) {
+                return false;
+            } else {
+
+                EditAppointmentDescriptor e = (EditAppointmentDescriptor) other;
+
+                return getAppointmentName().equals(e.getAppointmentName())
+                        && getStartDate().equals(e.getStartDate())
+                        && getEndDate().equals(e.getEndDate())
+                        && getStartTime().equals(e.getStartTime())
+                        && getEndTime().equals(e.getEndTime())
+                        && getLocation().equals(e.getLocation())
+                        && getCelebrityIndices().equals(e.getCelebrityIndices())
+                        && getPointOfContactIndices().equals(e.getPointOfContactIndices())
+                        && getCelebIds().equals(e.getCelebIds())
+                        && getPointOfContactIndices().equals(e.getPointOfContactIndices());
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        } else if (!(other instanceof EditAppointmentCommand)) {
+            return false;
+        } else {
+            EditAppointmentCommand e = (EditAppointmentCommand) other;
+            return appointmentIndex.equals(e.appointmentIndex)
+                    && editAppointmentDescriptor.equals(e.editAppointmentDescriptor)
+                    && Objects.equals(appointmentToEdit, e.appointmentToEdit);
+        }
     }
 
 }
@@ -314,27 +456,32 @@ public class ListAppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "listAppointment";
     public static final String COMMAND_ALIAS = "la";
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM[-yyyy]");
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Lists all appointments in a celebrity calendar within a certain date range. ";
+            + ": Lists appointments of all celebrities within the specified date range."
+            + "Parameter: [START_DATE END_DATE] (includes the space in between."
+            + " lists all appointments when no range specified.)"
+            + "START_DATE and END_DATE should be in DD-MM-YYYY or DD-MM format, including the dash."
+            + "When latter is entered, YYYY will take the current year.\n"
+            + "Example: " + COMMAND_WORD + " 23-04 01-05";
 
-    public static final String MESSAGE_SUCCESS = "Listed appointments successfully.";
+    public static final String MESSAGE_INVALID_DATE_RANGE = "Start date cannot be after end date";
+    public static final String MESSAGE_SUCCESS = "Listed appointments from %s to %s successfully.";
 
-    public static final String MESSAGE_NO_APPTS_ERROR = "No appointments to list!";
+    public static final String MESSAGE_NO_APPTS_ERROR = "No appointments to list";
 
-    private static LocalDate startDate;
-    private static LocalDate endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public ListAppointmentCommand() {
+    public ListAppointmentCommand() {}
 
-    }
+    public ListAppointmentCommand(LocalDate startDateInput, LocalDate endDateInput) {
+        requireNonNull(startDateInput);
+        requireNonNull(endDateInput);
 
-    public ListAppointmentCommand(LocalDate startDate, LocalDate endDate) {
-        requireNonNull(startDate);
-        requireNonNull(endDate);
-
-        this.startDate = startDate;
-        this.endDate = endDate;
+        startDate = startDateInput;
+        endDate = endDateInput;
     }
 
     @Override
@@ -342,24 +489,28 @@ public class ListAppointmentCommand extends Command {
         if (!model.getStorageCalendar().hasAtLeastOneAppointment()) {
             throw new CommandException(MESSAGE_NO_APPTS_ERROR);
         }
-        startDate = model.getStorageCalendar().getEarliestDate();
-        endDate = model.getStorageCalendar().getLatestDate();
+
+        if (startDate == null && endDate == null) {
+            startDate = model.getStorageCalendar().getEarliestDate();
+            endDate = model.getStorageCalendar().getLatestDate();
+        }
 
         model.setIsListingAppointments(true);
         List<Appointment> newAppointmentList =
                 model.getStorageCalendar().getAppointmentsWithinDate(startDate, endDate);
-        model.setAppointmentList(newAppointmentList);
+        model.setCurrentlyDisplayedAppointments(newAppointmentList);
         EventsCenter.getInstance().post(new ShowAppointmentListEvent(newAppointmentList));
 
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(
+                String.format(MESSAGE_SUCCESS, startDate.format(FORMATTER), endDate.format(FORMATTER)));
     }
 
-    public static LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public static LocalDate getStartDate () {
-        return startDate;
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ListAppointmentCommand // instanceof handles nulls
+                && Objects.equals(startDate, ((ListAppointmentCommand) other).startDate)
+                && Objects.equals(endDate, ((ListAppointmentCommand) other).endDate));
     }
 }
 ```
@@ -378,7 +529,8 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
     @Override
     public AddAppointmentCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_TIME,
-                PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE, PREFIX_CELEBRITY);
+                PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE, PREFIX_CELEBRITY,
+                PREFIX_POINT_OF_CONTACT);
 
         if (!arePrefixesPresent(argMultiMap, PREFIX_NAME)
                 || !argMultiMap.getPreamble().isEmpty()) {
@@ -394,16 +546,18 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             Optional<LocalDate> endDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE));
             Optional<MapAddress> locationInput = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_LOCATION));
             Set<Index> celebrityIndices = ParserUtil.parseIndices(argMultiMap.getAllValues(PREFIX_CELEBRITY));
+            Set<Index> pointOfContactIndices = ParserUtil
+                    .parseIndices(argMultiMap.getAllValues(PREFIX_POINT_OF_CONTACT));
 
             MapAddress location = null;
             LocalTime startTime = LocalTime.now();
             LocalDate startDate = LocalDate.now();
-            LocalTime endTime = LocalTime.now();
+            LocalTime endTime = LocalTime.now().plusMinutes(15);
             LocalDate endDate = LocalDate.now();
 
             if (startTimeInput.isPresent()) {
                 startTime = startTimeInput.get();
-                endTime = startTimeInput.get();
+                endTime = startTimeInput.get().plusMinutes(15);
             }
             if (endTimeInput.isPresent()) {
                 endTime = endTimeInput.get();
@@ -419,8 +573,13 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
                 location = locationInput.get();
             }
 
+            // Checking if date and time take in correct values
+            if (isDateTimeNotValid(startDate, endDate, startTime, endTime)) {
+                throw new ParseException(MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME);
+            }
+
             Appointment appt = new Appointment(appointmentName, startTime, startDate, location, endTime, endDate);
-            return new AddAppointmentCommand(appt, celebrityIndices);
+            return new AddAppointmentCommand(appt, celebrityIndices, pointOfContactIndices);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -442,7 +601,8 @@ public class EditAppointmentCommandParser implements Parser<EditAppointmentComma
     @Override
     public EditAppointmentCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_TIME,
-                PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE, PREFIX_CELEBRITY);
+                PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE, PREFIX_CELEBRITY,
+                PREFIX_POINT_OF_CONTACT);
 
         Index appointmentIndex;
 
@@ -464,8 +624,10 @@ public class EditAppointmentCommandParser implements Parser<EditAppointmentComma
             ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE)).ifPresent(editApptDescriptor::setEndDate);
             ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_LOCATION))
                     .ifPresent(editApptDescriptor::setLocation);
-            parseCelebrityIndicesForEditAppointment(argMultiMap.getAllValues(PREFIX_CELEBRITY))
+            parseIndicesForEditAppointment(argMultiMap.getAllValues(PREFIX_CELEBRITY))
                     .ifPresent(editApptDescriptor::setCelebrityIndices);
+            parseIndicesForEditAppointment(argMultiMap.getAllValues(PREFIX_POINT_OF_CONTACT))
+                    .ifPresent(editApptDescriptor::setPointOfContactIndices);
 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -479,20 +641,20 @@ public class EditAppointmentCommandParser implements Parser<EditAppointmentComma
     }
 
     /**
-     * Parses {@code Collection<String> celebrityIndices} into a {@code Set<Index>}
-     * if {@code celebrityIndices} is non-empty. If {@code celebrityIndices} contain only one element
-     * which is an empty string, it will be parsed into a {@code Set<Celebrity>} containing zero celebrities.
+     * Parses {@code Collection<String> indices} into a {@code Set<Index>}
+     * if {@code indices} is non-empty. If {@code indices} contain only one element
+     * which is an empty string, it will be parsed into a {@code Set<Index>} containing zero indices.
      */
-    private Optional<Set<Index>> parseCelebrityIndicesForEditAppointment(Collection<String> celebrityIndices)
+    private Optional<Set<Index>> parseIndicesForEditAppointment(Collection<String> indices)
         throws IllegalValueException {
-        assert celebrityIndices != null;
+        assert indices != null;
 
-        if (celebrityIndices.isEmpty()) {
+        if (indices.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> celebrityIndexSet = (celebrityIndices.size() == 1 && celebrityIndices.contains(""))
-                ? Collections.emptySet() : celebrityIndices;
-        return Optional.of(ParserUtil.parseIndices(celebrityIndexSet));
+        Collection<String> indexSet = (indices.size() == 1 && indices.contains(""))
+                ? Collections.emptySet() : indices;
+        return Optional.of(ParserUtil.parseIndices(indexSet));
     }
 }
 ```
@@ -615,10 +777,13 @@ public class Appointment extends Entry {
 
 
     // Minimum duration for an appointment is at least 1 minute
-    private static final Duration minDuration = Duration.ofMinutes(1);
+    private static final Duration minDuration = Duration.ofMinutes(15);
 
-    private List<Entry> childEntryList;
-    private List<Celebrity> celebrityList;
+    private final List<Entry> childEntryList;
+    private final List<Celebrity> celebrityList;
+    private final List<Long> celebrityIds;
+    private final List<Person> pointOfContactList;
+    private final List<Long> pointOfContactIds;
     private MapAddress mapAddress;
 
     public Appointment(String title, LocalTime startTime, LocalDate startDate,
@@ -630,10 +795,11 @@ public class Appointment extends Entry {
         requireNonNull(endDate);
 
         this.setMinimumDuration(minDuration);
-        this.changeStartTime(startTime);
         this.changeStartDate(startDate);
-        this.changeEndTime(endTime);
         this.changeEndDate(endDate);
+        this.changeStartTime(startTime);
+        this.changeEndTime(endTime);
+
 
         this.mapAddress = mapAddress;
         if (mapAddress == null) {
@@ -643,22 +809,61 @@ public class Appointment extends Entry {
         }
         this.childEntryList = new ArrayList<>();
         this.celebrityList = new ArrayList<>();
+        this.celebrityIds = new ArrayList<>();
+        this.pointOfContactList = new ArrayList<>();
+        this.pointOfContactIds = new ArrayList<>();
     }
 
     public Appointment(Appointment appointment) {
         this.setTitle(appointment.getTitle());
         this.changeStartDate(appointment.getStartDate());
-        this.changeStartTime(appointment.getStartTime());
         this.changeEndDate(appointment.getEndDate());
+        this.changeStartTime(appointment.getStartTime());
         this.changeEndTime(appointment.getEndTime());
         this.mapAddress = appointment.getMapAddress();
 
         this.childEntryList = appointment.getChildEntryList();
         this.celebrityList = appointment.getCelebrities();
+        this.celebrityIds = appointment.getCelebIds();
+        this.pointOfContactList = appointment.getPointOfContactList();
+        this.pointOfContactIds = appointment.getPointOfContactIds();
+    }
+
+    /**
+     * Checks if the start date/time is NOT at least 15 min before end date/time
+     */
+    public static boolean isDateTimeNotValid(LocalDate startDate, LocalDate endDate, LocalTime startTime,
+                                             LocalTime endTime) {
+        LocalDateTime sdt = LocalDateTime.of(startDate, startTime);
+        LocalDateTime edt = LocalDateTime.of(endDate, endTime);
+
+        return edt.isBefore(sdt.plusMinutes(15));
     }
 
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
+    }
+
+    public void setCelebIds(List<Long> ids) {
+        celebrityIds.clear();
+        celebrityIds.addAll(ids);
+    }
+
+    public List<Long> getCelebIds() {
+        return celebrityIds;
+    }
+
+    public List<Person> getPointOfContactList() {
+        return pointOfContactList;
+    }
+
+    public List<Long> getPointOfContactIds() {
+        return pointOfContactIds;
+    }
+
+    public void setPointOfContactIds(List<Long> ids) {
+        pointOfContactIds.clear();
+        pointOfContactIds.addAll(ids);
     }
 
     @Override
@@ -672,14 +877,6 @@ public class Appointment extends Entry {
         }
 
         Appointment otherAppt = (Appointment) other;
-        return Objects.equals(otherAppt.getId(), this.getId());
-    }
-
-    /**
-     * Checks if the parameters (date, time, title and location of two appointments are equal.
-     */
-    public boolean equalsValue (Object other) {
-        Appointment otherAppt = (Appointment) other;
         return Objects.equals(otherAppt.getTitle(), this.getTitle())
                 && Objects.equals(otherAppt.getMapAddress(), this.getMapAddress())
                 && (otherAppt.getStartTime().getHour() == this.getStartTime().getHour())
@@ -688,22 +885,51 @@ public class Appointment extends Entry {
                 && (otherAppt.getEndTime().getHour() == this.getEndTime().getHour())
                 && (otherAppt.getEndTime().getMinute() == this.getEndTime().getMinute())
                 && Objects.equals(otherAppt.getEndDate(), this.getEndDate());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getMapAddress(), getStartTime().getHour(), getEndTime().getHour(),
+                getStartDate(), getEndDate(), getStartTime().getMinute(), getEndTime().getMinute());
+    }
+
+    /**
+     * Resets the stores celebrities and points of contacts, along with their associated
+     * information stored in the Appointment object
+     */
+    public void updateEntries(List<Celebrity> celebrities, List<Person> pointsOfContact) {
+
+        updateCelebEntries(celebrities);
+        updatePointsOfContacts(pointsOfContact);
     }
 
     /**
      * Removes old child entries and creates a new child entry for every celebrity
-     * and then stores it in childEntryList.
+     * and then stores it in childEntryList. Also stores the id of each celeb and the
+     * celebrities themselves
      */
-    public void updateEntries(List<Celebrity> celebrities) {
+    private void updateCelebEntries(List<Celebrity> celebrities) {
         clearChildEntries();
         celebrityList.clear();
         childEntryList.clear();
-
+        celebrityIds.clear();
         for (Celebrity celebrity : celebrities) {
             childEntryList.add(createChildEntry(celebrity));
+            celebrityIds.add(celebrity.getId());
         }
-        celebrityList = new ArrayList<>(celebrities);
+        celebrityList.addAll(celebrities);
+    }
+
+    /**
+     * Update points of contact list stored and their ids.
+     */
+    private void updatePointsOfContacts(List<Person> pointsOfContact) {
+        pointOfContactList.clear();
+        pointOfContactIds.clear();
+        for (Person p : pointsOfContact) {
+            pointOfContactIds.add(p.getId());
+        }
+        pointOfContactList.addAll(pointsOfContact);
     }
 
     /**
@@ -715,10 +941,10 @@ public class Appointment extends Entry {
 
     /**
      * Sets old child entries to the new entries.
-     * @param newChildEntryList
      */
     public void setChildEntries(List<Entry> newChildEntryList) {
-        childEntryList = newChildEntryList;
+        childEntryList.clear();
+        childEntryList.addAll(newChildEntryList);
     }
 
     public List<Entry> getChildEntryList() {
@@ -768,7 +994,7 @@ public class Appointment extends Entry {
     public MapAddress getMapAddress() {
         return mapAddress;
     }
-}
+
 ```
 ###### \java\seedu\address\model\calendar\CelebCalendar.java
 ``` java
@@ -790,8 +1016,17 @@ public class CelebCalendar extends Calendar {
  */
 public class StorageCalendar extends Calendar {
 
-    public StorageCalendar(String title) {
-        super(title);
+    private static String storageCalendarName = "Storage Calendar";
+
+    public StorageCalendar() {
+        super(storageCalendarName);
+    }
+
+    public StorageCalendar(StorageCalendar cal) {
+        super(storageCalendarName);
+        for (Appointment a : cal.getAllAppointments()) {
+            this.addEntry(new Appointment(a));
+        }
     }
 
     public boolean hasAtLeastOneAppointment() {
@@ -839,6 +1074,16 @@ public class StorageCalendar extends Calendar {
         return appointmentsWithinDate;
 
     }
+
+    /**
+     * Checks if appointment already exists in the model, and if it doesnt adds it to the calendar
+     */
+    public void addAppointment(Appointment appt) throws DuplicateAppointmentException {
+        if (getAllAppointments().contains(appt)) {
+            throw new DuplicateAppointmentException();
+        }
+        this.addEntry(appt);
+    }
 }
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -862,13 +1107,18 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
     private final StorageCalendar storageCalendar;
+    private List<Appointment> appointments;
 
     // attributes related to calendarPanel status
     private String currentCelebCalendarViewPage;
     private Celebrity currentCelebCalendarOwner;
-    private List<Appointment> appointments;
+    private List<Appointment> currentlyDisplayedAppointments;
     private boolean isListingAppointments;
     private LocalDate baseDate;
+
+    public ModelManager() {
+        this(new AddressBook(), new StorageCalendar(), new UserPrefs());
+    }
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -883,21 +1133,18 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
 
         celebCalendarSource = new CalendarSource(CELEB_CALENDAR_SOURCE_NAME);
-        initializeCelebCalendarSource(celebCalendarSource);
+        resetCelebCalendars();
 
-        this.storageCalendar = storageCalendar;
+        this.storageCalendar = new StorageCalendar(storageCalendar);
         appointments = getStoredAppointmentList();
+        associateAppointmentsWithCelebritiesAndPointsOfContact();
 
         currentCelebCalendarViewPage = DAY_VIEW_PAGE;
         currentCelebCalendarOwner = null;
+        currentlyDisplayedAppointments = new ArrayList<>();
         isListingAppointments = false;
         baseDate = LocalDate.now();
     }
-
-    public ModelManager() {
-        this(new AddressBook(), new StorageCalendar("Storage Calendar"), new UserPrefs());
-    }
-
 
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -933,6 +1180,18 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void associateAppointmentsWithCelebritiesAndPointsOfContact() {
+        List<Celebrity> celebrityList;
+        List<Person> pointOfContactList;
+        appointments = getStoredAppointmentList();
+        for (Appointment a : appointments) {
+            celebrityList = getCelebritiesFromId(a.getCelebIds());
+            pointOfContactList = getPointsOfContactFromId(a.getPointOfContactIds());
+            a.updateEntries(celebrityList, pointOfContactList);
+        }
+    }
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -952,69 +1211,42 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public String getCurrentCelebCalendarViewPage() {
-        return currentCelebCalendarViewPage;
-    }
-
-    @Override
-    public Celebrity getCurrentCelebCalendarOwner() {
-        return currentCelebCalendarOwner;
-    }
-
-    @Override
     public List<Appointment> getAppointmentList() {
         return this.appointments;
     }
 
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
     @Override
-    public void setAppointmentList(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
-
-    @Override
-    public LocalDate getBaseDate() {
-        return this.baseDate;
-    }
-
-    @Override
-    public  void setBaseDate(LocalDate date) {
-        this.baseDate = date;
-    }
-
-    @Override
-    public Appointment getChosenAppointment(int chosenIndex) throws CommandException {
-        if (!isListingAppointments) {
-            throw new CommandException(MESSAGE_NOT_LISTING_APPOINTMENTS);
+    public Appointment getChosenAppointment(int chosenIndex) throws IndexOutOfBoundsException {
+        if (chosenIndex < 0 || chosenIndex >= currentlyDisplayedAppointments.size()) {
+            throw new IndexOutOfBoundsException();
         }
-        LocalDate startDate = ListAppointmentCommand.getStartDate();
-        LocalDate endDate = ListAppointmentCommand.getEndDate();
-        StorageCalendar storageCalendar = getStorageCalendar();
-        List<Appointment> listOfAppointment = storageCalendar.getAppointmentsWithinDate(startDate, endDate);
-        if (chosenIndex < 0 || chosenIndex >= listOfAppointment.size()) {
-            throw new CommandException(INVALID_INDEX_CHOSEN);
-        }
-        return listOfAppointment.get(chosenIndex);
+        return currentlyDisplayedAppointments.get(chosenIndex);
     }
 
     @Override
-    public void addAppointmentToStorageCalendar(Appointment appt) {
-        getStorageCalendar().addEntry(appt);
+    public void addAppointmentToStorageCalendar(Appointment appt) throws DuplicateAppointmentException {
+        storageCalendar.addAppointment(appt);
+        appointments.add(appt);
         indicateAppointmentListChanged();
     }
 
     @Override
-    public void deleteAppointmentFromStorageCalendar(int index) throws CommandException {
+    public Appointment deleteAppointment(int index) throws IndexOutOfBoundsException {
         Appointment apptToDelete = getChosenAppointment(index);
         apptToDelete.removeAppointment();
+        removeAppointmentFromInternalList(index);
+        currentlyDisplayedAppointments.remove(apptToDelete);
         indicateAppointmentListChanged();
+        return apptToDelete;
     }
 
-    @Override
-    public Appointment removeAppointmentFromInternalList(int index) {
-        return getAppointmentList().remove(index);
-
+    /** Makes changes to model's internal appointment list */
+    private void removeAppointmentFromInternalList(int index) {
+        getAppointmentList().remove(index);
     }
-
 
 
     //=========== Filtered Person List Accessors =============================================================
@@ -1034,6 +1266,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    @Override
     public List<Celebrity> getCelebritiesChosen(Set<Index> indices) throws CommandException {
         List<Celebrity> celebrities = new ArrayList<>();
         for (Index index : indices) {
@@ -1045,13 +1278,33 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Celebrity getCelebrityChosen(Index index) throws CommandException {
         int zeroBasedIndex = index.getZeroBased();
-        List<Person> personList = getFilteredPersonList();
-        if (zeroBasedIndex >= personList.size()) {
+        if (zeroBasedIndex >= filteredPersons.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        } else if (!personList.get(zeroBasedIndex).isCelebrity()) {
+        } else if (!filteredPersons.get(zeroBasedIndex).isCelebrity()) {
             throw new CommandException(Messages.MESSAGE_NOT_CELEBRITY_INDEX);
         } else {
-            return (Celebrity) personList.get(zeroBasedIndex);
+            return (Celebrity) filteredPersons.get(zeroBasedIndex);
+        }
+    }
+
+    @Override
+    public List<Person> getPointsOfContactChosen(Set<Index> indices) throws CommandException {
+        List<Person> pointsOfContact = new ArrayList<>();
+        for (Index index : indices) {
+            pointsOfContact.add(getPointOfContactChosen(index));
+        }
+        return pointsOfContact;
+    }
+
+    @Override
+    public Person getPointOfContactChosen(Index index) throws CommandException {
+        int zeroBasedIndex = index.getZeroBased();
+        if (zeroBasedIndex >= filteredPersons.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } else if (filteredPersons.get(zeroBasedIndex).isCelebrity()) {
+            throw new CommandException(Messages.MESSAGE_NOT_POINT_OF_CONTACT_INDEX);
+        } else {
+            return filteredPersons.get(zeroBasedIndex);
         }
     }
 
@@ -1070,18 +1323,71 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && isListingAppointments == other.isListingAppointments
+                && getStoredAppointmentSet().equals(other.getStoredAppointmentSet());
+    }
+    //=========== Private inner methods =============================================================
+
+    /**
+     * Returns all stored appointments in a set
+     */
+    private Set<Appointment> getStoredAppointmentSet() {
+        return new HashSet<>(getStoredAppointmentList());
     }
 
     /**
      * Populates our CelebCalendar CalendarSource by creating a calendar for every celebrity in our addressbook
      */
-    private void initializeCelebCalendarSource(CalendarSource calSource) {
-        requireNonNull(addressBook);
-        ArrayList<Celebrity> celebrities = addressBook.getCelebritiesList();
-        for (Celebrity celebrity : celebrities) {
-            calSource.getCalendars().add(celebrity.getCelebCalendar());
+    private void resetCelebCalendars() {
+        // reset calendars in celebCalendarSource to the restored calendars
+        List<Celebrity> celebrities = addressBook.getCelebritiesList();
+        List<Calendar> calendars = new ArrayList<>();
+
+        for (Celebrity celebrity: celebrities) {
+            calendars.add(celebrity.getCelebCalendar());
         }
+        celebCalendarSource.getCalendars().clear();
+        celebCalendarSource.getCalendars().addAll(calendars);
+    }
+
+    private List<Person> getPointsOfContactFromId(List<Long> pointOfContactIds) {
+        List<Person> pointsOfContact = new ArrayList<>();
+        for (long pointOfContactId : pointOfContactIds) {
+            for (Person p : addressBook.getPersonList()) {
+                if (!p.isCelebrity() && (p.getId() == pointOfContactId)) {
+                    pointsOfContact.add(p);
+                    break;
+                }
+            }
+        }
+        return pointsOfContact;
+    }
+
+    /**
+     * Gets the celebrities based on their ids from our person list
+     */
+    private List<Celebrity> getCelebritiesFromId(List<Long> celebrityIds) {
+        List<Celebrity> celebrities = new ArrayList<>();
+        for (long celebId : celebrityIds) {
+            for (Person p : addressBook.getPersonList()) {
+                if (p.isCelebrity() && (p.getId() == celebId)) {
+                    celebrities.add((Celebrity) p);
+                    break;
+                }
+            }
+        }
+        return celebrities;
+    }
+
+    /**
+     * Raises an event to indicate the addressbook has changed
+     * and reassoicates appointments with relevant celebrities and points of contact
+     **/
+    private void indicateAddressBookChanged() {
+        resetCelebCalendars();
+        associateAppointmentsWithCelebritiesAndPointsOfContact();
+        raise(new AddressBookChangedEvent(addressBook));
     }
 
 }
@@ -1092,6 +1398,8 @@ public class ModelManager extends ComponentManager implements Model {
  *  Child class of Person for those who are tagged celebrities
  */
 public class Celebrity extends Person {
+    // for creation of different style for each celebrity calendar to differentiate
+    private static final Random random = new Random();
 
     private CelebCalendar celebCalendar;
 
@@ -1099,8 +1407,9 @@ public class Celebrity extends Person {
      * Every field must be present and not null.
      */
     public Celebrity(Person celeb) {
-        super(celeb.getName(), celeb.getPhone(), celeb.getEmail(), celeb.getAddress(), celeb.getTags());
-        this.celebCalendar = new CelebCalendar(this.getName().fullName);
+        super(celeb.getName(), celeb.getPhone(), celeb.getEmail(), celeb.getAddress(), celeb.getTags(), celeb.getId());
+        celebCalendar = new CelebCalendar(this.getName().fullName);
+        celebCalendar.setStyle(Calendar.Style.getStyle(random.nextInt(7)));
     }
 
     public CelebCalendar getCelebCalendar() {
@@ -1109,18 +1418,28 @@ public class Celebrity extends Person {
 
     /**
      * Sets the celebCalendar to another one.
-     * @param newCelebCalendar
      */
     public void setCelebCalendar(CelebCalendar newCelebCalendar) {
         this.celebCalendar = newCelebCalendar;
     }
 
     /**
-     * @param celeb
-     * @return true if input celeb is a copy of this celebrity
+     * Returns if input celeb is a copy of this celebrity
      */
     public boolean isCopyOf(Celebrity celeb) {
         return super.equals(celeb);
+    }
+}
+```
+###### \java\seedu\address\model\person\exceptions\DuplicateAppointmentException.java
+``` java
+
+/**
+ * Signals that the operation will result in duplicate Appointment objects.
+ */
+public class DuplicateAppointmentException extends DuplicateDataException {
+    public DuplicateAppointmentException() {
+        super("Operation would result in duplicate appointments");
     }
 }
 ```
@@ -1159,6 +1478,9 @@ public class AppointmentCard extends UiPart<Region> {
     private Label celebrities;
 
     @FXML
+    private Label pointsOfContact;
+
+    @FXML
     private Label id;
 
     public AppointmentCard(Appointment appt, int displayedIndex) {
@@ -1172,6 +1494,7 @@ public class AppointmentCard extends UiPart<Region> {
         endDate.setText("End date: " + appt.getEndDate().format(Appointment.DATE_FORMAT));
         appointmentLocation.setText(getLocation(appt));
         celebrities.setText(getCelebrities(appt));
+        pointsOfContact.setText(getPointsOfContact(appt));
     }
 
     private static String getLocation(Appointment appt) {
@@ -1195,6 +1518,20 @@ public class AppointmentCard extends UiPart<Region> {
             return sb.substring(0, sb.length() - 2);
         }
 
+    }
+
+    private static String getPointsOfContact(Appointment appt) {
+        List<Person> pointsOfContact = appt.getPointOfContactList();
+        if (pointsOfContact.size() == 0) {
+            return "No points of contact for this appointment.";
+        } else {
+            StringBuilder sb = new StringBuilder("Points of contact: ");
+            for (Person p :pointsOfContact) {
+                sb.append(p.getName().fullName);
+                sb.append(", ");
+            }
+            return sb.substring(0, sb.length() - 2);
+        }
     }
 
     @Override
@@ -1320,7 +1657,7 @@ public class CalendarPanel extends UiPart<Region> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
-
+        celebCalendarView.setLayout(DateControl.Layout.SWIMLANE);
         hideButtons();
     }
 
@@ -1380,6 +1717,7 @@ public class CalendarPanel extends UiPart<Region> {
 ```
 ###### \resources\view\AppointmentListCard.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -1387,7 +1725,6 @@ public class CalendarPanel extends UiPart<Region> {
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-
 <HBox id="appointmentCardPane" fx:id="appointmentCardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
@@ -1412,24 +1749,25 @@ public class CalendarPanel extends UiPart<Region> {
             <Label fx:id="endDate" styleClass="cell_small_label" text="\$endDate" />
             <Label fx:id="appointmentLocation" styleClass="cell_small_label" text="\$location" />
             <Label fx:id="celebrities" styleClass="cell_small_label" text="\$celebrities" />
+            <Label fx:id="pointsOfContact" styleClass="cell_small_label" text="\$pointsOfContact" />
         </VBox>
     </GridPane>
 </HBox>
 ```
 ###### \resources\view\AppointmentListWindow.fxml
 ``` fxml
+
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
-
 <VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <ListView fx:id="appointmentListView" prefWidth="248.0" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
 ###### \resources\view\CalendarPanel.fxml
 ``` fxml
+
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
-
 <StackPane xmlns:fx="http://javafx.com/fxml/1">
   <WebView fx:id="calendarViewPane"/>
 </StackPane>

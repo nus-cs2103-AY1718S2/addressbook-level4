@@ -8,11 +8,18 @@
 
 == Overview
 
-CelebManager is a desktop application designed to help celebrity managers to manage their contacts and different
-celebrities' schedules. Managers interact with CelebManager using the Command Line Input (CLI).
-CelebManager makes use of CalendarFX to integrate a calendar, and Google Map API to integrate a map inside the
-application, to display information about appointments.
-CelebManager consists of a GUI created with JavaFX and is written in Java. The project overall has over 10k LoC.
+CelebManager is a software application that allows celebrity managers to maintain schedules of celebrities under them.
+It is optimized for users who prefer to work with a Command Line Interface (CLI) while still having a
+Graphical User Interface (GUI) for visual feedback.
+
+In this software, the users will be able to:
+
+.   Manage contacts
+.	Manage appointments
+.	Manage calendars
+.	Plan efficient routes
+
+This project portfolio summarises my contribution towards the development of CelebManager.
 
 == Summary of contributions
 
@@ -21,7 +28,7 @@ CelebManager consists of a GUI created with JavaFX and is written in Java. The p
 `viewDate`. With these commands, users can view different celebrities' calendars, a joint calendar of all celebrities,
 a day's or week's or month's appointments, and change base date of the calendar.
 ** Justification: This feature improves the product significantly because it allows users to interact with the
-calendar inside CeleManager, and makes calendar a powerful visualisation tool to view timings of appointments.
+calendar inside CeleManager and makes the calendar a powerful visualisation tool to view timings of appointments.
 ** Highlights: The implementation requires comprehension of CalendarFX's API and experimenting with the API to
 understand which methods to be used to update the calendar UI. Also, additional variables were created
 to keep track of the current calendar's status to preserve the original ways of interaction between different

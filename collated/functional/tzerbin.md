@@ -115,7 +115,10 @@ package seedu.address.storage;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -141,6 +144,10 @@ public class XmlAdaptedAppointment {
     private String endDate;
     @XmlElement(required = true)
     private String endTime;
+    @XmlElement(required = true)
+    private List<Long> celebrityIds;
+    @XmlElement(required = true)
+    private List<Long> pointOfContactIds;
 
     /**
      * Constructs an XmlAdaptedAppointment.
@@ -162,6 +169,8 @@ public class XmlAdaptedAppointment {
         if (mapAddress != null) {
             location = mapAddress.toString();
         }
+        this.celebrityIds = new ArrayList<>();
+        this.pointOfContactIds = new ArrayList<>();
     }
 
     /**
@@ -179,6 +188,8 @@ public class XmlAdaptedAppointment {
         if (source.getMapAddress() != null) {
             location = source.getMapAddress().toString();
         }
+        this.celebrityIds = source.getCelebIds();
+        this.pointOfContactIds = source.getPointOfContactIds();
     }
 
     /**
@@ -248,12 +259,16 @@ public class XmlAdaptedAppointment {
             mapAddressCreated = new MapAddress(location);
         }
 
-        return new Appointment(appointmentName,
-                               startTimeCreated,
-                               startDateCreated,
-                               mapAddressCreated,
-                               endTimeCreated,
-                               endDateCreated);
+        Appointment appt =  new Appointment(appointmentName, startTimeCreated, startDateCreated,
+                mapAddressCreated, endTimeCreated, endDateCreated);
+        if (celebrityIds != null) {
+            appt.setCelebIds(celebrityIds);
+        }
+
+        if (pointOfContactIds != null) {
+            appt.setPointOfContactIds(pointOfContactIds);
+        }
+        return appt;
     }
 
     @Override
@@ -272,7 +287,8 @@ public class XmlAdaptedAppointment {
                 && Objects.equals(startTime, otherAppointment.startTime)
                 && Objects.equals(endDate, otherAppointment.endDate)
                 && Objects.equals(endTime, otherAppointment.endTime)
-                && Objects.equals(location, otherAppointment.location);
+                && Objects.equals(location, otherAppointment.location)
+                && Objects.equals(celebrityIds, otherAppointment.celebrityIds);
     }
 }
 ```
@@ -309,9 +325,11 @@ public class XmlSerializableStorageCalendar {
 
     public XmlSerializableStorageCalendar(StorageCalendar storageCalendar) {
         this();
-        List<Appointment> appointmentList = getStoredAppointmentList();
-        for (Appointment appt : appointmentList) {
-            appointments.add(new XmlAdaptedAppointment(appt));
+        if (storageCalendar != null) {
+            List<Appointment> appointmentList = storageCalendar.getAllAppointments();
+            for (Appointment appt : appointmentList) {
+                appointments.add(new XmlAdaptedAppointment(appt));
+            }
         }
     }
 
@@ -322,9 +340,9 @@ public class XmlSerializableStorageCalendar {
      * {@code XmlAdaptedAppointments}.
      */
     public StorageCalendar toModelType() throws IllegalValueException {
-        StorageCalendar calendar = new StorageCalendar("Storage Calendar");
+        StorageCalendar calendar = new StorageCalendar();
         for (XmlAdaptedAppointment a : appointments) {
-            calendar.addEntry(a.toModelType());
+            calendar.addAppointment(a.toModelType());
         }
         return calendar;
     }

@@ -102,6 +102,7 @@ public class DeleteAppointmentCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
+
     public static final String MESSAGE_SUCCESS = "Deleted Appointment: %1$s";
     public static final String MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY = "\nAppointment list becomes empty, "
             + "Switching back to calendar view by day\n"
@@ -118,46 +119,56 @@ public class DeleteAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        // throw exception if the user is not currently viewing an appointment list
         if (!model.getIsListingAppointments()) {
             throw new CommandException(Messages.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         }
-        model.deleteAppointmentFromStorageCalendar(targetIndex.getZeroBased());
-        apptToDelete = model.removeAppointmentFromInternalList(targetIndex.getZeroBased());
 
-        // remove the appt from last displayed appointment list
-        List<Appointment> newAppointmentList = model.getAppointmentList();
-        // if the list becomes empty, switch back to combined calendar day view
-        if (model.getAppointmentList().size() < 1) {
-            model.setIsListingAppointments(false);
-            model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
-            EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
-            EventsCenter.getInstance().post(new ShowCalendarEvent());
-
-            Celebrity currentCalendarOwner = model.getCurrentCelebCalendarOwner();
-            if (currentCalendarOwner == null) {
-                return new CommandResult(
-                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
-                                + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
-                                "combined"));
-            } else {
-                return new CommandResult(
-                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
-                                + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
-                                currentCalendarOwner.getName().toString() + "'s"));
-            }
+        try {
+            apptToDelete = model.deleteAppointment(targetIndex.getZeroBased());
+        } catch (IndexOutOfBoundsException iobe) {
+            throw new CommandException(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
         }
-        // if the list is not empty yet, update appointment list view
-        EventsCenter.getInstance().post(new ShowAppointmentListEvent(newAppointmentList));
 
+        List<Appointment> currentAppointmentList = model.getCurrentlyDisplayedAppointments();
+        // if the list becomes empty, switch back to combined calendar day view
+        if (currentAppointmentList.isEmpty()) {
+            model.setIsListingAppointments(false);
+            return changeToCalendarWithDayView();
+        }
+
+        EventsCenter.getInstance().post(new ShowAppointmentListEvent(currentAppointmentList));
         return new CommandResult(String.format(MESSAGE_SUCCESS, apptToDelete.getTitle()));
+    }
+
+    /**
+     * sets the calendar panel to calendar
+     * @return CommandResult with the corresponding message
+     */
+    private CommandResult changeToCalendarWithDayView() {
+        model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
+        EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+        EventsCenter.getInstance().post(new ShowCalendarEvent());
+
+        Celebrity currentCalendarOwner = model.getCurrentCelebCalendarOwner();
+        if (currentCalendarOwner == null) {
+            return new CommandResult(
+                    String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
+                            + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
+                            "combined"));
+        } else {
+            return new CommandResult(
+                    String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
+                            + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
+                            currentCalendarOwner.getName().toString() + "'s"));
+        }
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof DeleteAppointmentCommand
-                && apptToDelete.equals(((DeleteAppointmentCommand) other).apptToDelete));
+                && Objects.equals(this.apptToDelete, ((DeleteAppointmentCommand) other).apptToDelete)
+                && this.targetIndex.equals(((DeleteAppointmentCommand) other).targetIndex));
     }
 }
 ```
@@ -254,10 +265,10 @@ public class ViewCalendarCommand extends Command {
 
         Celebrity celebrityToShowCalendar = (Celebrity) personToShowCalendar;
         // the celebrity's calendar is currently being shown
-        if (celebrityToShowCalendar == model.getCurrentCelebCalendarOwner()
+        if (celebrityToShowCalendar.equals(model.getCurrentCelebCalendarOwner())
                 && !model.getIsListingAppointments()) {
-            throw new CommandException((String.format(MESSAGE_NO_CHANGE_IN_CALENDAR,
-                    celebrityToShowCalendar.getName().toString())));
+            throw new CommandException(String.format(MESSAGE_NO_CHANGE_IN_CALENDAR,
+                    celebrityToShowCalendar.getName().toString()));
         }
 
         model.setCelebCalendarOwner(celebrityToShowCalendar);
@@ -326,13 +337,16 @@ public class ViewDateCommand extends Command {
 
     public static final String COMMAND_WORD = "viewDate";
     public static final String COMMAND_ALIAS = "vd";
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM[-yyyy]");
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays the calendar which bases on the specified "
             + "date.\n"
             + "Parameter: [DATE] (goes back to current date when no parameter is given.)"
-            + "DATE should be in YYYY-MM-DD format\n"
-            + "Example: " + COMMAND_WORD + " 2018-04-23";
+            + "DATE should be in DD-MM-YYYY or DD-MM format, including the dash."
+            + "When latter is entered, YYYY will take the current year.\n"
+            + "Example: " + COMMAND_WORD + " 23-04";
 
+    public static final String MESSAGE_INVALID_DATE = "The date entered is invalid";
     public static final String MESSAGE_NO_CHANGE_IN_BASE_DATE = "The current calendar is already based on %1$s";
     public static final String MESSAGE_SUCCESS = "Switched to view calendar based on %1$s";
 
@@ -344,10 +358,11 @@ public class ViewDateCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        // view a date that is already the base
+        // view a date that is already the base date
         if (model.getBaseDate().equals(date)
                 && !model.getIsListingAppointments()) {
-            throw new CommandException(String.format(MESSAGE_NO_CHANGE_IN_BASE_DATE, date.toString()));
+            throw new CommandException(String.format(MESSAGE_NO_CHANGE_IN_BASE_DATE,
+                    date.format(FORMATTER)));
         }
 
         model.setBaseDate(date);
@@ -360,7 +375,14 @@ public class ViewDateCommand extends Command {
             EventsCenter.getInstance().post(new ShowCalendarEvent());
             model.setIsListingAppointments(false);
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, date.toString()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, date.format(FORMATTER)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ViewDateCommand // instanceof handles nulls
+                && Objects.equals(date, ((ViewDateCommand) other).date));
     }
 }
 ```
@@ -435,7 +457,7 @@ public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentC
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteAppointmentCommand
      * and returns an DeleteAppointmentCommand object for execution
-     * @throws ParseException if the user input does not comform to the expected format
+     * @throws ParseException if the user input does not conform to the expected format
      */
     public DeleteAppointmentCommand parse(String args) throws ParseException {
         try {
@@ -446,7 +468,73 @@ public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentC
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAppointmentCommand.MESSAGE_USAGE));
         }
     }
+}
+```
+###### \java\seedu\address\logic\parser\calendar\ListAppointmentCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ListAppointmentCommand object
+ */
+public class ListAppointmentCommandParser implements Parser<ListAppointmentCommand> {
 
+    /**
+     * Parses the given {@code String} of arguments in the context of the ListAppointmentCommand
+     * and returns a ListAppointmentCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ListAppointmentCommand parse(String args) throws ParseException {
+        if (args.isEmpty()) {
+            return new ListAppointmentCommand();
+        }
+
+        String trimmedArgs = args.trim();
+        String[] arguments = trimmedArgs.split(" ");
+        //there should be two elements, one for start date, the other for end date.
+        if (arguments.length != 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ListAppointmentCommand.MESSAGE_USAGE));
+        }
+        //check if start and end dates follow the format
+        try {
+            FORMATTER.parse(arguments[0]);
+            FORMATTER.parse(arguments[1]);
+        } catch (Exception e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ListAppointmentCommand.MESSAGE_USAGE));
+        }
+
+        LocalDate startDate = convertFormattedStringToLocalDate(arguments[0]);
+        LocalDate endDate = convertFormattedStringToLocalDate(arguments[1]);
+        if (startDate.isAfter(endDate)) {
+            throw new ParseException(MESSAGE_INVALID_DATE_RANGE);
+        }
+
+        return new ListAppointmentCommand(startDate, endDate);
+    }
+
+    /**
+     * Converts a correctly-formatted string to a LocalDate object.
+     * The input is assumed to be correctly-formmtted.
+     * @param s
+     * @return LocalDate
+     */
+    private LocalDate convertFormattedStringToLocalDate(String s) throws ParseException {
+        int[] time = Arrays.stream(s.split("-")).mapToInt(Integer::parseInt).toArray();
+        LocalDate date;
+        try {
+            if (time.length == 2) {
+                date = LocalDate.of(LocalDate.now().getYear(), time[1], time[0]);
+            } else if (time.length == 3) {
+                date = LocalDate.of(time[2], time[1], time[0]);
+            } else {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ListAppointmentCommand.MESSAGE_USAGE));
+            }
+        } catch (Exception e) {
+            throw new ParseException(MESSAGE_INVALID_DATE);
+        }
+        return date;
+    }
 }
 ```
 ###### \java\seedu\address\logic\parser\calendar\ViewCalendarByCommandParser.java
@@ -531,12 +619,24 @@ public class ViewDateCommandParser implements Parser<ViewDateCommand> {
         }
 
         String trimmedArgs = args.trim();
-        String[] arguments = trimmedArgs.split("\\s+");
+        try {
+            FORMATTER.parse(trimmedArgs);
+        } catch (Exception e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDateCommand.MESSAGE_USAGE));
+        }
+
+        int[] time = Arrays.stream(args.trim().split("-")).mapToInt(Integer::parseInt).toArray();
         LocalDate date;
         try {
-            date = LocalDate.parse(arguments[0]);
+            if (time.length == 2) {
+                date = LocalDate.of(LocalDate.now().getYear(), time[1], time[0]);
+            } else if (time.length == 3) {
+                date = LocalDate.of(time[2], time[1], time[0]);
+            } else {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDateCommand.MESSAGE_USAGE));
+            }
         } catch (Exception e) {
-            throw new ParseException(e.getMessage());
+            throw new ParseException(MESSAGE_INVALID_DATE);
         }
         return new ViewDateCommand(date);
     }
@@ -574,9 +674,57 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
+     * Saves the newData of {@code AddressBook} in an empty {@code AddressBook}.
+     */
+    public void savePreviousAddressBookData(ReadOnlyAddressBook newData) {
+        requireNonNull(newData);
+        setTags(new HashSet<>(newData.getTagList()));
+        List<Person> syncedPersonList = newData.getPersonList().stream()
+                .map(this::syncWithMasterTagList)
+                .collect(Collectors.toList());
+        List<Celebrity> filteredCelebrityList = filterCelebrities(syncedPersonList);
+        // make celebrity's celeb calendar point to the copy of original ones
+        List<Celebrity> syncedCelebrityList = syncCelebCalendar(filteredCelebrityList, newData.getCelebritiesList());
+
+        try {
+            setPersons(syncedPersonList);
+            setCelebrities(syncedCelebrityList);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+    }
+
+    /**
+     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Used when user undo/redo
+     */
+    public void resetData(ReadOnlyAddressBook newData) {
+        requireNonNull(newData);
+        setTags(new HashSet<>(newData.getTagList()));
+        List<Person> syncedPersonList = newData.getPersonList().stream()
+                .map(this::syncWithMasterTagList)
+                .collect(Collectors.toList());
+        List<Celebrity> filteredCelebrityList = filterCelebrities(syncedPersonList);
+        // make celebrity's celeb calendar point to the copy of original ones
+        List<Celebrity> syncedCelebrityList = syncCelebCalendar(filteredCelebrityList, newData.getCelebritiesList());
+
+        if (isUndoingRemovalOfCelebrity(getCelebritiesList(), syncedCelebrityList)) {
+            Celebrity copiedCelebrityForRemovedCelebrity =
+                    findCelebrityRemoved(getCelebritiesList(), syncedCelebrityList);
+            copiedCelebrityForRemovedCelebrity
+                    .setCelebCalendar(new CelebCalendar(copiedCelebrityForRemovedCelebrity.getName().fullName));
+        }
+
+        try {
+            setPersons(syncedPersonList);
+            setCelebrities(syncedCelebrityList);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+    }
+
+    /**
      * Returns true if the user is undoing removal of a celebrity
-     * @param currentCelebrities
-     * @param previousCelebrities
      * @return true or false
      */
     private boolean isUndoingRemovalOfCelebrity(
@@ -586,8 +734,6 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
 
     /**
      * Returns the copiedCelebrity of {@code Celebrity} removed in previous command
-     * @param currentCelebrities
-     * @param previousCelebrities
      * @return copiedCelebrity
      */
     private Celebrity findCelebrityRemoved(
@@ -622,7 +768,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
 
     /**
      * Removes {@code tag} from all persons in this {@code AddressBook}.
-     * @returns the number of {@code person}s with this {@code tag} removed.
+     * @return the number of {@code person}s with this {@code tag} removed.
      */
     public int removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
         boolean tagExists = false;
@@ -636,7 +782,6 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
         }
 
         int count = 0;
-        //is it possible to have two people with everything the same except for tag?
         for (Person person: persons) {
             if (person.hasTag(tag)) {
                 //get the new tag set with the specified tag removed
@@ -670,8 +815,6 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
 ``` java
     /**
      * Change pointers to celebCalendar of copied celebrity to the original celebCalendar
-     * @param celebrities
-     * @param previousCelebrities
      * @return modified celebrities
      */
     private List<Celebrity> syncCelebCalendar(List<Celebrity> celebrities, List<Celebrity> previousCelebrities) {
@@ -691,97 +834,8 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
-
-        // reset calendars in celebCalendarSource to the restored calendars
-        List<Celebrity> celebrities = addressBook.getCelebritiesList();
-        List<Calendar> calendars = new ArrayList<>();
-
-        for (Celebrity celebrity: celebrities) {
-            calendars.add(celebrity.getCelebCalendar());
-        }
-
-        ArrayList<Calendar> calendarsToRemove = new ArrayList<>();
-        for (Calendar calendarToRemove: celebCalendarSource.getCalendars()) {
-            calendarsToRemove.add(calendarToRemove);
-        }
-        for (Calendar calendar: calendarsToRemove) {
-            celebCalendarSource.getCalendars().removeAll(calendar);
-        }
-        celebCalendarSource.getCalendars().addAll(calendars);
-
+        resetCelebCalendars();
         indicateAddressBookChanged();
-    }
-
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /**
-     * Removes the person from appointments
-     * @param person
-     */
-    private void removePersonFromAppointments(Person person) {
-        List<Appointment> allAppointments = getStoredAppointmentList();
-        // to be implemented after knowing how normal person is added to an appointment
-    }
-
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /**
-     * Removes celebrity from appointments and celebrity's celeb calendar
-     * @param targetCelebrity
-     */
-    private synchronized void deleteCelebrity(Celebrity targetCelebrity) {
-        CelebCalendar targetCelebCalendar = targetCelebrity.getCelebCalendar();
-        StorageCalendar storageCalendar = this.getStorageCalendar();
-        List<Appointment> allAppointments = getStoredAppointmentList();
-
-        // find appointment that has entry(s) belonging to target's celeb calendar
-        // remove these entry(s) from the appointment's childEntryList
-        List<Appointment> appointmentsToRemove =
-                removeEntriesOfTargetCelebCalendarFrom(targetCelebCalendar, allAppointments);
-
-        // remove appointment that only involves the deleted celebrity
-        // from appointment list in storageCalendar and in storageCalendar itself
-        allAppointments.removeAll(appointmentsToRemove);
-        for (Appointment appointment: appointmentsToRemove) {
-            storageCalendar.removeEntry(appointment);
-        }
-
-        // remove the celebrity's calendar
-        celebCalendarSource.getCalendars().removeAll(targetCelebCalendar);
-    }
-
-    /**
-     * Removes child entries that belong to target celeb calendar from all appointments
-     * Finds appointments that only have child entries belonging to target celeb calendar
-     * @param targetCelebCalendar
-     * @param allAppointments
-     * @return a list of appointments that only has child entry pointing to the target celeb calendar
-     */
-    private List<Appointment> removeEntriesOfTargetCelebCalendarFrom(
-            CelebCalendar targetCelebCalendar, List<Appointment> allAppointments) {
-
-        List<Appointment> appointmentsOnlyInvolveTargetCelebCalendar = new ArrayList<>();
-
-        for (Appointment appointment: allAppointments) {
-            List<Entry> oldChildEntries = appointment.getChildEntryList();
-            List<Entry> newChildEntries = new ArrayList<>();
-            for (Entry childEntry: oldChildEntries) {
-                if (childEntry.getCalendar() == targetCelebCalendar) {
-                    continue;
-                }
-                newChildEntries.add(childEntry);
-            }
-            // appointment only involves the target celeb calendar, add to to the list
-            if (newChildEntries.size() < 1) {
-                appointmentsOnlyInvolveTargetCelebCalendar.add(appointment);
-            } else {
-                appointment.setChildEntries(newChildEntries);
-            }
-        }
-
-        return appointmentsOnlyInvolveTargetCelebCalendar;
     }
 
 ```
@@ -822,6 +876,44 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
     //=========== Celeb Calendar Accessors ===================================================================
 
 ```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public String getCurrentCelebCalendarViewPage() {
+        return currentCelebCalendarViewPage;
+    }
+
+    @Override
+    public Celebrity getCurrentCelebCalendarOwner() {
+        return currentCelebCalendarOwner;
+    }
+
+    @Override
+    public List<Appointment> getCurrentlyDisplayedAppointments() {
+        return this.currentlyDisplayedAppointments;
+    }
+
+    @Override
+    public List<Appointment> getStoredAppointmentList() {
+        return storageCalendar.getAllAppointments();
+    }
+
+    @Override
+    public void setCurrentlyDisplayedAppointments(List<Appointment> appointments) {
+        this.currentlyDisplayedAppointments = appointments;
+    }
+
+    @Override
+    public LocalDate getBaseDate() {
+        return this.baseDate;
+    }
+
+    @Override
+    public  void setBaseDate(LocalDate date) {
+        this.baseDate = date;
+    }
+
+```
 ###### \java\seedu\address\ui\CalendarPanel.java
 ``` java
     /** Hide all buttons in the calendar */
@@ -833,6 +925,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
         celebCalendarView.setShowPageToolBarControls(false);
         celebCalendarView.setShowPageSwitcher(false);
         celebCalendarView.setShowToolBar(false);
+        celebCalendarView.setLayout(DateControl.Layout.SWIMLANE);
     }
 
     public CalendarView getCalendarView() {
@@ -866,7 +959,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
 
             default:
                 try {
-                    throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
+                    throw new ParseException(MESSAGE_UNKNOWN_CALENDAR_VIEW);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -885,13 +978,6 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
                 }
             }
         });
-    }
-
-    //keep this method to load calendar if the selected person is a celeb
-    @Subscribe
-    private void handlePersonPanelSelectionChangedToCelebrityEvent(PersonPanelSelectionChangedToCelebrityEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showCalendarOf(((Celebrity) event.getNewSelection().person).getCelebCalendar());
     }
 
     @Subscribe

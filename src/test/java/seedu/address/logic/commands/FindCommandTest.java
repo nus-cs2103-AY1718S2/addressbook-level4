@@ -48,7 +48,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() throws ParseException {
-        FindCommand command = prepareCommand("Developer, lydia@example.com");
+        FindCommand command = prepareCommand(" Developer, lydia@example.com");
         assertCommandSuccess(command, Arrays.asList(CARL, FIONA));
     }
 
@@ -75,6 +75,21 @@ public class FindCommandTest {
         FindCommand command = prepareCommand(" n/Kurz, Elle, Kunz p/999, 555, "
                 + "000 e/heinz@example.com a/wall street y/2019");
         assertCommandSuccess(command, Arrays.asList());
+    }
+
+    @Test
+    public void execute_allSupportedPrefixesWithSingleKeyword_onePersonsFound() throws ParseException {
+        FindCommand command = prepareCommand(" n/\"arl Kurz\" p/95352563 "
+                + "e/heinz@example.com a/\"wall street\" u/\"SMU\" m/Computer* j/*Developer");
+        assertCommandSuccess(command, Arrays.asList(CARL));
+    }
+
+    @Test
+    public void execute_allSupportedPrefixesWithMultipleKeyword_twoPersonsFound() throws ParseException {
+        FindCommand command = prepareCommand(" n/\"arl Kurz\", \"Elle\" p/95352563, 9482224 "
+                + "e/heinz@example.com, werner@example.com a/\"wall street\", michegan"
+                + " u/\"SMU\", \"NUS\" m/Computer*, *Analytics j/*Developer, Big*");
+        assertCommandSuccess(command, Arrays.asList(CARL, ELLE));
     }
 
     /**

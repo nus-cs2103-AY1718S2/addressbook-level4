@@ -95,6 +95,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+
     /**
      * Sets the {@code ExpectedGraduationYear} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -103,6 +104,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author tanhengyeow
     /**
      * Sets the {@code Major} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -119,6 +121,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author
     /**
      * Sets the {@code JobApplied} of the {@code EditPersonDescriptor} that we are building.
      */

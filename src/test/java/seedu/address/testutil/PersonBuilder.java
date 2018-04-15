@@ -184,6 +184,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author tanhengyeow
     /**
      * Sets the {@code Major} of the {@code Person} that we are building.
      */

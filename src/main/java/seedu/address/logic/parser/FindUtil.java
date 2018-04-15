@@ -13,6 +13,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_UNIVERSITY;
 
 import java.util.function.Predicate;
 
+import org.apache.commons.lang.NullArgumentException;
+
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -85,10 +87,17 @@ public class FindUtil {
      * @param trimmedArgs
      * @return boolean value
      */
-    private boolean startWithPrefix(String trimmedArgs) {
+    private boolean startWithPrefix(String trimmedArgs) throws NullArgumentException {
         assert trimmedArgs != null;
-        String[] args = trimmedArgs.split("\\s+");
 
+        String[] args = null;
+
+        try {
+            args = trimmedArgs.split("\\s+");
+
+        } catch (NullArgumentException ne) {
+            ne.printStackTrace();
+        }
         return (args[0].contains(PREFIX_NAME.toString())
                 || args[0].contains(PREFIX_PHONE.toString())
                 || args[0].contains(PREFIX_EMAIL.toString())

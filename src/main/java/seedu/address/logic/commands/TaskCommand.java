@@ -18,7 +18,7 @@ public class TaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "task";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the desk board. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to desk board. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE_TIME + "DATETIME "

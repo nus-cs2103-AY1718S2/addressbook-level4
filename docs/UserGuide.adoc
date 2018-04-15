@@ -411,7 +411,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `ud`
-When you realise you've entered a command by mistake (e.g. accidentally deleted a petPatient) and want to undo that action? Simply enter `undo` or `ud` in the command box.
+When you realise you've entered a command by mistake (e.g. accidentally deleted a pet patient) and want to undo that action? Simply enter `undo` or `ud` in the command box.
 
 [NOTE]
 ====

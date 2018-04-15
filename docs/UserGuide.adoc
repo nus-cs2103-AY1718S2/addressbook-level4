@@ -331,6 +331,7 @@ a| * Currently accepted individual `PREFIX` finding are `n/PET_NAME`, `s/SPECIES
 * Data matching at least one keyword within a prefix will be returned. e.g. `-o n/Alex Yu` will return `Alex Yeoh`, `Bernice Yu`.
 * Only data matching at least one keyword in all prefixes will be returned. e.g. `-o n/Alex Yu nr/S0123456B` will return `Alex Yeoh` with the nric `S0123456B`.
 ****
+// end::find[]
 {empty} +
 
 image::find_examples.PNG[width="800"]
@@ -352,7 +353,6 @@ find -p n/Chae s/Cat bt/A
 ----
 
 {empty} +
-// end::find[]
 
 // tag::listappt[]
 === Listing appointments in a specified view requested: `listappt` or `la` `[Since v1.5rc]`
@@ -390,6 +390,8 @@ a| * The command will list appointments based on the specified `DATE` in the day
 * The command can run without any `DATE` keyword. This will switch the view to the day view of today's date.
 * The command will only run for past `DATE` keywords if there exists an appointment that was made in that year.
 |=====
+// end::listappt[]
+{empty} +
 
 .**Copy & paste to try out the examples**
 ----
@@ -409,7 +411,7 @@ To list appointments in 1st January 2018 in day view:
 listappt -d 2018-01-01
 
 ----
-// end::listappt[]
+
 {empty} +
 
 // tag::delete[]
@@ -441,6 +443,7 @@ a| * The command will delete the appointment at the specified `INDEX` listed by 
 * The index refers to the index number shown in the latest appointment listing. The index *must be a positive integer* 1, 2, 3, etc ...
 
 |=====
+// end::delete[]
 {empty} +
 
 image::delete_examples.PNG[width="800"]
@@ -461,7 +464,7 @@ delete -fp 1
 ----
 
 {empty} +
-// end::delete[]
+
 
 === Listing entered commands : `history` or `his`
 

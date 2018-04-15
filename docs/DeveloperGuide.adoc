@@ -638,14 +638,14 @@ As Medeina has both contacts and pet patients, it should be possible for users t
 * **Alternative 2 (current choice):** Each additional function will be an `and`.
 ** Pros: More specific, users can search for specific information with the prefixes adding up (i.e. `-p s/Cat bt/B` searches for pet patients who are cats and have blood type B)
 ** Cons: Chance that the search is too specific, and will display no results (i.e. `-o n/A nr/NRIC_NOT_A` will not get anything as each contact only has 1 `Nric`)
-
+//end::find[]
 ==== Current Limitations
 Users are unable to find appointment related elements as the `Appointment` listing function in the calendar is different from the listing function of the other classes of `Person` and `PetPatient`. As such, there is currently no implementation to find an appointment based on types or remarks, which may pose as inconvenience to veterinarians, should they want to search by a specific type of appointment or remark.
 
 ==== Future Considerations
 In the future, Medeina might consider adding functions that allow for finding of appointments by types or remarks, as well as update the calendar accordingly with the results of the find command.
 
-//end::find[]
+
 
 // tag::listappt[]
 === Listing Appointments of Different Views and Dates

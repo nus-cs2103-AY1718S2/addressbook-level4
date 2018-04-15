@@ -416,7 +416,9 @@ Certain properties of the application can be controlled (e.g App name, logging l
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
+A password must be implemented, used as secret key. Using `Java Cryptography Extension (JCE)` library, we can encrypt text in the xml files. +
+First we save as XML files, then we encrypt the text data in the XML to encrypted text, storing it somewhere, then deleting the XML file. +
+The reverse process is decrypting the encrypted data to XML, then reading data from there.
 
 // end::dataencryption[]
 
@@ -1313,7 +1315,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `Scheduler` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `Codeducator` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete student
@@ -1321,7 +1323,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 *MSS*
 
 1.  User requests to list students
-2.  Schedule shows a list of students
+2.  Codeducator shows a list of students
 3.  User requests to delete a specific student in the list
 4.  Schedule deletes the student
 +
@@ -1337,37 +1339,36 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Codeducator shows an error message.
 +
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Delete student
+=== Use case: Adding a lesson
 
 *MSS*
 
-1.  User requests to add a lesson
-2.  Scheduler shows a list of free slots
-3.  User requests to add a lesson to a slot
-4.  Scheduler adds that lesson to that slot
+. Schedule panel shows lessons and timeslots
+. User requests to add a lesson
+. Codeducator adds that lesson to that slot
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The timetable is empty.
+* 2a. The schedule is empty.
 +
 Use case ends.
 [none]
-* 2b. The timetable is full.
+* 2b. The schedule is full. (Any attempt to add lessons will result in clashes)
 +
-** 3b1. Scheduler shows an error message.
+** 3b1. Codeducator shows an error message.
 
-* 3a. The given index is invalid.
+* 3a. The given student index is invalid.
 +
 [none]
-** 3a1. Scheduler shows an error message.
+** 3a1. Codeducator shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1486,6 +1487,106 @@ Use case resumes at step 3.
 
 * 4a User is at the profile page while entering `editMisc` command.
 ** 4a1. The miscellaneous information portion is updated.
++
+Use case ends.
+
+[discrete]
+=== Use case: Deleting a lesson
+
+*MSS*
+
+.  Schedule panel shows lessons and timeslots.
+.  User requests to delete a lesson identified by index.
+.  Codeducator deletes that lesson from that slot.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The schedule is empty.
++
+Use case ends.
+[none]
++
+* 2b. The given lesson index is invalid.
+** 2b1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Logging in
+
+*MSS*
+
+. User requests to log in to Google Accounts.
+. A window opens in user's default browser.
+. User logs in to Google Accounts.
+. User authorizes Codeducator.
+. Codeducator shows login success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User enters wrong password too many times.
+** 3a1. Codeducator goes into timeout after 45 seconds.
++
+Use case ends.
+[none]
++
+* 3b. User closes his browser window.
+** 3b1. Codeducator goes into timeout after 45 seconds.
++
+* 4a. User does not authorise Codeducator.
+** 4a1. Codeducator shows authentication denied error.
++
+Use case ends.
+
+[discrete]
+=== Use case: Logging out
+
+*MSS*
+
+. User requests to log out of Google accounts in Codeducator
+. Codeducator shows logout success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User was not logged in
+** 1a1. Codeducator goes into timeout after 45 seconds.
++
+Use case ends.
+[none]
++
+* 3a. User closes his browser window
+** 3a1. Codeducator goes into timeout after 45 seconds.
++
+* 4a. User does not authorise Codeducator
+** 4a1. Codeducator shows authentication denied error
++
+Use case ends.
+
+[discrete]
+=== Use case: Syncing data
+
+*MSS*
+
+. User requests to sync data with Google services.
+. Codeducator uploads data through network connection.
+. Codeducator shows data sync success
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User's internet get cut
+** 2a1. Codeducator goes into timeout after losing connection.
 +
 Use case ends.
 
@@ -1641,8 +1742,6 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-
-
 [appendix]
 == Non Functional Requirements
 
@@ -1652,8 +1751,7 @@ Use case resumes at step 2.
 .  Should receive feedback after executing commands.
 .  Should have correct error handling and not crash from unexpected behavior.
 .  Should have its functions and commands easily understood and readable for first time users.
-
-_{More to be added}_
+.  Should be able to sync with any Google account ending with @gmail.com
 
 [appendix]
 == Glossary
@@ -1686,8 +1784,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a student
 
 . Deleting a student while all students are listed
@@ -1700,15 +1796,14 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
 
 === Saving data
 
 . Dealing with missing/corrupted data files
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+.. Delete the contents of /data. +
+  Expected: Codeducator will start off with sample contacts and empty schedule, empty dashboards, empty moreinfo pages
 
-_{ more test cases ... }_
 
 //tag::favTest[]
 === Adding a student to favourites

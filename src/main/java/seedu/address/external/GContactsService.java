@@ -109,6 +109,7 @@ public class GContactsService {
                     new GroupMembershipInfo(false, studentGroupEntry.getId()));
 
             logger.info(String.format("Contact created for: %s", student.getName()));
+            myService.insert(postUrl, toBeInserted);
         }
         logger.info("Successfully updated Google Contacts");
 

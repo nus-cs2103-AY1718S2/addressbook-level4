@@ -64,8 +64,12 @@ Both add up to around 3k lines of code.
  I wrote extensive documentation on my parts in my user and developer guides, but excluded them to fit within the page limit.
 |===
 
+Start of extract from [User Guide]
+
 == Scheduling component
 include::../UserGuide.adoc[tag=schedule]
+
+End of extract from [User Guide]
 
 And more (Deleting lessons, syncing with Google)...
 
@@ -74,5 +78,6 @@ And more (Deleting lessons, syncing with Google)...
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
-
+Start of extract from [Developer Guide]
 include::../DeveloperGuide.adoc[tag=schedule]
+End of extract from [Developer Guide]

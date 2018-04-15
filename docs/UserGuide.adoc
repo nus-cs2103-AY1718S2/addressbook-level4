@@ -706,7 +706,8 @@ Currently, Google Calendar will create a recurring weekly event per lesson, repe
 
 [WARNING]
 ====
-. You must first be logged in to sync your data
+. You must first be logged in to sync your data.
+. A stable internet connection is required to fully upload data. If cut, there is a high probability that it won't fully upload. Please try syncing again.
 . Do not change the name of the Students label. Codeducator will not be able to delete those contacts in future syncs.
 . Likewise, do not change the name of the Calendar "Student Lessons" as it will be similarly used for future syncs
 ====
@@ -1167,7 +1168,7 @@ image::editMiscCommand.png[width 400]
 image::editPictureSuccess.png[][width:400]
 
 [start=3]
-. By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated allergies information as shown below:
+= . By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated allergies information as shown below:
 
 .The profile page of the selected student is shown with the newly updated allergies information!
 image::editMiscSuccess.png[width:600]
@@ -1185,6 +1186,8 @@ image::editMiscSuccess.png[width:600]
 ==== Track student's homework in the dashboard `[coming in v2.0]`
 
 ==== Find students by their miscellaneous information `[coming in v2.0]`
+
+==== Full pull and push data using sync
 
 //tag::NLP[]
 == Interacting using free-form English

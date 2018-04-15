@@ -640,7 +640,7 @@ Examples:
 `viewappt` +
 Adds a medical appointment for the first person in the list on 19/3/2018 at 10am as shown in Figure 10.
 
-.Calendar panel in IMDB
+.Calendar panel in IMDB after an appointment is added
 [caption="Figure 10: "]
 image::addappt_window.PNG[width="990"]
 
@@ -695,20 +695,33 @@ image::viewappt_window.PNG[width="990"]
 
 Deletes the medical appointment at the given index of a patient specified by their name.
 
-Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
+Format: `delappt INDEX DATE TIME` or `da INDEX DATE TIME`
 
 [CAUTION]
 This command is only for medical staff.
 
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+* The date of the appointment must be in the following format: DD/MM/YYYY.
+* The time of the appointment must be given in 24 hour clock format: HHMM.
+* This command will only remove the appointment if it exists in the record.
+****
+
 Examples:
 
-* `viewappt Betsy` +
-`delappt Betsy 2` +
-Deletes the medical appointment made by Betsy with index number 2.
+* `viewappt 1` +
+`delappt 1 19/6/2018 1200` +
+Deletes the medical appointment on 19/6/2018 12pm made by the first patient in the list as shown in Figure 13.
 
-* `va John` +
-`da John 1` +
-Deletes the medical appointment made by John with index number 1.
+.Calendar panel in IMDB after deleting the appointment
+[caption="Figure 13: "]
+image::delappt_window.PNG[width="990"]
+
+* `va 2` +
+`da 2 13/7/2018 1430` +
+`viewappt` +
+Deletes the medical appointment on 13/7/2018 2:30pm made by the second patient in the list.
 
 ==== Viewing the schedule for a patient across all specialists `[coming in v2.0]`
 

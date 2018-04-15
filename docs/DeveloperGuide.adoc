@@ -173,7 +173,7 @@ The sections below give more details of each component.
 The following diagram displays the structure of the UI component.
 
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiClassDiagram.png[width="600"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -870,7 +870,7 @@ pet patient's medical history. +
 ==== Current Implemaentation
 Since Veterinarians and their assistants have the need to view the PetPatients as a list and see how many PetPatients belong to the same Owner. It is necessary to implement the PetPatient List feature.
 
-image::List_Command.PNG[width:650]
+image::List_Command.PNG[width="500"]
 
 ==== Design Consideration
 * **Alternative 1:** Use tab function to switch between PetPatientList and PersonList
@@ -898,7 +898,7 @@ Since veterinarians and their assistants have the need to constantly check their
 
 Third party API `CalendarFX` is used as a Java calendar frame to show Appointments.
 
-image::Show_Appointment.PNG[width:650]
+image::Show_Appointments.png[width="650"]
 
 
 ==== Design Consideration

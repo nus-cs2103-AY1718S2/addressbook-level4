@@ -45,7 +45,7 @@ If you have already set up Medeina, head on to <<CLI>>. +
 If you are already familiar with Medeina's Command Line Interface (CLI), head on to <<Commands>>.
 
 {empty} +
-
+// tag::GUI[]
 == Quick Start
 
 To successsfully install and run Medeina, you need to:
@@ -60,9 +60,10 @@ You can download the latest version of Java link:https://java.com/en/download//[
 .  Copy the file to the folder you want to use as the home folder for Medeina.
 .  Double-click the file to start the app. You should see the GUI (Graphical User Interface) in a few seconds.
 +
+
 .Medeina's GUI
 image::Interface.png[width="1000"]
-
+// end::GUI[]
 {empty} +
 
 // tag::cliUG[]
@@ -714,6 +715,8 @@ Coming v2.0, Medeina can be used concurrently on different systems. The data wil
 *Q*: What should I do if I find a bug? +
 *A*: We are very sorry about this. Please help us out by creating an issue in our GitHub link:{repoURL}/issues[here]. We will get back to you shortly!
 
+// tag::FAQ[]
+
 *Q*: There's no scroll-bar in calendar entry views, what happens when a have a long list of appointments on that week? +
 *A*: The calendar entry view is implemented by default without a scroll-bar, yet user can still scroll up and down using mouse wheel.
 
@@ -726,6 +729,7 @@ Coming v2.0, Medeina can be used concurrently on different systems. The data wil
 *Q*: When click on appointments, a pop over window appears to show details of appointments but its unmodifiable, why? +
 *A*: Because of Medeina's command line based property, modifying of appointments details using mouse is disabled. Instead, users should use `edit` command.
 
+// end::FAQ[]
 {empty} +
 
 // tag::commandsummaryUG[]

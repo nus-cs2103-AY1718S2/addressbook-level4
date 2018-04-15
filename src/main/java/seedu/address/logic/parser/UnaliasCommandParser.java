@@ -13,8 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class UnaliasCommandParser implements Parser<UnaliasCommand> {
     private static final String SPLIT_TOKEN = "\\s+";
     private static final int CORRECT_ARGS_LENGTH = 1;
-    private static final int UNALIAS_INDEX = 0;
-
+    
     /**
      * Parses the given {@code String} of arguments in the context of the UnaliasCommand
      * and returns an UnaliasCommand object for execution.

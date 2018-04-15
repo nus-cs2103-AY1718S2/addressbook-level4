@@ -16,11 +16,11 @@ It is a simple Java application intended for social workers to help them plan th
 *Major enhancement*: added a *authentication feature* and *multi-user capability*
 
 ** What it does:
-*** Authentication feature: Users can login and logout from their application with a unique username and password.
+*** *Authentication feature*: Users can login and logout from their application with a unique username and password.
 
-*** Multi-user Capability: The application now supports multiple users, each having their own contacts and SLAP.
+*** *Multi-user Capability*: The application now supports multiple users, each having their own contacts and SLAP.
 
-*** Justification: Firstly, this feature increases the security capability of the application. As the patient details and session
+*** *Justification*: Firstly, this feature increases the security capability of the application. As the patient details and session
 reports are sensitive data, having to authenticate first helps to maintain a level of confidentiality and integrity. Secondly,
 it converts the application from single-user to multi-user, hence allow for multiple social workers to use the app. This is useful
 in the scenario, where there is a mandate to use a single company laptop.
@@ -40,13 +40,13 @@ that could be used by institutes of social workers.
 This is a crucial feature of the application for social workers to store their information conveniently.
 
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/functional/kaisertanqr.md[Functional code]]
+*Code contributed*: [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/functional/kaisertanqr.md[Functional code]]
  [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/test/kaisertanqr.md[Test code]]
 
 
-* *Other contributions*:
+*Other contributions*:
 
-**Project Management
+** Project Management
 
 *** Managed released v1.4 - v1.5rc (2 releases) on GitHub
 

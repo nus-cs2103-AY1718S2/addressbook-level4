@@ -333,7 +333,7 @@ Format: `markPart` `INDEX` `marks/DIGITS`
 
 ****
 * The `INDEX` refers to the index number shown in the most recent listing.
-* The marks to be added must be a *positive integer* between 0 and 100 inclusive.
+* The marks to be added must be a *integer* between 0 and 100 inclusive.
 ****
 
 Examples:
@@ -356,7 +356,7 @@ Command entered: `find` `David` +
 
 Result: Returns David as a result (see Figure 18). +
 
-.Find command returns David
+.`find` Command returns David
 image::markPart2David.png[width="300"]
 
 Command entered: `markPart` `1` `marks/70` +

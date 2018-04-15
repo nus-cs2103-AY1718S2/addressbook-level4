@@ -1,6 +1,7 @@
 = Chia Kah Sheng Ellery - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103JAN2018-F09-B1/main
 
 == PROJECT: Your TA
 

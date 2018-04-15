@@ -88,7 +88,8 @@ public interface Model {
     Patient getPatientFromListByIndex(Index targetIndex);
 
     /** Delete a patient's appointment*/
-    void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) throws UniqueAppointmentList.AppoinmentNotFoundException;
+    void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) throws
+            UniqueAppointmentList.AppoinmentNotFoundException;
 
     /** Get appointment entries*/
     ObservableList<AppointmentEntry> getAppointmentEntryList();

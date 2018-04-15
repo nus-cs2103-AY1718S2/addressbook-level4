@@ -35,10 +35,13 @@ HuatAh! is a desktop loan shark manager application. It has a GUI but most of th
 
 ** Enhancements to other existing features:
 *** Improved `Add` command by letting it accept optional fields. This is useful for situations whereby not all personal details are available or when the user would like to quickly create a new contact. <include links>
-*** Modified various command messages to improve readability. <include link>
-*** Modified various commands, such as `Add` and `Edit`, to accept new parameters relevant to Customer and Runner. <include links>
-*** Modified 'Delete` command to exhibit proper behaviour (update the data corretly) with respect to the new functionality of assigning customers ro runners. <include links>
-*** Fixed various bugs. <include links>
+*** Modified various command messages to improve readability.
+*** Modified commands such as `Add` and `Edit`, to accept new parameters relevant to Customer and Runner.
+*** Modified 'Delete` command to exhibit proper behaviour (update the data corretly) with respect to the new functionality of assigning customers ro runners.
+*** Fixed various bugs. Examples: (
+https://github.com/CS2103JAN2018-F12-B4/main/pull/155[1]
+https://github.com/CS2103JAN2018-F12-B4/main/issues/188[2]
+)
 
 ** Documentation:
 *** Ensured that documentation was up-to-date with current implementations: https://github.com/CS2103JAN2018-F12-B4/main/pull/50[#50], https://github.com/CS2103JAN2018-F12-B4/main/pull/47[#47], https://github.com/CS2103JAN2018-F12-B4/main/pull/95[#95], https://github.com/CS2103JAN2018-F12-B4/main/pull/118[#118], https://github.com/CS2103JAN2018-F12-B4/main/pull/164[#164]

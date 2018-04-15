@@ -1398,11 +1398,7 @@ public class GoogleMapsDisplay extends UiPart<Region> {
     @Subscribe
     private void handleInfoPanelEvent(InfoPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        venuePlaceholder.toBack();
-        mapsPlaceholder.toBack();
-        birthdayPlaceholder.toBack();
-        timetableUnionPlaceholder.toBack();
-        aliasListPlaceholder.toBack();
+        hideAllPanel();
     }
 ```
 ###### \java\seedu\address\ui\VenueTable.java
@@ -1508,29 +1504,46 @@ public class VenueTable extends UiPart<Region> {
      */
     public void setStyle() {
         for (int i = 0; i < columns.size(); i++) {
-            columns.get(i).setCellFactory(column -> {
-                return new TableCell<ArrayList<String>, String>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (item == null || empty) {
-                            setText(null);
-                            setStyle(EMPTY_CELL);
-                        } else {
-                            removeAllStyle(this);
-                            setText(item);
-                            if (getItem().equals(OCCUPIED_LABEL)) {
-                                getStyleClass().add(OCCUPIED_STYLE_CLASS);
-                            } else if (getItem().equals(VACANT_LABEL)) {
-                                getStyleClass().add(VACANT_STYLE_CLASS);
-
-                            }
-                        }
-                    }
-                };
-            });
+            TableColumn<ArrayList<String>, String> columnToBeSet = columns.get(i);
+            setStyleForColumn(columnToBeSet);
         }
+    }
+
+    /**
+     * Sets the style of each column.
+     * @param columnToBeSet is the column that would be set
+     */
+    private void setStyleForColumn (TableColumn<ArrayList<String>, String> columnToBeSet) {
+        columnToBeSet.setCellFactory(column -> {
+            return setStyleForCell();
+        });
+    }
+
+    /**
+     * Sets the style of the cell given the data and return it
+     * @return the tablecell with its style set.
+     */
+    private TableCell<ArrayList<String>, String> setStyleForCell () {
+        return new TableCell<ArrayList<String>, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle(EMPTY_CELL);
+                } else {
+                    removeAllStyle(this);
+                    setText(item);
+                    if (getItem().equals(OCCUPIED_LABEL)) {
+                        getStyleClass().add(OCCUPIED_STYLE_CLASS);
+                    } else if (getItem().equals(VACANT_LABEL)) {
+                        getStyleClass().add(VACANT_STYLE_CLASS);
+
+                    }
+                }
+            }
+        };
     }
 
     /**

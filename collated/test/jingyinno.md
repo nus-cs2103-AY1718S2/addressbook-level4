@@ -1344,7 +1344,7 @@ public class AliasListTest extends GuiUnitTest {
         aliasList.init(obsExpected);
         postNow(aliasListEventStub);
         guiRobot.pauseForHuman();
-        ObservableList<TableColumn> a = aliasListHandle.getTables();
+
         // Assert content of the table
         GuiTestAssert.assertTableContent(aliasListHandle.getTables(), expected);
 

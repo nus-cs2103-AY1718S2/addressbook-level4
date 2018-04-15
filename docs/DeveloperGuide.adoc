@@ -1437,7 +1437,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |employer |update the schedule |show employees the available slots.
 
-|`* * *` |employer |employer, I want to encrypt and decrypt local storage files on demand |prevent unauthorised users from retrieving local file data.
+|`* * *` |employer |encrypt and decrypt local storage files on demand |prevent unauthorised users from retrieving local file data.
 
 |`* * *` |employee |view the schedule |choose when I want to work.
 
@@ -1481,7 +1481,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `PTMan` and the *Actor* is the `employer`, unless specified otherwise)
 
-=== Use case: Add employee
+=== Use Case: Add Employee
 
 *MSS*
 
@@ -1501,7 +1501,7 @@ Use case ends.
 +
 Use case resumes at step 1.
 
-=== Use case: Add shift
+=== Use Case: Add Shift
 
 *MSS*
 
@@ -1521,7 +1521,7 @@ Use case ends.
 +
 Use case resumes at step 1.
 
-=== Use case: Delete shift
+=== Use Case: Delete Shift
 
 *MSS*
 
@@ -1548,7 +1548,7 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-=== Use case: Delete employee
+=== Use Case: Delete Employee
 
 *MSS*
 
@@ -1573,7 +1573,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-=== Use case: Edit employee
+=== Use Case: Edit Employee
 
 *MSS*
 
@@ -1605,7 +1605,34 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-=== Use case: Sign up for available shifts
+=== Use Case: Edit Outlet Information
+
+*MSS*
+
+1.  Employer logs in to their admin account.
+2.  PTMan changes to admin mode.
+3.  Employer enters new values for outlet.
+4.  PTMan changes the outlet's details.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The entered format is invalid.
++
+[none]
+** 3a1. PTMan shows an error message.
++
+Use case resumes at step 3.
+* 3b. The entered format of new details is invalid.
++
+[none]
+** 3b1. PTMan shows an error message.
++
+Use case resumes at step 3.
+
+=== Use Case: Sign Up for Available Shifts
 
 *MSS*
 
@@ -1632,6 +1659,31 @@ Use case resumes at step 1.
 Use case resumes at step 1.
 
 [none]
+
+=== Use Case: Encrypt Local Files
+
+*MSS*
+
+1.  Employer requests to encrypt local files.
+2.  PTMan encrypts local files and sends a confirmation message to the employer.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The entered format is invalid.
++
+[none]
+** 1a1. PTMan shows an error message.
++
+Use case resumes at step 1.
+* 1b. Local files have already been encrypted.
++
+[none]
+** 1b1. PTMan shows an error message.
++
+Use case resumes at step 1.
 
 [discrete]
 == Non Functional Requirements

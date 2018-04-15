@@ -1044,7 +1044,7 @@ To enhance user experience and usage efficiency of the CLI by providing autocomp
 
 * *Add command*
 
-A single add command with options to add a contact, pet patient and appointment to Medeina. Users don't have to remember multiple commands performing similar functions. Also able to add all 3 objects in a single command to reduce typing.
+A single add command with options to add a contact, pet patient and appointment to Medeina. Users don't have to remember multiple commands performing similar functions. The new add command also enables the user to all 3 objects at one go to reduce typing.
 
 a|
 * *Add support to change theme (persistent beyond app restart)*

@@ -639,7 +639,7 @@ Only the tasks due within current month will be listed in the *Todo List*.
 Figure 38 below illustrates the change in tasks displayed after listCurrentTask is entered.
 
 .Behavior of Executing listCurrentTask
-image::listTasks.PNG[width = '800']
+image::listTasks.png[width = '800']
 
 === Sorting tasks: `sortTask`
 
@@ -681,7 +681,7 @@ Examples:
 Address book starts with the following as shown in Figure 39 below.
 
 .Application Before any Commands +
-image::UiFromDelete.png[width="800"]
+image::UIFromDelete.png[width="800"]
 
 Command(s) entered: `delete` `1`, `list`, `undo` +
 

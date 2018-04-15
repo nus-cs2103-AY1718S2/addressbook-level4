@@ -43,7 +43,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all orders
-* **`add`**`n/John Doe p/98765432 a/John street, block 123, #01-01 o/chicken rice` : adds an order of chicken rice from customer `John Doe` to the queue.
+* **`add`**`n/John Doe p/98765432 a/John street, block 123, #01-01 f/Chicken Rice` : adds an order of chicken rice from customer `John Doe` to the queue.
 * **`process`**`3` : process the 3rd order shown in the current list and add it to the processing queue
 * *`exit`* : exits the app
 
@@ -827,7 +827,7 @@ e.g. `tag 1 Delivered`
 
 == Command Summary (short form)(alphabetical)
 * *Add* `a n/NAME p/PHONE_NUMBER a/ADDRESS f/FOOD_ORDER [t/TAG]...` +
-e.g. `a n/James Ho p/22224444 a/123, Clementi Rd, 1234665 f/Chicken rice t/friend t/colleague`
+e.g. `a n/James Ho p/22224444 a/123, Clementi Rd, 1234665 f/Chicken Rice t/friend t/colleague`
 * *Clear* : `c`
 * *CompleteOne* : `cOne INDEX` +
 e.g. `cOne 2`

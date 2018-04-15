@@ -120,6 +120,17 @@ public class UniqueActivityList implements Iterable<Activity> {
         return activityFoundAndDeleted;
     }
 
+    //@@author Kyomian
+    /**
+     * Clears either all tasks in deskboard or all events.
+     * @param activityTypeToClear
+     */
+    public void clear(String activityTypeToClear) {
+        internalList.removeIf(activity ->
+            activity.getActivityType().equals(activityTypeToClear)
+        );
+    }
+
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

@@ -35,7 +35,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.DeskBoard;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalActivities;
@@ -150,14 +149,6 @@ public abstract class DeskBoardSystemTest {
     protected void showPersonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
         assertTrue(getModel().getFilteredActivityList().size() < getModel().getDeskBoard().getActivityList().size());
-    }
-
-    /**
-     * Selects the activity at {@code index} of the displayed list.
-     */
-    protected void selectPerson(Index index) {
-        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
-        assertEquals(index.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
     /**

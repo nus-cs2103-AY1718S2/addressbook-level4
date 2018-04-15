@@ -47,10 +47,10 @@ public class HelpCommand extends Command {
             //case EditCommand.COMMAND_WORD:
                 //return new CommandResult(EditCommand.MESSAGE_USAGE);
 
-            //case SelectCommand.COMMAND_WORD:
-                //return new CommandResult(SelectCommand.MESSAGE_USAGE);
-
             case RemoveCommand.COMMAND_WORD:
+                return new CommandResult(RemoveCommand.MESSAGE_USAGE);
+
+            case RemoveCommand.COMMAND_ALIAS:
                 return new CommandResult(RemoveCommand.MESSAGE_USAGE);
 
             case HelpCommand.COMMAND_WORD:
@@ -68,11 +68,32 @@ public class HelpCommand extends Command {
             case FindCommand.COMMAND_WORD:
                 return new CommandResult(FindCommand.MESSAGE_USAGE);
 
+            case OverdueCommand.COMMAND_WORD:
+                return new CommandResult(OverdueCommand.MESSAGE_USAGE);
+
             case ImportCommand.COMMAND_WORD:
                 return new CommandResult(ImportCommand.MESSAGE_USAGE);
 
             case ExportCommand.COMMAND_WORD:
                 return new CommandResult(ExportCommand.MESSAGE_USAGE);
+
+            case UndoCommand.COMMAND_WORD:
+                return new CommandResult(UndoCommand.MESSAGE_USAGE);
+
+            case UndoCommand.COMMAND_ALIAS:
+                return new CommandResult(UndoCommand.MESSAGE_USAGE);
+
+            case RedoCommand.COMMAND_WORD:
+                return new CommandResult(RedoCommand.MESSAGE_USAGE);
+
+            case RedoCommand.COMMAND_ALIAS:
+                return new CommandResult(RedoCommand.MESSAGE_USAGE);
+
+            case ClearCommand.COMMAND_WORD:
+                return new CommandResult(ClearCommand.MESSAGE_USAGE);
+
+            case ClearCommand.COMMAND_ALIAS:
+                return new CommandResult(ClearCommand.MESSAGE_USAGE);
 
             default:
                 throw new CommandException(MESSAGE_USAGE);

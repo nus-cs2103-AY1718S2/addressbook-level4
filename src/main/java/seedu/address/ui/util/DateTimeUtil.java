@@ -1,6 +1,5 @@
 package seedu.address.ui.util;
 
-import java.time.DateTimeException;
 import java.time.format.DateTimeFormatter;
 
 import seedu.address.model.activity.DateTime;
@@ -20,7 +19,7 @@ public class DateTimeUtil {
     /**
      * Formats DateTime of task as day, name of month, year, hours and minutes
      */
-    public static String getDisplayedDateTime(Task task) throws DateTimeException {
+    public static String getDisplayedDateTime(Task task) {
         DateTime dateTime = task.getDateTime();
         String displayedDateTime = displayFormatter.format(dateTime.getLocalDateTime());
         return displayedDateTime;
@@ -29,7 +28,7 @@ public class DateTimeUtil {
     /**
      * Formats StartDateTime of event as day, name of month, year, hours and minutes
      */
-    public static String getDisplayedStartDateTime(Event event) throws DateTimeException {
+    public static String getDisplayedStartDateTime(Event event) {
         DateTime dateTime = event.getStartDateTime();
         String displayedDateTime = displayFormatter.format(dateTime.getLocalDateTime());
         return displayedDateTime;
@@ -38,7 +37,7 @@ public class DateTimeUtil {
     /**
      * Formats EndDateTime of event as day, name of month, year, hours and minutes
      */
-    public static String getDisplayedEndDateTime(Event event) throws DateTimeException {
+    public static String getDisplayedEndDateTime(Event event) {
         DateTime dateTime = event.getEndDateTime();
         String displayedDateTime = displayFormatter.format(dateTime.getLocalDateTime());
         return displayedDateTime;

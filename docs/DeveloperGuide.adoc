@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W15-B2/main
 
 By: `Team W15-B2`      Since: `March 2018`      Licence: `MIT`
 
@@ -25,6 +25,7 @@ This section details how you can go about setting up IMDB.
 
 === Prerequisites
 Please ensure the following are installed before setting up IMDB: +
+
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
@@ -92,9 +93,9 @@ This section provides an explanation of how IMDB is designed.
 [[Design-Architecture]]
 === Architecture
 
-The *_Architecture Diagram_* given below explains the high-level design of the App. +
+The high-level design of the IMDB is given in Figure 1 below. +
 
-.Architecture Diagram
+.Architecture diagram
 image::Architecture.png[width="600"]
 
 {empty} +
@@ -129,18 +130,18 @@ The rest of the 4 components does the following:
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see Figure 2 below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 {empty} +
 {empty} +
 
-.Class Diagram of the Logic Component
+.Class diagram of the logic component
 image::LogicClassDiagram.png[width="800"]
 
 {empty} +
 
 === Events-driven Nature
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ given in Figure 3 below shows how the components interact for the scenario where the user issues the command `delete 1`.
 {empty} +
 {empty} +
 
@@ -150,7 +151,7 @@ image::SDforDeletePerson.png[width="800"]
 [NOTE]
 Note how the `Model` simply raises a `IMDBChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+Figure 4 below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
@@ -162,13 +163,13 @@ The sections below give more details of each component.
 
 [[Design-Ui]]
 === UI component
-The diagram below is an overview of the structure of the `UI` component. +
+The overview of the structure of the `UI` component is given below in Figure 5. +
 
-.Structure of the UI Component
+.Structure of the UI component
 image::UiClassDiagram.png[width="800"]
 
 {empty} +
-You may wish to refer to the following for more information about the API of the `UI`: link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`UI.java`]
+You may wish to refer to the following for more information about the API of the `UI` component: link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`UI.java`]
 
 The `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
@@ -180,20 +181,20 @@ The `UI` component responds to events raised from various parts of the App and u
 
 [[Design-Logic]]
 === Logic component
-The diagram below is an overview of the structure of the `Logic` component. +
+The overview of the structure of the `Logic` component is given below in Figure 6. +
 
 [[fig-LogicClassDiagram]]
-.Structure of the Logic Component
+.Structure of the logic component
 image::LogicClassDiagram.png[width="800"]
 
-The diagram below shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> +
+Figure 7 below shows the finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> +
 
-.Structure of Commands in the Logic Component.
+.Structure of commands in the logic component.
 image::LogicCommandClassDiagram.png[width="800"]
 
 {empty} +
 
-*API* :
+You may wish to refer to the following for more information about the API of the `Logic` component:
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 The `Logic` component first uses the `IMDBParser` class to parse the user command.
@@ -201,23 +202,24 @@ This results in a `Command` object which is executed by the `LogicManager`.
 The command execution can then affect the `Model` (e.g. adding a patient) and/or raise events.
 Lastly, the result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below in Figure 8 is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 {empty} +
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+.Interactions inside the logic component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
 {empty} +
 
 [[Design-Model]]
 === Model component
-The diagram below is an overview of the structure of the `Model` component. +
+The overview of the structure of the `Model` component is given in Figure 9 below. +
 
-.Structure of the Model Component
+.Structure of the model component
 image::ModelClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+You may wish to refer to the following for more information about the API of the `Model` component:
+ link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`:
 
@@ -228,12 +230,12 @@ The `Model`:
 
 [[Design-Storage]]
 === Storage component
-The diagram below is an overview of the structure of the `Storage` component. +
+The overview of the structure of the `Storage` component is given in Figure 10 below. +
 
-.Structure of the Storage Component
+.Structure of the storage component
 image::StorageClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+You may wish to refer to the following for more information about the API of the `Storage` component: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component:
 
@@ -250,9 +252,9 @@ This section describes some noteworthy details on how certain features are imple
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. Figure 11 shows the inheritance diagram for commands:
 
-.Structure of the Logic component
+.Structure of the logic component
 image::LogicCommandClassDiagram.png[width="800"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -290,12 +292,14 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th patient in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command), as shown in the diagram below.
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th patient in the address book. The current state of the address book is saved
+before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack`
+(the current state is saved together with the command), as shown in Figure 12 below.
 
 .Structure of the stacks before and after deletion
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`, as shown in the diagram below. For example, the user may execute `add n/David ...` to add a new patient.
+As the user continues to use the program, more commands are added into the `undoStack`, as shown in Figure 13 below. For example, the user may execute `add n/David ...` to add a new patient.
 
 .Structure of the stacks before and after addition
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
@@ -305,7 +309,8 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the patient was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed, as shown in the diagram below.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`.
+We will restore the address book to the state before the `add` command executed, as shown in Figure 14 below.
 
 .Structure of the stacks before and after redoing
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
@@ -313,7 +318,7 @@ image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The sequence diagram shown in Figure 15 displays how the undo operation works:
 
 .Sequence diagram detailing the undo operation in action
 image::UndoRedoSequenceDiagram.png[width="800"]
@@ -323,17 +328,17 @@ The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, an
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`, as shown in the diagram below. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`, as shown in Figure 16 below. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 .Structure of the stacks before and after clearing
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution, as shown in the diagam below.
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution, as shown in Figure 17 below.
 
 .Structure of the stacks before and after listing
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+Figure 18 summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 .Activity diagram summary of the stacks whenever a command is executed
 image::UndoRedoActivityDiagram.png[width="650"]
@@ -411,25 +416,25 @@ public CommandResult executeUndoableCommand() throws CommandException {
     }
 ----
 
-Suppose that the user has just launched the application. The current patient queue is shown in the figure below.
+Suppose that the user has just launched the application. The current patient queue is shown in Figure 19 below.
 
 .The current queue
-image::Figure 3.2.1.1.png[width="800"]
+image::Figure 3.2.1.1.PNG[width="800"]
 
 The user now decides to edit the remarks of the first person in the list.
 
 `RemarkCommand` will search for the first person in the list and store it as the person to be edited.
 `RemarkCommand` will then create a new patient with the same attributes as the patient to be edited, except the remarks attribute
-which will be based on the user input. This new patient will be stored as the edited patient as shown in the figure below.
+which will be based on the user input. This new patient will be stored as the edited patient as shown in Figure 20 below.
 
 .The patient before and after editing
-image::Figure 3.2.1.2.png[width="800"]
+image::Figure 3.2.1.2.PNG[width="800"]
 
 `RemarkCommand` will finally call the for the utility method `updatePerson` under `Model`, to replace the patient to be edited with the edited patient,
-the new list will be as shown in the figure below.
+the new list will be as shown in Figure 21 below.
 
 .The queue with updated details
-image::Figure 3.2.1.3.png[width="800"]
+image::Figure 3.2.1.3.PNG[width="800"]
 
 ==== Design Considerations
 
@@ -495,7 +500,7 @@ Delete Condition:
 
 It allows the user to simply add on to, or delete from, the list of conditions a patient has rather than have to retype all of the patient's conditions.
 
-Suppose that the user has just launched the application. The current list is shown in Figure 25 below.
+Suppose that the user has just launched the application. The current list is shown in Figure 22 below.
 
 .The current queue
 image::Figure3-4-1-1.png[width="800"]
@@ -504,13 +509,13 @@ The user now adds a `seafood` allergy to `David`{empty}'s list of medical condit
 
 `AddConditionCommand` will select the person in the list based on the index provided and store it as the person to be edited.
 `AddConditionCommand` will then create a new patient with the same attributes as the patient to be edited, except the `Condition` attribute which now has additional conditions
-based on the user input. This new patient will be stored as the edited patient as shown in Figure 26 below.
+based on the user input. This new patient will be stored as the edited patient as shown in Figure 23 below.
 
 .The patient before and after editing
 image::Figure3-4-1-2.png[width="800"]
 
 `EditCommand` will finally call the for the utility method `updatePerson` under `Model`, to replace the patient to be edited with the edited patient,
-the new list will be as shown in Figure 27 below.
+the new list will be as shown in Figure 24 below.
 
 .The queue with updated details
 image::Figure3-4-1-3.png[width="800"]
@@ -541,7 +546,7 @@ The addition mechanism functions like that of the `AddCommand` but uses only the
 The user can find patients with certain keywords in their name using `FindCommand` then add them into queue according to the list index displayed.
 The `AddPatientQueueCommand` then calls for the utility method `addPatientToQueue` under `Model`, to update the visiting queue and triggers an `IMDBChangedEvent` to the `UI` to update `VisitingQueuePanel`.
 
-Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure 3.4.1.1 below.
+Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure 25 below.
 
 .The empty queue
 image::emptyVisitQueue.png[width="800"]
@@ -549,7 +554,7 @@ image::emptyVisitQueue.png[width="800"]
 The user now decides to add a patient into the queue.
 
 `AddPatientQueueCommand` will check if the index given is valid and is in the bound of the current list displayed. If the given index is valid and in the bound, `AddPatientQueueCommand` will then call the for the utility method `addPatientToQueue` under `Model`, to add the patient index into the visiting queue.
-The updated queue is shown in the figure below.
+The updated queue is shown in Figure 26 below.
 
 .The updated queue
 image::patientInQueue.png[width="800"]
@@ -558,7 +563,7 @@ The removal mechanism functions like that of the `DeleteCommand`. If no paramete
 If the user wants to remove a specific patient in the queue, the user can provide the patient index as parameter in the command.
 The `RemovePatientQueueCommand` then calls for the utility method `removePatientFromQueue` under `Model`, to update the visiting queue and trigger an `IMDBChangedEvent` to `UI` to update the `VisitingQueuePanel`.
 
-Suppose that the queue contains patients as shown in the figure below.
+Suppose that the queue contains patients as shown in Figure 27 below.
 
 .The queue containing some patients
 image::patientsInQueue.png[width="800"]
@@ -567,7 +572,7 @@ image::patientsInQueue.png[width="800"]
 The user now decides to remove the first patient from the queue.
 
 `RemovePatientQueueCommand` will then call the for the utility method `removePatientFromQueue` under `Model`, to remove the patient from the visiting queue.
-The updated queue is shown in the figure below.
+The updated queue is shown in Figure 28 below.
 
 .The queue after a patient is removed
 image::patientInQueueRemoveState.png[width="800"]
@@ -713,26 +718,26 @@ protected void preprocessUndoableCommand() throws CommandException {
 ----
 
 
-Suppose that the user has just launched the application. The current patient queue is shown in the figure below.
+Suppose that the user has just launched the application. The current patient queue is shown in Figure 29 below.
 
 .The current queue
 image::Figure 3.5.1.1.png[width="800"]
 
 The user now decides to edit the first record of the first person in the list. Upon entering the command, a new window will pop up with each field displaying the
-details of the patient's current record as shown in the figure below.
+details of the patient's current record as shown in Figure 30 below.
 
 .The medical record window
 image::Figure 3.5.1.2.png[width="800"]
 
 After the user hits the enter button or clicks on the confirm button, `RecordCommand` will search for the first person in the list and store it as the person to be edited.
 `RecordCommand` will then create a new patient with the same attributes as the patient to be edited, except for the first record
-which will be edited based on the user's input into the medical record window. This new patient will be stored as the edited patient as shown in the figure below.
+which will be edited based on the user's input into the medical record window. This new patient will be stored as the edited patient as shown in Figure 31 below.
 
 .The patient before and after editing
 image::Figure 3.5.1.3.png[width="800"]
 
 `RecordCommand` will finally call the for the utility method `updatePerson` under `Model`, to replace the patient to be edited with the edited patient,
-the new list will be as shown in the figure below.
+the new list will be as shown in Figure 32 below.
 
 .The queue with updated details
 image::Figure 3.5.1.4.png[width="800"]
@@ -935,9 +940,9 @@ Here are the steps to convert the project documentation files to PDF format:
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in Figure 33 below.
 
-.Saving documentation as PDF files in Chrome
+.Saving documentation as PDF files in chrome
 image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
@@ -1695,6 +1700,24 @@ Expected: Invalid index error is shown.
 Expected: The first patient in the list is selected and his or her details displayed in the right panel.
 .. Type `select 9999` +
 Expected: Invalid index error is shown.
+
+=== Record
+
+. Views the medical record at the specified record index for a patient specified by the index number used in the last patient listing.
+.. Type `record 1 in/1` +
+Expected: The first patient in the list is selected and his or her first medical record details are displayed in a new window.
+.. Type `record 1 in/999` +
+Expected: The first patient in the list is selected and a new empty medical record is generate.
+.. Type `record 1 in/0` +
+Expected: Invalid record index error is shown.
+
+=== Remark
+
+. Edits the remarks for a patient specified by the index number used in the last patient listing.
+.. Type `remark 1 r/Weekly visits` +
+Expected: The first patient in the list is selected and his or her remarks are changed to `Weekly visits`.
+.. Type `remark 1 r/` +
+Expected: The first patient in the list is selected and his or her remarks are removed.
 
 [appendix]
 == Glossary

@@ -1,6 +1,7 @@
 = Ng Xin Ler - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103JAN2018-W11-B1/main
 
 == PROJECT: STUtor - V1.5
 

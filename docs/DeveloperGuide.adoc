@@ -1451,6 +1451,59 @@ These instructions only provide a starting point for testers to work on; testers
 .. Test case: `findmissing` +
    Expected: List of 1 person, containing only Johnny Doe as entered earlier. Message lists successful listing of 1 person.
 
+=== Autofill a command
+
+. Autofills a command in the command box
+
+.. Prerequisites: None.
+.. Test case: Type `add` then press the `Tab` key +
+   Expected: Add command with all fields will be displayed: `add n/ p/ e/ a/ $/ sub/ lvl/ r/`.
+   Position of caret will also be shifted to the first field to be entered (i.e. after `n/`)
+.. Test case: Type `add`, press the `Tab` key then the `Delete` key +
+   Expected: After pressing `Tab` key, expected output will be the same as above in part ii.
+   After pressing `Delete` key, the field and corresponding prefix will be removed and the caret will shift to the
+   next field to be filled in (i.e. the command box now looks like this: `add p/ e/ a/ $/ sub/ lvl/ r/`, with the caret
+   placed after `p/`.
+.. Test case: Type `add`, press the `Tab` key, type `John Doe`, shift caret to after `John` and press the `Delete` key (Not Recommended) +
+   Expected: After pressing `Tab` key, expected output will be the same as above in part ii.
+   By shifting the caret to the middle of a field (i.e. `n/John Doe`, with the caret positioned after `John`, input from
+   John to its prefix (i.e. `n/John` will be removed but `Doe` will still be there (i.e. the command box now looks like this:
+   `add Doe p/ e/ a/ $/ sub/ lvl/ r/`, with the caret positioned after `p/`.
+
+=== Adding a remark
+
+. Adding a remark to a specified person in STUtor
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `remark 1 r/Hardworking Student` +
+   Expected: Creates a remark 'Hardworking Student' for the 1st person in the list.
+.. Test case: `remark 1 edit` +
+   Expected: Edits a remark for the 1st person in the list. The person's previous remark (i.e. 'Hardworking Student' will be
+   displayed in the command box and the user will be able to edit the remark from there.
+.. Test case: `remark 1 r/` +
+   Expected: Removes the remark for the 1st person in the list.
+.. Test case: `remark 0 r/` +
+   Expected: No remark is added as the index specified is not within the range of persons in the list. Error details shown in the status message.
+
+=== Adding a rating
+
+. Adding a rating to a specified person in STUtor
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `rate 1 r/3.3` +
+   Expected: If this is the first time the first person in the list is being rated, the person will be given a rating of 3.3 and number of
+   people who rated the person will be 1. Else, all ratings for the person will be accumulated, average rating for the
+   person (to nearest 1 decimal place) will be displayed and the number of people who rated the person will increase by 1.
+.. Test case: `rate 1 r/4.0-` +
+   Expected: If this is the first time the person is being rated, the person will be given a rating of 4.0 and number of
+   people who rated the person will be 1. Else, this will resets the person's rating to 4.0 and the number of people who
+   rated the person to 1.
+.. Test case: `rate 0 r/4.0` +
+   Expected: No rating is added as the index specified is not within the range of persons in the list.
+   Error details shown in the status message.
+.. Test case: `rate 1 r/6.0` +
+   Expected: No rating is added as the rate specified is not within range. Error details shown in the status message.
+
 // tag::manualtestMatchUnmatch[]
 === Testing match and unmatch
 

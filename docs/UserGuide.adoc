@@ -526,6 +526,7 @@ image::print_window.PNG[width="990"]
 
 IMDB will be able to attach images(X-ray scans) to a patient and retrieve the images for viewing.
 
+// tag::visitingQueue[]
 === Visiting Queue Commands
 
 The commands listed in this section are realted to the management of the visiting queue of the clinic.
@@ -608,6 +609,9 @@ Removes the fourth patient in the patient list from the visiting queue.
 * `rq 2` +
 Removes the second patient in the patient list from the visiting queue.
 
+// end::visitingQueue[]
+
+// tag::patientAppointment[]
 === Appointment Commands
 
 The commands listed in this section are related to the management of patients’ appointments.
@@ -727,6 +731,8 @@ IMDB will be able to view the schedule for a patient across all specialists so t
 ==== Viewing the duty schedule for doctors across all specialists `[coming in v2.0]`
 
 IMDB will be able to view the duty schedule for doctors across all specialists so that medical staff can make arrangements if patient specifies which doctor he or she would like to visit for the appointment.
+
+// end::patientAppointment[]
 
 === Saving Data
 

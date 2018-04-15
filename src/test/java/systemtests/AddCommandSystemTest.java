@@ -131,7 +131,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + BIRTHDAY_DESC_BOB + TIMETABLE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except timetable -> added */
+        /* Case: add a person with all fields same as another person in the address book except timetable
+        -> NOT added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
                 .withTimetable(VALID_TIMETABLE_BOB).withTags(VALID_TAG_FRIEND).build();

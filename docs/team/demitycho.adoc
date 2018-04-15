@@ -21,11 +21,8 @@ This project is based on the https://github.com/se-edu/addressbook-level4[Addres
 ** What it does: It allows a user to add lessons for students in their contact list.
 *** Schedule helps tutors keep track of their lessons.
 *** Lessons can be added to the schedule.
-*** No clashing time slots allowed
-*** Able to upload contacts data and schedule data to Google Contacts and Calendar respectively.
-*** Easy organisation of data
-**** Data uploaded to Google Contact is uploaded under contact group label "Students"
-**** Data uploaded to Google Calendar is uploaded under calendar name "Student List". Events have the attendees as the students, so as to make the process of utilising Google Calendar much easier.
+*** Users can upload contacts data and schedule data to Google Contacts and Calendar respectively.
+*** Easy organisation of data: Data uploaded to Google Contact is uploaded under contact group label "Students". Data uploaded to Google Calendar is uploaded under calendar name "Student List". This make the process of utilising Google Accounts much easier.
 
 ** Justification: This feature improves the product significantly because:
 *** The target user faces a big problem in keeping track of their timetable and schedule. This feature allows a user to easily add, remove and view the events specific to his part time teaching job.
@@ -48,7 +45,7 @@ Both add up to around 3k lines of code.
 ** Project management:
 *** Managed releases `v1.3` and `v1.5rc` (2 releases) on GitHub
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com/CS2103JAN2018-W09-B3/main/pull/154[#154])
+*** Updated the current GUI color scheme (Pull requests https://github.com/CS2103JAN2018-W09-B3/main/pull/154[#154])
 *** Refactored `AddressBook` into a relational database where students are related to lessons by a `Uniquekey`
 ** Documentation:
 *** Refactored User guide with a more user-friendly tone, where it was more conversational and not so instructional. Gave the user guide a more personalised touch.

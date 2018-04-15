@@ -515,7 +515,7 @@ The Lesson is displayed with +
 
 ==== Viewing your Schedule
 
-Need a quick refresh of what lessons you have in the week? Coming from another panel? You can easily view your Schedule with a simple command. +
+A quick refresh of what lessons you have in the week is a simple command away. You can easily view your Schedule with a simple command. +
 
 ===== Format: `schedule`
 
@@ -530,7 +530,7 @@ image::scheduleResult.png[width="790"]
 
 ==== Adding a Lesson to your Schedule
 
-Your Student needs extra lessons? Got new Students that want lessons? Codeducator will allow you to add Lessons to your schedule.
+If your student needs extra lessons or you have new students that want lessons, Codeducator will allow you to add Lessons to your schedule.
 
 ===== Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]` +
 Adds a lesson for the Student identified by their `INDEX`, for a certain `DAY`, starting at `START_TIME` and ending at `END_TIME` +
@@ -578,10 +578,10 @@ image::addLessonStep2.png[width="790"]
 +
 .Result of the `addLesson` command
 image::addLessonResult.png[width="790"]
-
+// end::schedule[]
 ==== Deleting a Lesson in your Schedule
 
-Need to remove lessons because Students drop out? Let's use Codeducator's `deleteLesson` command to do that for you.
+You may wish to remove lessons because students drop out. Let's use Codeducator's `deleteLesson` command to do that for you.
 
 ===== Format: `deleteLesson INDEX` +
 Deletes an existing lesson in your schedule identified by the index number in the last schedule listing. of day, i.e. `mon` for Monday, `fri` for Friday.
@@ -614,7 +614,7 @@ image::deleteLessonStep2.png[width="790"]
 +
 .Result of executing the `deleteLesson` command
 image::deleteLessonResult.png[width="790"]
-// end::schedule[]
+
 
 // tag::sync[]
 === Syncing with your Google Account
@@ -743,7 +743,7 @@ image::syncResult2.png[width="790"]
 .You will see this message if you successfully synced your account!
 image::syncResult3.png[width="790"]
 +
-. Congrats, your data has been synchronised! You are free to use them across your devices in anyway that Google Contacts and Calendar supports!
+. Your data has been synchronised! You are free to use them across your devices in anyway that Google Contacts and Calendar supports!
 
 [NOTE]
 =====

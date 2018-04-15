@@ -1667,9 +1667,9 @@ Expected: IMDB shows successful login message, and all commands for doctor can b
 
 . Printing a patient's medical records while all patients are listed.
 .. Prerequisites: List all patients using the `list` command, multiple patients in the list, first patient has some records.
-.. Test case: `print 1` +
+.. Type `print 1` +
 Expected: Medical records of first patient in the list is printed into a PDF, which is opened by a PDF-reading program.
-.. Test case: `print 0` +
+.. Type `print 0` +
 Expected: Nothing is printed. Error details shown in the status message.
 
 === Add Conditions

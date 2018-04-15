@@ -18,6 +18,9 @@ import guitests.guihandles.BirthdayNotificationHandle;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BirthdaysCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.Model;
 
 //@@author AzuraAiR
 /**
@@ -43,23 +46,31 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void openBirthdayList() {
-        //use command box
+        /* Case: open birthday list -> success */
         executeCommand(BirthdaysCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(expectedResult, getBirthdayList().getText());
-    }
 
-    @Test
-    public void openEmptyBirthdayList() {
-        //use command box
+        /* Case: undo previous command -> rejected */
+        String command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: empty birthday list -> success */
         deleteAllPersonsAndAliases();
         executeCommand(BirthdaysCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals("", getBirthdayList().getText());
     }
 
+
     @Test
-    public void assertBirthdayListWithOnePersonToday() {
+    public void assertBirthdayNotificationWithOnePersonToday() {
         // Simulation of commands to create only one person whose birthday is today
         deleteAllPersonsAndAliases();
         executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
@@ -77,7 +88,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     }
 
     @Test
-    public void assertBirthdayListWithZeroPersonToday() {
+    public void assertBirthdayNotificationWithZeroPersonToday() {
         // Simulation of commands to create only one person whose birthday is today
         deleteAllPersonsAndAliases();
         executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
@@ -151,6 +162,27 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
         string.append("\n");
 
         return string.toString();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
     }
 
 }

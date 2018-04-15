@@ -2,7 +2,7 @@
 ###### \java\seedu\address\commons\events\ui\BirthdayListEvent.java
 ``` java
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a call for the Birthday List to be displayed
  */
 public class BirthdayListEvent extends BaseEvent {
 
@@ -25,7 +25,7 @@ public class BirthdayListEvent extends BaseEvent {
 ###### \java\seedu\address\commons\events\ui\BirthdayNotificationEvent.java
 ``` java
 /**
- * Represents a call for the Birthday Notification
+ * Represents a call for the Birthday Notification to be displayed
  */
 public class BirthdayNotificationEvent extends BaseEvent {
 
@@ -137,8 +137,8 @@ public class TimetableParserUtil {
     public static final String URL_MINUS_SIGN_REGEX = "-";
     public static final String URL_COMMA_SIGN_REGEX = ",";
     public static final String URL_COLON_REGEX = ":";
-    public static final int SEMSTER_NUMBER_URL_INDEX = 4;
-    public static final int SEMSTER_NUMBER_INTEGER_INDEX = 1;
+    public static final int SEMESTER_NUMBER_URL_INDEX = 4;
+    public static final int SEMESTER_NUMBER_INTEGER_INDEX = 1;
     public static final int LAST_STRING_URL_INDEX = 5;
     public static final int MODULE_STRING_INDEX = 1;
     public static final int MODULE_CODE_INDEX = 0;
@@ -168,8 +168,8 @@ public class TimetableParserUtil {
      * Attempts to access NUSMods to obtain the full NUSMods url
      * @param url shortened NUSMods url
      * @return long url
-     * @throws ParseException when the long
-     * @throws NoInternetConnectionException when
+     * @throws ParseException if the parsing fails and returns the default NUSMods URL
+     * @throws NoInternetConnectionException when the app timeouts in obtaining the long url
      */
     public static String parseShortUrl (String url) throws ParseException, NoInternetConnectionException {
         try {
@@ -205,11 +205,11 @@ public class TimetableParserUtil {
         ArrayList<Lesson> totalLessonList = new ArrayList<Lesson>();
         ArrayList<Lesson> lessonsToAddFromModule;
 
-        // Seperate semester number normally found at the fifth part
-        String semNum = urlParts[SEMSTER_NUMBER_URL_INDEX];
-        // Seperate "share" out of last part of url
+        // Separate semester number normally found at the fifth part
+        String semNum = urlParts[SEMESTER_NUMBER_URL_INDEX];
+        // Separate "share" out of last part of url
         String[] toParse = urlParts[LAST_STRING_URL_INDEX].split(URL_QUESTION_MARK_REGEX);
-        // Seperate the modules in last part of url
+        // Separate the modules in last part of url
         String[] modules = toParse[MODULE_STRING_INDEX].split(URL_AND_SIGN_REGEX);
 
         // Loop to find the modules taken and create the Lessons taken to add into Timetable
@@ -233,14 +233,18 @@ public class TimetableParserUtil {
         ArrayList<Lesson> lessonListFromApi;
         ArrayList<Lesson> lessonsTakenList;
         lessonsTakenList = new ArrayList<Lesson>();
+        // Separate the module code
         String[] moduleInfo = module.split(URL_EQUALS_SIGN_REGEX);
+        // Separate the number from SEM-NUM
         String[] semNumToParse = semNum.split(URL_MINUS_SIGN_REGEX);
-        int semNumInt = Integer.parseInt(semNumToParse[SEMSTER_NUMBER_INTEGER_INDEX]);
+        int semNumInt = Integer.parseInt(semNumToParse[SEMESTER_NUMBER_INTEGER_INDEX]);
         String moduleCode = moduleInfo[MODULE_CODE_INDEX];
+        //Separate the individual lessons
         String[] lessonsTaken = moduleInfo[LESSON_STRING_INDEX].split(URL_COMMA_SIGN_REGEX);
 
         lessonListFromApi = obtainModuleInfoFromApi(moduleCode, semNumInt);
 
+        // Main loop to add lessons to list
         for (String lessonTaken : lessonsTaken) {
             String[] lessonToParse = lessonTaken.split(URL_COLON_REGEX);
             String lessonType = convertShortFormToLong(lessonToParse[LESSON_TYPE_INDEX]);
@@ -351,7 +355,8 @@ public class BirthdaysCommand extends Command {
 
     public static final String ADDITIONAL_COMMAND_PARAMETER = "today";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list containing all persons' birthdays."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list containing all persons' birthdays. "
+            + "Or display a list of birthdays today"
             + "Optional Parameters: "
             + ADDITIONAL_COMMAND_PARAMETER
             + "Example: " + COMMAND_WORD + ", " + COMMAND_WORD + " " + ADDITIONAL_COMMAND_PARAMETER;
@@ -500,8 +505,9 @@ public class TimetableUnionCommand extends Command {
     public static final String COMMAND_WORD = "union";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the unified timetable of the persons entered\n"
-            + "Parameters: INDEX ODD/EVEN INDEX1 INDEX2 INDEX3..."
-            + "(indexes must be unique positive integers and separated by one space)\n"
+            + "Parameters: INDEX ODD/EVEN INDEX1 INDEX2 [INDEX3]..."
+            + "(There must be a minimum number of 2 indexes, "
+            + "which must be unique positive integers and separated by one space)\n"
             + "Example: " + COMMAND_WORD + "Odd " + "1 " + "2 " + "3";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Combined Timetable: %2$s";
@@ -1200,7 +1206,7 @@ public class TimetableDay {
  */
 public class TimetableSlot {
 
-    private Lesson lesson;
+    private ArrayList<Lesson> lessons = new ArrayList<>();
 
     /**
      * Fills up the slot with the given lesson
@@ -1208,19 +1214,44 @@ public class TimetableSlot {
      */
     public void addLessonToSlot(Lesson lesson) {
         requireNonNull(lesson);
-        this.lesson = lesson;
+
+        this.lessons.add(lesson);
     }
 
     public Lesson getLesson() {
-        return lesson;
+        return concat(lessons);
     }
 
     @Override
     public String toString() {
-        if (lesson == null) {
+        if (lessons.size() == 0) {
             return "";
         }
-        return lesson.toString();
+        String resultString = new String();
+        for (Lesson lesson: lessons) {
+            resultString += lesson + " \n";
+        }
+        return resultString;
+    }
+
+    /**
+     * Merges all the lessons in this time slot.
+     * @return a merged Lesson
+     */
+    private Lesson concat(ArrayList<Lesson> lessons) {
+        String concatModCode = new String();
+        String concatClassNo = new String();
+        String concatLessonType = new String();
+
+        for (Lesson lesson: lessons) {
+            concatModCode += lesson.getModuleCode() + " ";
+            concatClassNo += lesson.getClassNo() + " ";
+            concatLessonType += lesson.getLessonType() + " ";
+        }
+        Lesson lesson = lessons.get(0);
+        Lesson concatLesson = new Lesson(concatModCode, concatClassNo, concatLessonType, lesson.getWeekType(),
+                lesson.getDay(), lesson.getStartTime(), lesson.getEndTime());
+        return concatLesson;
     }
 }
 ```
@@ -1260,32 +1291,28 @@ public class TimetableWeek {
      * @throws IllegalValueException when Day is invalid
      */
     public void addLessonToWeek(Lesson lesson) throws IllegalValueException {
-        try {
-            switch (lesson.getDay()) {
-            case MONDAY_IDENTIFIER:
-                timetableDays[MONDAY_INDEX].addLessonToDay(lesson);
-                break;
+        switch (lesson.getDay()) {
+        case MONDAY_IDENTIFIER:
+            timetableDays[MONDAY_INDEX].addLessonToDay(lesson);
+            break;
 
-            case TUESDAY_IDENTIFIER:
-                timetableDays[TUESDAY_INDEX].addLessonToDay(lesson);
-                break;
+        case TUESDAY_IDENTIFIER:
+            timetableDays[TUESDAY_INDEX].addLessonToDay(lesson);
+            break;
 
-            case WEDNESDAY_IDENTIFIER:
-                timetableDays[WEDNESDAY_INDEX].addLessonToDay(lesson);
-                break;
+        case WEDNESDAY_IDENTIFIER:
+            timetableDays[WEDNESDAY_INDEX].addLessonToDay(lesson);
+            break;
 
-            case THURSDAY_IDENTIFIER:
-                timetableDays[THURSDAY_INDEX].addLessonToDay(lesson);
-                break;
+        case THURSDAY_IDENTIFIER:
+            timetableDays[THURSDAY_INDEX].addLessonToDay(lesson);
+            break;
 
-            case FRIDAY_IDENTIFIER:
-                timetableDays[FRIDAY_INDEX].addLessonToDay(lesson);
-                break;
+        case FRIDAY_IDENTIFIER:
+            timetableDays[FRIDAY_INDEX].addLessonToDay(lesson);
+            break;
 
-            default:
-                throw new IllegalValueException(MESSAGE_INVALID_DAY);
-            }
-        } catch (IllegalValueException ie) {
+        default:
             throw new IllegalValueException(MESSAGE_INVALID_DAY);
         }
     }
@@ -1396,7 +1423,7 @@ public class TimetableWeek {
 ###### \java\seedu\address\ui\BirthdayList.java
 ``` java
 /**
- * A ui for the status bar that is displayed at the header of the application.
+ * A ui for the birthday list that is displayed at the InfoPanel after `birthdays` is called
  */
 public class BirthdayList extends UiPart<Region> {
 
@@ -1406,10 +1433,16 @@ public class BirthdayList extends UiPart<Region> {
 
     @FXML
     private TextArea birthdayList;
+    @FXML
+    private ScrollPane scrollPane;
 
     public BirthdayList() {
         super(FXML);
         birthdayList.textProperty().bind(displayed);
+        scrollPane.setContent(birthdayList);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
     }
 
     public void loadList(String list) {
@@ -1421,7 +1454,7 @@ public class BirthdayList extends UiPart<Region> {
 ###### \java\seedu\address\ui\BirthdayNotification.java
 ``` java
 /**
- * A ui for the notification dialog that is displayed at the start of the application and
+ * A ui for the notification dialog that is displayed at the start of the application or
  * after `birthdays today` is called.
  */
 public class BirthdayNotification extends UiPart<Region> {
@@ -1459,9 +1492,7 @@ public class BirthdayNotification extends UiPart<Region> {
     private void handleBirthdayListEvent(BirthdayListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-        birthdayPlaceholder.getChildren().removeAll();
         birthdayList.loadList(event.getBirthdayList());
-        birthdayPlaceholder.getChildren().add(birthdayList.getRoot());
         birthdayPlaceholder.toFront();
     }
 ```
@@ -1565,36 +1596,53 @@ public class TimetableUnionPanel extends UiPart<Region> {
     }
 
     /**
-     * Sets the command box style to indicate free or having lesson
+     * Sets the columns to the style for each value.
      */
     public void setStyle() {
         for (int i = 0; i < columns.size(); i++) {
-            columns.get(i).setCellFactory(column -> {
-                return new TableCell<ArrayList<String>, String>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (item == null || empty) {
-                            setText(null);
-                            setStyle("");
-                        } else {
-
-                            setText(item);
-                            removeAllStyle(this);
-                            if ("".equals(getItem())) {
-                                getStyleClass().add(EMPTY_STYLE_CLASS);
-                            } else if (StringUtil.isDay(getItem())) {
-                                getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
-                            } else {
-                                getStyleClass().add(getColorStyleFor(getItem()));
-                            }
-                        }
-                    }
-                };
-            });
+            TableColumn<ArrayList<String>, String> columnToBeSet = columns.get(i);
+            setStyleForColumn(columnToBeSet);
         }
     }
+
+    /**
+     * Sets the style of each column.
+     * @param columnToBeSet is the column that would be set
+     */
+    private void setStyleForColumn (TableColumn<ArrayList<String>, String> columnToBeSet) {
+        columnToBeSet.setCellFactory(column -> {
+            return setStyleForCell();
+        });
+    }
+
+    /**
+     * Sets the style of the cell given the data and return it
+     * @return the tablecell with its style set.
+     */
+    private TableCell<ArrayList<String>, String> setStyleForCell () {
+        return new TableCell<ArrayList<String>, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    removeAllStyle(this);
+                    if ("".equals(getItem())) {
+                        getStyleClass().add(EMPTY_STYLE_CLASS);
+                    } else if (StringUtil.isDay(getItem())) {
+                        getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
+                    } else {
+                        getStyleClass().add(getColorStyleFor(getItem()));
+                    }
+                }
+            }
+        };
+    }
+
 
     /**
      * Removes all styles present in cell
@@ -1620,9 +1668,12 @@ public class TimetableUnionPanel extends UiPart<Region> {
 ```
 ###### \resources\view\BirthdayList.fxml
 ``` fxml
+<?import javafx.scene.control.ScrollPane?>
 <StackPane fx:id="birthdayPlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextArea fx:id="birthdayList" editable="false" />
+      <ScrollPane fx:id="scrollPane" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+            <TextArea fx:id="birthdayList" editable="false" />
+      </ScrollPane>
    </children>
 </StackPane>
 ```

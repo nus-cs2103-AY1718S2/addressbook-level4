@@ -981,9 +981,9 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.task.Task;
-import seedu.address.model.task.exceptions.TaskNotFoundException;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.CompleteMoreOrderCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Implementation follows {@code DeleteCommand}
@@ -1007,8 +1007,10 @@ public class DeleteOrderCommand extends UndoableCommand {
     }
 
 
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.CompleteOneOrderCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 
         List<Task> lastShownList = model.getFilteredTaskList();
 

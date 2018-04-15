@@ -12,18 +12,10 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Halal;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Vegetarian;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.queue.TaskList;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 
@@ -34,6 +26,7 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 public class ProcessOrderCommand extends Command {
     public static final String COMMAND_WORD = "process";
+    public static final String COMMAND_ALIAS = "ps";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds the order identified by the index number into the processing queue\n"
@@ -41,8 +34,10 @@ public class ProcessOrderCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "New Order added: %1$s";
-    public static final String MESSAGE_DUPLICATE_TASK = "This order already exists in the processing queue";
+    public static final String MESSAGE_DUPLICATE_TASK = "This order already exists in the processing queue.";
     public static final String MESSAGE_FULL_CAPACITY = "Kitchen is at full capacity. No available chef.";
+    public static final String MESSAGE_ALREADY_PROCESSED = "This order has already being processed.\n"
+            + "WARNING: DO NOT OVERWRTIE EXISTING ‘Processed’, ‘Cooked’ TAGS.";
 
     protected Index targetIndex;
 
@@ -78,11 +73,15 @@ public class ProcessOrderCommand extends Command {
 
         Person personToAdd = lastShownList.get(targetIndex.getZeroBased());
 
+        if (CommandHelper.checkIsProcessed(personToAdd)) {
+            throw new CommandException(MESSAGE_ALREADY_PROCESSED);
+        }
+
         toAdd = new Task(personToAdd, orderTime);
 
         Person personToEdit = personToAdd;
         // labels person with tag "Processing"
-        Person editedPerson = createNewTaggedPerson(personToEdit, "Processed");
+        Person editedPerson = CommandHelper.createNewTaggedPerson(personToEdit, "Processed");
 
         addAndTag(toAdd, personToEdit, editedPerson);
 
@@ -90,11 +89,12 @@ public class ProcessOrderCommand extends Command {
     }
 
     /**
-     *
+     * adds the order to the processing queue, and tag the matching person
+     * with tag "Processed"
      * @param toAdd task to be added
      * @param personToEdit original person
      * @param editedPerson replacement
-     * @throws CommandException
+     * @throws CommandException exceptions
      */
     protected void addAndTag(Task toAdd, Person personToEdit, Person editedPerson) throws CommandException {
         try {
@@ -130,28 +130,5 @@ public class ProcessOrderCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof ProcessOrderCommand // instanceof handles nulls
                 && toAdd.equals(((ProcessOrderCommand) other).toAdd));
-    }
-
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     */
-    protected Person createNewTaggedPerson(Person personToEdit, String tag) {
-        assert personToEdit != null;
-
-        Name updatedName = personToEdit.getName();
-        Phone updatedPhone = personToEdit.getPhone();
-        Order updatedOrder = personToEdit.getOrder();
-        Address updatedAddress = personToEdit.getAddress();
-        Halal updatedHalal = personToEdit.getHalal();
-        Vegetarian updatedVegetarian = personToEdit.getVegetarian();
-        UniqueTagList updatedTags = new UniqueTagList(personToEdit.getTags());
-
-        try {
-            updatedTags.add(new Tag(tag));
-        } catch (UniqueTagList.DuplicateTagException dte) {
-            //does not add tag "processing" if already exists
-        }
-        return new Person(updatedName, updatedPhone, updatedOrder, updatedAddress,
-                updatedHalal, updatedVegetarian, updatedTags);
     }
 }

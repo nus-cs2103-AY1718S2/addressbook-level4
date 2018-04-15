@@ -12,8 +12,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class ProcessMoreCommandParser implements Parser<ProcessMoreCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the CompleteOrderCommand
-     * and returns an CompleteOrderCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the CompleteMoreOrderCommand
+     * and returns an CompleteMoreOrderCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public ProcessMoreCommand parse(String args) throws ParseException {

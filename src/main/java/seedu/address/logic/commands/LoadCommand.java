@@ -16,9 +16,13 @@ public class LoadCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Load the inputted web page "
             + "Parameters: web page link\n"
-            + "Example: " + COMMAND_WORD + " www.google.com.sg";
+            + "Example: " + COMMAND_WORD + " https://www.google.com.sg "
+            + "WARNING: PLEASE ENSURE URL ENTERED IS VALID AS SYSTEM WOULD NOT "
+            + " FEEDBACK ERROR MESSAGE WHEN PAGE IS INVALID";
 
-    public static final String MESSAGE_LOAD_PAGE_SUCCESS = "Load Successful: %1$s";
+    public static final String MESSAGE_LOAD_PAGE_SUCCESS = "Load Page: %1$s, need to have https://\n"
+            + "It could take a while if internet connection is slow.\n"
+            + "However, if page does not load after a long time, please double check url entered";
 
     private final String url;
 

@@ -14,6 +14,7 @@ import java.util.Set;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.ShowUpdatedSessionLogEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -75,6 +76,7 @@ public class AddSessionLogCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         EventsCenter.getInstance().post(new ShowUpdatedSessionLogEvent(editedPerson));
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
         return new CommandResult(String.format(MESSAGE_ADD_SESSION_LOG_SUCCESS, editedPerson));
     }
 

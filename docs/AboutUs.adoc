@@ -18,7 +18,7 @@ Responsibilities: UI and calendar implementation
 
 === Chang Ho Huan
 image::chh.jpg[width="150", align="left"]
-{empty}[http://github.com/Soilchang[github]] [<<SoliChang#, portfolio>>]
+{empty}[http://github.com/Soilchang[github]] [<<SoilChang#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: UI

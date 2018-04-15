@@ -501,11 +501,18 @@ Then it gets the address of the person specified by the parameter and pass it to
 `LocateCommand` relies on `LocateRequestEvent` which is handled by `BrowserPanel` to call the appropriate method for loading `Person` address using Google Map.
 
 The current implementation enables the user to search through all fields in a Person. If there're more than one person with the same specifier passed in by the user, it automatically locates the address of the person on top of the filteredList and ask the user to be more specific given the filtered list.
-For example, `Locate Alex` will locate the first person on the filtered list and present a message for the user to select one from the listed persons.
+`locate` will locate the first person on the filtered list and present a message for the user to select one from the listed persons.
 
-image::locate_same_specifier.png[width="800"]
+For example, `locate` a person without address will return a red error message.
+
+image::locate1.png[width="800"]
 
 Locate command is implemented this way:
+
+The sequence diagram for locate command is presented below:
+
+image::locateSequencediagram.png[width="800"]
+
 [source,java]
 ----
 public LocateCommand(Predicate<Person> predicate) {
@@ -538,7 +545,7 @@ With loadUrl, the Google Map url is passed to 'BrowserPanel'to display the locat
 
 As we can see from the picture below, once the command is executed, the location is presented on Google Map is loaded in the BrowserPanel.
 
-image::interface_of_locate.png[width="800"]
+image::locate2.png[width="800"]
 
 ==== Rationale
 The rationale for implementing the `locate` command is that there's actual need of the users to find a person as easily as possible while using this application. By locating the person on Google Map in this application, the user can directly see the location of a person instead of a simple line of address that's not so useful.

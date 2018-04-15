@@ -59,7 +59,9 @@ Both add up to around 3k lines of code.
 == Contributions to the User Guide
 
 |===
-|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users. I wrote extensive parts in my user and developer guides, but excluded them to fit within the page limit.
+|Given below are sections I contributed to the User Guide.
+ They showcase my ability to write documentation targeting end-users.
+ I wrote extensive documentation on my parts in my user and developer guides, but excluded them to fit within the page limit.
 |===
 
 == Scheduling component

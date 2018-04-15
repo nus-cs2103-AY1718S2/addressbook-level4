@@ -1460,13 +1460,13 @@ The corresponding display picture image to the person deleted is expected to be 
 . Close and restart the application and log back in to the same account. +
 Expected: Unused image files will be deleted, only one image file remains.
 
-=== Adding a Task
-
 ** Deleting image files while the application is not running.
 *** Prerequisites: There exists some persons already added and are utilizing a display picture.
 .. Test case: Delete all images from the `data/displayPic` folder. +
    Expected: Upon loading up the application, the affected persons will be reset back to the default profile picture.
 . Adding a task while all tasks are listed.
+
+=== Adding a Task
 
 ** Prerequisites: List all tasks using the `listTask` command. Multiple tasks in the list.
 .. Test case: `addTask title/meeting desc/there is team meeting for CS2103 by/20-04-2018 priority/3`

@@ -255,6 +255,9 @@ The `Model` component:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
+* stores a `StorageCalendar` object that contains all appointments.
+* stores a `CalendarSource` object that is used to display the calendar.
+* stores a list of appointments which will be displayed for `listAppointment` command.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 

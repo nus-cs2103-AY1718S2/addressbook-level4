@@ -9,7 +9,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.queue.TaskList;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Task;
 
 /**
@@ -20,6 +19,7 @@ import seedu.address.model.task.Task;
 
 public class ProcessNextCommand extends ProcessOrderCommand {
     public static final String COMMAND_WORD = "processNext";
+    public static final String COMMAND_ALIAS = "pN";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds the first unprocessed order into the processing queue\n"
@@ -42,12 +42,8 @@ public class ProcessNextCommand extends ProcessOrderCommand {
         targetIndex = noOrderToBeProcessed;
 
         List<Person> lastShownList = model.getFilteredPersonList();
-        for (Person person:lastShownList) {
-            if (person.getTagList().contains(new Tag("Processed")) == false) {
-                targetIndex = lastShownList.indexOf(person);
-                break;
-            }
-        }
+
+        targetIndex = CommandHelper.findIndexOfPersonToBeProcessed(lastShownList);
 
         if (targetIndex == noOrderToBeProcessed) {
             throw new CommandException(MESSAGE_All_PROCESSING);
@@ -70,9 +66,14 @@ public class ProcessNextCommand extends ProcessOrderCommand {
 
         toAdd = new Task(personToAdd, orderTime);
 
+        if (CommandHelper.checkIsProcessed(personToAdd)) {
+            throw new CommandException(MESSAGE_ALREADY_PROCESSED);
+        }
+
+        //
         Person personToEdit = personToAdd;
         // labels person with tag "Processing"
-        Person editedPerson = createNewTaggedPerson(personToEdit, "Processed");
+        Person editedPerson = CommandHelper.createNewTaggedPerson(personToEdit, "Processed");
 
         addAndTag(toAdd, personToEdit, editedPerson);
 

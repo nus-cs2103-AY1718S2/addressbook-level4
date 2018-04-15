@@ -28,6 +28,7 @@ import seedu.address.model.tag.UniqueTagList;
 
 public class TagOrderCommand extends Command {
     public static final String COMMAND_WORD = "tag";
+    public static final String COMMAND_ALIAS = "t";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Tags the order identified by the index number with given tag\n"

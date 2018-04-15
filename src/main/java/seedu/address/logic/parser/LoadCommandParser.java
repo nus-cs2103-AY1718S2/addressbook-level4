@@ -1,6 +1,8 @@
 //@@author ZhangYijiong
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.logic.commands.LoadCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -14,6 +16,10 @@ public class LoadCommandParser implements Parser<LoadCommand> {
      * of the ProcessOrderCommand and returns an ProcessOrderCommand object for execution.
      */
     public LoadCommand parse(String args) throws ParseException {
+        if (args.trim().equals("")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoadCommand.MESSAGE_USAGE));
+        }
+
         return new LoadCommand(args.trim());
     }
 }

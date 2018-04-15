@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 public class ProcessMoreCommand extends ProcessNextCommand {
     public static final String COMMAND_WORD = "processMore";
+    public static final String COMMAND_ALIAS = "pM";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds first n unprocessed order into the processing queue.\n"

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class UserPrefsTest {
     @Test
-    public void testGetAddressBookName_Success() {
+    public void testGetAddressBookName_success() {
         UserPrefs userPrefs = new UserPrefs();
         String sampleName = "book";
         userPrefs.setAddressBookName(sampleName);
@@ -17,7 +17,7 @@ public class UserPrefsTest {
     }
 
     @Test
-    public void testEquals_Symmetric() {
+    public void testEquals_symmetric() {
         UserPrefs userPrefsA = new UserPrefs();
         UserPrefs userPrefsB = new UserPrefs();
         UserPrefs userPrefsC = new UserPrefs();
@@ -57,7 +57,7 @@ public class UserPrefsTest {
     }
 
     @Test
-    public void testHashcode_Symmetric() {
+    public void testHashcode_symmetric() {
         UserPrefs userPrefsA = new UserPrefs();
         UserPrefs userPrefsB = new UserPrefs();
         UserPrefs userPrefsC = new UserPrefs();

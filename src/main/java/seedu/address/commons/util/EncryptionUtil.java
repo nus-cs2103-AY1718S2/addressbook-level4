@@ -9,8 +9,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.util.logging.Logger;
 import java.security.GeneralSecurityException;
+import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 
@@ -73,9 +73,10 @@ public class EncryptionUtil {
             md.update(salt);
             byte[] bytes = md.digest(passwordToHash.getBytes());
             StringBuilder sb = new StringBuilder();
-            for (int i=0; i < bytes.length ;i++) {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1)); }
-                generatedPassword = sb.toString();
+            for (int i = 0 ; i < bytes.length ; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {
             logger.severe("This algorithm is not supported " + e.getMessage());
         }

@@ -56,7 +56,7 @@ You can download the latest version of Java link:https://java.com/en/download//[
 .  Double-click the file to start the app. You should see the GUI (Graphical User Interface) in a few seconds.
 +
 .Medeina's GUI
-image::Ui.png[width="790"]
+image::Ui.png[width="800"]
 
 {empty} +
 
@@ -445,15 +445,15 @@ image::Undo_Fail.PNG[width:500]
 `undo` (This command reverses `clear`) +
 `ud` (This command reverses the `delete **-fo** 1`) +
 
-.Executed `delete **-fo** 1` and `clear`
+.Executed `delete **-fo** 1` and `clear`. Medeina's data has now been erased.
 image::After_Clear.PNG[width:500]
 {empty} +
 
-.After `undo`
+.After `undo`. `clear` command has been undone.
 image::Undo_Clear.PNG[width:500]
 {empty} +
 
-.After `ud`
+.After `ud`. `delete **-fo** 1` command has been undone. Alex and Ane were added back.
 image::After_Undo.PNG[width:500]
 
 {empty} +
@@ -496,16 +496,16 @@ image::Redo_Fail.PNG[width:500]
 `rd` (This command reapplies `clear`) +
 // end::undoredo[]
 
-.After `delete **-fo** 1` + `clear`
+.After `delete **-fo** 1` + `clear`. Medeina's data has been cleared.
 image::After_Clear.PNG[width:500]
 
 {empty} +
 
-.After first `ud`
+.After first `ud`. `clear` command has been undone.
 image::Undo_Clear.PNG[width:500]
 {empty} +
 
-.After second `ud` Alex and pet Ane were added back.
+.After second `ud`. `delete **-fo** 1` has been undone. Alex and pet Ane were added back.
 image::After_Undo.PNG[width:500]
 {empty} +
 
@@ -552,7 +552,7 @@ image::Theme_Dark.PNG[width:790]
 {empty} +
 
 .Light theme
-image::Ui.png[width:790]
+image::Screen_Shot.png[width:790]
 // end::changethemeUG[]
 {empty} +
 

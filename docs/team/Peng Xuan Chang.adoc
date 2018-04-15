@@ -50,7 +50,7 @@ This application was built upon an existing code base for an address book for th
 
 include::../UserGuide.adoc[tag=listcommand]
 
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=undoredo]
 
 == Contributions to the Developer Guide
 
@@ -63,8 +63,3 @@ include::../DeveloperGuide.adoc[tag=ListPets]
 include::../DeveloperGuide.adoc[tag=calendar]
 
 
-== PROJECT:
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

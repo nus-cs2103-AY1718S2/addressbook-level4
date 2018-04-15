@@ -16,7 +16,7 @@ The user interacts with PrioriTask by using a Command Line Interface (CLI), and 
 == Summary of contributions
 
 * *Major enhancement*: added *the ability to recur tasks weekly*
-** What it does: allows the user to recur tasks weekly. The tasks that are recurred have deadlines that are on the same day of the week as the original task.
+** What it does: It allows the user to recur tasks weekly. The tasks that are recurred have deadlines that are on the same day of the week as the original task.
 ** Justification: This feature improves the product significantly because a user can add tasks that need to be done weekly much more quickly, as compared to with just the feature to add tasks one by one.
 ** Highlights: This feature was difficult to implement because there are many ways a user may want to recur a task. Finding a way to recur tasks that can fit most users' needs was a challenge.
 

@@ -19,11 +19,11 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W13-B4/main
 
-By: `CS2103JAN2018-W13-B4`      Since: `March 2018`      Licence: `MIT`
+By: `CS2103JAN2018-W13-B4`      Since: `April 2018`      Licence: `MIT`
 
 == Introduction
 
-PrioriTask is a desktop task management application. It is not just any task management application, but a combination of the to-do list, calendar and reminder features, with an added bonus of automatic updating and sorting of your tasks based on priority levels. It helps you keep track of your tasks, while providing you with at-a-glance views of upcoming tasks by day, week or month. PrioriTask is optimized for those who prefer to interact with an application by typing commands instead of clicking on buttons.
+PrioriTask is a desktop task management application. It is not just any task management application, but a combination of the to-do list, calendar and reminder features, with an added bonus of automatic updating and sorting of your tasks based on priority levels. It helps you keep track of your tasks, while providing you with at-a-glance views of upcoming tasks by day, week or month. PrioriTask is optimized for those who prefer to interact with an application by typing commands instead of clicking using a cursor.
 
 This guide will show you how to get started using PrioriTask, and will introduce you to the different features PrioriTask has.
 
@@ -298,7 +298,7 @@ _This section explains what a *Task* is, and the commands to manage them._
 // tag::priority[]
 * [parameters]#`PRIORITY LEVEL`#
 ** A priority level can range from *0* (lowest) to *9* (highest).
-** It is *optional* to set a priority level. If the user does not specify a priority level, PrioriTask will automatically set it to its *default level* : *0*.
+** It is *optional* to set a priority level. If the user does not specify a priority level, PrioriTask will automatically set it to its *default level|*0*.
 ** Priority levels are automatically updated by gradual incremental steps, based on the date added, current date, and deadline.
 *** If the current date is equal to the date added, and the current date is equals or after the deadline.
 **** The priority level remains the same.
@@ -331,7 +331,6 @@ _This section explains what a *Task* is, and the commands to manage them._
 ** Tag labels are coloured. However, please note:
 *** Two different tags may have labels of the same colour.
 *** After closing and re-opening the application, the same tag label may have a different colour.
-
 ====
 
 === Adding a task: `add` or `a`
@@ -414,6 +413,8 @@ Different commands for listing different tasks. +
 
 ==== Listing all tasks : `list` or `l`
 
+List all tasks in PrioriTask.
+
 [.format]
 ====
 [format-title]#Format:# `list`
@@ -421,12 +422,16 @@ Different commands for listing different tasks. +
 
 ==== Listing all uncompleted tasks : `uncompleted` or `uncom` `[since v1.5]`
 
+List all uncompleted tasks in PrioriTask.
+
 [.format]
 ====
 [format-title]#Format:# `uncompleted`
 ====
 
 ==== Listing all completed tasks : `completed` or `com` `[since v1.5]`
+
+List all completed tasks in PrioriTask.
 
 [.format]
 ====
@@ -560,7 +565,7 @@ The calendar is updated with the new task listing reflected on the `Task List Pa
 
 ==== Locating tasks by tag `[coming in v2.0]`
 
-_Locate all tasks with a common tag_
+_Locate all tasks with a common tag._
 
 === Marking task as complete: `toggle` or `t` `[since v1.2]`
 
@@ -600,7 +605,7 @@ Clear all of your tasks from PrioriTask. +
 // tag::recurw[]
 === Recurring a task : `recurw` or `rw` `[since v1.5rc]`
 
-Recurs an existing task in PrioriTask.
+Recur an existing task in PrioriTask.
 
 [.format]
 ====
@@ -627,7 +632,7 @@ Recurs the 1st task weekly for 3 times.
 // tag::deleter[]
 === Deleting a task and all its recurred versions : `deleter` or `dr` `[since v1.5]`
 
-Deletes the specified task and all its recurred versions from PrioriTask. +
+Delete the specified task and all its recurred versions from PrioriTask. +
 
 [.format]
 ====
@@ -655,7 +660,7 @@ Deletes the 1st task and all its recurred versions in the results of the `find` 
 // tag::remove[]
 === Removing tags from all tasks : `remove` or `r` `[since v1.5]`
 
-Removes specified tags from all tasks in PrioriTask. +
+Remove specified tags from all tasks in PrioriTask. +
 
 [.format]
 ====
@@ -738,7 +743,7 @@ Deletes the fourth subtask of the second task in th result of `find cleaning` co
 
 === Editing a subtask: `edits` or `es` `[since v1.5]`
 
-Edit name of a subtask
+Edit name of a subtask.
 
 [.format]
 ====
@@ -761,7 +766,7 @@ Changes the first subtask of the first task name to `Do some research`.
 Change the fourth subtask of the second task in the result of `find cleaning` command name to `Run for 7.87 Km`.
 ====
 
-=== Mark subtask as complete: `toggle-subtask` or `ts` `[since v1.3]`
+=== Marking subtask as complete: `toggle-subtask` or `ts` `[since v1.3]`
 
 Toggle the status of the subtask identified by the index number used in the last subtask listing
 between `Completed` and `Not Completed`. +
@@ -787,9 +792,9 @@ Toggles the first subtask of the first task in PrioriTask.
 Toggles the fourth subtask of the second task in th result of `find homework` command.
 ====
 
-=== Reorder subtask `[coming in v2.0]`
+=== Reordering subtask `[coming in v2.0]`
 
-_Reorder subtasks using a given condition_
+_Reorder subtasks using a given condition._
 // end::subtaskFeature[]
 
 // tag::calendar[]
@@ -810,7 +815,7 @@ In future releases, the calendar will support,
 * Displaying of only the completed or uncompleted tasks on the calendar, regardless of the last task listing `[coming in v2.0]`.
 * Viewing of the calendar by days, weeks and years `[coming in v2.0]`.
 
-=== Go to current month: `cmonth` or `cm` `[since v1.4]`
+=== Going to current month: `cmonth` or `cm` `[since v1.4]`
 
 Change the view of the calendar to that of the current month. +
 
@@ -829,9 +834,9 @@ Views `December 2018` +
 Goes to `April 2018`
 ====
 
-=== Go to previous month: `pmonth` or `pm` `[since v1.4]`
+=== Going to previous month: `pmonth` or `pm` `[since v1.4]`
 
-Chang the view of the calendar to that of the previous month. +
+Change the view of the calendar to that of the previous month. +
 
 [.format]
 ====
@@ -847,9 +852,9 @@ Chang the view of the calendar to that of the previous month. +
 Goes to `February 2018`
 ====
 
-=== Go to next month: `nmonth` or `nm` `[since v1.4]`
+=== Going to next month: `nmonth` or `nm` `[since v1.4]`
 
-Chang the view of the calendar to that of the next month. +
+Change the view of the calendar to that of the next month. +
 
 [.format]
 ====
@@ -872,7 +877,7 @@ _This section explains the commands which access and manage PrioriTask data._
 
 === Viewing help : `help`
 
-Show all available commands in PrioriTask ..
+Show all available commands in PrioriTask .
 
 [.format]
 ====
@@ -997,60 +1002,62 @@ How do I transfer my data to another computer?:::
 Install the application in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous PrioriTask folder.
 
 == Command Summary
-
-* *Add* : [format-no-box]#`add n/NAME [p/PRIORITY_LEVEL] d/DEADLINE [des/DESCRIPTION] [t/TAG]…`# +
-e.g. [example-no-box]#`add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t/CS2101 t/PhaseA`#
-* *Add question answer set* : [format-no-box]#`addqa q/QUESTION a/ANSWER`# +
-e.g. [example-no-box]#`addqa q/are cats cool? a/yes`#
-* *Add subtask* : [format-no-box]#`adds TASK_INDEX n/NAME`# +
-e.g. [example-no-box]#`adds 1 n/Submit Report`#
-* *Answer question* : [format-no-box]#`answer u/USERNAME a/ANSWER`# +
-e.g. [example-no-box]#`answer u/david a/yes`#
-* *Clear* : [format-no-box]#`clear`#
-* *Delete* : [format-no-box]#`delete INDEX`# +
-e.g. [example-no-box]#`delete 3`#
-* *Delete subtask* : [format-no-box]#`delete-subtask TASK_INDEX SUBTASK_INDEX`# +
-e.g. [example-no-box]#`delete-subtask 2 3`#
-* *Delete task and its recurred versions* : [format-no-box]#`deleter INDEX`# +
-e.g. [example-no-box]#`deleter 3`#
-* *Edit* : [format-no-box]#`edit INDEX [n/NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [des/DESCRIPTION] [t/TAG]…​`# +
-e.g. [example-no-box]#`edit 1 p/9 d/2018-12-30`#
-* *Edit subtask* : [format-no-box]#`edits TASK_INDEX SUBTASK_INDEX n/NAME`# +
-e.g.[example-no-box]#`edits 3 2 n/Feed cats`#
-* *Exit* : [format-no-box]#`exit`#
-* *Find* : [format-no-box]#`find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`# +
-e.g. [example-no-box]#`find CS2103 update 2018-03-17`#
-** *Find description* : [format-no-box]#`finddes KEYWORD [MORE_KEYWORDS]` or `fdes KEYWORDS [MORE_KEYWORDS]`# +
-e.g. [example-no-box]#`finddes study update`#
-** *Find name* : [format-no-box]#`findn KEYWORD [MORE_KEYWORDS]` or `fn KEYWORD [MORE_KEYWORDS]`# +
-e.g. [example-no-box]#`findn Developer User`#
-** *Find deadline* : [format-no-box]#`findd KEYWORD [MORE_KEYWORDS]` or `fd KEYWORDS [MORE_KEYWORDS]`# +
-e.g. [example-no-box]#`findd 2018-03-17 2018-09-07`#
-* *Go to current month* : [format-no-box]#`cmonth`#
-* *Go to previous month* : [format-no-box]#`pmonth`#
-* *Go to next month* : [format-no-box]#`nmonth`#
-* *Help* : [format-no-box]#`help`#
-* *History* : [format-no-box]#`history`#
-* *List* : [format-no-box]#`list`#
-** *List all completed* : [format-no-box]#`completed`#
-** *List all uncompleted* : [format-no-box]#`uncompleted`#
-* *Login* : [format-no-box]#`login u/USERNAME p/PASSWORD`# +
-e.g. [example-no-box]#`login u/patrick p/pat12351`#
-* *Logout* : [format-no-box]#`logout`#
-* *Recur weekly* : [format-no-box]#`recurw INDEX x/TIMES`# +
-e.g.[example-no-box]#`recurw 2 x/2`#
-* *Redo* : [format-no-box]#`redo`#
-* *Remove tags* : [format-no-box]#`remove t/TAG1 [t/TAG2]…​`# +
-e.g. [example-no-box]#`remove t\friends t\homework`#
-* *Retrieve question* : [format-no-box]#`forgotpassword u/USERNAME`# +
-e.g. [example-no-box]#`forgotpassword u/david`#
-* *Sign up* : [format-no-box]#`signup u/USERNAME p/PASSWORD`# +
-e.g. [example-no-box]#`signup u/patrick p/pat12351`#
-* *Toggle* : [format-no-box]#`toggle INDEX`# +
-e.g.[example-no-box]#`toggle 3`#
-* *Toggle subtask* : [format-no-box]#`toggle-subtask TASK_INDEX SUBTASK_INDEX`# +
-e.g.[example-no-box]#`toggle-subtask 3 2`#
-* *Undo* : [format-no-box]#`undo`#
+[width="59%",cols="22%,<25%,<30%",options="header",]
+|=======================================================================
+|Command |Command Format |Example
+|Add |[format-no-box]#`add n/NAME [p/PRIORITY_LEVEL] d/DEADLINE [des/DESCRIPTION] [t/TAG]…`#
+|[example-no-box]#`add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t/CS2101 t/PhaseA`#
+|Add question answer set|[format-no-box]#`addqa q/QUESTION a/ANSWER`#
+|[example-no-box]#`addqa q/are cats cool? a/yes`#
+|Add subtask|[format-no-box]#`adds TASK_INDEX n/NAME`#
+|[example-no-box]#`adds 1 n/Submit Report`#
+|Answer question|[format-no-box]#`answer u/USERNAME a/ANSWER`#
+|[example-no-box]#`answer u/david a/yes`#
+|Clear|[format-no-box]#`clear`#|
+|Delete|[format-no-box]#`delete INDEX`#
+|[example-no-box]#`delete 3`#
+|Delete subtask|[format-no-box]#`delete-subtask TASK_INDEX SUBTASK_INDEX`#
+|[example-no-box]#`delete-subtask 2 3`#
+|Delete task and its recurred versions|[format-no-box]#`deleter INDEX`#
+|[example-no-box]#`deleter 3`#
+|Edit|[format-no-box]#`edit INDEX [n/NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [des/DESCRIPTION] [t/TAG]…​`#
+|[example-no-box]#`edit 1 p/9 d/2018-12-30`#
+|Edit subtask|[format-no-box]#`edits TASK_INDEX SUBTASK_INDEX n/NAME`#
+|[example-no-box]#`edits 3 2 n/Feed cats`#
+|Exit|[format-no-box]#`exit`#|
+|Find|[format-no-box]#`find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`#
+|[example-no-box]#`find CS2103 update 2018-03-17`#
+|Find description|[format-no-box]#`finddes KEYWORD [MORE_KEYWORDS]` or `fdes KEYWORDS [MORE_KEYWORDS]`#
+|[example-no-box]#`finddes study update`#
+|Find name|[format-no-box]#`findn KEYWORD [MORE_KEYWORDS]` or `fn KEYWORD [MORE_KEYWORDS]`#
+|[example-no-box]#`findn Developer User`#
+|Find deadline|[format-no-box]#`findd KEYWORD [MORE_KEYWORDS]` or `fd KEYWORDS [MORE_KEYWORDS]`#
+|[example-no-box]#`findd 2018-03-17 2018-09-07`#
+|Go to current month|[format-no-box]#`cmonth`#|
+|Go to previous month|[format-no-box]#`pmonth`#|
+|Go to next month|[format-no-box]#`nmonth`#|
+|Help|[format-no-box]#`help`#|
+|History|[format-no-box]#`history`#|
+|List|[format-no-box]#`list`#|
+|List all completed|[format-no-box]#`completed`#|
+|List all uncompleted|[format-no-box]#`uncompleted`#|
+|Login|[format-no-box]#`login u/USERNAME p/PASSWORD`#
+|[example-no-box]#`login u/patrick p/pat12351`#
+|Logout|[format-no-box]#`logout`#|
+|Recur weekly|[format-no-box]#`recurw INDEX x/TIMES`#
+|[example-no-box]#`recurw 2 x/2`#
+|Redo|[format-no-box]#`redo`#|
+|Remove tags|[format-no-box]#`remove t/TAG1 [t/TAG2]…​`#
+|[example-no-box]#`remove t\friends t\homework`#
+|Retrieve question|[format-no-box]#`forgotpassword u/USERNAME`#
+|[example-no-box]#`forgotpassword u/david`#
+|Sign up|[format-no-box]#`signup u/USERNAME p/PASSWORD`#
+|[example-no-box]#`signup u/patrick p/pat12351`#
+|Toggle|[format-no-box]#`toggle INDEX`#
+|[example-no-box]#`toggle 3`#
+|Toggle subtask|[format-no-box]#`toggle-subtask TASK_INDEX SUBTASK_INDEX`#
+|[example-no-box]#`toggle-subtask 3 2`#
+|Undo|[format-no-box]#`undo`#|
 
 
 

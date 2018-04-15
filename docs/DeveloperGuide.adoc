@@ -1525,7 +1525,7 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-    
+
 [appendix]
 == Instructions for Manual Testing
 
@@ -1552,8 +1552,8 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Deleting a person while all persons are listed
 
-.. Prerequisites: 
-** List all persons using the `list` command. 
+.. Prerequisites:
+** List all persons using the `list` command.
 ** There must be multiple persons in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the person list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
@@ -1566,7 +1566,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Adding a job opening
 
-.. Prerequisites: 
+.. Prerequisites:
 ** You must be logged in to contactHeRo.
 .. Test case: `addjob p/Job1 t/Team1 l/Singapore n/1 s/Java` +
    Expected: A job opening is added to the job list and its details are displayed on the task pane(far right). Timestamp in the status bar is updated.
@@ -1579,8 +1579,8 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Deleting a job opening while all job openings are listed
 
-.. Prerequisites: 
-** List all job openings using the `listjob` command. 
+.. Prerequisites:
+** List all job openings using the `listjob` command.
 ** There must be multiple job openings in the list.
 .. Test case: `deletejob 2` +
    Expected: Second job opening is deleted from the job opening list. Details of the deleted job opening shown in the status message. Timestamp in the status bar is updated.
@@ -1591,7 +1591,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Deleting a job opening by finding it
 
-.. Prerequisites: 
+.. Prerequisites:
 ** Job opening to find must exist in the job opening list.
 .. Test case: `findjob p/Software` followed by `deletejob 1` +
    Expected: First job opening is deleted from the search results of `findjob` command. Details of the deleted job opening shown in the status message. Timestamp in the status bar is updated.
@@ -1602,8 +1602,8 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Editing a job opening
 
-.. Prerequisites: 
-** List all job openings using the `listjob` command. 
+.. Prerequisites:
+** List all job openings using the `listjob` command.
 ** There must be atleast two job openings in the list.
 .. Test case: `editjob 1 p/Hardware Engineer` +
    Expected: The first job opening is edited and updated job opening is displayed. Details of the edited job opening shown in the status message. Timestamp in the status bar is updated.
@@ -1616,8 +1616,8 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Finding a job opening
 
-.. Prerequisites: 
-** List all job openings using the `listjob` command. 
+.. Prerequisites:
+** List all job openings using the `listjob` command.
 ** There must be atleast one job openings in the list.
 .. Test case: `findjob p/Engineer` +
 Expected: All job openigns containing 'Engineer' in their position name are displayed in the job opening list. Status bar remains the same.
@@ -1630,8 +1630,8 @@ Expected: Job openings are not searched. Error details shown in the status messa
 
 . Matching a job opening
 
-.. Prerequisites: 
-** List all job openings using the `listjob` command. 
+.. Prerequisites:
+** List all job openings using the `listjob` command.
 ** There must be atleast one job openings in the list.
 .. Test case: `matchjob 1` +
 Expected: All persons whose skills match any of those required for the job opening at index 1 are displayed in the person list. Status bar remains the same.
@@ -1644,8 +1644,8 @@ Expected: Job openings are not searched. Error details shown in the status messa
 
 . Searching a person on LinkedIn
 
-.. Prerequisites: 
-** List all persons using the `list` command. 
+.. Prerequisites:
+** List all persons using the `list` command.
 ** There must be atlest one person in the list.
 .. Test case: `linkedIn 1` +
    Expected: LinkedIn tab is visible and once you login/signup, the first person in the person list is searched on LinkedIn. Status bar remains the same.

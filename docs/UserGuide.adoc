@@ -1086,10 +1086,9 @@ image::moreInfoCommand.png[width:400]
 . You will then be able to view the profile page of the student. Enter the same command with a different number for viewing the profile page of other students (e.g. `moreInfo 2`).
 
 .Executing the command `moreInfo 1` displays the 1st student (Alex Yeoh's) profile page
-image::moreInfoResult.png[width:800]
+image::moreInfoResult.png[width:400]
 
-{empty} +
-{empty} +
+
 [TIP]
 You will be able to attain the profile page style in `Figure 5` if your OS zoom scale is set to `125%`. The profile photo may seem of a different size for other configurations. Search you computer settings should you wish to change this.
 
@@ -1115,7 +1114,7 @@ The file path you entered can be relative to the current folder of the `jar` fil
 
 Suppose you wish to have this picture, with the file name of `animal.jpg`  as a new profile picture as your student:
 
-image::animal.jpg[width:200]
+image::animal.jpg[width:100]
 
 . Enter the command as shown below:
 
@@ -1132,10 +1131,7 @@ image::editPictureSuccess.png[width:400]
 . By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated picture as shown below:
 
 .The profile page of the selected student is shown with the new profile picture!
-image::editedPicture.png[width:800]
-
-{empty} +
-{empty} +
+image::editedPicture.png[width:600]
 
 [TIP]
 The ideal aspect ratio of the picture is 1.25 from height to width.
@@ -1171,7 +1167,7 @@ image::editPictureSuccess.png[][width:400]
 . By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated allergies information as shown below:
 
 .The profile page of the selected student is shown with the newly updated allergies information!
-image::editMiscSuccess.png[width:800]
+image::editMiscSuccess.png[width:600]
 
 
 ****

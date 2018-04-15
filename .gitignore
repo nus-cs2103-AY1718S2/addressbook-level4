@@ -14,7 +14,9 @@ preferences.json
 .DS_Store
 ./screenshot*.png
 classes/
-
+/data/
+data
+!data/demoaddressbook.xml
 /bin/
 src/main/resources/docs/
 out/

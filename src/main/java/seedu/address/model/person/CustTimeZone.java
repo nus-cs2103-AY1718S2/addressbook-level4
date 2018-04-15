@@ -1,10 +1,10 @@
 package seedu.address.model.person;
 
-import java.util.Arrays;
-import java.util.TimeZone;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.util.Arrays;
+import java.util.TimeZone;
 
 //@@author glorialaw
 /**

@@ -145,7 +145,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleRefreshDetailsPanelEvent(RefreshDetailsPanelEvent event){
+    private void handleRefreshDetailsPanelEvent(RefreshDetailsPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showSelectedPersonDetails(null);
     }

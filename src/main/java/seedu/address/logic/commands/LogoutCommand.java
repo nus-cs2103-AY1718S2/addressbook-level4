@@ -3,9 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import com.google.api.services.calendar.model.Event;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.DailyScheduleShownChangedEvent;

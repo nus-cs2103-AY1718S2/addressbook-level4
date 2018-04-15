@@ -46,8 +46,7 @@ public class Task {
         return this == obj // short circuit if same object
                 || (obj instanceof Task // instanceof checks null
                 && this.name.equals(((Task) obj).getName())
-                && this.description.equals(((Task) obj).getDescription())
-                && this.isCompleted == ((Task) obj).isCompleted());
+                && this.description.equals(((Task) obj).getDescription()));
     }
 
     @Override

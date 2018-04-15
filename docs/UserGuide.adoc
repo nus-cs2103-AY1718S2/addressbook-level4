@@ -70,11 +70,9 @@ image::DefaultLogin.png[width="800", align="center"]
 You can change the password later using the `updatepassword` command.
 +
 .  Upon successful login, You should see the user interface as shown below (Refer to figure 3).
-
++
 .contactHeRo UI after login
-
 image::UIMarkup.png[width="800", align="center"]
-
 
 Now you can start using contactHeRo.
 
@@ -95,7 +93,7 @@ Thank you for choosing us as your contact management solution!
 == Features
 contactHeRo is a *Command Line Interface(CLI) application*. Hence you need to type in the commands in order to use its features.
 
-Below is the interface(Refer to figure 3) that contactHeRo provides for you to type your command.
+Below is the interface(Refer to figure 4) that contactHeRo provides for you to type your command.
 
 .Command Box in contactHeRo
 image::commandBox.png[width="790", align="center"]
@@ -294,7 +292,7 @@ This selects the 2nd person in contactHeRo.
 `select 1` +
 This selects the 1st person in the results of the `find` command.
 +
-On running this command, you should see a similar result as the following (Refer to figure 4). Betsy is selected in the person list and her contact details are visible in the Contact Details Tab.
+On running this command, you should see a similar result as the following (Refer to figure 5). Betsy is selected in the person list and her contact details are visible in the Contact Details Tab.
 
 .Select Command Execution
 image::selectCommand.png[width="800", align="center"]
@@ -325,7 +323,7 @@ This loads the LinkedIn search of the 2nd person in the contactHeRo.
 `linkedIn 1` +
 This loads the LinkedIn search of 1st person in the results of the `find` command. +
 +
-On running the above command and after you have logged in, you should a similar result as the following (Refer to figure 5). Betsy is selected in the person list and she is searched on LinkedIn in the LinkedIn Tab.
+On running the above command and after you have logged in, you should a similar result as the following (Refer to figure 6). Betsy is selected in the person list and she is searched on LinkedIn in the LinkedIn Tab.
 
 .LinkedIn Command Execution
 image::linkedInCommand.png[width="800", align="center"]
@@ -350,7 +348,7 @@ On running the above command, you should see the following success message: +
 
 * `addjob p/Marketing Intern t/Social Media Marketing l/Kuala Lampur, Malaysia n/1 s/Excel s/Writing`
 +
-On running the above command, you should see the following success message and the job opening UI(Refer to figure 6) added to the Job List Panel(Refer to figure 2): +
+On running the above command, you should see the following success message and the job opening UI(Refer to figure 7) added to the Job List Panel(Refer to figure 3): +
 
  New job opening added: Marketing Intern Team: Social Media Marketing Location: Kuala Lampur, Malaysia Number of Positions: 1 Skills: [Excel][Writing]
 
@@ -454,7 +452,7 @@ This will show any person whose skills match any of those required for the job o
 `matchjob 1` +
 This will show any person whose skills match any of those required for the job opening at index 1 in the results of the findjob command.
 +
-On running this command, you should see a similar result as the following (Refer to figure 7). All persons having any skill as required by the job 'Software Engineer' will be shown.
+On running this command, you should see a similar result as the following (Refer to figure 8). All persons having any skill as required by the job 'Software Engineer' will be shown.
 
 .MatchJob Command Execution
 image::matchjobCommand.png[width="800", align="center"]

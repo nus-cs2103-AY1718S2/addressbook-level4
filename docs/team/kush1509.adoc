@@ -29,7 +29,7 @@ This portfolio is to collate my contributions towards the developing of contactH
 ** Took the role of Team Leader to make important decisions regarding development of product.
 ** Auto-complete: added functionality for commands to be auto-completed on pressing `TAB` https://github.com/CS2103JAN2018-W09-B2/main/pull/35[Pull request #35], https://github.com/CS2103JAN2018-W09-B2/main/pull/186[Pull request #186]
 ** Project management:
-*** Managed all releases `v1.3` - `v1.5rc` on GitHub
+*** Managed all releases `v1.3` - `v1.5` on GitHub
 *** Managed all milestones `v1.1` - `v1.5` (6 milestones) on GitHub
 *** Managed project effectively to keep track of issues, merging pull requests by resolving conflicts and keeping track of deadlines and deliverables.
 ** Enhancements to existing features:

@@ -22,6 +22,6 @@ public class ListPositiveBalanceCommand extends Command {
     }
 
     public Predicate<Person> isPositiveBalance() {
-        return a -> a.getMoney().balance >= 0;
+        return a -> a.getMoney().balance > 0;
     }
 }

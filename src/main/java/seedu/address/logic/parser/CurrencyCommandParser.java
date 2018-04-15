@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import com.ritaja.xchangerate.util.Currency;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CurrencyCommand;
@@ -35,9 +37,15 @@ public class CurrencyCommandParser implements Parser<CurrencyCommand> {
             if (currencyIndex.getZeroBased() < 0) {
                 throw new IllegalValueException(MESSAGE_INVALID_INDEX);
             }
-
             fromCurrency = currencyKeywords[1].toUpperCase();
             toCurrency = currencyKeywords[2].toUpperCase();
+            Currency fromFormattedCurrency = Currency.get(fromCurrency);
+            Currency toFormattedCurrency = Currency.get(toCurrency);
+
+            if (fromFormattedCurrency == null || toFormattedCurrency == null) {
+                throw new ParseException(CurrencyCommand.MESSAGE_CURRENCY_NOT_SUPPORTED);
+            }
+
             return new CurrencyCommand(currencyIndex, fromCurrency, toCurrency);
         } catch (IllegalValueException ive) {
             throw new ParseException(

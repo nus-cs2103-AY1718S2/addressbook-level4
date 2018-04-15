@@ -288,13 +288,15 @@ Remove the tags `owesMoney` and `friends` from the first person.
 
 === Seeing which contact owes you the most: `maxlent` or `ml` [Since v1.2]
 
-Lists the contact which owes you the most money. +
+Lists the contact which owes you the most money. If two contacts owe the same amount,
+only one will be selected. +
 Format: `maxlent` or `ml`
 
 // tag::min[]
 === Seeing which contact owes you the least: `maxborrowed` or `mb`[Since v1.2]
 
-Lists the contact to which you owe the most money. A message appears if user does not have any debts  +
+Selects the contact to which you owe the most money. A message appears if user does not have any debts. +
+If the same amount is owed to two contacts, only one will be selected. +
 Format: `maxborrowed` or `mb`
 // end::min[]
 
@@ -347,6 +349,10 @@ Displays a search for the nearest ATM in the browser panel. The map will launch 
 opening the app. If the browser panel displays something different, simply type `map` to view the
 search once more.
 Format: `map` or `mp`
+
+[NOTE]
+This feature relies on internet connectivity. Please make sure you have a working internet connection
+to ensure proper connectivity.
 // end::map[]
 
 === Settling up your balance with a contact: `settle` or `stl`[Since v1.3]
@@ -430,6 +436,10 @@ once more, refer to `map` command.
 Format : `select INDEX`
 Format : `maxborrowed`
 Format : `maxlent`
+
+[NOTE]
+This feature relies on internet connectivity. Please make sure you have a working internet connection
+to ensure proper functionality.
 // end::selectAddress[]
 
 // tag::convert[]

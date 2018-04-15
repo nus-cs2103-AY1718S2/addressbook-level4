@@ -17,7 +17,8 @@ public class MaxCommand extends Command {
     public static final String COMMAND_SHORTCUT = "ml";
     public static final String MESSAGE_SUCCESS = "The contact who owes you the most money is: ";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the person that owes the most money ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the person that owes the most money. "
+            + "If two contacts owe the same amount, only one will be selected.";
 
     @Override
     public CommandResult execute() {

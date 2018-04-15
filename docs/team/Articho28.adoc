@@ -43,9 +43,10 @@ amounts that he/she deems relevant.
 
 ** Project management:
 *** Initialized issue tracker at v1.2 and regularly created issues for epics, user stories, and other tasks.
-Combed through all issues and assigned them to team members according to their contributions.
+Combed through all issues reported during peer user testing. Fixed all the ones I could reproduce, otherwise
+labeled them as unreproducible. Assigned them to teammates when unable to solve.
 *** Included valid labels in issue tracker to be reused by teammates to comply with NUS scripts.
-*** Created milestones from v1.2 to v1.5rc and managed releases from v1.3 to v1.5rc.
+*** Created milestones from v1.2 to v1.5 and managed releases from v1.3 to v1.5rc.
 ** Code Quality:
 *** Wrote substantial tests for all my contributions to keep coverage at 92%.
 *** Followed checkstyle guidelines.

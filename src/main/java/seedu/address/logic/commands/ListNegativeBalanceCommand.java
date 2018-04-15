@@ -12,7 +12,7 @@ public class ListNegativeBalanceCommand extends Command {
     public static final String COMMAND_WORD = "debt";
     public static final String COMMAND_SHORTCUT = "de";
 
-    public static final String MESSAGE_SUCCESS = "Listed all persons who you owe money";
+    public static final String MESSAGE_SUCCESS = "Listed all persons to which you owe money";
 
     @Override
     public CommandResult execute() {

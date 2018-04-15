@@ -31,6 +31,7 @@ public class SettleCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the balance to zero for the specified person "
             + "Parameters: INDEX (must be a positive integer) ";
+    public static final String MESSAGE_ALREADY_SETTLED = "Your finances with this contact are settled!";
 
     public static final String MESSAGE_SETTLE_PERSON_SUCCESS = "Settled Person: ";
 
@@ -79,8 +80,11 @@ public class SettleCommand extends UndoableCommand {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * but with a 0 balance
      */
-    private static Person getSettledPerson(Person personToEdit) {
+    private static Person getSettledPerson(Person personToEdit) throws CommandException {
         assert personToEdit != null;
+        if (personToEdit.getMoney().balance == 0) {
+            throw new CommandException(MESSAGE_ALREADY_SETTLED);
+        }
 
         Name name = personToEdit.getName();
         Phone phone = personToEdit.getPhone();

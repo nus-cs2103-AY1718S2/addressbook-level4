@@ -34,6 +34,7 @@ public class CurrencyCommand extends Command {
             + "[Current Currency Symbol]  "
             + "[New Currency Symbol]\n"
             + "Example: " + COMMAND_WORD + " 1" + " SGD" + " USD";
+    public static final String MESSAGE_CURRENCY_NOT_SUPPORTED = "The currency you have provided is not supported.";
     public static final String MESSAGE_SUCCESS = "Here is your balance in the new currency";
     private String fromCurrency;
     private String toCurrency;

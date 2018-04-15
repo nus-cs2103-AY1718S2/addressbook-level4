@@ -496,7 +496,7 @@ The `ModelManager` then updates the password in the `AddressBook` as shown below
 image::PasswordSdForModel.png[width="800"]
 
 The 128 bit password used to encrypt `addressbook.xml` is saved in the address book as `XmlAdaptedPassword` to ensure that the password is not lost after every reset of the application.
-This is secure as even if a malicious user were to somehow get a copy of the 128 bit password, they would still need to use a computationally unfeasible second pre-image attack.
+This is secure as even if a malicious user were to somehow get a copy of the 128 bit password, they would still need to use a computationally unfeasible <<second-pre-image-attack, second pre-image attack>>.
 This is because users are unable to input hashed password directly.
 
 When the user first starts the application, `ModelManager` would try to load the data from `addressbook.xml` without using any password.
@@ -517,7 +517,7 @@ image::passwordBox.png[width="800"]
 If the password the user input is unable to decrypt `addressbook.xml`, a `WrongPasswordEvent` is raised which will cause the `PasswordUiManager` to display the following dialog to the user:
 
 .Wrong Password Dialog UI
-image::wrongpassworddialog.png[width="800"]
+image::wrongPasswordDialog.PNG[width="800"]
 
 If the password the user input successfully decrypts `addressbook.xml`, a `CorrectPasswordEvent` is raised. This event is handled by the `PasswordUiManager` which will start the `UiManager`.
 The application would behave as if it is not encrypted from here on.
@@ -547,7 +547,7 @@ The application would behave as if it is not encrypted from here on.
 ** Pros: The password is not lost after every reload of the application.
 ** Cons: Plaintext of `addressbook.xml` contains the 128 bit `AES` key used.
 However, this is still secure as even if a malicious user were to somehow get a copy of the 128 bit password,
-they would still need to use a computationally unfeasible second pre-image attack.
+they would still need to use a computationally unfeasible <<second-pre-image-attack, second pre-image attack>>.
 
 * **Alternative 2:** Password not saved
 ** Pros: No chance of password being compromised.
@@ -665,7 +665,7 @@ image::ModelStorageComponentUploadSequenceDiagram.png[width="800"]
 // tag::birthdays[]
 === Birthdays feature
 ==== Current Implementation
-`Birthdays` Command uses the existing `Events` system and sends an event according to the parameters provided.
+`Birthdays` Command uses the existing `Events` system and sends an event according to the <<parameter, parameters>> provided.
 
 .Birthdays Command Sequence Diagram for Logic Component +
 image::LogicComponentBirthdaysSequenceDiagram.png[width="800"]
@@ -704,12 +704,12 @@ For "birthdays today" notification, the app will create an alert dialog instead.
 
 * **Alternative 1**: Manual command "birthdays" or "birthdays today"
 ** Pros: User can control when to view the birthdays.
-** Cons: Not very user-friendly. Additional parameter cannot be shortened.
+** Cons: Not very user-friendly. Additional <<parameter, parameter>> cannot be shortened.
 * ** Alternative 2 (current choice)**: Notification at the start of app if a birthday is occurring today
 ** Pros: User can be reminded immediately and need not type the command.
 ** Cons: Currently, StardyTogether does not have settings to switch on/off the feature. User may find it irritating.
 
-===== Aspect: How User inputs the Birthday parameter in `Person` class
+===== Aspect: How User inputs the Birthday <<parameter, parameter>> in `Person` class
 * ** Alternative 1 (Current choice)**: Fixed format as DDMMYYYY
 ** Pros: Less room for errors.
 ** Cons: User may not like the DDMMYYYY format.
@@ -862,7 +862,7 @@ The `InfoPanel` will swap between `UserDetailsPanel`, `BirthdayList`, `VenueTabl
 ** Pros: No need to implement a separate function to add lessons and a separate `Module` class
 ** Cons: May be troublesome for the user
 * **Alternative 2**: Implement a function to add lessons and `Module` class
-** Pros: User need not to manually edit the timetable parameter
+** Pros: User need not to manually edit the timetable <<parameter, parameter>>
 ** Cons: Hard to implement. Lessons and modules will not have any usage outside `Timetable`
 
 ===== Aspect: Testing of Timetable
@@ -911,7 +911,7 @@ Currently, some commands such as `add` and `edit` requires many different fills 
 This makes it extremely tedious as users have to remember what fills are there to be included.
 Spelling mistakes are also very costly as users would need to retype the command.
 
-When the user press the `Tab` key, commands ,and parameters carets will auto complete or auto correct.
+When the user press the `Tab` key, commands ,and <<parameter, parameters>> carets will auto complete or auto correct.
 Pressing `Tab` again would give the next suggested input.
 
 The Auto Correct can be implemented in `CommandBox` as all user inputs can be easily accessed in it.
@@ -920,7 +920,7 @@ Editing the text already entered can also be done easily in `CommandBox`.
 Since all commands are in the form of `String`, we can use a `TreeSet` of the current input's character to find the closest matching command
 and traverse the `TreeSet` to get other suggestions.
 
-To prevent a situation of the need to differentiate between a auto completion of the next parameter or getting the next suggestion of the current command or parameter,
+To prevent a situation of the need to differentiate between a auto completion of the next <<parameter, parameter>> or getting the next suggestion of the current command or <<parameter, parameter>>,
 next suggestion is always chosen before a space is entered and auto completion only happen for non-empty strings.
 
 Suppose that the user wants to type the `encrypt` command, he can press `Tab` to auto complete.
@@ -958,11 +958,11 @@ image::parameterautocomplete.png[width="800"]
 ** Cons: Makes changing the current input display a difficult task which may require access to the `CommandBox`.
 
 ===== Aspect: What to auto correct or complete
-* **Alternative 1 (Suggested):** Commands and Parameters.
+* **Alternative 1 (Suggested):** Commands and <<parameter, Parameters>>.
 ** Pros: Makes it easy for users as everything can be auto completed or corrected.
-** Cons: Makes it more confusing as sometimes it completes commands while other times it completes the parameters.
-Also makes the implementation complicated as a clear distinction of Command and Parameters have to be made for completion and correction.
-* **Alternative 2:** Only Commands or Parameters
+** Cons: Makes it more confusing as sometimes it completes commands while other times it completes the <<parameter, parameters>>.
+Also makes the implementation complicated as a clear distinction of Command and <<parameter, Parameters>> have to be made for completion and correction.
+* **Alternative 2:** Only Commands or <<parameter, Parameters>>
 ** Pros: Easier to understand.
 ** Cons: Not as efficient for the user.
 
@@ -1311,6 +1311,13 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[parameter]] Parameter::
+Argument or Information passed to commands for details.
+
+[[second-pre-image-attack]] Second Pre-Image attack::
+An attack to get the same hash using the same or different String
+
 
 [appendix]
 == Instructions for Manual Testing

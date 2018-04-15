@@ -49,14 +49,6 @@ public class GoogleMapsDisplayHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Returns true if the current {@code URL} is different from the value remembered by the most recent
-     * {@code rememberUrl()} call.
-     */
-    public boolean isUrlChanged() {
-        return !lastRememberedUrl.equals(getLoadedUrl());
-    }
-
-    /**
      * Returns true if the browser is done loading a page, or if this browser has yet to load any page.
      */
     public boolean isLoaded() {

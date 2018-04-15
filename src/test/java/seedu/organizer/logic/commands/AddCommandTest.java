@@ -178,7 +178,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void recurTask(Task task, int times) throws DuplicateTaskException {
+        public void recurWeeklyTask(Task task, int times) throws DuplicateTaskException {
             fail("This method should not be called.");
         }
 

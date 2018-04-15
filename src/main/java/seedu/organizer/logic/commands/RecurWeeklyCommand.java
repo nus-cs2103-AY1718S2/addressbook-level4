@@ -52,7 +52,7 @@ public class RecurWeeklyCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.recurTask(taskToRecur, this.times);
+            model.recurWeeklyTask(taskToRecur, this.times);
         } catch (DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (TaskNotFoundException pnfe) {

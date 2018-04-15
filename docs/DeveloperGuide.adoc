@@ -20,7 +20,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W13-B4/main
 
-By: `CS2103JAN2018-W13-B4`      Since: `March 2018`      Licence: `MIT`
+By: `CS2103JAN2018-W13-B4`      Since: `April 2018`      Licence: `MIT`
 
 == Introduction
 
@@ -307,7 +307,7 @@ The command execution can affect the `Model` (e.g. adding a task) and/or raise e
 
 `Model` consists of a `UniqueTaskList`, `UniqueTagList`, and `UniqueUserList` that contains and manipulates the data within the application using an `ObservableList`. The component also includes `Task`, and its respective parameters (e.g. `Name`, `Priority`, `Date Added`, etc.).
 
-The class diagram below (refers to <<fig-ModelComponent>>) gives an overview of the structure of `Model`.
+The class diagram below (refers to <<fig-ModelComponent>>) gives an overview of the structure of `model`.
 
 [[fig-ModelComponent]]
 .Structure of `Model`
@@ -836,7 +836,7 @@ The sequence flow is slightly similar to that of the execution of a normal comma
 
 ==== Current Implementation
 
-Subtask feature allows user to split their tasks into multiple subtasks. This feature allows user to better
+Subtask feature allows users to split their tasks into multiple subtasks. This feature allows users to better
 manage their task. It is implemented using `Subtask` class and `UniqueSubtaskList` class as shown by <<fig-SubtaskComponentDiagram>> below:
 
 [[fig-SubtaskComponentDiagram]]
@@ -871,6 +871,85 @@ is `O(n)`.
 
 // end::subtask[]
 
+// tag::recur[]
+=== Recurring Tasks
+
+Recurring Tasks feature allows users to recur tasks weekly using the `RecurWeeklyCommand`. It also allows users to delete a task and all its recurred versions using the `DeleteRecurredTasksCommand`.
+
+==== Current implementation
+
+The recurring task feature is implemented through a `Recurrence` component, which is a parameter for `Task`.
+
+The first recurred version of the task has a deadline set to be a week after the original task's deadline. The second recurred version of the task (if asked for by the user) has a deadline set to be 2 weeks after the original task's deadline.
+
+The pattern continues for the rest of the recurred versions.
+
+The recurred versions of the tasks and all their subtasks are set to be `Not Completed` by default.
+
+Additionally, the priorities of the recurred versions of the tasks are set to be the priority of the orginal task, as last set in the `AddCommand` or `EditCommand`. This is done instead of taking the priority of the original task as it is, which could have been changed by PrioriTask through its auto-updating feature.
+
+Both `RecurWeeklyCommand` and `DeleteRecurredTasksCommand` are `UndoableCommands`.
+
+The `Recurrence` component is implemented using a Recurrence class. The following diagram (refer to <<fig-RecurrenceComponentDiagram>>) shows the class diagram for `Recurrence`.
+
+[[fig-RecurrenceComponentDiagram]]
+.Recurrence UML Class Diagram
+image::RecurrenceComponentDiagram.png[width="400"]
+
+==== Scenario
+
+Suppose that the user wants to recur a task weekly.
+
+The user executes a new `RecurWeeklyCommand`, `recurw 1 x/2`, to recur the 1st task in the organizer weekly for 3 times.
+
+Assuming that the task has not been recurred before, the following sequence diagram (refer to <<fig-RecurWeeklySequenceDiagram>>) shows how the recur weekly operation works:
+
+[[fig-RecurWeeklySequenceDiagram]]
+.RecurWeekly sequence diagram
+image::RecurWeeklySequenceDiagram.png[width="800"]
+
+The object diagram below (refer to <<fig-RecurredTasksObjectDiagram>>) shows the original task and the 2 `Tasks` created after the execution of the command.
+
+[[fig-RecurredTasksObjectDiagram]]
+.Recurred tasks object diagram
+image::RecurredTasksObjectDiagram.png[width="800"]
+
+Suppose the user now wants to delete the 1st task in the PrioriTask and all its recurred versions.
+
+The user executes a new `DeleteRecurredTasksCommand`, `deleter 1`, to delete the task that was just recurred and all its recurred versions.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `recurrenceGroup` in `Recurrence`
+
+* **Alternative 1 (current choice):** Set recurrenceGroup as hash code of the task`
+** Pros: It is guaranteed to be unique, which is needed to identify a group of recurred tasks. It is also easy to implement.
+** Cons: It is not as intuitive to identify the group of recurred tasks using long hash codes.
+* **Alternative 2:** Set recurrenceGroup using a counter.
+** Pros: It is a more intuitive way of identifying recurrence groups.
+** Cons: There is a need to implement a counter for recurrence groups in `Model`.
+
+===== Aspect: Implementation of `RecurWeeklyCommand`
+
+* **Alternative 1 (current choice):** Add a new `Task` for each recurred version of the original task
+** Pros: It is easy to implement.
+** Cons: It takes up more memory for Objects that have very similar parameters..
+* **Alternative 2:** Maintain a list for each of the parameters that change when recurred within the original `Task`, such as a list of `DateCompleted` and a list of `Status`.
+** Pros: It will use less memory.
+** Cons: There is a need to change how certain parameters in `Task` are implemented.
+
+
+===== Aspect: Implementation of `DeleteRecurredTasksCommand`
+
+* **Alternative 1 (current choice):** Add tasks that are not part of the recurrence group into a new task list and set the new task list to replace the old one.
+** Pros: It only reverts changes that are hard to change back (the view can easily be re-modified as no data are * lost).
+** Cons: A user might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+* **Alternative 2:** Remove tasks that are part of the recurrence group while iterating through the task list.
+** Pros: This is a more intuitive way of removing tasks from the list.
+** Cons: There is a need to implement an Iterator to remove tasks, as we cannot use a for loop which can cause undefined behaviour.
+
+// end::recur[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -881,7 +960,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 *Logging Levels*
 
-The following are breif descriptions of different logging levels:
+The following are brief descriptions of different logging levels:
 
 * `SEVERE` : A message level indicating a _serious_ failure (e.g. failure resulting in application termination).
 * `WARNING` : A message level indicating a _potential_ problem (e.g. application can still continue, but do so with caution).
@@ -1043,8 +1122,8 @@ Help busy university students keep track of their tasks and priorities.
 * Natania Djohaari
 ** Major : Recurring Tasks
 *** Helps users automatically create tasks that are recurring.
-** Minor : Date completed parameter
-*** Allows users to view what date the task has been completed on.
+** Minor : Remove tags command
+*** Allows users to delete multiple tags from all tasks.
 * Yeo Guek Ling
 ** Major : Calendar
 *** Allows users to be able to have a chronological overview of the deadlines of all their tasks.
@@ -1146,6 +1225,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *`|user using the same machine as others |logout of PrioriTask |ensure privacy of my tasks
 
 |`* *`|user who has a user account |retrieve my password |login to my account if I forget my password
+
+|`* *`|user who has similar tasks that happen weekly |recur tasks weekly |easily create versions of the same task but with different deadlines.
 |=======================================================================
 
 [appendix]
@@ -1297,7 +1378,15 @@ If the window size is smaller than the default height and width, the window size
 
 === Task Management
 
-. Natania add your recurring task testing here
+. Recurring a task weekly
+.. Prerequisites: Application is logged in, and at least a task is added that has not been recurred yet.
+.. Test case: recurw 1 x/2 +
+Expected: Task recurred successfully. A success message will be shown in the results display box. 2 tasks will have been added to the task list panel and the calendar.
+
+. Deleting a task and its recurred versions
+.. Prerequisites: Application is logged in, and at least a task is added that has been recurred.
+.. Test case: deleter 1 +
+Expected: Task and its recurred versions deleted successfully. A success message will be shown in the results display box. The task and its recurred versions will not be shown in the task list panel or the calendar.
 
 . Adding a subtask
 .. Prerequisites: Application is logged in, and at least a task is added with no subtask.

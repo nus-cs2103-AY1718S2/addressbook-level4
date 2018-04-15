@@ -44,7 +44,7 @@ public class DeleteRecurredTasksCommandTest {
     public void setUp() {
         try {
             model.loginUser(ADMIN_USER);
-            model.recurTask(model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased()), 1);
+            model.recurWeeklyTask(model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased()), 1);
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {

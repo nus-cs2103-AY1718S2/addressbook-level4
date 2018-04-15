@@ -305,10 +305,17 @@ public class Organizer implements ReadOnlyOrganizer {
      *
      * @throws DuplicateTaskException if an equivalent task already exists.
      */
-    public void recurTask(Task taskToRecur, int times)
+    public void recurWeeklyTask(Task taskToRecur, int times)
             throws DuplicateTaskException, TaskAlreadyRecurredException, TaskNotFoundException {
         Task task = createRecurredTask(taskToRecur);
         updateTask(taskToRecur, task);
+        addRecurringWeeklyTasks(task, times);
+    }
+
+    /**
+     * Adds versions of a {@code task} that are recurred weekly.
+     */
+    public void addRecurringWeeklyTasks(Task task, int times) throws DuplicateTaskException {
         LocalDate oldDeadline = task.getDeadline().date;
         for (int i = 1; i <= times; i++) {
             LocalDate newDeadline = oldDeadline.plusWeeks(i);
@@ -338,16 +345,24 @@ public class Organizer implements ReadOnlyOrganizer {
         if (!key.getRecurrence().getIsRecurring()) {
             throw new TaskNotRecurringException();
         } else {
-            int recurrenceGroup = key.getRecurrence().getRecurrenceGroup();
-            List<Task> newTaskList = new ArrayList<>();
-            for (Task task : tasks) {
-                if (task.getRecurrence().getRecurrenceGroup() != recurrenceGroup) {
-                    newTaskList.add(task);
-                }
-            }
+            List<Task> newTaskList = makeNewTaskListWithoutTags(key);
             setTasks(newTaskList);
             removeUnusedTags();
         }
+    }
+
+    /**
+     * Removes {@code tag} from all tasks in this {@code Organizer}.
+     */
+    public List<Task> makeNewTaskListWithoutTags(Task key) {
+        int recurrenceGroup = key.getRecurrence().getRecurrenceGroup();
+        List<Task> newTaskList = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getRecurrence().getRecurrenceGroup() != recurrenceGroup) {
+                newTaskList.add(task);
+            }
+        }
+        return newTaskList;
     }
     //@@author
 

@@ -611,7 +611,7 @@ Recurs an existing task in PrioriTask.
 * The task is recurred for the specified number of `TIMES`, not inclusive of the original existing task.
 * The 1st recurred task has the deadline set to be 1 week after the original task's deadline. The 2nd recurred task has the deadline set to be 2 weeks after the original task's deadline, and so on.
 * Priority of the recurred tasks is set to be the original task's priority when it was last edited using `edit` or when it was first set using `add`.
-* The recurred tasks will be set set as `Not Completed` by default.
+* The recurred tasks and their subtasks will be set set as `Not Completed` by default.
 * All subtasks of the recurred tasks will also be set as `Not Completed` by default.
 
 
@@ -624,7 +624,7 @@ Recurs the 1st task weekly for 3 times.
 ====
 // end::recurw[]
 
-// tag::deleter{}
+// tag::deleter[]
 === Deleting a task and all its recurred versions : `deleter` or `dr` `[since v1.5]`
 
 Deletes the specified task and all its recurred versions from PrioriTask. +

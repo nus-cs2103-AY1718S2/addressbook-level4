@@ -21,6 +21,7 @@ import seedu.organizer.model.Model;
 import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.Organizer;
 import seedu.organizer.model.UserPrefs;
+import seedu.organizer.model.task.DateCompleted;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
@@ -111,7 +112,7 @@ public class ToggleCommandTest {
                 task.getBasePriority(),
                 task.getDeadline(),
                 task.getDateAdded(),
-                task.getDateCompleted(), task.getDescription(),
+                new DateCompleted(true), task.getDescription(),
                 task.getStatus().getInverse(),
                 task.getTags(),
                 task.getSubtasks(),

@@ -26,6 +26,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.exception.BadDataException;
+import seedu.address.model.exception.InvalidPasswordException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
@@ -156,12 +158,13 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateUsername(String username) {
+        public void updateUsername(String username) throws BadDataException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void updatePassword(String password1, String password2) {
+        public void updatePassword(String password1, String password2)
+            throws InvalidPasswordException, BadDataException {
             fail("This method should not be called.");
         }
 

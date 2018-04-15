@@ -1,10 +1,14 @@
 //@@author Jason1im
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.AccountUpdateEvent;
+import seedu.address.model.exception.BadDataException;
 import seedu.address.model.exception.InvalidPasswordException;
 import seedu.address.model.exception.InvalidUsernameException;
 
@@ -20,6 +24,8 @@ public class AccountsManager {
         account = new Account();
     }
 
+    public AccountsManager(Account account) { this.account = account; }
+
     private boolean checkUsername(String username, Account account) {
         return account.getUsername().equals(username);
     }
@@ -28,17 +34,18 @@ public class AccountsManager {
         return account.getPassword().equals(password);
     }
 
+    /** Raises an event to indicate the account has changed */
+    private void indicateAccountUpdated() {
+        EventsCenter.getInstance().post(new AccountUpdateEvent(account));
+    }
+
     /**
      * Updates the username of the account.
      * @throws InvalidUsernameException if the username is already in use
      */
-    public void updateUsername(String inputUsername) throws InvalidUsernameException {
-        requireAllNonNull(inputUsername);
-        if (checkUsername(inputUsername, account)) {
-            throw new InvalidUsernameException();
-        } else {
-            account.updateUsername(inputUsername);
-        }
+    public void updateUsername(String inputUsername) throws BadDataException {
+        requireNonNull(inputUsername);
+        account.updateUsername(inputUsername);
     }
 
     /**
@@ -46,17 +53,14 @@ public class AccountsManager {
      * @throws InvalidPasswordException
      */
     public void updatePassword(String oldPassword, String newPassword)
-            throws InvalidPasswordException {
+            throws InvalidPasswordException, BadDataException {
         requireAllNonNull(oldPassword, newPassword);
         if (!checkPassword(oldPassword, account)) {
             throw new InvalidPasswordException();
         } else {
             account.updatePassword(newPassword);
+            indicateAccountUpdated();
         }
-    }
-
-    public void resetPassword() {
-        account.resetPassword();
     }
 
     /**

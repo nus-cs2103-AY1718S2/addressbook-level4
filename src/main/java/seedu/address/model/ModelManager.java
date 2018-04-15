@@ -19,6 +19,7 @@ import seedu.address.commons.events.ui.ReloadCalendarEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.exception.BadDataException;
 import seedu.address.model.exception.InvalidPasswordException;
 import seedu.address.model.exception.InvalidUsernameException;
 import seedu.address.model.exception.MultipleLoginException;
@@ -50,9 +51,9 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, Account account) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, userPrefs, account);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
@@ -60,12 +61,12 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         appointments = new ArrayList<Appointment>(this.addressBook.getAppointmentList());
         filteredJobs = new FilteredList<>(this.addressBook.getJobList());
-        this.accountsManager = new AccountsManager();
+        this.accountsManager = new AccountsManager(account);
         this.user = Optional.empty();
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), new Account());
     }
 
     @Override
@@ -172,13 +173,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateUsername(String oldUsername) throws InvalidUsernameException {
-        accountsManager.updateUsername(oldUsername);
+    public void updateUsername(String newUsername) throws BadDataException {
+        accountsManager.updateUsername(newUsername);
     }
 
     @Override
     public void updatePassword(String oldPassword, String newPassword)
-        throws InvalidPasswordException {
+        throws InvalidPasswordException, BadDataException {
         accountsManager.updatePassword(oldPassword, newPassword);
     }
 

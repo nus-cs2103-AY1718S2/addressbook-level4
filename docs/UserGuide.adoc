@@ -592,7 +592,7 @@ This will open up the `Google` tab for you to login. On running the above comman
 You should also see the login screen as shown below.
 
 .The Google log in page
-image::googlelogin1.PNG[width="600", align="center"]
+image::googlelogin1.PNG[width="400", align="center"]
 
 
 [NOTE]
@@ -636,7 +636,7 @@ The collected information will be used automatically to fill up details as shown
 If you have also used `sub/Interview on 13 May 2018` in the command, the Subject textbox will also be fill with "Interview on 13 May 2018".
 
 .The User Interface to draft your email
-image::emailSS1.PNG[width="790", align="center"]
+image::emailSS1.PNG[width="400", align="center"]
 
 [TIP]
 You can use keyboard short-cuts like `Ctrl-B` to *bold* your text while drafting
@@ -647,7 +647,7 @@ button to send your email. If the email is sent successfully, you should see
 a pop-up message as shown below.
 
 .Pop-up message
-image::emailSS2.PNG[width="400", align="center"]
+image::emailSS2.PNG[width="300", align="center"]
 // end::email[]
 
 === Utility Features

@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.exception.BadDataException;
 import seedu.address.model.exception.InvalidPasswordException;
 import seedu.address.model.exception.InvalidUsernameException;
 import seedu.address.model.exception.MultipleLoginException;
@@ -99,16 +100,17 @@ public interface Model {
      * Changes the password of the user account
      * @param oldPassword
      * @param newPassword
-     * @throws InvalidPasswordException if password_1 is invalid.
+     * @throws InvalidPasswordException if password is invalid.
+     * @throws BadDataException if password does not meet contraints.
      */
     void updatePassword(String oldPassword, String newPassword)
-            throws InvalidPasswordException;
+            throws InvalidPasswordException, BadDataException;
 
     /**
      * Changes the username of the user account.
-     * @throws InvalidUsernameException
+     * @throws BadDataException is username does not meet contraints.
      */
-    void updateUsername(String oldUsername) throws InvalidUsernameException;
+    void updateUsername(String oldUsername) throws BadDataException;
 
     /**
      * Checks if the user has logged in.

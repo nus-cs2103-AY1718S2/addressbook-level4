@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.exception.BadDataException;
 import seedu.address.model.exception.InvalidPasswordException;
 
 /**
@@ -40,9 +41,11 @@ public class UpdatePasswordCommand extends Command {
         requireNonNull(model);
         try {
             model.updatePassword(oldPassword, newPassword);
-            return new CommandResult(String.format(MESSAGE_SUCCESS));
+            return new CommandResult(MESSAGE_SUCCESS);
         } catch (InvalidPasswordException ipe) {
             throw new CommandException(Messages.MESSAGE_INVALID_PASSWORD);
+        } catch (BadDataException bde) {
+            throw new CommandException(bde.getMessage());
         }
     }
 

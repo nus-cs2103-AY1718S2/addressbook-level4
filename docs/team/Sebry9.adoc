@@ -41,12 +41,19 @@ reInsurance is a desktop client tracking application used for insurance agent to
 |===
 include::../UserGuide.adoc[tag=insurance]
 
+include::../UserGuide.adoc[tag=colorTag]
+
 
 == Contributions to the Developer Guide
 
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
+
+include::../DeveloperGuide.adoc[tag=sebryStory1]
+
+include::../DeveloperGuide.adoc[tag=sebryStory2]
+
 include::../DeveloperGuide.adoc[tag=insurance]
 
 ---

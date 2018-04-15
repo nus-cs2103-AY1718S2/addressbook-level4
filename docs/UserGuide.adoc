@@ -87,10 +87,19 @@ Format: `i/INSURANCE[COMMISSION]`
 [TIP]
 A person can have any number of insurances, to add in the commission of a particular insurance simply put the amount immediately after the insurance name and inside a '[]' or a '{}' bracket.
 
-Examples:
+[NOTE]
+Insurance only accept alpha numeric characters and Commission needs to be non-negative
 
-* `add n/Jeremy Lee p/82286918 e/sebry9@gmail.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 i/Health[10] i/General{20}`
+Examples:
+ `add n/Jeremy Lee p/82286918 e/sebry9@gmail.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 i/Health[10] i/General{20}`
 // end::insurance[]
+
+// tag::colorTag[]
+=== Colour Tag [Since V1.2]
+
+Common tags in reInsurances are colour highlighted. Tags input type is non restrictive and up to the user's imagination.
+
+// end::colorTag[]
 
 === Listing all persons : `list`
 

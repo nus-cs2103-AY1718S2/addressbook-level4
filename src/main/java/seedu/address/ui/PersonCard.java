@@ -169,8 +169,4 @@ public class PersonCard extends UiPart<Region> {
     public Person getPerson() {
         return person;
     }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 }

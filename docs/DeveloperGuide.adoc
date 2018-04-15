@@ -479,7 +479,7 @@ To find the next field to shift the caret to, manipulation of `String` is used t
 command box. By searching the position of the next `/`, it indicates where the next field should be entered.
 
 .Visualization for find next field
-image::AutofillAdd_Tab2.png[width="700"]
+image::AutofillAdd_Tab2.png[width="500"]
 
 ===== Delete Previous Prefix
 To delete the previous prefix, the last instance of `{nbsp}{nbsp}` from the current caret position is located. Any text
@@ -487,14 +487,14 @@ between this position and the caret position is deleted to remove the desired pr
 then procedes to find next field to be shifted to. Below shows what happens when `Delete` is pressed when caret position is at `n/`.
 
 .Visualization for delete previous prefix
-image::AutofillAdd_Delete.png[width="700"]
+image::AutofillAdd_Delete.png[width="500"]
 
 ==== Select index to edit
 To select/highlight the index to edit, the first instance of a digit is searched from the current caret position. The index
 is then highlighted by selecting the caret forward.
 
 .Visualization for select index to edit
-image::AutofillMatch.png[width="700"]
+image::AutofillMatch.png[width="500"]
 
 We decide to create shortcuts for even for commands that do not have lengthy inputs (e.g. `add` and `edit`) as it makes typing
 command easier for our user. By highlighting the index to edit, user can simply type the index they want to edit without
@@ -795,10 +795,10 @@ appropriate modifications.
 
 The following sequence diagrams shows how the remark operation works:
 
-image::RemarkCommandSequenceDiagram.png[width="550"]
+image::RemarkCommandSequenceDiagram.png[width="370"]
 .Sequence Diagram for `remark`
 
-image::RemarkCommandSequenceDiagram1.png[width="550"]
+image::RemarkCommandSequenceDiagram1.png[width="370"]
 
 
 ==== Design Considerations
@@ -840,10 +840,10 @@ in the user input. When setting an absolute rating, the app resets `count` back 
 
 The following sequence diagrams shows how the rate operation works:
 
-image::RateCommandSequenceDiagram.png[width="550"]
+image::RateCommandSequenceDiagram.png[width="370"]
 .Sequence Diagram for `rate`
 
-image::RateCommandSequenceDiagram1.png[width="550"]
+image::RateCommandSequenceDiagram1.png[width="370"]
 
 ==== Design Considerations
 ===== Aspect: Indication for Absolute Rating

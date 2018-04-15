@@ -1362,6 +1362,8 @@ These instructions only provide a starting point for testers to work on; testers
 .. Prerequisites: a valid filepath with valid format
 .. Test case: `import VALID_FILE_PATH` +
    Expected: All students, tags, and aliases from the imported file are added to StardyTogether.
+.. Test case: `undo` +
+   Expected: undo the changes.
 .. Test case: `import INVALID_FILE_PATH` +
    Expected: Invalid filepath error message will be shown
 .. Other incorrect import commands to try: `import`, `import filepath wrongPassword` (where wrongPassword is wrong), `import INVALID_FILE_FORMAT` (where file is in invalid format) +
@@ -1404,6 +1406,17 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect upload commands to try: `upload`, `upload filename   password  ` (notice the spaces) +
    Expected: Invalid command error message will be shown
 
+=== Finding vacant rooms
+
+. Finding vacant rooms
+
+.. Test case: `vacant COM1` +
+   Expected: All rooms schedule of COM1 are displayed on UI.
+.. Test case: `vacant nonExistentBuilding` +
+   Expected: Building not found, list of buildings are displayed on UI.
+.. Other incorrect vacant commands to try: `vacant`, `vacant COM1 COM2` +
+   Expected: Invalid command error message will be shown
+
 === Encrypting and Decrypting
 
 . Encrypting data
@@ -1431,4 +1444,34 @@ These instructions only provide a starting point for testers to work on; testers
 .. Test case: `select INDEX odd` where `INDEX` is the index of the person in the list+
    Expected: Card with Details of the person shows up with his/her odd week Timetable
 
-_{ more test cases ... }_
+=== Adding an alias
+
+. Adding an alias to valid command
+
+.. Test case: `alias add a` +
+   Expected: Entering `list` would display `a` under `add` column.
+.. Test case: `undo` +
+   Expected: Entering `list` would display `a` removed from `add` column.
+.. Other incorrect alias commands to try: `alias`, `alias *`, `alias abc`, `alias add! abc`, `alias wrong w` +
+   Expected: Displays error messages
+
+=== Removing an alias
+
+. Removing an existing alias
+
+.. Prerequisites: Add an alias with alias name a, `alias add a`.
+.. Test case: `unalias a` +
+   Expected: Entering `list` would display `a` removed from `add` column.
+.. Other incorrect unalias commands to try: `unalias`, `unalias *`, `unalias abc`, `unalias abc abc` +
+   Expected: Displays error messages
+
+=== Locating places on Google Maps
+
+. Locating a place or finding directions from one place to another
+
+.. Test case: `map COM1` +
+   Expected: Displays the location of NUS COM1 on Google Maps.
+.. Test case: `map Tampines Mall/COM2` +
+   Expected: Shows the directions from Tampines Mall to COM2 on Google Maps.
+.. Other incorrect map commands to try: `map` +
+   Expected: Displays error messages

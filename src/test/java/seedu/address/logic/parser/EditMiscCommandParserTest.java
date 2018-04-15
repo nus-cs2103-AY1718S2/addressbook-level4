@@ -29,6 +29,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditMiscCommand;
 import seedu.address.model.student.miscellaneousinfo.Allergies;
@@ -94,8 +95,8 @@ public class EditMiscCommandParserTest {
 
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_ALLERGIES_DESC + INVALID_NOKNAME_DESC +
-                        REMARKS_DESC_AMY, Allergies.MESSAGE_ALLERGIES_CONSTRAINTS);
+        assertParseFailure(parser, "1" + INVALID_ALLERGIES_DESC + INVALID_NOKNAME_DESC
+                + REMARKS_DESC_AMY, Allergies.MESSAGE_ALLERGIES_CONSTRAINTS);
     }
 
     @Test

@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.MoreInfoCommand;
 
 public class MoreInfoCommandParserTest {
@@ -15,7 +16,7 @@ public class MoreInfoCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, MoreInfoCommand.MESSAGE_USAGE);
 
-    MoreInfoCommandParser parser = new MoreInfoCommandParser();
+    private MoreInfoCommandParser parser = new MoreInfoCommandParser();
 
     @Test
     public void parse_invalidArgs_throwsParseException() {

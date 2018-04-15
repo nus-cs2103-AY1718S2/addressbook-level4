@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PICTURE_PATH;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.EditPictureCommand;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 
@@ -42,7 +43,7 @@ public class EditPictureCommandParserTest {
         assertParseFailure(parser, PREFIX_INDEX +  "0" + PROFILEPICTUREPATH_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
         // invalid arguments being parsed as preamble
-        assertParseFailure(parser,PREFIX_INDEX + "1 some random string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, PREFIX_INDEX + "1 some random string", MESSAGE_INVALID_FORMAT);
 
         // invalid prefix being parsed as preamble
         assertParseFailure(parser, PREFIX_INDEX + "1 i/ string", MESSAGE_INVALID_FORMAT);

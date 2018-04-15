@@ -20,7 +20,7 @@ public class EditMiscDescriptorBuilder {
         descriptor = new EditMiscDescriptor();
     }
 
-    public EditMiscDescriptorBuilder(EditMiscDescriptor editMiscDescriptor ) {
+    public EditMiscDescriptorBuilder(EditMiscDescriptor editMiscDescriptor) {
         this.descriptor = new EditMiscDescriptor(editMiscDescriptor);
     }
 

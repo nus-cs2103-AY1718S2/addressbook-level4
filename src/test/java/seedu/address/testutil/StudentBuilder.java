@@ -185,7 +185,7 @@ public class StudentBuilder {
      * Sets the {@code Allergies} of the student we are building
      */
     public StudentBuilder withAllergies(String allergies) {
-        this.miscellaneousInfo = new MiscellaneousInfo(new Allergies(allergies),miscellaneousInfo.getNextOfKinName(),
+        this.miscellaneousInfo = new MiscellaneousInfo(new Allergies(allergies), miscellaneousInfo.getNextOfKinName(),
                 miscellaneousInfo.getNextOfKinPhone(), miscellaneousInfo.getRemarks());
         return this;
     }

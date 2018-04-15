@@ -14,6 +14,7 @@ import java.io.File;
 import java.nio.file.Paths;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.CommandHistory;
@@ -39,9 +40,9 @@ public class MoreInfoCommandTest {
     }
 
     @Test
-    public void execute_storageFileMissing_success() throws Exception{
+    public void execute_storageFileMissing_success() throws Exception {
         MoreInfoCommand moreInfoCommand = prepareCommand(INDEX_FIRST);
-        String expectedMessage = MoreInfoCommand.MESSAGE_MOREINFO_STUDENT_SUCCESS.substring(0,40)
+        String expectedMessage = MoreInfoCommand.MESSAGE_MOREINFO_STUDENT_SUCCESS.substring(0, 40)
                 + "Alice Pauline";
 
 
@@ -57,7 +58,7 @@ public class MoreInfoCommandTest {
 
         assertCommandSuccess(moreInfoCommand, model , expectedMessage, model);
 
-        if(fileCreated == true) {
+        if (fileCreated == true) {
             File parent = dataFileToCreate.getParentFile();
             dataFileToCreate.delete();
             parent.delete();

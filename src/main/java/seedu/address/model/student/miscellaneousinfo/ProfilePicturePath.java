@@ -48,7 +48,7 @@ public class ProfilePicturePath {
      * Returns true if a given string is a valid file path with extensions either '.jpg' or '.png'.
      */
     public static boolean isValidPath(String test) {
-        test = test.replace('\\','/' );
+        test = test.replace('\\', '/');
         if (test.equals(ProfilePicturePath.DEFAULT_PROFILE_PICTURE)) {
             return true;
         }

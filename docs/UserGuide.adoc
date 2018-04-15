@@ -377,10 +377,10 @@ To encrypt ST and protect your data, you can enter the command `encrypt` followe
 Format: `encrypt PASSWORD`
 
 [WARNING]
-****
+=====
 * Passwords are case-sensitive.
 * The password string can only contain characters in the UTF-8 format.
-****
+=====
 
 Examples:
 
@@ -412,10 +412,10 @@ Format: `import FILEPATH PASSWORD`
 ****
 
 [WARNING]
-****
+=====
 * If no `PASSWORD` is provided, the instance will be read without decryption.
 * The instance file *must be in XML file format* after decryption.
-****
+=====
 
 Example:
 

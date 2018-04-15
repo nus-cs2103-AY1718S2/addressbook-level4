@@ -96,14 +96,14 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "\n";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Contact: %1$s";
     public static final String MESSAGE_EDIT_PET_PATIENT_SUCCESS = "Edited Pet Patient: %1$s";
     public static final String MESSAGE_EDIT_APPOINTMENT_SUCCESS = "Edited Appointment: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This contact already exists in the address book.";
     public static final String MESSAGE_DUPLICATE_PET_PATIENT = "This pet patient already exists in the address book.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the address book.";
-    public static final String MESSAGE_MISSING_PERSON = "The target person cannot be missing.";
+    public static final String MESSAGE_MISSING_PERSON = "The target contact cannot be missing.";
     public static final String MESSAGE_MISSING_PET_PATIENT = "The target pet patient cannot be missing";
     public static final String MESSAGE_MISSING_APPOINTMENT = "The target appointment cannot be missing.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT_TIMING = "Duplicate in appointment timing.";

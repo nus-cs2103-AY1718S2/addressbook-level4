@@ -437,15 +437,11 @@ As you can see from the diagram below, these are the interactions among the comp
 
 image::menu_fig_1.png[width="800"]
 
-To achieve this enhancement, the following modifications are made for Model and Storage components.
+To achieve this enhancement, the following modifications are made for Model and Storage components. For Model components, besides AddressBook, UserPref and CustomerStats, now ModelManager has an additional Menu class. It consists a Data field with all the available food provided by the restaurant. In the Storage component, there is an additional MenuStorage interface and it is implemented by a XmlMenuStorage class to read the XML file on local machine.
 
 image::menu_fig_2.png[width="800"]
 
-As the diagram shown above, besides AddressBook, UserPref and CustomerStats, now ModelManager has an additional Menu class. It consists a Data field with all the available food provided by the restaurant.
-
 image::menu_fig_3.png[width="800"]
-
-In the Storage component, there is an additional MenuStorage interface and it is implemented by a XmlMenuStorage class to read the XML file on local machine.
 
 ==== Design Considerations
 

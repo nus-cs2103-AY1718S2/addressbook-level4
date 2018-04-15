@@ -34,6 +34,8 @@ TuitionCor is a desktop address book application used for teaching Software Engi
 ** Documentation:
 *** Updated the developer guide's model description to reflect the current implementation: https://github.com/CS2103JAN2018-F11-B2/main/pull/78[#78]
 *** Added the initial intended features contribution to developer guide: https://github.com/CS2103JAN2018-F11-B2/main/pull/25[#25]
+** Community:
+*** Provided useful bug reports and suggestions for other teams. (Issues https://github.com/CS2103JAN2018-F14-B3/main/issues/178[#178], https://github.com/CS2103JAN2018-F14-B3/main/issues/180[#180], https://github.com/CS2103JAN2018-F14-B3/main/issues/170[#170])
 
 == Contributions to the User Guide
 

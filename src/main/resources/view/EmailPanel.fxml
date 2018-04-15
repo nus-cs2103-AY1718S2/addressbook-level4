@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<!-- //@@author KevinCJH -->
+
+<GridPane prefHeight="478.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" vgap="1">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="100.0" />
+    </columnConstraints>
+    <children>
+        <TextField fx:id="toTxtField" prefHeight="25.0" promptText="To:" GridPane.columnIndex="0" GridPane.rowIndex="0" disable="true" />
+        <TextField fx:id="subjectTxtField" prefHeight="29.0" promptText="Subject:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <HTMLEditor fx:id="bodyTxtField" prefHeight="257.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Button fx:id="sendBtn" text="Send" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="36.0" prefWidth="686.0" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    </children>
+</GridPane>

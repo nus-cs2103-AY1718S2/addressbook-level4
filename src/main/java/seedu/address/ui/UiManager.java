@@ -14,6 +14,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -31,6 +32,12 @@ public class UiManager extends ComponentManager implements Ui {
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
+
+    private static final String LOGIN_PROMPT = "Type 'login u/USERNAME pw/PASSWORD' to login. "
+            + "If you're using contactHeRo for the first time, type 'Admin' as the USERNAME"
+            + " and 'ad123' as the PASSWORD. \n"
+            + "Type 'help' to view the User Guide. \n"
+            + "Type 'exit' to exit contactHeRo.";
 
     private Logic logic;
     private Config config;
@@ -53,9 +60,31 @@ public class UiManager extends ComponentManager implements Ui {
 
         try {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+            mainWindow.init();
             mainWindow.show(); //This should be called before creating other UI parts
-            mainWindow.fillInnerParts();
+            mainWindow.fillInnerParts(false);
+            raise(new NewResultAvailableEvent(LOGIN_PROMPT));
+        } catch (Throwable e) {
+            logger.severe(StringUtil.getDetails(e));
+            showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
+        }
+    }
 
+    /**
+     * This method is for Testing
+     */
+    @Override
+    public void startTest(Stage primaryStage) {
+        logger.info("Starting UI...");
+
+        //Set the application icon.
+        primaryStage.getIcons().add(getImage(ICON_APPLICATION));
+
+        try {
+            mainWindow = new MainWindow(primaryStage, config, prefs, logic, 1);
+            mainWindow.init();
+            mainWindow.show(); //This should be called before creating other UI parts
+            mainWindow.fillInnerParts(true);
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);

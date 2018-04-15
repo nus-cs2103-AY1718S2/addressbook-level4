@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author Jason1im -->
+<account>
+    <!-- invalid username -->
+    <username>...</username>
+    <passqord>doe123</passqord>
+</account>

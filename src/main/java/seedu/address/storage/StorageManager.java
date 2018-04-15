@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -8,9 +9,11 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AccountUpdateEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.Account;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
@@ -22,14 +25,50 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private AccountDataStorage accountDataStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage,
+                          AccountDataStorage accountDataStorage) {
         super();
+        createProfilePicturesFolder();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.accountDataStorage = accountDataStorage;
     }
 
+    private void createProfilePicturesFolder() {
+        File dir = new File("./ProfilePictures");
+        dir.mkdir();
+    }
+
+    //@@author Jason1im
+    // ================ AccountData methods ==============================
+
+    @Override
+    public Optional<Account> readAccountData() throws DataConversionException, IOException {
+        return accountDataStorage.readAccountData();
+    }
+
+    @Override
+    public Optional<Account> readAccountData(String filePath) throws DataConversionException,
+            IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return accountDataStorage.readAccountData(filePath);
+    }
+
+    @Override
+    public void saveAccountData(Account account) throws IOException {
+        accountDataStorage.saveAccountData(account);
+    }
+
+    @Override
+    public void saveAccountData(Account account, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        accountDataStorage.saveAccountData(account);
+    }
+
+    //@@author
     // ================ UserPrefs methods ==============================
 
     @Override
@@ -87,6 +126,22 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+
+    @Override
+    @Subscribe
+    public void handleAccountUpdateEvent(AccountUpdateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Account data changed, saving to file"));
+        try {
+            saveAccountData(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        addressBookStorage.backupAddressBook(addressBook);
     }
 
 }

@@ -4,10 +4,9 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.address.testutil.TypicalJobs.getTypicalJobs;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
@@ -23,21 +22,25 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.JobListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.job.JobFindCommand;
+import seedu.address.logic.commands.job.JobListCommand;
+import seedu.address.logic.commands.person.FindCommand;
+import seedu.address.logic.commands.person.ListCommand;
+import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
@@ -83,7 +86,15 @@ public abstract class AddressBookSystemTest {
      * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
      */
     protected AddressBook getInitialData() {
-        return TypicalPersons.getTypicalAddressBook();
+        AddressBook ab = TypicalPersons.getTypicalAddressBook();
+        for (Job job : getTypicalJobs()) {
+            try {
+                ab.addJob(job);
+            } catch (DuplicateJobException e) {
+                throw new AssertionError("not possible");
+            }
+        }
+        return ab;
     }
 
     /**
@@ -103,6 +114,11 @@ public abstract class AddressBookSystemTest {
 
     public PersonListPanelHandle getPersonListPanel() {
         return mainWindowHandle.getPersonListPanel();
+    }
+
+    // @@author kush1509
+    public JobListPanelHandle getJobListPanel() {
+        return mainWindowHandle.getJobListPanel();
     }
 
     public MainMenuHandle getMainMenu() {
@@ -132,8 +148,6 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
-
-        waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
@@ -148,10 +162,29 @@ public abstract class AddressBookSystemTest {
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
-        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
+        executeCommand(FindCommand.COMMAND_WORD + " n/" + keyword);
         assertTrue(getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size());
     }
 
+    // @@author kush1509
+
+    /**
+     * Displays all persons in the address book.
+     */
+    protected void showAllJobs() {
+        executeCommand(JobListCommand.COMMAND_WORD);
+        assertEquals(getModel().getAddressBook().getPersonList().size(), getModel().getFilteredPersonList().size());
+    }
+
+    /**
+     * Displays all jobs with any parts of their positions matching {@code keyword} (case-insensitive).
+     */
+    protected void showJobsWithPosition(String keyword) {
+        executeCommand(JobFindCommand.COMMAND_WORD + " p/" + keyword);
+        assertTrue(getModel().getFilteredJobList().size() < getModel().getAddressBook().getJobList().size());
+    }
+
+    // @@author
     /**
      * Selects the person at {@code index} of the displayed list.
      */
@@ -163,9 +196,17 @@ public abstract class AddressBookSystemTest {
     /**
      * Deletes all persons in the address book.
      */
-    protected void deleteAllPersons() {
+    protected void deleteAllPersonsAndJobs() {
         executeCommand(ClearCommand.COMMAND_WORD);
         assertEquals(0, getModel().getAddressBook().getPersonList().size());
+    }
+
+    /**
+     * Deletes all jobs in the address book.
+     */
+    protected void deleteAllJobs() {
+        executeCommand(ClearCommand.COMMAND_WORD);
+        assertEquals(0, getModel().getAddressBook().getJobList().size());
     }
 
     /**
@@ -192,6 +233,7 @@ public abstract class AddressBookSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
+        getJobListPanel().rememberSelectedJobCard();
     }
 
     /**
@@ -202,6 +244,13 @@ public abstract class AddressBookSystemTest {
     protected void assertSelectedCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
+    }
+
+    /**
+     * Asserts that the previously selected job card is now deselected.
+     */
+    protected void assertSelectedJobCardDeselected() {
+        assertFalse(getJobListPanel().isAnyCardSelected());
     }
 
     /**
@@ -231,6 +280,14 @@ public abstract class AddressBookSystemTest {
     protected void assertSelectedCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
+    }
+
+    /**
+     * Asserts that the selected card in the job list panel remain unchanged.
+     * @see JobListPanelHandle#isSelectedJobCardChanged()
+     */
+    protected void assertSelectedJobCardUnchanged() {
+        assertFalse(getJobListPanel().isSelectedJobCardChanged());
     }
 
     /**
@@ -276,7 +333,8 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertListMatching(getJobListPanel(), getModel().getFilteredJobList());
+            assertEquals(BrowserPanel.DEFAULT_PAGE_URL, getBrowserPanel().getLoadedUrl().toString());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

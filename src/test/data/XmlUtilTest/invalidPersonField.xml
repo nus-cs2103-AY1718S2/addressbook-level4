@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author kush1509 -->
 <!-- Person with an invalid phone field -->
 <person>
     <name>Hans Muster</name>
     <phone>9482asf424</phone>
     <email>hans@example</email>
     <address>4th street</address>
-    <tagged>friends</tagged>
+    <currentPosition>Software Engineer</currentPosition>
+    <company>Google</company>
+    <profilePicture>./src/test/data/images/hans.jpeg</profilePicture>
+    <tagged>Java</tagged>
 </person>

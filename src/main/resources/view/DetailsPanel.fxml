@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author kush1509 -->
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab id="0" fx:id="profile" text="Contact Details">
+      <content>
+      </content>
+    </Tab>
+    <Tab id="1" fx:id="linkedIn" text="LinkedIn Search">
+      <content>
+      </content>
+    </Tab>
+      <Tab fx:id="calendar" text="Calendar">
+        <content>
+        </content>
+      </Tab>
+    <Tab fx:id="email" text="Draft Email">
+      <content>
+      </content>
+    </Tab>
+    <Tab fx:id="googlelogin" text="Google">
+      <content>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

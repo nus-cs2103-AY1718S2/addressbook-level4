@@ -10,6 +10,11 @@ public interface Ui {
     /** Starts the UI (and the App).  */
     void start(Stage primaryStage);
 
+    /**
+     * This is for Test
+     */
+    void startTest(Stage primaryStage);
+
     /** Stops the UI. */
     void stop();
 

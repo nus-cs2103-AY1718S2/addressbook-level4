@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.CommandList;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -26,6 +29,8 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private int tabNumber = 0;
+    private String prevText = "";
 
     @FXML
     private TextField commandTextField;
@@ -50,16 +55,56 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
 
             navigateToPreviousInput();
+            prevText = "";
+            tabNumber = 0;
             break;
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            prevText = "";
+            tabNumber = 0;
+            break;
+        case TAB:
+            keyEvent.consume();
+            autoCompleteCommand(commandTextField.getText());
+            tabNumber++;
             break;
         default:
+            prevText = "";
+            tabNumber = 0;
             // let JavaFx handle the keypress
         }
     }
 
+    // @@author kush1509
+    /**
+     * Auto-completes the partial command {@code text} entered with the first command matched
+     * in the lexicographically sorted command list
+     */
+    private void autoCompleteCommand(String text) {
+        if (text.equals("")) {
+            return;
+        }
+
+        if (!text.startsWith(prevText) || prevText.equals("")) {
+            prevText = text;
+            tabNumber = 0;
+        }
+
+        CommandList commandListObj = new CommandList();
+
+        List<String> matchedCommands = commandListObj.commandList.stream().filter(u -> u.startsWith(prevText))
+                .collect(Collectors.toList());
+
+        if (matchedCommands.size() > 0) {
+            String textToDisplay = commandListObj.getSyntax(matchedCommands.get(tabNumber % matchedCommands.size()));
+
+            replaceText(textToDisplay);
+            commandTextField.positionCaret(textToDisplay.length() + 1);
+        }
+    }
+
+    // @@author
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}

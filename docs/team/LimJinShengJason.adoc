@@ -1,0 +1,63 @@
+= Lim Jin Sheng Jason - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: contactHeRo
+
+---
+
+== Overview
+
+contactHeRo is a desktop contact management application for recruiters across companies who need a quick and efficient way to manage the contact details and profiles of their potential recruits.
+It is a Command Line Interface(CLI) application with several useful features such as a login system, email system, a view linkedIn profile feature as well as an in-built calendar.
+
+This portfolio is to collate my contributions to this project as well as showing my developments in software engineering skills which I have learned from CS2103T.
+
+== Summary of contributions
+
+* *Major enhancement*: added the *login system* in contactHeRo.
+** What it does: provides security for the user's data.
+** Justification: Recruiters are dealing with data of their potential employees and some of these data are personal and sensitive. Recruiters may also have some confidential company data stored in the application. Hence it is necessary for them to set up some form of security to protect these sensitive data. Having a login system is one of the common methods to ensure data security.
+
+** Highlights: This enhancement provides a foundation for other security measures to be implemented in contactHeRo in the future to further help users in securing their important data.
+** Credits: stackoverflow.com.
+
+* *Minor enhancement*: added the *ability to clear history of user input*.
+** What it does: It allows the user erase the past commands which was inputted in the command line.
+** Justification: As our app only uses one command line interface for all user input and it comes with a history command which lets the user see the list previously entered commands,
+this may expose some of the sensitive data which the user has inputted, like login username and password. Hence being able to clear away the history of user inputs can help to protect those sensitive information.
+** Highlights: This was one of my first enhancement to the project and it helped me get familiarise with the logic component of the code.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B2/main/blob/master/collated/functional/Jason1im.md[Functional code]]
+[https://github.com/CS2103JAN2018-W09-B2/main/blob/master/collated/test/Jason1im.md[Test code]] +
+
+* *Other contributions*:
+
+** Project management:
+*** Reach the milestones `v1.1` - `v1.3rc` and `v1.5rc - 1.5` on GitHub.
+*** Created issues and milestones for the team.
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=login]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=loginsystem]
+
+=== Proposed Enhancement
+
+* Add data encryption feature to further improve the security of the data in contactHeRo.
+* Add shortcut keys to scroll through the list of data in contactHeRo to make it more user-friendly.
+
+---

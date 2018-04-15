@@ -204,7 +204,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
+     * Asserts that the previously selected card is now deselected and the detail panel remains displaying the details
      * of the previously selected person.
      * @see DetailPanelHandle#isUrlChanged()
      * @see DetailPanelHandle#isDetailChanged()
@@ -216,7 +216,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the person in the person list panel at
+     * Asserts that the detail panel is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
      * @see DetailPanelHandle#isUrlChanged()
      * @see DetailPanelHandle#isDetailChanged()
@@ -233,7 +233,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
+     * Asserts that the detail panel and the selected card in the person list panel remain unchanged.
      * @see DetailPanelHandle#isUrlChanged()
      * @see DetailPanelHandle#isDetailChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()

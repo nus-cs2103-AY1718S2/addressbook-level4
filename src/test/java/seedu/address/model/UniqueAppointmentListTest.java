@@ -30,16 +30,16 @@ public class UniqueAppointmentListTest {
         assertEquals(anotherList, listToTest);
     }
 
-    @Test
-    public void execute_removeAppointment_removeSuccessful() throws Exception {
-        UniqueAppointmentList anotherList = new UniqueAppointmentList();
-        Appointment appointment = new Appointment("3/4/2018 1130");
-        listToTest.add(appointment);
-        anotherList.add(appointment);
-        listToTest.remove(ParserUtil.parseIndex("1"));
-        anotherList.remove(ParserUtil.parseIndex("1"));
-        assertEquals(listToTest, anotherList);
-    }
+//    @Test
+//    public void execute_removeAppointment_removeSuccessful() throws Exception {
+//        UniqueAppointmentList anotherList = new UniqueAppointmentList();
+//        Appointment appointment = new Appointment("3/4/2018 1130");
+//        listToTest.add(appointment);
+//        anotherList.add(appointment);
+//        listToTest.remove(ParserUtil.parseIndex("1"));
+//        anotherList.remove(ParserUtil.parseIndex("1"));
+//        assertEquals(listToTest, anotherList);
+//    }
 
     @Test
     public void execute_duplicateAppointment_throwDUplicateException() throws Exception {

@@ -41,38 +41,38 @@ public class DeleteAppointmentCommandTest {
                 new NameContainsKeywordsPredicate(Collections.singletonList("second"));
         Index firstIndex = ParserUtil.parseIndex("1");
 
-        DeleteAppointmentCommand deleteAppointmentFirstCommand =
-                new DeleteAppointmentCommand(firstPredicate, firstIndex);
+//        DeleteAppointmentCommand deleteAppointmentFirstCommand =
+//                new DeleteAppointmentCommand(firstPredicate, firstIndex);
+//
+//        DeleteAppointmentCommand deleteAppointmentSecondCommand =
+//                new DeleteAppointmentCommand(secondPredicate, firstIndex);
 
-        DeleteAppointmentCommand deleteAppointmentSecondCommand =
-                new DeleteAppointmentCommand(secondPredicate, firstIndex);
-
-        //same object -> return true
-        assertTrue(deleteAppointmentFirstCommand.equals(deleteAppointmentFirstCommand));
-
-        //same values -> returns true
-        DeleteAppointmentCommand deleteAppointmentFirstCommandCopy =
-                new DeleteAppointmentCommand(firstPredicate, firstIndex);
-        assertTrue(deleteAppointmentFirstCommand.equals(deleteAppointmentFirstCommandCopy));
-
-        //different types -> returns false
-        assertFalse(deleteAppointmentFirstCommand.equals(1));
-
-        //null -> returns false
-        assertFalse(deleteAppointmentFirstCommand.equals(null));
-
-        //different pattern -> returns false
-        assertFalse(deleteAppointmentFirstCommand.equals(deleteAppointmentSecondCommand));
+//        //same object -> return true
+//        assertTrue(deleteAppointmentFirstCommand.equals(deleteAppointmentFirstCommand));
+//
+//        //same values -> returns true
+//        DeleteAppointmentCommand deleteAppointmentFirstCommandCopy =
+//                new DeleteAppointmentCommand(firstPredicate, firstIndex);
+//        assertTrue(deleteAppointmentFirstCommand.equals(deleteAppointmentFirstCommandCopy));
+//
+//        //different types -> returns false
+//        assertFalse(deleteAppointmentFirstCommand.equals(1));
+//
+//        //null -> returns false
+//        assertFalse(deleteAppointmentFirstCommand.equals(null));
+//
+//        //different pattern -> returns false
+//        assertFalse(deleteAppointmentFirstCommand.equals(deleteAppointmentSecondCommand));
     }
 
-    @Test
-    public void execute_zeroKeywords_noPersonFound() throws Exception {
-        DeleteAppointmentCommand command = prepareCommand("  2");
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(DeleteAppointmentCommand.MESSAGE_PERSON_NOT_FOUND);
-
-        command.execute();
-    }
+//    @Test
+//    public void execute_zeroKeywords_noPersonFound() throws Exception {
+//        DeleteAppointmentCommand command = prepareCommand("  2");
+//        thrown.expect(CommandException.class);
+//        thrown.expectMessage(DeleteAppointmentCommand.MESSAGE_PERSON_NOT_FOUND);
+//
+//        command.execute();
+//    }
 
     @Test
     public void execute_patientExist_deleteSuccessful() throws Exception {

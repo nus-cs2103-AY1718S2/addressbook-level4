@@ -56,4 +56,9 @@ public class Name {
         return fullName.hashCode();
     }
 
+    public int compareTo(Name other) {
+        return toString().compareToIgnoreCase(other.toString());
+    }
+
+
 }

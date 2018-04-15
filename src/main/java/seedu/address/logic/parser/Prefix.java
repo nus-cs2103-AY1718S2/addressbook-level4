@@ -11,7 +11,7 @@ public class Prefix {
         this.prefix = prefix;
     }
 
-    public String getPrefix() {
+    public final String getPrefix() {
         return prefix;
     }
 

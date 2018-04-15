@@ -98,6 +98,13 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author chenchongsong
+    @Override
+    public void sortUniquePersonList(String sortKey, String sortOrder) {
+        addressBook.sortPersons(sortKey, sortOrder);
+    }
+    //@@author
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

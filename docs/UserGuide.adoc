@@ -333,7 +333,7 @@ Format: `markPart` `INDEX` `marks/DIGITS`
 
 ****
 * The `INDEX` refers to the index number shown in the most recent listing.
-* The marks to be added must be a *integer* between 0 and 100 inclusive.
+* The marks to be added must be a *integer* between 1 and 100 inclusive.
 ****
 
 Examples:

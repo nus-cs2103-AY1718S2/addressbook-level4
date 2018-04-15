@@ -356,19 +356,10 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!NextOfKin.isValidName(trimmedName)) {
-            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
-        }
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        /*if (!NextOfKin.isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(NextOfKin.MESSAGE_PHONE_CONSTRAINTS);
-        }*/
         requireNonNull(email);
         String trimmedEmail = email.trim();
-        /*if (!NextOfKin.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(NextOfKin.MESSAGE_EMAIL_CONSTRAINTS);
-        }*/
         requireNonNull(remark);
         String trimmedRemark = remark.trim();
 

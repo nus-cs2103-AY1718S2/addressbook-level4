@@ -12,9 +12,10 @@ public class Cca {
     public final String pos;
 
     /**
-     * Constructs a {@code Remark}.
+     * Constructs a {@code Cca}.
      *
-     * @param cca A valid remark.
+     * @param cca A valid cca.
+     * @param pos A valid position.
      */
     public Cca(String cca, String pos) {
         requireNonNull(cca);
@@ -27,7 +28,7 @@ public class Cca {
     @Override
     public String toString() {
         if (value != "" && pos != "") {
-            return value + ": " + pos;
+            return value + ", " + pos;
         } else {
             return "";
         }

@@ -28,11 +28,11 @@ import seedu.address.model.tag.Tag;
 //@@author chuakunhong
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the cca details of an existing person in the address book.
  */
-public class AddCcaCommand extends UndoableCommand {
+public class CcaCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addcca";
+    public static final String COMMAND_WORD = "cca";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the CCA and the position "
             + "to the student that you want. "
@@ -55,7 +55,7 @@ public class AddCcaCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public AddCcaCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public CcaCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
@@ -121,12 +121,12 @@ public class AddCcaCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddCcaCommand)) {
+        if (!(other instanceof CcaCommand)) {
             return false;
         }
 
         // state check
-        AddCcaCommand e = (AddCcaCommand) other;
+        CcaCommand e = (CcaCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);

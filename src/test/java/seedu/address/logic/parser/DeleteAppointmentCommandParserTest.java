@@ -45,19 +45,19 @@ public class DeleteAppointmentCommandParserTest {
 
     @Test
     public void parse_invalidDate_throwParseException() {
-        assertParseFailure(parser, "alex 14/three/2018 1200", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+        assertParseFailure(parser, "1 14/three/2018 1200", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 DeleteAppointmentCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_invalidTime_throwParseException() {
-        assertParseFailure(parser, "alex 14/3/2018 12pm", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+        assertParseFailure(parser, "1 14/3/2018 12pm", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 DeleteAppointmentCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_dateTimeArgSwap_throwParseException() {
-        assertParseFailure(parser, "alex 1200 14/3/2018", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+        assertParseFailure(parser, "1 1200 14/3/2018", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 DeleteAppointmentCommand.MESSAGE_USAGE));
     }
 

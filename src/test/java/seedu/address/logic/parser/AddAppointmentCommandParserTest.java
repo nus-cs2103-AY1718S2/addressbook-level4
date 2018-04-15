@@ -21,6 +21,48 @@ public class AddAppointmentCommandParserTest {
     }
 
     @Test
+    public void parse_missingTime_throwParseException() {
+        assertParseFailure(parser, "1 2/4/2108", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_missingDate_throwParseException() {
+        assertParseFailure(parser, "1 1200", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_missingIndex_throwParseException() {
+        assertParseFailure(parser, "2/4/2108 1030", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidIndex_throwParseException() {
+        assertParseFailure(parser, "alex 2/4/2108 1030", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidDate_throwParseException() {
+        assertParseFailure(parser, "1 2/April/2108 1030", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidTime_throwParseException() {
+        assertParseFailure(parser, "1 2/4/2108 10:30am", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_dateTimeArgSwap_throwParseException() {
+        assertParseFailure(parser, "1 1030 2/4/2108", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_validArgs_returnsAddAppointmentCommand() throws IllegalValueException {
         AddAppointmentCommand expectedCommand = new AddAppointmentCommand(INDEX_FIRST_PERSON,
                 ParserUtil.parseDateTime("2/4/2108 1030"));

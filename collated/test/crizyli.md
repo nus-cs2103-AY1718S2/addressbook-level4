@@ -1079,15 +1079,3 @@ public class UniquePhotoListTest {
         return this;
     }
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
-``` java
-
-    /**
-     * Sets the {@code Rating} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withRating(String rating) {
-        this.rating = new Rating(rating);
-        return this;
-    }
-
-```

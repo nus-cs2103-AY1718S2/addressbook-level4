@@ -1,6 +1,12 @@
 # limzk1994-unused
 ###### /SecretKeyUtil.java
 ``` java
+/*
+Initial idea was to generate a secret key and store it in a keystore is the data folder
+However, the secret key will still be exposed, thus I changed secretKey the implementation to a
+password based one, remove the need to use this SecretKeyUtil. Some functions are not fully refactored
+since they won't be used.
+*/
 public class SecretKeyUtil {
 
     private static final char[]KEYSTORE_PASSWORD = {'p','a','s','s'};

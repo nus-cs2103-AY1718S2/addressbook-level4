@@ -1,4 +1,72 @@
 # Sebry9
+###### /java/seedu/address/ui/PersonCardTest.java
+``` java
+        // with default color Tags
+        Person personWithDefaultColorTag = new PersonBuilder().withTags("default").build();
+        personCard = new PersonCard(personWithDefaultColorTag, 3);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithDefaultColorTag, 3);
+    }
+
+    @Test
+    public void equals() {
+        Person person = new PersonBuilder().build();
+        PersonCard personCard = new PersonCard(person, 0);
+
+        // same person, same index -> returns true
+        PersonCard copy = new PersonCard(person, 0);
+        assertTrue(personCard.equals(copy));
+
+        // same object -> returns true
+        assertTrue(personCard.equals(personCard));
+
+        // null -> returns false
+        assertFalse(personCard.equals(null));
+
+        // different types -> returns false
+        assertFalse(personCard.equals(0));
+
+        // different person, same index -> returns false
+        Person differentPerson = new PersonBuilder().withName("differentName").build();
+        assertFalse(personCard.equals(new PersonCard(differentPerson, 0)));
+
+        // same person, different index -> returns false
+        assertFalse(personCard.equals(new PersonCard(person, 1)));
+    }
+
+    /**
+     * Asserts that {@code personCard} displays the details of {@code expectedPerson} correctly and matches
+     * {@code expectedId}.
+     */
+    private void assertCardDisplay(PersonCard personCard, Person expectedPerson, int expectedId) {
+        guiRobot.pauseForHuman();
+
+        PersonCardHandle personCardHandle = new PersonCardHandle(personCard.getRoot());
+
+        // verify id is displayed correctly
+        assertEquals(Integer.toString(expectedId) + ". ", personCardHandle.getId());
+
+        // verify person details are displayed correctly
+        assertCardDisplaysPerson(expectedPerson, personCardHandle);
+    }
+}
+```
+###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+``` java
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
+        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
+        assertEquals("Phone: " + expectedPerson.getPhone().value, actualCard.getPhone());
+        assertEquals("Email: " + expectedPerson.getEmail().value, actualCard.getEmail());
+        assertEquals("Address: " + expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals("Group: " + expectedPerson.getGroup().groupName, actualCard.getGroup());
+
+        assertTagsEqual(expectedPerson, actualCard);
+    }
+
+```
 ###### /java/seedu/address/ui/testutil/GuiTestAssert.java
 ``` java
     /**
@@ -22,20 +90,15 @@
         case "owesMoney":
             return "red";
 
-        case "boyfriend":
-        case "girlfriend":
-            return "purple";
-
         case "grandparent":
         case "neighbours":
-            return "grey";
+            return "purple";
 
         case "colleagues":
             return "orange";
 
         default:
-            fail(tagName + " does not have a color assigned to it.");
-            return "";
+            return "grey";
         }
     }
 
@@ -192,6 +255,118 @@
     }
 }
 ```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandAlias_add() throws Exception {
+        Person person = new PersonBuilder().build();
+        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommandWithAlias(person));
+        assertEquals(new AddCommand(person), command);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandAlias_clear() throws Exception {
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD_ALIAS) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD_ALIAS + " 3") instanceof ClearCommand);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandAlias_delete() throws Exception {
+        DeleteCommand command = (DeleteCommand) parser.parseCommand(
+                DeleteCommand.COMMAND_WORD_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandAlias_edit() throws Exception {
+        Person person = new PersonBuilder().build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
+        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD_ALIAS + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
+        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandAlias_find() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_fingTag() throws Exception {
+        List<String> keywords = Arrays.asList("friends", "oweMoney");
+        FindTagCommand command = (FindTagCommand) parser.parseCommand(
+            FindTagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindTagCommand(new PersonContainsTagsPredicate(keywords)), command);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandAlias_help() throws Exception {
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD_ALIAS) instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD_ALIAS + " 3") instanceof HelpCommand);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandAlias_history() throws Exception {
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD_ALIAS) instanceof HistoryCommand);
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD_ALIAS + " 3") instanceof HistoryCommand);
+
+        try {
+            parser.parseCommand("histories");
+            fail("The expected ParseException was not thrown.");
+        } catch (ParseException pe) {
+            assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
+        }
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_count() throws Exception {
+        assertTrue(parser.parseCommand(CountCommand.COMMAND_WORD) instanceof  CountCommand);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandAlias_select() throws Exception {
+        SelectCommand command = (SelectCommand) parser.parseCommand(
+                SelectCommand.COMMAND_WORD_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandAlias_redoCommandWord_returnsRedoCommand() throws Exception {
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD_ALIAS) instanceof RedoCommand);
+        assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandAlias_undoCommandWord_returnsUndoCommand() throws Exception {
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD_ALIAS) instanceof UndoCommand);
+        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+    }
+```
 ###### /java/seedu/address/logic/parser/AddCommandParserTest.java
 ``` java
     @Test
@@ -296,6 +471,80 @@
     }
 }
 ```
+###### /java/seedu/address/logic/commands/SortCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for SortCommand.
+ */
+public class SortCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_sortByName_success() throws Exception {
+        Prefix prefix = PREFIX_ADDRESS;
+        SortCommand sortCommand = prepareCommand(model);
+        String expectedMessage = SortCommand.MESSAGE_SUCCESS;
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.sortFilteredPersonList(model.getFilteredPersonList());
+
+        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_sortTwoPersonsList_success() throws Exception {
+        Prefix prefix = PREFIX_NAME;
+        AddressBook ab = new AddressBookBuilder().withPerson(getTypicalPersons().get(1))
+            .withPerson(getTypicalPersons().get(0)).build();
+        Model modelWithTwoPersons = new ModelManager(ab, new UserPrefs());
+        SortCommand sortCommand = prepareCommand(modelWithTwoPersons);
+        String expectedMessage = SortCommand.MESSAGE_SUCCESS;
+        Model expectedModel = new ModelManager(new AddressBook(modelWithTwoPersons.getAddressBook()), new UserPrefs());
+        expectedModel.sortFilteredPersonList(model.getFilteredPersonList());
+
+        assertCommandSuccess(sortCommand, modelWithTwoPersons, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_sortEmptyList_throwsCommandException() {
+        Prefix prefix = PREFIX_EMAIL;
+        Model emptyModel = new ModelManager(new AddressBook(), new UserPrefs());
+        String expectedMessage = Messages.MESSAGE_PERSON_LIST_EMPTY;
+        assertCommandFailure(prepareCommand(emptyModel), model, expectedMessage);
+    }
+
+    /**
+     * Generates a new {@code SortCommand} with the Model and prefix given.
+     */
+    private SortCommand prepareCommand(Model model) {
+        SortCommand sortCommand = new SortCommand();
+        sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return sortCommand;
+    }
+}
+```
+###### /java/seedu/address/storage/XmlAdaptedPersonTest.java
+``` java
+    @Test
+    public void toModelType_invalidInsurances_throwsIllegalValueException() {
+        List<XmlAdaptedInsurance> invalidInsurances = new ArrayList<>(VALID_INSURANCE);
+        invalidInsurances.add(new XmlAdaptedInsurance(INVALID_INSURANCE));
+        XmlAdaptedPerson person =
+            new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS, VALID_BIRTHDAY,
+                VALID_APPOINTMENT, VALID_GROUP, invalidInsurances);
+        Assert.assertThrows(IllegalValueException.class, person::toModelType);
+    }
+```
+###### /java/seedu/address/storage/XmlSerializableAddressBookTest.java
+``` java
+    @Test
+    public void toModelType_invalidInsuranceFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(INVALID_INSURANCE_FILE,
+            XmlSerializableAddressBook.class);
+        thrown.expect(IllegalValueException.class);
+        dataFromFile.toModelType();
+    }
+```
 ###### /java/seedu/address/model/UniqueInsuranceListTest.java
 ``` java
 public class UniqueInsuranceListTest {
@@ -311,6 +560,61 @@ public class UniqueInsuranceListTest {
 
 }
 ```
+###### /java/seedu/address/model/AddressBookTest.java
+``` java
+    @Test
+    public void getGroupList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getGroupList().remove(0);
+    }
+
+```
+###### /java/seedu/address/model/AddressBookTest.java
+``` java
+    @Test
+    public void getInsuranceList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getInsuranceList().remove(0);
+    }
+
+    /**
+     * A stub ReadOnlyAddressBook whose persons, tags lists and insurances list can violate interface constraints.
+     */
+    private static class AddressBookStub implements ReadOnlyAddressBook {
+        private final ObservableList<Person> persons = FXCollections.observableArrayList();
+        private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<Group> groups = FXCollections.observableArrayList();
+        private final ObservableList<Insurance> insurances = FXCollections.observableArrayList();
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
+                        Collection<? extends Insurance> insurances) {
+            this.persons.setAll(persons);
+            this.tags.setAll(tags);
+            this.insurances.setAll(insurances);
+        }
+
+        @Override
+        public ObservableList<Person> getPersonList() {
+            return persons;
+        }
+
+        @Override
+        public ObservableList<Tag> getTagList() {
+            return tags;
+        }
+
+        @Override
+        public ObservableList<Group> getGroupList() {
+            return groups;
+        }
+
+        @Override
+        public ObservableList<Insurance> getInsuranceList() {
+            return insurances;
+        }
+    }
+
+}
+```
 ###### /java/seedu/address/model/Insurance/InsuranceTest.java
 ``` java
 public class InsuranceTest {
@@ -320,9 +624,93 @@ public class InsuranceTest {
     }
 
     @Test
+    public void constructor_invalidInsuranceName_throwsIllegalArgumentException() {
+        String invalidInsuranceName = "@Health";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Insurance(invalidInsuranceName));
+    }
+
+    @Test
     public void isValidInsurance() {
         //null insurance name
         Assert.assertThrows(NullPointerException.class, () -> Insurance.isValidInsurance(null));
+    }
+}
+```
+###### /java/seedu/address/model/Insurance/CommissionTest.java
+``` java
+public class CommissionTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Insurance(null));
+    }
+
+    @Test
+    public void constructor_invalidCommission_throwsIllegalArgumentException() {
+        String invalidCommission = "Health[-100]";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Insurance(invalidCommission));
+    }
+}
+```
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+``` java
+    /**
+     * Sets the {@code Insurance} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withInsurance(String... insurances) {
+        Set<Insurance> insuranceSet = Stream.of(insurances).map(Insurance::new).collect(Collectors.toSet());
+        descriptor.setInsurances(insuranceSet);
+        return this;
+    }
+
+
+    /**
+     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        descriptor.setBirthday(new Birthday(birthday));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withAppointment(String appointment) {
+        descriptor.setAppointment(new Appointment(appointment));
+        return this;
+    }
+
+
+    /**
+     * Sets the {@code Group} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withGroup(String group) {
+        descriptor.setGroup(new Group(group));
+        return this;
+    }
+
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withTags(String... tags) {
+        Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
+        descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Parses the {@code insurances} into a {@code Set<Insurance>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withInsurances(String... insurances) {
+        Set<Insurance> insuranceSet = Stream.of(insurances).map(Insurance::new).collect(Collectors.toSet());
+        descriptor.setInsurances(insuranceSet);
+        return this;
+    }
+
+    public EditPersonDescriptor build() {
+        return descriptor;
     }
 }
 ```

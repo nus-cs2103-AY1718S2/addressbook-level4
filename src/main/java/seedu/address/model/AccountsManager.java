@@ -5,6 +5,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.AccountUpdateEvent;
 import seedu.address.model.exception.InvalidPasswordException;
 import seedu.address.model.exception.InvalidUsernameException;
 
@@ -20,6 +22,8 @@ public class AccountsManager {
         account = new Account();
     }
 
+    public AccountsManager(Account account) { this.account = account; }
+
     private boolean checkUsername(String username, Account account) {
         return account.getUsername().equals(username);
     }
@@ -28,16 +32,22 @@ public class AccountsManager {
         return account.getPassword().equals(password);
     }
 
+    /** Raises an event to indicate the account has changed */
+    private void indicateAccountUpdated() {
+        EventsCenter.getInstance().post(new AccountUpdateEvent(account));
+    }
+
     /**
      * Updates the username of the account.
      * @throws InvalidUsernameException if the username is already in use
      */
-    public void updateUsername(String inputUsername) throws InvalidUsernameException {
+    public synchronized void updateUsername(String inputUsername) throws InvalidUsernameException {
         requireAllNonNull(inputUsername);
         if (checkUsername(inputUsername, account)) {
             throw new InvalidUsernameException();
         } else {
             account.updateUsername(inputUsername);
+            indicateAccountUpdated();
         }
     }
 
@@ -45,18 +55,15 @@ public class AccountsManager {
      * Updates the password of the account.
      * @throws InvalidPasswordException
      */
-    public void updatePassword(String oldPassword, String newPassword)
+    public synchronized void updatePassword(String oldPassword, String newPassword)
             throws InvalidPasswordException {
         requireAllNonNull(oldPassword, newPassword);
         if (!checkPassword(oldPassword, account)) {
             throw new InvalidPasswordException();
         } else {
             account.updatePassword(newPassword);
+            indicateAccountUpdated();
         }
-    }
-
-    public void resetPassword() {
-        account.resetPassword();
     }
 
     /**

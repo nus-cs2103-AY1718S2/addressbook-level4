@@ -51,7 +51,7 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson() {}
 
     /**
-     * Constructs an {@code XmlAdaptedJob} with the given person details.
+     * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
     public XmlAdaptedPerson(String name, String phone, String email, String address, String currentPosition,
                             String company, String profilePicture, List<XmlAdaptedSkill> tagged) {

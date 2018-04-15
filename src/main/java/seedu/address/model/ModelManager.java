@@ -50,9 +50,9 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, Account account) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, userPrefs, account);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
@@ -60,12 +60,12 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         appointments = new ArrayList<Appointment>(this.addressBook.getAppointmentList());
         filteredJobs = new FilteredList<>(this.addressBook.getJobList());
-        this.accountsManager = new AccountsManager();
+        this.accountsManager = new AccountsManager(account);
         this.user = Optional.empty();
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), new Account());
     }
 
     @Override

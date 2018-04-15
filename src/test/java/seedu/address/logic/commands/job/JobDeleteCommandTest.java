@@ -21,6 +21,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -32,7 +33,7 @@ import seedu.address.model.job.Job;
  */
 public class JobDeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new Account());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -41,7 +42,7 @@ public class JobDeleteCommandTest {
 
         String expectedMessage = String.format(JobDeleteCommand.MESSAGE_DELETE_JOB_SUCCESS, jobToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Account());
         expectedModel.deleteJob(jobToDelete);
 
         assertCommandSuccess(jobDeleteCommand, model, expectedMessage, expectedModel);
@@ -64,7 +65,7 @@ public class JobDeleteCommandTest {
 
         String expectedMessage = String.format(JobDeleteCommand.MESSAGE_DELETE_JOB_SUCCESS, jobToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Account());
         expectedModel.deleteJob(jobToDelete);
         showNoJob(expectedModel);
 
@@ -91,7 +92,7 @@ public class JobDeleteCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Job jobToDelete = model.getFilteredJobList().get(INDEX_FIRST.getZeroBased());
         JobDeleteCommand jobDeleteCommand = prepareCommand(INDEX_FIRST);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Account());
 
         // delete -> first job deleted
         jobDeleteCommand.execute();
@@ -134,7 +135,7 @@ public class JobDeleteCommandTest {
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         JobDeleteCommand jobDeleteCommand = prepareCommand(INDEX_FIRST);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new Account());
 
         showJobAtIndex(model, INDEX_SECOND);
         Job jobToDelete = model.getFilteredJobList().get(INDEX_FIRST.getZeroBased());

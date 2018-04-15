@@ -113,8 +113,12 @@ The commands listed in this section are related to the general usage of IMDB.
 
 ==== Viewing help : `help`
 
-Opens the user guide in a separate window. +
+Opens the user guide in a separate window as shown in Figure 3 below. +
 Format: `help` or `h`
+
+.Help Window
+[caption="Figure 3: "]
+image::help_window.PNG[width="990"]
 
 // tag::login[]
 ==== Logging into the system: `login` [since v1.2]

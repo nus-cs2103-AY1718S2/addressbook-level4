@@ -378,23 +378,63 @@ The `Rating` field can be manipulated by user through `edit` or `rate` command. 
 
 === Edit and rate a person
 
-`edit` command and `rate` command are implemented in a similar manner. They both involve modifying the field(s) of a person. The only difference is that `rate` can only change the `Rating` field, but `edit` can be used to change any field.
+==== Current Implementation
 
-The implementation of `edit` and `rate` command in the Logic component involves 4 objects: +
+`Edit` command and `rate` command are implemented in a similar manner. The only difference is that `rate` can only change the `Rating` field, but `edit` can be used to change any field.
 
-. Person toEdit.
-. Person edited.
-. Parser: EditCommandParser or RateCommandParser.
-. EditPersonDescriptor.
+4 objects will be created during the execution of `rate` and `edit` command, and they play a vital role in the execution. They are:
 
-Since all fields of the `Person` class are immutable, we need to use `edited` Person to replace the `toEdit` Person.
+* Person edited
+* EditCommandParser or RateCommandParser
+* EditPersonDescriptor
+* EditCommand
 
-The details of implementation are as follow:
+The following code snippet shows the fields of the `EditPersonDescriptor` class, which is an internal class of `EditCommand`.
 
-. `Parser` extracts the new information for each field from user input.
-. `EditPersonDescriptor` is used to record which field(s) will be changed and the respective new value.
-. `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit` Person.
-. `edited` Person is used to replace `toEdit` Person in `AddressBook`.
+[source, java]
+----
+  public static class EditPersonDescriptor {
+        private Name name;
+        private Phone phone;
+        private Email email;
+        private Address address;
+        private Set<Tag> tags;
+        private Set<Review> reviews;
+        private Rating rating;
+        private Photo photo;
+  }
+----
+Note that the `EditPersonDescriptor` has the exact same fields as the `Person` class.
+Each of the fields is used to contain the corresponding *new* value of the field. For example, suppose the user wants to edit the name from "Alek" to "Alex", "Alex" will be stored in the `name` field of `EditPersonDescriptor`. +
+
+_Figure 11_ below shows the sequence diagram of the execution of `rate` command. `Edit` command has an exactly same execution, `RateCommandParser` will be replaced with `EditCommandParser` while `RateCommand` will be replaced with `EditCommand`.
+
+.Sequence diagram of Rate Command execution
+image::Rate Command Sequence Diagram.png[width="800"]
+
+The important method calls during the execution of `edit` and `rate` command includes:
+
+. parse(args): `EditCommandParser` extracts the new information for each field from user input.
+. EditPersonDescriptor(): `EditPersonDescriptor` is used to record which field(s) will be changed and the respective new value.
+. getFilteredPersonList(): The original Person, `toEdit` is obtained from `Model`.
+. person(): `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit`.
+. updatePerson(toEdit, edited): `edited` Person is used to replace `toEdit` Person in `AddressBook`.
+
+[NOTE]
+This current implementation of `edit` command is by courtesy of the original AddressBook application. The W15B1 team is only responsible for adapting the implementation into `rate` command.
+
+==== Design Considerations
+
+This section showcases some of the alternative designs for the implementation of `rate` and `edit` command.
+
+There are 2 ways to update information regarding a `Person` object. +
+
+* Alternative 1 (current implementation): Creates a new `Person` object that contains the new information to replace the old `Person` object
+** Pros: data integrity is guaranteed, higher cohesion (all modifications on data must be done through `Model`)
+** Cons: implementation is more complicated
+* Alternative 2: Uses setter methods on the `Person` object
+** Pros: implementation is simple
+** Cons: data integrity is compromised (the `Person` object can be modified by any entity), more coupling
 
 // tag::emer7[]
 === Review system
@@ -782,7 +822,7 @@ Here is the code snippet of the execution of `export` command:
 // end::exportcom[]
 
 
-=== Show notifications about expired events
+=== Notification System
 This section discusses about the implementation of the notification feature of Employees Tracker.
 
 [NOTE]
@@ -791,36 +831,131 @@ not to be confused with Event classes in commons package which will be referred 
 e.g. BaseEvent, AddressBookChangedEvent.
 
 ==== Current Implementation
-In the current implementation, the `AddressBook` class saves a list of `Notification`.
+This section shows how the Notification System is implemented in the current version of ET.
 
-When adding a new `Notification`:
+===== Introduction
+In the current implementation, the major classes and objects of the notification system includes:
 
-.  An `Event` is created.
-. `ModelManager` to add the `Notification` into the `Notifications` list in `AddressBook`.
-. `Model Manager` raises a `AddressBookChangedEvent` and `NotificationAddedEvent` after adding the Notification.
-. `AddressBookChangedEvent` and `NotificationAddedEvent` are handled:
-* `Storage Manager` handles the `AddressBookChangedEvent` and saves the new list of Notifications.
-* `Logic Manager` handles the  `TimetableEntryAddedEvent` by adding a new `TimerTask` into its HashMap of `scheduledTimerTasks`.
+* The `Notification` class that stores of essential information for each `Event`.
+* The LinkedList of `Notification` in the `AddressBook` class that stores all `Notification` objects.
+* The `NotificationCard` class, which is a graphical representation of `Notification`.
+* The `Notification Center` class that stores all the `NotificationCard` objects.
+* The `MainWindow` class that is involved in showing `NotificationCard` objects on the GUI.
+* The `Model` class that initiates the add notifications and delete notifications operations.
 
-When showing a `Notification Card` in UI:
+Please refer to the class diagram below for the association between them.
 
-.  The `TimerTask` associated with the `Notification` expires.
-. `LogicManager` raises a `ShowNotificationEvent` and `RequestToDeleteTimeTableEvent`.
-.  UiManager handles the `ShowNotificationEvent` by showing the notification to user.
-. `ModelManager` handles the `RequestToDeleteTimeTableEvent` by removing the corresponding `Notification` from the list of Notifications in `AddressBook`.
-. `Model Manager` raises a `AddressBookChangedEvent` and `NotificationAddedEvent` after adding the Notification.
-. `Storage Manager` handles the `AddressBookChanged` event and saves the new list of Notifications.
+.Class diagram of the Notification System
+image::Notification System.png[width=""]
+
+===== Initialization of the Notification System
+
+For every time the app starts, the following initialization operations will be carried out:
+
+. `AddressBook` and LinkedList of `Notification` is read from storage.
+. `MainWindow` is created.
+. `MainWindow` creates a `NotificationCenter`.
+. `MainWindow` passes the `NotificationCenter` to `Model` through `Logic`.
+
+===== Add-Notification Operation
+
+The following steps show how a Notification is added to the Notification System:
+
+.  A `Notification` is created.
+. `Model` to add the `Notification` into the `Notifications` list in `AddressBook`.
+. `Model` raises a `AddressBookChangedEvent` and `NotificationAddedEvent` after adding the Notification.
+. `Storage` handles the `AddressBookChangedEvent` and saves the new list of Notifications.
+. `Logic` handles the  `NotificationAddedEvent` and decides when to show the notification.
+. When it is time to show the notification, `Logic` will request `Ui` to show a notification.
+. `Ui` will instruct `MainWindow` to show a notification.
+. `MainWindow` will create a `NotificationCard` and shows it to user on-screen.
+. `MainWindow` will create another copy of the same `NotificationCard` and stores it in the `NotificationCenter`
+
+===== Find-owner-name operation
 
 [NOTE]
 Each `Event` is assigned (and thus) to an employee. In the following discussions, we will use the phrase `owner` to refer to the employee who is assigned to the `Event`.
 
-In order to support `email` and `whatsapp` command, as well as displaying the `owner` 's name on the `Notification Card`, we need access some information of its `owner`. This is done through the `searchEmployeeById` mechanism:
+Note that the `Notification` class only contains a field called `ownerId` instead of the name, email, etc. of its `owner`.
+The information of the owner of a notification is retrieved through the `findPersonById` mechanism.
+The following are the details of the mechanism:
 
-. `addressBook` object has a `nextId` integer field.
-. Whenever an employee is added, `addressBook` assigns the `nextId` to him and increment the `nextId` field.
-. The `Person` class has an `id` field to store the id.
-. When a `Notification` is created, it has a `ownerId` field that stores the `id` of its `owner`.
-. When the `TimerTask` associated with the `TimetableEntry` expires, it will extract the name (and other fields) of the owner using the `getNameById()` method in `ModelManager`.
+* `AddressBook` class has a `nextId` integer field.
+* Whenever an employee is added, `addressBook` assigns the `nextId` to him and increment the `nextId` field.
+* The `Person` class has an `id` field to store the id.
+* When a `Notification` is created, it has a `ownerId` field that stores the `id` of its `owner`.
+* To retrieve the owner of a `Notification`, call `findPersonById(ownerId)` to obtain the `Person` owner. Then, use getter methods to obtain relevant information.
+
+===== Delete-notification operation
+
+Delete-notification operation has a simpler implementation compared to Add-notification operation. Please refer to _Figure 19_ below for the flow of the operation.
+
+.Activity Diagram for deleting notification
+image::Delete Notification.png[width=""]
+
+[NOTE]
+====
+* Deleting with `eventId` and *not* `deleteFromAddressBookOnly` is usally invoked by `deleteEvent` command.
+* Deleting with `eventId` and `deleteFromAddressBookOnly` is usually invoked by `Logic`, when it is yet to add a `NotificationCard` to the `NotificationCenter` but finds out that the `owner` has already been deleted.
+* Deleting with `eventId` is usually invoked by `delete` command, where `Notification` and `Person` are deleted together.
+====
+
+===== Add-notifications-at-startup operation
+
+At each startup, after initializing the Notification System, ET will then go through the LinkedList of `Notification` in `AddressBook`.
+For each `Notification` in the LinkedList, `NotificationAddedEvent` will be called.
+That said, this may result in multiple threads attempting to make GUI operations at the same time through `MainWindow.showNewNotification`.
+This will result in concurrent modification issues. Thus, `Semaphore` is used to prevent those issues. Please refer to the simplified code of `MainWindow.showNewNotification` at below.
+
+[source, java]
+====
+  //current implementation only allows 1 thread to enter showNewNotification() at the same time.
+  Semaphore = new Semaphore(1);
+
+  /**
+     * Show in-app notification
+     */
+    public void showNewNotification(ShowNotificationEvent event) {
+        logger.info("Preparing in app notification");
+        //...metadata update
+        //hides notificationCard away from screen
+        notificationCard.setTranslateX(NOTIFICATION_CARD_WIDTH);
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        notificationCard.setTranslateY(UP * shownNotificationCards.size() * NOTIFICATION_CARD_HEIGHT);
+        shownNotificationCards.add(notificationCard);
+        semaphore.release();
+        //enter animation
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                mainStage.getChildren().add(notificationCard);
+                animateHorizontally(notificationCard, NOTIFICATION_CARD_WIDTH, ENTER);
+                Timer timer = new Timer();
+                TimerTask timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        //it should be the first notification card to exit first
+                        try {
+                            semaphore.acquire();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Region firstNotificationCard = shownNotificationCards.removeFirst();
+                        //cards are reused later in notification center
+                        animateHorizontally(firstNotificationCard, NOTIFICATION_CARD_WIDTH, EXIT);
+                        moveAllNotificationCardsDown();
+                        semaphore.release();
+                    }
+                };
+                timer.schedule(timerTask, NOTIFICATION_CARD_SHOW_TIME);
+            }
+        });
+    }
+====
 
 ==== Design Considerations
 There are a couple of aspects with regards to `Notification` that can be implemented in alternative designs.
@@ -931,11 +1066,6 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution.
 * `INFO` : Information showing the noteworthy actions by the App.
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size.
-
-[[Implementation-Configuration]]
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 == Documentation
 

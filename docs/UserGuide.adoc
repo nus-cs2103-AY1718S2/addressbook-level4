@@ -479,7 +479,11 @@ Examples:
 
 * `list` +
 `record 1 in/1` +
-Displays the first medical record for the first person in the result of the list command.
+Displays the first medical record for the first person in the result of the list command as shown Figure 7 below.
+
+.Record Window
+[caption="Figure 7: "]
+image::record_window.PNG[width="990"]
 
 ==== Deleting the medical records for a patient : `remover` [since v1.4]
 

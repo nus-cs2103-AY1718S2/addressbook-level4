@@ -12,7 +12,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.ui.testutil.UiPartRule;
 
 /**
- * A GUI unit test class for AddressBook.
+ * A GUI unit test class for MoviePlanner.
  */
 public abstract class GuiUnitTest {
     @Rule
@@ -29,7 +29,6 @@ public abstract class GuiUnitTest {
      * Retrieves the {@code query} node owned by the {@code rootNode}.
      *
      * @param query name of the CSS selector of the node to retrieve.
-     * @throws NodeNotFoundException if no such node exists.
      */
     protected <T extends Node> T getChildNode(Node rootNode, String query) {
         Optional<T> node = guiRobot.from(rootNode).lookup(query).tryQuery();

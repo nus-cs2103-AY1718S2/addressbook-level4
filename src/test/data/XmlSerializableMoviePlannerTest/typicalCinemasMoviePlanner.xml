@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- MoviePlanner save file which contains the same Cinema values as in
+{@code TypicalCinemas#getTypicalMoviePlanner()}-->
+<movieplanner>
+    <cinemas>
+        <name>Aljunied Cathay</name>
+        <phone>65355255</phone>
+        <email>aljunied@cathay.com</email>
+        <address>123, Aljunied</address>
+        <theater number="1"/>
+        <theater number="2"/>
+        <theater number="3"/>
+    </cinemas>
+    <cinemas>
+        <name>Bedok Shaws</name>
+        <phone>68765432</phone>
+        <email>bedok@shaw.com</email>
+        <address>311, Bedok</address>
+        <theater number="1"/>
+        <theater number="2"/>
+        <theater number="3"/>
+    </cinemas>
+    <cinemas>
+        <name>Clementi Cathay</name>
+        <phone>65352563</phone>
+        <email>clementi@cathay.com</email>
+        <address>111, Clementi</address>
+        <theater number="1"/>
+        <theater number="2"/>
+        <theater number="3"/>
+    </cinemas>
+    <cinemas>
+        <name>Dover Shaws</name>
+        <phone>67652533</phone>
+        <email>dover@shaw.com</email>
+        <address>10th Street</address>
+        <theater number="1"/>
+        <theater number="2"/>
+        <theater number="3"/>
+    </cinemas>
+    <cinemas>
+        <name>Eunos Cathay</name>
+        <phone>6482224</phone>
+        <email>eunos@cathay.com</email>
+        <address>Eunos Street</address>
+        <theater number="1"/>
+        <theater number="2"/>
+        <theater number="3"/>
+    </cinemas>
+    <cinemas>
+        <name>Farrer Cathay</name>
+        <phone>6482427</phone>
+        <email>farrer@cathay.com</email>
+        <address>Farrer Park</address>
+        <theater number="1"/>
+        <theater number="2"/>
+        <theater number="3"/>
+    </cinemas>
+    <cinemas>
+        <name>Gul Cathay</name>
+        <phone>6482442</phone>
+        <email>gul@cathay.com</email>
+        <address>Gul Circle</address>
+        <theater number="1"/>
+        <theater number="2"/>
+        <theater number="3"/>
+    </cinemas>
+</movieplanner>

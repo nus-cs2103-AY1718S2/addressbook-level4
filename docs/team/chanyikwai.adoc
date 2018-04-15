@@ -1,0 +1,54 @@
+= Chan Yik Wai - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: MoVie Planner (MVP) - V1.5
+
+---
+
+== Overview
+
+MoVie Planner (MVP) is a desktop application that aims to assist cinema managers in managing schedule of movies in different cinemas, providing features such as replicating cinemas’ schedules across periods of time, secure storage of cinema schedule and more.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 20 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the email feature*
+** What it does: allows the user to send out an email to the target recipient, with or without an attachment.
+** Justification: This feature improves the product significantly because it provides the user with a convenient means of
+sending out his schedule after he planned it right from the application itself.
+** Highlights: This enhancement affects the existing model, because interacts with the model. The implementation of the email feature
+was challenging too as it requires the use of the JavaMail API.
+** Credits: JavaMail API
+
+* *Minor enhancement*: added a shortcut key combinations that allows the user to access certain commands with ease.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B2/main/blob/master/collated/functional/chanyikwai.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B2/main/blob/master/collated/test/chanyikwai.md[Test code]]
+
+* *Other contributions*:
+
+** Enhancements to existing features:
+*** Updated the GUI color scheme (Pull requests https://github.com/CS2103JAN2018-W11-B2/main/pull/117[#117])
+*** Wrote additional tests for existing features to increase coverage from 69% to 70% (Pull requests https://github.com/CS2103JAN2018-W11-B2/main/pull/148[#148])
+** Documentation:
+*** Updated User Guide with Email Feature: https://github.com/CS2103JAN2018-W11-B2/main/pull/100[#100]
+** Community:
+** Tools:
+*** Integrated a third party library (JavaMail) to the project (https://github.com/CS2103JAN2018-W11-B2/main/pull/100[#100])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=emailfeature]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=emailfeature]

@@ -1,0 +1,318 @@
+.picture-as-background {
+    -fx-background-image: url("../images/scene_background.png");
+    -fx-background-size: stretch;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.transparent-background {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+/* Handles Tab UI */
+#tabsPane .tab-label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.tab-pane *.tab:selected {
+    -fx-background-color: rgba(0, 200, 170, 0.3);
+    -fx-text-fill: white;
+}
+
+.anchor-pane {
+    -fx-background-color: rgba(50, 50, 50, 0.3);
+}
+
+/* Handle Split Pane UI */
+.split-pane:horizontal .split-pane-divider {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent white transparent transparent;
+}
+
+.text-box {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+}
+
+.split-pane {
+    -fx-background-color: transparent;
+}
+
+/* Handles menu UI */
+.menu-bar {
+    -fx-background-color: transparent;
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container {
+    -fx-background-color: black;
+}
+
+.context-menu {
+    -fx-background-color: rgba(0, 55, 80, 0.8);
+}
+
+.context-menu .label {
+    -fx-text-fill: white;
+}
+
+/* Handles Tags UI */
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+
+#tags .red {
+    -fx-text-fill: black;
+    -fx-background-color: red;
+}
+
+#tags .blue {
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+}
+
+#tags .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#tags .green {
+    -fx-text-fill: black;
+    -fx-background-color: green;
+}
+
+#tags .yellow {
+    -fx-text-fill: black;
+    -fx-background-color: yellow;
+}
+
+#tags .grey {
+    -fx-text-fill: white;
+    -fx-background-color: grey;
+}
+
+#tags .white {
+    -fx-text-fill: black;
+    -fx-background-color: white;
+}
+
+#tags .black {
+    -fx-text-fill: white;
+    -fx-background-color: black;
+}
+
+#tags .pink {
+    -fx-text-fill: black;
+    -fx-background-color: pink;
+}
+
+#tags .brown {
+    -fx-text-fill: white;
+    -fx-background-color: brown;
+}
+
+/* Handles Scroll Bar UI */
+.scroll-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+/* Handles List view UI */
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: rgba(50, 50, 50, 0.2);
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: rgba(0, 200, 170, 1);
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: rgba(90, 150, 200, 1);
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: rgba(90, 120, 180, 1);
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+
+.list-cell .label {
+    -fx-text-fill: white;
+}
+
+.cell_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+.cell_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
+}
+
+#filterField, #cinemaListPanel, #cinemaWebpage {
+    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* Handles Table View UI */
+.table-view {
+    -fx-base: #1d1d1d;
+    -fx-control-inner-background: #1d1d1d;
+    -fx-background-color: #1d1d1d;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color:
+        transparent
+        transparent
+        derive(-fx-base, 80%)
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+/* Handles Label UI */
+#cinema {
+    -fx-font-size: 15pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #ffffff;
+    -fx-opacity: 0.9;
+}
+
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #555555;
+    -fx-opacity: 0.9;
+}
+
+.label-bright {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.label-header {
+    -fx-font-size: 32pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.text-box {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-font-size: 13pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-border-color: white;
+}
+
+
+/* Handles status bar UI */
+.status-bar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+}
+
+.status-bar-with-border {
+    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-border-color: derive(#1d1d1d, 25%);
+    -fx-border-width: 1px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: white;
+}

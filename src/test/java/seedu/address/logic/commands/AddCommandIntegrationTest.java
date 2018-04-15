@@ -2,18 +2,19 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalCinemas.getTypicalMoviePlanner;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.email.EmailManager;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.cinema.Cinema;
+import seedu.address.testutil.CinemaBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
@@ -24,31 +25,31 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalMoviePlanner(), new UserPrefs(), new EmailManager());
     }
 
     @Test
-    public void execute_newPerson_success() throws Exception {
-        Person validPerson = new PersonBuilder().build();
+    public void execute_newCinema_success() throws Exception {
+        Cinema validCinema = new CinemaBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPerson(validPerson);
+        Model expectedModel = new ModelManager(model.getMoviePlanner(), new UserPrefs(), new EmailManager());
+        expectedModel.addCinema(validCinema);
 
-        assertCommandSuccess(prepareCommand(validPerson, model), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, validPerson), expectedModel);
+        assertCommandSuccess(prepareCommand(validCinema, model), model,
+                String.format(AddCommand.MESSAGE_SUCCESS, validCinema), expectedModel);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = model.getAddressBook().getPersonList().get(0);
-        assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
+    public void execute_duplicateCinema_throwsCommandException() {
+        Cinema cinemaInList = model.getMoviePlanner().getCinemaList().get(0);
+        assertCommandFailure(prepareCommand(cinemaInList, model), model, AddCommand.MESSAGE_DUPLICATE_CINEMA);
     }
 
     /**
-     * Generates a new {@code AddCommand} which upon execution, adds {@code person} into the {@code model}.
+     * Generates a new {@code AddCommand} which upon execution, adds {@code cinema} into the {@code model}.
      */
-    private AddCommand prepareCommand(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddCommand prepareCommand(Cinema cinema, Model model) {
+        AddCommand command = new AddCommand(cinema);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

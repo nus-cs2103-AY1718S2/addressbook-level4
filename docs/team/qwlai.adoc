@@ -1,0 +1,59 @@
+= Lai Qi Wei - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: MoVie Planner (MVP) - V1.5
+
+---
+
+== Overview
+
+MoVie Planner (MVP) is a desktop application that aims to help cinema managers manage the schedule of movies in
+different cinemas.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 20 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Added scheduling system.
+** What it does: Allows the user to add or delete a movie screening in a cinema.
+** Justification: This feature makes cinema schedule planning much easier because the user can add a movie screening to a cinema's theater
+ without worrying about variables such as preparation delay and advertisement time. These variables are calculated automatically in MVP
+ to see if a screening can be added to the cinema's theater. Once added, the screening will be displayed for the user to view the schedule.
+** Highlights: This enhancement interacts heavily with existing model and requires deep consideration
+on areas such as storage and ui. Displaying the schedule also affects existing commands and it requires careful testing.
+I have also added a jump command for user to navigate the dates in the schedule.
+** Credits: CalendarFX API
+
+* *Minor enhancement*: Added a panel to display the list of movies.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B2/main/blob/master/collated/functional/qwlai.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B2/main/blob/master/collated/test/qwlai.md[Test code]]
+
+* *Other contributions*:
+
+** Project management
+*** Managed releases `v1.3` - `v1.5` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Add alias to existing commands (Pull requests https://github.com/CS2103JAN2018-W11-B2/main/pull/24[#24])
+** Documentation:
+*** Updated User Guide to show the before and after when a command is entered (Pull requests https://github.com/CS2103JAN2018-W11-B2/main/pull/162/[#162])
+** Tools:
+*** Integrated a third party library (CalendarFX) to the project (Pull requests https://github.com/CS2103JAN2018-W11-B2/main/pull/88[#88])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=scheduling]
+
+include::../UserGuide.adoc[tag=jump]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=scheduling]

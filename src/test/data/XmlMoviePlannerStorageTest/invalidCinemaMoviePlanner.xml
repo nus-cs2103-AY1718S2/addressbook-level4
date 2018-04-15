@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<movieplanner>
+    <!-- Cinema with invalid name field -->
+    <cinemas>
+        <name>Ha!ns Cin@ma</name>
+        <phone isPrivate="false">9482424</phone>
+        <email isPrivate="false">hans@example.com</email>
+        <address isPrivate="false">4th street</address>
+		<theaters isPrivate="false">1</theaters>
+    </cinemas>
+</movieplanner>

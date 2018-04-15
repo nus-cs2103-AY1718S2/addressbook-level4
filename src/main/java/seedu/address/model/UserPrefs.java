@@ -10,8 +10,9 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String moviePlannerFilePath = "data/movieplanner.xml";
+    private String encryptedMoviePlannerFilePath = "data/encryptedmovieplanner.xml";
+    private String moviePlannerName = "MyMoviePlanner";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -29,20 +30,28 @@ public class UserPrefs {
         guiSettings = new GuiSettings(width, height, x, y);
     }
 
-    public String getAddressBookFilePath() {
-        return addressBookFilePath;
+    public String getMoviePlannerFilePath() {
+        return moviePlannerFilePath;
     }
 
-    public void setAddressBookFilePath(String addressBookFilePath) {
-        this.addressBookFilePath = addressBookFilePath;
+    public void setMoviePlannerFilePath(String moviePlannerFilePath) {
+        this.moviePlannerFilePath = moviePlannerFilePath;
     }
 
-    public String getAddressBookName() {
-        return addressBookName;
+    public String getEncryptedMoviePlannerFilePath() {
+        return encryptedMoviePlannerFilePath;
     }
 
-    public void setAddressBookName(String addressBookName) {
-        this.addressBookName = addressBookName;
+    public void setEncryptedMoviePlannerFilePath(String encryptedMoviePlannerFilePath) {
+        this.encryptedMoviePlannerFilePath = encryptedMoviePlannerFilePath;
+    }
+
+    public String getMoviePlannerName() {
+        return moviePlannerName;
+    }
+
+    public void setMoviePlannerName(String moviePlannerName) {
+        this.moviePlannerName = moviePlannerName;
     }
 
     @Override
@@ -57,21 +66,22 @@ public class UserPrefs {
         UserPrefs o = (UserPrefs) other;
 
         return Objects.equals(guiSettings, o.guiSettings)
-                && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(moviePlannerFilePath, o.moviePlannerFilePath)
+                && Objects.equals(encryptedMoviePlannerFilePath, o.encryptedMoviePlannerFilePath)
+                && Objects.equals(moviePlannerName, o.moviePlannerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, moviePlannerFilePath, encryptedMoviePlannerFilePath, moviePlannerName);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
-        sb.append("\nLocal data file location : " + addressBookFilePath);
-        sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nLocal data file location : " + moviePlannerFilePath);
+        sb.append("\nMoviePlanner name : " + moviePlannerName);
         return sb.toString();
     }
 

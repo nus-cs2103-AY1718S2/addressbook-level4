@@ -76,6 +76,16 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    @Test
+    public void removeNonExistentPerson_throwsPersonNotFoundException() throws Exception {
+        Person personA = new Person();
+        Person personB = new Person(new Name("Aaron"), new Phone(), new Email(), new Address(), new HashSet<>());
+
+        addressBook.addPerson(personA);
+        thrown.expect(PersonNotFoundException.class);
+        addressBook.removePerson(personB);
+    }
+
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */

@@ -497,6 +497,7 @@ Examples:
 * `vacant current location` +
 Displays the list of rooms schedule for the day in the nearest building
 
+// tag::module[]
 === Modules Tag _(coming in v2.0)_
 
 Each friend will be able to have their own list of modules they have taken. +
@@ -504,16 +505,17 @@ To find out which friends have not taken a module (so as to plan with them to ta
 Format: `module MODULE_CODE`
 
 [NOTE]
-Module code follows the traditional naming conventions used by NUS (Example: CS2103T or CS2101)
+Module code follows the traditional case-sensitive naming conventions used by NUS (Example: CS2103T or CS2101)
 
 Examples:
 
 * `module CS2103` +
 Displays the list of friends who have not taken the module CS2103
 
+// end::module[]
 === Command Autocomplete Function _(coming in v2.0)_
 
-// tag::FAQ[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -565,7 +567,7 @@ image::Redirect_Second.PNG[width="790"]
 +
 image::Redirect_Third.PNG[width="790"]
 ****
-// end::FAQ[]
+
 
 == Troubleshooting
 [width="790",cols="<15%,75%",options="header",]

@@ -19,14 +19,16 @@ By: `Team CS2103JAN2018-F09-B3` Since: `Feb 2018` Licence: `MIT`
 
 == Introduction
 
-_CoinBook_ is a desktop application that is made for users who prefer to work on a mouse-free, command line platform with minimal [gloss]#<<gui,graphical user interface (GUI)>># dependence.
+_CoinBook_ is a desktop application that is made for users who prefer to work on a mouse-free environment where everything can be done through commands typed in with the keyboard. There is no need to click on visual components of the App to perform tasks. In other words, _CoinBook_ offers a command line interface with minimal [gloss]#<<gui,graphical user interface (GUI)>># dependence.
 
 _Coinbook_ allows you to store a portfolio of your cryptocurrency purchases as well as track the latest price trends and news, in addition to providing various
 tools to simplify and expedite your management process such as profit calculation.
 
+This guide will help you set up _CoinBook_, as well as introduce its various features.
+
 == How the program looks like
 
-The figure below (fig. 1) describes each section of the interface.
+The figure below (Fig. 1) describes each section of the interface.
 
 .Main Layout Window
 image::LabelledUI.png[width="790"]
@@ -162,6 +164,7 @@ If a non-existent trading code is added, its price will not be updated with the 
 |===
 
 Adds a new coin account into the list, with the given trading code, and the given tags.
+You will be notified in the result pane if the added coin is not known to have a subreddit, for the viewing of news updates. See <<view,`view` command>>.
 
 .Example
 ----
@@ -280,6 +283,7 @@ list
 
 Updates the listing to show all coin accounts in _CoinBook_.
 
+[[view]]
 === View details of an account `view` | `v` `[Coming in v1.5]`
 
 .Format
@@ -293,6 +297,7 @@ Opens up the detail window for the account specified. The detail window includes
 * Amount earned from selling this coin
 * Possible profit if all coin in this account is sold at the current price
 * Chart of the price history
+* Subreddit of this coin, if there is one
 * etc... [More analytics coming in v2.0]
 
 .Examples
@@ -300,10 +305,6 @@ Opens up the detail window for the account specified. The detail window includes
  view BTC
 
 See details for the `BTC` account
-
- view Bitcoin
-
-See details for the `Bitcoin` account
 
  view 2
 
@@ -376,7 +377,10 @@ Sets a condition that triggers a popup notification whenever the condition match
 
 .Notification Options Format
 ****
-* You can put `+` or `-` before specifying an amount to indicate a change in the property specified instead of its absolute value, for example:
+* You can put `+` or `-` before specifying any of the following amounts to test its change instead of its absolute value:
+** `p/PRICE`: Current price, in dollars, of the coin
+** `w/WORTH`: How much, in dollars, the current amount held is worth at the current price
+* For example:
 ** `p/+1000`: Current price rose $1000
 ** `p/pass:[-]>500`: Current price fell more than $500
 ****

@@ -4,8 +4,14 @@ skinparam activityStartColor black
 skinparam activityEndColor black
 skinparam activityBackgroundColor #0070C0
 skinparam activityBorderColor #0070C0
+skinparam componentFontColor White
+skinparam stateFontColor White
+skinparam activityFontStyle bold
 
 skinparam shadowing false
+skinparam activity {
+  FontColor White
+}
 
 (*) --> "Parse the tokens syntactically"
 
@@ -24,5 +30,3 @@ else
 	--> (*)
 
 @enduml
-
-

@@ -8,7 +8,7 @@
 :stylesDir: stylesheets
 :pdf-stylesdir: stylesheets
 :pdf-style: pdf
-:xrefstyle: full
+:xrefstyle: basic
 :experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -201,7 +201,7 @@ The following diagram (Fig. 5) illustrates the structure of this component:
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
-The user interface (UI) consists of a `MainWindow` that is made up of several parts, e.g. `CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including `MainWindow`, inherit from the abstract `UiPart` class.
+The user interface (UI) consists of a `MainWindow` that is made up of several parts, e.g. `CommandBox`, `ResultDisplay`, `CoinListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses the JavaFx UI framework. The layout of the UI parts are defined in matching `.fxml` files located in the `src/main/resources/view` folder. For example, the layout of the
 [exref]#link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`]# is specified in
@@ -288,6 +288,8 @@ image::StorageClassDiagram.png[width="800"]
 
 This chapter describes some noteworthy details on how certain features and components have been implemented. It is highly recommended to read the previous chapter on <<Design>> first so that you have some picture of where these features fit in.
 //tag::condition[]
+[[condition]]
+
 === Condition Parser Component
 
 ==== Current implementation
@@ -328,6 +330,7 @@ The `Condition` object that is generated at the end is actually just a `Predicat
 the Coin objects and returns a true/false value.
 
 ==== Error handling
+
 On syntactically and semantically invalid inputs, `ConditionParser` will retrieve the expected and actual type of
 `Token` that were not a match during the parsing phase from `TokenStack` and raise a `ParseException` before returning.
 
@@ -354,7 +357,7 @@ as per convention from `ParserUtil`.
 ** Pros: There will be less redundant code.
 ** Cons: This approach clearly violates SRP.
 
-==== Advanced details
+==== Advanced Details
 
 ===== Argument Tokenizing
 We will illustrate the flow of tokenizing an example input:
@@ -461,7 +464,8 @@ p/>100 AND t/fav
 
 `p/>100` is a condition on price whereas `t/fav` is a condition on tags, and they can be composed using the `Predicate`
 method `and()` to return a logical conjunction of the two conditions.
-//end::condition[]
+// end::condition[]
+
 // tag::undoredo[]
 === Undo/Redo Feature
 ==== Current Implementation
@@ -602,11 +606,12 @@ This approach also violates the Single Responsibility Principle and the Separati
 // end::undoredo[]
 
 // tag::notifications[]
+
 === User-Set Notifications
 
 ==== Current Implementation
 
-The notification system is facilitated by a `RuleBook`, which is located with the `Model` component as part of the App data. `RuleBook` holds a set of rules which define, in this case, conditions to trigger notifications on. A `RuleChecker` in `Logic` also does the work of checking rules and executing the associated actions.
+The notification system is facilitated by a `RuleBook`, which is located with the `Model` component as part of the App data. `RuleBook` holds a set of rules which define conditions to trigger some predefined action when met. A `RuleChecker` in `Logic` does this work of checking rules and executing the associated actions.
 
 Let us walk through the implementation of notifications by considering a typical scenario involving this feature. Suppose the user wants to keep track of a certain coin's price, say `BTC`.
 
@@ -622,16 +627,194 @@ image::NotificationsSequenceDiagram1.png[width="800"]
 .Sequence Diagram for Notifications
 image::NotificationsSequenceDiagram2.png[width="800"]
 
+==== Advanced Details and Proposed Extensions
+
+In order to allow for future extensions, the rule system has been designed to separate, as much as possible, the construction of the rule and its later behaviour.
+
+===== Structure of the `Rule` Class
+
+The `Rule` class looks like the following:
+
+[source,java]
+----
+public class Rule<T> {                    <5>
+
+    public final RuleType type;           <2>
+    public final String description;
+
+    public final ActionCommand<T> action; <1>
+    public final Predicate<T> condition;
+
+    protected Rule(String description, RuleType type,
+                   ActionParser<T> actionParser,
+                   ConditionParser<T> conditionParser) {     <4>
+        this.description = description;
+        this.type = type;
+        this.action = actionParser.parse(description);
+        this.condition = conditionParser.parse(description);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(RULE_FORMAT_STRING, type, description);   <3>
+    }
+
+    @FunctionalInterface
+    protected interface ActionParser<T> {
+        ActionCommand<T> parse(String args);
+    }
+
+    @FunctionalInterface
+    protected interface ConditionParser<T> {
+        Predicate<T> parse(String args) throws IllegalValueException;
+    }
+
+    [...]
+}
+----
+
+A few things to note from this:
+
+<1> Each `Rule` object is a condition-action pair
+<2> It is completely described by its `type` and `description`
+<3> By storing the above two values as strings, the exact object can be reconstructed on startup
+<4> The constructor has been made `protected` so that new rule types must be defined by extending this base `Rule` class to be constructed and accessed from outside
+<5> The class is generic, and parameterized by the type of the object it is a condition upon, e.g. notification rules test against `Coin` objects
+
+This structure follows very closely the [ext]#https://sourcemaking.com/design_patterns/strategy[Strategy design pattern]# as described in the "Gang of Four" book. It leads to the following class structure, as used above (see Fig. 24):
+
+.Class Diagram for Rule System
+image::NotificationClassDiagram.png[width="800]
+
+An example concrete implementation is the `NotificationRule` class used for notifications:
+
+[source,java]
+----
+public class NotificationRule extends Rule<Coin> {
+
+    private static final ActionParser<Coin>
+    parseAction = SpawnNotificationCommand::new;
+
+    private static final ConditionParser<Coin>
+    parseCondition = NotifyCommandParser::parseNotifyCondition;
+
+    public NotificationRule(String value) {
+        super(value, RuleType.NOTIFICATION, parseAction, parseCondition);
+    }
+}
+----
+
+The notification command fills in the abstract `actionParser` and `conditionParser` with functions implemented in various places, but which follow the template `FunctionalInterface` shown above.
+
+`conditionParser` takes in the description string and returns a `Predicate<T>` object, which can be tested against with an object of type `T`. This results in a `true` or `false` output depending on whether that object satisfies the condition. `NotificationRule` uses the same `ConditionParser` as in the `find` command, explained in the previous <<condition,section>>.
+
+`actionParser` takes in the same description string and returns an `ActionCommand`, which is just:
+
+[source,java]
+----
+public abstract class ActionCommand<T> extends Command {
+    public abstract void setExtraData(T data, BaseEvent event);
+}
+----
+
+It adds a method atop <<fig-LogicClassDiagram,`Command`>> objects, to receive extra data which is only known after matching the rule. An easy example is the object that triggered the rule itself, which cannot be known until it is actually tested, and that only happens after the `Rule` has been constructed. This is the first extra data. You shall see the reason for the second one (`event`) later.
+
+===== Rule Checking System
+
+The rule checker is implemented via the <<event-driven-design,event-driven approach>> described in the previous chapter. The rule checker looks something like the below (simplified from actual):
+
+[source,java]
+----
+public class RuleChecker {
+
+    private final RuleBook rules;
+
+    @Subscribe
+    public void handleCoinChangedEvent(CoinChangedEvent cce) {
+        for (Rule r : rules.getRuleList()) {
+            r.action.setExtraData(cce.data, cce);
+
+            switch (r.type) {
+            case NOTIFICATION:
+                checkAndFire(r, cce.data);
+                break;
+            [...more types in the future]
+            }
+        }
+    }
+
+    private static <T> void checkAndFire(Rule<T> rule, T data) {
+        if (rule.condition.test(data)) {
+            rule.action.execute();
+        }
+    }
+}
+----
+
+An instance of `RuleChecker` lives inside `LogicManager`, at the same level of architecture as the `UndoRedoStack` or the `CommandHistory` (<<fig-LogicClassDiagram,see above>>).
+The rule testing procedure is initiated by an event, usually capturing information about a change in the state of some objects of interest.
+
+`RuleChecker`, upon capturing this event, begins looping through the list of rules, testing each one's condition against the event data and performing the custom action defined with it.
+The extra data as above is also set with the potentially matching object, as well as the event itself, as alluded to above, which should contain all other necessary context for the action's execution.
+
+A concrete example from `NotificationRule`:
+
+[source,java]
+----
+public class SpawnNotificationCommand extends ActionCommand<Coin> {
+
+    private final String message;
+    private Coin jumpTo;
+    private Index index;
+
+    public SpawnNotificationCommand(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public void setExtraData(Coin data, BaseEvent event) {
+        jumpTo = data;
+        index = ((CoinChangedEvent) event).index;
+    }
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowNotificationRequestEvent(
+            message, index, jumpTo.getCode().toString()));
+        return new CommandResult("");
+    }
+   }
+}
+----
+
+This sends yet another event `ShowNotificationRequestEvent`, which is captured by the `UI` component that then creates a pop-up notification to show to the user.
+
+===== Proposed Extensions
+
+With the above in mind, you should be able to see that it is relatively easy to add other kinds of rules to _CoinBook_. For example:
+
+* Scheduled tasks
+** Condition: Time-based
+** Action: User-set, e.g. run the `sync` command, export data to file and mail, etc.
+
+* Webhook rules
+** Condition: Similar to notifications
+** Action: Instead of just popping-up a notification, post some preformatted data to a URL
+
+* Associated actions
+** Condition: Action made upon some coin account
+** Action: The same action is done on a specified target
+
 ==== Design Considerations
 
 ===== Aspect: Implementation of rules
 
 * **Alternative 1 (current choice):** Make them generalized trigger-action pairs
-** Pros: Later extension is easy to make by simply defining new condition and command parsers along with associated input.
+** Pros: Later extension is easy to make by simply defining new condition and action parsers along with associated input.
 ** Cons: This design pattern (Strategy pattern) is more advanced and may be hard for new developers to understand. Code readability may also suffer.
 
 * **Alternative 2:** Make only a single `NotificationRule` type
-** Pros: This is quicker to implement as the behavious is hard-coded.
+** Pros: This is quicker to implement as the behaviour is hard-coded.
 ** Cons: It will be more difficult to extend rules to handle other events in the future.
 
 [TIP]
@@ -664,6 +847,7 @@ We want to keep `Model` as an interface for just the coin data itself.
 // tag::organisation[]
 
 [[Implementation-Organisation]]
+
 === Organisation Features
 
 ==== Sorting
@@ -672,23 +856,23 @@ The sorting mechanism is facilitated by `Collections.sort`. It supports sorting 
 The way `Collections.sort` works is that it takes the collection's underlying array and calls its sort method to sort the actual elements. The sorting algorithm used by Java is Timsort.
 This sorts the collection in-place, i.e., it modifies the given collection by sorting its elements directly. As a result, a sorted copy need not be made, saving resources.
 
-The diagram (Fig. 24) below is the Sequence Diagram for interactions that occur from when the sort command is first called by the user to when the Coin List is sorted.
+The diagram (Fig. 25) below is the Sequence Diagram for interactions that occur from when the sort command is first called by the user to when the Coin List is sorted.
 
 .Sequence Diagram for SortCommand
 image::SortCommand_SequenceDiagram.png[width="800"]
 
-The order mechanism is facilitated by the SortCommand which is also an UndoableCommand.
-The SortCommandParser checks for the sort order (a or z parameter) to decide the relevant SortCommand to call.
-The internalList is then sorted using Java's sort method.
+The order mechanism is facilitated by `SortCommand` which is also an `UndoableCommand`.
+`SortCommandParser` checks for the sort order (a or z parameter) to decide the relevant `SortCommand` to call.
+The `internalList` object is then sorted using Java's sort method.
 
 How the sort procedure works:
 
 * Sort by lexicographical order
 
-** We can use compareTo() for comparing coin code names. For _CoinBook_, we want to order our list of coins lexicographically, based on the alphabetical order of their component letters.
-This is done by passing the internalList into the sort function which then uses getCode() to compare each of the component letters of the coin code, which will then arrange coins based on the lexicographical value of the code string.
+** We can use `compareTo()` for comparing coin code names. For _CoinBook_, we want to order our list of coins lexicographically, based on the alphabetical order of their component letters.
+This is done by passing `internalList` into the sort function which then uses `getCode()` to compare each of the component letters of the coin code, which will then arrange coins based on the lexicographical value of the code string.
 The coin code strings with the lowest lexicographical value will appear first followed by coin code strings with higher lexicographical values as you go further down the list.
-** We can either use the `reversed` function on `Comparator` or change the compare condition of compareTo() to invert the default setting and arrange the coins from highest to lowest lexicographical value instead.
+** We can either use the `reversed` function on `Comparator` or change the compare condition of `compareTo()` to invert the default setting and arrange the coins from highest to lowest lexicographical value instead.
 ** We do not have to pass in any comparator for the list to be correctly sorted because the 3-letter coin code is a `String` which implements the `Comparable` _interface_, and hence guarantees its own implementation of the sort comparator.
 
 ==== Grouping `[Coming in v2.0]`
@@ -854,7 +1038,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Follow the instructions in [exref]##<<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>>## to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Find the generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  In Chrome's menu, click on the `Print` option.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot (Fig. 24) below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot (Fig. 26) below.
 
 .Options for Saving Documentation as PDF Files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
@@ -890,7 +1074,7 @@ There are three ways to run tests on your computer before sharing your changes t
 *Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, right-click on a test package, test class, or a test, e.g. `ABC`, and choose `Run 'ABC'` (see Fig. 25)
+* To run a subset of tests, right-click on a test package, test class, or a test, e.g. `ABC`, and choose `Run 'ABC'` (see Fig. 27)
 
 .Running Tests
 image::RunningTests.png[]
@@ -1000,7 +1184,7 @@ A project often depends on third-party libraries. For example, _CoinBook_ depend
 
 *Ewald Hew*
 
-* Major: Sync and notifications. Updates price data periodically and make notifications based on user-set rules. This helps users stay on top of what's happening and obtain important information at the right time.
+* Major: Notifications and rule system. Make notifications based on user-set rules, checked when coin data updates. This helps users stay on top of what's happening and obtain important information at the right time.
 * Minor: Charts panel for data visualization. This lets users analyse price trends for decision making.
 
 *Lai Cheng Yu*
@@ -1217,7 +1401,7 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-=== Deleting a coin
+=== Deleting a Coin
 
 . Deleting a coin while all coins are listed
 
@@ -1235,7 +1419,7 @@ These instructions only provide a starting point for testers to work on; testers
 .. Test case: `delete 2` +
    Expected: The coin is removed from the list. The detail window should return to a blank one, as when no coin is selected.
 
-=== Saving data
+=== Saving Data
 
 . Dealing with missing/corrupted data files
 
@@ -1249,3 +1433,36 @@ Expected: The coin list in App memory remains the same, and a new data file is c
 .. Copy the `data/` folder in the old installation to the new installation folder.
 .. Launch the App as in F.1.1. +
 Expected: All data from the old installation should be preserved and appear in the listing when the App is launched.
+
+=== Finding Coins
+
+. Finding a coin from a long list of coins
+
+.. Prerequisites: List all coins using the `list` command. Multiple coins in the list. Some coins are tagged with `fav`. +
+Run the command `tag 1 t/fav` to tag the first coin in the list.
+.. Test case: `find c/e` +
+Expected: The list only shows coins with the letter `e` in their trading code.
+.. Test case: `find p/>1` +
+Expected: The list only shows coins with a price greater than $1.
+.. Test case: `find t/fav OR ( p/>1000 AND h/>2000)` +
+Expected: The list only shows coins with either the `fav` tag or with price greater than $1000 and amount held greater than 2000 coins simultaneously.
+
+=== Setting Notifications
+
+. Creating a new notification
+
+.. Prerequisites: Have known coins added to the list that can receive price updates, e.g. BTC. +
+Otherwise, run the command `add c/BTC`
+.. Test case: `notify c/BTC AND p/>1000`, `sync` +
+Expected: The latest price of Bitcoin is fetched, and, assuming the price has not completely crashed, a notification
+should pop up in the bottom-right corner of the screen. +
+If price is below 1000, use a smaller value after `p/` and try again
+.. Test case: `listnotifs` +
+Expected: The notification list window should open, and any added notification rules are listed.
+
+. Using notifications to jump to view coin
+
+.. Prerequisites: Have multiple known coins added to the list that can receive price updates, e.g. BTC, ETH, XRP, DOGE...
+.. Test case: `notify p/>1`, `sync` +
+Click on any notification.
+Expected: The coin stated on the notification is opened in the detail window, and its price history chart and subreddit page can be seen.

@@ -18,7 +18,7 @@ public class NotifyCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a new notification to be triggered "
             + "upon the specified rule. Rules are provided in the following format:\n"
             + "Parameters: TARGET OPTION/VALUE [...] \n"
-            + "Example: " + COMMAND_WORD + " BTC p/15000";
+            + "Example: " + COMMAND_WORD + " c/BTC AND p/>15000";
 
     public static final String MESSAGE_SUCCESS = "Added: %1$s";
     public static final String MESSAGE_DUPLICATE_RULE = "This notification rule already exists!";

@@ -134,7 +134,7 @@ Medeina comes with an autocomplete feature in the CLI to help you manage your co
 * Autocomplete will provide suggestions for NRIC when you are adding a new pet patient or new appointment, assigning pet patient under another contact using the edit command, and finding a contact by NRIC.
 * Autocomplete will provide suggestions for pet patient name when you are adding an appointment.
 * Suggestions for tags, species, breed, colour and blood type will be shown when their corresponding prefixes are detected.
-* Autocomplete matching is case-insensitive e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
+* Autocomplete matching is **case-insensitive** e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
 * You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the drop-down menu.
 * Autocomplete shows up to a maximum of 13 suggestions in the drop-down menu.
 * Press kbd:[Enter] to select an autocomplete suggestion in the drop-down menu.

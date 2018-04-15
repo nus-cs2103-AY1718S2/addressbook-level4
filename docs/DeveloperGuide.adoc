@@ -230,7 +230,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-//tag::LoginLogout[]
+//tag::Login/Logout[]
 === Login/logout & reset password feature
 ==== Current Implementation
 The login/logout command feature requires the sales person to enter password whenever he/she starts to use the addressbook. This will allow for a safer address book.
@@ -241,7 +241,7 @@ An example of the sort command would be: lock
 
 An example of the sort command alias would be: lk
 
-To unlock the adress book, simply type 'unlock [PASSWORD]' or the command alias 'ulk [PASSWORD]'.
+To unlock the adress book, simply type 'unlock PASSWORD' or the command alias 'ulk PASSWORD'.
 
 An example of the sort command would be: unlock 123456
 
@@ -249,12 +249,12 @@ An example of the sort command alias would be: ulk 123456
 
 The reset password command feature allows the sales person to change password. This will allow for a safer address book.
 
-To change the password, simply type 'setPassword [OLD_PASSWORD] [NEW_PASSWORD]' or the command alias 'sp [OLD_PASSWORD] [NEW_PASSWORD]'.
+To change the password, simply type 'setPassword OLD_PASSWORD NEW_PASSWORD' or the command alias 'sp OLD_PASSWORD NEW_PASSWORD'.
 
 An example of the change password command would be: setPassword 123456 123
 
 An example of the sort command alias would be: sp 123456 123
-//end::LoginLogout[]
+//end::Login/Logout[]
 
 //tag::SortCommand[]
 === SortCommand feature

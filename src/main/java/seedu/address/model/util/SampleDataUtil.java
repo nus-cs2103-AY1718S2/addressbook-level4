@@ -115,23 +115,6 @@ public class SampleDataUtil {
     }
 
     /**
-     * helper method to generate a meaningful date. Currently hard-coded for 1 March 2018.
-     *
-     * @return
-     */
-    private static Date defaultDate() {
-        int year = 2018;
-        int month = MARCH;
-        int dayOfMonth = 1;
-        int hourOfDay = 0;
-        int minute = 0;
-        int second = 0;
-
-        GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute, second);
-        return calendar.getTime();
-    }
-
-    /**
      * helper method to generate a custom meaningful date.
      *
      * @return

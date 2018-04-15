@@ -1,18 +1,11 @@
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.HashSet;
 
 import org.junit.Test;
 
-import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.Assert;
 
 public class UniquePersonListTest {
 

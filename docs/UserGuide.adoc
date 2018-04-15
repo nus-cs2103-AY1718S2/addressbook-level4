@@ -27,19 +27,24 @@ Medeina is finally here to solve your problems.
 
 Medeina is a specialized desktop application designed to provide veterinarians and their assistants with better management over contacts, pet patient details and appointments. It serves as both an address book and a task manager.
 
-If you are comfortable working with a Command Line Interface (CLI), then Medeina is perfect for you. Nevertheless, Medeina keeps to simple and intuitive commands that even those who are unfamiliar with CLI can pick it up easily. Medeina also comes with a clean and organized Graphical User Interface (GUI) to present information in the most optimal way for your perusal.
+If you are comfortable working with a Command Line Interface (CLI), then Medeina is perfect for you. Medeina keeps to simple and intuitive commands that even those who are unfamiliar with CLI can pick it up easily. Medeina also comes with a clean and organized Graphical User Interface (GUI) to present information in the most optimal way for your perusal.
 
 Medeina, your all-in-one solution to curb your data nightmare.
 
 === Using this Guide
 
-This document provides detailed information pertaining to Medeina's set-up and usage instructions for the various features it offers. The user guide can be accessed any time through the `help` command in Medeina. +
-Do take note of the following colours and their representation, as they will be used to better illustrate Medeina's commands in <<CLI>>.
+This document provides detailed information pertaining to Medeina's set-up and usage instructions for the various features it offers. The user guide can be accessed any time through the `help` command in Medeina.
 
-* Blue -> information related to a contact
-* Green -> information related to a pet patient
-* Magenta -> information related to an appointment
+Do take note of the following colours and their representation, as they will be used in this guide to better illustrate Medeina's commands.
 
+.Colour representation
+image::colours.png[width="300"]
+
+{empty} +
+If you have already set up Medeina, head on to <<CLI>>. +
+If you are already familiar with Medeina's Command Line Interface (CLI), head on to <<Commands>>.
+
+{empty} +
 
 == Quick Start
 
@@ -60,34 +65,91 @@ image::Ui.png[width="800"]
 
 {empty} +
 
+// tag::cliUG[]
 [[CLI]]
 == Command Line Interface (CLI)
+You will be interacting with Medeina mainly through the CLI. This section will help you to get familiarize with Medeina's CLI in no time.
 
 === Command format used in Medeina
+The following image illustrates the command format used in Medeina. You can refer to the table below for more information.
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add **-o** n/NAME`, `NAME` is a parameter which can be used as `add **-o** n/John Doe`.
-* Characters in **bold** are options to be specified by the user to execute variants of a command e.g. in `add **-p** n/NAME`, **-p** denotes to add a pet patient.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-* Shorthand equivalent alias, or better known as short-form, is available for all commands to simplify execution of commands e.g. `a` is the alias for `add`.
-
+.Command format
+image::commandSyntax.png[width="600"]
 {empty} +
+
+[width="100%", cols="15%,<45%a,<40%", options="header"]
+|=====
+| Term
+| Examples
+| Notes
+
+.^a|Command word
+| `add`, `edit`, `clear`, `help`, `undo`
+a| * Medeina's syntax starts with a command word.
+
+.^a|Alias
+| `a`, `ed`, `cls`, `h`, `ud`
+a| * Aliases are short-forms that can be used to replace command words.
+
+.^a|Options
+| `**-o**`, `**-p**`, `**-a**`, `**-fo**`, `**-fp**`, `**-fa**`, `**-y**`
+a| * Options are used in `add`, `edit`, `find`, `delete` and `listappt` commands.
+* You can specify them to execute variants of a command. For example in figure 2, `**-p**` option denotes editing a pet patient.
+* If there are multiple options used in a command, the order must be preserved.
+
+.^a|Index
+| `1`, `2`, any number
+a| * Index is used to refer to a particular contact, pet patient or appointment that you would like to `edit` or `delete`.
+* Please refer to figure 1 to find out where indexes are found.
+
+.^a|Prefixes
+| `n/`, `p/`, `nr/`, `e/`, `s/`, `t/`
+a| * Prefixes mark the start of parameters.
+* They indicate the type of parameter expected by Medeina e.g. `nr/` will expect NRIC as parameter, and `e/` will expect an email address as parameter.
+
+.^a|Parameters
+| `Persian`, `ginger`, `asthma` +
+ +
+In `nr/NRIC`, `NRIC` represents the parameter
+a| * Parameters are values supplied by the user.
+* They are represented by words in upper case.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
+.^a|Tag
+| Any parameter marked by `t/` prefix
+a| * In this guide and also in error messages, when tag is bounded in square brackets e.g. `n/NAME [t/TAG]`, it means that tag is optional. You can specify `n/John Doe t/friend` or as `n/John Doe`.
+* `[t/TAG]...` denotes multiple tags can be supplied by the user e.g. `t/friend`, `t/friend t/family` etc.
+|=====
 
 // tag::autocompleteUG[]
 === Autocomplete `[Since v1.3]`
 
-.Medeina's autocomplete
-image::autocomplete.png[width="700"]
+.Medeina's autocomplete for command words, prefixes and options
+image::autocomplete.png[width="500"]
 
-* Medeina supports autocomplete for command words, options, prefixes, and parameters.
-* You will be shown a list of suggested NRICs when when you need to reference an existing contact in Medeina e.g. adding a pet patient / appointment, editing a pet patient to change ownership.
-* You will also be shown a list of suggested pet patients names when you need to reference them in `*-p* n/PET_PATIENT_NAME`.
-* Autocomplete matching is case-insensitive e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
-* You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the pop-up context menu.
-* Press kbd:[Enter] to select an autocomplete suggestion on the pop-up context menu.
-* You can toggle autocomplete on/off using kbd:[F2] when the command box is focused.
+{empty} +
+Medeina comes with an autocomplete feature in the CLI to help you manage your contacts, pet patients and appointments faster.
+
+* Medeina supports autocomplete for command words, options, prefixes, and parameters such as tags, NRIC, pet patient name, species, breed, colour and blood type.
+* Autocomplete will provide suggestions for NRIC when you are adding a new pet patient or new appointment, assigning pet patient under another contact using the edit command, and finding a contact by NRIC.
+* Autocomplete will provide suggestions for pet patient name when you are adding an appointment.
+* Suggestions for tags, species, breed, colour and blood type will be shown when their corresponding prefixes are detected.
+* Autocomplete matching is **case-insensitive** e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
+* You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the drop-down menu.
+* Autocomplete shows up to a maximum of 13 suggestions in the drop-down menu.
+* Press kbd:[Enter] to select an autocomplete suggestion in the drop-down menu.
+
+[NOTE]
+====
+Autocomplete for options, prefixes and parameters works only for commands that require them: `add`, `edit`, `find`, `delete` and `listappt`.
+====
+
+[TIP]
+====
+You can toggle autocomplete on/off using kbd:[F2] when the command box is focused.
+====
 // end::autocompleteUG[]
+// end::cliUG[]
 
 {empty} +
 
@@ -117,16 +179,16 @@ You can learn more about this command in the following table:
 a| * Tag is optional.
 
 .^| Pet patient
-| `add **-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOR bt/BLOOD_TYPE [t/TAG]... **-o** nr/OWNER_NRIC`
-a| * OWNER_NRIC must belong to an existing contact.
+| `add **-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOR bt/BLOOD_TYPE [t/TAG]... **-o** nr/NRIC`
+a| * NRIC must belong to an existing contact, in order to assign the new pet patient under a contact.
 * Tag is optional.
 
 .^| Appointment
 | `add **-a** d/YYYY-MM-DD HH:MM r/REMARK t/TAG...` +
-`**-o** nr/OWNER_NRIC **-p** n/PET_PATIENT_NAME`
-a| * OWNER_NRIC must belong to an existing contact.
-* PET_PATIENT_NAME must belong to an existing pet patient.
-* Appointment time HH:MM must be in 30-minute blocks.
+`**-o** nr/NRIC **-p** n/PET_PATIENT_NAME`
+a| * NRIC must belong to an existing contact.
+* PET_PATIENT_NAME must belong to an existing pet patient under the contact with NRIC.
+* The duration of each appointment is 30 minutes by default. Take note that HH:MM must be at least 30 minutes before/after appointments on the same day.
 * Type '-' or 'nil' if you have no REMARK to record.
 * Compulsory tag (minimum 1).
 
@@ -134,14 +196,19 @@ a| * OWNER_NRIC must belong to an existing contact.
 | `add **-o** n/CONTACT_NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAG]...` +
 `**-p** n/PET_PATIENT_NAME s/SPECIES b/BREED c/COLOR bt/BLOOD_TYPE [t/TAG]...` +
 `**-a** d/YYYY-MM-DD HH:MM r/REMARK [t/TAG]...`
-a|
+a| * This command adds a new contact, a new pet patient, and a new appointment simultaneously.
+* The new pet patient is assigned under the new contact.
+* The new appointment is made for the pet patient.
 |=====
-{empty} +
+
+[WARNING]
+====
+Options are in order. For example, the add command for pet patient will have an error message if the option order is not preserved e.g. `add **-o** nr/CONTACT_NRIC **-p** ...`
+====
 
 image::add_examples.PNG[width="800"]
-{empty} +
 
-.**Copy & paste to try out**
+.**Copy & paste to try out the above examples**
 ----
 add -o n/Viktor Nikiforov p/91237890 e/v_nikiforov@gmail.com a/27 Skating Place nr/F0012345Z
 
@@ -538,16 +605,15 @@ This command **cannot** be undone after you exit the application. Please be cert
 // tag::changethemeUG[]
 === Changing theme : `theme` or `t` `[Since v1.1]`
 
-You can use `theme THEME_NAME` or `t THEME_NAME` to change Medeina's theme to one of the following: +
+If you would like change Medeina's theme to better suit your preference, simply use the command `theme THEME_NAME` or `t THEME_NAME` to change theme. Medeina currently supports the following themes:
 
 * dark
 * light
 
 [TIP]
 ====
-`THEME_NAME` is case insensitive. e.g DARK will match dark.
+`THEME_NAME` is case insensitive. e.g DaRK will match dark.
 ====
-{empty} +
 
 .Dark theme
 image::Theme_Dark.PNG[width:790]
@@ -560,7 +626,7 @@ image::Screen_Shot.png[width:790]
 
 === Exiting the program : `exit` or `q`
 
-You can easily exit Medeina without any mouse click by entering `exit` or `q` in the command box. +
+You can easily close the Medeina application by entering `exit` or `q` in the command box. +
 
 {empty} +
 

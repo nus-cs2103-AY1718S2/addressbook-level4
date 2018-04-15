@@ -231,9 +231,9 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 //tag::Login/Logout[]
-=== Login/logout & reset password feature
+=== Lock/unlock & reset password feature
 ==== Current Implementation
-The login/logout command feature requires the sales person to enter password whenever he/she starts to use the addressbook. This will allow for a safer address book.
+The lock/unlock command feature requires the sales person to enter password whenever he/she starts to modify the addressbook. This will allow for a safer address book.
 
 To lock the adress book, simply type 'lock' or the command alias 'lk'.
 

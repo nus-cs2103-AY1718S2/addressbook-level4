@@ -1429,7 +1429,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate stack, and can just reuse what is already in the codebase.
 ** Cons: This requires dealing with commands that have already been undone, meaning we must remember to skip these commands. It violates Single Responsibility Principle and Separation of Concerns as `_HistoryManager_` now needs to do two * different things.
 
-=== Unique Tag Colors
+=== Unique tag colors
 // tag::unique-tag-colors[]
 ==== Current implementation
 The `_RecipeCard_` class calls the `_UiUtil_` class to convert the hashcode of a tag name into a valid hexadecimal color code. This ensures that all tags with the same name will have the same tag color.
@@ -2179,7 +2179,7 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app.
 * Expected outcome: The most recent window size and location is retained.
 
-=== Features / Commands
+=== Features/Commands
 
 Sample commands can be found in the cheatsheet in the User Guide. Here are some test cases for some of the features:
 

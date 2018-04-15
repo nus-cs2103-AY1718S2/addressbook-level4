@@ -1,9 +1,8 @@
+//@@author ongkuanyang
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -22,76 +22,72 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.AppointmentName;
+import seedu.address.model.appointment.AppointmentTime;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
 
-public class AddCommandTest {
+public class AddAppointmentCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullName_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddAppointmentCommand(null,
+                new AppointmentTime("13 Jan 2018 13:22 Asia/Singapore"), new ArrayList<Index>());
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
-
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
-
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+    public void constructor_nullTime_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new AddAppointmentCommand(new AppointmentName("testname"), null, new ArrayList<Index>());
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void constructor_nullIndexes_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new AddAppointmentCommand(new AppointmentName("testname"),
+                new AppointmentTime("13 Jan 2018 13:22 Asia/Singapore"), null);
+    }
+
+    @Test
+    public void execute_appointmentAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingAppointmentAdded modelStub = new ModelStubAcceptingAppointmentAdded();
+        Appointment validAppointment = new Appointment(new AppointmentName("testname"),
+                new AppointmentTime("13 Jan 2018 13:22 Asia/Singapore"), new UniquePersonList());
+
+        CommandResult commandResult = getAddCommandForAppointment(validAppointment, modelStub).execute();
+
+        assertEquals(String.format(AddAppointmentCommand.MESSAGE_SUCCESS, validAppointment),
+                commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validAppointment), modelStub.appointmentsAdded);
+    }
+
+    @Test
+    public void execute_duplicateAppointment_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateAppointmentException();
+        Appointment validAppointment = new Appointment(new AppointmentName("testname"),
+                new AppointmentTime("13 Jan 2018 13:22 Asia/Singapore"), new UniquePersonList());
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddAppointmentCommand.MESSAGE_DUPLICATE_APPOINTMENT);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
-    }
-
-    @Test
-    public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
-
-        // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
-
-        // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
-
-        // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        getAddCommandForAppointment(validAppointment, modelStub).execute();
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddAppointmentCommand with the details of the given appointment.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddAppointmentCommand getAddCommandForAppointment(Appointment appointment, Model model) {
+        AddAppointmentCommand command = new AddAppointmentCommand(appointment.getName(),
+                appointment.getTime(), new ArrayList<Index>());
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -105,7 +101,6 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        //@@author XavierMaYuqian
         @Override
         public void sort() {
             fail("This method should not be called.");
@@ -151,8 +146,7 @@ public class AddCommandTest {
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
+            return new UniquePersonList().asObservableList();
         }
 
         @Override
@@ -171,14 +165,12 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        //@@author XavierMaYuqian
         @Override
         public String getPassword() {
             fail("This method should not be called.");
             return null;
         }
 
-        //@@author XavierMaYuqian
         @Override
         public void setPassword(String e) {
             fail("This method should not be called.");
@@ -201,12 +193,12 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicateAppointmentException when trying to add an appointment.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateAppointmentException extends ModelStub {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+            throw new DuplicateAppointmentException();
         }
 
         @Override
@@ -216,15 +208,15 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the appointment being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingAppointmentAdded extends ModelStub {
+        final ArrayList<Appointment> appointmentsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+            requireNonNull(appointment);
+            appointmentsAdded.add(appointment);
         }
 
         @Override

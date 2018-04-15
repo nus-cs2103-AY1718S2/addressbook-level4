@@ -57,31 +57,37 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Some commands have command aliases which can be used in place of the command, e.g. `a` for `add`.
 ====
 
-=== Login : `unlock`
+//tag::unlock[]
+=== Unlock : `unlock`
 
-You need to login to the APP to do any actions. The initial password is 123456.+
-Format: `unlock [PASSWORD]`
+You can unlock the APP while it is locked if you wish to do modification on contact and appointment. The initial password is 123456. +
+Format: `unlock PASSWORD`
 alias: `ulk`
 
 Examples:
 
 * `unlock 123456`
+//end::unlock[]
 
-=== Logout : `lock`
+//tag::lock[]
+=== Lock : `lock`
 
-You need to logout after using the APP. The initial password is 123456.+
+You can logout after doing modification on contacts and appointment on the APP. The initial password is 123456. +
 Format: `lock`
 alias: `lk`
+//end::lock[]
 
+//tag::setPassword[]
 === Reset password : `setPassword`
 
-You may change the password of login. The initial password is 123456.+
-Format: `setPassword [OLD_PASSWORD] [NEW_PASSWORD]`
+You may change the password of login. The initial password is 123456. +
+Format: `setPassword OLD_PASSWORD NEW_PASSWORD`
 alias: `sp`
 
 Examples:
 
 * `setPassword 123456 123`
+//end::setPassword[]
 
 === Viewing help : `help`
 
@@ -102,7 +108,7 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 tz/PST c/She can speak French t/criminal`
 
 // tag::addappointment[]
-=== Adding an appointment: `addappoinmtment` `Since v1.3`
+=== Adding an appointment: `addappointment` `Since v1.3`
 
 Adds an appointment to the address book +
 Format: `addappointment [INDEX]... n/NAME d/DATETIME tz/TIMEZONE`
@@ -130,29 +136,35 @@ Shows a list of all persons (including archived) in the address book. +
 Format: `listall`
 Alias: `la`
 
+//tag::listappointment[]
+=== Listing all appointments : `listappointment`
+
+Shows a list of all appointments in the address book. +
+Format: `listappointment`
+Alias: `lap`
+//end::listappointment[]
+
+//tag::sort[]
 === Sorting all persons : `sort`
 
 Sorts all persons in the address book based on alphabetical order of their full names. +
 Format: `sort`
 Alias: `so`
+//end::sort[]
 
+//tag::export[]
 === Export all persons : `export`
 
 Exports all persons in the address book based to a csv file. +
 Format: `export`
 Alias: `ep`
+//end::export[]
 
 === Listing all clients tagged with one or more specific tag (union): `listtag` `Coming in v2.0`
 
 Shows a list of all clients in the address book tagged with any of the tags entered. +
 Format: `listtag TAG...`
 Alias: `lt`
-
-=== Add or modifies notes to a client: `note` `Coming in v2.0`
-
-Adds or modifies notes to an existing client. A text box will appear containing the saved notes (if available) for editing +
-Format: `note INDEX`
-Alias: `n`
 
 // tag::archive[]
 === Archives a client: `archive` `Since v1.2`
@@ -273,6 +285,7 @@ Examples:
 Deletes the 2nd appointment in the address book.
 // end::deleteappointment[]
 
+//tag::deletetag[]
 === Deleting a tag : `deletetag`
 
 Deletes the specified tag from everyone in the address book. +
@@ -287,6 +300,7 @@ Examples:
 
 *`delete family` +
 Deletes the family tag for every person in the address book.
+//end::deletetag[]
 
 === Listing entered commands : `history`
 
@@ -417,15 +431,17 @@ e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [ti/TIMEZONE] [t/TAG]...` +
 * *Edit appointment* : `editappointment 1 2 3 n/Sell laptop` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Note* : `note INDEX`
 * *Archive* : `archive INDEX`
 * *Unarchive* : `unarchive INDEX`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
 * *List all* : `listall`
+* *List appointment* : `listappointment`
 * *listtag* : `listtag TAG...`
 * *Help* : `help`
 * *History* : `history`
+* *Sort* : `sort`
+* *Export* : `export`
 * *Undo* : `undo`
 * *Redo* : `redo`

@@ -16,6 +16,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.GetPersonRequestEvent;
+import seedu.address.commons.events.model.PasswordChangedEvent;
 import seedu.address.commons.events.model.ReturnedPersonEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
@@ -141,6 +142,23 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deleteTag(Tag t) {
         addressBook.removeTag(t);
+    }
+
+    private void indicatePasswordChangedEvent(String p) {
+        raise(new PasswordChangedEvent(p));
+    }
+
+    //@@author XavierMaYuqian
+    @Override
+    public void setPassword(String password) {
+        addressBook.setPassword(password);
+        indicateAddressBookChanged();
+        indicatePasswordChangedEvent(password);
+    }
+
+    //@@author XavierMaYuqian
+    public String getPassword() {
+        return addressBook.getPassword();
     }
 
     //=========== Filtered Person List Accessors =============================================================

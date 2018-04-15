@@ -413,7 +413,7 @@ Each of the fields is used to contain the corresponding *new* value of the field
 _Figure 11_ below shows the sequence diagram of the execution of `rate` command. `Edit` command has an exactly same execution, `RateCommandParser` will be replaced with `EditCommandParser` while `RateCommand` will be replaced with `EditCommand`.
 
 .Sequence diagram of Rate Command execution
-image::Rate Command Sequence Diagram.png[width="800"]
+image::Rate Command Sequence Diagram.png[width="500"]
 
 The important method calls during the execution of `edit` and `rate` command includes:
 
@@ -874,6 +874,9 @@ Here is the code snippet of the execution of `export` command:
 // end::exportcom[]
 
 // tag::ns[]
+
+
+
 === Notification System
 This section discusses about the implementation of the notification feature of Employees Tracker.
 
@@ -898,7 +901,7 @@ In the current implementation, the major classes and objects of the notification
 Please refer to the class diagram below for the association between them.
 
 .Class diagram of the Notification System
-image::Notification System.png[width=""]
+image::Notification System.png[width="500"]
 
 ===== Initialization of the Notification System
 
@@ -908,6 +911,8 @@ For every time the app starts, the following initialization operations will be c
 . `MainWindow` is created.
 . `MainWindow` creates a `NotificationCenter`.
 . `MainWindow` passes the `NotificationCenter` to `Model` through `Logic`.
+
+// end::ns[]
 
 ===== Add-Notification Operation
 
@@ -952,6 +957,7 @@ image::Delete Notification.png[width=""]
 * Deleting with `eventId` is usually invoked by `delete` command, where `Notification` and `Person` are deleted together.
 ====
 
+// tag::ns2[]
 ===== Add-notifications-at-startup operation
 
 At each startup, after initializing the Notification System, ET will then go through the LinkedList of `Notification` in `AddressBook`.
@@ -963,7 +969,6 @@ This will result in concurrent modification issues. Thus, `Semaphore` is used to
 ====
   //current implementation only allows 1 thread to enter showNewNotification() at the same time.
   Semaphore = new Semaphore(1);
-
   /**
      * Show in-app notification
      */
@@ -980,32 +985,7 @@ This will result in concurrent modification issues. Thus, `Semaphore` is used to
         notificationCard.setTranslateY(UP * shownNotificationCards.size() * NOTIFICATION_CARD_HEIGHT);
         shownNotificationCards.add(notificationCard);
         semaphore.release();
-        //enter animation
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                mainStage.getChildren().add(notificationCard);
-                animateHorizontally(notificationCard, NOTIFICATION_CARD_WIDTH, ENTER);
-                Timer timer = new Timer();
-                TimerTask timerTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        //it should be the first notification card to exit first
-                        try {
-                            semaphore.acquire();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        Region firstNotificationCard = shownNotificationCards.removeFirst();
-                        //cards are reused later in notification center
-                        animateHorizontally(firstNotificationCard, NOTIFICATION_CARD_WIDTH, EXIT);
-                        moveAllNotificationCardsDown();
-                        semaphore.release();
-                    }
-                };
-                timer.schedule(timerTask, NOTIFICATION_CARD_SHOW_TIME);
-            }
-        });
+        //..animations
     }
 ====
 
@@ -1033,7 +1013,7 @@ There are a couple of aspects with regards to `Notification` that can be impleme
 * **Alternative4** : does not store `Event` locally (relies on Google calendar service).
 ** Pros: has the simplest implementation (only need to pull data from Google, does not need to create local class), saves storage space as nothing is stored locally.
 ** Cons: compromises notification feature if there's no internet access, requires another mechanism for extracting `ownerName` because `Event` class does not store `ownerName`, compromises performance if internet speed is slow).
-// end::ns[]
+// end::ns2[]
 
 // tag::sort[]
 === Sort existing employees

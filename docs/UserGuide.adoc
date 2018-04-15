@@ -29,7 +29,6 @@ This user guide serves to guide you so that you are able to use utilize Employee
 
 Jump to <<Quick Start>> to get started!
 
-// tag::quickStart[]
 == Quick Start
 This section contains essential information and instructions to help you to start using E.T. quickly.
 
@@ -116,6 +115,8 @@ The result display box shows 3 types of information:
 
 [NOTE]
 Whenever you type keyword of a command in the `Command Box`, E.T. will provide [maroon]#hints# about its usage.
+// tag::quickStart[]
+
 
 === Understanding the notifications
 E.T. has a 2 phase notification system, i.e. there will be 2 notification cards popping up to remind you of each event:
@@ -129,7 +130,7 @@ image::card_blue.png[width=""]
 .Second phase notification card.
 image::card_red.png[width=""]
 
-For example, suppose you have assigned a task to Alex which will due on 15^th^ Apr 2018 0032 hrs. When you open E.T. for the first time in the morning of 15^th^ Apr 2018, you will be notified that Alex has a task that will due on *today* in a [blue]#blue# notification card. Later at 0032 hrs of 15^th^ Apr 2018, you will receive the second phase notification in [red]#red#, informing you that Alex should have finished the task by *now*.
+For example, suppose you have assigned a task to Jane which will due on 15^th^ Apr 2018 0032 hrs. When you open E.T. for the first time in the morning of 15^th^ Apr 2018, you will be notified that Jane has a task that will due on *today* in a [blue]#blue# notification card. Later at 0032 hrs of 15^th^ Apr 2018, you will receive the second phase notification in [red]#red#, informing you that Jane should have finished the task by *now*.
 
 Notification cards will disappear from the screen after 5 seconds and will be stored in the `Notification Center`. If you want to refer to them later, use `noti` command or double press kbd:[Shift] to open the `Notification Center`.
 
@@ -640,7 +641,7 @@ Format: `email INDEX`
 * The recipient of the email will be set to the email address of the employee who was assigned the event.
 =====
 
-=== Reminding an employee through WhatsApp : `emailall`
+=== Reminding all notifications through email : `emailall`
 
 Opens up the email app of the computer to send a reminder email to all persons who has a task ended. +
 Format: `emailall INDEX`

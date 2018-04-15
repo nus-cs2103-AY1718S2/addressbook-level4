@@ -18,14 +18,14 @@ By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 [[Introduction]]
 == Introduction
 CLIndar is a desktop application that helps university computing students to manage their schedules.
-CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
+The application deals with 2 types of entries:
 
-With CLIndar, you can:
+* *tasks*: things that need to be done by a certain deadline; and
+* *events*: things that occur at a specific time and place.
 
-* keep track of your tasks and events and be reminded of their due dates; and
-* record all completed tasks and events, so that you know what you have done.
+CLIndar is *Common-Line Interface (CLI)-based and uses Linux-style commands*, which computing students are familiar with.
 
-This guide provides information on the core functionality of CLIndar and their implementation, so that a developer can
+This guide provides information on the core functionalities of CLIndar and their implementation, so that a developer can
 get started customizing and contributing to the application.
 
 [[ComputerSetup]]
@@ -202,8 +202,9 @@ This section describes how the features in this application are implemented inte
 
 [[Design-Architecture]]
 === Architecture
-The high-level design of this application is illustrated by _Figure 8_ below.
+The high-level design of this application is illustrated by _<<archiDiagram>>_ below.
 
+[[archiDiagram]]
 .Architecture diagram
 image::Architecture.png[width="600"]
 
@@ -476,7 +477,7 @@ Once the `Event` is successfully added, it will be reflected in the CLIndar GUI 
 {empty} +
 {empty} +
 
-//tag::sorting
+//tag::sorting[]
 ===== Sorting task and event lists automatically
 When a `Task` or `Event` is added, it is inserted into the respective list such that the list is sorted in terms of their `dueDateTime` or `startDateTime` respectively.
 The sorting is done in the `UniqueActivityList` which contains a list of unique activities which is either a `Task` or an `Event`
@@ -1642,7 +1643,7 @@ The following section describes the major and minor enhancements that each of ou
 ==== Karen
 *Major enhancement:* Management of the storage of task and event data, which includes:
 
-** *automatic saving* of task and event data after each change;
+** *automatic saving* of task and event data after each update;
 ** *automatic loading* of latest task and event data upon launching of application;
 ** *exporting* of task and event data into an xml file (when `export` command is called); and
 ** *importing* of task and event data from an xml file (when `import` command is called).

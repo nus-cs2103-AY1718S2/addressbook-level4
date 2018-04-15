@@ -10,7 +10,7 @@ public final class Account {
 
     public static final String MESSAGE_USERNAME_CONSTRAINTS = "Username should be alphanumeric,"
             + " 3-20 characters long and should not contain any white space.";
-    public static final String MESSAGE_PASSWORD_CONSTRAINTS = "Password should be start with a "
+    public static final String MESSAGE_PASSWORD_CONSTRAINTS = "Password should start with a "
             + "alphanumeric character and around 5-20 characters long.\n It should contain at "
             + "least 1 digit, 1 alphabet and not contain any white space.";
 

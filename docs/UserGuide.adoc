@@ -67,7 +67,7 @@ image::DefaultLogin.png[width="800", align="center"]
 
 +
 [NOTE]
-You can change the password later using the `updatepassword` command.
+You can change the username and password later using the `updateusername` and `updatepassword` commands respectively.
 +
 .  Upon successful login, You should see the user interface as shown below (Refer to figure 3).
 
@@ -121,24 +121,6 @@ Now that you have understood the command format, let's explore the features.
 
 This section describes the commands which enable you to use the login system to secure your data stored in contactHeRo.
 
-==== Registering a new account : `signup`
-
-You can create a new user account through the command line by using the following format. +
-Format: `signup u/USERNAME pw/PASSWORD`
-
-****
-* Username has to be at least 3 characters starting with an alphanumeric character. +
-* Password should be at least 4 characters long. +
-* Both username and password should not contain any whitespaces. +
-****
-
-Examples:
-
-* `signup u/JohnDoe pw/doe123`
-+
-On running the above command, you should see the following success message: +
-  `You have signup successfully!`
-
 ==== Logging in : `login`
 You can login via the command line using the following format. +
 Format: `login u/USERNAME pw/PASSWORD`
@@ -148,14 +130,47 @@ Examples:
 * `login u/JohnDoe pw/doe123`
 +
 On running the above command, you should see the following success message: +
- `You have successfully login as JohnDoe`
+ `You have successfully logged in as JohnDoe`
 
 ==== Logging out : `logout`
 You can logout via the command line using the following this format. +
 Format: `logout`
 
 On running this command, you should see the following success message: +
- `You have logout successfully!`
+ `You have logged out successfully!`
+
+==== Changing your username : `updateusername`
+
+You can change your username by using the following format. +
+Format: `updateusername u/NEWUSERNAME`
+
+****
+* Username has to be alphanumeric and is at least 3 characters long. +
+****
+
+Examples:
+
+* `updateusername u/JohnDoe`
++
+On running the above command, you should see the following success message: +
+  `You have successfully changed your username to JohnDoe`
+
+==== Changing your password : `updatepassword`
+
+You can change your password by using the following format. +
+Format: `updatepassword pw/OLDPASSWORD npw/NEWPASSWORD`
+
+****
+* Password should start with a alphanumeric character and is at least 5 characters long.
+* It should contain at least 1 digit, 1 alphabet and not contain any white spaces.
+****
+
+Examples:
+
+* `updatepassword pw/Doe123 npw/doe456`
++
+On running the above command, you should see the following success message: +
+  `You have successfully updated your password!`
 
 === Managing Persons
 
@@ -818,6 +833,7 @@ The following sections summarize the commands you can use in contactHeRo.
 |===
 |Function |Command |Example
 |Logging in |`login` |`login u/Admin pw/ad123`
+|Changing your username |`updateusername u/NEWUSERNAME` |`updateusername u/JohnDoe`
 |Changing your password |`updatepassword pw/PASSWORD npw/NEW_PASSWORD` |`updatepassword pw/Doe123 npw/doe456`
 |Logging out |`logout` |`logout`
 |===

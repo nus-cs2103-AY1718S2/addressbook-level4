@@ -20,8 +20,6 @@ public class Mailer {
     private static String pigeonsMail = "pigeonscs2103@gmail.com";
     private static String password = "Pigeons2103";
     private static String host = "smtp.gmail.com";
-    //private static String defaultRecipient = "delepine.matthieu@gmail.com";
-    //private static String defaultRecipient = "matthieu2301@hotmail.fr";
     private static String defaultRecipient = pigeonsMail;
 
     /**

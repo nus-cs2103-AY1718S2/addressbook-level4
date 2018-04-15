@@ -17,6 +17,7 @@ By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 
 [.print-only]
 Please visit the https://recirecipe.netlify.com/userguide[online page] to view the Developer Guide in full formatting.
+
 ---
 
 == Introduction

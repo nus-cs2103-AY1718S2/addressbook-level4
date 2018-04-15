@@ -569,18 +569,24 @@ Add operation:
 
 ----
 
+
 Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure 25 below.
 
 .The empty queue
 image::emptyVisitQueue.png[width="800"]
 
+
 The user now decides to add a patient into the queue.
+
 
 `AddPatientQueueCommand` will check if the index given is valid and is in the bound of the current list displayed. If the given index is valid and in the bound, `AddPatientQueueCommand` will then call the for the utility method `addPatientToQueue` under `Model`, to add the patient index into the visiting queue.
 The updated queue is shown in Figure 26 below.
 
+
 .The updated queue
 image::patientInQueue.png[width="800"]
+
+
 
 The removal mechanism functions like that of the `DeleteCommand`. If no parameters are provided, it removes the first patient of the queue.
 If the user wants to remove a specific patient in the queue, the user can provide the patient index displayed in the queue.
@@ -623,19 +629,24 @@ Remove operation:
 
 ----
 
+
 Suppose that the queue contains patients as shown in Figure 27 below.
+
 
 .The queue containing some patients
 image::patientsInQueue.png[width="800"]
 
 
+
 The user now decides to remove the first patient from the queue.
+
 
 `RemovePatientQueueCommand` will then call the for the utility method `removePatientFromQueue` under `Model`, to remove the patient from the visiting queue.
 The updated queue is shown in Figure 28 below.
 
 .The queue after a patient is removed
 image::patientInQueueRemoveState.png[width="800"]
+
 
 ==== Design Considerations
 

@@ -19,6 +19,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.smplatform.Link;
 
 public class BrowserPanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
@@ -47,8 +48,9 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.FACEBOOK_SEARCH_PAGE_URL
-                + ALICE.getName().fullName.replaceAll(" ", "%20"));
+        String storedLink = ALICE.getSocialMediaPlatformMap().get(Link.FACEBOOK_LINK_TYPE).getLink().value;
+        URL expectedPersonUrl = new URL("https://m."
+                + storedLink.substring(storedLink.indexOf(Link.FACEBOOK_LINK_TYPE)));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());

@@ -4,14 +4,16 @@ import seedu.address.commons.events.BaseEvent;
 
 //@@author KevinChuangCH
 /**
- * Represents a search for person on all available social media platforms.
+ * Represents a search for person.
  */
-public class SearchPersonOnAllPlatformEvent extends BaseEvent {
+public class SearchPersonEvent extends BaseEvent {
 
     private final String searchName;
+    private final String platformToSearch;
 
-    public SearchPersonOnAllPlatformEvent(String searchName) {
+    public SearchPersonEvent(String platformToSearch, String searchName) {
         this.searchName = searchName;
+        this.platformToSearch = platformToSearch;
     }
 
     @Override
@@ -21,6 +23,10 @@ public class SearchPersonOnAllPlatformEvent extends BaseEvent {
 
     public String getSearchName() {
         return searchName;
+    }
+
+    public String getPlatform() {
+        return platformToSearch;
     }
 
 }

@@ -364,25 +364,27 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 The 'findtag' feature is implemented with the same mechanism as the 'find' feature. It is used for finding stored persons with their tags instead of names. The key components of the feature are 'FindWithTagCommand', 'FindWithTagCommandParser', and 'TagContainsKeywordsPredicate'.
 
-The main component of 'findtag' is the 'FindWithTagCommand' which resides inside the logic component. It inherit from 'Command', as such, similar to 'find', 'findtag' is not an undoable command. The following diagram shows the inheritance diagram for 'FindWithTagCommand':
+The main component of 'findtag' is the 'FindWithTagCommand' which resides inside the logic component. It inherit from 'Command', as such, similar to 'find', 'findtag' is not an undoable command. From the class diagram of Logic class, we can see inheritance  of 'FindWithTagCommand' in comparison with other types of commands:
 
-image::LogicCommandClassDiagram.png[width="800"]
+image::FindTagInLogicClassDiagram.png[width="800"]
 
 The user execute the FindWithTagCommand with the keyword ‘findtag’ following by the tag keywords, separated by whitespace. When the command is executed, the current list of persons shown in the GUI will only contain the persons with the tags same as the tag keywords. The following image shows the result of a 'findtag' execution:
 
-image::FindTagResultDiagram.png[width="800"]
+image::FindtagExecution.png[width="800"]
 
 Note that the tag keywords are not case sensitive; however, the command keyword is. For example, both 'findtag friends' and 'findtag FrIeNdS' can be executed and return a list of persons with the tag 'friends'. However 'FiNdTaG friends' cannot be executed and will result in a 'Unknown Command' feedback, as shown in the following:
 
-image::InvalidCommandKeywordDiagram.png[width="800"]
+image::DifferentCaseSize.png[width="800"]
 
-Note that the list of persons displayed will not change for in this case.
+Since the application does not recognize the command, the list of person displayed will not be changed.
 
 The 'findtag' command can handle multiple input tag keywords and, similar to 'find', 'findtag' is an ‘or’ search. For example, 'findtag friends owesMoney' will find any person with the tag ‘friends’ or ‘owesMoney’ or both.
 
+image::FindMultipleTags.png[width="800"]
+
 The following sequence diagram shows how the findtag operation works:
 
-image::UndoRedoSequenceDiagram.png[width="800"]
+image::FindTagSequenceDiagram.png[width="900"]
 
 ==== Design Considerations
 
@@ -390,7 +392,7 @@ image::UndoRedoSequenceDiagram.png[width="800"]
 
 * **Alternative 1 (current choice):** Follow the mechanism of `FindCommand`
 ** Pros: 'findtag' works in the same mechanism as 'find', thus will not deviate from the overall architecture of the address book (i.e. Event Driven design).
-** Cons: May generate classes/ methods that are implemented with very similar style (i.e. a general pattern can be abstract out). Thus, additional work may be needed to handle the abstraction.
+** Cons: May generate classes/ methods that are implemented with very similar style, or in the worse case, we may have duplicate codes. Thus, additional attention needds to be given to ensure that the implementation of 'findtag' will not result in duplicate codes.
 * **Alternative 2:** Implement new mechanism specifically for `FindWithTagCommand`
 ** Pros: Does not generate similar classes/ methods.
 ** Cons: Hard to implement, risk deviating away from the overall architecture of the address book.
@@ -456,6 +458,131 @@ image::SortCommandSequenceDiagram.png[width="800"]
 ** Pros: More properly describes what `sort` actually does by showing the full list of persons sorted.
 ** Cons: Current list is replaced by showing all persons.
 // end::sort[]
+
+// tag::addplatform[]
+=== Add Platform feature
+==== Current Implementation
+
+The add platform function makes use of a factory to facilitate the creation of various social media platforms.
+A platform is created only when users provide a valid profile link; this object will be associated to the particular
+person found in the list as specified by the user. Currently, only the `Facebook` and `Twitter` platforms are available.
+
+The structure of the class diagram is as shown:
+
+image::SocialMediaPlatformFactoryClassDiagram.png[width="650"]
+
+As seen, a client can make use of the `SocialMediaPlatformFactory` to deal with the creation of social media platform
+objects without the need of specifying the concrete class to construct.
+Thus, it follows the https://www.tutorialspoint.com/design_pattern/factory_pattern.htm[factory pattern] since the
+creation logic is abstracted away by the factory. The difference here to other implementations of the pattern is the
+use of an _abstract_ class, `SocialMediaPlatform`, instead of the usual _interface_.
+
+In order to properly utilise the factory, a client needs to provide some form of specification:
+[source, java]
+----
+public final class SocialMediaPlatformFactory {
+    // ... class variables, constructor ...
+
+    public static SocialMediaPlatform getSocialMediaPlatform(String type, Link link) throws IllegalValueException {
+        // ... social media platform instance creation logic ...
+    }
+}
+----
+From the extract, a `String` data type and a `Link` object need to be provided by the caller when using the
+`getSocialMediaPlatform` method. The method will then return an instance of the available concrete classes.
+
+The `AddPlatformCommand` makes use of the implementation of `EditCommand` as the foundation, editing the `Person` model
+to include the newly created social media platforms. Each platform is stored as an entry to the person's platform map,
+with the key being the name of the platform. An example is shown below as an illustration:
+
+image::SocialMediaPlatformMapObjectDiagram.png[width="650"]
+
+{empty}
+
+The links provided by the user will be parsed within the `AddPlatformCommandParser` to convert them into `Link`
+objects. From there, `AddPlatformCommand` will create a new map and add the relevant social media platforms by
+calling the `getSocialMediaPlatform` method of `SocialMediaPlatformFactory` for object creation. To merge the updates
+with the targeted person, the command would also retrieve all of its information in order to create a new `Person`
+object before replacement is done. The sequence of the events is as follows:
+
+image::AddPlatformCommandSequenceDiagram.png[width="850"]
+
+{empty}
+
+In the UI Component, the `PersonCard` will be updated to show the icons of the platforms added. Suppose the user want
+to add a `Facebook` profile to the first person. The `AddPlatformCommand` would be executed using the `addplatform`
+command word. As illustration, the user has successfully added a `Facebook` platform to the targeted person by typing
+`addplatform 4 l/www.facebook.com/david`:
+
+image::AddPlatformToPersonDiagram.png[width="750"]
+
+{empty}
+
+Since the basis of `AddPlatformCommand` is heavily inspired by the `EditCommand`, interactions between the various
+components is exactly the same:
+
+image::AddPlatformCommandHighLevelSequenceDiagrams.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Storing of Links in Person Model
+* **Alternative 1 (current choice):** Create social media platform objects with the links as attributes and store into a map
+** Pros: High potential of implementing methods for interactions between the actual profile page using the corresponding API.
+** Cons: Accessing and inputting of data will be more complex.
+* **Alternative 2:** Store using a set of links
+** Pros: Ease of access to data.
+** Cons: Can only be used for the displaying of pages, no room for other implementations.
+
+===== Aspect: Usage of Interface or Abstract Class
+* **Alternative 1 (current choice):** Have `SocialMediaPlatform` be an abstract class
+** Pros: Allows common methods to be used by classes that extends from it and still provide a means of ensuring critical methods that are abstract be implemented.
+** Cons: Classes that want to make use of the implementations can only extend from it.
+* **Alternative 2:** Have `SocialMediaPlatform` be an interface
+** Pros: Higher flexibility for classes since they can implement many interfaces.
+** Cons: Limitations in sharing and utilisation of default methods between classes.
+// end::addplatform[]
+
+// tag::search[]
+=== Search feature
+==== Current Implementation
+
+The implementation of the search feature follows very closely to the Event-Driven architecture. It is used for searching profiles on the social media platforms available in the application. The key components of the feature is the 'SearchPersonEvent' and its handler method.
+
+The 'SearchCommand' class is located within the logic component. It is not an undoable command, hence it inherit from 'Command'.
+
+The search feature is able to perform search on either the input platform or all the available platforms. To execute the search feature, simply input the command keyword "search" followed by an optional declaration of platform to perform the search on, and lastly followed by the profile name to be searched for.
+
+image::SearchFunction.png[width="1000"]
+
+Similar to most of the other feature in the application, the command keyword is case sensitive while the search name is not. As for platform declaration, only predefined inputs are allowed. These predefined inputs are the names of the platform as well as the aliases. (e.g. facebook, fb, twitter...) An invalid command format prompt will be shown if the input platform is not one of the predefined inputs, or has a different case size.
+
+image::InvalidPlatformCases.png[width="1000"]
+
+Upon execution of the search feature with the keyword "search", the validation of input arguments are first checked by the parser, then a SearchPersonEvent will be posted to the event bus. This event is handled by the handleSearchPersonEvent method, which determine the platform to perform the search on and choose the tabs to display.
+
+image::SearchPersonEvent.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SearchCommand` `SearchPersonEvent` and the handler method
+
+* **Alternative 1:** Implement multiple Command class, Event class, and handler method to facilitate searching on different social media platforms.
+** Pros: Easier to implement since each class only need to handle search on one platform.
+** Cons: High chance of generating similar/duplicated codes.
+* **Alternative 2 (current choice):** Have a common 'SearchCommand' class for search.
+** Pros: Reduce repeated/similar code.
+** Cons: Harder to implement since the feature now has to determine the platform to search on base on the input form the user.
+
+===== Aspect: Link to the search functions of different social media platforms
+
+* **Alternative 1 (current choice):** Use the search URL of different platform to perfom the search.
+** Pros: Much easier to implement since we are simply loading the search URL into our browser.
+** Cons: Direct use of search URL uses a lot of resources.
+* **Alternative 2:** Use a third party code to perform the search.
+** Pros: May consume less resources.
+** Cons: May have to program the UI to display the search result.
+
+// end::search[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -911,7 +1038,7 @@ viewing the social feeds of friends.
 
 |Chuang Cheng Heng
 a|
-* `searchall` function:
+* `search` function:
 ** Allows user to perform the search action on all the social media platforms available with a single command.
 This feature improves the product significantly because a user can do search on the application instead of going to
 the individual social media platform and repeatedly perform the search.
@@ -922,11 +1049,11 @@ This can assist users in filtering out people who only use a certain social medi
 
 |Tan Wei Jie
 a|
-* Add person from social media friends list function:
-** Allows user to perform the `add` command by obtaining the relevant information stated in his/her friend's social
-media page.
-This feature eases the process of having to manually key in all the required information before a user can add a
-person to the address book.
+* Manage social media platforms of persons function:
+** Allows user to manage the social media platforms of each person through the `addplatform` and `removeplatform`
+commands.
+This feature allows a user to have the application keep track of all the links to the social media profiles of
+each person in the address book so that he/she can easily access their profile pages when selected.
 a|
 * `sort` command:
 ** Allows the user to sort the address book list alphabetically.
@@ -1014,7 +1141,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
-_{More to be added}_
 // end::user-stories[]
 
 [appendix]

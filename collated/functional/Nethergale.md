@@ -104,7 +104,8 @@ public class AddPlatformCommand extends UndoableCommand {
      */
     private void addToSocialMediaPlatformMap() throws IllegalValueException {
         for (String type : linkMap.keySet()) {
-            socialMediaPlatformMap.put(type, SocialMediaPlatformBuilder.build(type, linkMap.get(type)));
+            socialMediaPlatformMap.put(type,
+                    SocialMediaPlatformFactory.getSocialMediaPlatform(type, linkMap.get(type)));
         }
     }
 
@@ -312,6 +313,18 @@ public class AddPlatformCommandParser implements Parser<AddPlatformCommand> {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+        case SortCommand.COMMAND_WORD:
+            return new SortCommand();
+
+        case AddPlatformCommand.COMMAND_WORD:
+            return new AddPlatformCommandParser().parse(arguments);
+
+        case RemovePlatformCommand.COMMAND_WORD:
+            return new RemovePlatformCommandParser().parse(arguments);
+
+```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
@@ -440,9 +453,15 @@ public class RemovePlatformCommandParser implements Parser<RemovePlatformCommand
  * Represents a facebook object.
  */
 public class Facebook extends SocialMediaPlatform {
+
+    public static final String PLATFORM_KEYWORD = "facebook";
+
+    public static final String PLATFORM_ALIAS = "fb";
+
     //Code adapted from https://stackoverflow.com/questions/5205652/facebook-profile-url-regular-expression
     public static final String LINK_VALIDATION_REGEX = "(?:https?:\\/\\/)?(?:www\\.|m\\.)?facebook\\.com\\/"
-            + "(?:profile.php\\?id=(?=\\d.*))?.(?:(?:\\w)*#!\\/)?(?:pages\\/)?(?:[\\w\\-]*\\/)*([\\w\\-\\.]*)/?";
+            + "(?:profile.php\\?id=(?=\\d.*))?"
+            + "[^/ \\\\](?:(?:\\w)*#!\\/)?(?:pages\\/)?(?:[\\w\\-]*\\/)*([\\w\\-\\.]*)/?";
 
     public Facebook(Link link) {
         this.link = link;
@@ -477,12 +496,12 @@ public class Link {
      * Returns the social media platform type of the link.
      */
     public static String getLinkType(String link) {
-        if (link.contains(FACEBOOK_LINK_SIGNATURE)
-                && !(link.indexOf(FACEBOOK_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
-            return FACEBOOK_LINK_TYPE;
-        } else if (link.contains(TWITTER_LINK_SIGNATURE)
+        if (link.contains(TWITTER_LINK_SIGNATURE)
                 && !(link.indexOf(TWITTER_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
             return TWITTER_LINK_TYPE;
+        } else if (link.contains(FACEBOOK_LINK_SIGNATURE)
+                && !(link.indexOf(FACEBOOK_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
+            return FACEBOOK_LINK_TYPE;
         } else {
             return UNKNOWN_LINK_TYPE;
         }
@@ -492,12 +511,12 @@ public class Link {
      * Returns true if a given string is a valid link.
      */
     public static boolean isValidLink(String test) {
-        if (test.contains(FACEBOOK_LINK_SIGNATURE)
-                && !(test.indexOf(FACEBOOK_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
-            return test.matches(Facebook.LINK_VALIDATION_REGEX);
-        } else if (test.contains(TWITTER_LINK_SIGNATURE)
+        if (test.contains(TWITTER_LINK_SIGNATURE)
                 && !(test.indexOf(TWITTER_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
             return test.matches(Twitter.LINK_VALIDATION_REGEX);
+        } else if (test.contains(FACEBOOK_LINK_SIGNATURE)
+                && !(test.indexOf(FACEBOOK_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
+            return test.matches(Facebook.LINK_VALIDATION_REGEX);
         } else {
             return false;
         }
@@ -523,31 +542,27 @@ public class Link {
 ```
 ###### \java\seedu\address\model\smplatform\SocialMediaPlatform.java
 ``` java
-/**
- * Represents a social media platform, which can take many forms.
- */
-public abstract class SocialMediaPlatform {
     protected Link link;
 
     public Link getLink() {
         return link;
     }
-}
+
 ```
-###### \java\seedu\address\model\smplatform\SocialMediaPlatformBuilder.java
+###### \java\seedu\address\model\smplatform\SocialMediaPlatformFactory.java
 ``` java
 /**
  * Acts as a social media platform creator.
  * Determines the different types of social media platform objects to be created by using the link and its type.
  */
-public final class SocialMediaPlatformBuilder {
+public final class SocialMediaPlatformFactory {
     public static final String MESSAGE_BUILD_ERROR = "Social media platform cannot be constructed. "
             + "Link type is unrecognised or mismatched with link.";
 
     /**
      * Don't let anyone instantiate this class.
      */
-    private SocialMediaPlatformBuilder() {}
+    private SocialMediaPlatformFactory() {}
 
     /**
      * Constructs the specific social media platform object by using the {@code type} and setting the {@code link}
@@ -556,7 +571,7 @@ public final class SocialMediaPlatformBuilder {
      * @return the created social media platform object
      * @throws IllegalValueException if type is not recognised
      */
-    public static SocialMediaPlatform build(String type, Link link) throws IllegalValueException {
+    public static SocialMediaPlatform getSocialMediaPlatform(String type, Link link) throws IllegalValueException {
         if (type.equals(Link.FACEBOOK_LINK_TYPE) && type.equals(Link.getLinkType(link.value))) {
             return new Facebook(link);
         } else if (type.equals(Link.TWITTER_LINK_TYPE) && type.equals(Link.getLinkType(link.value))) {
@@ -660,7 +675,7 @@ public class XmlAdaptedSocialMediaPlatform {
             throw new IllegalValueException(Link.MESSAGE_INVALID_LINK);
         }
 
-        return SocialMediaPlatformBuilder.build(type, new Link(link));
+        return SocialMediaPlatformFactory.getSocialMediaPlatform(type, new Link(link));
     }
 
     @Override
@@ -677,6 +692,125 @@ public class XmlAdaptedSocialMediaPlatform {
                 && link.equals(((XmlAdaptedSocialMediaPlatform) other).link);
     }
 }
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+        openTabIdSet = tabPane.getTabs().stream().map(tab -> tab.getId()).collect(Collectors.toSet());
+
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    /**
+     * Updates the display of social media browser tabs.
+     *
+     * @param function defines an add or remove function
+     * @param tabId id of the fxml tab
+     */
+    private void updateBrowserTabs(String function, String tabId) {
+        switch (function) {
+
+        case FUNCTION_ADD:
+            addBrowserTab(tabId);
+            break;
+
+        case FUNCTION_REMOVE:
+            removeBrowserTab(tabId);
+            break;
+
+        default:
+            // Do nothing
+        }
+    }
+
+    /**
+     * Adds the specified browser tab to the UI using the {@code tabId} if it is not open;
+     */
+    private void addBrowserTab(String tabId) {
+        if (!openTabIdSet.contains(tabId)) {
+            openTabIdSet.add(tabId);
+            switch (tabId) {
+
+            case FACEBOOK_TAB_ID:
+                tabPane.getTabs().add(0, facebookTab);
+                break;
+
+            case TWITTER_TAB_ID:
+                tabPane.getTabs().add(twitterTab);
+                break;
+
+            default:
+                // Do nothing
+            }
+        }
+    }
+
+    /**
+     * Removes the specified browser tab from the UI using the {@code tabId};
+     */
+    private void removeBrowserTab(String tabId) {
+        openTabIdSet.remove(tabId);
+        switch (tabId) {
+
+        case FACEBOOK_TAB_ID:
+            tabPane.getTabs().remove(facebookTab);
+            break;
+
+        case TWITTER_TAB_ID:
+            tabPane.getTabs().remove(twitterTab);
+            break;
+
+        default:
+            //Do nothing
+        }
+    }
+
+    /**
+     * Returns the given {@code url} with a protocol and subdomain if unspecified.
+     */
+    public static String parseUrl(String url) {
+        if (!url.contains("://")) {
+            if (!url.contains("www")) {
+                return "https://www." + url;
+            }
+            return "https://" + url;
+        } else {
+            if (!url.contains("www")) {
+                String[] splitUrl = url.split("://");
+                return "https://www." + splitUrl[1];
+            }
+        }
+
+        return url;
+    }
+
+    /**
+     * Loads the Facebook profile page for the browser on the Facebook tab if it exists.
+     */
+    private void loadFacebookBrowserProfilePage(Person person) {
+        if (person.getSocialMediaPlatformMap().containsKey(Link.FACEBOOK_LINK_TYPE)) {
+            updateBrowserTabs(FUNCTION_ADD, FACEBOOK_TAB_ID);
+            String url = person.getSocialMediaPlatformMap().get(Link.FACEBOOK_LINK_TYPE).getLink().value;
+            loadFacebookBrowserPage(parseUrl(url));
+        } else {
+            updateBrowserTabs(FUNCTION_REMOVE, FACEBOOK_TAB_ID);
+            loadFacebookBrowserPage(defaultPage.toExternalForm());
+        }
+    }
+
+    /**
+     * Loads the Twitter profile page for the browser on the Twitter tab if it exists.
+     */
+    private void loadTwitterBrowserProfilePage(Person person) {
+        if (person.getSocialMediaPlatformMap().containsKey(Link.TWITTER_LINK_TYPE)) {
+            updateBrowserTabs(FUNCTION_ADD, TWITTER_TAB_ID);
+            String url = person.getSocialMediaPlatformMap().get(Link.TWITTER_LINK_TYPE).getLink().value;
+            loadTwitterBrowserPage(parseUrl(url));
+        } else {
+            updateBrowserTabs(FUNCTION_REMOVE, TWITTER_TAB_ID);
+            loadTwitterBrowserPage(defaultPage.toExternalForm());
+        }
+    }
+
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java

@@ -124,6 +124,7 @@ public class Person {
         return builder.toString();
     }
 
+    //@@author KevinChuangCH
     /**
      * Returns the tag names of tags of a person as String.
      * @return a string of all the tag names of tags of a person.

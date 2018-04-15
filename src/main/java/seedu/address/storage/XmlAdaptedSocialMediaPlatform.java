@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.smplatform.Link;
 import seedu.address.model.smplatform.SocialMediaPlatform;
-import seedu.address.model.smplatform.SocialMediaPlatformBuilder;
+import seedu.address.model.smplatform.SocialMediaPlatformFactory;
 
 //@@author Nethergale
 /**
@@ -52,7 +52,7 @@ public class XmlAdaptedSocialMediaPlatform {
             throw new IllegalValueException(Link.MESSAGE_INVALID_LINK);
         }
 
-        return SocialMediaPlatformBuilder.build(type, new Link(link));
+        return SocialMediaPlatformFactory.getSocialMediaPlatform(type, new Link(link));
     }
 
     @Override

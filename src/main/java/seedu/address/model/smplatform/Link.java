@@ -29,12 +29,12 @@ public class Link {
      * Returns the social media platform type of the link.
      */
     public static String getLinkType(String link) {
-        if (link.contains(FACEBOOK_LINK_SIGNATURE)
-                && !(link.indexOf(FACEBOOK_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
-            return FACEBOOK_LINK_TYPE;
-        } else if (link.contains(TWITTER_LINK_SIGNATURE)
+        if (link.contains(TWITTER_LINK_SIGNATURE)
                 && !(link.indexOf(TWITTER_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
             return TWITTER_LINK_TYPE;
+        } else if (link.contains(FACEBOOK_LINK_SIGNATURE)
+                && !(link.indexOf(FACEBOOK_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
+            return FACEBOOK_LINK_TYPE;
         } else {
             return UNKNOWN_LINK_TYPE;
         }
@@ -44,12 +44,12 @@ public class Link {
      * Returns true if a given string is a valid link.
      */
     public static boolean isValidLink(String test) {
-        if (test.contains(FACEBOOK_LINK_SIGNATURE)
-                && !(test.indexOf(FACEBOOK_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
-            return test.matches(Facebook.LINK_VALIDATION_REGEX);
-        } else if (test.contains(TWITTER_LINK_SIGNATURE)
+        if (test.contains(TWITTER_LINK_SIGNATURE)
                 && !(test.indexOf(TWITTER_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
             return test.matches(Twitter.LINK_VALIDATION_REGEX);
+        } else if (test.contains(FACEBOOK_LINK_SIGNATURE)
+                && !(test.indexOf(FACEBOOK_LINK_SIGNATURE) > LONGEST_VALID_LINK_PREFIX.length())) {
+            return test.matches(Facebook.LINK_VALIDATION_REGEX);
         } else {
             return false;
         }

@@ -49,6 +49,7 @@ public class UniqueTagList implements Iterable<Tag> {
         return new HashSet<>(internalList);
     }
 
+    //@@author KevinChuangCH
     /**
      * Returns an array of tag names of tags of a person.
      * @return array of tag names
@@ -61,6 +62,7 @@ public class UniqueTagList implements Iterable<Tag> {
         }
         return tagStringArray;
     }
+    //@@author
 
     /**
      * Replaces the Tags in this list with those in the argument tag list.

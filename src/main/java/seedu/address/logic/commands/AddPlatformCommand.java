@@ -17,7 +17,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.smplatform.Link;
 import seedu.address.model.smplatform.SocialMediaPlatform;
-import seedu.address.model.smplatform.SocialMediaPlatformBuilder;
+import seedu.address.model.smplatform.SocialMediaPlatformFactory;
 
 //@@author Nethergale
 /**
@@ -123,7 +123,8 @@ public class AddPlatformCommand extends UndoableCommand {
      */
     private void addToSocialMediaPlatformMap() throws IllegalValueException {
         for (String type : linkMap.keySet()) {
-            socialMediaPlatformMap.put(type, SocialMediaPlatformBuilder.build(type, linkMap.get(type)));
+            socialMediaPlatformMap.put(type,
+                    SocialMediaPlatformFactory.getSocialMediaPlatform(type, linkMap.get(type)));
         }
     }
 

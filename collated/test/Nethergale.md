@@ -1,4 +1,80 @@
 # Nethergale
+###### \java\guitests\guihandles\BrowserPanelHandle.java
+``` java
+    public static final String FACEBOOK_BROWSER_ID = "#facebookBrowser";
+    public static final String TWITTER_BROWSER_ID = "#twitterBrowser";
+    public static final String TAB_PANE_ID = "#tabPane";
+
+    private boolean isWebViewLoaded = true;
+
+    private URL lastRememberedUrl;
+
+    private WebView facebookWebView;
+    private WebView twitterWebView;
+
+    public BrowserPanelHandle(Node browserPanelNode) {
+        super(browserPanelNode);
+
+        facebookWebView = getChildNode(FACEBOOK_BROWSER_ID); // browser for facebookTab
+        WebEngine facebookEngine = facebookWebView.getEngine();
+        new GuiRobot().interact(() -> facebookEngine.getLoadWorker().stateProperty().addListener((
+                obs, oldState, newState) -> {
+            if (newState == Worker.State.RUNNING) {
+                isWebViewLoaded = false;
+            } else if (newState == Worker.State.SUCCEEDED) {
+                isWebViewLoaded = true;
+            }
+        }));
+
+        twitterWebView = getChildNode(TWITTER_BROWSER_ID); // browser for twitterTab
+        WebEngine twitterEngine = twitterWebView.getEngine();
+        new GuiRobot().interact(() -> twitterEngine.getLoadWorker().stateProperty().addListener((
+                obs, oldState, newState) -> {
+            if (newState == Worker.State.RUNNING) {
+                isWebViewLoaded = false;
+            } else if (newState == Worker.State.SUCCEEDED) {
+                isWebViewLoaded = true;
+            }
+        }));
+    }
+
+    /**
+     * Returns the {@code URL} of the currently loaded page for the default browser tab (i.e. facebookTab).
+     */
+    public URL getLoadedUrl() {
+        URL loadedUrl = WebViewUtil.getLoadedUrl(twitterWebView);
+        if (Link.isValidLink(loadedUrl.toExternalForm())) {
+            String completeUrl = BrowserPanel.parseUrl(loadedUrl.toExternalForm());
+            try {
+                loadedUrl = new URL(completeUrl);
+                return loadedUrl;
+            } catch (MalformedURLException mue) {
+                throw new AssertionError("URL expected to be valid.");
+            }
+        }
+        return WebViewUtil.getLoadedUrl(facebookWebView);
+    }
+
+    /**
+     * Returns the {@code URL} of the currently loaded page for the specified {@code browserTab}.
+     */
+    public URL getLoadedUrl(String browserTab) {
+        if (browserTab.equals(Link.TWITTER_LINK_TYPE)) {
+            URL loadedUrl = WebViewUtil.getLoadedUrl(twitterWebView);
+            if (Link.isValidLink(loadedUrl.toExternalForm())) {
+                String completeUrl = BrowserPanel.parseUrl(loadedUrl.toExternalForm());
+                try {
+                    loadedUrl = new URL(completeUrl);
+                    return loadedUrl;
+                } catch (MalformedURLException mue) {
+                    throw new AssertionError("URL expected to be valid.");
+                }
+            }
+        }
+        return getLoadedUrl();
+    }
+
+```
 ###### \java\seedu\address\logic\commands\AddPlatformCommandTest.java
 ``` java
 public class AddPlatformCommandTest {
@@ -14,7 +90,7 @@ public class AddPlatformCommandTest {
 
         AddPlatformCommand addPlatformCommand = prepareCommand(INDEX_THIRD_PERSON, smpMap);
 
-        assertCommandFailure(addPlatformCommand, model, SocialMediaPlatformBuilder.MESSAGE_BUILD_ERROR);
+        assertCommandFailure(addPlatformCommand, model, SocialMediaPlatformFactory.MESSAGE_BUILD_ERROR);
     }
 
     @Test
@@ -714,6 +790,11 @@ public class AddPlatformCommandParserTest {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
+        AddCommand commandAlias = (AddCommand) parser.parseCommand(PersonUtil.getAddCommandAlias(person));
+        assertEquals(new AddCommand(person), commandAlias);
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
     @Test
     public void parseCommand_sort() throws Exception {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD) instanceof SortCommand);
@@ -744,6 +825,13 @@ public class AddPlatformCommandParserTest {
         assertEquals(new RemovePlatformCommand(INDEX_FIRST_PERSON, platformSet), command);
     }
 
+    @Test
+    public void parseCommand_search() throws Exception {
+        String searchName = "foo";
+        SearchCommand command = (SearchCommand) parser.parseCommand(
+                SearchCommand.COMMAND_WORD + " " + searchName);
+        assertEquals(new SearchCommand("all", searchName), command);
+    }
 ```
 ###### \java\seedu\address\logic\parser\RemovePlatformCommandParserTest.java
 ``` java
@@ -775,6 +863,101 @@ public class RemovePlatformCommandParserTest {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\SearchCommandParserTest.java
+``` java
+public class SearchCommandParserTest {
+
+    private static final String INVALID_SEARCH_NAME = "a%b2$c";
+    private static final String VALID_SEARCH_NAME = "abc";
+    private static final String TWITTER_PLATFORM = "twitter";
+    private static final String FACEBOOK_PLATFORM_ALIAS = "fb";
+
+    private SearchCommandParser parser = new SearchCommandParser();
+
+    @Test
+    public void parse_noPlatformSpecifiedInvalidSearchName_failure() {
+        assertParseFailure(parser, INVALID_SEARCH_NAME,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_noPlatformSpecifiedValidSearchName_success() {
+        assertParseSuccess(parser, VALID_SEARCH_NAME, new SearchCommand("all", VALID_SEARCH_NAME));
+    }
+
+    @Test
+    public void parse_validPlatformSpecifiedInvalidSearchName_failure() {
+        assertParseFailure(parser, TWITTER_PLATFORM + ", " + INVALID_SEARCH_NAME,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validPlatformSpecifiedValidSearchName_success() {
+        assertParseSuccess(parser, FACEBOOK_PLATFORM_ALIAS + ", " + VALID_SEARCH_NAME,
+                new SearchCommand(FACEBOOK_PLATFORM_ALIAS, VALID_SEARCH_NAME));
+    }
+
+    @Test
+    public void parse_invalidPlatformSpecifiedValidSearchName_failure() {
+        String invalidPlatform = "aha";
+        assertParseFailure(parser, invalidPlatform + ", " + VALID_SEARCH_NAME,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser,  "yo, test, this, command",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\model\smplatform\LinkTest.java
+``` java
+public class LinkTest {
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Link(null));
+    }
+
+    @Test
+    public void isValidLink() {
+        // null link
+        Assert.assertThrows(NullPointerException.class, () -> Link.isValidLink(null));
+
+        // invalid links
+        assertFalse(Link.isValidLink("")); // empty string
+        assertFalse(Link.isValidLink(" ")); // spaces only
+        assertFalse(Link.isValidLink("www.google.com/")); // unknown link
+        assertFalse(Link.isValidLink("www.facebook.com/")); // facebook link without any path specified
+        assertFalse(Link.isValidLink("www.facebook.com////")); // facebook link with slashes only
+        assertFalse(Link.isValidLink("www.facebook.com/ /")); // facebook link with space as profile username
+        assertFalse(Link.isValidLink("www.twitter.com/")); // twitter link without any path specified
+        assertFalse(Link.isValidLink("www.twitter.com////")); // twitter link with slashes only
+        assertFalse(Link.isValidLink("www.twitter.com/ /")); // twitter link with space as username handle
+
+        // valid links
+        assertTrue(Link.isValidLink("https://www.facebook.com/abc")); // facebook page with protocol and subdomain
+        assertTrue(Link.isValidLink("http://facebook.com/abc")); // facebook page with protocol only
+        assertTrue(Link.isValidLink("www.facebook.com/teo.yong")); // facebook page with subdomain only
+        assertTrue(Link.isValidLink("facebook.com/abc")); // facebook page with profile username only
+        assertTrue(Link.isValidLink("facebook.com/profile.php?id=100008354955053")); // facebook page with ID
+        assertTrue(Link.isValidLink("https://www.twitter.com/abc")); // twitter page with protocol and subdomain
+        assertTrue(Link.isValidLink("http://twitter.com/__ChrisLee")); // twitter page with protocol only
+        assertTrue(Link.isValidLink("www.twitter.com/yosp")); // twitter page with subdomain only
+        assertTrue(Link.isValidLink("twitter.com/abc")); // twitter page with username handle only
+    }
+}
+```
+###### \java\seedu\address\testutil\PersonUtil.java
+``` java
+    /**
+     * Returns an add command alias string for adding the {@code person}.
+     */
+    public static String getAddCommandAlias(Person person) {
+        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
+    }
+
+```
 ###### \java\seedu\address\ui\PersonCardTest.java
 ``` java
         // with platforms
@@ -797,4 +980,53 @@ public class RemovePlatformCommandParserTest {
         personCard = new PersonCard(personWithIncorrectSmpMap, 4);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithIncorrectSmpMap, 4);
+```
+###### \java\systemtests\AddressBookSystemTest.java
+``` java
+    /**
+     * Asserts that the browser's url is changed to display the details of the person in the person list panel at
+     * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
+     * @see BrowserPanelHandle#isUrlChanged()
+     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     */
+    protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
+        String selectedBrowserLink = "";
+        Map<String, SocialMediaPlatform> selectedPersonSmpMap = getModel().getFilteredPersonList().get(
+                expectedSelectedCardIndex.getZeroBased()).getSocialMediaPlatformMap();
+        List<String> keyList = new ArrayList<>(selectedPersonSmpMap.keySet());
+        if (!keyList.isEmpty()) {
+            selectedBrowserLink = selectedPersonSmpMap.get(keyList.get(0)).getLink().value;
+        }
+
+        URL expectedUrl;
+        URL actualUrl;
+
+        try {
+            expectedUrl = getExpectedUrl(selectedBrowserLink);
+            actualUrl = getBrowserPanel().getLoadedUrl(Link.getLinkType(selectedBrowserLink));
+        } catch (MalformedURLException mue) {
+            throw new AssertionError("URL expected to be valid.");
+        }
+        assertEquals(expectedUrl, actualUrl);
+
+        assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+    }
+
+```
+###### \java\systemtests\AddressBookSystemTest.java
+``` java
+    /**
+     * Returns the expected URL in the correct format when provided with a String type {@code url}.
+     * {@code personName} is utilised when no URLs of the available platforms can be constructed.
+     */
+    protected URL getExpectedUrl(String url) throws MalformedURLException {
+        if (Link.getLinkType(url).equals(Link.FACEBOOK_LINK_TYPE)) {
+            return new URL("https://m." + url.substring(url.indexOf(Link.FACEBOOK_LINK_TYPE)));
+        } else if (Link.getLinkType(url).equals(Link.TWITTER_LINK_TYPE)) {
+            return new URL("https://" + url);
+        }
+
+        return MainApp.class.getResource(FXML_FILE_FOLDER + "default.html");
+    }
+
 ```

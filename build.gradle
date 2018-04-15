@@ -58,7 +58,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = "addressbook.jar"
+    archiveName = "mediasocializer.jar"
 
     destinationDir = file("${buildDir}/jar/")
 }
@@ -199,6 +199,11 @@ task deployOfflineDocs(type: Copy) {
 
 task copyDummySearchPage(type: Copy) {
     from 'docs/DummySearchPage.html'
+    into "${buildDir}/docs/html5"
+}
+
+task copyLoadingPage(type: Copy) {
+    from 'docs/LoadingPage.html'
     into "${buildDir}/docs/html5"
 }
 

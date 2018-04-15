@@ -648,24 +648,38 @@ Since the user is already on his/her Google Drive, he/she may download the file 
 // tag::birthdays[]
 === Birthdays feature
 ==== Current Implementation
-Birthdays Command uses the existing Events system and sends an event.
+`Birthdays` Command uses the existing `Events` system and sends an event according to the parameters provided.
 
-.Birthdays Command Sequence Diagram for Logic Component
+.Birthdays Command Sequence Diagram for Logic Component +
 image::LogicComponentBirthdaysSequenceDiagram.png[width="800"]
 
-The UI component will then receive the event and handle the data.
+The `BirthdayList` UI component will then receive the event and handle the display of the data +
 
-.Birthdays Command Sequence Diagram for UI Component
+.Birthdays Command Sequence Diagram for UI Component +
 image::UiComponentBirthdayListSequenceDiagram.png[width="800"]
+
+For "birthdays today" notification, the app will create an alert dialog instead.
+[source,java]
+----
+    @Subscribe
+    private void handleBirthdayNotificationEvent(BirthdayNotificationEvent event) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        // ... setting up of Alert ...
+        alert.showAndWait();
+    }
+----
 
 ==== Design Considerations
 
-===== Aspect: How the BirthdayList UI component obtains and parses its data
+===== Aspect: How the `BirthdayList` UI component obtains and parses its data
 
 * **Alternative 1**: Let UI component handle the parsing of UniquePersonList obtained from Event
-** Pros: Isolated and independent within BirthdayList UI component. Less overhead.
+** Pros: Isolated and independent within `BirthdayList` UI component. Less overhead.
 ** Cons: Not intuitive to new developers as parsing of data is not expected in UI.
-* **Alternative 2 (current choice)**: Let Birthdays do the parsing of UniquePersonList obtained from Model
+* **Alternative 2 (current choice)**: Let `Birthdays` do the parsing of UniquePersonList obtained from Model
 ** Pros: More modularity.
 ** Cons: Not apparent in usage by User. Functionality remains the same but Birthdays command becomes more cluttered.
 
@@ -678,7 +692,7 @@ image::UiComponentBirthdayListSequenceDiagram.png[width="800"]
 ** Pros: User can be reminded immediately and need not type the command.
 ** Cons: Currently, StardyTogether does not have settings to switch on/off the feature. User may find it irritating.
 
-===== Aspect: How User inputs the Birthday parameter in Person class
+===== Aspect: How User inputs the Birthday parameter in `Person` class
 * ** Alternative 1 (Current choice)**: Fixed format as DDMMYYYY
 ** Pros: Less room for errors.
 ** Cons: User may not like the DDMMYYYY format.
@@ -737,22 +751,74 @@ As shown in diagram above, all Rooms weekday schedule will be return in an `Arra
 // tag::timetable[]
 === Timetable feature
 ==== Current Implementation
-When adding a Person using the Add Command, users can enter their NUSMods shortened link into the "tt/" field.
-The link goes into the TimetableParserUtil class to parse and retrieve the info of the user's modules.
-The information is then sorted and added as a list of lessons taken by the user to the Timetable
+When adding a `Person` using the "Add" Command, users can enter their NUSMods shortened link into the "tt/" field.
+NUSMods URLs currently come in the format of `.../timetable/SEM_NUM/share?MODULE_CODE=LESSON_CODE`
+Using `TimetableParserUtil:parseShortUrl`, we obtain the full url from the shortened link.
+Then, we parse the information accordingly and obtain lesson data from {empty}[https://api.nusmods.com/[NUSMods API]] to represent them in `Lesson`
+The information is then sorted and added as a list of `Lesson` taken by the user to the Timetable.
+[source,java]
+----
+        try {
+            // Grab lesson info from API and store as a map
+            URL url = new URL(link);
+            @SuppressWarnings("unchecked")
+            Map<String, Object> mappedJson = mapper.readValue(url, HashMap.class);
+            @SuppressWarnings("unchecked")
+            ArrayList<HashMap<String, String>> lessonInfo = (ArrayList<HashMap<String, String>>)
+                    mappedJson.get("Timetable");
 
-The main contents of the timetable is stored as TimetableData and is accessed through Timetable.
-TimetableData consists of 2 TimetableWeek, which each consist of 5 TimetableDay, which each consist of 24
-TimetableSlot (following the 24h clock)
+            // Parse the information from API and creates an Arraylist of all possible lessons
+            ArrayList<Lesson> lessons = new ArrayList<>();
+            for (HashMap<String, String> lesson : lessonInfo) {
+                Lesson lessonToAdd = new Lesson(moduleCode, lesson.get("ClassNo"), lesson.get("LessonType"),
+                        lesson.get("WeekText"), lesson.get("DayText"), lesson.get("StartTime"), lesson.get("EndTime"));
+                lessons.add(lessonToAdd);
+            }
+
+            return lessons;
+        } catch (IOException exception) {
+            throw new ParseException("Cannot retrieve module information");
+        }
+----
+
+The main contents of the timetable is stored as `TimetableData` and is accessed through `Timetable`.
+`TimetableData` consists of 2 `TimetableWeek`, which each consist of 5 `TimetableDay`, which each consist of 24
+`TimetableSlot` (following the 24h clock)
 
 .Timetable Component
 image::TimetableComponentClassDiagram.png[width="800"]
 
-In the event the url provided is invalid or empty, a empty Timetable will be created.
+In the event the url provided is invalid or empty, a empty `Timetable` will be created.
 Do take note that there are dummy urls for the purpose of testing. While normal users should not be able to know of their existence,
 entering a dummy link will result in a preset timetable being built.
 
 When the user uses the `TimetableUnionCommand`, the indexes selected will be parsed and a union of the timetables selected will be created.
+[source,java]
+----
+    public static ArrayList<String> unionTimetableDay(ArrayList<TimetableDay> timetables) {
+        ArrayList<String> commonTimetable = new ArrayList<>();
+        boolean checker;
+
+        for (int i = 8; i < 22; i++) {
+            checker = false;
+            for (TimetableDay timetable : timetables) {
+                TimetableSlot t = timetable.timetableSlots[i];
+                if (!t.toString().equals(EMPTY_SLOT_STRING)) {
+                    checker = true;
+                    break;
+                }
+            }
+
+            if (checker) {
+                commonTimetable.add(TITLE_OCCUPIED);
+            } else {
+                commonTimetable.add(EMPTY_SLOT_STRING);
+            }
+        }
+        return commonTimetable;
+    }
+----
+
 Afterwards, it will raise the `TimeTableEvent` which will be caught and handled by the `InfoPanel`.
 The `InfoPanel` will swap between `UserDetailsPanel`, `BirthdayList`, `VenueTable` and `TimetableUnionPanel` so that the UI would not be too cluttered.
 
@@ -775,6 +841,15 @@ The `InfoPanel` will swap between `UserDetailsPanel`, `BirthdayList`, `VenueTabl
 * ** Alternative 2**: Prevent the adding of a Person without a valid timetable
 ** Pros: Warns the user that the timetable is not inputted properly
 ** Cons: Not very user-friendly if user just does not have a valid timetable
+
+===== Aspect: Adding of lessons to Timetable
+
+* **Alternative 1** (current choice): Users do the adding on NUSMods and re-import the timetable link
+** Pros: No need to implement a separate function to add lessons and a separate `Module` class
+** Cons: May be troublesome for the user
+* **Alternative 2**: Implement a function to add lessons and `Module` class
+** Pros: User need not to manually edit the timetable parameter
+** Cons: Hard to implement. Lessons and modules will not have any usage outside `Timetable`
 
 ===== Aspect: Testing of Timetable
 

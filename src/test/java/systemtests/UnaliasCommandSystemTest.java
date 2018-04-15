@@ -78,20 +78,18 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
         /* Case: remove nonexistent alias from a non-empty address book, command with leading and trailing spaces
          * -> rejected
          * */
-        String toDeleteNonExistent = INVALID_UNALIAS;
         command = "   " + UnaliasCommand.COMMAND_WORD + "  " + INVALID_UNALIAS + "  ";
         assertCommandFailure(command, UnaliasCommand.MESSAGE_UNKNOWN_UNALIAS);
 
         /* Case: remove alias with symbols from a non-empty address book, command with leading and trailing spaces
          * -> rejected
          * */
-        String toDeleteSymbols = INVALID_UNALIAS_DESC;
         command = "   " + UnaliasCommand.COMMAND_WORD + "  " + INVALID_UNALIAS_DESC + "  ";
         assertCommandFailure(command, Alias.MESSAGE_ALIAS_CONSTRAINTS);
     }
 
     /**
-     * Executes the {@code UnaliasCommand} that adds {@code toDelete} from the model and asserts that the,<br>
+     * Executes the {@code UnaliasCommand} that removes {@code toDelete} from the model and asserts that the,<br>
      * 1. Command box displays an empty string.<br>
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the success message of executing {@code unaliasCommand} <br>
@@ -99,19 +97,9 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
      * the current model without {@code toDelete}.<br>
      * 5. Browser url and selected card remain unchanged.<br>
      * 6. Status bar's sync status changes.<br>
-     * 7. Info panel's AliasList changes <br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(String toDelete, Alias[][] expectedTable) {
-        assertCommandSuccess(AliasUtil.getUnliasCommand(toDelete), toDelete, expectedTable);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(Alias)}. Executes {@code command}
-     * instead.
-     * @see UnaliasCommandSystemTest#assertCommandSuccess(String, Alias[][])
      */
     private void assertCommandSuccess(String command, String toDelete, Alias[][] expectedTable) {
         Model expectedModel = getModel();

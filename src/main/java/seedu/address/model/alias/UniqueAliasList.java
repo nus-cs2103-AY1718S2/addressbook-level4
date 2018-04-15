@@ -183,7 +183,7 @@ public class UniqueAliasList {
      * Groups alias mappings by command.
      */
     private void convertAliasHashmapToArrayList(ArrayList<ArrayList<String>> aliases) {
-        for (String command : AliasCommand.getCommands()) {
+        for (int i = 0; i < AliasCommand.getCommands().size(); i++) {
             aliases.add(new ArrayList<>());
         }
 

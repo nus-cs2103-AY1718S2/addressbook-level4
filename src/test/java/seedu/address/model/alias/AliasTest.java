@@ -25,7 +25,6 @@ import seedu.address.testutil.Assert;
 //@@author jingyinno
 public class AliasTest {
 
-    private AliasBuilder builder;
     private Alias clear;
     private Alias add;
     private Alias addClone;
@@ -33,7 +32,7 @@ public class AliasTest {
 
     @Before
     public void setUp() {
-        builder = new AliasBuilder();
+        AliasBuilder builder = new AliasBuilder();
         clear = builder.withCommand(ClearCommand.COMMAND_WORD).withAlias(VALID_ALIAS_CLEAR).build();
         add = builder.withCommand(AddCommand.COMMAND_WORD).withAlias(VALID_ALIAS_ADD).build();
         addClone = builder.withCommand(AddCommand.COMMAND_WORD).withAlias(VALID_ALIAS_ADD).build();

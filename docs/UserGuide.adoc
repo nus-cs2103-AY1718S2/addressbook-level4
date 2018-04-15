@@ -177,7 +177,7 @@ Selects the 2nd friend in ST.
 Selects the 1st friend in the results of the `find` command.
 
 // tag::birthdays[]
-==== Viewing a collated birthday list: `birthdays` (since v1.3)
+==== Viewing a collated birthday list: `birthdays` _(since v1.3)_
 
 To get a list that contains all the birthdays of all your friends (ordered by date) +
 Or to know whose birthday is it today, you can enter the following commands +
@@ -205,7 +205,7 @@ image::birthdaysToday.png[width="790"]
 === NUS Commands
 
 // tag::union[]
-==== Viewing common time slots in timetable: `union` (since v1.5)
+==== Viewing common time slots in timetable: `union` _(since v1.5rc)_
 
 To know your free slots together with your friends, you can use `union` to display the common free time of multiple friends in ST. (Minimum: 2) +
 Format: `union ODD/EVEN INDEX INDEX [INDEX]...`
@@ -227,7 +227,7 @@ Displays the combined even timetable for friends at Index 1 and 2.
 // end::union[]
 
 // tag::vacant[]
-==== Vacant study rooms finder : `vacant` (since v1.3)
+==== Vacant study rooms finder : `vacant` _(since v1.3)_
 
 To get a list of study rooms in the specified building and their vacancy (in blocks of 1 hours), you can enter `vacant` follwed by the BUILDING code. +
 Format: `vacant BUILDING`
@@ -244,7 +244,7 @@ Finds the vacancy status of study rooms in COM1 building.
 // end::vacant[]
 
 // tag::maps[]
-==== Google maps display : `map` (since v1.4)
+==== Google maps display : `map` _(since v1.4)_
 
 To find locations or a path from one place to another, you can enter the command `map` along with the locations to launch Google Maps with the specified location(s).
 Format: `map LOCATION` or `map LOCATION/LOCATION...` or `map current location`
@@ -280,7 +280,7 @@ If you find yourself lost on what to do in ST, you can enter the command `help`!
 Format: `help`
 
 // tag::alias[]
-==== Adding a command alias: `alias` (since v1.1)
+==== Adding a command alias: `alias` _(since v1.1)_
 
 To create customized aliases for any valid command, you can enter the command `alias` followed by your desired command and your very own alias.+
 Format: `alias [COMMAND] [ALIAS]`
@@ -296,7 +296,7 @@ Examples:
 * `alias find f`
 * `alias alias al`
 
-==== Removing a currently existing alias: `unalias` (since v1.3)
+==== Removing a currently existing alias: `unalias` _(since v1.3)_
 
 To remove a previously created alias, you can enter the command `unalias` followed by the alias you wish to remove+
 Format: `unalias [CURRENT_ALIAS]`
@@ -374,7 +374,7 @@ To clear all entries of your friends from ST :sob: , you can enter the command `
 Format: `clear`
 
 // tag::dataencryption[]
-==== Encrypting data files : `encrypt` (since v1.2)
+==== Encrypting data files : `encrypt` _(since v1.2)_
 
 To encrypt ST and protect your data, you can enter the command `encrypt` followed by your password. +
 Format: `encrypt PASSWORD`
@@ -402,7 +402,7 @@ Format: `decrypt`
 // end::dataencryption[]
 
 // tag::datatransfer[]
-==== Importing data : `import` (since v1.1)
+==== Importing data : `import` _(since v1.1)_
 
 To import your friend's ST to your own ST, you can enter the command `import` followed by the various parameters.
 An encrypted or unencrypted ST instance from filepath to the existing ST application. Friends, Tags, and Aliases that are not in your ST will be added. +
@@ -425,7 +425,7 @@ Example:
 * `import data/addressBook.xml testpassword` +
 Imports `addressBook.xml` file at data folder using "testpassword" as the password.
 
-==== Exporting data : `export` (since v1.4)
+==== Exporting data : `export` _(since v1.4)_
 
 To export your ST for your friends' ST to import, you can enter `export` with the various parameters.
 The current view of the existing ST application with or without password encryption to the specified filepath. +
@@ -443,7 +443,7 @@ Example:
 * `export data/addressBookBackUp.xml testpassword` +
 Exports the current list of ST application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption. +
 
-==== Uploading data : `upload` (since v1.5rc)
+==== Uploading data : `upload` _(since v1.5rc)_
 
 To upload your ST to Google Drive, you can enter the command `upload` with the various parameters.
 The current view of the existing ST application with or without password encryption to the specified filename in Google Drive.
@@ -478,11 +478,24 @@ ST data are saved in the hard disk automatically after any command that changes 
 There is no need to save manually.
 
 == Upcoming Features
-=== Use current location to find vacant rooms
+We have a few exciting ideas to further improve ST for you!
+=== Use current location to find vacant rooms _(coming in v2.0)_
 
-=== Modules Tag
+=== Modules Tag _(coming in v2.0)_
 
-=== Command Autocomplete Function
+Each friend will be able to have their own list of modules they have taken. +
+To find out which friends have not taken a module (so as to plan with them to take), you can enter the command `module` followed by the module code
+Format: `module MODULE_CODE`
+
+[NOTE]
+Module code follows the traditional naming conventions used by NUS (Example: CS2103T or CS2101)
+
+Examples:
+
+* `module CS2103` +
+Displays the list of friends who have not taken the module CS2103
+
+=== Command Autocomplete Function _(coming in v2.0)_
 
 // tag::FAQ[]
 == FAQ

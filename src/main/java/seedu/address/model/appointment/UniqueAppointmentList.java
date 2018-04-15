@@ -10,7 +10,6 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -164,26 +163,12 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      */
     public void remove(Appointment targetAppointment) throws AppoinmentNotFoundException {
         requireNonNull(targetAppointment);
-//        Appointment appointmentToDelete = getAppointmentByIndex(index);
-//        boolean isPastAppointment = getPastAppointmentObservableList().contains(appointmentToDelete);
-//
-//        if (isPastAppointment) {
-//            return false;
-//        }
 
         if (!contains(targetAppointment)) {
             throw new AppoinmentNotFoundException();
         }
 
         internalList.remove(targetAppointment);
-    }
-
-    public Appointment getAppointmentByIndex(Index index) throws ParseException {
-
-//        if (index.getZeroBased() >= getPastAppointmentObservableList().size()) {
-//            return getUpcomingAppointmentObservableList().get();
-//        }
-        return (Appointment) internalList.get(index.getZeroBased());
     }
 
     /**

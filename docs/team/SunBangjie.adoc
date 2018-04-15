@@ -1,0 +1,68 @@
+= Sun Bangjie - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:xrefstyle: short
+
+== PROJECT: Part-time Manager (PTMan)
+
+== Overview
+
+Part-Time Manager (PTMan) is a desktop human resource application used for managing part-time employees in outlets such as bubble tea shops and fast food restaurants. PTMan aims to give part-time employees the freedom of choosing when they want to work by registering for the available shifts set by the outlet managers.
+Instead of huge amount of paper work and time spent on communication via phone calls and messages, PTMan helps both managers and employees reduce the hassle of work scheduling. +
+
+The user interacts with the application using a Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+This project portfolio page aims to showcase my work in the project.
+
+== Summary of contributions
+
+* *Major enhancement*: Added the *outlet* feature.
+** What it does:
+*** It allows outlet managers to edit outlet information including name, operating hours, contact number and email.
+*** It allows managers to create and broadcast announcement to all employees.
+*** It allows managers to encrypt and decrypt data stored in local storage files.
+** Justification: This feature improves the product significantly because:
+. Outlet information is unique and essential. Operating hours will determine the timetable and working schedule. Contact number and email will be used to receive admin password reset. This outlet feature provides convenient ways for managers to manage the outlet.
+. Creating and broadcasting announcement is necessary as it enhances communication between managers and employees.
+. Encryption and decryption of local storage files prevents any group of people who do not have the access from interpreting the private and important data, and protects the credential of data.
+** Highlights: This enhancement modifies the existing model to store outlet information. It also modifies the UI component to display outlet information. There were design considerations to integrate outlet information into the existing model while minimizing coupling with the other components.
+This enhancement also changes the storage component significantly as data stored can be encrypted and decrypted.
+
+* *Minor enhancement*: added functionality that backs up local storage files to `.backup` files.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B2/main/blob/master/collated/functional/SunBangjie.md[Functional code]]
+                       [https://github.com/CS2103JAN2018-W14-B2/main/blob/master/collated/test/SunBangjie.md[Test code]]
+* *Other contributions*:
+
+** Project management:
+*** Managed release `v1.3` (1 release) on GitHub.
+** Enhancements to existing features:
+*** Provided methods to encrypt and decrypt local storage files. (Pull requests: https://github.com/CS2103JAN2018-W14-B2/main/pull/121[#121], https://github.com/CS2103JAN2018-W14-B2/main/pull/145[#145], https://github.com/CS2103JAN2018-W14-B2/main/pull/193[#193])
+** Documentation:
+*** Updated user stories, use cases and NFRs in Developer guide: https://github.com/CS2103JAN2018-W14-B2/main/pull/2[#2], https://github.com/CS2103JAN2018-W14-B2/main/pull/10[#10]
+*** Updated formatting of Developer Guide: https://github.com/CS2103JAN2018-W14-B2/main/pull/23[#23]
+*** Updated manual testing in Developer Guide: https://github.com/CS2103JAN2018-W14-B2/main/pull/231[#231]
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W13-B2/main/issues/142[#142])
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=outletManagement]
+
+include::../UserGuide.adoc[tag=outletCommand]
+
+include::../UserGuide.adoc[tag=backup]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=outlet]

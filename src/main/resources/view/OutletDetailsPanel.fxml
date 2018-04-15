@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- @@author hzxcaryn -->
+<StackPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox>
+        <Label fx:id="outletNamePanelHeader" styleClass="panel_large_label" />
+        <HBox fx:id="outletInformation">
+            <Label fx:id="operatingHours"><graphic><FontAwesomeIconView fill="#7A8492" glyphName="CALENDAR" /></graphic></Label>
+            <Label fx:id="outletContact"><graphic><FontAwesomeIconView fill="#7A8492" glyphName="PHONE" /></graphic></Label>
+            <Label fx:id="outletEmail"><graphic><FontAwesomeIconView fill="#7A8492" glyphName="ENVELOPE" /></graphic></Label>
+        </HBox>
+        <Label fx:id="announcement"><graphic><FontAwesomeIconView fill="#7A8492" glyphName="BULLHORN" /></graphic></Label>
+    </VBox>
+</StackPane>

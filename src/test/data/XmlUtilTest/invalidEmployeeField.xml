@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Employee with an invalid phone field -->
+<employee>
+    <name>Alex Yeoh</name>
+    <phone>+6587438807</phone>
+    <email>alexyeoh@example.com</email>
+    <address>Blk 30 Geylang Street 29, #06-40</address>
+    <salary>0</salary>
+    <passwordHash>wkqTFuX6NX3hucWqn2ZxB24cRo73LssRq7IDOk6Zx00=</passwordHash>
+    <tagged>barista</tagged>
+</employee>

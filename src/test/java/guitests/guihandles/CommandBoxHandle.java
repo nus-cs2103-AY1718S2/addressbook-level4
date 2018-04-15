@@ -3,14 +3,15 @@ package guitests.guihandles;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import seedu.address.ui.CommandBox;
+import seedu.ptman.ui.CommandBox;
 
 /**
  * A handle to the {@code CommandBox} in the GUI.
  */
 public class CommandBoxHandle extends NodeHandle<TextField> {
 
-    public static final String COMMAND_INPUT_FIELD_ID = "#commandTextField";
+    public static final String COMMAND_FIELD_ID = "#commandTextField";
+
 
     public CommandBoxHandle(TextField commandBoxNode) {
         super(commandBoxNode);

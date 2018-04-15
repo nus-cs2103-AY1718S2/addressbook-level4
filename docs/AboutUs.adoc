@@ -3,53 +3,45 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
+PTMan was developed by the CS2103T AY17/18 W14-B2 Team.
+
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Shannon Wong
+image::shanwpf.jpg[width="150", align="left"]
+{empty}[https://github.com/shanwpf[github]] [<<shanwpf#, portfolio>>]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Developer + Team Lead +
+Responsibilities: Logic Component + Deliverables and Deadlines + Documentation
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Koo Chin Chye
+image::koo1993.jpg[width="150", align="left"]
+{empty}[http://github.com/koo1993[github]] [<<koo1993#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Model Component + Integration + Documentation
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Caryn Heng
+image::hzxcaryn.jpg[width="150", align="left"]
+{empty}[http://github.com/hzxcaryn[github]] [<<hzxcaryn#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: UI Component + Integration + Documentation
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Sun Bangjie
+image::SunBangjie.JPG[width="150", align="left"]
+{empty}[http://github.com/SunBangjie[github]] [<<SunBangjie#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Storage Component + Testing + Documentation
 
 '''
+

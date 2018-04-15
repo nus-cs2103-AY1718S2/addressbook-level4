@@ -1,0 +1,61 @@
+= Shannon Wong - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:xrefstyle: short
+
+== PROJECT: Part-Time Manager (PTMan)
+
+== Overview
+
+PTMan is a desktop human resource application used for managing part-time employees. +
+
+PTMan aims to give part-time employees the freedom of choosing when they want to work by registering for the available shifts set by the manager.
+Thereby reducing the hassle of work scheduling for both employers and employees. +
+
+The user interacts with the application using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Added the *shift* feature.
+** What it does: Allows employers to create work shifts. Employees can then apply for the shifts that they want to work in.
+** Justification: This feature allows for easy management of manpower while giving employees the freedom and flexibility to work whenever they want to.
+** Highlights: This enhancement modifies the app's model to store shifts.
+The storage component also had to be modified to save shifts to local storage.
+There were design considerations to integrate shifts into the existing model while minimizing coupling with the other components.
+To enable user interaction with this feature, various commands that manipulate shifts had to be implemented.
+
+* *Minor enhancement*: Added command aliases that are shorthands for the full commands.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B2/main/blob/master/collated/functional/shanwpf.md[Functional code]]
+ [https://github.com/CS2103JAN2018-W14-B2/main/blob/master/collated/test/shanwpf.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed milestones and issue-tracking on GitHub.
+** Documentation:
+*** Added cross-reference links to the User Guide and Developer Guide:
+ [https://github.com/CS2103JAN2018-W14-B2/main/pull/154[#154]]
+ [https://github.com/CS2103JAN2018-W14-B2/main/pull/159[#159]]
+*** Ensured that the language and format of the documentation are correct and consistent:
+ [https://github.com/CS2103JAN2018-W14-B2/main/pull/154[#154]]
+** Tools:
+*** Integrated TravisCI to the team repo.
+*** Integrated Coveralls to the team repo.
+*** Integrated Codacy to the team repo.
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=shiftmanager]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=shifts]

@@ -1,0 +1,64 @@
+= Koo Chin Chye - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:xrefstyle: short
+
+== PROJECT: Part-time Manager (PTMan)
+
+== Overview
+
+PTMan is a desktop human resource application used for managing part-time employees. +
+
+PTMan aims to give part-time employees the freedom of choosing when they want to work by registering for the available shifts set by the manager.
+Thereby reducing the hassle of work scheduling for both employers and employees. +
+
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Added *access control* that manages functions for employer and employee. [https://github.com/CS2103JAN2018-W14-B2/main/issues/39[Issue #39]]
+** What it does:
+*** Assigns password to each employer and employee.
+*** Separates command for employer and employee.
+*** Implements API for password checking that needs password.
+*** Implements Login/Logout to admin mode for employer to use admin commands at ease.
+*** Implements Change/reset password for both group of user with email service.
+** Justification: This ensure only authenticated personnel can use the system and restrict employee to use functions that are meant for the employer. This prevent misuse of PTMan.
+** Highlights:
+This enhancement puts security in high regard.
+Lots of consideration is put into avoiding inconvience for the user while maintaining high security.
+
+* *Minor enhancement*: Added salary parameter and addsalary command for employer to manage employees' pay.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B2/main/blob/master/collated/functional/koo1993.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B2/main/blob/master/collated/test/koo1993.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Constantly collate updates from the team and call for meeting if there is a need to.
+** Enhancements to existing features:
+*** Implemented obfuscation for password in input text field and history. (Pull requests https://github.com/CS2103JAN2018-W14-B2/main/pull/132[#132], https://github.com/CS2103JAN2018-W14-B2/main/pull/141[#141], https://github.com/CS2103JAN2018-W14-B2/main/pull/157[#157])
+*** Wrote email service to send reset password to employer and employee via email. (Pull requests https://github.com/CS2103JAN2018-W14-B2/main/pull/113[#113])
+*** Fixed a bug when closing the application when minimized (pull requests https://github.com/CS2103JAN2018-W14-B2/main/pull/133[#133])
+** Community:
+*** Reported bugs and suggestions for other teams in the class (Issue:  https://github.com/CS2103JAN2018-W10-B2/main/issues/68[#68], https://github.com/CS2103JAN2018-W10-B2/main/issues/69[#69], https://github.com/CS2103JAN2018-W10-B2/main/issues/72[#72], https://github.com/CS2103JAN2018-W10-B2/main/issues/85[#85], https://github.com/CS2103JAN2018-W10-B2/main/issues/89[#89])
+
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=accessControl]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=accessControl]

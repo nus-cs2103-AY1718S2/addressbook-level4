@@ -1,6 +1,8 @@
 package systemtests;
 
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static org.junit.Assert.assertEquals;
+import static seedu.ptman.model.Model.PREDICATE_SHOW_ALL_SHIFTS;
+import static seedu.ptman.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,17 +10,21 @@ import java.nio.file.Paths;
 
 import org.junit.Test;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.util.SampleDataUtil;
-import seedu.address.testutil.TestUtil;
+import javafx.collections.ObservableList;
+import seedu.ptman.model.Model;
+import seedu.ptman.model.PartTimeManager;
+import seedu.ptman.model.employee.Employee;
+import seedu.ptman.model.shift.Shift;
+import seedu.ptman.model.util.SampleDataUtil;
+import seedu.ptman.testutil.TestUtil;
 
-public class SampleDataTest extends AddressBookSystemTest {
+public class SampleDataTest extends PartTimeManagerSystemTest {
+
     /**
      * Returns null to force test app to load data of the file in {@code getDataFileLocation()}.
      */
     @Override
-    protected AddressBook getInitialData() {
+    protected PartTimeManager getInitialData() {
         return null;
     }
 
@@ -44,8 +50,14 @@ public class SampleDataTest extends AddressBookSystemTest {
     }
 
     @Test
-    public void addressBook_dataFileDoesNotExist_loadSampleData() {
-        Person[] expectedList = SampleDataUtil.getSamplePersons();
-        assertListMatching(getPersonListPanel(), expectedList);
+    public void partTimeManager_dataFileDoesNotExist_loadSampleData() {
+        Employee[] expectedEmployeeList = SampleDataUtil.getSampleEmployees();
+        assertListMatching(getEmployeeListPanel(), expectedEmployeeList);
+
+        Shift[] expectedShiftList = SampleDataUtil.getSampleShifts();
+        Model model = getModel();
+        model.updateFilteredShiftList(PREDICATE_SHOW_ALL_SHIFTS);
+        ObservableList<Shift> actualShiftList = model.getFilteredShiftList();
+        assertEquals(expectedShiftList, actualShiftList.toArray());
     }
 }

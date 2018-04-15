@@ -1,8 +1,9 @@
-= AddressBook Level 4 - Developer Guide
+= image:ptman_logo_dg.png[width="400"]
 :toc:
-:toc-title:
+:toc-title: Table of Contents
 :toc-placement: preamble
 :sectnums:
+:sectnumlevels: 5
 :imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
@@ -10,13 +11,20 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W14-B2/main/tree/master/
+:xrefstyle: short
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W14-B2`      Since: `March 2018`      Licence: `MIT`
 
-== Setting up
+== Introduction
+
+Part-time Manager (PTMan) is a Java application that helps employers manage and schedule their part-time employees. +
+It provides a graphical user interface for displaying schedules and employee information while making use of a command-line interface as the primary mode of input.
+
+== Setting Up
 
 === Prerequisites
+You need to make sure the following prerequisites are installed on your computer before proceeding:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -32,43 +40,44 @@ IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting Up the Project in Your Computer
+Follow these steps to set up the project in your computer:
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Verifying the Setup
+You may check that you have setup the project correctly by following these steps:
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.ptman.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
-=== Configurations to do before writing code
+=== Configurations to do Before Writing Code
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify:
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
 . Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
-
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+. Click on the `Imports` tab to set the order:
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: Set the order to be `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W14-B2/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-W14-B2/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -86,65 +95,73 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Here are some tips before you get started with coding:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
+// TODO: Update diagrams
+This section explains the design of the app.
 
 [[Design-Architecture]]
 === Architecture
 
+_<<fig-ArchitectureDiagram>>_ below illustrates the high-level design of the app.
+
+[[fig-ArchitectureDiagram]]
 .Architecture Diagram
 image::Architecture.png[width="600"]
-
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+In this section, 'components' refer to the `UI`, `Logic`, `Model`, `Storage`, `Commons`, and `Main` as seen in <<fig-ArchitectureDiagram>>.
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+Here is a quick overview of each component:
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+* `Main`: Contains a class called link:{repoURL}/src/main/java/seedu/ptman/MainApp.java[`MainApp`], which is responsible for:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+** At app launch: Initializing the components in the correct sequence and connecting them up with each other.
+** At shut down: Shutting down the components and invoking cleanup methods where necessary.
 
-The rest of the App consists of four components.
+* <<Design-Commons,*`Commons`*>>: Contains a collection of classes used by other components. Two of those classes play important roles at the architectural level:
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
+** `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+** `LogsCenter` : This class is used to write log messages to the app's log file.
+
+* <<Design-Ui,*`UI`*>>: Displays the UI of the app.
+* <<Design-Logic,*`Logic`*>>: Executes commands.
+* <<Design-Model,*`Model`*>>: Holds the data of the app in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+The API of the `UI`, `Logic`, `Model` and `Storage` components are structured similarly. These components:
 
-* Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
+* Define their API in an `interface` with the same name as the component.
+* Expose their functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component, illustrated by _<<fig-LogicClassDiagram>>_, defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
+[[fig-LogicClassDiagram]]
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+_<<fig-DeleteSeq1>>_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
-.Component interactions for `delete 1` command (part 1)
+[[fig-DeleteSeq1]]
+.Component Interactions for `delete 1` Command (Part 1)
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `PartTimeManagerChangedEvent` when the Part-Time Manager's data is changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+_<<fig-DeleteSeq2>>_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
+[[fig-DeleteSeq2]]
+.Component Interactions for `delete 1` Command (Part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
 
 [NOTE]
@@ -153,94 +170,507 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 The sections below give more details of each component.
 
 [[Design-Ui]]
-=== UI component
+=== UI Component
 
+The `UI` component is responsible for displaying information to the user.
+_<<fig-UI>>_ below shows the structure of the `UI` component.
+
+[[fig-UI]]
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*API* : link:{repoURL}/src/main/java/seedu/ptman/ui/Ui.java[`Ui.java`]
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `EmployeeListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/ptman/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
-
-The `UI` component,
+The `UI` component:
 
 * Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* Binds itself to some data in the `Model` so that the UI can automatically update when data in the `Model` changes.
+* Responds to events raised from various parts of the app and updates the UI accordingly.
 
 [[Design-Logic]]
-=== Logic component
+=== Logic Component
 
-[[fig-LogicClassDiagram]]
+_<<fig-LogicClassDiagram2>>_ shows the overall structure of the `Logic` component.
+
+[[fig-LogicClassDiagram2]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+_<<fig-CommandStructure>>_ shows finer details concerning `XYZCommand` and `Command` in _<<fig-LogicClassDiagram2>>_
+
+[[fig-CommandStructure]]
+.Structure of Commands in the Logic Component.
 image::LogicCommandClassDiagram.png[width="800"]
 
 *API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+link:{repoURL}/src/main/java/seedu/ptman/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+The `Logic` component:
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+. Parses user commands using the `PartTimeManagerParser` class and returns a `Command` object.
+. Executes the `Command` object using `LogicManager`.
+  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+. Passes the result of the command execution (`CommandResult`) to the `UI`.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+_<<fig-DeleteSd>>_ is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+
+[[fig-DeleteSd]]
+.Interactions inside the Logic Component for the `delete 1` Admin Command
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
-=== Model component
+=== Model Component
+_<<fig-ModelClassDiagram>>_ shows the overview of the `Model` component.
 
+[[fig-ModelClassDiagram]]
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API* : link:{repoURL}/src/main/java/seedu/ptman/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model` component:
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the `PartTimeManager` data in memory.
+* Exposes an unmodifiable `ObservableList<Employee>` and `ObservableList<Shift>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the lists change.
+* Does not depend on any of the other three components (`UI`, `Storage` and `Logic`).
 
 [[Design-Storage]]
-=== Storage component
+=== Storage Component
+_<<fig-StorageClassDiagram>>_ shows the overview of the `Storage` component.
 
+[[fig-StorageClassDiagram]]
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API* : link:{repoURL}/src/main/java/seedu/ptman/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component:
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* Saves `UserPref` objects in json format and reads it back.
+* Saves the PartTimeManager data in xml format and reads it back.
 
 [[Design-Commons]]
-=== Common classes
-
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+=== Common Classes
+// TODO: Either add content or delete
+Classes used by multiple components are in the `seedu.ptman.commons` package.
 
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
 
+
+// tag::outlet[]
+=== Outlet Feature
+
+==== Reason for implementation
+PTMan is designed for outlets such as bubble tea shops and fast food restaurants which require a large number of part-time workers.
+This outlet feature stores essential outlet information such as outlet name, operating hours, contact number, email and admin password.
+Such details are also important to facilitate other functions such as the access control system and the timetable displayed in the app.
+
+==== How it is implemented
+
+===== OutletInformation class
+The `OutletInformation` class represents an outlet in PTMan.
+It supports commands that utilize attributes of this class. It is also responsible for information displayed in the UI and data stored in local storage files. +
+
+_<<fig-OutletClassDiagram>>_ is a class diagram that displays the association between `OutletInformation` and other classes in the `Model`.
+
+[[fig-OutletClassDiagram]]
+.Overview of the OutletInformation Class in the Model Component
+image::OutletInformationClassDiagram.png[width="800"]
+
+With reference to _<<fig-OutletClassDiagram>>_, an `OutletInformation` object stores a boolean value `isDataEncrypted` and six other attributes, including `masterPassword`, `outletName`, `operatingHours`, `outletEmail`, `outletContact` and `announcement`.
+Currently, the `OutletInformation` object initialized in the `PartTimeManager` is created by calling its default constructor:
+[source, java]
+----
+OutletInformation outlet = new OutletInformation();
+----
+This default constructor initializes a boolean value `isDataEncrypted` to false and six other attributes to respective default values.
+This is because with the help of initial values, any employer new to PTMan does not need to create a new `OutletInformation` object using commands such as `addoutlet`.
+It provides convenience for users. Outlet managers can edit those values by entering an `editoutlet` command after they log in.
+
+
+
+===== Commands
+
+Currently, there are two commands that allow outlet managers to change attributes of the `OutletInformation`: `editoutlet` and `announcement` commands which are implemented in similar ways.
+The implementation of `editoutlet` command will be explained in details.
+In addition, there are also commands that allow managers to encrypt and decrypt local storage files.
+The implementation of `encrypt` command and how data is encrypted will be explained in details. +
+
+====== Edit outlet command
+
+The `editoutlet` command can change outlet name, operating hours, contact number and email, which are displayed in the app as shown in _<<fig-OutletInformationDisplayed>>_.
+The information displayed will change after a successful command.
+
+[[fig-OutletInformationDisplayed]]
+.Example of the Outlet Information Displayed
+image::outletinformationdisplay.jpg[width="600"]
+
+When an `editoutlet` command executes successfully, three events will be raised and handled as shown in _<<fig-EditOutletCommandHighLevelSequenceDiagram>>_:
+
+. `OutletNameChangedEvent` updates the outlet name displayed in the app.
+. `OutletInformationChangedEvent` updates the operating hours, contact number and email displayed in the app.
+. `OutletDataChangedEvent` saves latest outlet information to the local storage file "data/outletinformation.xml".
+
+[[fig-EditOutletCommandHighLevelSequenceDiagram]]
+.High Level Sequence Diagram for the `editoutlet` Command
+image::EditOutletCommandHighLevelSequenceDiagrams.png[width="800"]
+
+The following sequence diagram (_<<fig-EditOutletCommandSequenceDiagram>>_) illustrates how an `editoutlet` command is executed in the Logic Component, and how it interacts with the Model Component.
+
+[[fig-EditOutletCommandSequenceDiagram]]
+.Interactions inside the Logic Component for the `editoutlet n/Edited Outlet` Admin Command
+image::EditOutletCommandSequenceDiagram.png[width="800"]
+
+Currently, editing outlet information with some fields unspecified is allowed.
+For example, `editoutlet n/OUTLETNAME` is a valid command.
+The reason why it is implemented in this why is that it enables employers to edit only the information required for change.
+
+In order to check whether some fields are specified, several branches are created in the `setOutletInformation` method of the `OutletInformation` class.
+When all fields are null, it throws a new exception as shown below:
+[source,java]
+----
+if (name == null && operatingHours == null && outletContact == null && outletEmail == null) {
+    throw new NoOutletInformationFieldChangeException();
+}
+
+----
+This `NoOutletInformationFieldChangeException` is then handled by the `EditOutletCommand`.
+When the exception is caught, the `CommandException` with a message of command failure will be thrown,
+with reference to the function below:
+[source,java]
+----
+try {
+    editedOutlet.setOutletInformation(name, operatingHours, outletContact, outletEmail);
+} catch (NoOutletInformationFieldChangeException e) {
+    throw new CommandException(MESSAGE_EDIT_OUTLET_FAILURE);
+}
+----
+
+====== Encrypt and decrypt commands
+Since PTMan stores files locally, it is highly possible that any worker in the outlet can open the storage files and read data inside.
+Such files store a large amount of essential and private data such as admin password, employees' passwords, employees' phones, addresses, and emails.
+By using the `encrypt` command, the data in local storage files can be hidden from any group of people who do not have the access to it.
+Managers can use the `decrypt` command to make the files human-readable.
+
+When an `encrypt` command executes successfully, two events will be raised and handled with reference to _<<fig-EncryptCommandHighLevelSequenceDiagram>>_:
+
+. `PartTimeManagerChangedEvent` saves encrypted or decrypted information of employees and shifts to the local storage file "data/parttimemanager.xml".
+. `OutletDataChangedEvent` saves encrypted or decrypted outlet information to the local storage file "data/outletinformation.xml".
+
+[[fig-EncryptCommandHighLevelSequenceDiagram]]
+.High Level Sequence Diagram for the `encrypt` Command
+image::EncryptCommandHighLevelSequenceDiagrams.png[width="800"]
+
+The following sequence diagram (_<<fig-EncryptCommandSequenceDiagram>>_) illustrates how an `encrypt` command is executed in the Logic Component, and how it interacts with the Model Component.
+
+[[fig-EncryptCommandSequenceDiagram]]
+.Interactions inside the Logic Component for the `encrypt` Admin Command
+image::EncryptDataCommandSequenceDiagram.png[width="800"]
+
+Currently, the local data is encrypted in the Advanced Encryption Standard (AES) in XML files.
+The secret key used is a byte array of "TheBestSecretKey".
+The function below demonstrates how encryption is implemented using `javax.crypto.Cipher`: +
+[source, java]
+----
+Key key = generateKey();
+Cipher c = Cipher.getInstance(ALGO);
+c.init(Cipher.ENCRYPT_MODE, key);
+byte[] encVal = c.doFinal(data.getBytes());
+return Base64.getEncoder().encodeToString(encVal);
+----
+The encryption status is stored in `OutletInformation` as a variable `isDataEncrypted`.
+The encryption status stored in local files, with reference to the third line of _<<fig-OutletEncrypt>>_, is always plaintext because it is used to convert strings in XML files to models.
+In encryption mode, data writen to or read from XML files will be encrypted using `encrypt(String plainText)` or decrypted using `decrypt(String cipherText)` respectively.
+
+[[fig-OutletEncrypt]]
+.Example of an Encrypted XML File of Outlet Information
+image::OutletInformationEncryptedXMLFile.jpg[width="800"]
+
+==== Design considerations
+
+===== Aspect: implementation of OutletInformation class
+
+* **Alternative 1 (current choice):** Use default constructor to initialize all attributes with default values.
+** Pros: Provides convenience to users because they do not have to create a new outlet by themselves.
+** Cons: Lacks flexibility to initialize the attributes with user-defined values.
+* **Alternative 2:** Use a constructor with more parameters.
+** Pros: Allows flexibility in storing outlet information.
+** Cons: Needs to be very careful when calling the constructor. Since `isDataEncrypted` can be initialized to true, users new to this app must be informed clearly that data stored in local files are encrypted.
+Moreover, the default admin password in the User Guide must be updated to what is initialized in the `masterPassword`.
+Otherwise, users are unable to log in with correct password when they start using the app for the first time.
+
+===== Aspect: implementation of encryption and decryption
+
+* **Alternative 1 (current choice):** Encrypt and decrypt data writen to and read from XML files.
+** Pros: Successfully prevents any user of the computer directly interpreting the stored information in a clean and fast way.
+** Cons: Still maintains the XML file structure and does not encrypt the title of each element as shown in _<<fig-OutletEncrypt>>_. It is possible that any user with advanced knowledge of data encryption is able to decrypt the data with the found patterns.
+
+* **Alternative 2:** Encrypt and decrypt XML files with the XMLCipher package from apache.org with reference to the code below.
+** Pros: Enhances safety of data since there are no more obvious patterns in XML files.
+** Cons: Increases difficulty in saving and backing up data in local files because additional encrypted and decrypted files need to be created and replace original files.
+
+[source, java]
+----
+public static Document encryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
+    Element rootElement = document.getDocumentElement();
+    XMLCipher xmlCipher = XMLCipher.getInstance(algorithm);
+    xmlCipher.init(XMLCipher.ENCRYPT_MODE, secretKey);
+    xmlCipher.doFinal(document, rootElement, true);
+    return document;
+}
+----
+// end::outlet[]
+
+
+// tag::shifts[]
+=== Shifts Feature
+
+==== Reason for implementation
+
+PTMan is designed to give employees the freedom and flexibility to choose the shifts they want to work in.
+By allowing employers to add or delete shifts, employees can then apply for the shifts that are available.
+
+==== How it is implemented
+The `Shift` class represents a shift in PTMan. +
+
+It stores:
+
+. The `Date` of the shift.
+`Date` is a class that wraps Java's `LocalDate` class.
+. The starting and ending `Time` of the shift.
+`Time` is a class that wraps Java's `LocalTime` class.
+. The employee `Capacity` for the shift.
+`Capacity` is a class that wraps an integer.
+. The `UniqueEmployeeList` of employees working in the shift.
+`UniqueEmployeeList` is a list that stores the `Employee` objects of employees that have applied for the shift.
+It guarantees there are no duplicate employees in the shift.
+
+_<<fig-ShiftClassDiagram>>_ is a class diagram that displays the association between `Shift` and other components in the `Model`.
+
+[[fig-ShiftClassDiagram]]
+.Overview of the Shift Class in the Model Component
+image::ShiftClassDiagram.png[width="800"]
+
+`Date` and `Time` use Java's `LocalDate` and `LocalTime` classes for easy integration with the timetable.
+They also make formatting and parsing simple through the use of Java's `DateTimeFormatter`.
+
+To store a list of shifts in `PartTimeManager`, we use a `UniqueShiftList` to ensure there are no duplicate shifts.
+
+===== Commands
+
+The following are commands that directly interact with the `Shift` class:
+
+. `AddShiftCommand`: Creates a `Shift` and adds it to the `UniqueShiftList` in `PartTimeManager`. +
+. `DeleteShiftCommand`: Deletes a `Shift` from the `UniqueShiftList` in `PartTimeManager`.
+. `ApplyCommand`: Adds an `Employee` to the `UniqueEmployeeList` in the `Shift`. +
+To adhere to defensive programming practices, instead of simply adding the `Employee` to the `Shift`, `ApplyCommand` does the following:
+.. Create a copy of the specified `Shift`
+.. Add the `Employee` to the copy.
+.. Replace the original `Shift` with the copy.
+. `UnapplyCommand`: Removes an `Employee` from the `UniqueEmployeeList` in the `Shift`. +
+Similar to `ApplyCommand`, `UnapplyCommand` will:
+.. Create a copy of the specified `Shift`.
+.. Remove the `Employee` from the copy.
+.. Replace the original with the copy.
+
+===== Shift indexing
+
+The commands `DeleteShiftCommand`, `ApplyCommand` and `UnapplyCommand` access the specified `Shift` via it's index displayed on the timetable.
+The preferred behaviour for the indexes is to have the first shift of the week start from index 1, with subsequent shifts incrementing that index.
+However, having shifts that are earlier than the current timetable week will cause the first shift of the week to have an index that is greater than 1. +
+As seen in _<<fig-ShiftIndexBad>>_ below, the shift on Monday has index 5 because there are 4 other shifts in the week(s) before the current week.
+
+[[fig-ShiftIndexBad]]
+.Example of Undesired Shift Indexing
+image::ShiftIndexBad.png[width="800"]
+
+To avoid this, we only want to index shifts that are visible in the current timetable view. +
+This can be achieved by setting the `Predicate<Shift>` for the `FilteredList<Shift>` in `ModelManager` to filter shifts in the current week as shown below:
+----
+// In Model
+public static Predicate<Shift> PREDICATE_SHOW_WEEK_SHIFTS = shift ->
+    getWeekFromDate(shift.getDate().getLocalDate()) == getWeekFromDate(LocalDate.now());
+
+// In ModelManager
+updateFilteredShiftList(PREDICATE_SHOW_WEEK_SHIFTS);
+----
+This results in the desired shift indexing as shown in _<<fig-ShiftIndexGood>>_ below.
+
+[[fig-ShiftIndexGood]]
+.Example of Desired Shift Indexing
+image::ShiftIndexGood.png[width=800]
+// end::shifts[]
+
+// tag::timetable[]
+=== Timetable Feature
+
+PTMan has a timetable that increases interactivity between users and shifts.
+_<<fig-Feature_Timetable1>>_ below shows how the timetable looks like.
+
+[[fig-Feature_Timetable1]]
+.Example of the Timetable in PTMan
+image::Feature_Timetable1.png[width=800]
+
+==== Reason for implementation
+
+A timetable is useful for both employers and employees, as it allows them to visualise the shifts and access them via their indexes.
+The timetable instantly reflects any changes to the shifts and allows selected employee's shifts to be highlighted.
+Users are also allowed to export the timetable as image for future reference.
+All in all, the timetable feature improves user experience and brings convenience to the user.
+
+==== How it is implemented
+
+The timetable is created with the help of the https://github.com/dlemmermann/CalendarFX[CalendarFX] library, and `TimetablePanel`
+ is the main class in charge of displaying the timetable. +
+
+`TimetablePanel` contains the following JavaFX components:
+
+. A `CalendarView` object.
+`CalendarView` is a class in CalendarFX, and it is responsible for displaying the timetable in the `TimetablePanel`.
+. A `BorderPane` object.
+`BorderPane` is the object in charge of displaying the navigation bar of the timetable.
+. A `Label` object.
+`Label` is the object in charge of displaying the text (in this case, the month and year) in the navigation bar.
+. Two `Button` objects.
+Each of the `Button` object is in charge of displaying the left/right buttons in the navigation bar.
+It allows users to click on them to navigate through the weeks in the timetable.
+. A `VBox` object.
+`VBox` is in charge of laying `BorderPane` and `CalendarView` out in a vertical column.
+
+_<<fig-TimetablePanelClassDiagram>>_ below shows a class diagram of the `TimetablePanel` and its association with JavaFX components. +
+ +
+[[fig-TimetablePanelClassDiagram]]
+.Overview of the TimetablePanel Class in the UI Component
+image::TimetablePanelClassDiagram.png[width="800"]
+
+A `TimetablePanel` is created with its constructor:
+[source,java]
+----
+public TimetablePanel(Logic logic) {
+    // ...
+    this.logic = logic;
+    this.shiftObservableList = logic.getFilteredShiftList();
+    this.outletInformation = logic.getOutletInformation();
+    // ...
+}
+----
+
+Using the `logic` argument, the `TimetablePanel` constructor initialises `shiftObservableList` and `outletInformation`.
+These pieces of information are important to the `TimetablePanel` because:
+
+* `shiftObservableList` is an `ObservableList<Shift>` object, and is responsible for providing `TimetablePanel` with the shifts required to build the timetable.
+Shifts are added to the timetable in the method `setShifts()`.
+* `outletInformation` is an `OutletInformation` object, and is responsible for providing `TimetablePanel` with the operating hours of the outlet.
+The timetable re-scales according to the operating hours of the outlet, in the method `setTimetableRange()`.
+
+===== Updating the timetable
+
+The main method in charge of updating the timetable is `updateTimetableView()`.
+When this method is called, the `Label` in the navigation bar is set to show the month that is being displayed
+on the timetable, and the timetable is rebuilt with the newly set shifts and operating hours.
+`updateTimetableView()` is called whenever a `PartTimeManagerChangedEvent`, `TimetableWeekChangeRequestEvent` or `EmployeePanelSelectionChangedEvent` is posted. +
+
+We will use `PartTimeManagerChangedEvent` to illustrate `updateTimetableView()` works.
+_<<fig-updateTimetableViewHighLevelSequenceDiagram>>_ below shows a high level sequence diagram of what happens when a `PartTimeManagerChangedEvent`
+ is posted and how it causes the `UI` to call `updateTimetableView()`. +
+ +
+[[fig-updateTimetableViewHighLevelSequenceDiagram]]
+.Component Interactions for a `PartTimeManagerChangedEvent`
+image::updateTimetableViewHighLevelSequenceDiagram.png[width="800"]
+
+_<<fig-updateTimetableViewSequenceDiagram>>_ below shows the sequence diagram of how `TimetablePanel` carries out `updateTimetableView()` to
+respond to a `PartTimeManagerChangedEvent`. +
+ +
+[[fig-updateTimetableViewSequenceDiagram]]
+.Sequence Diagram to Update Timetable
+image::updateTimetableViewSequenceDiagram.png[width="750"]
+
+Here are some examples of when `updateTimetableView()` is called: +
+
+* A `Shift` is added, removed, or altered:
+`PartTimeManagerChangedEvent` is posted which is handled by calling `updateTimetableView()` to rebuild the timetable with the changed shifts.
+* `OutletInformation` is edited:
+`OutletInformationChangedEvent` is posted which is handled by calling `updateTimetableView()` to rebuild the timetable and fit in the updated operating hours.
+* The user wants to navigate the timetable to the next/previous/current week:
+`TimetableWeekChangeRequestEvent` is posted which is handled by calling `navigateToNextWeek()`, `navigateToPreviousWeek()` or `navigateToCurrWeek()` accordingly.
+All of these methods call `updateTimetableView()` to rebuild the timetable displaying the appropriate weeks.
+* Selection/Deselection of an employee:
+`EmployeePanelSelectionChangedEvent` is posted which is handled by calling `loadEmployeeTimetable(employee)` or `loadDefaultTimetable()` accordingly. Both of these
+methods call `updateTimetableView()` to rebuild the timetable with the appropriate colours of the entries.
+
+
+===== Commands
+
+The following are commands that are supported as part of the timetable feature:
+
+. <<Select, `SelectCommand`>>: Selects an employee and highlight their shifts on the timetable.
+. <<Deselect, `DeselectCommand`>>: Returns the timetable back to the default view of the current week.
+. <<Export, `ExportCommand`>>: Exports timetable as an image.
+
+[[Select]]
+===== Viewing of individual employee's shifts
+
+PTMan allows employees to highlight their own shifts on the timetable through `SelectCommand`. When a particular employee is
+being selected, `EmployeePanelSelectionChangedEvent` is posted with the selected employee as its argument. +
+
+`EmployeePanelSelectionChangedEvent` has the following constructor:
+----
+public EmployeePanelSelectionChangedEvent(EmployeeCard newSelection)
+----
+
+`TimetablePanel` subscribes to this event and handles it by calling the `loadEmployeeTimetable` method for the `newSelection`. +
+ +
+
+[[Deselect]]
+===== Returning to default view of timetable
+
+The `DeselectCommand` deselects any selected employee and returns the timetable back to its default style.
+`EmployeePanelSelectionChangedEvent` is posted with `null` as its argument.
+
+`TimetablePanel` subscribes to this event and handles it by calling the `loadDefaultTimetable` method. +
+ +
+
+[[Export]]
+===== Exporting timetable
+
+Exporting of the timetable is triggered by `ExportCommand`, which:
+
+* Saves the timetable as an image locally if no email address is specified, or
+* Sends the timetable as an image through email if an email address is specified.
+
+The former posts an `ExportTimetableAsImageRequestEvent`, while the latter posts an `ExportTimetableAsImageAndEmailRequestEvent`,
+both of which are subscribed to by `TimetablePanel`. +
+
+`TimetablePanel` handles them by calling `exportTimetableAsImage` or `exportTimetableAsImageAndEmail` accordingly.
+The exporting works by taking a Snapshot of the `timetableView` node, and then writing it into a local file.
+If `exportTimetableAsImageAndEmail` is called instead of `exportTimetableAsImage`, this image
+will be emailed through the `EmailService` class, and then deleted from local storage.
+
+// end::timetable[]
+
+
 // tag::undoredo[]
-=== Undo/Redo feature
-==== Current Implementation
+=== Undo/Redo Feature
+==== How it is implemented
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the Part-time Manager (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram (_<<fig-LogicCommand>>_) shows the inheritance diagram for commands:
+{nbsp} +
 
+[[fig-LogicCommand]]
+.Inheritance Diagram for Commands
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+{nbsp} +
+
+As you can see from _<<fig-LogicCommand>>_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the Part-time Manager before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implement the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,119 +705,249 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the Part-time Manager. The current state of the Part-time Manager is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command) as shown in _<<fig-Undo1>>_.
 
+[[fig-Undo1]]
+.Demonstration of `delete 5` Command in Undo and Redo Stack
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+{nbsp} +
 
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person, as shown in _<<fig-Undo2>>_.
+
+[[fig-Undo2]]
+.Demonstration of `add n/David ...` Command in Undo and Redo Stack
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
+{nbsp} +
+
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the Part-time Manager to the state before the `add` command executed as shown in _<<fig-Undo3>>_..
 
+[[fig-Undo3]]
+.Demonstration of `undo` Command in Undo and Redo Stack
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+{nbsp} +
+The following sequence diagram (_<<fig-UndoRedoSD>>_) shows how the undo operation works:
 
+[[fig-UndoRedoSD]]
+.Sequence Diagram for Undo Operation
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+{nbsp} +
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the Part-time Manager to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer makes sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow). _<<fig-Undo4>>_ shows changes in undoStack and redoStack after a `clear` command.
 
+[[fig-Undo4]]
+.Demonstration of `clear` Command in Undo and Redo Stack
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+{empty} +
 
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution, as shown in _<<fig-Undo5>>_.
+
+[[fig-Undo5]]
+.Demonstration of `list` Command in Undo and Redo Stack
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+{nbsp} +
 
+The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command, as shown in _<<fig-Undo6>>_.
+
+[[fig-Undo6]]
+.Activity Diagram for Undo/Redo Feature
 image::UndoRedoActivityDiagram.png[width="650"]
 
-==== Design Considerations
+{nbsp} +
 
-===== Aspect: Implementation of `UndoableCommand`
+==== Design considerations
+This section highlights the considerations behind our application's design choices.
 
-* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
+===== Aspect: implementation of `UndoableCommand`
+
+* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`.
 ** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
 ** Cons: Hard for new developers to understand the template pattern.
 * **Alternative 2:** Just override `execute()`
 ** Pros: Does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
-===== Aspect: How undo & redo executes
+===== Aspect: how undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire Part-time Manager.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
 ** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
+** Cons: We must ensure that the implementation of each command is correct.
 
 
-===== Aspect: Type of commands that can be undone/redone
+===== Aspect: type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+* **Alternative 1 (current choice):** Only include commands that modify the Part-time Manager (`add`, `clear`, `edit`).
+** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost).
+** Cons: User might think that undo also applies when the list is modified (undoing filtering for example),  only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
-** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
+** Pros: PTMan might be more intuitive for the user.
+** Cons: User has no way of skipping such commands if he or she just want to reset the state of PTMan and not the view.
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
-
-===== Aspect: Data structure to support the undo/redo commands
+===== Aspect: data structure to support the undo/redo commands
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
+** Pros: Easy to understand for new Computer Science undergraduates, who are likely to be the new incoming developers of our project.
+** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update  both `HistoryManager` and `UndoRedoStack`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
 
-// end::dataencryption[]
+// tag::accessControl[]
+=== Password Feature
+
+==== Reason for implementation
+As PTMan is currently designed to use locally on a system, both employer and employee must go through the same system to allocate their preferred slot or to edit the data in PTMan. A Password class is given to both employer and employee to ensure that they are the authorized person that is using the system.
+
+==== How it is implemented
+A Password class is created with two constructors.
+----
+new Password();
+new Password(String hashCode);
+----
+`new Password()` produce hash code converted by https://en.wikipedia.org/wiki/SHA-2[SHA-256] using the default password "DEFAULT1" and store it within the class. +
+
+`new Password(String hashCode)` allows storage to directly insert the generated hash code to create the password class upon loading. +
+
+[NOTE]
+To create a password with desired password String, one can invoke the method below.
+----
+createPassword(String password)
+----
+
+As of version 1.2, each person and outlet now has a `Password` class. You may refer to _<<fig-PasswordCD>>_ for an overview of the `Password` class.
+
+[[fig-PasswordCD]]
+.Overview of the Password Class in Model Component
+image::PasswordClassDiagram.png[width="700"]
+
+
+The reason of converting password string to hashCode is to protect user’s password from being seen in the storage file.  Anyone who get hold of the data are not able to convert the hashCode back to the original password string as SHA-256 is a https://en.wikipedia.org/wiki/Collision_resistance[collision resistant] hash.
+
+=== Admin Mode and Command Feature
+
+==== Reason for implementation
+Initial startup of PTMan require huge amount of manual input by admin. To promote hassle-free commands, employers can log in to admin mode with `login` command and use the command provided without the need to be autheticated for every command.
+
+==== How it is implemented  (admin mode)
+Model component now implement three new API for logic component to use.
+----
+boolean isAdminMode();
+boolean setTrueAdminMode(Password password);
+
+/** guarantee to set adminMode to false */
+setFalseAdminMode();
+----
+
+`setTrueAdminMode(Password password)` requires a password that will check against the outlet password and set admin mode accordingly. Failing to give the correct password will result in returning false.
+
+==== How it is implemented (admin command)
+In order to enable commands to be usable only in admin mode the code below must be added to the execution() of the command *first*.
+----
+if (!model.isAdminMode()) {
+    throw new CommandException(MESSAGE_ACCESS_DENIED);
+}
+----
+_<<fig-DeleteSD>>_ below illustrates how the admin command is generally executed.
+
+[[fig-DeleteSD]]
+.Interactions inside the Logic Component for the `delete 1` Admin Command
+image::DeletePersonSdForLogic.png[width="800"]
+
+
+=== Email Service Feature
+
+==== Reason for implementation
+Email service can be useful to send reset password and notification to employee. To facilitate easy sending of email, a https://en.wikipedia.org/wiki/Singleton_pattern[singleton] `EmailService` class is introduced.
+
+==== How it is implementation
+To get an instance of the email service the following code can be called anywhere.
+----
+EmailService.getInstance();
+----
+Currently, there are two specialized methods in `EmailService` class that can be used to send email.
+----
+sendTimetableAttachment(String email, String filename)
+sendResetPasswordMessage(String name, String email, String newPassword)
+----
+`sendTimetableAttachment` crafts a specialized email and send to the specified `email` with attachment from `filename`. +
+
+`sendResetPasswordMessage` crafts a specialized email and send to the specified `email` to the intended personnel.
+
+[NOTE]
+`EmailService` class is free for extension.
+// end::accessControl[]
+
+// tag::backup[]
+=== Backup Storage
+
+==== Reason for implementation
+Sometimes local storage files might be corrupted due to accidents.
+It is important to keep backup files to prevent any loss of essential data.
+
+==== How it is implemented
+Currently, backup files are stored with file extension ".backup" in the same folder as local storage files.
+Backup files are updated upon exit of the app.
+It is implemented by calling `backupPartTimeManager(ReadOnlyPartTimeManager partTimeManager)` and `backupOutletInformation(OutletInformation outletInformation)` in the `MainApp.java` as shown below:
+----
+public void stop() {
+    ...
+    storage.backupPartTimeManager(model.getPartTimeManager());
+    storage.backupOutletInformation(model.getOutletInformation());
+    ...
+}
+----
+An alternative implementation would be not only saving backup files but also sending them to the cloud such as Dropbox and Google Drive.
+It can be done using the respective Dropbox and Google Drive APIs.
+// end::backup[]
 
 === Logging
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+We are using the `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
+* The logging level can be controlled using the `logLevel` setting in the configuration file. (See <<Implementation-Configuration>>)
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
+* Currently, log messages are output to `Console` and to a `.log` file.
 
 *Logging Levels*
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+* `SEVERE` : Logs critical problems which may possibly cause the termination of the application.
+* `WARNING` : Logs potential problems.
+* `INFO` : Logs the noteworthy actions of app.
+* `FINE` : Logs details that are not usually noteworthy but may be useful in debugging e.g. printing the actual list instead of just it's size.
 
 [[Implementation-Configuration]]
 === Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+Certain properties of the application can be controlled (e.g app name, logging level) through the configuration file (default: `config.json`).
 
 == Documentation
 
-We use asciidoc for writing documentation.
+This section describes how to edit, publish and convert documentation. We use asciidoc for writing documentation.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -401,71 +961,83 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting Documentation to PDF Format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
-Here are the steps to convert the project documentation files to PDF format.
+Here are the steps to convert the project documentation files to PDF format:
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
-.  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
-.  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Go to `build/docs` folder, your should see the generated HTML files.
+.  Right click on the file and select `Open with` -> `Google Chrome`. You should see a Google Chrome window.
+.  Click on the `Print` option in Chrome's menu. You should see a `Print` window as shown in _<<fig-SaveDoc>>_ below.
+.  Set the destination to `Save as PDF`.
+.  Click `Save` to save a copy of the file in PDF format. For the best results, use the settings indicated in _<<fig-SaveDoc>>_.
 
-.Saving documentation as PDF files in Chrome
+[[fig-SaveDoc]]
+.Saving Documentation as PDF Files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+
+This section explains how to run the different types of tests and test troubleshooting.
 
 === Running Tests
 
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the third one. The first two methods might fail in some GUI tests due to platform/resolution-specific idiosyncrasies.
 
-*Method 1: Using IntelliJ JUnit test runner*
+*Method 1: Using IntelliJ JUnit Test Runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* Right-click on the `src/test/java` folder and choose `Run 'All Tests'` to run all tests.
+* Right-click on a test package, test class, or a test and choose `Run 'ABC'` to run a subset of tests.
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean allTests`. If you are using Mac/Linux system, run the command `./gradlew clean allTests` instead.
 
 [NOTE]
-See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+See <<UsingGradle#, UsingGradle.adoc>> for more information on how to run tests using Gradle.
 
-*Method 3: Using Gradle (headless)*
+*Method 3: Using Gradle (Headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+* Open a console and run the command `gradlew clean headless allTests` to run tests in headless mode. If you are using Mac/Linux system, run the command `./gradlew clean headless allTests` instead.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+[NOTE]
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the computer while the tests are running.
 
-=== Types of tests
+=== Types of Tests
 
 We have two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
-..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
-e.g. `seedu.address.logic.LogicManagerTest`
+.  *GUI Tests* +
+ These are tests involving the GUI. They include:
+* _System tests_ test the entire app by simulating user actions on the GUI. These are in the `systemtests` package.
+* _Unit tests_ test the individual UI components. These are in the `seedu.ptman.ui` package.
+.  *Non-GUI Tests* +
+ These are tests not involving the GUI. They include:
+*  _Unit tests_ test methods/classes at the lowest level. +
+e.g. `seedu.ptman.commons.StringUtilTest`
+*  _Integration tests_ test the integration of multiple code units. Those code units are assumed to be working. +
+e.g. `seedu.ptman.storage.StorageManagerTest`
+*  Hybrids of _unit_ and _integration tests_ test multiple code units as well as how they are connected together. +
+e.g. `seedu.ptman.logic.LogicManagerTest`
 
 
 === Troubleshooting Testing
-**Problem: `HelpWindowTest` fails with a `NullPointerException`.**
+
+The common problems encountered while testing are listed here.
+
+**Problem:** `HelpWindowTest` fails with a `NullPointerException`.
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
 == Dev Ops
+The following sections help you ensure that the project is fully integrated, tested, and built for release.
 
 === Build Automation
 
@@ -473,7 +1045,7 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform continuous integration on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Coverage Reporting
 
@@ -484,7 +1056,7 @@ When a pull request has changes to asciidoc files, you can use https://www.netli
 
 === Making a Release
 
-Here are the steps to create a new release.
+Here are the steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
@@ -493,302 +1065,59 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+A project often depends on third-party libraries. For example, PTMan depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these dependencies can be automated using Gradle. One advantage of Gradle is that it can download these dependencies automatically, which is better than the below alternatives: +
 
-[[GetStartedProgramming]]
-[appendix]
-== Suggested Programming Tasks to Get Started
+..  Including the third-party libraries in the repo. This bloats the repo size. +
+..  Making developers download the third-party libraries manually. This creates extra work for developers.
 
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == Product Scope
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* has a need to manage part-time employees.
+* wants to give employees flexibility in their working hours.
+* can type fast.
+* prefers typing over mouse input.
+* is reasonably comfortable using CLI apps.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage part-time employees faster than a typical mouse/GUI driven app
+
+=== Feature Contribution
+*Shannon*:
+
+. *Shifts (Major)*:
+.. *Add/remove shifts*: Added commands for the employer to add/remove shifts. Employees can then view the available shifts, their working hours, and the capacity of each shift.
+.. *Select/Deselect shifts*: Added commands for employees to choose the shifts they want to work in.
+. *Command aliases (Minor)*: Added aliases to most commands. These aliases can be used in place of the full length commands for the user's convenience.
+
+*Chin Chye*:
+
+. *Access Control (Major)*:
+.. *Password*: Give password to every employee and outlet to protect from accidental/misuse of command.
+.. *Login for edit/admin Mode*: Using the password in outlet, employer are able to login to access admin functions.
+.. *Change/reset password command*: Employee and employer are able to change/reset password to keep their data/password a secret.
+. *Salary (Minor)*: Added salary to employee. This variable is used to keep track of how much employee has earned so far.
+
+*Caryn*:
+
+. *Timetable (Major)*:
+.. *Timetable view*: Added the interactive timetable for users to interact through the Shift commands.
+.. *Export timetable*: Added a command for exporting timetable as image.
+.. *View shifts applied by employee*: Modified a command for employees to view their own shifts on the timetable.
+.. *View employees working in shift*: Added a command for listing employees working in any particular shift.
+. *Tag colors (Minor)*: Added different colors for different tags inside person cards. Tags are allocated colors based on their hashcode.
+
+*Bangjie*:
+
+. *Outlet Feature(Major)*:
+.. *Edit outlet information*: Commands are added for the employers to edit outlet information, including outlet name and operating hours.
+.. *Create announcement*: Announcement command is added for the employers to broadcast important messages to all employees.
+.. *Display outlet information*: Outlet information will be displayed in the UI. Any change in the outlet information will be reflected as well.
+.. *Store outlet information*: Outlet information is stored in a separate file.
+.. *Data encryption*: Storage files can be encrypted and decrypted on command to ensure that data cannot be obtained and understood by any third party.
+. *Backup storage files (Minor)*: Backup files with file extension ".backup" are created and updated upon exit of the app.
 
 [appendix]
 == User Stories
@@ -798,35 +1127,156 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |have a user manual |know how to use the app.
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |have access control |prevent unauthorized access to my information.
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |update my password |keep my information secure.
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |reset my password |reset when i forget my password.
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |constantly back up my local files |retrieve important information if some files are corrupted.
+
+|`* * *` |user |navigate through the weeks of the timetable |manage shifts ahead of time, and revisit old shifts.
+
+|`* * *` |employer |add a new employee |store them in the record.
+
+|`* * *` |employer |add an employee to a shift |assign employees to their shifts.
+
+|`* * *` |employer |remove an employee from a shift |reassign employees their shifts.
+
+|`* * *` |employer |view employees working in a shift |keep track of who is working.
+
+|`* * *` |employer |view an employee’s contact |contact them.
+
+|`* * *` |employer |view an employee’s salary |view their salary.
+
+|`* * *` |employer |edit an employee’s salary |update their salary.
+
+|`* * *` |employer |delete an existing employee |remove employees that are no longer working.
+
+|`* * *` |employer |update the schedule |show employees the available slots.
+
+|`* * *` |employer |encrypt and decrypt local storage files on demand |prevent unauthorised users from retrieving local file data.
+
+|`* * *` |employee |view the schedule |choose when I want to work.
+
+|`* * *` |employee |select from the available slots in the schedule |work during that slot.
+
+|`* *` |employer |edit an employee’s contact |update their outdated contact information.
+
+|`* *` |employer |edit the outlet information |update the outdated outlet information.
+
+|`* *` |employer |sort employees by name |have a clearer view of all employees’ details.
+
+|`* *` |employer |find an employee by name |locate details of employees without having to go through the entire list.
+
+|`* *` |employer |view an employee’s address|view their address information.
+
+|`* *` |employer |edit an employee’s address|update their outdated address.
+
+|`* *` |employee |view my own shifts in the timetable |so that I can easily recall when I need to work.
+
+|`* *` |employee |export timetable as image |have easy access to the time slots I'm working at.
+
+|`* *` |employee |edit my contact and address |update my particulars.
+
+|`* *` |employee |view my salary so far for the month |plan my expenses.
+
+|`*` |employer |add an employee’s photo |view it at any time.
+
+|`*` |employer |edit an employee’s photo |change an employee's photo to a newer one.
+
+|`*` |employer |view an employee’s photo |recognize the employee.
+
+|`*` |employer |remove an employee’s photo |remove their old photo.
+
+|`*` |employee |add a photo |be easily identified by my employer.
+
+|`*` |employee |have a notification for slot confirmation |be assured that I am working at that slot.
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `PTMan` and the *Actor* is the `employer`, unless specified otherwise)
 
-[discrete]
-=== Use case: Delete person
+=== Use Case: Add Employee
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  Employer logs in to their admin account.
+2.  Employer enters the employee's details.
+3.  PTMan adds the employee.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The entered format is invalid.
++
+[none]
+** 2a1. PTMan shows an error message.
++
+Use case resumes at step 1.
+
+=== Use Case: Add Shift
+
+*MSS*
+
+1.  Employer logs in to their admin account.
+2.  Employer enters the shift details.
+3.  PTMan adds the shift.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The entered format is invalid.
++
+[none]
+** 2a1. PTMan shows an error message.
++
+Use case resumes at step 1.
+
+=== Use Case: Delete Shift
+
+*MSS*
+
+1.  Employer logs in to their admin account.
+2.  Employer enters the shift's index.
+3.  PTMan deletes the shift.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The entered format is invalid.
++
+[none]
+** 2a1. PTMan shows an error message.
++
+Use case resumes at step 2.
+[none]
+* 2b. The entered index does not exist.
++
+[none]
+** 2b1. PTMan shows an error message.
++
+Use case resumes at step 2.
+
+=== Use Case: Delete Employee
+
+*MSS*
+
+1.  Employer requests to list employees.
+2.  PTMan shows a list of employees.
+3.  Employer requests to delete a specific employee in the list.
+4.  PTMan deletes the employee.
 +
 Use case ends.
 
@@ -840,20 +1290,134 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. PTMan shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use Case: Edit Employee
 
-[appendix]
+*MSS*
+
+1.  Employer logs in to their admin account.
+2.  Employer enters the employee's index and the new details of the employee.
+3.  PTMan changes the employee's details.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The entered format is invalid.
++
+[none]
+** 2a1. PTMan shows an error message.
++
+Use case resumes at step 2.
+* 2b. The employee cannot be found.
++
+[none]
+** 2b1. PTMan shows an error message.
++
+Use case resumes at step 2.
+* 2c. The entered format of new details is invalid.
++
+[none]
+** 2c1. PTMan shows an error message.
++
+Use case resumes at step 2.
+
+=== Use Case: Edit Outlet Information
+
+*MSS*
+
+1.  Employer logs in to their admin account.
+2.  PTMan changes to admin mode.
+3.  Employer enters new values for outlet.
+4.  PTMan changes the outlet's details.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The entered format is invalid.
++
+[none]
+** 3a1. PTMan shows an error message.
++
+Use case resumes at step 3.
+* 3b. The entered format of new details is invalid.
++
+[none]
+** 3b1. PTMan shows an error message.
++
+Use case resumes at step 3.
+
+=== Use Case: Sign Up for Available Shifts
+
+*MSS*
+
+1.  Employee enters a shift that he wants to work in.
+2.  PTMan sends a confirmation message to the employee.
+3.  PTMan updates the indicated time slot in the timetable of the indicated outlet.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The entered format is invalid.
++
+[none]
+** 1a1. PTMan shows an error message.
++
+Use case resumes at step 1.
+* 1b. The shift is full.
++
+[none]
+** 1b1. PTMan shows an error message.
++
+Use case resumes at step 1.
+
+[none]
+
+=== Use Case: Encrypt Local Files
+
+*MSS*
+
+1.  Employer requests to encrypt local files.
+2.  PTMan encrypts local files and sends a confirmation message to the employer.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The entered format is invalid.
++
+[none]
+** 1a1. PTMan shows an error message.
++
+Use case resumes at step 1.
+* 1b. Local files have already been encrypted.
++
+[none]
+** 1b1. PTMan shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  Should work on both 32-bit and 64-bit environment.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should respond within 2 seconds after entering any command.
+.  Should be able to use by users who has never used a command line interface before.
+.  Should be able to manage contact details of part-time workers in any outlet.
+.  Should be able to manage work schedule in any outlet.
+.  Should not be required to handle the printing of contact details and schedules.
 
 [appendix]
 == Glossary
@@ -863,23 +1427,6 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing
@@ -903,26 +1450,139 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Admin Mode Logging in / Logging out
 
-=== Deleting a person
+. Logging in to admin mode in order to do admin-only commands.
+.. Prerequisites: It must be your first login and you did not change the admin password.
+.. Test case: `login pw/DEFAULT1` +
+   Expected: log in successfully and you will see red sign "Admin Mode" at the top right corner of the app.
+.. Test case: `login pw/wrongPassword123` +
+   Expected: login fails.
 
-. Deleting a person while all persons are listed
+. Logging out of admin mode.
+.. Test case: `logout` +
+   Expected: If you logged in, now you will log out and red sign "Admin Mode" will disappear.
+   Otherwise, you cannot log out again.
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
-   Expected: Similar to previous.
+=== Editing Outlet Information
+. Editing outlet information
 
-_{ more test cases ... }_
+.. Prerequisites: Login with the correct admin password. Make sure you are in the admin mode. (The default admin password is `DEFAULT1`)
+.. Test case: `editoutlet n/Cool Coffee h/1000-2000 c/92223333 e/coolcoffee@gmail.com` +
+   Expected: Outlet information displayed changes accordingly. Timetable resizes accordingly.
+.. Test case: `editoutlet n/Cool Tea NUS` +
+   Expected: Outlet information displayed changes accordingly.
+.. Test case: `editoutlet n/Cool Tea @ NUS` +
+   Expected: No outlet information is changed. Error details shown in the status message.
+.. Test case: `editoutlet h/2000-1000` +
+   Expected: No outlet information is changed. Error details shown in the status message.
 
-=== Saving data
+. Editing announcement
+
+.. Prerequisites: Login with the correct admin password. Make sure you are in the admin mode. (The default admin password is `DEFAULT1`)
+.. Test case: `announcement It is a new announcement!` +
+   Expected: Announcement displayed changes accordingly.
+.. Test case: `announce It is another announcement!` +
+   Expected: Announcement displayed changes accordingly.
+
+=== Changing Password
+
+. Changing admin password.
+.. Prerequisites: Login with the correct admin password. Make sure you are in the admin mode. (The default admin password is `DEFAULT1`)
+.. Test case: `changeadminpw pw/DEFAULT1 pw/newPassword pw/newPassword` +
+   Expected: Your master password changed successfully and now you can login with the new password.
+.. Test case: `changeadminpw pw/WRONG_PASSWORD pw/newPassword pw/newPassword` +
+   Expected: Your old password is incorrect. Error details shown in the status message.
+
+=== Resetting Password
+
+. Resetting admin password.
+.. Prerequisites: Make sure the email address of the outlet is valid (your own email address for testing) and Internet is in good condition. Otherwise, you are unable to receive the email.
+.. Test case: `resetadminpw`
+   Expected: Email will be sent to the outlet email address after a few seconds depending on your Internet speed. +
+   Note: You can now log in with the password sent to you. It is a temporary password, you must change ur password immediately.
+
+=== Adding a Shift
+
+. Adding a Shift
+.. Test case: `addshift d/21-04-18 ts/1200 te/1500 c/5` +
+   Expected: A shift is successfully added.
+.. Test case: `addshift d/10-03-18 ts/1200 te/1500 c/5` +
+   Expected: No shift added. Error details shown in the status message.
+.. Test case: `addshift d/21-04-18 ts/1600 te/1500 c/5` +
+   Expected: No shift added. Error details shown in the status message.
+
+=== Deleting a Shift
+
+. Deleting a Shift
+.. Test case: `deleteshift 1` +
+   Expected: A chosen shift is deleted. Shift indices updated.
+.. Test case: `deleteshift x` where x is larger than all the shift indices in the timetable. +
+   Expected: No shift deleted. Error details shown in the status message.
+
+=== Applying an Employee for a Shift
+
+. Applying an employee for a shift
+.. Prerequisites: Login with the correct admin password. Make sure you are in the admin mode. (The default admin password is `DEFAULT1`).
+   Make sure you have added some shifts.
+.. Test case: `apply 1 1` +
+   Expected: The first employee is successfully added to the first shift.
+.. Test case: `apply 1 1` again +
+   Expected: Employee is already in the shift. Error details shown in the status message.
+.. Test case: `apply 1 x` where x is a shift on a past date, or an invalid index.
+   Expected: Error details shown in the status message.
+
+=== Unapplying an Employee from a Shift
+
+. Unapplying an employee from a shift
+.. Prerequisites: Login with the correct admin password. Make sure you are in the admin mode. (The default admin password is `DEFAULT1`).
+   Make sure you have added some employees into some shifts.
+.. Test case: `unapply 1 1` +
+   Expected: The first employee is successfully removed from the first shift.
+.. Test case: `unapply 1 1` again +
+   Expectd: Employee is not in the shift as just removed. Error details shown in the status message.
+
+=== Displaying an Employee's Shift on the Timetable
+
+. Displaying an employee on the timetable
+.. Test case: `select 1` -> `apply 1 1` +
+   Expected: You can see shift 1 colour has changed from brown to blue, indicating that the first employee is enrolled in shift 1.
+
+=== Viewing All Employees in a Shift
+
+. Viewing all employees in a shift
+.. Prerequisites: Make sure you have added some shifts and added some employees into the shifts.
+.. Test case: `viewshift 1` +
+   Expected: Correct number of employees listed in employee list.
+
+=== Encrypting and Decrypting Local Storage Files
+. Encrypting local storage files
+
+.. Prerequisites: Login with the correct admin password. Make sure you are in the admin mode. (The default admin password is `DEFAULT1`)
+.. Test case: `encrypt` +
+   Expectd: If your files are not encrypted, after this command, files will be encrypted after a few seconds.
+   If your files have already been encrypted, after this command, files will not be affected and error details will be shown in the status message.
+
+. Decrypting local storage files
+
+.. Prerequisites: Login with the correct admin password. Make sure you are in the admin mode. (The default admin password is `DEFAULT1`)
+.. Test case: `decrypt` +
+   Expectd: If your files are encrypted, after this command, files will be decrypted after a few seconds.
+   If your files have already been decrypted, after this command, files will not be affected and error details will be shown in the status message.
+
+=== Saving and Recovering Data
 
 . Dealing with missing/corrupted data files
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
+.. Prerequisites: You have already run the app once, and exited. You will see files with extension ".backup" in `data` folder.
+.. Simulate missing/corrupted data files:
+... Open `data` folder.
+... Delete "parttimemanager.xml" and "outletinformation.xml".
+... Copy "parttimemanager.xml.backup" and "outletinformation.xml.backup" to another folder.
+.. Recover data:
+... Rename "parttimemanager.xml.backup" to "parttimemanager.xml".
+... Rename "outletinformation.xml.backup" to "outletinformation.xml".
+... Paste those two files back into `data` folder.
+... Run the app and you will see data recovered.
+.. If both of your `.xml` and `.backup` files are missing/corrupted, you are unable to recover data.
+.. If you feel that data read from local files are not correct, *DO NOT* close the app. Quickly copy and paste `.backup` files into another folder and follow `recover data` procedures.

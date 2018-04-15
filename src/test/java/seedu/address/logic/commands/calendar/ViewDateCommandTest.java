@@ -19,6 +19,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
+//@@author WJY-norainu
 public class ViewDateCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
     private LocalDate mayFirst2018 = LocalDate.of(2018, 5, 1);

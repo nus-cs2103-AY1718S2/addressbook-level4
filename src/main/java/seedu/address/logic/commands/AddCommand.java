@@ -17,7 +17,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 
 /**
- * Adds a person to the address book.
+ * Adds a person to the Smart Insurance Collection.
  */
 public class AddCommand extends UndoableCommand {
 

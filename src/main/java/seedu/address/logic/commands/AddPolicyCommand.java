@@ -22,7 +22,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.policy.Policy;
 
 /**
- * Add a policy to an existing person in the address book.
+ * Add a policy to an existing person in the Smart Insurance Collection.
  */
 public class AddPolicyCommand extends UndoableCommand {
 

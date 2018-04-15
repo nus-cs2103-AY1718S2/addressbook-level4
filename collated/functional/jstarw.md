@@ -423,8 +423,8 @@ public class ShowCommand extends Command {
 ###### /java/seedu/address/model/person/Age.java
 ``` java
 /**
- * Represents a Person's age in the address book.
- * Represents a Person's value in the address book
+ * Represents a Person's age in the Smart Insurance Collection.
+ * Represents a Person's value in the Smart Insurance Collection
  * Guarantees: immutable; is valid as declare in {@link #isValidAge(Integer)}}
  */
 public class Age {

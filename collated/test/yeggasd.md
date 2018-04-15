@@ -42,6 +42,26 @@ public class PasswordBoxHandle extends NodeHandle<TextField> {
     }
 }
 ```
+###### \java\guitests\guihandles\PasswordWindowHandle.java
+``` java
+/**
+ * Provides a handle for {@code PasswordWindow}.
+ */
+public class PasswordWindowHandle extends StageHandle {
+
+    private final PasswordBoxHandle passwordBox;
+
+    public PasswordWindowHandle(Stage stage) {
+        super(stage);
+
+        passwordBox = new PasswordBoxHandle(getChildNode(PasswordBoxHandle.PASSWORD_INPUT_FIELD_ID));
+    }
+
+    public PasswordBoxHandle getPasswordBox() {
+        return passwordBox;
+    }
+}
+```
 ###### \java\guitests\guihandles\PersonCardHandle.java
 ``` java
     public List<String> getTagStyleClasses(String tag) {
@@ -55,6 +75,70 @@ public class PasswordBoxHandle extends NodeHandle<TextField> {
 ```
 ###### \java\guitests\guihandles\PersonDetailsCardHandle.java
 ``` java
+/**
+ * Provides a handle to a person details card in the main window.
+ */
+public class PersonDetailsCardHandle extends NodeHandle<Node> {
+    public static final String PERSON_DETAILS_CARD_PLACEHOLDER = "#personDetailsCard";
+
+    private static final String NAME_FIELD_ID = "#name";
+    private static final String ADDRESS_FIELD_ID = "#address";
+    private static final String PHONE_FIELD_ID = "#phone";
+    private static final String EMAIL_FIELD_ID = "#email";
+    private static final String TAGS_FIELD_ID = "#tags";
+    private static final String TIMETABLE_FIELD_ID = "#timeTable";
+
+    private final Label nameLabel;
+    private final Label addressLabel;
+    private final Label phoneLabel;
+    private final Label emailLabel;
+    private final List<Label> tagLabels;
+    private final TableView timeTable;
+
+    public PersonDetailsCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.nameLabel = getChildNode(NAME_FIELD_ID);
+        this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
+        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
+        this.emailLabel = getChildNode(EMAIL_FIELD_ID);
+
+        Region tagsContainer = getChildNode(TAGS_FIELD_ID);
+        this.tagLabels = tagsContainer
+                .getChildrenUnmodifiable()
+                .stream()
+                .map(Label.class::cast)
+                .collect(Collectors.toList());
+        this.timeTable = getChildNode(TIMETABLE_FIELD_ID);
+    }
+
+    public String getName() {
+        return nameLabel.getText();
+    }
+
+    public String getAddress() {
+        return addressLabel.getText();
+    }
+
+    public String getPhone() {
+        return phoneLabel.getText();
+    }
+
+    public String getEmail() {
+        return emailLabel.getText();
+    }
+
+    public List<String> getTags() {
+        return tagLabels
+                .stream()
+                .map(Label::getText)
+                .collect(Collectors.toList());
+    }
+
+    public TableView getTimeTable() {
+        return timeTable;
+    }
+
     public List<String> getTagStyleClasses(String tag) {
         return tagLabels
                 .stream()
@@ -63,6 +147,8 @@ public class PasswordBoxHandle extends NodeHandle<TextField> {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No such tag."));
     }
+}
+
 ```
 ###### \java\seedu\address\commons\util\SecurityUtilTest.java
 ``` java
@@ -192,11 +278,39 @@ public class SecurityUtilTest {
         SecurityUtil.decrypt(TEST_DATA_FILE, truncatedHashedPassword);
     }
 
+    @Test
+    public void decryptEncrypt_null_throwsNullPointerExceptionError() throws Exception {
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.encrypt(null, hashedPassword));
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.encrypt(TEST_DATA_FILE, null));
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.decrypt(null));
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.decrypt(null, hashedPassword));
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.decrypt(TEST_DATA_FILE, null));
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.hashPassword(null));
+
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.decryptFile(TEST_DATA_FILE, null));
+        Assert.assertThrows(NullPointerException.class, () -> SecurityUtil.decryptFile(null, new Password("asd")));
+
+        Assert.assertThrows(NullPointerException.class, () ->  SecurityUtil.encryptFile(null, new Password("asd")));
+
+    }
+
     @After
     public void reset() throws Exception {
         SecurityUtil.decrypt(VALID_DATA_FILE, hashedPassword);
     }
 }
+```
+###### \java\seedu\address\logic\commands\CommandTestUtil.java
+``` java
+    public static final String VALID_PASSWORD = "test";
+    public static final byte[] VALID_PASSWORD_HASH;
+    public static final String MIXED_CASE_PASSWORD_COMMAND_WORD = "EnCrYpT";
+    public static final String MIXED_CASE_REMOVEPASSWORD_COMMAND_WORD = "DeCrYpT";
 ```
 ###### \java\seedu\address\logic\commands\ImportCommandTest.java
 ``` java
@@ -424,22 +538,26 @@ public class RemovePasswordCommandTest {
 ``` java
     @Test
     public void parseCommand_password() throws Exception {
-        PasswordCommand command = (PasswordCommand) parser.parseCommand(
-                PasswordCommand.COMMAND_WORD + " test");
+        String password = PasswordCommand.COMMAND_WORD + " test";
+        String[] input = parser.extractCommandArgs(password);
+        PasswordCommand command = (PasswordCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new PasswordCommand("test"), command);
     }
 
     @Test
     public void parseCommand_nopassword() throws Exception {
-        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD) instanceof RemovePasswordCommand);
-        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD + " 3")
+        String removePassword = RemovePasswordCommand.COMMAND_WORD + " 3";
+        assertTrue(parser.parseCommand(RemovePasswordCommand.COMMAND_WORD, EMPTY_ARG) instanceof RemovePasswordCommand);
+        String[] input = parser.extractCommandArgs(removePassword);
+        assertTrue(parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX])
                 instanceof RemovePasswordCommand);
     }
 
     @Test
     public void parseCommand_import() throws Exception {
-        ImportCommand command = (ImportCommand) parser.parseCommand(
-                ImportCommand.COMMAND_WORD + " /data/addressbook.xml test");
+        String importFile = ImportCommand.COMMAND_WORD + " /data/addressbook.xml test";
+        String[] input = parser.extractCommandArgs(importFile);
+        ImportCommand command = (ImportCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new ImportCommand("/data/addressbook.xml", "test"), command);
     }
 ```
@@ -580,14 +698,14 @@ public class XmlAdaptedPasswordTest {
 ###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
 ``` java
     @Test
-    public void readAddressBookWithPassword_invalidAndValidPersonAddressBook_throwDataConversionException()
+    public void readAddressBookWithPassword_invalidAndValidPersonAddressBook_throwsDataConversionException()
             throws Exception {
         thrown.expect(DataConversionException.class);
         readAddressBook("invalidAndValidPersonAddressBook.xml");
     }
 
     @Test
-    public void readAddressBookWithPassword_wrongPassword_throwWrongPasswordException() throws Exception {
+    public void readAddressBookWithPassword_wrongPassword_throwsWrongPasswordException() throws Exception {
         String filePath = "TempEncryptedAddressBook.xml";
         File file = new File(TEST_DATA_FOLDER + filePath);
         SecurityUtil.encrypt(file, SecurityUtil.hashPassword("wrongPassword"));
@@ -683,15 +801,15 @@ public class PasswordBoxTest extends GuiUnitTest {
         Storage storageManager = setUpStorage();
         Model model = new ModelManager(storageManager.readAddressBook(new Password(CORRECT_PASSWORD)).get());
 
-        PasswordBox commandBox = new PasswordBox(storageManager, model);
-        passwordBoxHandle = new PasswordBoxHandle(getChildNode(commandBox.getRoot(),
+        PasswordBox passwordBox = new PasswordBox(storageManager, model);
+        passwordBoxHandle = new PasswordBoxHandle(getChildNode(passwordBox.getRoot(),
                 PasswordBoxHandle.PASSWORD_INPUT_FIELD_ID));
-        uiPartRule.setUiPart(commandBox);
+        uiPartRule.setUiPart(passwordBox);
 
         defaultStyleOfPasswordBox = new ArrayList<>(passwordBoxHandle.getStyleClass());
 
         errorStyleOfPasswordBox = new ArrayList<>(defaultStyleOfPasswordBox);
-        errorStyleOfPasswordBox.add(CommandBox.ERROR_STYLE_CLASS);
+        errorStyleOfPasswordBox.add(PasswordBox.ERROR_STYLE_CLASS);
     }
 
     private String getTestFilePath(String fileName) {
@@ -752,6 +870,21 @@ public class PasswordBoxTest extends GuiUnitTest {
 ###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     */
+    public static void assertCardDetailsDisplaysPerson(Person expectedPerson, PersonDetailsCardHandle actualCard) {
+        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
+        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
+        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
+        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualCard.getTags());
+        assertTrue(actualCard.getTimeTable() != null);
+    }
+```
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+``` java
+    /**
      * Asserts that the tags in {@code actualCard} matches all the tags in {@code expectedPerson} with the correct
      * color.
      */
@@ -763,4 +896,182 @@ public class PasswordBoxTest extends GuiUnitTest {
                 assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, PersonCard.getColorStyleFor(tag)),
                         actualCard.getTagStyleClasses(tag)));
     }
+```
+###### \java\systemtests\PasswordCommandSystemTest.java
+``` java
+/**
+ * A system test class for the Password Command, which contains interaction with other UI components.
+ */
+public class PasswordCommandSystemTest extends AddressBookSystemTest {
+    @Test
+    public void password() {
+        /* ----------------------------------- Perform valid password operations  ----------------------------------- */
+
+        /* Case: set password with no leading or trailing password -> password set */
+        String command = PasswordCommand.COMMAND_WORD + " " + VALID_PASSWORD;
+        assertCommandSuccess(command, VALID_PASSWORD);
+
+        /* Case: set password with no leading or trailing password -> password set */
+        command = "   " + PasswordCommand.COMMAND_WORD + "   " + VALID_PASSWORD + "   ";
+        assertCommandSuccess(command, VALID_PASSWORD);
+
+        /* Case: two parameters ->  password set as the whole string */
+        command = "   " + PasswordCommand.COMMAND_WORD + "  " + VALID_PASSWORD + "  " + VALID_PASSWORD;
+        assertCommandSuccess(command, VALID_PASSWORD + "  " + VALID_PASSWORD);
+
+        /* Case: undo previous command -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* ----------------------------------- Perform invalid password operations ---------------------------------- */
+
+        /* Case: no parameters -> rejected */
+        assertCommandFailure(PasswordCommand.COMMAND_WORD + " ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, INVALID_PASSWORD, MESSAGE_USAGE));
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure(MIXED_CASE_PASSWORD_COMMAND_WORD + " " + VALID_PASSWORD, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays an empty string.<br>
+     * 2. Command box has the default style class.<br>
+     * 3. Result display box displays the success message of executing {@code PasswordCommand}.<br>
+     * 4. {@code PersonListPanel} remain unchanged.<br>
+     * 5. {@code Model} and {@code Storage} is updated with password and encrypted accordingly.<br>
+     * 6. Status bar remains unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command, String password) {
+        Model expectedModel = getModel();
+        byte[] hashedPassword = SecurityUtil.hashPassword(password);
+        expectedModel.updatePassword(hashedPassword);
+        String expectedResultMessage = String.format(MESSAGE_SUCCESS);
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
+```
+###### \java\systemtests\RemovePasswordCommandSystemTest.java
+``` java
+/**
+ * A system test class for the RemovePassword Command, which contains interaction with other UI components.
+ */
+public class RemovePasswordCommandSystemTest extends AddressBookSystemTest {
+    @Test
+    public void removePassword() {
+        /* ----------------------------------- Perform valid password operations  ----------------------------------- */
+
+        /* Case: set password and remove with no leading or trailing space in command -> no password change */
+        String passwordCommand = PasswordCommand.COMMAND_WORD + " " + VALID_PASSWORD;
+        String removeCommand = RemovePasswordCommand.COMMAND_WORD;
+        assertCommandSuccess(passwordCommand, removeCommand);
+
+        /* Case: set password and remove with trailing space in command -> no password change */
+        passwordCommand = PasswordCommand.COMMAND_WORD + " " + VALID_PASSWORD;
+        removeCommand = RemovePasswordCommand.COMMAND_WORD + " ";
+        assertCommandSuccess(passwordCommand, removeCommand);
+
+        /* Case: set password twice and remove -> no password change */
+        passwordCommand = PasswordCommand.COMMAND_WORD + " " + VALID_PASSWORD;
+        removeCommand = RemovePasswordCommand.COMMAND_WORD;
+        getModel().updatePassword(VALID_PASSWORD_HASH);
+        executeCommand(passwordCommand);
+        assertCommandSuccess(passwordCommand, removeCommand);
+
+        /* Case: undo previous command -> rejected */
+        String command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* ----------------------------------- Perform invalid password operations ---------------------------------- */
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure(MIXED_CASE_REMOVEPASSWORD_COMMAND_WORD + " " + VALID_PASSWORD, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays an empty string.<br>
+     * 2. Command box has the default style class.<br>
+     * 3. Result display box displays the success message of executing {@RemovePasswordCommand}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 4. {@code PersonListPanel} remain unchanged.<br>
+     * 6. Status bar remains unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String passwordCommand, String removeCommand) {
+        Model expectedModel = getModel();
+        expectedModel.updatePassword(VALID_PASSWORD_HASH);
+        expectedModel.updatePassword(null);
+        String expectedResultMessage = String.format(MESSAGE_SUCCESS);
+        executeCommand(passwordCommand);
+        executeCommand(removeCommand);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
 ```

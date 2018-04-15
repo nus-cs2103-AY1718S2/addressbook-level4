@@ -339,7 +339,7 @@ public class XmlAddressBookStorageTest {
         thrown.expect(NullPointerException.class);
         saveAddressBook(new AddressBook(), null);
     }
-
+    //@@author yeggasd
     @After
     public void reset() throws Exception {
         String filePath = "TempEncryptedAddressBook.xml";

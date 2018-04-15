@@ -111,36 +111,53 @@ public class TimetableUnionPanel extends UiPart<Region> {
     }
 
     /**
-     * Sets the command box style to indicate free or having lesson
+     * Sets the columns to the style for each value.
      */
     public void setStyle() {
         for (int i = 0; i < columns.size(); i++) {
-            columns.get(i).setCellFactory(column -> {
-                return new TableCell<ArrayList<String>, String>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (item == null || empty) {
-                            setText(null);
-                            setStyle("");
-                        } else {
-
-                            setText(item);
-                            removeAllStyle(this);
-                            if ("".equals(getItem())) {
-                                getStyleClass().add(EMPTY_STYLE_CLASS);
-                            } else if (StringUtil.isDay(getItem())) {
-                                getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
-                            } else {
-                                getStyleClass().add(getColorStyleFor(getItem()));
-                            }
-                        }
-                    }
-                };
-            });
+            TableColumn<ArrayList<String>, String> columnToBeSet = columns.get(i);
+            setStyleForColumn(columnToBeSet);
         }
     }
+
+    /**
+     * Sets the style of each column.
+     * @param columnToBeSet is the column that would be set
+     */
+    private void setStyleForColumn (TableColumn<ArrayList<String>, String> columnToBeSet) {
+        columnToBeSet.setCellFactory(column -> {
+            return setStyleForCell();
+        });
+    }
+
+    /**
+     * Sets the style of the cell given the data and return it
+     * @return the tablecell with its style set.
+     */
+    private TableCell<ArrayList<String>, String> setStyleForCell () {
+        return new TableCell<ArrayList<String>, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    removeAllStyle(this);
+                    if ("".equals(getItem())) {
+                        getStyleClass().add(EMPTY_STYLE_CLASS);
+                    } else if (StringUtil.isDay(getItem())) {
+                        getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
+                    } else {
+                        getStyleClass().add(getColorStyleFor(getItem()));
+                    }
+                }
+            }
+        };
+    }
+
 
     /**
      * Removes all styles present in cell

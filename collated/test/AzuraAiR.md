@@ -296,21 +296,24 @@ public class TimetableUnionCommandTest {
     @Test
     public void parseCommand_birthdays() throws Exception {
         BirthdaysCommand command = (BirthdaysCommand) parser.parseCommand(
-                BirthdaysCommand.COMMAND_WORD);
+                BirthdaysCommand.COMMAND_WORD, EMPTY_ARG);
         assertEquals(new BirthdaysCommand(false), command);
     }
 
     @Test
     public void parseCommand_birthdaysToday() throws Exception {
-        BirthdaysCommand command = (BirthdaysCommand) parser.parseCommand(
-                BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER);
+        String birthday = BirthdaysCommand.COMMAND_WORD + " " + BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER;
+        String[] input = parser.extractCommandArgs(birthday);
+        BirthdaysCommand command = (BirthdaysCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new BirthdaysCommand(true), command);
     }
 
     @Test
     public void parseCommand_timeTableUnion() throws Exception {
-        TimetableUnionCommand command = (TimetableUnionCommand) parser
-                .parseCommand(TimetableUnionCommand.COMMAND_WORD + " Odd 1 2");
+        String timetableUnion = TimetableUnionCommand.COMMAND_WORD + " Odd 1 2";
+        String[] input = parser.extractCommandArgs(timetableUnion);
+        TimetableUnionCommand command = (TimetableUnionCommand) parser.parseCommand(input[
+                COMMAND_INDEX], input[ARG_INDEX]);
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
@@ -608,7 +611,7 @@ public class BirthdayTest {
 public class TimetableBuilder {
 
     public static final int NUM_OF_DUMMY_TIMETABLE = 2;
-    public static final String DUMMY_LINK_ONE = "http://modsn.us/aaaaa";
+    public static final String DUMMY_LINK_ONE = "http://modsn.us/HWwZJ";
     public static final String DUMMY_LINK_TWO = "http://modsn.us/bbbbb";
 
     private Timetable[] dummyTimetables;

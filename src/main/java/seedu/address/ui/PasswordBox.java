@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PasswordCorrectEvent;
+import seedu.address.commons.events.ui.PasswordWrongEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.WrongPasswordException;
 import seedu.address.logic.ListElementPointer;
@@ -44,7 +45,7 @@ public class PasswordBox extends UiPart<Region> {
         this.storage = storage;
         this.model = model;
 
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
+        // calls #setStyleToDefault() whenever there is a change to the text of the Passowrd box.
         passwordTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
     }
 
@@ -75,6 +76,7 @@ public class PasswordBox extends UiPart<Region> {
             raise(new PasswordCorrectEvent());
         } catch (WrongPasswordException e) {
             logger.warning("Wrong password used. Trying again.");
+            raise(new PasswordWrongEvent());
             setStyleToIndicateCommandFailure();
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");

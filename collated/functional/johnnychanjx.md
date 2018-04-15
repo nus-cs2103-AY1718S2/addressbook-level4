@@ -110,6 +110,157 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
     /** Adds the given person's page*/
     void addPage(Person person) throws IOException;
 ```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+     * @param person
+     * @throws IOException
+     * Adds a BrowserPanel html Page into StudentPage
+     *
+     */
+
+    public void addPage(Person person) throws IOException {
+
+        String userHome = System.getProperty("user.home") + File.separator + "StudentPage";
+        String locatie = userHome;
+        File folder = new File(locatie);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        URL personPage = MainApp.class.getResource(PROFILE_DIRECTORY + "template.html");
+
+        String htmlString = Resources.toString(personPage, Charsets.UTF_8);
+
+        File f = new File(System.getProperty("user.home") + File.separator + "StudentPage"
+                + File.separator + person.getName() + ".html");
+        if (!f.exists()) {
+            f.createNewFile();
+        }
+
+        Name titleName = person.getName();
+        String title = titleName.toString();
+        htmlString = htmlString.replace("$title", title);
+
+        Nric identityNumberClass = person.getNric();
+        String identityNumber = identityNumberClass.toString();
+        htmlString = htmlString.replace("$identityNumber", identityNumber);
+
+        List<Tag> tagList = person.getTagArray();
+        int taglistSize = tagList.size();
+        if (taglistSize != 0) {
+            htmlString = htmlString.replace("Class Not Specified", tagList.get(0).tagForBrowser());
+        }
+
+        List<Subject> subjectList = person.getSubjectArray();
+        int listSize = subjectList.size();
+        System.out.println(person.getSubjects());
+        int i = 0;
+        while (i < listSize) {
+            String iString = Integer.toString(i + 1);
+            htmlString = htmlString.replace("Subject " + iString, subjectList.get(i).nameToString());
+            htmlString = htmlString.replace("$percent" + iString, subjectList.get(i).gradeToPercent());
+            htmlString = htmlString.replace("Grade " + iString, subjectList.get(i).gradeToString());
+            i++;
+        }
+
+        // ADD L1R5
+
+        int score = person.calculateL1R5();
+        String scoreString = "-";
+        if (score == 0) {
+            scoreString = "-";
+        } else {
+            scoreString = Integer.toString(score);
+        }
+        htmlString = htmlString.replace("STUDENTS SCORE", scoreString);
+
+        // L1B4A
+        int scoreL1B4A = person.calculateL1B4A();
+        String scoreL1B4AString = "-";
+        if (scoreL1B4A == 0) {
+            scoreL1B4AString = "-";
+        } else {
+            scoreL1B4AString = Integer.toString(scoreL1B4A);
+        }
+        htmlString = htmlString.replace("STUDENTS L1B4A", scoreL1B4AString);
+
+        //L1B4B
+
+        int scoreL1B4B = person.calculateL1B4B();
+        String scoreL1B4BString = "-";
+        if (scoreL1B4B == 0) {
+            scoreL1B4BString = "-";
+        } else {
+            scoreL1B4BString = Integer.toString(scoreL1B4B);
+        }
+        htmlString = htmlString.replace("STUDENTS L1B4B", scoreL1B4BString);
+
+        //L1B4C
+        int scoreL1B4C = person.calculateL1B4C();
+        String scoreL1B4CString = "-";
+        if (scoreL1B4C == 0) {
+            scoreL1B4CString = "-";
+        } else {
+            scoreL1B4CString = Integer.toString(scoreL1B4C);
+        }
+        htmlString = htmlString.replace("STUDENTS L1B4C", scoreL1B4CString);
+
+        //L1B4D
+        int scoreL1B4D = person.calculateL1B4D();
+        String scoreL1B4DString = "-";
+        if (scoreL1B4D == 0) {
+            scoreL1B4DString = "-";
+        } else {
+            scoreL1B4DString = Integer.toString(scoreL1B4D);
+        }
+        htmlString = htmlString.replace("STUDENTS L1B4D", scoreL1B4DString);
+
+        // ADD CCA
+        String ccaString = person.getCca().getValue();
+        htmlString = htmlString.replace("CCA", ccaString);
+
+        //ADD CCA Rank
+
+        String ccaRank = person.getCca().getPos();
+        htmlString = htmlString.replace("STUDENT RANK", ccaRank);
+
+        // ADD REMARK
+
+        String remark = person.getRemark().toString();
+        htmlString = htmlString.replace("Remarks to facilitate teaching should be included here.", remark);
+
+        //ADD INJURY
+        String injury = person.getInjuriesHistory().toString();
+        htmlString = htmlString.replace("Insert injury history here", injury);
+
+        // NOK Details
+
+        String nokName = person.getNextOfKin().fullName;
+        htmlString = htmlString.replace("NOK Name", nokName);
+        String nokGender = person.getNextOfKin().remark;
+        htmlString = htmlString.replace("NOK Gender", nokGender);
+        String nokEmail = person.getNextOfKin().email;
+        htmlString = htmlString.replace("NOK Email", nokEmail);
+        String nokPhone = person.getNextOfKin().phone;
+        htmlString = htmlString.replace("NOK Phone", nokPhone);
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+        bw.write(htmlString);
+        bw.close();
+
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+     * Deletes BrowserPanel html
+     */
+    public void deletePage(Person person) {
+
+        File f = new File(System.getProperty("user.home") + File.separator + "StudentPage"
+                + File.separator + person.getName() + ".html");
+        boolean bool = f.delete();
+    }
+```
 ###### \java\seedu\address\model\subject\Subject.java
 ``` java
     public String gradeToString() {

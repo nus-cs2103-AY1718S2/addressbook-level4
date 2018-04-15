@@ -17,7 +17,7 @@ By: `CS2103JAN2018-T09-B1`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-_EduBuddy_ is a desktop application designed for secondary school teachers *to store and manage student records*.
+Welcome to _EduBuddy_! This is a desktop application designed for secondary school teachers *to store and manage student records*.
 More importantly, _EduBuddy_ is *optimized for those who prefer to work with a
 Command Line Interface(CLI)* while still having the benefits of a Graphical User Interface (GUI).
 If you can type fast, _EduBuddy_ can get your student profile management tasks done faster
@@ -121,7 +121,7 @@ Abbreviation Format: `l`
 // tag::sort[]
 === Sorting all students : `sort` [since v1.2]
 
-Having trouble finding the student contact in the never ending list?
+Having trouble sieving through the never ending list of contacts so as to make comparisons?
 Fret not, as this feature helps you to sort the list of all students in _EduBuddy_ according to different parameters. +
 Format: `sort PARAMETER`
 

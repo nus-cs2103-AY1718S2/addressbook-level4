@@ -19,7 +19,10 @@ By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
 image:FASTIS.png[ align="center"] +
 Fastis is a stand-alone desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time. +
+
 Fastis has a graphical user interface (GUI), but most of the user interactions happen using a command line interface (CLI). Users with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+This User Guide is meant to provide the necessary information for users, whether new or experienced, who would like to gain more insights about how to use Fastis effectively. The guide consists of the overview of the application and descriptions of its current features.
 
 == Quick Start
 

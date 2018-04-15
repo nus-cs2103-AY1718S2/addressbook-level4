@@ -64,3 +64,14 @@ include::../UserGuide.adoc[tag=listappointment]
 |===
 
 include::../DeveloperGuide.adoc[tag=Login/Logout]
+
+include::../DeveloperGuide.adoc[tag=SortCommand]
+
+include::../DeveloperGuide.adoc[tag=ExportCommand]
+
+include::../DeveloperGuide.adoc[tag=ListAppointment]
+
+include::../DeveloperGuide.adoc[tag=DeleteTag]
+
+include::../DeveloperGuide.adoc[tag=AddComment]
+

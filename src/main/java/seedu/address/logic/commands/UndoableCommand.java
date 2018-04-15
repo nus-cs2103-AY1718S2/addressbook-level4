@@ -27,8 +27,8 @@ public abstract class UndoableCommand extends Command {
      */
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
-        previousTheme = Theme.getTheme();
         this.previousAddressBook = new AddressBook(model.getAddressBook());
+        previousTheme = Theme.getTheme();
     }
 
     /**
@@ -37,7 +37,7 @@ public abstract class UndoableCommand extends Command {
      */
     protected void preprocessUndoableCommand() throws CommandException {}
 
-    //@@author Yoochard
+
     /**
      * Reverts the AddressBook to the state before this command
      * was executed and updates the filtered person list to
@@ -47,10 +47,12 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        //@@author Yoochard
         if (this instanceof ChangeThemeCommand) {
             Theme.changeCurrentTheme(previousTheme);
             EventsCenter.getInstance().post(new ChangeThemeEvent(previousTheme));
         }
+        //@@author
     }
 
     /**

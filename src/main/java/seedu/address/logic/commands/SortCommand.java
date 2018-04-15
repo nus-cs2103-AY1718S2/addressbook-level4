@@ -14,11 +14,11 @@ public class SortCommand extends UndoableCommand {
 
     public static final String[] SORT_FIELD_LIST = {"name", "phone", "email", "address", "tag", "rate"};
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the list of employees by a specific field.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts employees by a specific field.\n"
             + "Parameters: FIELD\n"
             + "Example: " + COMMAND_WORD + " name";
 
-    public static final String MESSAGE_SORT_EMPLOYEE_SUCCESS = "Employees has been sorted.";
+    public static final String MESSAGE_SORT_EMPLOYEE_SUCCESS = "Employees have been sorted.";
     public static final String MESSAGE_SORT_INVALID_FIELD = "Your input field is invalid, please check again.";
 
     private final String sortField;

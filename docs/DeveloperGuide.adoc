@@ -480,13 +480,13 @@ is found in Desk Board or the `name` or `dueDateTime` field is left empty.
 _Figure 24_ below shows how the relevant primary and secondary components interact
 in a scenario where the user issues the command `task n/NAME..`.
 
-.Relevant component interactions for `task n/NAME..` command (part 1)
+.Relevant components interaction for `task n/NAME..` command (part 1)
 image::SDforTask.png[width='650']
 
 _Figure 25_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 
-.Relevant component interactions for `task n/NAME..` command (part 2)
+.Relevant components interaction for `task n/NAME..` command (part 2)
 image::SDHandlingTaskEvent.png[width='650']
 
 The following is a snippet of code for `TaskCommand` 's  `executeUndoableCommand()` method.
@@ -1131,7 +1131,7 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th activity in Desk Board. The current state of Desk Board is saved before the `delete 5` command executes.
 The `delete 5` command will then be pushed onto the `undoStack`
-(the current state is saved together with the command) as shown in _Figure 37_ below.
+(the current state is saved together with the command) as shown in _Figure 37_ below:
 
 .Undo and redo starting stack diagram
 image::UndoRedoStartingStackDiagram.png[width="800"]

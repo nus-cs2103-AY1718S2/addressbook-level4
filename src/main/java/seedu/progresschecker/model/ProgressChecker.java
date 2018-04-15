@@ -309,8 +309,6 @@ public class ProgressChecker implements ReadOnlyProgressChecker {
      * Replaces the given exercise {@code target} in the list with {@code editedExercise}.
      *
      * @throws ExerciseNotFoundException if {@code target} could not be found in the list.
-     *
-     * @see #syncWithMasterTagList(Person)
      */
     public void updateExercise(Exercise target, Exercise editedExercise)
             throws ExerciseNotFoundException {

@@ -16,15 +16,23 @@ By: `Team T09-B3`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-ProgressChecker is for *students* who *prefer to use a desktop app* to keep track of their learning progress throughout the certain module. (Current version is available for CS2103/T) +
+ProgressChecker is for *students* who *prefer to use a desktop app* to keep track of their learning progressthroughout the certain module. (Current version is available for CS2103/T) +
 
-For the current version, you can add your teammates details into ProgressChecker. You can also create a new task list through google task. By default, app will display all the link:DeveloperGuide.adoc#Learning-Outcomes[Learning Outcomes] for this week in the task list. Students can use this task list to track their weekly homework and the progress of the project.
+For the current version, you can add your teammates details into ProgressChecker. You can also create a new task list through google task. By default, app will display all the link:DeveloperGuide.adoc#Learning-Outcomes[Learning Outcomes] taken from the https://nus-cs2103-ay1718s2.github.io/website/index.html[CS2103/T module website] for this week in the task list. Students can use this task list to track their weekly homework and the progress of the project.
 
 More importantly, ProgressChecker is *optimized for students who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (link:DeveloperGuide.adoc#GUI[GUI]).
 If you can type fast, ProgressChecker can get your learning outcome tasks done faster than traditional GUI apps. +
 
 Now you are ready to jump to the <<Setting-up,Setting up>> to get started. Enjoy!
 
+== Icons Meaning
+You will be seeing these icons throughout the guide. Each icon display specific information.
+
+[TIP]
+This lightbulb icon means tips that you can try when using ProgressChecker.
+
+[NOTE]
+This info icon means notes that you should pay attention to when using ProgressChecker.
 
 == Setting up
 
@@ -194,6 +202,8 @@ The sections below give more details of each component.
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
+{sp}+
+
 *API* : link:{repoURL}/src/main/java/seedu/progresschecker/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
@@ -213,8 +223,12 @@ The `UI` component,
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
+{sp}+
+
 .Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
 image::LogicCommandClassDiagram.png[width="800"]
+
+{sp}+
 
 *API* :
 link:{repoURL}/src/main/java/seedu/progresschecker/logic/Logic.java[`Logic.java`]
@@ -250,6 +264,8 @@ The `Model`,
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
+{sp}+
+
 *API* : link:{repoURL}/src/main/java/seedu/progresschecker/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
@@ -276,6 +292,8 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 .Structure of Commands in the Logic Component
 image::LogicCommandClassDiagram.png[width="800"]
+
+{sp}+
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the ProgressChecker before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -317,10 +335,14 @@ The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th teammat
 .Undo/Redo Stack at Starting Point
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
+{sp}+
+
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new teammate.
 
 .Undo/Redo Stack with New Command `add`
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+
+{sp}+
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -332,6 +354,8 @@ We will pop the most recent command out of the `undoStack` and push it back to t
 .Undo/Redo Stack with Command `undo`
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
+{sp}+
+
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
@@ -339,6 +363,8 @@ The following sequence diagram shows how the undo operation works:
 
 .Sequence Diagram of Undo/Redo
 image::UndoRedoSequenceDiagram.png[width="800"]
+
+{sp}+
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the ProgressChecker to the state after the command is executed).
 
@@ -350,10 +376,14 @@ The user now decides to execute a new command, `clear`. As before, `clear` will 
 .Undo/Redo Stack with New Command `clear`
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
+{sp}+
+
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 .Undo/Redo Stack with Command `list`
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+
+{sp}+
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
@@ -581,75 +611,200 @@ The entered key is not instantly updated in the command box thats why after the 
 |===
 // end::search[]
 
-// tag::answer[]
-=== [Planned] Answering an exercise
-==== Planned Implementation
+// tag::view[]
+=== Toggling between tab views
+==== Current Implementation
 
-The exercises for all weeks would be stored as a local file upon which it would be loaded by the `StorageManager` on start up.
+This command toggles the view between the different type of tabs in the software. +
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `answer 2.1.1 a d`.
-
-.Component interactions for `answer 2.1.1 a d` command (part 1)
-image::SDforAnswerExercise.png[width="800"]
-
-[NOTE]
-Note how the `Model` simply raises a `ExercisesChangedEvent` when the exercises data are changed, instead of asking the `Storage` to save the updates to the hard disk.
-
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the exercises display of the UI being updated to reflect the newly given answers.
-
-.Component interactions for `answer 2.1.1 a d` command (part 2)
-image::SDforExercisesEventHandling.png[width="800"]
+.Reference of the tab view in the software
+image::TabView.png[width="600"]
 
 {sp} +
 
-==== Design Considerations
+It inherits `Command` and executes on an _Event Driven_ design between the Logic and UI component.
 
-===== Aspect: Implementation of `AnswerCommand`
+Suppose that the user is on the `Task` tab and wants to toggle to the `Exercise` tab. The user executes a new `Command`, `view exercise`, to switch to the `Exercise` tab. The _Sequence Diagram_ below shows how the components interact with each other.
 
-* Add a new command that extends `Command`
+.Logic and UI component interaction for `view exercise` command (part 1)
+image::SDforViewExercise.png[width="600"]
 
-===== Aspect: Format of answer command
+{sp} +
 
-|===
-|Alternative | Pros | Cons
+[NOTE]
+Note how the `Logic` simply raises a `TabLoadChangedEvent` when the `view` command gets executed. The `TabLoadChangedEvent` is implemented as follows:
+[source,java]
+----
+public class TabLoadChangedEvent extends BaseEvent {
+    public final String type;
 
-|**Use same command formatting `answer INDEX ANSWER` regardless of the type of question (e.g. text based question, multiple choice question)** +
-(current choice):
-|Less parser files to manage altogether.
-|Can be unintuitive for users when it comes to answer different question with the same formatting.
+    public TabLoadChangedEvent(String type) {
+        this.type = type;
+    }
 
-|**Use different command based on the type of question (e.g. `answert INDEX ANSWER` for answering text based question and `answerm INDEX CHOICE` for answering multiple choice questions)** +
-(current choice)
-|Can be clearer on what is being answered for the user.
-|More commands and formatting to learn and remember.
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 
-|===
+    public String getTabName() {
+        return type;
+    }
+}
+----
+
+The diagram below shows how the `EventCenter` reacts to that event, which eventually results in the UI updating to which tab view is to be in selection.
+
+.Logic and UI component interaction for `view exercise` command (part 2)
+image::SDforViewExerciseEventHandling.png[width="600"]
+
+{sp} +
+
+[NOTE]
+The UI scene's elements are automatically populated in `MainWindow.java` due to using JavaFX FXML Controller. That is, a reference to a particular UI element will be available as long as it has its `fx:id` specified in `MainWindow.fxml`.
+
+The code snippet below shows how the UI component executes the toggling of tab view upon receiving the event change.
+[source,java]
+----
+@Subscribe
+private void handleTabLoadChangedEvent(TabLoadChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    SingleSelectionModel<Tab> selectionModel = tabPlaceholder.getSelectionModel();
+    switch (event.getTabName()) {
+    case "profile":
+        selectionModel.select(profilePlaceholder);
+        break;
+    case "task":
+        selectionModel.select(taskPlaceholder);
+        break;
+    case "exercise":
+        selectionModel.select(exercisePlaceholder);
+        break;
+    case "issues":
+        selectionModel.select(issuePlaceholder);
+        break;
+    default:
+        selectionModel.select(selectionModel.getSelectedItem());
+    }
+}
+----
+// end::view[]
+
+// tag::answer[]
+=== View, answer, and save for an exercise
+==== Current Implementation
+
+This command allows user to answer an exercise based on the question index shown in the software.
+
+.Reference of the question index in the software
+image::QuestionIndexIndication.png[width="300"]
+
+{sp} +
+
+It inherits `UndoableCommand` and executes through all four components in the code base.
+
+Suppose that the user wants to answer an exercise with index 11.1.1. The user executes a new `Command`, `ans 11.1.1 a`, to answer the exercise. The Sequence Diagram below shows how the components interact with each other.
+
+.Component interactions for `ans 11.1.1 a` command (part 1)
+image::SDforAnswerExercise.png[width="800"]
+
 {sp}+
 
-===== Aspect: How answering executes
+[NOTE]
+Note how the `Model` simply raises a `ProgressCheckerChangedEvent` when the ProgressChecker data has been changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-* Trigger an event change in `Logic` to signal `UI` for a change in text display in `ExercisesPanel`
-* Process checking of correctness in `Model`
-* Save data to local file in `Storage`
+{sp} +
 
-===== Aspect: Storing of exercise questions
+The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk.
+
+.Component interactions for `ans 11.1.1 a` command (part 2)
+image::SDforAnswerExerciseEventHandling.png[width="800"]
+
+{sp} +
+
+Before the `Logic` component executes the `Undoable Command` which calls the `Model`, it prepares the exercise that needs to be updated by going through the internal list of exercises stored in model. The code that searches for the exercise is as follows:
+[source,java]
+----
+for (Exercise e : exerciseList) {
+    if (e.getQuestionIndex().toString().equals(questionIndex.toString())) {
+        exerciseToEdit = exerciseList.get(exerciseList.indexOf(e));
+        editedExercise = createEditedExercise(exerciseToEdit, studentAnswer);
+        isFound = true;
+        break;
+    }
+}
+----
+
+The internal list, `exerciseList`, is implemented as an observable list of filtered exercises in `Model`. Upon calling the `ProgressCheckerChangedEvent`, `Storage` will run `saveProgressChecker`. Subsequently, to load the data on the next software start up requires parsing of xml data into `Model`. The following code snippet shows how `Storage` does so:
+[source,java]
+----
+public Exercise toModelType() throws IllegalValueException {
+    if (this.questionIndex == null) {
+        throw new IllegalValueException(
+                String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                QuestionIndex.class.getSimpleName()));
+    }
+    if (!QuestionIndex.isValidIndex(this.questionIndex)) {
+        throw new IllegalValueException(QuestionIndex.MESSAGE_INDEX_CONSTRAINTS);
+    }
+    final QuestionIndex questionIndex = new QuestionIndex(this.questionIndex);
+
+    if (this.questionType == null) {
+        throw new IllegalValueException(
+                String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                QuestionType.class.getSimpleName()));
+    }
+    if (!QuestionType.isValidType(this.questionType)) {
+        throw new IllegalValueException(QuestionType.MESSAGE_TYPE_CONSTRAINTS);
+    }
+    final QuestionType questionType = new QuestionType(this.questionType);
+
+    ...
+
+    return new Exercise(questionIndex, questionType, question, studentAnswer, modelAnswer);
+}
+----
+
+Additionally, since it is an observable list, the UI element harboring this list will update any changes made to this list accordingly. In viewing of exercises by week, the list is filtered with predicate as follows:
+[source,java]
+----
+model.updateFilteredExerciseList(exercise -> exercise.getQuestionIndex().getWeekNumber()
+                == editedExercise.getQuestionIndex().getWeekNumber());
+----
+
+==== Design Considerations
+===== Aspect: Viewing of exercises by week
 
 |===
 |Alternative | Pros | Cons
 
-|**Load from a local file** +
+|**Adapt from `View Command` by adding additional WEEK_NUMBER parameter to type `exercise`** +
 (current choice)
-|Implementation becomes a lot more modular.
-|Have to implement extra text file parser and involves `Storage` that might be seen as extra load to learn for new programmers
+|Not required to create a new command and hence more cohesive with the existing commands as well as one less command for users to learn
+|`ViewCommandParser` requires additional parser check to separate between the `View Command` that can take in WEEK_NUMBER to one that doesn't which might violate SLAP principle
 
-|**Include in `UI` file together with where the text display is being changed at** +
+|**Create a new command to list exercises by week** +
+|Standalone from existing commands and hence easier to be built upon or removed without consequences
+|Creates an extra unnecessary complication for users having to learn a new command when the existing `View Command` essentially does something similar
+
+|===
+
+===== Aspect:  Loading of exercises data on fresh start
+
+|===
+|Alternative | Pros | Cons
+
+|**Include all exercises data in `SampleDataUtil` and read from there** +
 (current choice)
-|Easier to see where everything is.
-|Formatting the exercises becomes harder and the implementation is less modular.
+|No additional processing required, is easy to modify whenever default data needs to be changed
+|Is directly affected by the `Clear Command` that is meant for the list of `Persons` which user may not expect it to be for
+
+|**Read from stored text file, parse accordingly, and load into software on fresh start** +
+|Standalone data and will not be affected by changes made to list of `Persons`
+|Incurs extra overhead when parsing the text file into Java objects
 
 |===
 // end::answer[]
-{sp} +
 
 // tag::tasks[]
 === Tasks
@@ -1263,52 +1418,57 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-This section covers what ProgressChecker is meant to be and what it can do for the users. Your name and feature contribution will be listed here.
+This section covers what ProgressChecker is meant to be and what it can do for the users.
 
 *Target user profile*:
 
-* is taking CS2103/CS2103T in NUS
-* wants to keep track on his/her learning progress
-* is willing to have good team management
+* is taking CS2103T in NUS
 * has a need to manage a up to 4 contacts
-* prefers desktop apps over other types
-* can type fast
+* wants to have a centralized hub for managing his/her learning and software development
+* wants to keep track on his/her learning outcomes and progress
+* wants to save and refer to their answers for the weekly CS2103/T exercises
+* wants to manage GitHub issues efficiently
+* prefers desktop apps over other platforms
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
 *Value proposition*:
 
-* never miss LOs hidden in the nested collapsible list
+* keep track of your teammates' details
 * keep track of your own progress on a week by week basis
-* manage issues from github straight from the software along with other tracking
-* save your answers(no more than 100 words) for the exercises (as proof of completion and for future revision)
-* easily search for information based on key words (which is hard to achieve in the module website with nested collapsible lists)
+* never miss any learning outcomes due to missing them out in nested collapsible list
+* keep track of completed and incomplete (compulsory) learning outcomes
+* view and save your answers for the exercises (as proof of completion and for future revision)
+* manage issues from GitHub straight from the software along with other tracking
 
-*Feature Contribution*:
+[appendix]
+== Feature Contribution
 
-**Koh Yee Ru:**
+The names of the contributors and their contributions to the project are listed here in brief.
 
-. (Minor) Week based window view: students are able to navigate and view content arranged in a weekly basis. (acts as a base for incorporation of API)
-. (Minor) Changing color themes: students will be able to change between a dark and light theme like the norm for editors which programmers are used to.
-. (Major) Exercises: students will be able to view, answer and save their responses for the weekly exercises to help track their conceptual understanding. Choice based questions will automatically be check for correctness with corresponding feedback to students.
+=== Koh Yee Ru
 
-**Kang Anmin:**
+. (Major) View, answer and save responses for weekly CS2103/T exercises
+. (Minor) View command that toggles the tab view
+image:TabView.png[width="600"]
 
+=== Kang Anmin
+
+. (Major) Task management: Add LOs to google tasks (the users google account, load tasks and sign completion.
 . (Minor) Progress Bar: to give a graphic view of tasks completeness
 . (Minor) Change/Add more fields of information for teammates in the contact list, in order to fit the specific context of this software. It also lays a foundation for other operations.
-. (Major) Task management: Add LOs to google tasks (the users google account, load tasks and sign completion.
 
-**Lai Liwen:**
+=== Lai Liwen
 
-. (Minor) HighLight the key word: the key word will be highlighted in command find
 . (Major) Revamp the UI: rearrange the different sections and panels to best suit audience's needs
 . (Major) Upload profile photo: students will be able to upload a photo to their profile
+. (Minor) HighLight the key word: the key word will be highlighted in command find
 
-**Aditya Agarwal:**
+=== Aditya Agarwal
 
+. (Major) Add a progress checker which will keep a track of number of tasks remaining and accordingly update the progress bar
 . (Minor) Implement dynamic search
 . (Minor) Add an auto-complete for commands with tab press
-. (Major) Add a progress checker which will keep a track of number of tasks remaining and accordingly update the progress bar
 
 [appendix]
 == User Stories
@@ -1330,13 +1490,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a teammate's details |help myself to track my current teammates' progress
 
-|`* * *` |user |delete a teammate |remove an entry of a teammate that I'm no longer grouped with
+|`* * *` |user |delete a teammate's details |remove an entry of a teammate's details that I'm no longer grouped with
 
 |`* * *` |new user |upload a photo for myself or my teammates |help me to recognize my teammates
-
-|`* * *` |new user |load a photo of myself or my teammates from github |help me to recognize my teammates
-
-|`* * *` |user |search information in our module website based on keywords |navigate and reference the information I need quickly
 
 |`* * *` |user |view my to-do <<learning outcomes,learning outcomes>> |know all the weekly deliverables and not miss them out
 
@@ -1345,8 +1501,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |answer and save my responses for the weekly exercises |show to tutor as proof of my learning outcome and revise before exams
 
 |`* * *` |user |know if my answer for an exercise is correct |learn from any mistakes I made
-
-|`* * *` |user |see the list of completed/incomplete <<learning outcomes,learning outcomes>> of my teammates |help to remind my teammate of the task or know which task to offer help with if they are having difficulties
 
 |`* * *` |user |list issues (tasks) on GitHub |easily inform my teammates of my upcoming plans even before I send any pull requests to the team's repository
 
@@ -1357,6 +1511,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |close issues (tasks) on GitHub |easily inform my teammates of a completed task if no particular pull requests closes it
 
 |`* *` |user |see the timeline showing the learning progress of me and my teammates |make sure everyone is on track
+
+|`* *` |new user |load a photo of myself or my teammates from GitHub |help me to recognize my teammates
+
+|`* *` |user |see the list of completed/incomplete <<learning outcomes,learning outcomes>> of my teammates |help to remind my teammate of the task or know which task to offer help with if they are having difficulties
+
+|`* *` |user |search information in our module website based on keywords |navigate and reference the information I need quickly
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
@@ -1369,6 +1529,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 This section list the sequence of events for a feature. It includes possible scenarios in which a feature is not interacted with as intended which you can defense against.
 
 (For all use cases below, the *System* is the `ProgressChecker` and the *Actor* is the `user`, unless specified otherwise)
+
+// tag::viewusecase[]
+[discrete]
+=== Use case: View (toggle) a different tab
+
+*MSS*
+
+1.  User requests to view a specific tab type
+2.  ProgressChecker toggles tab view to show the requested tab
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The given tab type is invalid.
++
+[none]
+** 1a1. ProgressChecker shows an error message.
+Use case ends.
+
+[none]
+* 2a. There is no content to be shown.
++
+Use case ends.
+// end::viewusecase[]
 
 [discrete]
 === Use case: Add teammate
@@ -1557,13 +1742,14 @@ Use case ends.
 +
 Use case ends.
 
+// tag::answerusecase[]
 [discrete]
 === Use case: Answer a question and save
 
 *MSS*
 
-1.  User requests to view a specific week
-2.  ProgressChecker shows content of the specified week
+1.  User requests to view the exercise tab of week X
+2.  ProgressChecker toggles to exercise tab and list week X's exercises
 3.  User requests to key in and save an answer to a question
 4.  ProgressChecker takes in input and saves
 +
@@ -1571,23 +1757,45 @@ Use case ends.
 
 *Extensions*
 
-* 1a. Specified week does not exist.
+* 1a. The given tab type is invalid.
 +
 [none]
 ** 1a1. ProgressChecker shows an error message.
+Use case ends.
+
+* 1b. Specified week does not exist.
++
+[none]
+** 1b1. ProgressChecker shows an error message.
 +
 Use case ends.
 
 [none]
-* 2a. There is no content to be shown.
+* 2a. There are no exercises to be shown.
 +
 Use case ends.
 
-* 3a. The question index does not exist.
+* 3a. User did not provide a question index.
++
 [none]
 ** 3a1. ProgressChecker shows an error message.
 +
 Use case ends.
+
+* 3b. User did not provide an answer.
++
+[none]
+** 3b1. ProgressChecker shows an error message.
++
+Use case ends.
+
+* 3c. The given question index does not exists.
++
+[none]
+** 3c1. ProgressChecker shows an error message.
++
+Use case ends.
+// end::answerusecase[]
 
 [discrete]
 === Use case: Assign an issue to a teammate
@@ -1734,24 +1942,6 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-[discrete]
-=== Use case: View contents of a specific week
-
-*MSS*
-
-1.  User requests to view a specific week
-2.  ProgressChecker shows content of the specified week
-+
-Use case ends.
-
-*Extensions*
-
-* 1a. Specified week does not exist.
-
-** 1a1. ProgressChecker shows an error message.
-+
-Use case ends.
-
 [appendix]
 == Non Functional Requirements
 
@@ -1759,10 +1949,8 @@ This sections list the criteria needed for the system and software.
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  The data cannot be retrieved from outside.
 .  The product may need 3-5 minutes to build up for the first time.
-.  User can only view the information of their teammates.
 .  User need to authenticate with their Google Tasks credentials.
 
 [appendix]
@@ -1778,7 +1966,7 @@ Gradle is an open-source build automation system.
 Graphical User Interface.
 
 [[Learning-Outcomes (LO)]] Learning Outcomes::
-Exercises that need to be done through github for module CS2103/T.
+Exercises that need to be done through GitHub for module CS2103/T.
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, MAC-OS(OS-X).

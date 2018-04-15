@@ -43,18 +43,9 @@ public class SampleDataUtil {
                 getTagSet("neighbours")),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@gmail.com"),
                 new GithubUsername("DavidGithub"), new Major("Computer Engineering"), new Year("2"),
-                getTagSet("family")),
-            new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@gmail.com"),
-                new GithubUsername("IrfanGithub"), new Major("Computer Science"), new Year("2"),
-                getTagSet("classmates")),
-            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@gmail.com"),
-                new GithubUsername("RoyGithub"), new Major("Computer Science"), new Year("2"),
-                getTagSet("colleagues"))
+                getTagSet("family"))
         };
     }
-
-    //@@author adityaa1998
-    //@@author adityaa1998
 
     public static ReadOnlyProgressChecker getSampleProgressChecker() {
         try {

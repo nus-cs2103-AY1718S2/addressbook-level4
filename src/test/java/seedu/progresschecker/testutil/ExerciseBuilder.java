@@ -9,7 +9,7 @@ import seedu.progresschecker.model.exercise.StudentAnswer;
 
 //@@author iNekox3
 /**
- * A utility class to help with building Person objects.
+ * A utility class to help with building Exercise objects.
  */
 public class ExerciseBuilder {
 

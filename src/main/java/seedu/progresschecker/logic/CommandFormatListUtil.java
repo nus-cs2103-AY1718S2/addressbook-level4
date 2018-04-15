@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import seedu.progresschecker.logic.commands.AddCommand;
+import seedu.progresschecker.logic.commands.AnswerCommand;
 import seedu.progresschecker.logic.commands.ClearCommand;
 import seedu.progresschecker.logic.commands.CloseIssueCommand;
 import seedu.progresschecker.logic.commands.CompleteTaskCommand;
@@ -47,6 +48,7 @@ public final class CommandFormatListUtil {
      */
     private static void createCommandFormatList() {
         commandFormatList.add(AddCommand.COMMAND_FORMAT);
+        commandFormatList.add(AnswerCommand.COMMAND_FORMAT);
         commandFormatList.add(ClearCommand.COMMAND_WORD);
         commandFormatList.add(DeleteCommand.COMMAND_FORMAT);
         commandFormatList.add(CompleteTaskCommand.COMMAND_WORD);

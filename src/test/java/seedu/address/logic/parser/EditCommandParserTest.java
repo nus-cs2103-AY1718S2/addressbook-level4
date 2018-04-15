@@ -74,7 +74,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_NRIC_DESC, Nric.MESSAGE_NRIC_CONSTRAINTS); // invalid nric
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
-        // valid phone followed by invalid phone. The test case for invalid phone followed by valid phone
+        // valid nric followed by invalid nric. The test case for invalid nric followed by valid nric
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
         assertParseFailure(parser, "1" + NRIC_DESC_BOB + INVALID_NRIC_DESC, Nric.MESSAGE_NRIC_CONSTRAINTS);
 

@@ -155,6 +155,7 @@ public class ParserUtil {
         requireNonNull(subjects);
         String subjectsStr = Iterables.get(subjects, 0);
         String[] splitSubjectStr = subjectsStr.trim().split("\\s+");
+        Subject subjectToAdd;
         for (int i = 0; i < splitSubjectStr.length; i++) {
             String subjectName = splitSubjectStr[i];
             if (!Subject.isValidSubjectName(subjectName)) {
@@ -164,6 +165,12 @@ public class ParserUtil {
             String subjectGrade = splitSubjectStr[i];
             if (!Subject.isValidSubjectGrade(subjectGrade)) {
                 throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
+            }
+            subjectToAdd = new Subject(subjectName, subjectGrade);
+            for (Subject s : subjectSet) {
+                if (s.subjectName.equals(subjectToAdd.subjectName)) {
+                    throw new IllegalValueException(Subject.MESSAGE_DUPLICATE_SUBJECT);
+                }
             }
             subjectSet.add(new Subject(subjectName, subjectGrade));
         }

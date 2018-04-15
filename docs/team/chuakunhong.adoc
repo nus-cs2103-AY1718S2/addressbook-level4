@@ -47,6 +47,8 @@ include::../UserGuide.adoc[tag = remarks]
 
 include::../UserGuide.adoc[tag = cca]
 
+include::../UserGuide.adoc[tag = injuries]
+
 == Contributions to the Developer Guide
 
 |===
@@ -54,7 +56,5 @@ include::../UserGuide.adoc[tag = cca]
 |===
 
 include::../DeveloperGuide.adoc[tag = TagReplace]
-
-include::../DeveloperGuide.adoc[tag = masstagremoval]
 
 include::../DeveloperGuide.adoc[tag = remark]

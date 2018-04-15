@@ -280,6 +280,18 @@ An example of the sort command would be: export
 An example of the sort command alias would be: ep
 //end::ExportCommand[]
 
+//tag::ListAppointment[]
+=== ListAppointment feature
+==== Current Implementation
+The listappointment command feature allows the sales person to list all the appointments in his addressbook. This will allow for a more simple way to fina an appointment.
+
+To list the appointment in the adress book, simply type 'listappointment' or the command alias 'lap'.
+
+An example of the sort command would be: listappointment
+
+An example of the sort command alias would be: lap
+//end::ListAppointment[]
+
 // tag::DeleteTag[]
 === DeleteTag feature
 ==== Current Implementation
@@ -300,12 +312,6 @@ The current codebase has a flaw in tags management. Tags no longer in use by any
 ** Pros: Less time consuming.
 ** Cons: More complex inplementation.
 //end::DeleteTag[]
-
-// tag::TotalPersonStatusBar[]
-=== TotalPersonStatusBar feature
-==== Current Implementation
-This feature will allow user to see how many contacts he or she has in his/her address book in a straight way, so that I can call it straightforward when I need the information.
-//end::TotalPersonStatusBar[]
 
 // tag::AddComment[]
 === AddComment feature

@@ -61,6 +61,8 @@ include::../UserGuide.adoc[tag=switch]
 |===
 
 include::../DeveloperGuide.adoc[tag=archive]
+
 include::../DeveloperGuide.adoc[tag=switchtheme]
+
 include::../DeveloperGuide.adoc[tag=appointment]
 

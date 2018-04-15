@@ -48,6 +48,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete` or `d`** `3` : deletes the 3rd student shown in the current list
 * *`exit`* : exits the app
 
+[IMPORTANT]
+-The person must be re-selected for the information in the profile to be updated!!
+
 .  Refer to <<Features>> for details of each command.
 
 [[Features]]

@@ -46,6 +46,7 @@ public class AccountsManager {
     public void updateUsername(String inputUsername) throws BadDataException {
         requireNonNull(inputUsername);
         account.updateUsername(inputUsername);
+        indicateAccountUpdated();
     }
 
     /**

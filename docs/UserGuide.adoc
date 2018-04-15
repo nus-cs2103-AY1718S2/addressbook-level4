@@ -470,7 +470,7 @@ Shows the user a list of their upcoming events (limited to 250 events).
 
 ==== Deleting an event from the calendar : `calendar-delete`
 
-Allows the user to delete an event based on the index listed from the `calendar-list` command.
+Allows the user to delete an event based on the index listed from the `calendar-list` or `show-schedule d/DATE` command.
 
 Format: `calendar-delete INDEX`
 
@@ -480,6 +480,8 @@ Format: `calendar-delete INDEX`
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
 to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
+
+If neither the `calendar-list` nor `show-schedule d/DATE` have been called previously, the command will do nothing.
 ====
 
 Examples:

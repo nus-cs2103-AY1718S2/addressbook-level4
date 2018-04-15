@@ -1664,11 +1664,11 @@ _{ more test cases ... }_
 .. Test case: Press `F8` and not logged in +
    Expected: Calendar WebView opens and states that you must be logged in to use the feature.
 .. Test case: `calendar-launch` and logged in +
-   Expected: Calendar WebView opens and the calendar is displayed.
+   Expected: Calendar WebView opens and the calendar is displayed (if not signed in to a Google Calendar account, the user will be prompted to sign in).
 .. Test case: `View > Open Calendar` and logged in +
-   Expected: Calendar WebView opens and the calendar is displayed.
+   Expected: Calendar WebView opens and the calendar is displayed (if not signed in to a Google Calendar account, the user will be prompted to sign in).
 .. Test case: Press `F8` and logged in +
-   Expected: Calendar WebView opens and the calendar is displayed.
+   Expected: Calendar WebView opens and the calendar is displayed (if not signed in to a Google Calendar account, the user will be prompted to sign in).
 .. Test case: `logout` with open calendar WebViews open (one or many) +
    Expected: All calendar windows close and user is logged out from signed-in calendar sessions (verify by logging as any user).
 
@@ -1677,7 +1677,7 @@ _{ more test cases ... }_
 .. Test case: `switch calendar` and not logged in +
    Expected: Switch case states that you must be logged in to use the command.
 .. Test case: `switch calendar` and logged in +
-   Expected: Scene is switched to display the calendar.
+   Expected: Scene is switched to display the calendar (if not signed in to a Google Calendar account, the user will be prompted to sign in).
 .. Test case: `logout` and logged in +
    Expected: User is signed out from the calendar scene session (verify by logging in as any user).
 
@@ -1691,12 +1691,28 @@ _{ more test cases ... }_
 .  Adding a calendar event
 .. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
 
-.  Listing upcoming calendar events
+.  Listing upcoming calendar events in the command results box
 .. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `calendar-list` and not logged in +
+   Expected: calendar-list command states that you must be logged in to use the feature.
+.. Test case: `calendar-list` and logged in +
+   Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will free the application. Assuming a valid certificate is obtained, if the user has any upcoming events, they will be displayed (up to 250). Otherwise, the command will state that no upcoming events were found.
 
 .  Deleting a calendar event
 .. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
-
+.. Prerequisites: List all upcoming events using the `calendar-list` command or list events for a particular say using `show-schedule d/DATE`. A non-zero amount of events is required in either case.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `calendar-delete 1` and not logged in +
+   Expected: calendar-list command states that you must be logged in to use the feature.
+.. Test case: `calendar-delete 1` and logged in and neither `calendar-list` nor `show-schedule` has been run +
+   Expected: Nothing will happen.
+.. Test case: `calendar-delete 1` and logged in and `calendar-list` nor `show-schedule` has been run but no events are displayed+
+   Expected: calendar-delete command will throw an invalid index exception and inform the user of the proper command usage.
+.. Test case: `calendar-delete 1` and logged in and `calendar-list` nor `show-schedule` has been run and a non-zero number of events are displayed+
+   Expected: calendar-delete command will delete the event at index 1 and inform the user of the deleted event.
+.. Test case: `calendar-delete 5` and logged in and `calendar-list` nor `show-schedule` has been run and a non-zero, but less than 5, number of events are displayed+
+   Expected: calendar-delete command will delete an invalid index exception and inform the user of the proper command usage.
 
 // end::calendarTesting[]
 

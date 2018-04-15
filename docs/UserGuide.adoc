@@ -61,7 +61,7 @@ You can download the latest version of Java link:https://java.com/en/download//[
 .  Double-click the file to start the app. You should see the GUI (Graphical User Interface) in a few seconds.
 +
 .Medeina's GUI
-image::Ui.png[width="800"]
+image::Interface.png[width="1000"]
 
 {empty} +
 
@@ -467,7 +467,7 @@ delete -fo 1
 To list all the commands that you have entered in reverse chronological order. +
 The command format should be: `history` or `his`
 
-image::History_Command.PNG[width:800]
+image::History_Command.PNG[width="800"]
 
 [NOTE]
 ====
@@ -488,18 +488,18 @@ Undoable commands: those commands that modify Medeina's content (`add`, `delete`
 **Examples:**
 
 .Before any command
-image::List_Command.PNG[width:500]
+image::List_Command.PNG[width="500"]
 
 * `delete **-fo** 1` +
 `list` +
 `ud` (The command will reverse the `delete **-fo** 1` command) +
 
 .After `delete **-fo** 1` and `list`. Note that Alex Yeoh and his pet Ane have been deleted.
-image::After_Delete.PNG[width:500]
+image::After_Delete.PNG[width="500"]
 {empty} +
 
 .After `ud` Alex and Ane are back in the lists.
-image::After_Undo.PNG[width:500]
+image::After_Undo.PNG[width="500"]
 
 * `find **-o** n/Joe` +
 `list` +
@@ -507,7 +507,7 @@ image::After_Undo.PNG[width:500]
 The `undo` command fails as there are no undoable commands executed previously.
 
 .`undo` fails
-image::Undo_Fail.PNG[width:500]
+image::Undo_Fail.PNG[width="500"]
 
 * `delete **-fo** 1` +
 `clear` +
@@ -515,15 +515,15 @@ image::Undo_Fail.PNG[width:500]
 `ud` (This command reverses the `delete **-fo** 1`) +
 
 .Executed `delete **-fo** 1` and `clear`. Medeina's data has now been erased.
-image::After_Clear.PNG[width:500]
+image::After_Clear.PNG[width="500"]
 {empty} +
 
 .After `undo`. `clear` command has been undone.
-image::Undo_Clear.PNG[width:500]
+image::Undo_Clear.PNG[width="500"]
 {empty} +
 
 .After `ud`. `delete **-fo** 1` command has been undone. Alex and Ane were added back.
-image::After_Undo.PNG[width:500]
+image::After_Undo.PNG[width="500"]
 
 {empty} +
 
@@ -536,7 +536,7 @@ Simply type `redo` or `rd`, this will reverse the most recent `undo` command.
 Examples:
 
 .Before any command
-image::List_Command.PNG[width:500]
+image::List_Command.PNG[width="500"]
 
 
 * `delete **-fo** 1` +
@@ -544,18 +544,18 @@ image::List_Command.PNG[width:500]
 `redo` (This command reapplies `delete **-fo** 1`) +
 
 .After `delete **-fo** 1` + `undo`. Alex and pet Ane were deleted then added back.
-image::After_Undo.PNG[width:500]
+image::After_Undo.PNG[width="500"]
 {empty} +
 
 .After `redo`. `delete **-fo** 1` was applied again. Alex and pet Ane were once again deleted.
-image::Redo_Success.PNG[width:500]
+image::Redo_Success.PNG[width="500"]
 
 * `delete **-fo** 1` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
 .`redo` fails
-image::Redo_Fail.PNG[width:500]
+image::Redo_Fail.PNG[width="500"]
 
 * `delete **-fo** 1` +
 `clear` +
@@ -566,24 +566,24 @@ image::Redo_Fail.PNG[width:500]
 // end::undoredo[]
 
 .After `delete **-fo** 1` + `clear`. Medeina's data has been cleared.
-image::After_Clear.PNG[width:500]
+image::After_Clear.PNG[width="500"]
 
 {empty} +
 
 .After first `ud`. `clear` command has been undone.
-image::Undo_Clear.PNG[width:500]
+image::Undo_Clear.PNG[width="500"]
 {empty} +
 
 .After second `ud`. `delete **-fo** 1` has been undone. Alex and pet Ane were added back.
-image::After_Undo.PNG[width:500]
+image::After_Undo.PNG[width="500"]
 {empty} +
 
 .After first `rd`: `delete **-fo** 1` was applied again. Alex and pet Ane were once again deleted.
-image::Redo_Success.PNG[width:500]
+image::Redo_Success.PNG[width="500"]
 {empty} +
 
 .After second `rd`: `clear` command was applied again.
-image::Redo_Clear.PNG[width:500]
+image::Redo_Clear.PNG[width="500"]
 
 {empty} +
 
@@ -592,7 +592,7 @@ image::Redo_Clear.PNG[width:500]
 You can use `clear` or `cls` to delete all entries in Medeina. +
 
 .Executed clear command
-image::After_Clear.PNG[width:800]
+image::After_Clear.PNG[width="500"]
 
 {empty} +
 [WARNING]
@@ -616,11 +616,11 @@ If you would like change Medeina's theme to better suit your preference, simply 
 ====
 
 .Dark theme
-image::Theme_Dark.PNG[width:790]
+image::Theme_Dark.PNG[width="790"]
 {empty} +
 
 .Light theme
-image::Screen_Shot.png[width:790]
+image::Ui.png[width="790"]
 // end::changethemeUG[]
 {empty} +
 

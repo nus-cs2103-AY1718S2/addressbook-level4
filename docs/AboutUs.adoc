@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Tan Heng Yeow
 image::tanhengyeow.png[width="150", align="left"]
-{empty}[https://github.com/tanhengyeow[github]] [<<#tanhengyeow, portfolio>>]
+{empty}[https://github.com/tanhengyeow[github]] [<<tanhengyeow#, portfolio>>]
 
 Role: Team Lead, Testing +
 Responsibilites: Logic, Model
@@ -29,7 +29,7 @@ Responsibilities: Ui, Storage
 '''
 === Ma Hongqiang
 image::mhq199657.png[width="150", align="left"]
-{empty}[http://github.com/mhq199657[github]] [<<#, portfolio>>]
+{empty}[http://github.com/mhq199657[github]] [<<mahongqiang#, portfolio>>]
 
 Role: Code quality, Testing +
 Responsibilities: Logic, Model

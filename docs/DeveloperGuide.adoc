@@ -696,9 +696,9 @@ A new injuries history component is added to the person model.
 
 This injuries history feature allows the user to add injuries history to the student profile of the specified student.
 
-//image::InjuriesHistoryClassSequenceDiagram.png[width="800"]
+image::InjuriesHistoryClassSequenceDiagram.png[width="800"]
 
-//Figure 15. Sequence Diagram of AddInjuriesCommand
+Figure 16. Sequence Diagram of AddInjuriesCommand
 
 ==== Design Considerations
 ===== Aspect: Implementation of the `Injuries History` feature
@@ -717,9 +717,9 @@ A new cca component is added to the person model.
 
 This cca feature allows the user to add cca and the position to the student profile of the specified student.
 
-//image::CcaClassSequenceDiagram.png[width="800"]
+image::CcaClassSequenceDiagram.png[width="800"]
 
-//Figure 15. Sequence Diagram of CcaCommand
+Figure 17. Sequence Diagram of CcaCommand
 
 ==== Design Considerations
 ===== Aspect: Implementation of the `Cca` feature
@@ -738,9 +738,9 @@ A new next of kin component is added to the person model.
 
 This NextOfKin feature allows the user to add the details of the student's next of kin into the student profile of the specified student.
 
-//image::NextOfKinClassSequenceDiagram.png[width="800"]
+image::NextOfKinClassSequenceDiagram.png[width="800"]
 
-//Figure 15. Sequence Diagram of NextOfKinCommand
+Figure 18. Sequence Diagram of NextOfKinCommand
 
 ==== Design Considerations
 ===== Aspect: Implementation of the `NextOfKin` feature

@@ -557,10 +557,9 @@ Why it is implemented that way
 *** Alternative 2: Checking is done concurrently during parse of delete transaction argument, similar to add transaction
 ** Pro: This will ensure exception to be thrown at the earlier part of the execution and prevent bugs from arising due to the inexistent of payer or payee(s)
 ** Con: More line of codes and method has to be added
-
 //end::deletetransaction[]
 
-//tag::Debtors_Creditor_Panel
+//tag::Debtors_Creditor_Panel[]
 === Debtors & Creditors List Table Mechanism
 
 ==== Debtors & Creditors List Table Implementation
@@ -596,7 +595,7 @@ Why it is implemented that way
 ** Alternative 2: Each person has a unique debtors and creditor list
 ** Pro:  Easy retrieve of debtors and creditors
 ** Con: Once a new transaction is added, all the creditors and debtors list relevant to the payer or payee(s) in the transaction have to be updated
-//end::Debtors_Creditor_Panel
+//end::Debtors_Creditor_Panel[]
 
 //tag::findtransaction[]
 === [Proposed] Find Transaction feature
@@ -1333,7 +1332,7 @@ Use case ends.
 [discrete]
 //end::usecases[]
 
-//start::nonfunctionalrequirements[]
+//tag::nonfunctionalrequirements[]
 [appendix]
 == Non Functional Requirements
 
@@ -1347,7 +1346,7 @@ Use case ends.
 .  The project is expected to adhere to a schedule that delivers a feature/bug-fix update every week.
 //end::nonfunctionalrequirements[]
 
-//start::glossary[]
+//tag::glossary[]
 [appendix]
 == Glossary
 

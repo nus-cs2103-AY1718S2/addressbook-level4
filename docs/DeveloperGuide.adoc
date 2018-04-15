@@ -14,6 +14,14 @@ endif::[]
 
 By: `Team CS2103JAN2018-T16-B1`      Since: `Mar 2018`      Licence: `MIT`
 
+// tag::devguideintroduction[]
+== Introduction
+
+Catalogue is a desktop application that allows book and account management for the Library. +
+This developer guide has been written to help any possible contributor to improve the application in the future. +
+It is also very useful to understand how the different features work and how to run tests on them. +
+Finally, it will explain you how the idea for Catalogue came.
+// end::devguideintroduction[]
 == Setting up
 
 === Prerequisites
@@ -861,13 +869,16 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of books
+* has a need to manage a significant number of student and librarian accounts
+* NUS Librarians
+* NUS Students
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: Fast and efficient book and accounts management application.
 
 [appendix]
 == User Stories
@@ -893,21 +904,29 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |As a librarian |I want to add a new book title into the database |So that I can constantly update the database for borrowers
 |`* * *` |As a librarian |I want to delete a book title from the database |So that I can constantly update the database for borrowers
-|`* * *` |As a librarian |I want to confirmation in notification before deleting a book |So that I will not accidentally delete the wrong book title
 |`* * *` |As a librarian |I want to find a book title in the database |So that I can see the status of the book
-|`* * ` |As a librarian |I want to view the history of borrowed books from each borrower |So that I can keep track of books availability
+|`* * *` |As a librarian |I want to add accounts to the system |So that more students can read and use books
+|`* * *` |As a librarian |I want to delete accounts from the system |So I don't keep unused accounts
+|`* * *` |As a librarian |I want to edit a book of the library |So I can correct a mistake in its information
+|`* *` |As a librarian |I want to confirmation in notification before deleting a book |So that I will not accidentally delete the wrong book title
+|`* * `|As a librarian |I want to view the history of borrowed books from each borrower |So that I can keep track of books availability
+|`* *` |As a librian |I want to list all the accounts |So I can visually see all the student information
+|`* * *` |As a student |I want to borrow a book from the library |So I can increase my knowledge
+|`* * *` |As a student |I want to return a book to the library |So I can discover new subjects
 |`* * *` |As a student |I want to find a book title in the database by it's title |So I can facilitate my search process
-|`* * *` |As a student |I want to find a book title in the database by it's tag |So that I can facilitate my search process
 |`* * *` |As a student |I want to check for the availability of the book |So that I can know it' loan status
 |`* * *` |As a student |I want to loan a book  |So that I can use the book for higher learning
+|`* * *` |As a student |I want to reserve a book currently being loaned |So that I will be able to loan the book as soon as it is available
 |`* *` |As a student |I want to renew existing loaned book |So that I have more time to finish the book
-|`* *` |As a student |I want to reserve a book currently being loaned |So that I will be able to loan the book as soon as it is available
-|`* * *` |As a student |I want to receive notification when my current book is due soon |So that I will not miss the due date
+|`* *` |As a student |I want to find a book title in the database by it's tag |So that I can facilitate my search process
+|`* *` |As a student |I want to receive notification when my current book is due soon |So that I will not miss the due date
+|`*` |As a student |I want to know which book is mandatory for which course |So that I can study in the best conditions
+|`*` |As a student |I want to be able to ask for a hint with my password |So that I don't forget it
+|`*` |As a student |I want to be able to change the dark theme to my preference |So that I can fully personalize my account
 |`* * *` |As a guest |I want to find a book title in the database |So that I can see the status of the book
 |`* * *` |As a guest |I want to check for the availability of the book |So that I can see it's loan status
 |=======================================================================
 
-_{More to be added}_
 
 [appendix]
 == Use Cases
@@ -1093,7 +1112,6 @@ Use case ends.
 Use case ends.
 
 *Extensions*
-
 [none]
 
 * 2a. The previous executed command is redone.
@@ -1133,7 +1151,7 @@ Use case ends.
 +
 Use case ends.
 
-*Extensions*
+*Extensions* 
 
 * 2a. The list is empty
 +
@@ -1153,7 +1171,6 @@ Use case ends.
 +
 Use case ends.
 
-[discrete]
 === Use case: Select
 
 *MSS*
@@ -1253,6 +1270,65 @@ Catalogue shows an error message.
 ** 3a1. Catalogue shows an error message.
 +
 Use case resumes at step 2.
+
+// tag::usecaseclearaclearhistory[]
+[discrete]
+=== Use case: Clear accounts, cleara
+
+*MSS*
+
+1.  User logs in with credentials
+2.  Catalogue authenticates with the credentials entered
+3.  Catalogue shows successful login message
+4.  Librarian types `cleara` in the command box
+5.  Catalogue checks the privilege of the user against the privilege level associated with `cleara`
+6.  If successful, Catalogue clears all the accounts from the list of accounts, logs out the current user and add the default admin user.
++
+
+*Extensions*
+
+[none]
+* 6a. The list of accounts is empty
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear books, clear
+
+*MSS*
+
+1.  Librarian logs in with credentials
+2.  Catalogue shows successful login message
+3.  Librarian types `clear` in the command box to clear Catalogue
+4.  Catalogue clears all the books from Catalogue
++
+
+*Extensions*
+
+[none]
+* 4a. Catalogue is empty
++
+Use case ends.
+
+[discrete]
+=== Use case: History Command
+
+*MSS*
+
+1.  User logs in with credentials
+2.  Catalogue shows successful login message
+3.  Librarian types `history` in the command box to see the history of entered commands
+4.  The application shows the previously entered commands, most recent first
++
+
+*Extensions*
+
+[none]
+* 5a. No commands have been entered as for now
++
+Use case ends.
+// end::usecaseclearaclearhistory[]
+
 
 [appendix]
 == Non Functional Requirements
@@ -1536,4 +1612,48 @@ _{ more test cases ... }_
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
+_{ more test cases ... }_
 
+// tag::manualtestclearaclearhistory[]
+=== Clearing the list of accounts
+
+. Clear all accounts
+
+.. Prerequisites: There is at least one account in the list of accounts
+.. Test Case: `cleara` +
+   Expected: All the accounts present in the list of accounts are erased. The message "AccountList has been cleared, and you are logged out!" is displayed in the result display.
+
+. Clear all accounts from empty list
+
+.. Prerequisites: No accounts have been entered in the list of accounts
+.. Test Case: `cleara` +
+   Expected: The empty list of account will be replaced by another empty list of accounts. The message "AccountList has been cleared, and you are logged out!" is displayed in the result display.
+
+=== Clearing Catalogue
+
+. Clear all books from Catalogue
+
+.. Prerequisites: There is at least one book in Catalogue
+.. Test Case: `clear` +
+   Expected: All the books present in Catalogue are erased. The message "Catalogue has been cleared!" is displayed in the result display.
+
+. Clear all books from empty Catalogue
+
+.. Prerequisites: No book have been entered in Catalogue
+.. Test Case: `clear` +
+   Expected: The empty Catalogue will be replaced by another empty Catalogue. The message "Catalogue has been cleared!" is displayed in the result display.
+
+=== Getting the history of entered commands
+
+. Get the history
+
+.. Prerequisites: At least one command has been entered
+.. Test Case: `history` +
+   Expected: All the commands previously entered are shown from earliest to oldest. The message "Entered commands (from most recent to earliest) is displayed in the result display.
+
+. Get the history without any entered commands
+
+.. Prerequisites: No commands have been typed in
+.. Test Case: `history` +
+   Expected: No commands are shown. The message "You have not yet entered any commands." is displayed in the result display.
+// end::manualtestclearaclearhistory[]

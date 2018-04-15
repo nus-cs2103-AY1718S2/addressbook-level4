@@ -55,4 +55,8 @@ public class Address {
         return value.hashCode();
     }
 
+    public int compareTo(Address other) {
+        return toString().compareToIgnoreCase(other.toString());
+    }
+
 }

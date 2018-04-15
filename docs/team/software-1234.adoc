@@ -1,0 +1,70 @@
+= Eric Zhou - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: TravelBanker
+
+---
+
+== Overview
+
+This is a desktop application allowing people, particularly travellers, to keep track of amounts of money
+ lent or borrowed from contacts. User interactions are command-line based, but the app also consists of
+ of a GUI created with JavaFX, which includes a command box, a browser panel, a status bar footer, a list panel
+ and more. It is written in Java.
+
+== Summary of Contributions
+
+* *Major Enhancement*: Implemented currency conversion feature to allow people to quickly convert their currencies from one currency to another. Total balances can also be converted.
+** What it does: The command allows users to convert specific entries' balances from one currency to another currency. This allows the user to convert to different currencies because it is not clear where the user will be located. The feature supports 170 currencies.
+** Credits:
+Used third-party currency converter library from github: https://github.com/Ritaja/java-exchange-rates
+
+* *Minor Enhancements*: Allow users to wipe all balances in their addressbook, show the all the people who owe the user money, and all the people who the user owes money to
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/functional/software-1234.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/test/software-1234.md[Test code]]
+
+
+* *Other contributions*:
+
+** Project management:
+*** Contributed code from v1.0 on
+*** Created milestones from v1.2 to v1.5rc and managed releases for v1.3.
+*** Created issues from v1.2
+** Documentation:
+*** Updated documentation to ensure latest versions were correct
+** Tools:
+*** Added new third party library to use for currency conversion
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+
+include::../UserGuide.adoc[tag=convert]
+
+include::../UserGuide.adoc[tag=wipe]
+
+include::../UserGuide.adoc[tag=debt]
+
+include::../UserGuide.adoc[tag=lend]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=posneg]
+
+
+
+
+
+
+
+
+

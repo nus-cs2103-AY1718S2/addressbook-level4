@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.item.Item;
+import seedu.address.model.money.Money;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -31,9 +33,17 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    //@@author pkuhanan
+    @XmlElement
+    private String balance;
+    //@@author
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    //@@author chenchongsong
+    @XmlElement
+    private List<XmlAdaptedItem> items = new ArrayList<>();
+    //@@author
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -44,11 +54,13 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, String balance,
+                            List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.balance = balance;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -64,9 +76,14 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        balance = source.getMoney().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
+        }
+        items = new ArrayList<>();
+        for (Item item : source.getItems()) {
+            items.add(new XmlAdaptedItem(item));
         }
     }
 
@@ -80,6 +97,13 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+
+        //@@author chenchongsong
+        final List<Item> personItems = new ArrayList<>();
+        for (XmlAdaptedItem item : items) {
+            personItems.add(item.toModelType());
+        }
+        //@@author
 
         if (this.name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -113,8 +137,18 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        //@@author pkuhanan
+        if (!Money.isValidMoney(this.balance)) {
+            throw new IllegalValueException(Money.MESSAGE_MONEY_CONSTRAINTS);
+        }
+        final Money balance = new Money(this.balance);
+        //@@author
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        //@@author chenchongsong
+        final ArrayList<Item> items = new ArrayList<>(personItems);
+        return new Person(name, phone, email, address, balance, tags, items);
+        //@@author
     }
 
     @Override
@@ -132,6 +166,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
+                && Objects.equals(balance, otherPerson.balance)
                 && tagged.equals(otherPerson.tagged);
     }
 }

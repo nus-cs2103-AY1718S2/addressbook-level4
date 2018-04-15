@@ -95,7 +95,7 @@ public interface Model {
     ObservableList<AppointmentEntry> getAppointmentEntryList();
 
     /** Delete a patient's appointment*/
-    void addPatientAppointment(Patient patient, String dateTimeString) throws
+    void addPatientAppointment(Patient patient, DateTime dateTime) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException;
 }

@@ -214,11 +214,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addPatientAppointment(Patient patient, String dateTimeString) throws
+    public synchronized void addPatientAppointment(Patient patient, DateTime dateTime) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
-        requireNonNull(patient, dateTimeString);
-        imdb.addAppointment(patient, dateTimeString);
+        requireAllNonNull(patient, dateTime);
+        imdb.addAppointment(patient, dateTime);
         indicateAppointmentChanged(patient);
     }
     //@@author

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentEntry;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
@@ -198,10 +199,10 @@ public class Imdb implements ReadOnlyImdb {
      * @throws UniqueAppointmentList.DuplicatedAppointmentException
      * @throws UniqueAppointmentEntryList.DuplicatedAppointmentEntryException
      */
-    public void addAppointment(Patient patient, String dateTimeString) throws
+    public void addAppointment(Patient patient, DateTime dateTime) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
-        Appointment newAppt = new Appointment(dateTimeString);
+        Appointment newAppt = new Appointment(dateTime.toString());
         patient.addAppointment(newAppt);
         addAppointmentEntry(newAppt, patient.getName().fullName);
     }

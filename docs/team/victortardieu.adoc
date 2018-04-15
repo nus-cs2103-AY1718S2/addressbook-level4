@@ -30,24 +30,21 @@
 
 ** Project management:
 
-** Enhancements to existing features:
-Tag colors: Assign a new color each time a new tag is created so that the tags have different colors. +
-Created the basics for the tests of the account functions
+** Enhancements to existing features: +
+UI enhancement --> Tag colors: Assign a new color each time a new tag is created so that the tags have different colors. +
+Test enhancement --> Created the data files for the tests of the account functions
 
-** Documentation:
-Fixed the issues in User Guide from in-class testing session (see issues from bot).
-Added in User Guide the new functions (AddAccount, ClearAccount, DeleteAccount, Borrow, Return, Reserve, Logout)
-Wrote the User Stories
+** Documentation: +
+Fixed the issues in User Guide from in-class testing session (see issues from bot). +
+Added in User Guide the new functions (AddAccount, ClearAccount, DeleteAccount, Borrow, Return, Reserve, Logout) +
+Wrote the User Stories, Use cases
 
-** Others
+** Community: +
+Assigned issues to different team members after testing session
+
+** Others:
 Created the first book system.
 
-
-** Community:
-
-** Tools:
-
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 
@@ -56,12 +53,10 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
-
-include::../UserGuide.adoc[tag=dataencryption]
 
 ** Quick Start Section
 Modify it to explain the new user interface. Write sentence for every section of the UI.
+Create the new user interface picture.
 
 ** Logout
 Add the following information (format, example, tips, notes) on how to use this function.
@@ -91,9 +86,9 @@ Add the following information (format, example, tips, notes) on how to use this 
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
 
-include::../DeveloperGuide.adoc[tag=dataencryption]
+**Introduction
+include::../DeveloperGuide.adoc[tag=devguideintroduction]
 
 ** UI component
 Modify the UI diagram to make it about our project.
@@ -107,9 +102,11 @@ Rank them by user and then by importance (*** first and * last)
 
 ** Appendix D
 Write Use Cases for ClearCommand, ClearAccountCommand, HistoryCommand
+include::../DeveloperGuide.adoc[tag=usecaseclearaclearhistory]
 
 ** Appendix H
 Write instructions for manual testing for ClearCommand, ClearAccountCommand, HistoryCommand
+include::../DeveloperGuide.adoc[tag=manualtestclearaclearhistory]
 
 
 == PROJECT: PowerPointLabs

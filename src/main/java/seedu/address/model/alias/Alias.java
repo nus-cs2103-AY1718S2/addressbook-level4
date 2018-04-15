@@ -19,6 +19,7 @@ public class Alias {
     /**
      * Constructs an {@code Alias}.
      *
+     * @param command A valid command word
      * @param aliasName A valid alias name.
      */
     public Alias(String command, String aliasName) {
@@ -29,10 +30,18 @@ public class Alias {
         this.command = command;
     }
 
+    /**
+     *
+     * @return the command word
+     */
     public String getCommand() {
         return command;
     }
 
+    /**
+     *
+     * @return the alias name
+     */
     public String getAlias() {
         return aliasName;
     }

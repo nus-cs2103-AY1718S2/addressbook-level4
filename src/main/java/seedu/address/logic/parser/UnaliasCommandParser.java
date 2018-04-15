@@ -28,7 +28,7 @@ public class UnaliasCommandParser implements Parser<UnaliasCommand> {
     }
 
     /**
-     * Returns a not empty String of unalias.
+     * Returns a non empty String of unalias.
      */
     private String validateNumberOfArgs(String args) throws ParseException {
         String unalias = args.trim();

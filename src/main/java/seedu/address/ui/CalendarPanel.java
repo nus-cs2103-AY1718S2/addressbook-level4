@@ -96,7 +96,7 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleActivityListChangeCalendarEvent(DeskBoardChangedEvent event) {
+    private void handleDeskBoardChangedEvent(DeskBoardChangedEvent event) {
         syncCalendarWithActivities(event.data.getActivityList());
     }
 

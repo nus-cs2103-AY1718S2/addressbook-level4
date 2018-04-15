@@ -261,17 +261,19 @@ image::LogicAPI.png[width="800"]
 ===== Events-Driven Nature of the Design
 
 
-_Figure 9_ below shows how the primary and secondary components interact in a scenario where the user issues the command `delete 1`.
+_Figure 10_ below shows how the primary and secondary components interact in a scenario
+where the user issues the command `delete 1`.
 
-.Component interactions for `delete 1` command (part 1)
+.Relevant Components interactions for `delete 1` command (part 1)
 image::SDforDeleteActivity.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `DeskBoardChangedEvent` when the Desk Board data are changed, instead of asking the `Storage` to save the updates into the hard disk.
+Note how the `Model` simply raises a `DeskBoardChangedEvent` when the Desk Board data
+are changed, instead of asking the `Storage` to save the updates into the hard disk.
 
 _Figure 11_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
+.Relevant Components interactions for `delete 1` command (part 2)
 image::SDforDeleteActivityEventHandling.png[width="800"]
 
 [NOTE]
@@ -294,7 +296,10 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `EventListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `MainView`
+`ResultDisplay`, `StatusBarFooter`,  etc. Note that `TaskListPanel`, `EventListPanel`, `BrowserPanel` and
+`CalendarPanel` are part of `MainView`. All these, including the `MainWindow`, inherit
+from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
@@ -650,26 +655,122 @@ We will need to write codes for classes and methods related to `Task` and `Event
 {empty} +
 //end::activitydesign[]
 
+// tag::guiimplementation[]
 === Managing GUI
 
 This section describes implementation of features related to the GUI.
 
 ==== Current implementation
 
-There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe the implementation for each comman.
+There are 3 views for the GUI of CLIndar - `MainView`, `TaskView` and `EventView`.
 
-===== Listing of tasks and events
+`MainView` displays both `Task` and `Event which is the default display for
+the GUI. It comprises of `CalendarPanel`, `TaskListPanel`, `EventListPanel` and `BrowserPanel`.
 
-A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all the `Task` objects added by the user
-is then displayed using the `TaskListPanel`, while `Event` objects added by user are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and an `EventListCard`.
+`TaskView` displays `Task` only on the GUI and comprises of `CalendarPanel`, `TaskListPanel` and `BrowserPanel`.
+
+`EventView` displays `Event` only on the GUI and comprises of `CalendarPanel`, `EventListPanel` and `BrowserPanel`.
+
+`centerStagePlaceholder` refers to the center stage of the GUI marked out by the red rectangle shown in _Figure 10_ below.
+
+.centerStagePlaceholder
+image::centerStagePlaceholder.png[width='650']
+
+To facilitate switching of views, the .xfml file of relevant view will be added to `centerStagePlaceholder`.
+
+Following is a snippet that shows how `MainView` is added to `centerStagePlaceholder`:
+----
+    @Subscribe
+    private void handleShowActivityRequestEvent(ShowActivityRequestEvent event)    {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        centerStagePlaceholder.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+        view = "mainView";
+        mainView = new MainView(logic);
+        centerStagePlaceholder.getChildren().add(mainView.getRoot());
+    }
+----
+
+{empty} +
+{empty} +
+
+The calendar feature of the application makes use of the open source project - CalendarFX.
+
+Whenever `DeskboardChangedEvent` is fired from the `EventCenter`, meaning that an `Activity` has been added or removed,
+`CalendarPanel` receives it updates the calendar accordingly.
+
+The following is a snippet shows how `handleDeskBoardChangedEvent` synchronizes with `UniqueActivityList`:
+[source,java]
+----
+    @Subscribe
+    private void handleDeskBoardChangedEvent(DeskBoardChangedEvent event) {
+        syncCalendarWithActivities(event.data.getActivityList());
+    }
+----
+
+{empty} +
+{empty} +
+
+Next, `BrowserPanel` is hidden in the GUI when the application is first initialised. Selecting a cell in either of the
+cells in `TaskListPanel` or `EventListPanel` causes the `BrowserPanel` to appear.
+
+The following is a snippet of how the constructor of `BrowserPanel` hides itself:
+[source,java]
+----
+    public BrowserPanel() {
+
+        /...some code.../
+        browser.managedProperty().bind(browser.visibleProperty());
+        browser.setVisible(false);
+        /...some code.../
+    }
+----
+
+Below is a snippet of how `BrowserPanel` displays the details of the `Task` selected in the GUI:
+[source,java]
+----
+    private void showBrowserPanelTask(Task task) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                browser.setVisible(true);
+                browser.getChildren().setAll(setupBrowserPanelTask(task));
+            }
+        });
+    }
+----
+
+{empty} +
+{empty} +
+
+There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe
+the implementation for each command.
+
+==== Listing of tasks and events
+
+A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all
+the `Task` objects added by the user is then displayed using the `TaskListPanel`, while `Event` objects added by
+user are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and an `EventListCard`.
 
 .TaskListCard example
-image::TaskCard.png[width="550"]
+image::TaskCard.png[width="650"]
 
 .EventListCard example
-image::EventCard.png[width='550']
+image::EventCard.png[width='650']
 
 `ListCommand` allows the user to only view `Task` only, `Event` only or both in the GUI.
+
+_Figure 10_ below shows how the relevant primary and secondary components interact
+in a scenario where the user issues the command `list task`.
+
+.Relevant components interaction for `list task` command (part 1)
+image::SDListCommand.png[width='650']
+
+_Figure 11_ below shows how the `EventsCenter` reacts to that event, which eventually
+results in 'centerStagePlaceholder` of the UI being updated to display `TaskView`.
+
+.Relevant components interaction for `list task` command (part 2)
+image::SDListCommandEventHandling.png[width='650']
 
 The following snippet shows how `execute()` of `ListCommand` displays `Task` and/or `Event` objects in the GUI.
 If an invalid request for `ListCommand` happens, a `CommandException` will be thrown.
@@ -697,10 +798,11 @@ If `ListCommand` is successful:
 * `list` will show only `Task` objects;
 * `list event` will show only `Event` objects; and
 * `list` will show both `Task` and `Event` objects.
+// end::guiimplementation[]
 {empty} +
 {empty} +
 
-===== Overdue
+==== Overdue
 
 Overdue tasks can be viewed through the use of the `OverdueCommand`. Note that the `OverdueCommand` only
 lists down overdue tasks; overdue events are marked as completed automatically.
@@ -719,6 +821,7 @@ If the current date and time is past an `Event` `s `endDateTime`, the `Event` wi
 
 This section describes various design considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
+// tag::listcommandaspect[]
 [discrete]
 ===== Aspect: Implementation of `ListCommand`
 
@@ -736,6 +839,7 @@ information tags. The design of the UI will be much more intuitive too.
 We preferred the second alternative as it adheres more closely with fundamental design principles. The GUI
 has to be made as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
 definitely the preferred approach here.
+// end::listcommandaspect[]
 {empty} +
 {empty} +
 

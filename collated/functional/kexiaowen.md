@@ -1,4 +1,113 @@
 # kexiaowen
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void sortPersonListAscOrder(SortCommand.SortField sortField) {
+        addressBook.sortAsc(sortField);
+        Predicate<? super Person> currPredicate = filteredPersons.getPredicate();
+        filteredPersons.setPredicate(currPredicate);
+    }
+
+    @Override
+    public void sortPersonListDescOrder(SortCommand.SortField sortField) {
+        addressBook.sortDesc(sortField);
+        Predicate<? super Person> currPredicate = filteredPersons.getPredicate();
+        filteredPersons.setPredicate(currPredicate);
+    }
+
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    /**
+     * Sorts all students in HR+ based on {@code sortField} in ascending order
+     */
+    public void sortAsc(SortCommand.SortField sortField) {
+        switch (sortField) {
+        case GPA:
+            persons.sortPersonsGradePointAverageAsc();
+            break;
+
+        case NAME:
+            persons.sortPersonsNameAsc();
+            break;
+
+        case RATING:
+            persons.sortPersonsRatingAsc();
+            break;
+
+        default:
+            throw new IllegalArgumentException(MESSAGE_INVALID_SORT_FIELD);
+        }
+    }
+
+    /**
+     * Sorts all students in HR+ based on {@code sortField} in descending order
+     */
+    public void sortDesc(SortCommand.SortField sortField) {
+        switch (sortField) {
+        case GPA:
+            persons.sortPersonsGradePointAverageDesc();
+            break;
+
+        case NAME:
+            persons.sortPersonsNameDesc();
+            break;
+
+        case RATING:
+            persons.sortPersonsRatingDesc();
+            break;
+
+        default:
+            throw new IllegalArgumentException(MESSAGE_INVALID_SORT_FIELD);
+        }
+    }
+
+```
+###### /java/seedu/address/model/person/UniquePersonList.java
+``` java
+    /**
+     * Sorts the list based on overall rating in ascending order
+     */
+    public void sortPersonsRatingAsc() {
+        Collections.sort(internalList, Person::compareByOverallRating);
+    }
+
+    /**
+     * Sorts the list based on overall rating in descending order
+     */
+    public void sortPersonsRatingDesc() {
+        Collections.sort(internalList, Collections.reverseOrder(Person::compareByOverallRating));
+    }
+
+    /**
+     * Sorts the list based on GPA in ascending order
+     */
+    public void sortPersonsGradePointAverageAsc() {
+        Collections.sort(internalList, Person::compareByGradePointAverage);
+    }
+
+    /**
+     * Sorts the list based on GPA in descending order
+     */
+    public void sortPersonsGradePointAverageDesc() {
+        Collections.sort(internalList, Collections.reverseOrder(Person::compareByGradePointAverage));
+    }
+
+    /**
+     * Sorts the list based on name in ascending order
+     */
+    public void sortPersonsNameAsc() {
+        Collections.sort(internalList, Person::compareByName);
+    }
+
+    /**
+     * Sorts the list based on name in descending order
+     */
+    public void sortPersonsNameDesc() {
+        Collections.sort(internalList, Collections.reverseOrder(Person::compareByName));
+    }
+
+```
 ###### /java/seedu/address/commons/util/DoubleUtil.java
 ``` java
 /**
@@ -145,6 +254,145 @@ public class RateCommand extends UndoableCommand {
         RateCommand e = (RateCommand) other;
         return index.equals(e.index)
                 && rating.equals(e.rating);
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/SortCommand.java
+``` java
+/**
+ * Sorts and lists all students in HR+ based on name, rating or gpa
+ */
+public class SortCommand extends Command {
+
+    public static final String COMMAND_WORD = "sort";
+    public static final String SORT_ORDER_ASC = "asc";
+    public static final String SORT_ORDER_DESC = "desc";
+    public static final String SORT_FIELD_GPA = "gpa";
+    public static final String SORT_FIELD_NAME = "name";
+    public static final String SORT_FIELD_RATING = "rating";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Sorts current list of students in HR+ based on a specified field in descending or ascending order.\n"
+            + "Sorting order can only be either desc or asc. The field must be either gpa, name or rating.\n"
+            + "Parameters: FIELD (must be either gpa, name or rating) "
+            + PREFIX_SORT_ORDER + "SORTING ORDER\n"
+            + "Example: " + COMMAND_WORD + " rating "
+            + PREFIX_SORT_ORDER + SORT_ORDER_ASC;
+
+    public static final String MESSAGE_INVALID_SORT_ORDER =
+            "The sort order can only be asc or desc";
+    public static final String MESSAGE_INVALID_SORT_FIELD =
+            "The field must be either gpa, name or rating";
+    public static final String MESSAGE_SORT_SUCCESS =
+            "Sorted students based on %1$s in %2$s order";
+    private static final String SORT_ORDER_ASC_FULL = "ascending";
+    private static final String SORT_ORDER_DESC_FULL = "descending";
+    private static final String SORT_FIELD_GPA_FULL = "gpa";
+    private static final String SORT_FIELD_NAME_FULL = "name";
+    private static final String SORT_FIELD_RATING_FULL = "rating";
+
+    /**
+     * Enumeration of acceptable sort orders
+     */
+    public enum SortOrder {
+        ASC, DESC
+    }
+
+    /**
+     * Enumeration of acceptable sort fields
+     */
+    public enum SortField {
+        GPA, NAME, RATING
+    }
+
+    private final SortOrder sortOrder;
+    private final SortField sortField;
+
+    public SortCommand(SortOrder sortOrder, SortField sortField) {
+        requireAllNonNull(sortOrder, sortField);
+        this.sortOrder = sortOrder;
+        this.sortField = sortField;
+    }
+
+    /**
+     * Returns true if a given string is a valid sort order
+     */
+    public static boolean isValidSortOrder(String sortOrder) {
+        requireNonNull(sortOrder);
+        return sortOrder.equals(SORT_ORDER_DESC) || sortOrder.equals(SORT_ORDER_ASC);
+    }
+
+    /**
+     * Returns true if a given string is a valid sort field
+     */
+    public static boolean isValidSortField(String sortField) {
+        requireNonNull(sortField);
+        return sortField.equals(SORT_FIELD_GPA)
+                || sortField.equals(SORT_FIELD_NAME)
+                || sortField.equals(SORT_FIELD_RATING);
+    }
+
+
+    /**
+     * Returns the string representation of a {@cod SortOrder}
+     */
+    private String getSortOrderString(SortOrder sortOrder) {
+        switch (sortOrder) {
+        case ASC:
+            return SORT_ORDER_ASC_FULL;
+
+        case DESC:
+            return SORT_ORDER_DESC_FULL;
+
+        default:
+            return null;
+        }
+    }
+
+    /**
+     * Returns the string representation of a {@cod SortField}
+     */
+    private String getSortFieldString(SortField sortField) {
+        switch (sortField) {
+        case GPA:
+            return SORT_FIELD_GPA_FULL;
+
+        case NAME:
+            return SORT_FIELD_NAME_FULL;
+
+        case RATING:
+            return SORT_FIELD_RATING_FULL;
+
+        default:
+            return null;
+        }
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        switch (sortOrder) {
+        case ASC:
+            model.sortPersonListAscOrder(sortField);
+            break;
+
+        case DESC:
+            model.sortPersonListDescOrder(sortField);
+            break;
+
+        default:
+            throw new CommandException(MESSAGE_INVALID_SORT_ORDER);
+        }
+        return new CommandResult(String.format(MESSAGE_SORT_SUCCESS,
+                getSortFieldString(sortField), getSortOrderString(sortOrder)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SortCommand // instanceof handles nulls
+                && this.sortOrder.equals(((SortCommand) other).sortOrder))
+                && this.sortField.equals(((SortCommand) other).sortField); // state check
     }
 
 }
@@ -517,143 +765,81 @@ public class RatingEditCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### /java/seedu/address/logic/parser/RatingDeleteCommandParser.java
 ``` java
 /**
- * Sorts and lists all students in HR+ based on name, rating or gpa
+ * Parses input arguments and creates a new RatingDeleteCommand object
  */
-public class SortCommand extends Command {
-
-    public static final String COMMAND_WORD = "sort";
-    public static final String SORT_ORDER_ASC = "asc";
-    public static final String SORT_ORDER_DESC = "desc";
-    public static final String SORT_FIELD_GPA = "gpa";
-    public static final String SORT_FIELD_NAME = "name";
-    public static final String SORT_FIELD_RATING = "rating";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sorts current list of students in HR+ based on a specified field in descending or ascending order.\n"
-            + "Sorting order can only be either desc or asc. The field must be either gpa, name or rating.\n"
-            + "Parameters: FIELD (must be either gpa, name or rating) "
-            + PREFIX_SORT_ORDER + "SORTING ORDER\n"
-            + "Example: " + COMMAND_WORD + " rating "
-            + PREFIX_SORT_ORDER + SORT_ORDER_ASC;
-
-    public static final String MESSAGE_INVALID_SORT_ORDER =
-            "The sort order can only be asc or desc";
-    public static final String MESSAGE_INVALID_SORT_FIELD =
-            "The field must be either gpa, name or rating";
-    public static final String MESSAGE_SORT_SUCCESS =
-            "Sorted students based on %1$s in %2$s order";
-    private static final String SORT_ORDER_ASC_FULL = "ascending";
-    private static final String SORT_ORDER_DESC_FULL = "descending";
-    private static final String SORT_FIELD_GPA_FULL = "gpa";
-    private static final String SORT_FIELD_NAME_FULL = "name";
-    private static final String SORT_FIELD_RATING_FULL = "rating";
+public class RatingDeleteCommandParser implements Parser<RatingDeleteCommand> {
 
     /**
-     * Enumeration of acceptable sort orders
+     * Parses the given {@code String} of arguments in the context of the RatingDeleteCommand
+     * and returns a RatingDeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
      */
-    public enum SortOrder {
-        ASC, DESC
-    }
-
-    /**
-     * Enumeration of acceptable sort fields
-     */
-    public enum SortField {
-        GPA, NAME, RATING
-    }
-
-    private final SortOrder sortOrder;
-    private final SortField sortField;
-
-    public SortCommand(SortOrder sortOrder, SortField sortField) {
-        requireAllNonNull(sortOrder, sortField);
-        this.sortOrder = sortOrder;
-        this.sortField = sortField;
-    }
-
-    /**
-     * Returns true if a given string is a valid sort order
-     */
-    public static boolean isValidSortOrder(String sortOrder) {
-        requireNonNull(sortOrder);
-        return sortOrder.equals(SORT_ORDER_DESC) || sortOrder.equals(SORT_ORDER_ASC);
-    }
-
-    /**
-     * Returns true if a given string is a valid sort field
-     */
-    public static boolean isValidSortField(String sortField) {
-        requireNonNull(sortField);
-        return sortField.equals(SORT_FIELD_GPA)
-                || sortField.equals(SORT_FIELD_NAME)
-                || sortField.equals(SORT_FIELD_RATING);
-    }
-
-
-    /**
-     * Returns the string representation of a {@cod SortOrder}
-     */
-    private String getSortOrderString(SortOrder sortOrder) {
-        switch (sortOrder) {
-        case ASC:
-            return SORT_ORDER_ASC_FULL;
-
-        case DESC:
-            return SORT_ORDER_DESC_FULL;
-
-        default:
-            return null;
+    public RatingDeleteCommand parse(String args) throws ParseException {
+        Index index;
+        try {
+            index = ParserUtil.parseIndex(args);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RatingDeleteCommand.MESSAGE_USAGE));
         }
+        return new RatingDeleteCommand(index);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/SortCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new SortCommand object
+ */
+public class SortCommandParser {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the SortCommand
+     * and returns an SortCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SortCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_SORT_ORDER);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_SORT_ORDER)
+                || !areAllFieldsSupplied(argMultimap, PREFIX_SORT_ORDER)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+
+        SortCommand.SortField sortField;
+        try {
+            sortField = ParserUtil.parseSortField(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        SortCommand.SortOrder sortOrder;
+        try {
+            sortOrder = ParserUtil.parseSortOrder(
+                    argMultimap.getValue(PREFIX_SORT_ORDER)).get();
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+        return new SortCommand(sortOrder, sortField);
     }
 
     /**
-     * Returns the string representation of a {@cod SortField}
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
      */
-    private String getSortFieldString(SortField sortField) {
-        switch (sortField) {
-        case GPA:
-            return SORT_FIELD_GPA_FULL;
-
-        case NAME:
-            return SORT_FIELD_NAME_FULL;
-
-        case RATING:
-            return SORT_FIELD_RATING_FULL;
-
-        default:
-            return null;
-        }
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
-    @Override
-    public CommandResult execute() throws CommandException {
-        switch (sortOrder) {
-        case ASC:
-            model.sortPersonListAscOrder(sortField);
-            break;
-
-        case DESC:
-            model.sortPersonListDescOrder(sortField);
-            break;
-
-        default:
-            throw new CommandException(MESSAGE_INVALID_SORT_ORDER);
-        }
-        return new CommandResult(String.format(MESSAGE_SORT_SUCCESS,
-                getSortFieldString(sortField), getSortOrderString(sortOrder)));
+    private static boolean areAllFieldsSupplied(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> !Optional.of(argumentMultimap.getValue(prefix)).equals(""));
     }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof SortCommand // instanceof handles nulls
-                && this.sortOrder.equals(((SortCommand) other).sortOrder))
-                && this.sortField.equals(((SortCommand) other).sortField); // state check
-    }
-
 }
 ```
 ###### /java/seedu/address/logic/parser/ParserUtil.java
@@ -779,15 +965,15 @@ public class SortCommand extends Command {
         if (trimmedScore.equals("")) {
             throw new IllegalValueException(RatingEditCommand.MESSAGE_EMPTY_SCORE);
         }
+        double scoreValue;
         try {
-            if (!Rating.isValidScore(Double.parseDouble(trimmedScore))) {
+            scoreValue = DoubleUtil.roundToTwoDecimalPlaces(trimmedScore);
+            if (!Rating.isValidScore(scoreValue)) {
                 throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
             }
         } catch (NumberFormatException nfe) {
             throw new IllegalValueException(RatingEditCommand.MESSAGE_EMPTY_SCORE);
         }
-
-        double scoreValue = DoubleUtil.roundToTwoDecimalPlaces(trimmedScore);
         return scoreValue;
     }
 
@@ -897,30 +1083,6 @@ public class RateCommandParser implements Parser<RateCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RatingDeleteCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new RatingDeleteCommand object
- */
-public class RatingDeleteCommandParser implements Parser<RatingDeleteCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the RatingDeleteCommand
-     * and returns a RatingDeleteCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public RatingDeleteCommand parse(String args) throws ParseException {
-        Index index;
-        try {
-            index = ParserUtil.parseIndex(args);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RatingDeleteCommand.MESSAGE_USAGE));
-        }
-        return new RatingDeleteCommand(index);
-    }
-}
-```
 ###### /java/seedu/address/logic/parser/RatingEditCommandParser.java
 ``` java
 /**
@@ -987,166 +1149,4 @@ public class RatingEditCommandParser implements Parser<RatingEditCommand> {
         return new RatingEditCommand(index, editRatingDescriptor);
     }
 }
-```
-###### /java/seedu/address/logic/parser/SortCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new SortCommand object
- */
-public class SortCommandParser {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the SortCommand
-     * and returns an SortCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public SortCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_SORT_ORDER);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_SORT_ORDER)
-                || !areAllFieldsSupplied(argMultimap, PREFIX_SORT_ORDER)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        }
-
-        SortCommand.SortField sortField;
-        try {
-            sortField = ParserUtil.parseSortField(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-
-        SortCommand.SortOrder sortOrder;
-        try {
-            sortOrder = ParserUtil.parseSortOrder(
-                    argMultimap.getValue(PREFIX_SORT_ORDER)).get();
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-        return new SortCommand(sortOrder, sortField);
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-    private static boolean areAllFieldsSupplied(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> !Optional.of(argumentMultimap.getValue(prefix)).equals(""));
-    }
-}
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-    /**
-     * Sorts all students in HR+ based on {@code sortField} in ascending order
-     */
-    public void sortAsc(SortCommand.SortField sortField) {
-        switch (sortField) {
-        case GPA:
-            persons.sortPersonsGradePointAverageAsc();
-            break;
-
-        case NAME:
-            persons.sortPersonsNameAsc();
-            break;
-
-        case RATING:
-            persons.sortPersonsRatingAsc();
-            break;
-
-        default:
-            throw new IllegalArgumentException(MESSAGE_INVALID_SORT_FIELD);
-        }
-    }
-
-    /**
-     * Sorts all students in HR+ based on {@code sortField} in descending order
-     */
-    public void sortDesc(SortCommand.SortField sortField) {
-        switch (sortField) {
-        case GPA:
-            persons.sortPersonsGradePointAverageDesc();
-            break;
-
-        case NAME:
-            persons.sortPersonsNameDesc();
-            break;
-
-        case RATING:
-            persons.sortPersonsRatingDesc();
-            break;
-
-        default:
-            throw new IllegalArgumentException(MESSAGE_INVALID_SORT_FIELD);
-        }
-    }
-
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public void sortPersonListAscOrder(SortCommand.SortField sortField) {
-        addressBook.sortAsc(sortField);
-        Predicate<? super Person> currPredicate = filteredPersons.getPredicate();
-        filteredPersons.setPredicate(currPredicate);
-    }
-
-    @Override
-    public void sortPersonListDescOrder(SortCommand.SortField sortField) {
-        addressBook.sortDesc(sortField);
-        Predicate<? super Person> currPredicate = filteredPersons.getPredicate();
-        filteredPersons.setPredicate(currPredicate);
-    }
-
-```
-###### /java/seedu/address/model/person/UniquePersonList.java
-``` java
-    /**
-     * Sorts the list based on overall rating in ascending order
-     */
-    public void sortPersonsRatingAsc() {
-        Collections.sort(internalList, Person::compareByOverallRating);
-    }
-
-    /**
-     * Sorts the list based on overall rating in descending order
-     */
-    public void sortPersonsRatingDesc() {
-        Collections.sort(internalList, Collections.reverseOrder(Person::compareByOverallRating));
-    }
-
-    /**
-     * Sorts the list based on GPA in ascending order
-     */
-    public void sortPersonsGradePointAverageAsc() {
-        Collections.sort(internalList, Person::compareByGradePointAverage);
-    }
-
-    /**
-     * Sorts the list based on GPA in descending order
-     */
-    public void sortPersonsGradePointAverageDesc() {
-        Collections.sort(internalList, Collections.reverseOrder(Person::compareByGradePointAverage));
-    }
-
-    /**
-     * Sorts the list based on name in ascending order
-     */
-    public void sortPersonsNameAsc() {
-        Collections.sort(internalList, Person::compareByName);
-    }
-
-    /**
-     * Sorts the list based on name in descending order
-     */
-    public void sortPersonsNameDesc() {
-        Collections.sort(internalList, Collections.reverseOrder(Person::compareByName));
-    }
-
 ```

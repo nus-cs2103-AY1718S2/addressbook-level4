@@ -49,6 +49,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         resetData(toBeCopied);
     }
 
+
     //// list overwrite operations
 
     public void setPersons(List<Person> persons) throws DuplicatePersonException {
@@ -115,10 +116,23 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given person {@code target} in the list with {@code editedPersonWithNewLog}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPersonWithNewLog}.
+     *
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    public void addLogToPerson(Person target, Person editedPersonWithNewLog)
+            throws PersonNotFoundException {
+        requireNonNull(editedPersonWithNewLog);
+        persons.addLogToPerson(target, editedPersonWithNewLog);
+    }
+
+    /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
      *  list.
      */
+
     private Person syncWithMasterTagList(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
         tags.mergeFrom(personTags);
@@ -131,8 +145,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+        Person correctPerson = new Person(
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences,
+                person.getSessionLogs());
+        return correctPerson;
     }
 
     /**

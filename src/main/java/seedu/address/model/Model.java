@@ -3,6 +3,13 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.login.Password;
+import seedu.address.model.login.UniqueUserList;
+import seedu.address.model.login.User;
+import seedu.address.model.login.Username;
+import seedu.address.model.login.exceptions.AlreadyLoggedInException;
+import seedu.address.model.login.exceptions.DuplicateUserException;
+import seedu.address.model.login.exceptions.UserNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -36,6 +43,14 @@ public interface Model {
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    /**
+     * Replaces the given person {@code target} with {@code editedPersonWithNewLog}.
+     *
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    void addLogToPerson(Person target, Person editedPersonWithNewLog)
+            throws PersonNotFoundException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
@@ -45,4 +60,58 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    //@@author kaisertanqr
+
+    /**
+     * Sets the unique users list to {@code uniqueUserList} in the UserDatabase.
+     */
+    void setUsersList(UniqueUserList uniqueUserList);
+
+    /** Returns the UserDatabase */
+    ReadOnlyAddressBook getUserDatabase();
+
+    /** Deletes the given user. */
+    void deleteUser(User target) throws UserNotFoundException;
+
+    /** Adds the given user */
+    void addUser(User person) throws DuplicateUserException;
+
+    /** Updates the password of the target user*/
+    void updateUserPassword(User target, User userWithNewPassword) throws UserNotFoundException;
+
+    /**
+     * Checks the validity of login credentials.
+     *
+     * @param username
+     * @param password
+     *
+     * @throws AlreadyLoggedInException if user has already logged in.
+     */
+    boolean checkLoginCredentials(Username username, Password password) throws AlreadyLoggedInException;
+
+    /**
+     * Checks a whether credentials.
+     *
+     * @param username
+     * @param password
+     */
+    boolean checkCredentials(Username username, Password password) throws AlreadyLoggedInException;
+
+    /**
+     * Returns whether the AddressBook has already been logged into.
+     *
+     */
+    boolean hasLoggedIn();
+
+    /**
+     * Set login status in AddressBook to {@code status}.
+     *
+     * @param status
+     */
+    void setLoginStatus(boolean status);
+
+    /**
+     * Returns the user who is logged in.
+     */
+    User getLoggedInUser();
 }

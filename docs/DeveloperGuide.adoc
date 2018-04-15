@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Social Worker Session Logger and Planner - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-T15-B3`      Since: `Feb 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -220,6 +220,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the User Database data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -229,6 +230,141 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::multiuser[]
+=== Multi-User Feature
+
+.Structure of the Model Component (UserDatabase Emphasis)
+image::ModelClassDiagramUD.png[width="800"]
+
+To implement the multi-user feature, where each user has his/her own Address Book, we have added a `userDatabase` in Model
+to store all the available users in the application. The `userDatabase` is the same architectural level as the `addressBook`.
+A similar storing system used in `addressBook` is also used for `userDatabase` where the all the user data is stored in a
+single XML file.
+
+==== Design Considerations for Database
+
+A big design consideration is the architecture in implementing the retrieval and storage of multiple users.
+
+*A Possible Design* +
+A possible design was to store users and persons under the same data folder which means encapsulating AddressBook
+in a User. In the XML data storage, the Addressbook will be an element of a User; the User Database will then be the root. +
+
+
+Example:
+
+    <userdatabase>
+        <user>
+            <username> user </username>
+            <password> pass </password>
+            <addressbook>
+                <persons>
+                    <name>John Doe</name>
+                    <phone>98765432</phone>
+                    <email>johnd@example.com</email>
+                    <address>311, Clementi Ave 2, #02-25</address>
+                    <sessionlogs></sessionlogs>
+                    <tags>ADHD</tags>
+                </persons>
+            </addressbook>
+        </user>
+    </userdatabase>
+
+
+However, this may over-complicate and over populate the data storage file very fast
+which can grow quite large with many users. Transportation of the data file may be an issue if the file size becomes too big.
+
+*Current Implementation* +
+
+.Structure of the Storage Component (UserDatabase Emphasis)
+image::StorageClassDiagramUD.png[width="800"]
+
+Currently, the User Database mimics the AddressBook classes and instances in the Model and Storage Components.
+
+In terms of storage, the User Database of all users is now collectively stored in one XML data file. (eg. users.xml).
+The addressbook of each user is now stored in separate XML files. Each addressbook data file is identified in the following
+format:
+
+`addressbook-[USERNAME].xml` where [USERNAME] refers to the username of the user
+
+While this can be argued to be bad as there is strong coupling between the user and the addressbook data file, such is
+fixed as in the absence of the addressbook data file, a sample data file will be created.
+
+Also, there may be a security concern that a side channel information leak because an external party can figure
+ out the number of active users from the number of addressbook files. However, such information is not very useful to conduct
+an attack on the application.
+
+*Other Alternative Designs*
+
+Other alternative designs involves external third-party database systems such as SQL or no-SQL databases such as MongoDB.
+
+==== Deleting User
+One thing to highlight about the deleting of user, it also deletes the AddressBook XML data file, hence it cannot be
+retrieved again. It also prevents users from accessing the file again by creating a user with the same username as the one
+being deleted.
+
+// end::multiuser[]
+
+// tag::authentication[]
+=== Authentication
+
+==== Current Implementation
+
+===== User Login
+
+The Login feature involves UI, Logic and Model components. It allows the user to login and logout
+from the application. When the user is logged out, the user commands are limited, some panels are hidden
+the user and the viewing of history is disabled. It serves the purpose of maintaining confidentiality of the data in the application.
+
+The `LoginCommand` is part of Logic component. However it makes use of `userDatabase` to check for the match in
+the username and password input. Below is a sequence diagram of how the feature works.
+
+.Sequence Diagram for Login Command (Logic Component)
+image::LoginFeatureLogicModelComponent.png[width="800"]
+
+The Login feature involves the UI component as well as we need to know when to hide and show certain panels depending on
+whether the user has logged in or not. To maintain our n-tier architecture, we make `CommandBox` check the login
+status upon each command entry to effect the change on the UI. The sequence diagram is as shown below.
+
+.Sequence Diagram for Login Command (UI Component)
+image::LoginFeatureUIComponent.png[width="800"]
+
+When the user is not logged in, commands that manipulate data in the application will be disabled. To avoid editing
+every single command, the invalidity of the command is handled in `LogicManager`.
+
+===== User Logout
+
+The logout feature similarly involves the UI, Logic and Model components. It allows the user to
+log out from the application, securing his data.
+
+The user cannot logout when he/she is not even logged in initially. This is already handled by limiting the availability
+of commands when the user is logged out.
+
+Similarly, some of the UI panels will be hidden when the user logs out.
+
+
+===== User Login Status
+
+To identify the login status of the application and know its the correct user, a login status bar on
+the top of the window has been implemented. Its shows the status and the user that is logged in.
+
+Example:
+
+.Login Status Bar (Logged Out)
+image::LoginStatusBarLoggedOut.png[width="800"]
+
+.Login Status Bar (Logged In)
+image::LoginStatusBarLoggedIn.png[width="800"]
+
+==== Possible enhancements
+
+1. Login UI Box can be implemented before launching the main window
+2. Encryption of user file [coming in v2.0]
+3. Salting of passwords so that it is not deterministic when hashing/encrypting
+4. 2-Factor Authentication for login
+
+// end::authentication[]
+
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -361,9 +497,203 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
+*Proposed Implementation* +
+Basing on the current storage architecture, we could implement a FileEncryption class to handle both the encryption and
+decryption when storing and retrieving the data files.
+
+** For User Database +
+Information in the user database that needs to be encrypted is the username and password. Hashing is a good encryption scheme to use,
+ a two-way encryption scheme is not needed here because we only need to check the validity of the username and password.
+
+
+** For Address Book +
+AddressBook data files require a two-way encryption scheme as the information needs to be read when the application
+initialises. A symmetric key encryption scheme is more suitable here than public key encryption scheme because less information
+needs to be stored. Also, it is easy when we can use the username as the symmetric key in the encryption scheme. Some
+possible schemes are AES or CBC.
 
 // end::dataencryption[]
+
+// tag::calendarview[]
+=== Google Calendar Integration
+Command line and graphical integration with Google Calendar from within SLAP. This assumes that the user already uses Google Calendar to manage their events.
+
+==== Proposed Implementation
+===== Aspect: GUI
+The GUI portion of this feature will be a WebView of the Google Calendar web application. The user will have the option to either open their calendar as a new floating window by pressing the `F8` function key or by clicking `View > Open Calendar` or as a scene within the main SLAP GUI by invoking the `calendar` command. In either case, the WebView will be instantiated as a new JavaFX scene and take advantage of Java's build in WebView/WebEngine. This will allow the user to interact with the familiar Google Calendar web interface without any loss of functionality.
+
+===== Aspect: CLI
+The CLI portion of this feature will rely on Google's Calendar API that uses the OAuth 2.0 protocol to allow an application (such as SLAP) to directly read/write to a user's calendar, provided that they have given them access to the calendar. Once a user has authorized the application to read/write to their calendar, they will gain access to the the following commands: `event-add`, `event-delete`, and `event-edit`. The Oauth authentication process will be entirely handled by Google with the only requirement being that the user must log in to their calendar using the GUI interface.
+
+A check will eventually be added to ensure that the user has already logged in before attempting to execute any of the aforementioned commands.
+
+UML Sequence Diagram of Proposed Command Flow For `calendar-add` Command
+
+Every command that requires OAuth (i.e. calendar-add, calendar-delete, calendar-list, show-schedule, and reauthenticate) will follow a similar flow with the potential commision of the parse step depending on the command.
+
+image::OauthRevisedSequenceDiagram.png[width="800"]
+
+UML Activity Diagram of High Level Logic Flow For `calendar-add` Command
+
+Every command that requires OAuth (i.e. calendar-add, calendar-delete, calendar-list, show-schedule, and reauthenticate) will follow a similar flow with the potential commision of the parse step depending on the command.
+
+image::OauthRevisedActivityDiagram.png[width="800"]
+
+==== Design Considerations
+===== Aspect: GUI
+* **Alternative 1 (current choice):** Native Google Calendar WebView
+** Pros: Minimal effort to implement as it is just a wrapper about the existing Google Calendar UI. Data is managed and secured by Google.
+** Cons: Cannot customize the interface without injecting customize styles. Requires complicated OAuth 2.0 authentication to work. Assumes that the user already has a Google account.
+
+* **Alternative 2: ** https://github.com/dlemmermann/CalendarFX[CalendarFX]
+** Pros: Can more easily create a custom UI and not rely on Google Calendar.
+** Cons: Documentation does not explain how to interface with the UI / Storage. Optimal if used with Google Calendar anyway. In the absense of using Google Calendar, it would require a custom local storage layer for persistant data.
+
+* **Alternative 3: ** http://jfxtras.org/[JFXtras]
+** Pros: Simple adgenda view with relatively simple API to understand.
+** Cons: Not as feature rich as the other options and would require a custom local storage layer to have persistant data.
+
+* **Alternative 4: ** Pure CLI Interface
+** Pros: Simple adgenda view with relatively simple API to understand.
+** Cons: Not as feature rich as the other options and would require a custom local storage layer to have persistant data.
+
+===== Aspect: Data Access
+* **Alternative 1 (current choice):** Use OAuth
+** Pros: Can take advantage of Google's first-party Calendar APIs for seamless CLI data manipulation.
+** Cons: Extremely complicated to configure and set up in a testable way.
+
+* **Alternative 2: ** Require the user to export their existing Google Calendar and import it into the application. New events added to the SLAP calendar would not appear in their Google Calendar.
+** Pros: Does not require complex authentication and is thus easier to implement. Solution works offline.
+** Cons: Requires additional local storage implementations and calendar events are no longer synced to the cloud.
+** Cons: Less secure due to the requirement of local storage; more prone to file loss.
+
+===== Aspect: Implementation of `AddEventCommand` -> `calendar-add  [args..]`
+* **Alternative 1 (current choice):** Use Google's Calendar API
+** Pros: First-party direct access to Google Calendar data.
+** Cons: Requires the user to authenticate our application before this feature works correctly.
+** Cons: Requires a complex parser to make the input format more friendly for a wider range of users.
+
+* **Alternative 2: ** Use URL Params
+** Pros: Does not require Oauth and is therefore easier to implement.
+** Cons: Requires the user to confirm the event addition through a GUI action, thus not allowing for a true CLI-only experience.
+
+===== Aspect: Implementation of `ViewCalendarCommand` -> `calendar-launch` and `switch calendar`
+* **Alternative 1 (current choice):** Open a Webview (either as a new window or within the main application gui)
+** Pros: Low development cost as the webview exists already.
+** Pros: Visually clear to the user how their calendar (and events) is organized.
+** Cons: Requires an internet connection. Has no CLI-friendly output.
+
+* **Alternative 2: ** List events in the CLI (see next consideration)
+** Pros: CLI-only friendly. Does not require a webview and thus makes the application less resource intensive.
+** Cons: Higher development cost as it becomes necessary to format the response from Google's APIs (and write a new set of logic to parse and format the data.)
+
+===== Aspect: Implementation of `ViewCalendarEventsCommand` -> `calendar-list`
+* **Alternative 1 (current choice):** CLI Output
+** Pros: Provides a command-line friendly way to view upcoming calendar events.
+** Cons: Much higher development cost as it was necessary to parse and format the response from Google's APIs.
+** Cons: Requires OAuth.
+** Cons: Less visually clear to the user how their events are spaced out temporally.
+
+* **Alternative 2:** Create a new calendar interface similar to the Contacts Pane
+** Pros: Pros: Visually easy to parse and thematically in line with the overall design language of the application.
+** Cons: Requires a significant implementation change to adapt the UI due to the non-locally stored nature of the data from Google.
+
+===== Aspect: Implementation of `ViewCalendarEventsForParticularDayCommand` -> `show-schedule [args..]`
+* **Alternative 1 (current choice):** CLI Output
+** Pros: Can adapt `calendar-list` command but increase specificity.
+** Pros: Can pass this data to the daily scheduler feature to minimize duplicate code generation.
+** Cons: Less visually clear to the user how their events are spaced out temporally.
+** Cons: Requires OAuth.
+
+* **Alternative 2:** Create a new calendar interface similar to the Contacts Pane
+** Pros: Visually easy to parse and thematically in line with the overall design language of the application.
+** Pros: Can reuse the `calendar-list` alternative 2 code if that route is decided upon.
+** Cons: Requires a significant implementation change to adapt the UI due to the non-locally stored nature of the data from Google.
+
+===== Aspect: Implementation of `EditEventCommand` -> `calendar-edit` [Coming in v2.0]
+* **Alternative 1 (current choice):** Use Google's Calendar API
+** Pros: First-party direct access to Google Calendar data.
+** Cons: Requires the user to authenticate our application before this feature works correctly.
+
+* **Alternative 2: ** Only allow for graphical editing
+** Pros: No implementation required as everything happens through the spawned webview.
+** Cons: No CLI-friendly output. More resource intensive on the end-user's system.
+
+===== Aspect: Implementation of `DeleteEventCommand` -> `calendar-delete [args..]`
+* **Alternative 1 (current choice):** Use Google's Calendar API
+** Pros: First-party direct access to Google Calendar data.
+** Pros: Scales well with multiple users (sandboxed credential authorization).
+** Cons: Requires the user to authenticate our application before this feature works correctly.
+
+* **Alternative 2: ** Only allow for graphical deleting
+** Pros: No implementation required as everything happens through the spawned WebView.
+** Cons: No CLI-friendly output. More resource intensive on the end-user's system.
+** Cons: Does not scale well with multiple users.
+
+// end::calendarview[]
+
+// tag::mapComponents[]
+=== Map Components
+==== Current Implementation
+
+The map view feature is implemented using `GMapsFX`, an imported library created by https://github.com/rterp/GMapsFX[rterp]. The library contains basic integration of Google Maps APIs into FMXL files.
+The feature supports the display and retrieval of addresses as a marker and of directions on the various Google Map components implemented across the application. There are two main instances of Map: in `Details` Feature and `Daily Scheduler` Feature.
+
+Each map is loaded a separately as independent `MapPanels` with their own `MapManager`, located in `logic` folder managing them. Switching out of feature will unload the respective `MapPanel`, required due to limitations of API used.
+
+image::MapPanelSelectionSequenceDiagram.png[width="800"]
+
+The above sequence diagram represents the process of loading and setting a new marker on the map panel within Person Details panel.
+The feature can create markers to pin beneficiary location on map and also display suggested navigation routes between event locations.
+
+As the Map Panel is a UI component, adopting the event-driven approach, we have made it such that the parent of the Map Panel
+listens for the `PersonPanelSelectionChangeEvent` to signal the child Map Panel to load a load/set a new address on the map.
+
+The Google geocoding service helps to translate the string address into a proper Geocode request for Google to process.
+
+==== Design Considerations
+
+===== Aspect: GUI
+
+* **Alternative 1 (current choice):** `GMapsFX`
+** Pros: Intuitive to use. Collated various Google Map APIs to be compatible with JavaFX. Sufficient for displaying and controlling simple usage of Google Maps. Once loaded, the map does not require further initialisation calls to load different address.
+** Cons: Documentation is at times unclear. Several methods are designed as lambda expressions but not specified in documentation. Limited flexibility. Can only load one map at a time.
+* **Alternative 2:** Use WebView component and load HTML file containing simple embedded Google Maps
+** Pros: Easy to implement.
+** Cons: Requires re-loading for each call to view different person. Lacking in control. Application cannot communicate efficiently to loaded pages. Easy to break. Inflexible.
+* **Alternative 3:** Integrate Google Maps APIs directly
+** Pros: Well-documented. Full-access to Google Maps APIs allows for great flexibility.
+** Cons: Too complicated. Not built/compatible for JavaFX. Cannot load more than one map at a time.
+
+===== Aspect: Logic
+
+* **Alternative 1 (current choice):** Maintain a non-static `MapManager` in `logic` to handle manipulation of Map.
+** Pros: Cleaner code. Each `MapPanel` maintains their own logic controller. Avoids asynchronous event/callback errors.
+** Cons: May have issues with retrieving correct data. Have to instantiate new `MapManager` for every instance of Map.
+* **Alternative 2:** Use a static Map logic manager that is called only when required.
+** Pros: Not all map instances require a dedicated MapManager to handle requests.
+** Cons: GMapsFX has limitations in using static class, attributes has to be reset for each Map.
+// end::mapComponents[]
+
+// tag::dailyScheduler[]
+=== Daily Scheduler
+==== Current Implementation
+
+Feature includes a list of scheduled events for the specified day in addition to the aforementioned maps implemented using `GMapsFX`, an imported library created by https://github.com/rterp/GMapsFX[rterp].
+
+`Daily Scheduler` feature involves two separate sections,`Events List Display` and `Navigation`. The display portion focuses on retrieving events of the specified date whereas the navigation portion seeks to retrieve suggested routes between those events.
+
+The `Daily Scheduler` feature will involve the UI component as while as the Model component, and makes use of `OAuthManager` to get required events.
+The OAuthManager is only used in the parser of the navigate command to retrieve the relevant event pairs.
+
+image::LoadDirectionsSequenceDiagram.png[width="800"]
+
+The above sequence diagram represents the process of loading and setting new direction markers on the map panel within Daily Scheduler panel.
+This happens after the parsing and doing the execution of `navigate` command where `LoadDirectionsEvent` is posted as an event.
+
+The DailySchedulerPanel, being the parent of the directionPanel, listens for the event and will update the map panel accordingly.
+
+// end::dailyScheduler[]
 
 === Logging
 
@@ -782,15 +1112,93 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
+Our SLAP aims to target social workers who have to visit different less privileged families and/or high-risk
+stay-at-home patients as their daily routine. Social workers regularly make visits to these beneficiaries to assist them
+ in overcoming obstacles in their lives.
+
+Our SLAP will allow them to organise their schedule for the day as they may have to visit multiple locations, take
+copious notes and help in many different ways. For example, a social worker may have to pick a victim of domestic abuse
+up in the morning to take her to the lawyer’s office to file for a divorce from her abusive husband and after taking her
+ home, the social worker might have to visit another family to check on a disabled patient.
+
+
 * has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
+* handles sensitive contacts
+* plans and manages their daily visits on desktop
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
+
+* manage contacts faster than a typical mouse/GUI driven app
+* easily add and manage calendar events without a full-blown application experience
+* organize key meetings and keep track of key contacts in one place
+* able to provide routes from one location to another
+* uses minimal system resources
+* more secure than a traditional address book
+
+*Feature contribution:*
+
+**Jason Jerome Manson-Hing**
+
+`Major Feature:` Calendar Integration
+* Functional calendar within the application with add/view/delete functionality.
+* This is useful for social workers to keep track of all of the things that they have to do now and in the future.
+This calendar will be seperate from their personal calendar so as to keep business and personal information seperate.
+Additionally, this calendar will integrate with the daily scheduler function to help optimize their time in a day.
+
+`Minor Feature:` Daily Scheduler (Events)
+* Allows the user to view their events for a particular day.
+* Supplies the data for the daily scheduler routing (navigation)
+
+
+`Minor Feature:` View Error Log in App
+* Allows the user to view the application's error from within the application itself.
+* This is useful as it allows an advanced user to send the application developer a log of the events that occurred before an exception was encountered.
+* This feature is unobtrustive as the information contained within the log is essentially meaningless to everyone except for the developer. Additionally, the command is relatively hard to invoke accidentally, and thus has a low chance of being discovered. Additionally, this command only shows read-only information and thus cannot cause any harm to the system.
+* This feature is useful so that if the user encounters an issue and wishes to help provide more information, they can relatively easily retrieve this information without much effort provided they are instructed on how to do so. It is unlikely that a user will encounter this feature by accident.
+
+**Chan Jin Jia**
+
+`Major Feature:` Map Location and Daily Scheduler
+
+* As our application aims to better the day-to-day operations of a social worker, integrating maps into our application
+greatly aids their visitation process. This integration aims to make the locating of beneficiaries much more convenient.
+* A vital feature to any social worker will be that of a daily scheduler that lists their scheduled events for the day.
+Not only does the daily scheduler collates the user's list of calendar events for the day into an easily consumable view,
+the daily scheduler feature of our app will also display the suggested route between event locations or beneficiary addresses to facilitate ease of movement.
+* Allows the social worker to plan the most optimal route of travel for their beneficiary visits for the day and creates the
+optimal schedule for them.
+
+`Minor Feature:` Main GUI and CSS
+
+* In addition, a cleaner Main UI will be required to better display our Session Logger and Planner (SLAP) for
+Social Worker application as it will contain several major features (beneficiary details, calendar, and daily
+scheduler).
+* On the details feature, map is loaded to display address of beneficiary and a panel of previous session logs are loaded
+to remind social worker of previous sessions with the beneficiary.
+* The scheduler feature contains indicators on the right of the map to provide visual cues of the number of journeys required for the day.
+
+**Kaiser Tan**
+
+`Major feature:` User Login and Multi-User capabilities
+
+* The application will support multiple users and each having their own addressbook. This is a step towards allowing our application
+to be used as a centralised application used by institute of social workers.
+* User can also login and logout safely, preventing external users from accessing the SLAP without authorisation
+* As a social worker, he/she should be able to secure SLAP and only ensure that it is only accessible to him/her, hence a login function
+is needed to maintain the C-I-A security framework.
+
+`Minor feature:` Adding Session Reports/Logs
+
+* This feature allows the social worker to add logs to the SLAP.
+* The session reports/logs feature is a crucial feature for our target audience of social workers.
+* A social worker should be able to add their reports for their patient for each session, so that he/she have a consolidated
+view of all their reports specific to the patient. This allows for convenience and easy tracking on the progress of
+their patients.
+
 
 [appendix]
+
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -808,10 +1216,87 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+//@@author ifalluphill
+|`* * *` |social worker |add calendar events |keep track of my interactions with my contacts
 
-_{More to be added}_
+|`* * *` |social worker |view upcoming calendar events |quickly check my schedule
+
+|`* * *` |social worker |view calendar events on a particular day |quickly check my daily schedule
+
+|`* * *` |social worker |delete calendar events |keep my schedule up to date
+
+|`*` |advanced user |view error logs in app |help the developer resolve the issues that I encountered
+
+|`* *` |novice user |get a command correction suggestion |easily fix my mistakes
+
+|`*` |social worker |have command autocomplete |enter commands faster
+
+|`*` |social worker with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |social worker |edit the details of an existing contact |update a contact's information to the most current information
+
+|`* *` |social worker with many persons in the address book |filter contacts by tags |quickly view a subset of my contacts list
+
+|`* *` |social worker |sort contacts by tags |view contacts listed in decreasing level of urgency (in terms of their case)/priority
+
+|`* *` |social worker sharing my computer with others |automatically log out of my calendar session |other users cannot view or edit my private details
+//@@author
+
+|`*` |advanced user |change the location of my address book |more easily back it up
+
+|`* *` |user |back up my address book |restore it to a previous state in case of emergency
+
+|`*` |user |export one or several contacts |easily share them with other address book users
+
+|`* *` |user |add the address of my contacts |keep track of where they live
+
+|`* *` |user |view the address of my contacts on a map |visually see where they live
+
+|`* *` |user |edit/delete the address of my contacts |keep contacts up to date
+
+|`*` |advanced user |export my entire address book as a CSV or JSON |for use in other applications
+
+|`* * *` |user |favourite contacts |keep track of particularly important contacts
+
+|`* *` |user |view frequently interacted-with contacts |quickly access frequently-contacted people
+
+|`* *` |user |view recently interacted-with contacts |quickly access recently interacted-with people
+
+|`* * *` |user |switch between views of features |easily navigate the address book features
+
+|`* * *` |social worker |view a daily schedule of planned visits |know where to visit and order of events for the day
+
+|`* *` |social worker |view pre-planned route between visit addresses |have a general direction between addresses planned for the day
+
+|`*` |social worker |export daily schedule as pdf file |view the document outside of the programme and/or be able to print out a physical copy
+
+|`*` |social worker |view fully-detailed directions between addresses |know what modes of transport to take and navigate the way between addresses
+
+|`*` |social worker |send reminder email from address book |be efficient with reminding beneficies of scheduled visits
+
+
+|`* * *` |social worker |add new session reports | be able to have a consolidated record of all my reports for easy reference.
+
+|`* * *` |social worker |edit my session reports | be able to have a make edit mistakes in my reports
+
+|`* * ` |social worker |delete my session reports | remove reports that are irrelevant
+
+|`* * *` |secure user |login |gain access to my address book
+
+|`* * *` |social worker |login into my account with any instance of application| so that I can easily access my SLAP information anywhere
+
+|`* * *` |secure user |logout |prevent others from having authorised access to my SLAP
+
+|`* * *` |secure user |change my password |update and secure access to my address book whenever I want
+
+|`* *` |user |reset my password |still recover my password when I forget what it is
+
+|`* *` |secure user |encrypt and export my address book |so that I can securely transport my address from one computer to another
+
+|`*` |secure user |lock my address book |so that it is convenient for me to secure and access my address book while it is still running
+
+
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -844,7 +1329,266 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+
+[discrete]
+=== Use case: Add Calendar Event
+
+*MSS*
+
+1.  User attempts to add calendar event.
+2.  AddressBook updates calendar events and updates the main window to show the events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User formats the command incorrectly.
++
+[none]
+** 1a1. AddressBook notifies user of incorrect syntax.
++
+Use case ends.
+
+[discrete]
+=== Use case: View Calendar Event
+
+*MSS*
+
+1.  User requests to view calendar events.
+2.  AddressBook shows the user the relevant calendar events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit Calendar Event
+
+*MSS*
+
+1.  User requests to view calendar events.
+2.  AddressBook shows the user a list of their relevant calendar events.
+3.  User selects calendar event to edit.
+4.  AddressBook returns calendar event info as editable string.
+5.  User edits information and confirms action.
+6.  AddressBook saves changes and refreshes the main window.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete Calendar Event
+
+*MSS*
+
+1.  User requests to view calendar events.
+2.  AddressBook retrieves calendar events and updates the main window to show the events.
+3.  User selects calendar event to delete.
+4.  AddressBook asks for user confirmation.
+5.  User confirms action.
+6.  AddressBook deletes calendar event and refreshes the main window.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+* 3a. User selects invalid index.
++
+[none]
+** 3a1. AddressBook notifies user that they have selected an incorrect index.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: View Daily Schedule Events
+
+*MSS*
+
+1.  User requests to view events scheduled for a particular day.
+2.  AddressBook shows the user the relevant calendar events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There are no calendar events.
++
+[none]
+** 1a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Show Error Log
+
+*MSS*
+
+1.  User requests to see error log.
+2.  AddressBook retrieves error log and displays it to the user.
+
+*Extensions*
+
+[none]
+* 1a. There is no error log.
++
+[none]
+** 1a1. AddressBook notifies user that there is no error log.
++
+Use case ends.
+
+// tag::jaronUseCases[]
+[discrete]
+=== Use case: Switch Views of Features
+
+*MSS*
+
+1.  User requests to change view (between calendar, details, daily schedule)
+2.  AddressBook updates main window to show specified feature
++
+Use case ends.
+
+[discrete]
+=== Use case: View Daily Schedule
+
+*MSS*
+
+1.  User requests to view daily schedule for specified date.
+2.  AddressBook retrieves calendar events for the specified date.
+3.  AddressBook retrieves addresses of specified contacts to be visited on specified day.
+4.  AddressBook requests for Google navigation between specified addresses.
+5.  AddressBook updates main window to show the listed events with suggested navigation.
+6.  User receives automatically generated daily schedule.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Specified date is invalid
++
+[none]
+** 1a1. AddressBook notifies user of invalid date
++
+Use case ends.
+
+* 2a. Specified date has no calendar events.
++
+[none]
+** 2a1. AddressBook notifies user that there are no events.
++
+Use case ends.
+
+// end::jaronUseCases[]
+
+// tag::kaiserUseCases[]
+[discrete]
+=== Use case: User Login
+
+*MSS*
+1.  User enters username and password
+2.  SLAP allows access to UI
+
+*Extensions*
+
+[none]
+* 1a. SLAP detects invalid username +
+[none]
+** 1a1. SLAP displays “invalid username” and request for username followed by Step 1 +
+Use case resumes at step 1.
+
+* 3a. SLAP detects invalid password +
+[none]
+** 3a1. SLAP displays “invalid password” and request for username followed by Step 1 +
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: User Logout
+
+*MSS*
+1.  User attempts to logout +
+2.  SLAP prompts for confirmation to logout +
+3.  User confirms +
+4.  AddressBook logs the user out +
+
+[discrete]
+=== Use case: Create User
+
+*MSS*
+1.  User enters desired username and password to create user
+2.  SLAP creates a user with the input username and password
+
+*Extensions*
+
+[none]
+* 1a. SLAP detects invalid characters used in username and/or password +
+[none]
+** 1a1. SLAP displays “invalid username and/or password” and request for username and password followed by Step 1 +
+Use case resumes at step 1.
+
+* 1b. SLAP detects that the username is taken +
+[none]
+** 1b1. SLAP displays “username has been taken” and request for a new username and password followed by Step 1 +
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Delete User
+
+*MSS*
+1.  User enters desired username and password to delete user
+2.  SLAP deletes the user with the input username and password
+
+*Extensions*
+
+[none]
+* 1a. SLAP detects no such username exists +
+[none]
+** 1a1. SLAP displays “invalid username and/or password” and request for username and password followed by Step 1 +
+Use case resumes at step 1.
+
+* 1b. SLAP detects username exists but incorrect password +
+[none]
+** 1b1. SLAP displays “invalid username and/or password” and request for username and password followed by Step 1 +
+Use case resumes at step 1.
+
+
+
+[discrete]
+=== Use case: Export AddressBook
+
+*MSS*
+1.  User attempts to export AddressBook +
+2.  AddressBook prompts for directory to export the file +
+3.  User enters directory +
+4.  Address prompts for confirmation +
+5.  User confirms +
+6.  AddressBook exports storage file into specified directory +
+
+
+// end::kaiserUseCases[]
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +1596,22 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should come with automated unit tests and open source code.
+.  Should preserve user data when the program is restarted or updated.
+.  Should still retain basic functionality even when not connected to the internet.
+.  Should support both 32-bit and 64-bit operating systems.
+.  Should not be graphically intensive for maximum compatibility.
+.  Should be backward compatible with previous versions of SLAP app.
+.  Should have all features and commands documented.
+.  Should be easily usable by an infrequent computer user.
+.  Should gracefully handle incorrect user input and return friendly error messages to the user.
+.  Should be easy to setup and install for an infrequent computer user.
+.  Should not unnecessarily collect data about a user.
+.  Should sanitize sensitive user data before logging.
+.  Should not allow non-users to access storage file
+.  Should not allow non-users to read storage file
+.  Should not exit the program without encrypting the storage file
+.  Should not hang
 
 [appendix]
 == Glossary
@@ -863,6 +1621,15 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[infrequent-computer-user]] Infrequent computer user::
+A user who does not use a computer regularly (only a couple times a week)
+
+[[events]] Events::
+A pre-planned visit by the social worker to check on beneficiary
+
+[[daily-schedule]] Daily schedule::
+A list of events of a specified date with navigation details
 
 [appendix]
 == Product Survey
@@ -903,7 +1670,153 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+// tag::kaiserManualTests[]
+=== Authentication process
+
+==== Login and Logout
+
+. Login as a specific user.
+
+.. Prerequisites: An existing user (with username: "test" and password: "pass") created.
+.. Test Case: `login u/test p/pass` +
+   Expected: Login successful and GUI displays UI panels. Login successful in status message. Login status bar changes to green and displays
+   login details.
+.. Test Case: `login u/test p/password` +
+   Expected: Login unsuccessful. Error message shown in status message. Login status bar unchanged.
+.. Test Case: `login u/testsss p/pass` +
+   Expected: Login unsuccessful. Error message shown in status message. Login status bar unchanged.
+
+. Logout from an account.
+
+.. Prerequisites: Application is logged in as a user.
+.. Test Case: `logout` +
+   Expected: Logout is successful.
+
+. Login when user is already logged in.
+
+.. Prerequisites: Application is logged in as a user "test".
+.. Test Case: `login u/test p/pass` +
+   Expected: Login unsuccessful. Error message showing that user has already in is displayed. Login status bar unchanged.
+
+. Logout when user is already logged out.
+
+.. Prerequisites: Application has not been logged into.
+.. Test Case: `login u/test p/pass` +
+   Expected: Login unsuccessful. Error message showing that user has already in is displayed. Login status bar unchanged.
+
+==== Command restrictions when not logged in
+
+. Executing available commands when logged out.
+
+.. Prerequisites: Application has not been logged into.
+.. Test Case: `help` +
+   Expected: Command is executed. Help guide window opens.
+.. Other available commands to try: `create-user`, `delete-user`, `change-user-password`, `login`, `exit` +
+   Expected: Command is executed as intented
+
+. Executing unavailable commands when logged out.
+
+.. Prerequisites: Application has not been logged into.
+.. Test Case: `list` +
+   Expected: Command is not executed. Error message shown.
+.. Other unavailable commands to try: `edit`, `add`, `switch`, `calendar-launch`, ... +
+   Expected: Command is not executed and error message is shown.
+
+==== Security concern with history feature
+
+. Unable to access history when logged out.
+
+.. Prerequisites: Application has not been logged into.
+.. Test Case: +
+   `help` +
+   Press "Up" arrow key +
+   Expected: User is unable to view history.
+
+. History is cleared when logout.
+
+.. Prerequisites: An existing user (with username: "test" and password: "pass") is created.
+.. Test Case: +
+   `login u/test p/pass` +
+   `help` +
+   `list` +
+   `logout` +
+   `login u/test p/pass` +
+   Press "Up" arrow key +
+   Expected: Should only be able to access history up to the 2nd `login u/test p/pass`. ie. user cant see `help` and `list`.
+.. Other test cases: Any other combinations of commands entered after login. Check history after a logout and login. +
+   Expected: Should not be able to access history from the previous login session.
+
+=== Multi-user feature
+
+==== Creating a user
+
+. Creating a user.
+.. Prerequisites: No such user with username "test" exists. +
+.. Test Case: `create-user u/TeSt p/pass` +
+   Expected: User with username "test" and password "pass" is created. Success message shown. +
+.. Test Case: `create-user u/test p/pass` +
+   Expected: No user created. Error message that username already exists is shown. +
+.. Test Case (Username contains spaces) : `create-user u/test test p/pass` +
+   Expected: No user created. Error message that username format is wrong. +
+.. Test Case (Password contains spaces) : `create-user u/test p/pass pass` +
+   Expected: No user created. Error message that username format is wrong. +
+.. Test case: `login u/test p/pass` +
+   Expected: Login is successful with a sample patient address book loaded.
+
+==== Deleting a user
+
+. Deleting a user.
+.. Prerequisites: An existing user (with username: "test" and password: "pass") created. User is logged out from the application.
+.. Test Case: `delete-user u/TeSt p/pass` +
+   Expected: User is deleted. Success message shown. +
+.. Test Case: `login u/test p/pass` +
+   Expected: Login unsuccessful. Error message shown in status message. Login status bar unchanged. +
+.. Test Case (No double deletion) : `delete-user u/test p/pass` +
+   Expected: No user is deleted. Error message that username and password may be wrong. +
+.. Test case (User not existent) : `login u/hello p/pass` +
+   Expected: No user is deleted. Error message that username and password may be wrong.
+
+==== Changing a user's password
+
+. Changing a user.
+.. Prerequisites: An existing user (with username: "test" and password: "pass") created. User is logged out from the application.
+.. Test Case: `change-user-password u/TeSt p/pass newp/password` +
+   Expected: User password is changed. Success message shown. +
+.. Test Case: `login u/test p/pass` +
+   Expected: Login unsuccessful. Error message shown in status message. Login status bar unchanged. +
+.. Test Case: `login u/test p/password` +
+   Expected: Login successful and GUI displays UI panels. Login successful in status message. Login status bar changes to green and displays
+   login details.
+.. Test Case (Wrong password input): `change-user-password u/test p/wrongpassword newp/password` +
+   Expected: No user password is changed. Error message that username and password may be wrong. +
+
+==== Dissociation of User's Address Book
+
+. Checking different users have different address books.
+.. Prerequisites: Two existing user (User 1: u: "test" and p: "pass", User 2: u :"test2" and p: "pass2") created.
+.. Test Case: +
+   `login u/test p/pass` +
+   `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+   `logout` +
+   `login u/test2 p/pass2` +
+   Expected: In user `test2` account, the person list panel does not contain `John Doe`.
+   In file path `data/`, one should observe that each user have their own addressbook data file too. (If data file missing, it means
+   no edits have been done to the user's AddressBook yet.)
+
+=== Session Reports and Logs
+
+==== Add session report
+
+. Add a session report to a existing person while all persons are listed
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `add-log 1 log/test session log` +
+   Expected: Session log will be added to the first person in the list. Success Message shown. Date & Time Stamp included in the session log.
+.. Test case: `add-log 0 log/test session log` +
+   Expected: No session report will be added. Error details shown in the status message.
+.. Other incorrect add-log commands to try: `add-log`, `add-log x log/test log` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+// end::kaiserManualTests[]
 
 === Deleting a person
 
@@ -926,3 +1839,177 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+// tag::calendarTesting[]
+
+=== Calendar Tools
+.  Displaying the calendar within a WebView
+.. Notes: The signed in user within the WebView is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Test case: `calendar-launch` and not logged in +
+   Expected: Error log command states that you must be logged in to use the command.
+.. Test case: `View > Open Calendar` and not logged in +
+   Expected: Calendar WebView opens and states that you must be logged in to use the feature.
+.. Test case: Press `F8` and not logged in +
+   Expected: Calendar WebView opens and states that you must be logged in to use the feature.
+.. Test case: `calendar-launch` and logged in +
+   Expected: Calendar WebView opens and the calendar is displayed (if not signed in to a Google Calendar account, the user will be prompted to sign in).
+.. Test case: `View > Open Calendar` and logged in +
+   Expected: Calendar WebView opens and the calendar is displayed (if not signed in to a Google Calendar account, the user will be prompted to sign in).
+.. Test case: Press `F8` and logged in +
+   Expected: Calendar WebView opens and the calendar is displayed (if not signed in to a Google Calendar account, the user will be prompted to sign in).
+.. Test case: `logout` with open calendar WebViews open (one or many) +
+   Expected: All calendar windows close and user is logged out from signed-in calendar sessions (verify by logging as any user).
+
+.  Displaying the calendar within the scene switcher
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Test case: `switch calendar` and not logged in +
+   Expected: Switch case states that you must be logged in to use the command.
+.. Test case: `switch calendar` and logged in +
+   Expected: Scene is switched to display the calendar (if not signed in to a Google Calendar account, the user will be prompted to sign in).
+.. Test case: `logout` and logged in +
+   Expected: User is signed out from the calendar scene session (verify by logging in as any user).
+
+.  Reauthenticating Oauth certificate for calendar use
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Test case: `reauthenticate` and not logged in +
+   Expected: Reauthenticate command states that you must be logged in to use the command.
+.. Test case: `reauthenticate` and logged in +
+   Expected: System default browser is launched and user is asked to select an account to authenticate the SLAP app to manage. Failure to do so will freeze the application. Once permission has been granted, a test event will be added and deleted.
+
+.  Adding a calendar event
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Test case: `calendar-add` and not logged in +
+   Expected: calendar-add command states that you must be logged in to use the feature.
+.. Test case: `calendar-add` and logged in +
+   Expected: calendar-add will detect missing parameters and inform the user how to use the feature.
+.. Test case: `calendar-add title/Some Event` and logged in (i.e. missing start/DATETIME and/or end/DATETIME flag) +
+   Expected: calendar-add will detect missing parameters and inform the user how to use the feature.
+.. Test case: `calendar-add title/Test Event start/ end/` and logged in (i.e. missing start/ and/or end/ flag input) +  +
+   Expected: Nothing will happen (no feedback to user -- will be fixed in v2.0).
+.. Test case: `calendar-add title/CS2103 Tutorial start/This Thursday at 3PM end/4PM on Thursday` and logged in (i.e. missing loc/LOCATION flag) +
+   Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will freeze the application. calendar-add command will add event to authorized Google Calendar and show the user the event details with a link to the event.
+.. Test case: `calendar-add title/CS2103 Tutorial start/This Thursday at 3PM end/4PM on Thursday loc/NUS School of Computing, COM1, 13 Computing Drive, Singapore 117417` and logged in +
+   Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will freeze the application. calendar-add command will add event to authorized Google Calendar and show the user the event details with a link to the event.
+
+.  Listing upcoming calendar events in the command results box
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Test case: `calendar-list` and not logged in + h
+   Expected: calendar-list command states that you must be logged in to use the feature.
+.. Test case: `calendar-list` and logged in +
+   Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will free the application. Assuming a valid certificate is obtained, if the user has any upcoming events, they will be displayed (up to 250). Otherwise, the command will state that no upcoming events were found.
+
+.  Deleting a calendar event
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Prerequisites: List all upcoming events using the `calendar-list` command or list events for a particular say using `show-schedule d/DATE`. A non-zero amount of events is required in either case.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Test case: `calendar-delete 1` and not logged in +
+   Expected: calendar-list command states that you must be logged in to use the feature.
+.. Test case: `calendar-delete 1` and logged in and neither `calendar-list` nor `show-schedule` has been run +
+   Expected: Nothing will happen.
+.. Test case: `calendar-delete 1` and logged in and `calendar-list` nor `show-schedule` has been run but no events are displayed+
+   Expected: calendar-delete command will throw an invalid index exception and inform the user of the proper command usage.
+.. Test case: `calendar-delete 1` and logged in and `calendar-list` nor `show-schedule` has been run and a non-zero number of events are displayed+
+   Expected: calendar-delete command will delete the event at index 1 and inform the user of the deleted event.
+.. Test case: `calendar-delete 5` and logged in and `calendar-list` nor `show-schedule` has been run and a non-zero, but less than 5, number of events are displayed+
+   Expected: calendar-delete command will delete an invalid index exception and inform the user of the proper command usage.
+// end::calendarTesting[]
+
+// tag::showScheduleTesting[]
+.  Display the user's events for a particular day in the command results box
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Test case: `show-schedule d/May 5` +
+   Expected: If there are calendar events for this date, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
+.. Test case: `show-schedule d/On Tuesday` +
+   Expected: If there are calendar events for this date, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
+.. Test case: `show-schedule` +
+   Expected: Display invalid command format and display correct command usage.
+.. Test case: `show-schedule d/May 5 after 2PM`
+   Expected: Ignores the time; If there are calendar events for this date at any time, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
+
+// end::showScheduleTesting[]
+
+// tag::errorLogTesting[]
+.  Displaying the error log within a WebView
+.. Test case: `errorlog` and not logged in +
+   Expected: Error log command states that you must be logged in to use the command.
+.. Test case: `View > Show Error Log` and not logged in +
+   Expected: Error log WebView opens and states that you must be logged in to use the feature.
+.. Test case: `errorlog` and logged in +
+   Expected: Error log WebView opens and the error log is displayed.
+.. Test case: `View > Show Error Log` and logged in +
+   Expected: Error log WebView opens and the error log is displayed.
+.. Test case: `logout` with open error logs WebViews open (one or many) +
+   Expected: All error log windows close.
+// end::errorLogTesting[]
+
+//tag::jaronManualTesting[]
+=== UI Features and Map Components
+
+==== Switching features
+  . Switching between feature tabs through Command Line Interface.
+ .. Prerequisites: Already logged in. +
+ .. Test Case: `switch scheduler` +
+    Expected: UI switches scenes to display daily scheduler feature. Success message shown. +
+ .. Test Case (Switch to same feature) : `switch scheduler` +
+    Expected: No changes to UI. Success message shown. +
+ .. Test Case (Wrong name) : `switch detail` +
+    Expected: No changes to UI. Error message that feature target name is wrong. +
+ .. Test Case (Number used) : `switch 1` +
+    Expected: No changes to UI. Error message that feature target name is wrong.
+
+==== Selecting persons will display updated UI
+  . Updates to Map Panel.
+ .. Prerequisites: Already logged in and on `Details` feature. Person selected has a valid address. +
+ .. Test Case: `select 1` +
+     Expected: UI updates to display first indexed person's address on the map. +
+ .. Test Case: `select 2` +
+    Expected: UI updates to display second indexed person's address on the map. +
+ .. Prerequisites: Added a person with bad address such as `a/huhhuh`. For this example, imagine person index is 10. +
+ .. Test Case (Select person with unrecognisable address) : `select 10` +
+    Expected: Map Panel updates to show that Google could not retrieve address. +
+  . Updates to Session Log Panel.
+ .. Prerequisites: Already logged in and on `Details` feature. +
+ .. Test Case: `select 1` +
+    Expected: UI updates to display first indexed person's session log.
+ .. Test Case: `select 2` +
+    Expected: UI updates to display second indexed person's session log.
+ .. Test Case: `add-log 1 log/TEST` +
+    Expected: Selects first indexed person and updates UI to display that person's details including session log.
+
+==== Show-schedule updates list of scheduled events shown
+  . Updates to Events List Shown.
+ .. Prerequisites: Already logged in and on `Scheduler` feature. Date chosen, eg. 5 May and 6 May, already have at least 1 event scheduled. +
+ .. Test Case: `show-schedule d/5 May` +
+     Expected: UI updates to show information of events scheduled on 5 May. +
+ .. Test Case (Select different date with valid number of events): `show-schedule d/6 May` +
+    Expected: UI updates to show information of events scheduled on 6 May. +
+ .. Prerequisites: Date, eg. 7 May chosen has no scheduled events planned. +
+ .. Test Case (Select different date with no events): `show-schedule d/7 May` +
+    Expected: UI updates to show prompt informing user to add events or select a date with events. +
+  . Updates to Navigation Option Indicators
+ .. Prerequisites: Date chosen, eg. 8 May have at 5 events scheduled. +
+ .. Test Case: `show-schedule d/8 May` +
+    Expected: UI updates to display to show 4 buttons next to map panel. +
+ .. Prerequisites: Date chosen, eg. 9 May only have 1 event scheduled. +
+ .. Test Case (Not enough events): `show-schedule d/9 May` +
+    Expected: UI updates to not display any buttons. +
+
+==== Navigate command updates Daily Scheduler Map Panel
+  . Updates to Daily Scheduler Map Panel.
+ .. Prerequisites: Already called show-schedule for a date with sufficient events, i.e. 2 or more events. +
+ .. Test Case: `navigate 1` +
+    Expected: UI refreshes to display directions between event 1 and 2. Message success will be shown. +
+
+==== UI updates on Log Out and Log In
+  . Updates to Details Panel.
+ .. Prerequisites: Logged in, carried out a few commands and current view is details feature. +
+ .. Test Case: `logout + login u/user p/pass` +
+    Expected: UI refreshes to not display any persons details. +
+  . Updates to Daily Scheduler Panel.
+ .. Prerequisites: Logged in, carried out a few commands and current view is daily scheduler feature. +
+ .. Test Case: `logout + login u/user p/pass` +
+    Expected: UI refreshes to not display any events or directions or indicators. +
+//end::jaronManualTesting[]

@@ -3,53 +3,37 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+SLAP for Social Workers was developed by the our team (See below). We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore]
+and have extended from the project AddressBook - Level 4 developed by the https://se-edu.github.io/docs/Team.html[se-edu] team
+to fit social worker more specifically.
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Chan Jin Jia
+image::jaronchan.jpg[width="150", align="left"]
 
-Role: Project Advisor
+{empty}[https://github.com/jaronchan[github]] [https://cs2103jan2018-t15-b3.github.io/main/team/jaronchan.html[Project Portfolio Page] | https://github.com/CS2103JAN2018-T15-B3/main/blob/master/docs/team/jaronchan.adoc[Project Portfolio Page (on GitHub)]]
 
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Project Developer +
+Responsibilities: Main UI, Map and Daily Scheduler
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Tan Quan Rong Kaiser
+image::Profilepic_Kaiser.jpg[width="150", align="left"]
+{empty}[https://github.com/kaisertanqr[github]] [https://cs2103jan2018-t15-b3.github.io/main/teams/TanQuanRongKaiser.html[Project Portfolio Page]]
 
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Project Developer +
+Responsibilities: Authentication/Security and Multi-user features
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Jason Jerome Manson-Hing
+image::ifalluphill.jpg[width="150", align="left"]
+{empty}[https://github.com/ifalluphill[GitHub]] [https://cs2103jan2018-t15-b3.github.io/main/team/jasonmansonhing.html[Project Portfolio Page] | https://github.com/CS2103JAN2018-T15-B3/main/blob/master/docs/team/jasonmansonhing.adoc[Project Portfolio Page (on GitHub)]]
 
-Role: Developer +
-Responsibilities: UI
+Role: Project Developer +
+Responsibilities: Calendar, Daily Scheduler, and Error Log
 
-'''
+
+

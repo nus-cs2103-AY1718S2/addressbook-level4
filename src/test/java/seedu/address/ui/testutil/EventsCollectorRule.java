@@ -76,6 +76,30 @@ public class EventsCollectorRule implements TestRule {
             return events.get(events.size() - 1);
         }
 
+        //@@author jaronchan
+        /**
+         * Returns the most recent list of events collected
+         */
+        public List<BaseEvent> getMostRecentList() {
+            if (events.isEmpty()) {
+                return null;
+            }
+
+            return events;
+        }
+
+        /**
+         * Returns the specified recent event collected
+         */
+        public BaseEvent getEventByIndex(int index) {
+            if (events.isEmpty()) {
+                return null;
+            }
+
+            return events.get(index);
+        }
+        //@@author
+
         /**
          * Returns true if the collector did not receive any events
          */

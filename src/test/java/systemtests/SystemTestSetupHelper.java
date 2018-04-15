@@ -8,6 +8,7 @@ import org.testfx.api.FxToolkit;
 import guitests.guihandles.MainWindowHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
+import seedu.address.TestAppWithLogin;
 import seedu.address.model.ReadOnlyAddressBook;
 
 /**
@@ -15,6 +16,7 @@ import seedu.address.model.ReadOnlyAddressBook;
  */
 public class SystemTestSetupHelper {
     private TestApp testApp;
+    private TestAppWithLogin testAppWithLogin;
     private MainWindowHandle mainWindowHandle;
 
     /**

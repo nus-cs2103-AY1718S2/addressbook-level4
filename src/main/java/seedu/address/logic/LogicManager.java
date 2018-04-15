@@ -5,12 +5,19 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.ChangeUserPasswordCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.CreateUserCommand;
+import seedu.address.logic.commands.DeleteUserCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.login.User;
 import seedu.address.model.person.Person;
 
 /**
@@ -37,7 +44,14 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command = addressBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
-            CommandResult result = command.execute();
+            CommandResult result;
+            if (model.hasLoggedIn()) {
+                result = command.execute();
+            } else {
+                logger.info("User attempts to use a command without logging in first.");
+                result = executeNoLoginCommands(commandText, command);
+                history.clear();
+            }
             undoRedoStack.push(command);
             return result;
         } finally {
@@ -54,4 +68,35 @@ public class LogicManager extends ComponentManager implements Logic {
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }
+
+    //@@author kaisertanqr
+    @Override
+    public CommandResult executeNoLoginCommands (String commandText, Command command) throws CommandException {
+        CommandResult result;
+        try {
+            if (commandText.split(" ")[0].equals(LoginCommand.COMMAND_WORD)
+                    || commandText.split(" ")[0].equals(HelpCommand.COMMAND_WORD)
+                    || commandText.split(" ")[0].equals(ExitCommand.COMMAND_WORD)
+                    || commandText.split(" ")[0].equals(CreateUserCommand.COMMAND_WORD)
+                    || commandText.split(" ")[0].equals(DeleteUserCommand.COMMAND_WORD)
+                    || commandText.split(" ")[0].equals(ChangeUserPasswordCommand.COMMAND_WORD)) {
+                result = command.execute();
+            } else {
+                result = null;
+            }
+        } finally { }
+
+        return result;
+    }
+
+    @Override
+    public boolean hasLoggedIn() {
+        return model.hasLoggedIn();
+    }
+
+    @Override
+    public User getLoggedInUser() {
+        return model.getLoggedInUser();
+    }
+
 }

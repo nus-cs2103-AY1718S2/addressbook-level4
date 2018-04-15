@@ -45,6 +45,11 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Override
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
+
+    @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
 
@@ -117,4 +122,5 @@ public class UiManager extends ComponentManager implements Ui {
         showFileOperationAlertAndWait(FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE, FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE,
                 event.exception);
     }
+
 }

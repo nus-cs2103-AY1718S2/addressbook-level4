@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -20,12 +21,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class CommandBox extends UiPart<Region> {
 
+    public static final String MESSAGE_HAVE_NOT_LOGGED_IN = "You have not logged in yet. Please log in.";
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private MainWindow mainWindow;
 
     @FXML
     private TextField commandTextField;
@@ -39,24 +42,34 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Initialise MainWindow
+     * @param mainWindow
+     */
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+    }
+
+    /**
      * Handles the key press event, {@code keyEvent}.
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
-            keyEvent.consume();
+        if (logic.hasLoggedIn()) {
+            switch (keyEvent.getCode()) {
+            case UP:
+                // As up and down buttons will alter the position of the caret,
+                // consuming it causes the caret's position to remain unchanged
+                keyEvent.consume();
 
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        default:
-            // let JavaFx handle the keypress
+                navigateToPreviousInput();
+                break;
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
+                break;
+            default:
+                    // let JavaFx handle the keypress
+            }
         }
     }
 
@@ -102,12 +115,22 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
+            if (logic.hasLoggedIn()) {
+                mainWindow.showAfterLogin();
+            } else {
+                mainWindow.hideBeforeLogin();
+            }
             initHistory();
             historySnapshot.next();
             // process result of the command
             commandTextField.setText("");
-            logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            if (commandResult != null) {
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            } else {
+                logger.info("Result: " + "User is not logged in yet.");
+                raise(new NewResultAvailableEvent(MESSAGE_HAVE_NOT_LOGGED_IN));
+            }
 
         } catch (CommandException | ParseException e) {
             initHistory();
@@ -115,6 +138,8 @@ public class CommandBox extends UiPart<Region> {
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

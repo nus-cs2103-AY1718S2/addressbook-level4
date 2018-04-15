@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= SLAP for Social Workers - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,16 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-T15-B3`      Since: `FEB 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Session Logger and Planner (SLAP) for Social Workers is for those who *prefer to use a desktop app for managing their schedule and
+contacts*. More importantly, SLAP is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having
+the benefits of a Graphical User Interface (GUI). If you can type fast, SLAP can get your daily scheduling and
+contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,22 +30,137 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `slap-app.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Session Logger and Planner (SLAP) for Social Workers app.
+.  Double-click the file to start the app. The application main window should appear in a few seconds.
+.  You firstly need to create a user account with a unique username and password. (See `create-user` command in <<Features>>)
+.  If you do not wish to create a new user, there is a default user account available. The username is "user" and the password is "pass".
+.  Login into your account using the `login` command (See <<Features>>) and using your username and password.
+.  If login is successful, the GUI below should appear.
 +
+.SLAP application UI mock-up.
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
+* * `add-log 2 log/Patient is feeling unwell today`* : Adds a session log to the 2nd person shown in the current list.
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
+
+// tag::userInterfaceWalkthrough[]
+== User Interface
+
+The figures below show the various interfaces of SLAP. This section will help you understand
+the different sections of SLAP.
+
+*Before beginning:*
+
+Before you can see all the features of SLAP, you are required to log into your account.
+
+You can either use `login u/user p/pass` for the default account as a trial or create your own account using
+`create-user user/USERNAME pass/PASSWORD`.
+
+.Before logging-in to SLAP.
+image::before-login.png[width="790"]
+
+.After logging-in to SLAP.
+image::after-login.png[width="790"]
+
+*Sections of the Main User Interface:* +
+
+.Guidelines to Main UI
+image::ui-sections.png[width="790"]
+
+. *Login Status Bar:* +
+Displays username and indicates if user is logged in.
+. *Beneficiary List Panel:* +
+Displays all beneficiaries existing in the program.
+. *Command Box:* +
+Takes in the input by the user.
+. *Command Box Notification:* +
+Notifies the command feedback to the user.
+. *Features Tab:* +
+Indicates current feature being viewed scheduled in the program.
+. *Features Panel:* +
+Executing `switch FEATURE` and/or clicking on respective tab on `Features Tab` will trigger this region to display the
+respective feature panel.
+
+*Sections of the Person Details Feature:* +
+
+.Guidelines to Details Panel
+image::ui-section-details.png[width="790"]
+
+. *Table of Particulars:* +
+Displays the particulars of the selected beneficiary.
+. *Address Location Panel:* +
+Marks  and displays the address of the beneficiary on a map component.
+. *Session Reports Panel:* +
+Displays the existing session logs of the selected beneficiary.
+
+*Sections of the Calendar Feature:* +
+
+.Guidelines to Calendar Panel (Before)
+image::ui-section-calendar-before.png[width="790"]
+
+.Guidelines to Calendar Panel (After)
+image::ui-section-calendar-after.png[width="790"]
+
+. *Log in for Display of Calendar:* +
+Requires user to log in to Google Calendar account within the app to display the calendar.
+Note that this log in is separate from the permissions request that authorises SLAP to run Calendar functions. (For more information check out `Calendar Tools` section)
+
+. *Display of Calendar:* +
+After logging in, the user will be able to see the calendar paired with SLAP.
+
+*Sections of the Daily Scheduler Feature:* +
+
+.Guidelines to Daily Scheduler Panel
+image::ui-section-scheduler.png[width="790"]
+
+. *Scheduled Sessions List Panel:* +
+Displays the scheduled events here after calling `show-schedule d/DATE`.
+
+. *Direction Between Events Map Panel:* +
+Displays a suggested navigation route between events after calling `navigate INDEX` where, for example `navigate 1` will display the direction between events number 1 and 2 of the day.
+
+. *Navigation Options Indicator:* +
+Displays a number of buttons at the side of map to indicate journeys available to navigate.
+This will correspond to the valid indexes for `navigate INDEX`.
+
+// end::userInterfaceWalkthrough[]
+
+// tag::calendarquickstart[]
+== Calendar Quick Start
+image::calendar-quickstart.png[width="790"]
+
+This section is meant to be a brief explanation on the various Google Calendar integrations built into the SLAP app.
+
+.  WebView versus Command Line Experiences
+.. WebView Experiences include: `switch calendar`, `calendar-launch`, pressing `F8`, and `View > Open Calendar`
+.. Command Line Experiences (i.e. require an OAuth certificate) include: `calendar-add`, `calendar-delete`, `calendar-list`, `show-schedule`, and reauthenticate
+
+.  How are these features related?
+.. The WebView Experiences and Command Line experiences are *not* linked by default. That is, you can technically log into one Google account within the WebView experience and authorize SLAP to manage a different account via CLI without any issues programatically. The WebView experiences will work as intended, and the command line experiences will work as well, however they will be operating on seperate Google Calendar accounts.
+.. The WebView experience is meant to act as a front-end for the CLI operations.
+.. Each of the WebViews share the same cookies / cache. You cannot log into one account in one WebView and another account in a different WebView.
+
+.  What is OAuth and why is it required?
+.. OAuth is a secure authorization protocol that allows for the authorization of third party applications to access specific subsets of a user's data from a specific service without exposing their password directly to the service requesting the data. For the SLAP app, OAuth is being used to enable communication directly with Google's Calendar services to manage a user's calendar via API calls, provided that they have authorized the application to do so. This is what enables command line interaction with Google Calendar.
+
+.  How can I ensure that both my WebView and Command Line experiences are operating on the same calendar?
+.. After logging in to the SLAP application, first, execute the `switch calendar` command and log in with the desired user account in the presented WebView of the Google Calendar web application. Alternatively, you may perform any of the following actions to launch a floating WebView containing the same Google Calendar web application to log in to: execute `calendar-launch`, `View > Open Calendar`, press `F8`.
+.. Once you have signed in with the desired Google account inside any of the calendar WebViews, execute the `reauthenticate` command. Your system browser should launch and ask you to select the account that you wish to authorize the SLAP application to manage. Ensure that you select the same account as the one you have just logged in to within the SLAP app's calendar WebViews. *Note that at this point, if you do not authorize an account, the SLAP application will freeze and crash.*
+.. After successfully selecting an account, you may close your system browser and return to the SLAP app.
+.. Congratulations! You have successfully synchronized the two Google Calendar experiences (i.e. WebView and Command Line) within the SLAP app.
+
+
+// end::calendarquickstart[]
 
 [[Features]]
 == Features
@@ -56,11 +174,123 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Help Guide
 
+==== Viewing help : `help`
+
+Opens a new user guide window. +
 Format: `help`
 
-=== Adding a person: `add`
+// tag::authentication[]
+=== Multi-user and Authentication
+
+==== Create new user : `create-user`
+
+Creates a new user account in the application. +
+Format: `create-user u/USERNAME p/PASSWORD`
+e.g. `create-user u/marcus p/pass`
+
+
+[NOTE]
+====
+* The username is *not* case-sensitive. eg. "User", "useR" and "uSeR" are the same username.
+* Both username and password only allows a single word (no spaces) that contains only alphanumeric characters.
+====
+
+****
+* You will need to enter a unique username to successfully create an new user.
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+****
+
+
+==== Delete existing user : `delete-user`
+
+Deletes an existing user account in the application. +
+Format: `delete-user u/USERNAME p/PASSWORD`
+
+[NOTE]
+====
+You will need to be logged out to use this Command.
+
+This command will also delete the user's Oauth token.
+====
+
+****
+* You will need to enter both the correct username and password for the target user account that you wish to delete.
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+* The username is *not* case-sensitive. eg. "User", "useR" and "uSeR" are the same username.
+* The password is case-sensitive.
+****
+
+==== Login : `login`
+
+Logs the user into the application. +
+Format: `login u/USERNAME p/PASSWORD`
+
+****
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+* The username is *not* case-sensitive. eg. "User", "useR" and "uSeR" are the same username.
+* The password is case-sensitive.
+****
+
+==== Logout: `logout`
+
+Logs the user out of the application.
+Format: `logout`
+
+[NOTE]
+====
+Logging out will close all open calendar and errorlog windows, log out of any Google Calendar sessions, and clear
+the Daily Scheduler view.
+====
+
+==== Change user password: `change-user-password`
+
+Change the password of an existing user in the application. +
+Format: `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
+
+[NOTE]
+====
+You will need to be logged out to use this Command.
+====
+
+****
+* You will need to enter both the correct username and password for the target user account that you wish to change password for.
+* You will need to enter both the correct username and password for the target user account that you wish to change password for
+* Multiple entries of username and password can be included, however only the last entry will be considered.
+* The username is *not* case-sensitive. eg. "User", "useR" and "uSeR" are the same username.
+* Passwords is case-sensitive.
+****
+
+==== 2-Factor Authentication [Coming in v2.0]
+
+User have to use another form of authentication to log in (most probably a one-time password).
+
+// end::authentication[]
+
+// tag::switchCommand[]
+=== Application Navigation
+
+==== Switching between feature interfaces : `switch`
+
+[NOTE]
+====
+All `switch` commands of valid input will be valid on current feature tabs even when target feature is the current view.
+====
+
+Examples:
+
+* `switch details` +
+Switches to `details` tab and displays contents
+* `switch calendar` +
+Switches to `calendar` tab and displays contents
+* `switch scheduler` +
+Switches to `scheduler` tab and displays contents
+// end::switchCommand[]
+
+=== Contacts Manipulation
+
+==== Adding a person: `add`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -73,12 +303,12 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+==== Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
-=== Editing a person : `edit`
+==== Editing a person : `edit`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -98,7 +328,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+==== Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -118,7 +348,21 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+==== Filtering contacts by tag: `filter`
+
+Filters persons to only display those whose contact contains the given tag. +
+Format: `filter TAG`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+****
+
+Examples:
+
+* `filter friends` +
+Returns any person that has the tag `friends`
+
+==== Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -138,7 +382,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+==== Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
@@ -158,7 +402,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+==== Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -168,8 +412,244 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+// tag::sessionlog[]
+=== Session Reports and Logs
+
+==== Adding a new session report: `add-log`
+
+Adds a new session report/log to the person identified by the index number used in the last person listing. +
+Format: `add-log INDEX log\LOG` +
+Example: `add-log 2 log\Today the patient reported he was feeling unwell ... ...`
+
+****
+* Adds the session log the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* The date and time will automatically be added. It will store the date and time at the moment you execute the command.
+****
+
+==== Delete a existing session report: `delete-log` [Coming in v2.0]
+Deletes a particular report/log from a person.
+
+==== Edit a new session report: `edit-log` [Coming in v2.0]
+Edits particular report/log entries from a person.
+
+// end::sessionlog[]
+
+// tag::navigateCommand[]
+
+=== Map Tools
+
+==== Navigate between scheduled events : `navigate`
+Displays the directions between planned locations on the daily scheduler map. +
+Format: `navigate INDEX`
+
+[WARNING]
+====
+Must be on `scheduler` view first for command to work, else nothing happens (i.e. run `switch schedule`).
+`show-schedule d/DATE` has to be called BEFORE `navigate` can work properly.
+To test function it is recommended to add sufficient number of events, i.e. 2 or more, to the particular date.
+It is assumed that every event location used is valid.
+====
+
+****
+* Displays direction between two different but adjacent events by specifying `INDEX`. This will display the direction
+between `Event Num: INDEX` and `Event Num: INDEX + 1`. For example, `navigate 1` will show the directions between
+the first and the second event of the day.
+* `INDEX` must be more then `1`, but less than total events for the day minus ONE or `NUM_OF_EVENTS - 1`.
+****
+
+[TIP]
+Number of buttons on the right of the scheduler panel map indicates how many navigation options are available.
+
+Examples:
+
+* `switch scheduler` +
+Switches to `calendar` tab and displays contents
+* `show-schedule d/5 May` +
+Retrieves events on the 5th of May.
+* `navigate 1` +
+Displays directions between the first and the second event of the day.
+
+// end::navigateCommand[]
+
+// tag::calendar[]
+=== Calendar Tools
+==== Opening a calendar : `calendar-launch`
+
+Opens a calendar in a webview.
+Format: `calendar-launch`
+
+[NOTE]
+====
+The user can also open the calendar by pressing the `F8` function key, or by pressing `View > Open Calendar`.
+
+The previous `calendar` command has been depricated since v1.4 in favour of the `switch calendar` command that properly opens
+the calendar in the build-in scene switcher.
+
+Logging in to the calendar interface DOES NOT perform the Oauth authentication process.
+====
+
+Examples:
+* `calendar-launch`
+
+Opens the Google Calendar web app in a new WebView.
+
+==== Adding and event to the calendar : `calendar-add`
+
+Allows a user to add an event directly to their calendar.
+
+Format: `calendar-add title/EVENTNAME start/STARTDATETIME end/ENDDATETIME [loc/LOCATION]`
+
+[NOTE]
+====
+Start/End times can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+
+The expected behaviour is such that if no time is provided with the date, the program will assume that the the desired
+time is the current time. For example, if current time is 12am and the user does not specify a start or end time for the
+two dates that they provide, then the application will use 12am as both the start and end time for their input dates.
+
+Similarly, if no date is provided with the time, the program will assume that the desired day was the current day.
+For example, if the current time is 4am, and the start date is 12am and the end date is 6am, the created event will
+start on the current day at 12am and end at 6am on the same day.
+
+The location parameter is optional.
+
+`calendar-` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-` command is executed, the
+Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
+app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
+to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
+
+If either the start/ and/or end/ flag is not given an input parameter, nothing will happen and no feedback is given
+to the user -- will be fixed in v2.0).
+====
+
+Examples:
+* `calendar-add title/CS2103 Tutorial start/This Thursday at 3PM end/4PM on Thursday loc/NUS School of Computing, COM1, 13 Computing Drive, Singapore 117417`
+
+Adds an event named CS2103 tutorial that starts on the upcoming Thursday at 3pm and ends at 4pm, at the NUS School of Computing, COM1
+
+* `calendar-add title/CS2103 Tutorial start/May 2 3PM end/4PM on May 2`
+
+Adds an event named CS2103 tutorial that starts on May 2 at 3pm and ends at 4pm with no location
+
+==== List upcoming events in the command line: `calendar-list`
+
+Allows a user to view their upcoming calendar events (limited to 250 events).
+
+Format: `calendar-list`
+
+[NOTE]
+====
+`calendar-` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-` command is executed, the
+Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
+app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
+to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
+====
+
+Examples:
+* `calendar-list`
+
+Shows the user a list of their upcoming events (limited to 250 events).
+
+==== Deleting an event from the calendar : `calendar-delete`
+
+Allows the user to delete an event based on the index listed from the `calendar-list` or `show-schedule d/DATE` command.
+
+Format: `calendar-delete INDEX`
+
+[NOTE]
+====
+`calendar-` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-` command is executed, the
+Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
+app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
+to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
+
+If neither the `calendar-list` nor `show-schedule d/DATE` have been called previously, the command will do nothing (and
+will not give any feedback to the user -- will be fixed in v2.0).
+====
+
+Examples:
+* `calendar-list`
+
+Shows the user a list of their upcoming events (limited to 250 events) with indexes next to each event.
+
+* `calendar-delete 1*
+
+Deletes the first event on that list.
+
+==== Editing an event in the calendar : `calendar-edit` [coming in v2.0]
+
+Displays a list of upcoming events to the user and lets them select one to edit.
+
+Format: `calendar-edit`
+
+==== Reauthenticate Google Oauth : `reauthenticate`
+
+Allows a user to manually reauthenticate their Google Oauth credentials/permissions for SLAP.
+
+Format: `reauthenticate`
+
+
+[NOTE]
+====
+This command is used to manually reauthenticate the Oauth certificate. The SLAP app will launch the system default
+browser (i.e. not a WebView) and ask them to select the account that they wish to grant the SLAP app permission to
+edit. *Failure to authenticate will cause the program to freeze and crash.*
+====
+
+Examples:
+* `reauthenticate`
+
+Deletes the user's existing Oauth certificate and attempts to regain authorization.
+
+==== List upcoming events on a particular day in the command line: `show-schedule`
+
+Allows a user to view their calendar events for a particular day.
+
+Format: `show-schdeule d/DATE`
+
+[NOTE]
+====
+Date can be written in natural language (e.g. Today, This Friday, May 4, etc.)
+
+This command relies on Google Oauth to access the calendar. Whenever a Google Calendar-related command is executed, the
+Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
+app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
+to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
+====
+
+Examples
+* show-schedule d/This Thursday
+
+Shows a list of events that occur on this coming Thursday.
+
+* show-schedule d/May 5
+
+Shows a list of events that occur on May 5.
+
+// end::calendar[]
+
+=== Other Tools
+
+// tag::errorlog[]
+==== Opening the Error Log : `errorlog`
+
+Opens the error log in a new window.
+
+Format: `errorlog`
+
+[NOTE]
+====
+The user can also open the error log by pressing `View > Show Error Log`
+====
+
+Examples:
+* `errorlog`
+
+Opens the user log in a new WebView.
+// end::errorlog[]
+
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -194,8 +674,9 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
+`undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -218,26 +699,34 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+==== Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+==== Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+// tag::dataencryption[]
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+=== Exporting
+
+==== Export SLAP : `export-patients` `[coming in v2.0]`
+
+Exports your SLAP into a file so that it can be transported across operating systems or devices.
+
+=== Storage Features
+
+==== Saving the data
+
+SLAP data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+==== Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Encryption should be done automatically when SLAP is logged out or is exited.
 
 == FAQ
 
@@ -246,6 +735,13 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
+* *Help Guide* : `help`
+* *Create New User* : `create-user u/USERNAME p/PASSWORD`
+e.g. `create-user u/marcus p/pass`
+* *Delete Existing User* : `delete-user u/USERNAME p/PASSWORD`
+* *Change Password of Existing User* : `change-user-password u/USERNAME p/PASSWORD newp/NEWPASSWORD`
+* *Login* : `login u/USERNAME p/PASSWORD`
+* *Logout* : `logout`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
@@ -256,9 +752,23 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
-* *Help* : `help`
+* *Add Session Reports/Logs* : `add-log INDEX log/LOGCONTENT`
+* *Calendar Launch* : `calendar-launch` `[Since v1.1] [Updated v1.4]`
+* *Calendar List* : `calendar-list` `[Since v1.2]`
+* *Calendar Add* : `calendar-add title/EVENTNAME start/STARTDATETIME end/ENDDATETIME [loc/LOCATION] `[Since v1.3] [Updated v1.4]` +
+e.g. calendar-add title/CS2103 Tutorial start/This Thursday at 3PM end/4PM on Thursday loc/NUS School of Computing, COM1, 13 Computing Drive, Singapore 117417
+* *Calendar Delete* : `calendar-delete INDEX` `[Since v1.4]` +
+e.g. `calendar-delete 1`
+* *Show Schedule* : `show-schedule d/DATE `[Since v1.4]` +
+e.g. `show-schedule d/May 5`
+* *Error* : `errorlog` `[Since v1.2]`
+* *Reauthenticate* : `reauthenticate` `[Since v1.2]`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Switch* : `switch FEATURE` +
+e.g.`switch scheduler`
+* *Navigate* : `navigate INDEX` +
+e.g.`navigate 2`
 * *Undo* : `undo`
 * *Redo* : `redo`

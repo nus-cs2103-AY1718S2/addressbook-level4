@@ -1,0 +1,109 @@
+= Chan Jin Jia - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Session Logger and Planner (SLAP) for Social Workers
+
+---
+
+== Overview
+The Session Logger and Planner (SLAP) application for Social Workers is a desktop client used to help
+social workers manage their day-to-day operations. By creating an easy to use command-line interface with graphical
+elements, social workers can quickly manage their contacts (e.g. beneficiaries) as well as their
+schedule (i.e. their calendar and daily schedule) from one central location efficiently via the command line.
+In addition to a fully-featured address book and calendar through the use of command line input,
+the client also allows for social workers to take session notes and attach them to their
+beneficiaries, as well as generate an optimal route of their daily schedule to help organize their day.
+
+On top of these features, a robust login system was implemented such that multiple users can securely
+switch between different accounts and have distinct address books, session reports, and calendars
+isolated from each other. Thus, not only does this allow for increased security, but it also
+allows for multiple users to use the same application on the same system, which has the added
+benefit of saving money as several people can share the same application on the same system
+without affecting the data of another person.
+
+The social worker is to interact with the application primarily through the command line. The GUI was created
+using JavaFX.
+
+== Summary of contributions
+
+*Major enhancement*: integrated *Map APIs* and added *Daily Scheduler*
+
+** *Added the following UI controllers and FXML files*:
+```
+DailySchedulerPanel.fxml
+MapPanel.fxml
+PersonDetailsPanel.fxml
+ScheduledEventCard.fxml
+```
+** *Added the following commands*:
+```
+switch [args..]
+navigate [args..]
+```
+** What it does: The enhancement adds the functionality of maps to display relevant location markers and a compiled
+daily schedule page that helps for route planning and task listing for the convenience of the social worker.
+From the using the command line alone, the user is able to see the locations of beneficiaries, suggested directions
+between scheduled events and display the events for the day.
+*** Justification: This feature significantly improves the the user experience of the social worker as it bring together
+vital information to be displayed all in one app. By including a map display with the particulars of the beneficiary, it
+aids the social worker in planning their route for the day. Moreover, by including a separate daily scheduler feature,
+the social worker need not plow through their calendar check their scheduled events, simply use the daily scheduler to view
+events of a specific day and check the directions between locations. This feature allows for the social worker to easily
+re-plan their day if needed as all the information of events are collated in this feature.
+*** Highlights: These features greatly improves the effectiveness of the application and laid the foundation for many events
+and UIs within the application. To maintain architectural integrity of the application where the UI is kept separate and
+is built to be events-driven, the Map Components had to be broken down into UI and Logic, where MapPanel.java controller
+and MapManager.java that handles logic were created respectively. Moreover, there was a need to work around existing
+limitations of GMapsFX where no more than one map can interact with Google APIs at the same time.
+*** Credits: GMapsFX by https://github.com/rterp/GMapsFX[rterp]
+
+
+*Minor enhancement*: Main GUI and CSS. Handled front-end interactions with user and the view of the application. Developing
+the backend of the application is not enough to produce an effective product. Building upon the back-end laid out by my teammates,
+I built GUI of the application to manage model data of the application. Apart from map controls already mentioned, I took charge
+of displaying session logs, scheduled events, creating additional UI update events on existing commands. Handled the refreshing of
+UI when logging out of the application. Made the user flow smoother by separating the features into their own panels and implemented,
+`switch` command to swap between features. Additional CSS styling can be found in `extensions.css`.
+
+*Code contributed*: [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/functional/jaronchan.md[Functional code]]
+ [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/test/jaronchan.md[Test code]]
+
+*Other contributions*:
+
+** UI Design:
+*** Created and added UI mock-up on behalf of team (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/26[#26])
+*** Designed brand logo for SLAP (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/120[#120])
+** Documentation:
+*** Added first-time user-friendly UI walk through (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/137[#137])
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-F09-B4/main/issues/195[1], https://github.com/CS2103JAN2018-F09-B4/main/issues/175[2], https://github.com/CS2103JAN2018-F09-B4/main/issues/211[3])
+** Tools:
+*** Integrated a third party library (GMapsFX) to the project (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/35[#35])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=userInterfaceWalkthrough]
+
+include::../UserGuide.adoc[tag=switchCommand]
+
+include::../UserGuide.adoc[tag=navigateCommand]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=mapComponents]
+
+include::../DeveloperGuide.adoc[tag=dailyScheduler]
+
+include::../DeveloperGuide.adoc[tag=jaronUseCases]
+
+include::../DeveloperGuide.adoc[tag=jaronManualTesting]

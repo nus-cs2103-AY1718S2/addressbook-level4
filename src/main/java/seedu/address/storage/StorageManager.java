@@ -9,10 +9,14 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UserDatabaseChangedEvent;
+import seedu.address.commons.events.model.UserDeletedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyUserDatabase;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.login.User;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -22,12 +26,15 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private UserDatabaseStorage userDatabaseStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage,
+                          UserDatabaseStorage userDatabaseStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.userDatabaseStorage = userDatabaseStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -61,7 +68,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyAddressBook> readAddressBook(String filePath)
+            throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return addressBookStorage.readAddressBook(filePath);
     }
@@ -88,5 +96,69 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+
+    //@@author kaisertanqr
+
+    // ================ User database methods ==============================
+
+    @Override
+    public String getUserDatabaseFilePath() {
+        return userDatabaseStorage.getUserDatabaseFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyUserDatabase> readUserDatabase() throws DataConversionException, IOException {
+        return readUserDatabase(userDatabaseStorage.getUserDatabaseFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyUserDatabase> readUserDatabase(String filePath)
+            throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return userDatabaseStorage.readUserDatabase(filePath);
+    }
+
+    @Override
+    public void saveUserDatabase(ReadOnlyUserDatabase userDatabase) throws IOException {
+        saveUserDatabase(userDatabase, userDatabaseStorage.getUserDatabaseFilePath());
+    }
+
+    @Override
+    public void saveUserDatabase(ReadOnlyUserDatabase userDatabase, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        userDatabaseStorage.saveUserDatabase(userDatabase, filePath);
+    }
+
+    @Override
+    public void deleteAddressBook(User user) {
+        logger.fine("Attempting to delete to data file: " + user.getAddressBookFilePath());
+        addressBookStorage.deleteAddressBook(user);
+    }
+
+    @Override
+    @Subscribe
+    public void handleUserDatabaseChangedEvent(UserDatabaseChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local users data changed, saving to file"));
+        try {
+            saveUserDatabase(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    @Override
+    @Subscribe
+    public void handleUserDeletedEvent(UserDeletedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "User has been deleted, deleting files"));
+        deleteAddressBook(event.data);
+    }
+
+    // ============== Storage updater =====================
+
+    public void update(User user) {
+        this.addressBookStorage = new XmlAddressBookStorage(user.getAddressBookFilePath());
+    }
+
+
 
 }

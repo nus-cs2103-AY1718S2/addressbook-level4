@@ -18,6 +18,7 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -73,6 +74,13 @@ public class TypicalPersons {
             }
         }
         return ab;
+    }
+
+    /**
+     * Returns an {@code AddressBook} with all the typical persons.
+     */
+    public static AddressBook getTypicalAddressBookForLogin() {
+        return SampleDataUtil.getSampleAddressBookForTest();
     }
 
     public static List<Person> getTypicalPersons() {

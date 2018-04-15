@@ -1,0 +1,110 @@
+
+= Tan Quan Rong Kaiser - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Session Logger and Planner (SLAP) for Social Workers
+
+---
+
+== Overview
+The Session Logger and Planner (SLAP) application for Social Workers is a desktop client used to help
+social workers manage their day-to-day operations. By creating an easy to use command-line interface with graphical
+elements, social workers can quickly manage their contacts (e.g. beneficiaries) as well as their
+schedule (i.e. their calendar and daily schedule) from one central location efficiently via the command line.
+In addition to a fully-featured address book and calendar through the use of command line input,
+the client also allows for social workers to take session notes and attach them to their
+beneficiaries, as well as generate an optimal route of their daily schedule to help organize their day.
+
+On top of these features, a robust login system was implemented such that multiple users can securely
+switch between different accounts and have distinct address books, session reports, and calendars
+isolated from each other. Thus, not only does this allow for increased security, but it also
+allows for multiple users to use the same application on the same system, which has the added
+benefit of saving money as several people can share the same application on the same system
+without affecting the data of another person.
+
+The social worker is to interact with the application primarily through the command line. The GUI was created
+using JavaFX.
+
+== Summary of contributions
+
+*Major enhancement*: added a *authentication feature* and *multi-user capability*
+
+** *What it does:*
+*** *Authentication feature*: Users can login and logout from their application with a unique username and password.
+
+*** *Multi-user Capability*: The application now supports multiple users, each having their own contacts and SLAP.
+
+*** *Justification*: Firstly, this feature increases the security capability of the application. As the patient details and session
+reports are sensitive data, having to authenticate first helps to maintain a level of confidentiality and integrity. Secondly,
+it converts the application from single-user to multi-user, hence allow for multiple social workers to use the app. This is useful
+in the scenario, where there is a mandate to use a single company laptop.
+
+*** *Highlights*: The authentication and multi-user feature requires an in-depth analysis of the previous architecture before implementation.
+It involves editing in almost all of the components with more emphasis on the Model and Storage components. An understanding of the n-tier
+architecture is needed as the User Database mimics thats of the AddressBook. It is also a step towards making it a centralised application
+that could be used by institutes of social workers.
+
+
+*Minor enhancement*: added a *add session reports* feature
+
+
+** What it does: This feature allows the user to add a new session report/log to the list of existing session reports/logs.
+
+*** Justification: This is to allow social workers to keep records of their reports and also to collate into one single display.
+This is a crucial feature of the application for social workers to store their information conveniently.
+
+
+*Code contributed*: [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/functional/kaisertanqr.md[Functional code]]
+ [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/test/kaisertanqr.md[Test code]]
+
+
+*Other contributions*:
+
+** Project Management
+
+*** Managed released v1.4 - v1.5 (3 releases) on GitHub
+
+** Documentation:
+*** Did rearrangement to existing contents of the User Guide [https://github.com/CS2103JAN2018-T15-B3/main/pull/115/commits/d8448448eefcf8dfaf6341e999c549b037d95f41[#115]]
+*** Added Use Cases relating to login and multi-user capabilities
+*** Updated Model and Storage component diagrams in Developers Guide[https://github.com/CS2103JAN2018-T15-B3/main/pull/115/commits/90bce689353271cd3959acadace8fa8b5b22637b[#115]]
+*** Added user account setup and login instructions in Quick Start in User Guide [https://github.com/CS2103JAN2018-T15-B3/main/commit/a77c231b879b88f163b0bf3425db03363aee351e#diff-d80058c033b9f127ec727c18cc84ce4d[#68]]
+
+** Community:
+*** Reported bugs and suggestions for other teams in the class (Examples: https://github.com/CS2103JAN2018-W11-B2/main/issues/144[1])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+=== Features
+
+include::../UserGuide.adoc[tag=authentication]
+
+include::../UserGuide.adoc[tag=sessionlog]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+=== Design and Implementation
+
+include::../DeveloperGuide.adoc[tag=multiuser]
+
+include::../DeveloperGuide.adoc[tag=authentication]
+
+include::../DeveloperGuide.adoc[tag=dataencryption]
+
+=== Use Cases
+
+include::../DeveloperGuide.adoc[tag=kaiserUseCases]
+
+=== Instructions for Manual Tests
+
+include::../DeveloperGuide.adoc[tag=kaiserManualTests]

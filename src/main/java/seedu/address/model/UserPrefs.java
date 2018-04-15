@@ -11,10 +11,11 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String usersFilePath = "data/users.xml";
+    private String addressBookName = "SLAP for Social Workers";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(1200, 750, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {
@@ -31,6 +32,14 @@ public class UserPrefs {
 
     public String getAddressBookFilePath() {
         return addressBookFilePath;
+    }
+
+    public String getUsersFilePath() {
+        return usersFilePath;
+    }
+
+    public void setUsersFilePath(String usersFilePath) {
+        this.usersFilePath = usersFilePath;
     }
 
     public void setAddressBookFilePath(String addressBookFilePath) {
@@ -72,6 +81,7 @@ public class UserPrefs {
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nLocal user file location : " + usersFilePath);
         return sb.toString();
     }
 

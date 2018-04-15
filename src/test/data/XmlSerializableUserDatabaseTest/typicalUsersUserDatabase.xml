@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- UserDatabase save file which contains the same User values as in
+{@code TypicalUsers#getTypicalUserDatabase()}-->
+<usersdatabase>
+    <users>
+        <username>username</username>
+        <password>pass</password>
+        <addressbookfilepath>data/addressbook-username.xml</addressbookfilepath>
+    </users>
+    <users>
+        <username>slap</username>
+        <password>pass</password>
+        <addressbookfilepath>data/addressbook-slap.xml</addressbookfilepath>
+    </users>
+    <users>
+        <username>long</username>
+        <password>pass</password>
+        <addressbookfilepath>data/addressbook-long.xml</addressbookfilepath>
+    </users>
+    <users>
+        <username>kara</username>
+        <password>pass</password>
+        <addressbookfilepath>data/addressbook-kara.xml</addressbookfilepath>
+    </users>
+    <users>
+        <username>dany</username>
+        <password>pass</password>
+        <addressbookfilepath>data/addressbook-dany.xml</addressbookfilepath>
+    </users>
+</usersdatabase>

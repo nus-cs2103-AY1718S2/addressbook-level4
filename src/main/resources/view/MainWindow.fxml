@@ -11,58 +11,108 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
   <icons>
-    <Image url="@/images/address_book_32.png" />
+    <Image url="@/images/address_book_32.png"/>
   </icons>
   <scene>
     <Scene>
       <stylesheets>
-        <URL value="@DarkTheme.css" />
-        <URL value="@Extensions.css" />
+        <URL value="@DarkTheme.css"/>
+        <URL value="@Extensions.css"/>
       </stylesheets>
 
       <VBox>
-        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+        <StackPane fx:id="loginStatusbarPlaceholder"/>
+
+        <MenuBar id="menuBar" fx:id="menuBar" VBox.vgrow="NEVER">
           <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
           </Menu>
+          <!-- @@author ifalluphill -->
+          <Menu mnemonicParsing="false" text="View">
+            <MenuItem fx:id="viewCalendarMenuItem" mnemonicParsing="false" onAction="#handleViewCalendar" text="Open Calendar" />
+            <MenuItem fx:id="viewErrorsMenuItem" mnemonicParsing="false" onAction="#handleViewErrors" text="Show Error Log" />
+          </Menu>
+          <!-- @@author -->
           <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
           </Menu>
         </MenuBar>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
-
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
-
+        <!-- @@author jaronchan -->
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
           <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
+              <Insets right="10" bottom="10" left="10"/>
             </padding>
+            <StackPane fx:id="logo" minHeight="125" maxHeight="125" minWidth="340" prefWidth="340" VBox.vgrow="NEVER">
+              <ImageView fitHeight="100" fitWidth="200" pickOnBounds="true" preserveRatio="true"
+                         StackPane.alignment="BOTTOM_CENTER">
+                <Image url="@/images/slap-brand.jpg"/>
+              </ImageView>
+            </StackPane>
+            <StackPane fx:id="beneficiariesPane" minHeight="50" maxHeight="50">
+              <Label id="beneficiariesLabel" text="Beneficiaries:" StackPane.alignment="CENTER_LEFT" translateX="10"/>
+            </StackPane>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
+          <VBox fx:id="mainVBox" minWidth="560" prefWidth="560">
+            <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder">
+              <padding>
+                <Insets top="5" right="15" bottom="5" left="15"/>
+              </padding>
+            </StackPane>
 
-          <StackPane fx:id="browserPlaceholder" prefWidth="340" >
-            <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
-            </padding>
-          </StackPane>
+            <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder"
+                       minHeight="120" prefHeight="120" maxHeight="120">
+              <padding>
+                <Insets top="5" right="15" bottom="15" left="15"/>
+              </padding>
+            </StackPane>
+
+            <TabPane fx:id="featuresTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+              <tabs>
+                <Tab id="details" fx:id="detailsTab" text="Details">
+                  <content>
+                    <StackPane fx:id="personDetailsPlaceholder" prefWidth="340">
+                      <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                      </padding>
+                    </StackPane>
+                  </content>
+                </Tab>
+                <Tab id="calendar" fx:id="calendarTab" text="Calendar">
+                  <content>
+                    <StackPane fx:id="calendarPlaceholder" prefWidth="340">
+                      <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                      </padding>
+                    </StackPane>
+                  </content>
+                </Tab>
+                <Tab id="scheduler" fx:id="dailySchedulerTab" text="Daily Scheduler">
+                  <content>
+                    <StackPane fx:id="dailySchedulerPlaceholder" prefWidth="340">
+                      <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                      </padding>
+                    </StackPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+          </VBox>
         </SplitPane>
-
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+        <!-- @@author -->
+        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
       </VBox>
     </Scene>
   </scene>
 </fx:root>
+

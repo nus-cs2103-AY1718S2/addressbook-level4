@@ -13,4 +13,6 @@ public interface Ui {
     /** Stops the UI. */
     void stop();
 
+    /** Returns the MainWindow */
+    MainWindow getMainWindow();
 }

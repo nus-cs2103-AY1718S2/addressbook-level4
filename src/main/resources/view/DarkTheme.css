@@ -81,6 +81,11 @@
     -fx-border-color: transparent transparent transparent #4d4d4d;
 }
 
+.split-pane:vertical .split-pane-divider {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-color: #4d4d4d transparent transparent transparent;
+}
+
 .split-pane {
     -fx-border-radius: 1;
     -fx-border-width: 1;
@@ -106,6 +111,7 @@
 .list-cell:filled:odd {
     -fx-background-color: #515658;
 }
+
 
 .list-cell:filled:selected {
     -fx-background-color: #424d5f;
@@ -306,6 +312,7 @@
     -fx-padding: 8 1 8 1;
 }
 
+
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -349,3 +356,4 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+

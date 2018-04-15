@@ -1461,7 +1461,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect upload commands to try: `upload`, `upload filename   password  ` (notice the spaces) +
    Expected: Invalid command error message will be shown
 
-=======
 === Finding vacant rooms
 
 . Finding vacant rooms

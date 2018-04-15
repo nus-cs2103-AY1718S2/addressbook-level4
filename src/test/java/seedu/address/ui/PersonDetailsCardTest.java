@@ -40,7 +40,7 @@ public class PersonDetailsCardTest extends GuiUnitTest {
         assertTrue(personDetailsCard.equals(personDetailsCard));
 
         // null -> returns false
-        assertFalse(personDetailsCard.equals(null));
+        assertFalse(personDetailsCard ==  null);
 
         // different types -> returns false
         assertFalse(personDetailsCard.equals(0));

@@ -11,6 +11,7 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W11-B4/main
 
@@ -63,19 +64,21 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Contact Commands
 ==== Adding a person: `add`
 
-Adds a person to StardyTogether. +
+To add a friend to ST, you can enter the command `add` followed by the various parameters +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY tt/TIMETABLE [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
-[NOTE]
+[WARNING]
 =====
 * Birthday must be in DDMMYYYY format
-* Timetable must either be a valid NUSMods shortened link or left empty (in which a empty timetable will be created)
-* Timetable from NUSMods should not have clashes
+* Timetable must either be a valid NUSMods shortened link or left empty
 * If the computer has no internet access, a empty timetable will be created instead
 =====
+
+[NOTE]
+If timetable is invalid, left empty or there is no internet access, an empty timetable will be created
 
 For more information on how to get a valid link, refer to <<FAQ>>.
 
@@ -96,7 +99,7 @@ image::aliasList.png[width="790"]
 
 ==== Editing a person : `edit`
 
-Edits an existing person in StardyTogether. +
+To edit a friend's particulars, you can enter the command `edit` followed by the respective parameters you wish to edit. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tt/TIMETABLE] [t/TAG]...`
 
 ****
@@ -177,13 +180,11 @@ Selects the 1st person in the results of the `find` command.
 // tag::birthdays[]
 ==== Viewing a collated birthday list: `birthdays` (since v1.3)
 
-Displays a list that contains all the birthdays of all contacts ordered by date +
-Or display a notification of the birthdays today +
+To get a list that contains all the birthdays of all your friends (ordered by date) +
+Or to know whose birthday is it today, you can enter the following commands +
 Format: `birthdays [ADDITIONAL_PARAMETER]`
+
 The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field +
-
-image::birthdaysToday.png[width="790"]
-
 ****
 * `todays`: Shows a notification of the birthdays occurring today +
 ****
@@ -194,6 +195,7 @@ Examples:
 Displays a list of all birthdays
 * `birthdays today` +
 Displays a window with the birthdays today
+image::birthdaysToday.png[width="790"]
 // end::birthdays[]
 
 === NUS Commands
@@ -201,13 +203,12 @@ Displays a window with the birthdays today
 // tag::union[]
 ==== Viewing common time slots in timetable: `union` (since v1.5)
 
-Displays the common free time of multiple people in StardyTogether.(Minimum: 2) +
+To know your free slots together with your friends, you can use `union` to display the common free time of multiple friends in StardyTogether.(Minimum: 2) +
 Format: `union ODD/EVEN INDEX INDEX [INDEX]...`
 
-****
-* Only indexes of the current filtered list are valid
-* Overlap of the persons' timetables will be displayed.
-****
+[NOTE]
+Only indexes of the current filtered list are valid
+
 
 Examples:
 
@@ -494,6 +495,18 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 .   Paste it in StardyTogether at the tt/TIMETABLE field
 ****
 // end::FAQ[]
+
+==Troubleshooting
+[width="790",cols="<15%,<23%, 45%",options="header",]
+|=======================================================================
+|Problem |How to solve
+|The timetable I entered is empty!|Do check the validity of your NUSMods link by inputting in your internet browser, and your internet connection.
+|I am having trouble accessing the Google Drive functions!|
+****
+.   Go to your user directory (Example: C:/users/USER)
+.   Delete .googlecredentials folder (if it doesn't appear, show hidden files in Settings)
+****
+|=======================================================================
 
 == Command Summary
 [width="790",cols="<15%,<23%, 45%",options="header",]

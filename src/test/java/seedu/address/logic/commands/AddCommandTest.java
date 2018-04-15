@@ -5,13 +5,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
@@ -20,10 +22,15 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -31,16 +38,18 @@ public class AddCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @Test
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @org.junit.Test
     public void constructor_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
     }
 
-    @Test
+    @org.junit.Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+        Person validPerson = new PersonBuilder().withName("Altria").withNric("S8375768H").build();
 
         CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
 
@@ -48,10 +57,10 @@ public class AddCommandTest {
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }
 
-    @Test
+    @org.junit.Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+        Person validPerson = new PersonBuilder().withName("Jacky").withNric("S9783287J").build();
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -59,7 +68,7 @@ public class AddCommandTest {
         getAddCommandForPerson(validPerson, modelStub).execute();
     }
 
-    @Test
+    @org.junit.Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
@@ -96,9 +105,28 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+
+        @Override
+        public void replaceTag(List<Tag> tagList) {
+            fail("This method should not be called.");
+        }
+
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void addPage(Person person) throws IOException {
+
+        }
+
+        public void updatePage(Person person) throws IOException{
+
+        }
+
+        public void deletePage(Person person) {
+
         }
 
         @Override
@@ -125,12 +153,42 @@ public class AddCommandTest {
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
+            return model.getFilteredPersonList();
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<Person> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) throws TagNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonList(String parameter) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void addAppointment(Appointment appointment) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void deleteAppointment(Appointment appointment) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public ObservableList<Appointment> getFilteredAppointmentList() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
+        public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
             fail("This method should not be called.");
         }
     }

@@ -21,6 +21,10 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedSubject> subjects;
+    @XmlElement
+    private List<XmlAdaptedAppointment> appointments;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -29,6 +33,8 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        subjects = new ArrayList<>();
+        appointments = new ArrayList<>();
     }
 
     /**
@@ -38,6 +44,9 @@ public class XmlSerializableAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        subjects.addAll(src.getSubjectList().stream().map(XmlAdaptedSubject::new).collect(Collectors.toList()));
+        appointments.addAll(src.getAppointmentList().stream().map(XmlAdaptedAppointment::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -48,11 +57,17 @@ public class XmlSerializableAddressBook {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
+        for (XmlAdaptedSubject s: subjects) {
+            addressBook.addSubject(s.toModelType());
+        }
         for (XmlAdaptedTag t : tags) {
             addressBook.addTag(t.toModelType());
         }
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
+        }
+        for (XmlAdaptedAppointment a : appointments) {
+            addressBook.addAppointment(a.toModelType());
         }
         return addressBook;
     }
@@ -68,6 +83,6 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && subjects.equals(otherAb.subjects);
     }
 }

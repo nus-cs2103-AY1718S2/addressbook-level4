@@ -1,9 +1,13 @@
 package seedu.address.ui;
 
+import static seedu.address.model.ThemeColourUtil.getThemeHashMap;
+
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -17,8 +21,10 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ThemeSwitchRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -27,6 +33,9 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final String EXTENSIONS_STYLESHEET = "view/Extensions.css";
+    private static final String DEFAULT_THEME_COLOUR = "light";
+    private static final HashMap<String, String> themeHashMap;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -36,8 +45,13 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private AppointmentListPanel appointmentListPanel;
     private Config config;
     private UserPrefs prefs;
+    private String themeColour;
+
+    @FXML
+    private StackPane appointmentListPanelPlaceholder;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -57,6 +71,10 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    static {
+        themeHashMap = getThemeHashMap();
+    }
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
 
@@ -67,6 +85,7 @@ public class MainWindow extends UiPart<Stage> {
         this.prefs = prefs;
 
         // Configure the UI
+        setThemeColour();
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
 
@@ -121,6 +140,9 @@ public class MainWindow extends UiPart<Stage> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        appointmentListPanel = new AppointmentListPanel(logic.getFilteredAppointmentList());
+        appointmentListPanelPlaceholder.getChildren().add(appointmentListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -185,6 +207,10 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
+    public AppointmentListPanel getAppointmentListPanel() {
+        return this.appointmentListPanel;
+    }
+
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -194,4 +220,25 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    private void setThemeColour() {
+        setThemeColour(DEFAULT_THEME_COLOUR);
+    }
+
+    private void setThemeColour(String themeColour) {
+        primaryStage.getScene().getStylesheets().add(EXTENSIONS_STYLESHEET);
+        primaryStage.getScene().getStylesheets().add(themeHashMap.get(themeColour));
+    }
+
+    private void changeThemeColour() {
+        primaryStage.getScene().getStylesheets().clear();
+        setThemeColour(themeColour);
+    }
+
+    @Subscribe
+    private void handleChangeThemeEvent(ThemeSwitchRequestEvent event) {
+        themeColour = event.themeToChangeTo;
+        Platform.runLater(this::changeThemeColour);
+    }
+
 }

@@ -1,0 +1,60 @@
+= Tey Xin Hui - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: EduBuddy
+
+---
+
+== Overview
+
+EduBuddy is a desktop application designed for secondary school teachers to manage student information better.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Added L1R5 and L1B4 calculation support
+** What it does: It helps to calculate the streaming score of each student by looking at the list of subjects assigned to the student.
+** Justification: The streaming score is an important indicator of how well the students are doing academically. The process of calculating the score is tedious as you have to compare across many subjects and grades to obtain the best possible score.
+Therefore, the calculation support just requires the teacher to key in the subject grades for the student and the teacher would be able to view the score easily as the
+calculation support will calculate the score for the teacher.
+
+* *Minor enhancement*: Created subject database and allow users to add/edit subject details
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T09-B1/main/blob/master/collated/functional/TeyXinHui.md[Functional code]] [https://github.com/CS2103JAN2018-T09-B1/main/blob/master/collated/test/TeyXinHui.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Opened, closed, and verified some issues on the issue tracker.
+** Enhancements to existing features:
+*** Allow `AddCommand` and `EditCommand` to support the `Subject` attribute of the students.
+*** Prevent students in the _EduBuddy_ from having the same `NRIC` number by enhancing the `AddCommand` and `EditCommand`. This is because `NRIC` number is supposed to be unique to everyone.
+** Documentation:
+*** Did revisions to existing contents of the User Guide and Developer Guide
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag = addsubject]
+
+include::../UserGuide.adoc[tag = tagdelete]
+
+include::../UserGuide.adoc[tag = stream]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag = addsubjects]
+
+include::../DeveloperGuide.adoc[tag = masstagremoval]
+
+include::../DeveloperGuide.adoc[tag = subject]
+
+

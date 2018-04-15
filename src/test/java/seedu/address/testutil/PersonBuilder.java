@@ -3,11 +3,14 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Cca;
+import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
+import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -17,23 +20,37 @@ import seedu.address.model.util.SampleDataUtil;
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "alice@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_NRIC = "S8535525Z";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String[] DEFAULT_SUBJECTS = {"English A1",  "EMath A1", "Hist A1", "HTamil A1",
+                                                     "Chem A1", "Phy A1"};
+    public static final String DEFAULT_REMARK = " ";
+    public static final String DEFAULT_CCA = "Basketball";
+    public static final String DEFAULT_CCA_POSITION = "Member";
+    public static final String DEFAULT_INJURIES_HISTORY = " ";
+    public static final String DEFAULT_NAME_OF_KIN = "Betty";
+    public static final String DEFAULT_PHONE = "98763451";
+    public static final String DEFAULT_EMAIL = "betty@gmail.com";
+    public static final String DEFAULT_RELATIONSHIP = "Mother";
 
     private Name name;
-    private Phone phone;
-    private Email email;
-    private Address address;
+    private Nric nric;
     private Set<Tag> tags;
+    private Set<Subject> subjects;
+    private Remark remark;
+    private Cca cca;
+    private InjuriesHistory injuriesHistory;
+    private NextOfKin nextOfKin;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
-        phone = new Phone(DEFAULT_PHONE);
-        email = new Email(DEFAULT_EMAIL);
-        address = new Address(DEFAULT_ADDRESS);
+        nric = new Nric(DEFAULT_NRIC);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+        subjects = SampleDataUtil.getSubjectSet(DEFAULT_SUBJECTS);
+        remark = new Remark(DEFAULT_REMARK);
+        cca = new Cca(DEFAULT_CCA, DEFAULT_CCA_POSITION);
+        injuriesHistory = new InjuriesHistory(DEFAULT_INJURIES_HISTORY);
+        nextOfKin = new NextOfKin(DEFAULT_NAME_OF_KIN, DEFAULT_PHONE, DEFAULT_EMAIL, DEFAULT_RELATIONSHIP);
     }
 
     /**
@@ -41,10 +58,13 @@ public class PersonBuilder {
      */
     public PersonBuilder(Person personToCopy) {
         name = personToCopy.getName();
-        phone = personToCopy.getPhone();
-        email = personToCopy.getEmail();
-        address = personToCopy.getAddress();
+        nric = personToCopy.getNric();
         tags = new HashSet<>(personToCopy.getTags());
+        subjects = new HashSet<>(personToCopy.getSubjects());
+        remark = personToCopy.getRemark();
+        cca = personToCopy.getCca();
+        injuriesHistory = personToCopy.getInjuriesHistory();
+        nextOfKin = personToCopy.getNextOfKin();
     }
 
     /**
@@ -64,31 +84,59 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Person} that we are building.
+     * Sets the {@code Nric} of the {@code Person} that we are building.
      */
-    public PersonBuilder withAddress(String address) {
-        this.address = new Address(address);
+    public PersonBuilder withNric(String nric) {
+        this.nric = new Nric(nric);
         return this;
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Parses the {@code subjects} into a {@code Set<Subject>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
+    public PersonBuilder withSubjects(String ... subjects) {
+        this.subjects = SampleDataUtil.getSubjectSet(subjects);
         return this;
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Remark} of the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String email) {
-        this.email = new Email(email);
+    public PersonBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
         return this;
     }
 
+    /**
+     * Sets the {@code Cca} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCca(String cca, String pos) {
+        this.cca = new Cca(cca, pos);
+        return this;
+    }
+
+    /**
+     * Sets the {@code InjuriesHistory} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withInjuriesHistory(String injuriesHistory) {
+        this.injuriesHistory = new InjuriesHistory(injuriesHistory);
+        return this;
+    }
+
+    /**
+     * Sets the {@code NextOfKin} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withNameOfKin(String nameOfKin, String phone, String email, String remark) {
+        this.nextOfKin = new NextOfKin(nameOfKin, phone, email, remark);
+        return this;
+    }
+
+
+    /**
+     * Initializes the PersonBuilder with the data of {@code personToCopy}.
+     */
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, nric, tags, subjects, remark, cca, injuriesHistory, nextOfKin);
     }
 
 }

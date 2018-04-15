@@ -1,20 +1,31 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.person.Name.MESSAGE_NAME_CONSTRAINTS;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+
 import java.util.Set;
+
+import com.google.common.collect.Iterables;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.Cca;
+import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.NextOfKin;
+import seedu.address.model.person.Nric;
+import seedu.address.model.person.Remark;
+import seedu.address.model.subject.Subject;
 import seedu.address.model.tag.Tag;
+
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -53,7 +64,7 @@ public class ParserUtil {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!Name.isValidName(trimmedName)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
         return new Name(trimmedName);
     }
@@ -67,77 +78,32 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
+    //@@author chuakunhong
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
+     * Parses a {@code String nric} into a {@code Nric}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code phone} is invalid.
+     * @throws IllegalValueException if the given {@code nric} is invalid.
      */
-    public static Phone parsePhone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+    public static Nric parseNric(String nric) throws IllegalValueException {
+        requireNonNull(nric);
+        String trimmedNric = nric.trim();
+        if (!Nric.isValidNric(trimmedNric)) {
+            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return new Nric(trimmedNric);
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Parses a {@code Optional<String> nric} into an {@code Optional<Nric>} if {@code nric} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
+    public static Optional<Nric> parseNric(Optional<String> nric) throws IllegalValueException {
+        requireNonNull(nric);
+        return nric.isPresent() ? Optional.of(parseNric(nric.get())) : Optional.empty();
     }
 
-    /**
-     * Parses a {@code String address} into an {@code Address}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code address} is invalid.
-     */
-    public static Address parseAddress(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-        return new Address(trimmedAddress);
-    }
-
-    /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code email} is invalid.
-     */
-    public static Email parseEmail(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        return new Email(trimmedEmail);
-    }
-
-    /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
-    }
+    //@@author
 
     /**
      * Parses a {@code String tag} into a {@code Tag}.
@@ -155,6 +121,18 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code Collection<String> tags} into a {@code List<Tag>}.
+     */
+    public static List<Tag> parseTagsForReplacement(Collection<String> tags) throws IllegalValueException {
+        requireNonNull(tags);
+        final List<Tag> tagSet = new LinkedList<>();
+        for (String tagName : tags) {
+            tagSet.add(parseTag(tagName));
+        }
+        return tagSet;
+    }
+
+    /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
@@ -164,5 +142,252 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    //@@author TeyXinHui
+    /**
+     * Splits a {@code String subjects} into {@code String subjectName} and {@code String subjectGrade}
+     * Parses {@code String subjectName} and {@code String subjectGrade}into a {@code Subject}.
+     * Add {@code Subject} into a {@code Set<Subject> subjectSet}.
+     * @throws IllegalValueException if the given {@code subjects} is invalid
+     */
+    public static void parseSubject(Collection<String> subjects, Set<Subject> subjectSet) throws IllegalValueException {
+        requireNonNull(subjects);
+        String subjectsStr = Iterables.get(subjects, 0);
+        String[] splitSubjectStr = subjectsStr.trim().split("\\s+");
+        Subject subjectToAdd;
+        for (int i = 0; i < splitSubjectStr.length; i++) {
+            String subjectName = splitSubjectStr[i];
+            if (!Subject.isValidSubjectName(subjectName)) {
+                throw new IllegalValueException(Subject.MESSAGE_SUBJECT_NAME_CONSTRAINTS);
+            }
+            i += 1;
+            String subjectGrade;
+            if (i >= splitSubjectStr.length) {
+                throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
+            } else {
+                subjectGrade = splitSubjectStr[i];
+            }
+            if (!Subject.isValidSubjectGrade(subjectGrade)) {
+                throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
+            }
+            subjectToAdd = new Subject(subjectName, subjectGrade);
+            for (Subject s : subjectSet) {
+                if (s.subjectName.equals(subjectToAdd.subjectName)) {
+                    throw new IllegalValueException(Subject.MESSAGE_DUPLICATE_SUBJECT);
+                }
+            }
+            subjectSet.add(new Subject(subjectName, subjectGrade));
+        }
+    }
+
+    /**
+     * Parses {@code Collection<String> subjects} into a {@code Set<Subject}.
+     */
+    public static Set<Subject> parseSubjects(Collection<String> subjects) throws IllegalValueException {
+        requireNonNull(subjects);
+        final Set<Subject> subjectSet = new HashSet<>();
+        if (subjects.size() == 1) {
+            parseSubject(subjects, subjectSet);
+        }
+        return subjectSet;
+    }
+
+    //@@author
+    /**
+     * Parses a {@code String remark} into a {@code Remark}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static Remark parseRemark(String remark) {
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+        return new Remark(trimmedRemark);
+    }
+
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(parseRemark(remark.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String info} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseInfo(String info) {
+        requireNonNull(info);
+        String trimmedInfo = info.trim();
+
+        return trimmedInfo;
+    }
+
+    /**
+     * Parses a {@code Optional<String> info} into an {@code Optional<String>} if {@code info} is present.
+     */
+    public static Optional<String> parseInfo (Optional<String> info) {
+        requireNonNull(info);
+        return info.isPresent() ? Optional.of(parseInfo(info.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static String parseDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!Appointment.isValidAppointmentDate(trimmedDate)) {
+            throw new IllegalValueException(Appointment.MESSAGE_APPOINTMENT_DATE_CONSTRAINTS);
+        }
+        return new String(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<String>} if {@code date} is present.
+     */
+    public static Optional<String> parseDate (Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String startTime} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code startTime} is invalid.
+     */
+    public static String parseStartTime(String startTime) throws IllegalValueException {
+        requireNonNull(startTime);
+        String trimmedStartTime = startTime.trim();
+        if (!Appointment.isValidAppointmentStartTime(trimmedStartTime)) {
+            throw new IllegalValueException(Appointment.MESSAGE_APPOINTMENT_START_TIME_CONSTRAINTS);
+        }
+        return new String(trimmedStartTime);
+    }
+
+    /**
+     * Parses a {@code Optional<String> startTime} into an {@code Optional<String>} if {@code startTime} is present.
+     */
+    public static Optional<String> parseStartTime (Optional<String> startTime) throws IllegalValueException {
+        requireNonNull(startTime);
+        return startTime.isPresent() ? Optional.of(parseStartTime(startTime.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String endTime} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code endTime} is invalid.
+     */
+    public static String parseEndTime(String endTime) throws IllegalValueException {
+        requireNonNull(endTime);
+        String trimmedEndTime = endTime.trim();
+        if (!Appointment.isValidAppointmentEndTime(trimmedEndTime)) {
+            throw new IllegalValueException(Appointment.MESSAGE_APPOINTMENT_END_TIME_CONSTRAINTS);
+        }
+        return new String(trimmedEndTime);
+    }
+
+    /**
+     * Parses a {@code Optional<String> endTime} into an {@code Optional<String>} if {@code endTime} is present.
+     */
+    public static Optional<String> parseEndTime (Optional<String> endTime) throws IllegalValueException {
+        requireNonNull(endTime);
+        return endTime.isPresent() ? Optional.of(parseEndTime(endTime.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static Cca parseCca(String cca, String pos) {
+        requireNonNull(cca);
+        String trimmedCca = cca.trim();
+
+        requireNonNull(pos);
+        String trimmedPos = pos.trim();
+        return new Cca(trimmedCca, trimmedPos);
+
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Cca> parseCca(Optional<String> cca, Optional<String> pos) {
+        requireNonNull(cca);
+        requireNonNull(pos);
+        return (cca.isPresent() && pos.isPresent()) ? Optional.of(parseCca(cca.get(), pos.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static InjuriesHistory parseInjuriesHistory(String injuriesHistory) {
+        requireNonNull(injuriesHistory);
+        String trimmedInjuriesHistory = injuriesHistory.trim();
+        return new InjuriesHistory(trimmedInjuriesHistory);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<InjuriesHistory> parseInjuriesHistory(Optional<String> injuriesHistory) {
+        requireNonNull(injuriesHistory);
+        return injuriesHistory.isPresent() ? Optional.of(parseInjuriesHistory(injuriesHistory.get()))
+                : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static NextOfKin parseNextOfKin(String name, String phone, String email, String remark)
+            throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        requireNonNull(phone);
+        String trimmedPhone = phone.trim();
+        requireNonNull(email);
+        String trimmedEmail = email.trim();
+        requireNonNull(remark);
+        String trimmedRemark = remark.trim();
+
+        return new NextOfKin(trimmedName, trimmedPhone, trimmedEmail, trimmedRemark);
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<NextOfKin> parseNextOfKin(Optional<String> name, Optional<String> phone,
+                                                     Optional<String> email, Optional<String> remark)
+                                                    throws IllegalValueException {
+        requireNonNull(name);
+        requireNonNull(phone);
+        requireNonNull(email);
+        requireNonNull(remark);
+        if (!email.isPresent()) {
+            Optional<String> na = Optional.of("N.A");
+            return name.isPresent() ? Optional.of(parseNextOfKin(name.get(), phone.get(), na.get(), remark.get()))
+                    : Optional.empty();
+        }
+        return name.isPresent() ? Optional.of(parseNextOfKin(name.get(), phone.get(), email.get(), remark.get()))
+                : Optional.empty();
     }
 }

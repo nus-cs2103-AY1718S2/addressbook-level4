@@ -58,7 +58,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 //tag::unlock[]
-=== Login : `unlock`
+=== Unlock : `unlock`
 
 You can unlock the APP while it is locked if you wish to do modification on contact and appointment. The initial password is 123456. +
 Format: `unlock PASSWORD`
@@ -70,7 +70,7 @@ Examples:
 //end::unlock[]
 
 //tag::lock[]
-=== Logout : `lock`
+=== Lock : `lock`
 
 You can logout after doing modification on contacts and appointment on the APP. The initial password is 123456. +
 Format: `lock`

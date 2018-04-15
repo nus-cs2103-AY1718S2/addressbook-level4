@@ -1,3 +1,4 @@
+//@@author software-1234
 package seedu.address.logic.commands;
 
 import java.math.BigDecimal;
@@ -56,10 +57,9 @@ public class CurrencyCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
-
         converter.setRefreshRateSeconds(86400);
 
-        if (index.getZeroBased() >= lastShownList.size()) {
+        if (index.getZeroBased() > lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -70,7 +70,7 @@ public class CurrencyCommand extends Command {
                 convertedPersonBalance = convertedPersonBalance + currentPersonBalance;
             }
         } else {
-            convertedPerson = lastShownList.get(index.getZeroBased());
+            convertedPerson = lastShownList.get(index.getZeroBased() - 1);
             convertedPersonBalance = convertedPerson.getMoney().balance;
         }
 

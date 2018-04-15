@@ -1,3 +1,4 @@
+//@@author software-1234
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -31,7 +32,7 @@ public class CurrencyCommandParser implements Parser<CurrencyCommand> {
             if (Integer.parseInt(currencyKeywords[0]) == 0) {
                 currencyIndex = Index.fromZeroBased(0);
             } else {
-                currencyIndex = Index.fromOneBased(Integer.parseInt(currencyKeywords[0]));
+                currencyIndex = Index.fromZeroBased(Integer.parseInt(currencyKeywords[0]));
             }
 
             if (currencyIndex.getZeroBased() < 0) {

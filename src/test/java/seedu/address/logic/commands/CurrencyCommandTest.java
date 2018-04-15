@@ -11,7 +11,7 @@ import seedu.address.model.ModelManager;
  * Contains integration tests (interaction with the Model) and unit tests for
  * {@code ConvertCommand}.
  */
-//@@author software-1234
+
 public class CurrencyCommandTest {
     private CurrencyCommand currencyCommand;
 

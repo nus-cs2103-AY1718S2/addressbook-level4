@@ -1,4 +1,6 @@
-//@@author sofware-1234
+# sofware-1234
+###### /java/seedu/address/logic/commands/ListNegativeBalanceCommand.java
+``` java
 package seedu.address.logic.commands;
 
 import java.util.function.Predicate;
@@ -25,3 +27,4 @@ public class ListNegativeBalanceCommand extends Command {
         return p -> p.getMoney().balance < 0;
     }
 }
+```

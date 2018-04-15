@@ -1,27 +1,4 @@
 # Articho28
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    public void loadAtmSearchPage() {
-        loadPage(ATM_SEARCH_PAGE_URL);
-    }
-
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
-    }
-    private void loadPersonAddress(Person person) {
-        loadPage (ADDRESS_SEARCH_PAGE_URL + person.getAddress().value);
-    }
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    @Subscribe
-    private void handleShowMapRequestEvent(ShowMapRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadAtmSearchPage();
-    }
-
-}
-```
 ###### /java/seedu/address/commons/events/ui/ShowMapRequestEvent.java
 ``` java
 /**
@@ -31,144 +8,6 @@ public class ShowMapRequestEvent extends BaseEvent {
 
     public String toString() {
         return this.getClass().getSimpleName();
-    }
-}
-```
-###### /java/seedu/address/logic/parser/SearchTagCommandParser.java
-``` java
-
-package seedu.address.logic.parser;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.ParserUtil.parseTags;
-
-import java.util.Set;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
-import seedu.address.logic.commands.SearchTagCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tag.Tag;
-
-/**
- * Parses a SearchTagCommand. Verifies that tags are properly formatted before
- */
-public class SearchTagCommandParser implements Parser<SearchTagCommand> {
-
-    public static final String MESSAGE_INVALID_COMMAND_NO_TAGS = "Please insert tags in the tag field: t/";
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the ColorCommand
-     * and returns an RemoveTagCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-
-    public SearchTagCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TAG);
-        Set<Tag> tagsToFind;
-        try {
-            tagsToFind = parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            if (tagsToFind.isEmpty()) {
-                throw new ParseException(MESSAGE_INVALID_COMMAND_NO_TAGS);
-            }
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-        return new SearchTagCommand(tagsToFind);
-    }
-}
-```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
-``` java
-        case BalanceCommand.COMMAND_SHORTCUT:
-            return new BalanceCommand();
-
-        case BalanceCommand.COMMAND_WORD:
-            return new BalanceCommand();
-```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
-``` java
-        case MinCommand.COMMAND_WORD:
-            return new MinCommand();
-
-        case MinCommand.COMMAND_SHORTCUT:
-            return new MinCommand();
-```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
-``` java
-        case MapCommand.COMMAND_WORD:
-            return new MapCommand();
-        case MapCommand.COMMAND_SHORTCUT:
-            return new MapCommand();
-```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
-``` java
-        case SearchTagCommand.COMMAND_WORD:
-            return new SearchTagCommandParser().parse(arguments);
-        case SearchTagCommand.COMMAND_SHORTCUT:
-            return new SearchTagCommandParser().parse(arguments);
-```
-###### /java/seedu/address/logic/parser/CurrencyCommandParser.java
-``` java
-            Currency fromFormattedCurrency = Currency.get(fromCurrency);
-            Currency toFormattedCurrency = Currency.get(toCurrency);
-
-            if (fromFormattedCurrency == null || toFormattedCurrency == null) {
-                throw new ParseException(CurrencyCommand.MESSAGE_CURRENCY_NOT_SUPPORTED);
-            }
-```
-###### /java/seedu/address/logic/commands/MinCommand.java
-``` java
-package seedu.address.logic.commands;
-
-import java.util.List;
-
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.index.Index;
-
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.model.person.Person;
-/**
- * Finds the person to which you owe the most money
- */
-public class MinCommand extends Command {
-
-    public static final String COMMAND_WORD = "maxborrowed";
-    public static final String COMMAND_SHORTCUT = "mb";
-    public static final String MESSAGE_SUCCESS_FOUND = "The contact to which you owe the most money is: ";
-    public static final String MESSAGE_SUCCESS_NO_RESULT = "Good news! You don't owe any money.";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the person to which you owe the most money ";
-    private CommandResult result;
-
-    public CommandResult getResult() {
-        return result;
-    }
-
-    public void setResult(CommandResult result) {
-        this.result = result;
-    }
-    @Override
-    public CommandResult execute() {
-        List<Person> lastShownList = model.getFilteredPersonList();
-        Index index = Index.fromZeroBased(0);
-        double lowestDebt = 0.0;
-
-        for (int i = 0; i < lastShownList.size(); i++) {
-            Person person = lastShownList.get(i);
-            if (person.getMoney().balance < lowestDebt) {
-                index = Index.fromZeroBased(i);
-                lowestDebt = person.getMoney().balance;
-            }
-            if (lowestDebt == 0.0) {
-                result = new CommandResult(MESSAGE_SUCCESS_NO_RESULT);
-            } else {
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
-                result = new CommandResult(MESSAGE_SUCCESS_FOUND + lastShownList.get(index.getZeroBased()).getName());
-            }
-        }
-        return result;
     }
 }
 ```
@@ -220,6 +59,80 @@ public class BalanceCommand extends Command {
         }
 
         return accumulator;
+    }
+}
+```
+###### /java/seedu/address/logic/commands/MapCommand.java
+``` java
+/**
+ * Shows a map and searchs for the nearest ATM.
+ */
+
+public class MapCommand extends Command {
+
+    public static final String COMMAND_WORD = "map";
+    public static final String COMMAND_SHORTCUT = "mp";
+    public static final String MESSAGE_SUCCESS = "Map Shown";
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowMapRequestEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+
+}
+```
+###### /java/seedu/address/logic/commands/MinCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import java.util.List;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.model.person.Person;
+/**
+ * Finds the person to which you owe the most money
+ */
+public class MinCommand extends Command {
+
+    public static final String COMMAND_WORD = "maxborrowed";
+    public static final String COMMAND_SHORTCUT = "mb";
+    public static final String MESSAGE_SUCCESS_FOUND = "The contact to which you owe the most money is: ";
+    public static final String MESSAGE_SUCCESS_NO_RESULT = "Good news! You don't owe any money.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the person to which you owe the most money ";
+    private CommandResult result;
+
+    public CommandResult getResult() {
+        return result;
+    }
+
+    public void setResult(CommandResult result) {
+        this.result = result;
+    }
+    @Override
+    public CommandResult execute() {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        Index index = Index.fromZeroBased(0);
+        double lowestDebt = 0.0;
+
+        for (int i = 0; i < lastShownList.size(); i++) {
+            Person person = lastShownList.get(i);
+            if (person.getMoney().balance < lowestDebt) {
+                index = Index.fromZeroBased(i);
+                lowestDebt = person.getMoney().balance;
+            }
+            if (lowestDebt == 0.0) {
+                result = new CommandResult(MESSAGE_SUCCESS_NO_RESULT);
+            } else {
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+                result = new CommandResult(MESSAGE_SUCCESS_FOUND + lastShownList.get(index.getZeroBased()).getName());
+            }
+        }
+        return result;
     }
 }
 ```
@@ -316,25 +229,109 @@ public class SearchTagCommand extends UndoableCommand {
 
 
 ```
-###### /java/seedu/address/logic/commands/MapCommand.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
-/**
- * Shows a map and searchs for the nearest ATM.
- */
+        case BalanceCommand.COMMAND_SHORTCUT:
+            return new BalanceCommand();
 
-public class MapCommand extends Command {
+        case BalanceCommand.COMMAND_WORD:
+            return new BalanceCommand();
+```
+###### /java/seedu/address/logic/parser/AddressBookParser.java
+``` java
+        case MinCommand.COMMAND_WORD:
+            return new MinCommand();
 
-    public static final String COMMAND_WORD = "map";
-    public static final String COMMAND_SHORTCUT = "mp";
-    public static final String MESSAGE_SUCCESS = "Map Shown";
+        case MinCommand.COMMAND_SHORTCUT:
+            return new MinCommand();
+```
+###### /java/seedu/address/logic/parser/AddressBookParser.java
+``` java
+        case MapCommand.COMMAND_WORD:
+            return new MapCommand();
+        case MapCommand.COMMAND_SHORTCUT:
+            return new MapCommand();
+```
+###### /java/seedu/address/logic/parser/AddressBookParser.java
+``` java
+        case SearchTagCommand.COMMAND_WORD:
+            return new SearchTagCommandParser().parse(arguments);
+        case SearchTagCommand.COMMAND_SHORTCUT:
+            return new SearchTagCommandParser().parse(arguments);
+```
+###### /java/seedu/address/logic/parser/CurrencyCommandParser.java
+``` java
+            Currency fromFormattedCurrency = Currency.get(fromCurrency);
+            Currency toFormattedCurrency = Currency.get(toCurrency);
 
-    @Override
-    public CommandResult execute() {
-        EventsCenter.getInstance().post(new ShowMapRequestEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
+            if (fromFormattedCurrency == null || toFormattedCurrency == null) {
+                throw new ParseException(CurrencyCommand.MESSAGE_CURRENCY_NOT_SUPPORTED);
+            }
+            return new CurrencyCommand(currencyIndex, fromCurrency, toCurrency);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CurrencyCommand.MESSAGE_USAGE));
+        } catch (NumberFormatException nfe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CurrencyCommand.MESSAGE_USAGE));
+        } catch (IllegalArgumentException iae) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CurrencyCommand.MESSAGE_USAGE));
+        } catch (ArrayIndexOutOfBoundsException aiobe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CurrencyCommand.MESSAGE_USAGE));
+        }
     }
 
+}
 
+
+
+```
+###### /java/seedu/address/logic/parser/SearchTagCommandParser.java
+``` java
+
+package seedu.address.logic.parser;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.ParserUtil.parseTags;
+
+import java.util.Set;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+import seedu.address.logic.commands.SearchTagCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.Tag;
+
+/**
+ * Parses a SearchTagCommand. Verifies that tags are properly formatted before
+ */
+public class SearchTagCommandParser implements Parser<SearchTagCommand> {
+
+    public static final String MESSAGE_INVALID_COMMAND_NO_TAGS = "Please insert tags in the tag field: t/";
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ColorCommand
+     * and returns an RemoveTagCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+
+    public SearchTagCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TAG);
+        Set<Tag> tagsToFind;
+        try {
+            tagsToFind = parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            if (tagsToFind.isEmpty()) {
+                throw new ParseException(MESSAGE_INVALID_COMMAND_NO_TAGS);
+            }
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+        return new SearchTagCommand(tagsToFind);
+    }
 }
 ```
 ###### /java/seedu/address/model/money/Money.java
@@ -353,4 +350,27 @@ public class MapCommand extends Command {
         return true;
     }
 
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    public void loadAtmSearchPage() {
+        loadPage(ATM_SEARCH_PAGE_URL);
+    }
+
+    private void loadPersonPage(Person person) {
+        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    }
+    private void loadPersonAddress(Person person) {
+        loadPage (ADDRESS_SEARCH_PAGE_URL + person.getAddress().value);
+    }
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    @Subscribe
+    private void handleShowMapRequestEvent(ShowMapRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadAtmSearchPage();
+    }
+
+}
 ```

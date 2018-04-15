@@ -1,5 +1,5 @@
 # pkuhanan
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
         public void setMoney(Money money) {
             this.money = money;
@@ -9,7 +9,7 @@
             return Optional.ofNullable(money);
         }
 ```
-###### \java\seedu\address\logic\commands\MaxCommand.java
+###### /java/seedu/address/logic/commands/MaxCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -29,7 +29,8 @@ public class MaxCommand extends Command {
     public static final String COMMAND_SHORTCUT = "ml";
     public static final String MESSAGE_SUCCESS = "The contact who owes you the most money is: ";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the person that owes the most money ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the person that owes the most money. "
+            + "If two contacts owe the same amount, only one will be selected.";
 
     @Override
     public CommandResult execute() {
@@ -50,7 +51,7 @@ public class MaxCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemindCommand.java
+###### /java/seedu/address/logic/commands/RemindCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -122,7 +123,7 @@ public class RemindCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TransactionCommand.java
+###### /java/seedu/address/logic/commands/TransactionCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -225,7 +226,7 @@ public class TransactionCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case MaxCommand.COMMAND_WORD:
             return new MaxCommand();
@@ -233,7 +234,7 @@ public class TransactionCommand extends UndoableCommand {
         case MaxCommand.COMMAND_SHORTCUT:
             return new MaxCommand();
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case SettleCommand.COMMAND_WORD:
             return new SettleCommandParser().parse(arguments);
@@ -241,7 +242,7 @@ public class TransactionCommand extends UndoableCommand {
         case SettleCommand.COMMAND_SHORTCUT:
             return new SettleCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case RemindCommand.COMMAND_WORD:
             return new RemindCommandParser().parse(arguments);
@@ -254,7 +255,7 @@ public class TransactionCommand extends UndoableCommand {
         case TransactionCommand.COMMAND_SHORTCUT:
             return new TransactionCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code String money} into an {@code Money}.
@@ -265,8 +266,8 @@ public class TransactionCommand extends UndoableCommand {
     public static Money parseMoney(String money) throws IllegalValueException {
         requireNonNull(money);
         String trimmedMoney = money.trim();
-        if (!Money.isValidMoney(trimmedMoney)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+        if (!Money.isValidMoney(trimmedMoney) || !Money.isNumberLowEnough(money)) {
+            throw new IllegalValueException(Money.MESSAGE_MONEY_CONSTRAINTS);
         }
         return new Money(trimmedMoney);
     }
@@ -280,7 +281,7 @@ public class TransactionCommand extends UndoableCommand {
         return money.isPresent() ? Optional.of(parseMoney(money.get())) : Optional.empty();
     }
 ```
-###### \java\seedu\address\logic\parser\RemindCommandParser.java
+###### /java/seedu/address/logic/parser/RemindCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -311,7 +312,7 @@ public class RemindCommandParser implements Parser<RemindCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\TransactionCommandParser.java
+###### /java/seedu/address/logic/parser/TransactionCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -358,7 +359,7 @@ public class TransactionCommandParser {
     }
 }
 ```
-###### \java\seedu\address\model\money\Money.java
+###### /java/seedu/address/model/money/Money.java
 ``` java
 package seedu.address.model.money;
 
@@ -370,42 +371,29 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidMoney(String)}
  */
 public class Money {
-    public static final String MESSAGE_MONEY_CONSTRAINTS = "Money values should be numbers";
-    public static final String MONEY_VALIDATION_REGEX = "-?\\d+(\\.\\d+)?(E-?\\d+)?";
-
-    public final double balance;
-    public final String value;
-
+    public static final String MESSAGE_MONEY_CONSTRAINTS = "Money values should be numbers and a maximum "
+            + "of 16 digits long";
+```
+###### /java/seedu/address/model/money/Money.java
+``` java
     /**
-     * Constructs a {@code Money}.
-     *
-     * @param balance A valid money balance.
+     * Returns true if the user need to pay the contact certain amount of money
+     * @return true/false
      */
-    public Money(String balance) {
-        requireNonNull(balance);
-        checkArgument(isValidMoney(balance), MESSAGE_MONEY_CONSTRAINTS);
-        this.balance = Double.parseDouble(balance);
-        this.value = balance;
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    public Double toDouble() {
-        return balance;
+    public boolean isNeedPaidMoney() {
+        return balance < 0.0;
     }
 
     /**
-     * Returns true if a given string is a valid money balance.
+     * Returns true if the user need to received certain amount of money from the contact
+     * @return true/false
      */
-    public static boolean isValidMoney(String test) {
-        return test.matches(MONEY_VALIDATION_REGEX);
+    public boolean isNeedReceivedMoney() {
+        return balance > 0.0;
     }
 
 ```
-###### \java\seedu\address\model\money\Money.java
+###### /java/seedu/address/model/money/Money.java
 ``` java
     @Override
     public boolean equals(Object other) {
@@ -414,30 +402,26 @@ public class Money {
                 && this.value.equals(((Money) other).value)); // state check
     }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     public Money getMoney() {
         return money;
     }
 ```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
 ``` java
     @XmlElement
     private String balance;
 ```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
 ``` java
         if (!Money.isValidMoney(this.balance)) {
             throw new IllegalValueException(Money.MESSAGE_MONEY_CONSTRAINTS);
         }
         final Money balance = new Money(this.balance);
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     @FXML
     private Label money;
-```
-###### \resources\view\PersonListCard.fxml
-``` fxml
-      <Label fx:id="money" styleClass="cell_small_label" text="\$money" />
 ```

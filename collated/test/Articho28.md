@@ -1,99 +1,11 @@
 # Articho28
-###### /java/seedu/address/ui/BrowserPanelTest.java
-``` java
-    @Test
-    public void display() throws Exception {
-        // default web page
-        URL expectedDefaultPageUrl = new URL(BrowserPanel.ATM_SEARCH_PAGE_URL);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
-
-        // associated web page of a person
-        postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.ADDRESS_SEARCH_PAGE_URL
-                +  BOB.getAddress().value.replaceAll(" ", "%20"));
-
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
-    }
-}
-```
-###### /java/seedu/address/logic/parser/SearchTagCommandParserTest.java
-``` java
-
-package seedu.address.logic.parser;
-
-import static org.testng.Assert.assertEquals;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.SearchTagCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tag.Tag;
-
-/**
- * Tests that the SeachTagCommandParser manipulates the input properly.
- */
-public class SearchTagCommandParserTest {
-
-    public static final String TAG_NAME_1 = "friends";
-    public static final String TAG_NAME_2 = "colleagues";
-
-    private SearchTagCommandParser searchTagCommandParser = new SearchTagCommandParser();
-
-    /**
-     * Test for single input.
-     * @throws ParseException
-     */
-    @Test
-    public void validArgsSingleTagInputIsEqual() throws ParseException {
-        Set<Tag> tagsToFind = new HashSet<>();
-        tagsToFind.add(new Tag(TAG_NAME_1));
-        SearchTagCommand searchTagCommand = searchTagCommandParser.parse( " " + PREFIX_TAG + TAG_NAME_1);
-        assertEquals(searchTagCommand.getTagsToFind(), tagsToFind);
-    }
-
-    /**
-     * Tests for multiple input.
-     * @throws ParseException
-     */
-    @Test
-    public void validArgsMultipleTagsAreEqual() throws ParseException {
-        Set<Tag> multipleTagsToFind = new HashSet<>();
-        multipleTagsToFind.add(new Tag(TAG_NAME_1));
-        multipleTagsToFind.add(new Tag(TAG_NAME_2));
-        SearchTagCommand searchTagCommand = searchTagCommandParser.parse(" "
-                + PREFIX_TAG + TAG_NAME_1
-                + " "
-                + PREFIX_TAG + TAG_NAME_2);
-        assertEquals(searchTagCommand.getTagsToFind(), multipleTagsToFind);
-
-    }
-    /**
-     * Throws exception when no tags are provided.
-     */
-    @Test
-    public void emptyTagsArgs() {
-        assertParseFailure(searchTagCommandParser, "a",
-                String.format(SearchTagCommandParser.MESSAGE_INVALID_COMMAND_NO_TAGS, SearchTagCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/address/logic/commands/SearchTagCommandTest.java
+###### /java/seedu/address/logic/commands/BalanceCommandTest.java
 ``` java
 
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -103,60 +15,33 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.tag.Tag;
-
-public class SearchTagCommandTest {
+public class BalanceCommandTest {
 
     private Model model;
-    private Model expectedModelSingleInput;
-    private Model expectedModelMultipleInput;
-    private SearchTagCommand searchTagCommandSingleTagInput;
-    private SearchTagCommand searchTagCommandMultipleTagsInput;
-    private Set<Tag> multipleTagsAsInput;
-    private Set<Tag> singleTagAsInput;
-
+    private Model expectedModel;
+    private BalanceCommand balanceCommand;
+    private double balance;
 
 
     @Before
     public void setUp() {
-
-        singleTagAsInput = new HashSet<>();
-        singleTagAsInput.add(new Tag("friends"));
-
-        multipleTagsAsInput = new HashSet<>();
-        multipleTagsAsInput.add(new Tag("friends"));
-        multipleTagsAsInput.add(new Tag("classmates"));
-        multipleTagsAsInput.add(new Tag("colleagues"));
-
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModelSingleInput = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModelSingleInput.updateFilteredPersonList(SearchTagCommand.personHasTags(singleTagAsInput));
-        expectedModelMultipleInput = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModelMultipleInput.updateFilteredPersonList(SearchTagCommand.personHasTags(multipleTagsAsInput));
-
-        searchTagCommandSingleTagInput = new SearchTagCommand(singleTagAsInput);
-        searchTagCommandMultipleTagsInput = new SearchTagCommand((multipleTagsAsInput));
-        searchTagCommandSingleTagInput.setData(model, new CommandHistory(), new UndoRedoStack());
-        searchTagCommandMultipleTagsInput.setData(model, new CommandHistory(), new UndoRedoStack());
+        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        balanceCommand = new BalanceCommand();
+        balanceCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        balance = balanceCommand.getBalanceFromTravelBanker();
     }
 
     @Test
-    public void showsAllContactWithFriendsTag() {
-        int result = expectedModelSingleInput.getFilteredPersonList().size();
-        assertCommandSuccess(searchTagCommandSingleTagInput, model, SearchTagCommand.MESSAGE_SUCCESS
-                + "\n"
-                + SearchTagCommand.formatTagsFeedback(singleTagAsInput)
-                + "\n"
-                + Command.getMessageForPersonListShownSummary(result), expectedModelSingleInput);
+    public void executes_getsOverallBalanceSuccess() {
+        assertCommandSuccess(balanceCommand, model,  BalanceCommand.MESSAGE_SUCCESS
+                + "\n" + "Your balance is "
+                + BalanceCommand.getFormatTwoDecimalPlaces().format(balance)
+                + ".", expectedModel);
     }
 
-    @Test
-    public void showsNoContactsWithMultipleTags() {
-        int result = expectedModelMultipleInput.getFilteredPersonList().size();
-        assertCommandSuccess(searchTagCommandMultipleTagsInput, model, SearchTagCommand.MESSAGE_FAILURE
-                + "\n"
-                + SearchTagCommand.formatTagsFeedback(multipleTagsAsInput), expectedModelMultipleInput);
-    }
+
+
 
 }
 ```
@@ -222,52 +107,6 @@ public class MapCommandTest extends GuiUnitTest {
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(new URL(BrowserPanel.ATM_SEARCH_PAGE_URL), browserPanelHandle.getLoadedUrl());
     }
-
-
-}
-```
-###### /java/seedu/address/logic/commands/BalanceCommandTest.java
-``` java
-
-package seedu.address.logic.commands;
-
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-public class BalanceCommandTest {
-
-    private Model model;
-    private Model expectedModel;
-    private BalanceCommand balanceCommand;
-    private double balance;
-
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        balanceCommand = new BalanceCommand();
-        balanceCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        balance = balanceCommand.getBalanceFromTravelBanker();
-    }
-
-    @Test
-    public void executes_getsOverallBalanceSuccess() {
-        assertCommandSuccess(balanceCommand, model,  BalanceCommand.MESSAGE_SUCCESS
-                + "\n" + "Your balance is "
-                + BalanceCommand.getFormatTwoDecimalPlaces().format(balance)
-                + ".", expectedModel);
-    }
-
-
 
 
 }
@@ -426,6 +265,167 @@ public class MinCommandTest {
      */
     static void assertExecutionSuccess(Person expectedSelection, Person actualSelection) {
         assertTrue(expectedSelection.equals(actualSelection));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/SearchTagCommandTest.java
+``` java
+
+package seedu.address.logic.commands;
+
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.tag.Tag;
+
+public class SearchTagCommandTest {
+
+    private Model model;
+    private Model expectedModelSingleInput;
+    private Model expectedModelMultipleInput;
+    private SearchTagCommand searchTagCommandSingleTagInput;
+    private SearchTagCommand searchTagCommandMultipleTagsInput;
+    private Set<Tag> multipleTagsAsInput;
+    private Set<Tag> singleTagAsInput;
+
+
+
+    @Before
+    public void setUp() {
+
+        singleTagAsInput = new HashSet<>();
+        singleTagAsInput.add(new Tag("friends"));
+
+        multipleTagsAsInput = new HashSet<>();
+        multipleTagsAsInput.add(new Tag("friends"));
+        multipleTagsAsInput.add(new Tag("classmates"));
+        multipleTagsAsInput.add(new Tag("colleagues"));
+
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModelSingleInput = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModelSingleInput.updateFilteredPersonList(SearchTagCommand.personHasTags(singleTagAsInput));
+        expectedModelMultipleInput = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModelMultipleInput.updateFilteredPersonList(SearchTagCommand.personHasTags(multipleTagsAsInput));
+
+        searchTagCommandSingleTagInput = new SearchTagCommand(singleTagAsInput);
+        searchTagCommandMultipleTagsInput = new SearchTagCommand((multipleTagsAsInput));
+        searchTagCommandSingleTagInput.setData(model, new CommandHistory(), new UndoRedoStack());
+        searchTagCommandMultipleTagsInput.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void showsAllContactWithFriendsTag() {
+        int result = expectedModelSingleInput.getFilteredPersonList().size();
+        assertCommandSuccess(searchTagCommandSingleTagInput, model, SearchTagCommand.MESSAGE_SUCCESS
+                + "\n"
+                + SearchTagCommand.formatTagsFeedback(singleTagAsInput)
+                + "\n"
+                + Command.getMessageForPersonListShownSummary(result), expectedModelSingleInput);
+    }
+
+    @Test
+    public void showsNoContactsWithMultipleTags() {
+        int result = expectedModelMultipleInput.getFilteredPersonList().size();
+        assertCommandSuccess(searchTagCommandMultipleTagsInput, model, SearchTagCommand.MESSAGE_FAILURE
+                + "\n"
+                + SearchTagCommand.formatTagsFeedback(multipleTagsAsInput), expectedModelMultipleInput);
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/SearchTagCommandParserTest.java
+``` java
+
+package seedu.address.logic.parser;
+
+import static org.testng.Assert.assertEquals;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.SearchTagCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.Tag;
+
+/**
+ * Tests that the SeachTagCommandParser manipulates the input properly.
+ */
+public class SearchTagCommandParserTest {
+
+    public static final String TAG_NAME_1 = "friends";
+    public static final String TAG_NAME_2 = "colleagues";
+
+    private SearchTagCommandParser searchTagCommandParser = new SearchTagCommandParser();
+
+    /**
+     * Test for single input.
+     * @throws ParseException
+     */
+    @Test
+    public void validArgsSingleTagInputIsEqual() throws ParseException {
+        Set<Tag> tagsToFind = new HashSet<>();
+        tagsToFind.add(new Tag(TAG_NAME_1));
+        SearchTagCommand searchTagCommand = searchTagCommandParser.parse( " " + PREFIX_TAG + TAG_NAME_1);
+        assertEquals(searchTagCommand.getTagsToFind(), tagsToFind);
+    }
+
+    /**
+     * Tests for multiple input.
+     * @throws ParseException
+     */
+    @Test
+    public void validArgsMultipleTagsAreEqual() throws ParseException {
+        Set<Tag> multipleTagsToFind = new HashSet<>();
+        multipleTagsToFind.add(new Tag(TAG_NAME_1));
+        multipleTagsToFind.add(new Tag(TAG_NAME_2));
+        SearchTagCommand searchTagCommand = searchTagCommandParser.parse(" "
+                + PREFIX_TAG + TAG_NAME_1
+                + " "
+                + PREFIX_TAG + TAG_NAME_2);
+        assertEquals(searchTagCommand.getTagsToFind(), multipleTagsToFind);
+
+    }
+    /**
+     * Throws exception when no tags are provided.
+     */
+    @Test
+    public void emptyTagsArgs() {
+        assertParseFailure(searchTagCommandParser, "a",
+                String.format(SearchTagCommandParser.MESSAGE_INVALID_COMMAND_NO_TAGS, SearchTagCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/ui/BrowserPanelTest.java
+``` java
+    @Test
+    public void display() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = new URL(BrowserPanel.ATM_SEARCH_PAGE_URL);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+
+        // associated web page of a person
+        postNow(selectionChangedEventStub);
+        URL expectedPersonUrl = new URL(BrowserPanel.ADDRESS_SEARCH_PAGE_URL
+                +  BOB.getAddress().value.replaceAll(" ", "%20"));
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
 }
 ```

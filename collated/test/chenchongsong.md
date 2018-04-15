@@ -1,327 +1,8 @@
 # chenchongsong
-###### /java/seedu/address/logic/parser/SortCommandParserTest.java
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
 ``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.SortCommand;
-
-public class SortCommandParserTest {
-
-
-    private SortCommandParser parser = new SortCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsSortCommand() {
-
-        assertParseSuccess(parser, PREFIX_ADDRESS + SortCommand.SORT_ORDER_ASCENDING,
-                new SortCommand(PREFIX_ADDRESS.toString(), SortCommand.SORT_ORDER_ASCENDING));
-
-        assertParseSuccess(parser, PREFIX_PHONE + SortCommand.SORT_ORDER_DESCENDING,
-                new SortCommand(PREFIX_PHONE.toString(), SortCommand.SORT_ORDER_DESCENDING));
-
-        assertParseSuccess(parser, PREFIX_EMAIL + SortCommand.SORT_ORDER_ASCENDING,
-                new SortCommand(PREFIX_EMAIL.toString(), SortCommand.SORT_ORDER_ASCENDING));
-
-        assertParseSuccess(parser, PREFIX_NAME + SortCommand.SORT_ORDER_DESCENDING,
-                new SortCommand(PREFIX_NAME.toString(), SortCommand.SORT_ORDER_DESCENDING));
-
-        assertParseSuccess(parser, PREFIX_MONEY + SortCommand.SORT_ORDER_ASCENDING,
-                new SortCommand(PREFIX_MONEY.toString(), SortCommand.SORT_ORDER_ASCENDING));
-
-        assertParseSuccess(parser, PREFIX_TAG + SortCommand.SORT_ORDER_DESCENDING,
-                new SortCommand(PREFIX_TAG.toString(), SortCommand.SORT_ORDER_DESCENDING));
-
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        // duplicate
-        assertParseFailure(parser, "n/asc e/asc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-
-        // typo
-        assertParseFailure(parser, "e/ascc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-
-        // typo
-        assertParseFailure(parser, "tt/desc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/address/logic/parser/SplitCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-
-import java.util.ArrayList;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.SplitCommand;
-
-public class SplitCommandParserTest {
-
-    private static final String VALID_INDEX = "1";
-    private static final String VALID_INDICES_1 = "1 2 3";
-    private static final String VALID_INDICES_2 = "1 1 1 2";
-    private static final String INVALID_INDEX_1 = "a";
-    private static final String INVALID_INDEX_2 = "0";
-    private static final String VALID_BILL_1 = PREFIX_MONEY + "100.00";
-    private static final String VALID_BILL_2 = PREFIX_MONEY + "0.12";
-
-    private SplitCommandParser parser = new SplitCommandParser();
-
-    @Test
-    public void parse_validArgsSingleIndex_returnsSplitCommand() {
-        ArrayList<Index> indices = new ArrayList<>();
-        indices.add(INDEX_FIRST_PERSON);
-        assertParseSuccess(parser, VALID_INDEX + " " + VALID_BILL_1,
-                new SplitCommand(indices, 100.00));
-    }
-
-    @Test
-    public void parse_validArgsMultipleIndex_returnsSplitCommand() {
-        ArrayList<Index> indices = new ArrayList<>();
-        indices.add(INDEX_FIRST_PERSON);
-        indices.add(INDEX_SECOND_PERSON);
-        indices.add(INDEX_THIRD_PERSON);
-        assertParseSuccess(parser, VALID_INDICES_1 + " " + VALID_BILL_2,
-                new SplitCommand(indices, 0.12));
-
-        // In this case, the first person would take 3/4 of that bill
-        // and the second person would take 1/4 of that bill
-        indices = new ArrayList<>();
-        indices.add(INDEX_FIRST_PERSON);
-        indices.add(INDEX_FIRST_PERSON);
-        indices.add(INDEX_FIRST_PERSON);
-        indices.add(INDEX_SECOND_PERSON);
-        assertParseSuccess(parser, VALID_INDICES_2 + " " + VALID_BILL_2,
-                new SplitCommand(indices, 0.12));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, INVALID_INDEX_1 + " " + VALID_BILL_1,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SplitCommand.MESSAGE_USAGE));
-
-        assertParseFailure(parser, INVALID_INDEX_2 + " " + VALID_BILL_2,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SplitCommand.MESSAGE_USAGE));
-    }
-
-}
-```
-###### /java/seedu/address/logic/parser/ItemShowCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.ItemShowCommand;
-
-/**
- * Test scope: similar to {@code DeleteCommandParserTest}.
- * @see DeleteCommandParserTest
- */
-public class ItemShowCommandParserTest {
-
-    private ItemShowCommandParser parser = new ItemShowCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsItemShowCommand() {
-        assertParseSuccess(parser, "1", new ItemShowCommand(INDEX_FIRST_PERSON));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemShowCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/address/logic/parser/ItemDeleteCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ITEM;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.ItemDeleteCommand;
-
-public class ItemDeleteCommandParserTest {
-
-    private ItemDeleteCommandParser parser = new ItemDeleteCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsItemDeleteCommand() {
-        assertParseSuccess(parser, "1 1",
-                new ItemDeleteCommand(INDEX_FIRST_PERSON, INDEX_FIRST_ITEM));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemDeleteCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1 1 1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemDeleteCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "0 1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemDeleteCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1 0",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemDeleteCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/address/logic/parser/ItemAddCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.ItemAddCommand;
-
-public class ItemAddCommandParserTest {
-
-    public static final String VALID_ITEM_NAME = "Taxi Fare";
-    public static final String VALID_ITEM_VALUE = "10.23";
-    public static final String INVALID_ITEM_NAME = "Taxi*&(Fare)";
-    public static final String INVALID_ITEM_VALUE = "10k";
-
-
-    private ItemAddCommandParser parser = new ItemAddCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsItemAddCommand() {
-        assertParseSuccess(parser, "1 " + PREFIX_NAME + VALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
-                new ItemAddCommand(INDEX_FIRST_PERSON, VALID_ITEM_NAME, VALID_ITEM_VALUE));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-
-        // 0 as targetIndex
-        assertParseFailure(parser, "0 " + PREFIX_NAME + VALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemAddCommand.MESSAGE_USAGE));
-
-        // no prefix "n/"
-        assertParseFailure(parser, "1 " + VALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemAddCommand.MESSAGE_USAGE));
-
-        // no prefix "m/"
-        assertParseFailure(parser, "1 " + PREFIX_NAME + VALID_ITEM_NAME + " " + VALID_ITEM_VALUE,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemAddCommand.MESSAGE_USAGE));
-
-        // invalid item name
-        assertParseFailure(parser, "1 " + PREFIX_NAME + INVALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
-                ItemAddCommand.MESSAGE_INVALID_ARGUMENT);
-
-        // invalid item value
-        assertParseFailure(parser, "1 " + PREFIX_NAME + VALID_ITEM_NAME + " " + PREFIX_MONEY + INVALID_ITEM_VALUE,
-                ItemAddCommand.MESSAGE_INVALID_ARGUMENT);
-    }
-}
-```
-###### /java/seedu/address/logic/parser/RemoveTagCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.RemoveTagCommand;
-import seedu.address.model.tag.Tag;
-
-public class RemoveTagCommandParserTest {
-
-    public static final String TAG_NAME_1 = "friends";
-    public static final String TAG_NAME_2 = "owesMoney";
-
-    private RemoveTagCommandParser parser = new RemoveTagCommandParser();
-
-    @Test
-    public void parse_validArgsSingleTag_returnsRemoveTagCommand() {
-        Set<Tag> tagsToRemoved = new HashSet<>();
-        tagsToRemoved.add(new Tag(TAG_NAME_1));
-
-        EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
-        editPersonDescriptor.setTags(tagsToRemoved);
-
-        assertParseSuccess(parser, "1 " + PREFIX_TAG + TAG_NAME_1,
-                new RemoveTagCommand(INDEX_FIRST_PERSON, editPersonDescriptor));
-    }
-
-    @Test
-    public void parse_validArgsMultipleTags_returnsRemoveTagCommand() {
-        Set<Tag> tagsToRemoved = new HashSet<>();
-        tagsToRemoved.add(new Tag(TAG_NAME_1));
-        tagsToRemoved.add(new Tag(TAG_NAME_2));
-
-        EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
-        editPersonDescriptor.setTags(tagsToRemoved);
-
-        assertParseSuccess(parser, "1 " + PREFIX_TAG + TAG_NAME_1 + " " + PREFIX_TAG + TAG_NAME_2,
-                new RemoveTagCommand(INDEX_FIRST_PERSON, editPersonDescriptor));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        // no tags
-        assertParseFailure(parser, "1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
-
-        // no index
-        assertParseFailure(parser, "t/friends",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
-
-        // 0 index
-        assertParseFailure(parser, "0 t/friends",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
-    }
-}
+    public static final String VALID_BILL = " " + PREFIX_MONEY + "100.00";
+    public static final String INVALID_BILL = " " + PREFIX_MONEY + "100k";
 ```
 ###### /java/seedu/address/logic/commands/RemoveTagCommandTest.java
 ``` java
@@ -514,11 +195,6 @@ public class RemoveTagCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/CommandTestUtil.java
-``` java
-    public static final String VALID_BILL = " " + PREFIX_MONEY + "100.00";
-    public static final String INVALID_BILL = " " + PREFIX_MONEY + "100k";
-```
 ###### /java/seedu/address/logic/commands/SplitCommandTest.java
 ``` java
 package seedu.address.logic.commands;
@@ -564,6 +240,330 @@ public class SplitCommandTest {
         assertEquals(expectedBalance2,
                 model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()).getMoney().toDouble(), 0.001);
     }
+}
+```
+###### /java/seedu/address/logic/parser/ItemAddCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.ItemAddCommand;
+
+public class ItemAddCommandParserTest {
+
+    public static final String VALID_ITEM_NAME = "Taxi Fare";
+    public static final String VALID_ITEM_VALUE = "10.23";
+    public static final String INVALID_ITEM_NAME = "Taxi*&(Fare)";
+    public static final String INVALID_ITEM_VALUE = "10k";
+
+
+    private ItemAddCommandParser parser = new ItemAddCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsItemAddCommand() {
+        assertParseSuccess(parser, "1 " + PREFIX_NAME + VALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
+                new ItemAddCommand(INDEX_FIRST_PERSON, VALID_ITEM_NAME, VALID_ITEM_VALUE));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+
+        // 0 as targetIndex
+        assertParseFailure(parser, "0 " + PREFIX_NAME + VALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemAddCommand.MESSAGE_USAGE));
+
+        // no prefix "n/"
+        assertParseFailure(parser, "1 " + VALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemAddCommand.MESSAGE_USAGE));
+
+        // no prefix "m/"
+        assertParseFailure(parser, "1 " + PREFIX_NAME + VALID_ITEM_NAME + " " + VALID_ITEM_VALUE,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemAddCommand.MESSAGE_USAGE));
+
+        // invalid item name
+        assertParseFailure(parser, "1 " + PREFIX_NAME + INVALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
+                ItemAddCommand.MESSAGE_INVALID_ARGUMENT);
+
+        // invalid item value
+        assertParseFailure(parser, "1 " + PREFIX_NAME + VALID_ITEM_NAME + " " + PREFIX_MONEY + INVALID_ITEM_VALUE,
+                ItemAddCommand.MESSAGE_INVALID_ARGUMENT);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ItemDeleteCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ITEM;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.ItemDeleteCommand;
+
+public class ItemDeleteCommandParserTest {
+
+    private ItemDeleteCommandParser parser = new ItemDeleteCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsItemDeleteCommand() {
+        assertParseSuccess(parser, "1 1",
+                new ItemDeleteCommand(INDEX_FIRST_PERSON, INDEX_FIRST_ITEM));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemDeleteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1 1 1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemDeleteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "0 1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemDeleteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1 0",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemDeleteCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ItemShowCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.ItemShowCommand;
+
+/**
+ * Test scope: similar to {@code DeleteCommandParserTest}.
+ * @see DeleteCommandParserTest
+ */
+public class ItemShowCommandParserTest {
+
+    private ItemShowCommandParser parser = new ItemShowCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsItemShowCommand() {
+        assertParseSuccess(parser, "1", new ItemShowCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemShowCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/logic/parser/RemoveTagCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
+import seedu.address.model.tag.Tag;
+
+public class RemoveTagCommandParserTest {
+
+    public static final String TAG_NAME_1 = "friends";
+    public static final String TAG_NAME_2 = "owesMoney";
+
+    private RemoveTagCommandParser parser = new RemoveTagCommandParser();
+
+    @Test
+    public void parse_validArgsSingleTag_returnsRemoveTagCommand() {
+        Set<Tag> tagsToRemoved = new HashSet<>();
+        tagsToRemoved.add(new Tag(TAG_NAME_1));
+
+        EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+        editPersonDescriptor.setTags(tagsToRemoved);
+
+        assertParseSuccess(parser, "1 " + PREFIX_TAG + TAG_NAME_1,
+                new RemoveTagCommand(INDEX_FIRST_PERSON, editPersonDescriptor));
+    }
+
+    @Test
+    public void parse_validArgsMultipleTags_returnsRemoveTagCommand() {
+        Set<Tag> tagsToRemoved = new HashSet<>();
+        tagsToRemoved.add(new Tag(TAG_NAME_1));
+        tagsToRemoved.add(new Tag(TAG_NAME_2));
+
+        EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+        editPersonDescriptor.setTags(tagsToRemoved);
+
+        assertParseSuccess(parser, "1 " + PREFIX_TAG + TAG_NAME_1 + " " + PREFIX_TAG + TAG_NAME_2,
+                new RemoveTagCommand(INDEX_FIRST_PERSON, editPersonDescriptor));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        // no tags
+        assertParseFailure(parser, "1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+
+        // no index
+        assertParseFailure(parser, "t/friends",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+
+        // 0 index
+        assertParseFailure(parser, "0 t/friends",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/logic/parser/SortCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.SortCommand;
+
+public class SortCommandParserTest {
+
+
+    private SortCommandParser parser = new SortCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsSortCommand() {
+
+        assertParseSuccess(parser, PREFIX_ADDRESS + SortCommand.SORT_ORDER_ASCENDING,
+                new SortCommand(PREFIX_ADDRESS.toString(), SortCommand.SORT_ORDER_ASCENDING));
+
+        assertParseSuccess(parser, PREFIX_PHONE + SortCommand.SORT_ORDER_DESCENDING,
+                new SortCommand(PREFIX_PHONE.toString(), SortCommand.SORT_ORDER_DESCENDING));
+
+        assertParseSuccess(parser, PREFIX_EMAIL + SortCommand.SORT_ORDER_ASCENDING,
+                new SortCommand(PREFIX_EMAIL.toString(), SortCommand.SORT_ORDER_ASCENDING));
+
+        assertParseSuccess(parser, PREFIX_NAME + SortCommand.SORT_ORDER_DESCENDING,
+                new SortCommand(PREFIX_NAME.toString(), SortCommand.SORT_ORDER_DESCENDING));
+
+        assertParseSuccess(parser, PREFIX_MONEY + SortCommand.SORT_ORDER_ASCENDING,
+                new SortCommand(PREFIX_MONEY.toString(), SortCommand.SORT_ORDER_ASCENDING));
+
+        assertParseSuccess(parser, PREFIX_TAG + SortCommand.SORT_ORDER_DESCENDING,
+                new SortCommand(PREFIX_TAG.toString(), SortCommand.SORT_ORDER_DESCENDING));
+
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        // duplicate
+        assertParseFailure(parser, "n/asc e/asc",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+
+        // typo
+        assertParseFailure(parser, "e/ascc",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+
+        // typo
+        assertParseFailure(parser, "tt/desc",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/logic/parser/SplitCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+
+import java.util.ArrayList;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.SplitCommand;
+
+public class SplitCommandParserTest {
+
+    private static final String VALID_INDEX = "1";
+    private static final String VALID_INDICES_1 = "1 2 3";
+    private static final String VALID_INDICES_2 = "1 1 1 2";
+    private static final String INVALID_INDEX_1 = "a";
+    private static final String INVALID_INDEX_2 = "0";
+    private static final String VALID_BILL_1 = PREFIX_MONEY + "100.00";
+    private static final String VALID_BILL_2 = PREFIX_MONEY + "0.12";
+
+    private SplitCommandParser parser = new SplitCommandParser();
+
+    @Test
+    public void parse_validArgsSingleIndex_returnsSplitCommand() {
+        ArrayList<Index> indices = new ArrayList<>();
+        indices.add(INDEX_FIRST_PERSON);
+        assertParseSuccess(parser, VALID_INDEX + " " + VALID_BILL_1,
+                new SplitCommand(indices, 100.00));
+    }
+
+    @Test
+    public void parse_validArgsMultipleIndex_returnsSplitCommand() {
+        ArrayList<Index> indices = new ArrayList<>();
+        indices.add(INDEX_FIRST_PERSON);
+        indices.add(INDEX_SECOND_PERSON);
+        indices.add(INDEX_THIRD_PERSON);
+        assertParseSuccess(parser, VALID_INDICES_1 + " " + VALID_BILL_2,
+                new SplitCommand(indices, 0.12));
+
+        // In this case, the first person would take 3/4 of that bill
+        // and the second person would take 1/4 of that bill
+        indices = new ArrayList<>();
+        indices.add(INDEX_FIRST_PERSON);
+        indices.add(INDEX_FIRST_PERSON);
+        indices.add(INDEX_FIRST_PERSON);
+        indices.add(INDEX_SECOND_PERSON);
+        assertParseSuccess(parser, VALID_INDICES_2 + " " + VALID_BILL_2,
+                new SplitCommand(indices, 0.12));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, INVALID_INDEX_1 + " " + VALID_BILL_1,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SplitCommand.MESSAGE_USAGE));
+
+        assertParseFailure(parser, INVALID_INDEX_2 + " " + VALID_BILL_2,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SplitCommand.MESSAGE_USAGE));
+    }
+
 }
 ```
 ###### /java/seedu/address/model/item/ItemTest.java
@@ -649,12 +649,6 @@ public class ItemTest {
         return this;
     }
 ```
-###### /java/seedu/address/testutil/TypicalIndexes.java
-``` java
-    public static final Index INDEX_FIRST_ITEM = Index.fromOneBased(1);
-    public static final Index INDEX_SECOND_ITEM = Index.fromOneBased(2);
-    public static final Index INDEX_THIRD_ITEM = Index.fromOneBased(3);
-```
 ###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
@@ -664,4 +658,10 @@ public class ItemTest {
         this.tags = SampleDataUtil.getTagSet();
         return this;
     }
+```
+###### /java/seedu/address/testutil/TypicalIndexes.java
+``` java
+    public static final Index INDEX_FIRST_ITEM = Index.fromOneBased(1);
+    public static final Index INDEX_SECOND_ITEM = Index.fromOneBased(2);
+    public static final Index INDEX_THIRD_ITEM = Index.fromOneBased(3);
 ```

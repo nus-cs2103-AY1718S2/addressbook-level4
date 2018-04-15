@@ -4,6 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+//@@author Pearlissa
 /**
  * Represents a User registered in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.

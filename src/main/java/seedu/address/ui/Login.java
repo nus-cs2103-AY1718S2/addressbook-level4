@@ -12,7 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.LoginManager;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
-
+//@@author Pearlissa
 /**
  * The UI component that is responsible for receiving user command inputs.
  */

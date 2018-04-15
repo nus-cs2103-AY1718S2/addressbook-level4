@@ -862,7 +862,7 @@ If `ListCommand` is successful:
 
 ==== Design Considerations
 
-This section describes various Design Considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
+This section describes various design considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
 // tag::listcommandaspect[]
 [discrete]
@@ -896,7 +896,7 @@ This section describes the implementation and design considerations for the stor
 The management of Desk Board storage in CLIndar includes automatic saving and loading of data, as well as export and import operations.
 The following describes how each feature is implemented.
 
-===== Storing `Task` and `Event` objects
+===== Storing tasks and events
 
 In CLIndar, Desk Board data are stored using an xml file. For this purpose, `DeskBoard`, which is composed of `Task` and `Event` objects,
 is converted into `XmlSerializableDeskBoard` containing `XmlAdaptedTask` and `XmlAdaptedEvent` objects.

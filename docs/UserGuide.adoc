@@ -399,5 +399,7 @@ There is no need to save manually.
 |`redo`         |`r`        |`redo`                 |[[empty]]          |Reverses the most recent `undo` command
 |`remove event` |`rm event` |`remove event INDEX`   |`remove event 1`   |Removes event at index 1
 |`remove task`  |`rm task`  |`remove task INDEX`    |`remove task 1`    |Removes task at index 1
+|`select event` |[[empty]]  |`select event INDEX`   |`select event 1`  |Select event at index 1
+|`select task`  |[[empty]]  |`select task INDEX`    |`select task 1`  |Select task at index 1
 |`task`         |[[empty]]  |`task n/NAME d/DUE_DATE_TIME [r/REMARK] [t/TAGS]`|`task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`|Adds a task to Desk Board
 |`undo`         |`u`        |`undo`                 |[[empty]]          |Reverses the most recent undoable command

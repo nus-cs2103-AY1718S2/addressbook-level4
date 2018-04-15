@@ -118,6 +118,7 @@ Below are various contributions I have made to ReciRecipé, some of which were c
 ** Added new fields (`CookingTime`, `PreparationTime`, `Calories`, `Servings`) and fix old fields formatting (PR https://github.com/CS2103JAN2018-F09-B2/main/pull/50[#50]).
 
 * Project management & quality assurance:
+** Managed the issues and milestones.
 ** Added continuous integration tools using https://ci.appveyor.com/project/kokonguyen191/main[AppVeyor],
 https://coveralls.io/github/CS2103JAN2018-F09-B2/main?branch=master[Coveralls] and
 https://app.codacy.com/app/kokonguyen191/main/dashboard[Codacy] (commits link:https://github.com/CS2103JAN2018-F09-B2/main/commit/4bbee79bf29fed6255f28869c1fd4443afba5844[4bbee79] & link:https://github.com/CS2103JAN2018-F09-B2/main/commit/e1f945872d623f578a37246941f529d6b4ba64ea[e1f9458]).

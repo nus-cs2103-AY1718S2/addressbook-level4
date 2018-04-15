@@ -54,29 +54,4 @@
     -fx-text-fill: black;
     -fx-background-color: #FFEB3B;
 }
-
-.modteal {
-    -fx-text-fill: black;
-    -fx-background-color: #009688;
-}
-
-.modyellow {
-    -fx-text-fill: black;
-    -fx-background-color: #FFEB3B;
-}
-
-.modyellow {
-    -fx-text-fill: black;
-    -fx-background-color: #FFEB3B;
-}
-
-.modplum {
-    -fx-text-fill: black;
-    -fx-background-color: #DDA0DD;
-}
-
-.modsandybrown {
-    -fx-text-fill: black;
-    -fx-background-color: #F4A460;
-}
 ```

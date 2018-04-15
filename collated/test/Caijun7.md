@@ -1,4 +1,150 @@
 # Caijun7
+###### \java\seedu\address\logic\commands\CommandTestUtil.java
+``` java
+    public static final String VALID_IMPORT_FILEPATH = "src/test/data/ImportCommandTest/aliceAddressBook.xml";
+    public static final String ENCRYPTED_IMPORT_FILEPATH =
+            "src/test/data/ImportCommandTest/encryptedAliceBensonAddressBook.xml";
+    public static final String TEST_PASSWORD = "test";
+    public static final String WRONG_PASSWORD = "wrong";
+    public static final String MIXED_CASE_IMPORT_COMMAND_WORD = "ImPoRt";
+    public static final String INVALID_IMPORT_FILEPATH = "src/";
+    public static final String INVALID_FILE_FORMAT = "src/test/data/ImportCommandTest/invalidFileFormatAddressBook.xml";
+
+    public static final String VALID_EXPORT_FILEPATH = "src/test/data/sandbox/temp.xml";
+    public static final String MIXED_CASE_EXPORT_COMMAND_WORD = "ExPoRt";
+    public static final String INVALID_EXPORT_FILEPATH = "src/";
+
+    public static final String VALID_UPLOAD_FILEPATH = "src/test/data/sandbox/temp.xml";
+    public static final String MIXED_CASE_UPLOAD_COMMAND_WORD = "UpLoAd";
+    public static final String INVALID_UPLOAD_FILEPATH = "src/";
+```
+###### \java\seedu\address\logic\commands\ExportCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code ExportCommand}.
+ */
+public class ExportCommandTest {
+
+    private static final String TEST_DATA_FILE = FileUtil.getPath("src/test/data/sandbox/temp.xml");
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/ExportCommandTest/");
+    private static final String TEST_DATA_FILE_ALICE = TEST_DATA_FOLDER + "aliceAddressBook.xml";
+    private static final String TEST_DATA_FILE_ALICE_BENSON = TEST_DATA_FOLDER + "aliceBensonAddressBook.xml";
+    private static final String TEST_PASSWORD = "test";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private final AddressBook addressBookWithAliceAndBenson = new AddressBookBuilder().withPerson(ALICE)
+            .withPerson(BENSON).build();
+
+    private Model model = new ModelManager(new AddressBook(), new UserPrefs());
+
+    private final ExportCommand standardCommand = prepareCommand(TEST_DATA_FILE_ALICE_BENSON, model);
+
+    @Test
+    public void execute_emptyAddressBookExportIntoValidFilepathUnencrypted_success() throws Exception {
+        String filepath = TEST_DATA_FILE;
+        ExportCommand exportCommand = prepareCommand(filepath, model, null);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.exportAddressBook(filepath, null);
+        assertCommandSuccess(exportCommand, model, ExportCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_nonEmptyAddressBookExportIntoValidFilepathUnencrypted_success() throws Exception {
+        String filepath = TEST_DATA_FILE;
+        ModelManager model = new ModelManager(addressBookWithAliceAndBenson, new UserPrefs());
+        ExportCommand exportCommand = prepareCommand(filepath, model, null);
+
+        ModelManager expectedModel = new ModelManager(addressBookWithAliceAndBenson, new UserPrefs());
+        expectedModel.exportAddressBook(filepath, null);
+        assertCommandSuccess(exportCommand, model, ExportCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_emptyAddressBookExportIntoValidFilepathEncrypted_success() throws Exception {
+        String filepath = TEST_DATA_FILE;
+        ExportCommand exportCommand = prepareCommand(filepath, model, TEST_PASSWORD);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.exportAddressBook(filepath, new Password(TEST_PASSWORD));
+        assertCommandSuccess(exportCommand, model, ExportCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_nonEmptyAddressBookExportIntoValidFilepathEncrypted_success() throws Exception {
+        String filepath = TEST_DATA_FILE;
+        ModelManager model = new ModelManager(addressBookWithAliceAndBenson, new UserPrefs());
+        ExportCommand exportCommand = prepareCommand(filepath, model, TEST_PASSWORD);
+
+        ModelManager expectedModel = new ModelManager(addressBookWithAliceAndBenson, new UserPrefs());
+        expectedModel.exportAddressBook(filepath, new Password(TEST_PASSWORD));
+        assertCommandSuccess(exportCommand, model, ExportCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_emptyAddressBookExportIntoInvalidFilepath_throwsCommandException() throws Exception {
+        String invalidFilepath = "";
+        ExportCommand exportCommand = prepareCommand(invalidFilepath, model, null);
+
+        assertCommandFailure(exportCommand, model, ExportCommand.MESSAGE_FILE_UNABLE_TO_SAVE);
+    }
+
+    @Test
+    public void equals_sameValues_true() {
+        ExportCommand commandWithSameValues = prepareCommand(TEST_DATA_FILE_ALICE_BENSON, model);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+    }
+
+    @Test
+    public void equals_sameObject_true() {
+        assertTrue(standardCommand.equals(standardCommand));
+    }
+
+    @Test
+    public void equals_sameType_true() {
+        assertTrue(standardCommand.equals(new ExportCommand(TEST_DATA_FILE_ALICE_BENSON, TEST_PASSWORD)));
+    }
+
+    @Test
+    public void equals_nullInstance_false() {
+        assertFalse(standardCommand.equals(null));
+    }
+
+    @Test
+    public void equals_differentTypes_false() {
+        assertFalse(standardCommand.equals(new ClearCommand()));
+    }
+
+    @Test
+    public void equals_differentAddressBook_false() {
+        assertFalse(standardCommand.equals(prepareCommand(TEST_DATA_FILE_ALICE, model)));
+    }
+
+    /**
+     * Returns a {@code ExportCommand} with the parameter {@code filepath} with password as TEST_PASSWORD.
+     */
+    private ExportCommand prepareCommand(String filepath, Model model) {
+        return prepareCommand(filepath, model, TEST_PASSWORD);
+    }
+
+    /**
+     * Returns a {@code ExportCommand} with the parameter {@code filepath} and {@code password}.
+     */
+    private ExportCommand prepareCommand(String filepath, Model model, String password) {
+        ExportCommand exportCommand;
+        if (password == null) {
+            exportCommand = new ExportCommand(filepath);
+        } else {
+            exportCommand = new ExportCommand(filepath, password);
+        }
+        exportCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return exportCommand;
+    }
+
+}
+```
 ###### \java\seedu\address\logic\commands\ImportCommandTest.java
 ``` java
 /**
@@ -185,6 +331,182 @@ public class ImportCommandTest {
 
 }
 ```
+###### \java\seedu\address\logic\commands\UploadCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code UploadCommand}.
+ */
+public class UploadCommandTest {
+
+    private static final String TEST_DATA_FILE = FileUtil.getPath("src/test/data/sandbox/temp.xml");
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/UploadCommandTest/");
+    private static final String TEST_DATA_FILE_ALICE = TEST_DATA_FOLDER + "aliceAddressBook.xml";
+    private static final String TEST_DATA_FILE_ALICE_BENSON = TEST_DATA_FOLDER + "aliceBensonAddressBook.xml";
+    private static final String TEST_PASSWORD = "test";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private final AddressBook addressBookWithAliceAndBenson = new AddressBookBuilder().withPerson(ALICE)
+            .withPerson(BENSON).build();
+
+    private Model model = new ModelManager(new AddressBook(), new UserPrefs());
+
+    private final UploadCommand standardCommand = prepareCommand(TEST_DATA_FILE_ALICE_BENSON, model);
+
+    @BeforeClass
+    public static void setTestEnvironment() {
+        GoogleDriveStorage.setTestEnvironment();
+    }
+
+    @Test
+    public void execute_emptyAddressBookUploadIntoValidFilepathUnencrypted_success() throws Exception {
+        String filepath = TEST_DATA_FILE;
+        UploadCommand uploadCommand = prepareCommand(filepath, model, null);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.uploadAddressBook(filepath, null);
+        assertCommandSuccess(uploadCommand, model, UploadCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_nonEmptyAddressBookUploadIntoValidFilepathUnencrypted_success() throws Exception {
+        String filepath = TEST_DATA_FILE;
+        ModelManager model = new ModelManager(addressBookWithAliceAndBenson, new UserPrefs());
+        UploadCommand uploadCommand = prepareCommand(filepath, model, null);
+
+        ModelManager expectedModel = new ModelManager(addressBookWithAliceAndBenson, new UserPrefs());
+        expectedModel.uploadAddressBook(filepath, null);
+        assertCommandSuccess(uploadCommand, model, UploadCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_emptyAddressBookUploadIntoValidFilepathEncrypted_success() throws Exception {
+        String filepath = TEST_DATA_FILE;
+        UploadCommand uploadCommand = prepareCommand(filepath, model, TEST_PASSWORD);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.uploadAddressBook(filepath, new Password(TEST_PASSWORD));
+        assertCommandSuccess(uploadCommand, model, UploadCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_nonEmptyAddressBookUploadIntoValidFilepathEncrypted_success() throws Exception {
+        String filepath = TEST_DATA_FILE;
+        ModelManager model = new ModelManager(addressBookWithAliceAndBenson, new UserPrefs());
+        UploadCommand uploadCommand = prepareCommand(filepath, model, TEST_PASSWORD);
+
+        ModelManager expectedModel = new ModelManager(addressBookWithAliceAndBenson, new UserPrefs());
+        expectedModel.uploadAddressBook(filepath, new Password(TEST_PASSWORD));
+        assertCommandSuccess(uploadCommand, model, UploadCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_addressBookUploadIntoInvalidFilepath_throwsCommandException() throws Exception {
+        String invalidFilepath = "";
+        UploadCommand uploadCommand = prepareCommand(invalidFilepath, model, null);
+
+        assertCommandFailure(uploadCommand, model, UploadCommand.MESSAGE_FILE_UNABLE_TO_SAVE);
+    }
+
+    @Test
+    public void execute_addressBookUploadNoUserResponse_throwsCommandException() throws Exception {
+        String filepath = TEST_DATA_FILE;
+        ModelManager model = new ModelManager(addressBookWithAliceAndBenson, new UserPrefs());
+        UploadCommand uploadCommand = prepareCommand(filepath, model, TEST_PASSWORD);
+
+        GoogleDriveStorage.resetTestEnvironment();
+        assertCommandFailure(uploadCommand, model, UploadCommand.MESSAGE_REQUEST_TIMEOUT);
+        GoogleDriveStorage.setTestEnvironment();
+    }
+
+    @Test
+    public void equals_sameValues_true() {
+        UploadCommand commandWithSameValues = prepareCommand(TEST_DATA_FILE_ALICE_BENSON, model);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+    }
+
+    @Test
+    public void equals_sameObject_true() {
+        assertTrue(standardCommand.equals(standardCommand));
+    }
+
+    @Test
+    public void equals_sameType_true() {
+        assertTrue(standardCommand.equals(new UploadCommand(TEST_DATA_FILE_ALICE_BENSON, TEST_PASSWORD)));
+    }
+
+    @Test
+    public void equals_nullInstance_false() {
+        assertFalse(standardCommand.equals(null));
+    }
+
+    @Test
+    public void equals_differentTypes_false() {
+        assertFalse(standardCommand.equals(new ClearCommand()));
+    }
+
+    @Test
+    public void equals_differentAddressBook_false() {
+        assertFalse(standardCommand.equals(prepareCommand(TEST_DATA_FILE_ALICE, model)));
+    }
+
+    /**
+     * Returns a {@code UploadCommand} with the parameter {@code filepath} with password as TEST_PASSWORD.
+     */
+    private UploadCommand prepareCommand(String filepath, Model model) {
+        return prepareCommand(filepath, model, TEST_PASSWORD);
+    }
+
+    /**
+     * Returns a {@code UploadCommand} with the parameter {@code filepath} and {@code password}.
+     */
+    private UploadCommand prepareCommand(String filepath, Model model, String password) {
+        UploadCommand uploadCommand;
+        if (password == null) {
+            uploadCommand = new UploadCommand(filepath);
+        } else {
+            uploadCommand = new UploadCommand(filepath, password);
+        }
+        uploadCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return uploadCommand;
+    }
+
+    @AfterClass
+    public static void resetTestEnvironment() {
+        GoogleDriveStorage.resetTestEnvironment();
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ExportCommandParserTest.java
+``` java
+public class ExportCommandParserTest {
+    private static final String TEST_PASSWORD = "test";
+
+    private ExportCommandParser parser = new ExportCommandParser();
+
+    @Test
+    public void parse_validOneArgs_returnsExportCommand() {
+        assertParseSuccess(parser, "validString", new ExportCommand("validString", TEST_PASSWORD));
+    }
+
+    @Test
+    public void parse_validTwoArgs_returnsExportCommand() {
+        assertParseSuccess(parser, "validString test", new ExportCommand("validString", TEST_PASSWORD));
+    }
+
+    @Test
+    public void parse_invalidThreeArg_throwsParseException() {
+        assertParseFailure(parser, "invalidString is invalid", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ExportCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidZeroArgs_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ImportCommandParserTest.java
 ``` java
 public class ImportCommandParserTest {
@@ -211,6 +533,35 @@ public class ImportCommandParserTest {
     @Test
     public void parse_invalidZeroArgs_throwsParseException() {
         assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\UploadCommandParserTest.java
+``` java
+public class UploadCommandParserTest {
+    private static final String TEST_PASSWORD = "test";
+
+    private UploadCommandParser parser = new UploadCommandParser();
+
+    @Test
+    public void parse_validOneArgs_returnsUploadCommand() {
+        assertParseSuccess(parser, "validString", new UploadCommand("validString", TEST_PASSWORD));
+    }
+
+    @Test
+    public void parse_validTwoArgs_returnsUploadCommand() {
+        assertParseSuccess(parser, "validString test", new UploadCommand("validString", TEST_PASSWORD));
+    }
+
+    @Test
+    public void parse_invalidThreeArg_throwsParseException() {
+        assertParseFailure(parser, "invalidString is invalid", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                UploadCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidZeroArgs_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
     }
 }
 ```
@@ -632,6 +983,59 @@ public class WeekTest {
 
 }
 ```
+###### \java\seedu\address\model\UniquePersonListTest.java
+``` java
+    @Test
+    public void importPerson_validPerson_success() throws Exception {
+        UniquePersonList uniquePersonList = new UniquePersonList();
+        Person validPerson = new PersonBuilder().build();
+        uniquePersonList.importPerson(validPerson);
+        assertEquals(Arrays.asList(validPerson), uniquePersonList.asObservableList());
+    }
+```
+###### \java\seedu\address\model\UniqueTagListTest.java
+``` java
+    @Test
+    public void importTag_validTag_success() throws Exception {
+        UniqueTagList uniqueTagList = new UniqueTagList();
+        uniqueTagList.importTag(VALID_TAG);
+        assertEquals(Arrays.asList(VALID_TAG), uniqueTagList.asObservableList());
+    }
+```
+###### \java\seedu\address\storage\GoogleDriveStorageTest.java
+``` java
+public class GoogleDriveStorageTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @BeforeClass
+    public static void setTestEnvironment() {
+        GoogleDriveStorage.setTestEnvironment();
+    }
+
+    @Test
+    public void constructor_noUserResponse_throwsRequestTimeoutException() throws Exception {
+        thrown.expect(RequestTimeoutException.class);
+        GoogleDriveStorage.resetTestEnvironment();
+        GoogleDriveStorage googleDriveStorage = new GoogleDriveStorage("test");
+        GoogleDriveStorage.setTestEnvironment();
+    }
+
+    @Test
+    public void uploadFile_invalidFilePath_throwsIoException() throws Exception {
+        thrown.expect(IOException.class);
+        String invalidFilePath = "nonExistentAddressBook.xml";
+        GoogleDriveStorage googleDriveStorage = new GoogleDriveStorage(invalidFilePath);
+        googleDriveStorage.uploadFile();
+    }
+
+    @AfterClass
+    public static void resetTestEnvironment() {
+        GoogleDriveStorage.resetTestEnvironment();
+    }
+
+}
+```
 ###### \java\seedu\address\storage\ReadOnlyJsonVenueInformationTest.java
 ``` java
 public class ReadOnlyJsonVenueInformationTest {
@@ -756,7 +1160,7 @@ public class ReadOnlyJsonVenueInformationTest {
 ###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
 ``` java
     @Test
-    public void importAddressBook_invalidFileFormat_throwDataConversionException() throws Exception {
+    public void importAddressBook_invalidFileFormat_throwsDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
         String filePath = TEST_DATA_FOLDER + "invalidFileFormatAddressBook.xml";
         AddressBook original = new AddressBook();
@@ -765,7 +1169,7 @@ public class ReadOnlyJsonVenueInformationTest {
     }
 
     @Test
-    public void importAddressBook_nonExistentFile_fileNotFoundException() throws Exception {
+    public void importAddressBook_nonExistentFile_throwsFileNotFoundException() throws Exception {
         thrown.expect(FileNotFoundException.class);
         String filePath = TEST_DATA_FOLDER + "nonExistentAddressBook.xml";
         AddressBook original = new AddressBook();
@@ -774,17 +1178,173 @@ public class ReadOnlyJsonVenueInformationTest {
     }
 
     @Test
-    public void importAddressBook_validFile_success() throws Exception {
-        String filePath = TEST_DATA_FOLDER + "validAddressBook.xml";
+    public void importAddressBook_encryptedFileWrongPassword_throwsWrongPasswordException() throws Exception {
+        thrown.expect(WrongPasswordException.class);
+        String encryptedFile = TEST_DATA_FILE_ALICE_BENSON_ENCRYPTED;
+        AddressBook original = new AddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(encryptedFile);
+        xmlAddressBookStorage.importAddressBook(encryptedFile, original, SecurityUtil.hashPassword("Wrong password"));
+    }
+
+    @Test
+    public void importAddressBook_encryptedValidFile_success() throws Exception {
+        String encryptedFile = TEST_DATA_FILE_ALICE_BENSON;
+        AddressBook original = new AddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(encryptedFile);
+        // Import file into existing address book
+        xmlAddressBookStorage.importAddressBook(encryptedFile, original, SecurityUtil.hashPassword(TEST_PASSWORD));
+
+        AddressBook expected = addressBookWithAliceAndBenson;
+        assertEquals(expected, original);
+    }
+
+    @Test
+    public void importAddressBook_unencryptedValidFile_success() throws Exception {
+        String filePath = TEST_DATA_FILE_ALICE_BENSON;
         AddressBook original = new AddressBook();
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
-
         // Import file into existing address book
-        xmlAddressBookStorage.importAddressBook(filePath, original, SecurityUtil.hashPassword(TEST_PASSWORD));
-        AddressBook expected = original;
-        expected.importPerson(ALICE);
-        expected.importPerson(BENSON);
-        assertEquals(original, expected);
+        xmlAddressBookStorage.importAddressBook(filePath, original, null);
+
+        AddressBook expected = addressBookWithAliceAndBenson;
+        assertEquals(expected, original);
+    }
+
+    @Test
+    public void exportAddressBook_invalidFilepath_throwsIoException() throws Exception {
+        thrown.expect(IOException.class);
+        String filePath = TEST_DATA_FOLDER;
+        AddressBook addressBook = addressBookWithAliceAndBenson;
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.exportAddressBook(filePath, null, addressBook.getPersonList(),
+                addressBook.getAliasList(), addressBook.getTagList());
+    }
+
+    @Test
+    public void exportAddressBook_validFilepathUnencryptedAddressBook_success() throws Exception {
+        String filePath = TEST_DATA_FILE;
+        AddressBook original = addressBookWithAliceAndBenson;
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.exportAddressBook(filePath, null, original.getPersonList(),
+                original.getAliasList(), original.getTagList());
+
+        Path testDataPath = Paths.get(TEST_DATA_FILE);
+        byte[] testData = Files.readAllBytes(testDataPath);
+
+        Path expectedPath = Paths.get(TEST_DATA_FILE_ALICE_BENSON);
+        byte[] expected = Files.readAllBytes(expectedPath);
+
+        assertTrue(Arrays.equals(expected, testData));
+    }
+
+    @Test
+    public void exportAddressBook_validFilepathEncryptedAddressBook_success() throws Exception {
+        String filePath = TEST_DATA_FILE_ALICE_BENSON_ENCRYPTED;
+        AddressBook original = addressBookWithAliceAndBenson;
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.exportAddressBook(filePath, new Password(TEST_PASSWORD), original.getPersonList(),
+                original.getAliasList(), original.getTagList());
+
+        Path testDataPath = Paths.get(TEST_DATA_FILE_ALICE_BENSON_ENCRYPTED);
+        byte[] testData = Files.readAllBytes(testDataPath);
+
+        Path expectedPath = Paths.get(TEST_DATA_FILE_ALICE_BENSON_ENCRYPTED_BACKUP);
+        byte[] expected = Files.readAllBytes(expectedPath);
+
+        assertTrue(Arrays.equals(expected, testData));
+    }
+
+    @Test
+    public void exportAndImportUnencryptedAddressBook_allInOrder_success() throws Exception {
+        String filePath = TEST_DATA_FILE;
+        AddressBook original = addressBookWithAliceAndBenson;
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.exportAddressBook(filePath, null, original.getPersonList(),
+                original.getAliasList(), original.getTagList());
+
+        AddressBook expected = new AddressBook();
+        XmlAddressBookStorage expectedXmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        expectedXmlAddressBookStorage.importAddressBook(filePath, expected, null);
+        assertEquals(expected, original);
+    }
+
+    @Test
+    public void exportAndImportEncryptedAddressBook_allInOrder_success() throws Exception {
+        String filePath = TEST_DATA_FILE;
+        AddressBook original = addressBookWithAliceAndBenson;
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        xmlAddressBookStorage.exportAddressBook(filePath, new Password(TEST_PASSWORD), original.getPersonList(),
+                original.getAliasList(), original.getTagList());
+
+        AddressBook expected = new AddressBook();
+        XmlAddressBookStorage expectedXmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+        expectedXmlAddressBookStorage.importAddressBook(filePath, expected, SecurityUtil.hashPassword(TEST_PASSWORD));
+        assertEquals(expected, original);
+    }
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBookTest.java
+``` java
+    @Test
+    public void toModelType_typicalAliasesFile_success() throws Exception {
+        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_ALIASES_FILE,
+                XmlSerializableAddressBook.class);
+        AddressBook addressBookFromFile = dataFromFile.toModelType();
+        AddressBook typicalAliasesAddressBook = TypicalAliases.getTypicalAddressBook();
+        assertEquals(addressBookFromFile, typicalAliasesAddressBook);
+    }
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBookTest.java
+``` java
+    @Test
+    public void toModelType_invalidAliasFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(INVALID_ALIAS_FILE,
+                XmlSerializableAddressBook.class);
+        thrown.expect(IllegalValueException.class);
+        dataFromFile.toModelType();
+    }
+
+    @Test
+    public void addToAddressBook_typicalPersonsFile_success() throws Exception {
+        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
+                XmlSerializableAddressBook.class);
+        AddressBook addressBookFromFile = new AddressBook();
+        dataFromFile.addToAddressBook(addressBookFromFile);
+        AddressBook typicalPersonsAddressBook = TypicalPersons.getTypicalAddressBook();
+        assertEquals(addressBookFromFile, typicalPersonsAddressBook);
+    }
+
+    @Test
+    public void addToAddressBook_typicalAliasesFile_success() throws Exception {
+        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_ALIASES_FILE,
+                XmlSerializableAddressBook.class);
+        AddressBook addressBookFromFile = new AddressBook();
+        dataFromFile.addToAddressBook(addressBookFromFile);
+        AddressBook typicalAliasesAddressBook = TypicalAliases.getTypicalAddressBook();
+        assertEquals(addressBookFromFile, typicalAliasesAddressBook);
+    }
+
+    @Test
+    public void addToAddressBook_invalidPersonFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(INVALID_PERSON_FILE,
+                XmlSerializableAddressBook.class);
+        thrown.expect(IllegalValueException.class);
+        dataFromFile.addToAddressBook(new AddressBook());
+    }
+
+    @Test
+    public void addToAddressBook_invalidTagFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(INVALID_TAG_FILE,
+                XmlSerializableAddressBook.class);
+        thrown.expect(IllegalValueException.class);
+        dataFromFile.addToAddressBook(new AddressBook());
+    }
+
+    @Test
+    public void addToAddressBook_invalidAliasFile_throwsIllegalValueException() throws Exception {
+        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(INVALID_ALIAS_FILE,
+                XmlSerializableAddressBook.class);
+        thrown.expect(IllegalValueException.class);
+        dataFromFile.addToAddressBook(new AddressBook());
     }
 ```
 ###### \java\seedu\address\testutil\BuildingBuilder.java
@@ -1107,6 +1667,336 @@ public class WeekDayBuilder {
         weekDay.setRoomName(roomName);
         weekDay.setWeekDaySchedule(weekDaySchedule);
         return weekDay;
+    }
+}
+```
+###### \java\systemtests\ExportCommandSystemTest.java
+``` java
+public class ExportCommandSystemTest extends AddressBookSystemTest {
+    @Test
+    public void export() {
+        /* ----------------------------------- Perform valid export operations  ----------------------------------- */
+
+        /* Case: export to valid filepath, command with no leading and trailing spaces -> retrieved */
+        String command = ExportCommand.COMMAND_WORD + " " + VALID_EXPORT_FILEPATH;
+        assertCommandSuccess(command);
+
+        /* Case: export to valid filepath encrypted with test password, command with no leading and trailing spaces
+         * -> retrieved
+         */
+        command = ExportCommand.COMMAND_WORD + " " + VALID_EXPORT_FILEPATH + " " + TEST_PASSWORD;
+        assertCommandSuccess(command);
+
+        /* Case: export to valid filepath, command with leading spaces and trailing spaces -> retrieved*/
+        command = "   " + ExportCommand.COMMAND_WORD + "   " + VALID_EXPORT_FILEPATH + "   ";
+        assertCommandSuccess(command);
+
+        /* ----------------------------------- Perform invalid export operations ----------------------------------- */
+
+        /* Case: no parameters -> rejected */
+        assertCommandFailure(ExportCommand.COMMAND_WORD + " ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+
+        /* Case: invalid number of parameters -> rejected */
+        assertCommandFailure(ExportCommand.COMMAND_WORD + " " + VALID_EXPORT_FILEPATH + " " + TEST_PASSWORD + " "
+                + VALID_EXPORT_FILEPATH, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+
+        /* Case: export to valid filepath encrypted with test password, command with leading spaces and trailing spaces
+         * -> rejected
+         */
+        assertCommandFailure("   " + ExportCommand.COMMAND_WORD + "   " + VALID_EXPORT_FILEPATH + "   " + TEST_PASSWORD
+                + " ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+
+        /* Case: invalid filepath -> rejected */
+        assertCommandFailure(ExportCommand.COMMAND_WORD + " " + INVALID_EXPORT_FILEPATH,
+                String.format(MESSAGE_FILE_UNABLE_TO_SAVE));
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure(MIXED_CASE_EXPORT_COMMAND_WORD + " " + VALID_EXPORT_FILEPATH, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays an empty string.<br>
+     * 2. Command box has the default style class.<br>
+     * 3. Result display box displays the success message of executing select command with the
+     * {@code expectedSelectedCardIndex} of the selected person.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
+     * 6. Status bar remains unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command) {
+        Model expectedModel = getModel();
+        String expectedResultMessage = String.format(MESSAGE_SUCCESS);
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
+```
+###### \java\systemtests\ImportCommandSystemTest.java
+``` java
+public class ImportCommandSystemTest extends AddressBookSystemTest {
+    @Test
+    public void importCommand() throws Exception {
+        Model model = getModel();
+
+        /* ----------------------------------- Perform valid import operations  ----------------------------------- */
+
+        /* Case: import from valid filepath, command with no leading and trailing spaces -> retrieved */
+        String command = ImportCommand.COMMAND_WORD + " " + VALID_IMPORT_FILEPATH;
+        assertCommandSuccess(command);
+
+        /* Case: undo adding Amy to the list -> Amy deleted */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, model, expectedResultMessage);
+
+        /* Case: redo adding Amy to the list -> Amy added again */
+        command = RedoCommand.COMMAND_WORD;
+        model.importAddressBook(VALID_IMPORT_FILEPATH, SecurityUtil.hashPassword(""));
+        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, model, expectedResultMessage);
+
+        /* Case: import from valid filepath and decrypted with test password, command with no leading and
+         * trailing spaces -> retrieved
+         */
+        command = ImportCommand.COMMAND_WORD + " " + ENCRYPTED_IMPORT_FILEPATH + " " + TEST_PASSWORD;
+        assertCommandSuccess(command);
+        SecurityUtil.encrypt(ENCRYPTED_IMPORT_FILEPATH, TEST_PASSWORD);
+
+        /* Case: import from valid filepath, command with leading spaces and trailing spaces -> retrieved*/
+        command = "   " + ImportCommand.COMMAND_WORD + "   " + VALID_IMPORT_FILEPATH + "   ";
+        assertCommandSuccess(command);
+
+
+        /* Case: import to valid filepath encrypted with test password, command with leading spaces and trailing spaces
+         * -> retrieved
+         */
+        command = "   " + ImportCommand.COMMAND_WORD + "   " + ENCRYPTED_IMPORT_FILEPATH + "   "
+                + TEST_PASSWORD + "  ";
+        assertCommandSuccess(command);
+        SecurityUtil.encrypt(ENCRYPTED_IMPORT_FILEPATH, TEST_PASSWORD);
+
+        /* ----------------------------------- Perform invalid import operations ----------------------------------- */
+
+        /* Case: no parameters -> rejected */
+        assertCommandFailure(ImportCommand.COMMAND_WORD + " ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+
+        /* Case: invalid number of parameters -> rejected */
+        assertCommandFailure(ImportCommand.COMMAND_WORD + " " + VALID_IMPORT_FILEPATH + " " + TEST_PASSWORD + " "
+                + VALID_IMPORT_FILEPATH, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+
+        /* Case: invalid filepath -> rejected */
+        assertCommandFailure(ImportCommand.COMMAND_WORD + " " + INVALID_IMPORT_FILEPATH,
+                String.format(MESSAGE_FILE_NOT_FOUND));
+
+        /* Case: wrong password -> rejected */
+        assertCommandFailure(ImportCommand.COMMAND_WORD + " " + ENCRYPTED_IMPORT_FILEPATH + " " + WRONG_PASSWORD,
+                String.format(MESSAGE_PASSWORD_WRONG));
+
+        /* Case: invalid file format -> rejected */
+        assertCommandFailure(ImportCommand.COMMAND_WORD + " " + INVALID_FILE_FORMAT,
+                String.format(MESSAGE_DATA_CONVERSION_ERROR));
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure(MIXED_CASE_IMPORT_COMMAND_WORD + " " + VALID_IMPORT_FILEPATH, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays an empty string.<br>
+     * 2. Command box has the default style class.<br>
+     * 3. Result display box displays the success message of executing select command with the
+     * {@code expectedSelectedCardIndex} of the selected person.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
+     * 6. Status bar remains unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command) {
+        Model expectedModel = getModel();
+        String expectedResultMessage = String.format(MESSAGE_SUCCESS);
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Person)} except asserts that
+     * the,<br>
+     * 1. Result display box displays {@code expectedResultMessage}.<br>
+     * 2. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
+     * {@code expectedModel}.<br>
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
+```
+###### \java\systemtests\UploadCommandSystemTest.java
+``` java
+public class UploadCommandSystemTest extends AddressBookSystemTest {
+
+    @BeforeClass
+    public static void setTestEnvironment() {
+        GoogleDriveStorage.setTestEnvironment();
+    }
+
+    @Test
+    public void upload() {
+        /* ----------------------------------- Perform valid upload operations  ----------------------------------- */
+
+        /* Case: upload to valid filepath, command with no leading and trailing spaces -> retrieved */
+        String command = UploadCommand.COMMAND_WORD + " " + VALID_UPLOAD_FILEPATH;
+        assertCommandSuccess(command);
+
+        /* Case: upload to valid filepath encrypted with test password, command with no leading and trailing spaces
+         * -> retrieved
+         */
+        command = UploadCommand.COMMAND_WORD + " " + VALID_UPLOAD_FILEPATH + " " + TEST_PASSWORD;
+        assertCommandSuccess(command);
+
+        /* Case: upload to valid filepath, command with leading spaces and trailing spaces -> retrieved*/
+        command = "   " + UploadCommand.COMMAND_WORD + "   " + VALID_UPLOAD_FILEPATH + "   ";
+        assertCommandSuccess(command);
+
+        /* ----------------------------------- Perform invalid upload operations ----------------------------------- */
+
+        /* Case: no parameters -> rejected */
+        assertCommandFailure(UploadCommand.COMMAND_WORD + " ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
+
+        /* Case: invalid number of parameters -> rejected */
+        assertCommandFailure(UploadCommand.COMMAND_WORD + " " + VALID_UPLOAD_FILEPATH + " " + TEST_PASSWORD + " "
+                + VALID_UPLOAD_FILEPATH, String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
+
+        /* Case: upload to valid filepath encrypted with test password, command with leading spaces and trailing spaces
+         * -> rejected
+         */
+        assertCommandFailure("   " + UploadCommand.COMMAND_WORD + "   " + VALID_UPLOAD_FILEPATH + "   " + TEST_PASSWORD
+                + " ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadCommand.MESSAGE_USAGE));
+
+        /* Case: invalid filepath -> rejected */
+        assertCommandFailure(UploadCommand.COMMAND_WORD + " " + INVALID_UPLOAD_FILEPATH,
+                String.format(MESSAGE_FILE_UNABLE_TO_SAVE));
+
+        GoogleDriveStorage.resetTestEnvironment();
+        /* Case: no user response -> rejected */
+        assertCommandFailure(UploadCommand.COMMAND_WORD + " " + INVALID_UPLOAD_FILEPATH,
+                String.format(MESSAGE_REQUEST_TIMEOUT));
+        GoogleDriveStorage.setTestEnvironment();
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure(MIXED_CASE_UPLOAD_COMMAND_WORD + " " + VALID_UPLOAD_FILEPATH, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays an empty string.<br>
+     * 2. Command box has the default style class.<br>
+     * 3. Result display box displays the success message of executing select command with the
+     * {@code expectedSelectedCardIndex} of the selected person.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
+     * 6. Status bar remains unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command) {
+        Model expectedModel = getModel();
+        String expectedResultMessage = String.format(MESSAGE_SUCCESS);
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+
+    @AfterClass
+    public static void resetTestEnvironment() {
+        GoogleDriveStorage.resetTestEnvironment();
     }
 }
 ```

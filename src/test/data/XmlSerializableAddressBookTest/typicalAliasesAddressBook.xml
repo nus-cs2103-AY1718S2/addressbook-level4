@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author Caijun7 -->
+<addressbook>
+    <aliases>
+        <command>list</command>
+        <aliasName>list1</aliasName>
+    </aliases>
+    <aliases>
+        <command>history</command>
+        <aliasName>history1</aliasName>
+    </aliases>
+    <aliases>
+        <command>exit</command>
+        <aliasName>exit1</aliasName>
+    </aliases>
+    <aliases>
+        <command>clear</command>
+        <aliasName>clear1</aliasName>
+    </aliases>
+    <aliases>
+        <command>redo</command>
+        <aliasName>redo1</aliasName>
+    </aliases>
+    <aliases>
+        <command>alias</command>
+        <aliasName>alias1</aliasName>
+    </aliases>
+    <aliases>
+        <command>edit</command>
+        <aliasName>edit1</aliasName>
+    </aliases>
+    <aliases>
+        <command>help</command>
+        <aliasName>help1</aliasName>
+    </aliases>
+    <aliases>
+        <command>undo</command>
+        <aliasName>undo1</aliasName>
+    </aliases>
+    <aliases>
+        <command>delete</command>
+        <aliasName>delete1</aliasName>
+    </aliases>
+    <aliases>
+        <command>add</command>
+        <aliasName>add1</aliasName>
+    </aliases>
+    <password/>
+</addressbook>

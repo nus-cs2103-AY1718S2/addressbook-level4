@@ -18,6 +18,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.VacantCommand;
 import seedu.address.model.Model;
 
+//@@author jingyinno
 /**
  * A system test class for the Venue Table table view, which contains interaction with other UI components.
  */

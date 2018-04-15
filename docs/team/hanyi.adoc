@@ -2,7 +2,7 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: MoVie Planner (MVP) - V1.5rc
+== PROJECT: MoVie Planner (MVP) - V1.5
 
 ---
 

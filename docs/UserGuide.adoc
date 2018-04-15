@@ -110,7 +110,7 @@ Both the display picture and tags fields are optional, and a person can have any
 [NOTE]
 ====
 ** The tags "lecturer", "TA" "student" and "T1" will appear red, yellow, blue and green respectively.
-** Do refrain from using high resolution images as display pictures, the optimum resolution is 300 x 300 pixels.
+** Do refrain from using high resolution images as display pictures, the optimum resolution is 500 x 500 pixels.
 ====
 
 [WARNING]
@@ -215,14 +215,15 @@ Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADD
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* Replaced display pictures will be removed from storage upon the next start up of Your TA.
+* Replaced display pictures will be removed from storage upon the logging in to the same account during the next start up of Your TA.
+* Do refrain from using high resolution images as display pictures, the optimum resolution is 500 x 500 pixels.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
 [NOTE]
-Do refrain from using high resolution images as display pictures, the optimum resolution is 300 x 300 pixels.
+Do refrain from using high resolution images as display pictures, the optimum resolution is 500 x 500 pixels.
 
 Examples:
 
@@ -302,7 +303,7 @@ Format: `updateDP INDEX dp/[IMAGE PATH]`
 ****
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-* Do note that unused display pictures will be deleted upon the next application startup.
+* Do note that unused display pictures will be deleted upon the next application startup when logging in to the same account that created it.
 * You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
 * The aspect ratio of the image will be used to fill a circle for the display picture, thus using an image with an aspect ratio close to 1:1 pixels would be optimal.
 ****
@@ -350,7 +351,7 @@ Format: `delete INDEX`
 ****
 
 [NOTE]
-The display picture that is stored on your hard disk will only be removed upon the next start up of Your TA.
+The display picture that is stored on your hard disk will only be removed upon the next start up of Your TA when you log into the same account that created it.
 
 Examples:
 

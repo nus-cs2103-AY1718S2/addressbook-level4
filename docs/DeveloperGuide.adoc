@@ -949,7 +949,9 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Product Scope
+== Product Scope and Features
+
+=== Product scope
 
 *Target user profile*: Tech-Savvy University Teachers/Tutors
 
@@ -1229,35 +1231,37 @@ These instructions only provide a starting point for testers to work on; testers
 
 === Launch and shutdown
 
-. Initial launch
+** Initial launch
 
-** Download the jar file and copy into an empty folder
+*** Download the jar file and copy into an empty folder
 .. Double-click the jar file +
    Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-. Saving window preferences
+** Saving window preferences
 
-** Resize the window to an optimum size. Move the window to a different location. Close the window.
+*** Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
 === Deleting a person
 
-. Deleting a person while all persons are listed.
+** Deleting a person while all persons are listed
 
-** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
+
+The corresponding display picture image to the person deleted is expected to be deleted upon next application start up and log in (to same account).
 
 === Adding participation marks for a person
 
-. Adding participation marks to a person while all persons are listed.
+** Adding participation marks to a person while all persons are listed.
 
-** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 .. Test case: `markPart 1 marks/50` +
    Expected: First person is updated with the addition of the marks. Success message shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `markPart 0 marks/50` +
@@ -1267,9 +1271,9 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect markPart commands to try: `markPart`, `markPat x marks/50` (where x is larger than the list size) +
    Expected: Similar to previous.
 
-. Adding participation marks to a person when you searched for a person using `find`
+** Adding participation marks to a person when you searched for a person using `find`
 
-** Prerequisites: Find a person using the `find` command. At least one person in the list returned.
+*** Prerequisites: Find a person using the `find` command. At least one person in the list returned.
 .. Test case: `markPart 1 marks/50` +
    Expected: First person is updated with the addition of the marks. Success message shown in the status message. Timestamp in the status bar is updated. List is still filtered.
 .. Test case: `markPart 0 marks/50` +
@@ -1278,27 +1282,43 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: No marks are added to anyone. Error details shown in the status message. Status bar remains the same. List is still filtered.
 
 
-=== Adding display picture to a person
+=== Adding/Updating display picture for a person
 
-. Adding display picture when adding a new (non-duplicate) person while all persons are listed.
+** Adding display picture when adding a new (non-duplicate) person while all persons are listed.
 
-** Prerequisites: List all persons using the `list` command. Multiple persons in the list. Not adding a duplicate person.
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list. Not adding a duplicate person.
 .. Assumptions: There is a valid image file at the specified location. +
 .. Test case: `add n/John Doe m/A1234567J p/98765432 e/johnd@example.com a/COM1 B#1-04 dp/C:\Users\Hello\Desktop\picture.jpg` +
    Expected: John Doe is added with the specified details and image. Success message shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `add n/John Doe m/A1234567J p/98765432 e/johnd@example.com a/COM1 B#1-04 dp/C:\Users\Hello\Desktop\picture.jpg` +
    Expected: John Doe is added with the specified details and has the default display picture. Success message shown in the status message. Timestamp in the status bar is updated. +
 
+** Adding display picture to an already existing person while all persons are listed.
+
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Assumptions: There is a valid image file at the specified location. +
+.. Test case: `updateDP 1 dp/C:\Users\Hello\Desktop\picture.jpg` +
+   Expected: First person's display picture is updated with the image. Success message shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `updateDP 1 dp/` +
+   Expected: First person's display picture is updated to the default display picture. Success message shown in the status message. Timestamp in the status bar is updated.
+
 === Saving and loading of the image files
 
-. Deleting image files while the application is still running.
+** Deleting image files while the application is still running.
 
+*** Prerequisites: There exists some persons already added and are utilizing a display picture.
+.. Test case: Delete all images from the `data/displayPic` folder. +
+   Expected: Upon next refresh of the list that causes changes, the affected persons will be reset back to the default profile picture.
 
+** Deleting image files while the application is not running.
+*** Prerequisites: There exists some persons already added and are utilizing a display picture.
+.. Test case: Delete all images from the `data/displayPic` folder. +
+   Expected: Upon loading up the application, the affected persons will be reset back to the default profile picture.
 
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
+** Checking proper deletion of image files
+*** Prerequisites: None of the existing persons in Your TA have a display picture.
+.. Test case:
+. Adding multiple images using the `updateDP` or `edit` command. E.g executing `updateDP 1 dp/C:\Users\Hello\Desktop\picture.jpg` twice.
+. Open the `data/displayPic` folder to note that there are 2 image files created.
+. Close and restart the application and log back in to the same account. +
+Expected: Unused image files will be deleted, only one image file remains.

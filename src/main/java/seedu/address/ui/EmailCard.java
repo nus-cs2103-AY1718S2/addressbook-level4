@@ -82,9 +82,9 @@ public class EmailCard extends UiPart<Region> {
                     preview.setText("This message is not in a supported format.");
                 }
             } catch (MessagingException e) {
-                System.out.println("Messaging Exception");
+                e.printStackTrace();
             } catch (IOException e) {
-                System.out.println("IOException");
+                e.printStackTrace();
             }
         }
     }
@@ -99,7 +99,7 @@ public class EmailCard extends UiPart<Region> {
             OpenEmailWindow cew = new OpenEmailWindow(this.email.getText(),
                     this.subject.getText(), this.msg);
         } catch (IOException e) {
-            System.out.println("IOException");
+            e.printStackTrace();
         }
     }
 }

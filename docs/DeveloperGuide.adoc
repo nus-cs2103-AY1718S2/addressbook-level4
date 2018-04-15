@@ -631,13 +631,15 @@ The feature supports the display and retrieval of addresses as a marker and of d
 
 Each map is loaded a separately as independent `MapPanels` with their own `MapManager`, located in `logic` folder managing them. Switching out of feature will unload the respective `MapPanel`, required due to limitations of API used.
 
+image::MapPanelSelectionSequenceDiagram.png[width="800"]
+
+The above sequence diagram represents the process of loading and setting a new marker on the map panel within Person Details panel.
 The feature can create markers to pin beneficiary location on map and also display suggested navigation routes between event locations.
 
-TODO: INSERT FINALISED DIAGRAM HERE
+As the Map Panel is a UI component, adopting the event-driven approach, we have made it such that the parent of the Map Panel
+listens for the `PersonPanelSelectionChangeEvent` to signal the child Map Panel to load a load/set a new address on the map.
 
-The Map View feature will involve the UI component as while as the Model component.
-
-TODO: SECTION INCOMPLETE
+The Google geocoding service helps to translate the string address into a proper Geocode request for Google to process.
 
 ==== Design Considerations
 
@@ -671,15 +673,15 @@ Feature includes a list of scheduled events for the specified day in addition to
 
 `Daily Scheduler` feature involves two separate sections,`Events List Display` and `Navigation`. The display portion focuses on retrieving events of the specified date whereas the navigation portion seeks to retrieve suggested routes between those events.
 
-TODO: INSERT FINALISED DIAGRAM HERE
-
 The `Daily Scheduler` feature will involve the UI component as while as the Model component, and makes use of `OAuthManager` to get required events.
+The OAuthManager is only used in the parser of the navigate command to retrieve the relevant event pairs.
 
-TODO: SECTION INCOMPLETE
+image::LoadDirectionsSequenceDiagram.png[width="800"]
 
-==== Design Considerations
+The above sequence diagram represents the process of loading and setting new direction markers on the map panel within Daily Scheduler panel.
+This happens after the parsing and doing the execution of `navigate` command where `LoadDirectionsEvent` is posted as an event.
 
-TODO: SECTION INCOMPLETE
+The DailySchedulerPanel, being the parent of the directionPanel, listens for the event and will update the map panel accordingly.
 
 // end::dailyScheduler[]
 

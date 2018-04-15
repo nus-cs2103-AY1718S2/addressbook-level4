@@ -523,7 +523,7 @@ Linking of pet patients to their respective owners and appointments will be impl
 ==== Current Implemaentation
 Since Veterinarians and their assistants have the need to view the PetPatients as a list and see how many PetPatients belong to the same Owner. It is necessary to implement the PetPatient List feature.
 
-image::List_Command.PNG[width="650"]
+image::List_Command.PNG[width="500"]
 
 ==== Design Consideration
 * **Alternative 1:** Use tab function to switch between PetPatientList and PersonList

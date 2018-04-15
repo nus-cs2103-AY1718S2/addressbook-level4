@@ -21,8 +21,10 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentEntry;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -117,6 +119,24 @@ public class ImdbTest {
                 "test");
         thrown.expect(UnsupportedOperationException.class);
         imdb.getAppointmentEntryList().add(entry);
+    }
+
+    @Test
+    public void addPatientAppointment_imdbUpdate() throws Exception {
+        Imdb expectedImdb = new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
+        DateTime toAddDateTime = ParserUtil.parseDateTime("2/4/2108 1500");
+        imdbWithAmyAndBob.addAppointment(AMY, toAddDateTime);
+        assertEquals(imdbWithAmyAndBob, expectedImdb);
+    }
+
+    @Test
+    public void deletePatientAppointment_imdbUpdate() throws Exception {
+        Imdb expectedImdb = new ImdbBuilder().withPerson(AMY).withPerson(BOB).build();
+        DateTime targetDateTime = ParserUtil.parseDateTime("2/4/2108 1500");
+        imdbWithAmyAndBob.addAppointment(AMY, targetDateTime);
+        assertEquals(imdbWithAmyAndBob, expectedImdb);
+        imdbWithAmyAndBob.deletePatientAppointment(AMY, new Appointment(targetDateTime.toString()));
+        assertEquals(imdbWithAmyAndBob, expectedImdb);
     }
 
     @Test

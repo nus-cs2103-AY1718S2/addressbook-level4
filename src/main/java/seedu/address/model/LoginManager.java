@@ -163,7 +163,6 @@ public class LoginManager extends ComponentManager implements Login {
         }
 
         return new ModelManager(initialData, userPrefs, username);
-    }
 
     @Override
     public boolean equals(Object other) {

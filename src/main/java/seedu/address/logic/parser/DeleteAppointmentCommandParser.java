@@ -30,6 +30,11 @@ public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentC
 
         String[] argsArray = trimmedArgs.split("\\s");
 
+        if (argsArray.length < 3) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    DeleteAppointmentCommand.MESSAGE_USAGE));
+        }
+
         try {
             Index targetPatientIndex = ParserUtil.parseIndex(argsArray[0]);
             DateTime appointmentDateTime = ParserUtil.parseDateTime(argsArray[1] + " " + argsArray[2]);

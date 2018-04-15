@@ -310,18 +310,21 @@ You can use `find` or `f` to do the following :
 
 .^a|Contact
 | `find **-o** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
-a| * Currently accepted individual `PREFIX` finding are `n/NAME`, `nr/NRIC`, `t/TAGS`.
+a| * Currently accepted individual `PREFIX` are `n/NAME`, `nr/NRIC`, `t/TAGS`.
 * The above `PREFIX` can be used in any combination to find more specific contacts.
 * Pets of displayed contacts will also be displayed.
+* The input in brackets are optional, and can be added if more specific information is required.
 
 .^| Pet patient
 | `find **-p** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
-a| * Currently accepted individual `PREFIX` finding are `n/PET_NAME`, `s/SPECIES`, `b/BREED`, `c/COLOR`, `bt/BLOOD_TYPE`, `t/PET_TAGS`.
+a| * Currently accepted individual `PREFIX` are `n/PET_NAME`, `s/SPECIES`, `b/BREED`, `c/COLOR`, `bt/BLOOD_TYPE`, `t/PET_TAGS`.
 * The above `PREFIX` can be used in any combination to find more specific pet patients.
 * Contacts of displayed pets will also be displayed.
+* The input in brackets are optional, and can be added if more specific information is required.
 
 |=====
 {empty} +
+// end::find[]
 
 ****
 * The search is case insensitive. e.g `-o n/alex` will match `Alex`.
@@ -330,32 +333,28 @@ a| * Currently accepted individual `PREFIX` finding are `n/PET_NAME`, `s/SPECIES
 * Data matching at least one keyword within a prefix will be returned. e.g. `-o n/Alex Yu` will return `Alex Yeoh`, `Bernice Yu`.
 * Only data matching at least one keyword in all prefixes will be returned. e.g. `-o n/Alex Yu nr/S0123456B` will return `Alex Yeoh` with the nric `S0123456B`.
 ****
+
 {empty} +
 
 image::find_examples.PNG[width="800"]
 {empty} +
 
-.**Copy & paste to try out**
+.**Copy & paste to try out the above examples**
 ----
 find -o n/Alex Bernice Charlotte t/Owner
 
 find -o nr/S0123456B T0123456C t/Owner
 
-find -p n/Bei Nei s/Cat
-
 find -p s/Dog Cat bt/DEA 4
-
-find -p s/Dog c/White Golden
 
 find -p s/Dog b/Pug c/Golden Brown
 
-find -p s/Cat b/Maine Coon c/Black bt/AB t/Aggressive
+find -p s/Cat b/Maine Coon t/Aggressive
 
-find -p n/Chae s/Cat b/Russian Blue c/Grey bt/A t/Naive
+find -p n/Chae s/Cat bt/A
 ----
 
 {empty} +
-// end::find[]
 
 // tag::listappt[]
 === Listing appointments in a specified view requested: `listappt` or `la` `[Since v1.5rc]`
@@ -371,15 +370,15 @@ You can use `listappt` or `la` to do the following :
 .^a|Year
 | `listappt -y [YEAR]`
 a| * The command will list appointments based on the specified `YEAR` in the year view of CalendarFX in YYYY format.
-* The command can run without any `YEAR` keyword. This will switch the view to the year view of today's date.
-* The command will only run for past `YEAR` keywords if there exists an appointment that was made in that year.
+* The input in brackets `[YEAR]` is optional. The command runs without this input, and this will switch the view to the year view of today's date.
+* The command will only run for past `YEAR` keyword if there exists an appointment that was made in that year.
 
 .^| Month
 | `listappt -m [YEAR-MONTH/MONTH]`
 a| * The command will list appointments based on the specified `YEAR-MONTH` in the month view of CalendarFX in YYYY-MM format.
-* The command can run without any `MONTH` keyword. This will switch the view to the month view of today's date.
+* The input in brackets `[MONTH]` is optional. The command runs without this input, and this will switch the view to the month view of today's date.
 * The command can run with only the `MONTH` keyword without the `YEAR` keyword in MM format. This will list appointments of the current year with the specified `MONTH`.
-* The command will only run for past `YEAR-MONTH` keywords if there exists an appointment that was made in that year.
+* The command will only run for past `YEAR-MONTH` keyword if there exists an appointment that was made in that year.
 
 .^| Week
 | `listappt -w [DATE]`
@@ -393,23 +392,28 @@ a| * The command will list appointments based on the specified `DATE` in the day
 * The command can run without any `DATE` keyword. This will switch the view to the day view of today's date.
 * The command will only run for past `DATE` keywords if there exists an appointment that was made in that year.
 |=====
-
+// end::listappt[]
 {empty} +
 
-.**Copy & paste to try out**
+.**Copy & paste to try out the examples**
 ----
+To list appointments in 2018 in year view:
 listappt -y 2018
 
+To list appointments in January 2018 in month view:
 listappt -m 2018-01
 
+To list appointments of the current month in month view:
 listappt -m
 
+To list appointments in 31st December 2018 in week view:
 listappt -w 2018-12-31
 
+To list appointments in 1st January 2018 in day view:
 listappt -d 2018-01-01
 
 ----
-// end::listappt[]
+
 {empty} +
 
 // tag::delete[]
@@ -441,12 +445,13 @@ a| * The command will delete the appointment at the specified `INDEX` listed by 
 * The index refers to the index number shown in the latest appointment listing. The index *must be a positive integer* 1, 2, 3, etc ...
 
 |=====
+// end::delete[]
 {empty} +
 
 image::delete_examples.PNG[width="800"]
 {empty} +
 
-.**Copy & paste to try out**
+.**Copy & paste to try out the above examples**
 ----
 delete -a 1
 
@@ -454,14 +459,14 @@ delete -p 1
 
 delete -o 1
 
-delete -fp 1
-
 delete -fo 1
+
+delete -fp 1
 
 ----
 
 {empty} +
-// end::delete[]
+
 
 === Listing entered commands : `history` or `his`
 

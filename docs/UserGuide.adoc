@@ -77,7 +77,7 @@ A person can have any number of tags (including 0)
 ****
 * Two student contacts are considered to be duplicates only if they have the same name, phone number, email, address, university, expected graduation year, major and grade point average.
 * Resume to be added is specified by the relative path to the jar file. It also must be valid PDF, and smaller than 1MB.
-* Image to be added is specified by the relative path to the jar file.
+* Image to be added is specified by the relative path to the jar file and must be smaller than 1MB.
 ****
 
 Examples:

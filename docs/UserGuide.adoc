@@ -525,7 +525,7 @@ There is no need to save manually.
 // tag::remark[]
 
 ==== Creating a remark for a person : `*remark*` or `*rk*` `[In V1.3]`
-Creates a remark for the person identified by the index number used in the *last person listing*. +
+You can create a remark for the person identified by the index number used in the *last person listing*. +
 
 ****
 * The index refers to the index number shown in the most recent listing.
@@ -573,7 +573,7 @@ image::AutofillRemark.png[width="700"]
 
 // tag::rate[]
 ==== Giving a rating to a person : `*rate*` or `*rt*` `[In V1.4]`
-Gives a rating to the person identified by the index number used in the *last person listing*.
+You can give a rating to the person identified by the index number used in the *last person listing*.
 By default, the rating will be accumulated.
 
 ****

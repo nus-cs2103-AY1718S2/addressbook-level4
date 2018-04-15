@@ -30,7 +30,7 @@ requires a fixed format between 0.0 to 5.0 (decimal can be omitted). For editing
 
 
 * *Minor enhancement*:
-Added the ability to autofill commands using `TAB` key and delete prefixes using `DELETE` key.
+Added the ability to autofill commands using `Tab` key and delete prefixes using `Delete` key.
 This facilitates the user when typing in commands, especially for long commands such as `add` and `edit`.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-W11-B1/main/blob/master/collated/functional/sherlynng.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B1/main/blob/master/collated/test/sherlynng.md[Test code]]
@@ -41,7 +41,7 @@ This facilitates the user when typing in commands, especially for long commands 
 *** Update BrowserPanel to reflect all attributes of a person (Pull requests https://github.com/CS2103JAN2018-W11-B1/main/pull/45[#45])
 ** Documentation:
 *** Create UI mock up for initial planning of UI (Pull requests https://github.com/CS2103JAN2018-W11-B1/main/pull/26[#26])
-*** Did cosmetic tweaks to existing contents of the User Guide to make is more end-user friendly: https://github.com/CS2103JAN2018-W11-B1/main/pull/140/files[#140]
+*** Cosmetic tweaks to existing contents of the User Guide to increase user friendliness: https://github.com/CS2103JAN2018-W11-B1/main/pull/140/files[#140]
 ** Community:
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W10-B4/main/issues/126[1], https://github.com/CS2103JAN2018-W10-B4/main/issues/127[2])
 

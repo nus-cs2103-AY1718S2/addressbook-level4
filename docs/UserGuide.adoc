@@ -599,6 +599,15 @@ Adds the cca details(cca basketball with the position member) to the 2nd student
 `cca 1 cca/Choir pos/Member` +
 Adds the cca details(cca Choir with the position member) to the 1st student in the results of the `find` command.
 
+image::BeforeAddingCca.png[width="400"]
+Figure 10. Before adding CCA to Betsy.
+
+image::AddCcaSuccessMessage.png[width="400"]
+Figure 10. The success message when command is successfully entered.
+
+image::AfterAddingCca.png[width="800"]
+Figure 11. After the command is successfully entered.
+
 *_return to <<toc,Table of Contents>>_*
 // tag::cca[]
 
@@ -607,7 +616,7 @@ Adds the cca details(cca Choir with the position member) to the 1st student in t
 Edits a next of kin details of the student in _EduBuddy_. +
 Format: `nok INDEX n/NAME p/PHONE [e/EMAIL] r/RELATIONSHIP` +
 You will be able to see the success message, +
-`Next of Kin: NAME Phone: PHONE Email: EMAIL REMARK: Father` +
+`Next of Kin: NAME Phone: PHONE Email: EMAIL Remark: Father` +
 `Person: NAME`
 
 [NOTE]
@@ -629,6 +638,15 @@ of the 2nd student in _EduBuddy_.
 `nok 1 n/Dave p/96784561 r/Father` +
 Edits the next of kin details(name, phone number and relationship)
 of the 1st student in the results of the `find` command.
+
+image::BeforeAddingNOK.png[width="400"]
+Figure 10. Before adding the next of kin details to Betsy.
+
+image::AddNOKSuccessMessage.png[width="400"]
+Figure 10. The success message when command is successfully entered.
+
+image::AfterAddingNOK.png[width="800"]
+Figure 11. After the command is successfully entered.
 
 // tag::NextofKin[]
 

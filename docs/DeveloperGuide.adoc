@@ -698,7 +698,7 @@ This injuries history feature allows the user to add injuries history to the stu
 
 //image::InjuriesHistoryClassSequenceDiagram.png[width="800"]
 
-Figure 15. Sequence Diagram of AddInjuriesCommand
+//Figure 15. Sequence Diagram of AddInjuriesCommand
 
 ==== Design Considerations
 ===== Aspect: Implementation of the `Injuries History` feature
@@ -719,7 +719,7 @@ This cca feature allows the user to add cca and the position to the student prof
 
 //image::CcaClassSequenceDiagram.png[width="800"]
 
-Figure 15. Sequence Diagram of CcaCommand
+//Figure 15. Sequence Diagram of CcaCommand
 
 ==== Design Considerations
 ===== Aspect: Implementation of the `Cca` feature
@@ -740,7 +740,7 @@ This NextOfKin feature allows the user to add the details of the student's next 
 
 //image::NextOfKinClassSequenceDiagram.png[width="800"]
 
-Figure 15. Sequence Diagram of NextOfKinCommand
+//Figure 15. Sequence Diagram of NextOfKinCommand
 
 ==== Design Considerations
 ===== Aspect: Implementation of the `NextOfKin` feature

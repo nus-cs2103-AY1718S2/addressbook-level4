@@ -665,6 +665,7 @@ public class SignUpCommandParser {
         Member member = syncWithMasterTagList(p);
         members.signup(member);
     }
+
 ```
 ###### \java\seedu\club\model\ClubBook.java
 ``` java

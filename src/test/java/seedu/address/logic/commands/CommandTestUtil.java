@@ -25,6 +25,8 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.student.Student;
@@ -199,6 +201,10 @@ public class CommandTestUtil {
             throw new AssertionError("Student in filtered list must exist in model.", pnfe);
         } catch (LessonNotFoundException lnfe) {
             throw new AssertionError("Lesson in Schedule to be deleted must exist in model.", lnfe);
+        } catch (DuplicateLessonException dle) {
+            throw new AssertionError("Lesson in schedule must be unique.", dle);
+        } catch (InvalidLessonTimeSlotException iltse) {
+            throw new AssertionError("Lesson in filtered list must not be clashing.", iltse);
         }
     }
 

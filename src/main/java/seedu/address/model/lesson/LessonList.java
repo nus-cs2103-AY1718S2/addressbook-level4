@@ -12,6 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
 
@@ -39,14 +41,30 @@ public class LessonList implements Iterable<Lesson> {
     /**
      * Adds a lesson to the list.
      */
-    public void add(Lesson toAdd) {
+    public void add(Lesson toAdd)
+            throws InvalidLessonTimeSlotException, DuplicateLessonException {
         requireNonNull(toAdd);
-        if (!contains(toAdd)) {
-            internalList.add(toAdd);
+        if (!isValidSlot(toAdd)) {
+            throw new InvalidLessonTimeSlotException();
         }
+        if (contains(toAdd)) {
+            throw new DuplicateLessonException();
+        }
+        internalList.add(toAdd);
         Collections.sort(internalList);
     }
-
+    /**
+     * Checks if lesson clashes with other lessons in the schedule
+     * @return true/false
+     */
+    private boolean isValidSlot(Lesson l) {
+        for (Lesson lesson : internalList) {
+            if (l.clashesWith(lesson)) {
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
@@ -71,7 +89,8 @@ public class LessonList implements Iterable<Lesson> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setLessons(List<Lesson> lessons) {
+    public void setLessons(List<Lesson> lessons)
+            throws InvalidLessonTimeSlotException, DuplicateLessonException {
         requireAllNonNull(lessons);
         final LessonList replacement = new LessonList();
         for (final Lesson lesson : lessons) {
@@ -85,7 +104,8 @@ public class LessonList implements Iterable<Lesson> {
      * {@code internalList} will setLessons of replacement
      * @param target
      */
-    public void removeStudentLessons(Student target) {
+    public void removeStudentLessons(Student target)
+            throws InvalidLessonTimeSlotException, DuplicateLessonException {
         final LessonList replacement = new LessonList();
         for (Lesson lesson : internalList) {
             if (!target.getUniqueKey().equals(lesson.getUniqueKey())) {

@@ -49,6 +49,7 @@ public class XmlAdaptedStudentTest {
         assertEquals(BENSON, student.toModelType());
     }
 
+    //@@author demitycho
     @Test
     public void toModelType_invalidKey_throwsIllegalValueException() {
         XmlAdaptedStudent student =
@@ -58,6 +59,7 @@ public class XmlAdaptedStudentTest {
         String expectedMessage = UniqueKey.MESSAGE_UNIQUE_KEY_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, student::toModelType);
     }
+    //@@author
 
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {

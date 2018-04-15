@@ -85,21 +85,14 @@ public class Schedule implements ReadOnlySchedule {
             setLessons(newList);
         } catch (DuplicateLessonException e) {
             throw new AssertionError("Schedules should not have duplicate lessons");
+        } catch (InvalidLessonTimeSlotException iltse) {
+            throw new AssertionError("Schedules should not have clashing time slots");
         }
     }
 
-    public void setLessons(List<Lesson> lessons) throws DuplicateLessonException {
+    public void setLessons(List<Lesson> lessons)
+            throws InvalidLessonTimeSlotException, DuplicateLessonException {
         this.lessons.setLessons(lessons);
-    }
-
-    /**
-     * Temp function @TODO delete later
-     */
-    public void printAll() {
-        for (Lesson l : lessons) {
-            System.out.println(l.getUniqueKey() + " " + l.getDay()
-                    + " " + l.getStartTime() + " " + l.getEndTime());
-        }
     }
 
     /**
@@ -107,9 +100,9 @@ public class Schedule implements ReadOnlySchedule {
      * @param target
      * @throws LessonNotFoundException
      */
-    public void removeStudentLessons(Student target) throws LessonNotFoundException {
+    public void removeStudentLessons(Student target)
+            throws InvalidLessonTimeSlotException, DuplicateLessonException, LessonNotFoundException {
         lessons.removeStudentLessons(target);
-
     }
 
     /**

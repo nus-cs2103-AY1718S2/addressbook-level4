@@ -461,6 +461,13 @@ Format: `exit`
 StardyTogether data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Upcoming Features
+=== Use current location to find vacant rooms
+
+=== Modules tag
+
+=== Autocomplete
+
 // tag::FAQ[]
 == FAQ
 
@@ -506,8 +513,8 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 |Problem |How to solve
 |The timetable I entered is empty!|Do check the validity of your NUSMods link by inputting it in your internet browser, and your internet connection.
 |I am having trouble accessing the Google Drive functions!|
-.   Go to your user directory (Example: C:/users/USER)
-.   Delete .googlecredentials folder (if it doesn't appear, show hidden files in Settings)
+1)  Go to your user directory (Example: C:/users/USER) +
+2)  Delete .googlecredentials folder (if it doesn't appear, show hidden files in Settings)
 |=======================================================================
 
 == Command Summary

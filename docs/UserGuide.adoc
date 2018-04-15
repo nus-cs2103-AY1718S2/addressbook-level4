@@ -62,7 +62,7 @@ image::download3.png[width="790"]
 +
 .  You can double-click the `progresschecker.jar` file to launch ProgressChecker. A GUI as shown below should appear in a few seconds.
 +
-image::Ui.jpg[width="790"]
+image::UI.jpg[width="790"]
 +
 Here are the four tabs(profile, task, exercise and issue) that you can switch in center panel:
 +

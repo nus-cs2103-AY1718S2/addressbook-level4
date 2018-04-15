@@ -23,10 +23,10 @@ Responsibility: Model
 
 === Pham Vu Hung
 image::PhamVuHung.jpg[width="150", align="left"]
-{empty}[https://github.com/LeonidAgarth[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/LeonidAgarth[github]] [<<phamvuhung#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Logic, Storage
+Responsibilities: Logic, Storage, in charge of implementing Calendar and Timetable
 
 '''
 
@@ -41,7 +41,7 @@ Responsibilities: Logic, Model , in charge of implementation of grouping
 
 === Isaac Lau
 image::IsaacLau.jpg[width="150", align="left"]
-{empty}[https://github.com/Isaaaca[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/Isaaaca[github]] [<<isaaclau#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Integrating NUSMods

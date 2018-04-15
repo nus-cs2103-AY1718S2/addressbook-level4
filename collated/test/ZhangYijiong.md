@@ -1,28 +1,56 @@
 # ZhangYijiong
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
-        @Override
-        public void addTask(Task task) throws DuplicateTaskException {
-            fail("This method should not be called.");
-        }
+    @Test
+    public void parseCommand_path() throws Exception {
+        PathCommand command = (PathCommand) parser.parseCommand(
+                PathCommand.COMMAND_WORD + " " + INDEX_SECOND_PERSON.getOneBased());
+        assertEquals(new PathCommand(INDEX_SECOND_PERSON), command);
+    }
 
-        @Override
-        public void deleteTask(Task task) throws TaskNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Task> getFilteredTaskList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredTaskList(Predicate<Task> predicate) {
-            fail("This method should not be called");
-        }
 ```
-###### \java\seedu\address\logic\commands\PathCommandTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_pathAlias() throws Exception {
+        PathCommand command = (PathCommand) parser.parseCommand(
+                PathCommand.COMMAND_ALIAS + " " + INDEX_SECOND_PERSON.getOneBased());
+        assertEquals(new PathCommand(INDEX_SECOND_PERSON), command);
+    }
+
+```
+###### /java/seedu/address/logic/parser/PathCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.PathCommand;
+
+/**
+ * Test scope: similar to {@code DeleteCommandParserTest} and to{@code SelectCommandParserTest}}.
+ * @see DeleteCommandParserTest
+ */
+public class PathCommandParserTest {
+    private PathCommandParser parser = new PathCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsPathCommand() {
+        assertParseSuccess(parser, "3", new PathCommand(INDEX_THIRD_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "ABC", String.format(MESSAGE_INVALID_COMMAND_FORMAT, PathCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/PathCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -182,58 +210,30 @@ public class PathCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
-    @Test
-    public void parseCommand_path() throws Exception {
-        PathCommand command = (PathCommand) parser.parseCommand(
-                PathCommand.COMMAND_WORD + " " + INDEX_SECOND_PERSON.getOneBased());
-        assertEquals(new PathCommand(INDEX_SECOND_PERSON), command);
-    }
+        @Override
+        public void addTask(Task task) throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
 
+        @Override
+        public void deleteTask(Task task) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Task> getFilteredTaskList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredTaskList(Predicate<Task> predicate) {
+            fail("This method should not be called");
+        }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_pathAlias() throws Exception {
-        PathCommand command = (PathCommand) parser.parseCommand(
-                PathCommand.COMMAND_ALIAS + " " + INDEX_SECOND_PERSON.getOneBased());
-        assertEquals(new PathCommand(INDEX_SECOND_PERSON), command);
-    }
-
-```
-###### \java\seedu\address\logic\parser\PathCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.PathCommand;
-
-/**
- * Test scope: similar to {@code DeleteCommandParserTest} and to{@code SelectCommandParserTest}}.
- * @see DeleteCommandParserTest
- */
-public class PathCommandParserTest {
-    private PathCommandParser parser = new PathCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsPathCommand() {
-        assertParseSuccess(parser, "3", new PathCommand(INDEX_THIRD_PERSON));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "ABC", String.format(MESSAGE_INVALID_COMMAND_FORMAT, PathCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### \java\seedu\address\testutil\TaskBuilder.java
+###### /java/seedu/address/testutil/TaskBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -343,7 +343,7 @@ public class TaskBuilder {
 }
 
 ```
-###### \java\seedu\address\testutil\TaskUtil.java
+###### /java/seedu/address/testutil/TaskUtil.java
 ``` java
 package seedu.address.testutil;
 

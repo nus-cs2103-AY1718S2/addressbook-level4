@@ -2,6 +2,7 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author kengsengg
 /**
  * Indicates a request to display Calendar
  */
@@ -17,3 +18,4 @@ public class DisplayCalendarRequestEvent extends BaseEvent {
         return this.parameter;
     }
 }
+//@@author

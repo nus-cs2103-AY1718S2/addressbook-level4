@@ -69,9 +69,9 @@ include::../DeveloperGuide.adoc[tag=SortCommand]
 
 include::../DeveloperGuide.adoc[tag=ExportCommand]
 
-include::../DeveloperGuide.adoc[tag=DeleteTag]
+include::../DeveloperGuide.adoc[tag=ListAppointment]
 
-include::../DeveloperGuide.adoc[tag=TotalPersonStatusBar]
+include::../DeveloperGuide.adoc[tag=DeleteTag]
 
 include::../DeveloperGuide.adoc[tag=AddComment]
 

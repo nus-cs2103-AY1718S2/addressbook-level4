@@ -18,24 +18,26 @@ By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
+Employees Tracker is a *Human Resource Manager* application that helps managers to manage their subordinates. It has 2 main functionalities: providing information about employees, as well as helping in tracking the tasks assigned to each employee.
+
 This developer guide serves to guide you so that you are able to develop Employees Tracker further and contribute to it.
 
-== Setting up
+== Setting Up
 
 Make sure you follow this section carefully so that you get to work on Employees Tracker right away!
 
 === Prerequisites
 
-To develop Employees Tracker, you are supposed to have following preparations. +
+Before you start developing, make sure you have the followings in your computer:
 
-. *JDK `1.8.0_60`* or later
+* *JDK `1.8.0_60`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 
-. *IntelliJ* IDE
+* *IntelliJ* IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
@@ -43,6 +45,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 
 === Instructions for setting up the project in your computer
+
+Follow the steps below to set up the project in your computer:
 
 . Fork this repo, and clone the fork to your computer.
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
@@ -58,6 +62,8 @@ This will generate all resources required by the application and tests.
 
 === Verification of the setup
 
+Follow the steps below to verify your setup:
+
 . Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
@@ -65,14 +71,18 @@ This will generate all resources required by the application and tests.
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours.
+
+To rectify:
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
 . Select `Editor` > `Code Style` > `Java`.
 . Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: +
+Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: +
+Add a `<blank line>` between `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, and `import all other imports` each sequentially.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -92,11 +102,11 @@ Coverage reporting could be useful for a team repository that hosts the final ve
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+When you are ready to start coding:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
@@ -108,135 +118,134 @@ This section outlines the design of Employees Tracker.
 [[Design-Architecture]]
 === Architecture
 
-.Architecture Diagram
-image::Architecture.png[width="600"]
+The *Architecture Diagram* given in _Figure 1_ below explains the high-level design of the App.
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+.Architecture Diagram.
+image::Architecture.png[width="600"]
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+Given below is a quick overview of each component:
 
-* At app launch: Initializing the components in the correct sequence, and connecting them up with each other.
-* At shut down: Shutting down the components and invoking cleanup method where necessary.
+* `Main` : It only has one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
+** At app launch: Initializing the components in the correct sequence, and connecting them up with each other.
+** At shut down: Shutting down the components and invoking cleanup method where necessary.
+* `Commons` : It represents a collection of classes used by other components. +
+Two of those classes play important roles at the architecture level:
+** `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+** `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
+* <<Design-Ui,*`UI`*>> : It is the User Interface (UI) of the App.
+* <<Design-Logic,*`Logic`*>> : It executes command.
+* <<Design-Model,*`Model`*>> : It holds Employees Tracker's data in memory.
+* <<Design-Storage,*`Storage`*>> : It communicates between Employees Tracker and hard disk to read and write data.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
-
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
-
-The rest of the App consists of four components.
-
-* <<Design-Ui,*`UI`*>>: the UI of the App
-* <<Design-Logic,*`Logic`*>>: the command executor
-* <<Design-Model,*`Model`*>>: the holder of Employees Tracker's data in-memory
-* <<Design-Storage,*`Storage`*>>: the communicator between Employees Tracker and hard disk to read and write data
-
-Each of the four components
+Each of the last four components (<<Design-Ui,*`UI`*>>, <<Design-Logic,*`Logic`*>>, <<Design-Model,*`Model`*>>, and <<Design-Storage,*`Storage`*>>) shares a common functionality:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (refer to the class diagram given in _Figure 2_ below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
 [discrete]
-==== Events-Driven nature of the design
+==== Events-driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* given in _Figure 3_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
-.Component interactions for `delete 1` command (part 1)
+.Component interactions for `delete 1` command (part 1).
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when Employees Tracker's data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Pay attention to how the `Model` simply raises a `AddressBookChangedEvent` when Employees Tracker's data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The *Sequence Diagram* given in _Figure 4_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
+.Component interactions for `delete 1` command (part 2).
 image::SDforDeletePersonEventHandling.png[width="800"]
 
 [NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+Pay attention to how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 
 [[Design-Ui]]
 === UI component
 
+The *Class Diagram* given in _Figure 5_ below shows the classes in UI component and their associations.
+
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+[NOTE]
+Refer to link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`] for the *API* of UI Component.
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
-
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+The `UI` component executes user commands using the `Logic` component, binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change, and responds to events raised from various parts of the App and updates the UI accordingly.
 
 [[Design-Logic]]
 === Logic component
 
+The *Class Diagram* given in _Figure 6_ below shows the classes in Logic component and their associations.
+
 [[fig-LogicClassDiagram]]
-.Structure of the Logic Component
+.Structure of the Logic Component.
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+The *Class Diagram* given in _Figure 7_ below shows a finer detail concerning `XYZCommand` and `Command` in _Figure 6_.
+
+.Structure of Commands in the Logic Component.
 image::LogicCommandClassDiagram.png[width="800"]
 
-*API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+[NOTE]
+Refer to link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`] for the *API* of Logic Component.
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+The `Logic` component uses the AddressBookParser class to parse the user command. This will result in a `Command` object which is executed by the `LogicManager`, which may affect the `Model` (e.g. adding a person) and/or raise events. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+The *Sequence Diagram* given in _Figure 8_ below shows the interactions within the `Logic` component for `execute("delete 1")` _API_ call.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+.Interactions Inside the Logic Component for the `delete 1` Command.
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
 
-.Structure of the Model Component
+The *Class Diagram* given in _Figure 9_ below shows the classes in Model component and their associations.
+
+.Structure of the Model Component.
 image::ModelClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+[NOTE]
+Refer to link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`] for the *API* of Model Component.
 
-The `Model`,
+The `Model` component does the following:
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores Employees Tracker's data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores Employees Tracker's data.
+* Exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+
+The `Model` component does not depend on any of the other three components.
 
 [[Design-Storage]]
 === Storage component
 
-.Structure of the Storage Component
+The *Class Diagram* given in _Figure 10_ below shows the classes in Storage component and their associations.
+
+.Structure of the Storage Component.
 image::StorageClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+[NOTE]
+Refer to link:{repoURL}/src/main/java/seedu/address/model/Storage.java[`Storage.java`] for the *API* of Storage Component.
 
-The `Storage` component,
+The `Storage` component does the following:
 
-* can save `UserPref` objects in json format and read it back.
-* can save Employees Tracker data in xml format and read it back.
-
-[[Design-Commons]]
-=== Common classes
-
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+* Save `UserPref` objects in json format and read it back.
+* Save Employees Tracker data in xml format and read it back.
 
 == Implementation
 
@@ -432,21 +441,19 @@ There are 2 ways to update information regarding a `Person` object. +
 // end::rate[]
 
 // tag::emer7[]
-=== Review system
+=== Review feature
+
+==== Current Implementation
 
 A `Review` consists of the _review_ content itself and the _reviewer_. _Review_ and _reviewer_ are separated by a single newline character.
 
-A person by default upon creation will have a list of `Review`-s with one null `Review` indicated to be `-` for both _reviewer_ and _review_ by default. This indicate that the person is yet to be reviewed.
+_Review_ content itself has no restriction on the content, it accepts all characters with no length limitation). _Reviewer_ must be a valid email format. A new empty `Review` will be instantiated with null value of `-` for both _review_ and _reviewer_, signifying that both fields are empty.
 
-A person can be assigned a `Review` through the command of `review`. `Review` does not have any restriction on the _review_ content (alphanumeric and symbols without any length restriction).
+Each `Person` has a `UniqueReviewList`, that is a unique list of `Review(s)`. A new `Person` upon creation will have an empty `UniqueReviewList`. A `Person` can be assigned `Review(s)` through `review` command.
 
-=== Review a person
+`review` command and `review` command are implemented in a similar manner. They both involve modifying the field(s) of a `Person`. The only difference is that `review` can only change the `Review` field, but `edit` can be used to change any field except `Review`. Hence, the implementation may be very similar to <<Edit and rate a person>>.
 
-Currently `review` command and `rate` command are implemented in a similar manner, and hence `review` command and `edit` command are also implemented in a similar manner.
-
-The implementation basically mirrors what has already been documented in `3.3. Editing and rating a person`, so the implementation below is basically the iteration of the said part, with some modification.
-
-The implementation of `edit` and `review` command in the Logic component involves 4 objects: +
+The implementation of `review` and `edit` command in the Logic component involves 4 objects: +
 
 . `Person` personToEdit.
 . `Person` editedPerson.
@@ -455,26 +462,76 @@ The implementation of `edit` and `review` command in the Logic component involve
 
 Since all fields of the `Person` class are immutable, we need to use `Person` _editedPerson_ to replace the `Person` _personToEdit_.
 
+Additionally, the implementation also involves `ReviewDialog` in the UI component and `ShowReviewDialogEvent` in Common component to show the pop-up review dialog for user to input _reviewer_ and _review_.
+
 The details of implementation are as follow:
 
-. `Parser` extracts the new information for each field from user input.
-. `EditPersonDescriptor` is used to record which field(s) will be changed and the respective new value.
-. `Person` _editedPerson_ will be created, by obtaining the new `Review` value from `EditPersonDescriptor` together with the old `Review` value. +
+. `Parser` extracts `Index` from user input and validates it.
+. `Parser` posts `ShowReviewDialogEvent` to show the review pop-up dialog for user to input the _reviewer_ and _review_.
+. `EditPersonDescriptor` is used to record the new `Review` value.
+. `Person` _editedPerson_ will be created by obtaining the new `Review` value from `EditPersonDescriptor` together with the old `Review` value. +
 The old `Review` value is obtained from `Person` _personToEdit_.
 . `Person` _editedPerson_ is used to replace `Person` _personToEdit_ in `AddressBook`.
 
-`Review` uses JavaFX's `Dialog` to get the review input from the user instead of from command box.
+Given below in _Figure 11_ is the partial sequence diagram of Review Command. `LogicManager` and how `ReviewCommand` executes are omitted as they are similar to _Figure 8_.
+
+.Sequence Diagram for Review Command
+image::review_seq.png[width="800"]
+
+[source,java]
+----
+public class ReviewCommandParser implements Parser<ReviewCommand> {
+
+    public ReviewCommand parse(String args) throws ParseException {
+        // ... get Index from args and validates it to be positive
+        // ... post events for the review dialog
+        try {
+            // ... create Review from the input from review dialog ...
+            // ... create EditPersonDescriptor based on the Review ...
+            return new ReviewCommand(index, editPersonDescriptor);
+        } catch (IllegalValueException ive) {
+            // ... throw exception ...
+        }
+    }
+
+    @Subscribe
+    private void getReviewInput(ReviewInputEvent event) {
+        // ... get reviewer and review content from the review dialog ...
+    }
+}
+----
+
+==== Design Considerations
+
+===== Aspect: How to get the review input from user
+
+* **Alternative 1 (current choice):** Use JavaFX's Dialog for a pop-up window.
+** Pros: More comfortable and convenient for user to type longer review and also easier for them to edit.
+** Cons: Harder to implement and user may not necessarily want a pop-up window.
+* **Alternative 2:** Use CommandBox.
+** Pros: Easier to implement and user can directly type to the CommandBox, which may be more efficient.
+** Cons: May be restrictive for user to enter a long review or to edit what they have typed.
+
+===== Aspect: Way of showing the review dialog
+
+* **Alternative 1 (current choice):** Post an event to request MainWindow to show the Dialog.
+** Pros: Good to comply with the Events-Driven nature of the application's design, making the design more cohesive and less coupling.
+** Cons: Events-Driven design is routine-less. Need to put extra effort to control the events. As the application grows, there are more events posted
+and it is necessary to control these events well to prevent events messing up.
+* **Alternative 2:** Just add a static method in MainWindow that will show the Dialog.
+** Pros: Simpler implementation than current one, no need extra effort for event controlling.
+** Cons: The static method could not use the non-static attributes in MainWindow, as a result, need extra effort to deal with referencing non-static variables.
 // end::emer7[]
 
 // tag::calendar[]
-=== Calendars and Operations on Calendars
+=== Calendars and operations on calendars
 ==== Current Implementation
 
 To implement the calendars for employees, a third party source has been used which is Google Calendar API, it allows to manage google
 calendars on desktop applications. The commands that relating to calendars are `addEvent`, `deleteEvent`, `todoList` and `authenET`.
 Below is the overall design:
 
-.Overall design relating to calendars
+.Overall design relating to calendars.
 image::calendarsystem.png[width="800"]
 
 [NOTE]
@@ -528,7 +585,7 @@ public CommandResult execute() {
 
 Below is the sequence diagram for the execution of `todoList` command.
 
-.Sequence diagram of `todoList`
+.Sequence diagram of `todoList`.
 image::todolist_seq.png[width="800"]
 
 ===== Implementation of `addEvent`, `deleteEvent` and `authenET` commands
@@ -572,7 +629,7 @@ is launched and kept at `LogicManager` in which the password can be handled at r
 
 Below is the overall design of Lock and Unlock system. Arrows are representing logic flow and lines in blue, red and green are for event posting and handling.
 
-.Overall design of lock and unlock system
+.Overall design of lock and unlock system.
 image::lockunlocksystem.png[width="800"]
 
 ===== Implementation of `lock` command
@@ -619,7 +676,7 @@ The following sequence diagram shows how `lock` command works:
 The event posted by LockCommand should firstly be reacted by `EventsCenter` and then handled by `DetailPanel`,
 this step is removed for clearer viewing and without messing up the diagram.
 
-.Sequence Diagram for Lock Command
+.Sequence Diagram for Lock Command.
 image::lock_seq.jpg[width="800"]
 
 ===== Implementation of `unlock` command
@@ -674,7 +731,7 @@ The detail of the instantiation of `UnlockCommand` is removed, because it is sim
 `LockCommand`. Note that both `MainWindow` and `UnlockCommand` are event handler, which is indicated by the two post method and the
 blue activation bar in the diagram, and the interaction with `EventsCenter` is also omitted like before.
 
-.Sequence Diagram for Unlock Command
+.Sequence Diagram for Unlock Command.
 image::unlock_seq.jpg[width="800"]
 
 ===== Implementation of `setPassword` command
@@ -756,7 +813,7 @@ person and pass to `ModelManager`.
 
 Here is the class diagram of `addPhoto` command:
 
-.Class diagram of `addPhoto` command
+.Class diagram of `addPhoto` command.
 image::addphotoclassdia.png[width="800"]
 
 ==== Design Considerations
@@ -996,11 +1053,11 @@ The details of implementation of `sort` command are as follow:
 
 Here is the sequence diagram of `sort` command:
 
-.Sequence diagram of `sort` command
+.Sequence diagram of `sort` command.
 image::SortCommandSeqDia.png[width="800"]
 
 ==== Design Considerations
-===== Aspect: Implementation of `SortComand`
+===== Aspect: Implementation of `SortCommand`
 * **Alternative1(current choice)**: Sort the employees in `UniqueEmployeeList`.
 ** Pros: Easy to understand for new developers, and it is the most intuitive way of implementing.
 ** Cons: Will create different levels of abstraction of the same sort method in Model for sorting, which results to slightly more work.
@@ -1072,16 +1129,16 @@ We use asciidoc for writing documentation.
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -1092,7 +1149,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
-.Saving documentation as PDF files in Chrome
+.Saving documentation as PDF files in Chrome.
 image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
@@ -1100,7 +1157,7 @@ image::chrome_save_as_pdf.png[width="300"]
 
 This section outlines the testing procedure of Employees Tracker.
 
-=== Running Tests
+=== Running tests
 
 There are three ways to run tests.
 
@@ -1129,10 +1186,10 @@ To run tests in headless mode, open a console and run the command `gradlew clean
 
 We have two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
+.  *GUI Tests* - These are tests involving the GUI. They include:
 .. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
 .. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
+.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`.
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
@@ -1141,7 +1198,7 @@ e.g. `seedu.address.storage.StorageManagerTest`.
 e.g. `seedu.address.logic.LogicManagerTest`.
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
@@ -1151,22 +1208,18 @@ e.g. `seedu.address.logic.LogicManagerTest`.
 
 This section outlines the development and operation of Employees Tracker.
 
-=== Build Automation
+=== Build automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
-=== Continuous Integration
+=== Continuous integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Coverage Reporting
-
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
-
-=== Documentation Previews
+=== Documentation previews
 When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -1175,7 +1228,7 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Employees Tracker depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size). +
@@ -2059,7 +2112,7 @@ Given below are instructions to test the app manually.
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
 
-=== Launch and Shutdown
+=== Launch and shutdown
 
 . Initial launch
 

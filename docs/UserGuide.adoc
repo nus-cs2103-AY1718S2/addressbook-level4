@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Delivery - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,18 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-F11-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F11-B4`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
+Delivery is targeted at restaurants, especially for the small-medium ones, which want to have a system to keep track customers’ orders and delivery.
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+A restaurant can have hundreds of orders a day and it’s extremely troublesome for the restaurant stuff to manually write down all customer information (including their names, contact numbers, addresses, orders and expected time of delivery etc.) and keep track on it.
+
+Hence, they need a software to store all the information mentioned above in an organised manner.
+
+Delivery is for those who *prefer to use a desktop app for managing orders*. More importantly, Delivery is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Delivery can manage the orders faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,8 +32,8 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `delivery.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for the database of customers' personal particulars.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -37,9 +42,9 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all orders
+* **`add`**`n/John Doe p/98765432 a/John street, block 123, #01-01 f/Chicken Rice` : adds an order of chicken rice from customer `John Doe` to the queue.
+* **`process`**`3` : process the 3rd order shown in the current list and add it to the processing queue
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -50,81 +55,117 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
+* Each command has an alias as the shortcut for advanced users to execute commands faster. +
+   (e.g. for the "add" command, you can either type "add" or "a")
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items in square brackets are optional e.g `n/NAME [h/HALAL]` can be used as `n/John Doe h/Halal` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing help: `help`
 
+If you want to find out all the features, or would like to know how to do a certain command, you can click on the help menu button. You can also enter the command help to access the help window. +
+Alias: `h` +
 Format: `help`
 
-=== Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+=== Order book(queue): left window in main window
+
+Order book is for recording the orders received.
+
+****
+* In the following sections commands are classified into none, order book or processing queue (bracket following
+command name in title).
+* Commands for order book would be based on the order book. Commands not labelled would affect both.
+****
+=== Processing Queue : right window in main window
+
+Processing Queue represents the restaurant's ability to process orders, for instance:number of chefs or number of
+kitchens. As such, the would be a limit on how many orders can be processed(cooking) at the same time.
+
+****
+* In the following sections commands are classified into none, order book or processing queue (bracket
+following command name in title).
+* Commands for processing queue would be based on the processing queue. Commands not labelled would affect both.
+****
+
+=== Browser Window : middle window in main window
+
+To serve as web browser to access certain web pages, such as google search page or google map page.
+
+// tag::add[]
+=== Adding an order (order book): `add`
+
+Adds an order to the order book, which keeps track all the orders received+
+Alias: `a` +
+Format: `add n/NAME p/PHONE_NUMBER a/ADDRESS f/FOOD_ORDER [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
+
+[TIP]
+Order book is the left displayed panel.
 
 [TIP]
 A person can have any number of tags (including 0)
 
+[TIP]
+First letter for every word of FOOD_ORDER must be capitalised e.g. "Chicken Rice", "Coffee"
+
+[TIP]
+Current Menu:
+Chicken Rice, Curry Chicken, Chicken Chop, Ban Mian, Ice Milo, Coffee
+
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken Rice h/Halal v/Vegetarian`
+* `add n/Betsy Crowe a/Newgate Prison p/1234567 t/friends f/Chicken Chop h/Halal`
+* `a n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken Rice h/Halal v/Vegetarian`
+* `a n/Betsy Crowe a/Newgate Prison p/1234567 t/friends f/Chicken Chop h/Halal`
+// end::add[]
 
-=== Listing all persons : `list`
+=== Listing all orders (order book): `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all orders in the order book. +
+Alias: `l` +
 Format: `list`
 
-=== Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+=== Editing an order (order book): `edit`
+
+Edits an existing order in the order book. +
+Alias: `e` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD_ORDER] [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
+
+[TIP]
+First letter for every word of FOOD_ORDER must be capitalised e.g. "Chicken Rice", "Coffee"
+
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the order at the specified `INDEX`. The index refers to the index number shown in the last order listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the order will be removed i.e adding of tags is not cumulative.
+* You can remove all the order's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 1 p/91234567` +
+Edits the phone number of the customer from 1st order to be `91234567` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the customer from 2nd order to be `Betsy Crower` and clears all existing tags.
+* `e 1 p/91234567` +
+Edits the phone number of the customer from 1st order to be `91234567` respectively.
+* `e 2 n/Betsy Crower t/` +
+Edits the name of the customer from 2nd order to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Deleting an order (order book): `delete`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
+Deletes the specified order from the order book. +
+Alias: `d` +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the order in the order book at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -133,18 +174,50 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd order in the order book.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st order in the results of the `find` command.
+* `l` +
+`d 2` +
+Deletes the 2nd order in the order book.
+* `f Betsy` +
+`d 1` +
+Deletes the 1st order in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Locating orders by name (order book): `find`
 
-Selects the person identified by the index number used in the last person listing. +
+Finds orders with their customers' names containing any of the given keywords. +
+Alias: `f` +
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the customer's name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Names matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `find John` +
+Returns `john` and `John Doe`
+* `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `f John` +
+Returns `john` and `John Doe`
+* `f Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Selecting an order (order book): `select`
+
+Selects the order identified by the index number used in the last listing. +
+Alias: `s` +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the load and loads the Google Map location of the customer from the order at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -153,14 +226,426 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd order in the order book.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st order in the results of the `find` command.
+* `l` +
+`s 2` +
+Selects the 2nd order in the order book.
+* `f Betsy` +
+`s 1` +
+Selects the 1st order in the results of the `find` command.
+
+// tag::Path[]
+=== Find Path of an order (order book): `path` (Since V1.3)
+
+Shows path to the order's address which is identified by the index number used in the last listing. +
+
+Format: `path INDEX` or `p INDEX`
+
+****
+* See setOwnAddress command would be avaiable in v2.0, now default own address is 'NUS'.
+****
+****
+* Shows path to the order’s address which is identified by the index number used in the current show order book list,
+using Google Map.
+* The index refers to the index number of the order.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* Now we have five orders. We wants to know how far away is the '311, Clementi Ave 2'
+
+image::UG_Path_1.png[width="790"]
+
+* Enter
+
+>> `path 1` or `p 1`
+
+* We can see from the google Map, it is 2.3 kilometers away from our own address(NUS at default).
+
+image::UG_Path_2.png[width="790"]
+
+// end::Path[]
+
+// tag::AddTag[]
+=== Tag an order (order book): `tag` (Since v1.5)
+
+Add an tag to an existing order in the order book.
+
+Format: `edit INDEX tagWord`
+
+[TIP]
+Adds 'Delivering', 'Delivered' and see its position in the order book. Use
+edit command to clear tags.
+
+****
+* Order book is the left dispalyed panel.
+****
+****
+* Only 'Delivering', 'Delivered' would be recognized for ordering. ('delivering''delivered' would not affect
+an order's position)
+****
+****
+* Edits the order at the specified `INDEX`. The index refers to the index number shown in the current shown list.
+The index *must be a positive integer* 1, 2, 3, ..
+* Existing order will be updated with input tagWord.
+* Different from edit command, adding of tags is cumulative.
+****
+****
+* Label orders with tag 'Delivering','Delivering' would change their position in the order book.
+* Once a order is processed, it will go below unprocessed orders, so that there is no need for user to scroll all
+the way down to process newly-added unprocessed order.
+* *Do not tag an order as 'Processed' as process commands would do the job.*
+* Once an order has been cooked, the order would be labelled as 'Cooked', and it will go to the top of the order book
+to remind user to send out delivery man.
+* *Do not tag an order as 'Cooked' as complete commands would do the job.*
+* When an order is tagged as 'Delivering', it would go above all the cooked orders.
+* Finally, when an order is tagged as 'Delivered', it would go all the way to the bottom as the order
+ is consider closed.
+****
+Examples:
+
+Example scenario 1:
+
+* We have five orders being processed.
+
+image::UG_Tag_1.png[width="790"]
+
+* Enter completeMore order command to complete first three orders, 'Curry Chicken' 'Ban Mian' and 'Chicken Chop'
+
+>> `cM 3`
+
+* Now these three orders are labelled as 'Cooked'
+
+image::UG_Tag_2.png[width="790"]
+
+* We send out delivery man for Chicken Chop and tag it as 'Delivering'
+
+>> `tag 3 Delivering` Notice no t/ needed
+
+image::UG_Tag_4.png[width="790"]
+
+* We can see it jumps to the top of the order book.
+
+* Finally when it is delivered, we enter
+
+>> `tag 1 Delivered` to push it to the bottom
+
+image::UG_Tag_3.png[width="790"]
+
+// end::AddTag[]
+
+// tag::Load[]
+=== Load a web page: `load url` (Since v1.5)
+
+You can try to load a web page in the browser panel, which is the middle window in the main window.
+
+Format: `load url` or `ld url`
+
+****
+* Url is the web page link, for instance: https://www.google.com.sg, https://www.youtube.com
+* Note that user needs to enter 'https://' before the normal web link entered in web browser.
+****
+****
+* Unlike normal web browser, there is no go back previous page function and no open in new tab function.
+****
+****
+* This is only an small extra function. As a result, *the function would not be guaranteed to work and
+ the behaviour of the function may vary from user to user*.
+****
+Example
+
+Example scenario 1:
+
+* You want to load google search page to find out something.
+
+image::UG_Load_1.png[width="790"]
+
+* Enter
+
+>> `load https://www.google.com.sg` or `ld https://www.google.com.sg`
+
+* Then you can see
+
+image::UG_Load_2.png[width="790"]
+// end::Load[]
+
+// tag::ProcessingQueue[]
+=== Process an order (add to the processing queue): `process` (Since v1.5)
+
+You can now process an existing order from the order book to the processing queue, indicating that the order now in being cooked.
+
+Format: `process INDEX` or `ps INDEX`
+
+****
+* You can use `ps INDEX` for faster input.
+****
+****
+* Processing queue is the right dispalyed panel.
+****
+****
+* Processing queue has a max capacity(default size is 5), to represents the ability of the restaurants to preparing
+orders(ie number of chefs, number of cookers, etc). Therefore, once the processing queue is full, no more order can be
+processed until some orders are cooked.
+****
+
+Things to take note
+
+* Index must be valid, meaning it can only be a positive integer that is no bigger than the total orders in the order book now.
+* One order in the order book cannot be processed twice.
+* Once a valid command is entered, the selected order would be added to the processing queue and the original order in the order book will be labelled as processed.
+* If user manually remove 'Processed' tag from an order with tag 'Cooked' or 'Delivering' or 'Delivered', then further
+process commands would not add the order to the processing queue again.
+* Processed orders in the order book(left panel) would sink below than unprocessed orders. If you think order disappears in the order book after type
+process command, try to scroll down below unprocessed orders to see it.
+
+****
+* Display of an order in the order queue is simplified, showing only food, address and inception time.
+* The processing queue is a normal queue without any ordering.
+****
+
+[TIP]
+User could user lazier version `processNext` command, to avoiding trouble of entering INDEX
+
+Examples:
+
+Example scenario 1:
+
+* There is only one order in the order book. To process the first order, we enter
+
+>> `process` or `ps`
+
+* we get feedback message saying that the index is required.
+
+image::UG_Process_1.png[width="790"]
+
+* After that, we enter correct command
+
+>> `process 1` or `ps 1`
+
+* We can see the result below. The order is added to the processing queue and the original order
+ is labelled "Processed".
+
+image::UG_Process_2.png[width="790"]
+
+Example scenario 2:
+
+* After scenario 1, we add more orders to the order book. Now there are several order in the order book. Notice that the
+order Chicken Chop, which is processed in scenario 1, now is ranked below all unprocessed orders.
+
+image::UG_Process_3.png[width="790"]
+
+* Now we enter command
+
+>> `process 2` or `ps 2`
+
+* We can see the result below. The order "Ice Milo" is added to the processing queue and the original order
+ is labelled "Processed". Now Ice Milo also goes below unprocessed orders.
+
+image::UG_Process_4.png[width="790"]
+
+// end::ProcessingQueue[]
+=== Process the next unprocessed order(add to the processing queue): `processNext` (Since v1.5)
+
+To save time, you can process an existing unprocessed order from the order book to the processing queue, without
+worrying about the index. ProcessNext would automatically find the first unprocessed order in the current shown list.
+
+Format: `processNext` or `pN`
+
+****
+* You can use `pN` for faster input. Note the capital 'N'.
+****
+****
+* Processing queue is the right dispalyed panel.
+****
+****
+* Processing queue has a max capacity(default size is 5), to represents the ability of the restaurants to preparing
+orders(ie number of chefs, number of cookers, etc). Therefore, once the processing queue is full, no more order can be
+processed until some orders are cooked.
+****
+Things to take note
+
+* If all orders in the shown list have been processed, message "All Order have been processed".
+* One order in the order book cannot be processed twice.
+* If user manually remove 'Processed' tag from an order with tag 'Cooked' or 'Delivering' or 'Delivered', then further
+process commands would not add the order to the processing queue again.
+* Processed orders in the order book(left panel) would sink below than unprocessed orders. If you think order disappears in the order book after type
+process command, try to scroll down below unprocessed orders to see it.
+
+[TIP]
+User could user even lazier version `processMore NUMBER` command, to avoiding trouble of entering
+`processNext` multiple time
+
+Examples:
+
+Example scenario 1:
+
+* Now our orders are these.
+
+image::UG_Process_4.png[width="790"]
+
+* To process the next order, which is 'Curry Chicken' in this case, we simply enter
+
+>> `processNext` or `pN`
+
+* We can see the result below. The 'Curry Chicken' order is added to the processing queue and the original order
+ is labelled "Processed".
+
+image::UG_Process_5.png[width="790"]
+
+Example scenario 2:
+
+* After scenario 1, we realize Ice Milo is finished preparing. We use  Notice it goes all the way to the top of the list, as a
+remainder for you to send out the delivery man.
+
+****
+* For details of order's ranking in order book, please refer to tag command section)
+****
+
+image::UG_Process_6.png[width="790"]
+
+* Now the next order to be processed is Ban Mian, which is at position 2. We enter
+
+>> `processNext` or `pN`
+
+* We can see the result below. The order "Ban Mian" is added to the processing queue and the original order
+ is labelled as "Processed".
+* ProcessNext skips the first processed order.
+
+image::UG_Process_7.png[width="790"]
+
+=== Process the next n unprocessed orders(add to processing queue): `processMore`(Since v1.5)
+
+Now you can process the next n unprocessed order at one simpler command.
+
+Format: `processMore NUMBER` or `pM NUMBER`
+
+****
+* You can use `pM` for faster input. Note the capital 'M'.
+****
+****
+* Processing queue is the right dispalyed panel.
+****
+****
+* Processing queue has a max capacity(default size is 5), to represents the ability of the restaurants to preparing
+orders(ie number of chefs, number of cookers, etc). Therefore, once the processing queue is full, no more order can be
+processed until some orders are cooked.
+****
+Things to take note
+
+* Number must be a positive integer
+* There is no upper bound to the number, as once the all the orders are processed or the processing queue is full,
+the adding and labelling would stop. However, we advise user *not to enter absurdly large number to avoid unusual
+ behavior*.
+
+Examples:
+
+Example scenario 1:
+
+* Now our orders are these. There are five orders waiting to be processed.
+
+image::UG_Process_8.png[width="790"]
+
+* To process all five orders, we simply enter
+
+>> `processMore 5` or `pM 5`
+
+* We can see the result below. All five orders are added to the processing queue and the original orders
+ are labelled "Processed".
+
+image::UG_Process_9.png[width="790"]
+
+=== Complete an order (delete form processing queue): `completeOne` (Since v1.5)
+
+After processing an order and the food is now ready to be delivered, you can use complete order command to remove the
+order from the processing queue, and label the original order in the order book as 'Cooked'.
+
+Format: `completeOne INDEX` or `cOne INDEX`
+
+****
+* You can use `cOne INDEX` for faster input. Note the capital 'O'.
+****
+****
+* Processing queue is the right dispalyed panel.
+****
+
+Things to take note
+
+****
+* Completes and removes the order in the processing queue at the specified `INDEX`.
+* The original order in the order book would be labelled as 'Cooked' and jumps to the top of the list.
+* The index *must be a positive integer* 1, 2, 3, 4, 5, as the default full capacity of the processing queue is 5.
+****
+
+Examples:
+
+Example scenario 1:
+
+* Now our orders are these. There are three orders be processing. Suppose food 'Curry Chicken' has finished cooking.
+Notice it is currently second in the processing queue.
+
+image::UG_Complete_1.png[width="790"]
+
+* To complete it, we simply enter
+
+>> `completeOne 2` or `cOne 2`
+
+* We can see the result below. 'Curry Chicken' is deleted from the processing queue and the original order
+ is labelled "Cooked". Notice the 'Cooked' 'Curry Chicken' would go above unprocessed and processing orders to remind
+ the user to send out delivery man.
+
+image::UG_Complete_2.png[width="790"]
+
+=== Complete n orders (delete form processing queue): `completeMore`
+
+Similar to completeOne command, now multiple orders can be finished and removed from the processing
+queue at the same time. Completes first n orders from the order queue, n is the NUMBER inputted. +
+
+Format: `completeOrder NUMBER` or `cMore NUMBER`
+
+****
+* You can use `cM NUMBER` for faster input. Note the capital 'M'.
+****
+****
+* Order queue is the right dispalyed panel.
+****
+****
+* Completes first n orders.
+* The number cannot be more than the total orders in order queue.
+* The index *must be a positive integer* 1, 2, 3, 4, 5, as the default full capacity of the processing queue is 5.
+****
+
+Examples:
+
+Example scenario 1:
+
+* From previous example, there are still two orders be processing. Suppose food 'Chicken Chop' and
+ 'Ban Mian' have finished cooking at the same time. We would now wants to complete both using one command.
+
+image::UG_Complete_2.png[width="790"]
+
+* To do so, we simply enter
+
+>> `completeMore 2` or `cM 2`
+
+* We can see the result below. Both 'Chicken Chop' and 'Ban Mian' are deleted from the processing queue and
+the original orders are labelled "Cooked". Notice the 'Cooked' 'Chicken Chop' and 'Ban Mian' would go above
+unprocessed and processing orders to remind the user to send out delivery man.
+
+image::UG_Complete_3.png[width="790"]
+
+
+
+
+
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
+Alias: `hist` +
 Format: `history`
 
 [NOTE]
@@ -171,12 +656,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the queue to the state before the previous _undoable_ command was executed. +
+Alias: `ud` +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the queue of orders (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -198,6 +684,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
+Alias: `rd` +
 Format: `redo`
 
 Examples:
@@ -218,47 +705,156 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries (order book and processing queue): `clear`
 
-Clears all entries from the address book. +
+Clears all orders from the order book. +
+Alias: `c` +
 Format: `clear`
+
+
 
 === Exiting the program : `exit`
 
 Exits the program. +
+Alias: `ext` +
 Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Customers' data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+// tag::count[]
+=== Count the number of orders a customer has placed in the past
+
+The statistics of customers will be stored in the hard disk as an XML file.
+When a customer places an order, it accumulates (add 1) to the number of his/her past orders.
+
+Examples:
+
+* Initially no order has been placed so the output XML file is empty.
+
+* `add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+The customer with phone number "91111111" has accumulated 1 order. +
+The result will be updated and stored in the XML file.
+
+image::user1.png[width="800"]
+
+* `add n/Zequn p/92222222 f/Chicken Rice a/NUS` +
+Another customer with a different phone number "92222222" has accumulated 1 order. +
+The result will be updated and stored in the XML file.
+
+image::user2.png[width="800"]
+
+* `delete 1` +
+`add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+`delete 1` +
+`add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+Now the first customer with phone number "91111111" has placed 3 orders in total in the past. +
+The results are reflected in the XML file.
+
+image::user3.png[width="800"]
+// end::count[]
+
+// tag::querycount[]
+=== Check a customer's current count of past orders `Coming in v2.0`
+
+Gets the number of past orders given a customers phone number. +
+Format: `count PHONE`
+
+* The PHONE provided must be a valid phone number.
+* If the customer has not placed any order before, the result obtained is 0.
+
+Examples:
+
+* `count 91238888`
+* `count 11111111`
+
+// end::querycount[]
+
+// tag::identify[]
+=== Identify loyal customer by past orders count and give discounts `Coming in v2.0`
+
+When a customer's past orders count has been accumulated to 3/5/7/9 (numbers determined by restaurants). +
+Messages will be shown to remind restaurants to give the customer discount on the current order.
+// end::identify[]
+
+// tag::menu[]
+=== Modify Menu `Coming in v2.0`
+
+The user will be allowed to modify menu e.g. addDish or deleteDish or editDish(change prices, names) by using the CLI instead of replacing the order menu file with a new menu file.
+
+// end::menu[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== Command Summary
+== Command Summary (full)(alphabetical)
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER a/ADDRESS f/FOOD_ORDER [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 a/123, Clementi Rd, 1234665 f/Chicken Rice t/friends`
 * *Clear* : `clear`
+* *CompleteOne* : `completeOne INDEX` +
+e.g. `completeOne 2`
+* *CompleteMore* : `completeMore NUMBER` +
+e.g. `completeMore 5`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [f/FOOD_ORDER] [t/TAG]...` +
+e.g. `edit 2 n/James Lee
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
 * *Help* : `help`
+* *History* : `history`
+* *List* : `list`
+* *Load* : `load ` + web page link +
+e.g. `load https://www.google.com.sg`
+* *Path* : 'path INDEX' +
+e.g.`path 2`
+* *Process* `process INDEX` +
+e.g. `process 1`
+* *ProcessNext* : `processNext` +
+* *ProcessMore* : `processMore NUMBER` +
+e.g. `processMore 2`
+* *Redo* : `redo`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *History* : `history`
+* *Tag* : `tag INDEX` + tagWord +
+e.g. `tag 1 Delivered`
 * *Undo* : `undo`
+
+== Command Summary (short form)(alphabetical)
+* *Add* `a n/NAME p/PHONE_NUMBER a/ADDRESS f/FOOD_ORDER [t/TAG]...` +
+e.g. `a n/James Ho p/22224444 a/123, Clementi Rd, 1234665 f/Chicken Rice t/friend t/colleague`
+* *Clear* : `c`
+* *CompleteOne* : `cOne INDEX` +
+e.g. `cOne 2`
+* *CompleteMore* : `cM NUMBER` +
+e.g. `cM 5`
+* *Delete* : `d INDEX` +
+e.g. `d 3`
+* *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [f/FOOD_ORDER] [t/TAG]...` +
+e.g. `e 2 n/James Lee
+* *Find* : `f KEYWORD [MORE_KEYWORDS]` +
+e.g. `f James Jake`
+* *Help* : `h`
+* *History* : `history`
+* *List* : `l`
+* *Load* : `ld ` + web page link +
+e.g. `ld https://www.google.com.sg`
+* *Path* : 'p INDEX' +
+e.g.`p 2`
+* *Process* `ps INDEX` +
+e.g. `process 1`
+* *ProcessNext* : `pN` +
+* *ProcessMore* : `pM NUMBER` +
+e.g. `processMore 2`
 * *Redo* : `redo`
+* *Select* : `s INDEX` +
+e.g.`select 2`
+* *Tag* : `tag INDEX` + tagWord +
+e.g. `tag 1 Delivered`
+* *Undo* : `undo`

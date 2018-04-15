@@ -4,10 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Vegetarian;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -18,21 +20,28 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "alice@gmail.com";
+    public static final String DEFAULT_ORDER = "Chicken Rice";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_HALAL = "Non-halal";
+    public static final String DEFAULT_VEGETARIAN = "Non-vegetarian";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
     private Phone phone;
-    private Email email;
+    private Order order;
     private Address address;
+    private Halal halal;
+    private Vegetarian vegetarian;
+
     private Set<Tag> tags;
 
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
-        email = new Email(DEFAULT_EMAIL);
+        order = new Order(DEFAULT_ORDER);
         address = new Address(DEFAULT_ADDRESS);
+        halal = new Halal(DEFAULT_HALAL);
+        vegetarian = new Vegetarian(DEFAULT_VEGETARIAN);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -42,8 +51,10 @@ public class PersonBuilder {
     public PersonBuilder(Person personToCopy) {
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
-        email = personToCopy.getEmail();
+        order = personToCopy.getOrder();
         address = personToCopy.getAddress();
+        halal = personToCopy.getHalal();
+        vegetarian = personToCopy.getVegetarian();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -54,6 +65,16 @@ public class PersonBuilder {
         this.name = new Name(name);
         return this;
     }
+
+    //@@author ZacZequn
+    /**
+     * Sets the {@code Order} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withOrder(String order) {
+        this.order = new Order(order);
+        return this;
+    }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
@@ -78,17 +99,27 @@ public class PersonBuilder {
         this.phone = new Phone(phone);
         return this;
     }
-
+    //@@author ZacZequn
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Halal} of the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String email) {
-        this.email = new Email(email);
+    public PersonBuilder withHalal(String halal) {
+        this.halal = new Halal(halal);
         return this;
     }
 
+    /**
+     * Sets the {@code Vegetarian} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withVegetarian(String vegetarian) {
+        this.vegetarian = new Vegetarian(vegetarian);
+        return this;
+    }
+    //@@author
+
+
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, order, address, halal, vegetarian, tags);
     }
 
 }

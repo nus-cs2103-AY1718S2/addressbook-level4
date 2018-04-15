@@ -1,0 +1,63 @@
+= Zhang Zequn - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Delivery
+
+---
+
+== Overview
+
+Delivery is a desktop application designed for restaurants who want to maintain their own system to keep track customers’ orders. It is optimized for those who prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the order feature* for AddCommand and *checked whether the order is available*
+** What it does: allows the user to key in the order made by customers, and check whether the ordered dish is available in the restaurants' menu.
+** Justification: This feature enables the main functionality of the Delivery app, because the app is serving the purpose to keep track customers' orders. By checking whether the ordered food is available in the menu, the user can decide whether customers can order the particular dish.
+** Highlights: Adding the order feature requires updates for AddCommand and EditCommand as well as all the relevant methods and data structure involved. Enabling the checking process needs to main a local menu storage for all the dishes available. Maintaining the dishes inside the menu by commands will be available in upcoming version 2.0.
+
+* *Minor enhancement*: Add Optional Halal/Non-halal and Vegetarian/Non-vegetarian features.
+** What it does: allows the user to key in the optional Halal/Non-halal and Vegetarian/Non-vegetarian features. If the user did not key in values for these two features, the default value is Non-halal and Non-vegetarian.
+** Justification: This allows the restaurants to have a clear view about whether the customer is halal and vegetarian, hence can better prepare for the food.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F11-B4/main/blob/master/collated/functional/ZacZequn.md[Functional code]] [https://github.com/CS2103JAN2018-F11-B4/main/blob/master/collated/test/ZacZequn.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` (1 releases) on GitHub
+** Enhancements to existing features:
+*** Add colours to different tags, such that same tags will be assigned the same colours which makes the differentiation of tags clearer. (Pull requests https://github.com/CS2103JAN2018-F11-B4/main/commit/69a6fb5ceccc27452f8f3c698aa2671fb9a61c02[#4])
+*** Wrote additional tests for added features e.g. Halal and Vegetarian features and sample Menu (Pull requests https://github.com/CS2103JAN2018-F11-B4/main/commit/03012e1ab2bcd39acf06190b2ff3f6b4a7267863[#29], https://github.com/CS2103JAN2018-F11-B4/main/pull/163/commits/9cfe128ca73eaf805f49fcfa497a49414b54250c[#163])
+*** Update the UI display e.g. App icon and name, displayed features (Pull requests https://github.com/CS2103JAN2018-F11-B4/main/pull/157/commits/5334c5e73e00ef064d31381a2ca849d50e86572a[#157], https://github.com/CS2103JAN2018-F11-B4/main/pull/157/commits/208ed78e1126a127be4099e3cd9e549e04581992[#157], https://github.com/CS2103JAN2018-F11-B4/main/pull/155/commits/182093a88d148feee9a62b591c2af10bc5ddf5f4[#155], https://github.com/CS2103JAN2018-F11-B4/main/pull/162/commits/bda036e3eedfec192e85237646f9ca26cfc2b496[#162])
+** Documentation:
+*** Update relevant parts for User Guide and Developer Guide
+** Community:
+*** Contributed to forum discussions (examples:  https://nus-cs2103-ay1718s2.slack.com/archives/D9M8Y20Q2/p1520616066000038[1])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T16-B1/main/issues/87[1], https://github.com/CS2103JAN2018-T16-B1/main/issues/80[2], https://github.com/CS2103JAN2018-T16-B1/main/issues/73[3]) +
+(These issues were created by me, but it shows that my team mate created them on gitHub. I think this could because that I was re-assigned to this group during the mock PE.)
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=add]
+
+include::../UserGuide.adoc[tag=menu]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=menu]
+
+
+
+

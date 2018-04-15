@@ -21,17 +21,26 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CustomerStats;
+import seedu.address.model.Menu;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCustomerStats;
+import seedu.address.model.ReadOnlyMenu;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.util.SampleMenuDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.CustomerStatsStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.MenuStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlCustomerStatsStorage;
+import seedu.address.storage.XmlMenuStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -40,7 +49,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -62,7 +71,9 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        CustomerStatsStorage customerStatsStorage = new XmlCustomerStatsStorage(userPrefs.getCustomerStatsFilePath());
+        MenuStorage menuStorage = new XmlMenuStorage(userPrefs.getMenuFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, customerStatsStorage, menuStorage);
 
         initLogging(config);
 
@@ -87,7 +98,11 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyCustomerStats> customerStatsOptional;
+        Optional<ReadOnlyMenu> menuOptional;
         ReadOnlyAddressBook initialData;
+        ReadOnlyCustomerStats initialCustomerStats;
+        ReadOnlyMenu initialMenu;
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
@@ -102,7 +117,39 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        //@@author Wuhao-ooo
+        try {
+            customerStatsOptional = storage.readCustomerStats();
+            if (!customerStatsOptional.isPresent()) {
+                logger.info("Data file for customer stats not found. Will be starting with an empty file");
+            }
+            initialCustomerStats = new CustomerStats();
+        } catch (DataConversionException e) {
+            logger.warning("Data file for customer stats in wrong format. Will be starting with an empty file");
+            initialCustomerStats = new CustomerStats();
+        }  catch (IOException e) {
+            logger.warning("Problem while reading from the customer stats file. Will be starting with an empty file");
+            initialCustomerStats = new CustomerStats();
+        }
+        //@@author
+
+        //@@author ZacZequn
+        try {
+            menuOptional = storage.readMenu();
+            if (!menuOptional.isPresent()) {
+                logger.info("Data file for menu not found. Will be starting with an empty file");
+            }
+            initialMenu = menuOptional.orElseGet(SampleMenuDataUtil::getSampleMenu);
+        } catch (DataConversionException e) {
+            logger.warning("Data file for menu in wrong format. Menu will be starting with an empty file");
+            initialMenu = new Menu();
+        }  catch (IOException e) {
+            logger.warning("Problem while reading from the menu file. Menu will be starting with an empty file");
+            initialMenu = new Menu();
+        }
+        //@@author
+
+        return new ModelManager(initialData, userPrefs, initialCustomerStats, initialMenu);
     }
 
     private void initLogging(Config config) {

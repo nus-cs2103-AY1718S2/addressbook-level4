@@ -12,6 +12,10 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String customerStatsFilePath = "data/customerstats.xml";
+    private String customerStatsName = "MyCustomerStats";
+    private String menuFilePath = "data/menu.xml";
+    private String menuName = "MyMenu";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -33,6 +37,18 @@ public class UserPrefs {
         return addressBookFilePath;
     }
 
+    //@@author Wuhao-ooo
+    public String getCustomerStatsFilePath() {
+        return customerStatsFilePath;
+    }
+
+    //@@author
+    //@@author ZacZequn
+    public String getMenuFilePath() {
+        return menuFilePath;
+    }
+
+    //@@author
     public void setAddressBookFilePath(String addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
     }
@@ -41,6 +57,12 @@ public class UserPrefs {
         return addressBookName;
     }
 
+    //@@author Wuhao-ooo
+    public String getCustomerStatsName() {
+        return customerStatsName;
+    }
+
+    //@@author
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
     }

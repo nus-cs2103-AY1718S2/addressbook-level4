@@ -13,9 +13,12 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.CustomerStatsChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CustomerStats;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCustomerStats;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -32,7 +35,9 @@ public class StorageManagerTest {
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        XmlCustomerStatsStorage customerStatsStorage = new XmlCustomerStatsStorage(getTempFilePath("cs"));
+        MenuStorage menuStorage = new XmlMenuStorage(getTempFilePath("menu"));
+        storageManager = new StorageManager(addressBookStorage, userPrefsStorage, customerStatsStorage, menuStorage);
     }
 
     private String getTempFilePath(String fileName) {
@@ -76,12 +81,45 @@ public class StorageManagerTest {
     public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
-                                             new JsonUserPrefsStorage("dummy"));
+                new JsonUserPrefsStorage("dummy"), new XmlCustomerStatsStorage("dummy"),
+                new XmlMenuStorage("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
+    //@@author Wuhao-ooo
+    @Test
+    public void getCustomerStatsFilePath() {
+        assertNotNull(storageManager.getCustomerStatsFilePath());
+    }
 
+    @Test
+    public void handleCustomerStatsChangedEvent_exceptionThrown_eventRaised() {
+        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
+        Storage storage = new StorageManager(new XmlAddressBookStorage("dummy"),
+                new JsonUserPrefsStorage("dummy"),
+                new XmlCustomerStatsStorageExceptionThrowingStub("dummy"),
+                new XmlMenuStorage("dummy"));
+        storage.handleCustomerStatsChangedEvent(new CustomerStatsChangedEvent(new CustomerStats()));
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
+    /**
+     * A Stub class for XmlCustomerStatsStorage to throw an exception when the save method is called
+     */
+    class XmlCustomerStatsStorageExceptionThrowingStub extends XmlCustomerStatsStorage {
+
+        public XmlCustomerStatsStorageExceptionThrowingStub(String filePath) {
+            super(filePath);
+        }
+
+        @Override
+        public void saveCustomerStats(ReadOnlyCustomerStats customerStats, String filePath) throws IOException {
+            throw new IOException("dummy exception");
+        }
+    }
+
+    //@@author
     /**
      * A Stub class to throw an exception when the save method is called
      */

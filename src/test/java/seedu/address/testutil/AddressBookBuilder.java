@@ -5,6 +5,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
  * A utility class to help with building Addressbook objects.
@@ -43,6 +45,18 @@ public class AddressBookBuilder {
             addressBook.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tagName is expected to be valid.");
+        }
+        return this;
+    }
+
+    /**
+     * Adds {@code Task} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withTask(Task task) {
+        try {
+            addressBook.addTask(task);
+        } catch (DuplicateTaskException dte) {
+            throw new IllegalArgumentException("order is expected to be unique.");
         }
         return this;
     }

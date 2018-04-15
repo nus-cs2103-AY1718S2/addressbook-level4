@@ -10,11 +10,16 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.dish.Price;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Halal;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Order;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Vegetarian;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Count;
+import seedu.address.model.task.Distance;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -91,6 +96,32 @@ public class ParserUtil {
         return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
     }
 
+    //@@author ZacZequn
+    /**
+     * Parses a {@code String order} into a {@code Order}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code order} is invalid.
+     */
+    public static Order parseOrder(String order) throws IllegalValueException {
+        requireNonNull(order);
+        String trimmedOrder = order.trim();
+        if (!Order.isValidOrder(trimmedOrder)) {
+            throw new IllegalValueException(Order.MESSAGE_ORDER_CONSTRAINTS);
+        }
+        return new Order(trimmedOrder);
+    }
+
+    /**
+     * Parses a {@code Optional<String> order} into an {@code Optional<Order>} if {@code order} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Order> parseOrder(Optional<String> order) throws IllegalValueException {
+        requireNonNull(order);
+        return order.isPresent() ? Optional.of(parseOrder(order.get())) : Optional.empty();
+    }
+    //@@author
+
     /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
@@ -115,29 +146,56 @@ public class ParserUtil {
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
     }
 
+    //@@author ZacZequn
     /**
-     * Parses a {@code String email} into an {@code Email}.
+     * Parses a {@code String halal} into an {@code Halal}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code email} is invalid.
+     * @throws IllegalValueException if the given {@code halal} is invalid.
      */
-    public static Email parseEmail(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+    public static Halal parseHalal(String halal) throws IllegalValueException {
+        requireNonNull(halal);
+        String trimmedHalal = halal.trim();
+        if (!Halal.isValidHalal(trimmedHalal)) {
+            throw new IllegalValueException(Halal.MESSAGE_HALAL_CONSTRAINTS);
         }
-        return new Email(trimmedEmail);
+        return new Halal(trimmedHalal);
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * Parses a {@code Optional<String> halal} into an {@code Optional<Halal>} if {@code halal} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    public static Optional<Halal> parseHalal(Optional<String> halal) throws IllegalValueException {
+        requireNonNull(halal);
+        return halal.isPresent() ? Optional.of(parseHalal(halal.get())) : Optional.empty();
     }
+
+    /**
+     * Parses a {@code String vegetarian} into an {@code Vegetarian}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code vegetarian} is invalid.
+     */
+    public static Vegetarian parseVegetarian(String vegetarian) throws IllegalValueException {
+        requireNonNull(vegetarian);
+        String trimmedVegetarian = vegetarian.trim();
+        if (!Vegetarian.isValidVegetarian(trimmedVegetarian)) {
+            throw new IllegalValueException(Vegetarian.MESSAGE_VEGETARIAN_CONSTRAINTS);
+        }
+        return new Vegetarian(trimmedVegetarian);
+    }
+
+    /**
+     * Parses a {@code Optional<String> vegetarian} into an {@code Optional<Vegetarian>}
+     * if {@code vegetarian} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Vegetarian> parseVegetarian(Optional<String> vegetarian) throws IllegalValueException {
+        requireNonNull(vegetarian);
+        return vegetarian.isPresent() ? Optional.of(parseVegetarian(vegetarian.get())) : Optional.empty();
+    }
+    //@@author
 
     /**
      * Parses a {@code String tag} into a {@code Tag}.
@@ -164,5 +222,77 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String price} into a {@code Price}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code price} is invalid.
+     */
+    public static Price parsePrice(String price) throws IllegalValueException {
+        requireNonNull(price);
+        String trimmedPrice = price.trim();
+        if (!Price.isValidPrice(trimmedPrice)) {
+            throw new IllegalValueException(Price.MESSAGE_PRICE_CONSTRAINTS);
+        }
+        return new Price(trimmedPrice);
+    }
+
+    /**
+     * Parses a {@code Optional<String> price} into an {@code Optional<Price>} if {@code price} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Price> parsePrice(Optional<String> price) throws IllegalValueException {
+        requireNonNull(price);
+        return price.isPresent() ? Optional.of(parsePrice(price.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String distance} into a {@code Distance}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code distance} is invalid.
+     */
+    public static Distance parseDistance(String distance) throws IllegalValueException {
+        requireNonNull(distance);
+        String trimmedDistance = distance.trim();
+        if (!Distance.isValidDistance(trimmedDistance)) {
+            throw new IllegalValueException(Distance.MESSAGE_DISTANCE_CONSTRAINTS);
+        }
+        return new Distance(trimmedDistance);
+    }
+
+    /**
+     * Parses a {@code Optional<String> distance} into an {@code Optional<Distance>} if {@code distance} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Distance> parseDistance(Optional<String> distance) throws IllegalValueException {
+        requireNonNull(distance);
+        return distance.isPresent() ? Optional.of(parseDistance(distance.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String count} into a {@code Count}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code count} is invalid.
+     */
+    public static Count parseCount(String count) throws IllegalValueException {
+        requireNonNull(count);
+        String trimmedCount = count.trim();
+        if (!Count.isValidCount(trimmedCount)) {
+            throw new IllegalValueException(Count.MESSAGE_COUNT_CONSTRAINTS);
+        }
+        return new Count(trimmedCount);
+    }
+
+    /**
+     * Parses a {@code Optional<String> count} into an {@code Optional<Count>} if {@code count} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Count> parseCount(Optional<String> count) throws IllegalValueException {
+        requireNonNull(count);
+        return count.isPresent() ? Optional.of(parseCount(count.get())) : Optional.empty();
     }
 }

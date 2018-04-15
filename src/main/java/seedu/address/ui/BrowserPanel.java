@@ -12,7 +12,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.LoadPageChangedEvent;
+import seedu.address.commons.events.ui.PersonPanelPathChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.Person;
 
 /**
@@ -21,8 +24,10 @@ import seedu.address.model.person.Person;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+    public static final String GOOGLE_MAP_SEARCH_PAGE =
+            "https://www.google.com.sg/maps/search/";
+    public static final String GOOGLE_MAP_PATH_SEARCH_PAGE =
+            "https://www.google.com.sg/maps/dir/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -40,9 +45,19 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
+    //@@author ZhangYijiong
+    private void loadGoogleMapAddressPage(Person person) {
+        loadPage(GOOGLE_MAP_SEARCH_PAGE + person.getAddress().getGoogleMapSearchForm());
+    }
+    //@@author ZhangYijiong
+    private void loadGoogleMapPathPage(Person person) {
+        loadPage(GOOGLE_MAP_PATH_SEARCH_PAGE + Address.ADDRESS_USER_OWN
+                + "/" + person.getAddress().getGoogleMapSearchForm());
+    }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    //@@author ZhangYijiong
+    private void loadUserInputPage(String url) {
+        loadPage(url);
     }
 
     public void loadPage(String url) {
@@ -64,9 +79,25 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author ZhangYijiong
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadGoogleMapAddressPage(event.getNewSelection().person);
+    }
+
+    //@@author ZhangYijiong
+    @Subscribe
+    private void handlePersonPanelPathChangedEvent(PersonPanelPathChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadGoogleMapPathPage(event.getNewSelection().person);
+    }
+
+    //@@author ZhangYijiong
+    @Subscribe
+    private void handleLoadPageChangedEvent(LoadPageChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadUserInputPage(event.getUrl());
     }
 }
+

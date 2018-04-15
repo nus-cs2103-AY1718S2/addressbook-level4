@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Delivery - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103-F11-B4/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F11-B4`      Since: `Mar 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -358,13 +358,6 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -384,6 +377,257 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::count[]
+=== Customers’ Orders Count feature
+==== Current Implementation
+The counting of customers’ past orders can be stored in an additional local database. The data can be kept in a local XmlCustomerStats file.
+
+The data file consists of CustomerStats. It can be implemented using a HashMap since each customer is identified by his / her unique phoneNumber and has a counter numOfOrders keep counting the number of orders. So, the keys of the HashMap are the phone number Strings and the values are the order count integers corresponding to the phone number String.
+
+As you can see from the diagram below, these are the interactions among the components during an “add” command. After the Model component raises an AddressBookChangedEvent to update the content of the AddressBook, it raises another CustomerStatsChangedEvent to update the current customer’s order count.
+
+image::3.5.1.a.png[width="800"]
+
+Then the EventsCenter reacts to the event. It finds the customer in the Customer Stats database using the phone number provided and add 1 to the corresponding numOfOrders value.
+
+To implement this feature, there are some modifications to the existing Model component and Storage component to support the additional data structure.
+
+image::3.5.1.b.png[width="800"]
+
+As the diagram shown above, besides AddressBook and UserPref, now ModelManager has an additional CustomerStats class. It consists an ordersCount field which is a HashMap and has many Phone numbers and numOfOrders counters. Phone numbers and the numOfOrders counters are 1-1 mapped and each pair represent one customer that has placed at least one order before.
+
+image::3.5.1.c.png[width="800"]
+
+In the Storage component, there is an additional CustomerStatsStorage interface and it is implemented by a XmlCustomerStatsStorage class to read and write the XML file on local machine.
+
+==== Design Considerations
+
+===== Aspect: Identification of customers
+
+* **Alternative 1 (current choice):** Identify a customer by his/her phone number.
+** Pros: Easy to implement.
+** Cons: Customers will lose their past orders count if they change phone number.
+* **Alternative 2:** Identify customers using individual accounts.
+** Pros: Customers can still have the counting kept going on even if they change phone numbers, as long as the account does not change.
+** Cons: It requires additional data structures and a server system. Too hard to implement.
+
+===== Aspect: Data structure to store data for orders count
+
+* **Alternative 1 (current choice):** Use a HashMap to store the phoneNumber-numOfOrders pair.
+** Pros: Efficient to search for a given key and update its value.
+** Cons: Information not fully encapsulated.
+* **Alternative 2:** Use an ArrayList of Customer objects and each Customer object contains a numOfOrders attribute.
+** Pros: Better encapsulation of information
+** Cons: It takes up more space and it requires a much longer time to find a customer and update the counter.
+// end::count[]
+
+// tag::menu[]
+=== Menu feature
+==== Current Implementation
+All the dishes can be created as an object and then be stored in an additional local database. The data can be kept in a local XmlMenu file.
+
+The data file consists of all the available food and drinks provided by the restaurant. Customers can only order those provided. In the case when anything which is not provided by the restaurant but is ordered by customers, exceptions will be thrown. Notification will be given to inform the user that customers should not order this particular food or drink.
+
+In this case, HashMap is used. While the name of the food is the key, and the Dish object is the value.
+
+In the upcoming Delivery v2.0, users will be able to update the data file by adding or deleting dishes objects inside the database.
+
+As you can see from the diagram below, these are the interactions among the components during an “add” command. During the adding process, the availability of the food ordered will be checked. Order will only be added when ordered food is available.
+
+image::menu_fig_1.png[width="800"]
+
+To achieve this enhancement, the following modifications are made for Model and Storage components. For Model components, besides AddressBook, UserPref and CustomerStats, now ModelManager has an additional Menu class. It consists a Data field with all the available food provided by the restaurant. In the Storage component, there is an additional MenuStorage interface and it is implemented by a XmlMenuStorage class to read the XML file on local machine.
+
+image::menu_fig_2.png[width="800"]
+
+image::menu_fig_3.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Data structure to store menu
+
+* **Alternative 1 (current choice):** Use a HashMap. String (names of dishes) will be the key, Dishes will be the value.
+** Pros: Efficient to search for a given key and decide whether the dish is available.
+** Cons: User may key in wrongly for names of dishes.
+* **Alternative 2:** Use a HashMap. Dishes will be the key, prices will be the value.
+** Pros: It is easy to retrieve the price for each dishes.
+** Cons: When the user key in the names of dishes, conversions are required to build a Dish object from the name of the dish(String). More information is required e.g. prices of all dishes.
+===== Aspect: Restriction for ordering
+
+* **Alternative 1 (current choice):** Allow user to input the names for dishes and drinks
+** Pros: No extra information is required e.g. a index reference.
+** Cons: It could be time-consuming for typing all the names. There might be typos which make dishes can not be recognised.
+* **Alternative 2:** Allow user to input the indexes for dishes and drinks
+** Pros: It can be efficient if the user is familiar with the index reference for all food, as the user can just key in indexes.
+** Cons: It requires a index reference. Extra work needs to be done for creating and maintaining the index reference.
+// end::menu[]
+
+===== Aspect: Maintaining the menu （Coming in v2.0)
+
+* **Alternative 1 (proposed):** Use lazy deletion.
+** Pros: Easy to implement.
+** Cons: It may take a lot of memory space if there are a lot of dishes updated.
+* **Alternative 2:** Delete the dish object.
+** Pros: Save memory space
+** Cons: While adding back those pre-existing dishes, more work need to be done.
+
+
+=== ProcessingQueue feature
+
+Processing queue gives restaurants owner a way to manage their kitchen and further differentiates different state of an
+order.
+
+In the code, processing queue is represented by TaskList, which is an observable, ordered list comprises of Task object.
+
+**Task list and processing queue are referring to the same thing, as Task list is just the name used in the code. Its
+intention is to serve as a processing queue.**
+
+**For clarification, in the code, the order object is represented using Person class, meaning although the functionality
+ of the class changes, names of the original classes are retained. This applies to most of the classes. Therefore,
+ order and person, order book and person list are essentially the same thing, only the names are wrong. For the following
+ section, terms order and order book are used.**
+
+==== Design Considerations
+
+===== Aspect: Implementation of Processing Queue
+
+* **Alternative 1:** Create another list of order, using existing Order class.
+** Pros: Easy to implement.
+** Cons: It gets complicated when you want to process an order, as you could move the original order object to the
+processing queue or you could create a duplicate order object.
+* **Alternative 2(current choice)::** Create a brand-new class to represent order being processed.
+** Pros: Difficult to implement
+** Cons: Reduces potential conflicts between existing commands and new commands
+
+=== Task Object
+
+The word "Task" is used because there exist a class named "Order" in Person package.
+Thus, "Task" is used to avoid any confusion if it were to named as "order". Besides, orders needed to be cooked can be
+seen a task to finish in some sense.However, this could create other possible
+confusions.
+
+The Task object represents an received order being cooked, as such there exist an one-to-one link between order
+in order book and task in taskList.
+and stores information same
+
+
+
+
+
+==== Current Implementation
+
+The following class diagram illustrates the structure of a Task object.
+
+image::Task_Class.png[width="790"]
+
+However, the actual construction of the task in commands omits attributes price, distance, past order count.
+
+==== Design Considerations
+
+===== Aspect: Construction of a task object
+
+* **Alternative 1(rejected):** Constructed based order details(food), address, price of the order,
+ distance from the owner, the customers' past order count.
+** Pros: It was originally design so that the particular task gets certain priority attached to it, and is able to
+jump queue.
+** Cons: It is fairer just to cook order based on the inception time of the order. In addition, the process command needs to
+take in lots of input, not efficient.
+* **Alternative 2(current choice)::** Construct using an existing order object (adopt order, address, other attributes
+are zero)
+** Pros: Makes process command much simpler
+** Cons: Unused code such as Price class, Distance class and Count class.
+// tag::ProcessingQueue[]
+=== TaskList
+
+TaskList is a ordered list of Task objects. It is used to store the task objects and perform operations on them.
+
+==== Current Implementation
+Below is the code for TaskList and UniquePersonList. The implementation of TaskList mimics that of the
+UniquePersonList.
+
+[source,java]
+----
+public class TaskList implements Iterable<Task> {
+    // ......
+    private final ObservableList<Task> internalList = FXCollections.observableArrayList();
+    // ......
+    }
+----
+[source,java]
+----
+public class UniquePersonList implements Iterable<Person> {
+    // ......
+    private final ObservableList<Person> internalList = FXCollections.observableArrayList();
+    // ......
+}
+----
+
+===== Aspect: Implementation of ordering of task objects in task list
+
+* **Alternative 1:** Use Java PriorityQueue
+** Pros: Efficient to add a task, complexity is lower than alternative 2.
+** Cons: Difficult to implement.
+* **Alternative 2:** Use an ArrayList of Order objects and comparable interface.
+** Pros: Easy to implement, quick to access and edit orders.
+** Cons: When number of orders gets larger, the time taken would be slower as internally the priority queue is maintained
+by sorting (MergeSort). The GUI would hang for a short while before display results.
+
+==== Storage of Task object and TaskList
+
+* **Alternative 1(current choice): **Store Task objects together in the default XML storage file addressbook.xml.
+** Pros Only 1 storage file is needed. The storage manager thus only needs to refer to one storage,
+except for customerStats.xml.
+** Cons Any changes to the Person or Task will affect the storage of both the Person and Task objects,
+which would significantly increase coupling between the Person and Task classes.
+
+* **Alternative 2: **Store Tasks objects in a separate XML file
+** Pros: Easier to manage as two storage are separated.
+** Cons: Difficult to implement.
+Additional method are needed to for existing save/load functions.
+
+=== ProcessOrderCommand
+
+Below is a sequence diagram when 'process 1' is entered.
+
+image::ProcessOrder_Sequence.png[width="790"]
+
+As see from the diagram, when the logic manager receives the input, it would sent it to the AddressBookParser, which decide
+which command the input is trying to access.
+
+The keyword 'process' is then identified by the AddressBookParser, following by a instantiation of ProcessOrderCommandParser
+ object to create a ProcessOrderCommand class to interact with model and perform its functionality.
+
+ProcessOrderCommand object would call its method execute(), which would make several method calls to update the order book and task list in model,
+before it returns a CommandResult object back to logic manager.
+
+As such, the operation "process 1" is carried and the result is shown in the GUI.
+
+=== CompleteOrderCommand
+
+Below is a UML diagram when 'completeOne 1' is entered.
+
+image::CompleteOneOrder_UML.png[width="790"]
+
+The class involved and sequence of method calling is similar to previous ProcessOrderCommand.
+// end::ProcessingQueue[]
+
+// tag::Path[]
+=== Path feature
+==== Current Implementation
+
+Path command uses similar implementation as Select command.
+
+As you can see from the diagram below, these are the interactions among the components during an “Path” command. The Model component raises a PersonPanelPathChangedEvent.
+
+image::figure3.8.1a.png[width="800"]
+
+The diagram below shows how EventsCenter reacts to the event.
+
+image::figure3.8.1b.png[width="800"]
+
+To implement this feature, there are some modifications to the existing Model component and UI component.
+// end::Path[]
 
 == Documentation
 
@@ -779,16 +1023,52 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == Product Scope
+Delivery is targeted at restaurants, especially the small ones,  which want to have a system to keep track customers’ orders of delivery.
+
+A restaurant can have hundreds of orders a day and it’s quite troublesome for the restaurant to manually keep track all customer information, including their names, contact numbers, addresses, orders and expected time of delivery etc.
+
+Hence they need a software to store all personal information and order information in an organised manner.
+
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* Owns a small-medium restaurant which provides delivery services/ big restaurants
+* Wants to have a database system for orders of deliveries from their customers
+* Not currently cooperating with delivery apps
+* Receives orders of food via phone (hotline)
+* Knows how to use CLI and prefer typing over using mouse
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+
+*Value proposition*: Help restaurants maintain all the information of customers and a queue for delivery services
+
+*Feature contribution*
+
+* Wu Hao
+- Minor enhancement: Add alias to each command +
+In case the restaurant has to handle many orders during lunch time, this feature helps restaurant owners to manage
+the orders faster using shortcuts for commands.
+- Minor enhancement: Add a light colour theme +
+An yellow-based light colour theme is now available as an alternative to the default dark grey colour theme. This
+is to give the users a warm and comfortable feeling when they are doing their busy work in the restaurant.
+- Major enhancement: Add a customers' past orders count feature +
+The restaurant can identify the frequent and loyal customers to give discounts.
+
+* Zhang Zequn
+- Minor enhancement: Add colours to different tags +
+Same tags will be assigned the same colours which makes the differentiation of tags clearer.
+- Minor enhancement: Add Halal/Non-halal and Vegetarian/Non-vegetarian features +
+Halal/Non-halal and Vegetarian/Non-vegetarian features now are available for Add command. Since these two features
+are optional, if no input is given, the default value is Non-halal and Non-vegetarian.
+- Major enhancement: Add a menu (storage for all the dishes customers can order) +
+The restaurant can modify the menu and customers can only order what are on the menu.
+
+* Zhang Yijiong
+- Minor enhancement: Add back up method in storage +
+Users are able to back up the address book in a different location.
+- Minor enhancement: Add find location feature +
+When clicking one particular person in the addressbook, the browser on the right will automatically show that person's
+address using google map.
+- Major enhancement: Implement a processing queue structure to process orders from add method
 
 [appendix]
 == User Stories
@@ -798,17 +1078,65 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |view instructions for commands | get familiar with CLI
 
-|`* * *` |user |add a new person |
+|`* * *` |user |retrieve a particular customer’s information | know whether he/she is a regular customer
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |check the current status of a particular customer’s order | answer the customer’s query
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |record down the customer’s order easily |
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |check how much the customer spend | decide whether should give him/her a promotional price
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |know how many regular customers the restaurant has per day | can know how much ingredients should be prepared
+
+|`* * *` |user |know next order to be delivered | send delivery courier to the right place in time
+
+|`* * *` |user |remove an order | complete an order when it’s delivered
+
+|`* * *` |user |check how many orders are still yet to be delivered | speed up preparation
+
+|`* * *` |user |cancel an order | no longer need to prepare for that order
+
+|`* * *` |user |edit the order |
+
+|`* * *` |user |know whether the courier spoil the order |reorder for the customer
+
+|`* * *` |user |know how many orders need to be completed for a day in the future|
+
+|`* * *` |user |update the customer’s delivering address and personal phone number|
+
+|`* * *` |user |know whether the customer has exact amount of cash | prepare the change in advance
+
+|`* * *` |user |know whether the customer has additional requirements|
+
+|`* *` |user |get feedback rating from the customer |improve the service next time
+
+|`* *` |user |see the address of current order in the map|
+
+|`* *` |user |check customer's ratings | decide whether should take the order
+
+|`* *` |user |check revenue and cost of the day | calculate profit
+
+|`* *` |user |know which dishes are more favoured by customers | adjust the menu accordingly
+
+|`* *` |user |know the maximum number of orders during the peak hour |know how many delivery couriers should be employed
+
+|`* *` |user |know the peak hours everyday| facilitate manpower
+
+|`* *` |user |retrieve personal information from historical data if the customer has placed an order before |
+
+|`* *` |user |know the customer’s frequently-order dishes |create a specialised menu for him/her
+
+|`* *` |user |know when the customer ordered for his/her first time| send gifts for anniversary
+
+|`*` |user |see the orders with addresses close to one another |deliver their orders together
+
+|`*` |user |see the optimal route the courier can take | assign several orders to a courier so that he can deliver them all within one trip
+
+|`*` |user |know the weather condition of an region | inform the customer earlier if the delivery cannot reach destination in time
+
+|`*` |user |know the traffic conditions of the region near the customer’s place |inform the customer earlier if the delivery cannot reach destination in time
 |=======================================================================
 
 _{More to be added}_
@@ -816,7 +1144,7 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Delivery` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -844,25 +1172,156 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Add an order
+
+**MSS**
+
+1.  User request to add an order
+2.  Delivery adds the offer to the current queue
+3.  Delivery shows a list of all current orders
++
+Use case ends
+
+**Extensions**
+
+* 1a. The input phone number is invalid
++
+[none]
+** 1a1. Delivery shows an error message indicating the correct phone number format
++
+Use case ends
+
+* 1b. The input address cannot be found
++
+[none]
+** 1b1. Delivery shows an error message indicating the current address is invalid
++
+Use case ends
+
+* 1c. The food ordered is sold out / not available
++
+[none]
+** 1c1. Delivery shows an error message indicating the food order cannot be placed successfully
++
+Use case ends
+
+=== Use case: Add an order with priority
+
+**MSS**
+
+1.  User request to add an order (prioritised)
+2.  Delivery decides what is the priority
+3.  Delivery adds the offer to the current queue (cut queue)
+4.  Delivery shows a list of all current orders
++
+Use case ends
+
+=== Use case: delete an order
+
+**MSS**
+
+1.  User request to delete an order
+2.  Check the status of the order e.g. unprepared, preparing or delivering
+3.  Delivery deletes the offer from the queue containing the order
+4.  Delivery shows a list of all current orders
++
+Use case ends
+
+**Extensions**
+
+* 1a. The food ordered is prepared
++
+[none]
+** 1a1. Delivery shows an message indicating the customer should be charged for the price of the food ordered
+
+* 1b. The food ordered is delivering
++
+[none]
+** 1b1. Delivery shows an message indicating the customer should be charged for the price of the food ordered and the delivery fee
++
+Use case ends
+
+=== Use case: query a specific time
+
+**MSS**
+
+1.  User request to query a specific time
+2.  Delivery shows a list of all orders at that time
++
+Use case ends
+
+=== Use case: query a specific location
+
+**MSS**
+
+1.  User request to query a specific location
+2.  Delivery shows a list of all orders that are going the location
++
+Use case ends
+
+=== Use case: query a customer
+
+**MSS**
+
+1.  User request to query a specific customer
+2.  Delivery shows a list of information of the customer
++
+Use case ends
+
+=== Use case: query revenue
+
+**MSS**
+
+1.  User request to query revenue of a day
+2.  Delivery shows the revenue
++
+Use case ends
+
+**Extensions**
+
+* 1a. The day is sometime in the future
++
+[none]
+** 1a1. Delivery shows an message indicating that feature cannot be used on future time.
++
+Use case ends
+
+
 _{More to be added}_
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to work offline
+.  Should be able to hold up to 1000 orders in working queue and 5000 persons in historical database
+.  Should be able to remain open for a long period of time while not taking up more than 100MB of RAM
+.  Should cater to both IT proficient people and those who are new to Command Line Interface
+.  Should work on both 32-bit and 64-bit environments.
+.  Should support English system
+.  Should be able to retain information in event of crash or force shutdown.
+.  Should respond to user command within 2 seconds.
+.  View should fit the screen of any computer screen size.
 
 _{More to be added}_
 
 [appendix]
 == Glossary
 
-[[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+[[personal-information]]Personal information::
+Personal information refers to the personal particulars of a customer, including his/her name, contact number, address and email address.
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+
+[[meal-order]] Meal order information::
+Meal order information refers to which dishes are ordered, what time it is ordered, what time it should be delivered, the total money of the dishes
+
+
+[[gui]] GUI::
+GUI stands for Graphical User Interface. It is a type of user interface that allows user to interact with the software through graphical icons and visualisation.
+
+
+[[cli]]CLI::
+CLI stands for Command-line interface. It is a way for the user to give commands to the computer program in the form of successive lines of text
+
 
 [appendix]
 == Product Survey
@@ -902,27 +1361,107 @@ These instructions only provide a starting point for testers to work on; testers
 .. Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
+// tag::Test[]
+=== Adding an order
 
-_{ more test cases ... }_
+. Adding an order while there is no order currently
 
-=== Deleting a person
-
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Prerequisites: No order in the list.
+.. Test case: `add n/Tom p/98765432 f/Chicken Rice a/1A Kent Ridge Road` +
+   Expected: First order in the list is the order added. Details of the added order shown in the status message.
+   Timestamp in the status bar is updated.
+.. Test case: `add n/Tom p/98765432 f/Hamburger a/1A Kent Ridge Road` +
+   Expected: Not added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `add n/Tom p/98765432 f/Double Cheeseburger a/1A Kent Ridge Road``, +
+     `add`   +
+     `add n/Tom p/98765432 f/Chicken Rice` +
+    `add n/Tom p/98765432 f/Chicken Rice`  +
+   `add p/98765432 f/Chicken Rice a/1A Kent Ridge Road` +
+   `add n/Tom f/Chicken Rice a/1A Kent Ridge Road` +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Deleting an order
 
+. Deleting an order while all orders are listed
+
+.. Prerequisites: List all orders using the `list` command. Multiple orders in the list.
+.. Test case: `delete 1` +
+   Expected: First order is deleted from the list. Details of the deleted order shown in the status message.
+   Timestamp in the status bar is updated.
+.. Test case: `delete 0` +
+   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) `delete -1`,
+ `delete dfaf`, `delete !@#`  +
+   Expected: Similar to previous.
+
+
+=== Processing an order
+
+. Process an existing order at index i, add it to the processing queue on the right and label the
+original order as "Processed"
+
+.. Prerequisites: There exist orders in the order book.
+.. Test case: `process 1` +
+   Expected: First order is added to the processing queue on the right. Original order is tagged as "Processed".
+   Details of the added order shown in the status message.
+   Timestamp in the status bar is updated.
+.. Test case: `process 0` +
+   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `process`, `process x` (where x is larger than the list size) `process -1`,
+ `process dfaf`, `process !@#`  +
+   Expected: Similar to previous.
+
+=== Completing an order
+
+. Complete a processed order at index i
+
+.. Prerequisites: There exist orders in the processing queue on the right.
+.. Test case: `completeOne 1` +
+   Expected: First order is removed from processing queue on the right. Details of the added order shown in the status message.
+   Timestamp in the status bar is updated.
+.. Test case: `completeOne 0` +
+   Expected: No order is removed from the processing queue. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `completeOne `, `completeOne x` (where x is larger than the list size) `completeOne -1`,
+ `completeOne dfaf`, `completeOne !@#`  +
+   Expected: Similar to previous.
+
+
+=== Showing path to an order
+
+. Show path to an unprocessed order at index i of the order book, on the browser panel using google map
+
+.. Prerequisites: There exist orders in the processing queue on the right.
+.. Test case: `path 1` +
+   Expected: Window in the middle shows path from own address to order one's address using google map.
+   Command success message shown in the status message.
+.. Test case: `path 0` +
+   Expected: No google map page shown. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `path `, `path x` (where x is larger than the list size) `path -1`,
+ `path dfaf`, `path !@#`  +
+   Expected: Similar to previous.
+
+// end::Test[]
 === Saving data
 
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
+// tag::testcounting[]
+=== Counting past orders
+
+. Counting customers' past orders based on phone numbers
+.. Test case: `add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+Expected: The customer with phone number "91111111" has accumulated 1 order. +
+The result can be found in /data/customerstats.xml
+.. Test case: (continued) `add n/Zequn p/92222222 f/Chicken Rice a/NUS` +
+Expected: Another customer with a different phone number "92222222" has accumulated 1 order. +
+The result will be updated and reflected in /data/customerstats.xml
+.. Test case: (continued)`clear` +
+`add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+`clear` +
+`add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+Expected: Now the first customer with phone number "91111111" has placed 3 orders in total in the past. +
+The results are reflected in /data/customerstats.xml
+// end::testcounting[]
 _{ more test cases ... }_

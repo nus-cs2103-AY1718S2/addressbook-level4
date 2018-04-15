@@ -1,0 +1,68 @@
+= Wu Hao - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Delivery
+
+---
+
+== Overview
+
+Delivery is targeted at restaurants, especially for the small-medium ones, which want to have a system to keep track customers’ orders and delivery.
+
+A restaurant can have hundreds of orders a day and it’s extremely troublesome for the restaurant stuff to manually write down all customer information (including their names, contact numbers, addresses, orders and expected time of delivery etc.) and keep track on it.
+
+Hence, they need a software to store all the information mentioned above in an organised manner.
+
+Delivery is for those who *prefer to use a desktop app for managing orders*. More importantly, Delivery is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Delivery can manage the orders faster than traditional GUI apps. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to keep counting the number of customers' past orders and store in a local file*
+** What it does: Every time an order is placed, the customer is identified by his/her phone number and the number of his/her past orders is counted.
+** What can it do in the future: When a customer has accumulated 3/5/7/9 orders (the numbers can be set by users), the user will be notified and discount will be applied to the current order.
+** Justification: This feature improves the product significantly because users (restaurant owners) will be able to identify loyal customers and give them discounts. This feature will also attract customers to the restaurant.
+** Highlights: This enhancement affects existing "add" command and commands to be added in future. It requires extensions of Model, Storage and Events components and interaction with local files.
+
+* *Minor enhancement*: added an alias to each command.
+** What it does: Added a short cut (e.g. "a" for "add", "d" for "delete" etc) for each command.
+** Justification: This feature improves the speed and efficiency to key in the input information especially for those experienced users who are familiar with the commands.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F11-B4/main/blob/master/collated/functional/Wuhao-ooo.md[Functional code]] [https://github.com/CS2103JAN2018-F11-B4/main/blob/master/collated/test/Wuhao-ooo.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.4` - `v1.5rc` (2 releases) on GitHub
+** Enhancements to existing features:
+*** Added a light GUI color theme (Pull requests https://github.com/CS2103JAN2018-F11-B4/main/commit/5ff950492092a708d9526a1dc0feae9de01b09ef[#21])
+** Documentation:
+*** Consistently updated contents of the User Guide and the Developer Guide
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T16-B1/main/issues/78[1], https://github.com/CS2103JAN2018-T16-B1/main/issues/83[2], https://github.com/CS2103JAN2018-T16-B1/main/issues/64[3])
+** Tools:
+*** Deployed Travis and enabled auto-publishing to team repo
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=count]
+
+include::../UserGuide.adoc[tag=querycount]
+
+include::../UserGuide.adoc[tag=identify]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=count]
+
+include::../DeveloperGuide.adoc[tag=testcounting]

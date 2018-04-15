@@ -14,9 +14,9 @@ HuatAh! is a desktop loan shark manager application. It has a GUI but most of th
 
 * *Major enhancement*: added the feature of locating a person on Google Map
 ** What it does: allows the user to locate a person using any fields of a person (e.g, name/phone/email...) on Google Map, and it perfectly helps the user to keep track of the person.
-** Justification: Allowing the target users of this app - loan shark managers, to know where their customers are important because it's both cost-efficient and time-efficient to assign the customers to the nearest runners.
+** Justification: Allowing the target users of this app - loan shark managers, to know where their customers are is very important because it's both cost-efficient and time-efficient to assign the customers to the nearest runners if the managers can see the location of the customers on a map.
 ** Highlights: This enhancement includes the use Google Map which allows for much more future possibilities to integrate with Google. It makes integrating with other Google functions in the future easier.
-** Credits: _https://github.com/CS2103AUG2017-F11-B3/main/blob/master/src/main/java/seedu/address/logic/commands/GmapCommand.java_
+** Credits: Google Maps URLs
 
 * *Minor enhancement*: added alias for command that allows the user to use a command more easily, minor change to ui-app logo
 
@@ -51,55 +51,7 @@ https://github.com/CS2103JAN2018-F12-B4/main/pull/183
 
 |===
 
-***
-=== Displaying a person's address using Google Maps : `locate`, kbd:[Ctrl+L] [[locate]]
-
-*Syntax:*
-====
- locate [SPECIFIER] KEYWORD [KEYWORD] ...
-====
-
-[NOTE]
-====
-* This command searches for relevant persons with the specified information then displays the first relevant person's address on google maps.
-* Name, phone, email, address and tags are searched by when no `SPECIFIER` or the `-all` `SPECIFIER` is input)
-* `Customer` and `Runner` specific fields are not queried in this version [coming in v2.0]
-* Only one `SPECIFIER` can be used at a time.
-* If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
-* Description of `SPECIFIERS`:
-** `-n` to search only names.
-** `-p` to search only phones.
-** `-e` to search only emails.
-** `-a` to search only addresses.
-** `-t` to search only tags.
-
-====
-
-*Usage examples:*
-
-====
- locate David
-
-_Locates any persons with name, address or tag "David" and displays the address associated with the first result on Google Maps._
-====
-
-====
- locate -n David
-
-_Locates any persons with name "David" and displays the address associated with the first result on Google Maps._
-====
-
-====
- locate -a Blk 30
-
-_Locates the address "Blk 30" on Google Maps and displays the person with that address in the PersonListPanel._
-====
-
-====
- locate -p 91234567
-
-_Locates any persons with phone number "91234567" and displays the address associated with the first result on Google Maps._
-====
+include::../UserGuide.adoc[tag=locatecommand]
 
 
 == Contributions to the Developer Guide
@@ -107,60 +59,9 @@ _Locates any persons with phone number "91234567" and displays the address assoc
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 
-|=== Locate on Google Map
-
-The `locate` command accepts a specifier, such as `-t` or `-p` as the first argument to the program to search through a specific field. `LocateCommandParser` then recognises the specifers and constructs the correct `LocateCommand` object with the correct `Predicate<Person>`. `LocateCommand.execute()` is then called, and it searches for the keywords in the correct fields according to the Predicate that was passed to it.
-Then it gets the address of the person specified by the parameter and pass it to the method loadUrl in browerPanel in MainWindow. The user can use 'locate' / 'lo' command with a specifier as the parameter to locate a person on google map.
-
-`LocateCommand` relies on `LocateRequestEvent` which is handled by `BrowserPanel` to call the appropriate method for loading `Person` address using Google Map.
-
-The current implementation enables the user to search through all fields in a Person. If there're more than one person with the same specifier passed in by the user, it automatically locates the address of the person on top of the filteredList and ask the user to be more specific given the filtered list.
-For example, `Locate Alex` will locate the first person on the filtered list and present a message for the user to select one from the listed persons.
-
-image::locate_same_specifier.png[width="800"]
-
-Locate command is implemented this way:
-[source,java]
-----
-public LocateCommand(Predicate<Person> predicate) {
-        this.predicate = predicate;
-    }
-----
-
-With loadUrl, the Google Map url is passed to 'BrowserPanel'to display the location indicated by the index in BrowserPanel.
-
-----
-    @Override
-    public CommandResult execute() {
-            List<Person> lastShownList = model.getFilteredPersonList(predicate);
-
-            Person location = lastShownList.get(target);
-
-            // Open Google Map on BrowserPanel
-            MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
-                    + location.getAddress().toString());
-
-            EventsCenter.getInstance().post(new LocateRequestEvent(target));
-
-            if (model.getFilteredPersonList().size() > 1) {
-                return new CommandResult(String.format(MESSAGE_LOCATE_SELECT, targetOne));
-            }
-            return new CommandResult(String.format(MESSAGE_LOCATE_SUCCESS, targetOne));
-
-        }
-----
-
-As we can see from the picture below, once the command is executed, the location is presented on Google Map is loaded in the BrowserPanel.
-
-image::interface_of_locate.png[width="800"]
-
-==== Rationale
-The rationale for implementing the `locate` command is that there's actual need of the users to find a person as easily as possible while using this application. By locating the person on Google Map in this application, the user can directly see the location of a person instead of a simple line of address that's not so useful.
-
-It is important to make sure that the `locate` command would use parameters other than the Index, as relevant information may be more easily to be obtained.
-
-
 |===
+
+include::../DeveloperGuide.adoc[tag=locatecommand]
 
 ---
 

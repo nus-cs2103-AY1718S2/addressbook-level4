@@ -490,6 +490,8 @@ It was important to make sure that the `find` command would search through field
 
 It was also important to be able to specify the field the user was interested in searching as this would increase the relevance of search results or reduce the occurence of irrelevant results. For example, if I searched "Baker" and there was a contact whose address was "Baker Street" and there was another contact who had been tagged as "Baker" I would receive two search results. But if I wanted to only view contacts who had been _tagged_ as "Baker", then I need only enter the specifier `-t` to increase the relevance of the results. This becomes more important as the size of the addressbook gets larger. Having more relevant results also increases the speed at which a user can use the application.
 
+//@@author zhangriqi
+//tag::locatecommand[]
 
 === Locate on Google Map
 
@@ -542,6 +544,8 @@ image::interface_of_locate.png[width="800"]
 The rationale for implementing the `locate` command is that there's actual need of the users to find a person as easily as possible while using this application. By locating the person on Google Map in this application, the user can directly see the location of a person instead of a simple line of address that's not so useful.
 
 It was important to make sure that the `locate` command would use parameters other than the Index, as relevant information may be more easily to be obtained.
+//@@author
+//end::locatecommand[]
 
 //@@author jonleeyz
 // tag::tagcolours[]

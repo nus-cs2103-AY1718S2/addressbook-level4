@@ -813,11 +813,10 @@ Users are able to add, edit and remove tasks (with command `addTask`, `editTask`
 Tasks scheduled in this application will be stored in `addressbook.xml` and displayed in the `Todo List` tab and `Calender` view respectively.
 
 `Todo List` displays tasks with all fields (title, description, deadline and priority) in a list view whereas `Calender` displays tasks with only task titles in their respective date cells determined by their deadline.
-Tasks displayed in a date cell are sorted by their priority. Tasks are displayed in `Todo List` and `Calender` as shown in figure 19.
+Tasks displayed in a date cell are color coded according to their priorities -- Green being lowest, yellow being medium and red being highest . Tasks are displayed in `Todo List` and `Calender` as shown in figure 19.
 
 .Tasks displayed in the application.
-//update image
-image::displayTask.png[width = "600"]
+image::displayTask.png[width = "800"]
 
 ==== Current Implementation
 

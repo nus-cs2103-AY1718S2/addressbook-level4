@@ -12,15 +12,15 @@ HuatAh! is a desktop loan shark manager application. It has a GUI but most of th
 
 == Summary of contributions
 
-* *Major enhancement*: implemented the critical backend infrastructure required for operations on two _subclasses_ of persons (`Customer` and `Runner`) and ensured that all commands are functional with respect to the new model/infrastructure.
+* *Major enhancement*: implemented the critical backend infrastructure required for the user, a loan shark syndicate boss, to be able to manage Customers and Runners. Also ensured that all commands are functional with respect to the new model. In addition, I implemented a new command `Assign` to provide basic functionality for the user to delegate his subordinates (Runners) to be in charge of one or more Customers.
 
-** What it does: allows developers to develop new functionality and users to benefit from new functionality pertaining specifically to two types of `Person`, namely `Customer` and `Runner`. This allows for proper delineation or separation of certain attributes and behaviours specific to each subclass.
+** What it does: allows developers to develop new functionality and users to benefit from new functionality pertaining specifically to two subtypes of `Person`, namely `Customer` and `Runner`. This allows for proper delineation or separation of certain attributes and behaviours specific to each subclass.
 
 ** Justification: Implementation of this feature was necessary for ensuring that features specific to our target-user could be developed and enjoyed.
 
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required significant changes to some existing commands (`Add`, `Edit, `Delete`) and touched all components (Model, Logic, Storage, UI).
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth understanding of the entire code-base from the early development stages. The implementation was extremely challenging as it required significant updates to many commands (`Add`, `Edit, `Delete`) and touched all components (Model, Logic, Storage, UI).
 
-* *Minor enhancement*: Implemented an `Assign` command to allow the user to delegate one or more customers to a single runner. This is to allow the user (the loan shark syndicate boss) to manage loan shark operations better. This command was meant to be one example of a target-user-specific usage of the new subclasses.
+* *Minor enhancement*: Improved the `Find` command to allow the user to search through more fields like Name, Phone, Email, Address, Tags. I also added the capability to specify a _particular_ field to search. This enhancement was necessary to enable the user (the syndicate boss) to easily find relevant personnel from a large number of contacts stored in the application. This would help the user to manage his data and his syndicate operations better.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/functional/melvintzw.md[functional]][https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/test/melvintzw.md[test]]
 
@@ -33,24 +33,25 @@ HuatAh! is a desktop loan shark manager application. It has a GUI but most of th
 *** Assigned issues to teammates
 *** Used Projects features in Github to better organize the development of major features and other aspects of the development
 
-** Enhancements to existing features:
-//*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-//*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-*** Enhanced `Find` command by letting the command search through more fields and by taking in specifiers to specify which field to search through. This enhancement improved the accuracy and relevance of searches, which is important for a Loan Shark boss who is managing hundreds of contacts.
-*** Improved `Add` command by letting it accept optional fields. This is useful for situations whereby not all personal details are available or when the user would like to quickly create a new contact.
-*** Modified various command messages to improve readability
-*** Modified various commands to accept new parameters relevant to Customer and Runner
+** Enhancements to other existing features:
+*** Improved `Add` command by letting it accept optional fields. This is useful for situations whereby not all personal details are available or when the user would like to quickly create a new contact. <include links>
+*** Modified various command messages to improve readability. <include link>
+*** Modified various commands, such as `Add` and `Edit`, to accept new parameters relevant to Customer and Runner. <include links>
+*** Modified 'Delete` command to exhibit proper behaviour (update the data corretly) with respect to the new functionality of assigning customers ro runners. <include links>
+*** Fixed various bugs. <include links>
 
 ** Documentation:
-*** Ensured that documentation was up-to-date with current implementations: https://github.com/CS2103JAN2018-F12-B4/main/pull/50[#50], https://github.com/CS2103JAN2018-F12-B4/main/pull/47[#47], https://github.com[#19], https://github.com/CS2103JAN2018-F12-B4/main/pull/95[#95], https://github.com/CS2103JAN2018-F12-B4/main/pull/118[#118], https://github.com/CS2103JAN2018-F12-B4/main/pull/164[#164]
+*** Ensured that documentation was up-to-date with current implementations: https://github.com/CS2103JAN2018-F12-B4/main/pull/50[#50], https://github.com/CS2103JAN2018-F12-B4/main/pull/47[#47], https://github.com/CS2103JAN2018-F12-B4/main/pull/95[#95], https://github.com/CS2103JAN2018-F12-B4/main/pull/118[#118], https://github.com/CS2103JAN2018-F12-B4/main/pull/164[#164]
 
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[coming], https://github.com[coming], https://github.com[coming]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Wrote code that was eventually reused in the implementation of another teammate's feature (`Find` command used in `Locate` command)
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-W14-B3/main/issues/107[1],
+ https://github.com/CS2103JAN2018-W14-B3/main/issues/106[2],
+ https://github.com/CS2103JAN2018-W14-B3/main/issues/98[3],
+ https://github.com/CS2103JAN2018-W14-B3/main/issues/94[4])
+*** Wrote code that was eventually reused in the implementation of another teammate's feature (my enhanced `Find` command used in the new `Locate` command)
 
 ** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
+*** Integrated a third party library (Natty) to the project (https://github.com/CS2103JAN2018-F12-B4/main/pull/80[#42])
 
 
 == Contributions to the User Guide
@@ -60,115 +61,18 @@ HuatAh! is a desktop loan shark manager application. It has a GUI but most of th
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
+
+
 == Contributions to the Developer Guide
 
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
-
-=== Find Command Enhancements
-
-In the original AddressBook, the `find` command only searches through the `Name` field of the `Person`. The current implementation enables the user to search through all fields in a Person. This is bound to be useful when the user may be interested in quickly finding someone whose address or tags contains a certain word. Furthermore, the current implementation allows the user to enter certain specifier parameters to narrow down the search range, which allows more relevant results to appear to the user.
-
-==== Basic Enhancement
-
-Most of the useful work done in the Find Command is done by constructing a `FindCommand` object and passing an appropriate `Predicate<>` as a parameter to it.
-
-----
-public FindCommand(Predicate<Person> predicate) {
-        this.predicate = predicate;
-    }
-
-    @Override
-    public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
-    }
-----
-
-In this case, the `FindCommand` object expects a `Predicate<Person>` as an argument, and then uses that Predicate object in `execute()` to filter the list in the `Model`.
-
-All that is needed now is to create an appropriate `Predicate<Person>` class that checks the correct fields in a `Person` instance.
-
-For example, in a `PersonContainsKeywordsPredicate`, the test field is overridden as such:
-
-----
-public boolean test(Person person) {
-
-        String stringOfTags = getStringOfTags(person);
-
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
-                || keywords.stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(stringOfTags, keyword))
-                || keywords.stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword))
-                || keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().value, keyword))
-                || keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
-    }
-----
-
-a `stream` is generated from the user-entered keywords and each keyword is checked against all the words in specific fields such as `person.getName().fullName`.
-
-==== Further Enhancement
-
-The `find` command accepts a specifier, such as `-t` or `-p` as the first argument to the program to search through a specific field. `FindCommandParser` then recognises the specifers and constructs the correct `FindCommand` object with the correct `Predicate<Person>`. `FindCommand.execute()` is then called, and it searches for the keywords in the correct fields according to the Predicate that was passed to it.
-
-These are the names of the `Predicate<Person>` classes currently implemented:
-
-** PersonContainsKeywordsPredicate
-** NameContainsKeywordsPredicate
-** AddressContainsKeywordsPredicate
-** EmailContainsKeywordsPredicate
-** PhoneContainsKeywordsPredicate
-** TagsContainsKeywordsPredicate
-
-In order to implement this further enhancement, we have to modify `FindCommandParser` to recognize the specifier and then to construct the correct `FindCommand` object. The code is shown below.
-
-----
- String[] arguments = trimmedArgs.split("\\s+");
-        String[] keywords;
-        //check arguments[0] for specifier
-
-        if (arguments[0].matches("\\p{Alnum}+.++")) {
-            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(arguments)));
-        }
-
-        switch (arguments[0]) {
-        case "-all":
-            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(keywords)));
-        case "-n":
-            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        case "-p":
-            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-            return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
-        case "-e":
-            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-            return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
-        case "-a":
-            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-            return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
-        case "-t":
-            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
-            return new FindCommand(new TagsContainsKeywordsPredicate(Arrays.asList(keywords)));
-        default:
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-----
-
-The first if-block captures the case for no specifiers, while the switch-case block captures the case for valid specifiers and throws an exception when the specifier is invalid.
-
-==== Rationale
-The rationale for improving the `find` command is the fact that users of an application containing contact data would like to be able to search for a contact easily using keywords.
-
-It was important to make sure that the `find` command would search through fields other than the Name of the Person, as relevant information may be contained in other fields.
-
-It was also important to be able to specify the field the user was interested in searching as this would increase the relevance of search results or reduce the occurence of irrelevant results. For example, if I searched "Baker" and there was a contact whose address was "Baker Street" and there was another contact who had been tagged as "Baker" I would receive two search results. But if I wanted to only view contacts who had been _tagged_ as "Baker", then I need only enter the specifier `-t` to increase the relevance of the results. This becomes more important as the size of the addressbook gets larger. Having more relevant results also increases the speed at which a user can use the application.
-
 |===
+
+include::../DeveloperGuide.adoc[tag=FindCommandEnhancement]
+
+---
+
+include::../DeveloperGuide.adoc[tag=ModelTwo]
 
 ---

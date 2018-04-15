@@ -1,14 +1,15 @@
 package seedu.address.storage;
 
-
 import static seedu.address.storage.XmlRequiredIndexStorage.updateData;
 
 import java.io.FileNotFoundException;
 
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
+
 import seedu.address.commons.util.FileUtil;
 
 //@@author samuelloh
@@ -36,7 +37,7 @@ public class XmlRequiredIndexStorageTest {
     }
 
     @Test
-    public void SaveRequiredIndexStorage_allInOrder_success() throws Exception {
+    public void saveRequiredIndexStorage_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempRequiredIndexStorage.xml";
 
     }

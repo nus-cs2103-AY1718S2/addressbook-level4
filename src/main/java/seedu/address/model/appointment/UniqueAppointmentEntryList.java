@@ -75,6 +75,9 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    /**
+     * Returns true if the same appointment has been made by other patient
+     */
     public boolean checkIfAppointmentIsBooked(AppointmentEntry toCheck) {
         for (Object apptEntry : internalList) {
             AppointmentEntry current = (AppointmentEntry) apptEntry;

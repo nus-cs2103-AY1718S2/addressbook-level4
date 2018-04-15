@@ -28,7 +28,7 @@ public class BirthdayListHandle extends NodeHandle<TextArea> {
 ###### \java\guitests\guihandles\BirthdayNotificationHandle.java
 ``` java
 /**
- * A handle for the {@code AlertDialog} of the UI.
+ * A handle for the {@code BirthdayNotificationHandle} of the UI.
  */
 public class BirthdayNotificationHandle extends StageHandle {
     private final DialogPane dialogPane;
@@ -611,7 +611,7 @@ public class BirthdayTest {
 public class TimetableBuilder {
 
     public static final int NUM_OF_DUMMY_TIMETABLE = 2;
-    public static final String DUMMY_LINK_ONE = "http://modsn.us/HWwZJ";
+    public static final String DUMMY_LINK_ONE = "http://modsn.us/aaaaa";
     public static final String DUMMY_LINK_TWO = "http://modsn.us/bbbbb";
 
     private Timetable[] dummyTimetables;
@@ -710,7 +710,8 @@ public class BirthdayListTest extends GuiUnitTest {
 ###### \java\systemtests\BirthdaysCommandSystemTest.java
 ``` java
 /**
- * A system test class for the help window, which contains interaction with other UI components.
+ * A system test class for the birthdays list and todays notification,
+ * which contains interaction with other UI components.
  */
 public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     private static final String ERROR_MESSAGE = "ATTENTION!!!! : On some computers, this test may fail when run on "
@@ -738,9 +739,18 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     }
 
     @Test
+    public void openEmptyBirthdayList() {
+        //use command box
+        deleteAllPersonsAndAliases();
+        executeCommand(BirthdaysCommand.COMMAND_WORD);
+        guiRobot.pauseForHuman();
+        assertEquals("", getBirthdayList().getText());
+    }
+
+    @Test
     public void assertBirthdayListWithOnePersonToday() {
         // Simulation of commands to create only one person whose birthday is today
-        deleteAllPersons();
+        deleteAllPersonsAndAliases();
         executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   b/"
                 + buildBirthday(true) + " " + TIMETABLE_DESC_AMY + TAG_DESC_FRIEND + " ");
@@ -758,7 +768,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void assertBirthdayListWithZeroPersonToday() {
         // Simulation of commands to create only one person whose birthday is today
-        deleteAllPersons();
+        deleteAllPersonsAndAliases();
         executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   b/"
                 + buildBirthday(false) + " " + TIMETABLE_DESC_AMY + " " + TAG_DESC_FRIEND + " ");

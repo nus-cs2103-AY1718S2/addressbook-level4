@@ -134,14 +134,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addCalendarEntry(CalendarEntry toAdd) throws DuplicateCalendarEntryException {
         calendarManager.addCalendarEntry(toAdd);
-        updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        updateFilteredCalendarEntryList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
         indicateCalendarManagerChanged();
     }
 
     @Override
     public void deleteCalendarEntry(CalendarEntry entryToDelete) throws CalendarEntryNotFoundException {
         calendarManager.deleteCalendarEntry(entryToDelete);
-        updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        updateFilteredCalendarEntryList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
         indicateCalendarManagerChanged();
     }
 
@@ -230,7 +230,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateFilteredCalendarEventList(Predicate<CalendarEntry> predicate) {
+    public void updateFilteredCalendarEntryList(Predicate<CalendarEntry> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }

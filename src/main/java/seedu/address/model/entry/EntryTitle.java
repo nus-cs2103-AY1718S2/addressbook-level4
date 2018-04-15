@@ -9,8 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class EntryTitle {
     public static final String MESSAGE_ENTRY_TITLE_CONSTRAINTS =
-            "Event title should only contain alphanumeric characters and spaces"
-                    + "and it should not be blank";
+            "Event title should only contain alphanumeric characters and spaces and it should not be blank";
 
     public static final String ENTRY_TITLE_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 

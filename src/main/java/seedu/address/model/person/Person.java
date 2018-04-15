@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -48,7 +49,7 @@ public class Person {
     }
 
     public Person(Name name, Phone phone, Email email, Address address, Set<Group> groupTags,
-                  Set<Preference> prefTags, Set<Order> orders) {
+                  Set<Preference> prefTags, List<Order> orders) {
         requireAllNonNull(name, phone, email, address, groupTags, prefTags, orders);
         this.name = name;
         this.phone = phone;
@@ -95,11 +96,11 @@ public class Person {
     }
 
     /**
-     * Returns an immutable order set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable order list, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Order> getOrders() {
-        return Collections.unmodifiableSet(orders.toSet());
+    public List<Order> getOrders() {
+        return Collections.unmodifiableList(orders.asObservableList());
     }
 
     /**

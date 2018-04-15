@@ -3,7 +3,6 @@ package seedu.address.model.entry;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -120,16 +119,6 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
         return other == this // short circuit if same object
                 || (other instanceof UniqueCalendarEntryList // instanceof handles nulls
                 && this.internalList.equals(((UniqueCalendarEntryList) other).internalList));
-    }
-
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueCalendarEntryList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
     }
 
     @Override

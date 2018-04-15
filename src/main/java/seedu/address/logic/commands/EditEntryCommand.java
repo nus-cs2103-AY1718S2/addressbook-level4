@@ -89,7 +89,7 @@ public class EditEntryCommand extends UndoableCommand {
         } catch (CalendarEntryNotFoundException cenfe) {
             throw new AssertionError("The target calendar entry cannot be missing.");
         }
-        model.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        model.updateFilteredCalendarEntryList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
 
         EventsCenter.getInstance().post(new ChangeCalendarDateRequestEvent(editedEntry.getDateToDisplay()));
         EventsCenter.getInstance().post(new DisplayCalendarEntryListEvent());

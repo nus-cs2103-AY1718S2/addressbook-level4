@@ -36,19 +36,6 @@ public class UniqueOrderListTest {
     }
 
     @Test
-    public void asOrderInsensitiveList_compareListsWithSameItemsInDiffOrder_assertEqual()
-            throws DuplicateOrderException {
-        UniqueOrderList firstOrderList = new UniqueOrderList();
-        firstOrderList.add(BOOKS);
-        firstOrderList.add(CHOCOLATES);
-        UniqueOrderList secondOrderList = new UniqueOrderList();
-        secondOrderList.add(CHOCOLATES);
-        secondOrderList.add(BOOKS);
-
-        assertTrue(firstOrderList.equalsOrderInsensitive(secondOrderList));
-    }
-
-    @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
         UniqueOrderList uniqueOrderList = new UniqueOrderList();
         thrown.expect(UnsupportedOperationException.class);

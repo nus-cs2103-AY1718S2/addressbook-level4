@@ -2,10 +2,10 @@ package seedu.address.commons.util;
 //@@author SuxianAlicia
 
 import static junit.framework.TestCase.fail;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_SUPPLIER;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,10 +24,10 @@ public class EntryTimeConstraintsUtilTest {
 
     @Test
     public void checkCalendarEntryTimeConstraints_validInputs_success() throws IllegalValueException {
-        StartDate startDate = new StartDate(VALID_START_DATE_MEET_BOSS);
-        EndDate endDate = new EndDate(VALID_END_DATE_MEET_BOSS);
-        StartTime startTime = new StartTime(VALID_START_TIME_MEET_BOSS);
-        EndTime endTime = new EndTime(VALID_END_TIME_MEET_BOSS);
+        StartDate startDate = new StartDate(VALID_START_DATE_MEET_SUPPLIER);
+        EndDate endDate = new EndDate(VALID_END_DATE_MEET_SUPPLIER);
+        StartTime startTime = new StartTime(VALID_START_TIME_MEET_SUPPLIER);
+        EndTime endTime = new EndTime(VALID_END_TIME_MEET_SUPPLIER);
 
         try {
             EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints(startDate, endDate, startTime, endTime);
@@ -40,9 +40,9 @@ public class EntryTimeConstraintsUtilTest {
     public void checkCalendarEntryTimeConstraints_startDateLaterThanEndDate_throwsIllegalValueException()
             throws IllegalValueException {
         StartDate invalidStartDate = new StartDate("06-06-2100"); //Start Date is after End Date
-        EndDate endDate = new EndDate(VALID_END_DATE_MEET_BOSS);
-        StartTime startTime = new StartTime(VALID_START_TIME_MEET_BOSS);
-        EndTime endTime = new EndTime(VALID_END_TIME_MEET_BOSS);
+        EndDate endDate = new EndDate(VALID_END_DATE_MEET_SUPPLIER);
+        StartTime startTime = new StartTime(VALID_START_TIME_MEET_SUPPLIER);
+        EndTime endTime = new EndTime(VALID_END_TIME_MEET_SUPPLIER);
 
         String expectedMessage = EntryTimeConstraintsUtil.START_AND_END_DATE_CONSTRAINTS;
         thrown.expect(IllegalValueException.class);
@@ -54,10 +54,10 @@ public class EntryTimeConstraintsUtilTest {
     public void checkCalendarEntryTimeConstraints_startTimeLaterThanEndTime_throwsIllegalValueException()
             throws IllegalValueException {
 
-        StartDate startDate = new StartDate(VALID_START_DATE_MEET_BOSS);
-        EndDate endDate = new EndDate(VALID_END_DATE_MEET_BOSS);
+        StartDate startDate = new StartDate(VALID_START_DATE_MEET_SUPPLIER);
+        EndDate endDate = new EndDate(VALID_END_DATE_MEET_SUPPLIER);
         StartTime invalidStartTime = new StartTime("23:59");
-        EndTime endTime = new EndTime(VALID_END_TIME_MEET_BOSS);
+        EndTime endTime = new EndTime(VALID_END_TIME_MEET_SUPPLIER);
 
         String expectedMessage = EntryTimeConstraintsUtil.START_AND_END_TIME_CONSTRAINTS;
         thrown.expect(IllegalValueException.class);

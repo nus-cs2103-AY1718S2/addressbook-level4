@@ -210,7 +210,7 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public void updateFilteredCalendarEventList(Predicate<CalendarEntry> predicate) {
+        public void updateFilteredCalendarEntryList(Predicate<CalendarEntry> predicate) {
             fail("This method should not be called.");
         }
 

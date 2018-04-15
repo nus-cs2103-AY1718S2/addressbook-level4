@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import guitests.guihandles.CalendarEntryCardHandle;
+import guitests.guihandles.CalendarEntryListPanelHandle;
 import guitests.guihandles.OrderCardHandle;
+import guitests.guihandles.OrderListPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -144,7 +146,7 @@ public class GuiTestAssert {
                 assertEquals(Arrays.asList(LABEL_DEFAULT_STYLE, getPrefTagColorStyleFor(tag)),
                         actualCard.getPreferenceTagStyleClasses(tag)));
     }
-    //@@author AJZ1995
+    //@@author
 
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedOrder}.
@@ -192,7 +194,7 @@ public class GuiTestAssert {
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, Person... persons) {
+    public static void assertPersonListMatching(PersonListPanelHandle personListPanelHandle, Person... persons) {
         for (int i = 0; i < persons.length; i++) {
             assertCardDisplaysPerson(persons[i], personListPanelHandle.getPersonCardHandle(i));
         }
@@ -202,14 +204,54 @@ public class GuiTestAssert {
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<Person> persons) {
-        assertListMatching(personListPanelHandle, persons.toArray(new Person[0]));
+    public static void assertPersonListMatching(PersonListPanelHandle personListPanelHandle, List<Person> persons) {
+        assertPersonListMatching(personListPanelHandle, persons.toArray(new Person[0]));
     }
+
+    //@@author SuxianAlicia-reused
+    /**
+     * Asserts that the list in {@code orderListPanelHandle} displays the details of {@code orders} correctly and
+     * in the correct order.
+     */
+    public static void assertOrderListMatching(OrderListPanelHandle orderListPanelHandle, Order... orders) {
+        for (int i = 0; i < orders.length; i++) {
+            assertCardDisplaysOrder(orders[i], orderListPanelHandle.getOrderCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code orderListPanelHandle} displays the details of {@code orders} correctly and
+     * in the correct order.
+     */
+    public static void assertOrderListMatching(OrderListPanelHandle orderListPanelHandle, List<Order> orders) {
+        assertOrderListMatching(orderListPanelHandle, orders.toArray(new Order[0]));
+    }
+
+    /**
+     * Asserts that the list in {@code calendarEntryListPanelHandle} displays the details of {@code entries} correctly
+     * and in the correct order.
+     */
+    public static void assertCalendarEntryListMatching(
+            CalendarEntryListPanelHandle calendarEntryListPanelHandle, CalendarEntry... entries) {
+        for (int i = 0; i < entries.length; i++) {
+            assertCardDisplaysEntry(entries[i], calendarEntryListPanelHandle.getCalendarEntryCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code calendarEntryListPanelHandle} displays the details of {@code entries} correctly
+     * and in the correct order.
+     */
+    public static void assertCalendarEntryListMatching(
+            CalendarEntryListPanelHandle calendarEntryListPanelHandle, List<CalendarEntry> entries) {
+        assertCalendarEntryListMatching(calendarEntryListPanelHandle, entries.toArray(new CalendarEntry[0]));
+    }
+    //@@author
 
     /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
      */
-    public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
+    public static void assertPersonListSize(PersonListPanelHandle personListPanelHandle, int size) {
         int numberOfPeople = personListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
     }

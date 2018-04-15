@@ -30,12 +30,11 @@ import guitests.guihandles.CenterPanelHandle;
  */
 public class CalendarPanelTest extends GuiUnitTest {
 
-    private static final Calendar calendar = new Calendar();
-
     private CenterPanelHandle centerPanelHandle;
 
     @Before
     public void setUp() {
+        Calendar calendar = new Calendar();
         calendar.setReadOnly(true);
         calendar.setStyle(Calendar.Style.STYLE1);
         CenterPanel centerPanel = new CenterPanel(calendar);
@@ -48,7 +47,7 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void handleChangeCalendarViewRequestEvent() {
-        centerPanelHandle.setUpCalendarPanelHandle(calendar);
+        centerPanelHandle.setUpCalendarPanelHandle();
 
         postNow(CHANGE_TO_MONTH_EVENT);
         guiRobot.pauseForHuman();
@@ -65,7 +64,7 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void handleChangeCalendarPageRequestEvent() {
-        centerPanelHandle.setUpCalendarPanelHandle(calendar);
+        centerPanelHandle.setUpCalendarPanelHandle();
 
         LocalDate originalDate = centerPanelHandle.getCalendarCurrentDate();
         postNow(CHANGE_TO_NEXT_PAGE_EVENT);
@@ -90,7 +89,7 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void handleChangeCalendarDateRequestEvent() {
-        centerPanelHandle.setUpCalendarPanelHandle(calendar);
+        centerPanelHandle.setUpCalendarPanelHandle();
 
         LocalDate previousDate = centerPanelHandle.getCalendarCurrentDate();
         postNow(CHANGE_DATE_EVENT);

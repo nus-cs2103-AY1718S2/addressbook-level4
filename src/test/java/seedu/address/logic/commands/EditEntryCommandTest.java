@@ -2,10 +2,10 @@ package seedu.address.logic.commands;
 //@@author SuxianAlicia
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_GET_STOCKS;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_GET_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -59,12 +59,12 @@ public class EditEntryCommandTest {
         CalendarEntry lastEntry = model.getFilteredCalendarEntryList().get(indexLastEntry.getZeroBased());
 
         CalendarEntryBuilder entryInList = new CalendarEntryBuilder(lastEntry);
-        CalendarEntry editedEntry = entryInList.withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS)
-                .withStartTime(VALID_START_TIME_GET_STOCKS).build();
+        CalendarEntry editedEntry = entryInList.withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS)
+                .withStartTime(VALID_START_TIME_GET_BOOKS).build();
 
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS)
-                .withStartTime(VALID_START_TIME_GET_STOCKS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS)
+                .withStartTime(VALID_START_TIME_GET_BOOKS).build();
         EditEntryCommand editEntryCommand = prepareCommand(indexLastEntry, descriptor);
 
         String expectedMessage = String.format(EditEntryCommand.MESSAGE_EDIT_ENTRY_SUCCESS, editedEntry);
@@ -103,7 +103,7 @@ public class EditEntryCommandTest {
     public void execute_invalidCalendarEntryIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEntryList().size() + 1);
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS).build();
         EditEntryCommand editEntryCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editEntryCommand, model, Messages.MESSAGE_INVALID_ENTRY_DISPLAYED_INDEX);
@@ -140,7 +140,7 @@ public class EditEntryCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEntryList().size() + 1);
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS).build();
         EditEntryCommand editEntryCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         // execution failed -> editEntryCommand not pushed into undoRedoStack
@@ -154,10 +154,10 @@ public class EditEntryCommandTest {
 
     @Test
     public void equals() throws Exception {
-        final EditEntryCommand firstCommand = prepareCommand(INDEX_FIRST_ENTRY, DESC_MEET_BOSS);
+        final EditEntryCommand firstCommand = prepareCommand(INDEX_FIRST_ENTRY, DESC_MEET_SUPPLIER);
 
         // same values -> returns true
-        EditEntryDescriptor copyDescriptor = new EditEntryDescriptor(DESC_MEET_BOSS);
+        EditEntryDescriptor copyDescriptor = new EditEntryDescriptor(DESC_MEET_SUPPLIER);
         EditEntryCommand firstCommandCopy = prepareCommand(INDEX_FIRST_ENTRY, copyDescriptor);
         assertTrue(firstCommand.equals(firstCommandCopy));
 
@@ -175,10 +175,10 @@ public class EditEntryCommandTest {
         assertFalse(firstCommand.equals(1));
 
         // different index -> returns false
-        assertFalse(firstCommand.equals(new EditEntryCommand(INDEX_SECOND_ENTRY, DESC_MEET_BOSS)));
+        assertFalse(firstCommand.equals(new EditEntryCommand(INDEX_SECOND_ENTRY, DESC_MEET_SUPPLIER)));
 
         // different descriptor -> returns false
-        assertFalse(firstCommand.equals(new EditEntryCommand(INDEX_FIRST_ENTRY, DESC_GET_STOCKS)));
+        assertFalse(firstCommand.equals(new EditEntryCommand(INDEX_FIRST_ENTRY, DESC_GET_BOOKS)));
     }
 
     /**

@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -76,7 +77,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.prefTags.setTags(prefTags);
     }
 
-    public void setOrders(Set<Order> orders) {
+    public void setOrders(List<Order> orders) throws DuplicateOrderException {
         this.orders.setOrders(orders);
     }
 
@@ -91,12 +92,18 @@ public class AddressBook implements ReadOnlyAddressBook {
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
 
-        setOrders(new HashSet<>(newData.getOrderList()));
-
         try {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+
+        List<Order> orderList = new ArrayList<>(newData.getOrderList());
+
+        try {
+            setOrders(orderList);
+        } catch (DuplicateOrderException e) {
+            throw new AssertionError("AddressBooks should not have duplicate orders");
         }
     }
 

@@ -48,7 +48,7 @@ public abstract class UndoableCommand extends Command {
         model.resetData(previousAddressBook, previousCalendarManager);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
-        model.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        model.updateFilteredCalendarEntryList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
         EventsCenter.getInstance().post(new ResetPersonPanelRequestEvent());
     }
 
@@ -66,7 +66,7 @@ public abstract class UndoableCommand extends Command {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
-        model.updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        model.updateFilteredCalendarEntryList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
         EventsCenter.getInstance().post(new ResetPersonPanelRequestEvent());
     }
 

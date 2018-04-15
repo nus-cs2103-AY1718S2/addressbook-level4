@@ -39,7 +39,7 @@ public class EditOrderCommand extends UndoableCommand {
             + "[" + PREFIX_ORDER_INFORMATION + "ORDER INFORMATION] "
             + "[" + PREFIX_PRICE + "PRICE] "
             + "[" + PREFIX_QUANTITY + "QUANTITY] "
-            + "[" + PREFIX_DELIVERY_DATE + "DELIVERY DATE] ";
+            + "[" + PREFIX_DELIVERY_DATE + "DELIVERY DATE]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the order identified "
             + "by the index number used in the last order listing. "

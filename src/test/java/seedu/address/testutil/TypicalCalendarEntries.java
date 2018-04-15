@@ -1,6 +1,17 @@
 //@@author SuxianAlicia
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_SUPPLIER;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +52,21 @@ public class TypicalCalendarEntries {
             .withEndDate("29-05-2018")
             .withStartTime("10:00")
             .withEndTime("15:00").build();
+
+    // Manually added - Calendar Entry's details found in {@code CommandTestUtil}
+    public static final CalendarEntry MEET_SUPPLIER = new CalendarEntryBuilder()
+            .withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER)
+            .withStartDate(VALID_START_DATE_MEET_SUPPLIER)
+            .withEndDate(VALID_END_DATE_MEET_SUPPLIER)
+            .withStartTime(VALID_START_TIME_MEET_SUPPLIER)
+            .withEndTime(VALID_END_TIME_MEET_SUPPLIER).build();
+
+    public static final CalendarEntry GET_BOOKS = new CalendarEntryBuilder()
+            .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS)
+            .withStartDate(VALID_START_DATE_GET_BOOKS)
+            .withEndDate(VALID_END_DATE_GET_BOOKS)
+            .withStartTime(VALID_START_TIME_GET_BOOKS)
+            .withEndTime(VALID_END_TIME_GET_BOOKS).build();
 
     private TypicalCalendarEntries() {} // prevents instantiation
 

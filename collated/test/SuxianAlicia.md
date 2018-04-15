@@ -298,10 +298,10 @@ public class DateUtilTest {
 ``` java
 
 import static junit.framework.TestCase.fail;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_BOSS;
+import static VALID_END_DATE_MEET_SUPPLIER;
+import static VALID_END_TIME_SUPPLIER;
+import static VALID_START_DATE_MEET_SUPPLIER;
+import static VALID_START_TIME_MEET_SUPPLIER;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -1212,10 +1212,10 @@ public class DeletePreferenceCommandTest {
 ``` java
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_GET_STOCKS;
+import static DESC_GET_BOOKS;
+import static DESC_MEET_SUPPLIER;
+import static VALID_ENTRY_TITLE_GET_BOOKS;
+import static VALID_START_TIME_GET_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -1405,13 +1405,13 @@ public class EditEntryCommandTest {
 ``` java
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_BOSS;
+import static DESC_GET_BOOKS;
+import static DESC_MEET_SUPPLIER;
+import static VALID_END_DATE_MEET_SUPPLIER;
+import static VALID_END_TIME_SUPPLIER;
+import static VALID_ENTRY_TITLE_MEET_SUPPLIER;
+import static VALID_START_DATE_MEET_SUPPLIER;
+import static VALID_START_TIME_MEET_SUPPLIER;
 
 import org.junit.Test;
 
@@ -2384,31 +2384,31 @@ public class CalendarJumpCommandParserTest {
 ###### /java/seedu/address/logic/parser/EditEntryCommandParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.ENTRY_TITLE_DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.ENTRY_TITLE_DESC_MEET_BOSS;
+import static END_DATE_DESC_GET_BOOKS;
+import static END_DATE_DESC_MEET_SUPPLIER;
+import static END_TIME_DESC_GET_BOOKS;
+import static END_TIME_DESC_MEET_SUPPLIER;
+import static ENTRY_TITLE_DESC_GET_BOOKS;
+import static ENTRY_TITLE_DESC_MEET_SUPPLIER;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ENTRY_TITLE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_TIME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_BOSS;
+import static START_DATE_DESC_GET_BOOKS;
+import static START_DATE_DESC_MEET_SUPPLIER;
+import static START_TIME_DESC_GET_BOOKS;
+import static START_TIME_DESC_MEET_SUPPLIER;
+import static VALID_END_DATE_GET_BOOKS;
+import static VALID_END_DATE_MEET_SUPPLIER;
+import static VALID_END_TIME_GET_BOOKS;
+import static VALID_END_TIME_SUPPLIER;
+import static VALID_ENTRY_TITLE_GET_BOOKS;
+import static VALID_ENTRY_TITLE_MEET_SUPPLIER;
+import static VALID_START_DATE_GET_BOOKS;
+import static VALID_START_DATE_MEET_SUPPLIER;
+import static VALID_START_TIME_GET_BOOKS;
+import static VALID_START_TIME_MEET_SUPPLIER;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ENTRY;

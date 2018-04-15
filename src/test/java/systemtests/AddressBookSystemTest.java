@@ -2,16 +2,15 @@ package systemtests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import static seedu.address.testutil.TypicalOrders.BOOKS;
-import static seedu.address.testutil.TypicalOrders.CHOCOLATES;
-import static seedu.address.testutil.TypicalOrders.FACEWASH;
-import static seedu.address.testutil.TypicalOrders.SHOES;
-
+import static seedu.address.testutil.TypicalOrders.getTypicalOrders;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCalendarEntryListMatching;
+import static seedu.address.ui.testutil.GuiTestAssert.assertOrderListMatching;
+import static seedu.address.ui.testutil.GuiTestAssert.assertPersonListMatching;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -22,9 +21,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
+import guitests.guihandles.CalendarEntryListPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.OrderListPanelHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.PersonPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -33,12 +34,14 @@ import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.EntryListClearCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
+import seedu.address.model.order.Order;
 import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.testutil.TypicalCalendarEntries;
 import seedu.address.testutil.TypicalPersons;
@@ -86,15 +89,13 @@ public abstract class AddressBookSystemTest {
      */
     protected AddressBook getInitialData() {
         AddressBook ab = TypicalPersons.getTypicalAddressBook();
-        try {
-            ab.addOrderToOrderList(BOOKS);
-            ab.addOrderToOrderList(CHOCOLATES);
-            ab.addOrderToOrderList(FACEWASH);
-            ab.addOrderToOrderList(SHOES);
-        } catch (DuplicateOrderException doe) {
-            throw new AssertionError("not possible");
+        for (Order order : getTypicalOrders()) {
+            try {
+                ab.addOrderToOrderList(order);
+            } catch (DuplicateOrderException doe) {
+                throw new AssertionError("not possible");
+            }
         }
-
         return ab;
     }
 
@@ -148,6 +149,14 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getResultDisplay();
     }
 
+    public OrderListPanelHandle getOrderListPanel() {
+        return mainWindowHandle.getOrderListPanel();
+    }
+
+    public CalendarEntryListPanelHandle getCalendarEntryListPanel() {
+        return mainWindowHandle.getCalendarEntryListPanel();
+    }
+
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
@@ -159,7 +168,6 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
-
     }
 
     /**
@@ -194,10 +202,20 @@ public abstract class AddressBookSystemTest {
         assertEquals(0, getModel().getAddressBook().getPersonList().size());
     }
 
+    //@@author SuxianAlicia
+    /**
+     * Deletes all calendar entries in the calendar manager.
+     */
+    protected void deleteAllCalendarEntries() {
+        executeCommand(EntryListClearCommand.COMMAND_WORD);
+        assertEquals(0, getModel().getCalendarManager().getCalendarEntryList().size());
+    }
+    //@@author
+
     /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
-     * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
-     * and the person list panel displays the persons in the model correctly.
+     * {@code expectedResultMessage}, the model and storage contains the same person, order and calendar entry objects
+     * as {@code expectedModel} and the person list panel displays the persons in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
@@ -205,12 +223,31 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
-        assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+        assertEquals(expectedModel.getCalendarManager(), testApp.readStorageCalendarManager());
+        assertPersonListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+    }
+
+    //@@author SuxianAlicia
+    /**
+     * Asserts that {@code OrderListPanel} is displayed, and order list panel displays orders in model correctly.
+     */
+    protected void assertOrderListDisplaysExpected(Model expectedModel) {
+        assertNotNull(getOrderListPanel());
+        assertOrderListMatching(getOrderListPanel(), expectedModel.getFilteredOrderList());
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
-     * their current state.
+     * Asserts that {@code CalendarEntryListPanel} is displayed, and calendar entry list panel
+     * displays calendar entries in model correctly.
+     */
+    protected void assertCalendarEntryListDisplaysExpected(Model expectedModel) {
+        assertNotNull(getCalendarEntryListPanel());
+        assertCalendarEntryListMatching(getCalendarEntryListPanel(), expectedModel.getFilteredCalendarEntryList());
+    }
+    //@@author
+
+    /**
+     * Calls {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
@@ -287,7 +324,7 @@ public abstract class AddressBookSystemTest {
         try {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
-            assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
+            assertPersonListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

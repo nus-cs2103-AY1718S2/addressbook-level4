@@ -16,7 +16,7 @@ public class ListCalendarEntryCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredCalendarEventList(Model.PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        model.updateFilteredCalendarEntryList(Model.PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
         EventsCenter.getInstance().post(new DisplayCalendarEntryListEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }

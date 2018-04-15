@@ -62,12 +62,12 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
                 + DELIVERY_DATE_DESC_COMPUTER + "   ";
         assertCommandSuccess(command, index, toAdd);
 
-        /* Case: undo adding Books to the list -> Books deleted */
+        /* Case: undo adding Computer to the list -> Computer deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo adding Books to the list -> Books added again */
+        /* Case: redo adding Computer to the list -> Computer added again */
         command = RedoCommand.COMMAND_WORD;
         model.addOrderToOrderList(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
@@ -234,11 +234,13 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
      * 1. Result display box displays {@code expectedResultMessage}.<br>
      * 2. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
      * {@code expectedModel}.<br>
+     * 3. {@code OrderListPanel} is equal to the corresponding order list in {@code expectedModel}.<br>
      * @see AddOrderCommandSystemTest#assertCommandSuccess(String, Index, Order)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertOrderListDisplaysExpected(expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
@@ -260,6 +262,7 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertOrderListDisplaysExpected(expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();

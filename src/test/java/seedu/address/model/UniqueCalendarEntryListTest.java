@@ -34,20 +34,6 @@ public class UniqueCalendarEntryListTest {
     }
 
     @Test
-    public void asOrderInsensitiveList_compareListsWithSameItemsInDiffOrder_assertEqual()
-            throws DuplicateCalendarEntryException {
-
-        UniqueCalendarEntryList firstEntriesList =  new UniqueCalendarEntryList();
-        firstEntriesList.add(MEETING_BOSS);
-        firstEntriesList.add(GET_STOCKS);
-        UniqueCalendarEntryList secondEntries = new UniqueCalendarEntryList();
-        secondEntries.add(GET_STOCKS);
-        secondEntries.add(MEETING_BOSS);
-
-        assertTrue(firstEntriesList.equalsOrderInsensitive(secondEntries));
-    }
-
-    @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
         UniqueCalendarEntryList calendarEntriesList = new UniqueCalendarEntryList();
         thrown.expect(UnsupportedOperationException.class);

@@ -6,6 +6,7 @@ import java.io.IOException;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
+import seedu.address.model.entry.CalendarEntry;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 
@@ -63,6 +64,20 @@ public class TestUtil {
     //@@author amad-person
 
     /**
+     * Returns the middle index of the calendar entry in the {@code model}'s calendar entry list.
+     */
+    public static Index getMidEntryIndex(Model model) {
+        return Index.fromOneBased(model.getCalendarManager().getCalendarEntryList().size() / 2);
+    }
+
+    /**
+     * Returns the last index of the calendar entry in the {@code model}'s calendar entry list.
+     */
+    public static Index getLastEntryIndex(Model model) {
+        return Index.fromOneBased(model.getCalendarManager().getCalendarEntryList().size());
+    }
+
+    /**
      * Returns the person in the {@code model}'s person list at {@code index}.
      */
     public static Person getPerson(Model model, Index index) {
@@ -77,4 +92,11 @@ public class TestUtil {
         return model.getAddressBook().getOrderList().get(index.getZeroBased());
     }
     //@@author
+
+    /**
+     * Returns the calendar entry in the {@code model}'s calendar entry list at {@code index}.
+     */
+    public static CalendarEntry getCalendarEntry(Model model, Index index) {
+        return model.getCalendarManager().getCalendarEntryList().get(index.getZeroBased());
+    }
 }

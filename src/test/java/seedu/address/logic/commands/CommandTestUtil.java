@@ -73,16 +73,17 @@ public class CommandTestUtil {
     public static final String VALID_QUANTITY_COMPUTER = "1";
     public static final String VALID_DELIVERY_DATE_COMPUTER = "18-07-2018";
 
-    public static final String VALID_ENTRY_TITLE_MEET_BOSS = "Meeting with boss";
-    public static final String VALID_ENTRY_TITLE_GET_STOCKS = "Get stocks from supplier";
-    public static final String VALID_START_DATE_MEET_BOSS = "06-06-2018";
-    public static final String VALID_START_DATE_GET_STOCKS = "01-07-2018";
-    public static final String VALID_END_DATE_MEET_BOSS = "06-06-2018";
-    public static final String VALID_END_DATE_GET_STOCKS = "01-07-2018";
-    public static final String VALID_START_TIME_MEET_BOSS = "10:00";
-    public static final String VALID_START_TIME_GET_STOCKS = "08:00";
-    public static final String VALID_END_TIME_MEET_BOSS = "12:00";
-    public static final String VALID_END_TIME_GET_STOCKS = "13:00";
+    public static final String VALID_ENTRY_TITLE_MEET_SUPPLIER = "Meeting with supplier";
+    public static final String VALID_ENTRY_TITLE_GET_BOOKS = "Get books from supplier";
+    public static final String VALID_START_DATE_ALTERNATE_DATE = "01-06-2018";
+    public static final String VALID_START_DATE_MEET_SUPPLIER = "06-06-2018";
+    public static final String VALID_START_DATE_GET_BOOKS = "01-07-2018";
+    public static final String VALID_END_DATE_MEET_SUPPLIER = "06-06-2018";
+    public static final String VALID_END_DATE_GET_BOOKS = "01-07-2018";
+    public static final String VALID_START_TIME_MEET_SUPPLIER = "10:00";
+    public static final String VALID_START_TIME_GET_BOOKS = "08:00";
+    public static final String VALID_END_TIME_MEET_SUPPLIER = "12:00";
+    public static final String VALID_END_TIME_GET_BOOKS = "12:30";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -114,16 +115,19 @@ public class CommandTestUtil {
     public static final String QUANTITY_DESC_COMPUTER = " " + PREFIX_QUANTITY + VALID_QUANTITY_COMPUTER;
     public static final String DELIVERY_DATE_DESC_COMPUTER = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_COMPUTER;
 
-    public static final String ENTRY_TITLE_DESC_MEET_BOSS = " " + PREFIX_ENTRY_TITLE + VALID_ENTRY_TITLE_MEET_BOSS;
-    public static final String ENTRY_TITLE_DESC_GET_STOCKS = " " + PREFIX_ENTRY_TITLE + VALID_ENTRY_TITLE_GET_STOCKS;
-    public static final String START_DATE_DESC_MEET_BOSS = " " + PREFIX_START_DATE + VALID_START_DATE_MEET_BOSS;
-    public static final String START_DATE_DESC_GET_STOCKS = " " + PREFIX_START_DATE + VALID_START_DATE_GET_STOCKS;
-    public static final String END_DATE_DESC_MEET_BOSS = " " + PREFIX_END_DATE + VALID_END_DATE_MEET_BOSS;
-    public static final String END_DATE_DESC_GET_STOCKS = " " + PREFIX_END_DATE + VALID_END_DATE_GET_STOCKS;
-    public static final String START_TIME_DESC_MEET_BOSS = " " + PREFIX_START_TIME + VALID_START_TIME_MEET_BOSS;
-    public static final String START_TIME_DESC_GET_STOCKS = " " + PREFIX_START_TIME + VALID_START_TIME_GET_STOCKS;
-    public static final String END_TIME_DESC_MEET_BOSS = " " + PREFIX_END_TIME + VALID_END_TIME_MEET_BOSS;
-    public static final String END_TIME_DESC_GET_STOCKS = " " + PREFIX_END_TIME + VALID_END_TIME_GET_STOCKS;
+    public static final String ENTRY_TITLE_DESC_MEET_SUPPLIER = " " + PREFIX_ENTRY_TITLE
+            + VALID_ENTRY_TITLE_MEET_SUPPLIER;
+    public static final String ENTRY_TITLE_DESC_GET_BOOKS = " " + PREFIX_ENTRY_TITLE + VALID_ENTRY_TITLE_GET_BOOKS;
+    public static final String START_DATE_DESC_ALTERNATE_DATE =
+            " " + PREFIX_START_DATE + VALID_START_DATE_ALTERNATE_DATE;
+    public static final String START_DATE_DESC_MEET_SUPPLIER = " " + PREFIX_START_DATE + VALID_START_DATE_MEET_SUPPLIER;
+    public static final String START_DATE_DESC_GET_BOOKS = " " + PREFIX_START_DATE + VALID_START_DATE_GET_BOOKS;
+    public static final String END_DATE_DESC_MEET_SUPPLIER = " " + PREFIX_END_DATE + VALID_END_DATE_MEET_SUPPLIER;
+    public static final String END_DATE_DESC_GET_BOOKS = " " + PREFIX_END_DATE + VALID_END_DATE_GET_BOOKS;
+    public static final String START_TIME_DESC_MEET_SUPPLIER = " " + PREFIX_START_TIME + VALID_START_TIME_MEET_SUPPLIER;
+    public static final String START_TIME_DESC_GET_BOOKS = " " + PREFIX_START_TIME + VALID_START_TIME_GET_BOOKS;
+    public static final String END_TIME_DESC_MEET_SUPPLIER = " " + PREFIX_END_TIME + VALID_END_TIME_MEET_SUPPLIER;
+    public static final String END_TIME_DESC_GET_BOOKS = " " + PREFIX_END_TIME + VALID_END_TIME_GET_BOOKS;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -164,8 +168,8 @@ public class CommandTestUtil {
     public static final EditOrderCommand.EditOrderDescriptor DESC_COMPUTER;
     public static final EditOrderCommand.EditOrderDescriptor DESC_COMICBOOK;
 
-    public static final EditEntryCommand.EditEntryDescriptor DESC_MEET_BOSS;
-    public static final EditEntryCommand.EditEntryDescriptor DESC_GET_STOCKS;
+    public static final EditEntryCommand.EditEntryDescriptor DESC_MEET_SUPPLIER;
+    public static final EditEntryCommand.EditEntryDescriptor DESC_GET_BOOKS;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -190,12 +194,12 @@ public class CommandTestUtil {
     }
 
     static {
-        DESC_MEET_BOSS = new EditEntryDescriptorBuilder().withEntryTitle(VALID_ENTRY_TITLE_MEET_BOSS)
-                .withStartDate(VALID_START_DATE_MEET_BOSS).withEndDate(VALID_END_DATE_MEET_BOSS)
-                .withStartTime(VALID_START_TIME_MEET_BOSS).withEndTime(VALID_END_TIME_MEET_BOSS).build();
-        DESC_GET_STOCKS = new EditEntryDescriptorBuilder().withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS)
-                .withStartDate(VALID_START_DATE_GET_STOCKS).withEndDate(VALID_END_DATE_GET_STOCKS)
-                .withStartTime(VALID_START_TIME_GET_STOCKS).withEndTime(VALID_END_TIME_GET_STOCKS).build();
+        DESC_MEET_SUPPLIER = new EditEntryDescriptorBuilder().withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER)
+                .withStartDate(VALID_START_DATE_MEET_SUPPLIER).withEndDate(VALID_END_DATE_MEET_SUPPLIER)
+                .withStartTime(VALID_START_TIME_MEET_SUPPLIER).withEndTime(VALID_END_TIME_MEET_SUPPLIER).build();
+        DESC_GET_BOOKS = new EditEntryDescriptorBuilder().withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS)
+                .withStartDate(VALID_START_DATE_GET_BOOKS).withEndDate(VALID_END_DATE_GET_BOOKS)
+                .withStartTime(VALID_START_TIME_GET_BOOKS).withEndTime(VALID_END_TIME_GET_BOOKS).build();
     }
 
     /**
@@ -241,7 +245,6 @@ public class CommandTestUtil {
             assertEquals(expectedFilteredOrderList, actualModel.getFilteredOrderList());
             assertEquals(expectedCalendarManager, actualModel.getCalendarManager());
             assertEquals(expectedFilteredCalendarEntryList, actualModel.getFilteredCalendarEntryList());
-
         }
     }
 

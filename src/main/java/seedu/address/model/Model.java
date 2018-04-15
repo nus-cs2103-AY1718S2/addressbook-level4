@@ -59,7 +59,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-    void updateFilteredCalendarEventList(Predicate<CalendarEntry> predicate);
+    void updateFilteredCalendarEntryList(Predicate<CalendarEntry> predicate);
 
     /**
      * Updates the filter of the filtered order list to filter by the given {@code predicate}.

@@ -1,5 +1,5 @@
 package seedu.address.ui;
-
+//@@author SuxianAlicia
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -15,7 +15,7 @@ import seedu.address.model.entry.CalendarEntry;
 import seedu.address.model.order.Order;
 
 /**
- * The Right Panel of the App that can switch between Order List Panel and CalendarEntry List Panel
+ * The Right Panel of the App that can switch between Order List Panel and CalendarEntry List Panel.
  */
 public class RightPanel extends UiPart<Region> {
     private static final String FXML = "RightPanel.fxml";
@@ -26,7 +26,7 @@ public class RightPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
-    private StackPane rightPlaceholder;
+    private StackPane rightPlaceHolder;
 
     public RightPanel(ObservableList<Order> orderList, ObservableList<CalendarEntry> calendarEntryList) {
         super(FXML);
@@ -43,9 +43,9 @@ public class RightPanel extends UiPart<Region> {
      * Displays the OrderList Panel.
      */
     private void displayOrderListPanel() {
-        if (!rightPlaceholder.getChildren().contains(orderListPanel.getRoot())) {
-            rightPlaceholder.getChildren().clear();
-            rightPlaceholder.getChildren().add(orderListPanel.getRoot());
+        if (!rightPlaceHolder.getChildren().contains(orderListPanel.getRoot())) {
+            rightPlaceHolder.getChildren().clear();
+            rightPlaceHolder.getChildren().add(orderListPanel.getRoot());
         }
     }
 
@@ -53,9 +53,9 @@ public class RightPanel extends UiPart<Region> {
      * Displays the CalendarEntryList Panel.
      */
     private void displayCalendarEntryListPanel() {
-        if (!rightPlaceholder.getChildren().contains(calendarEntryListPanel.getRoot())) {
-            rightPlaceholder.getChildren().clear();
-            rightPlaceholder.getChildren().add(calendarEntryListPanel.getRoot());
+        if (!rightPlaceHolder.getChildren().contains(calendarEntryListPanel.getRoot())) {
+            rightPlaceHolder.getChildren().clear();
+            rightPlaceHolder.getChildren().add(calendarEntryListPanel.getRoot());
         }
     }
 

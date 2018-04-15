@@ -673,8 +673,6 @@ The themes are found in resources/view.
 
 A new remark component is added to the person model.
 
-image::ModelClassDiagramWithRemark.png[width="800"]
-
 This remark feature allows the user to add remarks to the student profile of the specified student.
 
 image::RemarkClassSequenceDiagram.png[width="800"]
@@ -689,6 +687,69 @@ Figure 15. Sequence Diagram of AddRemarkCommand
 
 *_return to <<toc,Table of Contents>>_*
 // end::remark[]
+
+// tag::InjuriesHistory[]
+=== Injuries History Feature
+==== Current Implementation
+
+A new injuries history component is added to the person model.
+
+This injuries history feature allows the user to add injuries history to the student profile of the specified student.
+
+image::InjuriesHistoryClassSequenceDiagram.png[width="800"]
+
+Figure 16. Sequence Diagram of AddInjuriesCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `Injuries History` feature
+* ** Alternative 1:** Using just one method to add and delete the injuries history.
+** Pros: Need not create 2 command just to add and delete the injuries history.
+** Cons: The injuries history attached to the student in our student profile would not be able to exceed one line.
+
+*_return to <<toc,Table of Contents>>_*
+// end::InjuriesHistory[]
+
+// tag::Cca[]
+=== Cca Feature
+==== Current Implementation
+
+A new cca component is added to the person model.
+
+This cca feature allows the user to add cca and the position to the student profile of the specified student.
+
+image::CcaClassSequenceDiagram.png[width="800"]
+
+Figure 17. Sequence Diagram of CcaCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `Cca` feature
+* ** Alternative 1:** Using just two methods to add and delete the details of the cca.
+** Pros: More than 1 details of the student cca can be added.
+** Cons: The user has to type separate commands just to add or delete the details.
+
+*_return to <<toc,Table of Contents>>_*
+// end::Cca[]
+
+// tag::NOK[]
+=== NextOfKin Feature
+==== Current Implementation
+
+A new next of kin component is added to the person model.
+
+This NextOfKin feature allows the user to add the details of the student's next of kin into the student profile of the specified student.
+
+image::NextOfKinClassSequenceDiagram.png[width="800"]
+
+Figure 18. Sequence Diagram of NextOfKinCommand
+
+==== Design Considerations
+===== Aspect: Implementation of the `NextOfKin` feature
+* ** Alternative 1:** Using just two methods to add and delete the details of the next of kin of the student.
+** Pros: More than 1 details of the student's next of kin can be added.
+** Cons: The user has to type separate commands just to add or delete the details.
+
+*_return to <<toc,Table of Contents>>_*
+// end::NOK[]
 
 === Logging
 
@@ -1216,6 +1277,7 @@ The level of achievement in each subject is indicated by the grade obtained, wit
 |E8| 40% - 44%
 |F9| 0% - 39%
 |=======================================================================
+
 [[L1B4]] L1B4::
 A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
 The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
@@ -1238,6 +1300,11 @@ For more information, please click https://www.moe.gov.sg/admissions/direct-admi
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
+
+[[NRIC]] NRIC::
+It stands for National Registration Identity Card, and it is an identification document for the residents in Singapore.
+The `NRIC` that we are referring to in the _EduBuddy_ refers to the unique identification number that comes with each `NRIC`.
+Please visit https://www.ica.gov.sg/[this website] for more details.
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
@@ -1263,25 +1330,6 @@ For example, type in: `Hist A1` *not* `History A1`
 |=======================================================================
 
 * The following subjects can be assigned to students but cannot be contributed to the results: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
-
-*_return to <<toc,Table of Contents>>_*
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 *_return to <<toc,Table of Contents>>_*
 

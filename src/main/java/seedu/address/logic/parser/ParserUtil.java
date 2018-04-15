@@ -162,7 +162,12 @@ public class ParserUtil {
                 throw new IllegalValueException(Subject.MESSAGE_SUBJECT_NAME_CONSTRAINTS);
             }
             i += 1;
-            String subjectGrade = splitSubjectStr[i];
+            String subjectGrade;
+            if (i >= splitSubjectStr.length) {
+                throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
+            } else {
+                subjectGrade = splitSubjectStr[i];
+            }
             if (!Subject.isValidSubjectGrade(subjectGrade)) {
                 throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
             }
@@ -356,19 +361,10 @@ public class ParserUtil {
             throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!NextOfKin.isValidName(trimmedName)) {
-            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
-        }
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        /*if (!NextOfKin.isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(NextOfKin.MESSAGE_PHONE_CONSTRAINTS);
-        }*/
         requireNonNull(email);
         String trimmedEmail = email.trim();
-        /*if (!NextOfKin.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(NextOfKin.MESSAGE_EMAIL_CONSTRAINTS);
-        }*/
         requireNonNull(remark);
         String trimmedRemark = remark.trim();
 

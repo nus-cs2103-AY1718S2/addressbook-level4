@@ -110,7 +110,6 @@ public class VenueTableEvent extends BaseEvent {
 public class AliasCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "alias";
-    public static final String LIST_ALIAS_COMMAND_WORD = "list";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows list of alias or creates new alias. "
             + "Parameters for creating new alias: [COMMAND] [NEW_ALIAS] \n"
             + "Example: " + COMMAND_WORD + " add a";
@@ -153,7 +152,7 @@ public class AliasCommand extends UndoableCommand {
     }
 
     /**
-     * Checks if the command specified is valid command and the alias specified is not a command word.
+     * Checks if the command specified is an existent command and the alias specified is not a command word.
      */
     private void checkForValidCommandAndAlias() throws CommandException {
         if (!commands.contains(toAdd.getCommand())) {
@@ -165,6 +164,10 @@ public class AliasCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Retrieve all command words sorted in alphabetical order
+     * @return a list of application's command words in sorted order
+     */
     public static List<String> getCommands() {
         Collections.sort(commands);
         return commands;
@@ -193,12 +196,11 @@ public class MapCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Launching Google Maps ...";
     public static final String MESSAGE_NO_INTERNET = "Please check that you have internet connection";
-    private static final String SPLIT_TOKEN = "/";
-    private static final int TWO_LOCATIONS_WORD_LENGTH = 2;
-    private static final int FIRST_LOCATION_INDEX = 0;
+    public static final String SPLIT_TOKEN = "/";
+    public static final int TWO_LOCATIONS_WORD_LENGTH = 2;
+    public static final int FIRST_LOCATION_INDEX = 0;
 
     private String locations;
-    private boolean isOneLocation;
 
     /**
      * Creates a MapCommand to pass locations to Google Maps
@@ -211,37 +213,13 @@ public class MapCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
-        String[] locationsArray = locations.split(SPLIT_TOKEN);
-        checkForAndRetrieveNusBuildings(locationsArray);
-        identifyNumberOfSpecifiedLocations(locationsArray);
+        locations = ParserUtil.parseLocations(this.locations);
+        boolean isOneLocation = !locations.contains(SPLIT_TOKEN);
         try {
             EventsCenter.getInstance().post(new GoogleMapsEvent(locations, isOneLocation));
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } catch (IOException e) {
             throw new CommandException(MESSAGE_NO_INTERNET);
-        }
-    }
-
-    /**
-     * Identifies if one or more locations are specified in the user input
-     */
-    private void identifyNumberOfSpecifiedLocations(String[] locationsArray) {
-        if (locationsArray.length >= TWO_LOCATIONS_WORD_LENGTH) {
-            locations = String.join(SPLIT_TOKEN, locationsArray);
-            isOneLocation = false;
-        } else {
-            locations = locationsArray[FIRST_LOCATION_INDEX];
-            isOneLocation = true;
-        }
-    }
-
-    /**
-     * Creates a MapCommand to pass locations to Google Maps
-     */
-    private void checkForAndRetrieveNusBuildings(String[] locationsArray) {
-        for (int i = 0; i < locationsArray.length; i++) {
-            locationsArray[i] = locationsArray[i].trim();
-            locationsArray[i] = retrieveNusBuildingIfExist(locationsArray[i]);
         }
     }
 
@@ -360,7 +338,7 @@ public class VacantCommand extends Command {
      * Parses user input into command for execution.
      *
      * @param userInput full user input string
-     * @return String[] consists of commandWord and arguments
+     * @return String[] of size 2, consists of commandWord and arguments
      * @throws ParseException if the user input does not conform the expected format
      */
     public String[] extractCommandArgs(String userInput) throws ParseException {
@@ -460,6 +438,39 @@ public class MapCommandParser implements Parser<MapCommand> {
     }
 
     /**
+     * Parses a {@code String locations} into {@code String formattedLocations}
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseLocations(String locations) {
+        requireNonNull(locations);
+        String[] locationsArray = locations.split(MapCommand.SPLIT_TOKEN);
+        checkForAndRetrieveNusBuildings(locationsArray);
+        return identifyNumberOfSpecifiedLocations(locationsArray);
+    }
+
+    /**
+     * Identifies if one or more locations are specified in the user input
+     */
+    private static String identifyNumberOfSpecifiedLocations(String[] locationsArray) {
+        if (locationsArray.length >= MapCommand.TWO_LOCATIONS_WORD_LENGTH) {
+            return String.join(MapCommand.SPLIT_TOKEN, locationsArray);
+        } else {
+            return locationsArray[MapCommand.FIRST_LOCATION_INDEX];
+        }
+    }
+
+
+    /**
+     * Replace NUS building names with respective postal code
+     */
+    private static void checkForAndRetrieveNusBuildings(String[] locationsArray) {
+        for (int i = 0; i < locationsArray.length; i++) {
+            locationsArray[i] = locationsArray[i].trim();
+            locationsArray[i] = retrieveNusBuildingIfExist(locationsArray[i]);
+        }
+    }
+
+    /**
      * Parses a {@code String unalias}
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -496,6 +507,9 @@ public class MapCommandParser implements Parser<MapCommand> {
  */
 public class UnaliasCommandParser implements Parser<UnaliasCommand> {
 
+    private static final String SPLIT_TOKEN = "\\s+";
+    private static final int CORRECT_ARGS_LENGTH = 1;
+
     /**
      * Parses the given {@code String} of arguments in the context of the UnaliasCommand
      * and returns an UnaliasCommand object for execution.
@@ -512,11 +526,12 @@ public class UnaliasCommandParser implements Parser<UnaliasCommand> {
     }
 
     /**
-     * Returns a not empty String of unalias.
+     * Returns a non empty String of unalias.
      */
     private String validateNumberOfArgs(String args) throws ParseException {
         String unalias = args.trim();
-        if (unalias.isEmpty()) {
+        String[] splitArgs = unalias.split(SPLIT_TOKEN);
+        if (unalias.isEmpty() || splitArgs.length != CORRECT_ARGS_LENGTH) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
         }
@@ -659,7 +674,7 @@ public class VacantCommandParser implements Parser<VacantCommand> {
  */
 public class Alias {
 
-    public static final String MESSAGE_ALIAS_CONSTRAINTS = "Alias names should be alphanumeric";
+    public static final String MESSAGE_ALIAS_CONSTRAINTS = "Alias arguments should be alphanumeric";
     public static final String ALIAS_VALIDATION_REGEX = "\\p{Alnum}+";
 
     private final String command;
@@ -668,6 +683,7 @@ public class Alias {
     /**
      * Constructs an {@code Alias}.
      *
+     * @param command A valid command word
      * @param aliasName A valid alias name.
      */
     public Alias(String command, String aliasName) {
@@ -678,10 +694,18 @@ public class Alias {
         this.command = command;
     }
 
+    /**
+     *
+     * @return the command word
+     */
     public String getCommand() {
         return command;
     }
 
+    /**
+     *
+     * @return the alias name
+     */
     public String getAlias() {
         return aliasName;
     }
@@ -811,9 +835,7 @@ public class UniqueAliasList {
     }
 
     /**
-     * Converts the HashMap of alias and command pairings into an observable list of Alias objects
-     * Add in all the aliases in the given {@code aliases}
-     * if the Alias is not a duplicate of an existing Alias in the list.
+     * Replace all the current alias and command pairings with {@code aliases}
      */
     public void setAliases(HashMap<String, String> aliases) {
         requireNonNull(aliases);
@@ -845,13 +867,6 @@ public class UniqueAliasList {
      */
     public HashMap<String, String> getAliasCommandMappings() {
         return aliasCommandMap;
-    }
-
-    /**
-     * Replaces the aliases in this aliasCommandMap with the HashMap in the argument.
-     */
-    public void replaceHashmap(HashMap<String, String> aliases) {
-        aliasCommandMap = aliases;
     }
 
     /**
@@ -918,13 +933,24 @@ public class UniqueAliasList {
      * Groups alias mappings by command.
      */
     private void convertAliasHashmapToArrayList(ArrayList<ArrayList<String>> aliases) {
-        for (String command : AliasCommand.getCommands()) {
+        for (int i = 0; i < AliasCommand.getCommands().size(); i++) {
             aliases.add(new ArrayList<>());
         }
-        for (String key: aliasCommandMap.keySet()) {
+
+        String[] sortedKeys = sortAliasKeysByAlphabeticalOrder();
+        for (String key: sortedKeys) {
             String command = aliasCommandMap.get(key);
             aliases.get(AliasCommand.getCommands().indexOf(command)).add(key);
         }
+    }
+
+    /**
+     * Sorts aliases by alphabetical order.
+     */
+    private String[] sortAliasKeysByAlphabeticalOrder() {
+        String[] sortedKeys = aliasCommandMap.keySet().toArray(new String[0]);
+        Arrays.sort(sortedKeys);
+        return sortedKeys;
     }
 
     /**
@@ -1398,11 +1424,9 @@ public class GoogleMapsDisplay extends UiPart<Region> {
     @Subscribe
     private void handleInfoPanelEvent(InfoPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        venuePlaceholder.toBack();
-        mapsPlaceholder.toBack();
-        birthdayPlaceholder.toBack();
-        timetableUnionPlaceholder.toBack();
-        aliasListPlaceholder.toBack();
+        Platform.runLater(() -> {
+            hideAllPanel();
+        });
     }
 ```
 ###### \java\seedu\address\ui\VenueTable.java
@@ -1508,29 +1532,46 @@ public class VenueTable extends UiPart<Region> {
      */
     public void setStyle() {
         for (int i = 0; i < columns.size(); i++) {
-            columns.get(i).setCellFactory(column -> {
-                return new TableCell<ArrayList<String>, String>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (item == null || empty) {
-                            setText(null);
-                            setStyle(EMPTY_CELL);
-                        } else {
-                            removeAllStyle(this);
-                            setText(item);
-                            if (getItem().equals(OCCUPIED_LABEL)) {
-                                getStyleClass().add(OCCUPIED_STYLE_CLASS);
-                            } else if (getItem().equals(VACANT_LABEL)) {
-                                getStyleClass().add(VACANT_STYLE_CLASS);
-
-                            }
-                        }
-                    }
-                };
-            });
+            TableColumn<ArrayList<String>, String> columnToBeSet = columns.get(i);
+            setStyleForColumn(columnToBeSet);
         }
+    }
+
+    /**
+     * Sets the style of each column.
+     * @param columnToBeSet is the column that would be set
+     */
+    private void setStyleForColumn (TableColumn<ArrayList<String>, String> columnToBeSet) {
+        columnToBeSet.setCellFactory(column -> {
+            return setStyleForCell();
+        });
+    }
+
+    /**
+     * Sets the style of the cell given the data and return it
+     * @return the tablecell with its style set.
+     */
+    private TableCell<ArrayList<String>, String> setStyleForCell () {
+        return new TableCell<ArrayList<String>, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle(EMPTY_CELL);
+                } else {
+                    removeAllStyle(this);
+                    setText(item);
+                    if (getItem().equals(OCCUPIED_LABEL)) {
+                        getStyleClass().add(OCCUPIED_STYLE_CLASS);
+                    } else if (getItem().equals(VACANT_LABEL)) {
+                        getStyleClass().add(VACANT_STYLE_CLASS);
+
+                    }
+                }
+            }
+        };
     }
 
     /**

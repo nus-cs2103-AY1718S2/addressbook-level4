@@ -14,6 +14,7 @@ import seedu.address.model.alias.Alias;
 import seedu.address.testutil.AliasBuilder;
 import seedu.address.testutil.Assert;
 
+//@@author jingyinno
 public class XmlAdaptedAliasTest {
     private static final String ILLEGAL_COMMAND_WORD = "add%";
     private static final String ILLEGAL_ALIAS_WORD = "alias$";

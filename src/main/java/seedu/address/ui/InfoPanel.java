@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -115,7 +116,9 @@ public class InfoPanel extends UiPart<Region> {
     @Subscribe
     private void handleInfoPanelEvent(InfoPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        hideAllPanel();
+        Platform.runLater(() -> {
+            hideAllPanel();
+        });
     }
     //@@author
 

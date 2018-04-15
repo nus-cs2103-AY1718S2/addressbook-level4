@@ -87,6 +87,7 @@ public class CommandTestUtil {
     public static final String VALID_ALIAS_DELETE = "delete1";
     public static final String VALID_ALIAS_EDIT = "edit1";
     public static final String VALID_ALIAS_EXIT = "exit1";
+    public static final String VALID_ALIAS_EXPORT = "export1";
     public static final String VALID_ALIAS_FIND = "find1";
     public static final String VALID_ALIAS_HELP_COMMAND = HelpCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_HELP = "help1";
@@ -94,7 +95,8 @@ public class CommandTestUtil {
     public static final String VALID_ALIAS_IMPORT = "import1";
     public static final String VALID_ALIAS_LIST_COMMAND = ListCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_LIST = "list1";
-    public static final String VALID_ALIAS_MAP = "map1";
+    public static final String VALID_ALIAS_MAP1 = "map1";
+    public static final String VALID_ALIAS_MAP2 = "map2";
     public static final String VALID_ALIAS_ENCRYPT = "encrypt1";
     public static final String VALID_ALIAS_REDO = "redo1";
     public static final String VALID_ALIAS_DECRYPT = "decrypt1";
@@ -102,7 +104,9 @@ public class CommandTestUtil {
     public static final String VALID_ALIAS_UNALIAS = "unalias1";
     public static final String VALID_ALIAS_UNDO = "undo1";
     public static final String VALID_ALIAS_VACANT = "vacant1";
-    public static final String VALID_ALIAS_NUMBER = "9";
+    public static final String VALID_ALIAS_UNION = "union1";
+    public static final String VALID_ALIAS_UPLOAD = "upload1";
+    public static final String VALID_ALIAS_NUMBER = "911";
 
     public static final String ALIAS_DESC_ADD = AddCommand.COMMAND_WORD + " " + VALID_ALIAS_ADD;
     public static final String ALIAS_DESC_ALIAS = AliasCommand.COMMAND_WORD + " " + VALID_ALIAS_ALIAS;
@@ -113,24 +117,31 @@ public class CommandTestUtil {
     public static final String ALIAS_DESC_EDIT = EditCommand.COMMAND_WORD + " " + VALID_ALIAS_EDIT;
     public static final String ALIAS_DESC_EXIT = ExitCommand.COMMAND_WORD + " " + VALID_ALIAS_EXIT;
     public static final String ALIAS_DESC_ENCRYPT = PasswordCommand.COMMAND_WORD + " " + VALID_ALIAS_ENCRYPT;
+    public static final String ALIAS_DESC_EXPORT = ExportCommand.COMMAND_WORD + " " + VALID_ALIAS_EXPORT;
     public static final String ALIAS_DESC_FIND = FindCommand.COMMAND_WORD + " " + VALID_ALIAS_FIND;
     public static final String ALIAS_DESC_HELP = HelpCommand.COMMAND_WORD + " " + VALID_ALIAS_HELP;
     public static final String ALIAS_DESC_HISTORY = HistoryCommand.COMMAND_WORD + " " + VALID_ALIAS_HISTORY;
     public static final String ALIAS_DESC_IMPORT = ImportCommand.COMMAND_WORD + " " + VALID_ALIAS_IMPORT;
     public static final String ALIAS_DESC_LIST = ListCommand.COMMAND_WORD + " " + VALID_ALIAS_LIST;
-    public static final String ALIAS_DESC_MAP = MapCommand.COMMAND_WORD + " " + VALID_ALIAS_MAP;
-    public static final String ALIAS_DESC_PASSWORD = PasswordCommand.COMMAND_WORD + " " + VALID_ALIAS_ENCRYPT;
+    public static final String ALIAS_DESC_MAP1 = MapCommand.COMMAND_WORD + " " + VALID_ALIAS_MAP1;
+    public static final String ALIAS_DESC_MAP2 = MapCommand.COMMAND_WORD + " " + VALID_ALIAS_MAP2;
     public static final String ALIAS_DESC_REDO = RedoCommand.COMMAND_WORD + " " + VALID_ALIAS_REDO;
-    public static final String ALIAS_DESC_REMOVEPASSWORD = RemovePasswordCommand.COMMAND_WORD + " "
-            + VALID_ALIAS_DECRYPT;
     public static final String ALIAS_DESC_SELECT = SelectCommand.COMMAND_WORD + " " + VALID_ALIAS_SELECT;
     public static final String ALIAS_DESC_UNALIAS = UnaliasCommand.COMMAND_WORD + " " + VALID_ALIAS_UNALIAS;
     public static final String ALIAS_DESC_UNDO = UndoCommand.COMMAND_WORD + " " + VALID_ALIAS_UNDO;
     public static final String ALIAS_DESC_VACANT = VacantCommand.COMMAND_WORD + " " + VALID_ALIAS_VACANT;
+    public static final String ALIAS_DESC_UNION = TimetableUnionCommand.COMMAND_WORD + " " + VALID_ALIAS_UNION;
+    public static final String ALIAS_DESC_UPLOAD = UploadCommand.COMMAND_WORD + " " + VALID_ALIAS_UPLOAD;
+    public static final String ALIAS_DESC_NUMBER = UploadCommand.COMMAND_WORD + " " + VALID_ALIAS_NUMBER;
 
+    public static final String INVALID_COMMAND_SYNTAX = "command!";
     public static final String INVALID_ALIAS = "alias!";
-    public static final String INVALID_ALIAS_DESC = INVALID_ALIAS + " " + VALID_ALIAS_ALIAS;
     public static final String INVALID_COMMAND_DESC = "invalid";
+
+    public static final String INVALID_COMMAND_SYNTAX_DESC = INVALID_COMMAND_SYNTAX + " " + VALID_ALIAS_ALIAS;
+    public static final String INVALID_COMMAND_WORD_DESC = INVALID_COMMAND_DESC + " " + VALID_ALIAS_ALIAS;
+    public static final String INVALID_ALIAS_SYNTAX_DESC = SelectCommand.COMMAND_WORD + " " + INVALID_ALIAS;
+    public static final String INVALID_ALIAS_WORD_DESC = SelectCommand.COMMAND_WORD + " " + VacantCommand.COMMAND_WORD;
 
     public static final String VALID_BUILDING_1 = "COM1";
     public static final String VALID_BUILDING_2 = "S1";
@@ -142,6 +153,8 @@ public class CommandTestUtil {
     public static final String MIXED_CASE_VACANT_COMMAND_WORD = "VaCaNt";
 
     public static final String VALID_UNALIAS = VALID_ALIAS_ADD;
+
+    public static final String INVALID_UNALIAS = "nonexistent";
 
     public static final String INVALID_UNALIAS_DESC = "alias!";
 

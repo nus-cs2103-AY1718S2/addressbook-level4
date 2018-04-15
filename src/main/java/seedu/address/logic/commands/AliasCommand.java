@@ -17,7 +17,6 @@ import seedu.address.model.alias.exceptions.DuplicateAliasException;
 public class AliasCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "alias";
-    public static final String LIST_ALIAS_COMMAND_WORD = "list";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows list of alias or creates new alias. "
             + "Parameters for creating new alias: [COMMAND] [NEW_ALIAS] \n"
             + "Example: " + COMMAND_WORD + " add a";
@@ -60,7 +59,7 @@ public class AliasCommand extends UndoableCommand {
     }
 
     /**
-     * Checks if the command specified is valid command and the alias specified is not a command word.
+     * Checks if the command specified is an existent command and the alias specified is not a command word.
      */
     private void checkForValidCommandAndAlias() throws CommandException {
         if (!commands.contains(toAdd.getCommand())) {
@@ -72,6 +71,10 @@ public class AliasCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Retrieve all command words sorted in alphabetical order
+     * @return a list of application's command words in sorted order
+     */
     public static List<String> getCommands() {
         Collections.sort(commands);
         return commands;

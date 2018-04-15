@@ -59,7 +59,7 @@ public class VacantCommandTest {
     }
 
     @Test
-    public void equals() throws Exception {
+    public void equals() {
         Building validBuildingOne = new Building(VALID_BUILDING_1);
         Building validBuildingTwo = new Building(VALID_BUILDING_2);
 

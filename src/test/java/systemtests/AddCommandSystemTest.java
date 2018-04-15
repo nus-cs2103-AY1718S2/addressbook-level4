@@ -142,7 +142,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: add to empty address book -> added */
-        deleteAllPersons();
+        deleteAllPersonsAndAliases();
         assertCommandSuccess(ALICE);
 
         /* Case: add a person with tags, command with parameters in random order -> added */

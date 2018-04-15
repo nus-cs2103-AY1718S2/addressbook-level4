@@ -10,6 +10,7 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.input.MouseButton;
 import seedu.address.commons.events.ui.MaximizeAppRequestEvent;
+import seedu.address.commons.events.ui.MinimizeAppRequestEvent;
 import seedu.address.testutil.EventsUtil;
 
 //@@author Ang-YC
@@ -67,6 +68,15 @@ public class WindowGuiTest extends AddressBookSystemTest {
 
         Rectangle2D newBound = mainWindowHandle.getWindowBound();
         assertTrue(originalBound.equals(newBound));
+    }
+
+    @Test
+    public void testMinimize() {
+        MainWindowHandle mainWindowHandle = getMainWindowHandle();
+
+        // Minimize
+        EventsUtil.postNow(new MinimizeAppRequestEvent());
+        assertTrue(mainWindowHandle.isMinimized());
     }
 
     @Test

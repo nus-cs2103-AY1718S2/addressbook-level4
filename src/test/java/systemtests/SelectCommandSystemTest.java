@@ -109,7 +109,6 @@ public class SelectCommandSystemTest extends ProgressCheckerSystemTest {
      * Verifications 1, 3 and 4 are performed by
      * {@code ProgressCheckerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see ProgressCheckerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see ProgressCheckerSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
@@ -119,13 +118,6 @@ public class SelectCommandSystemTest extends ProgressCheckerSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-
-        if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
-            assertSelectedCardUnchanged();
-        } else {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        }
-
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
     }
@@ -136,7 +128,6 @@ public class SelectCommandSystemTest extends ProgressCheckerSystemTest {
      * 2. Command box has the error style class.<br>
      * 3. Result display box displays {@code expectedResultMessage}.<br>
      * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
-     * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code ProgressCheckerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see ProgressCheckerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -146,7 +137,6 @@ public class SelectCommandSystemTest extends ProgressCheckerSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

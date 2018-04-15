@@ -85,6 +85,7 @@ public class ProfilePanel extends UiPart<Region>  {
         }
         return sum;
     }
+    //@@author
 
     //@@author Livian1107
     /**
@@ -107,7 +108,7 @@ public class ProfilePanel extends UiPart<Region>  {
     /**
      * Loads the info of the selected person
      */
-    private void loadPerson(Person person) {
+    public void loadPerson(Person person) {
         this.person = person;
         tags.getChildren().clear();
         name.setText(person.getName().fullName);
@@ -122,6 +123,8 @@ public class ProfilePanel extends UiPart<Region>  {
             label.getStyleClass().add(getTagColor(tag.tagName));
             tags.getChildren().add(label);
         });
+        //@@author
+
         //@@author Livian1107
         loadPhoto();
 
@@ -160,6 +163,6 @@ public class ProfilePanel extends UiPart<Region>  {
     @Subscribe
     private void handlePersonPanelSelectionChangeEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPerson(event.getNewSelection().person);
+        this.loadPerson(event.getNewSelection().person);
     }
 }

@@ -21,39 +21,32 @@ public class ClearCommandSystemTest extends ProgressCheckerSystemTest {
          * spaces -> cleared
          */
         assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ");
-        assertSelectedCardUnchanged();
 
         /* Case: undo clearing ProgressChecker -> original ProgressChecker restored */
         String command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command,  expectedResultMessage, defaultModel);
-        assertSelectedCardUnchanged();
 
         /* Case: redo clearing ProgressChecker -> cleared */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
-        assertSelectedCardUnchanged();
 
         /* Case: selects first card in person list and clears ProgressChecker -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original ProgressChecker
         selectPerson(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardDeselected();
 
         /* Case: filters the person list before clearing -> entire ProgressChecker cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original ProgressChecker
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardUnchanged();
 
         /* Case: clear empty ProgressChecker -> cleared */
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> cleared */
         assertCommandSuccess("ClEaR");
-        assertSelectedCardUnchanged();
 
     }
 
@@ -95,7 +88,6 @@ public class ClearCommandSystemTest extends ProgressCheckerSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

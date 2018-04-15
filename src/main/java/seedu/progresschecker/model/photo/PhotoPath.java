@@ -37,7 +37,7 @@ public class PhotoPath {
     /**
      * Validates the given photo path
      */
-    public boolean isValidPhotoPath (String path) {
+    public static boolean isValidPhotoPath (String path) {
         if (path.isEmpty()) { //empty path
             return true;
         }

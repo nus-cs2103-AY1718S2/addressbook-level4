@@ -149,11 +149,6 @@
     -fx-background-color: #424d5f;
 }
 
-.list-cell:filled:selected #cardPane {
-    -fx-border-color: #9ea7b3;
-    -fx-border-width: 1;
-}
-
 .list-cell .label {
     -fx-text-fill: #ffffff;
 }
@@ -472,4 +467,8 @@
 
 .exercise .suggested-answer {
     -fx-text-fill: #0099C7;
+}
+
+.profile .label {
+    -fx-text-fill: white;
 }

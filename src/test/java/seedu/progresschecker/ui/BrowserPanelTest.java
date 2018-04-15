@@ -59,12 +59,6 @@ public class BrowserPanelTest extends GuiUnitTest {
         assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
 
         // associated web page of a person
-        postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getName().fullName.replaceAll(" ", "%20"));
-
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
-
         postNow(loadTaskEventStub);
         String expectedTitle = null;
 
@@ -73,8 +67,5 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         postNow(loadUrlEventStub);
         URL expectedUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);;
-
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedUrl, browserPanelHandle.getLoadedUrl());
     }
 }

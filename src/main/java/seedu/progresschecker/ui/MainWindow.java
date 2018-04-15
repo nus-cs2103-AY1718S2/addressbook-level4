@@ -299,7 +299,6 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinWidth(MIN_WIDTH);
     }
 
-    //@@author Livian107
     @Subscribe
     private  void handleChangeThemeEvent(ChangeThemeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -314,6 +313,7 @@ public class MainWindow extends UiPart<Region> {
             handleDayTheme();
         }
     }
+    //@@author
 
     //@@author iNekox3
     @Subscribe

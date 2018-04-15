@@ -85,6 +85,7 @@ public class FileUtil {
         Files.write(file.toPath(), content.getBytes(CHARSET));
     }
 
+    //@@author Livian1107
     /**
      * Copies all the contents from the file in original path to the one in destination path.
      * @param oriPath of the file to be copied
@@ -116,6 +117,7 @@ public class FileUtil {
 
         return true;
     }
+    //@@author
 
     /**
      * Converts a string to a platform-specific file path
@@ -127,6 +129,7 @@ public class FileUtil {
         return pathWithForwardSlash.replace("/", File.separator);
     }
 
+    //@@author Livian1107
     /**
      * Returns the extension information from the file path
      * @param filePath
@@ -166,4 +169,5 @@ public class FileUtil {
     public static boolean isUnderFolder(String path, String parentFolder) {
         return path.startsWith(parentFolder);
     }
+    //@@author
 }

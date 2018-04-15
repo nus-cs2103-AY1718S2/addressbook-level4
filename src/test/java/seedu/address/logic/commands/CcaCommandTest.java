@@ -32,7 +32,7 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 //@@author TeyXinHui
-public class AddCcaCommandTest {
+public class CcaCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -42,28 +42,28 @@ public class AddCcaCommandTest {
     @Test
     public void constructor_nullIndexAndPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCcaCommand(null, null);
+        new CcaCommand(null, null);
 
         thrown.expect(NullPointerException.class);
-        new AddCcaCommand(INDEX_FIRST_PERSON, null);
+        new CcaCommand(INDEX_FIRST_PERSON, null);
 
         thrown.expect(NullPointerException.class);
-        new AddCcaCommand(null, new EditPersonDescriptor());
+        new CcaCommand(null, new EditPersonDescriptor());
     }
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Person editedPerson = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
-        AddCcaCommand addCcaCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        CcaCommand ccaCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
 
-        String expectedMessage = String.format(AddCcaCommand.MESSAGE_REMARK_PERSON_SUCCESS, editedPerson.getCca(),
+        String expectedMessage = String.format(CcaCommand.MESSAGE_REMARK_PERSON_SUCCESS, editedPerson.getCca(),
                 editedPerson.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
-        assertCommandSuccess(addCcaCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(ccaCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -76,9 +76,9 @@ public class AddCcaCommandTest {
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
                 .withCca("Basketball", "Member").build();
-        AddCcaCommand addCcaCommand = prepareCommand(indexLastPerson, descriptor);
+        CcaCommand ccaCommand = prepareCommand(indexLastPerson, descriptor);
 
-        String expectedMessage = String.format(AddCcaCommand.MESSAGE_REMARK_PERSON_SUCCESS, editedPerson.getCca(),
+        String expectedMessage = String.format(CcaCommand.MESSAGE_REMARK_PERSON_SUCCESS, editedPerson.getCca(),
                 editedPerson.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -91,10 +91,10 @@ public class AddCcaCommandTest {
 
         Person personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personInFilteredList).build();
-        AddCcaCommand addCcaCommand = prepareCommand(INDEX_FIRST_PERSON,
+        CcaCommand ccaCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder().withCca("Basketball", "Member").build());
 
-        String expectedMessage = String.format(AddCcaCommand.MESSAGE_REMARK_PERSON_SUCCESS, editedPerson.getCca(),
+        String expectedMessage = String.format(CcaCommand.MESSAGE_REMARK_PERSON_SUCCESS, editedPerson.getCca(),
                 editedPerson.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -105,9 +105,9 @@ public class AddCcaCommandTest {
     public void execute_duplicatePersonUnfilteredList_failure() throws IOException {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
-        AddCcaCommand addCcaCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
+        CcaCommand ccaCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
 
-        assertCommandFailure(addCcaCommand, model, AddCcaCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(ccaCommand, model, CcaCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
     @Test
@@ -116,10 +116,10 @@ public class AddCcaCommandTest {
 
         // edit person in filtered list into a duplicate in address book
         Person personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        AddCcaCommand addCcaCommand = prepareCommand(INDEX_FIRST_PERSON,
+        CcaCommand ccaCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());
 
-        assertCommandFailure(addCcaCommand, model, AddCcaCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(ccaCommand, model, CcaCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
     @Test
@@ -127,9 +127,9 @@ public class AddCcaCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
                 .withCca("Basketball", "Member").build();
-        AddCcaCommand addCcaCommand = prepareCommand(outOfBoundIndex, descriptor);
+        CcaCommand ccaCommand = prepareCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(addCcaCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(ccaCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**
@@ -143,10 +143,10 @@ public class AddCcaCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         Assert.assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        AddCcaCommand addCcaCommand = prepareCommand(outOfBoundIndex,
+        CcaCommand ccaCommand = prepareCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withCca("Basketball", "Member").build());
 
-        assertCommandFailure(addCcaCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(ccaCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
@@ -157,12 +157,12 @@ public class AddCcaCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
                 .withCca("Basketball", "Member").build();
-        AddCcaCommand addCcaCommand = prepareCommand(outOfBoundIndex, descriptor);
+        CcaCommand ccaCommand = prepareCommand(outOfBoundIndex, descriptor);
 
-        // execution failed -> addCcaCommand not pushed into undoRedoStack
+        // execution failed -> ccaCommand not pushed into undoRedoStack
 
         try {
-            assertCommandFailure(addCcaCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            assertCommandFailure(ccaCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         } catch (IOException e) {
             Assert.fail("The expected CommandException was not thrown.");
         }
@@ -183,11 +183,11 @@ public class AddCcaCommandTest {
 
     @Test
     public void equals() throws Exception {
-        final AddCcaCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        final CcaCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, DESC_AMY);
 
         // same values -> returns true
         EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(DESC_AMY);
-        AddCcaCommand commandWithSameValues = prepareCommand(INDEX_FIRST_PERSON, copyDescriptor);
+        CcaCommand commandWithSameValues = prepareCommand(INDEX_FIRST_PERSON, copyDescriptor);
         Assert.assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -204,19 +204,19 @@ public class AddCcaCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new AddCcaCommand(INDEX_SECOND_PERSON, DESC_AMY)));
+        assertFalse(standardCommand.equals(new CcaCommand(INDEX_SECOND_PERSON, DESC_AMY)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new AddCcaCommand(INDEX_FIRST_PERSON, DESC_BOB)));
+        assertFalse(standardCommand.equals(new CcaCommand(INDEX_FIRST_PERSON, DESC_BOB)));
     }
 
     /**
-     * Returns an {@code AddCcaCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code CcaCommand} with parameters {@code index} and {@code descriptor}
      */
-    private AddCcaCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
-        AddCcaCommand addCcaCommand = new AddCcaCommand(index, descriptor);
-        addCcaCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return addCcaCommand;
+    private CcaCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
+        CcaCommand ccaCommand = new CcaCommand(index, descriptor);
+        ccaCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return ccaCommand;
     }
     //@@author
 }

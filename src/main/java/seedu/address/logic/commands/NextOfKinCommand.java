@@ -33,7 +33,7 @@ import seedu.address.model.tag.Tag;
 //@@author
 public class NextOfKinCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addnok";
+    public static final String COMMAND_WORD = "nok";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the Next of Kin details of the person identified"
             + " "
@@ -42,12 +42,11 @@ public class NextOfKinCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
+            + "[" + PREFIX_EMAIL + "EMAIL] "
             + PREFIX_REMARK + "RELATIONSHIP\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "John "
             + PREFIX_PHONE + "96784213 "
-            + PREFIX_EMAIL + "john@gmail.com "
             + PREFIX_REMARK + "Father";
 
     public static final String MESSAGE_ADD_NOK_SUCCESS = "Next of Kin: %1$s\nPerson: %2$s";

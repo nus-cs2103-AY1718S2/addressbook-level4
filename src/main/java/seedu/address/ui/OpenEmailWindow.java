@@ -151,7 +151,7 @@ public class OpenEmailWindow {
     @FXML
     private void openForwardWindow() {
         try {
-            ComposeEmailWindow cew = new ComposeEmailWindow("FWD: ", this.fromContent.getText(),
+            ComposeEmailWindow cew = new ComposeEmailWindow("FWD: ", "",
                      this.subjectContent.getText(), this.msgContent.getText());
         } catch (IOException e) {
             e.printStackTrace();

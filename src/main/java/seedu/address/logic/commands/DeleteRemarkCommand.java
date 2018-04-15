@@ -103,6 +103,9 @@ public class DeleteRemarkCommand extends UndoableCommand {
         String[] remarkArray = personToEdit.getRemark().toString().split("\n");
         String updateRemark = "";
         NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
+        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
+        InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
+                .orElse(personToEdit.getInjuriesHistory());
         boolean remarkIsFound = false;
         for (String remark: remarkArray) {
             if (!remark.contains(editPersonDescriptor.getRemark().get().toString())) {
@@ -114,9 +117,6 @@ public class DeleteRemarkCommand extends UndoableCommand {
         }
         if (remarkIsFound) {
             Remark updatedRemark = parseRemark(updateRemark);
-            Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
-            InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
-                    .orElse(personToEdit.getInjuriesHistory());
 
             return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
                     updatedInjuriesHistory, updatedNextOfKin);

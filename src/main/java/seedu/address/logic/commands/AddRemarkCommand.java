@@ -27,7 +27,7 @@ import seedu.address.model.tag.Tag;
 
 //@@author chuakunhong
 /**
- * Edits the details of an existing person in the address book.
+ * Adds a remark to an existing person in the address book.
  */
 public class AddRemarkCommand extends UndoableCommand {
 

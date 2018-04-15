@@ -16,7 +16,7 @@ import org.junit.rules.TemporaryFolder;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.exceptions.DataConversionException;
 
-public class ConfigUtilTest {
+public class ConfigUtilTest extends ConfigUtil {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/ConfigUtilTest/");
 

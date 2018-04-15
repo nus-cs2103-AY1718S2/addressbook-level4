@@ -24,6 +24,21 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
+     * Inputs text in the command box.
+     */
+    public void setInput(String input) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(input));
+    }
+
+    /**
+     * Inserts text in the command box at current caret position.
+     */
+    public void insertInput (String input) {
+        guiRobot.interact(() -> getRootNode().insertText(getRootNode().getCaretPosition(), input));
+    }
+
+    /**
      * Enters the given command in the Command Box and presses enter.
      * @return true if the command succeeded, false otherwise.
      */

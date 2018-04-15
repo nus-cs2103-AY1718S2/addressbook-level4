@@ -38,4 +38,24 @@ public class NameTest {
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
     }
+
+    //@@author aussiroth
+    @Test
+    public void checkNameEquality() {
+        //test name against non-name type
+        assertFalse(new Name("Stutor").equals(null));
+        assertFalse(new Name("Stutor").equals(new Address("Stutor")));
+        //test correctly returns equal if name string is the same
+        assertTrue(new Name("Stutor").equals(new Name("Stutor")));
+    }
+
+    @Test
+    public void checkNameHashCode() {
+        Name name = new Name("peter jack");
+        assertTrue(name.hashCode() == name.fullName.hashCode());
+        name = new Name("12345");
+        assertTrue(name.hashCode() == name.fullName.hashCode());
+        name = new Name("Capital Tan");
+        assertTrue(name.hashCode() == name.fullName.hashCode());
+    }
 }

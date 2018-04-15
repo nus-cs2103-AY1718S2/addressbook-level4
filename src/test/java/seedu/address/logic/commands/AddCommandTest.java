@@ -21,10 +21,16 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.pair.Pair;
+import seedu.address.model.pair.exceptions.PairNotFoundException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.StudentBuilder;
+import seedu.address.testutil.TutorBuilder;
 
 public class AddCommandTest {
 
@@ -48,9 +54,38 @@ public class AddCommandTest {
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }
 
+    //@@author alexawangzi
+    @Test
+    public void execute_studentAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+
+        Student validStudent = new StudentBuilder().build();
+
+        CommandResult commandResult = getAddCommandForPerson(validStudent, modelStub).execute();
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validStudent), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validStudent), modelStub.personsAdded);
+        assertTrue(modelStub.personsAdded.get(modelStub.personsAdded.size() - 1) instanceof Student);
+    }
+
+    //@@author alexawangzi
+    @Test
+    public void execute_tutorAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Tutor validTutor = new TutorBuilder().build();
+
+        CommandResult commandResult = getAddCommandForPerson(validTutor, modelStub).execute();
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validTutor), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validTutor), modelStub.personsAdded);
+        assertTrue(modelStub.personsAdded.get(modelStub.personsAdded.size() - 1) instanceof Tutor);
+    }
+
+
     @Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
+
         Person validPerson = new PersonBuilder().build();
 
         thrown.expect(CommandException.class);
@@ -124,6 +159,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void rateRemarkPerson(Person target, Person editedPerson)
+                throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -133,6 +174,29 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void addPair(Person student, Person tutor) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deletePair(Pair target) throws PairNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        //dummy method
+        @Override
+        public ObservableList<Pair> getFilteredPairList() {
+            return null;
+        }
+
+        //dummy method
+        @Override
+        public void updateFilteredPairList(Predicate<Pair> predicate) {
+
+        }
+
     }
 
     /**

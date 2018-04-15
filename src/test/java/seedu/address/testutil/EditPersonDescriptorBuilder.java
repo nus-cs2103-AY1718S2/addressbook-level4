@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -10,6 +11,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Price;
+import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -36,7 +39,22 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
-        descriptor.setTags(person.getTags());
+        descriptor.setPrice(person.getPrice());
+        descriptor.setSubject(person.getSubject());
+        descriptor.setLevel(person.getLevel());
+        descriptor.setStatus(null);
+        descriptor.setRole(person.getRole());
+        HashSet<Tag> correctTags = new HashSet<>();
+        for (Tag tag : person.getTags()) {
+            if (tag.tagType == Tag.AllTagTypes.DEFAULT) {
+                correctTags.add(tag);
+            }
+        }
+        if (correctTags.size() == 0) {
+            descriptor.setTags(null);
+        } else {
+            descriptor.setTags(new HashSet<>(correctTags));
+        }
     }
 
     /**
@@ -68,6 +86,22 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Price} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withPrice(String price) {
+        descriptor.setPrice(new Price(price));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Status} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withStatus(String status) {
+        descriptor.setStatus(new Status(status));
         return this;
     }
 

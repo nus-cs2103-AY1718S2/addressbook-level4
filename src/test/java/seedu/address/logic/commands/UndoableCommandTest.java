@@ -14,6 +14,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonMatchedCannotDeleteException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class UndoableCommandTest {
@@ -61,6 +62,8 @@ public class UndoableCommandTest {
                 model.deletePerson(personToDelete);
             } catch (PersonNotFoundException pnfe) {
                 fail("Impossible: personToDelete was retrieved from model.");
+            } catch (PersonMatchedCannotDeleteException e) {
+                e.printStackTrace();
             }
             return new CommandResult("");
         }

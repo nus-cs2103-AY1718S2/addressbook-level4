@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= STUtor - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,12 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W11-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B1`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+STUtor is a desktop application made specifically for the purpose of tuition coordinating. This guide provides information that will help you get started out with contributing to the project, such as the architecture and implementation of the available features.
 
 == Setting up
 
@@ -61,14 +64,14 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 . Select `Editor` > `Code Style` > `Java`
 . Click on the `Imports` tab to set the order
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to *999* to prevent IntelliJ from contracting the import statements
 * For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W11-B1/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-W11-B1/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -102,7 +105,7 @@ image::Architecture.png[width="600"]
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. If you want to update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
@@ -116,7 +119,7 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 The rest of the App consists of four components.
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
+* <<Design-Ui,*`UI`*>>: The User Interface (UI) of the App.
 * <<Design-Logic,*`Logic`*>>: The command executor.
 * <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
@@ -124,9 +127,9 @@ The rest of the App consists of four components.
 Each of the four components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
+* Reveals its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (refer to figure 2 below) defines it's API in the `Logic.java` interface and reveals its functionality using the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
@@ -134,7 +137,7 @@ image::LogicClassDiagram.png[width="800"]
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below (figure 3) shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
 image::SDforDeletePerson.png[width="800"]
@@ -142,7 +145,7 @@ image::SDforDeletePerson.png[width="800"]
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram below (figure 4) shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
@@ -160,7 +163,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `InfoPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -188,7 +191,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the _Sequence Diagram_ (figure 8)  for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
@@ -225,10 +228,14 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Such classes include the `LogsCenter` and `EventsCenter` that are used to implement the logging in the application and event-centered design respectively.
 
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+[NOTE]
+You may want to find out about the approach for existing features described here before starting to code!
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -238,6 +245,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
+.Logic Command Class Diagram
 image::LogicCommandClassDiagram.png[width="800"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -277,10 +285,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.Stack Diagram for Undo/Redo after `Delete`
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
+.Stack Diagram for Undo/Redo after `Add`
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
@@ -290,13 +300,15 @@ The user now decides that adding the person was a mistake, and decides to undo t
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
+.Stack Diagram for Undo/Redo after `Undo`
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following _sequence diagram_ (figure 15) shows how the undo operation works:
 
+.Sequence Diagram for `Undo`
 image::UndoRedoSequenceDiagram.png[width="800"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
@@ -304,16 +316,19 @@ The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, an
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. In this scenario, the `redoStack` is no longer empty. When the new command is executed, the `redoStack` will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.Stack Diagram for Undo/Redo after a new command `Clear`
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.Stack Diagram for Undo/Redo after `List`
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Activity Diagram for Undo/Redo
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
@@ -322,7 +337,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
 ** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
+** Cons: It may be difficult for new developers to understand the template pattern.
 * **Alternative 2:** Just override `execute()`
 ** Pros: Does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
@@ -358,13 +373,6 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -385,6 +393,590 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::uimodifications[]
+
+=== UI Modifications
+
+==== Details Panel
+The details panel is modified to show the selected person’s details instead of opening up a URL.
+This allows better visualization of a person’s details as each person now has up to 11 attributes: `Name`, `Phone`,
+`Address`, `Email`, `Role`, `Status`, `Subject`, `Level`, `Price`, `Remark`, `Rate` to be displayed.
+Below shows the modifications made:
+
+**Before**
+
+image::OldBrowserPanel.png[width="500"]
+
+**After**
+
+image::NewDetailsPanel.png[width="500"]
+
+
+===== Current Implementation
+The UI is modified using `SceneBuilder` and the layout is specified in link:{repoURL}/blob/master/src/main/resources/view/DetailsPanel.fxml[`DetailsPanel.fxml`].
+link:{repoURL}/blob/master/src/main/java/seedu/address/ui/DetailsPanel.java[`DetailsPanel.java`] subscribes to `handlePersonPanelSelectionChangedEvent`, where this allows the details panel to
+be updated whenever the user selects on a specific person.
+
+We choose to place the person's name at the top of the details panel for easy identification of a person while
+other details are organized in a table format for easy reference. Rows of the table are also alternately colored
+to increase readability.
+
+===== Design Considerations
+
+====== Aspect: Layout of Details Panel
+
+* **Alternative 1 (current choice):** Use table to display person details with a column specifying the type of attribute
+and the other specifying the actual content.
+** Pros: Easy to read and refer to.
+** Cons: May not look visually appealing due to grids and lines.
+* **Alternative 2:** Centralized display of person details without usage of tables and reference to the type of attribute.
+** Pros: More visually appealing as formatting is less rigid and squarish.
+** Cons: Locating an attribute may not be easy due to lack of labelling.
+// end::uimodifications[]
+
+==== Person Card
+Person card is improved to show the list of person’s details more concisely and clearly.
+Below shows the improvements made:
+
+**Before**
+
+image::OldPersonCard.png[width="300"]
+
+**After**
+
+image::NewPersonCard.png[width="300"]
+
+===== Removal of Unnecessary Information
+Besides `Name`, all other details are removed from the person card. We choose to remove it as these details can
+be easily viewed by selecting on the person card since the details panel now shows the full details of a person.
+
+As such, we decided to only leave the necessary details that the user will frequently refer
+to in the person card. This helps to reduce cluttering on the side panel and allows the user to be able to view a
+longer list of people at one time.
+
+===== Coloring of Tags
+To allow easy identification of the category that a tag belongs to, different colors are used for different attributes
+of a person. A standardized color is used for each attribute this colour is determined from the `tagType` attribute of the `Tag`.
+This ensures the color will be consistent for each person and the color will be retained when the user reopens the application.
+
+// tag::autofill[]
+
+=== Autofill
+
+Due to the significant amount of attributes to type in, especially when adding or editing a person, we decided to create
+autofill feature to reduce the time taken to enter a person's details. Besides `add` and `edit`, commands with
+definite format (i.e. `remark`, `rate`, `delete`, `select`, `unmatch`, `match`) have this feature implemented as well.
+
+==== Current Implementation
+Autofill feature is implemented in link:{repoURL}/blob/master/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox.java`].
+When keyboard `Delete` or `Tab` is pressed, depending on the user input in the command box, the caret position
+will be shifted accordingly. Below shows the workflow when `Delete` or `Tab` is pressed.
+
+.Activity Diagram for Autofill
+image::AutofillActivityDiagram.png[width="400"]
+
+===== Find Next Field
+To find the next field to shift the caret to, manipulation of `String` is used to locate the next instance of `/` in the
+command box. By searching the position of the next `/`, it indicates where the next field should be entered.
+
+.Visualization for find next field
+image::AutofillAdd_Tab2.png[width="500"]
+
+===== Delete Previous Prefix
+To delete the previous prefix, the last instance of `{nbsp}{nbsp}` from the current caret position is located. Any text
+between this position and the caret position is deleted to remove the desired prefix and user input (if any). The caret
+then procedes to find next field to be shifted to. Below shows what happens when `Delete` is pressed when caret position is at `n/`.
+
+.Visualization for delete previous prefix
+image::AutofillAdd_Delete.png[width="500"]
+
+==== Select index to edit
+To select/highlight the index to edit, the first instance of a digit is searched from the current caret position. The index
+is then highlighted by selecting the caret forward.
+
+.Visualization for select index to edit
+image::AutofillMatch.png[width="500"]
+
+We decide to create shortcuts for even for commands that do not have lengthy inputs (e.g. `add` and `edit`) as it makes typing
+command easier for our user. By highlighting the index to edit, user can simply type the index they want to edit without
+manually having to shift the caret to change the index.
+
+==== Design Considerations
+
+===== Aspect: Keyboard key for `Delete`
+
+* **Alternative 1 (current choice):** Use `Delete` button.
+** Pros: Intuitive to user.
+** Cons: May lead to confusion since the original functionality of the `DELETE` button does not work now.
+* **Alternative 2:** Use other keyboard keys that users typically do not use, for example `F2`.
+** Pros: Will not lead to confusion of expected keyboard functionalities.
+** Cons: Not intuitive for users to use as they would not expect it to be a key for delete function.
+
+===== Aspect: Commands that can be autofilled
+
+* **Alternative 1 (current choice):** Commands that have a fixed fomat can be autofilled.
+** Pros: Easy to use for the user as expected behavior of the autofill feature can be predicted.
+** Cons: May lead to some confusion as only selected commands can be autofilled.
+* **Alternative 2:** All commands can be autofilled.
+** Pros: Will not lead to confusion as to which commands can be autofilled.
+** Cons: For commands that do not have a definite format (e.g. `find KEYWORD [MORE_KEYWORDS]`), it can be confusing for the user if the app
+only autofills `find` and expects the user to remember the command format. Furthermore, using command alias (e.g. `f`) requires
+less typing from the user.
+
+// end::autofill[]
+
+// tag::attributetags[]
+=== Automatic creation of tags from person attributes
+
+==== Current implementation
+Each of the attributes `Price`, `Subject`, `Level` and `Status` of a person each have a tag with the value added to the person.
+This is done when user performs `add` or `edit` command.
+
+The creation of these tags from attributes is facilitated by static methods from a class in logic, called `AttributeTagSetter`. This class contains methods to remove existing attribute tags from a person, which can be used when needing to edit or find non-attribute tags of the person.
+Another method is to create the new attribute tags from provided input and return the new set of tags. This class is currently invoked from a static context, as its use currently is solely for managing the tags of a given `Person`.
+When parsing and making an add or edit command, it makes use of these methods to obtain the correct attribute tags and sets them.
+The sequence diagram below (figure 18) shows where the creation of these tags in the sequence of parsing an `Add` command. +
+
+.Sequence diagram for creating attribute tags
+image::AttributeTagsSequenceDiagram.png[width="800"]
+
+[NOTE]
+Since the `Price`, `Subject`, `Level` and `Status` attributes have been parsed and checked to conform to expected values, there is no need to reparse the values when creating them as a `Tag`. +
+The acceptable inputs for a `Tag` must necessarily allow all the acceptable inputs for `Price`, `Subject`, `Level`, `Status` and `Role` to prevent errors.
+
+==== Model Implementation
+The `Tag` class can support the ability to classify which attribute the tag was created from. This is done by adding an enum `AllTagsType` to the `Tag` class.
+A tag can be created without being from an attribute, with just a tag name. In this case, creating a `Tag` with no provided `AllTagsType` will initialise the `tagType` to `DEFAULT`.
+Otherwise, creation of the tag will require the tagType to be passed in.
+
+This is the current `Tag` class in UML notation
+
+.`Tag` Class
+image::TagClassDiagram.png[width="800"]
+
+This new attribute is used to implement the capability to standardize all tags created as a `Price` attribute to have the same color, all tags created as a `Subject` attribute to have the same color, and so on.
+This has been implemented as a new overloaded `getTagColorStyleFor` method, which takes in a Tag instead of a String. Depending on the tagType value, the correct colour will be assigned to the tag.
+
+[NOTE]
+Any tag that is not set to one of the 4 attributes will fall through to the default type, where they will have the same color. This is currently done as such to prevent accidental collisions of color with the 4 attribute tags.
+
+==== Storage Implementation
+The method for storing tags has also been changed slightly. Previously, just the `tagName` needed to be stored. Now both the `tagName` and `tagType` must be stored. +
+This has been accomplished by having XML store the single field in the form "TAGNAME,TAGTYPE" (see figure 19). +
+The respective tagName and tagType can be obtained by splitting the read string representing the tag data from the file around the "," separator. Since tags can only be alphanumeric, this provides a safe character to split around.
+
+.Storage of `Tag`
+image::tagStorage.png[width="400"]
+
+==== Design Considerations
+
+===== Aspect: Making use of tags to display the information
+* **Alternative 1 (current choice):** Create a `Tag` for each attribute we want to display
+** Pros: Reuses the code used to display tags, so that there is no need to manually code each attribute to appear similar to a tag.
+** Cons: Increased risk of violating Single Responsibility Principle if the `Tag` needs to change if attributes in `Person` change.
+
+* **Alternative 2:** Update the UI to allow the information to be displayed as needed.
+** Pros: Makes the logic section more intuitive as the user enters data and that data is stored a single attribute.
+** Cons: Increases repetition in the UI by having a design for each attribute, increases amount of work if the UI display is changed in the future.
+
+===== Aspect: Method of saving tag information in the saved XML file
+
+* **Alternative 1 (current choice):** Keep the `XmlAdaptedTag` stored in a single XML field.
+** Pros: There is no need to change the format of the XML file.
+** Cons: Need to ensure that the `tagName` and `tagType` can be clearly split when saved to the XML file, and retrieved back.
+* **Alternative 2:** Change the format of `XmlAdaptedTag`
+** Pros: Easier for advanced users to edit without causing an error, easy to retrieve values from file.
+** Cons: Risks causing issues with how `Tag` is saved as part of `XmlAdaptedPerson` and by itself as `XmlAdaptedTag`
+
+===== Aspect: Method to represent the attribute the tag was created from
+
+* **Alternative 1 (current choice):** Create a new attribute in `Tag` to represent its type.
+** Pros: Since the type belongs to and describes a `Tag`, this improves the cohesion of `Tag` and is intuitive.
+** Cons: Need to make sure there is a way to represent user input tags and it is handled properly each time tag type is used.
+
+* **Alternative 2:** Check the value in the tag against a known set of values to determine its type.
+** Pros: Keeps the `Tag` class a simple as possible.
+** Cons: Difficult to maintain, must ensure that there are no values that can possibly be in more than 1 person attribute.
+
+// end::attributetags[]
+// tag::fillingshortcut[]
+=== Shortcuts for the user in filling fields
+
+==== Current Implementation
+Due to the nature of the application, the user will input certain information repetitively.
+For example, `Role` can only be one of `Student` or `Tutor`.
+
+Thus, we have created shortcuts to improve efficiency in filling the fields.
+We currently support shortcuts for `Subject`, `Level`, and `Role`.
+
+[width="59%",cols="<30%,<35%,<35%",options="header",]
+|=======================================================================
+|Applicable field |Shortcut |Equivalence in full
+|subject | `sub/chem`| `sub/chemistry`
+|subject | `sub/phy`| `sub/physics`
+|subject | `sub/chi`| `sub/chinese`
+|subject | `sub/eng`| `sub/english`
+|level | `lvl/us`| `lvl/upper sec`
+|level | `lvl/ls`| `lvl/lower sec`
+|level | `lvl/up`| `lvl/upper pri`
+|level | `lvl/lp`| `lvl/lower pri`
+|role | `r/t`| `r/tutor`
+|role | `r/s`| `r/student`
+|=======================================================================
+
+==== Model Implementation
+The shortcut is first validated, then the field information is converted to its full form.
+Below is the function that performs conversion in the Role class. Other classes follow similar implementation.
+[source,java]
+----
+ public String convertToFullRole(String original) {
+      String cur = original.toLowerCase();
+       if (cur == null) {
+           return "";
+        } else if (cur.equals("s")) {
+            cur = "Student";
+        } else if (cur.equals("t")) {
+            cur = "Tutor";
+        }
+       return cur;
+ }
+----
+// end::fillingshortcut[]
+
+// tag::caseinsensitiveinput[]
+=== Case-insensitive input
+
+==== Current Implementation
+We made input of fields case-insensitive.
+
+After parsing and validation, the field entered is converted to <<proper-case, proper case>> internally, so tags generated from the field information will be standardized and more readable for the user.
+The exceptions are `Price` and `Phone` as they consist only of numbers and require no case conversion.
+`Email` and `Name` are kept in the same case in which they were entered.
+
+==== Model Implementation
+We utilise the `ProperCaseConverter` object to convert all parsed and valid input into proper case.
+The sequence diagram below shows how this is achieved in the constructor of `Role` class.
+
+
+.Sequence Diagram for achieveing case insensitive input
+image::SDforCaseInsensitiveInput.png[width="800"]
+
+The other classes utilise the `ProperCaseConverter` object in a similar way.
+
+
+[NOTE]
+The user can input shortcuts in case-insensitive fashion. +
+For instance, the user may input `add n/jOHN dOE p/98765432 e/johND@eXaMpLe.com a/NUS #04-02 $/50 sub/PHy lvl/uP t/T`
+, the stored entry will be `jOHN dOE Phone: 98765432 Email: johND@eXaMpLe.com Address: NUS #04-02 Tags: [Tutor][Upper Pri][50][Physics][Not Matched]`
+
+
+// end::caseinsensitiveinput[]
+
+// tag::filter[]
+=== Filter feature
+
+==== Current Implementation
+We have added the `filter` command which inherit from `Command`. The user can `filter` according to the attributes `Subject`, `Level` and `Status` of a person.
+However, the current implementation can only filter for 1 argument.
+
+The following sequence diagram shows how the filter command works:
+
+image::FilterCommandSequenceDiagramV3.png[width="800"]
+
+[NOTE]
+The user must input arguments in case full fashion and it is case insensitive.
+For instance, the entry `filter maTH` will work.
+
+===== Design Considerations
+
+====== Aspect: Argument for Filter Command
+
+* **Alternative 1 (current choice):** Argument to be filtered must be typed in full fashion and it is case
+insensitive.
+** Pros: Incorrect case of the argument typed will still produce the intended result.
+** Cons: User have to type the complete word.
+* **Alternative 2:** Argument to be filtered can be incomplete and it is case insensitive.
+** Pros: User can type less.
+** Cons: Arguments such as `Not Matched` and `Matched` cannot be differentiated.
+
+// end::filter[]
+
+// tag::optionaladd[]
+=== Optional Fields for Add Command
+==== Current Implementation
+
+The `Add` command is extremely long and unwieldly if the user has to type all the information in at once. +
+To make it easier for the user to enter new people or a person they lack all the data to enter at once, the `Add` command allows the user to specify only the name command and leave out all other fields as optional.
+The `AddCommandParser` now will only check that the `Name` field has been submitted by the user before proceeding to add the new entry into STUtor.
+For all fields that the user did not enter a value for, an empty string `""` will be assigned to that field.
+
+==== Design Considerations
+
+===== Aspect: Method to store unentered fields
+
+* **Alternative 1 (current choice):** Store it as an empty string `""`
+** Pros: Does not affect most of the other functionality as they will still successfully read an empty string and ignore it.
+** Cons: Need to ensure that empty string is an accepted input when making a new attribute class. +
+User can enter prefix with only spaces as a valid input, which will be read as an unentered field, which may be unintuitive.
+
+* **Alternative 2:** Store it as a `null` value
+** Pros: More intuitive to store a missing value as `null`.
+** Cons: When an attribute value needs to be obtained or used, must check for `null` value and handle accordingly. +
+Must create a special constructor for the attribute class to accept a `null` for its internal `String` value.
+
+=== Find Missing Command
+==== Current Implementation
+The intention and design behind this command is to complement the allowing of users to leave fields for a person's values unentered.
+As the design of the command, parser and sequence when a user enters a find missing command to be very similar to the filter command, the documentation
+here will focus more on the design considerations and rationale instead of repeating sequence diagrams that are almost the same as given previously. +
+
+Currently, the command makes use of a new predicate, `FindMissingPredicate`, to perform the check. +
+The implementation of the OR search in the `FindMissingPredicate` is as follows: +
+For each entered field by the user, if that field is unentered by the user, then the predicate will immediately return `true` as the person fits the criteria.
+If at the end of checking all values at the list, then the person has all fields specified by the user filled. Therefore, the predicate will return `false` in this case. +
+
+Rationale for having a new command and predicate is that reusing the `Filter` command or predicate would violate Single Responsibility Principle and the idea of Separation of Concerns.
+The `Filter` command and classes associated closely to it should have the single concern of listing people according to a search term. +
+Therefore, it is better design to create a new command for this feature.
+
+==== Design Considerations
+
+===== Aspect: Design of predicate used
+* **Alternative 1 (current choice):** One single predicate, containing a `List` of entered user arguments.
+** Pros: Ensures the predicate used in the `FindMissingCommand` remains of type `FindMissingPredicate`. Easy to test and inspect manually and to update the command predicate if needed.
+** Cons: Increased complexity of ensuring the predicate test will correctly give a true or false value.
+
+* **Alternative 2:** Create one predicate for each user argument, then make use of `Predicate` method to perform a logical OR.
+** Pros: Predicate simply needs to check for the field that was given as its keyword.
+** Cons: Due to the `Predicate.or` method being provided by Java, it is difficult to debug and ensure an intended `.equals` check is performed.
+
+===== Aspect: Method of taking in user input
+* **Alternative 1 (current choice):** Have user arguments be combined in an OR manner.
+** Pros: Makes it easier for the user to find a person they may not be too sure which field was left empty for, since they can specify multiple ones to search. +
+Current option used since it fits best with the user need of simply finding those with missing fields to refresh their memory on which people they need to fill out the attributes for.
+
+* **Alternative 2:** Have user arguments be combined in an AND manner.
+** Pros: Allows the user to narrow down a search, especially if the size of the stored contacts is large.
+** Cons: Might be too specific for the user, if they forget exactly which fields were left empty they will not be able to find the user. +
+This is the opposite of the OR choice, therefore the implementation depends on the user need.
+
+* **Alternative 3:** Allow user to enter only 1 argument
+** Pros: Simplifies the command significantly with only 1 field to search for.
+** Cons: Artificially limits the command heavily for users, where those who want to search for multiple missing fields will not be able to.
+
+// end::optionaladd[]
+
+// tag::review[]
+=== Review Feature
+As a tuition coordinator may receive feedback from students or tutors regarding their lessons, this feature helps the tuition coordinator
+to manage these information easily. Review feature in STUtor includes both adding a remark and rating for a student or tutor.
+
+==== Remark Command
+===== Current Implementation
+There are two ways users can interact with the Remark Command:
+
+. Create a new remark
+. Edit a current remark
+
+[NOTE]
+====
+By default, when a person is added into STUtor, we create an empty remark (i.e. empty string) as usually at the start, there will
+be no available feedback for a particular student or tutor yet.
+====
+
+`RemarkCommandParser` is implemented such that when creating a new remark, there is no restriction to the content of a
+remark. Any input indicated after the prefix `r/` will be taken to be the new remark created for the person indicated at
+the specified `INDEX`. If there is no remark indicated after `r/`, it is assumed that the user wants to remove the current remark.
+
+For editing a remark, prefix `r/` is not used to differentiate having the word 'edit' in the remark or executing edit remark command
+by getting the preamble in `RemarkCommandParser`. If it is an edit remark command, overloaded constructor for `RemarkCommand`
+with extra `isEditRemark` parameter is used instead of the constructor used when creating a new remark (without the extra parameter).
+As editing a remark requires making changes to the command box, `EditRemarkEvent` is used to signal `CommandBox` to make the
+appropriate modifications.
+
+The following sequence diagrams shows how the remark operation works:
+
+image::RemarkCommandSequenceDiagram.png[width="370"]
+.Sequence Diagram for `remark`
+
+image::RemarkCommandSequenceDiagram1.png[width="370"]
+
+
+==== Design Considerations
+===== Aspect: Constructor for Remark Command
+
+* **Alternative 1 (current choice):** Overloading constructor with extra parameter `isEditRemark`
+** Pros: Allows forward/backward compatibility such that methods that used the original constructor with two parameters can still
+be used since create remark command is implemented before edit remark.
+** Cons: May not be easy for new developers to understand at first glance when to use which constructor.
+* **Alternative 2:** Modify current constructor to take in new parameter.
+** Pros: Easy for new developers to understand at first glance as there is only one constructor.
+** Cons: May cause some methods and tests that uses the old constructor to break.
+
+==== Rate Command
+===== Current Implementation
+
+Rating is from 0.0 (low rating) to 5.0 (high rating).
+Regex is used to limit user input to a maximum of 1 decimal place and any number below 0.0 or above 5.0 is rejected.
+Sum of all ratings is stored as a `double` inside `Rate` class and the displayed value is calculated by taking the sum
+and divide it by the number of people who rated the person.
+
+When a person is first added to STUtor, both total rate `value` and `count` is initialized to 0.
+Since the person has yet to be rated, rating will be displayed as `-` in the `DetailsPanel`.
+
+We have decided to allow two types of ratings in STUtor:
+
+* Cumulative rating
+* Absolute rating
+
+Default will be cumulative rating as it is more natural and useful to combine all ratings given to a specific person to gauge his/her
+abilities. In STUtor, `value` in `Rate` class stores the total sum of all ratings given to the person.
+To display the cumulated rating, `DetailsPanel` calls `getDisplayedValue` method in `Rate` class and
+cumulated rating is calculated using the total `value` and divide it by `count`.
+Every time a new rate is added, `count` increases as well.
+
+Absolute rating is also implemented for users that wants to clear all old data or wants to shortlist/blacklist a student or tutor.
+`checkRateIsAbsolute` method in `ParserUtil` class is used to find out if the user requires an absolute rating by checking the last character
+in the user input. When setting an absolute rating, the app resets `count` back to 1 and rate `value` is set to the value indicated by the user.
+
+The following sequence diagrams shows how the rate operation works:
+
+image::RateCommandSequenceDiagram.png[width="370"]
+.Sequence Diagram for `rate`
+
+image::RateCommandSequenceDiagram1.png[width="370"]
+
+==== Design Considerations
+===== Aspect: Indication for Absolute Rating
+
+* **Alternative 1 (current choice):** Indicate using keyboard input `-`
+** Pros: Easy and quick to access `-`.
+** Cons: Not intuitive for new users that absolute rating is represented by `-`.
+* **Alternative 2:** Indicate using different prefix for absolute and cumulative rating
+** Pros: More intuitive for users to handle the different types of rating.
+** Cons: Implementation requires more complex handling (e.g. prefix can be omitted, presence of both prefixes).
+
+// end::review[]
+
+// tag::viewstats[]
+
+=== View Stats Command
+As a tutor coordinator, it is important to have data of the people in the app at your fingertip.
+This can be achieved by the `viewStats` command as consolidate statistical data regarding the people in the app.
+With these data, user will be able to foresee issues such as insufficient tutor for a particular subject with ease.
+Without this command, user will have to do manual consolidation which is inefficient. +
+Currently, the statistical data are presented in the form of pie chart which improves readability. A snapshot showing
+the role distribution between students and tutors is shown below.
+
+.Snapshot of `viewStats`
+image::CompleteChartSnap.png[width="500"]
+
+==== Current Implementation
+
+Whenever `viewStats` command is executed, a `ShowChartEvent` will be generated and posted to the `EventCenter`.
+Subsequently, the `handleShowChartEvent` from `ChartPanel` will be notified as it is subscribed to the `EventCenter`.
+`ChartPanel` will then generate the graph from the `ObservableList` and it will be displayed on the UI.
+
+[NOTE]
+Whenever any command which alters the information of people in the app is executed, execute the `viewStats` command to get the latest update.
+Why does this work? Executing the `viewStats` command will generate new graphs obtained from the updated ObservableList.
+
+==== Design Considerations
+
+===== Aspect: Displaying of statistical data
+
+* **Alternative 1 (current choice):** Replace the details in details panel with graph.
+** Pros: Do not have to deviate from the use of command line input.
+** Cons: Cannot view person detail and statistical data simultaneously.
+* **Alternative 2:** Open a new window to show graph.
+** Pros: Can use the app and view the statistical data simultaneously.
+** Cons: Create inconvenience as user need to take additional steps to close the window.
+
+===== Aspect: Displaying subjects data
+
+* **Alternative 1 (current choice):** Represent subjects taught by tutor and subjects student wants to learn in bar chart.
+** Pros: A subject with 0 tutor teaching or 0 student wanting to learn is well represented.
+** Cons: If the difference between 2 subjects is too large, it might be hard to read the number from y-axis.
+* **Alternative 2:** Represent subjects taught by tutor and subjects student wants to learn in pie chart.
+** Pros: Even if the difference between 2 subject is large, data will still be easy to read.
+** Cons: When there are multiple subjects with 0 tutor teaching or 0 student wanting to learn, the label of the subjects might overlap and it is hard to resolve.
+// end::viewstats[]
+
+// tag::matchunmatch[]
+=== Match Command & Unmatch Command
+A tuition coordinator needs to record which students are receiving tuition from which tutors.
+Intuitively, the `match` command allows the user to pair a student with a tutor,
+while the `unmatch` command removes the pair. +
+The matched pairs will be saved to `UniquePairList` in model,
+stored in STUtor.xml as a `XmlAdaptedPair`, and displayed on the Pair List panel (the leftmost vertical panel) for user to see.
+
+==== Current Implementation
+A matched pair is represented by a `Pair.java` object.
+We use a `PairHash.java` class to help with creating, deleting and identifying a pair,
+all of which are essential for the `match` and `unmatch` commands to work properly.
+
+.Class diagram of Pair and PairHash class.
+image::PairPairHashClassDiagram.png[width="700"]
+
+The `PairHash` is derived using Java's `Objects.hash()` method.
+Among the parameters, student.toString() and tutor.toString() are used instead of the actual
+`Student` or `Tutor` objects. The rational for this choice will become clearer later. +
+
+.Diagram showing associations between Person, Pair and PairHash class.
+image::PairClassDiagram.png[width="700"]
+
+As seen from the above diagram, a person (`Student` or `Tutor`) can have any number of unique `PairHash`, that is,
+*a student can be paired to multiple tutors and vice versa.* +
+
+The current implementation of `match` and `unmatch` relies on the one-to-one association between `Pair` and `PairHash`.
+`PairHash` is used to facilitate matching and unmatching, as well as updating the status of a person. +
+
+`PairHash` objects associated with a particular `Person` object is stored inside that `Person` as a list.
+When a `Pair` is created through the `match` command, a `PairHash` is generated and automatically stored in the
+`Pair` itself, as well as in the `Student` and `Tutor` objects involved (see below).
+Similarly, when a `Pair` is removed through the `unmatch` command, its `PairHash` is extracted
+and used to retrieve the `Student` and `Tutor` marked by it. This `PairHash` is then deleted from the persons.
+
+.Activity diagram for Match Command
+image::MatchActivityDiagram.png[width="800"]
+
+Now the rational for using toString() instead of the `Person` object itself is clear:
+since the `Person` object stores a list of pairHashes, direct hashing with the person object will give different hashes but
+essentially adding duplicates to the `UniquePairList` in model.
+The toString() method only return fields that are not related to matching, therefore
+prevents duplicates from being saved to the database.
+
+[NOTE]
+Whenever a `PairHash` is add to/ removed from the list, a check is done to makes sure the status
+of the person remains correct. If the list is empty, that `Person` 's status will be `Not Matched`, else it will be `Matched`.
+
+==== Design Considerations
+
+===== Aspect: Acceptance of Many-to-Many matches
+* **Alternative 1 (current choice):** Allow a student to be paired to multiple tutors and vice versa.
+** Pros: Realistic as as one student may take tuition for several subjects, and a tutor is likely to take a few students.
+** Cons: Requires the `Person` class to store multiple `PairHash` instead of one.
+Updating of status requires extra checkings to ensure correctness.
+* **Alternative 2:** Only allow one-to-one matches.
+** Pros: The `Person` class only need to store one `PairHash`.
+** Cons: Not realistic.
+
+===== Aspect: Creating, deleting and identifying a pair
+
+* **Alternative 1 (current choice):** Use `PairHash` to to identify the `Pair` itself, and mark `Person` in the Pair.
+Saving the `PairHash` to the `Person` when `Pair` is created, delete the same `PairHash` from `Person`
+when this `Pair` is unmatched.
+** Pros: Reduce coupling between `Pair` and `Person`.
+** Cons: `PairHash` has a very slight chance of having collisions, which might result in errors in data.
+* **Alternative 2:** Store the `Pair` directly in `Person`.
+** Pros: Easy to code.
+** Cons: High degree of coupling between `Pair` and `Person`.
+
+// end::matchunmatch[]
+
+
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -403,7 +995,7 @@ See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to dep
 
 === Converting Documentation to PDF format
 
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+We use https://www.google.com/chrome/details/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
 Here are the steps to convert the project documentation files to PDF format.
 
@@ -499,324 +1091,107 @@ b. Require developers to download those libraries manually (this creates extra w
 
 [[GetStartedProgramming]]
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == Product Scope
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* Tuition coordinator
+* Has to manage a significant number of tutors and students
+* Prefers desktop application over other types
+* Prefers typing over mouse input and can type fast
+* Is reasonably comfortable using command line input (CLI) applications
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: Efficient management of students and tutors information and matching them.
+
+*Feature Contributions*:
+
+[width="59%",cols="<30%,<35%,<35%",options="header",]
+|=======================================================================
+|Name |Minor Enhancement |Major Enhancement
+|Danny NG Ming Xuan |Create new command to filter the person list with respect to the various attributes in
+Person card. This will enable the user to view persons with attributes he/she is interested in.|Create `viewStats` command.
+This allows the user to view information such as number of students/tutors/matched and more in the form of graph.
+|NG Xin Ler |Create autofill for commands that are longer or have fixed input. This helps to reduce the amount of time
+the user has to type in a command.|
+Allow writing of review (including `remark` and `rating` for a person. This allows the user to evaluate the performance
+of a person, so that the user can refer to them for future matching.
+|WANG Zi |Create shortcut for the user in filling subject, level and role. For instance, `sub/eng` and
+`sub/english` both result in adding the subject English. After that, accommodate case-insensitive input, and
+standardize display to follow <<proper-case, proper case>>.
+|Create `match` and `unmatch` command. This allows the user to match/unmatch a pair of Tutor and Student.
+|YAN Hong Yao Alvin | Automatically generate tags for some attribute fields. This makes them easy to view by the user |
+Allow all non-name fields to be optional. This makes input easier for the user as the add command is extremely long otherwise.
+|=======================================================================
+
 
 [appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="80%",cols="22%,<23%,<36%,<40%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new tutor/student |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a tutor/student |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a tutor/student by name |locate details of persons without having to go through the entire list
+
+|`* * *` |user |edit the <<fields, fields>> of a tutor/student |change fields without re-adding the entry
+
+|`* * *` |user |list all tutors or students separately |view a cleaner list without mixing tutors and students
+
+|`* * *` |user |see a tutor/student’s <<status, status>> |know who is not matched
+
+|`* * *` |user |mark a tutor/student as <<matched, matched>> with some other tutor/student |
+
+|`* *` |analytical user |view statistics on tutor/student numbers and statuses |have a clearer picture of the status of tutor/student
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user |protect the app with a password |ensure confidentiality of the contacts
 
-_{More to be added}_
+|`* *` |user |sort matching list by price |find the best match at the lowest price
+
+|`* *` |user |rate a tutor according to student’s feedback |assess tutors’ capability
+
+|`* *` |user |store a list of all tutor/student that have been matched |have a cleaner list consisting of only unmatched tutor/student and also able to refer to past records if required
+
+|`* *` |user |find all pairs of tutor/students that are <<matching-in-progress, matching in progress>> |easily set a pair to matched or unmatched depending if they have agreed upon the tutoring
+
+|`* *` |user |indicate the special request by tutor/student (e.g. prefer female tutor)|consider these factors when performing match
+
+|`* *` |user |change theme of the app |personalise the app to user’s preference
+
+|`* *` |forgetful user | view password hint |recall my password
+
+|`* *` |user with poor eyesight |change the font and font size |easily read the output text
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |add upload tutors’ qualifications via pdf file |add in data easily without typing them down individually
+
+|`*` |user |view the location markers of tutor/student on a map |see the geographical concentration of tutors/students
+
+|`*` |user |automatically send an email to the matched pair of tutor and student |inform both parties efficiently
+
+|`*` |user |allow a tutor/student to have multiple subject to teach/learn |have more possibilities when matching tutors and students
+
+|`*` |user |sort the matching list by distance |pair tutor/student who lives nearer to each other
+
+|`*` |user |sync database to remote centralized database |work on multiple devices without losing data
+
+|`*` |user |auto-match tutor and student based on available time slots |save time in matching schedules
+
+|=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `STUtor` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -824,9 +1199,9 @@ _{More to be added}_
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  STUtor shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  STUtor deletes the person
 +
 Use case ends.
 
@@ -840,11 +1215,85 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. STUtor shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Edit the field of a certain tutor/student
+
+*MSS*
+
+1.  User requests to edit a field of a certain tutor/student
+2.  STUtor updates the field
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given tutor/student is invalid.
++
+[none]
+** 1a1. STUtor shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Match tutor and student [Coming in V2.0]
+
+*MSS*
+
+1.  User requests to show a list of all tutors/students
+2.  STUtor returns a list of all tutors/students
+3.  User selects a tutor/student for matching
+4.  STUtor returns a list of students/tutors that fulfils the field of tutor/student selected
+5.  User creates a match with the most suitable field
+6.  STUtor creates the match and updates the status of the matched tutor and student to ‘Matching-in-progress’
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. STUtor shows an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 4a. The list is empty (no tutor/student fulfills the field)
++
+Use case ends.
+
+[discrete]
+=== Use case: Confirm a match [Coming in V2.0]
+
+*MSS*
+
+1.  User requests for a list of pending matches
+2.  STUtor shows a list of ‘Matching-in-progress’ entries
+3.  User select a particular entry
+4.  STUtor updates the status of the tutor and student
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. STUtor shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +1301,7 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Data can be easily transferred from one computer to another.
 
 [appendix]
 == Glossary
@@ -864,27 +1312,31 @@ Windows, Linux, Unix, OS-X
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
-[appendix]
-== Product Survey
+[[proper-case]] Proper case::
+Proper case is any text that is written with each of the first letters of every word being capitalized.
+For example, "This Is An Example Of Proper Case."
 
-*Product Name*
+[[fields]] Fields::
+Name, address, phone, email, subject, level, price and role
 
-Author: ...
+[[match]] Match::
+A tutor and a student are paired for a subject
 
-Pros:
+[[matched]] Matched::
+Tutor and student have confirmed the match and are ready to start lessons
 
-* ...
-* ...
+[[matching-in-progress]] Matching in progress::
+Waiting for tutor and student to confirm the match
 
-Cons:
+[[status]] Status::
+Includes not matched, matching-in-progress, matched
 
-* ...
-* ...
+// tag::manualtest[]
 
 [appendix]
 == Instructions for Manual Testing
 
-Given below are instructions to test the app manually.
+The instructions given below aims to guide user on how to test the app manually.
 
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
@@ -896,14 +1348,52 @@ These instructions only provide a starting point for testers to work on; testers
 .. Download the jar file and copy into an empty folder
 .. Double-click the jar file +
    Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+.. If jar file does not launch as instructed in the previous step, please follow the subsequent steps: +
+... Run command prompt and navigate to the directory where the jar file is
+... Run `java -jar FILENAME.jar`. Please change FILENAME to the saved name of the jar file
 
 . Saving window preferences
 
-.. Resize the window to an optimum size. Move the window to a different location. Close the window.
+.. Resize the window to an optimum size. Move the window to a different location. Close the window using `exit` or click on the x on the top right corner.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Opening the help menu
+
+. Opening the help menu
+
+.. Prerequisites: None.
+.. Test case: `help` +
+   Expected: A new window is opened. User guide is shown in the new window.
+
+=== Adding a person
+
+. Adding a person
+
+.. Prerequisites: None.
+.. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 $/50 sub/Math lvl/Lower Sec  r/Student` +
+   Expected: Person is added to the bottom of the  list. Details of the added person shown in the status message.
+.. Test case: `add` +
+   Expected: Details panel will remain unchanged. Invalid command format, add command format and an example of add shown in the status message.
+
+. Adding a person using case insensitive input and shortcuts
+
+.. Prerequisites: None.
+.. Test case: `add n/John al Doe p/98765432 e/johnd@ExaMplE.com a/311, Clementi Ave 2, #02-25 $/50 sub/chEM lvl/Ls r/S` +
+   Expected: Person is added to the bottom of the list.Details of the added person shown in the status message.
+   The person will be tagged with "Chemistry", "Lower Sec", "Student". His name and email will be kept in mixed case.
+
+=== Selecting a person
+
+. Selecting a person while all persons are listed
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `select 1` +
+   Expected: First contact is selected from the list, details of person 1 is shown in the Details Panel. Status message shows selected person: 1.
+.. Test case: `select 0` +
+   Expected: No person is selected, Details Panel will remain unchanged. Invalid command format shown in the status message.
+.. Other incorrect delete commands to try: `select`, `select x` (where x is larger than the list size) +
+   Expected: Similar to previous.
 
 === Deleting a person
 
@@ -914,15 +1404,135 @@ _{ more test cases ... }_
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Clearing all data
 
-=== Saving data
+. Clearing all data in app
 
-. Dealing with missing/corrupted data files
+.. Prerequisites: None.
+.. Test case: `clear` +
+   Expected: All data in app is cleared. App has been cleared shown in status message.
+.. Test case: `undo` +
+   Expected: All cleared data are restored. Undo success shown in status message.
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+=== Filtering the list
 
-_{ more test cases ... }_
+. Filtering the list by KEYWORD
+
+.. Prerequisites: None.
+.. Test case: `filter student` +
+   Expected: All persons with student tag are displayed in the list. The number of people that match the KEYWORD is shown in status message.
+.. Test case: `filter tutor math` +
+   Expected: No person is displayed in the list. 0 listed person shown in the status message.
+.. Other incorrect delete commands to try: `filter` +
+   Expected: Similar to previous.
+
+=== Viewing the statistics
+
+. Viewing statistics
+
+.. Prerequisites: None.
+.. Test case: `viewStats` +
+   Expected: A panel opens within Details Panel. Data represented in graph should match the persons in list.
+.. Test case: `viewStats 123` +
+   Expected: Similar to previous.
+.. Test case: `viewStats` followed by `add n/unknown r/tutor` and `viewStats` again +
+   Expected: The updated pie chart should show 1 more tutor than the previous pie chart.
+
+// end::manualtest[]
+
+=== Testing optional fields
+
+. Adding a person with only name
+.. Prerequisites: All people entered into STUtor have all attributes filled in.
+.. Test case: `add n/Johnny Doe` +
+   Expected: Person is added to the bottom of the  list. Details of the added person shown in the status message. Person does not have an attribute other than name, and will not have any tags shown.
+.. Test case: `findmissing` +
+   Expected: List of 1 person, containing only Johnny Doe as entered earlier. Message lists successful listing of 1 person.
+
+=== Autofill a command
+
+. Autofills a command in the command box
+
+.. Prerequisites: None.
+.. Test case: Type `add` then press the `Tab` key +
+   Expected: Add command with all fields will be displayed: `add n/ p/ e/ a/ $/ sub/ lvl/ r/`.
+   Position of caret will also be shifted to the first field to be entered (i.e. after `n/`)
+.. Test case: Type `add`, press the `Tab` key then the `Delete` key +
+   Expected: After pressing `Tab` key, expected output will be the same as above in part ii.
+   After pressing `Delete` key, the field and corresponding prefix will be removed and the caret will shift to the
+   next field to be filled in (i.e. the command box now looks like this: `add p/ e/ a/ $/ sub/ lvl/ r/`, with the caret
+   placed after `p/`.
+.. Test case: Type `add`, press the `Tab` key, type `John Doe`, shift caret to after `John` and press the `Delete` key (Not Recommended) +
+   Expected: After pressing `Tab` key, expected output will be the same as above in part ii.
+   By shifting the caret to the middle of a field (i.e. `n/John Doe`, with the caret positioned after `John`, input from
+   John to its prefix (i.e. `n/John` will be removed but `Doe` will still be there (i.e. the command box now looks like this:
+   `add Doe p/ e/ a/ $/ sub/ lvl/ r/`, with the caret positioned after `p/`.
+
+=== Adding a remark
+
+. Adding a remark to a specified person in STUtor
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `remark 1 r/Hardworking Student` +
+   Expected: Creates a remark 'Hardworking Student' for the 1st person in the list.
+.. Test case: `remark 1 edit` +
+   Expected: Edits a remark for the 1st person in the list. The person's previous remark (i.e. 'Hardworking Student' will be
+   displayed in the command box and the user will be able to edit the remark from there.
+.. Test case: `remark 1 r/` +
+   Expected: Removes the remark for the 1st person in the list.
+.. Test case: `remark 0 r/` +
+   Expected: No remark is added as the index specified is not within the range of persons in the list. Error details shown in the status message.
+
+=== Adding a rating
+
+. Adding a rating to a specified person in STUtor
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `rate 1 r/3.3` +
+   Expected: If this is the first time the first person in the list is being rated, the person will be given a rating of 3.3 and number of
+   people who rated the person will be 1. Else, all ratings for the person will be accumulated, average rating for the
+   person (to nearest 1 decimal place) will be displayed and the number of people who rated the person will increase by 1.
+.. Test case: `rate 1 r/4.0-` +
+   Expected: If this is the first time the person is being rated, the person will be given a rating of 4.0 and number of
+   people who rated the person will be 1. Else, this will resets the person's rating to 4.0 and the number of people who
+   rated the person to 1.
+.. Test case: `rate 0 r/4.0` +
+   Expected: No rating is added as the index specified is not within the range of persons in the list.
+   Error details shown in the status message.
+.. Test case: `rate 1 r/6.0` +
+   Expected: No rating is added as the rate specified is not within range. Error details shown in the status message.
+
+// tag::manualtestMatchUnmatch[]
+=== Testing match and unmatch
+
+. Match compatible student and tutor and then unmatch
+.. Prerequisites: clear your STUtor.
+.. Test case: +
+... `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 $/50 sub/Math lvl/Lower Sec  r/Student` +
+... `add n/Mary Chang p/81890003 e/marychang@example.com a/178, Rosewood Garden, #03-01 $/50 sub/Math lvl/Lower Sec  r/Tutor` +
+... `match 1 2` +
+  Expected: Pair is added to Pair List panel. Details of the added pair shown in the status message.
+  "Math", "Lower Sec" and "50" will be displayed as tags below the newly created pair.
+  The two persons have status updated to "Matched".
+.. Test case: +
+   Continue form the previous test case, type the command `unmatch 1` +
+   Expected: Pair is remove from the Pair List panel. Details of the unmatched pair shown in the status message.
+               The two persons have status updated to "Not Matched".
+
+. Match incompatible student and tutor
+.. Prerequisites: clear your STUtor.
+.. Test case: +
+... `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 $/50 sub/English lvl/Lower Sec  r/Student` +
+... `add n/Mary Chang p/81890003 e/marychang@example.com a/178, Rosewood Garden, #03-01 $/50 sub/Math lvl/Lower Sec  r/Tutor` +
+... `match 1 2` +
+  Expected: Error mesage of "Matching failed. Incompatible subject." shown in the status message.
+
+. Unmatch pair at invalid index
+.. Prerequisites: clear your STUtor.
+.. Test case: +
+... `unmatch 1` +
+  Expected: Error mesage of "The pair index provided is invalid." shown in the status message.
+// end::manualtestMatchUnmatch[]

@@ -67,6 +67,17 @@ public class StorageManagerTest {
         assertEquals(original, new AddressBook(retrieved));
     }
 
+    //@@author aussiroth
+    @Test
+    public void addressBookBackupSave() throws Exception {
+        //Note: This test is essentially similar to addressBookReadSave above, but uses backup method instead.
+        AddressBook original = getTypicalAddressBook();
+        storageManager.backupAddressBook(original);
+        ReadOnlyAddressBook retrieved = storageManager.readAddressBook(getTempFilePath("ab.backup")).get();
+        assertEquals(original, new AddressBook(retrieved));
+    }
+
+    //@@author
     @Test
     public void getAddressBookFilePath() {
         assertNotNull(storageManager.getAddressBookFilePath());

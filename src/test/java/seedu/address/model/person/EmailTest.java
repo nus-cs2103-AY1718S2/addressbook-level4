@@ -15,18 +15,11 @@ public class EmailTest {
     }
 
     @Test
-    public void constructor_invalidEmail_throwsIllegalArgumentException() {
-        String invalidEmail = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Email(invalidEmail));
-    }
-
-    @Test
     public void isValidEmail() {
         // null email
         Assert.assertThrows(NullPointerException.class, () -> Email.isValidEmail(null));
 
         // blank email
-        assertFalse(Email.isValidEmail("")); // empty string
         assertFalse(Email.isValidEmail(" ")); // spaces only
 
         // missing parts
@@ -58,5 +51,25 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("a1+be!@example1.com")); // mixture of alphanumeric and special characters
         assertTrue(Email.isValidEmail("peter_jack@very-very-very-long-example.com"));   // long domain name
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com"));    // long local part
+    }
+
+    //@@author aussiroth
+    @Test
+    public void checkEmailEquality() {
+        //test email against non-email type
+        assertFalse(new Email("test@abc.com").equals(null));
+        assertFalse(new Email("test@abc.com").equals(new Address("test@abc.com")));
+        //test correctly returns equal if email string is the same
+        assertTrue(new Email("test@abc.com").equals(new Email("test@abc.com")));
+    }
+
+    @Test
+    public void checkEmailHashCode() {
+        Email email = new Email("PeterJack_1190@example.com");
+        assertTrue(email.hashCode() == email.value.hashCode());
+        email = new Email("test@localhost");
+        assertTrue(email.hashCode() == email.value.hashCode());
+        email = new Email("peter_jack@very-very-very-long-example.com");
+        assertTrue(email.hashCode() == email.value.hashCode());
     }
 }

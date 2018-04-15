@@ -6,7 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class AppUtilTest {
+public class AppUtilTest extends AppUtil {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

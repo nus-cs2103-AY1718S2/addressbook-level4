@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_FAILURE_MATCHED;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -81,6 +82,18 @@ public class DeleteCommandTest {
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author aussiroth
+    @Test
+    public void execute_validIndexUnfilteredList_throwsPersonMatchedCannotDeleteException() throws Exception {
+        //create a new pair for the test
+        Person student = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person tutor = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        model.addPair(student, tutor);
+        DeleteCommand deleteCommand = prepareCommand(INDEX_SECOND_PERSON);
+        assertCommandSuccess(deleteCommand, model, MESSAGE_DELETE_PERSON_FAILURE_MATCHED, model);
+    }
+
+    //@@author
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();

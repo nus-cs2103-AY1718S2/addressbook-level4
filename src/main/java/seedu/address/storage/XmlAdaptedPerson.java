@@ -9,11 +9,19 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.pair.PairHash;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Level;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Price;
+import seedu.address.model.person.Rate;
+import seedu.address.model.person.Remark;
+import seedu.address.model.person.Role;
+import seedu.address.model.person.Status;
+import seedu.address.model.person.Subject;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,9 +39,27 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String price;
+    @XmlElement(required = true)
+    private String subject;
+    @XmlElement(required = true)
+    private String level;
+    @XmlElement(required = true)
+    private String status;
+    @XmlElement(required = true)
+    private String role;
+    @XmlElement(required = true)
+    private String remark;
+    @XmlElement(required = true)
+    private String rate;
+    @XmlElement(required = true)
+    private String count;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedPairHash> paired = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -44,13 +70,28 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address,
+                            String price, String subject, String level, String status, String role,
+                            List<XmlAdaptedTag> tagged, String remark, String rate, String count,
+                            List<XmlAdaptedPairHash> paired) {
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.price = price;
+        this.status = status;
+        this.subject = subject;
+        this.level = level;
+        this.role = role;
+        this.remark = remark;
+        this.rate = rate;
+        this.count = count;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
+        }
+        if (paired != null) {
+            this.paired = new ArrayList<>(paired);
         }
     }
 
@@ -64,9 +105,21 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        level = source.getLevel().value;
+        subject = source.getSubject().value;
+        status = source.getStatus().value;
+        price = source.getPrice().value;
+        role = source.getRole().value;
+        remark = source.getRemark().value;
+        rate = Double.toString(source.getRate().getValue());
+        count = Integer.toString(source.getRate().getCount());
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
+        }
+        paired = new ArrayList<>();
+        for (PairHash ph : source.getPairHashes()) {
+            paired.add(new XmlAdaptedPairHash(ph));
         }
     }
 
@@ -79,6 +132,11 @@ public class XmlAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+
+        final List<PairHash> personPairHashes = new ArrayList<>();
+        for (XmlAdaptedPairHash ph : paired) {
+            personPairHashes.add(ph.toModelType());
         }
 
         if (this.name == null) {
@@ -113,8 +171,64 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        if (this.price == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Price.class.getSimpleName()));
+        }
+        if (!Price.isValidPrice(this.price)) {
+            throw new IllegalValueException(Price.MESSAGE_PRICE_CONSTRAINTS);
+        }
+        final Price price = new Price(this.price);
+
+        if (this.subject == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Subject.class.getSimpleName()));
+        }
+        if (!Subject.isValidSubject(this.subject)) {
+            throw new IllegalValueException(Subject.MESSAGE_SUBJECT_CONSTRAINTS);
+        }
+        final Subject subject = new Subject(this.subject);
+
+        if (this.level == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Level.class.getSimpleName()));
+        }
+        if (!Level.isValidLevel(this.level)) {
+            throw new IllegalValueException(Level.MESSAGE_LEVEL_CONSTRAINTS);
+        }
+        final Level level = new Level(this.level);
+
+        if (this.status == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Status.class.getSimpleName()));
+        }
+        if (!Status.isValidStatus(this.status)) {
+            throw new IllegalValueException(Status.MESSAGE_STATUS_CONSTRAINTS);
+        }
+        final Status status = new Status(this.status);
+
+        if (this.role == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Role.class.getSimpleName()));
+        }
+        if (!Role.isValidRole(this.role)) {
+            throw new IllegalValueException(Role.MESSAGE_ROLE_CONSTRAINTS);
+        }
+        final Role role = new Role(this.role);
+
+        if (this.remark == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Remark.class.getSimpleName()));
+        }
+        final Remark remark = new Remark(this.remark);
+
+        if (this.rate == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Rate.class.getSimpleName()));
+        }
+        final Rate rate = new Rate(Double.parseDouble(this.rate), true);
+        rate.setCount(Integer.parseInt(count));
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        final Set<PairHash> pairHashes = new HashSet<>(personPairHashes);
+
+
+        return new Person(name, phone, email, address, price, subject, level, status, role,
+                          tags, remark, rate, pairHashes);
     }
 
     @Override

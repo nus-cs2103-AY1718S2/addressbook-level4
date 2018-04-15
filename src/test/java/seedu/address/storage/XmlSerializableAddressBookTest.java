@@ -1,6 +1,8 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -47,5 +49,18 @@ public class XmlSerializableAddressBookTest {
                 XmlSerializableAddressBook.class);
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
+    }
+
+    //@@author aussiroth
+    @Test
+    public void testSerializableAddressBookEquality() throws Exception {
+        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
+                XmlSerializableAddressBook.class);
+        XmlSerializableAddressBook copy = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
+                XmlSerializableAddressBook.class);
+        AddressBook addressBookFromFile = dataFromFile.toModelType();
+        assertTrue(dataFromFile.equals(dataFromFile));
+        assertTrue(dataFromFile.equals(copy)); //assert equality is true if values are equal
+        assertFalse(dataFromFile.equals(addressBookFromFile)); //assert equality is false if class is different
     }
 }

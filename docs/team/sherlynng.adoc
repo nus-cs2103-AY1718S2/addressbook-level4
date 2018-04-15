@@ -1,0 +1,72 @@
+= Ng Xin Ler - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103JAN2018-W11-B1/main
+
+== PROJECT: STUtor - V1.5
+
+---
+
+== Overview
+
+STUtor -V1.5 is a *desktop app* tailored for *tuition coordinators* to easily _match_ and _manage_ a database of tutors and students. +
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 25 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*:
+added *the ability to review a person*
+** What it does:
+allows the user to _write a remark_ or _give a rating_ to a tutor/student based on their performance.
+** Justification:
+This feature allows the tuition coordinator to keep track on the performance of tutors and students.
+This helps future matching as tutors/students strengths and weaknesses can be taken into consideration.
+Rating allows the tuition coordinator to take note of the better performing and underperforming tutors/students.
+** Highlights:
+`Remark` and `Rate` require vastly different handling of inputs: `Remark` accepting any format (including null) while `Rate`
+requires a fixed format between 0.0 to 5.0 (decimal can be omitted). For editing a remark, as it requires interaction with
+`CommandBox` from UI, observer pattern is used to reduce coupling.
+
+
+* *Minor enhancement*:
+Added the ability to autofill commands using `Tab` key and delete prefixes using `Delete` key.
+This facilitates the user when typing in commands, especially for long commands such as `add` and `edit`.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B1/main/blob/master/collated/functional/sherlynng.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B1/main/blob/master/collated/test/sherlynng.md[Test code]]
+
+* *Other contributions*:
+
+** Enhancements to existing features:
+*** Update BrowserPanel to reflect all attributes of a person (Pull requests https://github.com/CS2103JAN2018-W11-B1/main/pull/45[#45])
+** Documentation:
+*** Create UI mock up for initial planning of UI (Pull requests https://github.com/CS2103JAN2018-W11-B1/main/pull/26[#26])
+*** Cosmetic tweaks to existing contents of the User Guide to increase user friendliness: https://github.com/CS2103JAN2018-W11-B1/main/pull/140/files[#140]
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W10-B4/main/issues/126[1], https://github.com/CS2103JAN2018-W10-B4/main/issues/127[2])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=remark]
+
+include::../UserGuide.adoc[tag=rate]
+
+=== Auofill Feature
+A sample command is shown below:
+
+==== Edit Command
+include::../UserGuide.adoc[tag=sampleautofill]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=review]
+
+include::../DeveloperGuide.adoc[tag=autofill]

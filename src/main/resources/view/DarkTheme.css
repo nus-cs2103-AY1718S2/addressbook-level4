@@ -132,6 +132,36 @@
     -fx-text-fill: #010504;
 }
 
+/* @@author sherlynng */
+.details_big_label {
+     -fx-font-family: "Segoe UI";
+     -fx-font-size: 40px;
+     -fx-text-fill: #fffacd;
+     -fx-text-weight: bold
+ }
+
+.details_label {
+     -fx-font-family: "Segoe UI";
+     -fx-font-size: 15px;
+     -fx-text-fill: #ffffff;
+     -fx-text-weight: bold
+ }
+
+.details_label_details {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-text-fill: #ffffff;
+}
+
+.details_stackPane_odd {
+    -fx-background-color: #333333
+}
+
+.details_stackPane_even {
+    -fx-background-color: #4C4C4C
+}
+/* @@author */
+
 .anchor-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
 }
@@ -342,10 +372,60 @@
 }
 
 #tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+<!-- @@author dannyngmx94 -->
+#tags .purple {
+    -fx-text-fill: white;
+    -fx-background-color: #AB51FF;
+}
+
+#tags .red {
+    -fx-text-fill: black;
+    -fx-background-color: red;
+}
+
+#tags .yellow {
+    -fx-text-fill: black;
+    -fx-background-color: yellow;
+}
+
+#tags .blue {
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+}
+
+#tags .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#tags .brown {
+    -fx-text-fill: white;
+    -fx-background-color: brown;
+}
+
+#tags .green {
+    -fx-text-fill: black;
+    -fx-background-color: green;
+}
+
+#tags .pink {
+    -fx-text-fill: black;
+    -fx-background-color: pink;
+}
+
+#tags .black {
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-background-color: black;
+}
+
+#tags .grey {
+    -fx-text-fill: black;
+    -fx-background-color: grey;
 }

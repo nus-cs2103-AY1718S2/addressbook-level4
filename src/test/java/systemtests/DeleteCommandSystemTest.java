@@ -19,6 +19,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonMatchedCannotDeleteException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
@@ -122,6 +123,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
             model.deletePerson(targetPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
+        } catch (PersonMatchedCannotDeleteException e) {
+            e.printStackTrace();
         }
         return targetPerson;
     }

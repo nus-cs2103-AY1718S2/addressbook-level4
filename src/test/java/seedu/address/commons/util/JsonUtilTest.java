@@ -13,7 +13,7 @@ import seedu.address.testutil.TestUtil;
 /**
  * Tests JSON Read and Write
  */
-public class JsonUtilTest {
+public class JsonUtilTest extends JsonUtil {
 
     private static final File SERIALIZATION_FILE = new File(TestUtil.getFilePathInSandboxFolder("serialize.json"));
 

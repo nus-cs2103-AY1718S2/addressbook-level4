@@ -121,5 +121,17 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
+    @Test
+    public void backupAddressBook_allInOrder_success() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        String backupfilePath = testFolder.getRoot().getPath() + "TempAddressBook.xml" + ".backup";
+        AddressBook original = getTypicalAddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+
+        //Save in backup file and read back
+        xmlAddressBookStorage.backupAddressBook(original);
+        ReadOnlyAddressBook backup = xmlAddressBookStorage.readAddressBook(backupfilePath).get();
+        assertEquals(original, new AddressBook(backup));
+    }
 
 }

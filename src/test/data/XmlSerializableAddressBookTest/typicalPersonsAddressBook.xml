@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!-- AddressBook save file which contains the same Person values as in
+<!--
+
+
+
+
+AddressBook save file which contains the same Person values as in
 {@code TypicalPersons#getTypicalAddressBook()}-->
 <addressbook>
     <persons>
@@ -7,46 +12,309 @@
         <phone>85355255</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
-        <tagged>friends</tagged>
+		<price>50</price>
+		<subject>Math</subject>
+		<level>Lower Sec</level>
+		<status>Not Matched</status>
+        <role>Tutor</role>
+        <remark>Hardworking but slow learner.</remark>
+        <rate>3.0</rate>
+        <count>1</count>
+        <pairHash>0</pairHash>
+        <tagged>Tutor,ROLE</tagged>\
+        <tagged>Matched,STATUS</tagged>
+        <tagged>Lower Sec,LEVEL</tagged>
+        <tagged>50,PRICE</tagged>
+        <tagged>Math,SUBJECT</tagged>
     </persons>
     <persons>
         <name>Benson Meier</name>
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+		<price>50</price>
+		<subject>Math</subject>
+		<level>Lower Sec</level>
+		<status>Matched</status>
+        <role>Student</role>
+        <remark>Not self motivated.</remark>
+        <rate>1.0</rate>
+        <count>3</count>
+        <pairHash>0</pairHash>
+        <tagged>Matched,STATUS</tagged>
+        <tagged>Lower Sec,LEVEL</tagged>
+        <tagged>50,PRICE</tagged>
+        <tagged>Math,SUBJECT</tagged>
+        <tagged>Student,ROLE</tagged>
     </persons>
     <persons>
         <name>Carl Kurz</name>
         <phone>95352563</phone>
         <email>heinz@example.com</email>
         <address>wall street</address>
+		<price>20</price>
+		<subject>Chemistry</subject>
+		<level>Upper Sec</level>
+		<status>Not Matched</status>
+        <role>Tutor</role>
+        <remark>Patient and clear in explanation.</remark>
+        <rate>4.0</rate>
+        <count>7</count>
+        <pairHash>0</pairHash>
+        <tagged>Tutor,ROLE</tagged>
+        <tagged>Chemistry,SUBJECT</tagged>
+        <tagged>Matched,STATUS</tagged>
+        <tagged>Upper Sec,LEVEL</tagged>
+        <tagged>20,PRICE</tagged>
     </persons>
     <persons>
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
+        <price>20</price>
+        <subject>Chemistry</subject>
+        <level>Upper Sec</level>
+        <status>Matched</status>
+        <role>Student</role>
+        <remark>Fast learner.</remark>
+        <rate>4.5</rate>
+        <count>3</count>
+        <pairHash>0</pairHash>
+        <tagged>Chemistry,SUBJECT</tagged>
+        <tagged>Matched,STATUS</tagged>
+        <tagged>Upper Sec,LEVEL</tagged>
+        <tagged>Student,ROLE</tagged>
+        <tagged>20,PRICE</tagged>
     </persons>
     <persons>
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <email>werner@example.com</email>
         <address>michegan ave</address>
+		<price>99</price>
+		<subject>English</subject>
+		<level>Upper Sec</level>
+		<status>Matched</status>
+        <role>Tutor</role>
+        <remark>Inspirational tutor.</remark>
+        <rate>4.7</rate>
+        <count>2</count>
+        <pairHash>0</pairHash>
+        <tagged>99,PRICE</tagged>
+        <tagged>Tutor,ROLE</tagged>
+        <tagged>English,SUBJECT</tagged>
+        <tagged>Matched,STATUS</tagged>
+        <tagged>Upper Sec,LEVEL</tagged>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
+        <price>99</price>
+        <subject>English</subject>
+        <level>Upper Sec</level>
+        <status>Matched</status>
+        <role>Student</role>
+        <remark>Impatient and poor in explanation.</remark>
+        <rate>1.0</rate>
+        <count>5</count>
+        <pairHash>0</pairHash>
+        <tagged>99,PRICE</tagged>
+        <tagged>English,SUBJECT</tagged>
+        <tagged>Matched,STATUS</tagged>
+        <tagged>Upper Sec,LEVEL</tagged>
+        <tagged>Student,ROLE</tagged>
     </persons>
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
         <email>anna@example.com</email>
         <address>4th street</address>
+		<price>320</price>
+		<subject>Chinese</subject>
+		<level>Lower Sec</level>
+		<status>Not Matched</status>
+        <role>Tutor</role>
+        <remark>Friendly and approachable.</remark>
+        <rate>4.0</rate>
+        <count>3</count>
+        <pairHash>0</pairHash>
+        <tagged>Tutor,ROLE</tagged>
+        <tagged>320,PRICE</tagged>
+        <tagged>Not Matched,STATUS</tagged>
+        <tagged>Chinese,SUBJECT</tagged>
+        <tagged>Lower Sec,LEVEL</tagged>
     </persons>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
+    <persons>
+        <name>Henry Meier</name>
+        <phone>8482424</phone>
+        <email>stefan@example.com</email>
+        <address>little india</address>
+        <price>1234</price>
+        <subject>Chinese</subject>
+        <level>Upper Sec</level>
+        <status>Not Matched</status>
+        <role>Tutor</role>
+        <remark>Very passionate tutor.</remark>
+        <rate>4.0</rate>
+        <count>2</count>
+        <pairHash>0</pairHash>
+        <tagged>Tutor,ROLE</tagged>
+        <tagged>Not Matched,STATUS</tagged>
+        <tagged>1234,PRICE</tagged>
+        <tagged>Upper Sec,LEVEL</tagged>
+        <tagged>Chinese,SUBJECT</tagged>
+    </persons>
+    <persons>
+        <name>Irene Mueller</name>
+        <phone>8482131</phone>
+        <email>hans@example.com</email>
+        <address>chicago ave</address>
+        <price>4321</price>
+        <subject>English</subject>
+        <level>Upper Sec</level>
+        <status>Not Matched</status>
+        <role>Student</role>
+        <remark>Constantly postponing lessons.</remark>
+        <rate>2.2</rate>
+        <count>3</count>
+        <pairHash>0</pairHash>
+        <tagged>English,SUBJECT</tagged>
+        <tagged>Not Matched,STATUS</tagged>
+        <tagged>Upper Sec,LEVEL</tagged>
+        <tagged>4321,PRICE</tagged>
+        <tagged>Student,ROLE</tagged>
+    </persons>
+    <persons>
+        <name>Jenny Yim</name>
+        <phone>8482131</phone>
+        <email>hans@example.com</email>
+        <address>chicago ave</address>
+        <price>4321</price>
+        <subject>English</subject>
+        <level>Lower Sec</level>
+        <status>Not Matched</status>
+        <role>Tutor</role>
+        <remark>Constantly postponing lessons.</remark>
+        <rate>2.0</rate>
+        <count>1</count>
+        <pairHash>0</pairHash>
+        <tagged>Tutor,ROLE</tagged>
+        <tagged>English,SUBJECT</tagged>
+        <tagged>Not Matched,STATUS</tagged>
+        <tagged>4321,PRICE</tagged>
+        <tagged>Lower Sec,LEVEL</tagged>
+    </persons>
+    <persons>
+        <name>Keith Chang</name>
+        <phone>8482131</phone>
+        <email>hans@example.com</email>
+        <address>chicago ave</address>
+        <price>120</price>
+        <subject>English</subject>
+        <level>Lower Sec</level>
+        <status>Not Matched</status>
+        <role>Student</role>
+        <remark>Constantly postponing lessons.</remark>
+        <rate>2.0</rate>
+        <count>1</count>
+        <pairHash>0</pairHash>
+        <tagged>Student,ROLE</tagged>
+        <tagged>English,SUBJECT</tagged>
+        <tagged>Not Matched,STATUS</tagged>
+        <tagged>120,PRICE</tagged>
+        <tagged>Lower Sec,LEVEL</tagged>
+    </persons>
+    <persons>
+        <name>Lisa Ong</name>
+        <phone>8482131</phone>
+        <email>hans@example.com</email>
+        <address>chicago ave</address>
+        <price>120</price>
+        <subject>English</subject>
+        <level>Lower Sec</level>
+        <status>Not Matched</status>
+        <role>Student</role>
+        <remark>Hardworking.</remark>
+        <rate>2.0</rate>
+        <count>1</count>
+        <pairHash>0</pairHash>
+        <tagged>Student,ROLE</tagged>
+        <tagged>English,SUBJECT</tagged>
+        <tagged>Not Matched,STATUS</tagged>
+        <tagged>120,PRICE</tagged>
+        <tagged>Lower Sec,LEVEL</tagged>
+    </persons>
+    <persons>
+        <name>Mary Lou</name>
+        <phone>8482131</phone>
+        <email>hans@example.com</email>
+        <address>chicago ave</address>
+        <price>100</price>
+        <subject>English</subject>
+        <level>Lower Sec</level>
+        <status>Not Matched</status>
+        <role>Tutor</role>
+        <remark>Hardworking.</remark>
+        <rate>2.0</rate>
+        <count>1</count>
+        <pairHash>0</pairHash>
+        <tagged>Student,ROLE</tagged>
+        <tagged>English,SUBJECT</tagged>
+        <tagged>Not Matched,STATUS</tagged>
+        <tagged>120,PRICE</tagged>
+        <tagged>Lower Sec,LEVEL</tagged>
+    </persons>
+    <pairs>
+        <studentName>Benson Meier</studentName>
+        <tutorName>Alice Pauline</tutorName>
+        <subject>Math</subject>
+        <level>Lower Sec</level>
+        <price>50</price>
+        <pairHash>-595479005</pairHash>
+        <tagged>Lower Sec,LEVEL</tagged>
+        <tagged>50,PRICE</tagged>
+        <tagged>Math,SUBJECT</tagged>
+    </pairs>
+    <pairs>
+        <studentName>Daniel Meier</studentName>
+        <tutorName>Carl Kurz</tutorName>
+        <subject>Chemistry</subject>
+        <level>Upper Sec</level>
+        <price>20</price>
+        <pairHash>1051375102</pairHash>
+        <tagged>Upper Sec,LEVEL</tagged>
+        <tagged>20,PRICE</tagged>
+        <tagged>Chemistry,SUBJECT</tagged>
+    </pairs>
+    <pairs>
+        <studentName>Fiona Kunz</studentName>
+        <tutorName>Elle Meyer</tutorName>
+        <subject>English</subject>
+        <level>Upper Sec</level>
+        <price>99</price>
+        <pairHash>580977797</pairHash>
+        <tagged>Upper Sec,LEVEL</tagged>
+        <tagged>99,PRICE</tagged>
+        <tagged>English,SUBJECT</tagged>
+    </pairs>
+    <tags>Tutor,ROLE</tags>
+    <tags>Matched,STATUS</tags>
+    <tags>Lower Sec,LEVEL</tags>
+    <tags>50,PRICE</tags>
+    <tags>Math,SUBJECT</tags>
+    <tags>Student,ROLE</tags>
+    <tags>Chemistry,SUBJECT</tags>
+    <tags>Upper Sec,LEVEL</tags>
+    <tags>20,PRICE</tags>
+    <tags>99,PRICE</tags>
+    <tags>English,SUBJECT</tags>
+    <tags>320,PRICE</tags>
+    <tags>Not Matched,STATUS</tags>
+    <tags>Chinese,SUBJECT</tags>
+    <tags>1234,PRICE</tags>
+    <tags>4321,PRICE</tags>
+    <tags>100,PRICE</tags>
 </addressbook>

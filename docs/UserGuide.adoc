@@ -1,7 +1,8 @@
-= AddressBook Level 4 - User Guide
+= STUtor - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
+:toclevels: 4
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -11,254 +12,720 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W11-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+* STUtor is a *desktop app* tailored for *tuition coordinators* to easily _match_ and _manage_ a database of tutors and students.
+* This app is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+* If you can type fast, STUtor can get your *tutor and student management tasks done efficiently*.
 
-== Quick Start
+[%hardbreaks]
+[%hardbreaks]
+[%hardbreaks]
+[%hardbreaks]
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+* This guide gives you an overview of the _basic_ and _advanced_ features of STUtor.
+
+== Getting Started
+This section helps you set up your STUtor app on your computer.
+
+.  Ensure you have Java version __1.8.0_60__ or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest _STUtor.jar_ link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use for storing your STUtor.
+.  Double-click the file to start the app. You will see the interface in a few seconds.
 +
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+// tag::ui[]
 
-.  Refer to <<Features>> for details of each command.
+image::Ui_withLabels.png[width="500"]
+
+*  Sections of STUtor:
+** Section 1: *Command Box* to type your commands
+** Section 2: *Result Display* to show the results of your command
+** Section 3: *Pair List* to list all pairs currently matched
+** Section 4: *Person List* to list all persons in the entire database
+** Section 5: *Information Panel* to show all details of a person
+// end::ui[]
+
+*  Type the command in the Command Box and press kbd:[Enter] to execute it. +
+e.g. typing `*help*` and pressing kbd:[Enter] will open the help window.
+*  Some example commands you can try:
+** To list all contacts: `*list*`
+** To add a contact named `John Doe` and his particulars to STUtor: `*add* n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 $/50 sub/Math lvl/Lower Sec r/Student`
+** To delete the 3rd contact shown in the current list: `*delete* 3`
+** To exit the app: `*exit*`
+* For more details for each command, you can view <<Basic Features>>.
+
 
 [[Features]]
 == Features
+To use the features, you need to key in the commands in the Command Box.
 
+=== Command Format
+
+****
+* Words in UPPER_CASE are the *parameters to be supplied* by you
+
+[%hardbreak]
+{nbsp}{nbsp}{nbsp}{nbsp} e.g. For `*add* n/NAME`, NAME is a parameter which can be used as `*add* n/John Doe`.
+
+* Items in *square brackets* are *optional*
+
+[%hardbreak]
+{nbsp}{nbsp}{nbsp}{nbsp} e.g `*add* n/NAME [$/PRICE]` can be used as `*add* n/John Doe $/40` or as `*add* n/John Doe`.
+
+* Items with `…`​ after them can be *used multiple times* including zero times
+
+[%hardbreak]
+{nbsp}{nbsp}{nbsp}{nbsp} e.g. `*findmissing* [FIELD]...` can be used as `*findmissing*` (i.e. no field is supplied), `*findmissing* phone email`
+
+* Parameters can be in *any order*
+
+[%hardbreak]
+{nbsp}{nbsp}{nbsp}{nbsp} e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
+* For advanced users, a *shorter alias* for most commands exist to reduce typing. These are provided in the information for each command.
+****
+
+=== Basic Features
+
+==== Viewing help : `*help*`
+At any time if you are unsure of how to use STUtor, this command will bring you to the help page.
+
+Format: `*help*`
+
+
+// tag::add[]
+==== Adding a person: `*add*` or `*a*`
+Adds a new person to STUtor. +
+You can add a person with the following fields: NAME, PHONE, EMAIL, ADDRESS, SUBJECT, LEVEL, PRICE and ROLE.
+Take note that some fields are restricted to the following options:
+
+[width="80%",cols="<30%,<50%",options="header",]
+|=======================================================================
+|Field |Options
+|SUBJECT | English, Chinese,  Math, Chemistry, Physics
+|LEVEL | Lower Primary, Upper Primary, Lower Secondary, Upper Secondary
+|PRICE | Must be a positive number
+|ROLE | Student, Tutor
+|=======================================================================
+****
+** Alias can be used to reduce typing. Refer to <<Field Shortcut Summary>> for more details.
+** These information is displayed as tags for easy reference.
+**  Upon adding to STUtor, all persons will have a default STATUS of "Not Matched".
+****
+
+[NOTE]
 ====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+Only the NAME field is required for the command to be accepted, all other fields are optional. +
+To fill in the other fields later, you can use the edit command to edit the person with the new information. +
 ====
 
-=== Viewing help : `help`
-
-Format: `help`
-
-=== Adding a person: `add`
-
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-
-[TIP]
-A person can have any number of tags (including 0)
+Format: `*add* n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [$/PRICE] [sub/SUBJECT] [lvl/LEVEL] [r/ROLE] [t/TAG]...`
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `*add* n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 $/50 sub/Math lvl/Lower Sec  r/Student`
+* `*add* n/Betsy Crowe p/91562389 e/betsycrowe@example.com a/Pasir Ris Drive 10, #06-02 $/30 sub/Chinese lvl/Upper Pri  r/Tutor`
+* `*add* n/Carl Kurz`
 
-=== Listing all persons : `list`
+[NOTE]
+====
+You can press kbd:[Tab] key once after typing `*add*` or `*a*` and it will autofill the command. +
+Further pressing of kbd:[Tab] key will jump to the next field to be filled in. +
+You can press kbd:[Delete] key to delete a field (and its prefix). +
+You can view the diagram below for a clearer visualization on how it works. +
+*Important!* If you enter only empty spaces after a prefix, it will be read as no value entered into the optional field. You do not need to delete prefixes for unentered fields to enter the command.
+====
 
-Shows a list of all persons in the address book. +
-Format: `list`
+image::AutofillAdd_Tab.png[width="700"]
+image::AutofillAdd_Delete.png[width="700"]
 
-=== Editing a person : `edit`
+// end::add[]
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+==== Listing all persons : `*list*` or `*l*`
+Shows a list of all persons in STUtor. +
+
+Format: `*list*`
+
+// tag::edit[]
+
+==== Editing a person : `*edit*` or `*e*`
+Edits an existing person in STUtor. +
+This also allows you to fill in unentered fields by simply editing that field.
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* A person's STATUS is not editable by you. It will automatically update after <<Matching a student and a tutor>>
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
+Format: `*edit* INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [$/PRICE] [sub/SUBJECT] [lvl/LEVEL] [r/ROLE] [t/TAG]...`
+
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
+* `*edit* 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+* `*edit* 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::sampleautofill[]
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+[NOTE]
+====
+You can press kbd:[Tab] key once after typing `*edit*` or `*e*` and it will autofill the command. +
+INDEX to be specified will be highlighted. +
+Further pressing of kbd:[Tab] key will jump to the next field to be filled in. +
+You can press kbd:[Delete] key to delete a field (and its prefix). +
+You can view the diagram below for a clearer visualization on how it works. +
+*Important!* You will need to delete the prefixes for fields you are not intending to change.
+====
 
+image::AutofillEdit.png[width="800"]
+
+// end::sampleautofill[]
+// end::edit[]
+
+// tag::filter[]
+
+==== Filtering all persons list by subject, level, role or status: `*filter*` `[In V1.3]`
+Filters all persons list whose SUBJECT, LEVEL, STATUS, or ROLE contain any of the given keywords. +
+To get back the list of persons that is unfiltered, you can simply execute the `*list*` command. +
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The filter is case insensitive.
+
+[%hardbreak]
+{nbsp}{nbsp}{nbsp}{nbsp} e.g `maTH` will match `Math`
+
+* Only full words will be matched e.g. `Eng` will not match `English`.
+* Persons with matching keyword will be returned.
+* This command is unable to filter an already filtered list.
 ****
+
+Format: `*filter* KEYWORD`
 
 Examples:
 
-* `find John` +
+* `*filter* Math` +
+Returns persons with `Math` subject
+* `*filter* maTH` +
+Returns persons with `Math` subject
+
+===== Upcoming improvement [Coming in V2.0] +
+`*filter* KEYWORD [MORE_KEYWORDS]` +
+The proposed improvement of filter command will return you persons who matches all the KEYWORD specified.
+
+// end::filter[]
+
+==== Locating persons by name: `*find*` or `*f*`
+Finds persons whose NAME contain any of the given keywords. +
+
+****
+* The search is case insensitive.
+
+[%hardbreak]
+{nbsp}{nbsp}{nbsp}{nbsp} e.g `hans` will match `Hans`
+
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
+
+[%hardbreak]
+{nbsp}{nbsp}{nbsp}{nbsp} e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Format: `*find* KEYWORD [MORE_KEYWORDS]`
+
+Examples:
+
+* `*find* John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `*find* Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+// tag::findmissing[]
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+==== Finding people with missing fields: `*findmissing*` or `*fm*` `[In V1.4]`
+
+Lists only people who have fields that you have not yet entered, making it easy for you to search for that person you want to edit in data. +
+If no arguments for FIELD is entered, lists all people with at least one field with an empty value. +
+Otherwise, finds all people with an empty value in at least one entered FIELD.
+
+****
+* The field name is case insensitive.
+* List of all possible fields:
+** address
+** email
+** level
+** phone
+** price
+** role
+** subject
+****
+
+Format: `*findmissing* [FIELD]...`
+
+Examples:
+
+* `*findmissing* role` +
+Returns any person who has no entered role.
+
+* `*findmissing* phone email` +
+Returns any person who has no entered phone or email.
+
+* `*findmissing*` +
+Returns any person who has no entered value for at least 1 field.
+
+==== Deleting a person : `*delete*` or `*d*`
+Deletes the specified person from STUtor. +
 
 ****
 * Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* The index refers to the index number shown in the *most recent listing*.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
+// end::findmissing[]
+
+Format: `*delete* INDEX`
+
 Examples:
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+* `*list*` +
+`*delete* 2` +
+Deletes the 2nd person in STUtor.
+* `*find* Betsy` +
+`*delete* 1` +
+Deletes the 1st person in the results of the `*find*` command.
 
-=== Selecting a person : `select`
+[NOTE]
+====
+You can press kbd:[Tab] key once after typing `*delete*` or `*d*` and it will autofill the command.
+INDEX to be specified will be highlighted.
+You can view the diagram below for a clearer visualization on how it works.
+====
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+image::AutofillDelete.png[width="500"]
+
+==== Selecting a person : `*select*` or `*s*`
+Selects the person identified by the index number used in the *last person listing*. +
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and displays person details at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
+Format: `*select* INDEX`
+
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+* `*list*` +
+`*select* 2` +
+Selects the 2nd person in STUtor.
+* `*find* Betsy` +
+`*select* 1` +
+Selects the 1st person in the results of the `*find*` command.
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+You can press kbd:[Tab] key once after typing `*select*` or `*s*` and it will autofill the command.
+INDEX to be specified will be highlighted.
+You can view the diagram below for a clearer visualization on how it works.
 ====
+
+image::AutofillSelect.png[width="500"]
+
+// tag::match[]
+==== Matching a student with a tutor : `*match*` or `*m*` `[In V1.4]`
+You can easily match a student with a tutor if they were to have lessons together.
+To indicate who you want to match, simply provide two index numbers used in the *last person listing*. +
+
+****
+* The indices supplied must be *compatible*. They must correspond to one *student* and one *tutor*.
+They must have *the same subject and level*.
+* The order of entering indices does not matter.
+  That is, you can enter the student's index first followed by the tutor's index,
+  or the other way round.
+****
+
+Format: `*match* PERSON_A_INDEX PERSON_B_INDEX` or `*m* PERSON_A_INDEX PERSON_B_INDEX`
+
+Examples:
+`*match* 1 3` +
+Match the person at index 1 to the person at index 3.
+
+[NOTE]
+====
+* If the match is valid (The two persons are compatible),
+you will see a success message. +
+See the figure below for an illustration.
+====
+.UI before `*match* 1 3` is executed.
+image::matchIllustration1.png[width="500"]
+.UI after `*match* 1 3` is executed. New pair is dispalyed on the Pair List, with pair information displayed as tags.
+image::matchIllustration2.png[width="500"]
+
+[NOTE]
+====
+* If the match is not valid, you will see a error message saying
+`Matching failed.` +
+You will also see detailed information on what went wrong.
+For example: +
+** `Incompatible role`
+** `Incompatible price.`
+
+* If the tutor demands higher price than what the student offers, the matching will be deemed as incompatible.
+When the tutor demands a price lower than what the student offers,
+the price for the pair will be the higher price offered by the student.
+ +
+====
+// end::match[]
+
+[NOTE]
+====
+You can press kbd:[Tab] key once after typing `*match*` or `*m*` and it will autofill the command.
+INDEX to be specified will be highlighted. Press kbd:[Tab] key again will jump to the next index to be filled in.
+You can view the diagram below for a clearer visualization on how it works.
+====
+
+image::AutofillMatch.png[width="700"]
+
+
+===== Upcoming improvement [Coming in V2.0] +
+** SmartMatch
+*  Upon selecting a person with his/her index, a list of compatible match choices will appear.
+You can sort the list based on price, location, rating, etc.
+You can then pair the person with one of the given choices.
+*  If you cannot confirm the match yet but wishes to take note of a potential match,
+you can mark the pair as `Matching in Progress`.
+
+** Display of pair information
+*  You will be able to view the schedule and billing information of the pair.
+After selecting a matched pair, such information will be displayed on the `DetailsPanel`.
+
+
+// tag::unmatch[]
+
+==== Unmatching a student and a tutor : `*ummatch*` or `*um*` `[In V1.4]`
+Once a pair finishes the course, you can unmatch them.
+Simply select the pair identified by the index numbers used in the Pair List. +
+
+Format: `*unmatch* INDEX` or `*um* INDEX`
+
+Examples:
+
+* `*unmatch* 1` +
+Unmatch the pair at index 1. +
+
+// end::unmatch[]
+
+[NOTE]
+====
+You can press kbd:[Tab] key once after typing `*unmatch*` or `*um*` and it will autofill the command.
+INDEX to be specified will be highlighted.
+You can view the diagram below for a clearer visualization on how it works.
+====
+
+image::AutofillUnmatch.png[width="500"]
+
+==== Listing entered commands : `*history*` or `*h*`
+You can list all the commands that you have entered in reverse chronological order. +
+
+[NOTE]
+====
+You can press kbd:[&uarr;] and kbd:[&darr;] arrows and it will display the previous and next input respectively in the Command Box.
+====
+
+Format: `*history*`
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
-
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+==== Undoing previous command : `*undo*` or `*u*`
+You can easily restore STUtor to the state before the previous _undoable_ command was executed. +
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify STUtor's content (e.g. `*add*`, `*delete*`, `*edit*` and `*clear*`).
 ====
 
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `*undo*`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `*delete* 1` +
+`*list*` +
+`*undo*` (reverses the `*delete* 1` command) +
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+* `*select* 1` +
+`*list*` +
+`*undo*` +
+The `*undo*` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+* `*delete* 1` +
+`*clear*` +
+`*undo*` (reverses the `*clear*` command) +
+`*undo*` (reverses the `*delete* 1` command) +
+
+==== Redoing the previously undone command : `*redo*` or `*r*`
+You can easily reverse the most recent `*undo*` command. +
+
+Format: `*redo*`
+
+Examples:
+
+* `*delete* 1` +
+`*undo*` (reverses the `*delete* 1` command) +
+`*redo*` (reapplies the `*delete* 1` command) +
+
+* `*delete* 1` +
+`*redo*` +
+The `*redo*` command fails as there are no `*undo*` commands executed previously.
+
+* `*delete* 1` +
+`*clear*` +
+`*undo*` (reverses the `*clear*` command) +
+`*undo*` (reverses the `*delete* 1` command) +
+`*redo*` (reapplies the `*delete* 1` command) +
+`*redo*` (reapplies the `*clear*` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+==== Clearing all entries : `*clear*` or `*c*`
+To clear all entries from your STUtor, use the `*clear*` command. +
 
-Clears all entries from the address book. +
-Format: `clear`
+Format: `*clear*`
 
-=== Exiting the program : `exit`
 
+
+==== Exiting the program : `*exit*`
 Exits the program. +
-Format: `exit`
 
-=== Saving the data
+Format: `*exit*`
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+==== Saving the data
+
+STUtor data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+
+=== Advanced Features
+
+// tag::remark[]
+
+==== Creating a remark for a person : `*remark*` or `*rk*` `[In V1.3]`
+You can create a remark for the person identified by the index number used in the *last person listing*. +
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* You can remove a remark by typing `r/` without specifying any remark after it.
+* You can edit a remark by typing `edit` after indicating the index you want to edit.
+****
+
+[NOTE]
+====
+The new remark created will not be shown automatically. You will have to select the person again to
+'refresh' the `Information Panel`.
+
+Auto-refreshing of person details will be done in V2.0.
+====
+
+Format: +
+
+* To create a new remark: `*remark* INDEX r/REMARK` +
+* To edit an existing remark: `*remark* INDEX edit` or `*remark* edit INDEX`
+
+Examples:
+
+* `*list*` +
+`*remark* 2 r/Fast learner.` +
+Creates a remark 'Fast learner.' for the 2nd person in STUtor.
+* `*find* Betsy` +
+`*remark* 1 r/` +
+Removes the remark for the 1st person in the results of the `*find*` command.
+
+* `*list*` +
+`*remark* 1 edit` +
+Edits the remark of the 1st person in STUtor.
+
+[NOTE]
+====
+You can press kbd:[Tab] key once after typing `*remark*` or `*rk*` and it will autofill the command.
+INDEX to be specified will be highlighted. Press kbd:[Tab] key again will jump to the position for you to input your remark.
+You can view the diagram below for a clearer visualization on how it works.
+====
+
+image::AutofillRemark.png[width="700"]
+
+// end::remark[]
+
+// tag::rate[]
+==== Giving a rating to a person : `*rate*` or `*rt*` `[In V1.4]`
+You can give a rating to the person identified by the index number used in the *last person listing*.
+By default, the rating will be accumulated.
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* Rating must be a number *between 0 and 5 (inclusive)* with *at most 1 decimal place*.
+* Placing a `-` after the rating gives an *absolute rating* to the person specified.
+
+[%hardbreak]
+{nbsp}{nbsp}{nbsp}{nbsp} e.g `*rate* 1 r/2.0-` will set rating of the 1st person in the results
+to 2.0 and number of people who rated the person will be resetted to 1.
+
+* Without placing `-` after the rating gives an *cumulative rating* to the person specified.
+
+[%hardbreak]
+{nbsp}{nbsp}{nbsp}{nbsp} e.g `*rate* 1 r/2.0` will add on to the current rating of the 1st person
+and the person's average ratings will be displayed. Number of people who rated the person will also increase by 1.
+
+[NOTE]
+====
+Rating value is rounded off to nearest 1 decimal place.
+====
+****
+
+[NOTE]
+====
+The new rating created will not be shown automatically. You will have to select the person again to
+'refresh' the `Information Panel`.
+
+Auto-refreshing of person details will be done in V2.0.
+====
+
+Format: `*rate* INDEX r/RATE`
+
+Examples:
+
+* `*list*` +
+`*rate* 2 r/2.0-` +
+Gives an absolute rating of 2.0 to the 2nd person in STUtor.
+* `*find* Betsy` +
+`*rate* 1 r/4.2` +
+Gives an accumulated rating for the 1st person in the results of the `*find*` command.
+
+[NOTE]
+====
+You can press kbd:[Tab] key once after typing `*rate*` or `*rt*` and it will autofill the command.
+INDEX to be specified will be highlighted. Press kbd:[Tab] key again will jump to the position for you to input your rating.
+You can view the diagram below for a clearer visualization on how it works.
+====
+
+image::AutofillRate.png[width="700"]
+
+// end::rate[]
+
+// tag::viewstats[]
+
+==== Viewing the statistic : `*viewStats*` `[In V1.4]`
+Shows statistical information for role and subject distribution. +
+
+image::CompleteChartSnap.png[width="500"]
+
+****
+* The statistic will not update in real time.
+* To get an update, call for `*viewStats*` command once more.
+* To exit from `*viewStats*`, you can simply click on person in the person list.
+****
+
+Format: `*viewStats*`
+
+===== Upcoming improvement [Coming in V2.0] +
+The proposed improvement of viewStats will provide user with more data such as people with different status and more.
+
+// end::viewstats[]
+
+// tag::enterpriseVersion[]
+=== Enterprise Version `[Coming in V2.0]`
+With added functionalities, the Enterprise Version of STUtor will serve tuition centers and agencies.
+
+** Remote centralised database
+*  Real-time synchronization will allow multiple coordinators to work on the same database.
+* Information about the students, tutors and pairs will be stored securely, allowing easy backup and data recovery.
+
+
+** Data Encryption
+*  The coordinator will need a password issued by the tuition center to access the application,
+therefore ensuring the confidentiality of the data.
+
+// end::enterpriseVersion[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: +
+1) Please install STUtor in the other computer. +
+2) Navigate to *main/data*, and overwrite the empty `STUtor.xml` file
+with the file of the same name found on your previous computer.
+You can the file under the same path of *main/data*
 
+*Q*: How do I update my version of STUtor to a new released version? +
+*A*: +
+1) Download the _STUtor.jar_ file from our link:{repoURL}/releases[release page]. +
+2) Copy the downloaded file and paste it in the the folder the old _STUtor.jar_ is located in. Confirm to overwrite the existing file. +
+3) Now you can simply run the new _STUtor.jar_ to be able to use the new version with all your data preserved.
+
+
+// tag::commandsummary[]
 == Command Summary
+You can use the following shortcuts when typing the commands.
+Note that there is no shortcuts for `help` and `exit` commands.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="80%",cols="<20%,<20%,<20%,<20%",options="header",]
+|=======================================================================
+|Command |Shortcut |Format |Example
+|`add`  | `a` |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS $/PRICE sub/SUBJECT lvl/LEVEL  r/ROLE [t/TAG]...`|`add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 $/50 sub/Math lvl/Lower Sec r/Student`
+|`delete`|`d`|`delete INDEX`|`delete 3`
+|`edit`|`e`|`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [$/PRICE] [sub/SUBJECT] [lvl/LEVEL] [r/ROLE] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
+|`filter`| |`filter KEYWORD`|`filter Math`
+|`find`|`f`|`find KEYWORD [MORE_KEYWORDS]`|`find James Jake`
+|`findmissing`|`fm`|`findmissing [FIELD]...`|`findmissing phone`
+|`match`|`m`|`match INDEX_A INDEX_B`|`match 1 2`
+|`unmatch`|`um`|`unmatch INDEX`|`unmatch 2`
+|`rate`|`rt`|`rate INDEX r/`|`rate INDEX r/3.5`
+|`remark`|`rk`|`remark INDEX r/`|`remark 2 r/Fast learner.`
+|`select`|`s`|`select INDEX`|`select 2`
+|`list`|`l`||
+|`viewStats`|||
+|`clear`|`c`||
+|`history`|`h`||
+|`undo`|`u`||
+|`redo`|`r`||
+|`help`|||
+|`exit`|||
+
+|=======================================================================
+// end::commandsummary[]
+
+// tag::prefixshortcut[]
+== Field Shortcut Summary
+To save time in adding a person, or editing a person's details, use the following shortcuts.
+
+[width="59%",cols="<30%,<35%,<35%",options="header",]
+|=======================================================================
+|Applicable field |Shortcut |Equivalence in full
+|SUBJECT | `sub/chem`| `sub/chemistry`
+|SUBJECT | `sub/phy`| `sub/physics`
+|SUBJECT | `sub/chi`| `sub/chinese`
+|SUBJECT | `sub/eng`| `sub/english`
+|LEVEL | `lvl/us`| `lvl/upper sec`
+|LEVEL | `lvl/ls`| `lvl/lower sec`
+|LEVEL | `lvl/up`| `lvl/upper pri`
+|LEVEL | `lvl/lp`| `lvl/lower pri`
+|ROLE | `r/t`| `r/tutor`
+|ROLE | `r/s`| `r/student`
+|=======================================================================
+// end::prefixshortcut[]

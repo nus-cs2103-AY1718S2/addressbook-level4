@@ -15,6 +15,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.pair.PairHash;
+import seedu.address.storage.XmlAdaptedPairHash;
 import seedu.address.storage.XmlAdaptedPerson;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableAddressBook;
@@ -22,7 +24,7 @@ import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TestUtil;
 
-public class XmlUtilTest {
+public class XmlUtilTest extends XmlUtil {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlUtilTest/");
     private static final File EMPTY_FILE = new File(TEST_DATA_FOLDER + "empty.xml");
@@ -39,7 +41,21 @@ public class XmlUtilTest {
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
-    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    private static final String VALID_SUBJECT = "English";
+    private static final String VALID_LEVEL = "lower Sec";
+    private static final String VALID_STATUS = "not Matched";
+    private static final String VALID_ROLE = "student";
+    private static final String VALID_PRICE = "77";
+    private static final String VALID_REMARK = "Fast learner";
+    private static final String VALID_RATE = "4.0";
+    private static final String VALID_RATECOUNT = "3";
+
+
+    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(
+            new XmlAdaptedTag("friends", "DEFAULT"));
+
+    private static final List<XmlAdaptedPairHash> VALID_PAIRHASH = Collections.singletonList(
+            new XmlAdaptedPairHash(PairHash.DEFAULT_PAIR_HASH));
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -80,7 +96,9 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_PRICE, VALID_SUBJECT,
+                VALID_LEVEL, VALID_STATUS, VALID_ROLE, VALID_TAGS, VALID_REMARK,
+                VALID_RATE, VALID_RATECOUNT, VALID_PAIRHASH);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -89,7 +107,9 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_PRICE, VALID_SUBJECT,
+                VALID_LEVEL, VALID_STATUS, VALID_ROLE, VALID_TAGS, VALID_REMARK,
+                VALID_RATE, VALID_RATECOUNT, VALID_PAIRHASH);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -98,7 +118,9 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_PRICE, VALID_SUBJECT,
+                VALID_LEVEL, VALID_STATUS,  VALID_ROLE, VALID_TAGS, VALID_REMARK,
+                VALID_RATE, VALID_RATECOUNT, VALID_PAIRHASH);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -130,7 +152,7 @@ public class XmlUtilTest {
 
         AddressBookBuilder builder = new AddressBookBuilder(new AddressBook());
         dataToWrite = new XmlSerializableAddressBook(
-                builder.withPerson(new PersonBuilder().build()).withTag("Friends").build());
+                builder.withPerson(new PersonBuilder().build()).build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableAddressBook.class);

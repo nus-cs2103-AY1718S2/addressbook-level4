@@ -1,0 +1,68 @@
+= Danny Ng Ming Xuan - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103JAN2018-W11-B1/main
+
+== PROJECT: STUtor - v1.5
+
+---
+
+== Overview
+
+STUtor -v1.5 is a desktop address book targeting tutor coordinators
+to help them _matching_ and _managing_ a large database of tutors and students. +
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 25 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*:
+Added the ability to *view statistical data of students and tutors in app*
+** What it does:
+Displays in graphical form to the user data such as number of students/tutors and the breakdown of subjects learning/teaching by the respective group.
+** Justification:
+This feature makes collection of data much simpler. Without this feature, if the coordinator wants to collect these data, he/she will need to perform multiple actions and consolidate the data manually. +
+However, with the help of this feature, all the manual and time consuming task of data collection can be done at the call of the viewStats command. +
+Furthermore, the data will be displayed beautifully in graphical representation.
+** Highlights:
+This feature require the use of various components such as Logic, Model and UI. It is recommended for future developers to read up on the components mentioned for better understanding.
+
+
+* *Minor enhancement*:
+Added the ability to *filter list* by *subject*, *level*, *status* or *role*. The keyword used for filter is case-insensitive.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B1/main/blob/master/collated/functional/dannyngmx94.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B1/main/blob/master/collated/test/dannyngmx94.md[Test code]]
+
+* *Other contributions*:
+
+** Enhancements to existing features:
+*** Added color label. (Pull request https://github.com/CS2103JAN2018-W11-B1/main/pull/4[#4])
+** Documentation:
+***Did some changes to the developer guide to improve reader-friendliness of existing content: https://github.com/CS2103JAN2018-W11-B1/main/pull/96[#96]
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-T09-B4/main/issues/142[1], https://github.com/CS2103JAN2018-T09-B4/main/issues/151[2])
+
+
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=filter]
+include::../UserGuide.adoc[tag=viewstats]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=filter]
+include::../DeveloperGuide.adoc[tag=viewstats]
+include::../DeveloperGuide.adoc[tag=manualtest]
+

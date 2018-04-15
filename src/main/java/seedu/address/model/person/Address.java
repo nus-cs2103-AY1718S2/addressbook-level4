@@ -28,14 +28,15 @@ public class Address {
     public Address(String address) {
         requireNonNull(address);
         checkArgument(isValidAddress(address), MESSAGE_ADDRESS_CONSTRAINTS);
-        this.value = address;
+        ProperCaseConverter pc = new ProperCaseConverter();
+        this.value = pc.convertToProperCase(address);
     }
 
     /**
      * Returns true if a given string is a valid person email.
      */
     public static boolean isValidAddress(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
+        return test.equals("") || test.matches(ADDRESS_VALIDATION_REGEX);
     }
 
     @Override

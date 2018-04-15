@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class CollectionUtilTest {
+public class CollectionUtilTest extends CollectionUtil {
     @Test
     public void requireAllNonNullVarargs() {
         // no arguments

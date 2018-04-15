@@ -1,0 +1,76 @@
+= Yan Hong Yao Alvin - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: STUtor - v1.5
+
+---
+
+== Overview
+
+STUtor -v1.5 is a desktop address book targeting tutor coordinators
+to help them _matching_ and _managing_ a large database of tutors and students. +
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 25 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*:
+Changed the functionality of add command to reduce number of compulsory fields.
+** What it does:
+Allows the user to add a new person with only their name, without entering any of the other fields.
+** Justification:
+This feature makes management and including new people much easier. When adding new tutors or students to the application, the coordinator might not always get all the required fields and may need to clarify further. +
+This setup allows them to go ahead and add the person first, while being able to find and edit in the details later. +
+Furthermore, if the user wants to add all the details at once, the command becomes extremely long - therefore users will feel less burdened if they have a choice to not add in all the details in one-shot.
+** Highlights:
+As much of the app makes use of the different values such as the subject and education level, it was important to make sure that the design used to allow optional fields would not lead to significant bugs or errors when handling these fields. +
+Furthermore, the documentation had to be clear to make sure that future developers when making use of these fields would be able to expect the possibility of optional fields, and be able to correctly handle them. +
+Finally, as a complement to this feature, I created an additional command that allows users to search for people whose fields are missing, to be able to list out those they need to request information from, or to find the correct person to edit.
+
+
+* *Minor enhancement*:
+Added the creation of special tags based off 5 attributes of the person.
+These tags would make use of the method of displaying tags to show important information about the tutor and student, such as the subject they are looking for a tutor/student for. +
+Each attribute has a special color associated with it to make visual recognition easy, as well as ordering them in a single, specific order.
+
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B1/main/blob/master/collated/functional/aussiroth.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B1/main/blob/master/collated/test/aussiroth.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` - `v1.5` (6 releases) on GitHub
+** Enhancements to existing features:
+*** Wrote additional tests for existing features and tests across the work of all team members to improve coverage significantly. These tests are located across many different parts of the code base.
+(Pull requests https://github.com/CS2103JAN2018-W11-B1/main/pull/40[#40], https://github.com/CS2103JAN2018-W11-B1/main/pull/64[#64], https://github.com/CS2103JAN2018-W11-B1/main/pull/155[#155], https://github.com/CS2103JAN2018-W11-B1/main/pull/179[#179])
+** Documentation:
+*** Did some changes to the developer guide to improve reader-friendliness of existing content: https://github.com/CS2103JAN2018-W11-B1/main/pull/96[#96]
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W15-B4/main/issues/183[1], https://github.com/CS2103JAN2018-W15-B4/main/issues/203[2], https://github.com/CS2103JAN2018-W15-B4/main/issues/190[3])
+
+
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+Part of extract for Add and Edit in the user guide was done by me - About the optional fields and how the attribute tags work.
+
+include::../UserGuide.adoc[tag=add]
+include::../UserGuide.adoc[tag=edit]
+include::../UserGuide.adoc[tag=findmissing]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=attributetags]
+include::../DeveloperGuide.adoc[tag=optionaladd]
+

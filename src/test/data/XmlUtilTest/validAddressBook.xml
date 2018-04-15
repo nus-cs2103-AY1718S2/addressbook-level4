@@ -5,53 +5,134 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+		<price isPrivate="false">201</price>
+		<subject isPrivate="false">english</subject>
+		<level isPrivate="false">lower Sec</level>
+        <role isPrivate="false">student</role>
+		<status isPrivate="false">not matched</status>
+        <remark isPrivate="false">not motivated.</remark>
+        <rate isPrivate="false">2.1</rate>
+        <count isPrivate="false">2</count>
+        <pairHash isPrivate="false">0</pairHash>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
-    </persons>
+		<price isPrivate="false">202</price>
+		<subject isPrivate="false">chinese</subject>
+		<level isPrivate="false">upper Sec</level>
+        <role isPrivate="false">student</role>
+		<status isPrivate="false">not matched</status>
+        <remark isPrivate="false"> - </remark>
+        <rate isPrivate="false">3.0</rate>
+        <count isPrivate="false">1</count>
+        <pairHash isPrivate="false">0</pairHash>
+	</persons>
     <persons>
         <name>Heinz Kurz</name>
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
+		<price isPrivate="false">203</price>
+		<subject isPrivate="false">math</subject>
+		<level isPrivate="false">upper Sec</level>
+        <role isPrivate="false">student</role>
+		<status isPrivate="false">not matched</status>
+        <remark isPrivate="false">quick-witted.</remark>
+        <rate isPrivate="false">4.0</rate>
+        <count isPrivate="false">3</count>
+        <pairHash isPrivate="false">0</pairHash>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
+		<price isPrivate="false">204</price>
+		<subject isPrivate="false">english</subject>
+		<level isPrivate="false">upper Sec</level>
+        <role isPrivate="false">student</role>
+		<status isPrivate="false">not matched</status>
+        <remark isPrivate="false">very active.</remark>
+        <rate isPrivate="false">3.0</rate>
+        <count isPrivate="false">1</count>
+        <pairHash isPrivate="false">0</pairHash>
     </persons>
     <persons>
         <name>Werner Meyer</name>
         <phone isPrivate="false">9482224</phone>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
+		<price isPrivate="false">205</price>
+		<subject isPrivate="false">physics</subject>
+		<level isPrivate="false">upper Sec</level>
+        <role isPrivate="false">student</role>
+		<status isPrivate="false">not matched</status>
+        <remark isPrivate="false">not very attentive.</remark>
+        <rate isPrivate="false">2.5</rate>
+        <count isPrivate="false">2</count>
+        <pairHash isPrivate="false">0</pairHash>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
         <phone isPrivate="false">9482427</phone>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
+		<price isPrivate="false">206</price>
+		<subject isPrivate="false">chemistry</subject>
+		<level isPrivate="false">upper Sec</level>
+        <role isPrivate="false">student</role>
+		<status isPrivate="false">not matched</status>
+        <remark isPrivate="false">self-motivated.</remark>
+        <rate isPrivate="false">4.0</rate>
+        <count isPrivate="false">1</count>
+        <pairHash isPrivate="false">0</pairHash>
     </persons>
     <persons>
         <name>Anna Best</name>
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
+		<price isPrivate="false">207</price>
+		<subject isPrivate="false">english</subject>
+		<level isPrivate="false">lower Sec</level>
+        <role isPrivate="false">student</role>
+		<status isPrivate="false">not matched</status>
+        <remark isPrivate="false">talks a lot in lessons.</remark>
+        <rate isPrivate="false">3.3</rate>
+        <count isPrivate="false">3</count>
+        <pairHash isPrivate="false">0</pairHash>
     </persons>
     <persons>
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
+		<price isPrivate="false">208</price>
+		<subject isPrivate="false">math</subject>
+		<level isPrivate="false">lower Sec</level>
+        <role isPrivate="false">student</role>
+		<status isPrivate="false">not matched</status>
+        <remark isPrivate="false">unclear with basic concepts.</remark>
+        <rate isPrivate="false">3.0</rate>
+        <count isPrivate="false">2</count>
+        <pairHash isPrivate="false">0</pairHash>
     </persons>
     <persons>
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
+		<price isPrivate="false">209</price>
+		<subject isPrivate="false">chemistry</subject>
+		<level isPrivate="false">upper Sec</level>
+        <role isPrivate="false">student</role>
+		<status isPrivate="false">not matched</status>
+        <remark isPrivate="false">good at tackling difficult questions.</remark>
+        <rate isPrivate="false">4.0</rate>
+        <count isPrivate="false">4</count>
+        <pairHash isPrivate="false">0</pairHash>
     </persons>
 </addressbook>

@@ -135,6 +135,33 @@ This will correspond to the valid indexes for `navigate INDEX`.
 
 // tag::userInterfaceWalkthrough[]
 
+// tag::calendarquickstart[]
+== Calendar Quick Start
+image::calendar-quickstart.png[width="790"]
+
+This section is meant to be a brief explanation on the various Google Calendar integrations built into the SLAP app.
+
+.  WebView versus Command Line Experiences
+.. WebView Experiences include: `switch calendar`, `calendar-launch`, pressing `F8`, and `View > Open Calendar`
+.. Command Line Experiences (i.e. require an OAuth certificate) include: `calendar-add`, `calendar-delete`, `calendar-list`, `show-schedule`, and reauthenticate
+
+.  How are these features related?
+.. The WebView Experiences and Command Line experiences are *not* linked by default. That is, you can technically log into one Google account within the WebView experience and authorize SLAP to manage a different account via CLI without any issues programatically. The WebView experiences will work as intended, and the command line experiences will work as well, however they will be operating on seperate Google Calendar accounts.
+.. The WebView experience is meant to act as a front-end for the CLI operations.
+.. Each of the WebViews share the same cookies / cache. You cannot log into one account in one WebView and another account in a different WebView.
+
+.  What is OAuth and why is it required?
+.. OAuth is a secure authorization protocol that allows for the authorization of third party applications to access specific subsets of a user's data from a specific service without exposing their password directly to the service requesting the data. For the SLAP app, OAuth is being used to enable communication directly with Google's Calendar services to manage a user's calendar via API calls, provided that they have authorized the application to do so. This is what enables command line interaction with Google Calendar.
+
+.  How can I ensure that both my WebView and Command Line experiences are operating on the same calendar?
+.. After logging in to the SLAP application, first, execute the `switch calendar` command and log in with the desired user account in the presented WebView of the Google Calendar web application. Alternatively, you may perform any of the following actions to launch a floating WebView containing the same Google Calendar web application to log in to: execute `calendar-launch`, `View > Open Calendar`, press `F8`.
+.. Once you have signed in with the desired Google account inside any of the calendar WebViews, execute the `reauthenticate` command. Your system browser should launch and ask you to select the account that you wish to authorize the SLAP application to manage. Ensure that you select the same account as the one you have just logged in to within the SLAP app's calendar WebViews. *Note that at this point, if you do not authorize an account, the SLAP application will freeze and crash.*
+.. After successfully selecting an account, you may close your system browser and return to the SLAP app.
+.. Congratulations! You have successfully synchronized the two Google Calendar experiences (i.e. WebView and Command Line) within the SLAP app.
+
+
+// end::calendarquickstart[]
+
 [[Features]]
 == Features
 
@@ -146,8 +173,6 @@ This will correspond to the valid indexes for `navigate INDEX`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
-
-== Calendar Quick Start
 
 === Help Guide
 
@@ -492,6 +517,9 @@ The location parameter is optional.
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
 to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
+
+If either the start/ and/or end/ flag is not given an input parameter, nothing will happen and no feedback is given
+to the user -- will be fixed in v2.0).
 ====
 
 Examples:
@@ -535,7 +563,8 @@ Oauth certificate will be checked. If the user has not authorized the SLAP app t
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
 to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
 
-If neither the `calendar-list` nor `show-schedule d/DATE` have been called previously, the command will do nothing.
+If neither the `calendar-list` nor `show-schedule d/DATE` have been called previously, the command will do nothing (and
+will not give any feedback to the user -- will be fixed in v2.0).
 ====
 
 Examples:

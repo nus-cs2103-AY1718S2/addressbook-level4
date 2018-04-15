@@ -10,7 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_LIST_COMMAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_MAP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_MAP1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_NUMBER;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +36,7 @@ public class AliasTest {
         clear = builder.withCommand(ClearCommand.COMMAND_WORD).withAlias(VALID_ALIAS_CLEAR).build();
         add = builder.withCommand(AddCommand.COMMAND_WORD).withAlias(VALID_ALIAS_ADD).build();
         addClone = builder.withCommand(AddCommand.COMMAND_WORD).withAlias(VALID_ALIAS_ADD).build();
-        map = builder.withCommand(MapCommand.COMMAND_WORD).withAlias(VALID_ALIAS_MAP).build();
+        map = builder.withCommand(MapCommand.COMMAND_WORD).withAlias(VALID_ALIAS_MAP1).build();
     }
 
     @Test
@@ -79,7 +79,7 @@ public class AliasTest {
     @Test
     public void getAlias_validAliases_Success() {
         assertEquals(add.getAlias(), VALID_ALIAS_ADD);
-        assertEquals(map.getAlias(), VALID_ALIAS_MAP);
+        assertEquals(map.getAlias(), VALID_ALIAS_MAP1);
     }
 
     @Test

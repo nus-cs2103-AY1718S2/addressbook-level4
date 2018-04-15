@@ -70,7 +70,7 @@ For instance, typing `help` and pressing kbd:[Enter] will open the help window f
 ** **`delete`** `3` : deletes the 3rd contact shown in the current list.
 ** *`exit`* : exits the application.
 
-*  Refer to <<Contact Features>> and <<Task, To-do list and Calendar Features>> for details of each command.
+*  Refer to <<Contact Features>> and <<TaskList_Feature>> for details of each command.
 
 [[Features]]
 
@@ -445,7 +445,7 @@ Command(s) entered: `find` `John`, `delete` `1` +
 
 Result: The 1st person listed in the person list, in this case, John is deleted (see Figure 24).
 
-.1st Person from `find` Deleted +
+.1st Person from Find Command Deleted +
 image::SecondDelete.png[width="300"]
 
 === Selecting a person: `select`
@@ -479,7 +479,7 @@ Command(s) entered: `find` `Betsy`, `select` `1` +
 
 Result: The 1st person in the results of the `find` command is selected, in this case, Betsy is selected (see Figure 27).
 
-.1st Person from `find` Selected +
+.1st Person from Find Command Selected +
 image::SecondSelect.png[width="300"]
 
 [[TaskList_Feature]]

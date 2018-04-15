@@ -37,8 +37,9 @@ The existing commands are also updated to support the adding, deleting and editi
 *** Managed releases `v1.2` and `v1.5rc`(2 releases) on GitHub
 *** Manage and set up the organization repo, assigned issues and manage Pull Requests.
 *** Set up Coverall for the organization repo.
+*** improved test coverage: https://github.com/CS2103JAN2018-F09-B1/main/pull/118[#118] https://github.com/CS2103JAN2018-F09-B1/main/pull/109[#109]
 ** Documentation:
-*** Updated the screenshots used in the User Guide: https://github.com/CS2103JAN2018-F09-B1/main/pull/124[#124]
+*** Updated the screenshots used in the User Guide: https://github.com/CS2103JAN2018-F09-B1/main/pull/124[1]
 *** Updated the images and added the Task List section in the Developer Guide.
 ** Community:
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T15-B4/main/issues/125[1])

@@ -68,17 +68,23 @@ Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to HR+ +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS u/UNIVERSITY y/EXPECTED_GRADUATION_YEAR m/MAJOR g/GRADE_POINT_AVERAGE j/JOB_APPLIED [r/RESUME] [i/IMAGE] [c/COMMENT] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
+****
+* Two student contacts are considered to be duplicates only if they have the same name, phone number, email, address, university, expected graduation year, major and grade point average.
+* Resume to be added is specified by the relative path to the jar file. It also must be valid PDF, and smaller than 1MB.
+* Image to be added is specified by the relative path to the jar file.
+****
+
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 u/NUS y/2020 m/Computer Science g/4.93 j/Software Tester`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 u/SMU y/2018 m/Information Security g/4.56 j/Web Security Analyst t/Python`
-* Resume to be added is specified by the relative path to the jar file. It also must be valid PDF, and smaller than 1MB.
+
 === Listing all persons : `list`
 
 Shows a list of all persons in HR+. +
@@ -496,8 +502,9 @@ Format: `exit`
 Data in HR+ are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Add more field support in `filter` command `[coming in v1.4]`
-Fields like interview date, status and maybe else will be supported.
+=== Display tags added to a student `[coming in v2.0]`
+
+Displays the tags that are added to a student in the left panel.
 
 === Highlights search results in user interface `[coming in v2.0]`
 

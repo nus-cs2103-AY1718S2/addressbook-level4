@@ -7,7 +7,7 @@ import seedu.address.commons.events.BaseEvent;
 
 //@@author yeggasd
 /**
- * Represents the TimeTable
+ * Represents a call for the TimeTable to be displayed
  */
 public class TimeTableEvent extends BaseEvent {
 

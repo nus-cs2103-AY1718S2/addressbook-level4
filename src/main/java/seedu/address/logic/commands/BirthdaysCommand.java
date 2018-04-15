@@ -23,7 +23,8 @@ public class BirthdaysCommand extends Command {
 
     public static final String ADDITIONAL_COMMAND_PARAMETER = "today";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list containing all persons' birthdays."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list containing all persons' birthdays. "
+            + "Or display a list of birthdays today"
             + "Optional Parameters: "
             + ADDITIONAL_COMMAND_PARAMETER
             + "Example: " + COMMAND_WORD + ", " + COMMAND_WORD + " " + ADDITIONAL_COMMAND_PARAMETER;

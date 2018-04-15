@@ -47,10 +47,10 @@ public class CommandTestUtil {
 
     static {
         DESC_MA2108_HOMEWORK = new EditTaskDescriptorBuilder().withName(VALID_NAME_MA2108_HOMEWORK)
-                .withPhone(VALID_DATE_TIME_MA2108_HOMEWORK).withAddress(VALID_REMARK_MA2108_HOMEWORK)
+                .withDateTime(VALID_DATE_TIME_MA2108_HOMEWORK).withRemark(VALID_REMARK_MA2108_HOMEWORK)
                 .withTags(VALID_TAG_CS2010).build();
         DESC_CS2010_QUIZ = new EditTaskDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ)
-                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withAddress(VALID_REMARK_CS2010_QUIZ)
+                .withDateTime(VALID_DATE_TIME_CS2010_QUIZ).withRemark(VALID_REMARK_CS2010_QUIZ)
                 .withTags(VALID_TAG_MA2108, VALID_TAG_CS2010).build();
     }
 

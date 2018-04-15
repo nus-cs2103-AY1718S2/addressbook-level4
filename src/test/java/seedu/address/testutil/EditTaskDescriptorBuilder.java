@@ -49,16 +49,16 @@ public class EditTaskDescriptorBuilder {
     /**
      * Sets the {@code DateTime} of the {@code EditTaskDescriptor} that we are building.
      */
-    public EditTaskDescriptorBuilder withPhone(String phone) {
-        descriptor.setDateTime(new DateTime(phone));
+    public EditTaskDescriptorBuilder withDateTime(String dateTime) {
+        descriptor.setDateTime(new DateTime(dateTime));
         return this;
     }
 
     /**
      * Sets the {@code Remark} of the {@code EditTaskDescriptor} that we are building.
      */
-    public EditTaskDescriptorBuilder withAddress(String address) {
-        descriptor.setRemark(new Remark(address));
+    public EditTaskDescriptorBuilder withRemark(String remark) {
+        descriptor.setRemark(new Remark(remark));
         return this;
     }
 

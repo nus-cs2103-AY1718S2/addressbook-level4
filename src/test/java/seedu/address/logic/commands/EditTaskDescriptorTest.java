@@ -42,12 +42,12 @@ public class EditTaskDescriptorTest {
 
         // different phone -> returns false
         editedAmy = new EditTaskDescriptorBuilder(DESC_MA2108_HOMEWORK)
-                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).build();
+                .withDateTime(VALID_DATE_TIME_CS2010_QUIZ).build();
         assertFalse(DESC_MA2108_HOMEWORK.equals(editedAmy));
 
         // different address -> returns false
         editedAmy = new EditTaskDescriptorBuilder(DESC_MA2108_HOMEWORK)
-                .withAddress(VALID_REMARK_CS2010_QUIZ).build();
+                .withRemark(VALID_REMARK_CS2010_QUIZ).build();
         assertFalse(DESC_MA2108_HOMEWORK.equals(editedAmy));
 
         // different tags -> returns false

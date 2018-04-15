@@ -65,7 +65,7 @@
 //                .withTags(VALID_TAG_MA2108).build();
 //
 //        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ)
-//                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withTags(VALID_TAG_MA2108).build();
+//                .withDateTime(VALID_DATE_TIME_CS2010_QUIZ).withTags(VALID_TAG_MA2108).build();
 //        EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 //
 //        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);

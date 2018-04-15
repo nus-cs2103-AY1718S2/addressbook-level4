@@ -52,7 +52,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void openEmptyBirthdayList() {
         //use command box
-        deleteAllPersons();
+        deleteAllPersonsAndAliases();
         executeCommand(BirthdaysCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals("", getBirthdayList().getText());

@@ -1,6 +1,7 @@
 //@@author jaronchan
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -8,6 +9,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -19,6 +21,7 @@ import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.ResetDirectionsEvent;
 import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
+import seedu.address.logic.commands.ShowScheduleCommand;
 
 /**
  * The UI component that handles the display of daily schedules and directions between locations.
@@ -45,6 +48,7 @@ public class DailySchedulerPanel extends UiPart<Region> {
 
     public DailySchedulerPanel() {
         super(FXML);
+        showPlannedEvents(new ArrayList<>());
         registerAsAnEventHandler(this);
     }
 
@@ -61,6 +65,15 @@ public class DailySchedulerPanel extends UiPart<Region> {
                 ScheduledEventCard card = new ScheduledEventCard(dailyEventsList.get(i), i + 1);
                 eventsListStack.getChildren().add(card.getRoot());
             }
+        } else {
+            Label emptyListLabel = new Label("No events listed.\n"
+                    + "You must first load events for a particular date\n"
+                    + "with existing events.\n"
+                    + "To load scheduled events,\n"
+                    + "execute show-schedule command.\n\n"
+                    + ShowScheduleCommand.MESSAGE_USAGE + "\n");
+            emptyListLabel.setWrapText(true);
+            eventsListStack.getChildren().add(emptyListLabel);
         }
     }
 

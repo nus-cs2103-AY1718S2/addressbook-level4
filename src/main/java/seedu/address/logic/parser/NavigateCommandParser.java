@@ -29,7 +29,7 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
 
             List<Event> eventPair = OAuthManager.getEventByIndexPairFromDailyList(index);
 
-            return new NavigateCommand(eventPair);
+            return new NavigateCommand(eventPair, index);
 
         //@@author jaronchan
 

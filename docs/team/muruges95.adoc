@@ -73,12 +73,6 @@ https://github.com/CS2103JAN2018-W14-B4/main/pull/51[#51] https://github.com/CS2
 
 === Address Book Features
 
-==== Person vs Celebrity: What's the difference?
-
-In our application, Celebrities are meant to be the celebrities that you, the manager, are currently managing. The other people are each referred to as a Person. The way you create or edit a Person is almost exactly the same as a Celebrity. Both have the same necessary and optional fields to them such as a name, phone number, address, email and some descriptive tags. The only difference is that if you want to create a Celebrity instead of a regular Person in our app, you need to have a compulsory `celebrity` tag, in small letters. This will signal to the program that you want to create a Celebrity instead of a normal Person. In other words, the usage of `celebrity` as a tag is reserved for creation of Celebrities. In some of the commands which deal with the adding and editing of a person this will be further explained.
-
-Each celebrity has their own calendar, which will displays the appointments he/she will be attending.
-
 ==== Adding a person: `add` [Since v1.0]
 
 Adds a person to CelebManager. +
@@ -113,42 +107,6 @@ Adds a celebrity named `John Lennon` to CelebManager and creates an empty calend
 
 * `add n/Paul McCartney p/91827364 e/paulmccartney@example.com a/Paul McCartney Rd, Block 789, #05-06 t/celebrity` +
 Adds a celebrity named `Paul McCartney` to CelebManager and creates an empty calendar named `Paul McCartney`.
-
-==== Editing a person : `edit` [Since v1.0]
-
-Edits an existing person in CelebManager. +
-Alias: `e` +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`.
-* `INDEX` refers to the index number shown in the last person listing.
-* `INDEX` *must be a positive integer* `1`, `2`, `3`, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tag after it.
-* If `celebrity` tag gets removed, the person's calendar will be removed and person will be removed from appointments
-he/she will be attending. Removal of the calendar and person from appointments *is not undoable*.
-* If the person now has `celebrity` tag, a calendar will be created for him/her.
-****
-
-Examples:
-
-* `list` +
-`edit 1 p/91234567 e/johndoe@example.com` +
-Changes the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-
-* `edit 2 n/Betsy Crowen t/` +
-Changes the name of the 2nd person to be `Betsy Crowen` and clears all existing tags.
-
-* `edit 1 t/celebrity`
-Converts the 1st person to a celebrity.
-If you follow all the examples so far, a new calendar should be created for this person as shown below.
-
-* `edit 3 n/Michael Jackson t/Singer`
-Converts the 3rd person to a contact.
-If you follow all the examples so far, this person's calendar should be deleted as shown below.
 
 
 === Appointment Features

@@ -176,7 +176,7 @@ image::UiClassDiagramV1.5.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts: `CommandBox`, `ResultDisplay`, `PersonListPanel`, `ToDoListPanel`, `GroupListPanel`, `Calendar`, `TimeTable`, `StatusBarFooter`, `BrowserPanel`. All these, including the `MainWindow` and excluding  `ProgessIndicatorProperty`, inherit from the abstract `UiPart` class. +
+The UI consists of a `MainWindow` that is made up of parts: `CommandBox`, `ResultDisplay`, `PersonListPanel`, `ToDoListPanel`, `GroupListPanel`, `Calendar`, `TimeTable`, `StatusBarFooter`. All these, including the `MainWindow` and excluding  `ProgessIndicatorProperty`, inherit from the abstract `UiPart` class. +
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -681,7 +681,6 @@ As the weekly equivalent of `Calendar`, `Timetable` has the same aspect to consi
 ** Pros: Catering to users with those modules, and support scheduling for the weekends.
 ** Cons: As the GUI already have 2 other main components which are the PersonListPanel and TodoListPanel, adding more columns to the Timetable makes it looks cluttered.
 // end::Timetable[]
-
 
 //tag::showingTimetable[]
 [[showingTimetable]]
@@ -2007,8 +2006,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the .jar file. +
    Expected: The most recent window size and location are retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 Deleting a person while all persons are listed
@@ -2111,8 +2108,6 @@ Listing all persons that have any of the specified tag(s).
    Expected: All members with tag `friends` will be listed on Person List. Number of person listed will be shown in status bar.
 . Test case: `listTagMembers 2131` (Tag 2131 does not exist in Fastis) +
    Expected: 0 persons listed.
-
-_{ more test cases ... }_
 
 === Changing a tag's color
 

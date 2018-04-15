@@ -1715,5 +1715,5 @@ Scheduling an interview for a student
 . Filtering the list of students according to multiple fields
 
 .. Command: `filter y/2019 r/3.5-4.5` +
-   Expected: The student list now only contains students with 2019 as their expected graduation year and with rating between 3.5 to 4.5, inclusive.
+   Expected: The student list now only contains students with 2019 as their expected graduation year and with overall rating score between 3.5 to 4.5, inclusive.
 

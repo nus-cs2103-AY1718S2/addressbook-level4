@@ -1,4 +1,4 @@
-= Jaron Chan Jin Jia - Project Portfolio
+= Chan Jin Jia - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
@@ -7,13 +7,28 @@
 ---
 
 == Overview
+The Sesion Logger and Planner (SLAP) application for Social Workers is a desktop client used to help
+social workers manage their day-to-day operations. By creating an easy to use command-line interface with graphical
+elements, social workers can quickly manage their contacts (e.g. beneficiaries) as well as their
+schedule (i.e. their calendar and daily schedule) from one central location efficiently via the command line.
+In addition to a fully-featured address book and calendar through the use of command line input,
+the client also allows for social workers to take session notes and attach them to their
+beneficiaries, as well as generate an optimal route of their daily schedule to help organize their day.
 
-Session Logger and Planner (SLAP) for Social Workers is for those who *prefer to use a desktop app for managing their schedule and contacts*. More importantly, SLAP is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, SLAP can get your daily scheduling and contact management tasks done faster than traditional GUI apps.
-It is a simple Java application intended for social workers to help them plan their day and keep track of their beneficiaries. Some key features of this application include secure sign-in, an address book, a calendar, a daily schedule display, user session logs and maps. Written in Java, it has about 15 kLoC.
+On top of these features, a robust login system was implemented such that multiple users can securely
+switch between different accounts and have distinct address books, session reports, and calendars
+isolated from each other. Thus, not only does this allow for increased security, but it also
+allows for multiple users to use the same application on the same system, which has the added
+benefit of saving money as several people can share the same application on the same system
+without affecting the data of another person.
+
+The social worker is to interact with the application primarily through the command line. The GUI was created
+using JavaFX.
 
 == Summary of contributions
 
-* *Major enhancement*: integrated *Map APIs* and added *Daily Scheduler*
+*Major enhancement*: integrated *Map APIs* and added *Daily Scheduler*
+
 ** *Added the following UI controllers and FXML files*:
 ```
 DailySchedulerPanel.fxml
@@ -24,18 +39,37 @@ ScheduledEventCard.fxml
 ** *Added the following commands*:
 ```
 switch [args..]
-naivgate [args..]
+navigate [args..]
 ```
-** What it does: The enhancement adds the functionality of maps to display relevant location markers and a compiled daily schedule page that helps for route planning and task listing for the convenience of the social worker.
-** Justification: *TO UPDATE*
-** Highlights: *TO UPDATE*
-** Credits: GMapsFX by https://github.com/rterp/GMapsFX[rterp]
+** What it does: The enhancement adds the functionality of maps to display relevant location markers and a compiled
+daily schedule page that helps for route planning and task listing for the convenience of the social worker.
+From the using the command line alone, the user is able to see the locations of beneficiaries, suggested directions
+between scheduled events and display the events for the day.
+*** Justification: This feature significantly improves the the user experience of the social worker as it bring together
+vital information to be displayed all in one app. By including a map display with the particulars of the beneficiary, it
+aids the social worker in planning their route for the day. Moreover, by including a separate daily scheduler feature,
+the social worker need not plow through their calendar check their scheduled events, simply use the daily scheduler to view
+events of a specific day and check the directions between locations. This feature allows for the social worker to easily
+re-plan their day if needed as all the information of events are collated in this feature.
+*** Highlights: These features greatly improves the effectiveness of the application and laid the foundation for many events
+and UIs within the application. To maintain architectural integrity of the application where the UI is kept separate and
+is built to be events-driven, the Map Components had to be broken down into UI and Logic, where MapPanel.java controller
+and MapManager.java that handles logic were created respectively. Moreover, there was a need to work around existing
+limitations of GMapsFX where no more than one map can interact with Google APIs at the same time.
+*** Credits: GMapsFX by https://github.com/rterp/GMapsFX[rterp]
 
-* *Minor enhancement*: Main GUI and CSS added a history command that allows the user to navigate to previous commands using up/down keys.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+*Minor enhancement*: Main GUI and CSS. Handled front-end interactions with user and the view of the application. Developing
+the backend of the application is not enough to produce an effective product. Building upon the back-end laid out by my teammates,
+I built GUI of the application to manage model data of the application. Apart from map controls already mentioned, I took charge
+of displaying session logs, scheduled events, creating additional UI update events on existing commands. Handled the refreshing of
+UI when logging out of the application. Made the user flow smoother by separating the features into their own panels and implemented,
+`switch` command to swap between features. Additional CSS styling can be found in `extensions.css`.
 
-* *Other contributions*:
+*Code contributed*: [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/functional/jaronchan.md[Functional code]]
+ [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/collated/test/jaronchan.md[Test code]]
+
+*Other contributions*:
 
 ** UI Design:
 *** Created and added UI mock-up on behalf of team (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/26[#26])

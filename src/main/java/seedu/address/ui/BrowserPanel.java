@@ -69,7 +69,7 @@ public class BrowserPanel extends UiPart<Region> {
      * Constructs the path to load the html files for student info display in string form
      * @return absolute path to file of studentMiscInfo.html in string
      */
-    private String constructPathToLoad() {
+    public String constructPathToLoad() {
         String jarFolder = new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation()
                 .getPath()).getParentFile().getPath().replace('\\', '/');
         String studentPageFilePath = "file:/" + jarFolder + "/data/view/" + STUDENT_MISC_INFO_PAGE;
@@ -80,7 +80,7 @@ public class BrowserPanel extends UiPart<Region> {
      * Tests if the file with the specified filepath exists. This is to handle a directory issue when
      * running the app in IDE instead of the Jar file.
      */
-    private String testIfFileExists(String testPath) {
+    public String testIfFileExists(String testPath) {
         File toTest = new File(testPath.substring(6).replace("%20", " "));
         if (!toTest.exists()) {
             String resourceFile = MainApp.class.getResource(FXML_FILE_FOLDER).toExternalForm();

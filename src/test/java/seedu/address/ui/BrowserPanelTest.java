@@ -48,9 +48,9 @@ public class BrowserPanelTest extends GuiUnitTest {
         // profile page of a student
         //@@author samuelloh
         postNow(moreInfoEventStub);
-        String mainFilePath = MainApp.class.getResource(FXML_FILE_FOLDER).toExternalForm();
-        String mainFile = mainFilePath.substring(0, mainFilePath.lastIndexOf("out"));
-        URL expectedMoreInfoUrl = new URL(mainFile + "data/view/" + BrowserPanel.STUDENT_MISC_INFO_PAGE);
+        String mainFilePath = browserPanel.constructPathToLoad();
+        String finalFilePath = browserPanel.testIfFileExists(mainFilePath);
+        URL expectedMoreInfoUrl = new URL(finalFilePath);
         assertEquals(expectedMoreInfoUrl, browserPanelHandle.getLoadedUrl());
         //@@author
     }

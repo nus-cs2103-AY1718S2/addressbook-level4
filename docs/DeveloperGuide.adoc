@@ -358,10 +358,40 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::findtag[]
+=== Find person by tag feature
+==== Current Implementation
+The idea for this features is to allow users to find persons by their tag(s).
+Some insurance policies are targeted to a certain group of people, e.g married.
+This is so that the user will be able to view persons that belong to certain categories as they will have certain tag(s) which will represent categories of clients.
+The feature can be used via the `findtag` command
+
+====Design Considerations
+
+===== Aspect: Implementation of findtag command (Since v1.3)
+
+* **Alternative 1 (current choice): ** Implementation of findtag as a new command
+** Pros: Command is easy to use
+** Cons: Unable to find person by both person tag and person name
+* **Alternative 2:** Implementation of findtag as part of the find command
+** Pros: Able to find person by both person tag and person name
+** Cons: Takes slightly longer to find a person by tag
+
+
+===== Aspect: Implementation of find command (Coming in v2.0)
+
+* **Alternative 1 (current choice): ** find command can find by name and/or tag(s)
+** Pros: find command has increased search flexibility
+** Cons: find and findtag command has overlapping functionality
+* **Alternative 2:** findtag command can find by name and/or tag(s)
+** Pros: findtag command has increased search flexibility
+** Cons: Less intuitive as findtag is more specific to tags only
+
+
 // tag::appointments[]
 === Notifications with Clients
 ==== Current Implementation
-The idea for this feature is to allow users to recieve notifications for matters regarding their clients.
+The idea for this feature is to allow users to receive notifications for matters regarding their clients.
 This is so that the user will be able to be reminded of matters regarding their many clients and not lose track of events.
 A calendar view also provided so that it is easier for the user to have a good overview of the upcoming events as well as events in the month.
 
@@ -374,17 +404,27 @@ Birthday prefix "b/" has been added to the add command so that users can add the
 
 ==== Design Considerations
 
+===== Aspect: Implementation of Birthdays (Since v1.5rc)
+
+* **Alternative 1 (current choice): ** Implementation of Birthdays as an attribute of Person
+** Pros: Birthdays are merged with existing commands as a prefix
+** Cons: Unable to add more attributes to birthday without breaking current convention
+* **Alternative 2:** Implementation of Birthdays as class with Person as an attribute
+** Pros: Other attributes can be added to birthdays e.g Location
+** Cons: A lot of restructuring of existing code required
+
+
 ===== Aspect: Implementation of Appointments (Since v1.5rc)
 
 * **Alternative 1 (current choice): ** Implementation of Appointments as an attribute of Person
 ** Pros: Appointments are merged with existing commands as a prefix
-** Cons: Unable to add more attributes to appointment without breaking current convension
+** Cons: Unable to add more attributes to appointment without breaking current convention
 * **Alternative 2:** Implementation of Appointments as class with Person as an attribute
 ** Pros: Other attributes can be added to appointments e.g Location
 ** Cons: A lot of restructuring of existing code required
 
 
-===== Aspect: Implementation of viewing Appointments (Coming in V2.0)
+===== Aspect: Implementation of viewing Appointments (Since v1.5rc)
 
 * **Alternative 1 (current choice): ** Implementation View as Calendar View
 ** Pros: Easy to have an overview for the current month
@@ -401,7 +441,7 @@ Birthday prefix "b/" has been added to the add command so that users can add the
 ** Cons: Notifications might be missed if user does not review them
 * **Alternative 2:** Implementation of Notifications as a Popup Alert
 ** Pros: Requires user interaction therefore it ensures that user has been notified
-** Cons: Pop ups might be unwelcomed as they can interupt current user tasks
+** Cons: Pop ups might be unwelcome as they can interrupt current user tasks
 // end::appointments[]
 
 // tag::sort[]

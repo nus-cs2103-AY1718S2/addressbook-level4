@@ -28,8 +28,6 @@ reInsurance is adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-l
 *** Managed release `v1.3` on GitHub
 *** Updated all test cases for `v1.3` on GitHub
 *** Created Jar file for `v1.3` to `v1.5` (3 releases) on GitHub
-** Enhancements to existing features (To be edited):
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 ** Community:
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T09-B1/main/issues/146[1], https://github.com/CS2103JAN2018-T09-B1/main/issues/166[2], https://github.com/CS2103JAN2018-T09-B1/main/issues/178[3])
 ** Tools:

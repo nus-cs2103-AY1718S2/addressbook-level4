@@ -40,32 +40,28 @@ public class TimetableWeek {
      * @throws IllegalValueException when Day is invalid
      */
     public void addLessonToWeek(Lesson lesson) throws IllegalValueException {
-        try {
-            switch (lesson.getDay()) {
-            case MONDAY_IDENTIFIER:
-                timetableDays[MONDAY_INDEX].addLessonToDay(lesson);
-                break;
+        switch (lesson.getDay()) {
+        case MONDAY_IDENTIFIER:
+            timetableDays[MONDAY_INDEX].addLessonToDay(lesson);
+            break;
 
-            case TUESDAY_IDENTIFIER:
-                timetableDays[TUESDAY_INDEX].addLessonToDay(lesson);
-                break;
+        case TUESDAY_IDENTIFIER:
+            timetableDays[TUESDAY_INDEX].addLessonToDay(lesson);
+            break;
 
-            case WEDNESDAY_IDENTIFIER:
-                timetableDays[WEDNESDAY_INDEX].addLessonToDay(lesson);
-                break;
+        case WEDNESDAY_IDENTIFIER:
+            timetableDays[WEDNESDAY_INDEX].addLessonToDay(lesson);
+            break;
 
-            case THURSDAY_IDENTIFIER:
-                timetableDays[THURSDAY_INDEX].addLessonToDay(lesson);
-                break;
+        case THURSDAY_IDENTIFIER:
+            timetableDays[THURSDAY_INDEX].addLessonToDay(lesson);
+            break;
 
-            case FRIDAY_IDENTIFIER:
-                timetableDays[FRIDAY_INDEX].addLessonToDay(lesson);
-                break;
+        case FRIDAY_IDENTIFIER:
+            timetableDays[FRIDAY_INDEX].addLessonToDay(lesson);
+            break;
 
-            default:
-                throw new IllegalValueException(MESSAGE_INVALID_DAY);
-            }
-        } catch (IllegalValueException ie) {
+        default:
             throw new IllegalValueException(MESSAGE_INVALID_DAY);
         }
     }

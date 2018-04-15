@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.LocalDate;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -12,10 +13,14 @@ import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.BirthdayNotificationEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.BirthdaysCommand;
+import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -34,14 +39,16 @@ public class UiManager extends ComponentManager implements Ui {
 
     private Logic logic;
     private Config config;
+    private Model model;
     private UserPrefs prefs;
     private MainWindow mainWindow;
 
-    public UiManager(Logic logic, Config config, UserPrefs prefs) {
+    public UiManager(Logic logic, Config config, UserPrefs prefs, Model model) {
         super();
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+        this.model = model;
     }
 
     @Override
@@ -107,6 +114,19 @@ public class UiManager extends ComponentManager implements Ui {
         showAlertDialogAndWait(Alert.AlertType.ERROR, title, e.getMessage(), e.toString());
         Platform.exit();
         System.exit(1);
+    }
+
+    /**
+     * Opens birthday notification
+     * Automatically called after UI is called or Password is entered.
+     */
+    public void openBirthdayNotification() {
+        LocalDate currentDate = LocalDate.now();
+
+        if (model != null) {
+            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand
+                    .parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate), currentDate));
+        }
     }
 
     //==================== Event Handling Code ===============================================================

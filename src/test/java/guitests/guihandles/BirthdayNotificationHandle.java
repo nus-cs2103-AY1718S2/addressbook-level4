@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 
 //@@author AzuraAiR
 /**
- * A handle for the {@code AlertDialog} of the UI.
+ * A handle for the {@code BirthdayNotificationHandle} of the UI.
  */
 public class BirthdayNotificationHandle extends StageHandle {
     private final DialogPane dialogPane;

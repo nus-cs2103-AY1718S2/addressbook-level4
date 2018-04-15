@@ -213,6 +213,9 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
+[TIP]
+Note that although it is stated that contacts are friends in the User Guide (for better presentation), they are actually represented as `Person` class in code.
+
 [[Design-Storage]]
 === Storage component
 

@@ -35,7 +35,6 @@ public class LogicManager extends ComponentManager implements Logic {
 
     // person details
     private Set<String> nricInModel;
-    private Set<String> phoneNumbersInModel;
     private Set<Tag> personTagsInModel;
 
     // pet patient details
@@ -94,6 +93,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public Set<String> getAllCommandWords() {
         return cliSyntax.getCommandWords();
+    }
+
+    @Override
+    public Set<String> getCommandWordsWithOptionPrefix() {
+        return cliSyntax.getCommandWordsWithOptionPrefix();
     }
 
     @Override
@@ -163,12 +167,10 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public void setAttributesForPersonObjects() {
         nricInModel = new HashSet<>();
-        phoneNumbersInModel = new HashSet<>();
         personTagsInModel = new HashSet<>();
 
         for (Person p : model.getAddressBook().getPersonList()) {
             nricInModel.add(p.getNric().toString());
-            phoneNumbersInModel.add(p.getPhone().toString());
             personTagsInModel.addAll(p.getTags());
         }
     }

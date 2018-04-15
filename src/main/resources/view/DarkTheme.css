@@ -1,6 +1,6 @@
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    background-color: #555555; /* Used in the default.html file */
 }
 
 .label {
@@ -112,6 +112,11 @@
 }
 
 .list-cell:filled:selected #cardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+
+.list-cell:filled:selected #appointmentCardPane #emailCardPane {
     -fx-border-color: #3e7b91;
     -fx-border-width: 1;
 }
@@ -311,6 +316,16 @@
     -fx-border-width: 0;
 }
 
+#appointmentCardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#emailCardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;
@@ -327,7 +342,7 @@
     -fx-text-fill: white;
 }
 
-#filterField, #personListPanel, #personWebpage {
+#filterField, #personListPanel, #appointmentListPanel, #personWebpage #mailPanel {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
@@ -342,6 +357,20 @@
 }
 
 #tags .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+
+#persons {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#persons .label {
     -fx-text-fill: white;
     -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;

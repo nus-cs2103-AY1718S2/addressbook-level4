@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -13,6 +15,7 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String ARCHIVED_STYLE = "archived";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -37,6 +40,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label timeZone;
+    @FXML
+    private Label comment;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(Person person, int displayedIndex) {
@@ -47,9 +54,30 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+        timeZone.setText(person.getCustTimeZone().timeZone);
+        comment.setText(person.getComment().value);
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        if (person.isArchived()) {
+            name.getStyleClass().add(ARCHIVED_STYLE);
+        }
     }
 
+    //@@author glorialaw
+    /**
+     * opens email sender when email is pushed
+     * @throws IOException
+     */
+    @FXML
+    private void writeEmail() throws IOException {
+        try {
+            ComposeEmailWindow cew = new ComposeEmailWindow("", this.email.getText(), "", "");
+        } catch (IOException e) {
+            System.out.println("IOException");
+        }
+    }
+
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

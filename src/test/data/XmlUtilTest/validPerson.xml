@@ -4,5 +4,8 @@
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <timeZone>PST</timeZone>
+    <comment>NIL</comment>
+    <isArchived>false</isArchived>
     <tagged>friends</tagged>
 </person>

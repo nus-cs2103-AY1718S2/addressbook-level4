@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
+
+import javax.mail.MessagingException;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -17,14 +20,19 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchThemeRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+
 
 /**
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
  */
 public class MainWindow extends UiPart<Stage> {
+
+    public static final String LIGHT_THEME = "/view/LightTheme.css";
+    public static final String DARK_THEME = "/view/DarkTheme.css";
 
     private static final String FXML = "MainWindow.fxml";
 
@@ -33,14 +41,18 @@ public class MainWindow extends UiPart<Stage> {
     private Stage primaryStage;
     private Logic logic;
 
+    private String theme;
+
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private CalendarPanel calendarPanel;
     private PersonListPanel personListPanel;
+    private AppointmentListPanel appointmentListPanel;
     private Config config;
     private UserPrefs prefs;
+    private MailPanel mailPanel;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane calendarPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -52,10 +64,16 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane appointmentListPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane emailPanelPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -69,6 +87,7 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+        setDefaultTheme(prefs);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -116,20 +135,39 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        calendarPanel = new CalendarPanel(logic.getFilteredAppointmentList());
+        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        appointmentListPanel = new AppointmentListPanel(logic.getFilteredAppointmentList());
+        appointmentListPanelPlaceholder.getChildren().add(appointmentListPanel.getRoot());
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        try {
+            mailPanel = new MailPanel();
+            emailPanelPlaceholder.getChildren().add(mailPanel.getRoot());
+        } catch (IOException e) {
+            System.out.println("Caught IOException");
+        } catch (MessagingException e) {
+            System.out.println("Caught MessagingException @ Main");
+        }
+
+        if (this.theme.equals(DARK_THEME)) {
+            calendarPanel.switchDarkTheme();
+        } else {
+            calendarPanel.switchLightTheme();
+        }
     }
 
     void hide() {
@@ -152,12 +190,23 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    //@@author ongkuanyang
+    /**
+     * Sets the default theme based on UserPrefs
+     */
+    private void setDefaultTheme(UserPrefs prefs) {
+        this.theme = prefs.getGuiSettings().getTheme();
+        String fullPath = getClass().getResource(this.theme).toExternalForm();
+        primaryStage.getScene().getStylesheets().add(fullPath);
+    }
+    //@@author
+
     /**
      * Returns the current size and the position of the main Window.
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), this.theme);
     }
 
     /**
@@ -168,6 +217,28 @@ public class MainWindow extends UiPart<Stage> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+
+    //@@author ongkuanyang
+    /**
+     * Switches the current theme
+     */
+    @FXML
+    public void handleSwitchTheme() {
+        String fullPath = getClass().getResource(this.theme).toExternalForm();
+        primaryStage.getScene().getStylesheets().remove(fullPath);
+
+        if (this.theme.equals(LIGHT_THEME)) {
+            this.theme = DARK_THEME;
+            calendarPanel.switchDarkTheme();
+        } else {
+            this.theme = LIGHT_THEME;
+            calendarPanel.switchLightTheme();
+        }
+
+        fullPath = getClass().getResource(this.theme).toExternalForm();
+        primaryStage.getScene().getStylesheets().add(fullPath);
+    }
+    //@@author
 
     void show() {
         primaryStage.show();
@@ -186,12 +257,18 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        calendarPanel.freeResources();
     }
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleSwitchThemeEvent(SwitchThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSwitchTheme();
     }
 }

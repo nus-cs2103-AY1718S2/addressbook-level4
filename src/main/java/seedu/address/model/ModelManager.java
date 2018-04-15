@@ -15,7 +15,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.DateTime;
@@ -205,7 +204,7 @@ public class ModelManager extends ComponentManager implements Model {
             UniqueAppointmentList.AppoinmentNotFoundException {
         requireAllNonNull(patient, targetAppointmentDateTime);
         Appointment targetAppointment = new Appointment(targetAppointmentDateTime.toString());
-        patient.deletePatientAppointment(targetAppointment);
+        imdb.deletePatientAppointment(patient, targetAppointment);
         indicateAppointmentChanged(patient);
     }
 

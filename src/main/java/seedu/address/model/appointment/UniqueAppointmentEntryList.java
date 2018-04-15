@@ -130,7 +130,13 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
      */
     public boolean remove(AppointmentEntry toRemove) {
         requireNonNull(toRemove);
-        return internalList.remove(toRemove);
+        for (Object apptEntry : internalList) {
+            AppointmentEntry current = (AppointmentEntry) apptEntry;
+            if (current.getAppointmentt().equals(toRemove.getAppointmentt())) {
+                return internalList.remove(apptEntry);
+            }
+        }
+        return false;
     }
 
     /**

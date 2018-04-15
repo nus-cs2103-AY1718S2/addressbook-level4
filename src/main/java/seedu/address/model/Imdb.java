@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
@@ -204,13 +203,28 @@ public class Imdb implements ReadOnlyImdb {
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
         Appointment newAppt = new Appointment(dateTimeString);
         patient.addAppointment(newAppt);
-        addAppointmentEntry(newAppt, patient.getName().toString());
+        addAppointmentEntry(newAppt, patient.getName().fullName);
     }
 
     private void addAppointmentEntry(Appointment appt, String patientName) throws
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
         AppointmentEntry appointmentEntry = new AppointmentEntry(appt, patientName);
         appointments.add(appointmentEntry);
+    }
+
+    /**
+     * Remove a patient's appointment
+     */
+    public void deletePatientAppointment(Patient patient, Appointment targetAppointment) throws
+            UniqueAppointmentList.AppoinmentNotFoundException {
+        requireAllNonNull(patient, targetAppointment);
+        patient.deletePatientAppointment(targetAppointment);
+        deleteAppointmentEntry(targetAppointment, patient.getName().fullName);
+    }
+
+    private void deleteAppointmentEntry(Appointment targetAppointment, String patientName) {
+        AppointmentEntry appointmentEntry = new AppointmentEntry(targetAppointment, patientName);
+        appointments.remove(appointmentEntry);
     }
 
     //// visiting queue-level operations
@@ -318,16 +332,6 @@ public class Imdb implements ReadOnlyImdb {
         }
 
         return queueList;
-    }
-
-
-    /**
-     * Remove a patient's appointment
-     */
-    public void deletePatientAppointment(Patient patient, Appointment targetAppointment) throws
-            UniqueAppointmentList.AppoinmentNotFoundException {
-        requireAllNonNull(patient, targetAppointment);
-       patient.deletePatientAppointment(targetAppointment);
     }
 
     //@@author

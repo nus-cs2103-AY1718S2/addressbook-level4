@@ -12,9 +12,13 @@ import com.calendarfx.model.Entry;
 public class AppointmentEntry {
     private static final int TIME_INTERVAL = 1800;
     private Entry<String> appointmentEntry;
+    private final Appointment appointmennt;
+    private final String patientName;
 
     public AppointmentEntry(Appointment appointment, String patientName) {
         requireAllNonNull(appointment, patientName);
+        this.appointmennt = appointment;
+        this.patientName = patientName;
         appointmentEntry = new Entry(patientName);
         appointmentEntry.setTitle(patientName);
         appointmentEntry.changeStartDate(appointment.getAppointmentDateTime().getLocalDate());
@@ -25,6 +29,10 @@ public class AppointmentEntry {
 
     public Entry getAppointmentEntry() {
         return appointmentEntry;
+    }
+
+    public Appointment getAppointmentt() {
+        return this.appointmennt;
     }
 
     @Override

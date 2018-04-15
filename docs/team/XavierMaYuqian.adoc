@@ -75,4 +75,3 @@ include::../DeveloperGuide.adoc[tag=TotalPersonStatusBar]
 
 include::../DeveloperGuide.adoc[tag=AddComment]
 
----

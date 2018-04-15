@@ -10,7 +10,6 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -159,16 +158,17 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     /**
-     * Returns true if the element is deleted..
+     * Removes an appointment from the appointment list
+     * @throws AppoinmentNotFoundException if the appointment does not exist in the list
      */
-    public boolean remove(Index index) {
-        requireNonNull(index);
-        Appointment appointmentToDelete = getAppointmentByIndex(index);
-        return internalList.remove(appointmentToDelete);
-    }
+    public void remove(Appointment targetAppointment) throws AppoinmentNotFoundException {
+        requireNonNull(targetAppointment);
 
-    public Appointment getAppointmentByIndex(Index index) {
-        return (Appointment) internalList.get(index.getZeroBased());
+        if (!contains(targetAppointment)) {
+            throw new AppoinmentNotFoundException();
+        }
+
+        internalList.remove(targetAppointment);
     }
 
     /**
@@ -178,5 +178,11 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         protected DuplicatedAppointmentException() {
             super("Operation would result in duplicate appointments.");
         }
+    }
+
+    /**
+     * Signals that an operation cannot be performed object that is not found
+     */
+    public static class AppoinmentNotFoundException extends Exception {
     }
 }

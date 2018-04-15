@@ -23,6 +23,7 @@ import seedu.address.model.Imdb;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyImdb;
 import seedu.address.model.appointment.AppointmentEntry;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -173,19 +174,13 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean deletePatientAppointment(Patient patient, Index index) {
-            fail("This method should not be called.");
-            return false;
-        }
-
-        @Override
         public ObservableList<AppointmentEntry> getAppointmentEntryList() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void addPatientAppointment(Patient patient, String dateTimeString) {
+        public void addPatientAppointment(Patient patient, DateTime dateTime) {
             fail("This method should not be called.");
         }
 
@@ -205,6 +200,17 @@ public class AddCommandTest {
         public boolean checkIfPatientInQueue(Patient targetPatient) {
             fail("This method should not be called.");
             return false;
+        }
+
+        @Override
+        public Patient getPatientFromListByIndex(Index targetIndex) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) {
+            fail("This method should not be called.");
         }
     }
 

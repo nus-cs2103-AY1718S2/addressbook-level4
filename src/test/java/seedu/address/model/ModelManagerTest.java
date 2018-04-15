@@ -12,6 +12,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.testutil.ImdbBuilder;
 
@@ -32,6 +34,14 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getVisitingQueue().remove(0);
+    }
+
+    @Test
+    public void getPatientAppointmentEntry_modifyAppointment_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getAppointmentEntryList().add(new AppointmentEntry(
+                new Appointment("8/5/2018 1030"), "Alice"));
     }
 
     //@@author

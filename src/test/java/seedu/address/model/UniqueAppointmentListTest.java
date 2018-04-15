@@ -11,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 
@@ -36,8 +35,8 @@ public class UniqueAppointmentListTest {
         Appointment appointment = new Appointment("3/4/2018 1130");
         listToTest.add(appointment);
         anotherList.add(appointment);
-        listToTest.remove(ParserUtil.parseIndex("1"));
-        anotherList.remove(ParserUtil.parseIndex("1"));
+        listToTest.remove(appointment);
+        anotherList.remove(appointment);
         assertEquals(listToTest, anotherList);
     }
 

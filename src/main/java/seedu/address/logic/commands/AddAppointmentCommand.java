@@ -3,10 +3,14 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -18,34 +22,33 @@ public class AddAppointmentCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient appointment. "
             + "Parameters: "
-            + "NAME "
-            + "DATE "
-            + "TIME\n"
-            + "Example: " + COMMAND_WORD + " John" + " 10/10/2018" + " 1000";;
+            + "INDEX (must be a positive integer) "
+            + "DATE TIME (24-hour clock) \n "
+            + "*DATE must be after today's date \n"
+            + "Example: " + COMMAND_WORD + "1 2/4/2018 1300";
 
-    public static final String MESSAGE_SUCCESS = "A new appointment is added.";
+    public static final String MESSAGE_SUCCESS = "A new appointment is added.\n"
+            + "Enter view appointment command to get updated calendar view.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exist.";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database.";
-    private final NameContainsKeywordsPredicate predicate;
-    private final String dateTimeString;
+    private final Index targetPatientIndex;
+    private final DateTime dateTime;
 
-    public AddAppointmentCommand(NameContainsKeywordsPredicate predicate, String dateString, String timeString) {
-        requireAllNonNull(predicate, dateString, timeString);
-        this.predicate = predicate;
+    public AddAppointmentCommand(Index targetPatientIndex, DateTime dateTime) {
+        requireAllNonNull(targetPatientIndex, dateTime);
+        this.targetPatientIndex = targetPatientIndex;
 
-        this.dateTimeString = dateString + " " + timeString;
+        this.dateTime = dateTime;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        Patient patientFound = model.getPatientFromList(predicate);
 
-        if (patientFound == null) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
-        }
+        preprocess();
+
+        Patient patientFound = model.getPatientFromListByIndex(targetPatientIndex);
 
         try {
-            model.addPatientAppointment(patientFound, dateTimeString);
+            model.addPatientAppointment(patientFound, dateTime);
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (UniqueAppointmentList.DuplicatedAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
@@ -54,11 +57,22 @@ public class AddAppointmentCommand extends Command {
         }
     }
 
+    /**
+     * Preprocess checking if index is valid and not out of bound of the patient list
+     */
+    private void preprocess() throws CommandException {
+        List<Patient> lastShownList = model.getFilteredPersonList();
+
+        if (targetPatientIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof AddAppointmentCommand
-                && predicate.equals(((AddAppointmentCommand) other).predicate)
-                && dateTimeString.equals(((AddAppointmentCommand) other).dateTimeString));
+                && this.targetPatientIndex.equals(((AddAppointmentCommand) other).targetPatientIndex)
+                && this.dateTime.equals(((AddAppointmentCommand) other).dateTime));
     }
 }

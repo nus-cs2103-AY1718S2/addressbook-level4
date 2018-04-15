@@ -16,6 +16,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -319,43 +320,61 @@ public class ImdbParserTest {
     @Test
     public void parseCommand_viewAppointment() throws Exception {
         LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
         ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
-                ViewAppointmentCommand.COMMAND_WORD + " " + keywords.stream()
-                        .collect(Collectors.joining(" ")));
-        assertEquals(new ViewAppointmentCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                ViewAppointmentCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new ViewAppointmentCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
     public void parseCommand_viewAppointmentCommandAlias() throws Exception {
         LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
         ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
-                ViewAppointmentCommand.COMMAND_ALIAS + " " + keywords.stream()
-                        .collect(Collectors.joining(" ")));
-        assertEquals(new ViewAppointmentCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                ViewAppointmentCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new ViewAppointmentCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
     public void parseCommand_deleteAppointment() throws Exception {
         LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz", "1");
+        String indexString = "1";
+        String dateTimeString = "16/4/2018 1400";
         DeleteAppointmentCommand command = (DeleteAppointmentCommand) parser.parseCommand(
-                DeleteAppointmentCommand.COMMAND_WORD + " " + keywords.stream()
-                        .collect(Collectors.joining(" ")));
-        assertEquals(new DeleteAppointmentCommand(new NameContainsKeywordsPredicate(keywords),
-                ParserUtil.parseIndex("1")), command);
+                DeleteAppointmentCommand.COMMAND_WORD + " " + indexString + " " + dateTimeString);
+        assertEquals(new DeleteAppointmentCommand(ParserUtil.parseIndex("1"),
+                ParserUtil.parseDateTime(dateTimeString)), command);
     }
 
     @Test
     public void parseCommand_deleteAppointmentCommandAlias() throws Exception {
         LoginManager.authenticate("bob", "password456");
-        List<String> keywords = Arrays.asList("foo", "bar", "baz", "1");
+        String indexString = "1";
+        String dateTimeString = "16/4/2018 1400";
         DeleteAppointmentCommand command = (DeleteAppointmentCommand) parser.parseCommand(
-                DeleteAppointmentCommand.COMMAND_ALIAS + " " + keywords.stream()
-                        .collect(Collectors.joining(" ")));
-        assertEquals(new DeleteAppointmentCommand(new NameContainsKeywordsPredicate(keywords),
-                ParserUtil.parseIndex("1")), command);
+                DeleteAppointmentCommand.COMMAND_ALIAS + " " + indexString + " " + dateTimeString);
+        assertEquals(new DeleteAppointmentCommand(ParserUtil.parseIndex("1"),
+                ParserUtil.parseDateTime(dateTimeString)), command);
+    }
+
+    @Test
+    public void parseCommand_addAppointment() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        String indexString = "1";
+        String dateTimeString = "16/4/2108 1400";
+        AddAppointmentCommand command = (AddAppointmentCommand) parser.parseCommand(
+                AddAppointmentCommand.COMMAND_WORD + " " + indexString + " " + dateTimeString);
+        assertEquals(new AddAppointmentCommand(ParserUtil.parseIndex("1"),
+                ParserUtil.parseDateTime(dateTimeString)), command);
+    }
+
+    @Test
+    public void parseCommand_addAppointmentCommandAlias() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        String indexString = "1";
+        String dateTimeString = "16/4/2108 1400";
+        AddAppointmentCommand command = (AddAppointmentCommand) parser.parseCommand(
+                AddAppointmentCommand.COMMAND_ALIAS + " " + indexString + " " + dateTimeString);
+        assertEquals(new AddAppointmentCommand(ParserUtil.parseIndex("1"),
+                ParserUtil.parseDateTime(dateTimeString)), command);
     }
 
     @Test

@@ -4,7 +4,6 @@ package seedu.address.model.appointment;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -30,24 +29,6 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
     public UniqueAppointmentEntryList() {}
 
     /**
-     * Returns all appointment entries in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
-     */
-    public Set<AppointmentEntry> toSet() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
-    }
-
-    /**
-     * Replaces the appointment entries in this list with those in the argument appointment entry list.
-     */
-    public void setAppointmentEntry(Set<AppointmentEntry> appointmentEntries) {
-        requireAllNonNull(appointmentEntries);
-        internalList.setAll(appointmentEntries);
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
      * Returns true if the list contains an equivalent appointment entry as the given argument.
      */
     public boolean contains(AppointmentEntry toCheck) {
@@ -67,8 +48,27 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
             throw new DuplicatedAppointmentEntryException();
         }
 
+        if (checkIfAppointmentIsBooked(toAdd)) {
+            throw new DuplicatedAppointmentEntryException();
+        }
+
         internalList.addAll(toAdd);
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Returns true if the same appointment has been made by other patient
+     */
+    public boolean checkIfAppointmentIsBooked(AppointmentEntry toCheck) {
+        for (Object apptEntry : internalList) {
+            AppointmentEntry current = (AppointmentEntry) apptEntry;
+            if (current.getAppointment().getAppointmentDateTime()
+                    .equals(toCheck.getAppointment().getAppointmentDateTime())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -91,16 +91,6 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
         return other == this
                 || (other instanceof UniqueAppointmentEntryList
                 && this.internalList.equals(((UniqueAppointmentEntryList) other).internalList));
-    }
-
-    /**
-     * Returns true if the element in this list or equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueAppointmentEntryList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
     }
 
     /**
@@ -130,7 +120,13 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
      */
     public boolean remove(AppointmentEntry toRemove) {
         requireNonNull(toRemove);
-        return internalList.remove(toRemove);
+        for (Object apptEntry : internalList) {
+            AppointmentEntry current = (AppointmentEntry) apptEntry;
+            if (current.getAppointment().equals(toRemove.getAppointment())) {
+                return internalList.remove(apptEntry);
+            }
+        }
+        return false;
     }
 
     /**

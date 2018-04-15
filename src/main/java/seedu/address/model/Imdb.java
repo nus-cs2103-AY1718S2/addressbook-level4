@@ -13,9 +13,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentEntry;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
@@ -194,23 +194,39 @@ public class Imdb implements ReadOnlyImdb {
     }
 
     //@@author Kyholmes
+    ////appointment-level operations
     /**
      * remove a patient appointment
      * @throws UniqueAppointmentList.DuplicatedAppointmentException
      * @throws UniqueAppointmentEntryList.DuplicatedAppointmentEntryException
      */
-    public void addAppointment(Patient patient, String dateTimeString) throws
+    public void addAppointment(Patient patient, DateTime dateTime) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
-        Appointment newAppt = new Appointment(dateTimeString);
+        Appointment newAppt = new Appointment(dateTime.toString());
         patient.addAppointment(newAppt);
-        addAppointmentEntry(newAppt, patient.getName().toString());
+        addAppointmentEntry(newAppt, patient.getName().fullName);
     }
 
     private void addAppointmentEntry(Appointment appt, String patientName) throws
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
         AppointmentEntry appointmentEntry = new AppointmentEntry(appt, patientName);
         appointments.add(appointmentEntry);
+    }
+
+    /**
+     * Remove a patient's appointment
+     */
+    public void deletePatientAppointment(Patient patient, Appointment targetAppointment) throws
+            UniqueAppointmentList.AppoinmentNotFoundException {
+        requireAllNonNull(patient, targetAppointment);
+        patient.deletePatientAppointment(targetAppointment);
+        deleteAppointmentEntry(targetAppointment, patient.getName().fullName);
+    }
+
+    private void deleteAppointmentEntry(Appointment targetAppointment, String patientName) {
+        AppointmentEntry appointmentEntry = new AppointmentEntry(targetAppointment, patientName);
+        appointments.remove(appointmentEntry);
     }
 
     //// visiting queue-level operations
@@ -318,16 +334,6 @@ public class Imdb implements ReadOnlyImdb {
         }
 
         return queueList;
-    }
-
-
-    /**
-     * Remove a patient's appointment
-     * @return true if the appointment is deleted successfully
-     */
-    public boolean deletePatientAppointment(Patient patient, Index index) {
-        requireAllNonNull(patient, index);
-        return patient.deletePatientAppointment(index);
     }
 
     //@@author

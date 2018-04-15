@@ -410,7 +410,7 @@ Examples:
 * `reserve` -> (press TAB) -> `reserve 1`
 // end::Borrow[]
 
-
+// tag::cleara[]
 === Clearing all accounts : `cleara`
 
 Clears all accounts from AccountList. +
@@ -429,7 +429,7 @@ Example:
 * `list` +
 `cleara` +
 All accounts removed from the list of accounts
-
+// end::cleara[]
 
 === Add an account : `addAccount` [TO BE IMPLEMENTED]
 

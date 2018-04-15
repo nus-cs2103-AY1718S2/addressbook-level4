@@ -56,7 +56,6 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs(), "");
     }
 
-
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);

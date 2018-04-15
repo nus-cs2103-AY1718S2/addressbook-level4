@@ -29,7 +29,7 @@ Role: Integration, In charge of Logic
 image::demitycho.jpg[width="150", align="left"]
 {empty}[https://github.com/demitycho[github]] [https://cs2103jan2018-w09-b3.github.io/main/team/demitycho[portfolio]]
 
-Role: Scheduling and tracking, In charge of Model
+Role: Scheduling and Google Services integration, In charge of Model, UI/UX design
 
 '''
 

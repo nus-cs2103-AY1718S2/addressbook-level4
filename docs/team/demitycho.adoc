@@ -8,33 +8,67 @@
 
 == Overview
 
-Codeducator is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Codeducator is a desktop address book application for private programming language tutors.
+Users are able to track the progress of their students, manage their tutoring schedule and other important information about their students. +
+
+Codeducator has a graphical user interface built with JavaFX but most of the user interactions are done using command line interface. It is written in Java and has about 10 kLoC. +
+
+This project is based on the https://github.com/se-edu/addressbook-level4[AddressBook-Level4] created by the SE-EDU initiative.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+* *Major enhancement*: added *Scheduling* functionality and *Google Services integration*.
+** What it does: It allows a user to add lessons for students in their contact list.
+*** Schedule helps tutors keep track of their lessons.
+*** Lessons can be added to the schedule.
+*** No clashing time slots allowed
+*** Able to upload contacts data and schedule data to Google Contacts and Calendar respectively.
+*** Easy organisation of data
+**** Data uploaded to Google Contact is uploaded under contact group label "Students"
+**** Data uploaded to Google Calendar is uploaded under calendar name "Student List". Events have the attendees as the students, so as to make the process of utilising Google Calendar much easier.
 
-* *Minor enhancement*: added a findTag command that allows the user to find Students by Tags
+** Justification: This feature improves the product significantly because:
+*** The target user faces a big problem in keeping track of their timetable and schedule. This feature allows a user to easily add, remove and view the events specific to his part time teaching job.
+*** Sync helps to push contacts and schedule to the cloud and be utilised by users in the cloud data context, e.g. viewing across devices
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+** Highlights: Scheduling required an addition of a major component not in the default AddressBook-level4.
+It required an in-depth analysis of design alternatives.
+The implementation too was challenging as it required fundamental changes the existing Model objects.
+Relating lessons with students required a refactor of `Student` class
+** Credits:
+*** Uses the excellent link:https://github.com/dlemmermann/CalendarFX[CalendarFX] class that was thankfully open source at the time of implementation.
+*** Uses Google APIs, which are very well documented and well developed. Made my life easier when exploring the option of Google Service integration.
+* *Minor enhancement*: added a findTag command that allows the user to find Students by Tags.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/functional/demitycho.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/test/demitycho.md[Test code]]
+Both add up to around 3k lines of code.
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+*** Managed releases `v1.3` and `v1.5rc` (2 releases) on GitHub
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#154])
+*** Updated the GUI color scheme (Pull requests https://github.com/CS2103JAN2018-W09-B3/main/pull/154[#154])
+*** Refactored `AddressBook` into a relational database where students are related to lessons by a `Uniquekey`
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Refactored User guide with a more user-friendly tone, where it was more conversational and not so instructional. Gave the user guide a more personalised touch.
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-W09-B3/main/pull/174[#174]
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W09-B3/main/pull/167[#167]
+*** Reported bugs for another team:
+https://github.com/CS2103JAN2018-W10-B4/main/issues/128[1],
+https://github.com/CS2103JAN2018-W10-B4/main/issues/131[2],
+https://github.com/CS2103JAN2018-W10-B4/main/issues/132[3],
+https://github.com/CS2103JAN2018-W10-B4/main/issues/133[4],
+https://github.com/CS2103JAN2018-W10-B4/main/issues/136[5],
+https://github.com/CS2103JAN2018-W10-B4/main/issues/138[6],
+https://github.com/CS2103JAN2018-W10-B4/main/issues/142[7],
+https://github.com/CS2103JAN2018-W10-B4/main/issues/146[8],
+https://github.com/CS2103JAN2018-W10-B4/main/issues/147[9]
+
 ** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
+*** Integrated a third party library (Google APIs) to the project (https://github.com/CS2103JAN2018-W09-B3/main/pull/95[#95])
+
 
 == Contributions to the User Guide
 
@@ -57,9 +91,3 @@ include::../UserGuide.adoc[tag=sync]
 |===
 
 include::../DeveloperGuide.adoc[tag=schedule]
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<loginmanager>
+    <!-- Person with invalid email field -->
+    <users>
+        <username>John Doe</username>
+        <password isPrivate="true">password</password>
+    </users>
+</loginmanager>

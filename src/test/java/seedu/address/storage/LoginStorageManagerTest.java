@@ -12,6 +12,7 @@ import org.junit.rules.TemporaryFolder;
 import seedu.address.model.LoginManager;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author JoonKai1995
 public class LoginStorageManagerTest {
 
     @Rule

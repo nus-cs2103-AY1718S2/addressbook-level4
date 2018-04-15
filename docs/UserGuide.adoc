@@ -701,7 +701,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the contactHeRo's content (`add`, `delete`, `edit`, `addjob`, `deletejob`, `editjob`, `addapp` and `delapp` and `clear`).
+Undoable commands: those commands that modify the contactHeRo's content (`add`, `delete`, `edit`, `addjob`, `deletejob`, `editjob` and `clear`).
 ====
 
 Examples:

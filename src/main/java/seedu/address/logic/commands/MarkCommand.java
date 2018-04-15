@@ -22,7 +22,7 @@ public class MarkCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "markPart";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the participation for a student "
-            + "Parameters: [INDEX] (must be a positive integer) "
+            + "Parameters: [INDEX] (must be an integer 0 and above to 100 inclusive) "
             + PREFIX_MARK_PARTICIPATION + "[MARKS]\n"
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_MARK_PARTICIPATION + "50";
 

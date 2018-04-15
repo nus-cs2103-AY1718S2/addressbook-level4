@@ -627,6 +627,17 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         return compareDate(yearDiff, monthDiff, dayDiff);
     }
 
+```
+###### \java\seedu\address\model\task\Task.java
+``` java
+    @Override
+    public int compareTo(Task task) {
+        int yearDiff = this.getDeadlineYear() - task.getDeadlineYear();
+        int monthDiff = this.getDeadlineMonth() - task.getDeadlineMonth();
+        int dayDiff = this.getDeadlineDay() - task.getDeadlineDay();
+
+        return compareDate(yearDiff, monthDiff, dayDiff);
+    }
     /**
      * Compares the dates
      * @param yearDiff difference in year
@@ -749,6 +760,55 @@ public class Title {
 ###### \java\seedu\address\model\task\UniqueTaskList.java
 ``` java
 
+```
+###### \java\seedu\address\model\util\SampleDataUtil.java
+``` java
+    /**
+     * Contains utility methods for populating {@code AddressBook} with sample data tasks.
+     */
+    public static Task[] getSampleTasks() {
+        return new Task[] {
+            new Task(new Title("Prepare Tut"), new TaskDescription("Prepare tutorial contents for friday Tutorial"),
+                new Deadline(tutorialDeadline), new Priority("1")),
+            new Task(new Title("2106 assignment"), new TaskDescription("Start doing CS2106 term assignment"),
+                new Deadline(assignmentDeadline), new Priority("3")),
+            new Task(new Title("Sem report"), new TaskDescription("Prepare for end of semester report"),
+                new Deadline(tutorialDeadline), new Priority("3")),
+            new Task(new Title("Bidding"), new TaskDescription("Prepare for bidding modules for the coming semester"),
+                new Deadline(biddingDeadline), new Priority("3")),
+            new Task(new Title("Revise 2010"), new TaskDescription("Revise the contents for CS2010"),
+                new Deadline(reviseDeadline), new Priority("2"))
+        };
+    }
+
+    public static ReadOnlyAddressBook getSampleAddressBook() {
+        try {
+            AddressBook sampleAb = new AddressBook();
+            for (Person samplePerson : getSamplePersons()) {
+                sampleAb.addPerson(samplePerson);
+            }
+            for (Task sampleTask : getSampleTasks()) {
+                sampleAb.addTask(sampleTask);
+            }
+            return sampleAb;
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("sample data cannot contain duplicate persons", e);
+        }
+    }
+
+    /**
+     * Returns a tag set containing the list of strings given.
+     */
+    public static Set<Tag> getTagSet(String... strings) {
+        HashSet<Tag> tags = new HashSet<>();
+        for (String s : strings) {
+            tags.add(new Tag(s));
+        }
+
+        return tags;
+    }
+
+}
 ```
 ###### \java\seedu\address\ui\TodoCard.java
 ``` java

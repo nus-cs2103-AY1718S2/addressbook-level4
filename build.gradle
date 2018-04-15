@@ -57,7 +57,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = "addressbook.jar"
+    archiveName = "yourta.jar"
 
     destinationDir = file("${buildDir}/jar/")
 }

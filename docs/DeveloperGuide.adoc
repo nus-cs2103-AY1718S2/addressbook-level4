@@ -647,7 +647,7 @@ This utilizes the `MarkCommand` command to update the participation marks of a `
 
 The user will input a command, `markPart INDEX marks/DIGITS`, to the application to update the marks.
 
-The following figure 12 and paragraph below shows the sequence of how the `MarkCommand` command functions:
+The following figure 13 and paragraph below shows the sequence of how the `MarkCommand` command functions:
 
 .MarkCommand Sequence Diagram
 image::MarkCommandSequenceDiagram.png[width="700"]
@@ -691,14 +691,14 @@ image::MarkCommandSequenceDiagram.png[width="700"]
 === Display picture
 
 Users are able to add a display picture for any person within the application. The user can utilise 3 different commands (`add`, `edit` and `updateDP`) to create and specify a display image for the person.
-It fully supports the `undo` and `redo` commands. It adds a drop shadow around the frame to indicate the level of participation (see above section 5.3) of the person.
+It fully supports the `undo` and `redo` commands. It adds a drop shadow around the frame to indicate the level of participation (see above <<Participation, section 5.4 Participation>>) of the person.
 
 This feature allows the user to enter a path to their selected image file when entering any of the above 3 commands and copies the image into the `data/displayPic` folder.
 
 It utilises the `DisplayPicStorage` class to handle all image storage related operations.
 
 It also makes use of the `Participation` feature to display a colored shadow around the display picture.
-This image will be shown in the application next to the details of the person as seen in figure 13 below.
+This image will be shown in the application next to the details of the person as seen in figure 14 below.
 
 .Display Picture example
 image::displaypic_personcard.PNG[width="250"]
@@ -725,7 +725,7 @@ For persons that were not specified a `dp/` during the `add` command, the `Displ
 The display picture can also be changed by using the `edit` or `updateDP` commands.
 The implementation of the UpdateDisplayCommand (`updateDP`) command closely follows the `edit` command, hence we will only showcase the implementation of the `UpdateDP` command.
 
-The following figure 14 is the sequence diagram of the `updateDP` command to show how it functions:
+The following figure 15 is the sequence diagram of the `updateDP` command to show how it functions:
 
 .UpdateDisplayCommand Sequence Diagram
 image::UpdateDisplayCommandSequenceDiagram.png[width="800"]
@@ -739,7 +739,7 @@ image::UpdateDisplayCommandSequenceDiagram.png[width="800"]
 
 To fully support the `undo` and `redo` commands, image files cannot be immediately deleted when it is not in use by the `UI`.
 
-To work around this, a new class `UniqueItemList` was added to the model of the `AddressBook` as seen below in Figure 15.
+To work around this, a new class `UniqueItemList` was added to the model of the `AddressBook` as seen below in Figure 16.
 
 .AddressBook Class Diagram
 image::AddressBookClass.png[width="600"]
@@ -780,7 +780,7 @@ which is stored in `src/resources/images/displayPic` as `default.png`.
 If a valid path to an image is provided, the image will be processed and copied over to the `data` folder where the `addressbook.xml` is stored as well.
 
 The filename of the image copied over will be a <<sha-256,SHA-256>> hash. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.
-The following activity diagram in Figure 16 shows how the files are saved:
+The following activity diagram in Figure 17 shows how the files are saved:
 
 .Activity diagram for storing image files
 image::StoreDisplayPictureActivityDiagram.png[width="800"]

@@ -301,7 +301,7 @@ Command entered: `edit` `2` `p/91234567` `e/johndoe@example.com` `dp/C:\Users\Na
 
 Result: This changes the details of the person with index 2 (Betsy Crowe) and writes over her original saved details (Figure 14).
 
-.Phone and Email of 2nd Person (Betsy Crowe) Edited +
+.Phone, Email and Display Picture of 2nd Person (Betsy Crowe) Edited +
 image::FirstEdit.png[width="300"]
 
 If you find that you've added someone with incorrect details, you can change the entry.
@@ -310,7 +310,7 @@ Command entered: `edit` `1` `n/John Doeser` +
 
 Result: This changes the details of the person with index 1 (originally John Doe) and updates his details (see Figure 15).
 
-.Name Changed to "John Doser" +
+.Name Changed to "John Doeser" +
 image::SecondEdit.png[width="300"]
 
 === Sorting all entries: `sort`
@@ -327,13 +327,13 @@ Adds to the participation marks of a person (student). The maximum limit for par
 and the maximum amount that can be added per execution of the command is 100. +
 i.e. if someone has 90 marks and you add 20, the participation marks will be capped at 100.
 
-If the marks is below 50, there will be a red frame surrounding the person's profile picture. If the person has 50 or more marks, the colored frame around the user will change to green.
+If the marks are below 50, there will be a red frame surrounding the person's profile picture. If the person has 50 or more marks, the colored frame around the user will change to green.
 
 Format: `markPart` `INDEX` `marks/DIGITS`
 
 ****
 * The `INDEX` refers to the index number shown in the most recent listing.
-* The marks to be added must be a *positive integer* between 0 and 100 inclusive.
+* The marks to be added must be a *integer* between 0 and 100 inclusive.
 ****
 
 Examples:
@@ -356,7 +356,7 @@ Command entered: `find` `David` +
 
 Result: Returns David as a result (see Figure 18). +
 
-.Find command returns David
+.`find` Command returns David
 image::markPart2David.png[width="300"]
 
 Command entered: `markPart` `1` `marks/70` +
@@ -380,13 +380,13 @@ Format: `updateDP` `INDEX` `dp/[IMAGE PATH]`
 ****
 * The `INDEX` refers to the index number shown in the most recent listing.
 * The index must be a *positive integer* 1, 2, 3, ...
-* Do note that unused display pictures will be deleted upon the next application startup when logging in to the same account.
+* Do note that unused display pictures will be deleted upon the next application startup when logging in to the same account that updated the display picture.
 * You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
 * The aspect ratio of the image will be used to fill a circle for the display picture, thus using an image with an aspect ratio close to 1:1 pixels would be optimal.
 ****
 
 [NOTE]
-Do refrain from using high resolution images as display pictures, the optimum resolution is 300 x 300 pixels.
+Do refrain from using high resolution images as display pictures, the optimum resolution is 500 x 500 pixels.
 
 Examples:
 
@@ -445,7 +445,7 @@ Command(s) entered: `find` `John`, `delete` `1` +
 
 Result: The 1st person listed in the person list, in this case, John is deleted (see Figure 24).
 
-.1st Person from `find` Deleted +
+.1st Person from Find Command Deleted +
 image::SecondDelete.png[width="300"]
 
 === Selecting a person: `select`
@@ -479,7 +479,7 @@ Command(s) entered: `find` `Betsy`, `select` `1` +
 
 Result: The 1st person in the results of the `find` command is selected, in this case, Betsy is selected (see Figure 27).
 
-.1st Person from `find` Selected +
+.1st Person from Find Command Selected +
 image::SecondSelect.png[width="300"]
 
 [[TaskList_Feature]]
@@ -531,7 +531,7 @@ Current date: 15-04-2018 +
 The application initially starts with no tasks, as seen in Figure 30 below.
 
 .Initial Application View +
-image::UiFromDelete.png[width="800"]
+image::UIFromDelete.png[width="800"]
 
 Command entered: `addTask` `title/Grade Exams` `desc/Grade mid-terms` `by/20-04-2018` `priority/2` +
 

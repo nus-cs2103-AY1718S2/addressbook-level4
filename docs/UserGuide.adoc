@@ -62,7 +62,17 @@ image::download3.png[width="790"]
 +
 .  You can double-click the `progresschecker.jar` file to launch ProgressChecker. A GUI as shown below should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ui.jpg[width="790"]
++
+Here are the four tabs(profile, task, exercise and issue) that you can switch in center panel:
++
+image::profileTab.jpg[width="790"]
++
+image::exerciseTab.jpg[width="790"]
++
+image::taskTab.jpg[width="790"]
++
+image::issueTab.jpg[width="790"]
 +
 . You should also notice that the following files shown below will have been automatically generated in the same directory as where your progresschecker.jar file is in upon launch.
 +
@@ -561,12 +571,19 @@ You can upload a image from your local PC as a profile photo for yourself or you
 
 * You can update the profile photo of the teammate at the specified `INDEX`. The index refers to the index number shown in the last teammate listing. The index *must be a positive integer* 1, 2, 3, ...
 * The extension of the image to upload can only be _'jpg'_, _'jepg'_  or _'png'_.
+* The local path cannot have white space inside.
 * Image to upload will be copied to the contact folder which is inside resources.
 
 *Examples:*
 
-* `upload 1 C:\Users\User\Desktop\profilePhoto.png` +
-Uploads the image with local path _'C:\Users\User\profilePhoto.png'_ as the profile photo of the first person.
+* `upload 1 C:\Users\Livian\Desktop\image.png` +
+Uploads the image with local path _'C:\Users\Livian\image.png'_ as the profile photo of the first person.
++
+image::uploadPhoto.jpg[width:790]
++
+You will see the following changes when you upload the profile photo successfully:
++
+image::uploadSuccess.jpg[width:790]
 // end::upload[]
 
 ===== Listing all teammates : `list` OR `l`

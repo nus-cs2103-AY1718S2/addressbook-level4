@@ -1,0 +1,64 @@
+= David Dalmaso - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: reInsurance
+
+---
+
+== Overview
+
+reInsurance is the premier organizational tool for insurance agents around the world. Allowing easy access and management of client information, reInsurance sets out to simplify the mundane administrative tasks of an insurance agent.
+
+== Summary of contributions
+
+* *Major enhancement*: added an export feature to the reInsurance application
+** What it does: the newly added export feature allows the user to export internal data from the application to an outside source. More specifically, the two major pieces of data to export are the calendar events and the portfolio of clients.
+** Justification: This feature is crucial to the application since it allows for the reInsurance users to access important data stored in the application when they are unable to use the actual application itself (i.e. when using a mobile phone or computer with reInsurance application).
+** Highlights: This enhancement builds off already existing features of the reInsurance application and its data. Other parts of the application were fairly unaffected by the enhancement. However, as the reInsurance application grows and stores more information, there are many possible upgrades to be made to the export feature.
+** Credits: _https://developers.google.com/calendar/[Google Calendar API]_
+
+* *Minor enhancement*: added a count command to view the total number of persons in the reInsurance application.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/daviddalmaso.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/test/daviddalmaso.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Set up initial team organization and repository.
+*** Managed release `v1.4` and `v1.5rc` on GitHub
+*** Created jar for release `v1.4` and `v1.5rc` on Github
+*** Set up Travis CI for team repository to check for build errors: https://github.com/CS2103JAN2018-T11-B3/main/pull/92[#92]
+*** Set up auto publishing of docs for team repository.
+*** Set up Coveralls for team repository to check for code coverage.
+** Enhancements to existing features:
+*** Added a clear button on the UI in the `File` section of the navigation bar
+** Documentation:
+*** Continually updated UserGuide and DeveloperGuide to stay up to date with changes made at every release.
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-T11-B3/main/pull/22[#22], https://github.com/CS2103JAN2018-T11-B3/main/pull/21[#21]
+*** PRs approved of: https://github.com/CS2103JAN2018-T11-B3/main/pull/17[#17]
+*** Help with build issues in code outside of my own: https://github.com/CS2103JAN2018-T11-B3/main/pull/26[#26]
+** Tools:
+*** Integrated Google Calendar API to the project https://github.com/CS2103JAN2018-T11-B3/main/pull/96[#96]
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=export]
+
+include::../UserGuide.adoc[tag=count]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=export]
+
+include::../DeveloperGuide.adoc[tag=count]

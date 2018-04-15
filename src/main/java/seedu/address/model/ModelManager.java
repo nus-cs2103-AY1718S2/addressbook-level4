@@ -12,6 +12,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.handleCalendarViewChangedEvent;
+import seedu.address.model.calendar.GoogleCalendar;
+import seedu.address.model.export.exceptions.CalendarAccessDeniedException;
+import seedu.address.model.export.exceptions.ConnectivityIssueException;
+import seedu.address.model.export.exceptions.InvalidFileNameException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,6 +30,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final GoogleCalendar calendar = new GoogleCalendar();
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -46,6 +52,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
+        calendar.resetCalendar();
+        raise(new handleCalendarViewChangedEvent());
         indicateAddressBookChanged();
     }
 
@@ -62,12 +70,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        calendar.removePersonFromCalendar(target);
+        raise(new handleCalendarViewChangedEvent());
         indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
+        calendar.addPersonToCalendar(person);
+        raise(new handleCalendarViewChangedEvent());
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -78,8 +90,23 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        calendar.updatePersonToCalendar(target, editedPerson);
+        raise(new handleCalendarViewChangedEvent());
         indicateAddressBookChanged();
     }
+
+    //@@author daviddalmaso
+    @Override
+    public void exportCalendar() throws CalendarAccessDeniedException, ConnectivityIssueException {
+        addressBook.exportCalendar();
+    }
+
+    @Override
+    public void exportPortfolio(String filePath) throws InvalidFileNameException {
+        requireNonNull(filePath);
+        addressBook.exportPortfolio(filePath);
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -116,4 +143,13 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    @Override
+    public ObservableList<Person> sortFilteredPersonList(ObservableList<Person> personsList) {
+
+        addressBook.sortedPersonsList();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+
+        return personsList;
+    }
 }

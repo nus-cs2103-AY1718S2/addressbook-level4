@@ -133,6 +133,21 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void exportCalendar() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void exportPortfolio(String filePath) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Person> sortFilteredPersonList(ObservableList<Person> unSortedList) {
+            return null;
+        }
     }
 
     /**

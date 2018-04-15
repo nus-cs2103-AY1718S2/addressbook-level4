@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -13,7 +14,8 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.Person;
+import seedu.address.commons.events.ui.handleCalendarViewChangedEvent;
+import seedu.address.model.calendar.GoogleCalendar;
 
 /**
  * The Browser Panel of the App.
@@ -21,10 +23,10 @@ import seedu.address.model.person.Person;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+    public static final String CALENDAR_PAGE_URL = "https://calendar.google.com/calendar/embed?src=";
 
-    private static final String FXML = "BrowserPanel.fxml";
+    private static final String FXML =
+            "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -41,20 +43,23 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
-    }
-
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
     /**
-     * Loads a default HTML file with a background that matches the general theme.
+     * Load Google Calendar View
      */
     private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+        GoogleCalendar googleCalendar = new GoogleCalendar();
+        try {
+            String calendarId = googleCalendar.getCalendarId();
+            loadPage(CALENDAR_PAGE_URL + calendarId);
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be creating new google calendar");
+            URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+            loadPage(defaultPage.toExternalForm());
+        }
     }
 
     /**
@@ -63,10 +68,15 @@ public class BrowserPanel extends UiPart<Region> {
     public void freeResources() {
         browser = null;
     }
-
+    @Subscribe
+    private void handleCalenderViewChangedEvent(handleCalendarViewChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadDefaultPage();
+    }
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadDefaultPage();
+        //loadPersonPage(event.getNewSelection().person);
     }
 }

@@ -174,7 +174,7 @@ functionality will allow you to quickly and efficiently manage your data with mi
 If no prefixes are present, positions the cursor after the last character in the CommandBox.
 
 |kbd:[Shift+Tab]
-|Positions the cursor after the previous prefix.
+|Positions the cursor after the previous prefix. +
 If no prefixes are present, brings the cursor before the first character in the CommandBox.
 
 |kbd:[Shift+Backspace]
@@ -186,6 +186,7 @@ If no prefixes, deletes all text before the cursor.
 
 == Feature details
 
+// tag::home[]
 === Displaying the home view : kbd:[F1] [since v1.5] [[home]]
 
 [NOTE]
@@ -197,6 +198,7 @@ If no prefixes, deletes all text before the cursor.
 keyboard shortcuts.
 ====
 <<Command Summary, Back to Command Summary>>
+// end::home[]
 
 ***
 === Displaying all Runners and Customers : `list`, kbd:[F2] [[list]]
@@ -230,7 +232,6 @@ with the latest addition at the bottom.
 <<Command Summary, Back to Command Summary>>
 
 ***
-// tag::addcommand[]
 === Adding a person: `add`, kbd:[Ctrl+I] [since v1.3] [[add]]
 
 *Syntax:*
@@ -273,7 +274,6 @@ address "Ang Mo Kio Police Divison HQ" and tags "UndercoverRunner", "TripleAgent
 <<Command Summary, Back to Command Summary>>
 
 ***
-// end::addcommand[]
 //@@author
 //@@author melvintzw
 //tag::AssignCommand[]
@@ -328,6 +328,7 @@ _Assigns the Customers associated with indices `2`, `5`, `8` to the Runner assoc
 <<Command Summary, Back to Command Summary>>
 
 ***
+// tag::deletecommand[]
 === Deleting a person : `delete`, kbd:[Ctrl+D] [[delete]]
 
 *Syntax:*
@@ -358,6 +359,7 @@ _Deletes the second person in the database._
 _Deletes the first person in the results of the `find` command._
 ====
 <<Command Summary, Back to Command Summary>>
+// end::deletecommand[]
 
 ***
 === Editing a person : `edit`, kbd:[Ctrl+E] [since v1.3] [[edit]]

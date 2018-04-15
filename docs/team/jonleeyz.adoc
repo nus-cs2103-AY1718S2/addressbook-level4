@@ -4,7 +4,7 @@
 :stylesDir: ../stylesheets
 
 //@@author jonleeyz
-== PROJECT: LoanShark Manager
+== PROJECT: HuatAh!
 
 ---
 
@@ -14,22 +14,49 @@ HuatAh! is a desktop loan shark manager application. It has a GUI but most of th
 
 == Summary of contributions
 
-* *Major enhancement*: added keyboard shortcuts to complement all commands that can be entered into the CommandBox.
-** What it does: This feature to press certain keyboard shortcuts to either execute a command immediately or populate
-the CommandBox with the necessary prefixes and specifiers required for the input of the Command.
-** Justification: This feature improves the product significantly because a typical user of this application will
+* *Major enhancement*: implemented keyboard shortcuts to complement all commands that can be entered into the CommandBox.
+** What it does: This feature allows the User to press certain keyboard shortcuts to execute a command immediately,
+populate the CommandBox with the necessary prefixes and specifiers required for the input of the Command, or reposition
+the cursor within the CommandBox.
+** Justification: This feature improves the product significantly because a typical user of this CLI application will
 input many commands throughout the course of his usage and it is easy to make a syntax error or typo if all commands
 are manually typed. Some commands such as the AddCommand might require many prefixes and having the prefixes already in
-the CommandBox also helps remind the User which values he / she needs or wants to input.
-** Highlights: Added menu items, keyboard shortcuts, difference between population and immediate execution, tests, home view
+the CommandBox also helps remind the User which values he / she needs or wants to input. Typing commands in full also
+consume much time and the time savings add up more and more as the User uses the application more and more.
+** Highlights: This enhancement required substantial time to implement as I had to understand how to enable the
+keyboard shortcuts and how the other UI elements interacted or interfered with their behaviour. Numerous tweaks had to
+be made to past implementations so that the keyboard shortcuts would work regardless of where the application focus was.
+Another challenging aspect of this enhancement was devising the cases to parse input in the CommandBox so the navigation
+shortcuts would work as expected.
 ** Pull Requests (functional):
 https://github.com/CS2103JAN2018-F12-B4/main/pulls/79[#79], https://github.com/CS2103JAN2018-F12-B4/main/pulls/100[#100],
 https://github.com/CS2103JAN2018-F12-B4/main/pulls/107[#107], https://github.com/CS2103JAN2018-F12-B4/main/pulls/125[#125],
 https://github.com/CS2103JAN2018-F12-B4/main/pulls/146[#146]
 ** Pull Requests (tests): https://github.com/CS2103JAN2018-F12-B4/main/pulls09[#109]
 
-* *Minor enhancement*: general UI updates - menu elements, ResultDisplay, CommandBox
-** Pull Requests: below
+* *Minor enhancement*: improved usability by tweaking the ResultDisplay UI element [[minorenhancement]]
+** What it does:
+*** Tweaked ResultDisplay to style its output red if invalid commands are entered: https://github.com/CS2103JAN2018-F12-B4/main/pulls/67[#67]
+*** Tweaked ResultDisplay to make it big enough to display 5 lines: https://github.com/CS2103JAN2018-F12-B4/main/pulls/143[#143]
+*** Tweaked structure of all command messages for readability: https://github.com/CS2103JAN2018-F12-B4/main/pulls/143[#143]
+*** Fix inconsistencies in command messages: https://github.com/CS2103JAN2018-F12-B4/main/pulls/149[#149]
+
+** Justification: This feature improves the usability of the ResultDisplay UI element, allowing the UI to obtain more
+                  information about available commands as well as information about executed commands, whether
+                  successful or not.
+*** The previous ResultDisplay did not change the text style when an invalid command was entered. Tweaking this
+behaviour so that invalid commands would yield red ResultDisplay text helps the User tell easily when something
+goes wrong.
+*** The previous ResultDisplay could only display 5 lines of text, making it difficult for the User to obtain
+information should the result message be too long or formatted poorly. Tweaking the size of the ResultDisplay
+assists the User in obtaining more information about commands executed without needing to scroll using a mouse.
+*** The previous messages fed to the ResultDisplay were inconsistently and poorly formatted. Tweaking these messages
+by formatting them with whitespaces and newline characters enhances readability and usability for the User.
+** Highlights: One aspect of this enhancement that was challenging to implement due to the required interaction and
+modification of CSS files. Another aspect that required substantial time commitment was the constant revision of the
+command messages (at least 5 rounds of checks done) to ensure that consistency was maintained across the messages
+displayed to the User as well as the User Guide and Developer Guide.
+
 
 * *Code contributed*:
 [https://github.com/CS2103JAN2018-F12-B4/main/tree/master/collated/functional/jonleeyz.md[Functional code]]
@@ -40,7 +67,7 @@ https://github.com/CS2103JAN2018-F12-B4/main/pulls/146[#146]
 * *Other contributions*:
 
 ** Project management:
-*** Managed release `v1.4` (1 release) on GitHub
+*** Managed release `v1.4` on GitHub
 *** Managed the rebrand of the application from LoanShark Manager to HuatAh!: https://github.com/CS2103JAN2018-F12-B4/main/pulls/152[#152]
 *** Created user story issues:
 https://github.com/CS2103JAN2018-F12-B4/main/issues/23[#23], https://github.com/CS2103JAN2018-F12-B4/main/issues/24[#24],
@@ -53,23 +80,25 @@ https://github.com/CS2103JAN2018-F12-B4/main/issues/35[#35], https://github.com/
 https://github.com/CS2103JAN2018-F12-B4/main/issues/37[#37], https://github.com/CS2103JAN2018-F12-B4/main/issues/38[#38]
 
 ** Enhancements to existing features:
+*** <<minorenhancement, Minor enhancement>>
 *** Tweaked CommandBox to ignore empty input: https://github.com/CS2103JAN2018-F12-B4/main/pulls/3[#3]
 *** Edited prefixes for AddCommand and EditCommand to use ":" instead of "/": https://github.com/CS2103JAN2018-F12-B4/main/pulls/45[#45]
 *** Added colours to tags: https://github.com/CS2103JAN2018-F12-B4/main/pulls/64[#64]
-*** Tweaked ResultDisplay to style its output red if invalid commands are entered: https://github.com/CS2103JAN2018-F12-B4/main/pulls/67[#67]
-*** Tweaked ResultDisplay to make it big enough to display 5 lines: https://github.com/CS2103JAN2018-F12-B4/main/pulls/143[#143]
-*** Tweaked structure of all command messages for readability: https://github.com/CS2103JAN2018-F12-B4/main/pulls/143[#143]
-*** Fix inconsistencies in command messages: https://github.com/CS2103JAN2018-F12-B4/main/pulls/149[#149]
 *** Added 15 sample `Runners` and `Customers` to the sample data: https://github.com/CS2103JAN2018-F12-B4/main/pulls/151[#151]
 
 ** Documentation:
 *** Overhauled structure and cosmetic style of the User Guide:
 https://github.com/CS2103JAN2018-F12-B4/main/pulls/81[#81],
-https://github.com/CS2103JAN2018-F12-B4/main/pulls/81[#112],
+https://github.com/CS2103JAN2018-F12-B4/main/pulls/112[#112],
 https://github.com/CS2103JAN2018-F12-B4/main/pulls/122[#122],
 https://github.com/CS2103JAN2018-F12-B4/main/pulls/143[#143]
-*** Fix inconsistencies in the User and Developer Guides: https://github.com/CS2103JAN2018-F12-B4/main/pulls/149[#149]
-*** Removed unused photos from `docs` folder: https://github.com/CS2103JAN2018-F12-B4/main/pulls/66[#66]
+*** Fix inconsistencies in the User and Developer Guides:
+https://github.com/CS2103JAN2018-F12-B4/main/pulls/149[#149],
+https://github.com/CS2103JAN2018-F12-B4/main/pulls/172[#172],
+https://github.com/CS2103JAN2018-F12-B4/main/pulls/195[#195]
+*** Removed unused photos from `docs` folder:
+https://github.com/CS2103JAN2018-F12-B4/main/pulls/66[#66],
+https://github.com/CS2103JAN2018-F12-B4/main/pulls/195[#195]
 
 ** Community:
 *** Replied issues created by other teams in the class: https://github.com/CS2103JAN2018-F12-B4/main/issues/133[#133], https://github.com/CS2103JAN2018-F12-B4/main/issues/135[#135],
@@ -91,9 +120,9 @@ Netlify
 
 include::../UserGuide.adoc[tag=commandsummary]
 
-include::../UserGuide.adoc[tag=addcommand]
+include::../UserGuide.adoc[tag=navigationshortcuts]
 
-include::../UserGuide.adoc[tag=FAQ]
+include::../UserGuide.adoc[tag=home]
 
 == Contributions to the Developer Guide
 
@@ -104,4 +133,6 @@ include::../UserGuide.adoc[tag=FAQ]
 include::../DeveloperGuide.adoc[tag=tagcolours]
 
 include::../DeveloperGuide.adoc[tag=keyboardshortcuts]
+
+include::../DeveloperGuide.adoc[tag=navigationshortcuts]
 //@@author

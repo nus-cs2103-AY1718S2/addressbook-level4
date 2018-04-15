@@ -3,6 +3,7 @@
 :toc-title:
 :toc-placement: preamble
 :sectnums:
+:sectnumlevels: 4
 :imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
@@ -63,65 +64,78 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 Do the following steps to set up the project in your computer.
 
 
-*Step 1:* Fork this repo, and clone the fork to your computer.
+*Step 1:* Fork this repo.
 
-To fork the repo, click the button circled below.
+To fork the repo, click the button circled below:
 
 .Forking this repo
 image::Origin Repo.png[width="600"]
 
-Then, open Git Bash. Change the current working directory to the location where you want the cloned directory to be made. Type the following:
+*Step 2:* Clone the fork.
+
+Open Git Bash. Change the current working directory to the location where you want the cloned directory to be made.
+
+*Step 3:* Type the following:
 
 ----
 git clone https://github.com/YOUR-USERNAME/main.git
 ----
-If the clone was successful, a new sub-directory titled 'main' appears on your local drive. This directory contains the files and metadata that Git requires to maintain the changes you make to the source files. +
-
-The following should appear if `git clone https://github.com/YOUR-USERNAME/main.git` at C:/Users/temp folder is executed.
+The sub-directory titled 'main' should appear if `git clone https://github.com/YOUR-USERNAME/main.git` at
+C:/Users/temp folder is executed. Figure 2 below describes this:
 
 .Finding cloned directory
 image::git clone.png[width="600"]
 
 {empty} +
 
-*Step 2:* Open IntelliJ. If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first, as shown in the picture below. +
+[NOTE]
+The sub-directory titled 'main' contains the files and metadata that Git requires to maintain the changes you make to the source files. +
 
-.Closing current project in IntelliJ
+*Step 4:* Open IntelliJ and configure the correct JKD version for Gradle.
+
+[NOTE]
+If you are not in the welcome screen, click `File` > `Close Project` to close the existing project
+dialog first, as shown in the picture below. Closing current project in IntelliJ
 image::Close Project.png[width="600"]
 {empty} +
 
-*Step 3:* Set up the correct JDK version for Gradle using the following steps, as illustrated by the pictures.
 
-*Step 3a:* Click `Configure` > `Project Defaults` > `Project Structure`.
+*Step 4a:* Click `Configure` > `Project Defaults` >
+`Project Structure`. Refer to Figure 3 below:
 
 .Configuring IntelliJ settings
 image::Configure.png[width="600"]
 
-*Step 3b:* Go to the `Project` tab and under `Project SDK` section, click `New...`. Find the directory of the JDK, and then click OK. +
+*Step 4c:* Go to the `Project` tab and under `Project SDK` section, click `New...`. Find the directory
+of the JDK, and then click OK. Refer to Figure 4 below:
 
 .Setting up JDK
 image::Setup JDK.png[width="600"]
 
 {empty} +
 
-*Step 4:* Click `Import Project`. +
+*Step 5:* To import the project, click `Import Project`. Refer to Figure 5 below,
 
 .Importing project to IntelliJ
 image::Import Project.png[width="600"]
 {empty} +
 
-*Step 5:* Locate the `build.gradle` file in the `main` folder that you have cloned and select it. Click `OK`. +
+*Step 5a:* Locate the `build.gradle` file in the `main` folder that you have cloned earlier and select it.
+Click `OK`. Refer to Figure 6 below:
 
 .Locating `build.gradle` file
 image::build.gradle.png[width="400"]
 {empty} +
 
-*Step 6:* In the `Import Project from Gradle` that appears, click `OK` again. +
+*Step 6b:* In the `Import Project from Gradle` that appears, click `OK` again. +
 
 image::Import Project from Gradle.png[width="600"]
 {empty} +
 
-*Step 7:* Open the `Terminal` and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+*Step 7:* Open the `Terminal` (refer to Figure 7) and run the command `gradlew processResources`
+(Mac/Linux: `./gradlew processResources`). It should finish with the 'BUILD SUCCESSFUL' message. +
+
+image::intellij-terminal.png[width="600"]
 
 This will generate all resources required by the application and tests.
 {empty} +
@@ -152,7 +166,7 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
 * For `Import Layout`: Set the order to be `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-After you do the steps above, the Settings window should appear as shown in the picture below.
+After you do the steps above, the Settings window should appear as shown in Figure 7 below.
 
 .Configuring IntelliJ settings for import order
 image::Import Setting.png[width="600"]
@@ -195,70 +209,85 @@ This section describes how the features in this application are implemented inte
 
 [[Design-Architecture]]
 === Architecture
-The high-level design of this application is illustrated in _Figure 9_ below.
+The high-level design of this application is illustrated by _Figure 8_ below.
 
 .Architecture diagram
 image::Architecture.png[width="600"]
 
-Given below is a quick overview of each component.
+Given below is a quick overview of the components, separated into 'Main' and 'Secondary' components.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
+==== Primary Component
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* at app launch: initializing other components in the correct sequence and connecting them up with each other; and
-* at shut down: shutting down other components and invoking cleanup method where necessary.
+* at app launch: initializing all components in the correct sequence and connecting them up with each other.
+* at shut down: shutting down all components and invoking cleanup method where necessary.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
+<<Design-Commons,*`Commons`*>> represents a collection of classes used by components within the secondary component and
+is stored in the `seedu.address.commons` package.
 
-* `EventsCenter`: This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+
+The two classes below play important roles at the architecture level:
+
+* `EventsCenter`: This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by the components within the secondary component to communicate with other components using events (i.e. a form of _Event Driven_ design).
 * `LogsCenter`: This class is used by many classes to write log messages to the App's log file.
+{empty} +
+{empty} +
 
-The rest of the application consists of four components:
+==== Secondary component
+
+The secondary component of the application consist of four components:
 
 * <<Design-Ui,*`UI`*>>: This component controls the UI of the application.
-* <<Design-Logic,*`Logic`*>>: This is the command executor.
+* <<Design-Logic,*`Logic`*>>: This component is the command executor.
 * <<Design-Model,*`Model`*>>: This component holds the data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: This component reads data from, and writes data to, the hard disk.
 
 Each of the four components:
 
-* defines its _API_ in an `interface` with the same name as the component; and
+* defines its _API_ in an `interface` with the same name as the sub-component; and
 * exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class. _Figure 10_ below is an overview of the `Logic` component.
+For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the
+`LogicManager.java` class. _Figure 9_ below is an overview of the `Logic` component.
 
 .The API of the `Logic` component
 image::LogicAPI.png[width="800"]
 
+
 [discrete]
-==== Events-Driven Nature of the Design
+===== Events-Driven Nature of the Design
 
-_Figure 11_ below shows how the components interact in a scenario where the user issues the command `delete 1`.
 
-.Component interactions for `delete 1` command (part 1)
+_Figure 10_ below shows how the primary and secondary components interact in a scenario
+where the user issues the command `delete 1`.
+
+.Relevant Components interactions for `delete 1` command (part 1)
 image::SDforDeleteActivity.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `DeskBoardChangedEvent` when the Desk Board data are changed, instead of asking the `Storage` to save the updates into the hard disk.
+Note how the `Model` simply raises a `DeskBoardChangedEvent` when the Desk Board data
+are changed, instead of asking the `Storage` to save the updates into the hard disk.
 
-_Figure 12_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+_Figure 11_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
+.Relevant Components interactions for `delete 1` command (part 2)
 image::SDforDeleteActivityEventHandling.png[width="800"]
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
-The sections below give more details of each component.
+The section below gives more details of each of the secondary component.
 
+{empty} +
 {empty} +
 
 [[Design-Ui]]
 === UI Component
 
-_Figure 13_ below shows the architecture diagram of the `UI` component.
+_Figure 12_ below shows the architecture diagram of the `UI` component.
 
 .Structure of the `UI` component
 image::UiClassDiagram.png[width="800"]
@@ -267,7 +296,10 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `EventListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `MainView`
+`ResultDisplay`, `StatusBarFooter`,  etc. Note that `TaskListPanel`, `EventListPanel`, `BrowserPanel` and
+`CalendarPanel` are part of `MainView`. All these, including the `MainWindow`, inherit
+from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
@@ -282,12 +314,12 @@ The `UI` component:
 [[Design-Logic]]
 === Logic Component
 
-_Figure 14_ below shows the architecture diagram of the `Logic` component.
+_Figure 13_ below shows the architecture diagram of the `Logic` component.
 [[fig-LogicClassDiagram]]
 .Structure of the `Logic` Component
 image::LogicClassDiagram.png[width="800"]
 
-Finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> in _Figure 15_ below.
+Finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> in _Figure 14_ below.
 
 .Structure of commands in the `Logic` component
 image::LogicCommandClassDiagram.png[width="800"]
@@ -304,7 +336,7 @@ The following describes the sequence of events executed by the Logic component:
 *  The command execution can affect the `Model` (e.g. adding a activity) and/or raise events.
 *  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("rm task 1")` API call.
+Figure 15 below is the Sequence Diagram for interactions within the `Logic` component for the `execute("rm task 1")` API call.
 
 .Interactions inside the `Logic` component for the `rm task 1` command
 image::DeletePersonSdForLogic.png[width="800"]
@@ -315,7 +347,7 @@ image::DeletePersonSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model Component
 
-_Figure 17_ below shows the architecture diagram of the `Model` component.
+_Figure 16_ below shows the architecture diagram of the `Model` component.
 
 .Structure of the `Model` component
 image::ModelClassDiagram.png[width="800"]
@@ -352,12 +384,6 @@ The `Storage` component saves and reads back:
 * desk board data in xml format.
 
 {empty} +
-
-[[Design-Commons]]
-=== Commons Classes
-
-Classes used by multiple components are in the `seedu.address.commons` package.
-
 {empty} +
 
 [[Implementation]]
@@ -369,7 +395,7 @@ This section describes some noteworthy details on how certain features are imple
 
 
 [[Implementation-Activity]]
-=== Activity
+=== Managing Activities
 `Activity` resides in the `Model` component of the application.
 It is an important class in this application as it represents each entry in the desk board.
 In CLIndar, an entry in the desk board can be either a `Task` or an `Event`.
@@ -395,7 +421,7 @@ Once the `Task` has been done by user, it can be mark as completed in the applic
 _Figure 20_ below shows how `Task` is represented in the application.
 
 .UML class diagram for `Task`
-image::TaskUMLDiagram.png[width="550"]
+image::TaskClassDiagram.png[width="550"]
 
 A brief description of each of the attributes of `Task` is given below:
 
@@ -437,7 +463,7 @@ Once the task is successfully added, it will be reflected in the CLIndar GUI its
 _Figure 19_ below shows how `Event` is implemented in the application.
 
 .UML Class Diagram for Event
-image::EventUMLDiagram.png[width="550"]
+image::EventClassDiagram.png[width="550"]
 
 A brief description of each of the attributes of `Event` is given below:
 
@@ -457,13 +483,13 @@ Once the `Event` is successfully added, it will be reflected in the CLIndar GUI 
 {empty} +
 {empty} +
 
-===== Autosorting feature
-In the GUI, the `Task` and `Event` objects will always be shown sorted in terms of their `dueDateTime` and `startDateTime` respectively.
-This is achieved through the `UniqueActivityList` which contains a list of unique activities which is either a `Task` or an `Event`
+===== Sorting task and event lists automatically
+When a `Task` or `Event` is added, it is inserted into the respective list such that the list is sorted in terms of their `dueDateTime` or `startDateTime` respectively.
+The sorting is done in the `UniqueActivityList` which contains a list of unique activities which is either a `Task` or an `Event`
 stored in an `internalList`.
 Each time an `Activity` is added to or edited in the `UniqueActivityList`,
 `internalList` will be sorted according to its `dateTime` attribute.
-Note `dateTime` refers to `dueDateTime` for `Task` and `startDateTime` for `Event`.
+Note that `dateTime` refers to `dueDateTime` for `Task` and `startDateTime` for `Event`.
 
 Following is a snippet which illustrates the function of `UniqueActivityList`:
 
@@ -471,7 +497,7 @@ Following is a snippet which illustrates the function of `UniqueActivityList`:
 ----
     private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
 
-    /...some code.../
+    // ... some code ...
 
     public void add(Activity toAdd) throws DuplicateActivityException {
         requireNonNull(toAdd);
@@ -483,6 +509,74 @@ Following is a snippet which illustrates the function of `UniqueActivityList`:
     }
 ----
 {empty} +
+// tag::find[]
+===== Find a task or event
+`FindEvent` class is added to locate `Task` and `Event` objects which contains any keywords in their name.
+{empty} +
+The list showned in GUI is controlled by the http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[`Predicate`] set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class[The list showned in GUI is controlled by the <<`Predicate` set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class][]
+which is a subclass of `Predicate` class in Java library.
+{empty} +
+{empty} +
+The following snippet shows the `executeUndoableCommand()` of the `FindCommand` class.
+`UniqueActivityList` resides in the `Model` will be filtered by setting `predicate` object to be the `Predicate` of the filterlist.
+
+[source,java]
+----
+    public CommandResult execute() {
+        model.updateFilteredActivityList(predicate);
+        return new CommandResult(getMessageForActivityListShownSummary(model.getFilteredActivityList().size()));
+    }
+----
+//end::find[]
+//tag::edit[]
+===== Editing a task or an event
+
+`Task` and `Event` objects are editable through the use of `EditCommand`.
+In this application, if a commmand requires a target to operate on,
+it will determine which `Task` or `Event` to modify by using the keywords `task` or `list` and index of the target in the displayed list,
+The `task` and `event` keyword would tell the program which list to select from. The index will indicate which `Task` or `Event` is the target.
+{empty} +
+{empty} +
+The edit command can modify every attribute decribed in the <<Adding a task, adding a task>> and <<Adding an event, adding an event>> section above.
+These fields is identified using the same prefix as the adding command.
+{empty} +
+{empty} +
+The following snippet shows the `executeUndoableCommand()` of the `EditCommand` class.
+`UniqueActivityList` resides in the `Model` will be updated by having `editedActivity` replacing `activityToEdit`..
+If `editedActitity` is identical to any `Activity` in `UniqueActivityList`, the edit operation will be aborted and a `DuplicateActivityException` will be throun.
+[source,java]
+----
+        public CommandResult executeUndoableCommand() throws CommandException {
+            try {
+                model.updateActivity(activityToEdit, editedActivity);
+            } catch (DuplicateActivityException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_ACTIVITY);
+            } catch (ActivityNotFoundException pnfe) {
+                throw new AssertionError("The target activity cannot be missing");
+            }
+            model.updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
+            return new CommandResult(String.format(MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity));
+        }
+----
+
+The `EditCommand` relies on two internal classes `EditEventDescriptor` and `EditTaskDescriptor` to store the information of modified attributes.
+The two classes shares many common behaviour, hence an interface `EditActivityDescriptor` is used for generic purpose.
+{empty} +
+{empty} +
+The api is given as below:
+[source,java]
+----
+    public static interface EditActivityDescriptor {
+
+        public boolean isAnyFieldEdited();
+
+        public EditActivityDescriptor getCopy();
+
+        public Activity createEditedActivity(Activity activityToEdit);
+    }
+----
+{empty} +
+// end::edit[]
 
 ===== Removing a task or an event
 `Task` and `Event` objects can be removed through the use of the `RemoveCommand`
@@ -502,7 +596,7 @@ If the index of an activity is not found, an `ActivityNotFoundException` will be
             throw new AssertionError("The target activity cannot be missing");
         }
 
-        /...some code.../
+        // ... some code ...
     }
 ----
 If `RemoveCommand` is successful, the relevant `Task` or `Event` at the specified index will be removed which
@@ -561,26 +655,122 @@ We will need to write codes for classes and methods related to `Task` and `Event
 {empty} +
 //end::activitydesign[]
 
-=== GUI
+// tag::guiimplementation[]
+=== Managing GUI
 
 This section describes implementation of features related to the GUI.
 
 ==== Current implementation
 
-There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe the implementation for each comman.
+There are 3 views for the GUI of CLIndar - `MainView`, `TaskView` and `EventView`.
 
-===== Listing of tasks and events
+`MainView` displays both `Task` and `Event which is the default display for
+the GUI. It comprises of `CalendarPanel`, `TaskListPanel`, `EventListPanel` and `BrowserPanel`.
 
-A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all the `Task` objects added by the user
-is then displayed using the `TaskListPanel`, while `Event` objects added by user are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and an `EventListCard`.
+`TaskView` displays `Task` only on the GUI and comprises of `CalendarPanel`, `TaskListPanel` and `BrowserPanel`.
+
+`EventView` displays `Event` only on the GUI and comprises of `CalendarPanel`, `EventListPanel` and `BrowserPanel`.
+
+`centerStagePlaceholder` refers to the center stage of the GUI marked out by the red rectangle shown in _Figure 10_ below.
+
+.centerStagePlaceholder
+image::centerStagePlaceholder.png[width='650']
+
+To facilitate switching of views, the .xfml file of relevant view will be added to `centerStagePlaceholder`.
+
+Following is a snippet that shows how `MainView` is added to `centerStagePlaceholder`:
+----
+    @Subscribe
+    private void handleShowActivityRequestEvent(ShowActivityRequestEvent event)    {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        centerStagePlaceholder.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+        view = "mainView";
+        mainView = new MainView(logic);
+        centerStagePlaceholder.getChildren().add(mainView.getRoot());
+    }
+----
+
+{empty} +
+{empty} +
+
+The calendar feature of the application makes use of the open source project - CalendarFX.
+
+Whenever `DeskboardChangedEvent` is fired from the `EventCenter`, meaning that an `Activity` has been added or removed,
+`CalendarPanel` receives it updates the calendar accordingly.
+
+The following is a snippet shows how `handleDeskBoardChangedEvent` synchronizes with `UniqueActivityList`:
+[source,java]
+----
+    @Subscribe
+    private void handleDeskBoardChangedEvent(DeskBoardChangedEvent event) {
+        syncCalendarWithActivities(event.data.getActivityList());
+    }
+----
+
+{empty} +
+{empty} +
+
+Next, `BrowserPanel` is hidden in the GUI when the application is first initialised. Selecting a cell in either of the
+cells in `TaskListPanel` or `EventListPanel` causes the `BrowserPanel` to appear.
+
+The following is a snippet of how the constructor of `BrowserPanel` hides itself:
+[source,java]
+----
+    public BrowserPanel() {
+
+        /...some code.../
+        browser.managedProperty().bind(browser.visibleProperty());
+        browser.setVisible(false);
+        /...some code.../
+    }
+----
+
+Below is a snippet of how `BrowserPanel` displays the details of the `Task` selected in the GUI:
+[source,java]
+----
+    private void showBrowserPanelTask(Task task) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                browser.setVisible(true);
+                browser.getChildren().setAll(setupBrowserPanelTask(task));
+            }
+        });
+    }
+----
+
+{empty} +
+{empty} +
+
+There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe
+the implementation for each command.
+
+==== Listing of tasks and events
+
+A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all
+the `Task` objects added by the user is then displayed using the `TaskListPanel`, while `Event` objects added by
+user are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and an `EventListCard`.
 
 .TaskListCard example
-image::TaskCard.png[width="550"]
+image::TaskCard.png[width="650"]
 
 .EventListCard example
-image::EventCard.png[width='550']
+image::EventCard.png[width='650']
 
 `ListCommand` allows the user to only view `Task` only, `Event` only or both in the GUI.
+
+_Figure 10_ below shows how the relevant primary and secondary components interact
+in a scenario where the user issues the command `list task`.
+
+.Relevant components interaction for `list task` command (part 1)
+image::SDListCommand.png[width='650']
+
+_Figure 11_ below shows how the `EventsCenter` reacts to that event, which eventually
+results in 'centerStagePlaceholder` of the UI being updated to display `TaskView`.
+
+.Relevant components interaction for `list task` command (part 2)
+image::SDListCommandEventHandling.png[width='650']
 
 The following snippet shows how `execute()` of `ListCommand` displays `Task` and/or `Event` objects in the GUI.
 If an invalid request for `ListCommand` happens, a `CommandException` will be thrown.
@@ -596,7 +786,7 @@ If an invalid request for `ListCommand` happens, a `CommandException` will be th
         case "event":
             EventsCenter.getInstance().post(new ShowEventOnlyRequestEvent());
             return new CommandResult(MESSAGE_SUCCESS_EVENT);
-        /..some code../
+        // ... some code ...
 
         default:
             throw new CommandException(String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, commandRequest));
@@ -608,10 +798,11 @@ If `ListCommand` is successful:
 * `list` will show only `Task` objects;
 * `list event` will show only `Event` objects; and
 * `list` will show both `Task` and `Event` objects.
+// end::guiimplementation[]
 {empty} +
 {empty} +
 
-===== Overdue
+==== Overdue
 
 Overdue tasks can be viewed through the use of the `OverdueCommand`. Note that the `OverdueCommand` only
 lists down overdue tasks; overdue events are marked as completed automatically.
@@ -630,6 +821,8 @@ If the current date and time is past an `Event` `s `endDateTime`, the `Event` wi
 
 This section describes various design considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
+// tag::listcommandaspect[]
+[discrete]
 ===== Aspect: Implementation of `ListCommand`
 
 * **Alternative 1:** Have 1 panel which will display the 2 classes.
@@ -646,9 +839,11 @@ information tags. The design of the UI will be much more intuitive too.
 We preferred the second alternative as it adheres more closely with fundamental design principles. The GUI
 has to be made as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
 definitely the preferred approach here.
+// end::listcommandaspect[]
 {empty} +
 {empty} +
 
+[discrete]
 ===== Aspect: Implementation of `OverdueCommand`
 
 * **Alternative 1**: Put the checking method in the `UniqueActivityList` class.
@@ -661,8 +856,163 @@ definitely the preferred approach here.
 {empty} +
 {empty} +
 
+
+// tag::storage[]
+=== Managing Desk Board Storage
+
+This section describes the implementation and design considerations for the storage of `Task` and `Event` objects.
+
+==== Current implementation
+
+The management of Desk Board storage in CLIndar includes automatic saving and loading of data, as well as export and import operations.
+The following describes how each feature is implemented.
+
+===== Storing `Task` and `Event` objects
+
+In CLIndar, Desk Board data are stored using an xml file. For this purpose, `DeskBoard`, which is composed of `Task` and `Event` objects,
+is converted into `XmlSerializableDeskBoard` containing `XmlAdaptedTask` and `XmlAdaptedEvent` objects.
+These xml-adapted objects have the same attributes as the objects they represent.
+However, the attributes are converted into `String` which can then be stored into xml format.
+Similar to how `Task` and `Event` objects inherit from `Activity` class (as discussed in <<Implementation - Activity, Managing Activities>>),
+their xml-adapted equivalents inherit from `XmlAdaptedActivity` class.
+The constructor method of `XmlAdaptedActivity` below illustrates how a `Task` object can be converted into
+an `XmlAdaptedTask` object.
+
+[source,java]
+----
+    public XmlAdaptedActivity(Activity source) {
+        name = source.getName().fullName;
+        dateTime = source.getDateTime().toString();
+        if (source.getRemark() != null) {
+            remark = source.getRemark().value;
+        }
+        tagged = new ArrayList<>();
+        for (Tag tag : source.getTags()) {
+            tagged.add(new XmlAdaptedTag(tag));
+        }
+        isCompleted = source.isCompleted();
+    }
+----
+
+[NOTE]
+The constructor method of `XmlAdaptedTask` calls the constructor method of its superclass.
+
+{empty} +
+
+`XmlAdaptedTask` and `XmlAdaptedEvent` can be transformed back into `Task` and `Event` objects respectively using the method `toModelType()`.
+The following snippet of code shows how the method is implemented in `XmlAdaptedTask`.
+
+[source,java]
+----
+    public Task toModelType() throws IllegalValueException {
+        final List<Tag> activityTags = new ArrayList<>();
+        for (XmlAdaptedTag tag : tagged) {
+            activityTags.add(tag.toModelType());
+        }
+
+        if (this.name == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    getActivityType(), "name"));
+        }
+        if (!Name.isValidName(this.name)) {
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+        final Name name = new Name(this.name);
+
+        // ... convert other attributes into respective classes ...
+
+        final Set<Tag> tags = new HashSet<>(activityTags);
+
+        return new Task(name, dateTime, remark, tags, this.isCompleted);
+    }
+----
+
+[NOTE]
+`XmlAdaptedActivity` does not have `toModelType()` method because it cannot create a new `Activity` object.
+
+{empty} +
+
+// may need to rephrase
+`XmlSerializableDeskBoard` too has a `toModelType()` method which returns a `DeskBoard` object.
+This method iterates through each `Task` or `Event` object that composes it, and calls the object's own `toModelType()` method.
+Unlike `DeskBoard` which has a single `UniqueActivityList` containing both `Task` and `Event` objects, `XmlSerializableDeskBoard` stores `XmlAdaptedTask` and `XmlAdaptedEvent` in
+two separate lists.
+{empty} +
+{empty} +
+
+===== Exporting data
+
+_Figure ##_ below shows the UML sequence diagram for export operation.
+
+.Export sequence diagram
+image::ExportSequenceDiagram.png[width="800"]
+
+As seen above, this operation requires the `Logic` component to access the `Storage` component.
+In particular, there needs to be an association between `ExecuteCommand` and `Storage`.
+The way such association can be created is similar to how an association between any subclass of `Command`
+and `Model` is formed.
+The modifications made to classes in the `Logic` component are shown in red in _Figure ##_.
+
+.Modification to `Logic` component
+image::LogicCommandClassDiagramModified.png[width="800"]
+
+After `ExportCommand` gains access to the application's `Storage` object, it can then call
+the `saveDeskBoard()` method in `Storage` which allows Desk Board data to be saved into an xml file in the specified `filePath`.
+{empty} +
+{empty} +
+
+===== Importing data
+
+_Figure ##_ below shows the sequence diagram for import operation.
+
+.Import sequence diagram
+image::ImportSequenceDiagram.png[width="800"]
+
+Just like `ExportCommand`, `ImportCommand` also needs to have access to the application's `Storage` object.
+This object reads the xml file at the given `filePath` and returns a `ReadOnlyDeskBoard` object based on the data saved in the file.
+Each `Activity` in the `ReadOnlyDeskBoard` is then added into the application's `DeskBoard`.
+This operation is abstracted to follow Single Level of Abstraction Principle (SLAP).
+_Figure ##_ below shows how `addActivities` is implemented in `Model` component which results in new entries from
+another `DeskBoard` object being added into the application's `Model`.
+
+.`addActivities()` sequence diagram
+image::AddActivitiesSequenceDiagram.png[width="800"]
+
+{empty} +
+
+==== Design considerations
+
+This section describes various design considerations related to the implementation of undo/redo feature. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
+
+
+[discrete]
+===== Aspect: Storage of `XmlAdaptedTask` and `XmlAdaptedEvent` in `XmlSerializableDeskBoard`
+
+* **Alternative 1 (current choice):** Use 2 lists to store objects of the 2 classes separately.
+** Pros: When the xml file is opened using another application (e.g. Microsoft Excel), details about tasks and events are shown separately.
+** Cons: Slightly more coding is required to create 2 separate lists.
+
+* **Alternative 2:** Use 1 list to store both `XmlAdaptedTask` and `XmlAdaptedEvent` objects.
+** Pros: This way mirrors the way `DeskBoard` stores `Task` and `Event` objects.
+** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
+
+{empty} +
+
+[discrete]
+===== Aspect: Association between `ExportCommand`/`ImportCommand` and `Storage` objects
+* **Alternative 1 (current choice):** Store the reference to the application's `Storage` in `LogicManager` which then passes it to the respective `Command` object.
+** Pros: This is consistent with the application's overall architecture.
+** Cons: We need to modify `LogicManager` and `Command` which can cause errors in other commands if the code is not written correctly.
+
+* **Alternative 2:** Create a new `StorageManager` object in `ExportCommand` and `ImportCommand`.
+** Pros: This is easier to code.
+** Cons: This application should not have multiple `Storage` objects.
+
+{empty} +
+// end::storage[]
+
 // tag::undoredo[]
-=== Undo/Redo feature
+=== Undoing/Redoing Commands
 
 The current implementation and design considerations for the undo/redo feature are explained in this section.
 
@@ -760,6 +1110,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 This section describes various design considerations related to the implementation of undo/redo feature. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
+[discrete]
 ===== Aspect: Implementation of `UndoableCommand`
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`.
@@ -769,6 +1120,7 @@ This section describes various design considerations related to the implementati
 ** Pros: This does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
+[discrete]
 ===== Aspect: Execution of undo and redo
 
 * **Alternative 1 (current choice):** Save the entire desk board.
@@ -778,7 +1130,7 @@ This section describes various design considerations related to the implementati
 ** Pros: This will use less memory (e.g. for `delete`, just save the activity being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
-
+[discrete]
 ===== Aspect: Type of commands that can be undone/redone
 
 * **Alternative 1 (current choice):** Only include commands that modifies the desk board (`add`, `clear`, `edit`).
@@ -790,7 +1142,7 @@ This section describes various design considerations related to the implementati
 
 * **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
-
+[discrete]
 ===== Aspect: Data structure to support the undo/redo commands
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo.
@@ -802,37 +1154,6 @@ This section describes various design considerations related to the implementati
 // end::undoredo[]
 
 {empty} +
-
-// tag::storage[]
-=== Storage for Task and Event
-
-This section describes the implementation and design considerations for the storage of Task and Event.
-
-==== Current implementation
-Storing of `Task` and `Event` data is managed by `StorageManager` within the `Storage` component.
-`Task` and `Event` is converted to `XmlAdaptedTask` and `XmlAdaptedEvent` respectively to be stored in a .xml file.
-
-==== Design considerations
-The application deals with 2 main classes: Task and Event. Hence, when the data is stored, there is a need for
-differentiation between these 2 classes. There are 2 possible implementations to do this:
-
-* **Alternative 1:** Use 1 list to store objects of both classes.
-** Pros: Minimal coding is required as only 1 list is required to store the 2 different class objects.
-** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
-
-* **Alternative 2 (current choice):** Use 2 lists to store objects of the 2 classes separately.
-** Pros: When we want to perform an operation on all the objects stored in a list, each object can be
-treated the same as they are from the same class.
-** Cons: More coding is required to create 2 separate lists.
-
-While both alternatives have advantages and disadvantages, we feel that the second alternative's
-advantages outweigh its disadvantages in the long run. It is easier to maintain the 2 separate lists of
-objects, whereby each list contains objects of the same class, especially as we make the 2 classes more
-specialized. The inconvenience of creating 2 separate lists will be counterbalanced by the convenience in
-the long run.
-{empty} +
-{empty} +
-// end::storage[]
 
 === Logging
 
@@ -1306,24 +1627,38 @@ faster than a typical mouse/GUI-driven app
 The following section describes the major and minor enhancements that each of our members contributes to the development of our product.
 
 ==== Jarrett
-*Major enhancement*: Creating 'overdue' command. This command shows a list of overdue tasks.
+*Major enhancement:* Creating 'overdue' command. This command shows a list of overdue tasks.
 
-*Minor enhancement*: Creating 'task' and 'event' commands which add Task and Event objects respectively.
+*Minor enhancement:* Creating 'task' and 'event' commands which add Task and Event objects respectively.
+{empty} +
+{empty} +
 
 ==== Jasmund
-*Major enhancement*: Modifying the GUI to fit our task/event manager application. This includes but is not limited to allowing the UI to display 2 panes for showing the Task and Event lists separately.
+*Major enhancement:* Modifying the GUI to fit our task/event manager application. This includes but is not limited to allowing the UI to display 2 panes for showing the Task and Event lists separately.
 
-*Minor enhancement*: Modifying the 'help' command. In our application, 'help' can be followed by a command word (e.g. 'help task') so that instructions for only the command desired are shown. Moreover, 'man' command -- an alias for 'help' -- is also added for users who are familiar with Linux commands.
+*Minor enhancement:* Modifying the 'help' command. In our application, 'help' can be followed by a command word (e.g. 'help task') so that instructions for only the command desired are shown. Moreover, 'man' command -- an alias for 'help' -- is also added for users who are familiar with Linux commands.
+{empty} +
+{empty} +
 
 ==== Karen
-*Major enhancement*: Modifying the Storage component to allow storage of Tasks and Events in an xml file.
+*Major enhancement:* Management of the storage of task and event data, which includes:
 
-*Minor enhancement*: Creating 'ls' command. This command shows the Event and Task objects added to the Desk Board in 2 separate lists.
+** *automatic saving* of task and event data after each change;
+** *automatic loading* of latest task and event data upon launching of application;
+** *exporting* of task and event data into an xml file (when `export` command is called); and
+** *importing* of task and event data from an xml file (when `import` command is called).
+
+The automatic save and load features *allow users to view their latest tasks and events*. The export and import features allow users to *move their data from one computer to another* (e.g. through e-mail or thumb drive). +
+{empty} +
+
+*Minor enhancement:* Automatic sorting of tasks and events by date and time. This allows users to prioritize their earliest tasks and events first.
+{empty} +
+{empty} +
 
 ==== Yuan Quan
-*Major enhancement*: Modifying the Model component. This includes creation of Event and Task classes, as well as their superclass, Activity. Other classes relevant to tasks and events are also created, such as DateTime.
+*Major enhancement:* Modifying the Model component. This includes creation of Event and Task classes, as well as their superclass, Activity. Other classes relevant to tasks and events are also created, such as DateTime.
 
-*Minor enhancement*: Creating 'complete' command. This command marks a Task object as completed.
+*Minor enhancement:* Creating 'complete' command. This command marks a Task object as completed.
 
 [appendix]
 == User Stories
@@ -1339,15 +1674,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student |add a new event |record a new event to remind myself
 
-|`* * *` |student |add the location of an event |be in the right location
+|`* * *` |student |record the location of an event |be in the right location
 
-|`* * *` |student |add items to bring for an event |attend an event with all the required items
+|`* * *` |student |record items to bring for an event |attend an event with all the required items
 
-|`* * *` |student |view upcoming tasks (in order of earliest to latest) |manage my time and finish my tasks on time
+|`* * *` |student |view uncompleted tasks (in order of earliest to latest) |manage my time and finish my tasks on time
 
 |`* * *` |student |view upcoming events (in order of earliest to latest) |attend my events
-
-|`* * *` |student |view free time slots |arrange for other events
 
 |`* * *` |student |change the deadline of a task |adjust my schedule when a deadline changes
 
@@ -1367,13 +1700,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student |view completed tasks |be assured I have completed a task
 
-|`* * *` |student |import entries from another file |easily add entries previously saved in another file
+|`* * *` |student |automatically save data after each update |have my most updated schedule to view in the future without having to save every time I make a change
+
+|`* * *` |student |load my most updated data when I open the application |view my most updated schedule
+
+|`* * *` |student |export data into a file in specified directory |send the data into another computer via e-mail or thumb drive
+
+|`* * *` |student |import data from another file |easily add entries previously saved in another file (possible from another computer)
+
+|`* * *` |student |view entries in order of date |finish task with nearest deadline first and know the nearest event that is coming up
 
 |`* * *` |forgetful student |view overdue tasks |be assured I did not miss any deadline
 
-|`* * *` |forgetful student |get notification for upcoming tasks |never forget to complete my tasks
+|`* *` |forgetful student |get notification for upcoming tasks |never forget to complete my tasks
 
-|`* * *` |forgetful student |get notification for upcoming events |never forget to attend my events
+|`* *` |forgetful student |get notification for upcoming events |never forget to attend my events
 
 |`* *` |busy student |sort tasks based on priority |allocate sufficient time for each task
 
@@ -1385,17 +1726,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |busy student |filter events based on tags |view only certain events when there are too many events to view
 
+|`* *` |busy student |view free time slots before a deadline |know how much time I have when I'm actually free to finish my tasks
+
 |`* *` |procrastinating student |add estimated time needed to complete a task |estimate when to start on a task to complete it on time
 
 |`* *` |procrastinating student |view contact details of person in-charge for a deadline extension |have enough time to complete my assignments despite my tight schedule
 
-|`* *` |busy student |view free time slots before a deadline |know how much time I have when I'm actually free to finish my tasks
-
-|`* *` |student |view common free time slots among my group mates |arrange a group meeting
-
-|`* *` |organised student |add multiple deadlines for a task |keep track of project progress
+|`* *` |organized student |add multiple deadlines for a task |keep track of project progress
 
 |`* *` |NUS student |import timetable from NUSMods |avoid the trouble of keying in my lecture and tutorial schedules manually
+
+|`* *` |student |view free time slots |arrange for other events
+
+|`* *` |student |view common free time slots among my group mates |arrange a group meeting
 
 |`*` |student |be rewarded for completing a task |feel a sense of achievement
 
@@ -1406,7 +1749,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `CLIndar` and the *Actor* is the `User`, unless specified otherwise)
+(For all use cases below, the *System* is `CLIndar` and the *Actor* is the `User`, unless specified otherwise)
 
 [discrete]
 

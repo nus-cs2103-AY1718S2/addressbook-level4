@@ -21,6 +21,8 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.DateTime;
+import seedu.address.model.activity.Event;
+import seedu.address.model.activity.Location;
 import seedu.address.model.activity.Name;
 import seedu.address.model.activity.Remark;
 import seedu.address.model.activity.Task;
@@ -28,10 +30,10 @@ import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 
+//@@author YuanQLLer
 /**
  * Edits the details of an existing activity in the desk board.
  */
-//TODO: This command need a lot of rework
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
@@ -68,7 +70,7 @@ public class EditCommand extends UndoableCommand {
         requireNonNull(editActivityDescriptor);
 
         this.index = index;
-        this.editActivityDescriptor = new EditActivityDescriptor(editActivityDescriptor);
+        this.editActivityDescriptor = editActivityDescriptor.getCopy();
     }
 
     @Override
@@ -86,7 +88,12 @@ public class EditCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Activity> lastShownList = model.getFilteredActivityList();
+        List<Activity> lastShownList;
+        if (editActivityDescriptor instanceof EditTaskDescriptor) {
+            lastShownList = model.getFilteredTaskList();
+        } else {
+            lastShownList = model.getFilteredEventList();
+        }
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
@@ -104,13 +111,9 @@ public class EditCommand extends UndoableCommand {
                                                  EditActivityDescriptor editActivityDescriptor) {
         assert activityToEdit != null;
 
-        Name updatedName = editActivityDescriptor.getName().orElse(activityToEdit.getName());
-        DateTime updatedDateTime = editActivityDescriptor.getDateTime().orElse(activityToEdit.getDateTime());
-        Remark updatedRemark = editActivityDescriptor.getRemark().orElse(activityToEdit.getRemark());
-        Set<Tag> updatedTags = editActivityDescriptor.getTags().orElse(activityToEdit.getTags());
-
-        return new Task(updatedName, updatedDateTime, updatedRemark, updatedTags);
+        return editActivityDescriptor.createEditedActivity(activityToEdit);
     }
+
 
     @Override
     public boolean equals(Object other) {
@@ -135,23 +138,51 @@ public class EditCommand extends UndoableCommand {
      * Stores the details to edit the activity with. Each non-empty field value will replace the
      * corresponding field value of the activity.
      */
-    public static class EditActivityDescriptor {
+    public static interface EditActivityDescriptor {
+
+        /**
+         * Returns true if at least one field is edited.
+         */
+        public boolean isAnyFieldEdited();
+
+        public EditActivityDescriptor getCopy();
+        /**
+         *  Creates and returns a {@code Activity} with the details of {@code activityToEdit}
+         *  edited with {@code editTaskDescriptor}.
+         * @param activityToEdit
+         * @return
+         */
+        public Activity createEditedActivity(Activity activityToEdit);
+    }
+
+    /**
+     * Stores the details to edit the task with. Each non-empty field value will replace the
+     * corresponding field value of the activity.
+     */
+    public static class EditTaskDescriptor implements EditActivityDescriptor {
         private Name name;
         private DateTime dateTime;
         private Remark remark;
         private Set<Tag> tags;
 
-        public EditActivityDescriptor() {}
+        public EditTaskDescriptor() {}
 
         /**
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
-        public EditActivityDescriptor(EditActivityDescriptor toCopy) {
+        public EditTaskDescriptor(EditTaskDescriptor toCopy) {
             setName(toCopy.name);
             setDateTime(toCopy.dateTime);
             setRemark(toCopy.remark);
             setTags(toCopy.tags);
+        }
+
+        /**
+         * Get a copy of this object
+         */
+        public EditActivityDescriptor getCopy() {
+            return new EditTaskDescriptor(this);
         }
 
         /**
@@ -210,17 +241,178 @@ public class EditCommand extends UndoableCommand {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditActivityDescriptor)) {
+            if (!(other instanceof EditTaskDescriptor)) {
                 return false;
             }
 
             // state check
-            EditActivityDescriptor e = (EditActivityDescriptor) other;
+            EditTaskDescriptor e = (EditTaskDescriptor) other;
 
             return getName().equals(e.getName())
                     && getDateTime().equals(e.getDateTime())
                     && getRemark().equals(e.getRemark())
                     && getTags().equals(e.getTags());
         }
+
+
+        /**
+         * Creates and returns a {@code Activity} with the details of {@code activityToEdit}
+         * edited with {@code editTaskDescriptor}.
+         */
+        public Activity createEditedActivity(Activity activityToEdit) {
+            assert activityToEdit != null;
+
+            Name updatedName = this.getName().orElse(activityToEdit.getName());
+            DateTime updatedDateTime = this.getDateTime().orElse(activityToEdit.getDateTime());
+            Remark updatedRemark = this.getRemark().orElse(activityToEdit.getRemark());
+            Set<Tag> updatedTags = this.getTags().orElse(activityToEdit.getTags());
+
+            return new Task(updatedName, updatedDateTime, updatedRemark, updatedTags, activityToEdit.isCompleted());
+        }
     }
+
+    /**
+     * Stores the details to edit the event with. Each non-empty field value will replace the
+     * corresponding field value of the event.
+     */
+    public static class EditEventDescriptor implements EditActivityDescriptor {
+        private Name name;
+        private DateTime startDateTime;
+        private DateTime endDateTime;
+        private Remark remark;
+        private Location location;
+        private Set<Tag> tags;
+
+        public EditEventDescriptor() {}
+
+        /**
+         * Copy constructor.
+         * A defensive copy of {@code tags} is used internally.
+         */
+        public EditEventDescriptor(EditEventDescriptor toCopy) {
+            setName(toCopy.name);
+            setStartDateTime(toCopy.startDateTime);
+            setEndDateTime(toCopy.endDateTime);
+            setRemark(toCopy.remark);
+            setLocation(toCopy.location);
+            setTags(toCopy.tags);
+        }
+
+        /**
+         * Get a copy of this object
+         */
+        public EditActivityDescriptor getCopy() {
+            return new EditEventDescriptor(this);
+        }
+
+        /**
+         * Returns true if at least one field is edited.
+         */
+        public boolean isAnyFieldEdited() {
+            return CollectionUtil.isAnyNonNull(this.name, this.startDateTime,
+                    this.endDateTime, this.location, this.remark, this.tags);
+        }
+
+        public void setName(Name name) {
+            this.name = name;
+        }
+
+        public Optional<Name> getName() {
+            return Optional.ofNullable(name);
+        }
+
+
+        public void setStartDateTime(DateTime startDateTime) {
+            this.startDateTime = startDateTime;
+        }
+
+        public Optional<DateTime> getStartDateTime() {
+            return Optional.ofNullable(startDateTime);
+        }
+
+        public void setEndDateTime(DateTime endDateTime) {
+            this.endDateTime = endDateTime;
+        }
+
+        public Optional<DateTime> getEndDateTime() {
+            return Optional.ofNullable(endDateTime);
+        }
+
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
+        }
+
+        public void setLocation(Location location) {
+            this.location = location;
+        }
+
+        public Optional<Location> getLocation() {
+            return Optional.ofNullable(location);
+        }
+
+        /**
+         * Sets {@code tags} to this object's {@code tags}.
+         * A defensive copy of {@code tags} is used internally.
+         */
+        public void setTags(Set<Tag> tags) {
+            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        }
+
+        /**
+         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code tags} is null.
+         */
+        public Optional<Set<Tag>> getTags() {
+            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            if (!(other instanceof EditEventDescriptor)) {
+                return false;
+            }
+
+            // state check
+            EditEventDescriptor e = (EditEventDescriptor) other;
+
+            return getName().equals(e.getName())
+                    && getStartDateTime().equals(e.getStartDateTime())
+                    && getEndDateTime().equals(e.getEndDateTime())
+                    && getRemark().equals(e.getRemark())
+                    && getLocation().equals(e.getLocation())
+                    && getTags().equals(e.getTags());
+        }
+        /**
+         * Creates and returns a {@code Activity} with the details of {@code activityToEdit}
+         * edited with {@code editTaskDescriptor}.
+         */
+        public Activity createEditedActivity(Activity activityToEdit) {
+            assert activityToEdit != null;
+            assert activityToEdit instanceof Event;
+            Event eventToEdit = (Event) activityToEdit;
+            Name updatedName = this.getName().orElse(eventToEdit.getName());
+            DateTime updatedStartDateTime =
+                    this.getStartDateTime().orElse(eventToEdit.getStartDateTime());
+            DateTime updatedEndDateTime =
+                    this.getEndDateTime().orElse(eventToEdit.getEndDateTime());
+            Remark updatedRemark = this.getRemark().orElse(eventToEdit.getRemark());
+            Location updatedLocation = this.getLocation().orElse(eventToEdit.getLocation());
+            Set<Tag> updatedTags = this.getTags().orElse(eventToEdit.getTags());
+
+            return new Event(updatedName, updatedStartDateTime, updatedEndDateTime, updatedLocation,
+                    updatedRemark, updatedTags, eventToEdit.isCompleted());
+        }
+    }
+
 }

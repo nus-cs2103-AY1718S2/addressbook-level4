@@ -120,6 +120,54 @@ or dd/mm/yy hh:mm
 * `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 * `event n/Blockchain Talk s/16/3/2018 16:00 e/16/03/2018 18:00`
 
+
+// tag::edit[]
+=== Edit a task: `edit task` `[As of v1.5]`
+Editing attributes of a task identified by its index in the task list.
+
+*Format:* `edit task INDEX [n/NAME] [d/DUE_DATE_TIME] [r/REMARK] [t/TAGS]`
+
+*Examples:*
+
+* `edit task 1 n/Project 1` +
+Rename the 1st task displayed to 'Project 1'
+
+* `edit task 2 n/edited name d/01/01/2018 23:59  r/new remark t/edited` +
+Edit the 2nd task in the list.
+
+* `edit task 3 r/` +
+Removes all the tags of task 3
+
+[NOTE]
+====
+`edit command would simply replace the whole list of tags with the list of `tags` provided by the inputs rather than adding the `tags` to the tag list.
+As such `edit task INDEX r/` would remove all the `tags` of the identified task.
+====
+
+
+=== Edit an event: `edit event` `[As of v1.5]`
+Editing attributes of a event identified by its index in the event list.
+
+*Format:* `edit event INDEX [n/NAME] [s/START_TIME] [e/END_TIME] [l/LOCATION] [r/REMARK]`
+
+*Examples:*
+
+* `edit event 1 n/Project 1` +
+Rename the 1st event displayed to 'Project 1'
+
+* `edit event 2 n/edited name s/01/01/2018 23:59 e/02/01/2018 23:59 l/new location  r/new remark t/edited` +
+Edit the 2nd event in the list.
+
+* `edit task 3 r/` +
+Removes all the tags of event 3
+
+[NOTE]
+====
+`edit` command would simply replace the whole list of tags with the list of `tags` provided by the inputs rather than adding the `tags` to the tag list.
+As such `edit event INDEX r/` would remove all the `tags` of the identified event.
+====
+// end::edit[]
+
 === Listing uncompleted tasks and upcoming events: `ls` `[As of  v1.4]`
 
 Shows one or two lists of tasks and events in Desk Board as described below.
@@ -149,7 +197,7 @@ Removes a task or event from Desk Board according to the following conditions:
 `rm task 2` +
 Removes the 2nd task in Desk Board.
 
-=== Completing a task: `complete task` or `com task` `[Coming Soon in  v1.5]`
+=== Completing a task: `complete task` or `com task` `[As of  v1.5]`
 
 Completes the task at the specified `INDEX` based on the most recent listing.
 
@@ -172,25 +220,30 @@ Shows a list of all completed tasks in Desk Board. +
 *Format:* `ls complete task` or `ls com task`
 
 // tag::find[]
-=== Locating task by name: `find task` `[Coming Soon in v2.0]`
-Shows a list of all tasks and/or event which contains given keyword in its name.
+=== Finding task by name: `find task` `[As of v1.5]`
+Shows a list of all tasks and/or event which contains any given keyword in its name.
 
-*Format:* find task KEYWORD or find event KEYWORK or find KEYWORD
+*Format:* find task LIST_OF_KEYWORDS or find event LIST_OF_KEYWORDS or find LIST_OF_KEYWORDS
 
 *Examples:*
 
 * `find task CS2101` +
-Finds all tasks with name containing "CS2101".
+Finds all tasks with name containing `CS2101`.
 
 * `find event exam` +
-Finds all events with name containing "exam".
+Finds all events with name containing `exam`.
 
-* 'find CS2101` +
-Finds all tasks and event with name containing "CS2101".
+* `find CS2101` +
+Finds all tasks and event with name containing `CS2101`.
+
+* `find CS2101 exam` +
+Finds all tasks and event with name containing either `CS2101` or `exam`.
 
 [NOTE]
 ====
-Use `list` command to retrieve the full list of event and task after this command.
+* `find` command is case sensitive and will returns result that even part of the name matches the keywords.
+* `list` command can be used to retrieve the full list of event and task after this command.
+* `find` command is not undoable or redoable,
 ====
 // end::find[]
 
@@ -269,6 +322,10 @@ Clears all entries from Desk Board.
 
 Exports Desk Board data into an xml file in the specified directory.
 
+[NOTE]
+This command does not allow overwriting of existing file.
+If a file with the same name exists in the same directory as `FILE_PATH`, then this command will not be executed.
+
 *Format:* `export f/FILE_PATH`
 
 *Example:*
@@ -315,6 +372,8 @@ There is no need to save manually.
 |Command Word   |Alias      |Format                 |Example            |Function
 |`clear`        |`c`        |`clear`                |[[empty]]          |Clears all entries
 |`complete task`|`com task` |`complete task INDEX`  |`complete task 1`  |Completes task at index 1
+|`edit event`   |[[empty]]  |`edit event INDEX [n/NAME] [s/START_TIME] [e/END_TIME] [l/LOCATION] [r/REMARK]`|`edit event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`|Edit event with index 1 in the deskboard
+|`edit task`    |[[empty]]  |`edit task INDEX [n/NAME] [d/DUE_DATE_TIME] [r/REMARK] [t/TAGS]`|`edit task 3 n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`|Edit the task with index 3 in the Desk Board
 |`event`        |[[empty]]  |`event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]`|`event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`|Adds an event to Desk Board
 |`exit`         |[[empty]]  |`exit`                 |[[empty]]          |Exits the program
 |`export`       |[[empty]]  |`export f/FILE_PATH`   |`export f/C:\data\deskBoard.xml`      |Exports Desk Board data into an xml file in specified directory

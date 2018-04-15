@@ -6,7 +6,6 @@ import static seedu.address.ui.util.DateTimeUtil.getDisplayedStartDateTime;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.activity.Activity;
@@ -28,15 +27,9 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label startDateTime;
-    @FXML
-    private Label endDateTime;
+    private Label dateTime;
     @FXML
     private Label locationEvent;
-    @FXML
-    private Label remark;
-    @FXML
-    private FlowPane tags;
 
     public EventCard(Activity event, int displayedIndex)   {
         super(FXML);
@@ -44,19 +37,12 @@ public class EventCard extends UiPart<Region> {
         this.event = (Event) event;
         id.setText(displayedIndex + ". ");
         name.setText(this.event.getName().fullName);
-        startDateTime.setText(getDisplayedStartDateTime(this.event));
-        endDateTime.setText(getDisplayedEndDateTime(this.event));
+        dateTime.setText(getDisplayedStartDateTime(this.event) + " - " + getDisplayedEndDateTime(this.event));
         if (this.event.getLocation() != null) {
             locationEvent.setText(this.event.getLocation().toString());
         } else {
             locationEvent.setVisible(false);
         }
-        if (this.event.getLocation() != null) {
-            remark.setText(this.event.getRemark().value);
-        } else {
-            remark.setVisible(false);
-        }
-        event.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
     @Override
@@ -75,5 +61,9 @@ public class EventCard extends UiPart<Region> {
         EventCard card = (EventCard) other;
         return id.getText().equals(card.id.getText())
                 && event.equals(card.event);
+    }
+
+    public Event getEvent() {
+        return event;
     }
 }

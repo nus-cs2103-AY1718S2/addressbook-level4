@@ -68,7 +68,6 @@ public class DateTimeSchedulerTest {
                 throws DuplicateActivityException, ActivityNotFoundException {
 
         }
-
         @Override
         public ObservableList<Activity> getFilteredActivityList() {
             return null;

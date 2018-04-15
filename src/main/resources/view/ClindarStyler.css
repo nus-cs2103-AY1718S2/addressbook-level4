@@ -1,7 +1,12 @@
 /*@@author jasmoon*/
 @font-face  {
-    font-family: 'Open Sans Bold Italic';
-    src: url('../fonts/open-sans/OpenSans-BoldItalic.ttf');
+    font-family: 'Open Sans Bold';
+    src: url('../fonts/open-sans/OpenSans-Bold.ttf');
+}
+
+@font-face  {
+    font-family: 'Open Sans Semibold';
+    src: url('../fonts/open-sans/OpenSans-Semibold.ttf');
 }
 
 @font-face  {
@@ -20,6 +25,11 @@
 }
 
 @font-face  {
+    font-family: 'Arvo Italic';
+    src: url('../fonts/arvo/Arvo-Italic.ttf');
+}
+
+@font-face  {
     font-family: 'Arvo Bold';
     src: url('../fonts/arvo/Arvo-Bold.ttf');
 }
@@ -28,20 +38,65 @@
 .menu-bar {
     -fx-background-color: #f7e399;
     -fx-padding: 0 2 0 2;
-    -fx-border-width: 0 0 2 0;
-    -fx-border-color: #dbdad9;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #434547;
 }
 
 .menu-bar .label {
-    -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Calibri Light";
+    -fx-font-size: 12pt;
     -fx-text-fill: black;
 }
 
 .context-menu {
     -fx-background-color: #ffd177;
-    -fx-border-width: 2 0 0 0;
-    -fx-border-color: #969594;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #434547;
+}
+
+/* browser panel */
+
+#browser #name {
+    -fx-font-family: "Arvo Bold";
+    -fx-font-size: 28;
+}
+
+#browser .label {
+    -fx-font-family: "Arvo";
+    -fx-font-size: 13;
+    -fx-padding: 2 4 2 4;
+}
+
+#browser #emphasizeText {
+    -fx-font-family: "Arvo";
+    -fx-font-size: 18;
+}
+
+#browser #text {
+    -fx-font-family: "Arvo";
+    -fx-font-size: 13;
+}
+
+/* calendar panel */
+
+#calendarPanelPlaceholder   {
+    -fx-border-color: #434547;
+    -fx-border-width: 2 1 1 1;
+}
+
+#calendarPanel  {
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: white;
+}
+
+.scroll-pane {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: linear-gradient(to bottom, #f4f4f4, #bcbcbc);
+    -fx-background-insets: 2;
 }
 
 /* taskList and eventList */
@@ -66,20 +121,24 @@
     -fx-background-insets: 0 0 0 1;
 }
 
+.list-cell:filled:selected {
+    -fx-effect: innershadow(gaussian, rgba(98,100,104,0.8), 50, 0, -5.0, 5.0);
+}
+
 #taskListView .list-cell:filled:even {
-    -fx-background: linear-gradient(to right, #e8e8e8 0%, #e8e8e8 82.5%, #b2eaff 82.5%, #b2eaff 100%);
+    -fx-background: linear-gradient(to right, #e8e8e8 0%, #e8e8e8 96%, #b2eaff 96%, #b2eaff 100%);
 }
 
 #taskListView .list-cell:filled:odd   {
-    -fx-background: linear-gradient(to right, #d1d1d1 0%, #d1d1d1 82.5%, #8ccef2 82.5%, #8ccef2 100%);
+    -fx-background: linear-gradient(to right, #d1d1d1 0%, #d1d1d1 96%, #8ccef2 96%, #8ccef2 100%);
 }
 
 #eventListView .list-cell:filled:even {
-    -fx-background: linear-gradient(to right, #e8e8e8 0%, #e8e8e8 82.5%, #ffd6d8 82.5%, #ffd6d8 100%);
+    -fx-background: linear-gradient(to right, #e8e8e8 0%, #e8e8e8 96%, #ffd6d8 96%, #ffd6d8 100%);
 }
 
 #eventListView .list-cell:filled:odd {
-    -fx-background: linear-gradient(to right, #d1d1d1 0%, #d1d1d1 82.5%, #ffb2b5 82.5%, #ffb2b5 100%);
+    -fx-background: linear-gradient(to right, #d1d1d1 0%, #d1d1d1 96%, #ffb2b5 96%, #ffb2b5 100%);
 }
 
 .list-cell .label {
@@ -87,14 +146,14 @@
 }
 
 .cell_big_label {
-    -fx-font-family: "Open Sans Bold Italic";
+    -fx-font-family: "Open Sans Semibold";
     -fx-font-size: 14pt;
     -fx-text-fill: #010504;
 }
 
 .cell_small_label {
-    -fx-font-family: "Open Sans Italic";
-    -fx-font-size: 10pt;
+    -fx-font-family: "Open Sans";
+    -fx-font-size: 8pt;
     -fx-text-fill: #010504;
 }
 
@@ -105,12 +164,15 @@
 
 #tags .label {
     -fx-font-family: "Open Sans";
+    -fx-font-size: 11;
+    -fx-padding: 1 3 1 3;
+}
+
+#tags .label, #browser .label {
     -fx-text-fill: white;
     -fx-background-color: #854c99;
-    -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
-    -fx-font-size: 11;
 }
 
 .scroll-bar .thumb  {
@@ -118,20 +180,20 @@
     -fx-background-insets: 2;
 }
 
-.scroll-bar .increment-button, .scroll-bar .decrement-button {
+.scroll-bar .increment-button, .list-view .scroll-bar .decrement-button {
     -fx-background-color: transparent;
     -fx-padding: 0 0 0 0;
 }
 
-.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+.list-view .scroll-bar .increment-arrow, .list-view .scroll-bar .decrement-arrow {
     -fx-shape: "|";
 }
 
-.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+.list-view .scroll-bar:vertical .increment-arrow, .list-view .scroll-bar:vertical .decrement-arrow {
     -fx-padding: 1 8 1 8;
 }
 
-.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+.list-view .scroll-bar:horizontal .increment-arrow, .list-view .scroll-bar:horizontal .decrement-arrow {
     -fx-padding: 8 1 8 1;
 }
 
@@ -166,7 +228,7 @@
 /* statusBar */
 
 #statusBarPlaceholder   {
-    -fx-background-color: #f7e399 /*silver #d8d7d0*/;
+    -fx-background-color: #f7e399;
     -fx-font-color: black;
     -fx-border-width: 1 0 0 0;
     -fx-border-color: #dbdad9;
@@ -174,7 +236,9 @@
 }
 
 .status-bar .label {
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Calibri Light";
+    -fx-font-size: 13;
+    -fx-padding: 0 0 0 4;
     -fx-text-fill: black;
 }
 

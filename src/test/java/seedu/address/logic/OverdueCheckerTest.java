@@ -67,12 +67,12 @@ public class OverdueCheckerTest {
         }
 
         @Override
-        public void addActivity(Activity activity) throws DuplicateActivityException {
+        public void addActivities(ReadOnlyDeskBoard deskBoard) {
 
         }
 
         @Override
-        public void addActivities(ReadOnlyDeskBoard deskBoard) {
+        public void addActivity(Activity activity) throws DuplicateActivityException {
 
         }
 

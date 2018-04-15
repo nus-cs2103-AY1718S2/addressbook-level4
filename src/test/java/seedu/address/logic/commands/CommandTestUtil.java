@@ -31,7 +31,7 @@ import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlDeskBoardStorage;
-import seedu.address.testutil.EditActivityDescriptorBuilder;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -42,15 +42,15 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditActivityDescriptor DESC_MA2108_HOMEWORK;
+    public static final EditCommand.EditTaskDescriptor DESC_MA2108_HOMEWORK;
     public static final EditCommand.EditActivityDescriptor DESC_CS2010_QUIZ;
 
     static {
-        DESC_MA2108_HOMEWORK = new EditActivityDescriptorBuilder().withName(VALID_NAME_MA2108_HOMEWORK)
-                .withPhone(VALID_DATE_TIME_MA2108_HOMEWORK).withAddress(VALID_REMARK_MA2108_HOMEWORK)
+        DESC_MA2108_HOMEWORK = new EditTaskDescriptorBuilder().withName(VALID_NAME_MA2108_HOMEWORK)
+                .withDateTime(VALID_DATE_TIME_MA2108_HOMEWORK).withRemark(VALID_REMARK_MA2108_HOMEWORK)
                 .withTags(VALID_TAG_CS2010).build();
-        DESC_CS2010_QUIZ = new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ)
-                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withAddress(VALID_REMARK_CS2010_QUIZ)
+        DESC_CS2010_QUIZ = new EditTaskDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ)
+                .withDateTime(VALID_DATE_TIME_CS2010_QUIZ).withRemark(VALID_REMARK_CS2010_QUIZ)
                 .withTags(VALID_TAG_MA2108, VALID_TAG_CS2010).build();
     }
 
@@ -195,6 +195,6 @@ public class CommandTestUtil {
 
         Storage storage = new StorageManager(new XmlDeskBoardStorage(""),
                 new JsonUserPrefsStorage(""));
-        storage.exportDeskBoard(deskBoard, filePath);
+        storage.saveDeskBoard(deskBoard, filePath);
     }
 }

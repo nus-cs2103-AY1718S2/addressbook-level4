@@ -553,7 +553,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.DeselectListCellTask;
+import seedu.address.commons.events.ui.DeselectEventListCellEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PanelSelectionChangedEvent;
 import seedu.address.model.activity.Activity;

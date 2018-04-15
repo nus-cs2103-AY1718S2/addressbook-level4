@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- DeskBoard save file which contains the same Activity values as in
 {@code TypicalActivities#getTypicalDeskBoard()}-->
-<deskboard>
+<deskBoard>
     <tasks>
         <name>CS2101Assignment</name>
         <dateTime>04/03/2018 23:59</dateTime>
@@ -61,4 +61,4 @@
     <tags>Optional</tags>
     <tags>optional</tags>
     <tags>CIP</tags>
-</deskboard>
+</deskBoard>

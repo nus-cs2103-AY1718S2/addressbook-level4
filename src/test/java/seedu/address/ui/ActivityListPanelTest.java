@@ -4,7 +4,7 @@
 //import static seedu.address.testutil.EventsUtil.postNow;
 //import static seedu.address.testutil.TypicalActivities.getTypicalActivitiess;
 //import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
-//import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+//import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 //import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 //
 //import org.junit.Before;
@@ -42,7 +42,7 @@
 //            Activity expectedActivity = TYPICAL_ACTIVITIES.get(i);
 //            PersonCardHandle actualCard = personListPanelHandle.getPersonCardHandle(i);
 //
-//            assertCardDisplaysPerson(expectedActivity, actualCard);
+//            assertCardDisplaysTask(expectedActivity, actualCard);
 //            assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
 //        }
 //    }

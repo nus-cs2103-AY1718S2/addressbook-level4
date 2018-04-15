@@ -16,8 +16,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.DeselectListCellTask;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.DeselectTaskListCellEvent;
+import seedu.address.commons.events.ui.JumpToEventListRequestEvent;
+import seedu.address.commons.events.ui.JumpToTaskListRequestEvent;
 import seedu.address.commons.events.ui.PanelSelectionChangedEvent;
 import seedu.address.model.activity.Activity;
 
@@ -26,6 +27,8 @@ import seedu.address.model.activity.Activity;
  */
 public class TaskListPanel extends UiPart<Region> {
     private static final String FXML = "TaskListPanel.fxml";
+    private static EventListPanel eventListPanel;
+    private static int selectedIndex = -1;
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
 
     @FXML
@@ -55,6 +58,7 @@ public class TaskListPanel extends UiPart<Region> {
 
     /**
      * Links taskListView to taskListViewCell as its custom ListCell
+     * Add deselection for mouse and ESC key.
      */
     private void linkCell() {
         taskListView.setCellFactory(listView -> {
@@ -66,23 +70,25 @@ public class TaskListPanel extends UiPart<Region> {
                     if (taskListView.getSelectionModel().getSelectedIndices().contains(index))  {
                         logger.fine("Selection in task list panel with index '" + index
                                 + "' has been deselected");
-                        raise(new DeselectListCellTask(taskListView, index));
+                        raise(new DeselectTaskListCellEvent(taskListView, index));
                     } else {
+                        selectedIndex = index;
                         taskListView.getSelectionModel().select(index);
                     }
                     event.consume();
                 }
             });
+
             return cell;
         });
     }
 
-    private void setEventHandlerForSelectionChangeEvent() {
+    public void setEventHandlerForSelectionChangeEvent() {
         taskListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in task list panel changed to : '" + newValue + "'");
-                        raise(new PanelSelectionChangedEvent(newValue));
+                        raise(new PanelSelectionChangedEvent(newValue, "TaskCard"));
                     }
                 });
     }
@@ -97,10 +103,34 @@ public class TaskListPanel extends UiPart<Region> {
         });
     }
 
+    //@@author YuanQLLer
+    /**
+     * Unselect a tab..
+     */
+    private void unselect() {
+        Platform.runLater(() -> {
+            taskListView.getSelectionModel().clearSelection();
+        });
+    }
+
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+    private void handleJumpToTaskListRequestEvent(JumpToTaskListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
+    }
+
+    @Subscribe
+    private void handleJumpToEventListRequestEvent(JumpToEventListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        unselect();
+    }
+
+    //@@author YuanQLLer
+    @Subscribe
+    private void handleDeselectTaskListCellEvent(DeselectTaskListCellEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        selectedIndex = -1;
+        event.getPanel().getSelectionModel().clearSelection(event.getTargetIndex());
     }
 
     /**
@@ -125,4 +155,13 @@ public class TaskListPanel extends UiPart<Region> {
     public ListView<TaskCard> getTaskListView()   {
         return taskListView;
     }
+
+    public void setData(EventListPanel eventListPanel) {
+        this.eventListPanel = eventListPanel;
+    }
+
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+
 }

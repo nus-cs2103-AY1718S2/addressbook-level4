@@ -20,9 +20,14 @@ CLIndar is a desktop application that helps university computing students to man
 
 include::../UserGuide.adoc[tag=find]
 
+include::../UserGuide.adoc[tag=edit]
+
 == Contributions to the Developer Guide
 
 include::../DeveloperGuide.adoc[tag=model]
 
 include::../DeveloperGuide.adoc[tag=activitydesign]
 
+include::../DeveloperGuide.adoc[tag=find]
+
+include::../DeveloperGuide.adoc[tag=edit]

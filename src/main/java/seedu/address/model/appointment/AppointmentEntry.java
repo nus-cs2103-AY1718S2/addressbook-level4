@@ -31,7 +31,7 @@ public class AppointmentEntry {
         return appointmentEntry;
     }
 
-    public Appointment getAppointmentt() {
+    public Appointment getAppointment() {
         return this.appointmennt;
     }
 

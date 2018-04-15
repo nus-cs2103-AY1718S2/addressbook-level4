@@ -62,8 +62,8 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
     public boolean checkIfAppointmentIsBooked(AppointmentEntry toCheck) {
         for (Object apptEntry : internalList) {
             AppointmentEntry current = (AppointmentEntry) apptEntry;
-            if (current.getAppointmentt().getAppointmentDateTime()
-                    .equals(toCheck.getAppointmentt().getAppointmentDateTime())) {
+            if (current.getAppointment().getAppointmentDateTime()
+                    .equals(toCheck.getAppointment().getAppointmentDateTime())) {
                 return true;
             }
         }
@@ -122,7 +122,7 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
         requireNonNull(toRemove);
         for (Object apptEntry : internalList) {
             AppointmentEntry current = (AppointmentEntry) apptEntry;
-            if (current.getAppointmentt().equals(toRemove.getAppointmentt())) {
+            if (current.getAppointment().equals(toRemove.getAppointment())) {
                 return internalList.remove(apptEntry);
             }
         }

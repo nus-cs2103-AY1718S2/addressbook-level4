@@ -13,6 +13,7 @@ import seedu.address.model.alias.Alias;
 
 //@@author jingyinno
 public class UnaliasCommandParserTest {
+
     private UnaliasCommandParser parser = new UnaliasCommandParser();
 
     @Test

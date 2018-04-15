@@ -28,7 +28,7 @@ Responsibilities: Logic
 
 === Lim Zheng Kai
 image::zhengkai.jpeg[width="150", align="left"]
-{empty}[https://github.com/limzk1994[github]]
+{empty}[https://github.com/limzk1994[github]][https://github.com/CS2103JAN2018-T11-B3/main/blob/master/docs/team/ZhengKai.adoc[Portfolio]]
 
 Role: Developer +
 Responsibilities: Data

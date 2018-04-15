@@ -374,7 +374,7 @@ Birthday prefix "b/" has been added to the add command so that users can add the
 
 ==== Design Considerations
 
-===== Aspect: Implementation of Appointments (Since v1.2)
+===== Aspect: Implementation of Appointments (Since v1.5rc)
 
 * **Alternative 1 (current choice): ** Implementation of Appointments as an attribute of Person
 ** Pros: Appointments are merged with existing commands as a prefix
@@ -414,13 +414,13 @@ The sort command allows the users to sort their clients according to the lexicog
 
 The following sequence diagram shows how the sortCommand operation works.
 
-image::sortdia.png[width="790"]
+image::sortdia.png[width="800"]
 
 In the sequence diagram, the sortCommand is passed to the AddressBookParser, which executes the parseCommand method. The Model then executes the sortedFilteredPersonList,  which sorts the internalList using a comparator.
 
 Suppose that the user has a list of clients in the application as shown in the diagram below, after executing the command, the list of clients will be as follows.
 
-image::sortedlist.png[width="790"]
+image::sortedlist.png[width="800"]
 ==== Design Considerations
 
 ===== Aspect: Implementation of SortCommand
@@ -500,7 +500,7 @@ image::InsuranceClassInModel.png[width="790"]
  ** Cons: Difficult to allocate commission to their respective client.
 // end::insurance[]
 
-// tag:: encryption[]
+// tag::encryption[]
 === Data Encryption
 
 *Since V1.5*
@@ -537,9 +537,9 @@ Replace files in library with Java Cryptography Extension (JCE) Unlimited Streng
 ** Cons: Requires more computation resources and might be a tad slower, albeit negligible
 
 
-// end:: encryption[]
+// end::encryption[]
 
-// tag:: password[]
+// tag::password[]
 === Password feature
 
 *Since V1.5*
@@ -549,13 +549,15 @@ As reInsurance contains sensitive client's data, apart from encrypting the XML d
 
 As such, we could implement a password to protect the data. The password will be encrypted and store as a local copy.
 
+In addition the XML file will be unlocked when the password is entered to allow power users to edit the XML file.
+
 The password feature will be created as a class of it's own. There will be no default password for ease of use of the program.
 
 Users can decide whether to set a password. The current implementation is just a proof of concept and will be improved upon in upcoming version.
 
 The sequence diagram shows how the password command works. In the following diagram, the `password set/123` is executed.
 
-image::passdia.png[width="790"]
+image::passdia.png[width="800"]
 
 ==== Design Considerations
 
@@ -583,11 +585,10 @@ In the event that the users forget their password, the current implementation do
 
 In V2.0, the user's password will be sent to the email that is linked to the user's calendar if requested.
 
-In addition the XML file will be unlocked when the password is entered to allow power users to edit the XML file.
-
 Lastly, password will be hashed and salted instead of being encrypted with a key.
-// end:: password[]
+//end:: password[]
 
+// tag::export[]
 === Exporting
 
 ==== Current Implementation
@@ -604,9 +605,10 @@ In terms of implementation, the export command works in similar fashion to most 
 
 ==== Aspect: Parameters of export
 
-*Since v1.4*
+*Since v1.5rc*
 
 * The application will handle the `export` command with one argument (Format: `export EXPORT_TYPE`).
+* If the `EXPORT_TYPE` is `portfolio`, then another argument is allowed to specify output filename (Format: `export portfolio FILENAME`).
 * The export types are from an enum class at `seedu.address.model.export.ExportType`.
 * To add another export type to be caught by the user's input, simply add another value to the enum class mentioned above.
 ** After adding an export type, an export function for that specific type should be created in the `seedu.address.model.AddressBook` class.
@@ -618,8 +620,7 @@ In terms of implementation, the export command works in similar fashion to most 
 * The export file type should be controlled by the arguments of the command.
 ** Example: `export portfolio csv`
 *** Should download a portfolio as a csv file onto the user's computer
-* Add another argument for specifying the output file name
-
+// end::export[]
 
 === Logging
 
@@ -1104,6 +1105,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |view appointment on the calendar |have a more organized view of my schedule and at the same time plan for future appointment
 
+|`* * *` |user |secure my address book by having a password in place
+
 |`* *` |user |export a calendar of my appointments and client birthdays |can use the data on a calendar outside of the application
 
 |`* *` |user |receive notification 3 day prior to my client's appointment date |ensure that I will not miss it
@@ -1127,8 +1130,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |add in password access to my address book |be viewed/edited only by allowed users
 
 |`* *` |user |change my password |further secure my address book
-
-|`* *` |user |forget password |have a backup plan
 
 |`*` |user |request access to other address book |seek potential customer from leaving colleague
 
@@ -1368,7 +1369,11 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+. Closing the program
+
+.. Use the `exit` command
+.. Alternatively, move the mouse over the File section of the navigation bar then clicking `exit` +
+   Expected: Program should finish with exit code 0. Program should be closed.
 
 === Deleting a person
 
@@ -1379,15 +1384,50 @@ _{ more test cases ... }_
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
-   Expected: Similar to previous.
-
-_{ more test cases ... }_
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
+   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
 === Saving data
 
 . Dealing with missing/corrupted data files
+.. Prerequisites: Navigate to the data folder and delete the addressbook.xml file to simulate missing data files
+.. Test case: Launch the application +
+   Expected: reInsurance will launch and populated with the default address book. Add a new entry for the addressbook.xml to be saved in the data directory.
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+.. Prerequisites: Navigate to the data folder and corrupt the addressbook.xml file to simulate corrupted data files
+.. Test case: Launch the application +
+   Expected: reInsurance will launch with an empty address book.
 
-_{ more test cases ... }_
+=== Encryption and Decryption behaviour with and without password
+
+. Encryption behaviour without password
+.. Prerequisites: Navigate to the data folder and observe the encryption status of the addressbook.xml file
+.. Test case: Before launching the application +
+   Expected: addressbook.xml will be encrypted and not text-editable.
+.. Test case: Launch the application +
+   Expected: addressbook.xml will be decrypted and text-editable.
+.. Test case: Close the application +
+   Expected: addressbook.xml will be encrypted and not text-editable.
+
+. Encryption behaviour with password
+.. Prerequisites: Navigate to the data folder and observe the encryption status of the addressbook.xml file
+.. Test case: Before launching the application +
+   Expected: addressbook.xml will be encrypted and not text-editable.
+.. Test case: Launch the application +
+   Expected: addressbook.xml will be encrypted and not text-editable.
+.. Test case: Launch the application and enter the correct password+
+   Expected: addressbook.xml will be decrypted and text-editable.
+.. Test case: Close the application +
+   Expected: addressbook.xml will be encrypted and not text-editable.
+
+=== Exporting data
+
+. Exporting the data in the portfolio to a portfolio.csv file
+.. Prerequisites: Ensure that there are entries in reInsurance
+.. Test case: `export portfolio` +
+   Expected: export the data in the portfolio to a portfolio.csv file in the root directory
+
+. Exporting the data in the portfolio with a specified file name
+.. Prerequisites: Ensure that there are entries in reInsurance
+.. Test case: `export mydata` +
+   Expected: export the data in the portfolio to a mydata.csv file in the root directory

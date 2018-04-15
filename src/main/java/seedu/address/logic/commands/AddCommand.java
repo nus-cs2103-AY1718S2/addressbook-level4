@@ -42,7 +42,6 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_APPOINTMENT + "05-05-2018 "
             + PREFIX_GROUP + "PRIORITY "
             + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney "
             + PREFIX_INSURANCE + "Health";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";

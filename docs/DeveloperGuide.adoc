@@ -1090,7 +1090,7 @@ up in the morning to take her to the lawyer’s office to file for a divorce fro
 
 *Feature contribution:*
 
-**Jason Manson-Hing**
+**Jason Jerome Manson-Hing**
 
 `Major Feature:` Calendar Integration
 * Functional calendar within the application with add/view/delete functionality.

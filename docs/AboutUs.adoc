@@ -30,20 +30,10 @@ Responsibilities: Authentication/Security, Multi-user features and User Storage
 
 === Jason Jerome Manson-Hing
 image::ifalluphill.jpg[width="150", align="left"]
-{empty}[https://github.com/ifalluphill[github]] [https://github.com[UPDATETHIS]]
+{empty}[https://github.com/ifalluphill[GitHub]] [https://cs2103jan2018-t15-b3.github.io/main/team/jasonmansonhing.html[Project Portfolio Page] | https://github.com/CS2103JAN2018-T15-B3/main/blob/master/docs/team/jasonmansonhing.adoc[Project Portfolio Page (on GitHub)]]
 
 Role: Project Developer +
 Responsibilities: Calendar, Daily Scheduler, and Error Log
 
-'''
-
-=== Clarissa Yong
-image::Clarissa_profilepic.jpg[width="150", align="left"]
-{empty}[https://github.com/clarissayong[github]] [https://github.com[Project Portfolio Page]]
-
-Role: Project Developer +
-Responsibilities: Session Reports and Logging
-
-'''
 
 

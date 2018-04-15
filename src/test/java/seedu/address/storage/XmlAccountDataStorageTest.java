@@ -77,7 +77,7 @@ public class XmlAccountDataStorageTest {
         assertEquals(original, readBack);
 
         //Save and read without specifying file path
-        original.updatePassword("boy2");
+        original.updatePassword("boy123");
         xmlAccountDataStorage.saveAccountData(original); //file path not specified
         readBack = xmlAccountDataStorage.readAccountData().get(); //file path not specified
         assertEquals(original, readBack);

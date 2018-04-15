@@ -1,12 +1,14 @@
 //@@author Jason1im
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.model.AccountUpdateEvent;
+import seedu.address.model.exception.BadDataException;
 import seedu.address.model.exception.InvalidPasswordException;
 import seedu.address.model.exception.InvalidUsernameException;
 
@@ -41,22 +43,17 @@ public class AccountsManager {
      * Updates the username of the account.
      * @throws InvalidUsernameException if the username is already in use
      */
-    public synchronized void updateUsername(String inputUsername) throws InvalidUsernameException {
-        requireAllNonNull(inputUsername);
-        if (checkUsername(inputUsername, account)) {
-            throw new InvalidUsernameException();
-        } else {
-            account.updateUsername(inputUsername);
-            indicateAccountUpdated();
-        }
+    public void updateUsername(String inputUsername) throws BadDataException {
+        requireNonNull(inputUsername);
+        account.updateUsername(inputUsername);
     }
 
     /**
      * Updates the password of the account.
      * @throws InvalidPasswordException
      */
-    public synchronized void updatePassword(String oldPassword, String newPassword)
-            throws InvalidPasswordException {
+    public void updatePassword(String oldPassword, String newPassword)
+            throws InvalidPasswordException, BadDataException {
         requireAllNonNull(oldPassword, newPassword);
         if (!checkPassword(oldPassword, account)) {
             throw new InvalidPasswordException();

@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
+import seedu.address.logic.commands.ClearHistoryCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ExitCommand;
@@ -70,7 +71,7 @@ public class LogicManager extends ComponentManager implements Logic {
      */
     private boolean isUnrestrictedCommand(Command command) {
         return command instanceof LoginCommand || command instanceof HelpCommand
-                || command instanceof ExitCommand;
+                || command instanceof ExitCommand || command instanceof ClearHistoryCommand;
     }
 
     //@@author

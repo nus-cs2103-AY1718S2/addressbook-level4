@@ -13,8 +13,8 @@ import seedu.address.model.exception.UserLogoutException;
 */
 public class LogoutCommand extends Command {
     public static final String COMMAND_WORD = "logout";
-    public static final String MESSAGE_SUCCESS = "You have logout successfully!";
-    public static final String MESSAGE_MULTIPLE_LOGOUT = "You have already logout.";
+    public static final String MESSAGE_SUCCESS = "You have logged out successfully!";
+    public static final String MESSAGE_MULTIPLE_LOGOUT = "You have already logged out.";
 
     @Override
     public CommandResult execute() throws CommandException {

@@ -1,3 +1,4 @@
+//@@author Jason1im
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -35,6 +36,5 @@ public class UpdatePasswordParserTest {
         assertParseFailure(parser, PREAMBLE_WHITESPACE + PASSWORD_DESC_USER
                 + PREFIX_NEW_PASSWORD, expectedMessage);
 
-        //
     }
 }

@@ -60,7 +60,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 //tag::unlock[]
 === Unlock : `unlock`
 
-You can unlock the APP while it is locked if you wish to do modification on contact and appointment. The initial password is 123456. Please remember that after unlocking, the content won automatically show. Please use list/listall/listappointment command. +
+You can unlock the APP while it is locked if you wish to do modification on contact and appointment. The initial password is 123456. Please remember that after unlocking, the content won't automatically show. Please use list/listall/listappointment command. +
 Format: `unlock PASSWORD`
 alias: `ulk`
 

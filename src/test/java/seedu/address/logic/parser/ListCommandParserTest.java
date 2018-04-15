@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.logic.commands.ListCommand;
 
 //@@author jasmoon
 public class ListCommandParserTest {
@@ -14,6 +15,6 @@ public class ListCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "hello",
-                String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, "hello"));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
     }
 }

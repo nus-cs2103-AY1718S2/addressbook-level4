@@ -20,6 +20,42 @@ public class DeleteAppointmentCommandParserTest {
     }
 
     @Test
+    public void parse_missingTime_throwParseException() {
+        assertParseFailure(parser, "1 14/3/2018", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_missingDate_throwParseException() {
+        assertParseFailure(parser, "1 1200", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_missingIndex_throwParseException() {
+        assertParseFailure(parser, "14/3/2018 1200", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidIndex_throwParseException() {
+        assertParseFailure(parser, "alex 14/3/2018 1200", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidDate_throwParseException() {
+        assertParseFailure(parser, "alex 14/three/2018 1200", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidTime_throwParseException() {
+        assertParseFailure(parser, "alex 14/3/2018 12pm", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_validArgs_returnDeleteAppointmentCommand() throws IllegalValueException {
         DeleteAppointmentCommand expectedCommand = new DeleteAppointmentCommand(
                 ParserUtil.parseIndex("1"), ParserUtil.parseDateTime("14/3/2018 1200"));

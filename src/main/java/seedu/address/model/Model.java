@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.export.exceptions.CalendarAccessDeniedException;
+import seedu.address.model.export.exceptions.ConnectivityIssueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -45,7 +47,7 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /** Exports the calendar */
-    void exportCalendar();
+    void exportCalendar() throws CalendarAccessDeniedException, ConnectivityIssueException;
 
     /** Exports the portfolio to a given filePath */
     void exportPortfolio(String filePath);

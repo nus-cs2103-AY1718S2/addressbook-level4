@@ -1,10 +1,12 @@
 package seedu.address.model.util;
 
-import java.io.InputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -22,6 +24,9 @@ import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.export.exceptions.CalendarAccessDeniedException;
+import seedu.address.model.export.exceptions.ConnectivityIssueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -30,6 +35,8 @@ import seedu.address.model.person.UniquePersonList;
  * Client for the Google Calendar API
  */
 public class GoogleCalendarClient {
+
+    private static final Logger logger = LogsCenter.getLogger(GoogleCalendarClient.class);
 
     /** Application name. */
     private static final String applicationName =
@@ -42,10 +49,8 @@ public class GoogleCalendarClient {
     /** Global instance of the HTTP transport. */
     private static HttpTransport httpTransport;
 
-    /** Global instance of the scopes required by this quickstart.
+    /** Global instance of the scopes required by this application.
      *
-     * If modifying these scopes, delete your previously saved credentials
-     * at ~/.credentials/export-calendar-java-credentials
      */
     private static final List<String> SCOPES =
             Arrays.asList(CalendarScopes.CALENDAR);
@@ -60,44 +65,112 @@ public class GoogleCalendarClient {
     }
 
     /**
-     *
+     * Checks internet connectivity of application.
+     * Export calendar can only be run with internet access
+     * @throws ConnectivityIssueException
+     */
+    public static void checkInternetConnection() throws ConnectivityIssueException {
+        try {
+            InetAddress byName = InetAddress.getByName("www.google.com");
+            if (!byName.isReachable(1000)) {
+                throw new ConnectivityIssueException();
+            }
+            logger.info("Connected to internet");
+        } catch (IOException e) {
+            logger.warning("Unable to connect to internet");
+            throw new ConnectivityIssueException();
+        }
+    }
+
+    /**
+     * Authorizes a user using the authorization code flow supported by Google OAuth API
      * @return a Credential object
      */
-    public static Credential authorize() {
+    public static Credential authorize() throws CalendarAccessDeniedException, ConnectivityIssueException {
         try {
-            InputStream in = GoogleCalendarClient.class.getResourceAsStream("/oAuth/client_secret.json");
-            InputStreamReader inputStreamReader = new InputStreamReader(in);
+            InputStreamReader inputStreamReader = new InputStreamReader(
+                    GoogleCalendarClient.class.getResourceAsStream("/oAuth/client_secret.json"));
             GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory,
                     inputStreamReader);
             GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                     httpTransport, jsonFactory, clientSecrets, SCOPES
-            ).build();
-
-            return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
-        } catch (Exception e) {
-            System.out.println(e);
+            ).setAccessType("offline").build();
+            checkInternetConnection();
+            Credential credential = new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver())
+                    .authorize("user");
+            logger.info("Received user authorization");
+            return credential;
+        } catch (IOException e) {
+            logger.info("User denied authorization");
+            throw new CalendarAccessDeniedException();
         }
-        return null;
     }
 
-    private static void setEventDates (Event event, String date) {
+    /**
+     * Builds calendar service
+     * @return Calendar object
+     */
+    public static Calendar getCalendarService()
+            throws CalendarAccessDeniedException, ConnectivityIssueException {
+        Credential credential = authorize();
+        return new Calendar.Builder(httpTransport, jsonFactory, credential)
+                .setApplicationName(applicationName).build();
+    }
+
+    /**
+     * @param date string in "dd-mm-yyyy" format
+     * @return string in "yyyy-mm-dd" format
+     */
+    private static String formatDate(String date) {
         String[] dates = date.split("-");
-        String day = dates[0];
-        String month = dates[1];
-        String year = dates[2];
+        return dates[2] + "-" + dates[1] + "-" + dates[0];
+    }
 
-        DateTime startDateTime = new DateTime(year + "-" + month + "-" + day + "T00:00:00+08:00");
-        EventDateTime startEventDateTime = new EventDateTime().setDateTime(startDateTime).setTimeZone("Asia/Singapore");
+    /**
+     * @param date date of the event
+     * @return an EventDateTime object for the specified date
+     */
+    private static EventDateTime createEventDateTime(String date) {
+        DateTime dateTime = new DateTime(formatDate(date));
+        return new EventDateTime().setDate(dateTime);
+    }
 
-        DateTime endDateTime = new DateTime(year + "-" + month + "-" + day + "T23:59:59+08:00");
-        EventDateTime endEventDateTime = new EventDateTime().setDateTime(endDateTime).setTimeZone("Asia/Singapore");
+    /**
+     * @param event event to set start and end dateTimes
+     * @param date date to use for the event
+     */
+    private static void setEventDates(Event event, String date) {
+        EventDateTime eventDateTime = createEventDateTime(date);
+        event.setStart(eventDateTime).setEnd(eventDateTime);
+    }
 
-        event.setStart(startEventDateTime).setEnd(endEventDateTime);
+    /**
+     * @param person a Person object
+     * @return an Event for their birthday
+     */
+    private static Event createBirthdayEvent(Person person) {
+        Event birthday = new Event()
+                .setSummary(person.getName().fullName + "'s Birthday");
+        setEventDates(birthday, person.getBirthday().value);
+        String[] reccurrence = new String[] {"RRULE:FREQ=YEARLY;COUNT=100"};
+        birthday.setRecurrence(Arrays.asList(reccurrence));
+        return birthday;
+    }
+
+    /**
+     * @param person a Person object
+     * @return an Event for their appointment
+     */
+    private static Event createAppointmentEvent(Person person) {
+        Event appointment = new Event()
+                .setSummary("Appointment with " + person.getName().fullName);
+        setEventDates(appointment, person.getAppointment().value);
+        return appointment;
     }
 
     /**
      *
-     * @param persons UniquePersonList: all Person objects in the address book
+     * @param persons UniquePersonList: all Person objects in the reInsurance application
      * @return returns a list of events, being the birthdays and appointments of each person
      */
     private static List<Event> createEvents(UniquePersonList persons) {
@@ -105,23 +178,8 @@ public class GoogleCalendarClient {
 
         // Iterate through persons to get their birthdays and appointments
         for (Person person : persons) {
-            String name = person.getName().fullName;
-
-            // Create birthday event for current Person object
-            Event birthday = new Event()
-                    .setSummary(name + "'s Birthday");
-
-            String birthdayDate = person.getBirthday().value;
-            setEventDates(birthday, birthdayDate);
-            String[] recc = new String[] {"RRULE:FREQ=YEARLY;COUNT=100"};
-            birthday.setRecurrence(Arrays.asList(recc));
-
-            // Create appointment event for current Person object
-            Event appointment = new Event()
-                    .setSummary("Appointment with " + name);
-
-            String appointmentDate = person.getAppointment().value;
-            setEventDates(appointment, appointmentDate);
+            Event birthday = createBirthdayEvent(person);
+            Event appointment = createAppointmentEvent(person);
 
             events.add(birthday);
             events.add(appointment);
@@ -134,36 +192,39 @@ public class GoogleCalendarClient {
      * @param persons UniquePersonList to make the Calendar out of
      * @throws Exception if the Google API Client fails
      */
-    public static void insertCalendar(UniquePersonList persons) throws Exception {
-        Credential credentials = GoogleCalendarClient.authorize();
-
-        Calendar service = new Calendar.Builder(httpTransport, jsonFactory, credentials)
-                .setApplicationName(applicationName).build();
+    public static void insertCalendar(UniquePersonList persons)
+            throws CalendarAccessDeniedException, ConnectivityIssueException {
+        Calendar service = getCalendarService();
 
         String existingCalendarId = getExistingCalendarId(service, "reInsurance Events");
 
-        // If the reInsurance Events calendar already exists, delete it
-        if (existingCalendarId != null) {
-            service.calendars().delete(existingCalendarId).execute();
-        }
+        try {
+            // If the reInsurance Events calendar already exists, delete it
+            if (existingCalendarId != null) {
+                service.calendars().delete(existingCalendarId).execute();
+            }
 
-        // Create a new calendar
-        com.google.api.services.calendar.model.Calendar calendar =
-                new com.google.api.services.calendar.model.Calendar();
-        calendar.setSummary("reInsurance Events");
-        calendar.setTimeZone("Asia/Singapore");
+            // Create a new calendar
+            com.google.api.services.calendar.model.Calendar calendar =
+                    new com.google.api.services.calendar.model.Calendar();
+            calendar.setSummary("reInsurance Events");
+            calendar.setTimeZone("Asia/Singapore");
 
-        // Insert the new calendar
-        com.google.api.services.calendar.model.Calendar createdCalendar =
-                service.calendars().insert(calendar).execute();
+            // Insert the new calendar into the Google Account
+            com.google.api.services.calendar.model.Calendar createdCalendar =
+                    service.calendars().insert(calendar).execute();
 
-        // Get created calendar Id
-        String calendarId = createdCalendar.getId();
+            // Get created calendar Id
+            String calendarId = createdCalendar.getId();
 
-        // Insert events into create calendar
-        List<Event> events = createEvents(persons);
-        for (Event event : events) {
-            service.events().insert(calendarId, event).execute();
+            // Insert events into create calendar
+            List<Event> events = createEvents(persons);
+            for (Event event : events) {
+                event = service.events().insert(calendarId, event).execute();
+                logger.info("Event " + event.getSummary() + " added to calendar " + createdCalendar.getSummary());
+            }
+        } catch (IOException e) {
+            logger.warning("Unable to insert reInsurance Events calendar");
         }
     }
 
@@ -178,9 +239,8 @@ public class GoogleCalendarClient {
                     return calendarListEntry.getId();
                 }
             }
-        } catch (Exception e) {
-            System.out.println("Unable to get CalendarList from Google Calendar");
-            System.out.println(e);
+        } catch (IOException e) {
+            logger.warning("Unable to get list of calendars owned by user");
         }
 
         return null;

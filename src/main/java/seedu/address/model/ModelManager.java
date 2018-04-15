@@ -14,6 +14,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.handleCalendarViewChangedEvent;
 import seedu.address.model.calendar.GoogleCalendar;
+import seedu.address.model.export.exceptions.CalendarAccessDeniedException;
+import seedu.address.model.export.exceptions.ConnectivityIssueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -94,7 +96,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author daviddalmaso
     @Override
-    public void exportCalendar() {
+    public void exportCalendar() throws CalendarAccessDeniedException, ConnectivityIssueException {
         addressBook.exportCalendar();
     }
 

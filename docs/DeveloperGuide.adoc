@@ -166,7 +166,7 @@ image::GUI.png[width="750"]
 . Attendance Card: a card that lists a registrant's contact information and displays if the registrant has attended or not.
 
 [NOTE]
-If no  `EpicEvent` has been selected, the Attendance Panewill be empty
+If no  `EpicEvent` has been selected, the Attendance Pane will be empty
 
 
 ==== Technical Overview
@@ -553,7 +553,7 @@ the user undoes a `ClearCommand`.
 ===== Aspect: Type of Commands that Can be Undone/Redone
 
 * **Alternative 1 (current choice):** Only include commands that modify the event planner (`add`, `clear`, `edit`).
-** Pros: Only commands that cannot be easily reverted need to be implemented (the view can easily be re-modified as no data is * lost).
+** Pros: Only commands that cannot be easily reverted need to be implemented (the view can easily be re-modified as no data is lost).
 ** Cons: User might mistakenly think that undo also applies to view modification (e.g. filtering).
 * **Alternative 2:** Include all commands.
 ** Pros: It might be more intuitive for the user.
@@ -565,7 +565,7 @@ the user undoes a `ClearCommand`.
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo
 ** Pros: This will be easier to understand for new Computer Science undergraduates, who are likely to be the incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
+** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: This requires dealing with commands that have already been undone - we must remember to skip these commands. This also violates the Single Responsibility Principle (SRP) and Separation of Concerns (SoC) as `HistoryManager` now needs to do two different things.
@@ -586,7 +586,7 @@ When a `register` command is called, we first find the `PersonToRegister` using 
 and the `EventToRegisterFor` using the name provided. Then, we call `registerPersonForEvent()` through
 the `ModelManager`, which eventually calls the `registerPerson()` method of the `EpicEvent`.
 
-This method not only adds the reference of the `Person` of the `EpicEvent`, but also increments a counter inside
+This method not only adds the reference of the `Person` to the `EpicEvent`, but also increments a counter inside
 the `Person`. This counter is used to check whether a `Person` is still registered for some event
 when the user attempts to delete that `Person`.
 
@@ -637,16 +637,15 @@ this feature at https://docs.oracle.com/javase/8/docs/api/java/util/function/Pre
 ==== Current Implementation
 
 The implementation uses a class called `Attendance`. An instance of `Attendance` is created
-every time a `Person` registers to an `EpicEvent` and stores references to the corresponding
-`EpicEvent` and `Person`. It also stores a `BooleanProperty` called `hasAttendedEventProperty`
-to store information on whether the `Person` has attended the `EpicEvent.
+every time a `EpicEvent` registers to an `EpicEvent` and the instance stores references to the corresponding
+`Person` and `Person`. It also stores a `BooleanProperty` called `hasAttendedEventProperty`
+that represents whether the `Person` has attended the `EpicEvent`.
 The `Attendance` object is then added to the `UniqueAttendanceList` inside the `EpicEvent`.
 This structure reduces coupling between the `Person` and `EpicEvent` class and allows the
 `EpicEvent` to have access to all its registrants so that adding, removing and listing registrants are
 easy to implement.
 
-When the `toggle` command is called, the command is passed to the `EventPlannerParser` object
-,which reads and parses the input to return a `ToggleAttendanceCommand` object.
+When the `toggle` command is called, the command is passed to the `EventPlannerParser` object, which reads and parses the input to return a `ToggleAttendanceCommand` object.
 The command then uses the index provided to find and save a reference to the `Attendance` object
 to be toggled. This is done so that the command can be undone by toggling the same
 `Attendance` object. <<#TCD>> below shows how the `toggle` command is processed
@@ -667,15 +666,17 @@ where the `hasAttendedEventProperty` is toggled.
 
 * **Alternative 1 (current choice):** Store in `EpicEvent` object
 ** Pros: There is less coupling between the `Person` and `EpicEvent` classes.
-Instances of `EpicEvent` are also able to keep track of the attendance list more easily and
-thus the UI has less difficulty displaying the attendance list.
-** Cons: It is more difficult for `EventPlanner` to track which events a
-person is registered for, so deleting a person requires
-checking through all the events to delete a person properly.
+Instances of `EpicEvent` are also able to keep track of changes in the attendance list more easily,
+making it easier for the UI  to reflect these changes when required.
+** Cons: It is more difficult for `EventPlanner` to track which `EpicEvents` a
+`Person` is registered for. In this case, deleting a `Person` requires
+checking through all the `EpicEvents` to determine whether the `Person` is still
+registered for any `EpicEvents` and this might be slow if there is a large number `EpicEvents` in
+the `EventPlanner`
 * **Alternative 2:** Store in `EventPlanner` object
-** Pros: The `EventPlanner` can easily track which events a person is registered for, thus making
-the implementation of some person-related commands such as `delete` easier.
-** Cons: In order to find out which persons are registered to an `EpicEvent`,
+** Pros: The `EventPlanner` can easily track which `EpicEvent` a `Person` is registered for, making
+the implementation of some person-related commands, such as `delete`, easier.
+** Cons: In order to find out which `Persons` are registered to an `EpicEvent`,
 an instance of `EpicEvent` would have to search through the entire list of `Attendance`
 objects in `EventPlanner`. This can be very slow if the number of `Attendance` objects is very large.
 
@@ -685,12 +686,12 @@ objects in `EventPlanner`. This can be very slow if the number of `Attendance` o
 ** Pros: Changes to the `Attendance` objects in the attendance list are more easily
 tracked, which makes updating of the UI more striaghtforward.
 This is because changes need to be made by replacing the object
-with a new copy that contains the updated properties and this can be tracked using listeners.
+with a new copy that contains the updated properties, and this replacement can be tracked using listeners.
 ** Cons: Implementation of the `toggle` command is more difficult as the entire object has to be replaced whenever
 a change needs to be made. For example, toggling the attendance would have to be done
 by replacing the entire object with a new copy which only has its `hasAttendedEventProperty` changed.
 * **Alternative 2:** Make `Attendance` objects mutable
-** Pros: Implementation of the `toggle` command is easier the `hasAttendedEventProperty`
+** Pros: Implementation of the `toggle` command is easier as the `hasAttendedEventProperty`
 of the `Attendance` object can be directly accessed and modified.
 ** Cons: Changes to the `Attendance` objects in the attendance list are harder to track
 as mutating the object cannot be tracked using a listener. In this case, specialised events
@@ -699,7 +700,7 @@ would have to be used to trigger changes in the UI.
 ==== Aspect: Method of Marking Attendance
 
 * **Alternative 1 (current choice):** Have one command to toggle attendance from attended to not attended and vice versa
-** Pros: Undoing the `toggle` command is easier as toggling is always valid while marking a registrant
+** Pros: Undoing the `toggle` command is easier as toggling is always valid. In constrast, marking a registrant
 as attended may not always be valid since that registrant may have already been marked as attended so
 the undo command has to account for that.
 ** Cons: Users may find it less intuitive to toggle the attendance of a registrant
@@ -707,7 +708,7 @@ compared to directly marking a registrant as attended or not attended.
 * **Alternative 2:** Have two separate commands: one for marking registrants as attended and one for marking
 them as not attended
 ** Pros: Users may find it more intuitive compared to toggling the attendance of a registrant.
-** Cons: Undoing the command is more difficult the undo commmand has to account for the case where
+** Cons: Undoing the command is more difficult as the undo commmand has to account for the case where
 a user tries to mark a registrant as attended when he/she has already been marked as attended.
 // end::markattendance[]
 
@@ -811,9 +812,9 @@ When deciding on the UI, the following aspects of user experience were considere
 - *Alternative 1 (current choice)*: A three-pane UI consisting of list of persons, events, and registrants for the selected event
     * Pros: The user can view all 3 lists at the same time. He would know what arguments to supply when typing commands as he can read them off the list.
     * Cons: The UI might become too cluttered as there are too many UI elements. However, given that EPIC is meant for modern computers with large displays, this should not be an issue.
-- *Alternative 2 (previous choice)*: two-pane UI where the left pane is a 2 tab pane consisting of a list of persons and events, and the right pane is a list of registrants
+- *Alternative 2 (previous choice)*: two-pane UI where the left pane is a two tab pane consisting of a list of persons and events, and the right pane is a list of registrants
     * Pros: Merging the horizontal space for the list of persons and events will create more space for the list of registrants. The user is likely to be more interested in the registrants' details.
-    * Cons: If the user needs to access data for some tabbed pane that is not in focus to fill out a command, he would have to delete his current command, execute a command to set focus to the desired tab. He must then memorize the required details and reenter his previous command. This would break his workflow and be a great inconvenience.
+    * Cons: If the user needs to access data for some tabbed pane that is not in focus to fill out a command, he would have to delete his current command, and execute a command to set focus to the desired tab. He must then memorize the required details and reenter his previous command. This would break his workflow and be a great inconvenience.
 - *Alternative 3*: A common list that can display either list of persons, events or registrants for the selected event
     * Pros: We only have to make minimal changes to the UI layout.
     * Cons: Events, persons, and registrants must be displayed using the same `Card` class. This would result in tight coupling of the display graphics logic  for the three lists.
@@ -867,9 +868,9 @@ This feature is proposed to allow mass registration of multiple persons, with
 the same tag, to a single event. For example, a user can register all persons tagged with
 `computing` for a computing-related seminar.
 
-The proposed implementation is to make use of tags to select groups of persons to register for an event.
+The proposed implementation is to make use of tags to select a group persons to register for an event.
 Currently, the `Tag` class has been split into `PersonTag` and `EpicEventTag` so as to
-differentiate between the two. This allows searching of persons by `PersonTag` and searching for events by `EpicEventTag`.
+differentiate between the two. This allows searching for persons by `PersonTag` and searching for events by `EpicEventTag`.
 
 By doing so, a `register-by-tag` command can be implemented that takes in a `PersonTag` as an argument.
 The persons can be filtered by `PersonTag` and the list of filtered persons can be registered

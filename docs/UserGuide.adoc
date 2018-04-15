@@ -607,15 +607,14 @@ Adds the injury, dislocated right shoulder to the 2nd student in _EduBuddy_.
 `addinjuries 1 injuries/Right Ligament Tear` +
 Adds the injury, right ligament tear to the 1st student in the results of the `find` command.
 
-image::InjuriesBeforeAdd.PNG[width="800"]
 .Before the command `addinjuries 1 injuries/Right Ligament Tear` was entered.
+image::InjuriesBeforeAdd.PNG[width="800"]
 
-image::AddInjuriesSuccessMessage.png[width="800"]
 .Success message when the command is entered successfully.
-
-image::InjuriesAfterAdd.png[width="800"]
+image::AddInjuriesSuccessMessage.png[width="800"]
 
 .After the command is successfully entered.
+image::InjuriesAfterAdd.png[width="800"]
 
 *_return to <<toc,Table of Contents>>_*
 

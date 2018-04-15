@@ -166,12 +166,6 @@ Shows a list of all clients in the address book tagged with any of the tags ente
 Format: `listtag TAG...`
 Alias: `lt`
 
-=== Add or modifies notes to a client: `note` `Coming in v2.0`
-
-Adds or modifies notes to an existing client. A text box will appear containing the saved notes (if available) for editing +
-Format: `note INDEX`
-Alias: `n`
-
 // tag::archive[]
 === Archives a client: `archive` `Since v1.2`
 
@@ -437,7 +431,6 @@ e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [ti/TIMEZONE] [t/TAG]...` +
 * *Edit appointment* : `editappointment 1 2 3 n/Sell laptop` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Note* : `note INDEX`
 * *Archive* : `archive INDEX`
 * *Unarchive* : `unarchive INDEX`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +

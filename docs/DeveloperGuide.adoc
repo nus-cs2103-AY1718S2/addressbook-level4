@@ -17,11 +17,21 @@ By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 [[Introduction]]
 == Introduction
-CLIndar is a desktop application that helps university computing students to manage their schedules.
-CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
 
-This guide provides information on the core functionalities of CLIndar and their implementation, so that a developer can
-get started customising and contributing to the application.
+CLIndar is a desktop application that helps university computing students to manage their tasks and events.
+CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
+Thus, compared to traditional Graphical User Interface (GUI) applications, CLIndar is faster and provides more convenience for computing students.
+
+With CLIndar, you can:
+
+* keep track of your tasks and events and be reminded of their due dates; and
+* record all completed tasks and events, so that you know what you have done.
+
+We are looking for developers who are savvy, keen to learn about developing Java applications using JavaFx UI
+framework and most importantly keen on developing CLIndar further. If you are interested, send us an email at CLIndar@gmail.com.
+
+This guide provides information on the core functionality of CLIndar and their implementation, so that a developer can
+get started customizing and contributing to the application.
 
 [[ComputerSetup]]
 == Computer Setup
@@ -34,7 +44,7 @@ This section describes the steps needed to set up your computer before you can s
 
 The following must be installed in your computer before you can begin using the application:
 
-. *JDK `1.8.0_60`* or later
+. *JDK `1.8.0_144`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
@@ -53,10 +63,7 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 Do the following steps to set up the project in your computer.
 
-
-*Step 1:* Fork this repo.
-
-To fork the repo, click the button circled below:
+*Step 1:* Fork this repo by clicking the button circled below.
 
 .Forking this repo
 image::Origin Repo.png[width="600"]
@@ -65,53 +72,50 @@ image::Origin Repo.png[width="600"]
 
 Open Git Bash. Change the current working directory to the location where you want the cloned directory to be made.
 
-*Step 3:* Type the following:
+*Step 3:* Type the following in the terminal:
 
 ----
 git clone https://github.com/YOUR-USERNAME/main.git
 ----
 The sub-directory titled 'main' should appear if `git clone https://github.com/YOUR-USERNAME/main.git` at
-C:/Users/temp folder is executed. Figure 2 below describes this:
-
-.Finding cloned directory
-image::git clone.png[width="600"]
-
-{empty} +
+C:/Users/temp folder is executed.
 
 [NOTE]
 The sub-directory titled 'main' contains the files and metadata that Git requires to maintain the changes you make to the source files. +
+
+{empty} +
 
 *Step 4:* Open IntelliJ and configure the correct JKD version for Gradle.
 
 [NOTE]
 If you are not in the welcome screen, click `File` > `Close Project` to close the existing project
-dialog first, as shown in the picture below. Closing current project in IntelliJ
-image::Close Project.png[width="600"]
+dialog first.
 {empty} +
 
 
-*Step 4a:* Click `Configure` > `Project Defaults` >
-`Project Structure`. Refer to Figure 3 below:
+*Step 4a:* Click `Configure` > `Project Defaults` > `Project Structure`. Refer to _Figure 2_ below:
 
 .Configuring IntelliJ settings
 image::Configure.png[width="600"]
 
-*Step 4c:* Go to the `Project` tab and under `Project SDK` section, click `New...`. Find the directory
-of the JDK, and then click OK. Refer to Figure 4 below:
+{empty} +
+
+*Step 4b:* Go to the `Project` tab and under `Project SDK` section, click `New...`. Find the directory
+of the JDK, and then click OK. Refer to _Figure 3_ below:
 
 .Setting up JDK
 image::Setup JDK.png[width="600"]
 
 {empty} +
 
-*Step 5:* To import the project, click `Import Project`. Refer to Figure 5 below,
+*Step 5:* To import the project, click `Import Project`. Refer to _Figure 4_ below:
 
 .Importing project to IntelliJ
 image::Import Project.png[width="600"]
 {empty} +
 
 *Step 5a:* Locate the `build.gradle` file in the `main` folder that you have cloned earlier and select it.
-Click `OK`. Refer to Figure 6 below:
+Click `OK`. Refer to _Figure 5_ below:
 
 .Locating `build.gradle` file
 image::build.gradle.png[width="400"]
@@ -119,12 +123,43 @@ image::build.gradle.png[width="400"]
 
 *Step 6b:* In the `Import Project from Gradle` that appears, click `OK` again. +
 
-image::Import Project from Gradle.png[width="600"]
 {empty} +
 
-*Step 7:* Open the `Terminal` (refer to Figure 7) and run the command `gradlew processResources`
+*Step 7:* To add dependency for CalendarFX, go to http://dlsc.com/products/calendarfx/ and click 'Download'. Refer
+to _Figure 6_ below:
+
+.Download CalendarFX
+image::CalendarFXDownload.png[width="600"]
+
+{empty} +
+
+*Step 7a:* Return to the project, go to `File` > `Project Structure...`. Refer to _Figure 7_ below:
+
+.Locating `Project Structure...`
+image::FileProjectStructure.png[width="600"]
+
+{empty} +
+
+*Step 7b:* Click on `Modules` tab > `addressbook-level4` module (lower) > `Dependencies` tab > '+' on the right side
+> `1 JAR or directories...`. Refer to _Figure 8_ below:
+
+.Adding dependency to project
+image::LocateAddDependency.png[width="600"]
+
+{empty} +
+
+*Step 7c:* Locate the download location of CalendarFX. Select both `lib` and `ext` in the folder, click `OK`
+and click `OK` again. Refer to _Figure 9_ below:
+
+.Adding `lib` and `ext` folder
+image::LibExtCalendarFX.png[width="600"]
+
+{empty} +
+
+*Step 8:* Open the `Terminal` (refer to _Figure 10_) and run the command `gradlew processResources`
 (Mac/Linux: `./gradlew processResources`). It should finish with the 'BUILD SUCCESSFUL' message. +
 
+.Opening Terminal on Intellij
 image::intellij-terminal.png[width="600"]
 
 This will generate all resources required by the application and tests.
@@ -144,6 +179,8 @@ Do the following steps to verify that the project has been successfully set up i
 === Configurations to Do Before Writing Code
 
 After you set up the project in your own computer, you still need to do the the configurations described in the following sections before you can start developing this application further with your own code.
+{empty} +
+{empty} +
 
 ==== Coding Style Configuration
 
@@ -156,16 +193,20 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
 * For `Import Layout`: Set the order to be `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-After you do the steps above, the Settings window should appear as shown in Figure 7 below.
+After you do the steps above, the Settings window should appear as shown in _Figure 11_ below.
 
 .Configuring IntelliJ settings for import order
 image::Import Setting.png[width="600"]
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write the code.
+{empty} +
+{empty} +
 
 ==== Documentation Updating
 
 After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W13-B3/main` repo. If you plan to develop this as a separate product, you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+{empty} +
+{empty} +
 
 
 ==== CI Setup
@@ -181,6 +222,9 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
+
+{empty} +
+{empty} +
 
 ==== Steps to Get Started with Coding
 
@@ -199,7 +243,7 @@ This section describes how the features in this application are implemented inte
 
 [[Design-Architecture]]
 === Architecture
-The high-level design of this application is illustrated by _Figure 8_ below.
+The high-level design of this application is illustrated by _Figure 12_ below.
 
 .Architecture diagram
 image::Architecture.png[width="600"]
@@ -209,10 +253,13 @@ Given below is a quick overview of the components, separated into 'Main' and 'Se
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
+{empty} +
+{empty} +
+
 ==== Primary Component
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* at app launch: initializing all components in the correct sequence and connecting them up with each other.
+* at app launch: initializing all components in the correct sequence and connecting them up with each other; and
 * at shut down: shutting down all components and invoking cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by components within the secondary component and
@@ -226,7 +273,7 @@ The two classes below play important roles at the architecture level:
 {empty} +
 {empty} +
 
-==== Secondary component
+==== Secondary Component
 
 The secondary component of the application consist of four components:
 
@@ -241,43 +288,43 @@ Each of the four components:
 * exposes its functionality using a `{Component Name}Manager` class.
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the
-`LogicManager.java` class. _Figure 9_ below is an overview of the `Logic` component.
+`LogicManager.java` class. _Figure 13_ below is an overview of the `Logic` component.
 
 .The API of the `Logic` component
 image::LogicAPI.png[width="800"]
+{empty} +
+{empty} +
+
+==== Events-driven Design Nature
+
+_Figure 14_ below shows how the primary and secondary components interact in a scenario
+where the user issues the command `rm task 1`.
 
 
-[discrete]
-===== Events-Driven Nature of the Design
-
-
-_Figure 10_ below shows how the primary and secondary components interact in a scenario
-where the user issues the command `delete 1`.
-
-.Relevant Components interactions for `delete 1` command (part 1)
+.Components interactions for `rm task 1` command (part 1)
 image::SDforDeleteActivity.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `DeskBoardChangedEvent` when the Desk Board data
+Note how the `Model` simply raises a `DeskBoardChangedEvent` when Desk Board data
 are changed, instead of asking the `Storage` to save the updates into the hard disk.
 
-_Figure 11_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+_Figure 15_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Relevant Components interactions for `delete 1` command (part 2)
+
+.Components interactions for `rm task 1` command (part 2)
 image::SDforDeleteActivityEventHandling.png[width="800"]
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The section below gives more details of each of the secondary component.
-
 {empty} +
 {empty} +
 
 [[Design-Ui]]
 === UI Component
 
-_Figure 12_ below shows the architecture diagram of the `UI` component.
+_Figure 16_ below shows the architecture diagram of the `UI` component.
 
 .Structure of the `UI` component
 image::UiClassDiagram.png[width="800"]
@@ -304,12 +351,14 @@ The `UI` component:
 [[Design-Logic]]
 === Logic Component
 
-_Figure 13_ below shows the architecture diagram of the `Logic` component.
+_Figure 17_ below shows the architecture diagram of the `Logic` component.
 [[fig-LogicClassDiagram]]
 .Structure of the `Logic` Component
 image::LogicClassDiagram.png[width="800"]
 
-Finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> in _Figure 14_ below.
+{empty} +
+
+Finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> in _Figure 18_ below.
 
 .Structure of commands in the `Logic` component
 image::LogicCommandClassDiagram.png[width="800"]
@@ -326,7 +375,7 @@ The following describes the sequence of events executed by the Logic component:
 *  The command execution can affect the `Model` (e.g. adding a activity) and/or raise events.
 *  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Figure 15 below is the Sequence Diagram for interactions within the `Logic` component for the `execute("rm task 1")` API call.
+_Figure 19_ below is the Sequence Diagram for interactions within the `Logic` component for the `execute("rm task 1")` API call.
 
 .Interactions inside the `Logic` component for the `rm task 1` command
 image::DeletePersonSdForLogic.png[width="800"]
@@ -337,7 +386,7 @@ image::DeletePersonSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model Component
 
-_Figure 16_ below shows the architecture diagram of the `Model` component.
+_Figure 20_ below shows the architecture diagram of the `Model` component.
 
 .Structure of the `Model` component
 image::ModelClassDiagram.png[width="800"]
@@ -349,7 +398,7 @@ image::ModelClassDiagram.png[width="800"]
 The `Model` component:
 
 * stores a `UserPref` object that represents the user's preferences,
-* stores the Desk Board data;
+* stores Desk Board data;
 * uses two classes to store information about `Event` and `Task` separately;
 * exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change; and
 * does not depend on any of the other three components.
@@ -359,7 +408,7 @@ The `Model` component:
 [[Design-Storage]]
 === Storage Component
 
-_Figure 18_ below shows the structure of the `Storage` component.
+_Figure 21_ below shows the structure of the `Storage` component.
 
 .Structure of the `Storage` component
 image::StorageClassDiagram.png[width="800"]
@@ -371,7 +420,7 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component saves and reads back:
 
 * `UserPref` objects in json format, and
-* desk board data in xml format.
+* Desk Board data in xml format.
 
 {empty} +
 {empty} +
@@ -383,34 +432,34 @@ This section describes some noteworthy details on how certain features are imple
 {empty} +
 {empty} +
 
-
 [[Implementation-Activity]]
-=== Managing Activities
+=== Activity Management
 `Activity` resides in the `Model` component of the application.
-It is an important class in this application as it represents each entry in the desk board.
-In CLIndar, an entry in the desk board can be either a `Task` or an `Event`.
+It is an important class in this application as it represents each entry in Desk Board.
+In CLIndar, an entry in Desk Board can be either a `Task` or an `Event`.
 
-==== Current implementation
-_Figure 19_ below shows the relationship between `Activity` and its relevant components.
+==== Current Implementation
+_Figure 22_ below shows the relationship between `Activity` and its relevant components.
 
 .Class diagram for `Activity`
 image::UniqueActivityListClassDiagram.png[width="550"]
 
 As shown above, `Activity` is a superclass for `Task` and `Event`.
 `Activity` is made abstract so that it cannot be instantiated.
-This is because an entry in the desk board must be either a `Task` or an `Event` and cannot simply be an `Activity`.
+This is because an entry in Desk Board must be either a `Task` or an `Event` and cannot simply be an `Activity`.
 {empty} +
 {empty} +
 
 ===== Adding a task
-//TODO: Should add a diagram to show how a task is added
-`Task` is one of the two types of entries in the desk board in CLIndar.
-`Task` represents a piece of work to be done by a certain deadline.
+
+`Task` is one of the two types of entries in Desk Board in CLIndar.
+
+It represents a piece of work to be done by a certain deadline.
 Once the `Task` has been done by user, it can be mark as completed in the application.
 
-_Figure 20_ below shows how `Task` is represented in the application.
+_Figure 23_ below shows how `Task` is represented in the application.
 
-.UML class diagram for `Task`
+.Class diagram for `Task`
 image::TaskClassDiagram.png[width="550"]
 
 A brief description of each of the attributes of `Task` is given below:
@@ -420,12 +469,24 @@ A brief description of each of the attributes of `Task` is given below:
 * `remark`: a short description or any other comments pertaining to the task. This attribute is optional.
 * `tags`: groupings for the task. This attribute is optional and a `Task` object can have multiple `tags`.
 
-A `Task` object can be added to the desk board through the use of the `TaskCommand`.
+A `Task` object can be added to Desk Board through the use of the `TaskCommand`.
 A `TaskCommand` is associated with a `Task` object to be added.
 When a `TaskCommand` object calls the method `executeUndoableCommand()`,
 the `Task` object is added into `UniqueActivityList` in the `DeskBoard`.
 Note that the `Task` object will not be added if an equivalent `Task`
-is found in the desk board or the `name` or `dueDateTime` field is left empty.
+is found in Desk Board or the `name` or `dueDateTime` field is left empty.
+
+_Figure 24_ below shows how the relevant primary and secondary components interact
+in a scenario where the user issues the command `task n/NAME..`.
+
+.Relevant components interaction for `task n/NAME..` command (part 1)
+image::SDforTask.png[width='650']
+
+_Figure 25_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+
+
+.Relevant components interaction for `task n/NAME..` command (part 2)
+image::SDHandlingTaskEvent.png[width='650']
 
 The following is a snippet of code for `TaskCommand` 's  `executeUndoableCommand()` method.
 
@@ -447,12 +508,12 @@ Once the task is successfully added, it will be reflected in the CLIndar GUI its
 
 ===== Adding an event
 
-`Event` is the second and last type of entries in the desk board in CLIndar.
+`Event` is the second and last type of entries in Desk Board in CLIndar.
 `Event` represents an activity with fixed start and end times, such as a test, doctor appointment etc.
 
-_Figure 19_ below shows how `Event` is implemented in the application.
+_Figure 26_ below shows how `Event` is implemented in the application.
 
-.UML Class Diagram for Event
+.Class diagram for `Event`
 image::EventClassDiagram.png[width="550"]
 
 A brief description of each of the attributes of `Event` is given below:
@@ -464,15 +525,16 @@ A brief description of each of the attributes of `Event` is given below:
 * `remark`: a short description or any other comments pertaining to the event. This attribute is optional.
 * `tags`: groupings for the event. This attribute is optional and an `Event` object can have multiple `tags`.
 
-An `Event` object can be added to the desk board through the use of the `EventCommand`.
+An `Event` object can be added to Desk Board through the use of the `EventCommand`.
 The way `Event` objects are added to `UniqueActivityList` is the same as `Task` objects.
 Note that the `Event` object will not be added if an equivalent `Event`
-is found in the desk board or the `name`, `startDateTime` or `endDateTime` field is left empty.
+is found in Desk Board or the `name`, `startDateTime` or `endDateTime` field is left empty.
 
 Once the `Event` is successfully added, it will be reflected in the CLIndar GUI itself.
 {empty} +
 {empty} +
 
+//tag::sorting
 ===== Sorting task and event lists automatically
 When a `Task` or `Event` is added, it is inserted into the respective list such that the list is sorted in terms of their `dueDateTime` or `startDateTime` respectively.
 The sorting is done in the `UniqueActivityList` which contains a list of unique activities which is either a `Task` or an `Event`
@@ -485,10 +547,6 @@ Following is a snippet which illustrates the function of `UniqueActivityList`:
 
 [source,java]
 ----
-    private final ObservableList<Activity> internalList = FXCollections.observableArrayList();
-
-    // ... some code ...
-
     public void add(Activity toAdd) throws DuplicateActivityException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
@@ -499,11 +557,13 @@ Following is a snippet which illustrates the function of `UniqueActivityList`:
     }
 ----
 {empty} +
+//end::sorting[]
+
 // tag::find[]
 ===== Find a task or event
-`FindEvent` class is added to locate `Task` and `Event` objects which contains any keywords in their name.
+`FindEvent` locates `Task` and `Event` objects which contain any keywords in their name.
 {empty} +
-The list showned in GUI is controlled by the http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[`Predicate`] set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class[The list showned in GUI is controlled by the <<`Predicate` set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class][]
+The list shown in GUI is controlled by the http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[`Predicate`] set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class[The list showned in GUI is controlled by the << `Predicate` set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class][]
 which is a subclass of `Predicate` class in Java library.
 {empty} +
 {empty} +
@@ -517,23 +577,26 @@ The following snippet shows the `executeUndoableCommand()` of the `FindCommand` 
         return new CommandResult(getMessageForActivityListShownSummary(model.getFilteredActivityList().size()));
     }
 ----
-//end::find[]
-//tag::edit[]
+
+{empty} +
+
+// end::find[]
+// tag::edit[]
 ===== Editing a task or an event
 
-`Task` and `Event` objects are editable through the use of `EditCommand`.
-In this application, if a commmand requires a target to operate on,
-it will determine which `Task` or `Event` to modify by using the keywords `task` or `list` and index of the target in the displayed list,
-The `task` and `event` keyword would tell the program which list to select from. The index will indicate which `Task` or `Event` is the target.
+`Task` and `Event` objects can be edited using `EditCommand`.
+In the application, if a command requires a target to operate on,
+it will determine which `Task` or `Event` to modify by using the keywords `task` or `list` and index of the target in the displayed list.
+The `Task` and `Event` keyword would tell the program which list to select from. The index will indicate which `Task` or `Event` is the target.
 {empty} +
 {empty} +
-The edit command can modify every attribute decribed in the <<Adding a task, adding a task>> and <<Adding an event, adding an event>> section above.
+The edit command can modify every attribute described in the <<Adding a task, adding a task>> and <<Adding an event, adding an event>> section above.
 These fields is identified using the same prefix as the adding command.
 {empty} +
 {empty} +
 The following snippet shows the `executeUndoableCommand()` of the `EditCommand` class.
-`UniqueActivityList` resides in the `Model` will be updated by having `editedActivity` replacing `activityToEdit`..
-If `editedActitity` is identical to any `Activity` in `UniqueActivityList`, the edit operation will be aborted and a `DuplicateActivityException` will be throun.
+`UniqueActivityList` resides in the `Model` will be updated by having `editedActivity` replacing `activityToEdit`.
+If `editedActitity` is identical to any `Activity` in `UniqueActivityList`, the edit operation will be aborted and a `DuplicateActivityException` will be thrown.
 [source,java]
 ----
         public CommandResult executeUndoableCommand() throws CommandException {
@@ -622,9 +685,12 @@ If `CompleteCommand` is successful, 'Uncompleted' will be replaced by 'Completed
 //end:complete[]
 
 //tag::activitydesign[]
-==== Design considerations
+==== Design Considerations
+This section describes various design considerations related to the backend design of the application.
 
+===== Aspect: Implementation of `Activity`, `Task` and `Event` class
 There are two ways to represent tasks and events in the application. The following shows the pros and cons for each alternative:
+
 
 * ** Alternative 1 (Current Choice):**
 Use a single class `Activity` as a superclass for `Task` and `Event`. +
@@ -646,7 +712,8 @@ We will need to write codes for classes and methods related to `Task` and `Event
 //end::activitydesign[]
 
 // tag::guiimplementation[]
-=== Managing GUI
+
+=== Managing the GUI
 
 This section describes implementation of features related to the GUI.
 
@@ -661,15 +728,20 @@ the GUI. It comprises of `CalendarPanel`, `TaskListPanel`, `EventListPanel` and 
 
 `EventView` displays `Event` only on the GUI and comprises of `CalendarPanel`, `EventListPanel` and `BrowserPanel`.
 
-`centerStagePlaceholder` refers to the center stage of the GUI marked out by the red rectangle shown in _Figure 10_ below.
+`centerStagePlaceholder` resides in the `MainWindow` of the UI component. It refers to the center stage of the GUI marked out by the red rectangle shown in _Figure 27_ below.
 
-.centerStagePlaceholder
+.`centerStagePlaceholder`
 image::centerStagePlaceholder.png[width='650']
 
 To facilitate switching of views, the .xfml file of relevant view will be added to `centerStagePlaceholder`.
 
 Following is a snippet that shows how `MainView` is added to `centerStagePlaceholder`:
 ----
+    @FXML
+    private StackPane centerStagePlaceholder;
+
+    /...some code.../
+
     @Subscribe
     private void handleShowActivityRequestEvent(ShowActivityRequestEvent event)    {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -680,8 +752,6 @@ Following is a snippet that shows how `MainView` is added to `centerStagePlaceho
         centerStagePlaceholder.getChildren().add(mainView.getRoot());
     }
 ----
-
-{empty} +
 {empty} +
 
 The calendar feature of the application makes use of the open source project - CalendarFX.
@@ -698,7 +768,6 @@ The following is a snippet shows how `handleDeskBoardChangedEvent` synchronizes 
     }
 ----
 
-{empty} +
 {empty} +
 
 Next, `BrowserPanel` is hidden in the GUI when the application is first initialised. Selecting a cell in either of the
@@ -731,35 +800,34 @@ Below is a snippet of how `BrowserPanel` displays the details of the `Task` sele
 ----
 
 {empty} +
-{empty} +
 
 There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe
 the implementation for each command.
 
-==== Listing of tasks and events
+==== Listing of Tasks and Events
 
 A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all
 the `Task` objects added by the user is then displayed using the `TaskListPanel`, while `Event` objects added by
-user are displayed using `EventListPanel`. Below are examples of a `TaskListCard` and an `EventListCard`.
+user are displayed using `EventListPanel`. _Figure 28_ and _Figure 29_ are examples of a `TaskListCard` and an `EventListCard` respectively.
 
-.TaskListCard example
-image::TaskCard.png[width="650"]
+.`TaskListCard` example
+image::TaskCard.png[width="300"]
 
-.EventListCard example
-image::EventCard.png[width='650']
+.`EventListCard` example
+image::EventCard.png[width='300']
 
 `ListCommand` allows the user to only view `Task` only, `Event` only or both in the GUI.
 
-_Figure 10_ below shows how the relevant primary and secondary components interact
+_Figure 30_ below shows how the relevant primary and secondary components interact
 in a scenario where the user issues the command `list task`.
 
-.Relevant components interaction for `list task` command (part 1)
+.Component interactions for `list task` command (part 1)
 image::SDListCommand.png[width='650']
 
 _Figure 11_ below shows how the `EventsCenter` reacts to that event, which eventually
 results in 'centerStagePlaceholder` of the UI being updated to display `TaskView`.
 
-.Relevant components interaction for `list task` command (part 2)
+.Component interactions for `list task` command (part 2)
 image::SDListCommandEventHandling.png[width='650']
 
 The following snippet shows how `execute()` of `ListCommand` displays `Task` and/or `Event` objects in the GUI.
@@ -821,7 +889,7 @@ definitely the preferred approach here.
 [discrete]
 
 // tag::storage[]
-=== Managing Desk Board Storage
+=== Desk Board Storage Management
 
 This section describes the implementation and design considerations for the storage of `Task` and `Event` objects.
 
@@ -836,7 +904,7 @@ In CLIndar, Desk Board data are stored using an xml file. For this purpose, `Des
 is converted into `XmlSerializableDeskBoard` containing `XmlAdaptedTask` and `XmlAdaptedEvent` objects.
 These xml-adapted objects have the same attributes as the objects they represent.
 However, the attributes are converted into `String` which can then be stored into xml format.
-Similar to how `Task` and `Event` objects inherit from `Activity` class (as discussed in <<Implementation - Activity, Managing Activities>>),
+Similar to how `Task` and `Event` objects inherit from `Activity` class (as discussed in <<Implementation - Activity, Activity Management>>),
 their xml-adapted equivalents inherit from `XmlAdaptedActivity` class.
 The constructor method of `XmlAdaptedActivity` below illustrates how a `Task` object can be converted into
 an `XmlAdaptedTask` object.
@@ -975,20 +1043,20 @@ This section describes various design considerations related to the implementati
 // end::storage[]
 
 // tag::undoredo[]
-=== Undoing/Redoing Commands
+=== Undo/Redo Commands
 
 The current implementation and design considerations for the undo/redo feature are explained in this section.
 
 ==== Current implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the desk board (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of Desk Board (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
-.Class Diagram of a Logic Command
+.Class diagram of a Logic command
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the desk board before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of Desk Board before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -1023,12 +1091,18 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th activity in the desk board. The current state of the desk board is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th activity in Desk Board. The current state of Desk Board is saved before the `delete 5` command executes.
+The `delete 5` command will then be pushed onto the `undoStack`
+(the current state is saved together with the command) as shown in _Figure 31_ below.
 
+.Undo and redo starting stack diagram
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new activity.
+As the user continues to use the program, more commands are added into the `undoStack`.
+For example, the user may execute `add n/David ...` to add a new activity.
+_Figure 32_ shows the undo and redo stack diagram after the add command is executed.
 
+.Undo and redo stack diagram after more command is added
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
@@ -1036,9 +1110,10 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the activity was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the desk board to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore Desk Board to the state before the `add` command executed.
+_Figure 33_ below shows the undo and redo stacks after the redo command is executed.
 
-.'Undo' stack pops into the 'Redo' Stack
+.Undo stack pops into the redo stack
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -1046,27 +1121,27 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
-.'Undo' and 'Redo' Stack Sequence Diagram
+.Undo and redo stack sequence diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo command does the exact opposite (pops from `redoStack`, pushes to `undoStack`, and restores the desk board to the state after the command is executed).
+The redo command does the exact opposite (pops from `redoStack`, pushes to `undoStack`, and restores Desk Board to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
-.Adding 'ClearCommand' to the 'Undo' Stack
+.Adding 'ClearCommand' to the undo stack
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
-.'ListCommand' does not affect the 'Undo' Stack
+.'ListCommand' does not affect the undo stack
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
-.Activity Diagram for 'Undo' and 'Redo'
+.Activity diagram for undo and redo
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design considerations
@@ -1086,7 +1161,7 @@ This section describes various design considerations related to the implementati
 [discrete]
 ===== Aspect: Execution of undo and redo
 
-* **Alternative 1 (current choice):** Save the entire desk board.
+* **Alternative 1 (current choice):** Save the entire Desk Board data.
 ** Pros: This is easy to implement.
 ** Cons: There may be performance issues in terms of memory usage.
 * **Alternative 2:** Make individual command know how to undo/redo itself.
@@ -1096,12 +1171,12 @@ This section describes various design considerations related to the implementati
 [discrete]
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the desk board (`add`, `clear`, `edit`).
+* **Alternative 1 (current choice):** Only include commands that modifies Desk Board data (`add`, `clear`, `edit`).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost).
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
 ** Pros: This might be more intuitive to the user.
-** Cons: User has no way of skipping such commands if he or she just want to reset the state of the desk board and not the view.
+** Cons: User has no way of skipping such commands if he or she just want to reset the state of Desk Board and not the view.
 
 * **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
@@ -1270,9 +1345,9 @@ To run tests in headless mode, open a console and run the command `gradlew clean
 
 === Test Types
 
-We have two types of tests, based on whether the tests involve the GUI:
+There is two types of tests, based on whether the tests involve the GUI:
 
-.  *GUI tests* which include:
+.  *GUI tests* which include :
 .. _System tests_ +
 These test the entire App by simulating user actions on the GUI. System tests are in the `systemtests` package.
 .. _Unit tests_ +
@@ -1385,12 +1460,12 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the desk board, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in Desk Board, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the desk board.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in Desk Board.
 +
 ****
 * Hints
@@ -1409,7 +1484,7 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your desk board application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last activity in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use CLIndar. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last activity in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
@@ -1459,7 +1534,7 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the desk board.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in Desk Board.
 +
 **Before**
 +
@@ -1472,7 +1547,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the desk board is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever Desk Board is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of activities when the application just started.
 ** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of activities whenever there are new changes to the addressbook.
@@ -1484,12 +1559,12 @@ image::getting-started-ui-status-after.png[width="500"]
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the desk board to the cloud. However, the current implementation of the application constantly saves the desk board after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the desk board storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving Desk Board to the cloud. However, the current implementation of the application constantly saves Desk Board after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for Desk Board storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the desk board can be saved in a fixed temporary location.
+. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that Desk Board can be saved in a fixed temporary location.
 +
 ****
 * Hint
@@ -1519,7 +1594,7 @@ Removes the remark for the first activity.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
+===== [Step 1] Logic: Teach the app to accept `remark` which does nothing
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
 
 **Main:**

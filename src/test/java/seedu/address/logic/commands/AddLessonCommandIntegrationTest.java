@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SIXTH;
 import static seedu.address.testutil.TypicalLessons.ALICE_WED_15_17;
 import static seedu.address.testutil.TypicalLessons.FIONA_SAT_15_17;
 import static seedu.address.testutil.TypicalLessons.getTypicalSchedule;
@@ -19,7 +20,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.lesson.Lesson;
 import seedu.address.model.student.Student;
 
-
+//@@author demitycho
 /**
  * Contains integration tests (interaction with the Model) for {@code AddLessonCommand}.
  */
@@ -38,10 +39,10 @@ public class AddLessonCommandIntegrationTest {
         Lesson lesson = FIONA_SAT_15_17;
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), model.getSchedule());
-        Student student = expectedModel.getAddressBook().getStudentList().get(5);
+        Student student = expectedModel.getAddressBook().getStudentList().get(INDEX_SIXTH.getZeroBased());
         expectedModel.addLesson(student, lesson.getDay(), lesson.getStartTime(), lesson.getEndTime());
 
-        assertCommandSuccess(prepareCommand(Index.fromOneBased(6), lesson), model,
+        assertCommandSuccess(prepareCommand(INDEX_SIXTH, lesson), model,
                 String.format(AddLessonCommand.MESSAGE_SUCCESS, student.getName()), expectedModel);
     }
 

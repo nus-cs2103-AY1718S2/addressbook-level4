@@ -46,8 +46,6 @@ include::../UserGuide.adoc[tag=birthdays]
 
 include::../UserGuide.adoc[tag=union]
 
-include::../UserGuide.adoc[tag=FAQ]
-
 == Contributions to the Developer Guide
 
 |===

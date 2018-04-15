@@ -313,7 +313,8 @@ If you follow all the examples so far, this person's calendar should be deleted 
 // tag::removeTag[]
 ==== Removing a tag : `removeTag` [Since v1.2]
 
-Removes the specified tag from every person in CelebManager and shows the number of person(s) affected by this
+Removes the specified tag from every person in CelebManager (including persons who may not be currently shown in `PersonListPanel`)
+and shows the number of person(s) affected by this
 operation. +
 Alias: `rt` +
 Format: `removeTag TAG`

@@ -33,7 +33,7 @@ calendar inside CeleManager and makes the calendar a powerful visualisation tool
 understand which methods to be used to update the calendar UI. Also, additional variables were created
 to keep track of the current calendar's status to preserve the original ways of interaction between different
 components.
-** Credits: [http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[CalendarFX]]
+** Credits: http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[CalendarFX]
 
 * *Major enhancement*: added *the ability to delete an appointment*
 ** What it does: This enhancement refers to the command, `deleteAppointment`. It allows users to delete an existing
@@ -42,32 +42,34 @@ appointment.
 get rid of appointments that are cancelled or no longer needed.
 ** Highlights: This enhancement requires an understanding of how appointments are stored and can be removed from the
 calendar visually.
-** Credits: [http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[CalendarFX]]
+** Credits: http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[CalendarFX]
 
 * *Minor enhancement*: added *the ability to list appointments within a given date range*
 
 * *Minor enhancement*: added *the ability to remove a tag from all contacts*
 
-* *Code contributed*:
-[https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/functional/WJY-norainu.md[Functional code]]
-[https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/test/WJY-norainu.md[Test code]]
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/functional/WJY-norainu.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/test/WJY-norainu.md[Test code]]
 
 * *Other contributions*:
 
 ** Enhancements to existing features:
 *** Added support for deleting celebrity using the existing command `delete`. This enhancement ensures the removal
 of the deleted celebrity from the appointments he/she is attending, as well as the deletion of his/her calendar.
-(Pull request: https://github.com/CS2103JAN2018-W14-B4/main/pull/119)
+(Pull request: https://github.com/CS2103JAN2018-W14-B4/main/pull/119[#119])
 *** Created TypicalCelebrities, modified getTypicalPersons to facilitate testing of new features
-(Pull request: https://github.com/CS2103JAN2018-W14-B4/main/pull/121)
+(Pull request: https://github.com/CS2103JAN2018-W14-B4/main/pull/121[#121])
 ** Documentation:
-*** Standardised the language of existing contents of the User Guide and Developer Guide: +
-https://github.com/CS2103JAN2018-W14-B4/main/pull/179 +
-https://github.com/CS2103JAN2018-W14-B4/main/pull/188
-*** Collated codes for `v1.4` release
+*** Contributed to the content of User Guide and Developer Guide: +
+https://github.com/CS2103JAN2018-W14-B4/main/pull/95[#95],
+https://github.com/CS2103JAN2018-W14-B4/main/pull/99[#99],
+https://github.com/CS2103JAN2018-W14-B4/main/pull/140[#140],
+https://github.com/CS2103JAN2018-W14-B4/main/pull/175[#175],
+https://github.com/CS2103JAN2018-W14-B4/main/pull/179[#179],
+https://github.com/CS2103JAN2018-W14-B4/main/pull/188[#188]
+*** Collated codes for `v1.4` and `v1.5` release
 ** Community:
 *** Reported bugs and suggestions for other teams in the class
-(examples:  https://github.com/CS2103JAN2018-T09-B3/main/issues/195)
+(examples:  https://github.com/CS2103JAN2018-T09-B3/main/issues/195[#195])
 
 == Contributions to the User Guide
 
@@ -117,7 +119,7 @@ Examples:
 Changes the base date of calendar to `03-05-2018` and displays the calendar by day for `03-05-2018` as shown below.
 
 .State of `CalendarPanel` after executing `viewDate 03-05-2018`
-image::ViewDate03-05-2018.jpg[width=""]
+image::ViewDate03-05-2018.jpg[width="500"]
 
 * `viewDate` +
 Changes the base date of calendar to current date and displays the calendar by day for current date. +
@@ -133,7 +135,7 @@ for May of 2018.
 ====  Deleting an appointment `deleteAppointment` [Since v1.4]
 
 Pre-requisite: you can only edit an appointment when `CalendarPanel` is showing an appointment list.
-Refer to <<Listing appointments: `listAppointment` [Since v1.5]>> for more information. +
+Refer to User Guide - Listing appointments: `listAppointment` [Since v1.5] for more information. +
 
 Deletes the specified appointment. +
 Alias: `da` +

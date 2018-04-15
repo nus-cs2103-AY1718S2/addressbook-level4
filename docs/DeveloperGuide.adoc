@@ -137,7 +137,7 @@ image::Architecture.png[width="600"]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 ////
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
+`Main` has only one class called link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
 * Initializing the components in the correct sequence and connects them up with each other at application launch.
 * Shutting down the components and invokes cleanup method where necessary.
@@ -198,14 +198,15 @@ The following diagram shows the class diagram of the `UI` component.
 .Class diagram of the `UI` component
 image::UiClassDiagram.png[width="800"]
 
-*API*: link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarPanel` etc.
 All these classes inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework.
 The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder.
-For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
+For example, the layout of the link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is
+specified in link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
 The `UI` component,
 
@@ -226,7 +227,7 @@ image::LogicClassDiagram.png[width="800"]
 .Structure of commands in the `Logic` component
 image::LogicCommandClassDiagram.png[width="800"]
 
-*API*: link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 When the user types in a new command to be parsed:
 
@@ -249,7 +250,7 @@ It describes the overall structure of the `Model` component, along with all its 
 .Class diagram of the `Model` component
 image::ModelClassDiagram.jpg[width="800"]
 
-*API*: link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model` component:
 
@@ -270,7 +271,7 @@ It describes how the overall structure of the `Storage` component and its differ
 .Class diagram of the `Storage` component
 image::StorageClassDiagram.png[width="800"]
 
-*API*: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component:
 
@@ -290,7 +291,7 @@ This feature allows the user to remove a specified tag from all the contacts.
 
 ==== Current Implementation
 
-The tag removal mechanism is facilitated by both `RemoveTagCommand` class, which resides inside `LogicManager`, and
+The tag removal mechanism is facilitated by both `RemoveTagCommand` class, which resides inside `Logic`, and
 `removeTag` method, which resides in `AddressBook`. This feature removes a specified tag from each person who has it in the
 address book. `RemoveTagCommand` class inherits from the `UndoableCommand` class and hence supports the `undo` and `redo` features.
 
@@ -386,7 +387,7 @@ public class AddressBook {
 }
 ----
 
-Note that `removeTag` makes use of `EditPersonDescriptor` class to creates a new `person` without the tag, to replace
+Note that `removeTag` makes use of `EditPersonDescriptor` class to create a new `person` without the tag, to replace
 the original `person` with the tag.
 
 Additionally, `removeUnusedTags` is called inside `removeTag` when there is at least one person affected by the removal.
@@ -397,17 +398,17 @@ As an example, the following sequence diagram shows the interaction within class
 the user executes `removeTag friends` successfully:
 
 .Sequence diagram of `removeTag` command
-image::RemoveTagSequenceDiagram.png[width=""]
+image::RemoveTagCommand-logic-seq-diagram.jpg[width=""]
 
 ==== Design Considerations
 ===== Aspect: Command result for removal of `celebrity` tag
 * **Alternative 1 (current choice):** Output an error message saying that the `celebrity` tag cannot be removed
 ** Pros: Prevents `removeTag` from affecting the calendar as celebrities will not get affected by this operation.
 ** Cons: Results in no available method to mass remove `celebrity` tag.
-* **Alternative 2:** Remove `celebrity` tag and clears all calendars
+* **Alternative 2:** Remove `celebrity` tag and clear all calendars
 ** Pros: Provides an easy way to mass remove `celebrity` tag and clears all celebrities from the address book.
-** Cons: Requires the creation of additional events to interact with `CalendarPanel` as calendars are under
-UI component, which logic component has no directly access to.
+** Cons: As changes made to calendars and appointments are not undoable,
+removing `celebrity` tag by mistake can result in loss of all celebrities' calendar and appointment information.
 // end::removeTag[]
 
 
@@ -1318,7 +1319,7 @@ Please refer to <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
 To do the following steps to create a new release, you can:
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+.  Update the version number in link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number, e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
@@ -1482,6 +1483,13 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+* 3b. The person at the given index is a celebrity.
++
+[none]
+** 3b1. CelebManager deletes the celebrity's calendar.
++
+Use case continues to step 4.
+
 === Use case: Undo
 
 *MSS*
@@ -1539,6 +1547,13 @@ Use case ends.
 +
 [none]
 ** 1a1. CelebManager shows an error message.
++
+Use case ends.
+
+* 1b. The tag is celebrity.
++
+[none]
+** 1b1. CelebManager shows an error message.
 +
 Use case ends.
 
@@ -1610,6 +1625,14 @@ Use case ends.
 Use case ends.
 
 [none]
+* 1b. The entered start date is after end date.
++
+[none]
+** 1b1. CelebManager outputs an error message.
++
+Use case ends.
+
+[none]
 * 2a. There is no appointment to show in the date range.
 +
 [none]
@@ -1635,6 +1658,14 @@ Use case ends.
 +
 [none]
 ** 1a1. CelebManager outputs an error message.
++
+Use case ends.
+
+[none]
+* 1b. The entered start date is after end date.
++
+[none]
+** 1b1. CelebManager outputs an error message.
 +
 Use case ends.
 
@@ -1829,13 +1860,13 @@ Windows, Linux, Unix, OS-X
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
-[[celebcalendar]] Celeb calendar::
+[[celebcalendar]] StorageCalendar::
 A calendar that contains all appointments a celebrity managed by the user has
 
 [[calendar-view]] Calendar view::
 The way in which appointments are displayed in calendar +
 [TIP]
-CelebManager currently supports displaying by day, week, month and year.
+CelebManager currently supports displaying by day, week and month.
 
 [[appointment]] Appointment::
 A meeting between contacts at a specific time, date and location +
@@ -1988,7 +2019,7 @@ This section includes instructions to test the `deleteAppointment` command of th
 [NOTE]
 Prerequisites: List appointments using the `listAppointment` command. At least one appointment in the list.
 
-. while listing appointments:
+. While listing appointments:
 .. Type `deleteAppointment 0` in command box and press enter. +
    _Expected: No appointment is deleted. Error details shown in the status message. Appointment list remains the same._
 .. Type `deleteAppointment 1` in command box and press enter. +

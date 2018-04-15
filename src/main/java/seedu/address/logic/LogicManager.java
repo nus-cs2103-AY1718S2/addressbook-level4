@@ -37,6 +37,14 @@ public class LogicManager extends ComponentManager implements Logic {
         clearRedundantImages();
     }
 
+    public LogicManager(Model model) {
+        this.model = model;
+        history = new CommandHistory();
+        addressBookParser = new AddressBookParser();
+        undoRedoStack = new UndoRedoStack();
+        clearRedundantImages();
+    }
+
     //@@author Alaru
     /**
      * Clears the data folder of redundant images

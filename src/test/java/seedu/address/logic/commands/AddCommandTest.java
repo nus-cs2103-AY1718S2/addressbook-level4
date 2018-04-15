@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -14,17 +15,32 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.google.gdata.util.ServiceException;
+
 import javafx.collections.ObservableList;
+
+import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.ReadOnlySchedule;
+import seedu.address.model.Schedule;
+import seedu.address.model.lesson.Day;
+import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.Time;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
+import seedu.address.model.student.Student;
+import seedu.address.model.student.exceptions.DuplicateStudentException;
+import seedu.address.model.student.exceptions.StudentNotFoundException;
+import seedu.address.model.tag.Tag;
+
+import seedu.address.testutil.StudentBuilder;
 
 public class AddCommandTest {
 
@@ -32,37 +48,37 @@ public class AddCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullStudent_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_studentAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingStudentAdded modelStub = new ModelStubAcceptingStudentAdded();
+        Student validStudent = new StudentBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddCommandForStudent(validStudent, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validStudent), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validStudent), modelStub.studentsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateStudent_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateStudentException();
+        Student validStudent = new StudentBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_STUDENT);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddCommandForStudent(validStudent, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+        Student alice = new StudentBuilder().withName("Alice").build();
+        Student bob = new StudentBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
@@ -79,15 +95,15 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different student -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddCommand with the details of the given student.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddCommand getAddCommandForStudent(Student student, Model model) {
+        AddCommand command = new AddCommand(student);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -97,12 +113,12 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
+        public void addStudent(Student student) throws DuplicateStudentException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newData, ReadOnlySchedule schedule) {
             fail("This method should not be called.");
         }
 
@@ -113,58 +129,115 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
+        public void deleteStudent(Student target) throws StudentNotFoundException, LessonNotFoundException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
+        public void updateStudent(Student target, Student editedStudent)
+                throws DuplicateStudentException {
             fail("This method should not be called.");
         }
 
         @Override
-        public ObservableList<Person> getFilteredPersonList() {
+        public ObservableList<Student> getFilteredStudentList() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
+        public void updateFilteredStudentList(Predicate<Student> predicate) {
             fail("This method should not be called.");
         }
+        @Override
+        public void deleteTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void updateProfilePicture(Student target, Student editedStudent, Student finalEditedStudent)
+                throws DuplicateStudentException, StudentNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addLesson(Student student, Day day, Time start, Time end)
+                throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void deleteLesson(Lesson lesson) throws LessonNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public Schedule getSchedule() {
+            fail("This method should not be called");
+            return null;
+        }
+
+        @Override
+        public void loginGoogleAccount() throws CredentialsException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void logoutGoogleAccount() throws CredentialsException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void synchronize() throws ServiceException, IOException {
+            fail("This method should not be called");
+        }
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicateStudentException when trying to add a student.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateStudentException extends ModelStub {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addStudent(Student student) throws DuplicateStudentException {
+            throw new DuplicateStudentException();
         }
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public Schedule getSchedule() {
+            return new Schedule();
+        }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the student being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingStudentAdded extends ModelStub {
+        final ArrayList<Student> studentsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addStudent(Student student) throws DuplicateStudentException {
+            requireNonNull(student);
+            studentsAdded.add(student);
         }
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public Schedule getSchedule() {
+            return new Schedule();
         }
     }
 

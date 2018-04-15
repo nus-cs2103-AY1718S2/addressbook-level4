@@ -1,0 +1,64 @@
+/**
+*@@author samuelloh
+*/
+
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+}
+
+.background {
+    background-color: white;
+}
+
+#name {
+	text-align: center;
+	font-size: 500%;
+	margin: 0 auto;
+	border: 1%;
+	padding: 1%;
+	word-wrap: break-word;
+	font-family: Arial;
+}
+#profilePicture {
+	margin-left: 6%;
+	width: 18%;
+	height: 40%;
+	float:left;
+}
+
+.infoPartOne {
+	margin-right : 7%;
+	border-style: solid;
+	border-width: thick;
+	width : 65%;
+	float: right;
+	padding: 1%;
+}
+
+.divider {
+	clear: both;
+	margin-bottom: 0.5%;
+	padding-bottom: 0.5%;
+}
+
+.infoPartTwo {
+	margin-left: 6%;
+	border-style: solid;
+	border-width: thick;
+	width : 85%;
+	padding: 1%;
+}
+
+#phone, #email, #address, #programmingLanguage, #tags, #allergies, #nextOfKinName, #nextOfKinPhone, #remarks {
+	font-size: 175%;
+	word-wrap: break-word;
+	font-family: Arial;
+	line-height: 20px;
+}
+/**
+*@@author
+*/

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- AddressBook save file which contains the same Student values as in
+{@code TypicalStudents#getTypicalAddressBook()}-->
+<addressbook>
+    <students>
+        <key>c5daab</key>
+        <name>Alice Pauline</name>
+        <phone>85355255</phone>
+        <email>alice@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <tagged>friends</tagged>
+		<programmingLanguage>Java</programmingLanguage>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
+    </students>
+    <students>
+        <key>558a24</key>
+        <name>Benson Meier</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+		<programmingLanguage>Java</programmingLanguage>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
+        <favourite>false</favourite>
+        <dashboard>
+            <milestoneList>
+                <dueDate>31/12/2018 23:59</dueDate>
+                <progress>0/1</progress>
+                <description>Arrays</description>
+                <tasksList>
+                    <name>Learn Array syntax</name>
+                    <description>Refer to textbook</description>
+                    <isCompleted>false</isCompleted>
+                </tasksList>
+            </milestoneList>
+        </dashboard>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </students>
+    <students>
+        <key>8e90ba</key>
+        <name>Carl Kurz</name>
+        <phone>95352563</phone>
+        <email>heinz@example.com</email>
+        <address>wall street</address>
+		<programmingLanguage>Java</programmingLanguage>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
+    </students>
+    <students>
+        <key>dd5605</key>
+        <name>Daniel Meier</name>
+        <phone>87652533</phone>
+        <email>cornelia@example.com</email>
+        <address>10th street</address>
+		<programmingLanguage>Java</programmingLanguage>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
+    </students>
+    <students>
+        <key>abbcfd</key>
+        <name>Elle Meyer</name>
+        <phone>9482224</phone>
+        <email>werner@example.com</email>
+        <address>michigan ave</address>
+		<programmingLanguage>Java</programmingLanguage>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
+    </students>
+    <students>
+        <key>9d2b20</key>
+        <name>Fiona Kunz</name>
+        <phone>9482427</phone>
+        <email>lydia@example.com</email>
+        <address>little tokyo</address>
+		<programmingLanguage>Java</programmingLanguage>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
+		<miscellaneousInfo>
+            <allergies>nuts</allergies>
+            <nextOfKinName>Not updated</nextOfKinName>
+            <nextOfKinPhone>000</nextOfKinPhone>
+            <remarks>well behaved</remarks>
+        </miscellaneousInfo>
+    </students>
+    <students>
+        <key>4e0965</key>
+        <name>George Best</name>
+        <phone>9482442</phone>
+        <email>anna@example.com</email>
+        <address>4th street</address>
+		<programmingLanguage>Java</programmingLanguage>
+		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
+        <favourite>false</favourite>
+        <dashboard/>
+            <milestoneList/>
+		<miscellaneousInfo>
+            <allergies>Not updated</allergies>
+            <nextOfKinName>Sam</nextOfKinName>
+            <nextOfKinPhone>90123456</nextOfKinPhone>
+            <remarks>No remarks</remarks>
+        </miscellaneousInfo>
+    </students>
+    <tags>friends</tags>
+    <tags>owesMoney</tags>
+</addressbook>

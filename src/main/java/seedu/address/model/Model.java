@@ -1,48 +1,84 @@
 package seedu.address.model;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 
+import com.google.gdata.util.ServiceException;
+
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.commons.exceptions.StorageFileMissingException;
+import seedu.address.external.exceptions.CredentialsException;
+import seedu.address.model.lesson.Day;
+import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.Time;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
+import seedu.address.model.lesson.exceptions.LessonNotFoundException;
+import seedu.address.model.student.Student;
+import seedu.address.model.student.exceptions.DuplicateStudentException;
+import seedu.address.model.student.exceptions.StudentNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Student> PREDICATE_SHOW_ALL_STUDENTS = unused -> true;
+    Predicate<Student> PREDICATE_SHOW_FAVOURITE_STUDENTS = Student::isFavourite;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyAddressBook newData, ReadOnlySchedule schedule);
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
-    /** Deletes the given person. */
-    void deletePerson(Person target) throws PersonNotFoundException;
+    /** Deletes the given student. */
+    void deleteStudent(Student target)
+            throws DuplicateLessonException, InvalidLessonTimeSlotException,
+            StudentNotFoundException, LessonNotFoundException;
 
-    /** Adds the given person */
-    void addPerson(Person person) throws DuplicatePersonException;
+    /** Adds the given student */
+    void addStudent(Student student) throws DuplicateStudentException;
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Replaces the given student {@code target} with {@code editedStudent}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws DuplicateStudentException if updating the student's details causes the student to be equivalent to
+     *      another existing student in the list.
+     * @throws StudentNotFoundException if {@code target} could not be found in the list.
      */
-    void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException;
+    void updateStudent(Student target, Student editedStudent)
+            throws DuplicateStudentException, StudentNotFoundException;
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered student list */
+    ObservableList<Student> getFilteredStudentList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered student list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredStudentList(Predicate<Student> predicate);
 
+    /** Removes the given {@code tag} from all {@code Student}s. */
+    void deleteTag(Tag tag);
+
+    void addLesson(Student student, Day day, Time startTime, Time endTime)
+            throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException;
+
+    void deleteLesson(Lesson target) throws LessonNotFoundException;
+
+    ReadOnlySchedule getSchedule();
+
+    void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException,
+            StorageFileMissingException;
+
+    void updateProfilePicture(Student target, Student editedStudent, Student finalEditedStudent)
+        throws DuplicateStudentException, StudentNotFoundException;
+
+    void loginGoogleAccount() throws CredentialsException, IOException;
+
+    void logoutGoogleAccount() throws CredentialsException;
+
+    void synchronize() throws ServiceException, IOException;
 }

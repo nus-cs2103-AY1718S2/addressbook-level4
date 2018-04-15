@@ -1,0 +1,85 @@
+= Tan Wei Hao - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Codeducator
+
+---
+
+== Overview
+
+Codeducator is a desktop address book application for private programming language tutors.
+Users are able to track the progress of their students, manage their tutoring schedule and other important information about their students. +
+
+Codeducator has a graphical user interface built with JavaFX but most of the user interactions are done using command line interface. It is written in Java and has about 10 kLoC. +
+
+This project is based on the https://github.com/se-edu/addressbook-level4[AddressBook-Level4] created by the SE-EDU initiative.
+
+== Summary of contributions
+
+* *Major enhancement*: added *Scheduling* functionality and *Google Services integration*.
+** What it does: It allows a user to add lessons for students in their contact list.
+*** Schedule helps tutors keep track of their lessons.
+*** Lessons can be added to the schedule.
+*** Users can upload contacts data and schedule data to Google Contacts and Calendar respectively.
+*** Easy organisation of data: Data uploaded to Google Contact is uploaded under contact group label "Students". Data uploaded to Google Calendar is uploaded under calendar name "Student List". This make the process of utilising Google Accounts much easier.
+
+** Justification: This feature improves the product significantly because:
+*** The target user faces a big problem in keeping track of their timetable and schedule. This feature allows a user to easily add, remove and view the events specific to his part time teaching job.
+*** Sync helps to push contacts and schedule to the cloud and be utilised by users in the cloud data context, e.g. viewing across devices
+
+** Highlights: Scheduling required an addition of a major component not in the default AddressBook-level4.
+It required an in-depth analysis of design alternatives.
+The implementation too was challenging as it required fundamental changes the existing Model objects.
+Relating lessons with students required a refactor of `Student` class
+** Credits:
+*** Uses the excellent link:https://github.com/dlemmermann/CalendarFX[CalendarFX] class that was thankfully open source at the time of implementation.
+*** Uses Google APIs, which are very well documented and well developed. Made my life easier when exploring the option of Google Service integration.
+* *Minor enhancement*: added a findTag command that allows the user to find Students by Tags.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/functional/demitycho.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/test/demitycho.md[Test code]]
+Both add up to around 3k lines of code.
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` and `v1.5rc` (2 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the current GUI color scheme (Pull requests https://github.com/CS2103JAN2018-W09-B3/main/pull/154[#154])
+*** Refactored `AddressBook` into a relational database where students are related to lessons by a `Uniquekey`
+** Documentation:
+*** Refactored User guide with a more user-friendly tone, where it was more conversational and not so instructional. Gave the user guide a more personalised touch.
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-W09-B3/main/pull/174[#174]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W09-B3/main/pull/167[#167]
+*** Reported bugs for another team: https://github.com/CS2103JAN2018-W10-B4/main/issues/128[1], https://github.com/CS2103JAN2018-W10-B4/main/issues/131[2], https://github.com/CS2103JAN2018-W10-B4/main/issues/132[3], https://github.com/CS2103JAN2018-W10-B4/main/issues/133[4], https://github.com/CS2103JAN2018-W10-B4/main/issues/136[5], https://github.com/CS2103JAN2018-W10-B4/main/issues/138[6], https://github.com/CS2103JAN2018-W10-B4/main/issues/142[7], https://github.com/CS2103JAN2018-W10-B4/main/issues/146[8], https://github.com/CS2103JAN2018-W10-B4/main/issues/147[9]
+** Tools:
+*** Integrated a third party library (Google APIs) to the project (https://github.com/CS2103JAN2018-W09-B3/main/pull/95[#95])
+
+== Contributions to the User Guide
+
+|===
+|Given below are sections I contributed to the User Guide.
+ They showcase my ability to write documentation targeting end-users.
+ I wrote extensive documentation on my parts in my user and developer guides, but excluded them to fit within the page limit.
+|===
+
+Start of extract from [User Guide]
+
+== Scheduling component
+include::../UserGuide.adoc[tag=schedule]
+
+End of extract from [User Guide]
+
+And more (Deleting lessons, syncing with Google)...
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+Start of extract from [Developer Guide]
+include::../DeveloperGuide.adoc[tag=schedule]
+End of extract from [Developer Guide]
+
+

@@ -1,3 +1,24 @@
+.dashboard-pane {
+    -fx-background-color: white;
+}
+
+.dashboard-title {
+    -fx-font-size: 18pt;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.dashboard-label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+}
+
+.milestone-title {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-fill: #010504;
+}
+
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);
     background-color: #383838; /* Used in the default.html file */
@@ -130,6 +151,12 @@
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
     -fx-text-fill: #010504;
+}
+
+.cell_small_label_black {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #030303;
 }
 
 .anchor-pane {
@@ -342,10 +369,58 @@
 }
 
 #tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#tags .teal {
+    -fx-text-fill: black;
+    -fx-background-color: teal;
+}
+
+#tags .red {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+}
+
+#tags .blue {
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+}
+
+#tags .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#tags .yellow {
+    -fx-text-fill: black;
+    -fx-background-color: yellow;
+}
+
+#tags .cyan {
+    -fx-text-fill: black;
+    -fx-background-color: cyan;
+}
+
+#tags .gold {
+    -fx-text-fill: white;
+    -fx-background-color: gold;
+}
+#tags .khaki {
+    -fx-text-fill: black;
+    -fx-background-color: khaki;
+}
+
+#tags .green {
+    -fx-text-fill: black;
+    -fx-background-color: green;
+}
+
+#tags .olive {
+    -fx-text-fill: white;
+    -fx-background-color: olive;
+}
+

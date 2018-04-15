@@ -28,9 +28,33 @@ public class XmlFileStorage {
      * Returns address book in the file or an empty address book
      */
     public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
-                                                                            FileNotFoundException {
+            FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
+
+    /**
+     * Saves the given schedule data to the specified file.
+     */
+    public static void saveScheduleDataToFile(File file, XmlSerializableSchedule schedule)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, schedule);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage());
+        }
+    }
+
+    /**
+     * Returns schedule in the file or an empty schedule
+     */
+    public static XmlSerializableSchedule loadScheduleDataFromSaveFile(File file) throws DataConversionException,
+            FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableSchedule.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

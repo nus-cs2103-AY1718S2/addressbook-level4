@@ -11,7 +11,9 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String addressBookName = "CodeducatorAddressBook";
+    private String scheduleFilePath = "data/schedule.xml";
+    private String scheduleName = "CodeducatorScheduler";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -43,6 +45,22 @@ public class UserPrefs {
 
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
+    }
+
+    public String getScheduleFilePath() {
+        return scheduleFilePath;
+    }
+
+    public void setScheduleFilePath(String scheduleFilePath) {
+        this.scheduleFilePath = scheduleFilePath;
+    }
+
+    public String getScheduleName() {
+        return scheduleName;
+    }
+
+    public void setScheduleName(String scheduleName) {
+        this.scheduleName = scheduleName;
     }
 
     @Override

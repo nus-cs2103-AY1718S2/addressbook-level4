@@ -1,37 +1,108 @@
-= AddressBook Level 4 - User Guide
+= image:CodeducatorTitle.png[width=60px] Codeducator - User Guide
+:imagesDir: images
 :toc:
 :toc-title:
 :toc-placement: preamble
+:toclevels: 3
 :sectnums:
-:imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
 :experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W09-B3/main/releases
+:contactsURL: https://contacts.google.com/
+:calendarURL: https://calendar.google.com/calendar/r/week
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B3`      Since: `Mar 2018`      Licence: `MIT`
 
-== Introduction
+== Welcome to Codeducator!
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Codeducator is a desktop address book and scheduling application for private programming language tutors who *prefer to use a desktop app for managing the contacts of students*. +
+
+You can also use Codeducator to track the progress of your students, manage your tutoring schedule and other important information about your students. More importantly, Codeducator is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Codeducator can get your contact management tasks done faster than traditional GUI apps. +
+
+Interested? Jump to the <<Quick Start>> to get started. +
+
+You may want to read <<Quick Overview>> to check out the User Interface, or <<How to use this User Guide>> to find out about the format of our help guide
+
+Enjoy using Codeducator!
+
+=== Quick Overview
+
+Codeducator’s user interface is split into a few sections. These sections are highlighted in the image below.
+
+image::CodeducatorTagged.png[width="850"]
+
+. *Command Box* +
+  Where you type your commands
+. *Command Result Box* +
+  The message result of executing your command
+. *Contact List* +
+  Where you keep your contacts
+. *Infopanel* +
+  A small but powerful multi-use window to view your Schedule, Full Information Page and Student Dashboards
+. *Status Bar* +
+  Tells you when you last updated Codeducator data
+
+The Infopanel has three screens, depending on the task you are trying to execute.
+
+. *Schedule* +
+  Tasks related to your Schedule and Student Lessons
++
+image::CodeducatorSchedule.png[width="790"]
++
+. *Full Information Page* +
+  Tasks related to assigning additional information to your student
++
+image::CodeducatorMoreInfo.png[width="790"]
++
+. *Student Dashboard* +
+  Tasks related to assigning your Student milestones in terms of learning
++
+image::CodeducatorDashboard.png[width="790"]
+
+
+=== How to use this User Guide
+
+Everything you need to know about Codeducator is in this user guide.
+
+You can quickly navigate the user guide by clicking on the links found in the table of contents at the top of the user guide.
+
+An example of the user guide for the features is shown below. You can identify the feature’s title, description, format and easy to follow step by step instructions. The instructions will follow this certain format
+
+image::UserGuideTagged.png[width="790"]
+
+. *Feature Title* +
+  This is the name of the feature or command being explained
+. *Description and use case* +
+  This describes the potential situations that you might need to use this command.
+. *Format of command* +
+  The defined structure of the command. See <<The Command Format>> for more information
+. *Steps Taken* +
+  A few example steps to show you how we might do things and what you will see
+  You should have a similar user interface of Codeducator when following the step by step instructions.
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer. You can download the latest Java release https://java.com/en/download/[here].
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `W09-B3-Coeducator.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Codeducator app.
+
+[TIP]
+You may use create a folder called `Codeducator` on your `Desktop`, or in `My Documents` folder
+
+.  Double-click the file to start the app. You should see the application open in a appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::UI.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -47,120 +118,53 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [[Features]]
 == Features
 
-====
-*Command Format*
+Codeducator has many awesome features to help out coding tutors, it may be pretty scary for a first time user. +
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+Don't fret! This user guide will show you the many simple commands that will help you go from zero to a Codeducator hero! +
+
+The subsequent sections of the user guide provides a step by step walk-through of all the commands that Codeducator has to offer.
+
+
+=== The Command Format
+
+====
+
+* Words in `UPPER_CASE` are the _parameters_ to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in square brackets are _optional_ e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times. In addition, the item be left out completely. e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend` or `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+Got it? Good! Let's get started on Codeducator! +
 
-Format: `help`
+=== Basic User Interface Commands
 
-=== Adding a person: `add`
+Let's start slow. This are the basic commands that Codeducator offers.
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+==== Viewing help : `help`
 
-[TIP]
-A person can have any number of tags (including 0)
+Feeling lost and not sure what to do? Can't remember the usage of the command? +
+You can type the help command and Codeducator will open this user guide in-application for your convenience. Don't be afraid to ask for help!
 
-Examples:
+===== Format: `help`
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+===== Steps taken to use the help command
 
-=== Listing all persons : `list`
+. Type help into the command box, and press kbd:[Enter] to execute it. +
++
+.Typing help into command box +
+image::helpStep1.png[width="790"]
++
+. The help window will appear as shown. +
++
+.Help box as shown.
+image::helpResult.png[width="790"]
 
-Shows a list of all persons in the address book. +
-Format: `list`
 
-=== Editing a person : `edit`
+==== Listing entered commands : `history`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+If you wish to execute a command you have entered before, you can use the `history` command to lists all the commands that you have entered in reverse chronological order. +
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
 [NOTE]
@@ -169,14 +173,16 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+If you have mistakenly entered a command and wish to revert it, you can use the `undo` command to restore the address book to the state before. +
+
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+* Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+* The `undo` command currently does not supports reversing dashboard commands (`addMS`, `addTask`, `deleteMS`, `deleteTask` and `checkTask`)
 ====
 
 Examples:
@@ -195,9 +201,10 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+If you have mistakenly used the `undo` command to revert a previous command, you can execute that command again by using the `redo` command. +
+
 Format: `redo`
 
 Examples:
@@ -218,27 +225,1020 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+==== Exiting the program : `exit`
 
-Clears all entries from the address book. +
-Format: `clear`
+If you wish to exit Codeducator, you can use the `exit` command. +
 
-=== Exiting the program : `exit`
-
-Exits the program. +
 Format: `exit`
 
-=== Saving the data
+==== Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+You will not need to save your address book and schedule data manually as Codeducator helps you save these data in the hard disk automatically after any command that changes those data. +
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== AddressBook
+==== Adding a student: `add`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+If you wish to add a student to your address book, you can use the `add` command. +
 
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pl/PROGRAMMING_LANGUAGE [t/TAG]...`
+
+[TIP]
+A student can have any number of tags (including 0)
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pl/Java`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pl/C t/criminal t/NoLife`
+
+==== Listing all students : `list`
+
+If you wish to view a list of all your students in the address book, you can use the `list` command. +
+
+Format: `list [-f]`
+
+[TIP]
+Use the -f flag to view all student in favourites
+
+Examples:
+
+* `list -f` +
+List only all student that you added to favourites
+* `list` +
+List all students
+
+===== Steps taken to view all students in the address book:
+
+*Step 1*: Type `list` into the command box and press kbd:[Enter] to execute it.
+
+.Entering the `list` command
+image::list1_screenshot.png[width="800"]
+
+*Step 2*: The result box will display "Listed all students".
+
+*Step 3*: You will see at the left panel a list of every student contact in your address book. You can scroll down to view more contacts in the list.
+
+.The left panel shows a list of every student contact
+image::list2_screenshot.png[width="800"]
+
+*Steps taken to view all students in favourites*: +
+
+*Step 1*: Type `list -f` into the command box and press kbd:[Enter] to execute it.
+
+.Entering the `list -f` command to view the list of students in favourites
+image::list3_screenshot.png[width="800"]
+
+*Step 2*: The result box will display "Listed all favourite students".
+
+*Step 3*: You will see at the left panel a list of student contacts that are in your favourites. You can scroll down to view more contacts in this favourite list.
+
+.The left panel shows a list of student contacts in favourites
+image::list4_screenshot.png[width="800"]
+
+==== Editing a student : `edit`
+
+If you wish to edit the information of your student in the address book, you can use the `edit` command. +
+
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pl/PROGRAMMING_LANGUAGE] [t/TAG]...`
+
+****
+* Edits the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the student will be removed i.e adding of tags is not cumulative.
+* You can remove all the student's tags by typing `t/` without specifying any tags after it.
+****
+
+[NOTE]
+The `edit` command currently does not support editing of student's dashboard.
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
+
+==== Locating students by name: `find`
+
+If you wish to locate a student in your address book, you can use the `find` command to find and list students whose names contain any of the given keywords. +
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+[TIP]
+If you wish to locate a student by their tag instead, you can use the `findTag` command (see <<Locating students by tags: `findTag`>>)
+
+Examples:
+
+* `find John` +
+Returns `john` and `John Doe`
+* `find Betsy Tim John` +
+Returns any student having names `Betsy`, `Tim`, or `John`
+
+// tag::findTag[]
+==== Locating students by tags: `findTag`
+
+If you wish to locate a student in your address book by their tag, you can use the `findTag` command. +
+
+Format: `findTag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+* The order of the keywords does not matter. e.g. ` friends owesMoney` will match `owesMoney` and `friends`
+* Only the tag is searched.
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends owesMoney` will return a
+student with tags `friends` and `rich`, as well as a student with tags `owesMoney` and `poor`
+****
+
+[TIP]
+If you wish to locate a student by their name instead, you can use the `find` command (see <<Locating students by name: `find`>>)
+
+Examples:
+
+When your AddressBook has a student named John Doe, which you have tagged t/friends and t/owesMoney, and a student named Betsy which you have tagged t/owesMoney and t/poor,
+* `findTag friends` +
+Returns `John Doe`
+* `findTag friends owesMoney` +
+Returns any student having tags `friends`, `owesMoney`, i.e. `John Doe` and `Betsy`
+// end::findTag[]
+
+// tag::favUnfav[]
+==== Adding a student to favourites : `fav`
+
+If you wish to access a student quickly, you can simply add the student as "favourite" using the `fav` command.
+
+Format: `fav INDEX`
+
+****
+* `INDEX` refers to the index number of the student in the most recent listing.
+* `INDEX` *must be a positive integer* 1, 2, 3, ...
+****
+
+[NOTE]
+You can view the list of your favourite students using the command `list -f` (see <<Listing all students : `list`>>).
+
+Example:
+
+* `list` +
+`fav 1` +
+Adds the 1st student in the address book to favourites.
+
+===== Steps taken to add a student to favourites
+
+*Step 1*: First, find the student you wish to add to favourites using the `list` command (see <<Listing all students : `list`>>).
+
+*Step 2*: Once you have found the student you want to add to your favourites, type `fav` into the command box, followed by the `INDEX` of the student in the list. Press kbd:[Enter] to execute it.
+
+.Entering the `fav` command followed by the `INDEX` 1 of the student to add to favourites
+image::fav1_screenshot.png[width="800"]
+
+*Step 3*: You have succeeded in adding the student as favourite when you see "Student added to favourites: [STUDENT'S NAME]" in the result box and the student's name being highlighted in orange.
+
+.Success in adding student "Alex Yeoh" at index 1 to favourites
+image::fav2_screenshot.png[width="800"]
+
+[WARNING]
+The student `INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when an invalid `INDEX` 10 is entered. There are less than 10 students in the student contact list.
+image::fav3_screenshot.png[width="800"]
+
+==== Removing a student from favourites : `unfav`
+
+If you want to remove a student from favourites, you can simply use the `unfav` command. +
+
+Format: `unfav INDEX`
+
+****
+* `INDEX` refers to the index number of the student in the most recent listing.
+* `INDEX` *must be a positive integer* 1, 2, 3, ...
+****
+
+Example:
+
+* `list` +
+`unfav 1` +
+Removes the 1st student in the address book from favourites.
+
+===== Steps taken to remove a student from favourites
+
+*Step 1*: First, find the student you wish to remove from your favourites using the `list -f` command (see <<Listing all students : `list`>>).
+
+*Step 2*: Once you have found the student you want to remove from your favourites, type `unfav` into the command box, followed by the `INDEX` of the student in the list. Press kbd:[Enter] to execute it.
+
+.Entering the `unfav` command followed by the `INDEX` 1 of the student to remove from favourites.
+image::unfav1_screenshot.png[width="800"]
+
+*Step 3*: You have succeeded in removing the student from favourites when you see "Student removed from favourites: [STUDENT'S NAME]" in the result box.
+
+.Success in removing student "Alex Yeoh" from favourites
+image::unfav2_screenshot.png[width="800"]
+
+[WARNING]
+The student `INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when an invalid `INDEX` 10 is entered. There are less than 10 students in the list of favourite students.
+image::unfav3_screenshot.png[width="800"]
+
+// end::favUnfav[]
+
+==== Clearing all entries : `clear`
+
+If you wish to remove all your student contacts in your address book, you can use the `clear` command. +
+
+Format: `clear`
+
+==== Deleting a student : `delete`
+
+If you wish to remove a student contact from the address book, you can use the `delete` command. +
+
+Format: `delete INDEX`
+
+****
+* Deletes the student at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd student in the address book.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st student in the results of the `find` command.
+
+==== Selecting a student : `select`
+
+If you wish to view the address of your student on google map, you can use the `select` command. +
+
+Format: `select INDEX`
+
+****
+* Selects the student at the specified `INDEX` and loads their location on Google Maps.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd student in the address book.
+* `find Betsy` +
+`select 1` +
+Selects the 1st student in the results of the `find` command.
+
+// tag::schedule[]
+=== Schedule
+
+Scheduling is a major feature of Codeducator. To help tutors manage their student lessons, Codeducator has implemented a Schedule component that keeps track of your student lessons on a weekly basis. Codeducator assumes you have regular lessons on a weekly basis. +
+
+.What you will see as a Schedule +
+image::scheduleDiagramUG.png[width="790"]
+
+The Schedule comprises of Lessons. A Lesson represents the tutoring lesson session you will have with a Student in your Contacts List.  +
+
+The Lesson is displayed with +
+
+. The displayed Lesson Index
+. The Student with whom you wil be having the Lesson with.
+
+==== Viewing your Schedule
+
+A quick refresh of what lessons you have in the week is a simple command away. You can easily view your Schedule with a simple command. +
+
+===== Format: `schedule`
+
+===== Steps taken to view your schedule
+
+. Type `schedule` into the command box. Press kbd:[enter] to execute.
++
+.Executing the `schedule` command +
+image::scheduleResult.png[width="790"]
++
+. View your schedule in its entirety!
+
+==== Adding a Lesson to your Schedule
+
+If your student needs extra lessons or you have new students that want lessons, Codeducator will allow you to add Lessons to your schedule.
+
+===== Format: `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]` +
+Adds a lesson for the Student identified by their `INDEX`, for a certain `DAY`, starting at `START_TIME` and ending at `END_TIME` +
+
+* Adds a lesson for the student at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
+* The day for the input is the abbreviated first three letters (_non-case sensitive_) of the name of day, i.e. `mon` for Monday, `fri` for Friday.
+* The time input must be in the format `HH:MM`, seperated by a colon `:`
+* The time input must be a _valid 24-hour time_ within the range of `00:00` to `23:59`
+* Input lesson _cannot clash_ with existing lessons already in the `Schedule`
+* Lessons will be added in chronological order to your `Schedule`
+
+[NOTE]
+--
+* Overnight lessons i.e. `st/23:30 et/00:30` cannot be held. It is assumed that people lead normal lives and work between 00:00 and 23:59 of the same day. +
+* If you need to add a lesson that ends at midnight, enter `23:59`.
+--
+
+Examples:
+
+* `list` +
+`addLesson 1 d/mon st/10:00 et/10:30` +
+Adds a lesson for the 1st student of the `list` command. Lesson will be held on the day of `mon` and starting time will be `10:00` and ending time will be `10:30`.
+
+
+* `find Betsy` +
+`addLesson 1 d/tue st/12:00 et/13:30` +
+Adds a lesson for the 1st student of the `find Betsy` command. Lesson will be held on the day of `tue` and starting time will be `12:00` and ending time will be `13:30`.
+
+===== Steps taken to add a lesson
+
+Let's say that you may want to add a Lesson for Bernice (`index 2`). The lesson time slot would be Sunday, 10:00am to 12:00pm.
+
+. Type `schedule` into the command box. Press kbd:[enter] to execute.
++
+.Executing the `schedule` command +
+image::addLessonStep1.png[width="790"]
++
+. Visually find a free time slot. Sunday, 10:00 to 12:00 looks free!
+. Type `addLesson 2 d/sun st/10:00 et/12:00`. Press kbd:[enter] to execute the command
++
+.Type out the command as shown
+image::addLessonStep2.png[width="790"]
++
+. The lesson will be added to your Schedule!
++
+.Result of the `addLesson` command
+image::addLessonResult.png[width="790"]
+// end::schedule[]
+==== Deleting a Lesson in your Schedule
+
+You may wish to remove lessons because students drop out. Let's use Codeducator's `deleteLesson` command to do that for you.
+
+===== Format: `deleteLesson INDEX` +
+Deletes an existing lesson in your schedule identified by the index number in the last schedule listing. of day, i.e. `mon` for Monday, `fri` for Friday.
+
+****
+* Deletes a lesson for the student at the specified `INDEX`.
+* The index refers to the displayed Lesson Index shown in the title. The index *must be a positive integer* 1, 2, 3, ...
+****
+
+===== Examples:
+
+* `deleteLesson 2` +
+Deletes the 2nd lesson listing in the schedule
+
+===== Steps taken to delete a lesson
+
+Let's say you want to delete Charlotte's Lesson, on Tuesday, 10:00am-12:00pm
+
+. Type `schedule` into the command box. Press kbd:[enter] to execute.
++
+.After executing the `schedule` command. The Lesson is identified by `INDEX:2` +
+image::deleteLessonStep1.png[width="790"]
++
+. Type `deleteLesson` into the command box. Press kbd:[enter] to execute the command
++
+.Type out the command as shown
+image::deleteLessonStep2.png[width="790"]
++
+. The lesson will be removed from your schedule!
++
+.Result of executing the `deleteLesson` command
+image::deleteLessonResult.png[width="790"]
+
+
+// tag::sync[]
+=== Syncing with your Google Account
+
+You probably want to view your contacts and schedule across your devices. With today's pervasive use of cloud services, Codeducator takes advantage of Google's Contacts and Calendar.
+Outside of Codeducator, you may view your contacts and schedule data in Google's mobile and web applications.
+
+Codeducator uploads both contact list and schedule data to your Google Account.
+Your contact list is synced with Google Contacts: link:{contactsURL}[contacts.google.com].
+Your schedule is synced with Google Calendar: link:{calendarURL}[calendar.google.com]
+
+==== Logging in to your Google Account
+
+Associate your Google account with Codeducator and authorise Codeducator to upload data to your Google account's cloud services
+
+[NOTE]
+Ensure you have a Google account! Take advantage of Google's cloud services
+
+===== Format: `login`
+Logs in to your Google Account. Authorizes your Google Account to communicate with our app and gives
+Codeducator permission to modify your data. +
+Opens a new window in your default browser to the Oauth2 screen +
+
+[NOTE]
+You must first be logged out to log in
+
+===== Steps taken to log in to your Google Account
+
+. Type `login` in the command box. We will use the `schedule` screen, but it will work from any screen.
++
+.Type `login` into the command box (Codeducator window)
+image::loginStep1.png[width="790"]
++
+. Execute the command using kbd:[enter].
+. Your default browser will redirect to Google's login screen. Follow the OAuth2 procedure by typing your Google username and password into the login screen.
++
+.Google's login screen (Your browser window)
+image::loginStep3.png[width="790"]
++
+. After logging in, you will see this window. Authorise Codeducator by clicking "Allow"
++
+.Google's OAuth/authentication window (Your browser window)
+image::loginStep4.png[width="790"]
++
+. If you have successfully logged in. Your browser will display this message as a sign of login success.
++
+.Google's login success message (Your browser window)
+image::loginStep5.png[width="790"]
++
+. Open the Codeducator window again. You will see that the message displays that you are logged in
++
+.Codeducator's login success message (Codeducator window)
+image::loginStep6.png[width="790"]
++
+
+You are now ready to sync your account! +
+
+[NOTE]
+====
+. There is a *45 second timeout* for the login process. If you do not login successfully (due to closing the window unexpectedly or poor network connection), the login process will timeout.
+. Authorising Codeducator is important! Denying access will stop Codeducator from uploading data to your account.
+. If you have already logged in before without logging out, you may skip the Google login process by just simply typing in `login`.
+. If you do not successfully login , don't worry! Just repeat the steps to login again.
+. Your stored credential may expire after a long period of not using Codeducator. Simply logout and re-login to re-authenticate. See <<Logging out of your Google Account>>
+====
+
+==== Syncing data with your Google Account
+
+Updates both Google Contacts and Google Calendar with Addressbook and Schedule. Deletes the old data that Codeducator
+has uploaded previously, and uploads the updated data, correct as of time of entering the `sync` command. +
+
+Google Contacts will create a new Contact Label group called "Students". Contacts from your Codeducator app will be uploaded here.
+Your Student's Name, Phone Number and Address will be uploaded. +
+
+Google Calendar will create a Calendar group called "Student Lessons". Lessons from your Calendar will be uploaded here.
+The name of the event will be "Lesson with <Student>", using the Start and End times of the Lesson, location will be using the address associated with the Student.
+The Calendar will only start syncing from the *first Lesson occurring after the current day* that you perform the sync. +
+
+[NOTE]
+====
+If you have synced before, future syncs will +
+
+.. Look for "Students" label in Google Contacts and delete contacts in those groups before reuploading your Student data
+.. Look for "Student Lessons" calendar and delete the events in that Calendar before reuploading your Schedule data.
+====
+
+Currently, Google Calendar will create a recurring weekly event per lesson, repeated over 4 weeks. If you have no edits to your Schedule within the month, do a sync at the end of the month to refresh your Calendar data.
+
+
+[WARNING]
+====
+. You must first be logged in to sync your data.
+. A stable internet connection is required to fully upload data. If cut, there is a high probability that it won't fully upload. Please try syncing again.
+. Do not change the name of the Students label. Codeducator will not be able to delete those contacts in future syncs.
+. Likewise, do not change the name of the Calendar "Student Lessons" as it will be similarly used for future syncs
+====
+
+Format: `sync`
+
+===== Steps taken to sync data with your Google Account
+
+. Ensure that you have logged in to your account. See <<Logging in to your Google Account>>
+.. Example Google Calendar and Contacts, account, I'll be starting with empty Google Contacts and Calendar
++
+.What my Google Contacts and Calendar look like before the sync
+image::syncStep00.png[width="790]
++
+. View the schedule that you want to sync. See <<Viewing your schedule>>
++
+.We will be using this example schedule
+image::syncStep0.png[width="790]
++
+. Type `sync` in the command box. Press kbd:[enter] to execute
++
+.Type `sync` into the command box
+image::syncStep1.png[width="790"]
++
+. Codeducator will now try to upload the current data. If you had previously used `sync`,
+Codeducator will delete the old data in you Google Contacts and Calendar
++
+.Viewing your schedule in Week and Month View in link:{calendarURL}[calendar.google.com]. Note the new Calendar "Student Lessons"
+image::syncResult1.png[width="790"]
++
+.Viewing your contacts list in Google Contacts in link:{contactsURL}[contacts.google.com]. Note the new Label "Students"
+image::syncResult2.png[width="790"]
++
+.You will see this message if you successfully synced your account!
+image::syncResult3.png[width="790"]
++
+. Your data has been synchronised! You are free to use them across your devices in anyway that Google Contacts and Calendar supports!
+
+[NOTE]
+=====
+If you have many contacts or lessons, it will take some time to synchronise your data. Be patient as Codeducator uploads your data!
+=====
+
+==== Logging out of your Google Account
+
+For security purposes, Codeducator allows you to log out of your Google Account. Codeducator will ecurely delete the OAuth2 credential stored in the App. +
+
+[NOTE]
+You must first be logged in to log out.
+
+Format: `logout`
+
+===== Steps taken to log out of your Google Account
+
+. Ensure that you are logged in. See <<Logging in to your Google Account>>
+.. If you are not logged in, you are already logged out!
+. Type `logout` in the command box. Press kbd:[enter] to execute the command.
++
+.Type `logout` in the command box.
+image::logoutStep1.png[width="790"]
++
+. You should see the following window
++
+.Result of executing `logout` command
+image::logoutResult.png[width="790"]
++
+. You have successfully logged out of your account! Log in again if you want to sync your contacts and schedule.
+
+// end::sync[]
+
+// tag::dashboard[]
+// tag::dashboard1[]
+=== Dashboard
+
+In Codeducator, you can *track the learning progress* of your students easily by utilising our Dashboard feature.
+Each of your student in your contact list has their own dashboard which you can view and manage easily. +
+
+*What's in a dashboard?*
+
+* Milestones: +
+Each dashboard will have a list of milestones. A milestone signifies a major step in the learning progress of your student.
+Codeducator allows you to create and add milestones in your students' dashboards so that you can keep track of learning objectives you have set for them.
+
+* Tasks: +
+Each milestone can contain a list of tasks. A task signifies a piece of work to be done to meet the milestone's objective.
+Codeducator allows you to create and add tasks to each milestone so that you can keep track of what has already been done and what still needs to be done to reach the milestone.
+
+.An example of a student's dashboard
+image::DashboardScreenshot.png[width="800"]
+
+==== Showing the dashboard of a student: `showDB`
+
+You can view the dashboard of a student by using the `showDB` command. +
+
+Format: `showDB STUDENT_INDEX`
+
+****
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `STUDENT_INDEX` *must be a positive integer* 1, 2, 3, ...
+****
+
+Example:
+
+* `list` +
+`showDB 1` +
+Shows the dashboard of the 1st student in the address book.
+
+===== Steps taken to show the dashboard of a student
+
+*Step 1*: First, find the student whose dashboard you wish to view using the `list` command (see <<Listing all students : `list`>>).
+
+*Step 2*: Once you have found the student, type `showDB` into the command box, followed by the `STUDENT_INDEX` of the student in the list. Press kbd:[Enter] to execute it.
+
+.Entering the `showDB` command followed by the `STUDENT_INDEX` 1 of the student whose dashboard you wish to view
+image::showDB1_screenshot.png[width="800"]
+
+*Step 3*: You have succeeded in viewing the student's dashboard if you see the message "Selected Dashboard of Student: `STUDENT_INDEX` " in the result box, with the dashboard containing the student's name appearing on the right panel.
+
+.Success in showing the dashboard of Alex Yeoh who has the index 1 on the students list
+image::showDB2_screenshot.png[width="800"]
+
+[WARNING]
+The student `INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when an invalid `STUDENT_INDEX` 10 is entered. There are less than 10 students in the student contact list.
+image::showDB3_screenshot.png[width="800"]
+
+
+==== Adding a milestone to a student's dashboard: `addMS`
+
+If you want to keep track of a learning objective you want your student to fulfil, you can add a milestone to your student's dashboard using the `addMS` command. +
+
+Format: `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE`
+
+****
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `STUDENT_INDEX` *must be a positive integer* 1, 2, 3, ...
+* `MILESTONE_DUE_DATE` must be in this format: *DD/MM/YYYY hh:mm* where DD/MM/YYYY is the calendar date and hh:mm is the time in 24-hour notation
+* `MILESTONE_DUE_DATE` can be a date in the past (before the current day)
+****
+
+Example:
+
+* `list` +
+`showDB 1` +
+`addMS i/1 d/23/05/2018 23:59 o/Learn Arrays` +
+Adds a milestone to the dashboard of the 1st student in the address book. The milestone is due on 23/05/2018 23:59 and the objective is "Learn Arrays".
+
+===== Steps taken to add a milestone to a dashboard
+
+*Step 1*: First, view the dashboard of the student where you want to add the milestone to (see <<Show the dashboard of a student: `showDB`>>).
+
+*Step 2*: Once you can view the student's dashboard, type `addMS` in the command box, followed by the `STUDENT_INDEX`, `MILESTONE_DUE_DATE` and `DESCRIPTION_OF_MILESTONE`. Press kbd:[Enter] to execute it.
+
+.Entering the `addMS` command, followed by the `STUDENT_INDEX` as "1", `MILESTONE_DUE_DATE` as "23/05/2018 23:59" and `DESCRIPTION_OF_MILESTONE` as "Learn Arrays"
+image::addMS1_screenshot.png[width="800"]
+
+*Step 3*: You have succeeded in adding the milestone to the student's dashboard if you see the message "Milestone added to Student's Dashboard:" followed by the description of the milestone you have added in the result box.
+The new milestone will also appear on the student's dashboard.
+
+.Success in adding the milestone with the description "Learn Arrays" which is due on "23/05/2018 23:59" to the dashboard of Alex Yeoh. Alex Yeoh has the index 1 on the students list.
+image::addMS2_screenshot.png[width="800"]
+
+[WARNING]
+The `STUDENT_INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when an invalid `STUDENT_INDEX` 10 is entered. There are less than 10 students in the student contact list.
+image::addMS3_screenshot.png[width="800"]
+
+[WARNING]
+The `MILESTONE_DUE_DATE` provided must have a valid calendar date and follows the specified format. Otherwise, an error message shown in the figure below will be displayed in the result box at *Step 3*. +
+
+.Error message displayed when an invalid `MILESTONE_DUE_DATE` "31/02/2018 23:59" is entered. There is no 31/02/2018 in the calendar.
+image::addMS4_screenshot.png[width="800"]
+
+
+==== Deleting a milestone from a student's dashboard: `deleteMS`
+
+If you wish to remove a milestone you no longer need from a student's dashboard, you can use the `deleteMS` command. +
+
+Format: `deleteMS i/STUDENT_INDEX m/MILESTONE_INDEX`
+
+****
+* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `MILESTONE_INDEX` refers to the index number of the milestone in the dashboard shown in the most recent listing.
+* Both `STUDENT_INDEX` and `MILESTONE_INDEX` *must be positive integers* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`showDB 1` +
+`deleteMS i/1 m/1` +
+Deletes the 1st milestone from the dashboard of the 1st student in the address book.
+
+===== Steps taken to delete a milestone from a dashboard
+
+*Step 1*: First, view the dashboard of the student where you want to remove the milestone from (see <<Show the dashboard of a student: `showDB`>>).
+
+*Step 2*: Once you can view the student's dashboard, type `deleteMS` in the command box, followed by the `STUDENT_INDEX` and `MILESTONE_INDEX`. Press kbd:[Enter] to execute it.
+
+.Entering the `deleteMS` command, followed by the `STUDENT_INDEX` as "1" and `MILESTONE_INDEX` as "1"
+image::deleteMS1_screenshot.png[width="800"]
+
+*Step 3*: You have succeeded in deleting the milestone if you see the message "Deleted milestone:" followed by the description of the milestone in the result box. The milestone will also no longer be on the dashboard of the student.
+
+.Success in deleting the milestone of index 1 in the dashboard of Alex Yeoh. Alex Yeoh has the index 1 on the students list.
+image::deleteMS2_screenshot.png[width="800"]
+
+[WARNING]
+The `STUDENT_INDEX` and `MILESTONE_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when invalid `STUDENT_INDEX` "10" and `MILESTONE_INDEX` "10" are entered
+image::deleteMS3_screenshot.png[width="800"]
+
+// end::dashboard1[]
+
+==== Adding a task to a milestone: `addTask`
+
+If you wish to keep track of a piece of work that needs to be done to complete a milestone's objective, you can add a task to the milestone in the student's dashboard using the `addTask` command. +
+
+Format: `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_OF_TASK`
+
+****
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `MILESTONE_INDEX` refers to the index number of the milestone in the dashboard shown in the most recent listing.
+* The milestone is in the dashboard of the student at the specified `STUDENT_INDEX`
+* `STUDENT_INDEX` and `MILESTONE_INDEX` *must be positive integers* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`showDB 1` +
+`addTask i/1 m/1 n/Learn Array Syntax o/Student to refer to the textbook` +
+Adds a task to the 1st milestone in the dashboard of the 1st student in the address book. The name of the task is "Learn Array Syntax" and the description is "Student to refer to the textbook".
+
+===== Steps taken to add a task to a milestone
+
+*Step 1*: First, view the dashboard of the student where you want to add the task to (see <<Show the dashboard of a student: `showDB`>>).
+
+*Step 2*: Once you can view the student's dashboard, type `addTask` in the command box, followed by `STUDENT_INDEX`, `MILESTONE_INDEX`, `NAME_OF_TASK` and `DESCRIPTION_OF_TASK`. Press kbd:[Enter] to execute it.
+
+.Entering the command `addTask`, followed by the `STUDENT_INDEX` as "1", `MILESTONE_INDEX` as "1", `NAME_OF_TASK` as "Learn Array Syntax"  and `DESCRIPTION_OF_TASK` as "Student to refer to the textbook"
+image::addTask1_screenshot.png[width="800"]
+
+*Step 3*: You have succeeded in adding the task to the milestone if you see the message "New task added:" followed by the description of the task you have added in the result box. The new task will also appear in the task list of the milestone.
+
+.Success in adding a task with the name "Learn Array Syntax" and description "Student to refer to the textbook" to the 1st milestone in the dashboard of Alex Yeoh. Alex Yeoh has the index 1 on the students list.
+image::addTask2_screenshot.png[width="800"]
+
+[WARNING]
+The `STUDENT_INDEX` and `MILESTONE_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when invalid `STUDENT_INDEX` "10" and `MILESTONE_INDEX` "10" are entered
+image::addTask3_screenshot.png[width="800"]
+
+==== Deleting a task from a milestone: `deleteTask`
+
+If you wish to remove a task you no longer need in a milestone of a dashboard, you can use the `deleteTask` command. +
+
+Format: `deleteTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
+
+****
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `MILESTONE_INDEX` refers to the index number of the milestone in the dashboard shown in the most recent listing.
+* `TASK_INDEX` refer to the index number of the task in the milestone shown in the most recent listing.
+* The task is in the milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX` *must be positive integers* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`showDB 1` +
+`deleteTask i/1 m/1 tk/1` +
+Deletes the 1st task in the 1st milestone. The milestone is in the dashboard of the 1st student in the address book.
+
+===== Steps taken to delete a task from a milestone
+
+*Step 1*: First, view the dashboard of the student where you want to delete the task from (see <<Show the dashboard of a student: `showDB`>>).
+
+*Step 2*: Once you can view the student's dashboard, type `deleteTask` in the command box, followed by `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX`. Press kbd:[Enter] to execute it.
+
+.Entering the command `deleteTask`, followed by the `STUDENT_INDEX` as "1", `MILESTONE_INDEX` as "1" and `TASK_INDEX` as "1"
+image::deleteTask1_screenshot.png[width="800"]
+
+*Step 3*: You have succeeded in deleting the task from the milestone if you see the message: "Deleted task:" followed by the description of the task you deleted in the result box. The task will also no longer be in the task list of the milestone.
+
+.Success in deleting the task of index 1 from the 1st milestone in the dashboard of Alex Yeoh. Alex Yeoh has the index 1 on the students list.
+image::deleteTask2_screenshot.png[width="800"]
+
+[WARNING]
+The `STUDENT_INDEX`, `MILESTONE_INDEX`, and `TASK_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when invalid `STUDENT_INDEX` "10", `MILESTONE_INDEX` "10" and `TASK_INDEX` "10" are entered
+image::deleteTask3_screenshot.png[width="800"]
+
+==== Marking a task as completed: `checkTask`
+
+If your student has completed a task and you wish to mark it as completed, you can use the `checkTask` command. +
+
+Format: `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
+
+****
+* `STUDENT_INDEX` refers to the index number of the student shown in the most recent listing.
+* `MILESTONE_INDEX` refers to the index number of the milestone in the dashboard shown in the most recent listing.
+* `TASK_INDEX` refer to the index number of the task in the milestone shown in the most recent listing.
+* The task is in the milestone at the specified `MILESTONE_INDEX`
+* The milestone is in the dashboard of a student at the specified `STUDENT_INDEX`
+* `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX` *must be positive integers* 1, 2, 3, ...
+****
+
+[TIP]
+Marking a task as completed updates the progress of the milestone.
+
+Examples:
+
+* `list` +
+`showDB 1` +
+`checkTask i/1 m/1 tk/1` +
+Marks the 1st task in the 1st milestone as completed. The milestone is in the dashboard of the 1st student in the address book.
+
+===== Steps taken to mark a task as completed
+
+*Step 1*: First, view the dashboard of the student where the task is (see <<Show the dashboard of a student: `showDB`>>).
+
+*Step 2*: Once you can view the student's dashboard, type `checkTask` in the command box, followed by `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX`. Press kbd:[Enter] to execute it.
+
+.Entering the command `checkTask`, followed by the `STUDENT_INDEX` as "1", `MILESTONE_INDEX` as "1" and `TASK_INDEX` as "1"
+image::checkTask1_screenshot.png[width="800"]
+
+*Step 3*: You have succeeded in marking the task as completed if you see the message "Task `TASK_INDEX` marked as completed in milestone `MILESTONE_INDEX` ".
+The task's "Completed" field will become "Yes" and the progress of the milestone will be updated.
+
+.Success in marking the task of index 1 from the 1st milestone in the dashboard of Alex Yeoh as completed. Alex Yeoh has the index 1 on the students list. The task's "Completed" field is now "Yes" and the milestone's progress is updated to 100%.
+image::checkTask2_screenshot.png[width="800"]
+
+[WARNING]
+Marking an already completed task as complete will cause the message "Task is already marked as completed" to be displayed in the result box at *Step 3*.
+
+.Error message displayed when specified task is already marked as completed
+image::checkTask4_screenshot.png[width="800"]
+
+[WARNING]
+The `STUDENT_INDEX`, `MILESTONE_INDEX`, and `TASK_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
+
+.Error message displayed when invalid `STUDENT_INDEX` "10", `MILESTONE_INDEX` "10" and `TASK_INDEX` "10" are entered
+image::checkTask3_screenshot.png[width="800"]
+
+// end::dashboard[]
+
+// tag::profilePage1[]
+=== Student Profile Page
+==== Displaying profile page for each student : `moreInfo`
+
+Displays the full information of a student on the browser panel. The full information of a student consists of 3 elements, main information, miscellaneous information and his/her profile picture. You will be able to view his/her profile picture if one exists. +
+
+Format: `moreInfo INDEX`
+
+[WARNING]
+The `moreInfo` command _**cannot**_ work if there is no existing XML data of students. Should you encounter this warning,you can either: +
+1) Simply enter `clear` and start out with an empty student list. +
+2) Add, edit or delete a student using their corresponding commands to generate XML data of the students.
+
+
+===== Steps taken to display the profile page of a student
+
+Suppose you wish to view the profile page of the 1st student of the current student list
+
+. Enter the command as shown below:
+
+.Command to be entered to display the 1st student's profile page.
+image::moreInfoCommand.png[width:400]
+
+
+[start=2]
+. You will then be able to view the profile page of the student. Enter the same command with a different number for viewing the profile page of other students (e.g. `moreInfo 2`).
+
+.Executing the command `moreInfo 1` displays the 1st student (Alex Yeoh's) profile page
+image::moreInfoResult.png[width:400]
+
+
+[TIP]
+You will be able to attain the profile page style in `Figure 5` if your OS zoom scale is set to `125%`. The profile photo may seem of a different size for other configurations. Search you computer settings should you wish to change this.
+
+
+****
+* Displays the full information of a student with the specified `INDEX`.
+* The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
+****
+// end::profilePage1[]
+==== Edit the profile picture of a student : `editPicture`
+
+Allows you to edit the current profile picture of a student to a new picture from a specific file path indicated by you. +
+
+Format: `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE`
+
+[NOTE]
+====
+The image file you wish to use must exist and have extensions either of `.jpg` or `.png`. +
+The file path you entered can be relative to the current folder of the `jar` file or the absolute path e.g. `C:/Users/User/Desktop/photo.jpg`
+====
+
+===== Steps taken to edit the profile picture of a student
+//tag::profilePage2[]
+Suppose you wish to have this picture, with the file name of `animal.jpg`  as a new profile picture as your student:
+
+image::animal.jpg[width:100]
+
+. Enter the command as shown below:
+
+.Command to be entered to edit a student's profile picture
+image::editPictureCommand.png[width:400]
+
+[start=2]
+. You will edit the profile picture of the 1st student of the latest student list to a picture existing in the same folder as the jar file with the name `animal.jpg`. You will then see the following:
+
+.Command to edit the student's profile picture success!
+image::editPictureSuccess.png[width:400]
+
+[start=3]
+. By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated picture as shown below:
+
+.The profile page of the selected student is shown with the new profile picture!
+image::editedPicture.png[width:600]
+
+[TIP]
+The ideal aspect ratio of the picture is 1.25 from height to width.
+//end::profilePage2[]
+****
+* Changes the profile photo of a student with the specified `INDEX` to a new one which has a file path of `FILE_PATH_OF_PICTURE`
+* The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
+* The file path of the picture is either relative to the folder which the jar application is or can be speicifed from the hard drive.
+****
+
+==== Edit the miscellaneous info of a student : `editMisc`
+
+Allows you to edit the miscellaneous information of a student. This includes his/her allergies, Next-Of-Kin name, Next-Of-Kin contact number and remarks for the student. +
+
+Format: `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS]`
+
+===== Steps Taken to edit the miscellaneous information of a student
+
+Suppose you wish to edit the allergies information of a student to `Allergic to nuts`.
+
+. Enter the command as shown below:
+
+.Command to be entered to edit the allergies information of a student.
+image::editMiscCommand.png[width 400]
+
+[start=2]
+. You will edit the `allergies` portion of the miscellaneous information of the 1st student of the student list to "Allergic to nuts". You will then see the following:
+
+.Command to edit the allergies portion of the student's miscellaneous information success!
+image::editPictureSuccess.png[][width:400]
+
+[start=3]
+. By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated allergies information as shown below:
+
+.The profile page of the selected student is shown with the newly updated allergies information!
+image::editMiscSuccess.png[width:600]
+
+
+****
+* Edits the student's miscellaneous info at the specified `INDEX`. The index refers to the index number shown in the last student listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one optional field must be provided.
+* Existing values will be updated to and overwritten by the input values.
+****
+
+
+
+=== Coming in v2.0
+==== Track student's homework in the dashboard `[coming in v2.0]`
+
+==== Find students by their miscellaneous information `[coming in v2.0]`
+
+==== Full pull and push data using sync
+
+//tag::NLP[]
+== Interacting using free-form English
+
+CodEducator also allows you to use features of the applications using everyday english sentences, without the need to remember specific command words.
+
+[WARNING]
+An active internet connection is required for this to work.
+
+=== How do i use this?
+
+You can refer to the table below to see which are the features that you are able to invoke using conversational English.
+
+[TIP]
+The examples below are just for your reference. Any phrase or sentence can be used, so long as your *intention* is precise and clear.
+[width="100%", cols=",^2m,^2e",options="header",]
+|=======================================================================
+| Command 2+| Examples
+|`Clear`|"I want everyone to be gone" | "Empty everything"
+|`Redo`|"do it again" | "reuse previous"
+|`Undo`|"revert back" | "negate the previous action"
+|`Help`|"I am lost"| "I need assistance"
+|`Exit`|"I'm done here"| "i wish to quit"
+|`History`|"what are my previous commands"| "archives of commands entered"
+|`List`|"Show me all my students"| "enumerate everyone"
+|`Schedule`|"what is my agenda"|"show me my timetable"
+|`Delete`| "Erase Susan"| "Remove Jason"
+|`Select`| "Choose Susan"| "Single out Jason"
+|=======================================================================
+
+[IMPORTANT]
+Currently, the commands `Delete` and `Select` only detects English names!
+
+.selecting one of your student, Jason
+image::Select(before).png[width="500"]
+
+{empty} +
+
+.You should see this after execution of the `select` command is successful
+image::Select(after).png[width="500"]
+
+=== Guidelines for using this feature
+* Be sure to check for spelling errors in your sentences.
+
+[WARNING]
+Spelling errors can be mis-interpreted and the wrong command might be invoked.
+
+* Be as precise as possible in specifying your intentions in the sentences, to prevent mis-interpretation of commands.
+* If the wrong feature is invoked, you can always use the `undo` command revert any undesired changes.
+
+//end::NLP[]
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -246,19 +1246,52 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="60%",cols="20%,<40%,<40%",options="header",]
+|=======================================================================
+| Purpose | Format | Example
+3+| *_Contact List Commands_*
+
+| Adding a student |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pl/PROGRAMMING_LANGUAGE [t/TAG]...`|`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 pl/HTML t/friend t/1stYear`
+| Clearing your entire contact list 2+| `clear`
+| Deleting a student | `delete INDEX` | `delete 3`
+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pl/PROGRAMMING_LANGUAGE] [t/TAG]...` |
+`edit 2 n/James Lee e/jameslee@example.com`
+| Find | `find KEYWORD [MORE_KEYWORDS]` | `find James Jake`
+| List 2+| `list`
+| Help 2+| `help`
+| Select | `select INDEX` | `select 2`
+| History 2+| `history`
+| Undo 2+| `undo`
+| Redo 2+| `redo`
+
+3+| *_Dashboard Commands_*
+| Show Dashboard | `showDB INDEX` |
+`showDB 3`
+| Add Milestone | `addMS i/STUDENT_INDEX d/MILESTONE_DUE_DATE o/DESCRIPTION_OF_MILESTONE` |
+`addMS i/1 d/23/11/2018 23:59 o/Arrays`
+| Delete Milestone | `deleteMS i/STUDENT_INDEX m/MILESTONE_INDEX` |
+e.g. `deleteMS i/1 m/2`
+| Add Task | `addTask i/STUDENT_INDEX m/MILESTONE_INDEX n/NAME_OF_TASK o/DESCRIPTION_OF_TASK` |
+e.g. `addTask i/1 m/2 n/Learn arrays syntax o/Refer to textbook`
+| Delete Task | `deleteTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX` |
+e.g. `deleteTask i/1 m/2 tk/3`
+| Mark Task As Completed | `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX` |
+e.g. `checkTask i/STUDENT_INDEX m/MILESTONE_INDEX tk/TASK_INDEX`
+
+3+| *_Schedule related commands_*
+| View your Schedule 2+| `schedule`
+| Add a Lesson | `addLesson INDEX [d/DAY] [st/START_TIME] [et/END_TIME]` |
+e.g. `addLesson 1 d/mon st/10:00 et/10:30`
+| Delete a Lesson | `deleteLesson INDEX` |
+e.g. `deleteLesson 2`
+| Login to your Google Account 2+| `login`
+| Synchronize data with Google Account 2+| `sync`
+| Logout of your Google Account 2+| `logout`
+
+3+| *_Full information page Commands_*
+| Full information page | `moreInfo INDEX` | `moreInfo 1`
+| Edit the profile picture | `editPicture i/STUDENT_INDEX pa/FILE_PATH_OF_PICTURE` |
+e.g. `editPicture i/1 pa/C:/Users/User/Desktop/test.jpg`
+| Edit the miscellaneous info of a student |  `editMisc INDEX [al/ALLERGIES] [nokn/NEXT_OF_KIN_NAME] [nokp/NEXT_OF_KIN_PHONE] [r/REMARKS] |
+e.g. `editMisc 2 al/seafood` |
+=======================================================================|

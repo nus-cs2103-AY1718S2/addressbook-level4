@@ -1,0 +1,67 @@
+= Tan Chee Wee - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Codeducator
+
+
+---
+
+== Overview
+
+Codeducator is a desktop address book application for private programming language tutors.
+Users are able to track the progress of their students, manage their tutoring schedule and other important information about their students. +
+
+Codeducator has a graphical user interface built with JavaFX but most of the user interactions are done using command line interface. It is written in Java and has about 10 kLoC. +
+
+This project is based on the https://github.com/se-edu/addressbook-level4[AddressBook-Level4] created by the SE-EDU initiative.
+
+== Summary of contributions
+
+* *Major enhancement*: Implementation of Natural Language Processing (NLP) in CLI
+
+
+** What it does: It allows the user to enter conversational English into the command line and the *intention* of the input will be deciphered and the corresponding command will be called.
+
+** Justification: New users of Codeducator might find themselves constantly referring to the help document often, hence this enhancement is to allow intuitive usage of the commands.
+
+** Credits: The above-mentioned enhancement is implemented using IBM Watson™ Assistant service and the relevant methods documented in the API.
+
+* *Minor enhancement*: Rendering of a student's address on Google Maps upon selection
+
+** What it does: A Google Maps page with the selected student's address will be shown in the embedded brower upon selection of the student
+
+** Justification: For ease of navigation planning to the student's house, the tutor would have the required information simply by just `Select` ing the student.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/functional/chweeee.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/test/chweeee.md[Test code]]
+
+* *Other contributions*:
+
+** Enhancements to existing features:
+*** Improved the `select` command to show the location of the student on Google Maps
+
+** Documentation:
+*** Proofreading the User Guide and making alterations to make it more personal to the user.
+
+** Tools:
+*** Integrated a third party library (IBM Watson™ Assistant service) to the project (https://github.com/CS2103JAN2018-W09-B3/main/issues/#24)
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=NLP]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=location]
+
+include::../DeveloperGuide.adoc[tag=nlp]
+
+

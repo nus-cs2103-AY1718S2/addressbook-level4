@@ -11,12 +11,15 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* Welcome to Employees Tracker (E.T.)! E.T. is a *Human Resource Manager* desktop application
-that helps managers to manage their subordinates. Its has 2 main functionalities: providing information about employees,
+Ever feels overwhelmed in managing all your employees?
+Ever wants to keep track of all the tasks you have assigned to your employees?
+
+Employees Tracker (E.T.) comes to the rescue!
+
+E.T. is a *Human Resource Manager* desktop application that helps managers to manage their subordinates. Its has 2 main functionalities: providing information about employees,
 as well as helping in tracking the tasks assigned to each employee. Its User Interface (UI) is a hybrid of Command Line
 Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). That said, ET will suit you better
-if you can type fast and are familiar with CLI.
-* Do not hesitate, let's see what ET can do!
+if you can type fast and are familiar with CLI!
 
 == Site Map
 

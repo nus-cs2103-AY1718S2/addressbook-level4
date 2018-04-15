@@ -528,6 +528,8 @@ Linking of pet patients to their respective owners and appointments will be impl
 ==== Current Implemaentation
 Since Veterinarians and their assistants have the need to view the PetPatients as a list and see how many PetPatients belong to the same Owner. It is necessary to implement the PetPatient List feature.
 
+image::List_Command.PNG[width:650]
+
 ==== Design Consideration
 * **Alternative 1:** Use tab function to switch between PetPatientList and PersonList
 
@@ -554,6 +556,9 @@ Since veterinarians and their assistants have the need to constantly check their
 
 Third party API `CalendarFX` is used as a Java calendar frame to show Appointments.
 
+image::Show_Appointment.PNG[width:650]
+
+
 ==== Design Consideration
 * **Alternative 1:** Use `iCalendar` from Jfxtra library
 
@@ -566,15 +571,12 @@ Third party API `CalendarFX` is used as a Java calendar frame to show Appointmen
 
 ==== Current Limitations
 
-As of now, the appointment class is yet to be properly developed, thus we are not able to show appointments inside the calendar yet.
+There's a known issue in CalendarFx, when switch from a year with appointments inside to a year without, the CalendarFx will still color the same appointment data despite there's no entry on that date.
 
-Only the UI of CalendarFX is integrated to show calendar view.
+Users and developers should know that this issue is embedded inside CalendarFx, and hopefully can be resolved in future versions of CalendarFx.
 
 ==== Future Work
-
-After the appointment class being finished, we'll be able to implement `setAppointment` function in CalendarFX, the user will then be able to see future appointments in either All-day/weekly/monthly/yearly view.
-
-We may also make enhancements to the Medeina's UI such as changing theme colour to match the UI colour of CalendarFX.
+We may be able to make enhancements to the Medeina's UI such as changing theme colour to match the UI colour of CalendarFX.
 // end::calendar[]
 
 // tag::addappointment[]
@@ -1399,6 +1401,14 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Similar to previous.
 
 _{ more test cases ... }_
+
+=== Listing owners and petPatients
+. Listing out all owners and petPatients
+
+.. Prerequisites: Conduct `find` command. More than one person or petPatient in the lists.
+.. Testcase: `find -o n/Alex` + `list` +
+    Expected: Medeina will display the located person and then list out all owners and petPatients in Medeina's storage.
+
 
 === Saving data
 

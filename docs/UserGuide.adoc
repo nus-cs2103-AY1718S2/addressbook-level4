@@ -226,7 +226,7 @@ add -o n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/
 // tag::listcommand[]
 === Listing all contacts : `list` or `ls`
 
-Medeina will show a list of all stored Owners and PetPatients if you enter `list` or `ls` in the command box.
+Medeina will show a list of all stored contacts and pet patients if you enter `list` or `ls` in the command box.
 
 .`list` command
 image::List_Command.PNG[width="800"]
@@ -238,7 +238,8 @@ image::List_Command.PNG[width="800"]
 // tag::editcommandUG[]
 === Editing a contact, pet patient or appointment : `edit` or `ed` `[Since v1.4]`
 
-You can use `edit` or `ed` to do the following:
+If you want to edit a contact, pet patient or an appointment in Medeina, simply use the `edit` or `ed` command.
+You can learn more about this command in the following table:
 
 [width="100%", cols="15%,<45%a,<40%", options="header"]
 |=====
@@ -246,11 +247,11 @@ You can use `edit` or `ed` to do the following:
 | Command syntax
 | Notes
 
-.^a|Person
+.^a|Contact
 | `edit **-o** INDEX [n/CONTACT_NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAG]...`
 a| * At least one of the optional fields must be provided.
 * The command edits the contact at the specified `INDEX`.
-* The index refers to the index number shown in the latest contact listing. The index *must be a positive integer* 1, 2, 3, etc ...
+* `INDEX` refers to the index number shown in the **latest** contact listing. The index *must be a positive integer* 1, 2, 3, etc ...
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
 * You can remove all of the contact's tags by typing `t/` without specifying any tags after it.
@@ -259,7 +260,7 @@ a| * At least one of the optional fields must be provided.
 | `edit **-p** INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOR] [bt/BLOOD_TYPE] [nr/OWNER_NRIC] [t/TAG]...`
 a| * At least one of the optional fields must be provided.
 * The command edits the pet patient at the specified `INDEX`.
-* The index refers to the index number shown in the latest pet patient listing. The index *must be a positive integer* 1, 2, 3, etc ...
+* `INDEX` refers to the index number shown in the **latest** pet patient listing. The index *must be a positive integer* 1, 2, 3, etc ...
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the pet patient will be removed i.e adding of tags is not cumulative.
 * You can remove all of the pet patient's tags by typing `t/` without specifying any tags after it.
@@ -269,12 +270,12 @@ a| * At least one of the optional fields must be provided.
 | `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [t/TAG]...`
 a| * At least one of the optional fields must be provided.
 * The command edits the appointment at the specified `INDEX`.
-* The index refers to the index number shown in the latest appointment listing. The index *must be a positive integer* 1, 2, 3, etc ...
+* `INDEX` refers to the index number shown in the **latest** appointment listing. The index *must be a positive integer* 1, 2, 3, etc ...
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the appointment will be removed i.e adding of tags is not cumulative.
 * You can remove all of the appointment's tags by typing `t/` without specifying any tags after it.
-* Appointment time HH:MM must be in 30-minute blocks.
-* Modification of owner's NRIC and / or pet patient's name is NOT allowed.
+* The duration of all appointments is 30 minutes by default. Please ensure that the new HH:MM must be at least 30 minutes before / after other appointments on the same day, as concurrent appointments are NOT allowed.
+* Modification of owner's NRIC and / or pet patient's name is NOT allowed. To edit these fields, please refer to the rows above for more details.
 |=====
 {empty} +
 
@@ -306,7 +307,7 @@ You can use `find` or `f` to do the following :
 | Command syntax
 | Notes
 
-.^a|Person
+.^a|Contact
 | `find **-o** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
 a| * Currently accepted individual `PREFIX` finding are `n/NAME`, `nr/NRIC`, `t/TAGS`.
 * The above `PREFIX` can be used in any combination to find more specific contacts.
@@ -421,7 +422,7 @@ You can use `delete` or `d` to do the following :
 | Command syntax
 | Notes
 
-.^a|Person
+.^a|Contact
 | `delete **-[f]o** INDEX`
 a| * The command will delete the contact at the specified `INDEX` listed by the `list` or `find` command.
 * The index refers to the index number shown in the latest contact listing. The index *must be a positive integer* 1, 2, 3, etc ...
@@ -460,6 +461,7 @@ delete -fo 1
 
 {empty} +
 // end::delete[]
+
 === Listing entered commands : `history` or `his`
 
 To list all the commands that you have entered in reverse chronological order. +
@@ -588,7 +590,7 @@ image::After_Clear.PNG[width:800]
 {empty} +
 [WARNING]
 ====
-This command **cannot** be undone. Please be certain that you have backed up your data (which is located in the `data` folder) before executing this command!
+This command **cannot** be undone after you exit the application. Please be certain that you have backed up your data (which is located in the `data` folder) before executing this command!
 ====
 
 {empty} +
@@ -621,7 +623,7 @@ You can easily close the Medeina application by entering `exit` or `q` in the co
 
 {empty} +
 
-== Data saving
+== Data Saving
 
 The data in Medeina is automatically saved to the hard disk after any command that may result in a change in the storage. +
 Commands that may result in a change in the storage are:
@@ -634,6 +636,13 @@ This command will update information in the storage.
 This command will remove information in the storage.
 
 You do not need to manually save the data.
+
+[WARNING]
+====
+User should take note **not** to modify the default files in any way. Manipulating the data inside files such as Medeina.xml, might cause data corruption (the application may still run, but will not be able to return error messages).
+====
+
+
 
 {empty} +
 
@@ -680,17 +689,35 @@ Coming v2.0, Medeina can be used concurrently on different systems. The data wil
 
 == FAQ
 
-*Q*: What if I find a bug? +
-*A*: Create an issue in our github link:{repoURL}/issues[here]. We will get back to you shortly.
+*Q*: Help! What is with all these data in Medeina on initial startup? How do I get rid of them? +
+*A*: This data is sample data aimed to get users started with Medeina. To start afresh, simply type `clear` into the command line, and all the sample data will be removed from the storage file.
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Medeina folder.
+*Q*: How do I transfer my data to another computer? +
+*A*: Install the application in the other computer. Open the application, type `clear` into the command line, then close it. Replace the data file, found at `data\medeina.xml`, that it had created with the data file that contains the data found in your previous Medeina folder. By default, this file will also be `medeina.xml`, unless you have renamed it to something else!
 
-*Q*: Help! What is with this data that in Medeina on initial startup? +
-*A*: This data is sample data aimed to get users started with Medeina.
+*Q*: I have modified some entries in my saved data file directly. However, upon opening the application, Medeina does not recognise my data file anymore! What is happening? Is this a bug? +
+*A*: This is not a bug. Upon opening Medeina, your existing data in the data file will be processed in accordance to certain restrictions, so that Medeina can display them appropriately for you. However, you may have edited some of the entries, such that it does not conform to these restrictions that we have set. As such, please ensure that all modifications of data *MUST* go through Medeina, otherwise your data file will not be recognised.
 
 *Q*: What if my questions are not answered through this user guide? +
-*A*: Post an issue in our github link:{repoURL}/issues[here]. Alternatively, email us at help@medeina.com. We will address your question as soon as possible.
+*A*: Please post an issue in our GitHub link:{repoURL}/issues[here]. Alternatively, you can also email us at help@medeina.com. We will address your question as soon as possible!
+
+*Q*: I have some suggestions / feedback for improvement; who can I talk to? +
+*A*: Thank you for your feedback! You may drop us an email at feedback@medeina.com; we will be happy to speak to you!
+
+*Q*: What should I do if I find a bug? +
+*A*: We are very sorry about this. Please help us out by creating an issue in our GitHub link:{repoURL}/issues[here]. We will get back to you shortly!
+
+*Q*: There's no scroll-bar in calendar entry views, what happens when a have a long list of appointments on that week? +
+*A*: The calendar entry view is implemented by default without a scroll-bar, yet user can still scroll up and down using mouse wheel.
+
+*Q*: After switching from a year view with appointments to a year view with none, the appointment dates were still colored despite no entry, why is that? +
+*A*: The issue is embedded inside the API of CalendarFx, it has already been documented in our developer guide as well. Hopefully the issue can be resolved in future releases of CalendarFX.
+
+*Q*: When right click on the calendar day view, a window jump out and says "unable to create a new entry", why is that? +
+*A*: Since Medeina is a command-line based application, clicking on calendar to create appointments has been disabled. User should create appointments using `add` command.
+
+*Q*: When click on appointments, a pop over window appears to show details of appointments but its unmodifiable, why? +
+*A*: Because of Medeina's command line based property, modifying of appointments details using mouse is disabled. Instead, users should use `edit` command.
 
 {empty} +
 
@@ -699,7 +726,9 @@ Coming v2.0, Medeina can be used concurrently on different systems. The data wil
 
 You can find a summary of all commands available in Medeina in the following sections.
 
-=== Person-related Commands
+=== Contact-related Commands
+
+These commands interact with contacts in Medeina.
 
 [width="100%", cols="20%, 10%, 40%, 30%", options="header"]
 |=====
@@ -731,6 +760,8 @@ You can find a summary of all commands available in Medeina in the following sec
 
 === Pet patient-related Commands
 
+These commands interact with pet patients in Medeina.
+
 [width="100%", cols="20%, 10%, 40%, 30%", options="header"]
 |=====
 | Command
@@ -761,6 +792,8 @@ You can find a summary of all commands available in Medeina in the following sec
 
 === Appointment-related Commands
 
+These commands interact with appointments in Medeina.
+
 [width="100%", cols="20%, 10%, 40%, 30%", options="header"]
 |=====
 | Command
@@ -779,10 +812,13 @@ You can find a summary of all commands available in Medeina in the following sec
 | `edit **-a** INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [t/TAG]...`
 | Edit an appointment in Medeina
 
-.^a|`find -a`
-| `f -a`
-| <IN PROGRESS>
-| Find an appointment in Medeina
+.^a|`listappt -y/m/w/d`
+| `la -y/m/w/d`
+| `listappt **-y** [YEAR]` +
+`listappt **-m** [YEAR-MONTH/MONTH]` +
+`listappt **-w** [DATE]` +
+`listappt **-d** [DATE]`
+| Lists appointments in Medeina by year, month, week or date
 
 .^a|`delete -a`
 | `d -a`
@@ -791,6 +827,8 @@ You can find a summary of all commands available in Medeina in the following sec
 |=====
 
 === Personalisation Commands
+
+These commands are used to personalise Medeina to your own preference.
 
 [width="100%", cols="20%, 10%, 40%, 30%", options="header"]
 |=====
@@ -806,6 +844,8 @@ You can find a summary of all commands available in Medeina in the following sec
 |=====
 
 === System-related Commands
+
+These commands carry out system-related tasks in Medeina.
 
 [cols="20, 10, 50", options="header"]
 |=====

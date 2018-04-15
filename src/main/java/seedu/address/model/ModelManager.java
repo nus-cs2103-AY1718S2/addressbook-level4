@@ -53,7 +53,7 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with Medeina: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
@@ -188,6 +188,24 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean hasConcurrentAppointment(LocalDateTime oldDateTime, LocalDateTime newDateTime) {
+        for (Appointment a : addressBook.getAppointmentList()) {
+            LocalDateTime dateTime = a.getDateTime();
+            if (newDateTime.isAfter(dateTime)
+                    && newDateTime.isBefore(dateTime.plusMinutes(30))
+                    && !dateTime.equals(oldDateTime)) {
+                return true;
+            }
+            if (newDateTime.isBefore(dateTime)
+                    && newDateTime.plusMinutes(30).isAfter(dateTime)
+                    && !dateTime.equals(oldDateTime)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

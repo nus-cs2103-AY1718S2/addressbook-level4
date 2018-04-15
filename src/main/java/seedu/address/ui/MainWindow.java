@@ -164,7 +164,7 @@ public class MainWindow extends UiPart<Stage> {
             primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
             primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
         }
-        getRoot().getScene().getStylesheets().add(prefs.getGuiSettings().getApplicationTheme());
+        getRoot().getScene().getStylesheets().add(prefs.getGuiSettings().getCurrentTheme());
     }
 
     //@@author aquarinte
@@ -172,7 +172,7 @@ public class MainWindow extends UiPart<Stage> {
      * Sets the default theme based on user preferences.
      */
     private void setWindowDefaultTheme(UserPrefs prefs) {
-        getRoot().getScene().getStylesheets().add(prefs.getGuiSettings().getApplicationTheme());
+        getRoot().getScene().getStylesheets().add(prefs.getGuiSettings().getCurrentTheme());
     }
 
     /**

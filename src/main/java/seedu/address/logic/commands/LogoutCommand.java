@@ -2,6 +2,16 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.api.services.calendar.model.Event;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.DailyScheduleShownChangedEvent;
+import seedu.address.commons.events.ui.RefreshDetailsPanelEvent;
+import seedu.address.commons.events.ui.ResetDirectionsEvent;
+import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
 import seedu.address.logic.OAuthManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 
@@ -23,6 +33,11 @@ public class LogoutCommand extends Command {
         model.setLoginStatus(false);
         //@@author ifalluphill
         OAuthManager.clearCachedCalendarData();
+        //@@author jaronchan
+        EventsCenter.getInstance().post(new DailyScheduleShownChangedEvent(new ArrayList<>()));
+        EventsCenter.getInstance().post(new ResetDirectionsEvent());
+        EventsCenter.getInstance().post(new UpdateNumberOfButtonsEvent(0));
+        EventsCenter.getInstance().post(new RefreshDetailsPanelEvent());
         //@@ author kaisertanqr
         return new CommandResult(MESSAGE_LOGOUT_SUCCESS);
     }

@@ -1694,17 +1694,19 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-=== Deleting an Employee
+=== Admin Mode Logging in / Logging out
 
-. Deleting an employee while all employees are listed
+. Logging in to admin mode in order to do admin-only commands.
+.. Prerequisites: It must be your first login and you did not change the admin password.
+.. Test case: `login pw/DEFAULT1` +
+   Expected: log in successfully and you will see red sign "Admin Mode" at the top right corner of the app.
+.. Test case: `login pw/wrongPassword123` +
+   Expected: login fails.
 
-.. Prerequisites: List all employees using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First employee is deleted from the list. Details of the deleted employee shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No employee is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
-   Expected: Similar to previous.
+. Logging out of admin mode.
+.. Test case: `logout` +
+   Expected: If you logged in, now you will log out and red sign "Admin Mode" will disappear.
+   Otherwise, you cannot log out again.
 
 === Editing Outlet Information
 . Editing outlet information
@@ -1726,6 +1728,76 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Announcement displayed changes accordingly.
 .. Test case: `announce It is another announcement!` +
    Expected: Announcement displayed changes accordingly.
+
+=== Changing Password
+
+. Changing admin password.
+.. Prerequisites: Login with the correct admin password. Make sure you are in the admin mode. (The default admin password is `DEFAULT1`)
+.. Test case: `changeadminpw pw/DEFAULT1 pw/newPassword pw/newPassword` +
+   Expected: Your master password changed successfully and now you can login with the new password.
+.. Test case: `changeadminpw pw/WRONG_PASSWORD pw/newPassword pw/newPassword` +
+   Expected: Your old password is incorrect. Error details shown in the status message.
+
+=== Resetting Password
+
+. Resetting admin password.
+.. Prerequisites: Make sure the email address of the outlet is valid (your own email address for testing) and Internet is in good condition. Otherwise, you are unable to receive the email.
+.. Test case: `resetadminpw`
+   Expected: Email will be sent to the outlet email address after a few seconds depending on your Internet speed. +
+   Note: You can now log in with the password sent to you. It is a temporary password, you must change ur password immediately.
+
+=== Adding a Shift
+
+. Adding a Shift
+.. Test case: `addshift d/21-04-18 ts/1200 te/1500 c/5` +
+   Expected: A shift is successfully added.
+.. Test case: `addshift d/10-03-18 ts/1200 te/1500 c/5` +
+   Expected: No shift added. Error details shown in the status message.
+.. Test case: `addshift d/21-04-18 ts/1600 te/1500 c/5` +
+   Expected: No shift added. Error details shown in the status message.
+
+=== Deleting a Shift
+
+. Deleting a Shift
+.. Test case: `deleteshift 1` +
+   Expected: A chosen shift is deleted. Shift indices updated.
+.. Test case: `deleteshift x` where x is larger than all the shift indices in the timetable. +
+   Expected: No shift deleted. Error details shown in the status message.
+
+=== Applying an Employee for a Shift
+
+. Applying an employee for a shift
+.. Prerequisites: Login with the correct admin password. Make sure you are in the admin mode. (The default admin password is `DEFAULT1`).
+   Make sure you have added some shifts.
+.. Test case: `apply 1 1` +
+   Expected: The first employee is successfully added to the first shift.
+.. Test case: `apply 1 1` again +
+   Expected: Employee is already in the shift. Error details shown in the status message.
+.. Test case: `apply 1 x` where x is a shift on a past date, or an invalid index.
+   Expected: Error details shown in the status message.
+
+=== Unapplying an Employee from a Shift
+
+. Unapplying an employee from a shift
+.. Prerequisites: Login with the correct admin password. Make sure you are in the admin mode. (The default admin password is `DEFAULT1`).
+   Make sure you have added some employees into some shifts.
+.. Test case: `unapply 1 1` +
+   Expected: The first employee is successfully removed from the first shift.
+.. Test case: `unapply 1 1` again +
+   Expectd: Employee is not in the shift as just removed. Error details shown in the status message.
+
+=== Displaying an Employee's Shift on the Timetable
+
+. Displaying an employee on the timetable
+.. Test case: `select 1` -> `apply 1 1` +
+   Expected: You can see shift 1 colour has changed from brown to blue, indicating that the first employee is enrolled in shift 1.
+
+=== Viewing All Employees in a Shift
+
+. Viewing all employees in a shift
+.. Prerequisites: Make sure you have added some shifts and added some employees into the shifts.
+.. Test case: `viewshift 1` +
+   Expected: Correct number of employees listed in employee list.
 
 === Encrypting and Decrypting Local Storage Files
 . Encrypting local storage files

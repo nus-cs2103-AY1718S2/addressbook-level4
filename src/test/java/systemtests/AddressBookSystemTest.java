@@ -267,6 +267,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
     }
 
+    //@@author shadow2496
     /**
      * Asserts that the result display's shows the default style.
      */
@@ -280,6 +281,8 @@ public abstract class AddressBookSystemTest {
     protected void assertResultDisplayShowsErrorStyle() {
         assertEquals(RESULT_DISPLAY_ERROR_STYLE, getResultDisplay().getStyleClass());
     }
+
+    //@@author
 
     /**
      * Asserts that the entire status bar remains the same.

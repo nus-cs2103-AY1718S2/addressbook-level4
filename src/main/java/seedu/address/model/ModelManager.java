@@ -60,6 +60,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author shadow2496
     @Override
     public void loginAccount(Account account) {
         addressBook.loginAccount(account);
@@ -70,6 +71,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void setVerificationCode(String code) {
         addressBook.setVerificationCode(code);
     }
+
+    //@@author
 
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {

@@ -13,6 +13,7 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class ResultDisplayTest extends GuiUnitTest {
 
+    //@@author shadow2496
     private static final NewResultAvailableEvent NEW_RESULT_EVENT_NON_ERROR =
             new NewResultAvailableEvent("Non Error", false);
     private static final NewResultAvailableEvent NEW_RESULT_EVENT_ERROR =
@@ -21,6 +22,8 @@ public class ResultDisplayTest extends GuiUnitTest {
     private ArrayList<String> defaultStyleOfResultDisplay;
     private ArrayList<String> errorStyleOfResultDisplay;
 
+    //@@author
+
     private ResultDisplayHandle resultDisplayHandle;
 
     @Before
@@ -28,12 +31,15 @@ public class ResultDisplayTest extends GuiUnitTest {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(),
                 ResultDisplayHandle.RESULT_DISPLAY_ID));
+        //@@author shadow2496
         uiPartRule.setUiPart(resultDisplay);
 
         defaultStyleOfResultDisplay = new ArrayList<>(resultDisplayHandle.getStyleClass());
 
         errorStyleOfResultDisplay = new ArrayList<>(defaultStyleOfResultDisplay);
         errorStyleOfResultDisplay.add(ResultDisplay.ERROR_STYLE_CLASS);
+
+        //@@author
     }
 
     @Test
@@ -41,6 +47,7 @@ public class ResultDisplayTest extends GuiUnitTest {
         // default result text
         guiRobot.pauseForHuman();
         assertEquals("", resultDisplayHandle.getText());
+        //@@author shadow2496
         assertEquals(defaultStyleOfResultDisplay, resultDisplayHandle.getStyleClass());
 
         // new error result received
@@ -52,8 +59,11 @@ public class ResultDisplayTest extends GuiUnitTest {
         postNow(NEW_RESULT_EVENT_NON_ERROR);
         guiRobot.pauseForHuman();
         assertBehaviorForNonErrorResult();
+
+        //@@author
     }
 
+    //@@author shadow2496
     /**
      * Verifies a result which has an error that <br>
      *      - the text remains <br>

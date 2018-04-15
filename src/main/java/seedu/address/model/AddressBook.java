@@ -80,6 +80,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author shadow2496
     //// account-level operations
 
     /**
@@ -94,6 +95,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setVerificationCode(String code) {
         account.setCode(code);
     }
+
+    //@@author
 
     //// person-level operations
 

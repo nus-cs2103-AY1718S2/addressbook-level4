@@ -45,10 +45,13 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author shadow2496
     @Override
     public void passVerificationCode(String code) {
         model.setVerificationCode(code);
     }
+
+    //@@author
 
     @Override
     public ObservableList<Person> getFilteredPersonList() {

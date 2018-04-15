@@ -767,8 +767,6 @@ e.g. `addTask title/Grade Exams desc/Grade mid-terms by/04-04-2018 priority/2`
 e.g. `deleteTask 1`
 * *Edit Task* : `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
 e.g. `editTask 1 title/Eat Dinner`
-*Edit Task*: `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
-e.g. `editTask 1 title/Eat Dinner` +
 * *List Task*: `listTask` +
 * *List Current month tasks*: `listCurrentTask` +
 * *Sort tasks by date*: `sortTask`

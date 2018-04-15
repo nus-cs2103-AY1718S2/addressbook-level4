@@ -74,6 +74,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
+    //@@author JoonKai1995
     /**
      * Parses a {@code String matricNumber} into a {@code MatriculationNumber}.
      * Leading and trailing whitespaces will be trimmed.
@@ -99,7 +100,7 @@ public class ParserUtil {
         requireNonNull(matricNumber);
         return matricNumber.isPresent() ? Optional.of(parseMatricNumber(matricNumber.get())) : Optional.empty();
     }
-
+    //@@author
     /**
      * Parses a {@code String phone} into a {@code Phone}.
      * Leading and trailing whitespaces will be trimmed.

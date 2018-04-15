@@ -1194,14 +1194,14 @@ image::editMiscSuccess.png[width:800]
 CodEducator also allows you to use features of the applications using everyday english sentences, without the need to remember specific command words.
 
 [WARNING]
-An active internet connection is required for this to work!
+An active internet connection is required for this to work.
 
 === How do i use this?
 
 You can refer to the table below to see which are the features that you are able to invoke using conversational English.
 
 [TIP]
-The examples below are just for your reference. Any phrase or sentence can be used, so long as your *intention* is precise and clear!
+The examples below are just for your reference. Any phrase or sentence can be used, so long as your *intention* is precise and clear.
 [width="100%", cols=",^2m,^2e",options="header",]
 |=======================================================================
 | Command 2+| Examples
@@ -1220,14 +1220,17 @@ The examples below are just for your reference. Any phrase or sentence can be us
 [IMPORTANT]
 Currently, the commands `Delete` and `Select` only detects English names!
 
+.selecting one of your student, Jason
 image::Select(before).png[width="500"]
+
+.You should see this after execution of the `select` command is successful
 image::Select(after).png[width="500"]
 
 === Guidelines for using this feature
 * Be sure to check for spelling errors in your sentences.
 
 [WARNING]
-Spelling errors can be mis-interpreted and the wrong command might be invoked!
+Spelling errors can be mis-interpreted and the wrong command might be invoked.
 
 * Be as precise as possible in specifying your intentions in the sentences, to prevent mis-interpretation of commands.
 * If the wrong feature is invoked, you can always use the `undo` command revert any undesired changes.

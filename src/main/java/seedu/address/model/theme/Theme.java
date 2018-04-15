@@ -8,6 +8,8 @@ import java.util.Arrays;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 
 /**
  * Represents a Tag in the address book.
@@ -23,11 +25,12 @@ public class Theme {
     /**
      * Change current theme
      */
-    public static void changeCurrentTheme(String currentTheme) {
-        requireNonNull(currentTheme);
-        assert (isValidThemeName(currentTheme));
-        if (isValidThemeName(currentTheme)) {
-            Theme.currentTheme = currentTheme;
+    public static void changeCurrentTheme(String curTheme) {
+        EventsCenter.getInstance().post(new ChangeThemeEvent(curTheme));
+        requireNonNull(curTheme);
+        assert (isValidThemeName(curTheme));
+        if (isValidThemeName(curTheme)) {
+            Theme.currentTheme = curTheme;
         }
     }
 
@@ -63,7 +66,7 @@ public class Theme {
                 cssFileName = BRIGHT_THEME_CSS_FILE_NAME;
                 break;
             default:
-                cssFileName = DARK_THEME_CSS_FILE_NAME;
+                cssFileName = BRIGHT_THEME_CSS_FILE_NAME;
             }
 
             scene.getStylesheets().add(cssFileName);

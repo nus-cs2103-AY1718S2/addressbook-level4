@@ -553,10 +553,10 @@ Sorts existing employees by any field +
 Format: `sort FIELD`
 
 ****
-* Sort the employees by any existing field in alphabetical order, note that rate field will be sorted in descending order.
+* Employees are sorted by existing field in alphabetical order, note that rate field will be sorted in descending order.
 * The field entered must be one of the following: `name`, `phone`, `email`, `address`, `rate`, `tag`.
 * Sorting is case-insensitive.
-* The sorted results is stored permanently. If you want to revert to the previous ordering, please refer to <<Undoing previous command : `undo`>>
+* Sorted results are stored permanently. If you want to revert to the previous ordering, please refer to <<Undoing previous command : `undo`>>
 ****
 
 Examples:
@@ -606,14 +606,16 @@ Examples:
 Deletes the event with title "Test Event" in 2^nd^ employee's timetable.
 // end::deleteevent[]
 
+// tag::changeTheme[]
 === Changing the theme of Employees Tracker: `changeTheme`
 
 Changes the theme of ET to bright or dark.
 Format: `changeTheme THEME`
 
 ****
-* The change of theme will be effective immediately.
-* the `THEME` parameter must be one of the following: bright, dark.
+* `changeTheme` command is not undoable.
+* Change of theme will be effective immediately.
+* The `THEME` parameter must be one of the following in current version: bright, dark.
 ****
 
 Examples:
@@ -699,6 +701,7 @@ This section summarizes the usage of all Employees Tracker's commands.
 |*AddEvent* |`addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION` |`addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event`
 |*AddPhoto* |`addPhoto INDEX` |
 |*Authentication* |`authenET` |
+|*ChangeTheme* |`changeTheme THEME` |`changeTheme dark`
 |*Clear* |`clear` |
 |*Delete* |`delete INDEX` |`delete 3`
 |*DeleteEvent* |`deleteEvent INDEX TITLE` |`deleteEvent 1 event title`
@@ -718,6 +721,7 @@ This section summarizes the usage of all Employees Tracker's commands.
 |*Review* |`review INDEX` |`review 2`
 |*Select* |`select INDEX` |`select 2`
 |*SetPassword* |`setPassword OLD_PASSWORD NEW_PASSWORD ` |`setPassword admin 12345`
+|*Sort* |`sort FIELD` |`sort name`
 |*TodoList* |`todoList` |
 |*Undo* |`undo` |
 |*Unlock* |`unlock PASSWORD` |`unlock admin`

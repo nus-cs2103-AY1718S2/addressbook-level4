@@ -37,6 +37,9 @@ This application was built upon an existing code base for an address book for th
 ** Enhancements to existing features:
 *** Created tabs for both OwnerList and PetPatientList  (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/196[#196])
 *** Improve *List* command to list out both owners and petPatients (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/143[#143])
+*** Assign different colors to different tags (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/14[#14])
+*** Implemented calendar switch view command which was integrated later into `listappt` command (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/179[#179])
+*** Create tab for both contact list and pet patient list (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/196[#196])
 ** Documentation:
 *** Adding prefaces and changing language in the User Guide (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/70[#70])
 *** Adding screenshot of command results in the User Guide (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/151[#151])

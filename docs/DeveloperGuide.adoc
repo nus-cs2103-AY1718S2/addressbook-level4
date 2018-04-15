@@ -1729,14 +1729,14 @@ Expected: List of appointments made by the the third patient in the list will be
 .. Type `viewappt 99999`
 Expected: Invalid index error is shown.
 
-=== Add Patient Appointments
+=== Add Patient Appointment
 . Add an appointment for a specific patient from the current patient list.
 .. Type `addappt 1 19/8/2018 1500` +
 Expected: New appointment will be added and the list of appointments of the patient will be updated. Changes will be reflected on the right panel.
 .. Type `addappt 1 19/8/2018`
 Expected: Error messages will shown that the command format is incorrect.
 
-=== Delete Patient Appointments
+=== Delete Patient Appointment
 . Delete an appointment made by a specific patient from the current patient list.
 .. Type `delappt 1 19/8/2018 1500` +
 Expected: The appointment will be deleted and the list of appointments of the patient will be updated. Changes will be reflected on the right panel.

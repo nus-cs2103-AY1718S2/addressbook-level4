@@ -259,8 +259,8 @@ Address book starts with the following as shown in Figure 13:
 .Application Before Edit. +
 image::AllListed.png[width="300"]
 
-Command entered: `edit 2 p/91234567 e/johndoe@example.com` +
-This changes the details of the person with index 2 (Betsy Crowe), in this case, her phone number and email address and writes over his original saved details (Figure 14).
+Command entered: `edit 2 p/91234567 e/johndoe@example.com dp/C:\Users\Name\Desktop\betsy.jpg` +
+This changes the details of the person with index 2 (Betsy Crowe), in this case, her phone number, email address, display picture and writes over her original saved details (Figure 14).
 
 .Phone Number and Email of 2nd Person (Betsy Crowe) Edited. +
 image::FirstEdit.png[width="300"]
@@ -311,7 +311,7 @@ image::markPart2David.png[width="300"]
 `markPart 1 marks/70` +
 Adds 70 marks to the 1st person in the results of the `find` command, in this case, David. We note that it has exceeded the cap of 100, hence the marks was set to 100 (Figure 19).
 
-.David's marks updated
+.David's marks updated, frame updated
 image::markPartupdateDavid.png[width="300"]
 
 // end::participation[]
@@ -337,7 +337,7 @@ Do refrain from using high resolution images as display pictures, the optimum re
 Examples:
 
 Command(s) entered: `list` +
-Lists all people in Your TA (Figure 20). +
+Lists all people in Your TA (Figure 20). We can see that Alex Yeoh has a display picture. +
 
 .Listing everyone in Your TA
 image::updateDPJack1.png[width="300"]
@@ -378,7 +378,7 @@ Examples:
 Address book starts with the following as shown in Figure 22:
 
 .Application before Delete. +
-image::UiAfterSecond.png[width="800']
+image::UiFromDelete.png[width="800']
 
 Command(s) entered: `list`, `delete 2` +
 The 2nd person listed in the address book is deleted (Figure 23).
@@ -409,7 +409,7 @@ Examples:
 Your TA starts with the following as shown in Figure 25:
 
 .Application before Select. +
-image::UiAfterSecond.png[width="800"]
+image::UiFromDelete.png[width="800"]
 
 Command(s) entered: `list`, `select 1` +
 Lists all people in address book and selects the 1st person (Figure 26).
@@ -455,7 +455,7 @@ Current date: 15-04-2018 +
 The application initially starts with no tasks:
 
 .Initial application view. +
-image::UiAfterSecond.png[width="800"]
+image::UiFromDelete.png[width="800"]
 
 Command entered: `addTask title/Grade Exams desc/Grade mid-terms by/20-04-2018 priority/2` +
 This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure 30).
@@ -583,7 +583,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `markPart`, `updateDP`, and `clear`).
 ====
 
 Examples:
@@ -591,7 +591,7 @@ Examples:
 Address book starts with the following as shown in Figure 19:
 
 .Application before any Commands +
-image::UiAfterSecond.png[width="800"]
+image::UiFromDelete.png[width="800"]
 
 Command(s) entered: `delete 1`, `list`, `undo` +
 The `delete 1` command will be reversed. +
@@ -613,7 +613,7 @@ Format: `redo`
 
 Examples:
 
-Address book starts with the same one in Figure 19.
+Your TA starts with the same one in Figure 19.
 
 Command(s) entered: `delete 1`, `undo`, `redo` +
 The delete command is reversed, then reapplied (Figure 20).

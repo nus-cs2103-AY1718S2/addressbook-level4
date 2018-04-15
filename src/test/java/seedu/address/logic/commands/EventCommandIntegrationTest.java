@@ -14,8 +14,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.Event;
-import seedu.address.storage.Storage;
-import seedu.address.storage.StorageManager;
 import seedu.address.testutil.EventBuilder;
 
 //@@author Kyomian

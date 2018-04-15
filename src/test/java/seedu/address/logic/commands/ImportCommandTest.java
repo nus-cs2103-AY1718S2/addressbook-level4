@@ -58,7 +58,8 @@ public class ImportCommandTest {
         expectedModel.addActivity(DEMO1);
 
         createXmlFile(Arrays.asList(ASSIGNMENT3, DEMO1), ASSIGNMENT3_DEMO1_FILE_PATH);
-        ImportCommand importCommand = getImportCommandForGivenFilePath(ASSIGNMENT3_DEMO1_FILE_PATH, actualModel, storage);
+        ImportCommand importCommand =
+                getImportCommandForGivenFilePath(ASSIGNMENT3_DEMO1_FILE_PATH, actualModel, storage);
 
         assertCommandSuccess(importCommand, actualModel, expectedMessage, expectedModel);
     }
@@ -94,7 +95,8 @@ public class ImportCommandTest {
         expectedModel.addActivity(DEMO1);
 
         createXmlFile(Arrays.asList(ASSIGNMENT3, DEMO1, ASSIGNMENT1, CIP), DUPLICATE_ACTIVITY_FILE_PATH);
-        ImportCommand importCommand = getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, actualModel, storage);
+        ImportCommand importCommand =
+                getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, actualModel, storage);
 
         assertCommandSuccess(importCommand, actualModel, expectedMessage, expectedModel);
     }

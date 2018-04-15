@@ -1696,6 +1696,53 @@ Expected: The first patient in the list is selected and his or her details displ
 .. Type `select 9999` +
 Expected: Invalid index error is shown.
 
+=== Add Patient into Visiting Queue
+. Add a patient from the current patient list into visiting queue.
+.. Type `addq 1` +
+Expected: The first patient in the list will be added into the visiting queue shown in visiting queue panel at the bottom.
+.. Type `addq 99999` +
+Expected: Invalid index error is shown.
+
+=== Remove Patient from Visiting Queue
+. Remove the first patient from the visiting queue.
+.. Type `removeq` +
+Expected: The first patient in the visiting queue will be removed from the queue.
+.. Type `removeq` when the visiting queue is empty +
+Expected: Error message will be shown that the queue is empty.
+
+=== Remove Patient from Visiting Queue by Index
+. Remove a specific patient from the visiting queue.
+.. Type `removeq 3` +
+Expected: The patient with index 3 in the visiting queue will be removed from the queue.
+.. Type `removeq 5` when the patient with index 3 does not exist in the visiting queue +
+Expected: Error message will be shown that the patient does not exist in the visiting queue.
+
+=== View Patient Appointments in Calendar View
+. View list of patient appointments in calendar view.
+.. Type `viewappt` +
+Expected: All patient appointments will be displayed in the calendar view.
+
+=== View Patient Appointments by Index
+. View list of patient appointments made by a specific patient from the current patient list.
+.. Type `viewappt 3` +
+Expected: List of appointments made by the the third patient in the list will be displayed at the right panel.
+.. Type `viewappt 99999`
+Expected: Invalid index error is shown.
+
+=== Add Patient Appointments
+. Add an appointment for a specific patient from the current patient list.
+.. Type `addappt 1 19/8/2018 1500` +
+Expected: New appointment will be added and the list of appointments of the patient will be updated. Changes will be reflected on the right panel.
+.. Type `addappt 1 19/8/2018`
+Expected: Error messages will shown that the command format is incorrect.
+
+=== Delete Patient Appointments
+. Delete an appointment made by a specific patient from the current patient list.
+.. Type `delappt 1 19/8/2018 1500` +
+Expected: The appointment will be deleted and the list of appointments of the patient will be updated. Changes will be reflected on the right panel.
+.. Type `delappt 1 19/8/2018`
+Expected: Error messages will shown that the command format is incorrect.
+
 [appendix]
 == Glossary
 

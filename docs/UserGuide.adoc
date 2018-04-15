@@ -778,6 +778,7 @@ image::logoutResult.png[width="790"]
 // end::sync[]
 
 // tag::dashboard[]
+// tag::dashboard1[]
 === Dashboard
 
 In Codeducator, you can *track the learning progress* of your students easily by utilising our Dashboard feature.
@@ -922,6 +923,8 @@ The `STUDENT_INDEX` and `MILESTONE_INDEX` provided must be valid. Otherwise, an 
 .Error message displayed when invalid `STUDENT_INDEX` "10" and `MILESTONE_INDEX` "10" are entered
 image::deleteMS3_screenshot.png[width="800"]
 
+// end::dashboard1[]
+
 ==== Adding a task to a milestone: `addTask`
 
 If you wish to keep track of a piece of work that needs to be done to complete a milestone's objective, you can add a task to the milestone in the student's dashboard using the `addTask` command. +
@@ -1058,7 +1061,7 @@ image::checkTask3_screenshot.png[width="800"]
 
 // end::dashboard[]
 
-// tag::profilePage[]
+// tag::profilePage1[]
 === Student Profile Page
 ==== Displaying profile page for each student : `moreInfo`
 
@@ -1097,7 +1100,7 @@ You will be able to attain the profile page style in `Figure 5` if your OS zoom 
 * Displays the full information of a student with the specified `INDEX`.
 * The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
 ****
-
+// end::profilePage1[]
 ==== Edit the profile picture of a student : `editPicture`
 
 Allows you to edit the current profile picture of a student to a new picture from a specific file path indicated by you. +
@@ -1111,7 +1114,7 @@ The file path you entered can be relative to the current folder of the `jar` fil
 ====
 
 ===== Steps taken to edit the profile picture of a student
-
+//tag::profilePage2[]
 Suppose you wish to have this picture, with the file name of `animal.jpg`  as a new profile picture as your student:
 
 image::animal.jpg[width:100]
@@ -1135,7 +1138,7 @@ image::editedPicture.png[width:600]
 
 [TIP]
 The ideal aspect ratio of the picture is 1.25 from height to width.
-
+//end::profilePage2[]
 ****
 * Changes the profile photo of a student with the specified `INDEX` to a new one which has a file path of `FILE_PATH_OF_PICTURE`
 * The index refers to the index number shown in the last schedule listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -1176,7 +1179,6 @@ image::editMiscSuccess.png[width:600]
 * Existing values will be updated to and overwritten by the input values.
 ****
 
-//end::profilePage[]
 
 
 === Coming in v2.0

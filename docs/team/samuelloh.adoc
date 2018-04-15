@@ -60,8 +60,12 @@ However, it is relatively small. Moreover, some details like Next-Of-Kin contact
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=profilePage]
+Start of extract from [User Guide]
 
+include::../UserGuide.adoc[tag=profilePage1]
+include::../UserGuide.adoc[tag=profilePage2]
+
+End of extract from [User Guide]
 
 == Contributions to the Developer Guide
 
@@ -69,6 +73,10 @@ include::../UserGuide.adoc[tag=profilePage]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=programmingLanguage]
-include::../DeveloperGuide.adoc[tag=profilePage]
+Start of extract from [Developer Guide]
 
+include::../DeveloperGuide.adoc[tag=programmingLanguage]
+include::../DeveloperGuide.adoc[tag=profilePage1]
+include::../DeveloperGuide.adoc[tag=profilePage2]
+
+End of extract from [Developer Guide]

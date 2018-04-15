@@ -74,6 +74,70 @@ public class SampleDataUtil {
             new Order(
                 new OrderInformation("Shoes"), new OrderStatus("ongoing"), new Price("129.99"),
                 new Quantity("1"), new DeliveryDate("10-05-2018")
+            ),
+            new Order(
+                new OrderInformation("Blue Shirt"), new OrderStatus("done"), new Price("20.99"),
+                new Quantity("1"), new DeliveryDate("05-03-2018")
+            ),
+            new Order(
+                new OrderInformation("Makeup Remover"), new OrderStatus("ongoing"), new Price("15.50"),
+                new Quantity("5"), new DeliveryDate("29-04-2018")
+            ),
+            new Order(
+                new OrderInformation("Monopoly"), new OrderStatus("ongoing"), new Price("45.00"),
+                new Quantity("2"), new DeliveryDate("28-04-2018")
+            ),
+            new Order(
+                new OrderInformation("Computer"), new OrderStatus("done"), new Price("1500.00"),
+                new Quantity("1"), new DeliveryDate("15-06-2018")
+            ),
+            new Order(
+                new OrderInformation("LED TV"), new OrderStatus("ongoing"), new Price("2999.99"),
+                new Quantity("2"), new DeliveryDate("21-08-2018")
+            ),
+            new Order(
+                new OrderInformation("Injustice 2"), new OrderStatus("ongoing"), new Price("200.00"),
+                new Quantity("2"), new DeliveryDate("11-09-2018")
+            ),
+            new Order(
+                new OrderInformation("Batman Plushie"), new OrderStatus("done"), new Price("17.99"),
+                new Quantity("5"), new DeliveryDate("19-03-2018")
+            ),
+            new Order(
+                new OrderInformation("Skirts"), new OrderStatus("ongoing"), new Price("15.50"),
+                new Quantity("10"), new DeliveryDate("16-08-2018")
+            ),
+            new Order(
+                new OrderInformation("Mints"), new OrderStatus("ongoing"), new Price("2.50"),
+                new Quantity("20"), new DeliveryDate("17-06-2018")
+            ),
+            new Order(
+                new OrderInformation("Formal Shirts"), new OrderStatus("ongoing"), new Price("39.99"),
+                new Quantity("5"), new DeliveryDate("10-10-2018")
+            ),
+            new Order(
+                new OrderInformation("Running Shoes"), new OrderStatus("done"), new Price("359.99"),
+                new Quantity("1"), new DeliveryDate("12-03-2018")
+            ),
+            new Order(
+                new OrderInformation("Sweatshirts"), new OrderStatus("done"), new Price("25.00"),
+                new Quantity("3"), new DeliveryDate("25-11-2018")
+            ),
+            new Order(
+                new OrderInformation("Smartphone"), new OrderStatus("done"), new Price("750.00"),
+                new Quantity("1"), new DeliveryDate("13-10-2018")
+            ),
+            new Order(
+                new OrderInformation("Notebooks"), new OrderStatus("ongoing"), new Price("3.50"),
+                new Quantity("20"), new DeliveryDate("22-12-2018")
+            ),
+            new Order(
+                new OrderInformation("Towels"), new OrderStatus("ongoing"), new Price("10.00"),
+                new Quantity("6"), new DeliveryDate("22-11-2018")
+            ),
+            new Order(
+                new OrderInformation("Coffee Mugs"), new OrderStatus("done"), new Price("12.00"),
+                new Quantity("6"), new DeliveryDate("19-05-2018")
             )
         };
     }

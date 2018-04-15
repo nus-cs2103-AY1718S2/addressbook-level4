@@ -2,7 +2,9 @@
 ###### \java\seedu\address\commons\core\Messages.java
 ``` java
     public static final String MESSAGE_EMAIL_SENT = "Email sent to %1$d persons!";
+    public static final String MESSAGE_EMAIL_UNKNOWN_ERROR = "An unknown error occurred while sending your email!";
     public static final String MESSAGE_TEMPLATE_NOT_FOUND = "No such templates found!";
+
 ```
 ###### \java\seedu\address\commons\util\GmailUtil.java
 ``` java
@@ -12,7 +14,6 @@
  */
 public class GmailUtil {
 
-    /** Application name. */
     private static final String APPLICATION_NAME =
             "Gmail API Java Quickstart";
 
@@ -20,14 +21,14 @@ public class GmailUtil {
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
             System.getProperty("user.home"), ".credentials/gmail-java-quickstart");
 
-    /** Global instance of the {@link FileDataStoreFactory}. */
+    /** Global instance of the {@link FileDataStoreFactory} to create the credentials file to save to*/
     private static FileDataStoreFactory dataStoreFactory;
 
-    /** Global instance of the JSON factory. */
+    /** Global instance of the JSON factory for reading and writing json*/
     private static final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
 
-    /** Global instance of the HTTP transport. */
+    /** Global instance of the HTTP transport to support http calls*/
     private static HttpTransport httpTransport;
 
 
@@ -52,19 +53,19 @@ public class GmailUtil {
     public GmailUtil() throws IOException {
         this.service = getGmailService();
     }
+
     /**
-     * Creates an authorized Credential object.
+     * Creates an authorized Credential object by
+     * Loading client secrets and
+     * Building flow and triggering user authorization request.
      * @return an authorized Credential object.
-     * @throws IOException
+     * @throws IOException if there is anything wrong with reading/writing to file.
      */
     public static Credential authorize() throws IOException {
-        // Load client secrets.
         InputStream in =
                 GmailUtil.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
-        // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
                         httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
@@ -81,7 +82,7 @@ public class GmailUtil {
     /**
      * Build and return an authorized Gmail client service.
      * @return an authorized Gmail client service
-     * @throws IOException
+     * @throws IOException from authorize
      */
     public static Gmail getGmailService() throws IOException {
         Credential credential = authorize();
@@ -92,13 +93,8 @@ public class GmailUtil {
 
     /**
      * Using inputs, generate MimeMessage type object to use to encapsulate message states.
-     * @param to
-     * @param cc
-     * @param from
-     * @param subject
-     * @param bodyText
      * @return MimeMessage to pass to createMessageWithEmail
-     * @throws MessagingException
+     * @throws MessagingException if message is invalid
      */
     private static MimeMessage createEmail(String to, String cc, String from, String subject, String bodyText)
             throws MessagingException {
@@ -122,10 +118,6 @@ public class GmailUtil {
 
     /**
      * Taking in MimeMessage email, generate a Message which can be used to send through Gmail api
-     * @param email
-     * @return
-     * @throws MessagingException
-     * @throws IOException
      */
     private static Message createMessageWithEmail(MimeMessage email) throws MessagingException, IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -139,15 +131,6 @@ public class GmailUtil {
     /**
      * Start of the chain, takes all the inputs and generates Message using createMessageWithEmail and uses gmail
      * api to send the email out
-     *
-     * @param service
-     * @param recipientEmail
-     * @param ccEmail
-     * @param fromEmail
-     * @param title
-     * @param message
-     * @throws IOException
-     * @throws MessagingException
      */
     public static void send(Gmail service, String recipientEmail, String ccEmail, String fromEmail, String title,
                             String message) throws IOException, MessagingException {
@@ -226,9 +209,10 @@ public class DeleteTemplateCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the template which has the specified purpose.\n"
-            + "Parameters: PURPOSE "
+            + "Parameters: "
+            + PREFIX_PURPOSE + " PURPOSE \n"
             + "Example: " + COMMAND_WORD + " "
-            + "greeting";
+            + PREFIX_PURPOSE + "greeting";
 
     public static final String MESSAGE_DELETE_TEMPLATE_SUCCESS = "Deleted Template with purpose : %1$s";
 
@@ -275,8 +259,12 @@ public class EmailCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Emails all persons whose names matches any of "
             + "the specified keywords (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
-            + "Parameters: NAME TEMPLATE\n"
-            + "Example: " + COMMAND_WORD + " alice coldemail";
+            + "Parameters: "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_PURPOSE + "PURPOSE \n"
+            + "Example: " + COMMAND_WORD +  " "
+            + PREFIX_NAME + "alice "
+            + PREFIX_PURPOSE + "coldemail";
 
     private final NameContainsKeywordsPredicate predicate;
     private final String search;
@@ -302,19 +290,21 @@ public class EmailCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
         ObservableList<Person> emailList = model.getFilteredPersonList();
-        for (Person p : emailList) {
+        if (emailList.size() == 0) {
+            return new CommandResult(Messages.MESSAGE_PERSONS_NOT_FOUND);
+        }
+        for (Person person : emailList) {
             try {
                 Template template = model.selectTemplate(this.search);
                 GmailUtil handler = new GmailUtil();
                 Gmail service = handler.getService();
-                handler.send(service, p.getEmail().toString(), "",
+                handler.send(service, person.getEmail().toString(), "",
                         service.users().getProfile("me").getUserId(), template.getTitle(),
                         template.getMessage());
             } catch (TemplateNotFoundException e) {
                 return new CommandResult(Messages.MESSAGE_TEMPLATE_NOT_FOUND);
             } catch (Exception e) {
-                System.out.println(e);
-                System.out.println("Some Exception occurred");
+                return new CommandResult(Messages.MESSAGE_EMAIL_UNKNOWN_ERROR);
             }
         }
         return new CommandResult(getMessageForPersonEmailSummary(model.getFilteredPersonList().size()));
@@ -466,7 +456,6 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 /**
  * Signals that the operation will result in duplicate Template objects.
  */
-
 public class DuplicateTemplateException extends DuplicateDataException {
     public DuplicateTemplateException() {
         super("Operation would result in duplicate templates");
@@ -478,7 +467,9 @@ public class DuplicateTemplateException extends DuplicateDataException {
 /**
  * Signals that the operation is unable to find the specified template.
  */
-public class TemplateNotFoundException extends Exception {}
+public class TemplateNotFoundException extends Exception {
+
+}
 ```
 ###### \java\seedu\address\model\email\UniqueTemplateList.java
 ``` java
@@ -525,12 +516,12 @@ public class UniqueTemplateList implements Iterable<Template> {
      * @throws DuplicateTemplateException if the template to add is a duplicate of an existing template
      * in the list.
      */
-    public void add(Template toAdd) throws DuplicateTemplateException {
-        requireNonNull(toAdd);
-        if (contains(toAdd)) {
+    public void add(Template templateToAdd) throws DuplicateTemplateException {
+        requireNonNull(templateToAdd);
+        if (contains(templateToAdd)) {
             throw new DuplicateTemplateException();
         }
-        internalList.add(toAdd);
+        internalList.add(templateToAdd);
     }
 
     /**

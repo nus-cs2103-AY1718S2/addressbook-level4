@@ -34,6 +34,7 @@ public class InterviewCommand extends UndoableCommand {
     public static final String MESSAGE_INTERVIEW_PERSON_SUCCESS =
             "Interview of person named %1$s has been scheduled on %2$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in HR+.";
+    public static final String PARSED_RESULT = "Parsed date: %1$s";
 
     private final Index index;
     private final LocalDateTime dateTime;
@@ -110,7 +111,7 @@ public class InterviewCommand extends UndoableCommand {
 
     @Override
     public String getParsedResult() {
-        return "Parsed date: " + UiUtil.formatDate(dateTime);
+        return String.format(PARSED_RESULT, UiUtil.formatDate(dateTime));
     }
 
     @Override

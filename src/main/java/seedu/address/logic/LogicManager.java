@@ -7,13 +7,11 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddAccountCommand;
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ReserveCommand;
-import seedu.address.logic.commands.ReturnCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CatalogueParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -53,23 +51,17 @@ public class LogicManager extends ComponentManager implements Logic {
         case AddCommand.COMMAND_WORD:
             auto = "add t/ a/ i/ av/ tag/ ";
             break;
-        case AddAccountCommand.COMMAND_WORD:
-            auto = "addAccount n/ m/ u/ p/ l/ ";
-            break;
         case EditCommand.COMMAND_WORD:
             auto = "edit 1 t/ a/ i/ av/ tag/ ";
             break;
         case DeleteCommand.COMMAND_WORD:
             auto = "delete 1";
             break;
-        case BorrowCommand.COMMAND_WORD:
-            auto = "borrow 1";
+        case SelectCommand.COMMAND_WORD:
+            auto = "select 1";
             break;
-        case ReturnCommand.COMMAND_WORD:
-            auto = "return 1";
-            break;
-        case ReserveCommand.COMMAND_WORD:
-            auto = "reserve 1";
+        case AddAccountCommand.COMMAND_WORD:
+            auto = "addAccount n/ m/ u/ p/ l/ ";
             break;
         default:
             auto = myString;

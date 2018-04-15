@@ -26,6 +26,16 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private String username;
+
+    public LogicManager(Model model, String username) {
+        this.model = model;
+        history = new CommandHistory();
+        this.username = username;
+        addressBookParser = new AddressBookParser();
+        undoRedoStack = new UndoRedoStack();
+        clearRedundantImages();
+    }
 
     public LogicManager(Model model) {
         this.model = model;
@@ -65,6 +75,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author JoonKai1995
     @Override
     public ObservableList<Task> getFilteredTaskList() {
         return model.getFilteredTaskList();
@@ -74,7 +85,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<Task>[][] getCalendarTaskLists() {
         return model.getCalendarTaskLists();
     }
-
+    //@@author
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());

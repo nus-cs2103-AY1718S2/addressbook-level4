@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+//@@author Pearlissa
 /**
  * Lists all persons in the address book to the user.
  */

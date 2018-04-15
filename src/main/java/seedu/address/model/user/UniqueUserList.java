@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
+//@@author Pearlissa
 /**
  * A list of users that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -50,7 +51,7 @@ public class UniqueUserList implements Iterable<User> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniqueUserList // instanceof handles nulls
-                && this.userList.equals(((UniqueUserList) other).userList));
+                && this.internalList.equals(((UniqueUserList) other).internalList));
     }
 
     @Override

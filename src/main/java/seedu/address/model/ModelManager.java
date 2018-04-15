@@ -33,10 +33,25 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Task> filteredTasks;
     private final ArrayList<String> filteredDeleteItems;
     private final ObservableList<Task>[][] calendarTaskLists;
+    private String username;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, String username) {
+        super();
+        requireAllNonNull(addressBook, userPrefs);
+
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+
+        this.addressBook = new AddressBook(addressBook);
+        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
+        filteredDeleteItems = new ArrayList<>(this.addressBook.getItemList());
+        calendarTaskLists = this.addressBook.getCalendarList();
+        this.username = username;
+    }
+
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
@@ -51,7 +66,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), "");
     }
 
     @Override
@@ -162,6 +177,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author JoonKai1995
     //=========== Filtered Task List Accessors =============================================================
 
     /**
@@ -179,11 +195,12 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(predicate);
     }
 
+    //@@author Alaru
     //=========== Item List Accessors ======================================================================
     public List<String> getItemList() {
         return Collections.unmodifiableList(filteredDeleteItems);
     }
-
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

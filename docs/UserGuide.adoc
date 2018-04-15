@@ -17,12 +17,14 @@ By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-*Your TA* is for university teaching assistants who prefer to use a desktop application to manage student contacts and plan your schedule.
-More importantly, it is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). +
-If you can type fast, it can get your contact management and tasks scheduling done faster than traditional GUI applications. +
-Once you're ready, jump to <<Quick Start>> to get started. Enjoy!
+*Your TA* is for university teaching assistants who prefer to use a desktop application to manage student contacts and plan their schedules. Your TA includes features such as,
+a login system, the ability to store information of various students, the ability to schedule different tasks along with a calendar that displays the tasks, and many more!
+It is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). +
+If you can type fast, it can get your contact management and tasks scheduling done faster than traditional GUI applications.
 
 == Quick Start
+
+Your TA is an application with many features. Here is a quick start guide on using Your TA:
 
 .  Ensure that you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -36,25 +38,27 @@ This app will not work with earlier versions of Java 8.
 +
 .The Login GUI upon double-clicking.
 //dummy image, plz update this image
-image::Login.png[width="800"]
+image::Login.png[width="500"]
 
 .  Enter your `Username` and `Password` to log in. _Refer to <<Features>> for details of the feature._
 .  After logging in, now you should see the main Application GUI in turn appear, as shown in Figure 2 below.
 
 .The main Application GUI upon login.
 //update this image also
-image::UiInitial.png[width="800"]
+image::Ui.png[width="800"]
 
-.  The command box is where you type in commands followed by pressing kbd:[Enter] to execute it. +
+Tips on using the command box:
+
+*  The command box is where you type in commands followed by pressing kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window for the application.
-.  Some example commands you can try:
+*  Some example commands you can try:
 
-* *`list`* : lists all contacts.
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the application.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list.
-* *`exit`* : exits the application.
+** *`list`* : lists all contacts.
+** **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the application.
+** **`delete`**`3` : deletes the 3rd contact shown in the current list.
+** *`exit`* : exits the application.
 
-.  Refer to <<Features>> for details of each command.
+*  Refer to <<Features>> for details of each command.
 
 [[Features]]
 == Login Feature
@@ -63,7 +67,9 @@ Before you are able to access the application, login is required.
 ====
 * Enter your `Username` and `Password` in the respective fields. +
 * Click on the `login` button.
-* If you have entered either of those incorrectly, the text "Wrong username or password entered" will be displayed. You have an unlimited number of tries to log in. +
+* If you have entered either of those incorrectly, the text "[Existing user: Incorrect password entered][New User: Password must contain 8-30 characters]" will be displayed.
+ This means that if you are an existing user, you have typed in an incorrect password, and if you are a new user, your password does not meet the specified requirements for a creation of a password.
+ You have an unlimited number of tries to log in. +
 * Upon successful login, the application will load with your previously saved data.
 ====
 
@@ -74,8 +80,25 @@ Both `Username` and `Password` fields are case-sensitive.
 If you are a first-time user, create an account by entering your desired `Username` and `Password` in the username and password text fields respectively. +
 Then, click on the `Login` button.
 
+Example:
 
-== Contact Features
+New User: newUser +
+Password: Iamanewuser
+
+Upon typing in the credentials, a new instance of `Your TA` will start up as seen in figure 3 below.
+
+.The main Application GUI upon login.
+image::Ui.png[width="800"]
+
+If you log out and then log back in using the same username but a wrong password, say "Iamnotanewuser".
+The error message will be displayed indicating a wrong password as seen in Figure 4 below.
+
+.The main Application GUI upon login.
+image::LoginFail.png[width="500"]
+
+== Command Info
+
+These are guidelines on how the command format will be represented in the rest of this guide.
 
 ====
 *Command Format*
@@ -91,12 +114,21 @@ e.g. `[t/TAG]...` can be used as `t/friend`, `t/friend t/family`, or even not us
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+
+== Help Feature
+
+This guide can be opened in `Your TA` itself, with the use of the `help` command.
+
+Viewing help : `help`
 
 Alias: `?` +
 Format: `help`
 [NOTE]
 This opens a help window which explains what commands can be used, and how to use them.
+
+== Contact Features
+
+This section goes in depth into the commands available for the people (students) stored in `Your TA`, and how they are used.
 
 === Adding a person: `add`
 
@@ -110,39 +142,38 @@ Both the display picture and tags fields are optional, and a person can have any
 [NOTE]
 ====
 ** The tags "lecturer", "TA" "student" and "T1" will appear red, yellow, blue and green respectively.
-** Do refrain from using high resolution images as display pictures, the optimum resolution is 300 x 300 pixels.
+** Do refrain from using high resolution images as display pictures, the optimum resolution is 500 x 500 pixels.
 ====
 
 [WARNING]
-The name field of Your TA will not allow duplicate names to be stored. However the matriculation number field allows duplicates.
+The name field of Your TA will allow duplicate names to be stored. However the matriculation number field does not allows duplicates.
 
 Examples:
 
-The address book initially starts with default inputs as displayed in Figure 2:
+The address book initially starts with default inputs as displayed in Figure 5:
 
 .Initial Address Book State +
-image::UiInitial.png[width="800"]
+image::UiInitialClear.png[width="800"]
 
 Let's try entering a command, such as the one below: +
 
-Command entered: +
-`add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dp/C:\Users\Name\Desktop\John.jpg`: +
+Command entered: `add n/John Doe m/A0111111X p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dp/C:\Users\Name\Desktop\John.jpg` +
 [NOTE]
 The filepath after the `dp/` depends on where your image file is located.
-This will add a person, 'John Doe' into the list with his respective details into the application (Figure 3).
+This will add a person, 'John Doe' into the list with his respective details into the application (Figure 6).
 
 .Application after John Doe has been Added +
 image::UiAfterFirst.png[width="800"]
 
-Command entered: +
-`add n/Betsy Crowe t/friend m/A1234567C e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`: +
-This will add a person, 'Betsy Crowe' into the list with her respective details into the application (Figure 4).
+Command entered: `add n/Betsy Crowe t/friend m/A1234567C e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal` +
+This will add a person, 'Betsy Crowe' into the list with her respective details into the application (Figure 7).
+
+.Application after Betsy Crowe has been added +
+image::UiAfterSecond.png[width="800"]
 
 [NOTE]
 You may leave the `dp/` portion empty if you do not have a profile picture. The application will default to using the default profile picture.
 
-.Application after Betsy Crowe has been added +
-image::UiAfterSecond.png[width="800"]
 
 === Locating persons by name or by matriculation number: `find`
 
@@ -163,31 +194,28 @@ Format: `find KEYWORD [MORE_KEYWORDS]...`
 
 Examples:
 
-Address book starts with the following as shown in Figure 5:
+Address book starts with the following as shown in Figure 8:
 
 .Application before People are Added. +
 image::UiAfterSecond.png[width="800"]
 
-Command entered: +
-`find John`: +
-The application searches for the keyword 'John' and returns 1 result (Figure 6).
+Command entered: `find John` +
+The application searches for the keyword 'John' and returns 1 result (Figure 9).
 
 .Returns `John Doe`. +
-image::FindJohn.png[width="800"]
+image::FindJohn.png[width="300"]
 
-Command entered: +
-`find Betsy Tim John`: +
-The application searches for the keywords 'Betsy', 'Tim' and 'John' and returns 2 results (Figure 7).
+Command entered: `find Betsy Tim John` +
+The application searches for the keywords 'Betsy', 'Tim' and 'John' and returns 2 results (Figure 10).
 
 .Returns `John Doe` and `Betsy Crowe`. +
-image::FindBTJ.png[width="800"]
+image::FindBTJ.png[width="300"]
 
-Command entered: +
-`find A0111111X`: +
-The application searches for the person with the matriculation number as shown and returns 1 result (Figure 8).
+Command entered: `find A0111111X` +
+The application searches for the person with the matriculation number as shown and returns 1 result (Figure 11).
 
 .Returns `John Doe`, with Matriculation Number A0111111X. +
-image::FindMatric.png[width="800"]
+image::FindMatric.png[width="300"]
 
 === Listing all persons : `list`
 
@@ -197,12 +225,11 @@ Format: `list`
 
 Example:
 
-Command entered: +
-`list`: +
-Application lists all persons who have been added up until this point (Figure 9).
+Command entered: `list` +
+Application lists all persons who have been added up until this point (Figure 12).
 
 .All People Listed. +
-image::AllListed.png[width="800"]
+image::AllListed.png[width="300"]
 
 
 === Editing a person : `edit`
@@ -215,36 +242,34 @@ Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADD
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* Replaced display pictures will be removed from storage upon the next start up of Your TA.
+* Replaced display pictures will be removed from storage upon the logging in to the same account during the next start up of Your TA.
+* Do refrain from using high resolution images as display pictures, the optimum resolution is 500 x 500 pixels.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
 [NOTE]
-Do refrain from using high resolution images as display pictures, the optimum resolution is 300 x 300 pixels.
+Do refrain from using high resolution images as display pictures, the optimum resolution is 500 x 500 pixels.
 
 Examples:
 
-Address book starts with the following as shown in Figure 10:
+Address book starts with the following as shown in Figure 13:
 
 .Application Before Edit. +
-image::AllListed.png[width="800"]
+image::AllListed.png[width="300"]
 
-Command entered: +
-`edit 2 p/91234567 e/johndoe@example.com`: +
-This changes the details of the person with index 2 (John Doe), in this case, his phone number and email address and writes over his original saved details (Figure 11).
+Command entered: `edit 2 p/91234567 e/johndoe@example.com dp/C:\Users\Name\Desktop\betsy.jpg` +
+This changes the details of the person with index 2 (Betsy Crowe), in this case, her phone number, email address, display picture and writes over her original saved details (Figure 14).
 
-.Phone Number and Email of 3rd Person (John Doe) Edited. +
-image::FirstEdit.png[width="800"]
+.Phone Number and Email of 2nd Person (Betsy Crowe) Edited. +
+image::FirstEdit.png[width="300"]
 
-Command entered: +
-`edit 3 n/Betsy Crower dp/C:\Users\Name\Desktop\Betsy.jpg t/`: +
-This changed the details of the person with index 3 (originally Betsy Crowe), in this case, her name and tags.
-It also updated her display picture. +
+Command entered: `edit 1 n/John Doeser` +
+This changed the details of the person with index 1 (originally John Doe), in this case, his name Figure 15).
 
-.Name changed to "Betsy Crower" and All Tags Cleared. +
-image::SecondEdit.png[width="800"]
+.Name changed to "John Doser" +
+image::SecondEdit.png[width="300"]
 
 // tag::participation[]
 === Adding Participation Marks : `markPart`
@@ -263,31 +288,30 @@ Format: `markPart INDEX marks/DIGITS`
 
 Examples:
 
-Command(s) entered: +
-`list` +
-Lists all people in the address book.
+Command(s) entered: `list` +
+Lists all people in the address book (Figure 16).
 
 .Listing everyone in Your TA
 image::markPartlist.png[width="300"]
 
 `markPart 1 marks/50` +
-Adds 50 participation marks to the 1st person in Your TA.
+Adds 50 participation marks to the 1st person in Your TA (Figure 17).
 
 .Adds 50 marks to Alex, note that the frame turns green
 image::markPartadd50.png[width="300"]
 
 Command(s) entered: +
 `find David` +
-Returns David as a result. +
+Returns David as a result (Figure 18). +
 
 .Find command returns David
 image::markPart2David.png[width="300"]
 
 
 `markPart 1 marks/70` +
-Adds 70 marks to the 1st person in the results of the `find` command, in this case, David. We note that it has exceeded the cap of 100, hence the marks was set to 100.
+Adds 70 marks to the 1st person in the results of the `find` command, in this case, David. We note that it has exceeded the cap of 100, hence the marks was set to 100 (Figure 19).
 
-.David's marks updated
+.David's marks updated, frame updated
 image::markPartupdateDavid.png[width="300"]
 
 // end::participation[]
@@ -302,7 +326,7 @@ Format: `updateDP INDEX dp/[IMAGE PATH]`
 ****
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-* Do note that unused display pictures will be deleted upon the next application startup.
+* Do note that unused display pictures will be deleted upon the next application startup when logging in to the same account that created it.
 * You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
 * The aspect ratio of the image will be used to fill a circle for the display picture, thus using an image with an aspect ratio close to 1:1 pixels would be optimal.
 ****
@@ -310,24 +334,21 @@ Format: `updateDP INDEX dp/[IMAGE PATH]`
 [NOTE]
 Do refrain from using high resolution images as display pictures, the optimum resolution is 300 x 300 pixels.
 
-
 Examples:
 
-Command(s) entered: +
-`list` +
-Lists all people in Your TA. +
+Command(s) entered: `list` +
+Lists all people in Your TA (Figure 20). We can see that Alex Yeoh has a display picture. +
 
 .Listing everyone in Your TA
 image::updateDPJack1.png[width="300"]
 
 `updateDP 1 dp/` +
-Deletes the display picture of the 1st person, turning it back to the default profile picture.
+Deletes the display picture of the 1st person, turning it back to the default profile picture (Figure 21).
 
 .Resetting Alex's display picture
 image::updateDPJack2.png[width="300"]
 
-Command(s) entered: +
-`find Betsy` +
+Command(s) entered: `find Betsy` +
 Returns Betsy as a result. Followed by: +
 `updateDP 1 dp/C:\Users\Betsy\Desktop\betsy.jpg` +
 Updates the display picture of the 1st person, in this case Betsy, to the picture specified in the `dp/` field.
@@ -350,28 +371,26 @@ Format: `delete INDEX`
 ****
 
 [NOTE]
-The display picture that is stored on your hard disk will only be removed upon the next start up of Your TA.
+The display picture that is stored on your hard disk will only be removed upon the next start up of Your TA when you log into the same account that created it.
 
 Examples:
 
-Address book starts with the following as shown in Figure 13:
+Address book starts with the following as shown in Figure 22:
 
 .Application before Delete. +
-image::SecondEdit.png[width="800']
+image:UIFromDelete.png[width="800']
 
-Command(s) entered: +
-`list`, `delete 2`: +
-The 2nd person listed in the address book is deleted (Figure 14).
+Command(s) entered: `list`, `delete 2` +
+The 2nd person listed in the address book is deleted (Figure 23).
 
 .3rd Person Deleted. +
-image::FirstDelete.png[width="800"]
+image::FirstDelete.png[width="300"]
 
-Command(s) entered: +
-`find Betsy`,`delete 1`: +
-The 1st person in the results of the `find` command is deleted, in this case, Betsy is deleted (Figure 15).
+Command(s) entered: `delete 1` +
+The 1st person in person list, in this case, John is deleted (Figure 24).
 
 .1st Person from `find` Command Deleted. +
-image::SecondDelete.png[width="800"]
+image::SecondDelete.png[width="300"]
 
 === Selecting a person : `select`
 
@@ -387,24 +406,22 @@ Format: `select INDEX`
 
 Examples:
 
-Address book starts with the following as shown in Figure 16:
+Your TA starts with the following as shown in Figure 25:
 
 .Application before Select. +
-image::SecondStart.png[width="800"]
+image::UIFromDelete.png[width="800"]
 
-Command(s) entered: +
-`list`, `select 1`: +
-Lists all people in address book and selects the 1st person (Figure 17).
+Command(s) entered: `list`, `select 1` +
+Lists all people in address book and selects the 1st person (Figure 26).
 
 .Selects 1st Person Listed. +
-image::FirstSelect.png[width="800"]
+image::FirstSelect.png[width="300"]
 
-Command(s) entered: +
-`find John`, `select 1`: +
-The 1st person in the results of the `find` command is selected, in this case, John is selected (Figure 18).
+Command(s) entered: `find Betsy`, `select 1` +
+The 1st person in the results of the `find` command is selected, in this case, Betsy is selected (Figure 27).
 
 .1st Person from `find` Command Selected. +
-image::SecondSelect.png[width="800"]
+image::SecondSelect.png[width="300"]
 
 [[TaskList_Feature]]
 == Task, To-do list and Calendar Features
@@ -430,19 +447,27 @@ New tasks will be added into the *To-do list* and *Calendar*. +
 * Deadline has to be a date that exists.
 * The month value has to be a month no more than 6 months after the current month (Start counting to 6 from the next month).
 * Tasks do not need to be unique (in any field title, description, dealine or priority). Duplicate tasks are allow.
-Examples:
 ====
 
-Current date: 03-04-2018 +
-The application initially starts with no tasks as displayed in Figure 2:
+Examples:
 
-Command entered: +
-`addTask title/Grade Exams desc/Grade mid-terms by/04-04-2018 priority/2`: +
-This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure ).
+Current date: 15-04-2018 +
+The application initially starts with no tasks:
 
-Command entered: +
-`addTask title/Submit Attendance desc/Submit tutorial attendance by/05-04-2018 priority/3`: +
-This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application (Figure ).
+.Initial application view. +
+image::UIFromDelete.png[width="800"]
+
+Command entered: `addTask title/Grade Exams desc/Grade mid-terms by/20-04-2018 priority/2` +
+This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure 30).
+
+.New task "Grade Exams" added. +
+image::FirstTask.png[width="800"]
+
+Command entered: `addTask title/Submit Attendance desc/Submit tutorial attendance by/21-04-2018 priority/3` +
+This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application (Figure 31).
+
+.New task "Submit Attendance" added. +
+image::SecondTask.png[width="800"]
 
 === Editing a task: `editTask`
 
@@ -463,13 +488,48 @@ The specified tasks will be edited in the *Todo List* and *Calendar*.
 * Existing values will be updated to the input values.
 ****
 
-=== Removing a task: `deleteTask`
+Examples:
+
+Current date: 15-04-2018 +
+The application initially starts with 2 tasks:
+
+.Initial application view. +
+image::SecondTask.png[width="800"]
+
+Command entered: `editTask 1 priority/1` +
+This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure 33).
+
+.Task at index 1 priority changed to 1. +
+image::FirstEditTask.png[width="800"]
+
+Command entered: `editTask 2 by/23-04-2018` +
+This will add a task, 'Submit tutorial attendance' into the calendar and to-do list with the respective details into the application (Figure 34).
+
+.Task at index 2 deadline changed to 23-04-2018. +
+image::SecondEditTask.png[width="800"]
+
+=== Deleting a task: `deleteTask`
 
 Deletes a task in the address book. +
 Alias: `dt` +
 Format: `deleteTask INDEX`
 
 The specified indexed task will be deleted from the *Todo List* and *Calendar*.
+
+Examples:
+
+Current date: 15-04-2018 +
+The application initially starts with 2 tasks:
+
+.Initial application view. +
+image::SecondEditTask.png[width="800"]
+
+Command entered: `deleteTask 1` +
+This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure 36).
+
+.Task at index 1 removed. +
+image::DeleteTask.png[width="800"]
+
 
 // tag::displayTask[]
 === Listing all tasks: `listTask`
@@ -491,7 +551,7 @@ Only the tasks due within current month will be listed in the *Todo List*.
 Figure below illustrate the display change of tasks after listCurrentTask is entered.
 
 .Behavior of executing listCurrentTask
-image::listTasks.PNG[width = '800']
+image::listTasks.png[width = '800']
 
 === Sorting tasks: `sortTask`
 
@@ -523,7 +583,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `markPart`, `updateDP`, and `clear`).
 ====
 
 Examples:
@@ -531,20 +591,17 @@ Examples:
 Address book starts with the following as shown in Figure 19:
 
 .Application before any Commands +
-image::SecondStart.png[width="800"]
+image::UIFromDelete.png[width="800"]
 
-Command(s) entered: +
-`delete 1`, `list`, `undo`: +
+Command(s) entered: `delete 1`, `list`, `undo` +
 The `delete 1` command will be reversed. +
 End result should look the same as Figure 19.
 
-Command(s) entered: +
-`select 1`, `list`, `undo`: +
+Command(s) entered: `select 1`, `list`, `undo` +
 The `undo` command fails as there are no undoable commands executed previously. +
 End result should look the same as Figure 19.
 
-Command(s) entered: +
-`delete 1`, `clear`, `undo`, `undo`: +
+Command(s) entered: `delete 1`, `clear`, `undo`, `undo` +
 Both commands reversed. +
 End result should look the same as Figure 19.
 
@@ -556,27 +613,24 @@ Format: `redo`
 
 Examples:
 
-Address book starts with the same one in Figure 19.
+Your TA starts with the same one in Figure 19.
 
-Command(s) entered: +
-`delete 1`, `undo`, `redo`: +
+Command(s) entered: `delete 1`, `undo`, `redo` +
 The delete command is reversed, then reapplied (Figure 20).
 
 .`delete` Command Reapplied +
-image::FirstRedo.png[width="800"]
+image::FirstRedo.png[width="300"]
 
-Command(s) entered: +
-`delete 1`, `redo`: +
+Command(s) entered: `delete 1`, `redo` +
 The `redo` command fails as there are no `undo` commands executed previously. +
 End result should look the same as in Figure 19.
 
-Command(s) entered: +
-`delete 1`, `clear`, `undo`, `redo`: +
+Command(s) entered: `delete 1`, `clear`, `undo`, `redo` +
 `clear` command and `delete` command are reversed. +
 `clear` command and `delete` command are subsequently reapplied (Figure 21).
 
 .Both Commands Reversed, Reapplied. Application Cleared. +
-image::SecondRedo.png[width="800"]
+image::SecondRedo.png[width="300"]
 
 === Clearing all entries : `clear`
 
@@ -610,7 +664,7 @@ Format: `switchTab`
 Figure below shows the result of entering command `switchTab` switching from Person List to Todo List and the display of command result.
 
 .Switches between tabs with command result displayed.
-image::switchTabs.PNG[width="800"]
+image::switchTabs.png[width="800"]
 // end::switchTab[]
 
 === Sorting all entries : `sort`
@@ -673,20 +727,6 @@ Commands that cannot be undone:
 [NOTE]
 To see the last few days of the final month, click on the `>>` button to navigate to the next months calendar, the last days of that month will be displayed there, as well as its tasks.
 
-== Toggling between themes
-
-Your TA starts off with a default `Dark Theme`. However, it can be toggled to become a `Light Theme`.
-
-On the top left side of the app, there are some menus.
-
-Click on the menu labeled `Switch Theme`.
-
-A drop-down menu will appear and click on the `toggle` option to switch to the theme that is not currently in use.
-
-[NOTE]
-As of version 1.5, the app only supports 2 themes, `Dark Theme` and `Light Theme`.
-
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -696,7 +736,7 @@ As of version 1.5, the app only supports 2 themes, `Dark Theme` and `Light Theme
 *A*: The calendar is there for a task scheduling feature that is coming in v2.0 of the application.
 
 *Q*: How do i keep my information safe? +
-*A*: A login feature will be coming in v2.0.
+*A*: A login feature has already been implemented as of v1.5, encryption of user data will be coming in v2.0.
 
 == Command Summary
 
@@ -727,8 +767,6 @@ e.g. `addTask title/Grade Exams desc/Grade mid-terms by/04-04-2018 priority/2`
 e.g. `deleteTask 1`
 * *Edit Task* : `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
 e.g. `editTask 1 title/Eat Dinner`
-*Edit Task*: `editTask INDEX [title/TASK TITLE] [desc/TASK DESCRIPTION] [by/DEADLINE] [priority/PRIORITY]`
-e.g. `editTask 1 title/Eat Dinner` +
 * *List Task*: `listTask` +
 * *List Current month tasks*: `listCurrentTask` +
 * *Sort tasks by date*: `sortTask`
@@ -737,6 +775,6 @@ e.g. `editTask 1 title/Eat Dinner` +
 
 * *Help* : `help`
 * *History* : `history`
-* *Undo* : `undo`
 * *Redo* : `redo`
 * *Switch tabs*: `switchTab`
+* *Undo* : `undo`

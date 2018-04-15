@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!-- @@author Pearlissa -->
+<!-- AddressBook save file which contains the same User values as in
+{@code TypicalUsers#getTypicalLoginManager()}-->
+<addressbook>
+    <users>
+        <username>JOHNDOE</username>
+        <password>12345678</password>
+    </users>
+    <users>
+        <username>ALICE</username>
+        <password>abcdefgh</password>
+    </users>
+    <users>
+        <username>BENSON</username>
+        <password>1234ABCDE</password>
+    </users>
+    <users>
+        <username>CARL</username>
+        <password>1a2b3c4d5e</password>
+    </users>
+    <users>
+        <username>DANIEL</username>
+        <password>password</password>
+    </users>
+    <users>
+        <username>ELLE</username>
+        <password>elleelle</password>
+    </users>
+    <users>
+        <username>FIONA</username>
+        <password>1223334444</password>
+    </users>
+    <users>
+        <username>GEORGE</username>
+        <password>george123</password>
+    </users>
+</addressbook>

@@ -196,3 +196,11 @@ public static boolean isSameFile(File file1, File file2) throws IOException {
     return true;
 }
 ```
+###### \UnsupportDesktopException.java
+``` java
+public class UnsupportDesktopException extends CommandException {
+    public UnsupportDesktopException(String message) {
+        super(message);
+    }
+}
+```

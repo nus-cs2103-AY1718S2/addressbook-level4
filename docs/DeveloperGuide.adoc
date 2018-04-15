@@ -465,11 +465,6 @@ If the user is a new (username does not exist), they should simply enter their d
 ** Cons: Large amount of coding and implementation required, prerequisites also include knowledge of security issues and safeguards.
 // end::login[]
 
-=== Help feature
-==== Current implementation
-
-The help command opens a new window, opening the user guide.
-
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current implementation
@@ -598,6 +593,33 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
+
+// tag::matricuationNumber[]
+=== Matriculation number
+
+This feature allows the user to keep track of the matriculation number of a `Person`. The matriculation number in this case
+has to start with an "A" or "U" followed by 7 digits and end with a capital letter. A new class, `Matriculation Number`, is created and is associated to the `Person` class.
+This is integrated into the `AddCommand` and `EditCommand` commands to update the participation marks of a `Person`.
+
+==== Current implementation
+
+The user will input an AddCommand or EditCommand, with the additional parameter `m/MATRICULATION_NUMBER`, to the application to update the marks.
+
+==== Design considerations
+
+===== Aspect: Should 2 people be allowed to have to same matriculation number
+
+* **Alternative 1 (current choice):** No, no 2 people can have the same matriculation number, DuplicateUserException will be thrown when trying to add a person with a matriculation number already inside Your TA.
+** Pros: It makes sense as no 2 students would have the same matriculation number, it alerts the user when they've most likely typed in the wrong matriculation number.
+** Cons: The user will not be able to add 2 different instances of the same student.
+* **Alternative 2:** Duplicate matriculation numbers are allowed
+** Pros: User have more freedom to add anyone.
+** Cons: Duplicate matriculation numbers will cause messiness when dealing with many students.
+
+==== Future enhancements (Coming in v2.0)
+
+** Link matriculation number to the students IVLE account info.
+// end::matriculationNumber[]
 
 // tag::participation[]
 === Participation
@@ -807,7 +829,7 @@ The image file will then be utilized by JavaFX and displayed on the UI. The drop
 // end::display[]
 
 // tag::task[]
-=== Task List
+=== Task list
 
 Users are able to add, edit and remove tasks (with command `addTask`, `editTask` and `deleteTask`) in order to schedule their tasks within the application.
 Tasks scheduled in this application will be stored in `addressbook.xml` and displayed in the `Todo List` tab and `Calender` view respectively.
@@ -818,12 +840,12 @@ Tasks displayed in a date cell are color coded according to their priorities -- 
 .Tasks displayed in the application.
 image::displayTask.png[width = "800"]
 
-==== Current Implementation
+==== Current implementation
 
 An additional class, `UniqueTaskList` is added to the `AddressBook` class. This class contains an `ObservableList` of tasks and a 2-dimensional `ObservableList` of tasks.
 The previous is the actual copy of tasks stored in `addressbook.xml` while the latter is a copy of reorganized tasks for displaying in `Calendar`.
 
-===== Adding a Task
+===== Adding a task
 
 The `addTask` command requires fields of `title/`, `desc/`, `by/` and `priority/` to be present.
 Any missing field will cause a built-in exception thrown when creating the `Task` object as the `addTaskCommandParser` validates the presence of all required fields.
@@ -833,12 +855,12 @@ Multiple of same field is allowed but all are discarded except the last entry of
 
 After successful creating the `Task` object, `ModelManager` will help add the object into `Addressbook`.
 
-===== Deleting a Task
+===== Deleting a task
 
 The `deleteTask` command requires a positive task index which specifies the task to be deleted. The `DeleteTaskCommandParse` validates this index with accordance to the current displayed `Todo List` size.
 If the index is valid, the `DeleteTaskCommand` will delete the corresponding `Task` object from `UniqueTaskList`.
 
-===== Editing a Task
+===== Editing a task
 
 The `editTask` command requires a positive task index and desired edit fields indicated by prefix `title/`, `desc/`, `by/` and `priority/`. The `EditTaskCommandParser` validates that there is at least one field specified in the command.
 
@@ -855,17 +877,17 @@ Add task, delete task and edit task commands have similar sequence behavior. Bel
 .Dlete a task.
 image::DeleteTaskCommandSequenceDiagram.png[width = "800"]
 
-===== Listing Tasks
+===== Listing tasks
 
 The execution of `listTask` command parses a predicate argument PREDICATE_SHOW_ALL_TASK to `ModelManager` which updates the task list based on this predicate.
 This will extract all tasks saved in the data file `addressbook.xml`.
 
-===== Listing Current Month Tasks
+===== Listing current month tasks
 
 The execution of `listCurrentTask` command parses the predicate argument PREDICATE_SHOW_ALL_CURRENT_TASK to `Model`. `ModelManager` then updates the task list based on this predicate.
 This is similar to Listing tasks but it will only extract tasks with deadlines due in the current month.
 
-===== Sorting Tasks
+===== Sorting tasks
 
 `Task` class implements Java `Comparable<>` class which enables sorting without writing the actual sorting algorithm. Thus,the execution of `sortTask` command relies on it.
 `Model` then calls `AddressBook` which sorts the tasks in `UniqueTaskList`.
@@ -877,7 +899,7 @@ The sorting is done by comparing the year, month and date sequentially. This is 
 listing and sorting tasks do not support `undo` and `redo` commands.
 ====
 
-==== Design Consideration
+==== Design consideration
 
 ===== Aspect: How `EditTaskCommand` executes
 * **Alternative 1(current choice): ** Adds a new Task and deletes the original task
@@ -889,6 +911,42 @@ listing and sorting tasks do not support `undo` and `redo` commands.
 ** Cons: Difficult to implement as a new mechanism to sync the `Calendar` cells is needed.
 
 // end::task[]
+
+// tag::calendar[]
+=== Tasks on calendar view
+
+** This feature allows the user to see the calendar on the UI and see the scheduled `Task` deadlines on the calendar.
+
+==== Current implementation
+
+The user will enter a command `addTask title/TITLE desc/DESCRIPTION by/DEADLINE priority/PRIORITY` to the application. The application will then rely on `AddressBookparser` and
+parse the argument. The argument will be passed into the AddTaskCommand to be executed. From there, it will create a new `Task` object that will be
+added to the `calendarList` of the `UniqueTaskList` which in turn will be displayed on the date of the deadline, on the calendar.
+
+==== Design considerations
+
+===== Aspect: How to link specific tasks to the correct calendar nodes
+
+* **Alternative 1 (current choice):** Use a 7 by 32, 2D `Array` to store the tasks to be added into the calendar.
+** Pros: Separate from the Task list (less prone to bugs). Faster run time (does not need to iterate through all tasks).
+** Cons: Higher memory usage constraint, can only schedule tasks up to 6 months in advance to prevent high memory usage that will affect the speed and performance of the app.
+* **Alternative 2:** Use the task list itself to be displayed in the calendar.
+** Pros: Easier to program and less memory usage (only 1 task list is used without another 2D array for the calendar), tasks can be scheduled as far ahead as desired.
+** Cons: Needs to iterate through the entire task list for every calendar node when loading the calendar view (slows performance when dealing with tasks).
+
+===== Aspect: Viewing the calendar only by month
+
+* **Alternative 1 (current choice):** Use a monthly only calendar view.
+** Pros: Easy view of the current tasks that are due on that month.
+** Cons: Not much choice for the user as only the monthly view is provided.
+* **Alternative 2:** Give the user a choice to switch between weekly, monthly or yearly, e.g. _calendarfx_.
+** Pros: User has more choice and freedom to control their UI.
+** Cons: Difficult to implement, also if 3rd party programs such at _calendarfx_ is used, certain features in those programs are redundant (e.g. map) and would only slow the app down.
+
+==== Future enhancements (Coming in v2.0)
+
+** Link specific key-press or select actions to the todo list such that a click on either side will display the selected task on the other.
+//end::calendar[]
 
 === Logging
 
@@ -1033,7 +1091,9 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Product Scope
+== Product Scope and Features
+
+=== Product scope
 
 *Target user profile*: Tech-Savvy University Teachers/Tutors
 
@@ -1313,35 +1373,37 @@ These instructions only provide a starting point for testers to work on; testers
 
 === Launch and shutdown
 
-. Initial launch
+** Initial launch
 
-** Download the jar file and copy into an empty folder
+*** Download the jar file and copy into an empty folder
 .. Double-click the jar file +
    Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-. Saving window preferences
+** Saving window preferences
 
-** Resize the window to an optimum size. Move the window to a different location. Close the window.
+*** Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
 === Deleting a person
 
-. Deleting a person while all persons are listed.
+** Deleting a person while all persons are listed
 
-** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
+
+The corresponding display picture image to the person deleted is expected to be deleted upon next application start up and log in (to same account).
 
 === Adding participation marks for a person
 
-. Adding participation marks to a person while all persons are listed.
+** Adding participation marks to a person while all persons are listed.
 
-** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 .. Test case: `markPart 1 marks/50` +
    Expected: First person is updated with the addition of the marks. Success message shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `markPart 0 marks/50` +
@@ -1351,9 +1413,9 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect markPart commands to try: `markPart`, `markPat x marks/50` (where x is larger than the list size) +
    Expected: Similar to previous.
 
-. Adding participation marks to a person when you searched for a person using `find`
+** Adding participation marks to a person when you searched for a person using `find`
 
-** Prerequisites: Find a person using the `find` command. At least one person in the list returned.
+*** Prerequisites: Find a person using the `find` command. At least one person in the list returned.
 .. Test case: `markPart 1 marks/50` +
    Expected: First person is updated with the addition of the marks. Success message shown in the status message. Timestamp in the status bar is updated. List is still filtered.
 .. Test case: `markPart 0 marks/50` +
@@ -1362,24 +1424,49 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: No marks are added to anyone. Error details shown in the status message. Status bar remains the same. List is still filtered.
 
 
-=== Adding display picture to a person
+=== Adding/Updating display picture for a person
 
-. Adding display picture when adding a new (non-duplicate) person while all persons are listed.
+** Adding display picture when adding a new (non-duplicate) person while all persons are listed.
 
-** Prerequisites: List all persons using the `list` command. Multiple persons in the list. Not adding a duplicate person.
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list. Not adding a duplicate person.
 .. Assumptions: There is a valid image file at the specified location. +
 .. Test case: `add n/John Doe m/A1234567J p/98765432 e/johnd@example.com a/COM1 B#1-04 dp/C:\Users\Hello\Desktop\picture.jpg` +
    Expected: John Doe is added with the specified details and image. Success message shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `add n/John Doe m/A1234567J p/98765432 e/johnd@example.com a/COM1 B#1-04 dp/C:\Users\Hello\Desktop\picture.jpg` +
    Expected: John Doe is added with the specified details and has the default display picture. Success message shown in the status message. Timestamp in the status bar is updated. +
 
+** Adding display picture to an already existing person while all persons are listed.
+
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Assumptions: There is a valid image file at the specified location. +
+.. Test case: `updateDP 1 dp/C:\Users\Hello\Desktop\picture.jpg` +
+   Expected: First person's display picture is updated with the image. Success message shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `updateDP 1 dp/` +
+   Expected: First person's display picture is updated to the default display picture. Success message shown in the status message. Timestamp in the status bar is updated.
+
 === Saving and loading of the image files
 
-. Deleting image files while the application is still running.
+** Deleting image files while the application is still running.
+
+*** Prerequisites: There exists some persons already added and are utilizing a display picture.
+.. Test case: Delete all images from the `data/displayPic` folder. +
+   Expected: Upon next refresh of the list that causes changes, the affected persons will be reset back to the default profile picture.
+
+** Checking proper deletion of image files
+*** Prerequisites: None of the existing persons in Your TA have a display picture.
+.. Test case:
+. Adding multiple images using the `updateDP` or `edit` command. E.g executing `updateDP 1 dp/C:\Users\Hello\Desktop\picture.jpg` twice.
+. Open the `data/displayPic` folder to note that there are 2 image files created.
+. Close and restart the application and log back in to the same account. +
+Expected: Unused image files will be deleted, only one image file remains.
+
+** Deleting image files while the application is not running.
+*** Prerequisites: There exists some persons already added and are utilizing a display picture.
+.. Test case: Delete all images from the `data/displayPic` folder. +
+   Expected: Upon loading up the application, the affected persons will be reset back to the default profile picture.
+. Adding a task while all tasks are listed.
 
 === Adding a Task
-
-. Adding a task while all tasks are listed.
 
 ** Prerequisites: List all tasks using the `listTask` command. Multiple tasks in the list.
 .. Test case: `addTask title/meeting desc/there is team meeting for CS2103 by/20-04-2018 priority/3`
@@ -1422,11 +1509,3 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: No task is edited. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect addTask commands to try: `editTask title/meeting priority/1`, `editTask x by/20-04-2018 priority/3` (where x is larger than the list size)
    Expected: similar to previous.
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_

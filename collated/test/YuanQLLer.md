@@ -672,6 +672,11 @@ public class TypicalActivities {
             .withDateTime("01/04/2018 20:00")
             .withRemark("nil")
             .withTags("CS2102").build();
+
+    public static final Task OVERDUETASK1 = new TaskBuilder().withName("Overdue task 1").withTags("Overdue").build();
+
+    public static final Task OVERDUETASK2 = new TaskBuilder().withName("Overdue task 2").withTags("Overdue").build();
+
     public static final Event DEMO1 = new EventBuilder().withName("CS2102ProjectDemo")
             .withStartDateTime("04/04/2018 09:00")
             .withEndDateTime("04/04/2018 10:00")

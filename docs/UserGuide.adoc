@@ -78,7 +78,7 @@ For example,  `n/NAME [r/REMARK]` can be used as `n/Software Engineering Milesto
 * *Parameters can be in any order.* +
 For example, if the command specifies `n/NAME d/DATETIME`, `d/DATETIME n/NAME` is also acceptable.
 
-
+// tag::helpcommand[]
 === Viewing help : `help` or `man` `[As of  v1.1]`
 
 Shows the help menu for all of the commands or only the `COMMAND_WORD` requested.
@@ -92,7 +92,7 @@ Shows the help menu for all of the commands or only the `COMMAND_WORD` requested
 * `help task`
 * `man task`
 * `help man`
-
+// end::helpcommand[]
 // tag::taskevent[]
 === Adding a task: `task` `[As of  v1.2]`
 
@@ -171,6 +171,7 @@ Removes all the tags of event 3
 As such `edit event INDEX r/` would remove all the `tags` of the identified event.
 ====
 // end::edit[]
+// tag::listcommand[]
 
 === Listing tasks and events: `ls` `[As of  v1.4]`
 
@@ -178,9 +179,11 @@ Shows one or two lists of tasks and events in Desk Board as described below.
 
 *Format:*
 
-* `ls task`: shows only tasks.
-* `ls event`: shows only events.
-* `ls`: shows both tasks and events in 2 separate lists.
+* `ls task`: shows only uncompleted tasks.
+* `ls event`: shows only upcoming events.
+* `ls`: shows both uncompleted tasks and upcoming events in 2 separate lists.
+// end::listcommand[]
+
 
 === Removing a task or event: `rm` `[As of  v1.4]`
 

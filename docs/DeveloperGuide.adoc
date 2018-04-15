@@ -561,7 +561,7 @@ Following is a snippet which illustrates the function of `UniqueActivityList`:
 //end::sorting[]
 
 // tag::find[]
-===== Find a task or event
+===== Finding a task or an event
 `FindEvent` locates `Task` and `Event` objects which contain any keywords in their name.
 {empty} +
 The list shown in GUI is controlled by the http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[`Predicate`] set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class[The list showned in GUI is controlled by the << `Predicate` set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class][]
@@ -801,6 +801,7 @@ Below is a snippet of how `BrowserPanel` displays the details of the `Task` sele
 
 {empty} +
 
+
 [discrete]
 ===== Listing tasks and events
 
@@ -858,7 +859,6 @@ If `ListCommand` is successful:
 {empty} +
 {empty} +
 
-
 // tag::select[]
 ===== Selecting a task or event
 `Task` objects can be selected through the use of the `SelectCommand` by specifying the `Task`'s or `Event`'s index reflected
@@ -899,6 +899,7 @@ The code make use the `JumpToEventListRequestEvent` or `JumpToTaskListRequestEve
 
 //end::select[]
 {empty} +
+
 
 ==== Design Considerations
 
@@ -1844,6 +1845,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |student |mark a task as complete |tell which tasks are completed and which are not
 
 |`* * *` |student |view completed tasks |be assured I have completed a task
+
+|`* * *` |student with design background |view tasks only|as I prefer have less clutter in the GUI
+
+|`* * *` |student with design background |view events only|as I prefer have less clutter in the GUI
 
 |`* * *` |student |automatically save data after each update |have my most updated schedule to view in the future without having to save every time I make a change
 

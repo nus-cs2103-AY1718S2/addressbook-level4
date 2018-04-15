@@ -27,9 +27,9 @@ import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.EventListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
-import guitests.guihandles.TaskListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.TaskListPanelHandle;
 import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -106,7 +106,9 @@ public abstract class DeskBoardSystemTest {
         return mainWindowHandle.getTaskListPanel();
     }
 
-    public EventListPanelHandle getEventListPanel() { return mainWindowHandle.getEventListPanel(); }
+    public EventListPanelHandle getEventListPanel() {
+        return mainWindowHandle.getEventListPanel();
+    }
 
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();

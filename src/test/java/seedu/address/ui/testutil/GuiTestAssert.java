@@ -88,7 +88,7 @@ public class GuiTestAssert {
      * in the correct order.
      */
     public static void assertEventListMatching(EventListPanelHandle eventListPanelHandle, Activity... activities) {
-        for(int i=0 ; i<activities.length ; i++) {
+        for (int i = 0; i < activities.length; i++) {
             Event event = (Event) activities[i];
             assertCardDisplaysEvent(event, eventListPanelHandle.getEventCardHandle(i));
         }
@@ -109,19 +109,19 @@ public class GuiTestAssert {
         int numberOfPeople = taskListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
     }
-    /**
-     * Asserts the size of the list in {@code eventListPanelHandle} equals to {@code size}.
-     */
 
     /**
-     * Asserts the message shown in {@code resultDisplayHandle} equals to {@code expected}.
+     * Asserts the size of the list in {@code eventListPanelHandle} equals to {@code size}.
      */
     public static void assertEventListSize(EventListPanelHandle eventListPanelHandle, int size) {
         int numberOfPeople = eventListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
     }
 
-        public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
+    /**
+     * Asserts the message shown in {@code resultDisplayHandle} equals to {@code expected}.
+     */
+    public static void assertResultMessage(ResultDisplayHandle resultDisplayHandle, String expected) {
         assertEquals(expected, resultDisplayHandle.getText());
     }
 }

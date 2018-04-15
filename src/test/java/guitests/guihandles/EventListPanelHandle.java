@@ -8,7 +8,11 @@ import seedu.address.model.activity.Activity;
 import seedu.address.ui.EventCard;
 
 //@@author jasmoon
-public class EventListPanelHandle extends NodeHandle<ListView<EventCard>>{
+
+/**
+ * Handle for Event List Panel
+ */
+public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
     public static final String EVENT_LIST_VIEW_ID = "#eventListView";
 
     private Optional<EventCard> lastRememberedSelectedEventCard;

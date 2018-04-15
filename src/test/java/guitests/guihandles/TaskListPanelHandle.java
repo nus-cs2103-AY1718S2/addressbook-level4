@@ -8,7 +8,11 @@ import seedu.address.model.activity.Activity;
 import seedu.address.ui.TaskCard;
 
 //@@author jasmoon
-public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>>{
+
+/**
+ * Handle for Task List Panel
+ */
+public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     public static final String TASK_LIST_VIEW_ID = "#taskListView";
 
     private Optional<TaskCard> lastRememberedSelectedTaskCard;

@@ -302,7 +302,10 @@ Examples:
 Exports the birthday and appointment data to Google Calendar
 ** When running this command, you will be prompted to enter your credentials to your Google Account. DO NOT EXIT THE BROWSER. This will stall the application.
 ** After entering credentials, you will be asked if reInsurance can access your account at a page as pictured below. +
+
+.Authorization Window
 image::calendar_access.png[width="600"]
+
 ** Hit `ALLOW` to proceed the export or `CANCEL` to deny reInsurance access.
 * `export portfolio` +
 Exports the data in the portfolio to a `portfolio.csv` file.

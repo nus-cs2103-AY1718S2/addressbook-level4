@@ -120,13 +120,6 @@ public class UniqueAliasList {
     }
 
     /**
-     * Replaces the aliases in this aliasCommandMap with the HashMap in the argument.
-     */
-    public void replaceHashmap(HashMap<String, String> aliases) {
-        aliasCommandMap = aliases;
-    }
-
-    /**
      * Clears aliasCommandMap, for clear command.
      */
     public void resetHashmap() {

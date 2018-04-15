@@ -158,7 +158,7 @@ the middle left of CelebManager.
 
 ==== Person vs Celebrity: What's the difference?
 
-In our application, Celebrities are meant to be the celebrities that you, the manager, are currently managing. The other people are each referred to as a Person. The way you create or edit a Person is almost exactly the same as a Celebrity. Both have the same necessary and optional fields to them such as a name, phone number, address, email and some descriptive tags. The only difference is that if you want to create a Celebrity instead of a regular Person in our app, you need to have a compulsory `celebrity` tag, in small letters. This will signal to the program that you want to create a Celebrity instead of a normal Person. In other words, the usage of `celebrity` as a tag is reserved for creation of Celebrities. In some of the commands which deal with the adding and editing of a person this will be further explained.
+In our application, Celebrities are meant to be the celebrities that you, the manager, are currently managing. The other people are each referred to as a Person. The way you create or edit a Person is almost exactly the same as a Celebrity. Both have the same necessary and optional fields to them such as a name, phone number, address, email and some descriptive tags. The only difference is that if you want to create a Celebrity instead of a regular Person in our app, you need to have a compulsory `celebrity` tag, in small letters. This will signal to the program that you want to create a Celebrity instead of a normal Person. In other words, the usage of `celebrity` as a tag is reserved for creation of Celebrities. In some of the commands which deal with the adding and editing of a person this will be further explained. In addition, if we use the term "Point of Contact" from here on out, it refers to a regular person without a `celebrity` tag (i.e. not a Celebrity).
 
 Each celebrity has their own calendar, which will displays the appointments he/she will be attending.
 
@@ -432,7 +432,7 @@ Format: `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/STAR
 * If `END_TIME` is omitted while `START_TIME` is not, `END_TIME` will be 15 minutes after `START_TIME`.
 * `CELEBRITY_INDEX` and `POINT_OF_person_INDEX` refer to the index shwon in the last shown person list in `PersonListPanel`.
 * The person at `CELEBRITY_INDEX` *must be* a celebrity.
-* The person at `POINT_OF_person_INDEX` *must not be* a celebrity.
+* The person at `POINT_OF_CONTACT_INDEX` *must not be* a celebrity.
 * `CELEBRITY_INDEX` and `POINT_OF_person_INDEX` *must be a positive integer* `1`, `2`, `3`, ...
 ****
 

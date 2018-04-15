@@ -92,6 +92,30 @@ Google Map in `MapPanel` supports mouse clicking. You can: +
 Do not click the `Google` logo or `Terms of Use` button.
 Clicking these two things triggers a bug which we plan to fix in `v2.0`.
 
+==== Show location on map : `showLocation` [Since v1.2]
+
+Shows the specified location by marking the latitude and longitude with a location marker on Google Map. +
+Alias: `sl` +
+Format: `showLocation ma/ADDRESS`
+
+****
+* `ADDRESS` should be a postal code, road name, location name or building name.
+****
+
+Examples:
+
+* `showLocation ma/Punggol` +
+Updates the map by re-centering to the new location `Punggol` and adds a location marker to it as shown below.
+
+.State of `MapPanel` after executing `showLocation ma/Punggol`
+image::AfterShowLocationInput.png[width="400"]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are some key sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
 === ShowLocation Feature
 ==== Current Implementation
 

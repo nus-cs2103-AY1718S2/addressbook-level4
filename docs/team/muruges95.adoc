@@ -23,12 +23,12 @@ of documentation or writing code.
 == Summary of contributions
 
 * *Major enhancement*: added *the ability to add appointments*
-** What it does: Allows users to add new appointments into CelebManager. For each appointment, CelebManager takes in an appointment an appointment name field and other optional fields
+** What it does: Allows users to add new appointments into CelebManager. For each appointment, CelebManager takes in an appointment name field and other optional fields
 such as the list of celebrities attending the appointment.
-** Justification: This feature is in fact the main feature of the appointment, as we want to be able to manage the schedules of celebrities.
+** Justification: This feature is in fact the main feature of the application, as we want to be able to manage the schedules of celebrities.
  The only way to do this would be to store and make corrections to these appointments that the celebrities are attending, which is what this feature allows for.
-** Highlights: Creating this feature was something that was done over the entirety of the project, due to how we changed how we wanted to implement storing of the appointments.
- There was difficulties in implementation due to the fact that each appointment could only be associated with a single celebrities' calendar at a time. Hence, it was eventually decided that appointments will be stored
+** Highlights: Creating this feature was done over the entirety of the project, due to changing how we wanted to implement the storage of the appointments.
+ There were difficulties in the implementation due to the fact that each appointment could only be associated with a single celebrity's calendar at a time. Hence, it was eventually decided that appointments will be stored
  centrally in a `StorageCalendar` and then cloned for each celebrity attending the appointment.
 ** Credits: A third party library called `CalendarFX` which can be found https://github.com/dlemmermann/CalendarFX[here] was used to implement this feature.
 
@@ -36,7 +36,7 @@ such as the list of celebrities attending the appointment.
 ** What it does: Allow the celebrity manager to create, edit and delete celebrities. The existence of a celebrity will add a calendar to the UI.
 ** Justification: This feature works hand in hand with the previous enhancement mentioned. By creating a celebrity, a calendar is created. Now, when we create an appointment and
 add a celebrity to the appointment, the appointment will display on the UI. This means that we are now able to view the appointments and effectively the schedule of the celebrity we are managing.
-** Highlights: This enhancement was carried out through modifications to how the add, edit and delete commands worked. By recognizing a `celebrity` tag to indicate that the person is a celebrity,
+** Highlights: This enhancement was carried out through modifications to the add, edit and delete commands. By recognizing a `celebrity` tag to indicate that the person is a celebrity,
 the add and edit commands now create a calendar for the added or modified celebrity. There were a lot of difficulties as we had to make sure the celebrities
 were synchronized with the calendars even when the commands were undoed or redoed, as add, edit and delete are meant to be undoable.
 ** Credits: A third party library called `CalendarFX` which can be found https://github.com/dlemmermann/CalendarFX[here] was used to implement this feature.

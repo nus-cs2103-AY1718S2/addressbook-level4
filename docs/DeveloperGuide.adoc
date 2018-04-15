@@ -366,7 +366,7 @@ Some insurance policies are targeted to a certain group of people, e.g married.
 This is so that the user will be able to view persons that belong to certain categories as they will have certain tag(s) which will represent categories of clients.
 The feature can be used via the `findtag` command
 
-====Design Considerations
+==== Design Considerations
 
 ===== Aspect: Implementation of findtag command (Since v1.3)
 

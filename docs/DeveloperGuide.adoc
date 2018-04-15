@@ -551,7 +551,7 @@ Since veterinarians and their assistants have the need to constantly check their
 
 Third party API `CalendarFX` is used as a Java calendar frame to show Appointments.
 
-image::Show_Appointment.PNG[width="650"]
+image::Show_Appointments.png[width="650"]
 
 
 ==== Design Consideration

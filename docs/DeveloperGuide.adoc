@@ -480,13 +480,13 @@ is found in Desk Board or the `name` or `dueDateTime` field is left empty.
 _Figure 24_ below shows how the relevant primary and secondary components interact
 in a scenario where the user issues the command `task n/NAME..`.
 
-.Relevant components interaction for `task n/NAME..` command (part 1)
+.Relevant component interactions for `task n/NAME..` command (part 1)
 image::SDforTask.png[width='650']
 
 _Figure 25_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 
-.Relevant components interaction for `task n/NAME..` command (part 2)
+.Relevant component interactions for `task n/NAME..` command (part 2)
 image::SDHandlingTaskEvent.png[width='650']
 
 The following is a snippet of code for `TaskCommand` 's  `executeUndoableCommand()` method.

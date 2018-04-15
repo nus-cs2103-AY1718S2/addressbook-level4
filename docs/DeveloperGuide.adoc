@@ -216,7 +216,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 === Model component
 
 .Structure of the Model Component
-image::ModelClassDiagramUpdated.png[width="800"]
+image::ModelClassDiagramUpdated.PNG[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -579,17 +579,65 @@ We may be able to make enhancements to the Medeina's UI such as changing theme c
 The find function allows users to look for contacts or pet patients.
 
 ==== Current Implementation
+As Medeina caters to veterinarians, there is a need to be able to search through heaps of data to find specific information. For example, users can search by contacts to find a particular `Person` through their `Nric`, or search by pet patients to find for possible blood donors through their `BloodType`.
+
+The below diagram illustrates the interaction between the `Logic` and `Model` components in finding pet patients with a specific `BloodType`.
+
+.Interaction between `Logic` and `Model` components upon running `find -p bt/B`.
+image::FindPetPatientDiagram.png[width="800"]
+
+{empty} +
+`FindCommandParser.java` handles and separates user input based on a regular expression that captures the matching groups of options `-o` and `-p`. The results are then parsed into `ArgumentMultimap` which separates user input into accepted prefixes of `n/NAME`, `nr/NRIC` and `t/TAGS` for contacts (option `-o`), `n/NAME`, `s/SPECIES`, `b/BREED`, `c/COLOUR`, `bt/BLOOD TYPE` and `t/TAGS` for pet patients (option `-p`).
+
+The keywords for each prefix found is then added as `String[]` into a `HashMap`, with a suitable `String` acting as a key for the values. A new `FindCommand` is created with the `HashMap` of all the keywords of all found relevant prefixes. Upon initialization of `FindCommand`, the type is determined (1 for contact, 2 for pet patient) based on the keys present in the `HashMap`.
+
+In `execute()`, there is a switch that determines if the find is for contacts or pet patient, based on the found type. The commands `findOwner()` or `findPetPatient()` are called respectively. For each of the prefix, if it exists, a `Predicate` is created for it with its keywords. All of the prefixes add together through the `.and(...)` function to make one final `Predicate` that encompasses of all the prefixes.
+
+[source, java]
+----
+private CommandResult findOwner() {
+    Predicate<Person> finalPredicate = null;
+
+    //... code for Predicate for name and nric ...
+
+    if (hashMap.containsKey("ownerTag")) {
+        String[] tagKeywords = hashMap.get("ownerTag");
+        Predicate<Person> tagPredicate = person -> Arrays.stream(tagKeywords)
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagString(), keyword));
+        if (finalPredicate == null) {
+            finalPredicate = tagPredicate;
+        } else {
+            finalPredicate = finalPredicate.and(tagPredicate);
+        }
+    }
+
+    model.updateFilteredPersonList(finalPredicate);
+    updatePetListForOwner();
+    return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
+            + "\n"
+            + getMessageForPetPatientListShownSummary(model.getFilteredPetPatientList().size()));
+}
+
+----
+
+The model then gets called via `updateFilteredPersonList(...)` or `updateFilteredPetPatientList(...)` together with the final predicate, as shown above.
+
+.Listing of found pet patients and contacts of found pet patients after running the command `find -p s/Cat bt/B`.
+image::FindPetPatientResult.PNG[width="800"]
+
+{empty} +
+As Medeina has both contacts and pet patients, it should be possible for users to see contacts of pet patients and vice versa. As such, a function is called after the update to reflect similar changes on the other panel. An exmple of the result obtained is shown above.
 
 ==== Design Consideration
 
-===== Aspect:
-* **Alternative 1:**
-** Pros:
-** Cons:
+===== Aspect: Improving search
+* **Alternative 1:** Each additional prefix will be a `or`.
+** Pros: Covers more ground, users can search for information with each individual prefix (i.e. `-o n/A nr/NRIC_NOT_A` will get both `A` and `NRIC_NOT_A`)
+** Cons: Chance that too much information will be listed, making it too broad of a search for specific things.
 
-* **Alternative 2 (current choice):**
-** Pros:
-** Cons:
+* **Alternative 2 (current choice):** Each additional function will be an `and`.
+** Pros: More specific, users can search for specific information with the prefixes adding up (i.e. `-p s/Cat bt/B` searches for pet patients who are cats and have blood type B)
+** Cons: Chance that the search is too specific, and will display no results (i.e. `-o n/A nr/NRIC_NOT_A` will not get anything as each contact only has 1 `Nric`)
 
 ==== Current Limitations
 Users are unable to find appointment related elements as the `Appointment` listing function in the calendar is different from the listing function of the other classes of `Person` and `PetPatient`. As such, there is currently no implementation to find an appointment based on types or remarks, which may pose as inconvenience to veterinarians, should they want to search by a specific type of appointment or remark.
@@ -607,9 +655,9 @@ The command allows users to list appointments based on the date that they wish t
 After Medeina implemented CalendarFX, users are able to view appointments at a specified date by clicking on the Calendar. However, as Medeina is a CLI-based application, users should not be required to move their mouse. Instead, users should be able to jump to certain dates to check appointments using the command line only.
 
 .Day view of the Calendar obtained by the `listappt -d` command.
-image::ListAppointmentDayView.png[width="800"]
+image::ListAppointmentDayView.PNG[width="800"]
 
-
+{empty} +
 The implemented CalendarFX API consists of 4 different views: Day, Week, Month and Year views. Users should be able to get a specific requested view of a date, month, or year they wish to see.
 
 The below diagram illustrates the interaction between the `UI`, `Logic` and `Events` components in the `ListAppointment` command.
@@ -617,8 +665,8 @@ The below diagram illustrates the interaction between the `UI`, `Logic` and `Eve
 .Sequence diagram for interactions between the different components upon running the `listappt -y 2017` command.
 image::SDforListAppointment.png[width="800"]
 
-
-`ListAppointmentParser.java` handles and separates the request of users based on a regular expression that captures the matching groups of options `-d`, `-w`, `-m`, `-y`. The parser then checks the remaining user input, and parses it into `LocalDate`, `YearMonth` and `Year` classes. Should there be no remaining user input after the option, the current date is obtained as the field. A new `ListAppointmentCommand` is created with the type (1 for year, 2 for month, 3 for week, 4 for date) as well as the parsed class.
+{empty} +
+`ListAppointmentParser.java` handles and separates the request of users based on a regular expression that captures the matching groups of options `-d`, `-w`, `-m` and `-y`. The parser then checks the remaining user input, and parses it into `LocalDate`, `YearMonth` and `Year` classes. Should there be no remaining user input after the option, the current date is obtained as the field. A new `ListAppointmentCommand` is created with the type (1 for year, 2 for month, 3 for week, 4 for date) as well as the parsed class.
 
 In `execute()`, there is a switch that determines the type of command run based on the type obtained from the parser. The relevant functions to change the Calendar gets called based on the type, and an event gets called to handle the change. If an appointment is in the past, a check is done to determine whether there were appointments in the year of that requested date, so that users are not able to jump into years that should not have appointments (i.e. years before Medeina existed).
 
@@ -701,7 +749,8 @@ The below diagram illustrates the interaction between `Logic` and `Model` compon
 .Interaction of `Logic` and `Model` Components through the `delete -o 1` command.
 image::DeletePersonDiagramForDelete.png[width="800"]
 
-`DeleteCommandParser.java` handles and separates the deletion based on a regular expression, that captures the matching groups of options `-o`, `-p`, `-a`, `-fp`, `-fo`. Subsequently, the parser gets the `Index` from user input to determine the element to delete. The parser then creates a new `DeleteCommand` with the type (1 for contact, 2 for pet patient, 3 for appointment, 4 for force contact, 5 for force pet patient), as well as the `Index`.
+{empty} +
+`DeleteCommandParser.java` handles and separates the deletion based on a regular expression that captures the matching groups of options `-o`, `-p`, `-a`, `-fp` and `-fo`. Next, the parser gets the `Index` from user input to determine the element to delete. The parser then creates a new `DeleteCommand` with the type (1 for contact, 2 for pet patient, 3 for appointment, 4 for force contact, 5 for force pet patient), as well as the `Index`.
 
 In `execute()`, there is a switch that determines the type of command run based on the type obtained from the parser. The normal delete functions (types 1, 2, 3) subsequently calls the `Model` component to properly remove the element.
 
@@ -744,95 +793,12 @@ It can be noted that pet patient dependencies are deleted before appointment dep
 .Listing of relevant dependencies deleted upon a force deletion of a contact.
 image::DeleteDependenciesForForce.png[width="800"]
 
+{empty} +
 For each dependency deleted, it is stored in `List<...>` so that the `CommandResult(...)` returns all deleted dependencies as well as the main, deleted element.
 
 ==== Design Consideration
 
 ===== Aspect: Improving user friendliness
-* **Alternative 1:** Use different commands for different delete functions.
-** Pros: It is easier to implement. The command can just take in an `Index` without any options before.
-** Cons: Hard on users as they will have to type a different command for every type of delete (i.e. `deleteperson`, `deletepetpatient` etc.).
-
-* **Alternative 2 (current choice):** Use one overseeing `delete` command.
-** Pros: Users do not need to go through the hassle of trying to remember every different command of delete.
-** Cons: Extra work to determine the type of deletion (i.e. `-a` for Appointment, `-p` for PetPatient etc.).
-
-===== Aspect: Ease of Use
-* **Alternative 1:** Have no force delete function.
-** Pros: There will be no need to implement functions to delete prior dependencies before a deletion is done. An exception can just be thrown if dependencies still exist.
-** Cons: Users will need to manually find and delete every dependency manually.
-
-* **Alternative 2 (current choice):** Have a force delete function that will delete all dependencies along with the element to be deleted.
-** Pros: Easier to use. Users do not need to manually find and delete all dependencies, it just gets deleted immediately if required.
-** Cons: Need to delete dependencies upon calling a force function. In addition, the dependencies deleted must be shown as well to inform users of all deleted elements.
-
-==== Current Limitations
-As of now, users are only capable of deleting an element based on its `Index` displayed in Medeina. This may pose as difficult for users if they want to delete an element based on the list displayed through the `list` command, especially if there is alot of data in Medeina.
-
-==== Future Considerations
-In the coming future, the `Delete` function can be altered such that it allows users to input other fields other than just `Index`, so that users do not need to get a list before deleting a particular element, especially if the user wants to delete an element that is not in the current listing (i.e. not on the listing after a `find` command).
-//end::delete[]
-
-// tag::delete[]
-=== Deletion and Force Deletion of Contact, Pet Patient and Appointment
-The delete function allows its users to get rid of obsolete information.
-
-==== Current Implementation
-Medeina has multiple important classes to handle: `Person`, `PetPatient` and `Appointment`. As Medeina caters to veterinarians, there is a need for the ability to remove the mentioned classes. For example, an `Appointment` can be deleted should a contact decide not to go for the appointment anymore, a `PetPatient` should be deleted if a pet patient dies, and a `Person` should be deleted if a contact decides to immigrate permanently.
-
-The below diagram illustrates the interaction between `Logic` and `Model` components during the deletion of a contact.
-
-.Interaction of `Logic` and `Model` Components through the `delete -o 1` command.
-image::DeletePersonDiagramForDelete.png[width="800"]
-
-`DeleteCommandParser.java` handles and separates the deletion based on a regular expression, that captures the matching groups of options `-o`, `-p`, `-a`, `-fp`, `-fo`. Subsequently, the parser gets the `Index` from user input to determine the element to delete. The parser then creates a new `DeleteCommand` with the type (1 for contact, 2 for pet patient, 3 for appointment, 4 for force contact, 5 for force pet patient), as well as the `Index`.
-
-In `execute()`, there is a switch that determines the type of command run based on the type obtained from the parser. The normal delete functions (types 1, 2, 3) subsequently calls the `Model` component to properly remove the element.
-
-[source,java]
-----
-private CommandResult deleteAppointment() {
-     //... code ...
-     requireNonNull(appointmentToDelete);
-     model.deleteAppointment(appointmentToDelete);
-     //... code ...
-     return new CommandResult(String.format(MESSAGE_DELETE_APPOINTMENT_SUCCESS, appointmentToDelete));
- }
-----
-However, for the force delete functions (types 4, 5), dependencies have to be removed before the element itself can be removed, as shown by the snippet of code from `DeleteCommand.java` below.
-
-[source,java]
-----
-private CommandResult deleteForcePerson() {
-    //... code ...
-
-    List<PetPatient> petPatientsDeleted = model.deletePetPatientDependencies(personToDelete);
-    List<Appointment> appointmentsDeleted = new ArrayList<>();
-    for (PetPatient pp : petPatientsDeleted) {
-        appointmentsDeleted.addAll(model.deleteAppointmentDependencies(pp));
-        deleteDependenciesList += "\n" + (String.format(MESSAGE_DELETE_PET_PATIENT_SUCCESS, pp));
-    }
-    for (Appointment appointment : appointmentsDeleted) {
-        deleteDependenciesList += "\n" + (String.format(MESSAGE_DELETE_APPOINTMENT_SUCCESS, appointment));
-    }
-    model.deletePerson(personToDelete);
-
-    //... code ...
-
-    return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete) + deleteDependenciesList);
-}
-----
-
-It can be noted that pet patient dependencies are deleted before appointment dependencies. This is because of the dependency "hierachy" between the different elements. A pet patient is uniquely tied to a contact based on `Nric`, while an appointment is uniquely tied to a pet patient based on `Nric` and `PetPatientName`. As a result, pet patients must first be deleted before determining which appointments are to be deleted.
-
-.Listing of relevant dependencies deleted upon a force deletion of a contact.
-image::DeleteDependenciesForForce.png[width="800"]
-
-For each dependency deleted, it is stored in `List<...>` so that the `CommandResult(...)` returns all deleted dependencies as well as the main, deleted element.
-
-==== Design Consideration
-
-===== Aspect: Improving user-friendliness
 * **Alternative 1:** Use different commands for different delete functions.
 ** Pros: It is easier to implement. The command can just take in an `Index` without any options before.
 ** Cons: Hard on users as they will have to type a different command for every type of delete (i.e. `deleteperson`, `deletepetpatient` etc.).

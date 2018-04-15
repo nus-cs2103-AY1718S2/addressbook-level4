@@ -26,16 +26,19 @@ Medeina is a desktop address book application used for teaching Software Enginee
 
 * *Minor enhancement*: added the capability list appointments of any date, in all 4 views allowed in CalendarFX.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/functional/wynonaK.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/test/wynonaK.md[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/functional/wynonaK.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/test/wynonaK.md[Test code]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.4` (1 release) on GitHub
+*** Managed releases `v1.4` (1 release) on GitHub.
+*** Consistently contributed to achieve weekly milestone from `v1.1` - `v1.5rc`.
+** Documentation
+*** Improved user-friendliness in the User Guide by adding prefaces. (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/79[#79])
+*** Touched up on `v2.0` upcoming functions in the User Guide. (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/79[#79])
+*** Updated the Developer Guide with new images to demonstrate the Model Component, as well as update obsolete information in Medeina. (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/243[#243], Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/5[#5])
 ** Community:
-*** Reported bugs and suggestions for other teams in the class (examples: )
-
-_{you can add/remove categories in the list above}_
+*** Reported bugs and suggestions for other teams (Example: https://github.com/CS2103JAN2018-W15-B4/main/issues/202[#202])
 
 == Contributions to the User Guide
 
@@ -56,8 +59,9 @@ include::../UserGuide.adoc[tag=delete]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-== PROJECT: PowerPointLabs
+include::../UserGuide.adoc[tag=find]
 
----
+include::../UserGuide.adoc[tag=listappt]
 
-_{Optionally, you may include other projects in your portfolio.}_
+include::../UserGuide.adoc[tag=delete]
+

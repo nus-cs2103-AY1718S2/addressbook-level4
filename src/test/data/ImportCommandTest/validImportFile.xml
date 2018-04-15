@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<deskBoard>
+    <tasks>
+        <name>CS2102Assignment</name>
+        <dateTime>01/04/2018 20:00</dateTime>
+        <remark>nil</remark>
+        <isCompleted>false</isCompleted>
+        <tagged>CS2102</tagged>
+    </tasks>
+    <events>
+        <name>CS2102ProjectDemo</name>
+        <dateTime>04/04/2018 09:00</dateTime>
+        <remark>FinalDemo</remark>
+        <isCompleted>false</isCompleted>
+        <tagged>CS2102</tagged>
+        <endDateTime>04/04/2018 10:00</endDateTime>
+        <location>COM1</location>
+    </events>
+    <tags>CS2102</tags>
+</deskBoard>

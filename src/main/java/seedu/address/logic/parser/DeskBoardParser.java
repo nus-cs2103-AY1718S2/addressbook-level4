@@ -117,7 +117,6 @@ public class DeskBoardParser {
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
-        //@@author karenfrilya97
         case ImportCommand.COMMAND_WORD:
             return new ImportCommandParser().parse(arguments);
 

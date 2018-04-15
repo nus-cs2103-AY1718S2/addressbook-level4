@@ -11,12 +11,10 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -46,13 +44,12 @@ public class MoreInfoCommandTest {
                 + "Alice Pauline";
 
 
-        String pathOfDataFileToCreate = Paths.get(".")
-                .toAbsolutePath().normalize().toString() + "\\data\\addressBook.xml";
-
-        File dataFileToCreate = new File (pathOfDataFileToCreate);
+        String pathOfDataFileToCreate = "data/addressBook.xml";
+        File dataFileToCreate = new File(pathOfDataFileToCreate);
         Boolean fileCreated = false;
-        if (!FileUtil.isFileExists(dataFileToCreate)) {
-            FileUtil.createFile(dataFileToCreate);
+        if (!dataFileToCreate.exists()) {
+            new File("data").mkdir();
+            dataFileToCreate.createNewFile();
             fileCreated = true;
         }
 
@@ -66,9 +63,6 @@ public class MoreInfoCommandTest {
         }
 
     }
-
-
-
 
     @Test
     public void equals() throws Exception {

@@ -29,6 +29,7 @@ import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
 import seedu.address.testutil.EditMiscDescriptorBuilder;
 import seedu.address.testutil.EditStudentDescriptorBuilder;
 
@@ -57,7 +58,7 @@ public class CommandTestUtil {
     public static final String VALID_NOKPHONE_BOB = "87654321";
     public static final String VALID_REMARKS_AMY = "well behaved";
     public static final String VALID_REMARKS_BOB = "naughty";
-    public static final String VALID_PROFILEPICTUREPATH_AMY = "src/main/resource/view/profile_photo_placeholder.png";
+    public static final String VALID_PROFILEPICTUREPATH_AMY = ProfilePicturePath.DEFAULT_PROFILE_PICTURE;
     public static final String VALID_PROFILEPICTUREPATH_BOB = "src/main/resource/view/test.png";
     public static final String PROFILEPICTUREPATH_DESC_AMY = PREFIX_PICTURE_PATH + VALID_PROFILEPICTUREPATH_AMY;
     public static final String PROFILEPICTUREPATH_DESC_BOB = PREFIX_PICTURE_PATH + VALID_PROFILEPICTUREPATH_BOB;

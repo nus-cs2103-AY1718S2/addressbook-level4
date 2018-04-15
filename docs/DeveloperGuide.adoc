@@ -361,7 +361,7 @@ The authentication mechanism is managed by Model and Logic, where Model maintain
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
 ** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
+** Cons: User have no way of skipping such commands if he or she just want to reset the state of the catalogue book and not the view.
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
@@ -374,6 +374,35 @@ The authentication mechanism is managed by Model and Logic, where Model maintain
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
+
+=== Account Functions
+// tag::addaccount[]
+==== Add Account
+===== Current Implementation
+1. The addAccount function helps to add new accounts with different privileges into the database. It includes the accounts with privilege level 1 for students and privilege level 2 for administrators or librarians.
+2. Only accounts with privilege level 2 (administrators and librarians) can access the addAccount function.
+
+===== Future Implementation
+
+1. The addAccount function will be able to add accounts based on an excel sheet that is provided instead of having to manually add the accounts one by one. +
+2. The addAccount function will be provided to the students such that they can create their own account as long as they have a registered matriculation number in the system without having a administrator privilege level.
+3. An edit account function will be created to allow borrowers/users to edit their own passwords if necessary instead of having to go through the librarian to delete and add a new account with a different password.
+// end::addaccount[]
+
+// tag::deleteaccount[]
+==== Delete Account
+===== Current Implementation
+1. The deleteAccount function helps to delete accounts in the existing account database.
+2. Only accounts with privilege level 2 (administrators and librarians) can access the deleteAccount function.
+
+===== Future Implementation
+1. When the list account function is set up, the administrators will be able to use the addAccount function by clicking on the the shown list to delete the accounts in large scales.
+2. The deleteAccount function will be able to delete the account by range of date created so that students that are registered into the school library can be deleted in bulk based on their matriculation and graduation date information.
+// end::deleteaccount[]
+
+
+
+
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -986,6 +1015,91 @@ Use case ends.
 [discrete]
 // end::usecaseloginoutlistfind[]
 
+[discrete]
+=== Use case: addAccount
+*MSS*
+
+1.  Administrator requests to add a new student or admin account into the database.
+2.  A new account of specified privilege level(student 1 OR admin 2) is created. +
+3.  The added account will be unique to other accounts based on the username only. If there is another account in the database that already has the same username, the command display box will throw back an error to indicate that the account cannot be added.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The account is added into the database.
++
+Use case ends.
+
+[discrete]
+=== Use case: deleteAccount
+*MSS*
+
+1.  Administrator requests to delete an existing account from the database.
+2.  The account will be deleted if the username that is required to be deleted exists in the database. If not, the account will not be deleted and command display will show that the desired account cannot be deleted.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The account is deleted from the database.
++
+Use case ends.
+
+[discrete]
+=== Use case: exit
+*MSS*
+
+1.  User requests to exit the programme.
+2.  The programme will be cancelled when given the command regardless of whichever privilege level.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The programme is cancelled.
++
+Use case ends.
+
+[discrete]
+=== Use case: undo
+*MSS*
+
+1.  Administrator requests to undo the last command executed in the system.
+2.  Only commands that change the state of the book catalogue or the account database can be undone.
+
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The previous executed command is undone.
++
+Use case ends.
+
+[discrete]
+=== Use case: redo
+*MSS*
+
+1.  Administrator requests to redo the last command that has been undone in the system.
+2.  Only commands that have been undone can be redone.
+
+Use case ends.
+
+*Extensions*
+
+[none]
+
+* 2a. The previous executed command is redone.
++
+Use case ends.
+
 // tag::usecaseAddEditHelpSelect[]
 === Use case: Add book
 
@@ -994,17 +1108,15 @@ Use case ends.
 1.  User requests to add book with TITLE, AUTHOR, ISBN, AVAIL, [TAGS]
 2.  Catalogue adds book
 3.  Catalogue list books
-+
-Use case ends.
 
-*Extensions*
-
-[none]
 * 1a. The TITLE or AUTHOR or ISBN or AVAIL is not valid or ISBN is not unique.
 +
 [none]
 ** 1a1. Catalogue shows an error message.
 +
+Use case ends.
+
+*Extensions*
 
 Use case ends.
 
@@ -1023,7 +1135,6 @@ Use case ends.
 
 *Extensions*
 
-[none]
 * 2a. The list is empty
 +
 Use case ends.
@@ -1033,8 +1144,6 @@ Use case ends.
 ** 3a1. Catalogue shows an error message.
 +
 Use case ends.
-
-[discrete]
 === Use case: Help
 
 *MSS*
@@ -1057,8 +1166,6 @@ Use case ends.
 Use case ends.
 
 *Extensions*
-
-[none]
 * 2a. The list is empty
 +
 Use case ends.
@@ -1324,8 +1431,68 @@ _{ more test cases ... }_
    Expected: Similar to previous.
 // end::manualtestAddEditHelpSelect[]
 
+=== Adding an account
+
+. Adding an account
+
+.. Prerequisites: The account with that specific username must not be added in the first place or else the account cannot be added.
+.. Test case: `addAccount n/Tiong Ley u/tiongley p/tiongley123 m/A0123456B l/1` +
+   Expected: Account with usename "tiongley" is added to the account database. Timestamp in the status bar is updated.
+.. Test case: `addAccount n/Johnny Marconi u/tiongley p/tiongley123 m/A0123456C l/1` +
+   Expected: No account is added. Error details shown in the status message. An error of "This account already exists in the system" will be shown.
+.. Other incorrect delete commands to try: `addAcCount`, `addAccount 1` , `addAccount tiongley` +
+   Expected: Similar to previous.
+
 _{ more test cases ... }_
 
+=== Deleting an account
+
+. Deleting an account
+
+.. Prerequisites: The account with that specific username must already exist in the first place or else the account cannot be deleted.
+.. Test case: `deleteAccount tiongley` +
+   Expected: Account with usename "tiongley" is deleted from the account database. Timestamp in the status bar is updated.
+.. Test case: `deleteAccount` +
+   Expected: No account is deleted. Error details shown in the status message. An error of "Account does not exist" will be shown.
+.. Other incorrect delete commands to try: `deleteAcCount tiongley`, `deleteAccount  `  +
+   Expected: Similar to previous.
+
+_{ more test cases ... }_
+
+=== Exit
+
+. Exiting the programme
+
+.. Prerequisites: The application programme must be opened.
+.. Test case: `exit` +
+   Expected: The application programme will close.
+.. Test case: `exit 123` +
+   Expected: The application will close.
+
+=== Undo
+
+. Undo the previous command
+
+.. Prerequisites: An undoable command (such as add, delete, edit) must have been executed before using the 'undo' command.
+.. Test case: `deleteAccount tiongley` followed by `undo`
+   Expected: Account with usename "tiongley" will be added back to the account database. Timestamp in the status bar is updated.
+.. Test case: (Given that no command was executed before this) `undo` +
+   Expected: Nothing happens. Error details shown in the status message. An error of "No more commands to undo!" will be shown.
+
+_{ more test cases ... }_
+
+=== Redo
+
+. Redo the previous command that has been undone
+
+.. Prerequisites: An undoable command (such as add, delete, edit) must have been undone by the "undo" command before using the 'redo' command.
+.. Test case: `deleteAccount tiongley` followed by `undo` followed by `redo`
+   Expected: Account with username "tiongley" will be deleted from the account database. Timestamp in the status bar is updated.
+.. Test case: (Given that no undoable command was undone before this) `redo` +
+   Expected: Nothing happens. Error details shown in the status message. An error of "No more commands to redo!" will be shown.
+
+_{ more test cases ... }_
+=======
 === Borrowing a book
 
 . Borrowing a book while all books are listed
@@ -1369,4 +1536,4 @@ _{ more test cases ... }_
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
-_{ more test cases ... }_
+

@@ -82,19 +82,27 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Login as Student/Librarian : `Login`
 
 Format: `login [username] [password]` +
-Privilege Level: 0(Guest)
+Privilege Level: 0(Guest) +
+Privilege Level: 1 (Student) +
+Privilege Level: 2 (Librarian or Administrator)
 
-Default account: +
+Default administrator account: +
 Username: admin +
 Password: admin
 
 Login with different accounts: +
-1 - Add account using adda command +
-2 – Use the username and password that you entered for the above account +
-e.g. adda n/Victor Tardieu m/A1234567N u/victor123 p/victor123 l/1
+1. Add account using "addAccount" command +
+2. Use the username and password that you entered for the above account +
+e.g. addAccount n/Victor Tardieu m/ A1234567N u/e12345 p/secretpassword l/1
+
+Access based on different privilege levels: +
+1. At privilege level of "guest", you can only browse the catalogue of library books inside. +
+2. At privilege level of "student", you can browse the catalogue, borrow a book, return a book and reserve a book that you want. +
+3. At privilege level of "librarian", you can browse, change the status of a borrower's borrowing status, add/delete/edit new books in the catalogue, and add/delete the accounts in the database.
+
 
 [NOTE]
-Different accounts might have different privilege levels. A command can only be executed when the privilege level of the current user is greater or equal to the command's required level. The default admin account can be logged in with 'login admin admin'
+Different accounts might have different privilege levels. A command can only be executed when the privilege level of the current user is greater or equal to the command's required level. The default admin account can be logged in with 'login admin admin'.
 
 === Logout from Student/Librarian : `Logout`
 
@@ -431,16 +439,16 @@ Example:
 All accounts removed from the list of accounts
 // end::cleara[]
 
-=== Add an account : `addAccount` [TO BE IMPLEMENTED]
-
+// tag::addaccount[]
+=== Add an account : `addAccount`
 Add a given account to the list of accounts +
-Format: `addAccount n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
+Format: `addAccount n/NAME u/USERNAME p/PASSWORD m/MATRICNUMBER l/PRIVILEGE LEVEL` +
 Privilege Level: 2(Librarian)
 
 Examples:
 
-* `addAccount n/Jack Morgan m/A0123456J u/jack p/jack123 l/1`
-* `addAccount n/Tom Madison m/A1234567T u/tom p/tom123 l/2`
+* `addAccount n/Jack Morgan u/jack p/jack123 m/A0123456J I/1`
+* `addAccount n/Tom Madison u/tom p/tom123 m/A1234567T  I/2`
 
 [TIP]
 Press TAB after writing `adda` to use the auto-complete function.
@@ -448,8 +456,9 @@ Press TAB after writing `adda` to use the auto-complete function.
 Examples:
 
 * `adda` --> (press TAB) --> `adda n/ m/ u/ p/ l/ `
-
-=== Deleting an account : `deletea` [TO BE IMPLEMENTED]
+// end::addaccount[]
+// tag::deleteaccount[]
+== Deleting an account : `deleteAccount`
 
 Deletes the specified account from the list of accounts. +
 Format: `delete USERNAME` +
@@ -462,17 +471,11 @@ Privilege Level: 2(Librarian)
 
 Examples:
 
-* `delete A1234567J` +
-Deletes account linked to A1234567J --> (Jack Morgan).
-* `delete A0123456M` +
-Deletes the account linked to A0123456M.
-
-[TIP]
-Press TAB after writing `deletea` to use the auto-complete function.
-
-Examples:
-
-* `deletea` --> (press TAB) --> `deletea 1 `
+* `deleteAccount jackmorgan` +
+Deletes account linked to Jack Morgan.
+* `deleteAccount tommy` +
+Deletes the account linked to Tommy.
+// end::deleteaccount[]
 
 === Exiting the program : `exit`
 
@@ -554,9 +557,9 @@ e.g. `borrow 1`
 e.g. `return 2`
 * *reserve* : `reserve INDEX` +
 e.g. `reserve 2`
-* *addaAccount* : `addAccount n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
+* *addAccount* : `addAccount n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
 e.g. `addAccount n/Jack Morgan m/A0123456J u/jack p/jack123 l/1`
-* *deletea* : `delete USERNAME` +
+* *deleteAccount* : `deleteAccount USERNAME` +
 e.g. `delete A0123456M`
 * *cleara* : `cleara`
 

@@ -11,6 +11,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.model.LoginManager;
 import seedu.address.model.UserPrefs;
 
+//@@author Pearlissa
 /**
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.

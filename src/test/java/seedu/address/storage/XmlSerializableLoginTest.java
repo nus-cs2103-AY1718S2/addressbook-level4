@@ -14,6 +14,7 @@ import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.LoginManager;
 import seedu.address.testutil.TypicalUsers;
 
+//@@author Pearlissa
 public class XmlSerializableLoginTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlSerializableLoginTest/");

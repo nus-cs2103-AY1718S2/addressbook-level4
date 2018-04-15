@@ -429,7 +429,7 @@ Example:
 * `list` +
 `cleara` +
 All accounts removed from the list of accounts
-// end::clear[]
+// end::cleara[]
 
 === Add an account : `addAccount` [TO BE IMPLEMENTED]
 

@@ -304,7 +304,7 @@ Deletes the template with the purpose greeting.
 // end::templating[]
 
 //tag::sort[]
-==== Sorting contacts in address book : `sort_by_name` or `sort`
+==== Sorting contacts in address book : `sort` or `so`
 
 Sorts the contacts in the address book in alphabetical order by name. Sorting will not distinguish between first and last names, but will sort by the full text entered for a contacts name.
 
@@ -313,12 +313,12 @@ Currently only sorting alphabetically by name is supported.
 [NOTE]
 No arguments are necessary, can simply enter `sort` in CLI
 
-Format: `sort` or `sort_by_name`
+Format: `sort` or `so`
 
 Examples:
 
 * `sort`
-* `sort_by_name`
+* `so`
 //end::sort[]
 
 //tag::import[]

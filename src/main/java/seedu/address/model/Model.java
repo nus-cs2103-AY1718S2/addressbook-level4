@@ -107,8 +107,8 @@ public interface Model {
     //@@author luca590
     /**
      * Sorts the addressbook lexographically by users' first name
-     * @throws Exception if {@code predicate} is null.
+     * @throws DuplicatePersonException if user already exists in model.
      */
     void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException;
-
+    //@@author
 }

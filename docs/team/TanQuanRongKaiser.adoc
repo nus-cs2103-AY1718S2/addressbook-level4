@@ -11,8 +11,9 @@
 Session Logger and Planner (SLAP) for Social Workers is for those who prefer to use a desktop app for managing their schedule and contacts*. More importantly, SLAP is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, SLAP can get your daily scheduling and contact management tasks done faster than traditional GUI apps.
 It is a simple Java application intended for social workers to help them plan their day and keep track of their beneficiaries. Some key features of this application include secure sign-in, an address book, a calendar, a daily schedule display, user session logs and maps. Written in Java, it has about 15 kLoC.
 
-
-
+SLAP aims to target social workers who have to visit different less privileged families and/or high-risk
+stay-at-home patients as their daily routine. SLAP allow them to organise their schedule for the day as
+they may have to visit multiple locations, take copious notes and help in many different ways.
 
 == Contributions to the User Guide
 

@@ -1223,6 +1223,8 @@ Currently, the commands `Delete` and `Select` only detects English names!
 .selecting one of your student, Jason
 image::Select(before).png[width="500"]
 
+{empty} +
+
 .You should see this after execution of the `select` command is successful
 image::Select(after).png[width="500"]
 

@@ -5,7 +5,7 @@ import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.Time;
 import seedu.address.model.student.UniqueKey;
 
-// @@author demitycho
+//@@author demitycho
 /**
  * A utility class to help with building Lesson objects.
  */

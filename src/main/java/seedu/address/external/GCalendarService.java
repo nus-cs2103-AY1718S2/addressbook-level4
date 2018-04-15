@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.HttpTransport;
@@ -19,6 +20,7 @@ import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 import seedu.address.model.lesson.Day;
@@ -39,6 +41,9 @@ public class GCalendarService {
     public static final String STRING_GMT_SG = "+08:00";
     public static final String STRING_STUDENT_CALENDAR_DESCRIPTION = "Calendar for your Student Lessons";
     public static final String STRING_STUDENT_CALENDAR_NAME = "Student Lessons";
+
+    private static final Logger logger = LogsCenter.getLogger(GCalendarService.class);
+
     private Credential credential;
     private HttpTransport httpTransport;
     private JsonFactory jsonFactory;
@@ -93,16 +98,19 @@ public class GCalendarService {
          * 3. Insert new schedule
          */
         try {
+            Integer displayIndex = 1;
             deleteExistingCalendarCopy(service);
             String newCalenderId = createStudentLessonCalendar(service);
             for (Lesson lesson : schedule.getSchedule()) {
                 Event newEvent = lessonToCalendarEvent(lesson, addressBook);
                 Event insertedEvent = service.events().insert(newCalenderId, newEvent).execute();
-                System.out.printf("Event created: %s\n", insertedEvent.getHtmlLink());
+                logger.info(String.format("Event created for Lesson %d: %s\n",
+                        displayIndex++, insertedEvent.getHtmlLink()));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        logger.info("Successfully updated Google Calendar.");
     }
 
     /**
@@ -193,6 +201,8 @@ public class GCalendarService {
         com.google.api.services.calendar.model.Calendar createdCalendar =
                 service.calendars().insert(newCalendar).execute();
 
+        logger.info("Successfully created Google Calendar: Student Lessons");
+
         return createdCalendar.getId();
     }
 
@@ -215,6 +225,9 @@ public class GCalendarService {
             }
             pageToken = calendarList.getNextPageToken();
         } while (pageToken != null);
+
+
+        logger.info("Successfully deleted all previous events");
     }
 
     /**

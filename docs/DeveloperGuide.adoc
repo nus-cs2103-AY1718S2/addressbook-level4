@@ -30,6 +30,8 @@ The following steps will guide you on the set up of FASTIS.
 
 === Prerequisites
 
+The following programs have to be installed on the computer system.
+
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
@@ -118,13 +120,13 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* Initializing the components in the correct sequence, and connects them up with each other during application launch.
+* Shutting down the components and invokes cleanup method where necessary during shut down.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
 
 <<Design-Database,*`Database`*>> handles the downloading of module information via the https://github.com/nusmodifications/nusmods/tree/master/api/data[NUSmods API], as well as holding and retrieving the information. Because it is only accessed and never changed, the database component resides on its own outside of the `Model` component.
 
@@ -132,8 +134,8 @@ The rest of the App consists of these components:
 
 * <<Design-Ui,*`UI`*>>: The UI of the App.
 * <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+* <<Design-Model,*`Model`*>>: The holder of the data of the App in-memory.
+* <<Design-Storage,*`Storage`*>>: The location on the hard disk where date is read from and written to.
 
 Each of the four components
 
@@ -197,7 +199,7 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  The `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
@@ -678,6 +680,11 @@ The groups in the group list are facilitated by `Group` class. Each `Group` obje
 
 .Group Class Diagram.
 image:GroupClassDiagram.png[width ="800"]
+
+The following diagram is a object diagram of Group Class.
+
+.Object Diagram of `Group`.
+image:GroupObjectDiagram.png[width="600"]
 
 Suppose that the user has just launched the application . The `UniqueGroupList` in the address book will include few groups that are declared in SampleDataUtil.
 
@@ -1771,6 +1778,9 @@ Person in address book.
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[UI]] User Interface::
+The means by which the user and a computer system interact, in particular the use of input devices and software.
 
 
 [appendix]

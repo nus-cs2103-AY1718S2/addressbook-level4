@@ -21,7 +21,8 @@ public class ViewAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "viewappt";
     public static final String COMMAND_ALIAS = "va";
 
-    public static final String MESSAGE_USAGE_PATIENT_WITH_INDEX = COMMAND_WORD + ": View list of appointments of a patient. "
+    public static final String MESSAGE_USAGE_PATIENT_WITH_INDEX = COMMAND_WORD
+            + ": View list of appointments of a patient. "
             + "Parameters: "
             + "INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
@@ -30,7 +31,6 @@ public class ViewAppointmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all appointments";
     public static final String MESSAGE_SUCCESS_PATIENT = "Listed all appointments made by %1$s";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database";
     private Index targetIndex;
     private final boolean indexArgumentIsExist;
 

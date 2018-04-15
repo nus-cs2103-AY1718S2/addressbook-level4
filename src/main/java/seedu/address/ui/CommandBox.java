@@ -43,15 +43,14 @@ public class CommandBox extends UiPart<Region> {
     private ContextMenu suggestionBox;
 
     private boolean isAutocompleting;
-    private Autocomplete autocompleteLogic = Autocomplete.getInstance();
-
-    private List<String> suggestions;
+    private Autocomplete autocompleteLogic;
 
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         suggestionBox = new ContextMenu();
         commandTextField.setContextMenu(suggestionBox);
+        autocompleteLogic = Autocomplete.getInstance();
         autocompleteLogic.init(logic);
         historySnapshot = logic.getHistorySnapshot();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
@@ -221,10 +220,10 @@ public class CommandBox extends UiPart<Region> {
 
         if (!newValue.equals("")) {
 
-            suggestions = autocompleteLogic.getSuggestions(commandTextField);
+            List<String> suggestions = autocompleteLogic.getSuggestions(commandTextField);
 
             if (!suggestions.isEmpty()) {
-                setContextMenu();
+                setContextMenu(suggestions);
             }
         }
     }
@@ -232,7 +231,7 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Sets the context menu {@code suggestionBox} with autocomplete suggestions.
      */
-    private void setContextMenu() {
+    private void setContextMenu(List<String> suggestions) {
         for (String s : suggestions) {
             MenuItem m = new MenuItem(s);
             String autocompleteValue = StringUtil.removeDescription(s);

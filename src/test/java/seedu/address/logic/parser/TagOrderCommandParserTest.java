@@ -18,7 +18,7 @@ public class TagOrderCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         assertParseSuccess(parser, "1 friend",
-                new TagOrderCommand(INDEX_FIRST_PERSON,VALID_TAG_FRIEND));
+                new TagOrderCommand(INDEX_FIRST_PERSON, VALID_TAG_FRIEND));
     }
 
     @Test

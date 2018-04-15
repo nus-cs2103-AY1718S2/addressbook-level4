@@ -176,6 +176,8 @@ public class CipherEngineTest {
     private static final String PASSWORD_3 = "1RS#(`D #Q HT%";
 
     @Rule
+    public ExpectedException thrown = ExpectedException.none();
+    @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Test
@@ -219,6 +221,10 @@ public class CipherEngineTest {
         assertTrue(CipherEngine.isValidPasswordHash(hashed));
         assertTrue(CipherEngine.checkPassword(PASSWORD_3, hashed));
     }
+
+```
+###### \java\seedu\address\logic\CipherEngineTest.java
+``` java
 
     private boolean isSameInContent(File one, File two) throws IOException {
         return Arrays.equals(Files.readAllBytes(one.toPath()), (Files.readAllBytes(two.toPath())));
@@ -842,6 +848,10 @@ public class LockManagerTest {
 
         // Cannot unlock if not locked
         assertFalse(LockManager.getInstance().unlock("testing"));
+
+        // Cannot unlock if initialized with invalid hash
+        LockManager.getInstance().initialize("invalid$11$11$invalid$invalid");
+        assertFalse(LockManager.getInstance().unlock(""));
     }
 
     @Test

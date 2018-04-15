@@ -110,7 +110,6 @@ public class VenueTableEvent extends BaseEvent {
 public class AliasCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "alias";
-    public static final String LIST_ALIAS_COMMAND_WORD = "list";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows list of alias or creates new alias. "
             + "Parameters for creating new alias: [COMMAND] [NEW_ALIAS] \n"
             + "Example: " + COMMAND_WORD + " add a";
@@ -165,6 +164,10 @@ public class AliasCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Retrieve all command words sorted in alphabetical order
+     * @return a list of application's command words in sorted order
+     */
     public static List<String> getCommands() {
         Collections.sort(commands);
         return commands;
@@ -198,7 +201,6 @@ public class MapCommand extends Command {
     public static final int FIRST_LOCATION_INDEX = 0;
 
     private String locations;
-    private boolean isOneLocation;
 
     /**
      * Creates a MapCommand to pass locations to Google Maps
@@ -212,7 +214,7 @@ public class MapCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         locations = ParserUtil.parseLocations(this.locations);
-        isOneLocation = !locations.contains(SPLIT_TOKEN);
+        boolean isOneLocation = !locations.contains(SPLIT_TOKEN);
         try {
             EventsCenter.getInstance().post(new GoogleMapsEvent(locations, isOneLocation));
             return new CommandResult(String.format(MESSAGE_SUCCESS));
@@ -336,7 +338,7 @@ public class VacantCommand extends Command {
      * Parses user input into command for execution.
      *
      * @param userInput full user input string
-     * @return String[] consists of commandWord and arguments
+     * @return String[] of size 2, consists of commandWord and arguments
      * @throws ParseException if the user input does not conform the expected format
      */
     public String[] extractCommandArgs(String userInput) throws ParseException {
@@ -450,18 +452,16 @@ public class MapCommandParser implements Parser<MapCommand> {
      * Identifies if one or more locations are specified in the user input
      */
     private static String identifyNumberOfSpecifiedLocations(String[] locationsArray) {
-        String parsedLocations = "";
         if (locationsArray.length >= MapCommand.TWO_LOCATIONS_WORD_LENGTH) {
-            parsedLocations = String.join(MapCommand.SPLIT_TOKEN, locationsArray);
+            return String.join(MapCommand.SPLIT_TOKEN, locationsArray);
         } else {
-            parsedLocations = locationsArray[MapCommand.FIRST_LOCATION_INDEX];
+            return locationsArray[MapCommand.FIRST_LOCATION_INDEX];
         }
-        return parsedLocations;
     }
 
 
     /**
-     * Creates a MapCommand to pass locations to Google Maps
+     * Replace NUS building names with respective postal code
      */
     private static void checkForAndRetrieveNusBuildings(String[] locationsArray) {
         for (int i = 0; i < locationsArray.length; i++) {
@@ -507,6 +507,9 @@ public class MapCommandParser implements Parser<MapCommand> {
  */
 public class UnaliasCommandParser implements Parser<UnaliasCommand> {
 
+    private static final String SPLIT_TOKEN = "\\s+";
+    private static final int CORRECT_ARGS_LENGTH = 1;
+
     /**
      * Parses the given {@code String} of arguments in the context of the UnaliasCommand
      * and returns an UnaliasCommand object for execution.
@@ -523,11 +526,12 @@ public class UnaliasCommandParser implements Parser<UnaliasCommand> {
     }
 
     /**
-     * Returns a not empty String of unalias.
+     * Returns a non empty String of unalias.
      */
     private String validateNumberOfArgs(String args) throws ParseException {
         String unalias = args.trim();
-        if (unalias.isEmpty()) {
+        String[] splitArgs = unalias.split(SPLIT_TOKEN);
+        if (unalias.isEmpty() || splitArgs.length != CORRECT_ARGS_LENGTH) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
         }
@@ -670,7 +674,7 @@ public class VacantCommandParser implements Parser<VacantCommand> {
  */
 public class Alias {
 
-    public static final String MESSAGE_ALIAS_CONSTRAINTS = "Alias names should be alphanumeric";
+    public static final String MESSAGE_ALIAS_CONSTRAINTS = "Alias arguments should be alphanumeric";
     public static final String ALIAS_VALIDATION_REGEX = "\\p{Alnum}+";
 
     private final String command;
@@ -679,6 +683,7 @@ public class Alias {
     /**
      * Constructs an {@code Alias}.
      *
+     * @param command A valid command word
      * @param aliasName A valid alias name.
      */
     public Alias(String command, String aliasName) {
@@ -689,10 +694,18 @@ public class Alias {
         this.command = command;
     }
 
+    /**
+     *
+     * @return the command word
+     */
     public String getCommand() {
         return command;
     }
 
+    /**
+     *
+     * @return the alias name
+     */
     public String getAlias() {
         return aliasName;
     }
@@ -822,9 +835,7 @@ public class UniqueAliasList {
     }
 
     /**
-     * Converts the HashMap of alias and command pairings into an observable list of Alias objects
-     * Add in all the aliases in the given {@code aliases}
-     * if the Alias is not a duplicate of an existing Alias in the list.
+     * Replace all the current alias and command pairings with {@code aliases}
      */
     public void setAliases(HashMap<String, String> aliases) {
         requireNonNull(aliases);

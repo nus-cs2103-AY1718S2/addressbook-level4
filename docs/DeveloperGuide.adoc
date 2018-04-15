@@ -1703,5 +1703,17 @@ Scheduling an interview for a student
 .. Command: `sort name o/asc` +
    Expected: List of students in the left panel are listed in alphabetical order with cases ignored.
 
+=== Updating status of a student
 
+. Updating the status of a student from the list of status
+
+.. Command: `status 1 2` +
+   Expected: Student at index 2 has its status changed to 1st round interview.
+
+=== Filtering according to multiple fields
+
+. Filtering the list of students according to multiple fields
+
+.. Command: `filter y/2019 r/3.5-4.5` +
+   Expected: The student list now only contains students with 2019 as their expected graduation year and with overall rating score between 3.5 to 4.5, inclusive.
 

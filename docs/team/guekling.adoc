@@ -1,6 +1,7 @@
 = Yeo Guek Ling - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+:nofooter:
 
 == PROJECT: PrioriTask
 
@@ -27,7 +28,7 @@ This application is based on the https://github.com/se-edu/addressbook-level4[Ad
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.2` - `v1.4` (3 releases) on GitHub.
+*** Managed releases `v1.2` - `v1.5rc` (4 releases) on GitHub.
 ** Enhancements to existing features:
 *** Change existing `Email` field to `Deadline` field. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/75[#75], https://github.com/CS2103JAN2018-W13-B4/main/pull/114[#114])
 *** Change existing `Address` field to `Description` field. (PRs https://github.com/CS2103JAN2018-W13-B4/main/pull/79[#79], https://github.com/CS2103JAN2018-W13-B4/main/pull/94[#94])

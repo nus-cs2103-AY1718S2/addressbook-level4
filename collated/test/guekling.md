@@ -192,6 +192,8 @@ public class FindDeadlineCommandTest extends FindCommandTest<FindDeadlineCommand
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
             e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
+            e.printStackTrace();
         }
     }
 
@@ -261,6 +263,8 @@ public class FindDescriptionCommandTest extends FindCommandTest<FindDescriptionC
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }
@@ -339,6 +343,8 @@ public class FindMultipleFieldsCommandTest extends FindCommandTest<FindMultipleF
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
+            e.printStackTrace();
+        } catch (UserPasswordWrongException e) {
             e.printStackTrace();
         }
     }
@@ -501,6 +507,85 @@ public class PreviousMonthCommandTest extends GuiUnitTest {
     }
 }
 ```
+###### /java/seedu/organizer/logic/parser/AddCommandParserTest.java
+``` java
+    @Test
+    public void parse_multipleSamePrefixes_failure() {
+        String expectedMessage = String.format(MESSAGE_REPEATED_SAME_PREFIXES, AddCommand.MESSAGE_USAGE);
+
+        // multiple name prefixes
+        assertParseFailure(parser, NAME_DESC_STUDY + NAME_DESC_REVISION + PRIORITY_DESC_STUDY
+            + DEADLINE_DESC_STUDY + DESCRIPTION_DESC_STUDY + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple priority prefixes
+        assertParseFailure(parser, NAME_DESC_STUDY + PRIORITY_DESC_STUDY + PRIORITY_DESC_REVISION
+                + DEADLINE_DESC_STUDY + DESCRIPTION_DESC_STUDY + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple deadline prefixes
+        assertParseFailure(parser, NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_REVISION
+                + DEADLINE_DESC_STUDY + DESCRIPTION_DESC_STUDY + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple description prefixes
+        assertParseFailure(parser, NAME_DESC_STUDY + PRIORITY_DESC_STUDY + DEADLINE_DESC_STUDY
+                + DESCRIPTION_DESC_STUDY + DESCRIPTION_DESC_REVISION + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                expectedMessage);
+
+    }
+}
+```
+###### /java/seedu/organizer/logic/parser/AddQuestionAnswerCommandParserTest.java
+``` java
+    @Test
+    public void parse_multipleSamePrefixes_failure() {
+        // repeated username prefix
+        assertParseFailure(parser, " " + validQuestion + " " + validQuestion + " " + validAnswer,
+            MESSAGE_MULTIPLE_SAME_PREFIXES);
+
+        // repeated password prefix
+        assertParseFailure(parser, " " + validQuestion + " " + validAnswer + " " + validAnswer,
+            MESSAGE_MULTIPLE_SAME_PREFIXES);
+    }
+```
+###### /java/seedu/organizer/logic/parser/AnswerCommandParserTest.java
+``` java
+    @Test
+    public void parse_multipleSamePrefixes_failure() {
+        // repeated username prefix
+        assertParseFailure(parser, " " + PREFIX_USERNAME + VALID_USERNAME_JOSHUA + " " + PREFIX_USERNAME
+            + VALID_USERNAME_BOBBY + " " + PREFIX_ANSWER + VALID_ANSWER, MESSAGE_MULTIPLE_SAME_PREFIXES);
+
+        // repeated password prefix
+        assertParseFailure(parser, " " + PREFIX_USERNAME + VALID_USERNAME_JOSHUA + " " + PREFIX_ANSWER
+            + VALID_ANSWER + " " + PREFIX_ANSWER + VALID_ANSWER, MESSAGE_MULTIPLE_SAME_PREFIXES);
+    }
+```
+###### /java/seedu/organizer/logic/parser/EditCommandParserTest.java
+``` java
+    @Test
+    public void parse_multipleSamePrefixes_failure() {
+
+        // multiple name prefixes
+        Index targetIndex = INDEX_THIRD_TASK;
+        String userInput = targetIndex.getOneBased() + NAME_DESC_EXAM + NAME_DESC_REVISION;
+        assertParseFailure(parser, userInput, MESSAGE_MULTIPLE_SAME_PREFIXES);
+
+        // multiple priority prefixes
+        targetIndex = INDEX_THIRD_TASK;
+        userInput = targetIndex.getOneBased() + PRIORITY_DESC_EXAM + PRIORITY_DESC_REVISION;
+        assertParseFailure(parser, userInput, MESSAGE_MULTIPLE_SAME_PREFIXES);
+
+        // multiple deadline prefixes
+        targetIndex = INDEX_THIRD_TASK;
+        userInput = targetIndex.getOneBased() + DEADLINE_DESC_EXAM + DEADLINE_DESC_REVISION;
+        assertParseFailure(parser, userInput, MESSAGE_MULTIPLE_SAME_PREFIXES);
+
+        // multiple description prefixes
+        targetIndex = INDEX_THIRD_TASK;
+        userInput = targetIndex.getOneBased() + DESCRIPTION_DESC_EXAM + DESCRIPTION_DESC_REVISION;
+        assertParseFailure(parser, userInput, MESSAGE_MULTIPLE_SAME_PREFIXES);
+    }
+}
+```
 ###### /java/seedu/organizer/logic/parser/FindDeadlineCommandParserTest.java
 ``` java
 public class FindDeadlineCommandParserTest {
@@ -575,7 +660,20 @@ public class FindMultipleFieldsCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserTest.java
+###### /java/seedu/organizer/logic/parser/LoginCommandParserTest.java
+``` java
+    @Test
+    public void parse_multipleSamePrefixes_failure() {
+        // repeated username prefix
+        assertParseFailure(parser, " " + PREFIX_USERNAME + VALID_USERNAME_JOSHUA + " " + PREFIX_USERNAME
+                + VALID_USERNAME_BOBBY + " " + PREFIX_PASSWORD + VALID_PASSWORD_BOBBY, MESSAGE_MULTIPLE_SAME_PREFIXES);
+
+        // repeated password prefix
+        assertParseFailure(parser, " " + PREFIX_USERNAME + VALID_USERNAME_JOSHUA + " " + PREFIX_PASSWORD
+                + VALID_PASSWORD_JOSHUA + " " + PREFIX_PASSWORD + VALID_PASSWORD_BOBBY, MESSAGE_MULTIPLE_SAME_PREFIXES);
+    }
+```
+###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_find() throws Exception {
@@ -586,20 +684,20 @@ public class FindMultipleFieldsCommandParserTest {
                 FindMultipleFieldsCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindMultipleFieldsCommand(new MultipleFieldsContainsKeywordsPredicate(keywords)), command);
         assertEquals(new FindMultipleFieldsCommand(new MultipleFieldsContainsKeywordsPredicate(keywords)),
-            commandAlias);
+                commandAlias);
     }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserTest.java
+###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_findDescription() throws Exception {
         List<String> keywords = Arrays.asList("cs2103", "cs2101", "CS2010");
         FindDescriptionCommand command = (FindDescriptionCommand) parser.parseCommand(
-            FindDescriptionCommand.COMMAND_WORD + " " + keywords.stream()
-            .collect(Collectors.joining(" ")));
+                FindDescriptionCommand.COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
         FindDescriptionCommand commandAlias = (FindDescriptionCommand) parser.parseCommand(
-            FindDescriptionCommand.COMMAND_ALIAS + " " + keywords.stream()
-            .collect(Collectors.joining(" ")));
+                FindDescriptionCommand.COMMAND_ALIAS + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")));
         assertEquals(new FindDescriptionCommand(new DescriptionContainsKeywordsPredicate(keywords)), command);
         assertEquals(new FindDescriptionCommand(new DescriptionContainsKeywordsPredicate(keywords)), commandAlias);
     }
@@ -617,7 +715,7 @@ public class FindMultipleFieldsCommandParserTest {
         assertEquals(new FindDeadlineCommand(new DeadlineContainsKeywordsPredicate(keywords)), commandAlias);
     }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserTest.java
+###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_previousMonthCommand() throws Exception {
@@ -648,8 +746,127 @@ public class FindMultipleFieldsCommandParserTest {
         assertTrue(parser.parseCommand(CurrentMonthCommand.COMMAND_ALIAS + " 3")
                 instanceof CurrentMonthCommand);
     }
+
 ```
-###### /java/seedu/organizer/model/task/DeadlineContainsKeywordsPredicateTest.java
+###### /java/seedu/organizer/logic/parser/SignUpCommandParserTest.java
+``` java
+    @Test
+    public void parse_multipleSamePrefixes_failure() {
+        // repeated username prefix
+        assertParseFailure(parser, " " + PREFIX_USERNAME + VALID_USERNAME_JOSHUA + " " + PREFIX_USERNAME
+            + VALID_USERNAME_BOBBY + " " + PREFIX_PASSWORD + VALID_PASSWORD_BOBBY, MESSAGE_MULTIPLE_SAME_PREFIXES);
+
+        // repeated password prefix
+        assertParseFailure(parser, " " + PREFIX_USERNAME + VALID_USERNAME_JOSHUA + " " + PREFIX_PASSWORD
+            + VALID_PASSWORD_JOSHUA + " " + PREFIX_PASSWORD + VALID_PASSWORD_BOBBY, MESSAGE_MULTIPLE_SAME_PREFIXES);
+        assertParseFailure(parser, " u/steven p/12345 p/12345",  MESSAGE_MULTIPLE_SAME_PREFIXES);
+    }
+```
+###### /java/seedu/organizer/model/task/DeadlineTest.java
+``` java
+public class DeadlineTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Deadline(null));
+    }
+
+    @Test
+    public void constructor_invalidDeadline_throwsIllegalArgumentException() {
+        String invalidDeadline = "2018";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Deadline(invalidDeadline));
+    }
+
+    @Test
+    public void isValidDeadline_true() {
+        // valid deadline
+        assertTrue(Deadline.isValidDeadline("2018-03-11"));
+        assertTrue(Deadline.isValidDeadline("2017-03-30"));  // dates that have already passed
+        assertTrue(Deadline.isValidDeadline("3000-03-23"));  // dates in the far future
+    }
+
+    @Test
+    public void isValidDeadline_false() {
+        // null deadline
+        Assert.assertThrows(NullPointerException.class, () -> Deadline.isValidDeadline(null));
+
+        // empty deadline
+        assertFalse(Deadline.isValidDeadline("")); // empty string
+        assertFalse(Deadline.isValidDeadline(" ")); // spaces only
+
+        // missing parts
+        assertFalse(Deadline.isValidDeadline("2018-02")); // missing date
+        assertFalse(Deadline.isValidDeadline("12-02")); // missing year
+        assertFalse(Deadline.isValidDeadline("2019")); // missing month and date
+        assertFalse(Deadline.isValidDeadline("12")); // missing year and date
+
+        // invalid parts
+        assertFalse(Deadline.isValidDeadline("17-12-12")); // invalid year
+        assertFalse(Deadline.isValidDeadline("2019-20-09")); // invalid month
+        assertFalse(Deadline.isValidDeadline("2016-02-40")); // invalid date
+        assertFalse(Deadline.isValidDeadline("2017-2-09")); // single numbered months should be declared '0x'
+        assertFalse(Deadline.isValidDeadline("2017-02-9")); // single numbered dates should be declared '0x'
+        assertFalse(Deadline.isValidDeadline("12-30-2017")); // wrong format of MM-DD-YYYY
+        assertFalse(Deadline.isValidDeadline("30-12-2017")); // wrong format of DD-MM-YYYY
+        assertFalse(Deadline.isValidDeadline(" 2017-08-09")); // leading space
+        assertFalse(Deadline.isValidDeadline("2017-08-09 ")); // trailing space
+        assertFalse(Deadline.isValidDeadline("2017/09/09")); // wrong symbol
+    }
+
+    @Test
+    public void isValidDate_true() {
+        assertTrue(Deadline.isValidDate("2018-02-28"));
+        assertTrue(Deadline.isValidDate("2020-02-29")); // leap year
+    }
+
+    @Test
+    public void isValidDate_false() {
+        assertFalse(Deadline.isValidDate("2018-02-31")); // not leap year
+        assertFalse(Deadline.isValidDate("2018-04-31"));
+    }
+
+    @Test
+    public void hashCode_equals() {
+        Deadline testDeadline = new Deadline("2018-09-09");
+        LocalDate testDeadlineValue = LocalDate.parse("2018-09-09");
+        assertEquals(testDeadline.hashCode(), testDeadlineValue.hashCode());
+    }
+}
+```
+###### /java/seedu/organizer/model/task/DescriptionTest.java
+``` java
+public class DescriptionTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Description(null));
+    }
+
+    @Test
+    public void isValidDescription() {
+        // null organizer
+        Assert.assertThrows(NullPointerException.class, () -> Description.isValidDescription(null));
+
+        // blank descriptions
+        assertTrue(Description.isValidDescription("")); // empty string
+        assertTrue(Description.isValidDescription(" ")); // spaces only
+
+        // valid descriptions
+        assertTrue(Description.isValidDescription("Practice MA1101R past year questions"));
+        assertTrue(Description.isValidDescription("!")); // one character
+        assertTrue(Description.isValidDescription("Add new sort feature / Update README.md / Refactor Address to "
+            + "Email")); // long description
+    }
+
+    @Test
+    public void hashCode_equals() {
+        Description testDescription = new Description("CS2103T Testing");
+        String testDescriptionValue = "CS2103T Testing";
+        assertEquals(testDescription.hashCode(), testDescriptionValue.hashCode());
+    }
+}
+```
+###### /java/seedu/organizer/model/task/predicates/DeadlineContainsKeywordsPredicateTest.java
 ``` java
 public class DeadlineContainsKeywordsPredicateTest {
 
@@ -717,63 +934,7 @@ public class DeadlineContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/DeadlineTest.java
-``` java
-public class DeadlineTest {
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Deadline(null));
-    }
-
-    @Test
-    public void constructor_invalidDeadline_throwsIllegalArgumentException() {
-        String invalidDeadline = "2018";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Deadline(invalidDeadline));
-    }
-
-    @Test
-    public void isValidDeadline() {
-        // null deadline
-        Assert.assertThrows(NullPointerException.class, () -> Deadline.isValidDeadline(null));
-
-        // blank deadline
-        assertTrue(Deadline.isValidDeadline("")); // empty string
-        assertFalse(Deadline.isValidDeadline(" ")); // spaces only
-
-        // missing parts
-        assertFalse(Deadline.isValidDeadline("2018-02")); // missing date
-        assertFalse(Deadline.isValidDeadline("12-02")); // missing year
-        assertFalse(Deadline.isValidDeadline("2019")); // missing month and date
-        assertFalse(Deadline.isValidDeadline("12")); // missing year and date
-
-        // invalid parts
-        assertFalse(Deadline.isValidDeadline("17-12-12")); // invalid year
-        assertFalse(Deadline.isValidDeadline("2019-20-09")); // invalid month
-        assertFalse(Deadline.isValidDeadline("2016-02-40")); // invalid date
-        assertFalse(Deadline.isValidDeadline("2017-2-09")); // single numbered months should be declared '0x'
-        assertFalse(Deadline.isValidDeadline("2017-02-9")); // single numbered dates should be declared '0x'
-        assertFalse(Deadline.isValidDeadline("12-30-2017")); // wrong format of MM-DD-YYYY
-        assertFalse(Deadline.isValidDeadline("30-12-2017")); // wrong format of DD-MM-YYYY
-        assertFalse(Deadline.isValidDeadline(" 2017-08-09")); // leading space
-        assertFalse(Deadline.isValidDeadline("2017-08-09 ")); // trailing space
-        assertFalse(Deadline.isValidDeadline("2017/09/09")); // wrong symbol
-
-        // valid deadline
-        assertTrue(Deadline.isValidDeadline("2018-03-11"));
-        assertTrue(Deadline.isValidDeadline("2017-02-31"));  // dates that have already passed
-        assertTrue(Deadline.isValidDeadline("3000-03-23"));   // dates in the far future
-    }
-
-    @Test
-    public void hashCode_equals() {
-        Deadline testDeadline = new Deadline("2018-09-09");
-        LocalDate testDeadlineValue = LocalDate.parse("2018-09-09");
-        assertEquals(testDeadline.hashCode(), testDeadlineValue.hashCode());
-    }
-}
-```
-###### /java/seedu/organizer/model/task/DescriptionContainsKeywordsPredicateTest.java
+###### /java/seedu/organizer/model/task/predicates/DescriptionContainsKeywordsPredicateTest.java
 ``` java
 public class DescriptionContainsKeywordsPredicateTest {
 
@@ -843,40 +1004,7 @@ public class DescriptionContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/DescriptionTest.java
-``` java
-public class DescriptionTest {
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Description(null));
-    }
-
-    @Test
-    public void isValidDescription() {
-        // null organizer
-        Assert.assertThrows(NullPointerException.class, () -> Description.isValidDescription(null));
-
-        // blank descriptions
-        assertTrue(Description.isValidDescription("")); // empty string
-        assertTrue(Description.isValidDescription(" ")); // spaces only
-
-        // valid descriptions
-        assertTrue(Description.isValidDescription("Practice MA1101R past year questions"));
-        assertTrue(Description.isValidDescription("!")); // one character
-        assertTrue(Description.isValidDescription("Add new sort feature / Update README.md / Refactor Address to "
-            + "Email")); // long description
-    }
-
-    @Test
-    public void hashCode_equals() {
-        Description testDescription = new Description("CS2103T Testing");
-        String testDescriptionValue = "CS2103T Testing";
-        assertEquals(testDescription.hashCode(), testDescriptionValue.hashCode());
-    }
-}
-```
-###### /java/seedu/organizer/model/task/MultipleFieldsContainsKeywordsPredicateTest.java
+###### /java/seedu/organizer/model/task/predicates/MultipleFieldsContainsKeywordsPredicateTest.java
 ``` java
 public class MultipleFieldsContainsKeywordsPredicateTest {
     @Test
@@ -1177,7 +1305,7 @@ public class EntryCardTest extends GuiUnitTest {
      */
     private void assertTaskEquals(Task expectedTask, Task actualTask) {
         assertEquals(expectedTask.getName(), actualTask.getName());
-        assertEquals(expectedTask.getPriority(), actualTask.getPriority());
+        assertEquals(expectedTask.getUpdatedPriority(), actualTask.getUpdatedPriority());
         assertEquals(expectedTask.getDeadline(), actualTask.getDeadline());
         assertEquals(expectedTask.getDateAdded(), actualTask.getDateAdded());
         assertEquals(expectedTask.getDateCompleted(), actualTask.getDateCompleted());

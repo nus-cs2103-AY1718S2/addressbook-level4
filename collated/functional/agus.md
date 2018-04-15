@@ -1,12 +1,613 @@
 # agus
-###### /java/seedu/organizer/commons/core/Message.java
+###### /java/seedu/organizer/commons/core/Messages.java
 ``` java
-public static final String MESSAGE_INVALID_SUBTASK_DISPLAYED_INDEX = "The subtask index provided is invalid";
+    public static final String MESSAGE_INVALID_SUBTASK_DISPLAYED_INDEX = "The subtask index provided is invalid";
 ```
-###### /java/seedu/organizer/logic/util/EditTaskDescriptor.java
+###### /java/seedu/organizer/logic/commands/AddSubtaskCommand.java
 ``` java
-package seedu.organizer.logic.commands.util;
+import static java.util.Objects.requireNonNull;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
+import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
+import static seedu.organizer.model.subtask.UniqueSubtaskList.DuplicateSubtaskException;
 
+import java.util.List;
+import java.util.Set;
+
+import seedu.organizer.commons.core.Messages;
+import seedu.organizer.commons.core.index.Index;
+import seedu.organizer.logic.commands.exceptions.CommandException;
+import seedu.organizer.model.recurrence.Recurrence;
+import seedu.organizer.model.subtask.Subtask;
+import seedu.organizer.model.subtask.UniqueSubtaskList;
+import seedu.organizer.model.tag.Tag;
+import seedu.organizer.model.task.DateAdded;
+import seedu.organizer.model.task.DateCompleted;
+import seedu.organizer.model.task.Deadline;
+import seedu.organizer.model.task.Description;
+import seedu.organizer.model.task.Name;
+import seedu.organizer.model.task.Priority;
+import seedu.organizer.model.task.Status;
+import seedu.organizer.model.task.Task;
+import seedu.organizer.model.task.exceptions.DuplicateTaskException;
+import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+
+/**
+ * Add a subtask into a task
+ */
+public class AddSubtaskCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "adds";
+    public static final String COMMAND_ALIAS = "as";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a subtask to a task. "
+            + "Parameters: INDEX (must be a positive integer) "
+            + PREFIX_NAME + "NAME "
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_NAME + "Submit report ";
+
+    public static final String MESSAGE_SUCCESS = "New subtask added: %1$s";
+    public static final String MESSAGE_DUPLICATED = "Subtask already exist";
+
+    private final Subtask toAdd;
+    private final Index index;
+
+    private Task taskToEdit;
+    private Task editedTask;
+
+    public AddSubtaskCommand(Index index, Subtask toAdd) {
+        requireNonNull(toAdd);
+        requireNonNull(index);
+        this.index = index;
+        this.toAdd = toAdd;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            editedTask = createEditedTask(taskToEdit, toAdd);
+            model.updateTask(taskToEdit, editedTask);
+        } catch (DuplicateTaskException dpe) {
+            throw new AssertionError("Task duplication should not happen");
+        } catch (TaskNotFoundException pnfe) {
+            throw new AssertionError("The target task cannot be missing");
+        } catch (DuplicateSubtaskException dse) {
+            throw new CommandException(MESSAGE_DUPLICATED);
+        }
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedTask));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Task> lastShownList = model.getFilteredTaskList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+
+        taskToEdit = lastShownList.get(index.getZeroBased());
+    }
+
+    /**
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     */
+    private static Task createEditedTask(Task taskToEdit, Subtask toAdd) throws DuplicateSubtaskException {
+        assert taskToEdit != null;
+
+        Name updatedName = taskToEdit.getName();
+        Priority updatedPriority = taskToEdit.getUpdatedPriority();
+        Priority basePriority = taskToEdit.getBasePriority();
+        Deadline updatedDeadline = taskToEdit.getDeadline();
+        DateAdded oldDateAdded = taskToEdit.getDateAdded();
+        DateCompleted oldDateCompleted = taskToEdit.getDateCompleted();
+        Description updatedDescription = taskToEdit.getDescription();
+        Set<Tag> updatedTags = taskToEdit.getTags();
+        UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(taskToEdit.getSubtasks());
+        Status updatedStatus = taskToEdit.getStatus();
+        Recurrence updatedRecurrence = taskToEdit.getRecurrence();
+
+        updatedSubtasks.add(toAdd);
+
+        return new Task(updatedName, updatedPriority, basePriority, updatedDeadline, oldDateAdded, oldDateCompleted,
+                updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(), getCurrentlyLoggedInUser(),
+                updatedRecurrence);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddSubtaskCommand // instanceof handles nulls
+                && this.index.equals(((AddSubtaskCommand) other).index) // state check
+                && this.toAdd.equals(((AddSubtaskCommand) other).toAdd)); // state check
+    }
+}
+```
+###### /java/seedu/organizer/logic/commands/DeleteSubtaskCommand.java
+``` java
+import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import seedu.organizer.commons.core.Messages;
+import seedu.organizer.commons.core.index.Index;
+import seedu.organizer.logic.commands.exceptions.CommandException;
+import seedu.organizer.model.recurrence.Recurrence;
+import seedu.organizer.model.subtask.Subtask;
+import seedu.organizer.model.subtask.UniqueSubtaskList;
+import seedu.organizer.model.tag.Tag;
+import seedu.organizer.model.task.DateAdded;
+import seedu.organizer.model.task.DateCompleted;
+import seedu.organizer.model.task.Deadline;
+import seedu.organizer.model.task.Description;
+import seedu.organizer.model.task.Name;
+import seedu.organizer.model.task.Priority;
+import seedu.organizer.model.task.Status;
+import seedu.organizer.model.task.Task;
+import seedu.organizer.model.task.exceptions.DuplicateTaskException;
+import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.model.user.User;
+
+/**
+ * Deletes a subtask of a task
+ */
+public class DeleteSubtaskCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "delete-subtask";
+    public static final String COMMAND_ALIAS = "ds";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": delete a subtask of a task. "
+            + "Parameters: TASK_INDEX (must be a positive integer) SUBTASK_INDEX (must be a positive integer)";
+
+    public static final String MESSAGE_EDIT_SUBTASK_SUCCESS = "Subtask Deleted: %1$s";
+
+    public final Index taskIndex;
+    public final Index subtaskIndex;
+
+    private Task taskToEdit;
+    private Task editedTask;
+    private Subtask deletedSubtask;
+
+    /**
+     * @param taskIndex index of the task in the filtered task list to edit
+     * @param subtaskIndex index of the subtask of the task to edit
+     */
+    public DeleteSubtaskCommand(Index taskIndex, Index subtaskIndex) {
+        this.taskIndex = taskIndex;
+        this.subtaskIndex = subtaskIndex;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.updateTask(taskToEdit, editedTask);
+        } catch (DuplicateTaskException dpe) {
+            throw new CommandException("This exception should not happen (duplicated task while toggling)");
+        } catch (TaskNotFoundException pnfe) {
+            throw new AssertionError("This exception should not happen (task missing while toggling)");
+        }
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        return new CommandResult(String.format(MESSAGE_EDIT_SUBTASK_SUCCESS, deletedSubtask));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Task> lastShownList = model.getFilteredTaskList();
+
+        if (taskIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+        taskToEdit = lastShownList.get(taskIndex.getZeroBased());
+
+        if (subtaskIndex.getZeroBased() >= taskToEdit.getSubtasks().size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_SUBTASK_DISPLAYED_INDEX);
+        }
+        deletedSubtask = taskToEdit.getSubtasks().get(subtaskIndex.getZeroBased());
+        editedTask = createEditedTask(taskToEdit, subtaskIndex);
+    }
+
+    /**
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     */
+    private static Task createEditedTask(Task taskToEdit, Index subtaskIndex) {
+        assert taskToEdit != null;
+
+        Name updatedName = taskToEdit.getName();
+        Priority updatedPriority = taskToEdit.getUpdatedPriority();
+        Priority basePriority = taskToEdit.getBasePriority();
+        Deadline updatedDeadline = taskToEdit.getDeadline();
+        DateAdded oldDateAdded = taskToEdit.getDateAdded();
+        DateCompleted oldDateCompleted = taskToEdit.getDateCompleted();
+        Description updatedDescription = taskToEdit.getDescription();
+        User user = taskToEdit.getUser();
+        Set<Tag> updatedTags = taskToEdit.getTags();
+        List<Subtask> originalSubtasks = new ArrayList<>(taskToEdit.getSubtasks());
+        Status updatedStatus = taskToEdit.getStatus();
+        Recurrence updatedRecurrence = taskToEdit.getRecurrence();
+
+        originalSubtasks.remove(subtaskIndex.getZeroBased());
+        UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(originalSubtasks);
+
+        return new Task(updatedName, updatedPriority, basePriority, updatedDeadline, oldDateAdded, oldDateCompleted,
+                updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(), user, updatedRecurrence);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteSubtaskCommand // instanceof handles nulls
+                && this.taskIndex.equals(((DeleteSubtaskCommand) other).taskIndex) // state check
+                && this.subtaskIndex.equals(((DeleteSubtaskCommand) other).subtaskIndex)); // state check
+    }
+}
+```
+###### /java/seedu/organizer/logic/commands/EditSubtaskCommand.java
+``` java
+import static java.util.Objects.requireNonNull;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
+import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
+import static seedu.organizer.model.subtask.UniqueSubtaskList.DuplicateSubtaskException;
+
+import java.util.List;
+import java.util.Set;
+
+import seedu.organizer.commons.core.Messages;
+import seedu.organizer.commons.core.index.Index;
+import seedu.organizer.logic.commands.exceptions.CommandException;
+import seedu.organizer.model.recurrence.Recurrence;
+import seedu.organizer.model.subtask.Subtask;
+import seedu.organizer.model.subtask.UniqueSubtaskList;
+import seedu.organizer.model.tag.Tag;
+import seedu.organizer.model.task.DateAdded;
+import seedu.organizer.model.task.DateCompleted;
+import seedu.organizer.model.task.Deadline;
+import seedu.organizer.model.task.Description;
+import seedu.organizer.model.task.Name;
+import seedu.organizer.model.task.Priority;
+import seedu.organizer.model.task.Status;
+import seedu.organizer.model.task.Task;
+import seedu.organizer.model.task.exceptions.DuplicateTaskException;
+import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+
+/**
+ * Edit a subtask
+ */
+public class EditSubtaskCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "edits";
+    public static final String COMMAND_ALIAS = "es";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": edit a subttask. "
+            + "Parameters: TASK_INDEX (must be a positive integer) SUBTASK_INDEX (must be a positive integer)"
+            + PREFIX_NAME + "NAME ";
+
+    public static final String MESSAGE_SUCCESS = "Subtask edited: %1$s";
+    public static final String MESSAGE_DUPLICATED = "Subtask already exist";
+
+    private final Subtask toEdit;
+    private final Index taskIndex;
+    private final Index subtaskIndex;
+
+    private Task taskToEdit;
+    private Task editedTask;
+
+    public EditSubtaskCommand(Index taskIndex, Index subtaskIndex, Subtask toEdit) {
+        requireNonNull(toEdit);
+        requireNonNull(taskIndex);
+        requireNonNull(subtaskIndex);
+        this.taskIndex = taskIndex;
+        this.subtaskIndex = subtaskIndex;
+        this.toEdit = toEdit;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            editedTask = createEditedTask(taskToEdit, subtaskIndex, toEdit);
+            model.updateTask(taskToEdit, editedTask);
+        } catch (DuplicateTaskException dpe) {
+            throw new AssertionError("Task duplication should not happen");
+        } catch (TaskNotFoundException pnfe) {
+            throw new AssertionError("The target task cannot be missing");
+        } catch (DuplicateSubtaskException dse) {
+            throw new CommandException(MESSAGE_DUPLICATED);
+        }
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedTask));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Task> lastShownList = model.getFilteredTaskList();
+
+        if (taskIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+
+        taskToEdit = lastShownList.get(taskIndex.getZeroBased());
+
+        if (subtaskIndex.getZeroBased() >= taskToEdit.getSubtasks().size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_SUBTASK_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     */
+    private static Task createEditedTask(Task taskToEdit, Index subtaskIndex,
+                                         Subtask toAdd) throws DuplicateSubtaskException {
+        assert taskToEdit != null;
+
+        Name updatedName = taskToEdit.getName();
+        Priority updatedPriority = taskToEdit.getUpdatedPriority();
+        Priority basePriority = taskToEdit.getBasePriority();
+        Deadline updatedDeadline = taskToEdit.getDeadline();
+        DateAdded oldDateAdded = taskToEdit.getDateAdded();
+        DateCompleted oldDateCompleted = taskToEdit.getDateCompleted();
+        Description updatedDescription = taskToEdit.getDescription();
+        Set<Tag> updatedTags = taskToEdit.getTags();
+        Status updatedStatus = taskToEdit.getStatus();
+        Recurrence updatedRecurrence = taskToEdit.getRecurrence();
+
+        UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(taskToEdit.getSubtasks());
+        updatedSubtasks.set(subtaskIndex, toAdd);
+
+        return new Task(updatedName, updatedPriority, basePriority, updatedDeadline, oldDateAdded, oldDateCompleted,
+                updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(), getCurrentlyLoggedInUser(),
+                updatedRecurrence);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EditSubtaskCommand // instanceof handles nulls
+                && this.toEdit.equals(((EditSubtaskCommand) other).toEdit) // state check
+                && this.subtaskIndex.equals(((EditSubtaskCommand) other).subtaskIndex) // state check
+                && this.taskIndex.equals(((EditSubtaskCommand) other).taskIndex)); // state check
+    }
+}
+
+```
+###### /java/seedu/organizer/logic/commands/ToggleCommand.java
+``` java
+import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
+import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
+
+import java.util.List;
+import java.util.Set;
+
+import seedu.organizer.commons.core.Messages;
+import seedu.organizer.commons.core.index.Index;
+import seedu.organizer.logic.commands.exceptions.CommandException;
+import seedu.organizer.model.recurrence.Recurrence;
+import seedu.organizer.model.subtask.Subtask;
+import seedu.organizer.model.tag.Tag;
+import seedu.organizer.model.task.DateAdded;
+import seedu.organizer.model.task.DateCompleted;
+import seedu.organizer.model.task.Deadline;
+import seedu.organizer.model.task.Description;
+import seedu.organizer.model.task.Name;
+import seedu.organizer.model.task.Priority;
+import seedu.organizer.model.task.Status;
+import seedu.organizer.model.task.Task;
+import seedu.organizer.model.task.exceptions.DuplicateTaskException;
+import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+
+/**
+ * Inverse the value of task status (Done or Not done)
+ */
+public class ToggleCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "toggle";
+    public static final String COMMAND_ALIAS = "t";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggle task status. "
+            + "Parameters: INDEX (must be a positive integer).\n"
+            + "Example: " + COMMAND_WORD + " " + "1";
+
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the organizer.";
+    public static final String MESSAGE_EDIT_TASK_SUCCESS = "Toggled Task: %1$s";
+
+    public final Index index;
+
+    private Task taskToEdit;
+    private Task editedTask;
+
+    /**
+     * @param index                of the task in the filtered task list to edit
+     */
+    public ToggleCommand(Index index) {
+        this.index = index;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.updateTask(taskToEdit, editedTask);
+        } catch (DuplicateTaskException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        } catch (TaskNotFoundException pnfe) {
+            throw new AssertionError("The target task cannot be missing");
+        }
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Task> lastShownList = model.getFilteredTaskList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+
+        taskToEdit = lastShownList.get(index.getZeroBased());
+        editedTask = createEditedTask(taskToEdit);
+    }
+
+    /**
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit} with status inversed
+     */
+    private static Task createEditedTask(Task taskToEdit) {
+        assert taskToEdit != null;
+
+        Name updatedName = taskToEdit.getName();
+        Priority updatedPriority = taskToEdit.getUpdatedPriority();
+        Priority basePriority = taskToEdit.getBasePriority();
+        Deadline updatedDeadline = taskToEdit.getDeadline();
+        DateAdded oldDateAdded = taskToEdit.getDateAdded();
+        DateCompleted updatedDateCompleted = taskToEdit.getDateCompleted().toggle();
+        Description updatedDescription = taskToEdit.getDescription();
+        Set<Tag> updatedTags = taskToEdit.getTags();
+        List<Subtask> updatedSubtasks = taskToEdit.getSubtasks();
+        Status updatedStatus = taskToEdit.getStatus().getInverse();
+        Recurrence updatedRecurrence = taskToEdit.getRecurrence();
+
+        return new Task(updatedName, updatedPriority, basePriority, updatedDeadline, oldDateAdded,
+                updatedDateCompleted, updatedDescription, updatedStatus,
+                updatedTags, updatedSubtasks, getCurrentlyLoggedInUser(), updatedRecurrence);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ToggleCommand // instanceof handles nulls
+                && this.index.equals(((ToggleCommand) other).index)); // state check
+    }
+}
+```
+###### /java/seedu/organizer/logic/commands/ToggleSubtaskCommand.java
+``` java
+import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import seedu.organizer.commons.core.Messages;
+import seedu.organizer.commons.core.index.Index;
+import seedu.organizer.logic.commands.exceptions.CommandException;
+import seedu.organizer.model.recurrence.Recurrence;
+import seedu.organizer.model.subtask.Subtask;
+import seedu.organizer.model.subtask.UniqueSubtaskList;
+import seedu.organizer.model.tag.Tag;
+import seedu.organizer.model.task.DateAdded;
+import seedu.organizer.model.task.DateCompleted;
+import seedu.organizer.model.task.Deadline;
+import seedu.organizer.model.task.Description;
+import seedu.organizer.model.task.Name;
+import seedu.organizer.model.task.Priority;
+import seedu.organizer.model.task.Status;
+import seedu.organizer.model.task.Task;
+import seedu.organizer.model.task.exceptions.DuplicateTaskException;
+import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.model.user.User;
+
+/**
+ * Inverse the value of task status
+ */
+public class ToggleSubtaskCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "toggle-subtask";
+    public static final String COMMAND_ALIAS = "ts";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggle a task's subtask status. "
+            + "Parameters: TASK_INDEX (must be a positive integer) SUBTASK_INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " " + "1 1";
+
+    public static final String MESSAGE_EDIT_SUBTASK_SUCCESS = "Toogled Subtask: %1$s";
+
+    public final Index taskIndex;
+    public final Index subtaskIndex;
+
+    private Task taskToEdit;
+    private Task editedTask;
+    private Subtask editedSubtask;
+
+    /**
+     * @param taskIndex index of the task in the filtered task list to edit
+     * @param subtaskIndex index of the subtask of the task to edit
+     */
+    public ToggleSubtaskCommand(Index taskIndex, Index subtaskIndex) {
+        this.taskIndex = taskIndex;
+        this.subtaskIndex = subtaskIndex;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.updateTask(taskToEdit, editedTask);
+        } catch (DuplicateTaskException dpe) {
+            throw new CommandException("This exception should not happen (duplicated task while toggling)");
+        } catch (TaskNotFoundException pnfe) {
+            throw new AssertionError("This exception should not happen (task missing while toggling)");
+        }
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        return new CommandResult(String.format(MESSAGE_EDIT_SUBTASK_SUCCESS, editedSubtask));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Task> lastShownList = model.getFilteredTaskList();
+
+        if (taskIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+        taskToEdit = lastShownList.get(taskIndex.getZeroBased());
+
+        if (subtaskIndex.getZeroBased() >= taskToEdit.getSubtasks().size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_SUBTASK_DISPLAYED_INDEX);
+        }
+        editedTask = createEditedTask(taskToEdit, subtaskIndex);
+        editedSubtask = editedTask.getSubtasks().get(subtaskIndex.getZeroBased());
+    }
+
+    /**
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit} with status inversed
+     */
+    private static Task createEditedTask(Task taskToEdit, Index subtaskIndex) {
+        assert taskToEdit != null;
+
+        Name updatedName = taskToEdit.getName();
+        Priority updatedPriority = taskToEdit.getUpdatedPriority();
+        Priority basePriority = taskToEdit.getBasePriority();
+        Deadline updatedDeadline = taskToEdit.getDeadline();
+        DateAdded oldDateAdded = taskToEdit.getDateAdded();
+        DateCompleted updatedDateCompleted = taskToEdit.getDateCompleted();
+        Description updatedDescription = taskToEdit.getDescription();
+        Set<Tag> updatedTags = taskToEdit.getTags();
+        List<Subtask> originalSubtasks = new ArrayList<>(taskToEdit.getSubtasks());
+        Status updatedStatus = taskToEdit.getStatus();
+        User user = taskToEdit.getUser();
+        Recurrence updatedRecurrence = taskToEdit.getRecurrence();
+
+        Subtask originalSubtask = originalSubtasks.get(subtaskIndex.getZeroBased());
+        Name subtaskName = originalSubtask.getName();
+        Status subtaskStatus = originalSubtask.getStatus().getInverse();
+
+        Subtask editedSubtask = new Subtask(subtaskName, subtaskStatus);
+        originalSubtasks.set(subtaskIndex.getZeroBased(), editedSubtask);
+
+        UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(originalSubtasks);
+
+        return new Task(updatedName, updatedPriority, basePriority, updatedDeadline, oldDateAdded,
+                updatedDateCompleted, updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(),
+                user, updatedRecurrence);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ToggleSubtaskCommand // instanceof handles nulls
+                && this.taskIndex.equals(((ToggleSubtaskCommand) other).taskIndex) // state check
+                && this.subtaskIndex.equals(((ToggleSubtaskCommand) other).subtaskIndex)); // state check
+    }
+}
+```
+###### /java/seedu/organizer/logic/commands/util/EditTaskDescriptor.java
+``` java
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -158,477 +759,8 @@ public class EditTaskDescriptor {
     }
 }
 ```
-###### /java/seedu/organizer/logic/command/AddSubtaskCommand.java
-``` java
-package seedu.organizer.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
-import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
-import static seedu.organizer.model.subtask.UniqueSubtaskList.DuplicateSubtaskException;
-
-import java.util.List;
-import java.util.Set;
-
-import seedu.organizer.commons.core.Messages;
-import seedu.organizer.commons.core.index.Index;
-import seedu.organizer.logic.commands.exceptions.CommandException;
-import seedu.organizer.model.subtask.Subtask;
-import seedu.organizer.model.subtask.UniqueSubtaskList;
-import seedu.organizer.model.tag.Tag;
-import seedu.organizer.model.task.DateAdded;
-import seedu.organizer.model.task.DateCompleted;
-import seedu.organizer.model.task.Deadline;
-import seedu.organizer.model.task.Description;
-import seedu.organizer.model.task.Name;
-import seedu.organizer.model.task.Priority;
-import seedu.organizer.model.task.Status;
-import seedu.organizer.model.task.Task;
-import seedu.organizer.model.task.exceptions.DuplicateTaskException;
-import seedu.organizer.model.task.exceptions.TaskNotFoundException;
-
-/**
- * Add a subtask into a task
- */
-public class AddSubtaskCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "adds";
-    public static final String COMMAND_ALIAS = "as";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a subttask to a task. "
-            + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_NAME + "NAME "
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_NAME + "Submit report ";
-
-    public static final String MESSAGE_SUCCESS = "New subtask added: %1$s";
-    public static final String MESSAGE_DUPLICATED = "Subtask already exist";
-
-    private final Subtask toAdd;
-    private final Index index;
-
-    private Task taskToEdit;
-    private Task editedTask;
-
-    public AddSubtaskCommand(Index index, Subtask toAdd) {
-        requireNonNull(toAdd);
-        requireNonNull(index);
-        this.index = index;
-        this.toAdd = toAdd;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        try {
-            editedTask = createEditedTask(taskToEdit, toAdd);
-            model.updateTask(taskToEdit, editedTask);
-        } catch (DuplicateTaskException dpe) {
-            throw new AssertionError("Task duplication should not happen");
-        } catch (TaskNotFoundException pnfe) {
-            throw new AssertionError("The target task cannot be missing");
-        } catch (DuplicateSubtaskException dse) {
-            throw new CommandException(MESSAGE_DUPLICATED);
-        }
-        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, editedTask));
-    }
-
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        List<Task> lastShownList = model.getFilteredTaskList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        }
-
-        taskToEdit = lastShownList.get(index.getZeroBased());
-    }
-
-    /**
-     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
-     */
-    private static Task createEditedTask(Task taskToEdit, Subtask toAdd) throws DuplicateSubtaskException {
-        assert taskToEdit != null;
-
-        Name updatedName = taskToEdit.getName();
-        Priority updatedPriority = taskToEdit.getPriority();
-        Deadline updatedDeadline = taskToEdit.getDeadline();
-        DateAdded oldDateAdded = taskToEdit.getDateAdded();
-        DateCompleted oldDateCompleted = taskToEdit.getDateCompleted();
-        Description updatedDescription = taskToEdit.getDescription();
-        Set<Tag> updatedTags = taskToEdit.getTags();
-        UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(taskToEdit.getSubtasks());
-        Status updatedStatus = taskToEdit.getStatus();
-
-        updatedSubtasks.add(toAdd);
-
-        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded, oldDateCompleted,
-                updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(), getCurrentlyLoggedInUser());
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddSubtaskCommand // instanceof handles nulls
-                && this.index.equals(((AddSubtaskCommand) other).index) // state check
-                && this.toAdd.equals(((AddSubtaskCommand) other).toAdd)); // state check
-    }
-}
-```
-###### /java/seedu/organizer/logic/command/DeleteSubtaskCommand.java
-``` java
-package seedu.organizer.logic.commands;
-
-import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import seedu.organizer.commons.core.Messages;
-import seedu.organizer.commons.core.index.Index;
-import seedu.organizer.logic.commands.exceptions.CommandException;
-import seedu.organizer.model.subtask.Subtask;
-import seedu.organizer.model.subtask.UniqueSubtaskList;
-import seedu.organizer.model.tag.Tag;
-import seedu.organizer.model.task.DateAdded;
-import seedu.organizer.model.task.DateCompleted;
-import seedu.organizer.model.task.Deadline;
-import seedu.organizer.model.task.Description;
-import seedu.organizer.model.task.Name;
-import seedu.organizer.model.task.Priority;
-import seedu.organizer.model.task.Status;
-import seedu.organizer.model.task.Task;
-import seedu.organizer.model.task.exceptions.DuplicateTaskException;
-import seedu.organizer.model.task.exceptions.TaskNotFoundException;
-import seedu.organizer.model.user.User;
-
-/**
- * Deletes a subtask of a task
- */
-public class DeleteSubtaskCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "delete-subtask";
-    public static final String COMMAND_ALIAS = "ds";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": delete a subtask of a task. "
-            + "Parameters: TASK_INDEX (must be a positive integer) SUBTASK_INDEX (must be a positive integer)";
-
-    public static final String MESSAGE_EDIT_SUBTASK_SUCCESS = "Subtask Deleted: %1$s";
-
-    public final Index taskIndex;
-    public final Index subtaskIndex;
-
-    private Task taskToEdit;
-    private Task editedTask;
-    private Subtask deletedSubtask;
-
-    /**
-     * @param taskIndex index of the task in the filtered task list to edit
-     * @param subtaskIndex index of the subtask of the task to edit
-     */
-    public DeleteSubtaskCommand(Index taskIndex, Index subtaskIndex) {
-        this.taskIndex = taskIndex;
-        this.subtaskIndex = subtaskIndex;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        try {
-            model.updateTask(taskToEdit, editedTask);
-        } catch (DuplicateTaskException dpe) {
-            throw new CommandException("This exception should not happen (duplicated task while toggling)");
-        } catch (TaskNotFoundException pnfe) {
-            throw new AssertionError("This exception should not happen (task missing while toggling)");
-        }
-        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        return new CommandResult(String.format(MESSAGE_EDIT_SUBTASK_SUCCESS, deletedSubtask));
-    }
-
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        List<Task> lastShownList = model.getFilteredTaskList();
-
-        if (taskIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        }
-        taskToEdit = lastShownList.get(taskIndex.getZeroBased());
-
-        if (subtaskIndex.getZeroBased() >= taskToEdit.getSubtasks().size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_SUBTASK_DISPLAYED_INDEX);
-        }
-        deletedSubtask = taskToEdit.getSubtasks().get(subtaskIndex.getZeroBased());
-        editedTask = createEditedTask(taskToEdit, subtaskIndex);
-    }
-
-    /**
-     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
-     */
-    private static Task createEditedTask(Task taskToEdit, Index subtaskIndex) {
-        assert taskToEdit != null;
-
-        Name updatedName = taskToEdit.getName();
-        Priority updatedPriority = taskToEdit.getPriority();
-        Deadline updatedDeadline = taskToEdit.getDeadline();
-        DateAdded oldDateAdded = taskToEdit.getDateAdded();
-        DateCompleted oldDateCompleted = taskToEdit.getDateCompleted();
-        Description updatedDescription = taskToEdit.getDescription();
-        User user = taskToEdit.getUser();
-        Set<Tag> updatedTags = taskToEdit.getTags();
-        List<Subtask> originalSubtasks = new ArrayList<>(taskToEdit.getSubtasks());
-        Status updatedStatus = taskToEdit.getStatus();
-
-        originalSubtasks.remove(subtaskIndex.getZeroBased());
-        UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(originalSubtasks);
-
-        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded, oldDateCompleted,
-                updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(), user);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DeleteSubtaskCommand // instanceof handles nulls
-                && this.taskIndex.equals(((DeleteSubtaskCommand) other).taskIndex) // state check
-                && this.subtaskIndex.equals(((DeleteSubtaskCommand) other).subtaskIndex)); // state check
-    }
-}
-```
-###### /java/seedu/organizer/logic/command/ToggleSubtaskCommand.java
-``` java
-package seedu.organizer.logic.commands;
-
-import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import seedu.organizer.commons.core.Messages;
-import seedu.organizer.commons.core.index.Index;
-import seedu.organizer.logic.commands.exceptions.CommandException;
-import seedu.organizer.model.subtask.Subtask;
-import seedu.organizer.model.subtask.UniqueSubtaskList;
-import seedu.organizer.model.tag.Tag;
-import seedu.organizer.model.task.DateAdded;
-import seedu.organizer.model.task.DateCompleted;
-import seedu.organizer.model.task.Deadline;
-import seedu.organizer.model.task.Description;
-import seedu.organizer.model.task.Name;
-import seedu.organizer.model.task.Priority;
-import seedu.organizer.model.task.Status;
-import seedu.organizer.model.task.Task;
-import seedu.organizer.model.task.exceptions.DuplicateTaskException;
-import seedu.organizer.model.task.exceptions.TaskNotFoundException;
-import seedu.organizer.model.user.User;
-
-/**
- * Inverse the value of task status
- */
-public class ToggleSubtaskCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "toggle-subtask";
-    public static final String COMMAND_ALIAS = "ts";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a subttask to a task. "
-            + "Parameters: TASK_INDEX (must be a positive integer) SUBTASK_INDEX (must be a positive integer)";
-
-    public static final String MESSAGE_EDIT_SUBTASK_SUCCESS = "Toogled Subtask: %1$s";
-
-    public final Index taskIndex;
-    public final Index subtaskIndex;
-
-    private Task taskToEdit;
-    private Task editedTask;
-    private Subtask editedSubtask;
-
-    /**
-     * @param taskIndex index of the task in the filtered task list to edit
-     * @param subtaskIndex index of the subtask of the task to edit
-     */
-    public ToggleSubtaskCommand(Index taskIndex, Index subtaskIndex) {
-        this.taskIndex = taskIndex;
-        this.subtaskIndex = subtaskIndex;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        try {
-            model.updateTask(taskToEdit, editedTask);
-        } catch (DuplicateTaskException dpe) {
-            throw new CommandException("This exception should not happen (duplicated task while toggling)");
-        } catch (TaskNotFoundException pnfe) {
-            throw new AssertionError("This exception should not happen (task missing while toggling)");
-        }
-        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        return new CommandResult(String.format(MESSAGE_EDIT_SUBTASK_SUCCESS, editedSubtask));
-    }
-
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        List<Task> lastShownList = model.getFilteredTaskList();
-
-        if (taskIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        }
-        taskToEdit = lastShownList.get(taskIndex.getZeroBased());
-
-        if (subtaskIndex.getZeroBased() >= taskToEdit.getSubtasks().size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_SUBTASK_DISPLAYED_INDEX);
-        }
-        editedTask = createEditedTask(taskToEdit, subtaskIndex);
-        editedSubtask = editedTask.getSubtasks().get(subtaskIndex.getZeroBased());
-    }
-
-    /**
-     * Creates and returns a {@code Task} with the details of {@code taskToEdit} with status inversed
-     */
-    private static Task createEditedTask(Task taskToEdit, Index subtaskIndex) {
-        assert taskToEdit != null;
-
-        Name updatedName = taskToEdit.getName();
-        Priority updatedPriority = taskToEdit.getPriority();
-        Deadline updatedDeadline = taskToEdit.getDeadline();
-        DateAdded oldDateAdded = taskToEdit.getDateAdded();
-        DateCompleted updatedDateCompleted = taskToEdit.getDateCompleted();
-        Description updatedDescription = taskToEdit.getDescription();
-        Set<Tag> updatedTags = taskToEdit.getTags();
-        List<Subtask> originalSubtasks = new ArrayList<>(taskToEdit.getSubtasks());
-        Status updatedStatus = taskToEdit.getStatus();
-        User user = taskToEdit.getUser();
-
-        Subtask originalSubtask = originalSubtasks.get(subtaskIndex.getZeroBased());
-        Name subtaskName = originalSubtask.getName();
-        Status subtaskStatus = originalSubtask.getStatus().getInverse();
-
-        Subtask editedSubtask = new Subtask(subtaskName, subtaskStatus);
-        originalSubtasks.set(subtaskIndex.getZeroBased(), editedSubtask);
-
-        UniqueSubtaskList updatedSubtasks = new UniqueSubtaskList(originalSubtasks);
-
-        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded, updatedDateCompleted,
-                updatedDescription, updatedStatus, updatedTags, updatedSubtasks.toList(), user);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ToggleSubtaskCommand // instanceof handles nulls
-                && this.taskIndex.equals(((ToggleSubtaskCommand) other).taskIndex) // state check
-                && this.subtaskIndex.equals(((ToggleSubtaskCommand) other).subtaskIndex)); // state check
-    }
-}
-```
-###### /java/seedu/organizer/logic/command/ToggleCommand.java
-``` java
-package seedu.organizer.logic.commands;
-
-import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
-import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
-
-import java.util.List;
-import java.util.Set;
-
-import seedu.organizer.commons.core.Messages;
-import seedu.organizer.commons.core.index.Index;
-import seedu.organizer.logic.commands.exceptions.CommandException;
-import seedu.organizer.model.subtask.Subtask;
-import seedu.organizer.model.tag.Tag;
-import seedu.organizer.model.task.DateAdded;
-import seedu.organizer.model.task.DateCompleted;
-import seedu.organizer.model.task.Deadline;
-import seedu.organizer.model.task.Description;
-import seedu.organizer.model.task.Name;
-import seedu.organizer.model.task.Priority;
-import seedu.organizer.model.task.Status;
-import seedu.organizer.model.task.Task;
-import seedu.organizer.model.task.exceptions.DuplicateTaskException;
-import seedu.organizer.model.task.exceptions.TaskNotFoundException;
-
-/**
- * Inverse the value of task status (Done or Not done)
- */
-public class ToggleCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "toggle";
-    public static final String COMMAND_ALIAS = "t";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggle task status\n";
-
-    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the organizer.";
-    public static final String MESSAGE_EDIT_TASK_SUCCESS = "Toggled Task: %1$s";
-
-    public final Index index;
-
-    private Task taskToEdit;
-    private Task editedTask;
-
-    /**
-     * @param index                of the task in the filtered task list to edit
-     */
-    public ToggleCommand(Index index) {
-        this.index = index;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        try {
-            model.updateTask(taskToEdit, editedTask);
-        } catch (DuplicateTaskException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_TASK);
-        } catch (TaskNotFoundException pnfe) {
-            throw new AssertionError("The target task cannot be missing");
-        }
-        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
-    }
-
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        List<Task> lastShownList = model.getFilteredTaskList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-        }
-
-        taskToEdit = lastShownList.get(index.getZeroBased());
-        editedTask = createEditedTask(taskToEdit);
-    }
-
-    /**
-     * Creates and returns a {@code Task} with the details of {@code taskToEdit} with status inversed
-     */
-    private static Task createEditedTask(Task taskToEdit) {
-        assert taskToEdit != null;
-
-        Name updatedName = taskToEdit.getName();
-        Priority updatedPriority = taskToEdit.getPriority();
-        Deadline updatedDeadline = taskToEdit.getDeadline();
-        DateAdded oldDateAdded = taskToEdit.getDateAdded();
-        DateCompleted updatedDateCompleted = taskToEdit.getDateCompleted().toggle();
-        Description updatedDescription = taskToEdit.getDescription();
-        Set<Tag> updatedTags = taskToEdit.getTags();
-        List<Subtask> updatedSubtasks = taskToEdit.getSubtasks();
-        Status updatedStatus = taskToEdit.getStatus().getInverse();
-
-        return new Task(updatedName, updatedPriority, updatedDeadline, oldDateAdded,
-                updatedDateCompleted, updatedDescription, updatedStatus,
-                updatedTags, updatedSubtasks, getCurrentlyLoggedInUser());
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ToggleCommand // instanceof handles nulls
-                && this.index.equals(((ToggleCommand) other).index)); // state check
-    }
-}
-```
 ###### /java/seedu/organizer/logic/parser/AddSubtaskCommandParser.java
 ``` java
-package seedu.organizer.logic.parser;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
@@ -683,8 +815,6 @@ public class AddSubtaskCommandParser implements Parser<AddSubtaskCommand> {
 ```
 ###### /java/seedu/organizer/logic/parser/DeleteSubtaskCommandParser.java
 ``` java
-package seedu.organizer.logic.parser;
-
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.organizer.commons.core.index.Index;
@@ -712,45 +842,134 @@ public class DeleteSubtaskCommandParser implements Parser<DeleteSubtaskCommand> 
         }
     }
 }
-
 ```
-###### /java/seedu/organizer/logic/parser/ToggleSubtaskCommandParser.java
+###### /java/seedu/organizer/logic/parser/EditSubtaskCommandParser.java
 ``` java
-package seedu.organizer.logic.parser;
-
+import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
+
+import java.util.Optional;
 
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.commons.exceptions.IllegalValueException;
-import seedu.organizer.logic.commands.ToggleSubtaskCommand;
+import seedu.organizer.logic.commands.EditSubtaskCommand;
 import seedu.organizer.logic.parser.exceptions.ParseException;
+import seedu.organizer.model.subtask.Subtask;
+import seedu.organizer.model.task.Name;
 
 /**
- * Parses input arguments and creates a new ToggleCommand object
+ * Parses input arguments and creates a new EditSubtaskCommand object
  */
-public class ToggleSubtaskCommandParser implements Parser<ToggleSubtaskCommand> {
+public class EditSubtaskCommandParser implements Parser<EditSubtaskCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the ToggleCommand
-     * and returns an ToggleCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public ToggleSubtaskCommand parse(String args) throws ParseException {
+    public EditSubtaskCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME);
+        Index[] indexs;
         try {
-            Index[] indexs = ParserUtil.parseSubtaskIndex(args);
-            return new ToggleSubtaskCommand(indexs[0], indexs[1]);
+            indexs = ParserUtil.parseSubtaskIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ToggleSubtaskCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditSubtaskCommand.MESSAGE_USAGE));
         }
+
+        Optional<Name> name = Optional.empty();
+        try {
+            name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        Subtask toAdd = null;
+        if (name.isPresent()) {
+            toAdd = new Subtask(name.get());
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditSubtaskCommand.MESSAGE_USAGE));
+        }
+
+        return new EditSubtaskCommand(indexs[0], indexs[1], toAdd);
     }
 }
+```
+###### /java/seedu/organizer/logic/parser/OrganizerParser.java
+``` java
+        case EditSubtaskCommand.COMMAND_WORD:
+            return new EditSubtaskCommandParser().parse(arguments);
 
+        case EditSubtaskCommand.COMMAND_ALIAS:
+            return new EditSubtaskCommandParser().parse(arguments);
+
+        case ToggleCommand.COMMAND_WORD:
+            return new ToggleCommandParser().parse(arguments);
+
+        case ToggleCommand.COMMAND_ALIAS:
+            return new ToggleCommandParser().parse(arguments);
+
+        case ToggleSubtaskCommand.COMMAND_WORD:
+            return new ToggleSubtaskCommandParser().parse(arguments);
+
+        case ToggleSubtaskCommand.COMMAND_ALIAS:
+            return new ToggleSubtaskCommandParser().parse(arguments);
+```
+###### /java/seedu/organizer/logic/parser/OrganizerParser.java
+``` java
+        case DeleteSubtaskCommand.COMMAND_WORD:
+            return new DeleteSubtaskCommandParser().parse(arguments);
+
+        case DeleteSubtaskCommand.COMMAND_ALIAS:
+            return new DeleteSubtaskCommandParser().parse(arguments);
+
+        case AddSubtaskCommand.COMMAND_WORD:
+            return new AddSubtaskCommandParser().parse(arguments);
+
+        case AddSubtaskCommand.COMMAND_ALIAS:
+            return new AddSubtaskCommandParser().parse(arguments);
+```
+###### /java/seedu/organizer/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses {@code oneBasedIndex} into an array of {@code Index} and returns it. Leading and trailing whitespaces
+     * will be trimmed.
+     *
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static Index[] parseIndexAsArray(String oneBasedIndex) throws IllegalValueException {
+        String trimmedIndex = oneBasedIndex.trim();
+        String[] rawIndex = trimmedIndex.split(" +");
+        Index[] result = new Index[rawIndex.length];
+
+        for (int i = 0; i < rawIndex.length; i++) {
+            if (!StringUtil.isNonZeroUnsignedInteger(rawIndex[i])) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+            result[i] = Index.fromOneBased(Integer.parseInt(rawIndex[i]));
+        }
+
+        return result;
+    }
+
+    /**
+     * Parses {@code oneBasedIndex} into an array of {@code Index} with length 2 and returns it. Leading and trailing
+     * whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static Index[] parseSubtaskIndex(String oneBasedIndex) throws IllegalValueException {
+        Index[] result = parseIndexAsArray(oneBasedIndex);
+        if (result.length != 2) {
+            throw new IllegalValueException(MESSAGE_WRONG_PART_COUNT);
+        }
+        return result;
+    }
 ```
 ###### /java/seedu/organizer/logic/parser/ToggleCommandParser.java
 ``` java
-package seedu.organizer.logic.parser;
-
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.organizer.commons.core.index.Index;
@@ -779,73 +998,38 @@ public class ToggleCommandParser implements Parser<ToggleCommand> {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/ParserUtil.java
+###### /java/seedu/organizer/logic/parser/ToggleSubtaskCommandParser.java
 ``` java
-/**
- * Parses {@code oneBasedIndex} into an array of {@code Index} and returns it. Leading and trailing whitespaces
- * will be trimmed.
- *
- * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
- */
-public static Index[] parseIndexAsArray(String oneBasedIndex) throws IllegalValueException {
-    String trimmedIndex = oneBasedIndex.trim();
-    String[] rawIndex = trimmedIndex.split(" +");
-    Index[] result = new Index[rawIndex.length];
+import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-    for (int i = 0; i < rawIndex.length; i++) {
-        if (!StringUtil.isNonZeroUnsignedInteger(rawIndex[i])) {
-            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+import seedu.organizer.commons.core.index.Index;
+import seedu.organizer.commons.exceptions.IllegalValueException;
+import seedu.organizer.logic.commands.ToggleSubtaskCommand;
+import seedu.organizer.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new ToggleCommand object
+ */
+public class ToggleSubtaskCommandParser implements Parser<ToggleSubtaskCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ToggleCommand
+     * and returns an ToggleCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ToggleSubtaskCommand parse(String args) throws ParseException {
+        try {
+            Index[] indexs = ParserUtil.parseSubtaskIndex(args);
+            return new ToggleSubtaskCommand(indexs[0], indexs[1]);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ToggleSubtaskCommand.MESSAGE_USAGE));
         }
-        result[i] = Index.fromOneBased(Integer.parseInt(rawIndex[i]));
     }
-
-    return result;
 }
-
-/**
- * Parses {@code oneBasedIndex} into an array of {@code Index} with length 2 and returns it. Leading and trailing
- * whitespaces will be trimmed.
- *
- * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
- */
-public static Index[] parseSubtaskIndex(String oneBasedIndex) throws IllegalValueException {
-    Index[] result = parseIndexAsArray(oneBasedIndex);
-    if (result.length != 2) {
-        throw new IllegalValueException(MESSAGE_WRONG_PART_COUNT);
-    }
-    return result;
-}
-```
-###### /java/seedu/organizer/logic/parser/OrganizerParser.java
-``` java
-case ToggleCommand.COMMAND_WORD:
-            return new ToggleCommandParser().parse(arguments);
-
-case ToggleCommand.COMMAND_ALIAS:
-    return new ToggleCommandParser().parse(arguments);
-
-case ToggleSubtaskCommand.COMMAND_WORD:
-    return new ToggleSubtaskCommandParser().parse(arguments);
-
-case ToggleSubtaskCommand.COMMAND_ALIAS:
-    return new ToggleSubtaskCommandParser().parse(arguments);
-
-case DeleteSubtaskCommand.COMMAND_WORD:
-    return new DeleteSubtaskCommandParser().parse(arguments);
-
-case DeleteSubtaskCommand.COMMAND_ALIAS:
-    return new DeleteSubtaskCommandParser().parse(arguments);
-
-case AddSubtaskCommand.COMMAND_WORD:
-    return new AddSubtaskCommandParser().parse(arguments);
-
-case AddSubtaskCommand.COMMAND_ALIAS:
-    return new AddSubtaskCommandParser().parse(arguments);
 ```
 ###### /java/seedu/organizer/model/subtask/Subtask.java
 ``` java
-package seedu.organizer.model.subtask;
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
@@ -923,8 +1107,6 @@ public class Subtask {
 ```
 ###### /java/seedu/organizer/model/subtask/UniqueSubtaskList.java
 ``` java
-package seedu.organizer.model.subtask;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -935,6 +1117,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.commons.exceptions.DuplicateDataException;
 import seedu.organizer.commons.util.CollectionUtil;
 
@@ -1007,6 +1190,43 @@ public class UniqueSubtaskList implements Iterable<Subtask> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    /**
+     * Count the number of specified subtask
+     * @param subtask to count
+     * @return number of specified subtask
+     */
+    public int count(Subtask subtask) {
+        int result = 0;
+
+        for (Subtask i: internalList) {
+            if (i.equals(subtask)) {
+                result += 1;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Set subtask in a specified index
+     * @throws DuplicateSubtaskException
+     */
+    public void set(Index index, Subtask toReplace) throws  DuplicateSubtaskException {
+        requireNonNull(toReplace);
+
+        int subtaskCount = this.count(toReplace);
+        if (internalList.get(index.getZeroBased()).equals(toReplace)) {
+            subtaskCount -= 1;
+        }
+        if (subtaskCount > 0) {
+            throw new DuplicateSubtaskException();
+        }
+
+        internalList.set(index.getZeroBased(), toReplace);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
     @Override
     public Iterator<Subtask> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -1054,19 +1274,16 @@ public class UniqueSubtaskList implements Iterable<Subtask> {
         }
     }
 
-}
 ```
 ###### /java/seedu/organizer/model/task/Status.java
 ``` java
-package seedu.organizer.model.task;
-
 /**
- * Represents a Task's status in the organizer book.
+ * Represents a Task's status in the organizer.
  */
 public class Status {
 
-    public static final String LABEL_FOR_DONE = "Done";
-    public static final String LABEL_FOR_NOT_DONE = "Not done";
+    public static final String LABEL_FOR_DONE = "Completed";
+    public static final String LABEL_FOR_NOT_DONE = "Not Completed";
 
     public final boolean value;
 
@@ -1113,43 +1330,96 @@ public class Status {
 ```
 ###### /java/seedu/organizer/model/task/Task.java
 ``` java
-private final Status status;
-private final UniqueSubtaskList subtasks;
+    private final UniqueTagList tags;
+    private final UniqueSubtaskList subtasks;
+```
+###### /java/seedu/organizer/model/task/Task.java
+``` java
+    /**
+     * Another constructor with custom status and subtask
+     */
+    public Task(Name name, Priority updatedPriority, Priority basePriority, Deadline deadline, DateAdded dateAdded,
+                DateCompleted dateCompleted, Description description, Status status, Set<Tag> tags,
+                List<Subtask> subtasks, User user, Recurrence recurrence) {
+        requireAllNonNull(name, updatedPriority, deadline, description, tags);
+        this.name = name;
+        this.updatedPriority = updatedPriority;
+        this.basePriority = basePriority;
+        this.deadline = deadline;
+        this.dateAdded = dateAdded;
+        this.dateCompleted = dateCompleted;
+        this.description = description;
+        this.status = status;
+        this.user = user;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.subtasks = new UniqueSubtaskList(subtasks);
+        this.recurrence = recurrence;
+    }
+```
+###### /java/seedu/organizer/model/task/Task.java
+``` java
+    public Status getStatus() {
+        if (status == null) {
+            return new Status(false);
+        }
+        return status;
+    }
+```
+###### /java/seedu/organizer/model/task/Task.java
+``` java
+    public List<Subtask> getSubtasks() {
+        return Collections.unmodifiableList(subtasks.toList());
+    }
+```
+###### /java/seedu/organizer/model/task/UniqueTaskList.java
+``` java
+import static java.util.Objects.requireNonNull;
+import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import seedu.organizer.commons.util.CollectionUtil;
+import seedu.organizer.model.recurrence.Recurrence;
+import seedu.organizer.model.subtask.Subtask;
+import seedu.organizer.model.subtask.UniqueSubtaskList;
+import seedu.organizer.model.tag.Tag;
+import seedu.organizer.model.task.exceptions.DuplicateTaskException;
+import seedu.organizer.model.task.exceptions.TaskNotFoundException;
+import seedu.organizer.model.task.predicates.TaskByUserPredicate;
+import seedu.organizer.model.user.User;
 
 /**
- * Another constructor with custom status and subtask
+ * A list of tasks that enforces uniqueness between its elements and does not allow nulls.
+ *
+ * Supports a minimal set of list operations.
+ *
+ * @see Task#equals(Object)
+ * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public Task(Name name, Priority priority, Deadline deadline, DateAdded dateAdded, DateCompleted dateCompleted,
-            Description description, Status status, Set<Tag> tags, List<Subtask> subtasks, User user) {
-    requireAllNonNull(name, priority, deadline, description, tags);
-    this.name = name;
-    this.priority = priority;
-    this.deadline = deadline;
-    this.dateAdded = dateAdded;
-    this.dateCompleted = dateCompleted;
-    this.description = description;
-    this.status = status;
-    this.user = user;
-    // protect internal tags from changes in the arg list
-    this.tags = new UniqueTagList(tags);
-    this.subtasks = new UniqueSubtaskList(subtasks);
-}
+public class UniqueTaskList implements Iterable<Task> {
 
-public Status getStatus() {
-    if (status == null) {
-        return new Status(false);
+    private final ObservableList<Task> internalList = FXCollections.observableArrayList();
+
+    /**
+     * Returns true if the list contains an equivalent task as the given argument.
+     */
+    public boolean contains(Task toCheck) {
+        requireNonNull(toCheck);
+        return internalList.contains(toCheck);
     }
-    return status;
-}
 
-public List<Subtask> getSubtasks() {
-    return Collections.unmodifiableList(subtasks.toList());
-}
 ```
 ###### /java/seedu/organizer/storage/XmlAdaptedSubtask.java
 ``` java
-package seedu.organizer.storage;
-
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -1228,27 +1498,21 @@ public class XmlAdaptedSubtask {
 ```
 ###### /java/seedu/organizer/storage/XmlAdaptedTask.java
 ``` java
-private List<XmlAdaptedSubtask> subtasks = new ArrayList<>();
-
-final List<Subtask> personSubtasks = new ArrayList<>();
-for (XmlAdaptedSubtask subtask : subtasks) {
-    personSubtasks.add(subtask.toModelType());
-}
-final List<Subtask> subtasks = new ArrayList<>(personSubtasks);
+        final List<Subtask> taskSubtasks = new ArrayList<>();
+        for (XmlAdaptedSubtask subtask : subtasks) {
+            taskSubtasks.add(subtask.toModelType());
+        }
 ```
-###### /java/seedu/organizer/ui/TaskListCard.java
+###### /java/seedu/organizer/ui/TaskCard.java
 ``` java
-@FXML
-private ListView<Label> subtasks;
-
-/**
- * Creates the subtask for {@code task}.
- */
-private void initSubtask(Task task) {
-    task.getSubtasks().forEach(subtask-> {
-        Label subtaskLabel = new Label(subtask.toString());
-        subtasks.getItems().add(subtaskLabel);
-    });
-    subtasks.setPrefHeight(10 + CELL_HEIGHT * task.getSubtasks().size());
-}
+    /**
+     * Creates the subtask for {@code task}.
+     */
+    private void initSubtask(Task task) {
+        task.getSubtasks().forEach(subtask-> {
+            Label subtaskLabel = new Label(subtask.toString());
+            subtasks.getItems().add(subtaskLabel);
+        });
+        subtasks.setPrefHeight(10 + CELL_HEIGHT * task.getSubtasks().size());
+    }
 ```

@@ -998,68 +998,62 @@ Install the application in the other computer and overwrite the empty data file 
 
 == Command Summary
 
-=== User features
-* *Help* : [format-no-box]#`help`#
-* *Sign up* : [format-no-box]#`signup u/USERNAME p/PASSWORD`#
-e.g. [example-no-box]#`signup u/patrick p/pat12351`#
-* *Login* : [format-no-box]#`login u/USERNAME p/PASSWORD`#
-e.g. [example-no-box]#`login u/patrick p/pat12351`#
-* *Logout* : [format-no-box]#`logout`#
-* *Add question answer set* : [format-no-box]#`addqa q/QUESTION a/ANSWER`#
-e.g. [example-no-box]#`addqa q/are cats cool? a/yes`#
-* *Retrieve question* : [format-no-box]#`forgotpassword u/USERNAME`#
-e.g. [example-no-box]#`forgotpassword u/david`#
-* *Answer question* : [format-no-box]#`answer u/USERNAME a/ANSWER`#
-e.g. [example-no-box]#`answer u/david a/yes`#
-* *Exit* : [format-no-box]#`exit`#
-
-=== Task management features
 * *Add* : [format-no-box]#`add n/NAME [p/PRIORITY_LEVEL] d/DEADLINE [des/DESCRIPTION] [t/TAG]…`# +
 e.g. [example-no-box]#`add n/CS2101 Script p/8 d/2018-03-05 des/Script should be 500 words long t/CS2101 t/PhaseA`#
-* *Delete* : [format-no-box]#`delete INDEX`# +
-e.g. [example-no-box]#`delete 3`#
-* *Edit* : [format-no-box]#`edit INDEX [n/NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [des/DESCRIPTION] [t/TAG]…​`# +
-e.g. [example-no-box]#`edit 1 p/9 d/2018-12-30`#
-* *List* : [format-no-box]#`list`#
-* *List all uncompleted* : [format-no-box]#`uncompleted`#
-* *List all completed* : [format-no-box]#`completed`#
-* *Find* : [format-no-box]#`find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`# +
-e.g. [example-no-box]#`find CS2103 update 2018-03-17`#
-** *Find name* : [format-no-box]#`findn KEYWORD [MORE_KEYWORDS]` or `fn KEYWORD [MORE_KEYWORDS]`# +
-e.g. [example-no-box]#`findn Developer User`#
-** *Find description* : [format-no-box]#`finddes KEYWORD [MORE_KEYWORDS]` or `fdes KEYWORDS [MORE_KEYWORDS]`# +
-e.g. [example-no-box]#`finddes study update`#
-** *Find deadline* : [format-no-box]#`findd KEYWORD [MORE_KEYWORDS]` or `fd KEYWORDS [MORE_KEYWORDS]`# +
-e.g. [example-no-box]#`findd 2018-03-17 2018-09-07`#
-* *Toggle* : [format-no-box]#`toggle INDEX`# +
-e.g.[example-no-box]#`toggle 3`#
-* *Clear* : [format-no-box]#`clear`#
-* *Recur weekly* : [format-no-box]#`recurw INDEX x/TIMES`# +
-e.g.[example-no-box]#`recurw 2 x/2`#
-* *Delete task and its recurred versions* : [format-no-box]#`deleter INDEX`# +
-e.g. [example-no-box]#`deleter 3`#
-* *Remove tags* : [format-no-box]#`remove t/TAG1 [t/TAG2]…​`# +
-e.g. [example-no-box]#`remove t\friends t\homework`#
-
-// tag::subtaskFeatureSummary[]
-=== Subtask management features
+* *Add question answer set* : [format-no-box]#`addqa q/QUESTION a/ANSWER`# +
+e.g. [example-no-box]#`addqa q/are cats cool? a/yes`#
 * *Add subtask* : [format-no-box]#`adds TASK_INDEX n/NAME`# +
 e.g. [example-no-box]#`adds 1 n/Submit Report`#
+* *Answer question* : [format-no-box]#`answer u/USERNAME a/ANSWER`# +
+e.g. [example-no-box]#`answer u/david a/yes`#
+* *Clear* : [format-no-box]#`clear`#
+* *Delete* : [format-no-box]#`delete INDEX`# +
+e.g. [example-no-box]#`delete 3`#
 * *Delete subtask* : [format-no-box]#`delete-subtask TASK_INDEX SUBTASK_INDEX`# +
 e.g. [example-no-box]#`delete-subtask 2 3`#
-* *Toggle subtask* : [format-no-box]#`toggle-subtask TASK_INDEX SUBTASK_INDEX`# +
-e.g.[example-no-box]#`toggle-subtask 3 2`#
+* *Delete task and its recurred versions* : [format-no-box]#`deleter INDEX`# +
+e.g. [example-no-box]#`deleter 3`#
+* *Edit* : [format-no-box]#`edit INDEX [n/NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [des/DESCRIPTION] [t/TAG]…​`# +
+e.g. [example-no-box]#`edit 1 p/9 d/2018-12-30`#
 * *Edit subtask* : [format-no-box]#`edits TASK_INDEX SUBTASK_INDEX n/NAME`# +
 e.g.[example-no-box]#`edits 3 2 n/Feed cats`#
-// end::subtaskFeatureSummary[]
-
-=== Calendar features
+* *Exit* : [format-no-box]#`exit`#
+* *Find* : [format-no-box]#`find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`# +
+e.g. [example-no-box]#`find CS2103 update 2018-03-17`#
+** *Find description* : [format-no-box]#`finddes KEYWORD [MORE_KEYWORDS]` or `fdes KEYWORDS [MORE_KEYWORDS]`# +
+e.g. [example-no-box]#`finddes study update`#
+** *Find name* : [format-no-box]#`findn KEYWORD [MORE_KEYWORDS]` or `fn KEYWORD [MORE_KEYWORDS]`# +
+e.g. [example-no-box]#`findn Developer User`#
+** *Find deadline* : [format-no-box]#`findd KEYWORD [MORE_KEYWORDS]` or `fd KEYWORDS [MORE_KEYWORDS]`# +
+e.g. [example-no-box]#`findd 2018-03-17 2018-09-07`#
 * *Go to current month* : [format-no-box]#`cmonth`#
 * *Go to previous month* : [format-no-box]#`pmonth`#
 * *Go to next month* : [format-no-box]#`nmonth`#
-
-=== PrioriTask features
+* *Help* : [format-no-box]#`help`#
 * *History* : [format-no-box]#`history`#
-* *Undo* : [format-no-box]#`undo`#
+* *List* : [format-no-box]#`list`#
+** *List all completed* : [format-no-box]#`completed`#
+** *List all uncompleted* : [format-no-box]#`uncompleted`#
+* *Login* : [format-no-box]#`login u/USERNAME p/PASSWORD`# +
+e.g. [example-no-box]#`login u/patrick p/pat12351`#
+* *Logout* : [format-no-box]#`logout`#
+* *Recur weekly* : [format-no-box]#`recurw INDEX x/TIMES`# +
+e.g.[example-no-box]#`recurw 2 x/2`#
 * *Redo* : [format-no-box]#`redo`#
+* *Remove tags* : [format-no-box]#`remove t/TAG1 [t/TAG2]…​`# +
+e.g. [example-no-box]#`remove t\friends t\homework`#
+* *Retrieve question* : [format-no-box]#`forgotpassword u/USERNAME`# +
+e.g. [example-no-box]#`forgotpassword u/david`#
+* *Sign up* : [format-no-box]#`signup u/USERNAME p/PASSWORD`# +
+e.g. [example-no-box]#`signup u/patrick p/pat12351`#
+* *Toggle* : [format-no-box]#`toggle INDEX`# +
+e.g.[example-no-box]#`toggle 3`#
+* *Toggle subtask* : [format-no-box]#`toggle-subtask TASK_INDEX SUBTASK_INDEX`# +
+e.g.[example-no-box]#`toggle-subtask 3 2`#
+* *Undo* : [format-no-box]#`undo`#
+
+
+
+
+
 

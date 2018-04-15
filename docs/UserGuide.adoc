@@ -86,7 +86,7 @@ Refer to <<Commands>> for more details on commands.
 
 === Knowing the User Interface
 
-_Figure 2_ shows the 5 major components of the user interface of Employees Tracker (ET):
+_Figure 5_ shows the 5 major components of the user interface of Employees Tracker (ET):
 
 * Command Box:where you type in commands
 * Result Display Box: where ET shows text result to you
@@ -111,8 +111,8 @@ Whenever you type keyword of a command in the `Command Box`, ET will provide [ma
 === Understanding the notifications
 ET has a 2 phase notification system, i.e. there will be 2 notification cards popping up to remind you of each event.
 
-* The first phase notification will pop out in a [blue]#blue# notification card, on the day of expiry, as shown in _Figure 4_.
-* The second phase notification will pop out in a [red]#red# notification card, at the exact time of expiry, as shown in _Figure 5_.
+* The first phase notification will pop out in a [blue]#blue# notification card, on the day of expiry, as shown in _Figure 6_.
+* The second phase notification will pop out in a [red]#red# notification card, at the exact time of expiry, as shown in _Figure 7_.
 
 .First phase notification card
 image::card_blue.png[width=""]
@@ -124,7 +124,7 @@ For example, suppose you have assigned a task to Alex which will due on 15^th^ A
 
 Notification cards will disappear from the screen after 5 seconds and will be stored in the `Notification Center`. If you want to refer to them later, use `noti` command or double press kbd:[Shift] to open the `Notification Center`.
 
-Also, if you minimizes ET to use other software, ET is capable of showing notification cards in your computer's system (e.g. Windows, Mac, Linux, etc.), as shown in _Figure 6_. However, this feature may not work on some computer systems.
+Also, if you minimizes ET to use other software, ET is capable of showing notification cards in your computer's system (e.g. Windows, Mac, Linux, etc.), as shown in _Figure 8_. However, this feature may not work on some computer systems.
 
 .ET shows notification card about event expiry even if you are using other programs.
 image::card_windows.png[width=""]
@@ -223,7 +223,7 @@ Format: `authenET`
 
 === Listing all employees : `list`
 
-Shows a list of all employees as shown in _Figure 10_. +
+Shows a list of all employees as shown in _Figure 11_. +
 Format: `list`
 
 [NOTE]
@@ -325,7 +325,7 @@ ET shows a list of employees whose name contains the word `Alex`. +
 `review 2` +
 Gives the 2^nd^ employee in the list of Alex(s) a review. +
 
-_Figure 11_ shows a pop-up dialog box that will appear after user executes the `review` command. The dialog box will prompts the user to enter the user's identity (as a reviewer) and the review.
+_Figure 12_ shows a pop-up dialog box that will appear after user executes the `review` command. The dialog box will prompts the user to enter the user's identity (as a reviewer) and the review.
 
 .A pop-up dialog box.
 image::review_dialog.png[width=""]
@@ -404,7 +404,7 @@ Selects the 2^nd^ employee in Employees Tracker.
 Selects the 1^st^ employee in the results of the `find` command.
 
 [NOTE]
-If `Calendar` in `Employee's Profile Panel` looks something similar to _Figure 8_, it means you will have to sign in to your *Google work account* from there. This is because for security purposes, you will be required to sign in once for every time you close Employees Tracker and open it again,
+If `Calendar` in `Employee's Profile Panel` looks something similar to _Figure 13_, it means you will have to sign in to your *Google work account* from there. This is because for security purposes, you will be required to sign in once for every time you close Employees Tracker and open it again,
 
 .Signing in to Google account at the Calendar row
 image::sign_in.png[width="790"][height="200"]
@@ -520,7 +520,7 @@ Format: `todoList`
 Examples:
 
 * `todoList` +
-Shows the to-do-list in a pop-up window. Refer to _Figure 14_ below.
+Shows the to-do-list in a pop-up window. Refer to _Figure 15_ below.
 
 .To-do list window.
 image::todoList.png[width="300"][height="400"]
@@ -541,7 +541,7 @@ Format: `setPassword`
 Examples:
 
 * `setPassword` +
-A dialog will pop up like below in _Figure 15_. Fill in the input boxes with matched old password and new password.
+A dialog will pop up like below in _Figure 16_. Fill in the input boxes with matched old password and new password.
 
 .Pop-up set password dialog
 image::setPassword_dialog.png[width="790"][height="200"]

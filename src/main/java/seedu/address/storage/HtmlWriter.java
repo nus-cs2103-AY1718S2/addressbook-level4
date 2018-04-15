@@ -149,4 +149,48 @@ public class HtmlWriter {
         absoluteFilepath = absoluteFilepath.replaceAll("\"", "/");
         return absoluteFilepath;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getAmountBorrowed() {
+        return amountBorrowed;
+    }
+
+    public String getInterestRate() {
+        return interestRate;
+    }
+
+    public String getAmountCurrentlyOwed() {
+        return amountCurrentlyOwed;
+    }
+
+    public String getOweStartDate() {
+        return oweStartDate;
+    }
+
+    public String getOweDueDate() {
+        return oweDueDate;
+    }
+
+    public String getRunnerAssigned() {
+        return runnerAssigned;
+    }
+
+    public List getCustomerList() {
+        return customerList;
+    }
 }

@@ -194,6 +194,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
+//tag::ModelTwo[]
 [[Design-Model]]
 === Model component
 
@@ -208,6 +209,7 @@ The `Model`,
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+//end::ModelTwo[]
 
 [[Design-Storage]]
 === Storage component
@@ -386,6 +388,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+
+//tag::FindCommandEnhancement[]
 === Find Command Enhancements
 
 In the original AddressBook, the `find` command only searches through the `Name` field of the `Person`. The current implementation enables the user to search through all fields in a Person. This is bound to be useful when the user may be interested in quickly finding someone whose address or tags contains a certain word. Furthermore, the current implementation allows the user to enter certain specifier parameters to narrow down the search range, which allows more relevant results to appear to the user.
@@ -490,7 +494,10 @@ It was important to make sure that the `find` command would search through field
 
 It was also important to be able to specify the field the user was interested in searching as this would increase the relevance of search results or reduce the occurence of irrelevant results. For example, if I searched "Baker" and there was a contact whose address was "Baker Street" and there was another contact who had been tagged as "Baker" I would receive two search results. But if I wanted to only view contacts who had been _tagged_ as "Baker", then I need only enter the specifier `-t` to increase the relevance of the results. This becomes more important as the size of the addressbook gets larger. Having more relevant results also increases the speed at which a user can use the application.
 
+//end::FindCommandEnhancement[]
 
+//@@author zhangriqi
+//tag::locatecommand[]
 === Locate on Google Map
 
 The `locate` command accepts a specifier, such as `-t` or `-p` as the first argument to the program to search through a specific field. `LocateCommandParser` then recognises the specifers and constructs the correct `LocateCommand` object with the correct `Predicate<Person>`. `LocateCommand.execute()` is then called, and it searches for the keywords in the correct fields according to the Predicate that was passed to it.
@@ -499,11 +506,18 @@ Then it gets the address of the person specified by the parameter and pass it to
 `LocateCommand` relies on `LocateRequestEvent` which is handled by `BrowserPanel` to call the appropriate method for loading `Person` address using Google Map.
 
 The current implementation enables the user to search through all fields in a Person. If there're more than one person with the same specifier passed in by the user, it automatically locates the address of the person on top of the filteredList and ask the user to be more specific given the filtered list.
-For example, `Locate Alex` will locate the first person on the filtered list and present a message for the user to select one from the listed persons.
+`locate` will locate the first person on the filtered list and present a message for the user to select one from the listed persons.
 
-image::locate_same_specifier.png[width="800"]
+For example, `locate` a person without address will return a red error message.
+
+image::locate1.png[width="800"]
 
 Locate command is implemented this way:
+
+The sequence diagram for locate command is presented below:
+
+image::locateSequencediagram.png[width="800"]
+
 [source,java]
 ----
 public LocateCommand(Predicate<Person> predicate) {
@@ -536,12 +550,45 @@ With loadUrl, the Google Map url is passed to 'BrowserPanel'to display the locat
 
 As we can see from the picture below, once the command is executed, the location is presented on Google Map is loaded in the BrowserPanel.
 
-image::interface_of_locate.png[width="800"]
+image::locate2.png[width="800"]
 
 ==== Rationale
 The rationale for implementing the `locate` command is that there's actual need of the users to find a person as easily as possible while using this application. By locating the person on Google Map in this application, the user can directly see the location of a person instead of a simple line of address that's not so useful.
 
 It was important to make sure that the `locate` command would use parameters other than the Index, as relevant information may be more easily to be obtained.
+//@@author
+//end::locatecommand[]
+
+//@@author zhangriqi
+//tag::alias[]
+=== Add Command Alias Enhancement
+In the original enhancement, all the command must be in full text to be considered as a valid command.
+----
+public class AddCommand extends UndoableCommand implements PopulatableCommand {
+
+    public static final String COMMAND_WORD = "add";
+    //@@author zhangriqi
+    public static final String COMMAND_ALIAS = "i";
+    //@@author
+
+     public CommandResult executeUndoableCommand() throws CommandException {
+            requireNonNull(model);
+            try {
+                model.addPerson(toAdd);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            } catch (DuplicatePersonException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            }
+
+        }
+----
+
+The alias command for all other commands will follow a similar implementation.
+
+==== Rationale
+This feature is implemented to allow a user to enter a command without specifying the entire word of the command.
+//@@author
+//end::alias[]
 
 //@@author jonleeyz
 // tag::tagcolours[]
@@ -656,13 +703,35 @@ This is a limitation of the BrowserPanel UI element.
 //@@author
 
 //@@author Der-Erlkonig
+// tag::BrowserPanel[]
 === BrowserPanel Enhancement
 In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows some more important details of the `Runner` or `Customer`.
 These are important fields for a loan shark manager to get a quick grasp of a customer's details, as well as who the runners are in charge of.
 
 ==== Enhancement
-Depending on whether the selected `Person` is a `Runner` or `Customer`, the respective HTML file with the desired fields are generated.
-Upon selection of the PersonCard, or select command from the CommandBox, a HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
+`SelectCommand` manages the displaying of a Person's details.
+The `loadPersonPage` method in `BrowserPanel` has been modified to show the details of a Person, rather than a dummy page, as outlined below:
+
+----
+    @Override
+    private void loadPersonPage(Person person) {
+            String personfilepath;
+            if (person instanceof Customer) {
+                htmlWriter = new HtmlWriter((Customer) person);
+                personfilepath = htmlWriter.writeCustomer();
+            } else if (person instanceof Runner) {
+                htmlWriter = new HtmlWriter((Runner) person);
+                personfilepath = htmlWriter.writeRunner();
+            } else {
+                personfilepath = "";
+            }
+            loadPage("file:///" + personfilepath);
+    }
+----
+
+A `Person` will be passed into a `HtmlWriter` and
+depending on whether the selected `Person` is a `Runner` or `Customer`, the respective HTML file with the desired fields are generated.
+A HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
 Both `Customer` and `Runner` will have the fields: name, phone, email, address.
 Fields exclusively for the `Customer` are: amount borrowed, amount owed, due date, and runner assigned.
 
@@ -679,7 +748,82 @@ The background and font colors are matched to the HuatAh! application.
 A customer's amount owed and due dates are very important variables which directly affect the PnL of the loan shark boss' enterprise.
 Being able to view a runner's list of assigned customers is important for managing human resource.
 Therefore, this feature is suitable, and definitely desirable from the perspective of a loan shark boss.
+
+==== Design Considerations
+The following methods of implementations were considered.
+
+===== Aspect: Data structure to support the undo/redo commands
+
+* **Alternative 1 (current choice):** Write the data to a .html file and use the current implementation of `loadPersonPage`.
+** Pros: Does not interfere with the implementation of `LocateCommand`, default page which shows keyboard shortcuts (also in .html)
+** Cons: May not be the most native.
+* **Alternative 2:** Use `HistoryManager` for undo/redo
+** Pros: More secure as details are kept within the app.
+** Cons: Will require a new implementation of the whole BrowserPanel,
+will not be compatible with the above implementation `LocateCommand`
+and the default page which shows keyboard shortcuts.
+
+// end::BrowserPanel[]
 //@@author
+
+//tag::ModelTwoImplementation[]
+=== New Model
+
+==== Modelling
+.The Model class diagram illustrates the new Runner and Customer classes and the fields they contain.
+image::ModelClassDiagram.png[width="800"]
+
+a Runner class and a Customer class were created to allow our app to manage operations on subtypes of Person and to encapsulate the data belonging to these different types of persons. These are located in the *Model* package.
+
+==== Saving the new objects into XML
+In order to _save_ these new objects into the XML data file, a modification was made to the `XmlAdaptedPerson.java` file in the *Storage* package. This is shown in the code snippet below.
+
+```
+public XmlAdaptedPerson(Person source) {
+        name = source.getName().fullName;
+        phone = source.getPhone().value;
+        email = source.getEmail().value;
+        address = source.getAddress().value;
+        tagged = new ArrayList<>();
+        for (Tag tag : source.getTags()) {
+            tagged.add(new XmlAdaptedTag(tag));
+        }
+        personType = source.getType();
+
+        if (source instanceof Customer) {
+            moneyBorrowed = ((Customer) source).getMoneyBorrowed();
+            standardInterest = ((Customer) source).getStandardInterest();
+            lateInterest = ((Customer) source).getLateInterest();
+            oweStartDate = ((Customer) source).getOweStartDate();
+            oweDueDate = ((Customer) source).getOweDueDate();
+            runner = new XmlAdaptedPerson(((Customer) source).getRunner());
+        }
+
+        if (source instanceof Runner) {
+            customers = new ArrayList<>();
+            for (Person person : ((Runner) source).getCustomers()) {
+                customers.add(new XmlAdaptedPerson(person));
+            }
+        }
+    }
+```
+
+==== Loading the new objects from an XML file.
+
+In order to be able to _load_ the data of Customers and Runners from the XML file into the application, the `XmlAdaptedPerson.toModelType()` method required modifications as well. The code snippet is long and is thus not shown.
+
+==== Viewing the new types through the GUI
+
+In order to view the new types on the GUI, two enhancements were implemented. 1. Display the type as *text* on the PersonCard. 2. Change the *background colour* of the PersonCard according to the person type.
+
+1. Was done by editing the PersonCard.java to have a new @FXML`Label` called personType, and calling the `Person.getType()` method then `setText()`. The FXML file PersonListCard.fxml has to be updated with a new line containing the label id personType.
+
+2. Was done by editing PersonListPanel.java's `updateItem()` method. The setStyle() method with appropriate arguments was called depending on whether the person was `instanceof Customer` or `instanceof Runner`. Appropriate changes were made in the DarkTheme.css file located in _resources/view_ as well to facilitate this change (removing the list-cell:filled:even and list-cell:filled:odd styles, setting appropriate border thickness and colours for list-cell and #cardPane etc...)
+
+The result is as such:
+
+image::PersonListPanel.PNG[width="600"]
+//end::ModelTwoImplementation[]
 
 == Documentation
 
@@ -1118,7 +1262,8 @@ Major: Implement UI element and methods for displaying summary statistics and re
 
 Minor: Recolouring of the GUI to improve look and feel
 
-
+//@@author zhangriqi
+//tag::userstories[]
 [appendix]
 == User Stories
 
@@ -1191,8 +1336,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 
 |=======================================================================
-
-_{More to be added}_
+//@@author
+//end::userstories[]
 
 [appendix]
 == Use Cases
@@ -1284,8 +1429,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed
@@ -1298,17 +1441,27 @@ _{ more test cases ... }_
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
+//tag::ManualTestDelete[]
 .. Test Case: `delete 1`, where 1 is a CUSTOMER, and 1 is assigned to a RUNNER +
     Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated. The associated Runner should no longer have that Customer assigned.
 .. Test Case: `delete 1`, where 1 is a RUNNER, and CUSTOMERS 2, 3, 4 are assigned to the RUNNER +
     Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated. The associated Customers at INDEX 2, 3, 4 should no longer have that Runner assigned to them.
+//end::ManualTestDelete[]
 
-_{ fill in more test cases as development continues }_
+//@@author Der-Erlkonic
+=== Select Command
 
-=== Saving data
+. Checking if the fields of a selected `Person` are displayed correctly correct.
 
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
+.. Prerequisites: Clear the list, add a `Customer` to index 1, add a `Runner` to index 2, add a (non-duplicate) `Customer` to index 3. Assign both the customers to the runner.
+.. Test case: `select 1` +
+     Expected: First contact is selected from the list. The `Person` should be a `Customer`.
+     Details of the `Customer` shown in the BrowserPanel.
+     Fields should be the same as what was entered in the Prerequisite step.
+     "Runner assigned" should be the name of `Runner` in index 2.
+.. Test case: `select 2` +
+     Expected: First contact is selected from the list. The `Person` should be a `Runner`.
+     Details of the `Runner` shown in the BrowserPanel.
+     Fields should be the same as what was entered in the Prerequisite step.
+     "Customers assigned" should indicate number two beside it, and name of `Customer` in index 1 and index 3 listed below.
+//@@author

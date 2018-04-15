@@ -13,7 +13,7 @@ image::ruiqi.jpg[width="150", align="left"]
 {empty}[http://github.com/zhangriqi[github]] [<<ZhangRuiqi#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: UI, Commands
 
 '''
 
@@ -22,7 +22,7 @@ image::melvin.jpg[width="150", align="left"]
 {empty}[http://github.com/melvintzw[github]] [<<melvintzw#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Model
+Responsibilities: Model, Commands
 
 '''
 
@@ -31,7 +31,7 @@ image::jonlee.jpg[width="150", align="left"]
 {empty}[http://github.com/jonleeyz[github]] [<<jonleeyz#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Logic
+Responsibilities: Usability, Commands
 
 '''
 
@@ -40,6 +40,6 @@ image::wisu.jpg[width="150", align="left"]
 {empty}[http://github.com/Der-Erlkonig[github]] [<<Der-Erlkonig#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: GUI, Data
 
 '''

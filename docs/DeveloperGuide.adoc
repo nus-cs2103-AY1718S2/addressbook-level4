@@ -544,23 +544,6 @@ The imported StardyTogether must be a XML file that follows `XmlAdaptedPerson`, 
 
 `Person`,`Tag`, and `Alias` from imported StardyTogether file that are not a duplicate of existing `Person`, `Tag`, and `Alias` in the user's StardyTogether will be added.
 
-The following code shows how `Person`,`Tag`, and `Alias` are imported into StardyTogether:
-
-----
-public AddressBook addToAddressBook(AddressBook addressBook) throws IllegalValueException {
-    for (XmlAdaptedTag t : tags) {
-        addressBook.importTag(t.toModelType());
-    }
-    for (XmlAdaptedPerson p : persons) {
-        addressBook.importPerson(p.toModelType());
-    }
-    for (XmlAdaptedAlias a : aliases) {
-        addressBook.importAlias(a.toModelType());
-    }
-    return addressBook;
-}
-----
-
 The following sequence diagram shows how the import operation works:
 
 .Import Command Sequence Diagram for Model and Storage Component
@@ -716,8 +699,6 @@ We have added the list of NUS buildings and the list of rooms in each building i
 We use `ReadOnlyJsonVenueInformation`, which resides inside `Storage` to read and store the room timetable data inside `nusVenues` in `Room` class, and also store NUS Buildings and their respective rooms inside `nusBuildingsAndRooms` in `Building` class.
 
 To avoid reading the data from Venue Information JSON file whenever the `vacant` command is executed, we only read the data once when the `MainApp` starts.
-
-The following sequence diagram shows how the vacant command is parsed:
 
 `ModelManager` will checks if the building is in the list of NUS Buildings, and will throw `BuildingNotFoundException` if the building is not in the list of NUS Buildings.
 
@@ -1270,7 +1251,7 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
 
 === Saving data
@@ -1280,6 +1261,46 @@ These instructions only provide a starting point for testers to work on; testers
 .. Test case: Delete `addressbook.xml` +
    Expected: Application opens with an address book with dummy data.
 .. Test case: Corrupt `addressbook.xml` by editing it +
-   Expected: Application opens with an address book with dummy data.
+   Expected: Application opens with an address book with empty data.
 
-=== 
+=== Importing a file
+
+. Importing a file from filepath
+
+.. Prerequisites: a valid filepath with valid format
+.. Test case: `import VALID_FILE_PATH` +
+   Expected: All students, tags, and aliases from the imported file are added to StardyTogether.
+.. Test case: `import INVALID_FILE_PATH` +
+   Expected: error message will be shown
+.. Other incorrect import commands to try: `import`, `import filepath wrongPassword` (where wrongPassword is wrong), `import INVALID_FILE_FORMAT` (where file is in invalid format) +
+   Expected: Similar to previous.
+
+=== Exporting a file
+
+. Exporting a file to filepath
+
+.. Prerequisites: a valid filepath
+.. Test case: `list` then `export VALID_FILE_PATH` +
+   Expected: All students, tags, and alias from StardyTogether are exported to filepath.
+.. Test case: `find alex` then `export INVALID_FILE_PATH` +
+   Expected: All students with `Alex` in his/her name, tags, and aliases from StardyTogether are exported to filepath.
+.. Test case: `find nonExistentName` then `export INVALID_FILE_PATH` +
+   Expected: All tags, and aliases from StardyTogether are exported to filepath. No students are exported.
+.. Test case: `export INVALID_FILE_PATH` +
+   Expected: error message will be shown
+.. Other incorrect export commands to try: `export`, `export filepath  wrongPassword  ` (notice the spaces) +
+   Expected: Similar to previous.
+
+=== Uploading a file
+
+. Uploading a file to Google Drive
+
+.. Prerequisites: user granted StardyTogether access to Google Drive
+.. Test case: `import VALID_FILE_PATH` +
+   Expected: All students, tags, and alias from the imported file are added to StardyTogether.
+.. Test case: `import INVALID_FILE_PATH` +
+   Expected: error message will be shown
+.. Other incorrect delete commands to try: `import`, `import filepath wrongPassword` (where wrongPassword is wrong), `import INVALID_FILE_FORMAT` (where file is in invalid format) +
+   Expected: Similar to previous.
+
+

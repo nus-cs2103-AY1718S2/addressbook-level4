@@ -223,12 +223,40 @@
 ``` xml
 <addressbook>
     <aliases>
-        <command>list</command>
-        <aliasName>list1</aliasName>
-    </aliases>
-    <aliases>
         <command>history</command>
         <aliasName>history1</aliasName>
+    </aliases>
+    <aliases>
+        <command>union</command>
+        <aliasName>union1</aliasName>
+    </aliases>
+    <aliases>
+        <command>map</command>
+        <aliasName>map2</aliasName>
+    </aliases>
+    <aliases>
+        <command>redo</command>
+        <aliasName>redo1</aliasName>
+    </aliases>
+    <aliases>
+        <command>map</command>
+        <aliasName>map1</aliasName>
+    </aliases>
+    <aliases>
+        <command>alias</command>
+        <aliasName>alias1</aliasName>
+    </aliases>
+    <aliases>
+        <command>undo</command>
+        <aliasName>undo1</aliasName>
+    </aliases>
+    <aliases>
+        <command>delete</command>
+        <aliasName>delete1</aliasName>
+    </aliases>
+    <aliases>
+        <command>list</command>
+        <aliasName>list1</aliasName>
     </aliases>
     <aliases>
         <command>exit</command>
@@ -239,14 +267,6 @@
         <aliasName>clear1</aliasName>
     </aliases>
     <aliases>
-        <command>redo</command>
-        <aliasName>redo1</aliasName>
-    </aliases>
-    <aliases>
-        <command>alias</command>
-        <aliasName>alias1</aliasName>
-    </aliases>
-    <aliases>
         <command>edit</command>
         <aliasName>edit1</aliasName>
     </aliases>
@@ -255,12 +275,8 @@
         <aliasName>help1</aliasName>
     </aliases>
     <aliases>
-        <command>undo</command>
-        <aliasName>undo1</aliasName>
-    </aliases>
-    <aliases>
-        <command>delete</command>
-        <aliasName>delete1</aliasName>
+        <command>upload</command>
+        <aliasName>911</aliasName>
     </aliases>
     <aliases>
         <command>add</command>

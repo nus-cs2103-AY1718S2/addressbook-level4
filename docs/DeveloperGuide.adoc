@@ -561,9 +561,6 @@ public AddressBook addToAddressBook(AddressBook addressBook) throws IllegalValue
 
 The following sequence diagram shows how the import operation works:
 
-.Import Command Sequence Diagram for Logic Component
-image::LogicComponentImportSequenceDiagram.png[width="800"]
-
 .Import Command Sequence Diagram for Model and Storage Component
 image::ModelStorageComponentImportSequenceDiagram.png[width="800"]
 
@@ -1099,6 +1096,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |student |be able to nagivate locations within and outside of NUS easily |find my way around quickly
 
 |`* * *`|user| be able to transfer data between computers |  share my data with others and change computers seamlessly
+
+|`* * *`|user| be able to upload to Google Drive easily |  store and restore backups and transfer data between computers without the use of hard drive
 
 |`* * *`|user who is concerned about privacy| be able to transfer encrypted data |share my data in its encrypted form
 

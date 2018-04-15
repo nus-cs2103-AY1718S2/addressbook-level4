@@ -532,13 +532,13 @@
 ```
 ###### /java/seedu/address/storage/XmlAdaptedTransaction.java
 ``` java
-        if (this.payees == null) {
+        if (this.payees.isEmpty()) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Payees"));
         }
+
         for (XmlAdaptedPerson payee: this.payees) {
             validatePersonFields(payee.toModelType());
         }
-
         UniquePersonList convertedPayees = new UniquePersonList();
         for (XmlAdaptedPerson payee: this.payees) {
             convertedPayees.add(payee.toModelType());
@@ -1075,9 +1075,5 @@ public class Balance {
 ###### /java/seedu/address/model/Model.java
 ``` java
     /** Returns a boolean if a transaction ,that have {@code person} as the payer, has been found. */
-    boolean hasNoTransactionWithPayer(Person person) throws TransactionNotFoundException, PersonFoundException;
-
-    /** Returns a boolean if a transaction ,that have {@code person} as a payee, has been found. */
-    boolean hasNoTransactionWithPayee(Person person) throws TransactionNotFoundException, PersonFoundException;
-
+    boolean personNotFoundInTransaction(Person person) throws TransactionNotFoundException, PersonFoundException;
 ```

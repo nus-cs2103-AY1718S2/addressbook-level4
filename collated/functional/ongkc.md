@@ -181,7 +181,7 @@ public class CreditorListPanel extends UiPart<Region>  {
 
 
     /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     * Scrolls to the {@code CreditorCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -192,7 +192,7 @@ public class CreditorListPanel extends UiPart<Region>  {
 
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code CreditorCard}.
      */
     class CreditorListViewCell extends ListCell<CreditorCard> {
         @Override
@@ -237,7 +237,7 @@ public class DebtorListPanel extends UiPart<Region> {
 
 
     /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     * Scrolls to the {@code DebtorCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -248,7 +248,7 @@ public class DebtorListPanel extends UiPart<Region> {
 
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code DebtorCard}.
      */
     class DebtorListViewCell extends ListCell<DebtorCard> {
         @Override
@@ -578,42 +578,25 @@ public class AddTransactionCommand extends UndoableCommand {
 ###### /java/seedu/address/logic/LogicManager.java
 ``` java
     /**
-     * Update the debt list to an empty list
+     * Update the Debtor and Creditor list to an empty list
      */
     @Override
-    public void updateDebtorsList() {
+    public void updateDebtorsAndCreditorList() {
         model.updateDebtorList(PREDICATE_SHOW_NO_DEBTORS);
+        model.updateCreditorList(PREDICATE_SHOW_NO_CREDITORS);
     }
     /**
-     * Update the people in the debt list
+     * Update the people in the Debtor and Creditor list
      */
-    public void updateDebtorsList(Person person) {
+    public void updateDebtorsAndCreditorList(Person person) {
+        model.updateCreditorList(PREDICATE_SHOW_ALL_CREDITORS);
         model.updateDebtorList(PREDICATE_SHOW_ALL_DEBTORS);
         DebtsTable debtsTable = model.getAddressBook().getDebtsTable();
         DebtsList debtsList = debtsTable.get(person);
         model.getAddressBook().setDebtors(debtsList);
-
-    }
-
-    /**
-     * Update creditor list to an empty list
-     */
-    @Override
-    public void updateCreditorsList() {
-        model.updateCreditorList(PREDICATE_SHOW_NO_CREDITORS);
-
-    }
-
-    /**
-     * Update the people in the creditor list
-     */
-    public void updateCreditorsList(Person person) {
-        model.updateCreditorList(PREDICATE_SHOW_ALL_CREDITORS);
-        DebtsTable debtsTable = model.getAddressBook().getDebtsTable();
-        DebtsList debtsList = debtsTable.get(person);
         model.getAddressBook().setCreditors(debtsList);
-
     }
+
 
 }
 ```
@@ -626,8 +609,8 @@ public class XmlAdaptedTransaction {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Transaction's %s field is missing!";
     public static final String MISSING_FIELD_MESSAGE_FORMAT_DATE =
-            "Transaction's %s field is missing, or is in wrong format!"
-                    + "(date format example: 2018-04-14T17:22:56.218+08:00";
+            "Transaction's %s field is missing, or is in wrong format "
+                    + "(date format example: 2018-04-14T17:22:56.218+08:00)";
 
     @XmlElement(required = true)
     private String transactionType;
@@ -1273,7 +1256,10 @@ public class Creditor {
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException, CommandException {
-        if (checkDebt(key)) {
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+        if (debtExists(key)) {
             throw new CommandException(String.format(MESSAGE_DEBT_NOT_PAID, key));
         }
         if (persons.remove(key)) {
@@ -1288,7 +1274,7 @@ public class Creditor {
     /**
      * check if the person to be deleted still owed any unpaid debt
      */
-    private boolean checkDebt(Person key) {
+    private boolean debtExists(Person key) {
         DebtsList debtsList = debtsTable.get(key);
         if (debtsList != null) {
             for (Balance value : debtsList.values()) {
@@ -1379,43 +1365,13 @@ public class Creditor {
         if (!transaction.getTransactionType().value.toLowerCase().equals(TransactionType.TRANSACTION_TYPE_PAYDEBT)) {
             updatePayerBalance(isAddingTransaction, transaction, payer);
 ```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-        }
-    }
-
-    /**
-     * Update payer balance whenever a new transaction is added or deleted
-     */
-    private void updatePayerBalance(Boolean isAddingTransaction, Transaction transaction, Person payer) {
-        payer.addToBalance(calculateAmountToAddForPayer(isAddingTransaction, transaction));
-    }
-    /**
-     * Update payee balance whenever a new transaction is added or deleted
-     */
-    private void updatePayeeBalance(Person payee,
-                                    Boolean isAddingTransaction,
-                                    Integer splitMethodValuesListIndex,
-                                    Transaction transaction) {
-        payee.addToBalance(calculateAmountToAddForPayee(isAddingTransaction,
-                    splitMethodValuesListIndex, transaction));
-    }
-    //@author phmignot
-    /**
-     * Removes {@code target} from the list of transactions.
-     * @throws TransactionNotFoundException if the {@code target} is not in the list of transactions.
-     */
-    public void removeTransaction(Transaction target) throws TransactionNotFoundException {
-        transactions.remove(target);
-        debtsTable.updateDebts(target, false);
-        debtsTable.display();
-    }
-
-```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
+    /**
+     * Check if the payer or payee in the transaction indicated exists
+     */
     @Override
-    public boolean hasNoTransactionWithPayer(Person person) throws PersonFoundException {
+    public boolean personNotFoundInTransaction(Person person) throws PersonFoundException {
         Set<Transaction> matchingTransactions = addressBook.getTransactionList()
                 .stream()
                 .filter(transaction -> transaction.getPayer().equals(person))
@@ -1429,30 +1385,9 @@ public class Creditor {
     }
 
     @Override
-    public boolean hasNoTransactionWithPayee(Person person) throws PersonFoundException {
-        Set<Transaction> matchingTransactions = addressBook.getTransactionList()
-                .stream()
-                .filter(transaction -> transaction.getPayees().contains(person))
-                .collect(Collectors.toSet());
-
-        if (matchingTransactions.isEmpty()) {
-            return true;
-        } else {
-            throw new PersonFoundException();
-        }
-    }
-
-    @Override
-    public List<Transaction> findTransactionsWithPayer(Person person) {
+    public List<Transaction> findTransactionsWithPerson(Person person) {
         List<Transaction> matchingTransactions = addressBook.getTransactionList()
                 .filtered(transaction -> transaction.getPayer().equals(person));
-        return matchingTransactions;
-    }
-
-    @Override
-    public List<Transaction> findTransactionsWithPayee(Person person) {
-        List<Transaction> matchingTransactions = addressBook.getTransactionList()
-                .filtered(transaction -> transaction.getPayees().contains(person));
         return matchingTransactions;
     }
     /**
@@ -1522,6 +1457,5 @@ public class Creditor {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
 }
 ```

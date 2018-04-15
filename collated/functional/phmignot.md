@@ -492,11 +492,7 @@ public class DebtsTable extends HashMap<Person, DebtsList> {
 ###### /java/seedu/address/model/Model.java
 ``` java
     /** Returns a List of transactions that have {@code person} as the payer */
-    List<Transaction> findTransactionsWithPayer(Person person);
-
-    /** Returns a List of transactions that have {@code person} as a payee */
-    List<Transaction> findTransactionsWithPayee(Person person);
-
+    List<Transaction> findTransactionsWithPerson(Person person);
 ```
 ###### /java/seedu/address/model/Model.java
 ``` java

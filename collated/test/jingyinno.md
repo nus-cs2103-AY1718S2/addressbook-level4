@@ -234,6 +234,7 @@ public class AliasCommandTest {
     public static final String VALID_ALIAS_DELETE = "delete1";
     public static final String VALID_ALIAS_EDIT = "edit1";
     public static final String VALID_ALIAS_EXIT = "exit1";
+    public static final String VALID_ALIAS_EXPORT = "export1";
     public static final String VALID_ALIAS_FIND = "find1";
     public static final String VALID_ALIAS_HELP_COMMAND = HelpCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_HELP = "help1";
@@ -241,7 +242,8 @@ public class AliasCommandTest {
     public static final String VALID_ALIAS_IMPORT = "import1";
     public static final String VALID_ALIAS_LIST_COMMAND = ListCommand.COMMAND_WORD;
     public static final String VALID_ALIAS_LIST = "list1";
-    public static final String VALID_ALIAS_MAP = "map1";
+    public static final String VALID_ALIAS_MAP1 = "map1";
+    public static final String VALID_ALIAS_MAP2 = "map2";
     public static final String VALID_ALIAS_ENCRYPT = "encrypt1";
     public static final String VALID_ALIAS_REDO = "redo1";
     public static final String VALID_ALIAS_DECRYPT = "decrypt1";
@@ -249,7 +251,9 @@ public class AliasCommandTest {
     public static final String VALID_ALIAS_UNALIAS = "unalias1";
     public static final String VALID_ALIAS_UNDO = "undo1";
     public static final String VALID_ALIAS_VACANT = "vacant1";
-    public static final String VALID_ALIAS_NUMBER = "9";
+    public static final String VALID_ALIAS_UNION = "union1";
+    public static final String VALID_ALIAS_UPLOAD = "upload1";
+    public static final String VALID_ALIAS_NUMBER = "911";
 
     public static final String ALIAS_DESC_ADD = AddCommand.COMMAND_WORD + " " + VALID_ALIAS_ADD;
     public static final String ALIAS_DESC_ALIAS = AliasCommand.COMMAND_WORD + " " + VALID_ALIAS_ALIAS;
@@ -260,24 +264,31 @@ public class AliasCommandTest {
     public static final String ALIAS_DESC_EDIT = EditCommand.COMMAND_WORD + " " + VALID_ALIAS_EDIT;
     public static final String ALIAS_DESC_EXIT = ExitCommand.COMMAND_WORD + " " + VALID_ALIAS_EXIT;
     public static final String ALIAS_DESC_ENCRYPT = PasswordCommand.COMMAND_WORD + " " + VALID_ALIAS_ENCRYPT;
+    public static final String ALIAS_DESC_EXPORT = ExportCommand.COMMAND_WORD + " " + VALID_ALIAS_EXPORT;
     public static final String ALIAS_DESC_FIND = FindCommand.COMMAND_WORD + " " + VALID_ALIAS_FIND;
     public static final String ALIAS_DESC_HELP = HelpCommand.COMMAND_WORD + " " + VALID_ALIAS_HELP;
     public static final String ALIAS_DESC_HISTORY = HistoryCommand.COMMAND_WORD + " " + VALID_ALIAS_HISTORY;
     public static final String ALIAS_DESC_IMPORT = ImportCommand.COMMAND_WORD + " " + VALID_ALIAS_IMPORT;
     public static final String ALIAS_DESC_LIST = ListCommand.COMMAND_WORD + " " + VALID_ALIAS_LIST;
-    public static final String ALIAS_DESC_MAP = MapCommand.COMMAND_WORD + " " + VALID_ALIAS_MAP;
-    public static final String ALIAS_DESC_PASSWORD = PasswordCommand.COMMAND_WORD + " " + VALID_ALIAS_ENCRYPT;
+    public static final String ALIAS_DESC_MAP1 = MapCommand.COMMAND_WORD + " " + VALID_ALIAS_MAP1;
+    public static final String ALIAS_DESC_MAP2 = MapCommand.COMMAND_WORD + " " + VALID_ALIAS_MAP2;
     public static final String ALIAS_DESC_REDO = RedoCommand.COMMAND_WORD + " " + VALID_ALIAS_REDO;
-    public static final String ALIAS_DESC_REMOVEPASSWORD = RemovePasswordCommand.COMMAND_WORD + " "
-            + VALID_ALIAS_DECRYPT;
     public static final String ALIAS_DESC_SELECT = SelectCommand.COMMAND_WORD + " " + VALID_ALIAS_SELECT;
     public static final String ALIAS_DESC_UNALIAS = UnaliasCommand.COMMAND_WORD + " " + VALID_ALIAS_UNALIAS;
     public static final String ALIAS_DESC_UNDO = UndoCommand.COMMAND_WORD + " " + VALID_ALIAS_UNDO;
     public static final String ALIAS_DESC_VACANT = VacantCommand.COMMAND_WORD + " " + VALID_ALIAS_VACANT;
+    public static final String ALIAS_DESC_UNION = TimetableUnionCommand.COMMAND_WORD + " " + VALID_ALIAS_UNION;
+    public static final String ALIAS_DESC_UPLOAD = UploadCommand.COMMAND_WORD + " " + VALID_ALIAS_UPLOAD;
+    public static final String ALIAS_DESC_NUMBER = UploadCommand.COMMAND_WORD + " " + VALID_ALIAS_NUMBER;
 
+    public static final String INVALID_COMMAND_SYNTAX = "command!";
     public static final String INVALID_ALIAS = "alias!";
-    public static final String INVALID_ALIAS_DESC = INVALID_ALIAS + " " + VALID_ALIAS_ALIAS;
     public static final String INVALID_COMMAND_DESC = "invalid";
+
+    public static final String INVALID_COMMAND_SYNTAX_DESC = INVALID_COMMAND_SYNTAX + " " + VALID_ALIAS_ALIAS;
+    public static final String INVALID_COMMAND_WORD_DESC = INVALID_COMMAND_DESC + " " + VALID_ALIAS_ALIAS;
+    public static final String INVALID_ALIAS_SYNTAX_DESC = SelectCommand.COMMAND_WORD + " " + INVALID_ALIAS;
+    public static final String INVALID_ALIAS_WORD_DESC = SelectCommand.COMMAND_WORD + " " + VacantCommand.COMMAND_WORD;
 
     public static final String VALID_BUILDING_1 = "COM1";
     public static final String VALID_BUILDING_2 = "S1";
@@ -289,6 +300,8 @@ public class AliasCommandTest {
     public static final String MIXED_CASE_VACANT_COMMAND_WORD = "VaCaNt";
 
     public static final String VALID_UNALIAS = VALID_ALIAS_ADD;
+
+    public static final String INVALID_UNALIAS = "nonexistent";
 
     public static final String INVALID_UNALIAS_DESC = "alias!";
 
@@ -357,6 +370,25 @@ public class MapCommandTest {
         String expectedMessage = String.format(MapCommand.MESSAGE_SUCCESS);
         CommandResult result = prepareCommand(VALID_THREE_LOCATIONS, model).execute();
         assertEquals(expectedMessage, result.feedbackToUser);
+    }
+
+    @Test
+    public void equals() {
+        MapCommand nus = new MapCommand("nus");
+        MapCommand soc = new MapCommand("soc");
+        MapCommand nusCopy = new MapCommand("nus");
+
+        // same object & values -> returns true
+        assertTrue(nus.equals(nusCopy));
+
+        // different types -> returns false
+        assertFalse(nus.equals(1));
+
+        // null -> returns false
+        assertFalse(nus == null);
+
+        // different person -> returns false
+        assertFalse(nus.equals(soc));
     }
 
     /**
@@ -727,24 +759,78 @@ public class AliasCommandParserTest {
 
     @Test
     public void parse_encryptAlias_success() {
-        Alias expectedUndoAlias = new AliasBuilder().withCommand(PasswordCommand.COMMAND_WORD)
+        Alias expectedEncryptAlias = new AliasBuilder().withCommand(PasswordCommand.COMMAND_WORD)
                 .withAlias(VALID_ALIAS_ENCRYPT).build();
 
-        assertParseSuccess(parser, ALIAS_DESC_ENCRYPT, new AliasCommand(expectedUndoAlias));
+        assertParseSuccess(parser, ALIAS_DESC_ENCRYPT, new AliasCommand(expectedEncryptAlias));
     }
 
     @Test
     public void parse_decryptAlias_success() {
-        Alias expectedUndoAlias = new AliasBuilder().withCommand(RemovePasswordCommand.COMMAND_WORD)
+        Alias expectedDecryptAlias = new AliasBuilder().withCommand(RemovePasswordCommand.COMMAND_WORD)
                 .withAlias(VALID_ALIAS_DECRYPT).build();
 
-        assertParseSuccess(parser, ALIAS_DESC_DECRYPT, new AliasCommand(expectedUndoAlias));
+        assertParseSuccess(parser, ALIAS_DESC_DECRYPT, new AliasCommand(expectedDecryptAlias));
     }
 
     @Test
-    public void parse_invalidValue_failure() {
+    public void parse_mapAlias_success() {
+        Alias expectedMapAlias = new AliasBuilder().withCommand(MapCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_MAP1).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_MAP1, new AliasCommand(expectedMapAlias));
+    }
+
+    @Test
+    public void parse_unionAlias_success() {
+        Alias expectedUnionAlias = new AliasBuilder().withCommand(TimetableUnionCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_UNION).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_UNION, new AliasCommand(expectedUnionAlias));
+    }
+
+    @Test
+    public void parse_unaliasAlias_success() {
+        Alias expectedUnaliasAlias = new AliasBuilder().withCommand(UnaliasCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_UNALIAS).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_UNALIAS, new AliasCommand(expectedUnaliasAlias));
+    }
+
+    @Test
+    public void parse_uploadAlias_success() {
+        Alias expectedUploadAlias = new AliasBuilder().withCommand(UploadCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_UPLOAD).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_UPLOAD, new AliasCommand(expectedUploadAlias));
+    }
+
+    @Test
+    public void parse_exportAlias_success() {
+        Alias expectedExportAlias = new AliasBuilder().withCommand(ExportCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_EXPORT).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_EXPORT, new AliasCommand(expectedExportAlias));
+    }
+
+    @Test
+    public void parse_vacantAlias_success() {
+        Alias expectedVacantAlias = new AliasBuilder().withCommand(VacantCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_VACANT).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_VACANT, new AliasCommand(expectedVacantAlias));
+    }
+
+    @Test
+    public void parse_invalidAliasSyntax_failure() {
         //alias with symbols failure
-        assertParseFailure(parser, INVALID_ALIAS_DESC, Alias.MESSAGE_ALIAS_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_ALIAS_SYNTAX_DESC, Alias.MESSAGE_ALIAS_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidCommandSyntax_failure() {
+        //command with symbols failure
+        assertParseFailure(parser, INVALID_COMMAND_SYNTAX_DESC, Alias.MESSAGE_ALIAS_CONSTRAINTS);
     }
 
     @Test
@@ -764,11 +850,14 @@ public class AliasCommandParserTest {
 ###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
     private static final String VALID_BUILDING = "COM1";
-
+    private static final String VALID_BUILDING_2 = "COM2";
     private static final String INVALID_BUILDING = "COM*";
-
     private static final String VALID_LOCATION = "com1";
-
+    private static final String VALID_POSTAL_CODE = "117417";
+    private static final String VALID_POSTAL_CODE_2 = "138527";
+    private static final String VALID_ALIAS = "add1";
+    private static final String INVALID_ALIAS = "add*";
+    private static final Alias ADD_ALIAS = new Alias(AddCommand.COMMAND_WORD, VALID_ALIAS);
 ```
 ###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
@@ -781,6 +870,97 @@ public class AliasCommandParserTest {
     @Test
     public void parseBuilding_invalidBuilding_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseBuilding(INVALID_BUILDING));
+    }
+
+    @Test
+    public void parseBuilding_invalidBuilding_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseBuilding(null));
+    }
+
+    @Test
+    public void parseUnalias_validUnAlias() throws Exception {
+        assertEquals(VALID_ALIAS, ParserUtil.parseUnalias(VALID_ALIAS));
+    }
+
+    @Test
+    public void parseUnalias_invalidUnAlias_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseUnalias(INVALID_ALIAS));
+    }
+
+    @Test
+    public void parseUnalias_invalidUnAlias_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseUnalias(null));
+    }
+
+    @Test
+    public void parseAlias_validAliasCommandAndAlias() throws Exception {
+        assertEquals(ADD_ALIAS, ParserUtil.parseAlias(AddCommand.COMMAND_WORD, VALID_ALIAS));
+    }
+
+    @Test
+    public void parseAlias_validAliasCommandAndinvalidAlias_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAlias(AddCommand.COMMAND_WORD,
+                INVALID_ALIAS));
+    }
+
+    @Test
+    public void parseAlias_invalidAliasCommandAndvalidAlias_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAlias(INVALID_ALIAS, VALID_ALIAS));
+    }
+
+    @Test
+    public void parseAlias_invalidAliasCommandAndvalidAlias_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAlias(null, VALID_ALIAS));
+    }
+
+    @Test
+    public void parseAlias_validAliasCommandAndinvalidAlias_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAlias(AddCommand.COMMAND_WORD, null));
+    }
+
+    @Test
+    public void parseLocations_validLocation_success() {
+        assertEquals(VALID_POSTAL_CODE, ParserUtil.parseLocations(VALID_POSTAL_CODE));
+    }
+
+    @Test
+    public void parseLocations_multipleLocations_success() {
+        String[] locations = new String[] {VALID_POSTAL_CODE, VALID_POSTAL_CODE_2};
+        String joinedLocations = String.join(MapCommand.SPLIT_TOKEN, locations);
+        assertEquals(joinedLocations , ParserUtil.parseLocations(joinedLocations));
+    }
+
+    @Test
+    public void parseLocations_validNusLocations_success() {
+        assertEquals(VALID_POSTAL_CODE , ParserUtil.parseLocations(VALID_BUILDING));
+    }
+
+    @Test
+    public void parseLocations_validNusLocationsMixedCase_success() {
+        assertEquals(VALID_POSTAL_CODE , ParserUtil.parseLocations(VALID_LOCATION));
+    }
+
+    @Test
+    public void parseLocations_validMultipleNusLocations_success() {
+        String[] locationsPostalCode = new String[] {VALID_POSTAL_CODE, VALID_POSTAL_CODE};
+        String expectedLocations = String.join(MapCommand.SPLIT_TOKEN, locationsPostalCode);
+        String[] locations = new String[] {VALID_BUILDING, VALID_BUILDING_2};
+        String joinedLocations = String.join(MapCommand.SPLIT_TOKEN, locations);
+        assertEquals(expectedLocations , ParserUtil.parseLocations(joinedLocations));
+    }
+
+    @Test
+    public void parseLocations_validMixedLocations_success() {
+        String[] locationsPostalCode = new String[] {VALID_POSTAL_CODE_2, VALID_POSTAL_CODE};
+        String expectedLocations = String.join(MapCommand.SPLIT_TOKEN, locationsPostalCode);
+        String[] locations = new String[] {VALID_POSTAL_CODE_2, VALID_BUILDING};
+        String joinedLocations = String.join(MapCommand.SPLIT_TOKEN, locations);
+        assertEquals(expectedLocations , ParserUtil.parseLocations(joinedLocations));
+    }
+
+    @Test
+    public void parseLocations_invalidLocation_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseLocations(null));
     }
 ```
 ###### \java\seedu\address\logic\parser\UnaliasCommandParserTest.java
@@ -871,6 +1051,20 @@ public class VacantCommandParserTest {
 ``` java
 public class AliasTest {
 
+    private Alias clear;
+    private Alias add;
+    private Alias addClone;
+    private Alias map;
+
+    @Before
+    public void setUp() {
+        AliasBuilder builder = new AliasBuilder();
+        clear = builder.withCommand(ClearCommand.COMMAND_WORD).withAlias(VALID_ALIAS_CLEAR).build();
+        add = builder.withCommand(AddCommand.COMMAND_WORD).withAlias(VALID_ALIAS_ADD).build();
+        addClone = builder.withCommand(AddCommand.COMMAND_WORD).withAlias(VALID_ALIAS_ADD).build();
+        map = builder.withCommand(MapCommand.COMMAND_WORD).withAlias(VALID_ALIAS_MAP1).build();
+    }
+
     @Test
     public void constructor_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> new Alias(null, null));
@@ -898,24 +1092,32 @@ public class AliasTest {
     }
 
     @Test
-    public void isValidUnaliasName() {
-        // null unalias
-        Assert.assertThrows(NullPointerException.class, () -> new Alias(null, null));
-
-        // invalid unalias
-        assertFalse(Alias.isValidAliasParameter("")); // empty string
-        assertFalse(Alias.isValidAliasParameter(" ")); // spaces only
-        assertFalse(Alias.isValidAliasParameter(INVALID_ALIAS)); // only non-alphanumeric characters
-
-        // valid unalias
-        assertTrue(Alias.isValidAliasParameter(VALID_ALIAS_ADD));
-        assertTrue(Alias.isValidAliasParameter(VALID_ALIAS_NUMBER));
+    public void equals() {
+        assertEquals(clear, new Alias(VALID_ALIAS_CLEAR_COMMAND, VALID_ALIAS_CLEAR));
     }
 
     @Test
-    public void equals() {
-        Alias clear = new Alias(VALID_ALIAS_CLEAR_COMMAND, VALID_ALIAS_CLEAR);
-        assertEquals(clear, new Alias(VALID_ALIAS_CLEAR_COMMAND, VALID_ALIAS_CLEAR));
+    public void getCommand_validAliases_success() {
+        assertEquals(add.getCommand(), AddCommand.COMMAND_WORD);
+        assertEquals(map.getCommand(), MapCommand.COMMAND_WORD);
+    }
+
+    @Test
+    public void getAlias_validAliases_success() {
+        assertEquals(add.getAlias(), VALID_ALIAS_ADD);
+        assertEquals(map.getAlias(), VALID_ALIAS_MAP1);
+    }
+
+    @Test
+    public void hashCode_equals() {
+        assertEquals(add.hashCode(), addClone.hashCode());
+        assertNotEquals(add.hashCode(), clear.hashCode());
+    }
+
+    @Test
+    public void toString_equals() {
+        String expectedString = String.format("[%s]", add.getAlias());
+        assertEquals(add.toString(), expectedString);
     }
 }
 ```
@@ -1060,10 +1262,18 @@ public class UniqueAliasListTest {
     }
 
     @Test
-    public void addAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
+    public void addAlias_validAlias_success() throws DuplicateAliasException {
         Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
         assertEquals(Arrays.asList(validAlias), uniqueAliasList.getAliasObservableList());
+    }
+
+    @Test
+    public void addAlias_validAlias_throwsDuplicateAliasException() throws DuplicateAliasException {
+        Alias validAlias = ADD;
+        uniqueAliasList.add(validAlias);
+        thrown.expect(DuplicateAliasException.class);
+        uniqueAliasList.add(validAlias);
     }
 
     @Test
@@ -1084,7 +1294,7 @@ public class UniqueAliasListTest {
     }
 
     @Test
-    public void getAliasCommand_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
+    public void getAliasCommand_validAlias_success() throws DuplicateAliasException {
         Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
 
@@ -1094,20 +1304,20 @@ public class UniqueAliasListTest {
     }
 
     @Test
-    public void importAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
+    public void importAlias_validAlias_success() {
         Alias validAlias = ADD;
         uniqueAliasList.importAlias(validAlias);
         assertEquals(Arrays.asList(validAlias), uniqueAliasList.getAliasObservableList());
     }
 
     @Test
-    public void extractAliasMapping_noAliasAdded_success() throws DuplicateAliasException, AliasNotFoundException {
+    public void extractAliasMapping_noAliasAdded_success() {
         ArrayList<String> expectedList = new ArrayList<String>();
         assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
     }
 
     @Test
-    public void extractAliasMapping_validAliasAdded_success() throws DuplicateAliasException, AliasNotFoundException {
+    public void extractAliasMapping_validAliasAdded_success() throws DuplicateAliasException {
         uniqueAliasList.add(ADD);
 
         ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD}});
@@ -1125,24 +1335,30 @@ public class UniqueAliasListTest {
     }
 
     @Test
-    public void extractAliasMapping_sameCommandAliases_success() throws DuplicateAliasException,
-            AliasNotFoundException {
+    public void extractAliasMapping_sameCommandAliases_success() throws DuplicateAliasException {
         uniqueAliasList.add(MAP_1);
         uniqueAliasList.add(MAP_2);
 
-        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{MAP_2}, {MAP_1}});
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{MAP_1}, {MAP_2}});
         assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
     }
 
     @Test
-    public void extractAliasMapping_mixedCommandAliases_success() throws DuplicateAliasException,
-            AliasNotFoundException {
+    public void extractAliasMapping_mixedCommandAliases_success() throws DuplicateAliasException {
         uniqueAliasList.add(ADD);
         uniqueAliasList.add(MAP_1);
         uniqueAliasList.add(MAP_2);
 
-        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD, MAP_2}, {MAP_1}});
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD, MAP_1}, {MAP_2}});
         assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
+
+    @Test
+    public void resetHashMap_success() throws DuplicateAliasException {
+        uniqueAliasList.add(ADD);
+        assertEquals(Arrays.asList(ADD), uniqueAliasList.getAliasObservableList());
+        uniqueAliasList.resetHashmap();
+        assertEquals(new ArrayList<Alias>(), uniqueAliasList.getAliasObservableList());
     }
 
     /**
@@ -1289,8 +1505,11 @@ public class TypicalAliases {
     public static final Alias HISTORY = new AliasBuilder().withCommand("history").withAlias("history1").build();
     public static final Alias IMPORT = new AliasBuilder().withCommand("import").withAlias("import1").build();
     public static final Alias LIST = new AliasBuilder().withCommand("list").withAlias("list1").build();
+    public static final Alias NONEXISTENT = new AliasBuilder().withCommand("list").withAlias("nonexistent").build();
     public static final Alias REDO = new AliasBuilder().withCommand("redo").withAlias("redo1").build();
     public static final Alias UNDO = new AliasBuilder().withCommand("undo").withAlias("undo1").build();
+    public static final Alias UPLOAD = new AliasBuilder().withCommand("upload").withAlias("911").build();
+    public static final Alias UNION = new AliasBuilder().withCommand("union").withAlias("union1").build();
     public static final Alias UNKNOWN = new AliasBuilder().withCommand("unknownCommand").withAlias("add1").build();
     public static final Alias MAP_1 = new AliasBuilder().withCommand("map").withAlias("map1").build();
     public static final Alias MAP_2 = new AliasBuilder().withCommand("map").withAlias("map2").build();
@@ -1314,7 +1533,8 @@ public class TypicalAliases {
     }
 
     public static List<Alias> getTypicalAliases() {
-        return new ArrayList<>(Arrays.asList(ADD, ALIAS, CLEAR, DELETE, EDIT, EXIT, HELP, HISTORY, LIST, REDO, UNDO));
+        return new ArrayList<>(Arrays.asList(ADD, ALIAS, CLEAR, DELETE, EDIT, EXIT, HELP, HISTORY, LIST, REDO,
+                UNDO, UNION, MAP_2, MAP_1, UPLOAD));
     }
 }
 ```
@@ -1333,7 +1553,8 @@ public class AliasListTest extends GuiUnitTest {
 
     @Test
     public void checkTable() {
-        // Populate expectedAliases
+
+        /* Case: add two aliases in the first row and one alias in the second row */
         String[][] expected = new String[][] {{"add1", "alias1"}, {"add2"}};
 
         // Init alias list and post event
@@ -1342,14 +1563,30 @@ public class AliasListTest extends GuiUnitTest {
         AliasListEvent aliasListEventStub = new AliasListEvent(obsExpected);
 
         aliasList.init(obsExpected);
+        aliasList.setStyle();
         postNow(aliasListEventStub);
         guiRobot.pauseForHuman();
 
         // Assert content of the table
         GuiTestAssert.assertTableContent(aliasListHandle.getTables(), expected);
 
-        // Populate expectedAliases
+        /* Case: add one alias in the first row */
         expected = new String[][] {{"add1"}};
+        expectedList = GuiTestAssert.populateExpectedAliases(expected);
+
+        // Init alias list and post event
+        obsExpected = FXCollections.observableArrayList(expectedList);
+        aliasListEventStub = new AliasListEvent(obsExpected);
+
+        aliasList.init(obsExpected);
+        postNow(aliasListEventStub);
+        guiRobot.pauseForHuman();
+
+        // Assert content of the table
+        GuiTestAssert.assertTableContent(aliasListHandle.getTables(), expected);
+
+        /* Case: add three aliases in the first row */
+        expected = new String[][] {{"add1", "alias1", "birthday1"}};
         expectedList = GuiTestAssert.populateExpectedAliases(expected);
 
         // Init alias list and post event
@@ -1415,6 +1652,21 @@ public class GoogleMapsDisplayTest extends GuiUnitTest {
     }
 
     /**
+     * Asserts that the content in {@code aliasListTable} matches all the string in {@code expected}
+     */
+    public static void assertTableContent(ObservableList<TableColumn> aliasListTable, Alias[][] expected) {
+        ArrayList<ArrayList<String>> expectedList = populateExpectedAliases(expected);
+        for (int i = 0; i < expectedList.size(); i++) {
+            for (int j = 0; j < expectedList.get(i).size(); j++) {
+                TableColumn column = aliasListTable.get(j);
+
+                // Current Row value at column
+                assertEquals(expectedList.get(i).get(j), column.getCellObservableValue(i).getValue());
+            }
+        }
+    }
+
+    /**
      * Helper method to populate expectedTable with unused empty Alias
      */
     public static ArrayList<ArrayList<String>> populateExpectedAliases(String[][] expected) {
@@ -1434,6 +1686,45 @@ public class GoogleMapsDisplayTest extends GuiUnitTest {
         }
         return expectedList;
     }
+
+    /**
+     * Helper method to populate expectedTable with unused empty Alias
+     */
+    public static ArrayList<ArrayList<String>> populateExpectedAliases(Alias[][] expected) {
+        String emptyAlias = "";
+        ArrayList<ArrayList<String>> expectedList = new ArrayList<>();
+        for (Alias[] inner : expected) {
+            ArrayList<String> innerList = setExpectedAliases(emptyAlias, inner);
+            expectedList.add(innerList);
+        }
+        return expectedList;
+    }
+
+    /**
+     * Helper method to set inner expected aliases
+     */
+    private static ArrayList<String> setExpectedAliases(String emptyAlias, Alias[] inner) {
+        ArrayList<String> innerList = createNewInnerList(emptyAlias);
+
+        // reset expected alias for command
+        for (Alias alias : inner) {
+            int index = AliasCommand.getCommands().indexOf(alias.getCommand());
+            innerList.set(index, alias.getAlias());
+        }
+        return innerList;
+    }
+
+    /**
+     * Helper method to generate new inner list
+     */
+    private static ArrayList<String> createNewInnerList(String emptyAlias) {
+        // Generate empty alias ("") for inner list
+        ArrayList<String> innerList = new ArrayList<>();
+        for (int i = 0; i < AliasCommand.getCommands().size(); i++) {
+            innerList.add(emptyAlias);
+        }
+        return innerList;
+    }
 ```
 ###### \java\systemtests\AddressBookSystemTest.java
 ``` java
@@ -1449,7 +1740,7 @@ public class GoogleMapsDisplayTest extends GuiUnitTest {
 ###### \java\systemtests\AddressBookSystemTest.java
 ``` java
     protected void assertTableDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
-                                               String[][] table) {
+                                               Alias[][] table) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         GuiTestAssert.assertTableContent(getAliasList().getTables(), table);
@@ -1656,6 +1947,185 @@ public class MapCommandSystemTest extends AddressBookSystemTest {
     public static void setAliases(Model model, HashMap<String, String> aliases) {
         model.updateAliasesMapping(aliases);
     }
+```
+###### \java\systemtests\UnaliasCommandSystemTest.java
+``` java
+public class UnaliasCommandSystemTest extends AddressBookSystemTest {
+
+    @Test
+    public void unalias() throws Exception {
+        Model model = getModel();
+
+        /* ------------------------ Perform remove operations from the alias list ----------------------------- */
+
+        /* Case: remove an alias from a non-empty address book, command with leading spaces and trailing spaces
+        * -> removed
+        * */
+        String toDeleteAdd = VALID_ALIAS_ADD;
+        generateAliases(model);
+        String command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_ADD + "   ";
+        Alias[] expectedAliasArray = getRemainingAliases(new Alias[] {ADD});
+        Alias[][] expectedAliases = new Alias[][] {expectedAliasArray};
+        assertCommandSuccess(command, toDeleteAdd, expectedAliases);
+
+        /* Case: undo removing ADD from the list -> ADD added */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, model, expectedResultMessage);
+
+        /* Case: redo removing ADD from the list -> ADD removed again */
+        command = RedoCommand.COMMAND_WORD;
+        model.removeAlias(VALID_ALIAS_ADD);
+        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        expectedAliases = new Alias[][] {expectedAliasArray};
+        assertCommandSuccess(command, model, expectedResultMessage, expectedAliases);
+
+        /* Case: remove another alias from a non-empty address book, command with leading and trailing spaces
+         * -> removed
+         * */
+        String toDeleteMap = VALID_ALIAS_MAP2;
+        command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_MAP2 + "  ";
+        expectedAliasArray = getRemainingAliases(new Alias[] {MAP_2, ADD});
+        expectedAliases = new Alias[][] {expectedAliasArray};
+        assertCommandSuccess(command, toDeleteMap, expectedAliases);
+
+        /* Case: remove another alias from a non-empty address book, command with leading and trailing spaces
+         * -> removed
+         * */
+        String toDeleteUpload = VALID_ALIAS_NUMBER;
+        command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_NUMBER + "  ";
+        expectedAliasArray = getRemainingAliases(new Alias[] {MAP_2, ADD, UPLOAD});
+        expectedAliases = new Alias[][] {expectedAliasArray};
+        assertCommandSuccess(command, toDeleteUpload, expectedAliases);
+
+        /* --------------------------------- Perform invalid unalias operations ------------------------------------- */
+
+        /* Case: remove nonexistent alias from a non-empty address book, command with leading and trailing spaces
+         * -> rejected
+         * */
+        command = "   " + UnaliasCommand.COMMAND_WORD + "  " + INVALID_UNALIAS + "  ";
+        assertCommandFailure(command, UnaliasCommand.MESSAGE_UNKNOWN_UNALIAS);
+
+        /* Case: remove alias with symbols from a non-empty address book, command with leading and trailing spaces
+         * -> rejected
+         * */
+        command = "   " + UnaliasCommand.COMMAND_WORD + "  " + INVALID_UNALIAS_DESC + "  ";
+        assertCommandFailure(command, Alias.MESSAGE_ALIAS_CONSTRAINTS);
+    }
+
+    /**
+     * Executes the {@code UnaliasCommand} that removes {@code toDelete} from the model and asserts that the,<br>
+     * 1. Command box displays an empty string.<br>
+     * 2. Command box has the default style class.<br>
+     * 3. Result display box displays the success message of executing {@code unaliasCommand} <br>
+     * 4. {@code Model}, {@code Storage} and {@code AliasListPanel} equal to the corresponding components in
+     * the current model without {@code toDelete}.<br>
+     * 5. Browser url and selected card remain unchanged.<br>
+     * 6. Status bar's sync status changes.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command, String toDelete, Alias[][] expectedTable) {
+        Model expectedModel = getModel();
+        try {
+            expectedModel.removeAlias(toDelete);
+        } catch (AliasNotFoundException e) {
+            throw new AssertionError("toDelete does not exists in the model.");
+        }
+        String expectedResultMessage = UnaliasCommand.MESSAGE_SUCCESS;
+
+        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedTable);
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Alias)} except asserts that
+     * the,<br>
+     * 1. Result display box displays {@code expectedResultMessage}.<br>
+     * 2. {@code Model}, {@code Storage} and {@code AliasListPanel} equal to the corresponding components in
+     * {@code expectedModel}.<br>
+     * @see UnaliasCommandSystemTest#assertCommandSuccess(String, String, Alias[][])
+     */
+    private void assertCommandSuccess(String command, Model expectedModel,
+                                      String expectedResultMessage, Alias[][] expectedTable) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+        assertAliasTable(expectedTable);
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Alias)} except asserts that
+     * the,<br>
+     * 1. Result display box displays {@code expectedResultMessage}.<br>
+     * 2. {@code Model}, {@code Storage} and {@code AliasListPanel} equal to the corresponding components in
+     * {@code expectedModel}.<br>
+     * @see UnaliasCommandSystemTest#assertCommandSuccess(String, String, Alias[][])
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    private void assertAliasTable(Alias[][] expectedTable) {
+        executeCommand(ListCommand.COMMAND_WORD);
+        assertTableDisplaysExpected("", ListCommand.MESSAGE_SUCCESS, expectedTable);
+    }
+
+    /**
+     * To add new alias into {@code model} with typicalAliases
+     * @param model the current model of the testing stage
+     */
+    private void generateAliases(Model model) {
+        List<Alias> aliases = TypicalAliases.getTypicalAliases();
+        for (Alias alias : aliases) {
+            try {
+                model.addAlias(alias);
+            } catch (DuplicateAliasException dpe) {
+                throw new IllegalArgumentException("toAdd already exists in the model.");
+            }
+            executeCommand(AliasUtil.getAliasCommand(alias));
+        }
+    }
+
+    /**
+     * To generate a new expected aliases list with typicalAliases excluding {@code aliases}
+     * @param aliases the aliases to be excluded from typicalAlias list
+     * @return the expected aliases excuding {@code aliases}
+     */
+    private Alias[] getRemainingAliases(Alias[] aliases) {
+        List<Alias> expectedAliases = TypicalAliases.getTypicalAliases();
+        for (Alias alias : aliases) {
+            expectedAliases.remove(alias);
+        }
+        return expectedAliases.toArray(new Alias[expectedAliases.size()]);
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code AliasListPanel} remain unchanged.<br>
+     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
 ```
 ###### \java\systemtests\VacantCommandSystemTest.java
 ``` java

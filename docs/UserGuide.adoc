@@ -219,7 +219,9 @@ Only indexes of the current filtered list are valid
 Examples:
 
 * `union Odd 1 2 3` +
-Displays the combined odd timetable for friends at Index 1, 2 and 3.
+Displays the combined odd timetable for friends at Index 1, 2 and 3. +
+
+image::timetableUnion.PNG
 
 * `union Even 1 2` +
 Displays the combined even timetable for friends at Index 1 and 2.
@@ -245,7 +247,7 @@ Finds the vacancy status of study rooms in COM1 building.
 // tag::maps[]
 ==== Google maps display : `map` _(since v1.4)_
 
-To find locations or a path from one place to another, you can enter the command `map` along with the locations to launch Google Maps with the specified location(s).
+To find locations or a path from one place to another, you can enter the command `map` along with the locations to launch Google Maps with the specified location(s). +
 Format: `map LOCATION` or `map LOCATION/LOCATION...` or `map current location`
 
 image::map.png[width="790"]
@@ -281,7 +283,7 @@ Format: `help`
 // tag::alias[]
 ==== Adding a command alias: `alias` _(since v1.1)_
 
-To create customized aliases for any valid command, you can enter the command `alias` followed by your desired command and your very own alias.+
+To create customized aliases for any valid command, you can enter the command `alias` followed by your desired command and your very own alias. +
 Format: `alias [COMMAND] [ALIAS]`
 
 ****
@@ -296,7 +298,7 @@ Examples:
 
 ==== Removing a currently existing alias: `unalias` _(since v1.3)_
 
-To remove a previously created alias, you can enter the command `unalias` followed by the alias you wish to remove+
+To remove a previously created alias, you can enter the command `unalias` followed by the alias you wish to remove. +
 Format: `unalias [CURRENT_ALIAS]`
 
 Examples:
@@ -486,6 +488,14 @@ There is no need to save manually.
 We have a few exciting ideas to further improve ST for you!
 
 === Use current location to find vacant rooms _(coming in v2.0)_
+
+You will be able to find vacant rooms in nearest building just by providing your current location. +
+Format: `vacant current location`
+
+Examples:
+
+* `vacant current location` +
+Displays the list of rooms schedule for the day in the nearest building
 
 === Modules Tag _(coming in v2.0)_
 

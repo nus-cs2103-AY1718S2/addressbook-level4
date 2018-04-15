@@ -9,7 +9,6 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.FilePath;
 import seedu.address.model.ReadOnlyDeskBoard;
-import seedu.address.storage.XmlDeskBoardStorage;
 
 //@@author karenfrilya97
 /**
@@ -42,8 +41,10 @@ public class ImportCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
+        requireNonNull(storage);
+
         try {
-            ReadOnlyDeskBoard toImport = new XmlDeskBoardStorage(filePath.value).readDeskBoard()
+            ReadOnlyDeskBoard toImport = storage.readDeskBoard(filePath.value)
                     .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePath)));
 
             model.addActivities(toImport);

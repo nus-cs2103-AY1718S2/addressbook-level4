@@ -9,6 +9,7 @@ import java.io.IOException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.FilePath;
+import seedu.address.model.ReadOnlyDeskBoard;
 
 //@@author karenfrilya97
 /**
@@ -48,7 +49,8 @@ public class ExportCommand extends Command {
         }
 
         try {
-            storage.exportDeskBoard(model.getDeskBoard(), filePath.value);
+            ReadOnlyDeskBoard deskBoard = model.getDeskBoard();
+            storage.saveDeskBoard(deskBoard, filePath.value);
             return new CommandResult(String.format(MESSAGE_SUCCESS, filePath.value));
         } catch (IOException ioe) {
             throw new CommandException(ioe.getMessage());

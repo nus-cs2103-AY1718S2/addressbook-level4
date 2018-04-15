@@ -73,7 +73,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public void saveDeskBoard(ReadOnlyDeskBoard deskBoard, String filePath) throws IOException {
-        logger.fine("Attempting to write to data file: " + filePath);
+        logger.fine("Attempting to write data to file: " + filePath);
         deskBoardStorage.saveDeskBoard(deskBoard, filePath);
     }
 
@@ -86,12 +86,5 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
-    }
-
-    //@@author karenfrilya97
-    @Override
-    public void exportDeskBoard(ReadOnlyDeskBoard deskBoard, String filePath) throws IOException {
-        logger.info("Exporting data to file: " + filePath);
-        deskBoardStorage.saveDeskBoard(deskBoard, filePath);
     }
 }

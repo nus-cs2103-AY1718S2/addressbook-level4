@@ -105,9 +105,6 @@ public class DeskBoard implements ReadOnlyDeskBoard {
     public void addActivities(List<Activity> toAdd) {
         for (Activity activity : toAdd) {
             activity = syncWithMasterTagList(activity);
-            // TODO: the tags master list will be updated even though the below line fails.
-            // This can cause the tags master list to have additional tags that are not tagged to any activity
-            // in the activity list.
             try {
                 activities.add(activity);
             } catch (DuplicateActivityException e) {

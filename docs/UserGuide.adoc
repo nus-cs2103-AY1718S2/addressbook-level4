@@ -27,9 +27,10 @@ Its User Interface (UI) is a hybrid of Command Line Interface (CLI) while still 
 Without further ado, let's see what ET can do!  Jump to the <<Quick Start>> to get started.
 
 == Quick Start
-This section is to help you to start using Employees Tracker quickly.
+This section contains essential information and instructions to help you to start using Employees Tracker quickly.
 
 === Setting up
+If you are using ET for the first time, please set up ET by following the instructions below carefully.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -37,6 +38,7 @@ This section is to help you to start using Employees Tracker quickly.
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
+. Ensure that you have access to the internet.
 .  Download the latest `et-employeestracker.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Employees Tracker.
 .  Double-click the file to start the app. The GUI should appear in a few seconds, as shown in _Figure 1_.
@@ -44,17 +46,28 @@ This app will not work with earlier versions of Java 8.
 .Graphical User Interface (GUI)
 image::Ui_locked.png[width="790"]
 +
-. To use ET, you have to unlock it with the default password "admin". Type command `unlock`, enter the password in the pop-up dialog and press kbd:[Enter] on keyboard.
-. If it is your first time to use ET, you are supposed to authorize ET to access your Google Calendar. Type this command `authenET`, a web page will be opened in your default browser,
-and you need to log in with your working google account and give the permission. Refer to Figure 2 below.
+. Type command `unlock` and press kbd:[Enter] to execute the unlock command. You will be greeted by a pop-up window as shown in _Figure 2_.
 +
-[NOTE]
-You need to connect to Internet when using E.T., because some commands need to access Internet.
+.Pop-up Window on top of ET
+image::password_box.png[width="790"]
 +
-.Authorizing ET
+. Type default password `admin` in the pop-up window and press kbd:[Enter] or the left-click on the `Unlock` button at the bottom right corner of the pop-up window. The pop-up window will then disappear.
+. Type `authenET` and press kbd:[Enter]. You will be directed to an authorizing web page as shown in _Figure 3_.
+
++
+.Authorizing web page
 image::authorize_ET.png[width="790"]
 +
-.  After logging in and authorizing, you can use ET by typing the commands kbd:[Enter] to execute it. +
+. Press `allow` at the bottom right corner. Closes your browser and return to ET once you see a web page with a confirmation message similar to that in _Figure 4_.
++
+.Confirmation message
+image::login_done.png[width="790"]
+
+
+[NOTE]
+The above instructions are only for first-time users. However, because ET is locked by default for security purposes, you will need to follow step 4, 5, 6 for every time you open ET in the future. Of course, if you have changed your password, then you will need to execute step 6 with your new password.
+
+After setting up, you can start using ET by typing commands and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 ****
@@ -68,57 +81,38 @@ adds an employee named `John Doe` to Employees Tracker.
 deletes the 3^rd^ contact shown in the current list.
 * `exit` +
 exits the app.
-
-Refer to <<Commands>> for details of each command.
 ****
+Refer to <<Commands>> for more details on commands.
 
-== Features
-This section lists all Employees Tracker's features in detail.
+=== Knowing the User Interface
 
-=== The User Interface
-The User Interface will be the application's interface that you will interact with.
-
-==== Knowing the components
-
-_Figure 2_ shows the 5 major components of the user interface of Employees Tracker (ET):
+_Figure 5_ shows the 5 major components of the user interface of Employees Tracker (ET):
 
 * Command Box:where you type in commands
 * Result Display Box: where ET shows text result to you
 * Employees List Panel: where the list of all employees is shown
 * Employee's Profile Panel: where the details of the selected employee is shown
-* Notification cards: where ET reminds you about ended events
+* Notification cards: where ET reminds you about events
 
 .User Interface
 image::UiLabelled.jpg[width="790"]
 
-==== Reading the result display box
+=== Reading the result display box
 
 The result display box shows 3 types of information:
 
 * Error messages in [red]#red#, if the command you entered does not exists or does not match the pre-defined format.
-* Hints about the format and usage of the command in [green]#green#.
-* Statuses of Employees Tracker in [white]#white#, if your command is processed successfully.
+* Hints about the format and usage of the command in [maroon]#maroon#.
+* Statuses of Employees Tracker in [maroon]#maroon#, if your command is processed successfully.
 
 [NOTE]
-ET will intelligently provide [green]#hints# according to the words you type in the `Command Box`.
+Whenever you type keyword of a command in the `Command Box`, ET will provide [maroon]#hints# about its usage.
 
-==== Understanding the notification system
-
-===== Notification cards
-
-_Figure 3_ shows a notification card of ET. Each notification card contains 4 information, which are index, event name, name of person in-charge and expiry date and time.
-
-.A notification card
-image::card_labelled.jpg[width=""]
-
-{nbsp} +
-
-===== Two Phase notification
-
+=== Understanding the notifications
 ET has a 2 phase notification system, i.e. there will be 2 notification cards popping up to remind you of each event.
 
-* The first phase notification will pop out in a [blue]#blue# notification card, on the day of expiry, as shown in _Figure 4_.
-* The second phase notification will pop out in a [red]#red# notification card, at the exact time of expiry, as shown in _Figure 5_.
+* The first phase notification will pop out in a [blue]#blue# notification card, on the day of expiry, as shown in _Figure 6_.
+* The second phase notification will pop out in a [red]#red# notification card, at the exact time of expiry, as shown in _Figure 7_.
 
 .First phase notification card
 image::card_blue.png[width=""]
@@ -126,41 +120,14 @@ image::card_blue.png[width=""]
 .Second phase notification card
 image::card_red.png[width=""]
 
-For example, suppose you have assigned a task to Alex which will due on 27^th^ May 2018 4:00 pm. When you open ET for the first time in the morning of 27^th^ May 2018, you will be notified that Alex has a task that will due on *today* in a [blue]#blue# notification card. Later at 4:00 pm of 27^th^ May 2018, you will receive the second phase notification in [red]#red#, informing you that Alex should have finished the task by *now* .
+For example, suppose you have assigned a task to Alex which will due on 15^th^ Apr 2018 0032 hrs. When you open ET for the first time in the morning of 15^th^ Apr 2018, you will be notified that Alex has a task that will due on *today* in a [blue]#blue# notification card. Later at 0032 hrs of 15^th^ Apr 2018, you will receive the second phase notification in [red]#red#, informing you that Alex should have finished the task by *now* .
 
-{nbsp} +
+Notification cards will disappear from the screen after 5 seconds and will be stored in the `Notification Center`. If you want to refer to them later, use `noti` command or double press kbd:[Shift] to open the `Notification Center`.
 
-===== Notification card in Operating System
-
-We understand that you as a manager lead a busy life, so we don't expect you to stare at ET at all times to catch the notification cards. Instead, ET is capable of showing notification cards in your computer's system (e.g. Windows, Mac, Linux, etc.) while you are using other software, as shown in _Figure 6_. Thus, you can feel free to minimize ET and continue working on your computer.
+Also, if you minimizes ET to use other software, ET is capable of showing notification cards in your computer's system (e.g. Windows, Mac, Linux, etc.), as shown in _Figure 8_. However, this feature may not work on some computer systems.
 
 .ET shows notification card about event expiry even if you are using other programs.
 image::card_windows.png[width=""]
-
-[NOTE]
-This feature may not work on some computer systems.
-
-{nbsp} +
-
-===== The Notification Center
-
-To prevent notification cards from flooding the screen, notification cards in Employees Tracker (ET) will be hidden after 5 seconds.
-
-However, fret not, you can still find them in the notification center. To open the `Notification Center`, please refer to <<Toggling the notification center : `noti`>>, or *double press* kbd:[SHIFT]. After that, you will be greeted by the `Notification Center` as shown in _Figure 7_. In the `Notification Center`, you will see a list of all un-dismissed notification cards.
-
-.The Notification Center
-image::notification_center.png[width=""]
-
-[NOTE]
-Notification cards will always stay in the notification center. Even if you close ET, the notification card will re-appear when you open ET again. To dismiss a notification card, please refer to <<Dismissing a notification card : `dismiss`>>.
-
-=== Locked-by-default system
-Employees Tracker (ET) is locked by default when it is opened in order to secure the data in ET. While ET is locked, all commands and the notification features will not work. To unlock ET, please refer to <<Logging in : `unlock`>>
-
-=== Data storage
-Employees Tracker data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
 
 [[Commands]]
 == Commands
@@ -199,8 +166,11 @@ image::unlock_dialog.png[width="790"][height="200"]
 
 === Viewing help : `help`
 
-Displays the user guide. +
+Displays the user guide, which is this document, as shown in _Figure 10. +
 Format: `help`
+
+.The user guide.
+image::user_guide.png[width=""]
 
 === Adding an employee: `add`
 
@@ -253,7 +223,7 @@ Format: `authenET`
 
 === Listing all employees : `list`
 
-Shows a list of all employees in Employees Tracker as in _Figure 10_. +
+Shows a list of all employees as shown in _Figure 11_. +
 Format: `list`
 
 [NOTE]
@@ -347,12 +317,15 @@ Format: `review INDEX`
 Examples:
 
 * `list` +
+ET shows a list of all employees. +
 `review 1` +
 Gives the 1^st^ employee in the last employees listing a review. +
-A pop-up dialog box will appear after user executes the command as shown in _Figure 11_ below. The dialog box will prompt the user to enter the user's credential (as a reviewer) and the review.
 * `find n/Alex` +
-`rate 2` +
+ET shows a list of employees whose name contains the word `Alex`. +
+`review 2` +
 Gives the 2^nd^ employee in the list of Alex(s) a review. +
+
+_Figure 12_ shows a pop-up dialog box that will appear after user executes the `review` command. The dialog box will prompts the user to enter the user's identity (as a reviewer) and the review.
 
 .A pop-up dialog box.
 image::review_dialog.png[width=""]
@@ -431,7 +404,7 @@ Selects the 2^nd^ employee in Employees Tracker.
 Selects the 1^st^ employee in the results of the `find` command.
 
 [NOTE]
-If `Calendar` in `Employee's Profile Panel` looks something similar to _Figure 8_, it means you will have to sign in to your *Google work account* from there. This is for security purposes, you will be required to sign in once for every time you close Employees Tracker and open it again,
+If `Calendar` in `Employee's Profile Panel` looks something similar to _Figure 13_, it means you will have to sign in to your *Google work account* from there. This is because for security purposes, you will be required to sign in once for every time you close Employees Tracker and open it again,
 
 .Signing in to Google account at the Calendar row
 image::sign_in.png[width="790"][height="200"]
@@ -513,17 +486,16 @@ Reapplies the `clear` command.
 Locks Employees Tracker, so that the data is protected without the need of closing the program or shutting down your computer. +
 Format: `lock`
 
-****
-* Employees Tracker will not respond to any command other than `unlock` when it is locked.
-****
-
 Examples:
 
 * `lock` +
 Locks Employees Tracker.
 
 [NOTE]
-After you locked Employees Tracker, you won't see any information on the User Interface. All information will be hiding when Employees Tracker is locked. Refer to _Figure 13_ below.
+=====
+* Employees Tracker will not respond to any command other than `unlock` when it is locked.
+* After you locked Employees Tracker, you won't see any information on the User Interface. All information will be hiding when Employees Tracker is locked. Refer to _Figure 14_ below.
+=====
 
 .Hiding information when Employees Tracker is locked.
 image::lock_screen.png[width="300"][height="400"]
@@ -538,7 +510,7 @@ Format: `myCalendar`
 Examples:
 
 * `myCalendar` +
-Your calendar will be displayed on a pop-up window.
+Your Google calendar will be displayed on a pop-up window.
 
 === Viewing my to-do-list: `todoList`
 
@@ -548,7 +520,7 @@ Format: `todoList`
 Examples:
 
 * `todoList` +
-Shows the to-do-list in a pop-up window. Refer to _Figure 14_ below.
+Shows the to-do-list in a pop-up window. Refer to _Figure 15_ below.
 
 .To-do list window.
 image::todoList.png[width="300"][height="400"]
@@ -569,7 +541,7 @@ Format: `setPassword`
 Examples:
 
 * `setPassword` +
-A dialog will pop up like below in _Figure 15_. Fill in the input boxes with matched old password and new password.
+A dialog will pop up like below in _Figure 16_. Fill in the input boxes with matched old password and new password.
 
 .Pop-up set password dialog
 image::setPassword_dialog.png[width="790"][height="200"]
@@ -660,6 +632,9 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+[NOTE]
+ET saves data automatically in the hard disk after any command that changes the data. There is no need to save manually before exit.
+
 === Toggling the notification center : `noti`
 
 Shows the notification panel if it is hidden; hides the notification center if it is shown. +
@@ -668,12 +643,12 @@ Format: `noti`
 [TIP]
 Alternatively, you can *double press* kbd:[SHIFT] to toggle the notification center.
 
-=== Dismissing a notification card : `dismiss` _[Coming in v1.5]_
+=== Dismissing a notification card : `dismiss`
 
 Dismisses the notification card identified by the index number. +
 Format: `dismiss INDEX`
 
-=== Reminding an employee through email : `email` _[Coming in v1.5]_
+=== Reminding an employee through email : `email`
 
 Opens up the email app of the computer to send a reminder email about the notification identified by the index number used in notification cards. +
 Format: `email INDEX`
@@ -684,15 +659,15 @@ Format: `email INDEX`
 * The recipient of the email will be set to the email address of the employee who was assigned the event.
 =====
 
-=== Reminding an employee through WhatsApp : `whatsapp` _[Coming in v1.5]_
+=== Reminding an employee through WhatsApp : `emailall`
 
-Opens up the WhatsApp webpage to send a reminder message about the notification identified by the index number used in notification cards. +
-Format: `whatsapp INDEX`
+Opens up the email app of the computer to send a reminder email to all persons who has a task ended. +
+Format: `email INDEX`
 
 [NOTE]
 =====
-* You will be brought straight to the WhatsApp webpage that sends message to the phone number of the employee who was assigned the event.
-* You may be required to scan a QR code from your phone to login to WhatsApp webpage.
+* You will be brought straight to the email composing interface of your email app.
+* The recipient of the email will be set to the email address of all employees who has task(s) ended.
 =====
 
 === Upcoming features
@@ -727,7 +702,10 @@ This section summarizes the usage of all Employees Tracker's commands.
 |*Clear* |`clear` |
 |*Delete* |`delete INDEX` |`delete 3`
 |*DeleteEvent* |`deleteEvent INDEX TITLE` |`deleteEvent 1 event title`
+|*Dismiss* |`dismiss INDEX` |`dismiss 2`
 |*Edit* |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
+|*Email* |`email INDEX` |`email 2`
+|*EmailAll* |`emailall` |
 |*Export* |`export` |
 |*Find* |`find (n/NAME_KEYPHRASE \| t/TAG_KEYPHRASE \| r/RATING_KEYPHRASE) [n/NAME_KEYPHRASE]…​ [t/TAG_KEYPHRASE]…​ [r/RATING_KEYPHRASE]…` |`find n/James n/Jake Black t/Sales t/Marketing Senior r/3`
 |*Help* |`help` |
@@ -735,6 +713,7 @@ This section summarizes the usage of all Employees Tracker's commands.
 |*List* |`list` |
 |*Lock* |`lock` |
 |*MyCalendar* |`myCalendar` |
+|*Noti* |`noti` |
 |*Redo* |`redo` |
 |*Review* |`review INDEX` |`review 2`
 |*Select* |`select INDEX` |`select 2`

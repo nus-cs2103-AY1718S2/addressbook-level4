@@ -162,7 +162,12 @@ public class ParserUtil {
                 throw new IllegalValueException(Subject.MESSAGE_SUBJECT_NAME_CONSTRAINTS);
             }
             i += 1;
-            String subjectGrade = splitSubjectStr[i];
+            String subjectGrade;
+            if (i >= splitSubjectStr.length) {
+                throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
+            } else {
+                subjectGrade = splitSubjectStr[i];
+            }
             if (!Subject.isValidSubjectGrade(subjectGrade)) {
                 throw new IllegalValueException(Subject.MESSAGE_SUBJECT_GRADE_CONSTRAINTS);
             }

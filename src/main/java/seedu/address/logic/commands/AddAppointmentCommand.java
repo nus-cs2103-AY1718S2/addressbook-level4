@@ -27,7 +27,8 @@ public class AddAppointmentCommand extends Command {
             + "*DATE must be after today's date \n"
             + "Example: " + COMMAND_WORD + "1 2/4/2018 1300";
 
-    public static final String MESSAGE_SUCCESS = "A new appointment is added.";
+    public static final String MESSAGE_SUCCESS = "A new appointment is added.\n"
+            + "Enter view appointment command to get updated calendar view.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exist.";
     private final Index targetPatientIndex;
     private final DateTime dateTime;

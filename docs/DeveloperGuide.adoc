@@ -541,9 +541,7 @@ Current implementation can work in a similar way that makes it easier to delete 
 === Find by Tag Command
 ==== Current Implementation
 When the Find command is called, FindCommandParser will look for the tag and/or name prefixes (t/ and n/ respectively).
-The arguments following each prefix will be made into a list. A mapping is then generated with the prefixes as the keys
- and the argument-lists as values. The name search portion will run like before, the tag search will follow a similar
- approach; creating a new predicate instance and return matching results if they exist.
+The arguments following each prefix will be made into a list. A mapping is then generated between prefixes/values and new predicate instances are created.
 
 image::FindCommand_sequence.png[Width="550"]
 
@@ -573,11 +571,10 @@ image::FindCommand_sequence.png[Width="550"]
 The PrisonBook calendar commands will instantiate a calendar class to interact with the Google Calendar API.
 The initial step is to obtain valid credentials authorized from the API side to access its resources, then
 the calendar class will send HTTPS requests to the server, whether it is calling the listEvents, addEvents or delEvents API command.
-Upon receiving a success confirmation from the API, the change will be reflected next time any calendar commands are called.
 
-Calendar Commands that are supported are:
-* listing upcoming events
-* adding an event
+Calendar Commands that are supported are: +
+* listing upcoming events +
+* adding an event +
 * removing an event
 
 image::CalendarCommands_classDiagrams.PNG[Width="350"]
@@ -594,7 +591,7 @@ image::CalendarCommands_classDiagrams.PNG[Width="350"]
  ** Pros: Two accounts is still relatively simple to maintain, allows for some separation of events-scheduling.
  ** Cons: All guards still share the same schedule, so they cannot have personal schedules.
  * **Alternative 4:** Use one Google account for Warden and one for Guards
- ** Pros: All prison staff have their own calendar to work with, where they can have private individual events.
+ ** Pros: All prison staff have their own calendar for private individual events.
  ** Cons: Hard to maintain because we have to make sure all staff have the master prison schedule of the inmates' activities non-overlapping with personal events. There will also be a lot of calendars to keep track of, depending on how many guards are hired.
 
 ===== Aspect: Choosing Number of Calendars per Person

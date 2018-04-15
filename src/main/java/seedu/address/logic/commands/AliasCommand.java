@@ -60,7 +60,7 @@ public class AliasCommand extends UndoableCommand {
     }
 
     /**
-     * Checks if the command specified is valid command and the alias specified is not a command word.
+     * Checks if the command specified is an existent command and the alias specified is not a command word.
      */
     private void checkForValidCommandAndAlias() throws CommandException {
         if (!commands.contains(toAdd.getCommand())) {

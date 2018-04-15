@@ -2061,7 +2061,7 @@ Prerequisites: At least one celebrity in the last shown list and the celebrity's
 .. Type `viewCalendar p` (where `p` is the index of a non-celebrity person) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
 .. Type `viewCalendar 0` in command box and press enter. +
-   _Expected: No change in calendar. Error details shown in the status message._   
+   _Expected: No change in calendar. Error details shown in the status message._
 .. Type other incorrect `viewCalendar` commands such as `viewCalendar`, `viewCalendar x` (where `x` is larger than the last shown contact list size or not a valid index number or the index of the celebrity whose calendar is currently displayed) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
 
@@ -2087,7 +2087,7 @@ Prerequisites: Calendar is currently in `day` view.
 .. Type `viewCalendarBy day` in command box and press enter. +
    _Expected: Calendar shows the day which is the original day._
 .. Type `viewCalendarBy day` again after executing the previous command in command box and press enter. +
-   _Expected: No change in calendar. Error details shown in the status message._ 
+   _Expected: No change in calendar. Error details shown in the status message._
 .. Type `viewCalendarBy MOnTh` in command box and press enter. +
    _Expected: Calendar shows the week which the original day is in._
 .. Type `viewCalendarBy 1` in command box and press enter. +
@@ -2109,7 +2109,7 @@ Prerequisites: Calendar is currently in `day` view and displays the current day'
 .. Type `viewDate` again after executing the previous command in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
 .. Type `viewDate 01-04` again after executing the previous command in command box and press enter. +
-   _Expected: No change in calendar. Error details shown in the status message._ 
+   _Expected: No change in calendar. Error details shown in the status message._
 .. Type `viewDate 0` in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
 .. Type `viewDate !` in command box and press enter. +

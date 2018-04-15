@@ -472,43 +472,145 @@ image::menu_fig_3.png[width="800"]
 ** Pros: Save memory space
 ** Cons: While adding back those pre-existing dishes, more work need to be done.
 
-// tag::PriorityQueue[]
-=== PriorityQueue feature
-==== Current Implementation
-Each order has a priority level. When adding an order to the order queue, the priority of the order is
-determined by three things, total price of the order, distance to the address and order's customer's past order count.
+// tag::ProcessingQueue[]
+=== ProcessingQueue feature
 
-There is no need for user to manually give priority to the order.
+Processing queue gives restaurants owner a way to manage their kitchen and further differentiates different state of an
+order.
 
-Orders are added to a priority queue, implemented using Java ArrayList class with comparator. Orders are queued inside the queue based on their priority level.
+In the code, processing queue is represented by TaskList, which is an observable, ordered list comprises of Task object.
 
-Current equation to calculate priority is that priority(integer) = 10 * price - 25 * distance + 5 * count.
+**Task list and processing queue are referring to the same thing, as Task list is just the name used in the code. Its
+intention is to serve as a processing queue.**
 
-As you can see from the diagram below, these are the interactions among the components during an “addOrder” command. The Model component raises an AddressBookChangedEvent to update the content of the AddressBook.
-
-image::figure3.5.1a.png[width="800"]
+**For clarification, in the code, the order object is represented using Person class, meaning although the functionality
+ of the class changes, names of the original classes are retained. This applies to most of the classes. Therefore,
+ order and person, order book and person list are essentially the same thing, only the names are wrong. For the following
+ section, terms order and order book are used.**
 
 ==== Design Considerations
 
-===== Aspect: Determination of priority level
+===== Aspect: Implementation of Processing Queue
 
-* **Alternative 1:** Determined based on the customers' past order count.
+* **Alternative 1:** Create another list of order, using existing Order class.
 ** Pros: Easy to implement.
-** Cons: It is difficult to decide which number should be the benchmark for a customer to given priority.
-* **Alternative 2(current choice)::** Determined based different things such as past order count, distance, price of the order.
-** Pros: It would be a fairer system to decide priority.
-** Cons: It might requires additional judging system to decide priority level. Difficult to implement.
+** Cons: It gets complicated when you want to process an order, as you could move the original order object to the
+processing queue or you could create a duplicate order object.
+* **Alternative 2(current choice)::** Create a brand-new class to represent order being processed.
+** Pros: Difficult to implement
+** Cons: Reduces potential conflicts between existing commands and new commands
 
-===== Aspect: Data structure to store data for orders
+=== Task Object
+
+The word "Task" is used because there exist a class named "Order" in Person package.
+Thus, "Task" is used to avoid any confusion if it were to named as "order". Besides, orders needed to be cooked can be
+seen a task to finish in some sense.However, this could create other possible
+confusions.
+
+The Task object represents an received order being cooked, as such there exist an one-to-one link between order
+in order book and task in taskList.
+and stores information same
+
+
+
+
+
+==== Current Implementation
+
+The following class diagram illustrates the structure of a Task object.
+
+image::Task_Class.png[width="790"]
+
+However, the actual construction of the task in commands omits attributes price, distance, past order count.
+
+==== Design Considerations
+
+===== Aspect: Construction of a task object
+
+* **Alternative 1(rejected):** Constructed based order details(food), address, price of the order,
+ distance from the owner, the customers' past order count.
+** Pros: It was originally design so that the particular task gets certain priority attached to it, and is able to
+jump queue.
+** Cons: It is fairer just to cook order based on the inception time of the order. In addition, the process command needs to
+take in lots of input, not efficient.
+* **Alternative 2(current choice)::** Construct using an existing order object (adopt order, address, other attributes
+are zero)
+** Pros: Makes process command much simpler
+** Cons: Unused code such as Price class, Distance class and Count class.
+
+=== TaskList
+
+TaskList is a ordered list of Task objects. It is used to store the task objects and perform operations on them.
+
+==== Current Implementation
+Below is the code for TaskList and UniquePersonList. The implementation of TaskList mimics that of the
+UniquePersonList.
+
+[source,java]
+----
+public class TaskList implements Iterable<Task> {
+    // ......
+    private final ObservableList<Task> internalList = FXCollections.observableArrayList();
+    // ......
+    }
+----
+[source,java]
+----
+public class UniquePersonList implements Iterable<Person> {
+    // ......
+    private final ObservableList<Person> internalList = FXCollections.observableArrayList();
+    // ......
+}
+----
+
+===== Aspect: Implementation of ordering of task objects in task list
 
 * **Alternative 1:** Use Java PriorityQueue
-** Pros: Efficient to add an order, complexity is lower than alternative 2.
+** Pros: Efficient to add a task, complexity is lower than alternative 2.
 ** Cons: Difficult to implement.
 * **Alternative 2:** Use an ArrayList of Order objects and comparable interface.
 ** Pros: Easy to implement, quick to access and edit orders.
 ** Cons: When number of orders gets larger, the time taken would be slower as internally the priority queue is maintained
-by sorting (MergeSort).
-// end::PriorityQueue[]
+by sorting (MergeSort). The GUI would hang for a short while before display results.
+
+==== Storage of Task object and TaskList
+
+* **Alternative 1(current choice): **Store Task objects together in the default XML storage file addressbook.xml.
+** Pros Only 1 storage file is needed. The storage manager thus only needs to refer to one storage,
+except for customerStats.xml.
+** Cons Any changes to the Person or Task will affect the storage of both the Person and Task objects,
+which would significantly increase coupling between the Person and Task classes.
+
+* **Alternative 2: **Store Tasks objects in a separate XML file
+** Pros: Easier to manage as two storage are separated.
+** Cons: Difficult to implement.
+Additional method are needed to for existing save/load functions.
+
+=== ProcessOrderCommand
+
+Below is a sequence diagram when 'process 1' is entered.
+
+image::ProcessOrder_Sequence.png[width="790"]
+
+As see from the diagram, when the logic manager receives the input, it would sent it to the AddressBookParser, which decide
+which command the input is trying to access.
+
+The keyword 'process' is then identified by the AddressBookParser, following by a instantiation of ProcessOrderCommandParser
+ object to create a ProcessOrderCommand class to interact with model and perform its functionality.
+
+ProcessOrderCommand object would call its method execute(), which would make several method calls to update the order book and task list in model,
+before it returns a CommandResult object back to logic manager.
+
+As such, the operation "process 1" is carried and the result is shown in the GUI.
+
+=== CompleteOrderCommand
+
+Below is a UML diagram when 'completeOne 1' is entered.
+
+image::CompleteOneOrder_UML.png[width="790"]
+
+The class involved and sequence of method calling is similar to previous ProcessOrderCommand.
+// end::ProcessingQueue[]
 
 // tag::Path[]
 === Path feature

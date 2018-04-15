@@ -318,7 +318,7 @@ image::UG_Tag_1.png[width="790"]
 
 >> `cM 3`
 
-* Now these three orders are labelled as
+* Now these three orders are labelled as 'Cooked'
 
 image::UG_Tag_2.png[width="790"]
 

@@ -18,13 +18,16 @@ Delivery is for those who *prefer to use a desktop app for managing orders*. Mor
 
 == Summary of contributions
 
-* *Major enhancement*: added *an separate order priority queue to process order* including addOrder, deleteOrder, and completeOrder commands
-** What it does: User is able to input orders from order book into the order queue, for them to decide which order needs to be processed first.
+* *Major enhancement*: added *an separate order processing queue to process order* including processOrder,
+processNextOrder, processMoreOrder, completeOneOrder, completeMoreOrder and tag commands.
+** What it does: User is able to input orders from order book into the processing queue, indicating that the order is
+being processed(cooking).
 ** What can it do in the future: When an order is completed from the queue, the total price of the order could automatically
 be added into the daily revenue, for additional accounting purposes.
 ** Justification: This feature improves the product significantly, as firstly it separates the recording and processing of orders.
-When an order is delivered, it is removed from the order queue, but still remains in order book, in case there is any future usage. Secondly, users (restaurant owners) need not to worry
-about which order should they do first, as the priority of each order is determined internally.
+When an order has been cooked, it is removed from the processing queue, but still remains in order book, in case
+there is any future usage for reference. Secondly, the owner can have a clearer idea about what is the status of
+his kitchens are doing, so that he can manage them more efficiently.
 ** Highlights: This enhancement does not affect commands such as "add", "delete" or others on the order book.
 
 * *Minor enhancement*: added an path feature.
@@ -32,22 +35,31 @@ about which order should they do first, as the priority of each order is determi
 user can roughly estimate how long does it take to deliver the food.
 ** Justification: The ability to estimate the delivery timing is crucial as the user would be able to determine whether to take the order.
 
+* *Minor enhancement*: added an inner ordering for person(Order) object in UniquePersonList(Order book).
+** What is does: When an order is labelled with different tag, its position in the order book would change.
+For instance, the order labelled 'Cooked' would jump to the front of the list to remind restaurant owner to quickly
+send out delivery man. Another example would be that orders labelled with 'Delivered' would sink to the
+bottom of the list so that the owner would not to worry about them.
+** Justification: If there is no such implementation, the new orders would always be below the older orders and
+it might be very troublesome to scroll down to see them, especially when the number of orders gets bigger.
+Besides, the different priority for order in different status can improve restaurants' efficiency.
+
 * *Code contributed*: [https://github.com/CS2103JAN2018-F11-B4/main/blob/master/collated/functional/ZhangYijiong.md[Functional code]] [https://github.com/CS2103JAN2018-F11-B4/main/blob/master/collated/test/ZhangYijiong.md[Test code]]
 
 * *Other contributions*:
 
 ** Enhancements to existing features:
 *** Modify select command to show the address of the order on Google Map (Pull requests https://github.com/CS2103JAN2018-F11-B4/main/commit/eed0e01164840261c1dff085b4205956e77913a8[#30])
+** Small Enhancement
+*** Added a load web page function which loads web page in the browser panel.
 ** Documentation:
-*** Updated contents of the User Guide and the Developer Guide
+*** Updated contents of the User Guide and the Developer Guide frequently.
 ** Community:
 *** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-F09-B2/main/issues/130[1] https://github.com/CS2103JAN2018-F09-B2/main/issues/128[2] https://github.com/CS2103JAN2018-F09-B2/main/issues/123[3] )
 ** Tools:
 *** Deployed Travis to own repo
 
-
 == Contributions to the User Guide
-
 
 |===
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.
@@ -64,6 +76,6 @@ include::../UserGuide.adoc[tag=Path]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=PriorityQueue]
+include::../DeveloperGuide.adoc[tag=ProcessingQueue]
 include::../DeveloperGuide.adoc[tag=Path]
 

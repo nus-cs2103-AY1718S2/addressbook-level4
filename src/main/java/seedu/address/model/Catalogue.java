@@ -154,7 +154,7 @@ public class Catalogue implements ReadOnlyCatalogue {
         tags.add(t);
     }
     //@@author LeKhangTai
-     /**
+    /**
      * @param target book that is selected by index to return
      * @param returnedBook duplicated book that will replace the original book
      * @throws BookNotFoundException

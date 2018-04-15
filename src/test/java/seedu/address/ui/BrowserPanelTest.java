@@ -12,11 +12,12 @@ import java.net.URL;
 import org.junit.Before;
 import org.junit.Test;
 
+import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.ui.BrowserDisplayEvent;
 
-import guitests.guihandles.BrowserPanelHandle;
+
 
 public class BrowserPanelTest extends GuiUnitTest {
     private BrowserDisplayEvent browserEventStub;

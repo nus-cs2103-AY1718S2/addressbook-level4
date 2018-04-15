@@ -57,9 +57,7 @@ and tracking their students' learning development.
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=favUnfav]
-
-include::../UserGuide.adoc[tag=dashboard]
+include::../UserGuide.adoc[tag=dashboard1]
 
 == Contributions to the Developer Guide
 
@@ -67,10 +65,4 @@ include::../UserGuide.adoc[tag=dashboard]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=favourites]
-
 include::../DeveloperGuide.adoc[tag=dashboard]
-
-include::../DeveloperGuide.adoc[tag=favTest]
-
-include::../DeveloperGuide.adoc[tag=dashboardTest]

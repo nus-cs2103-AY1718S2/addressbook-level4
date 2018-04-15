@@ -10,8 +10,10 @@ import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import java.net.URL;
 
 import guitests.guihandles.BrowserPanelHandle;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import seedu.address.MainApp;
 import seedu.address.commons.events.model.StudentInfoDisplayEvent;
 import seedu.address.commons.events.ui.BrowserDisplayEvent;
@@ -45,7 +47,6 @@ public class BrowserPanelTest extends GuiUnitTest {
         URL expectedStudentUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + CARL.getAddress().urlstyle());
 
         // profile page of a student
-
         //@@author samuelloh
         postNow(moreInfoEventStub);
         String mainFilePath = browserPanel.constructPathToLoad();

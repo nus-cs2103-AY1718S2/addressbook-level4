@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -141,6 +142,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author kengsengg
     public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         appointments.add(appointment);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws AppointmentNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeAppointment(Appointment key) throws AppointmentNotFoundException {
+        if (appointments.remove(key)) {
+            return true;
+        } else {
+            throw new AppointmentNotFoundException();
+        }
     }
 
     //@author TeyXinHui

@@ -24,6 +24,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
@@ -69,8 +70,8 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs());
     }
 
+    //@@author johnnychanjx
     /**
-     * @@ author Johnny Chan
      * @param person
      * @throws IOException
      * Adds a BrowserPanel html Page into StudentPage
@@ -211,7 +212,6 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     /**
-     * @@author Johnny chan
      * Deletes BrowserPanel html
      */
     public void deletePage(Person person) {
@@ -220,6 +220,7 @@ public class ModelManager extends ComponentManager implements Model {
                 + File.separator + person.getName() + ".html");
         boolean bool = f.delete();
     }
+    //@@author
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
@@ -264,6 +265,12 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
         addressBook.addAppointment(appointment);
         updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
+        addressBook.removeAppointment(target);
         indicateAddressBookChanged();
     }
     //@@author

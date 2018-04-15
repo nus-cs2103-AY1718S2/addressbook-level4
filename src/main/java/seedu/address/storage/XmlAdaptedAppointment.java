@@ -16,6 +16,8 @@ public class XmlAdaptedAppointment {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Appointment's %s field is missing!";
 
     @XmlElement(required = true)
+    private String name;
+    @XmlElement(required = true)
     private String info;
     @XmlElement(required = true)
     private String date;
@@ -33,7 +35,8 @@ public class XmlAdaptedAppointment {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given appointment details.
      */
-    public XmlAdaptedAppointment(String info, String date, String startTime, String endTime) {
+    public XmlAdaptedAppointment(String name, String info, String date, String startTime, String endTime) {
+        this.name = name;
         this.info = info;
         this.date = date;
         this.startTime = startTime;
@@ -46,6 +49,7 @@ public class XmlAdaptedAppointment {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedAppointment(Appointment source) {
+        name = source.getName();
         info = source.getInfo();
         date = source.getDate();
         startTime = source.getStartTime();
@@ -70,7 +74,7 @@ public class XmlAdaptedAppointment {
             throw new IllegalValueException(Appointment.MESSAGE_APPOINTMENT_END_TIME_CONSTRAINTS);
         }
 
-        return new Appointment(info, date, startTime, endTime);
+        return new Appointment(name, info, date, startTime, endTime);
     }
 
     @Override
@@ -79,7 +83,7 @@ public class XmlAdaptedAppointment {
             return true;
         }
 
-        if (!(other instanceof XmlAdaptedPerson)) {
+        if (!(other instanceof XmlAdaptedAppointment)) {
             return false;
         }
 

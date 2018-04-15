@@ -14,7 +14,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.model.person.Person;
 
 /**
@@ -30,6 +32,8 @@ public class BrowserPanel extends UiPart<Region> {
     private static final String FXML = "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private ViewCommand viewCommand;
 
     @FXML
     private WebView browser;
@@ -66,6 +70,15 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
+     * Loads the Google Calendar page
+     */
+    public void loadCalendarPage() {
+        // String parameter = viewCommand.getParameter();
+        // System.out.println(parameter);
+        loadPage("https://calendar.google.com/calendar/embed?src=edubuddytest%40gmail.com&ctz=Asia%2FSingapore");
+    }
+
+    /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
@@ -76,5 +89,11 @@ public class BrowserPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IOException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleDisplayCalendarEvent(DisplayCalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadCalendarPage();
     }
 }

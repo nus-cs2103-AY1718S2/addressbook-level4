@@ -27,6 +27,7 @@
                 </Label>
                 <Label fx:id="info" text="\$first" styleClass="cell_big_label" />
             </HBox>
+            <Label fx:id="name" text="\$name" styleClass="cell_small_label"  />
             <Label fx:id="date" text="\$date" styleClass="cell_small_label"  />
             <Label fx:id="startTime" text="\$startTime" styleClass="cell_small_label"  />
             <Label fx:id="endTime" text="\$endTime" styleClass="cell_small_label" />

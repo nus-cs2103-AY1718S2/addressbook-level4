@@ -173,6 +173,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteAppointment(Appointment appointment) {
+            fail("This method should not be called");
+        }
+
+        @Override
         public ObservableList<Appointment> getFilteredAppointmentList() {
             fail("This method should not be called.");
             return null;

@@ -93,8 +93,10 @@ public class SampleDataUtil {
 
     public static Appointment[] getSampleAppointments() {
         return new Appointment[] {
-            new Appointment("Consultation", "04042018", "1200", "1300"),
-            new Appointment("Remedial", "05052018", "1400", "1600")
+            new Appointment("Alex Yeoh", "Consultation", "04042018", "1200",
+                    "1300"),
+            new Appointment("David Li", "Remedial", "05052018", "1400",
+                    "1600")
         };
     }
 

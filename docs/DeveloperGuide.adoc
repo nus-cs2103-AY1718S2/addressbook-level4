@@ -1038,7 +1038,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 a|
 * *Autocomplete*
 
-To enhance user experience and usage efficiency of the CLI by providing autocomplete suggestions 
+To enhance user experience and usage efficiency of the CLI by providing autocomplete suggestions
 
 * *Add command*
 

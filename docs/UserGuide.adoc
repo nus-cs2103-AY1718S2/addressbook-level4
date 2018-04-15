@@ -27,7 +27,7 @@ Medeina is finally here to solve your problems.
 
 Medeina is a specialized desktop application designed to provide veterinarians and their assistants with better management over contacts, pet patient details and appointments. It serves as both an address book and a task manager.
 
-If you are comfortable working with a Command Line Interface (CLI), then Medeina is perfect for you. Nevertheless, Medeina keeps to simple and intuitive commands that even those who are unfamiliar with CLI can pick it up easily. Medeina also comes with a clean and organized Graphical User Interface (GUI) to present information in the most optimal way for your perusal.
+If you are comfortable working with a Command Line Interface (CLI), then Medeina is perfect for you. Medeina keeps to simple and intuitive commands that even those who are unfamiliar with CLI can pick it up easily. Medeina also comes with a clean and organized Graphical User Interface (GUI) to present information in the most optimal way for your perusal.
 
 Medeina, your all-in-one solution to curb your data nightmare.
 
@@ -35,12 +35,15 @@ Medeina, your all-in-one solution to curb your data nightmare.
 
 This document provides detailed information pertaining to Medeina's set-up and usage instructions for the various features it offers. The user guide can be accessed any time through the `help` command in Medeina.
 
-Do take note of the following colours and their representation, as they will be used to better illustrate Medeina's commands in <<CLI>>.
+Do take note of the following colours and their representation, as they will be used in this guide to better illustrate Medeina's commands.
 
-* Blue -> information related to a contact
-* Green -> information related to a pet patient
-* Magenta -> information related to an appointment
+.Colour representation
+image::colours.png[width="200"]
 
+{empty} +
+If you have already set up Medeina, head on to <<CLI>>. If you are already familiarize with Medeina's Command Line Interface (CLI), head on to <<Commands>>.
+
+{empty} +
 
 == Quick Start
 
@@ -101,13 +104,13 @@ a| * Index is used in `edit` and `delete` commands.
 
 .^a|Prefixes
 | `n/`, `p/`, `nr/`, `e/`, `s/`, `t/`
-a| * Prefix marks the start of a parameter. 
-* Indicate the type of parameter expected by Medeina e.g. `nr/` will expect NRIC as parameter, and `e/` will expect an email address as parameter. 
+a| * Prefix marks the start of a parameter.
+* Indicate the type of parameter expected by Medeina e.g. `nr/` will expect NRIC as parameter, and `e/` will expect an email address as parameter.
 
 .^a|Parameters
 | In `nr/NRIC`, `NRIC` represents the parameter
 a| * Values supplied by you
-* Parameters are represented by words in upper case. 
+* Parameters are represented by words in upper case.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 .^a|Tag
@@ -123,7 +126,7 @@ a| * In this guide and also in error messages, when tag is bounded in square bra
 image::autocomplete.png[width="500"]
 
 {empty} +
-Medeina comes with an autocomplete feature in the CLI to help you manage your contacts, pet patients and appointments faster. 
+Medeina comes with an autocomplete feature in the CLI to help you manage your contacts, pet patients and appointments faster.
 
 * Medeina supports autocomplete for command words, options, prefixes, and parameters such as tags, NRIC, pet patient name, species, breed, colour and blood type.
 * Autocomplete will provide suggestions for NRIC when you are adding a new pet patient or new appointment, assigning pet patient under another contact using the edit command, and finding a contact by NRIC.
@@ -131,6 +134,7 @@ Medeina comes with an autocomplete feature in the CLI to help you manage your co
 * Suggestions for tags, species, breed, colour and blood type will be shown when their corresponding prefixes are detected.
 * Autocomplete matching is case-insensitive e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
 * You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the drop-down menu.
+* Autocomplete shows up to a maximum of 13 suggestions in the drop-down menu.
 * Press kbd:[Enter] to select an autocomplete suggestion in the drop-down menu.
 
 [NOTE]

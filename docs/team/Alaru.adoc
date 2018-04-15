@@ -1,6 +1,7 @@
 = Chia Kah Sheng Ellery - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103JAN2018-F09-B1/main
 
 == PROJECT: Your TA
 
@@ -44,7 +45,7 @@ The existing commands (add, edit, delete and clear) were also updated to support
 ** Documentation:
 *** Help update README (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/66[#66]), changed application icon (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/108[#108]) and name (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/123[#123]).
 *** Updated screenshots used in the User Guide: (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/57[#57], PR https://github.com/CS2103JAN2018-F09-B1/main/pull/130[#130])
-*** Edited the developer guide for English usage, added prefaces, updated images, made explanations clearer (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/123[#123]) and added manual testing cases.
+*** Edited the developer guide for English usage, added prefaces, updated images, made explanations clearer (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/123[#123]) and added manual testing cases (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/130[#130]).
 *** Sequence diagram was added (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/108[#108]) and was edited and used by teammate (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/124[#124]).
 ** Community:
 *** Reported bugs and suggestions for another team in the class (examples:  https://github.com/CS2103JAN2018-F12-B2/main/issues/83[1], https://github.com/CS2103JAN2018-F12-B2/main/issues/80[2], https://github.com/CS2103JAN2018-F12-B2/main/issues/76[3])

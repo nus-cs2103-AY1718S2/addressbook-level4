@@ -24,6 +24,10 @@ import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.testutil.AliasUtil;
 
+//@@author jingyinno
+/**
+ * A system test class for Alias command which consists of model, storage and interaction with other UI components.
+ */
 public class AliasCommandSystemTest extends AddressBookSystemTest {
 
     @Test

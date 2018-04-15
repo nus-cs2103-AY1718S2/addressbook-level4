@@ -37,9 +37,9 @@ Responsibilities: Implement enhanced feature search and new feature review
 
 === Ho Bing Xuan
 image::izhobx.jpg[width="150", align="left"]
-{empty}[https://github.com/IzHoBX[github]]
+{empty}[https://github.com/IzHoBX[github]][https://github.com/IzHoBX/main/blob/master/docs/team/IzHoBX.adoc[portfolio]]
 
 Role: Developer +
-Responsibilities: Rating feature, notifications on timetable entry deadlines, email command, enhanced person identifying
+Responsibilities: Rating feature, notifications on timetable entry deadlines, email command, dynamic command usage suggestion system
 
 '''

@@ -1,0 +1,78 @@
+= Yeo Chong Han(Ivan) - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Personal Trainer Pro
+
+---
+
+== Overview
+
+Personal Trainer Pro is a free to use application used for helping personal trainers gauge the improvement of their clients as well as help them improve.
+It comes with a highly capable Command Line Interface(CLI) personal organiser and tracker keep together with an easy to use interface. The Graphical User Interface(GUI) is very simplistic but extremely detailed and easy to use to aid trainers in helping their clients.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *Calories Calculator*
+** What it does: allows the user/trainer to calculate the required calories based on a reliable website to obtain the best amount of calories the clients should have in order to improve, grow or lose weight. It uses all attribute data of the client to find the amount of calories needed.
+** Justification: This feature will allow for trainers to quickly and readily answer questions about the client and also choose a perfect workout to suit the needs and wants, be it to gain lose or maintain, of the client.
+** Highlights: This feature required additional attributes being added on to the original base and handling of events and creation of specific tests for each attribute before combining everything.
+** Credits: Calculator.net was used as the main calculator that was being build around.
+
+**External behaviour
+---
+[https://github.com/CS2103JAN2018-F12-B2/main/blob/master/docs/UserGuide.adoc#show-calories-a-person-requires-code-calories-code]
+---
+
+* *Minor enhancement*: added a html design when selecting the personal card in order to improve aesthetics and remove clutter.
+
+**External behaviour
+---
+[https://github.com/CS2103JAN2018-F12-B2/main/blob/master/docs/UserGuide.adoc#selecting-a-person-code-select-code]
+---
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F12-B2/main/blob/master/collated/functional/hypertun.md] [https://github.com/CS2103JAN2018-F12-B2/main/blob/master/collated/test/hypertun.md]
+
+* *Future implementation: *Tracking Weight for clients*
+**What it does: This will allow for trainers as well as clients to track their progress to reach their goal.
+**Justification: As the clients progress using the calories calculator it is important that they track their progress whether to gain weight, lose weight or to maintain weight. It already has a preliminary design as shown below in other contributions.
+
+* *Other contributions*: Tried to implement the weight log attribute but was unsuccessful. (Pull request(s): https://github.com/CS2103JAN2018-F12-B2/main/pull/40[#40])
+
+** Project management:
+*** Managed releases `v1.0` - `v1.5rc` (6 releases) on GitHub
+** Enhancements to existing features:
+*** Solved several bugs that was found during preliminary testing (Pull requests https://github.com/CS2103JAN2018-F12-B2/main/pull/102[#102], https://github.com/CS2103JAN2018-F12-B2/main/pull/101[#101], https://github.com/CS2103JAN2018-F12-B2/main/pull/88[#88])
+*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Added Command Aliases (https://github.com/CS2103JAN2018-F12-B2/main/pull/4[#4])
+*** Added Gender Attribute(https://github.com/CS2103JAN2018-F12-B2/main/pull/22[#22])
+** Documentation:
+*** Updated Major and Minor Enhancement (https://github.com/CS2103JAN2018-F12-B2/main/pull/23[#23])
+*** Documentation for attributes (https://github.com/CS2103JAN2018-F12-B2/main/pull/32[#32], https://github.com/CS2103JAN2018-F12-B2/main/pull/28[#28])
+** Community:
+*** Revamped original person card (https://github.com/CS2103JAN2018-F12-B2/main/pull/29[#29])
+*** Reverted error coding causing failure to merge due to previous member (https://github.com/CS2103JAN2018-F12-B2/main/pull/12[#12])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=calories]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=gender]
+
+include::../DeveloperGuide.adoc[tag=glossary]
+
+== Other Contributions
+
+Collated the code together. (https://github.com/CS2103JAN2018-F12-B2/main/pull/108[#108])

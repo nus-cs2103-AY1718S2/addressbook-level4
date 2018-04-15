@@ -5,5 +5,10 @@
     <phone>9482asf424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <height>169.0</height>
+    <weight>55.5</weight>
+    <gender>f</gender>
+    <age>22</age>
+    <activityLevel>1.2</activityLevel>
     <tagged>friends</tagged>
 </person>

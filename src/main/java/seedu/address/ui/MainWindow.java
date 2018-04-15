@@ -16,6 +16,9 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
+import seedu.address.commons.events.ui.ShowCaloriesEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -38,6 +41,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private CalendarWindow calendarWindow;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -169,6 +173,28 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author wayneong95
+
+    /**
+     * Switch to calendar window.
+     */
+    @FXML
+    private void handleCalendar() {
+        calendarWindow = new CalendarWindow();
+        browserPlaceholder.getChildren().add(calendarWindow.getRoot());
+        browserPlaceholder.getChildren().setAll(calendarWindow.getRoot());
+    }
+
+    /**
+     * Switch to browser from calendar.
+     */
+    @FXML
+    private void handleBrowser() {
+        browserPlaceholder.getChildren().setAll(browserPanel.getRoot());
+    }
+
+    //@@author
+
     void show() {
         primaryStage.show();
     }
@@ -190,8 +216,28 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
+    public void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    @Subscribe
+    private void handleShowCalendarEvent(ShowCalendarEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleCalendar();
+    }
+    //@@author hypertun
+    @Subscribe
+    private void handleShowCaloriesEvent(ShowCaloriesEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleBrowser();
+    }
+    //@@author
+
+    @Subscribe
+    private void handleShowBrowserEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleBrowser();
+    }
+
 }

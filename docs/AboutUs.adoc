@@ -3,53 +3,47 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
+Personal Trainer Pro was developed by the
+https://github.com/orgs/CS2103JAN2018-F12-B2/people[CS2103JAN2018-F12-B2] team. +
+
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Yeo Chong Han
+image::ivan.jpg[width="150", align="left"]
+{empty}[https://github.com/hypertun[github]]
+{empty}[https://github.com/CS2103JAN2018-F12-B2/main/blob/master/docs/team/Yeo%20Chong%20Han.adoc[portfolio]]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Model
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Cheng Wenhao
+image::wenhao.jpg[width="150", align="left"]
+{empty}[http://github.com/wenhao53y[github]]
+{empty}[https://github.com/CS2103JAN2018-F12-B2/main/blob/master/docs/team/Cheng%20Wenhao.adoc[portfolio]]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: UI, Documentation
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Ong Wei Sheng
+image::weisheng.jpg[width="150", align="left"]
+{empty}[http://github.com/wayneong95[github]]
+{empty}[https://github.com/CS2103JAN2018-F12-B2/main/blob/master/docs/team/Ong%20Wei%20Sheng.adoc[portfolio]]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Logic
 
 '''
+
+=== Praneeth
+{empty}[http://github.com/ppalla0325[github]]
+
+
+'''
+

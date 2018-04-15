@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Personal Trainer Pro (PTP) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,14 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-F12-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018-F12-B2`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Personal Trainer Pro (PTP) is for those who *prefer to use a desktop app for managing clients*. More importantly, PTP is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+Personal Trainers can make use of the application to manage their clients, schedule appointments, and view their clients' progress. If you can type fast, PTP can get your client management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,7 +28,7 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `PTP.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -37,8 +38,8 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* *`list`* : lists all clients
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 h/169.0 w/55.5 g/M age/22` : adds a contact named `John Doe` to the Personal Trainer Pro application.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -63,25 +64,47 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT g/GENDER age/AGE al/ACTIVITYLEVEL [t/TAG]...`
+Alias: `a`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 h/173.0 w/55.5 g/M age/22 al/1.2 `
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 h/169.0 w/66.7 g/f age/21 al/1.9 t/criminal`
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the PTP application. +
 Format: `list`
+Alias: `l`
+
+// tag::filter[]
+=== Filtering all persons according to BMI Classification : `bmi`
+
+Shows a filtered list of all persons in the PTP application whose BMI classification matches the given search query. +
+Format: `bmi KEYWORD [MORE_KEYWORDS]`
+
+Keywords (any of the below):
+
+* `Underweight` (BMI < 18.5)
+* `Acceptable` (18.5 &le; BMI &le; 24.9)
+* `Overweight` (25 &le; BMI &le; 29.9)
+* `Obese` (BMI &ge; 30)
+
+Examples:
+
+* `bmi overweight`
+* `bmi overweight underweight obese`
+// end::filter[]
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [h/HEIGHT] [w/WEIGHT] [g/GENDER] [age/AGE] [al/ACTIVITYLEVEL] [t/TAG]...`
+Alias: `e`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -95,13 +118,14 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+* `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
+Alias: `f`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -115,13 +139,14 @@ Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
+Alias: `d`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -135,16 +160,17 @@ Examples:
 `delete 2` +
 Deletes the 2nd person in the address book.
 * `find Betsy` +
-`delete 1` +
+`d 1` +
 Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects the person identified by the index number used in the last person listing and displays the person card that can be viewed by hovering mouse over the card. +
 Format: `select INDEX`
+Alias: `s`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the person card at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -155,8 +181,82 @@ Examples:
 `select 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
-`select 1` +
+`s 1` +
 Selects the 1st person in the results of the `find` command.
+
+//tag::calendar[]
+=== Show Google Calendar : `calendar`
+
+Shows the User's Google Calendar within the Personal Trainer Pro Application. +
+Format: `calendar`
+
+****
+* Loads the Google Calendar login page.
+* Users have to login the first time. After that, Google Calendar will be displayed upon 'calendar' command.
+* Users will need to re-login if they close and reopen the PTP app.
+****
+
+Examples:
+
+* `calendar`
+//end::calendar[]
+
+//tag::addEvent[]
+=== Add event to Google Calendar : `addEvent`
+
+Adds an event to the Google Calendar on the signed-in Google account within the Personal Trainer Pro Application. +
+Format: `addEvent n/EVENT_NAME sd/EVENT_START_DATE st/EVENT_START_TIME ed/EVENT_END_DATE et/EVENT_END_TIME`
+
+****
+* Adds an event to the Google Calendar on the signed-in Google account via Command Line Interface.
+* Upon first use of the 'addEvent' command, users will be prompted via a new browser window to authorize access to PTP app to manage their calendars.
+* Select the account logged in to Google Calendar and click 'allow'.
+* The event will then be added to the user's Google Calendar.
+* Refresh the calendar to show the newly added event by using the 'calendar' command.
+****
+
+[TIP]
+Once logged in to Google Calendar, be sure to tick your calendar in the left panel under 'My Calendars' to allow added events to be shown.
+
+Examples:
+
+* `addEvent n/Weights Training sd/2017-11-30 st/11:30 ed/2017-11-30 et/13:30`
+//end::addEvent[]
+
+//tag::calories[]
+=== Show Calories a person requires : `Calories`
+
+Selects the person identified by the index number and shows the amount of calories needed to increase or decrease in weight. +
+Format: `Calories INDEX`
+Alias: `cal`
+
+****
+* Selects the person and loads the Calories calculator page the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`Calories 2` +
+Shows the calories of the 2nd person in the address book.
+* `find Betsy` +
+`cal 1` +
+Shows the calories of the 1st person in the results of the `find` command.
+//end::calories[]
+
+=== Weight Logging for clients `[coming in v2.0]`
+
+Users will be able to view the history of weight changes for each client in a graphical and list format.
+
+=== Scheduling appointments with clients `[coming in v2.0]`
+
+=== Cancelling appointments with clients `[coming in v2.0]`
+
+=== Sharing workouts with clients `[coming in v2.0]`
+
+=== Obtaining feedback from clients `[coming in v2.0]`
 
 === Listing entered commands : `history`
 
@@ -230,7 +330,7 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Personal Trainer Pro data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 // tag::dataencryption[]
@@ -246,19 +346,26 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS h/HEIGHT w/WEIGHT g/GENDER age/AGE al/ACTIVITYLEVEL [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 h/169.0 w/55.5 g/M age/22 al/1.9 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [h/HEIGHT] [w/WEIGHT] [g/GENDER] [age/AGE] [al/ACTIVITYLEVEL] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Filter* : `bmi KEYWORD [MORE_KEYWORDS]` +
+e.g. `bmi overweight underweight`
 * *Help* : `help`
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g. `select 2`
+* *Calories* : `calories INDEX` +
+e.g. `calories 2`
+* *Calendar* : `calendar`
+* *addEvent* : `addEvent n/EVENT_NAME sd/EVENT_START_DATE st/EVENT_START_TIME ed/EVENT_END_DATE et/EVENT_END_TIME` +
+e.g. `addEvent n/Weights Training sd/2017-11-30 st/11:30 ed/2017-11-30 et/13:30`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

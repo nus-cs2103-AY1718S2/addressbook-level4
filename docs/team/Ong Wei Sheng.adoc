@@ -1,0 +1,62 @@
+= Ong Wei Sheng - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Personal Trainer Pro
+
+---
+
+== Overview
+
+Personal Trainer Pro is a desktop application used by personal trainers and their clients to keep track of their fitness journey. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *integrated Google Calendar Services*
+** What it does: Through the 'calendar' and 'addEvent' command, users can display their Google Calendar within the application, and also add new events to their Google Calendar through CLI.
+** Justification: This feature improves the product significantly as it allows users to have increased ease in the management of their schedule. It can be troublesome to have to switch between applications when planning one's schedule. This feature allows the user to do everything within the application itself, allowing them to finish planning quicker and more efficiently.
+** Highlights: This enhancement touched on all the different components of the code from User Interface to the Model component. Therefore, it required a deep understanding of how the different component interacts with one another. Also, since Google Calendar is integrated, it requires knowledge on how the Google Calendar API works and how to set it up, making it very challenging to implement.
+** Credits: Google Calendar API was used to allow Google Calendar services to be integrated into the application.
+
+* *Minor enhancement*: added a weight attribute that stores the users' weight, which is essential since this is a fitness application.
+
+* *Minor enhancement*: revamped the UI from a dark theme to a brighter and more positive light theme to match our product, which is a fitness application.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F12-B2/main/blob/master/collated/functional/wayneong95.md[Functional code]] [https://github.com/CS2103JAN2018-F12-B2/main/blob/master/collated/test/wayneong95.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed v1.5rc release on GitHub
+*** Proposed initial idea of a fitness application for personal trainers and clients
+** Enhancements to existing features:
+*** Wrote additional tests for existing features to increase coverage from 85% to 88% (Pull request https://github.com/CS2103JAN2018-F12-B2/main/pull/90)
+** Documentation:
+*** Constantly checks and updates user and developer guide. (examples: https://github.com/CS2103JAN2018-F12-B2/main/pull/44/files, https://github.com/CS2103JAN2018-F12-B2/main/pull/100, https://github.com/CS2103JAN2018-F12-B2/main/pull/120
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-W09-B1/main/issues/134, https://github.com/CS2103JAN2018-W09-B1/main/issues/130, https://github.com/CS2103JAN2018-W09-B1/main/issues/126)
+** Tools:
+*** Integrated a third party service (Google Calendar) to the project (https://github.com/CS2103JAN2018-F12-B2/main/pull/56)
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=calendar]
+
+include::../UserGuide.adoc[tag=addEvent]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=GoogleCalendarApi]
+
+include::../DeveloperGuide.adoc[tag=GoogleCalendar]
+
+---

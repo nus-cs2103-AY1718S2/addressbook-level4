@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's address in the address book.
+ * Represents a Person's address in the Personal Trainer Pro app.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
 public class Address {
@@ -36,6 +36,15 @@ public class Address {
      */
     public static boolean isValidAddress(String test) {
         return test.matches(ADDRESS_VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if two Addresses in comparison are alphabetically the same (regardless of case).
+     */
+    public boolean alphabeticallyEquals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Address // instanceof handles nulls
+                && this.value.toLowerCase().equals(((Address) other).value.toLowerCase())); // state check
     }
 
     @Override

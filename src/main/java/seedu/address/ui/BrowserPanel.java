@@ -13,7 +13,9 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowCaloriesEvent;
 import seedu.address.model.person.Person;
+import seedu.address.model.util.HtmlFormatter;
 
 /**
  * The Browser Panel of the App.
@@ -22,8 +24,24 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://www.google.com.sg/search?q=";
 
+    //@@author hypertun
+    public static final String CALCULATOR_PREFIX_URL = "http://www.calculator.net/calorie-calculator.html?ctype=metric";
+
+    public static final String CALCULATOR_AGE_PREFIX = "&cage=";
+
+    public static final String CALCULATOR_GENDER_PREFIX = "&csex=";
+
+    public static final String CALCULATOR_HEIGHT_PREFIX = "&cheightfeet=5&cheightinch=10&cpound=160&cheightmeter=";
+
+    public static final String CALCULATOR_WEIGHT_PREFIX = "&ckg=";
+
+    public static final String CALCULATOR_ACTIVITY_LEVEL_PREFIX = "&cactivity=";
+
+    public static final String CALCULATOR_SUFFIX_URL = "&printit=0";
+
+    //@@author
     private static final String FXML = "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -39,11 +57,14 @@ public class BrowserPanel extends UiPart<Region> {
 
         loadDefaultPage();
         registerAsAnEventHandler(this);
+
     }
 
+    //@@author hypertun
     private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+        browser.getEngine().loadContent(HtmlFormatter.getHtmlFormat(person));
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
@@ -57,6 +78,20 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(defaultPage.toExternalForm());
     }
 
+    //@@author hypertun
+    /**
+     * Creates calories from given person
+     */
+    public void loadPersonCalories(Person person) {
+        loadPage(CALCULATOR_PREFIX_URL
+                + CALCULATOR_AGE_PREFIX + person.getAge().value
+                + CALCULATOR_GENDER_PREFIX + person.getGender().value
+                + CALCULATOR_HEIGHT_PREFIX + person.getHeight().value
+                + CALCULATOR_WEIGHT_PREFIX + person.getWeight().value
+                + CALCULATOR_ACTIVITY_LEVEL_PREFIX + person.getActivityLevel().value
+                + CALCULATOR_SUFFIX_URL);
+    }
+
     /**
      * Frees resources allocated to the browser.
      */
@@ -65,8 +100,17 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    public void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
+
+    //@@author hypertun
+    @Subscribe
+    private void handleShowCaloriesEvent(ShowCaloriesEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event,
+                "Processing Calories of " + event.person.getName().fullName));
+        loadPersonCalories(event.person);
+    }
+    //@@author
 }

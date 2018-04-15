@@ -1,0 +1,63 @@
+= Cheng Wenhao - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Personal Trainer Pro
+
+---
+
+== Overview
+
+Personal Trainer Pro is a desktop application used by personal trainers and their clients to keep track of their fitness journey. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: changed background colour for person card to be *attribute-dependent*
+** What it does: The BMI of each person is automatically recalculated with any updates in height or weight. The classification of the BMI (Underweight, Acceptable, Overweight, Obese)
+changes after is reflected as the change in background colour of the PersonCard.
+** Justification: At times, personal trainers want to design a set of workout tailored for a group of people and more often than not, workouts are tailored based on the client's BMI.
+Allowing the personal trainer to know at a quick glance how many of his clients fall under which BMI classification would allow the trainer to better gauge what kind of workouts is needed.
+** Highlights: the background colour of the PersonCard is changed immediately upon any changes to the BMI classification with each edit command. This also reduces the cluttering of information displayed on the card.
+
+* *Minor enhancement*: added a *filtering command to sieve of clients of the same BMI classification* that complements the justification above.
+* *Minor enhancement*: added a height and BMI attribute to facilitate the classification of clients according to BMI.(Pull requests https://github.com/CS2103JAN2018-F12-B2/main/pull/27/[#27], https://github.com/CS2103JAN2018-F12-B2/main/pull/38/[#38])
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F12-B2/main/blob/master/collated/functional/wenhao53.md[Functional code]] [https://github.com/CS2103JAN2018-F12-B2/main/blob/master/collated/test/wenhao53.md[Test code]]
+
+* *Future implementations*: To make use of Google Charts API to provide an interactive display in Weight Logging for each client.
+This has already been done and tested working in a soft release but is not included in the `v1.5` release of the product due to testing inconsistencies and difficulties.
+
+* *Other contributions*:
+
+** Project management:
+*** Managed `v1.2` - `v1.5rc` (4 releases) on GitHub
+*** Written all enhancements and ensured that code complies to coding standards, resulting in minimal (< 0.5%) drop in code coverage with each PR.
+** Enhancements to existing features:
+*** Implemented case-insensitivity for AddCommand to allow leniency with alphabetical case errors. (Pull request https://github.com/CS2103JAN2018-F12-B2/main/pull/15/[#15])
+*** Restricted Height and Weight input to a specified range to prevent overflow issues and display problems, and to facilitate the calculation of BMI for clients.
+** Documentation:
+*** Served as the main link and auditor for documentation (User Guide, Developer Guide) to ensure consistencies in display, format and representation. (Pull requests https://github.com/CS2103JAN2018-F12-B2/main/pull/24/[#24], https://github.com/CS2103JAN2018-F12-B2/main/pull/45/[#45], https://github.com/CS2103JAN2018-F12-B2/main/pull/57/[#57])
+*** Updated user stories and use cases in accordance with initial projections of project implementations. (Pull request https://github.com/CS2103JAN2018-F12-B2/main/pull/20/[#20])
+** Community:
+*** Helped to solve most test failures in the early stages of the project by pinpointing missing implementations and person tests.
+*** Reported bugs and suggestions for other teams in the class during user testing (examples: https://github.com/CS2103JAN2018-F09-B2/main/issues/114[#114])
+
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=filter]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=bmiclassification]
+include::../DeveloperGuide.adoc[tag=userstories]
+include::../DeveloperGuide.adoc[tag=usecases]
+

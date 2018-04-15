@@ -98,7 +98,7 @@
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
 }
-
+/* ==============================================================================================================
 .list-cell:filled:even {
     -fx-background-color: #3c3e3f;
 }
@@ -106,6 +106,7 @@
 .list-cell:filled:odd {
     -fx-background-color: #515658;
 }
+*/
 
 .list-cell:filled:selected {
     -fx-background-color: #424d5f;
@@ -306,10 +307,36 @@
     -fx-padding: 8 1 8 1;
 }
 
+/* @@author wenhao53 */
+
 #cardPane {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
 }
+
+.ACCEPTABLE {
+    -fx-background-color: #003000;
+    -fx-border-color: derive(#003000, 25%);
+    -fx-border-width: 2;
+}
+
+.OBESE {
+    -fx-background-color: #500000;
+    -fx-border-color: derive(#500000, 25%);
+    -fx-border-width: 2;
+}
+
+.OVERWEIGHT {
+    -fx-background-color: #553300;
+    -fx-border-color: derive(#553300, 25%);
+    -fx-border-width: 2;
+}
+
+.UNDERWEIGHT {
+    -fx-background-color: #553300;
+    -fx-border-color: derive(#553300, 25%);
+    -fx-border-width: 2;
+}
+
+/* @@author */
 
 #commandTypeLabel {
     -fx-font-size: 11px;

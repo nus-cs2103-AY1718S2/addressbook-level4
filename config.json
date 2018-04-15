@@ -1,0 +1,5 @@
+{
+  "appTitle" : "Personal Trainer Pro",
+  "logLevel" : "INFO",
+  "userPrefsFilePath" : "preferences.json"
+}

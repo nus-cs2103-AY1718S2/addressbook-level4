@@ -28,4 +28,12 @@ public class WebViewUtil {
     public static void waitUntilBrowserLoaded(BrowserPanelHandle browserPanelHandle) {
         new GuiRobot().waitForEvent(browserPanelHandle::isLoaded);
     }
+
+    /**
+     * If the {@code calendarWindowHandle}'s {@code WebView} is loading,
+     * sleeps the thread till it is successfully loaded.
+     */
+    public static void waitUntilCalendarLoaded(CalendarWindowHandle calendarWindowHandle) {
+        new GuiRobot().waitForEvent(calendarWindowHandle::isLoaded);
+    }
 }

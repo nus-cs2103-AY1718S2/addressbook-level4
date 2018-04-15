@@ -6,6 +6,11 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <height isPrivate="false">169.0</height>
+        <weight isPrivate="false">55.5</weight>
+        <gender isPrivate="false">f</gender>
+        <age isPrivate="false">22</age>
+        <activityLevel isPrivate="false">1.2</activityLevel>
     </persons>
     <!-- Person with invalid phone field -->
     <persons>
@@ -13,5 +18,10 @@
         <phone isPrivate="false">948asdf2424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <height isPrivate="false">169.0</height>
+        <weight isPrivate="false">55.5</weight>
+        <gender isPrivate="false">f</gender>
+        <age isPrivate="false">22</age>
+        <activityLevel isPrivate="false">1.2</activityLevel>
     </persons>
 </addressbook>

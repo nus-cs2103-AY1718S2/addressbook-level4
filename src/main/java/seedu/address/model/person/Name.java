@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's name in the address book.
+ * Represents a Person's name in the Personal Trainer Pro app.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
@@ -38,6 +38,17 @@ public class Name {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
+    //@@author wenhao53
+    /**
+     * Returns true if two Names in comparison are alphabetically the same (regardless of case).
+     */
+    public boolean alphabeticallyEquals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Name // instanceof handles nulls
+                && this.fullName.toLowerCase().equals(((Name) other).fullName.toLowerCase())); // state check
+    }
+
+    //@@author
 
     @Override
     public String toString() {

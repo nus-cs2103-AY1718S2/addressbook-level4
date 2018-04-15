@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<title>Cheng Wenhao - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Cheng Wenhao - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-personal-trainer-pro-application"><a class="link" href="#project-personal-trainer-pro-application">PROJECT: Personal Trainer Pro Application</a></h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Personal Trainer Pro is a desktop application used by personal trainers and their clients to keep track of their fitness journey. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major enhancement</strong>: changed background colour for person card to be <strong>attribute-dependent</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: The BMI of each person is automatically recalculated with any updates in height or weight. The classification of the BMI (Underweight, Acceptable, Overweight, Obese)
+changes after is reflected as the change in background colour of the PersonCard.</p>
+</li>
+<li>
+<p>Justification: At times, personal trainers want to design a set of workout tailored for a group of people and more often than not, workouts are tailored based on the client&#8217;s BMI.
+Allowing the personal trainer to know at a quick glance how many of his clients fall under which BMI classification would allow the trainer to better gauge what kind of workouts is needed.</p>
+</li>
+<li>
+<p>Highlights: the background colour of the PersonCard is changed immediately upon any changes to the BMI classification with each edit command. This also reduces the cluttering of information displayed on the card.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>: added a <strong>filtering command to sieve of clients of the same BMI classification</strong> that complements the justification above.</p>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>: added a height and BMI attribute to facilitate the classification of clients according to BMI.(Pull requests <a href="https://github.com/CS2103JAN2018-F12-B2/main/pull/27/">#27</a>, <a href="https://github.com/CS2103JAN2018-F12-B2/main/pull/38/">#38</a>)</p>
+</li>
+<li>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-F12-B2/main/blob/master/collated/functional/wenhao53.md">Functional code</a>] [<a href="https://github.com/CS2103JAN2018-F12-B2/main/blob/master/collated/test/wenhao53.md">Test code</a>]</p>
+</li>
+<li>
+<p><strong>Future implementations</strong>: To make use of Google Charts API to provide an interactive display in Weight Logging for each client.
+This has already been done and tested working in a soft release but is not included in the <code>v1.5</code> release of the product due to testing inconsistencies and difficulties.</p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Project management:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Managed <code>v1.2</code> - <code>v1.5rc</code> (4 releases) on GitHub</p>
+</li>
+<li>
+<p>Written all enhancements and ensured that code complies to coding standards, resulting in minimal (&lt; 0.5%) drop in code coverage with each PR.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enhancements to existing features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Implemented case-insensitivity for AddCommand to allow leniency with alphabetical case errors. (Pull request <a href="https://github.com/CS2103JAN2018-F12-B2/main/pull/15/">#15</a>)</p>
+</li>
+<li>
+<p>Restricted Height and Weight input to a specified range to prevent overflow issues and display problems, and to facilitate the calculation of BMI for clients.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Served as the main link and auditor for documentation (User Guide, Developer Guide) to ensure consistencies in display, format and representation. (Pull requests <a href="https://github.com/CS2103JAN2018-F12-B2/main/pull/24/">#24</a>, <a href="https://github.com/CS2103JAN2018-F12-B2/main/pull/45/">#45</a>, <a href="https://github.com/CS2103JAN2018-F12-B2/main/pull/57/">#57</a>)</p>
+</li>
+<li>
+<p>Updated user stories and use cases in accordance with initial projections of project implementations. (Pull request <a href="https://github.com/CS2103JAN2018-F12-B2/main/pull/20/">#20</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Helped to solve most test failures in the early stages of the project by pinpointing missing implementations and person tests.</p>
+</li>
+<li>
+<p>Reported bugs and suggestions for other teams in the class during user testing (examples: <a href="https://github.com/CS2103JAN2018-F09-B2/main/issues/114">#114</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="filtering-all-persons-according-to-bmi-classification-code-bmi-code"><a class="link" href="#filtering-all-persons-according-to-bmi-classification-code-bmi-code">Filtering all persons according to BMI Classification : <code>bmi</code></a></h3>
+<div class="paragraph">
+<p>Shows a filtered list of all persons in the PTP application whose BMI classification matches the given search query.<br>
+Format: <code>bmi KEYWORD [MORE_KEYWORDS]</code></p>
+</div>
+<div class="paragraph">
+<p>Keywords (any of the below):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Underweight</code> (BMI &lt; 18.5)</p>
+</li>
+<li>
+<p><code>Acceptable</code> (18.5 &le; BMI &le; 24.9)</p>
+</li>
+<li>
+<p><code>Overweight</code> (25 &le; BMI &le; 29.9)</p>
+</li>
+<li>
+<p><code>Obese</code> (BMI &ge; 30)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>bmi overweight</code></p>
+</li>
+<li>
+<p><code>bmi overweight underweight obese</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="auto-assigning-and-sorting-of-bmi-classification-labels-to-clients"><a class="link" href="#auto-assigning-and-sorting-of-bmi-classification-labels-to-clients">Auto-assigning and Sorting of BMI Classification labels to clients</a></h3>
+<div class="paragraph">
+<p>The user will be able to have a quick glance at the list of clients that are sorted according to their BMI Classification (Obese, Overweight,
+Acceptable, or Underweight), so as to allow the user to identify which clients need more help in reaching their desired BMI range.</p>
+</div>
+<div class="paragraph">
+<p>The BMI classification will be adapted from the standards set by the World Health Organisation (WHO). The background colour of the Person card for each
+client will differ in colour according to the BMI classification for that particular client.</p>
+</div>
+<div class="paragraph">
+<p>Current BMI standards set by the World Health Organisation (WHO) are as follows:</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 70%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 30%;">
+<col style="width: 45%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Classification</th>
+<th class="tableblock halign-left valign-top">BMI Range</th>
+<th class="tableblock halign-left valign-top">Background Colour (Light Theme)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Underweight</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BMI &lt; 18.5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Light Yellow</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Acceptable</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18.5 &le; BMI &le; 24.9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Light Green</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Overweight</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25 &le; BMI &le; 29.9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Light Orange</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Obese</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BMI &ge; 30</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Light Red</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Each client is saved as a person with weight and height attributes facilitate the calculation of their BMI.
+Having the weight and height attributes in a Person allows the easy updating using the <code>edit</code> command in the application.
+This will allow the BMI to be re-calculated each time a client&#8217;s weight or height (or both) is updated.
+The background colour of the PersonCard will be updated automatically according to the BMI Classification</p>
+</div>
+<div class="paragraph">
+<p>The BMI for individual clients is calculated using the following formula: <strong>BMI = weight / (height / 100)<sup>2</sup> </strong>.</p>
+</div>
+<div class="paragraph">
+<p>The BMI of each client is stored as a Person attribute and is currently displayed (to 4 significant figures) in the PersonCard.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-display-of-bmi-classification"><a class="link" href="#aspect-display-of-bmi-classification">Aspect: Display of BMI Classification</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Individual client&#8217;s BMI will not be shown as a number, but classification is reflected using the Person card&#8217;s background colour</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to see at first glance which client is in which classification, minimise information included in a Person card.</p>
+</li>
+<li>
+<p>Cons: User has to select a client in order to view his/her BMI value.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Display client&#8217;s BMI classification as tags to their Person card</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Ease of viewing for trainer, actual BMI value will be available at first glance.</p>
+</li>
+<li>
+<p>Cons: Displaying each client&#8217;s BMI values as tags may interfere with the implementation and display of any existing tags and it is crucial to ensure the implementation of this tag, if desired,
+in a way that will not affect the storage or retrieval of other tags associated with each client.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="classification-command-to-filter-clients-displayed"><a class="link" href="#classification-command-to-filter-clients-displayed">Classification Command to filter clients displayed</a></h3>
+<div class="paragraph">
+<p>As the user may have a large list of clients, he may wish to filter out clients that belong to a certain BMI classification.
+The <code>bmi</code> command was implemented to allow the user to filter the list of clients using the case-insensitive keywords that corresponds
+to the BMI classification (i.e. acceptable, overweight, underweight, obese).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="user-stories"><a class="link" href="#user-stories">User Stories</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Priorities: High (must have) - <code>* * *</code>, Medium (nice to have) - <code>* *</code>, Low (unlikely to have) - <code>*</code></p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 70%;">
+<colgroup>
+<col style="width: 15%;">
+<col style="width: 15%;">
+<col style="width: 35%;">
+<col style="width: 35%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Priority</th>
+<th class="tableblock halign-left valign-top">As a &#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">I want to &#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">So that I can&#8230;&#8203;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">new user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see usage instructions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">refer to instructions when I forget how to use the App</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add a new client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">expand and record my client database</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete a client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">remove entries that I no longer need</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">edit a client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">edit the attributes of my clients as they progress</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find a client by name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of clients without having to go through the entire list</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">update the weight of my client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">track his/her weight progress</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">filter my clients according to BMI classification</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">easily view clients with similar BMI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">schedule appointments with my clients</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">craft my schedule and ensure that I am able to balance my efforts among clients</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">determine the caloric needs of my clients</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">help my clients to plan a healthy program that suits their needs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hide <a href="#private-contact-detail">private contact details</a> by default</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minimize chance of someone else seeing them by accident</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">track the weight changes of my clients</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">view my clients' progression till date using past weight updates</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">communicate with my clients</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">address any needs or instructions outside of workout sessions</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="use-case-add-person"><a class="link" href="#use-case-add-person">Use case: Add person</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to add person</p>
+</li>
+<li>
+<p>Personal Trainer Pro prompts for data input</p>
+</li>
+<li>
+<p>User inputs data for person to be added</p>
+</li>
+<li>
+<p>Personal Trainer Pro adds the new person</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a. Person of the same name (regardless of case) is already in Personal Trainer Pro</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. Personal Trainer Pro shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-add-goal-for-person"><a class="link" href="#use-case-add-goal-for-person">Use case: Add goal for person</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to add goal</p>
+</li>
+<li>
+<p>Personal Trainer Pro prompts for data input</p>
+</li>
+<li>
+<p>User inputs person name and goal to be added</p>
+</li>
+<li>
+<p>Personal Trainer Pro adds the new goal for the person</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. Personal Trainer Pro shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b. The input goal is empty.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b1. Personal Trainer Pro shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-filter-persons-according-to-bmi-classification"><a class="link" href="#use-case-filter-persons-according-to-bmi-classification">Use case: Filter persons according to BMI Classification</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to filter persons</p>
+</li>
+<li>
+<p>Personal Trainer Pro prompts for classification input</p>
+</li>
+<li>
+<p>User inputs BMI classification to filter</p>
+</li>
+<li>
+<p>Personal Trainer Pro displays a list of persons with that BMI classification</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a. User does not provide any input keywords, or provides invalid keywords</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. Personal Trainer Pro shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-track-weight-changes-for-person"><a class="link" href="#use-case-track-weight-changes-for-person">Use case: Track weight changes for person</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to track weight changes</p>
+</li>
+<li>
+<p>Personal Trainer Pro prompts for data input</p>
+</li>
+<li>
+<p>User inputs person to track past weight</p>
+</li>
+<li>
+<p>Personal Trainer Pro displays a chart showing past changes in weight</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. Personal Trainer Pro shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-04-15 14:53:49 SGT
+</div>
+</div>
+</body>
+</html>

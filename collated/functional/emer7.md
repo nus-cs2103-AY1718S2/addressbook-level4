@@ -41,7 +41,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a person edited change
  */
 public class PersonEditedEvent extends BaseEvent {
 
@@ -90,9 +90,10 @@ public class ShowReviewDialogEvent extends BaseEvent {
         String preppedWords = words.trim();
         String[] wordsInPreppedWords = preppedWords.split("\\s+");
         checkArgument(!preppedWords.isEmpty(), "Word parameter cannot be empty");
-```
-###### \java\seedu\address\commons\util\StringUtil.java
-``` java
+
+        String preppedSentence = sentence;
+        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+
         int howManyMatches = 0;
 
         for (String wordInWords: wordsInPreppedWords) {
@@ -180,7 +181,7 @@ public class ReviewCommand extends UndoableCommand {
             + "A separate pop-up dialog will appear to request for the review.";
 
     public static final String MESSAGE_REVIEW_PERSON_SUCCESS = "Reviewed employee: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "Both INDEX and REVIEW must be provided.";
+    public static final String MESSAGE_NOT_EDITED = "INDEX, REVIEWER, and REVIEW must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This employee already exists in Employees Tracker.";
 
     private final Index index;
@@ -293,12 +294,17 @@ public class ReviewCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\parser\FindCommandParser.java
 ``` java
+    public FindCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_RATING);
+
+        if (!(arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || arePrefixesPresent(argMultimap, PREFIX_TAG)
                 || arePrefixesPresent(argMultimap, PREFIX_RATING))
                 || !argMultimap.getPreamble().isEmpty()) {
-```
-###### \java\seedu\address\logic\parser\FindCommandParser.java
-``` java
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
         List<String> nameKeyphrases = argMultimap.getAllValues(PREFIX_NAME);
         List<String> tagKeyphrases = argMultimap.getAllValues(PREFIX_TAG);
         List<String> ratingKeyphrases = argMultimap.getAllValues(PREFIX_RATING);
@@ -308,6 +314,15 @@ public class ReviewCommand extends UndoableCommand {
         }
 
         return new FindCommand(new FieldContainKeyphrasesPredicate(nameKeyphrases, tagKeyphrases, ratingKeyphrases));
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 ```
 ###### \java\seedu\address\logic\parser\ReviewCommandParser.java
 ``` java
@@ -688,7 +703,7 @@ public class UniqueReviewList implements Iterable<Review> {
     }
 
     /**
-     * Returns all reviews in this list as a Set.
+     * Returns all Reviews in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */
     public Set<Review> toSet() {
@@ -697,7 +712,7 @@ public class UniqueReviewList implements Iterable<Review> {
     }
 
     /**
-     * Replaces the Reviews in this list with those in the argument review list.
+     * Replaces the Reviews in this list with those in the argument reviews list.
      */
     public void setReviews(Set<Review> reviews) {
         requireAllNonNull(reviews);
@@ -924,7 +939,7 @@ public class XmlAdaptedReview {
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
-    private void showDialogPane(ShowReviewDialogEvent event) {
+    private void showReviewDialog(ShowReviewDialogEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         ReviewDialog reviewDialog = new ReviewDialog();
         reviewDialog.show();
@@ -1035,11 +1050,6 @@ public class ReviewDialog {
 ```
 ###### \resources\view\DetailPanel.fxml
 ``` fxml
-
-```
-###### \resources\view\DetailPanel.fxml
-``` fxml
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>

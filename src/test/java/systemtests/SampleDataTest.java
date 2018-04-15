@@ -49,11 +49,13 @@ public class SampleDataTest extends AddressBookSystemTest {
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
         Person[] expectedList = SampleDataUtil.getSamplePersons();
+        //@@author emer7
         UnlockCommand testUnlockCommand = new UnlockCommand();
         testUnlockCommand.setTestMode();
         testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
         testUnlockCommand.execute();
         showAllPersons();
+        //@@author
         assertListMatching(getPersonListPanel(), expectedList);
     }
 }

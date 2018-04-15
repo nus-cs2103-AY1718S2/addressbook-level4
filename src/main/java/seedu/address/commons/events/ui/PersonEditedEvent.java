@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Person;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a person edited change
  */
 public class PersonEditedEvent extends BaseEvent {
 

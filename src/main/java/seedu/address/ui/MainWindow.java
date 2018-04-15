@@ -439,7 +439,7 @@ public class MainWindow extends UiPart<Stage> {
 
     //@@author emer7
     @Subscribe
-    private void showDialogPane(ShowReviewDialogEvent event) {
+    private void showReviewDialog(ShowReviewDialogEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         ReviewDialog reviewDialog = new ReviewDialog();
         reviewDialog.show();

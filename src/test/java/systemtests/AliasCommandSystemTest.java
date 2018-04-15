@@ -2,6 +2,7 @@ package systemtests;
 
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_HISTORY;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_NUMBER;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_MAP1;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_MAP2;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_SYNTAX_DESC;
@@ -12,6 +13,7 @@ import static seedu.address.testutil.TypicalAliases.ADD;
 import static seedu.address.testutil.TypicalAliases.HISTORY;
 import static seedu.address.testutil.TypicalAliases.MAP_1;
 import static seedu.address.testutil.TypicalAliases.MAP_2;
+import static seedu.address.testutil.TypicalAliases.UPLOAD;
 
 import org.junit.Test;
 
@@ -62,6 +64,12 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_MAP2;
         expectedAliases = new Alias[][] {{toAdd_map1, toAdd_history}, {toAdd_map2}};
         assertCommandSuccess(command, toAdd_map2, expectedAliases);
+
+        /* Case: add a number as alias for UploadCommand -> added */
+        Alias toAdd_number = UPLOAD;
+        command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_NUMBER;
+        expectedAliases = new Alias[][] {{toAdd_map1, toAdd_history, toAdd_number}, {toAdd_map2}};
+        assertCommandSuccess(command, toAdd_number, expectedAliases);
 
         /* Case: add to empty address book -> added */
         deleteAllPersonsAndAliases();

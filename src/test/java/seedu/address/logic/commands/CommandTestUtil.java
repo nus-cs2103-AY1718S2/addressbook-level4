@@ -105,7 +105,7 @@ public class CommandTestUtil {
     public static final String VALID_ALIAS_VACANT = "vacant1";
     public static final String VALID_ALIAS_UNION = "union1";
     public static final String VALID_ALIAS_UPLOAD = "upload1";
-    public static final String VALID_ALIAS_NUMBER = "9";
+    public static final String VALID_ALIAS_NUMBER = "911";
 
     public static final String ALIAS_DESC_ADD = AddCommand.COMMAND_WORD + " " + VALID_ALIAS_ADD;
     public static final String ALIAS_DESC_ALIAS = AliasCommand.COMMAND_WORD + " " + VALID_ALIAS_ALIAS;
@@ -131,6 +131,7 @@ public class CommandTestUtil {
     public static final String ALIAS_DESC_VACANT = VacantCommand.COMMAND_WORD + " " + VALID_ALIAS_VACANT;
     public static final String ALIAS_DESC_UNION = TimetableUnionCommand.COMMAND_WORD + " " + VALID_ALIAS_UNION;
     public static final String ALIAS_DESC_UPLOAD = UploadCommand.COMMAND_WORD + " " + VALID_ALIAS_UPLOAD;
+    public static final String ALIAS_DESC_NUMBER = UploadCommand.COMMAND_WORD + " " + VALID_ALIAS_NUMBER;
 
     public static final String INVALID_COMMAND_SYNTAX = "command!";
     public static final String INVALID_ALIAS = "alias!";
@@ -151,6 +152,8 @@ public class CommandTestUtil {
     public static final String MIXED_CASE_VACANT_COMMAND_WORD = "VaCaNt";
 
     public static final String VALID_UNALIAS = VALID_ALIAS_ADD;
+
+    public static final String INVALID_UNALIAS = "nonexistent";
 
     public static final String INVALID_UNALIAS_DESC = "alias!";
 

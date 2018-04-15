@@ -1,15 +1,25 @@
 package systemtests;
 
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_MAP2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_NUMBER;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_UNALIAS;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_UNALIAS_DESC;
 import static seedu.address.testutil.TypicalAliases.ADD;
+import static seedu.address.testutil.TypicalAliases.MAP_2;
+import static seedu.address.testutil.TypicalAliases.UPLOAD;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UnaliasCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.testutil.AliasBuilder;
 import seedu.address.testutil.AliasUtil;
 import seedu.address.testutil.TypicalAliases;
 
@@ -24,12 +34,13 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
 
         /* ------------------------ Perform remove operations from the alias list ----------------------------- */
 
-        /* Case: remove an alias from a non-empty address book, command with leading spaces and trailing spaces -> removed */
+        /* Case: remove an alias from a non-empty address book, command with leading spaces and trailing spaces
+        * -> removed
+        * */
         String toDelete_add = VALID_ALIAS_ADD;
-        Alias toDelete_add_Alias = ADD;
         generateAliases(model);
-        String command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_ADD;
-        Alias[] expectedAliasArray = getExcludedAliases(new Alias[] {ADD});
+        String command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_ADD + "   ";
+        Alias[] expectedAliasArray = getRemainingAliases(new Alias[] {ADD});
         Alias[][] expectedAliases = new Alias[][] {expectedAliasArray};
         assertCommandSuccess(command, toDelete_add, expectedAliases);
 
@@ -47,8 +58,39 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
         expectedAliases = new Alias[][] {expectedAliasArray};
         assertCommandSuccess(command, model, expectedResultMessage, expectedAliases);
 
-        /* --------------------------------- Perform invalid alias operations ------------------------------------- */
+        /* Case: remove another alias from a non-empty address book, command with leading and trailing spaces
+         * -> removed
+         * */
+        String toDelete_map = VALID_ALIAS_MAP2;
+        command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_MAP2 + "  ";
+        expectedAliasArray = getRemainingAliases(new Alias[] {MAP_2, ADD});
+        expectedAliases = new Alias[][] {expectedAliasArray};
+        assertCommandSuccess(command, toDelete_map, expectedAliases);
 
+        /* Case: remove another alias from a non-empty address book, command with leading and trailing spaces
+         * -> removed
+         * */
+        String toDelete_upload = VALID_ALIAS_NUMBER;
+        command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_NUMBER + "  ";
+        expectedAliasArray = getRemainingAliases(new Alias[] {MAP_2, ADD, UPLOAD});
+        expectedAliases = new Alias[][] {expectedAliasArray};
+        assertCommandSuccess(command, toDelete_upload, expectedAliases);
+
+        /* --------------------------------- Perform invalid unalias operations ------------------------------------- */
+
+        /* Case: remove nonexistent alias from a non-empty address book, command with leading and trailing spaces
+         * -> rejected
+         * */
+        String toDelete_nonExistent = INVALID_UNALIAS;
+        command = "   " + UnaliasCommand.COMMAND_WORD + "  " + INVALID_UNALIAS + "  ";
+        assertCommandFailure(command, UnaliasCommand.MESSAGE_UNKNOWN_UNALIAS);
+
+        /* Case: remove alias with symbols from a non-empty address book, command with leading and trailing spaces
+         * -> rejected
+         * */
+        String toDelete_symbols = INVALID_UNALIAS_DESC;
+        command = "   " + UnaliasCommand.COMMAND_WORD + "  " + INVALID_UNALIAS_DESC + "  ";
+        assertCommandFailure(command, Alias.MESSAGE_ALIAS_CONSTRAINTS);
     }
 
     /**
@@ -128,14 +170,14 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
         }
     }
 
-    private Alias[] getExcludedAliases(Alias[] aliases) {
+    private Alias[] getRemainingAliases(Alias[] aliases) {
         List<Alias> expectedAliases = TypicalAliases.getTypicalAliases();
         for (Alias alias : aliases) {
             expectedAliases.remove(alias);
         }
         return expectedAliases.toArray(new Alias[expectedAliases.size()]);
     }
-
+    
     /**
      * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays {@code command}.<br>

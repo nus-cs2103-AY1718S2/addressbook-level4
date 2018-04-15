@@ -25,8 +25,11 @@ public class TypicalAliases {
     public static final Alias HISTORY = new AliasBuilder().withCommand("history").withAlias("history1").build();
     public static final Alias IMPORT = new AliasBuilder().withCommand("import").withAlias("import1").build();
     public static final Alias LIST = new AliasBuilder().withCommand("list").withAlias("list1").build();
+    public static final Alias NONEXISTENT = new AliasBuilder().withCommand("list").withAlias("nonexistent").build();
     public static final Alias REDO = new AliasBuilder().withCommand("redo").withAlias("redo1").build();
     public static final Alias UNDO = new AliasBuilder().withCommand("undo").withAlias("undo1").build();
+    public static final Alias UPLOAD = new AliasBuilder().withCommand("upload").withAlias("911").build();
+    public static final Alias UNION = new AliasBuilder().withCommand("union").withAlias("union1").build();
     public static final Alias UNKNOWN = new AliasBuilder().withCommand("unknownCommand").withAlias("add1").build();
     public static final Alias MAP_1 = new AliasBuilder().withCommand("map").withAlias("map1").build();
     public static final Alias MAP_2 = new AliasBuilder().withCommand("map").withAlias("map2").build();
@@ -50,6 +53,7 @@ public class TypicalAliases {
     }
 
     public static List<Alias> getTypicalAliases() {
-        return new ArrayList<>(Arrays.asList(ADD, ALIAS, CLEAR, DELETE, EDIT, EXIT, HELP, HISTORY, LIST, REDO, UNDO));
+        return new ArrayList<>(Arrays.asList(ADD, ALIAS, CLEAR, DELETE, EDIT, EXIT, HELP, HISTORY, LIST, REDO,
+                UNDO, UNION, MAP_2, MAP_1, UPLOAD));
     }
 }

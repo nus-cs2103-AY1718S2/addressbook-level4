@@ -79,14 +79,14 @@ public class DeleteAppointmentCommandTest {
     }
 
     @Test
-    public void execute_patientExistUnfilteredList_deleteSuccessful() throws Exception {
+    public void execute_appointmentExistUnfilteredList_deleteSuccessful() throws Exception {
         DeleteAppointmentCommand command = prepareCommand("1 15/5/2018 1600");
         CommandResult commandResult = command.execute();
         assertEquals(DeleteAppointmentCommand.MESSAGE_DELETE_SUCCESS, commandResult.feedbackToUser);
     }
 
     @Test
-    public void execute_patientExistFilteredList_deleteSuccessful() throws Exception {
+    public void execute_appointmentExistFilteredList_deleteSuccessful() throws Exception {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         DeleteAppointmentCommand command = prepareCommand("1 15/5/2018 1600");
         CommandResult commandResult = command.execute();

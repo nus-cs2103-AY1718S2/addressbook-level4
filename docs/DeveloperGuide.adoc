@@ -742,6 +742,11 @@ The user executes the sync command using `SyncCommand`, i.e. `sync`, which first
 
 Once the `ModelManager` receives the new `Price` objects, it passes them to the `CoinBook` to carry out price updates for each coin via `CoinChangedEvent`.
 
+The following sequence diagram (Fig. 25) is a visual representation of the above described process.
+
+.Sequence Diagram for Sync
+image::SyncCommandSequenceDiagram.png[width="800"]
+
 ==== Design Considerations
 
 ===== Aspect: Asynchronous vs synchronous fetching
@@ -758,7 +763,7 @@ Once the `ModelManager` receives the new `Price` objects, it passes them to the 
 // tag::autocomplete[]
 === Autocomplete Feature
 
-The autocomplete mechanism is facilitated by `LogicManager`, which exposes `COMMAND_LIST` from `CommandList` for `CommandBox` to use. It supports the predicting of a word or phrase that the user may type based on a partial text query.
+The autocomplete mechanism is facilitated by `CommandBox`, which uses `COMMAND_LIST` from `CommandList`. It supports the predicting of a word or phrase that the user may type based on a partial text query.
 
 Suppose the user is trying to use the `sell` command.
 
@@ -768,10 +773,14 @@ s
 ```
 
 Now, the autocomplete feature will then auto-suggest inputs to complete the query by displaying a pop-up of all commands that contain the letter `s`.
-image::AutocompleteBefore.png[width="100"]
+
+.Auto-suggestions Display
+image::AutocompleteBefore.png[width="200"]
 
 When the user then presses kbd:[DOWN] twice to reach his desired `sell` command, the selected suggestion will be highlighted light grey.
-image::AutocompleteNav.png[width="100"]
+
+.Command Selection
+image::AutocompleteNav.png[width="200"]
 
 The user can then press kbd:[Enter] to confirm his selection of the `sell` command.
 ```

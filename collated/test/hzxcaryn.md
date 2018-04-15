@@ -1,5 +1,5 @@
 # hzxcaryn
-###### \java\guitests\guihandles\AdminModeDisplayHandle.java
+###### /java/guitests/guihandles/AdminModeDisplayHandle.java
 ``` java
 /**
  * A handler for the {@code AdminModeDetails} of the UI
@@ -28,7 +28,7 @@ public class AdminModeDisplayHandle extends NodeHandle<Label> {
 
 }
 ```
-###### \java\guitests\guihandles\OutletDetailsPanelHandle.java
+###### /java/guitests/guihandles/OutletDetailsPanelHandle.java
 ``` java
 /**
  * A handler for the {@code OutletDetailsPanel} of the UI
@@ -152,7 +152,7 @@ public class OutletDetailsPanelHandle extends NodeHandle<Node> {
 
 }
 ```
-###### \java\guitests\guihandles\TimetablePanelHandle.java
+###### /java/guitests/guihandles/TimetablePanelHandle.java
 ``` java
 /**
  * A handler for the {@code TimetableView} of the UI
@@ -223,25 +223,41 @@ public class TimetablePanelHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Check for all the entries from all entry types in the timetable view
+     * Check for all the entries from the default entry types in the timetable view
      * and returns a list of all the entries in sorted order
      * @return sorted list of all entries in timetable view
      */
-    public List<Entry> getTimetableEntries() {
+    public List<Entry> getTimetableEntriesFromDefaultMode() {
         List<Entry<?>> availEntries = getEntriesForEntryType(getTimetableAvail());
         List<Entry<?>> runningOutEntries = getEntriesForEntryType(getTimetableRunningOut());
         List<Entry<?>> fullEntries = getEntriesForEntryType(getTimetableFull());
-        List<Entry<?>> employeeEntries = getEntriesForEntryType(getTimetableEmployee());
-        List<Entry<?>> othersEntries = getEntriesForEntryType(getTimetableOthers());
 
         ArrayList<Entry> entries = new ArrayList<>(Stream.of(
-                availEntries, runningOutEntries, fullEntries, employeeEntries, othersEntries)
+                availEntries, runningOutEntries, fullEntries)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));
 
         Collections.sort(entries, Comparator.comparing(Entry::getStartAsLocalDateTime));
         return entries;
     }
+
+    /**
+     * Check for all the entries from selected employee entry types in the timetable view
+     * and returns a list of all the entries in sorted order
+     * @return sorted list of all entries in timetable view
+     */
+    public List<Entry> getTimetableEntriesFromSelectedEmployeeMode() {
+        List<Entry<?>> employeeEntries = getEntriesForEntryType(getTimetableEmployee());
+        List<Entry<?>> othersEntries = getEntriesForEntryType(getTimetableOthers());
+
+        ArrayList<Entry> entries = new ArrayList<>(Stream.of(employeeEntries, othersEntries)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList()));
+
+        Collections.sort(entries, Comparator.comparing(Entry::getStartAsLocalDateTime));
+        return entries;
+    }
+
 
     /**
      * For the given {@code entryType}, check for all entries in the timetable view
@@ -260,7 +276,7 @@ public class TimetablePanelHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### \java\seedu\ptman\commons\util\DateUtilTest.java
+###### /java/seedu/ptman/commons/util/DateUtilTest.java
 ``` java
     @Test
     public void getThursdayOfDate_validDate_returnsThursdayDate() {
@@ -315,7 +331,7 @@ public class TimetablePanelHandle extends NodeHandle<Node> {
 
 }
 ```
-###### \java\seedu\ptman\logic\commands\DeselectCommandTest.java
+###### /java/seedu/ptman/logic/commands/DeselectCommandTest.java
 ``` java
 public class DeselectCommandTest {
     @Rule
@@ -330,7 +346,7 @@ public class DeselectCommandTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\ExportCommandTest.java
+###### /java/seedu/ptman/logic/commands/ExportCommandTest.java
 ``` java
 public class ExportCommandTest {
     @Rule
@@ -378,7 +394,7 @@ public class ExportCommandTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\ViewShiftCommandTest.java
+###### /java/seedu/ptman/logic/commands/ViewShiftCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -489,7 +505,7 @@ public class ViewShiftCommandTest {
 
 }
 ```
-###### \java\seedu\ptman\logic\parser\ExportCommandParserTest.java
+###### /java/seedu/ptman/logic/parser/ExportCommandParserTest.java
 ``` java
 public class ExportCommandParserTest {
     private ExportCommandParser parser = new ExportCommandParser();
@@ -520,7 +536,7 @@ public class ExportCommandParserTest {
 
 }
 ```
-###### \java\seedu\ptman\logic\parser\PartTimeManagerParserTest.java
+###### /java/seedu/ptman/logic/parser/PartTimeManagerParserTest.java
 ``` java
     @Test
     public void parseCommand_export() throws Exception {
@@ -541,7 +557,7 @@ public class ExportCommandParserTest {
     }
 
 ```
-###### \java\seedu\ptman\logic\parser\PartTimeManagerParserTest.java
+###### /java/seedu/ptman/logic/parser/PartTimeManagerParserTest.java
 ``` java
     @Test
     public void parseCommand_defaultview() throws Exception {
@@ -557,7 +573,7 @@ public class ExportCommandParserTest {
     }
 
 ```
-###### \java\seedu\ptman\logic\parser\ViewShiftCommandParserTest.java
+###### /java/seedu/ptman/logic/parser/ViewShiftCommandParserTest.java
 ``` java
 public class ViewShiftCommandParserTest {
 
@@ -575,7 +591,7 @@ public class ViewShiftCommandParserTest {
     }
 }
 ```
-###### \java\seedu\ptman\ui\AdminModeDisplayTest.java
+###### /java/seedu/ptman/ui/AdminModeDisplayTest.java
 ``` java
 public class AdminModeDisplayTest extends GuiUnitTest {
 
@@ -622,7 +638,7 @@ public class AdminModeDisplayTest extends GuiUnitTest {
 
 }
 ```
-###### \java\seedu\ptman\ui\OutletDetailsPanelTest.java
+###### /java/seedu/ptman/ui/OutletDetailsPanelTest.java
 ``` java
 public class OutletDetailsPanelTest extends GuiUnitTest {
     private OutletInformationChangedEvent outletInformationChangedEventStub;
@@ -687,7 +703,71 @@ public class OutletDetailsPanelTest extends GuiUnitTest {
 
 }
 ```
-###### \java\seedu\ptman\ui\testutil\GuiTestAssert.java
+###### /java/seedu/ptman/ui/ResultDisplayTest.java
+``` java
+public class ResultDisplayTest extends GuiUnitTest {
+
+    private static final NewResultAvailableEvent NEW_RESULT_EVENT_SUCCESS =
+            new NewResultAvailableEvent("Success", false);
+    private static final NewResultAvailableEvent NEW_RESULT_EVENT_FAILED =
+            new NewResultAvailableEvent("Failed", true);
+
+    private ArrayList<String> defaultStyleOfResultDisplay;
+    private ArrayList<String> errorStyleOfResultDisplay;
+
+    private ResultDisplayHandle resultDisplayHandle;
+
+    @Before
+    public void setUp() {
+        ResultDisplay resultDisplay = new ResultDisplay();
+        uiPartRule.setUiPart(resultDisplay);
+
+        resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(),
+                ResultDisplayHandle.RESULT_DISPLAY_ID));
+
+        defaultStyleOfResultDisplay = new ArrayList<>(resultDisplayHandle.getStyleClass());
+
+        errorStyleOfResultDisplay = new ArrayList<>(defaultStyleOfResultDisplay);
+        errorStyleOfResultDisplay.add(CommandBox.ERROR_STYLE_CLASS);
+    }
+
+    @Test
+    public void display() {
+        // default result text
+        guiRobot.pauseForHuman();
+        assertEquals("Welcome to PTMan. Type a command in the search bar above to get started. "
+                + "If you need somewhere to start, search ???help??? to view the user guide.",
+                resultDisplayHandle.getText());
+        assertEquals(defaultStyleOfResultDisplay, resultDisplayHandle.getStyleClass());
+
+        // new results received
+        assertExpectedResultDisplay(NEW_RESULT_EVENT_SUCCESS);
+        assertExpectedResultDisplay(NEW_RESULT_EVENT_FAILED);
+    }
+
+    /**
+     * Runs a new result event, then verifies that <br>
+     *      - the text remains <br>
+     *      - a successful event result display's style is the same as {@code defaultStyleOfResultDisplay}.
+     *      - a failed event result display's style is the same as {@code errorStyleOfResultDisplay}.
+     */
+    private void assertExpectedResultDisplay(NewResultAvailableEvent event) {
+        postNow(event);
+        guiRobot.pauseForHuman();
+        assertEquals(event.message, resultDisplayHandle.getText());
+
+        if (event.isError) {
+            assertEquals(errorStyleOfResultDisplay, resultDisplayHandle.getStyleClass());
+        } else {
+            assertEquals(defaultStyleOfResultDisplay, resultDisplayHandle.getStyleClass());
+        }
+
+    }
+
+
+}
+```
+###### /java/seedu/ptman/ui/testutil/GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code actualEntry} displays the details of {@code expectedShift}.
@@ -752,7 +832,7 @@ public class OutletDetailsPanelTest extends GuiUnitTest {
     }
 
 ```
-###### \java\seedu\ptman\ui\TimetablePanelTest.java
+###### /java/seedu/ptman/ui/TimetablePanelTest.java
 ``` java
 public class TimetablePanelTest extends GuiUnitTest {
 
@@ -785,25 +865,8 @@ public class TimetablePanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() throws DuplicateShiftException {
-        // Event stubs
-        employeePanelSelectionChangedEventAliceStub =
-                new EmployeePanelSelectionChangedEvent(new EmployeeCard(ALICE, 0));
-        employeePanelSelectionChangedEventNullStub = new EmployeePanelSelectionChangedEvent(null);
-
-        exportTimetableAsImageRequestEventStub =
-                new ExportTimetableAsImageRequestEvent(TIMETABLE_IMAGE_FILE_NAME_FIRST_TEST);
-        exportTimetableAsImageAndEmailRequestEventStub = new ExportTimetableAsImageAndEmailRequestEvent(
-                TIMETABLE_IMAGE_FILE_NAME_SECOND_TEST, TIMETABLE_IMAGE_EMAIL_TEST);
-
-        timetableWeekChangeRequestEventPrevStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.PREVIOUS);
-        timetableWeekChangeRequestEventNextStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.NEXT);
-        timetableWeekChangeRequestEventCurrStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.CURRENT);
-
-        testFilePathFirst = Paths.get("." + File.separator + TIMETABLE_IMAGE_FILE_NAME_FIRST_TEST + "."
-                + TIMETABLE_IMAGE_FILE_FORMAT);
-        testFilePathNameSecond = "." + File.separator + TIMETABLE_IMAGE_FILE_NAME_SECOND_TEST + "."
-                + TIMETABLE_IMAGE_FILE_FORMAT;
-        testFilePathSecond = Paths.get(testFilePathNameSecond);
+        setUpAllEventStubs();
+        setUpTestFiles();
 
         Model model = new ModelManager(TYPICAL_PTMAN, new UserPrefs(), TYPICAL_OUTLET);
         logic = new LogicManager(model);
@@ -822,26 +885,26 @@ public class TimetablePanelTest extends GuiUnitTest {
         assertEquals(timetablePanelHandle.getSelectedPage(), timetablePanelHandle.getWeekPage());
         assertEquals(startingDate, timetablePanelHandle.getTimetableDate());
 
-        // Default timetable view: Displays all shifts
-        List<Entry> defaultEntries = timetablePanelHandle.getTimetableEntries();
+        // Default timetable view: Displays all shifts in the week in default mode
+        List<Entry> defaultEntries = timetablePanelHandle.getTimetableEntriesFromDefaultMode();
         for (int i = 0; i < TYPICAL_SHIFTS.size(); i++) {
             Shift expectedShift = TYPICAL_SHIFTS.get(i);
             Entry actualEntry = defaultEntries.get(i);
             assertEntryDisplaysShift(expectedShift, actualEntry, i + 1);
         }
 
-        // Associated shifts of employee highlighted
+        // Associated shifts of employee highlighted: Displays all shifts in selected employee mode
         postNow(employeePanelSelectionChangedEventAliceStub);
-        List<Entry> entriesAfterSelectionEventAlice = timetablePanelHandle.getTimetableEntries();
+        List<Entry> entriesAfterSelectionEventAlice = timetablePanelHandle.getTimetableEntriesFromSelectedEmployeeMode();
         for (int i = 0; i < TYPICAL_SHIFTS.size(); i++) {
             Shift expectedShift = TYPICAL_SHIFTS.get(i);
             Entry actualEntry = entriesAfterSelectionEventAlice.get(i);
             assertEntryDisplaysShift(expectedShift, actualEntry, i + 1);
         }
 
-        // Load back to default timetable view: Displays current week view
+        // Loads back to default timetable view: Displays all shifts in the week in default mode
         postNow(employeePanelSelectionChangedEventNullStub);
-        List<Entry> entriesAfterSelectionEventNull = timetablePanelHandle.getTimetableEntries();
+        List<Entry> entriesAfterSelectionEventNull = timetablePanelHandle.getTimetableEntriesFromDefaultMode();
         for (int i = 0; i < logic.getFilteredShiftList().size(); i++) {
             Shift expectedShift = TYPICAL_SHIFTS.get(i);
             Entry actualEntry = entriesAfterSelectionEventNull.get(i);
@@ -908,9 +971,39 @@ public class TimetablePanelTest extends GuiUnitTest {
         }
     }
 
+    /**
+     * Prepares all event stubs required for the tests
+     */
+    private void setUpAllEventStubs() {
+        // Event stubs
+        employeePanelSelectionChangedEventAliceStub =
+                new EmployeePanelSelectionChangedEvent(new EmployeeCard(ALICE, 0));
+        employeePanelSelectionChangedEventNullStub = new EmployeePanelSelectionChangedEvent(null);
+
+        exportTimetableAsImageRequestEventStub =
+                new ExportTimetableAsImageRequestEvent(TIMETABLE_IMAGE_FILE_NAME_FIRST_TEST);
+        exportTimetableAsImageAndEmailRequestEventStub = new ExportTimetableAsImageAndEmailRequestEvent(
+                TIMETABLE_IMAGE_FILE_NAME_SECOND_TEST, TIMETABLE_IMAGE_EMAIL_TEST);
+
+        timetableWeekChangeRequestEventPrevStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.PREVIOUS);
+        timetableWeekChangeRequestEventNextStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.NEXT);
+        timetableWeekChangeRequestEventCurrStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.CURRENT);
+    }
+
+    /**
+     * Prepares all required test files that will be used to test the exporting of timetable
+     */
+    private void setUpTestFiles() {
+        testFilePathFirst = Paths.get("." + File.separator + TIMETABLE_IMAGE_FILE_NAME_FIRST_TEST + "."
+                + TIMETABLE_IMAGE_FILE_FORMAT);
+        testFilePathNameSecond = "." + File.separator + TIMETABLE_IMAGE_FILE_NAME_SECOND_TEST + "."
+                + TIMETABLE_IMAGE_FILE_FORMAT;
+        testFilePathSecond = Paths.get(testFilePathNameSecond);
+    }
+
 }
 ```
-###### \java\systemtests\PartTimeManagerSystemTest.java
+###### /java/systemtests/PartTimeManagerSystemTest.java
 ``` java
     /**
      * Asserts that the admin mode display shows the default(logout) style.

@@ -45,7 +45,6 @@ public class OutletDetailsPanel extends UiPart<Region> {
     public OutletDetailsPanel(OutletInformation outlet) {
         super(FXML);
         this.outlet = outlet;
-        //outletInformation.setWrapText(true);
         setOutletInformation(outlet.getOperatingHours().getDisplayedMessage(),
                 outlet.getOutletContact().toString(),
                 outlet.getOutletEmail().toString());
@@ -55,6 +54,7 @@ public class OutletDetailsPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author hzxcaryn
     private void setOutletName(String name) {
         outletNamePanelHeader.setText(name);
     }
@@ -65,10 +65,12 @@ public class OutletDetailsPanel extends UiPart<Region> {
         this.outletEmail.setText(outletEmail);
     }
 
+    //@@author SunBangjie
     private void setAnnouncement(String text) {
         announcement.setText(text);
     }
 
+    //@@author hzxcaryn
     @Subscribe
     private void handleOutletInformationChangedEvent(OutletInformationChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

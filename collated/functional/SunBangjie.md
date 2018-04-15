@@ -1,5 +1,5 @@
 # SunBangjie
-###### \java\seedu\ptman\commons\encrypter\DataEncrypter.java
+###### /java/seedu/ptman/commons/encrypter/DataEncrypter.java
 ``` java
 /**
  * Provides tools to encrypts data
@@ -52,7 +52,7 @@ public class DataEncrypter {
     }
 }
 ```
-###### \java\seedu\ptman\commons\events\model\OutletDataChangedEvent.java
+###### /java/seedu/ptman/commons/events/model/OutletDataChangedEvent.java
 ``` java
 /** Indicates the OutletInformation in the model has changed*/
 public class OutletDataChangedEvent extends BaseEvent {
@@ -68,7 +68,7 @@ public class OutletDataChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\ptman\commons\events\ui\AnnouncementChangedEvent.java
+###### /java/seedu/ptman/commons/events/ui/AnnouncementChangedEvent.java
 ``` java
 /**
  * Represents an announcement change in the Outlet Information
@@ -86,7 +86,7 @@ public class AnnouncementChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\ptman\commons\events\ui\OutletInformationChangedEvent.java
+###### /java/seedu/ptman/commons/events/ui/OutletInformationChangedEvent.java
 ``` java
 /**
  * Represents an information change in the Outlet Information
@@ -110,7 +110,7 @@ public class OutletInformationChangedEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\ptman\commons\events\ui\OutletNameChangedEvent.java
+###### /java/seedu/ptman/commons/events/ui/OutletNameChangedEvent.java
 ``` java
 /**
  * Represents an information change in the Outlet Information
@@ -130,7 +130,7 @@ public class OutletNameChangedEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\ptman\logic\commands\AnnouncementCommand.java
+###### /java/seedu/ptman/logic/commands/AnnouncementCommand.java
 ``` java
 /**
  * Edits the announcement of outlet in the ptman.
@@ -189,7 +189,7 @@ public class AnnouncementCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\DecryptDataCommand.java
+###### /java/seedu/ptman/logic/commands/DecryptDataCommand.java
 ``` java
 /**
  * Decrypts local storage files.
@@ -216,7 +216,7 @@ public class DecryptDataCommand extends Command {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\EditOutletCommand.java
+###### /java/seedu/ptman/logic/commands/EditOutletCommand.java
 ``` java
 /**
  * Edits the details of outlet in the ptman.
@@ -301,7 +301,7 @@ public class EditOutletCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\EncryptDataCommand.java
+###### /java/seedu/ptman/logic/commands/EncryptDataCommand.java
 ``` java
 /**
  * Encrypts local storage files.
@@ -328,7 +328,7 @@ public class EncryptDataCommand extends Command {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\ViewEncryptionCommand.java
+###### /java/seedu/ptman/logic/commands/ViewEncryptionCommand.java
 ``` java
 /**
  * Displays the details of outlet in the ptman.
@@ -349,7 +349,7 @@ public class ViewEncryptionCommand extends Command {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\AnnouncementCommandParser.java
+###### /java/seedu/ptman/logic/parser/AnnouncementCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AnnouncementCommand object
@@ -372,7 +372,7 @@ public class AnnouncementCommandParser implements Parser {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\EditOutletCommandParser.java
+###### /java/seedu/ptman/logic/parser/EditOutletCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new EditOutletCommand object
@@ -415,7 +415,7 @@ public class EditOutletCommandParser implements Parser<EditOutletCommand> {
     }
 }
 ```
-###### \java\seedu\ptman\model\ModelManager.java
+###### /java/seedu/ptman/model/ModelManager.java
 ``` java
     /** Raises an event to indicate the model has changed */
     private void indicateEncryptionModeChanged() {
@@ -428,7 +428,7 @@ public class EditOutletCommandParser implements Parser<EditOutletCommand> {
         raise(new OutletDataChangedEvent(partTimeManager.getOutletInformation()));
     }
 ```
-###### \java\seedu\ptman\model\ModelManager.java
+###### /java/seedu/ptman/model/ModelManager.java
 ``` java
     @Override
     public void updateOutlet(OutletInformation editedOutlet) throws NoOutletInformationFieldChangeException {
@@ -463,7 +463,7 @@ public class EditOutletCommandParser implements Parser<EditOutletCommand> {
         indicateEncryptionModeChanged();
     }
 ```
-###### \java\seedu\ptman\model\outlet\Announcement.java
+###### /java/seedu/ptman/model/outlet/Announcement.java
 ``` java
 /**
  * Represents an announcement in PTMan.
@@ -496,7 +496,7 @@ public class Announcement {
     }
 }
 ```
-###### \java\seedu\ptman\model\outlet\exceptions\NoOutletInformationFieldChangeException.java
+###### /java/seedu/ptman/model/outlet/exceptions/NoOutletInformationFieldChangeException.java
 ``` java
 /**
  * Signals that the set outlet information operation has all null fields
@@ -504,7 +504,7 @@ public class Announcement {
 public class NoOutletInformationFieldChangeException extends Exception {
 }
 ```
-###### \java\seedu\ptman\model\outlet\OperatingHours.java
+###### /java/seedu/ptman/model/outlet/OperatingHours.java
 ``` java
 /**
  * Represents operating hours in an outlet.
@@ -611,7 +611,7 @@ public class OperatingHours {
 
 }
 ```
-###### \java\seedu\ptman\model\outlet\OutletContact.java
+###### /java/seedu/ptman/model/outlet/OutletContact.java
 ``` java
 /**
  * Represents an outlet's contact number in PTMan.
@@ -660,7 +660,7 @@ public class OutletContact {
     }
 }
 ```
-###### \java\seedu\ptman\model\outlet\OutletEmail.java
+###### /java/seedu/ptman/model/outlet/OutletEmail.java
 ``` java
 /**
  * Represents an email of outlet in PTMan.
@@ -727,7 +727,7 @@ public class OutletEmail {
     }
 }
 ```
-###### \java\seedu\ptman\model\outlet\OutletInformation.java
+###### /java/seedu/ptman/model/outlet/OutletInformation.java
 ``` java
 /**
  * Represents an outlet in PTMan.
@@ -949,7 +949,7 @@ public class OutletInformation {
     }
 }
 ```
-###### \java\seedu\ptman\model\outlet\OutletName.java
+###### /java/seedu/ptman/model/outlet/OutletName.java
 ``` java
 /**
  * Represents an outlet's name in PTMan.
@@ -1007,14 +1007,14 @@ public class OutletName {
 }
 
 ```
-###### \java\seedu\ptman\model\PartTimeManager.java
+###### /java/seedu/ptman/model/PartTimeManager.java
 ``` java
     public void setOutletInformation(OutletInformation outlet) throws NoOutletInformationFieldChangeException {
         this.outlet.setOutletInformation(outlet);
     }
 
 ```
-###### \java\seedu\ptman\model\PartTimeManager.java
+###### /java/seedu/ptman/model/PartTimeManager.java
 ``` java
     public void updateOutlet(OutletInformation editedOutlet) throws NoOutletInformationFieldChangeException {
         outlet.setOutletInformation(editedOutlet);
@@ -1033,7 +1033,7 @@ public class OutletName {
         outlet.setEncryptionMode(DECRYPTED);
     }
 ```
-###### \java\seedu\ptman\storage\OutletInformationStorage.java
+###### /java/seedu/ptman/storage/OutletInformationStorage.java
 ``` java
 /**
  * Represents a storage for {@link seedu.ptman.model.outlet.OutletInformation}.
@@ -1055,7 +1055,7 @@ public interface OutletInformationStorage {
     void backupOutletInformation(OutletInformation outletInformation) throws IOException;
 }
 ```
-###### \java\seedu\ptman\storage\StorageManager.java
+###### /java/seedu/ptman/storage/StorageManager.java
 ``` java
     @Override
     public String getOutletInformationFilePath() {
@@ -1100,7 +1100,7 @@ public interface OutletInformationStorage {
     // ================ backup methods ==============================
 
 ```
-###### \java\seedu\ptman\storage\StorageManager.java
+###### /java/seedu/ptman/storage/StorageManager.java
 ``` java
     @Override
     public void backupPartTimeManager(ReadOnlyPartTimeManager partTimeManager) throws IOException {
@@ -1113,7 +1113,7 @@ public interface OutletInformationStorage {
     }
 }
 ```
-###### \java\seedu\ptman\storage\XmlAdaptedOutletInformation.java
+###### /java/seedu/ptman/storage/XmlAdaptedOutletInformation.java
 ``` java
 /**
  * JAXB-friendly version of the OutletInformation.
@@ -1395,7 +1395,7 @@ public class XmlAdaptedOutletInformation {
     }
 }
 ```
-###### \java\seedu\ptman\storage\XmlEncryptedAdaptedEmployee.java
+###### /java/seedu/ptman/storage/XmlEncryptedAdaptedEmployee.java
 ``` java
 /**
  * JAXB-friendly version of the Employee.
@@ -1630,7 +1630,7 @@ public class XmlEncryptedAdaptedEmployee {
     }
 }
 ```
-###### \java\seedu\ptman\storage\XmlOutletFileStorage.java
+###### /java/seedu/ptman/storage/XmlOutletFileStorage.java
 ``` java
 /**
  * Stores outlet information data in an XML file
@@ -1662,7 +1662,7 @@ public class XmlOutletFileStorage {
     }
 }
 ```
-###### \java\seedu\ptman\storage\XmlOutletInformationStorage.java
+###### /java/seedu/ptman/storage/XmlOutletInformationStorage.java
 ``` java
 /**
  * A class to access OutletInformation data stored as an xml file on the hard disk.
@@ -1754,7 +1754,7 @@ public class XmlOutletInformationStorage implements OutletInformationStorage {
     }
 }
 ```
-###### \java\seedu\ptman\ui\OutletDetailsPanel.java
+###### /java/seedu/ptman/ui/OutletDetailsPanel.java
 ``` java
 /**
  * The Outlet Panel of the App, which displays the Outlet name and details
@@ -1786,7 +1786,6 @@ public class OutletDetailsPanel extends UiPart<Region> {
     public OutletDetailsPanel(OutletInformation outlet) {
         super(FXML);
         this.outlet = outlet;
-        //outletInformation.setWrapText(true);
         setOutletInformation(outlet.getOperatingHours().getDisplayedMessage(),
                 outlet.getOutletContact().toString(),
                 outlet.getOutletEmail().toString());
@@ -1796,34 +1795,15 @@ public class OutletDetailsPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void setOutletName(String name) {
-        outletNamePanelHeader.setText(name);
-    }
-
-    private void setOutletInformation(String operatingHours, String outletContact, String outletEmail) {
-        this.operatingHours.setText(operatingHours + "    ");
-        this.outletContact.setText(outletContact + "    ");
-        this.outletEmail.setText(outletEmail);
-    }
-
+```
+###### /java/seedu/ptman/ui/OutletDetailsPanel.java
+``` java
     private void setAnnouncement(String text) {
         announcement.setText(text);
     }
 
-    @Subscribe
-    private void handleOutletInformationChangedEvent(OutletInformationChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> setOutletInformation(event.operatingHours, event.outletContact, event.outletEmail));
-    }
-
-    @Subscribe
-    private void handleOutletNameChangedEvent(OutletNameChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> setOutletName(event.message));
-    }
-
 ```
-###### \java\seedu\ptman\ui\OutletDetailsPanel.java
+###### /java/seedu/ptman/ui/OutletDetailsPanel.java
 ``` java
     @Subscribe
     public void handleAnnouncementChangedEvent(AnnouncementChangedEvent event) {

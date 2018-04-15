@@ -96,25 +96,41 @@ public class TimetablePanelHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Check for all the entries from all entry types in the timetable view
+     * Check for all the entries from the default entry types in the timetable view
      * and returns a list of all the entries in sorted order
      * @return sorted list of all entries in timetable view
      */
-    public List<Entry> getTimetableEntries() {
+    public List<Entry> getTimetableEntriesFromDefaultMode() {
         List<Entry<?>> availEntries = getEntriesForEntryType(getTimetableAvail());
         List<Entry<?>> runningOutEntries = getEntriesForEntryType(getTimetableRunningOut());
         List<Entry<?>> fullEntries = getEntriesForEntryType(getTimetableFull());
-        List<Entry<?>> employeeEntries = getEntriesForEntryType(getTimetableEmployee());
-        List<Entry<?>> othersEntries = getEntriesForEntryType(getTimetableOthers());
 
         ArrayList<Entry> entries = new ArrayList<>(Stream.of(
-                availEntries, runningOutEntries, fullEntries, employeeEntries, othersEntries)
+                availEntries, runningOutEntries, fullEntries)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList()));
 
         Collections.sort(entries, Comparator.comparing(Entry::getStartAsLocalDateTime));
         return entries;
     }
+
+    /**
+     * Check for all the entries from selected employee entry types in the timetable view
+     * and returns a list of all the entries in sorted order
+     * @return sorted list of all entries in timetable view
+     */
+    public List<Entry> getTimetableEntriesFromSelectedEmployeeMode() {
+        List<Entry<?>> employeeEntries = getEntriesForEntryType(getTimetableEmployee());
+        List<Entry<?>> othersEntries = getEntriesForEntryType(getTimetableOthers());
+
+        ArrayList<Entry> entries = new ArrayList<>(Stream.of(employeeEntries, othersEntries)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList()));
+
+        Collections.sort(entries, Comparator.comparing(Entry::getStartAsLocalDateTime));
+        return entries;
+    }
+
 
     /**
      * For the given {@code entryType}, check for all entries in the timetable view

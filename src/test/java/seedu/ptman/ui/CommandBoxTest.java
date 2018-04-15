@@ -136,6 +136,8 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author hzxcaryn-reused
+    //Reused from original code base with modifications to test for error style
     /**
      * Runs a command that fails, then verifies that <br>
      *      - the text remains <br>
@@ -168,6 +170,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(defaultStyleOfCommandBox, commandBoxHandleOutput.getStyleClass());
     }
 
+    //@@author
     /**
      * Pushes {@code keycode} and checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
      */

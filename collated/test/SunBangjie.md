@@ -1,5 +1,5 @@
 # SunBangjie
-###### \java\seedu\ptman\commons\encrypter\EncrypterTest.java
+###### /java/seedu/ptman/commons/encrypter/EncrypterTest.java
 ``` java
 public class EncrypterTest {
 
@@ -20,7 +20,7 @@ public class EncrypterTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\AnnouncementCommandTest.java
+###### /java/seedu/ptman/logic/commands/AnnouncementCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code AnnouncementCommand}.
@@ -76,7 +76,7 @@ public class AnnouncementCommandTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\DecryptDataCommandTest.java
+###### /java/seedu/ptman/logic/commands/DecryptDataCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code DecryptDataCommand}.
@@ -120,7 +120,7 @@ public class DecryptDataCommandTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\EditOutletCommandTest.java
+###### /java/seedu/ptman/logic/commands/EditOutletCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code EditOutletCommand}.
@@ -275,7 +275,7 @@ public class EditOutletCommandTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\EncryptDataCommandTest.java
+###### /java/seedu/ptman/logic/commands/EncryptDataCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code EncryptDataCommand}.
@@ -319,7 +319,7 @@ public class EncryptDataCommandTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\ViewEncryptionCommandTest.java
+###### /java/seedu/ptman/logic/commands/ViewEncryptionCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code ViewOutletCommand}.
@@ -346,7 +346,7 @@ public class ViewEncryptionCommandTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\AnnouncementCommandParserTest.java
+###### /java/seedu/ptman/logic/parser/AnnouncementCommandParserTest.java
 ``` java
 public class AnnouncementCommandParserTest {
 
@@ -364,7 +364,7 @@ public class AnnouncementCommandParserTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\EditOutletCommandParserTest.java
+###### /java/seedu/ptman/logic/parser/EditOutletCommandParserTest.java
 ``` java
 public class EditOutletCommandParserTest {
 
@@ -400,7 +400,7 @@ public class EditOutletCommandParserTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\ParserUtilTest.java
+###### /java/seedu/ptman/logic/parser/ParserUtilTest.java
 ``` java
     @Test
     public void parseOutletName_null_throwsNullPointerException() {
@@ -515,7 +515,7 @@ public class EditOutletCommandParserTest {
                 Optional.of(operatingHoursWithWhitespace)));
     }
 ```
-###### \java\seedu\ptman\logic\parser\PartTimeManagerParserTest.java
+###### /java/seedu/ptman/logic/parser/PartTimeManagerParserTest.java
 ``` java
     @Test
     public void parseCommand_editoutlet() throws Exception {
@@ -584,7 +584,7 @@ public class EditOutletCommandParserTest {
     }
 
 ```
-###### \java\seedu\ptman\model\ModelManagerTest.java
+###### /java/seedu/ptman/model/ModelManagerTest.java
 ``` java
     @Test
     public void updateOutlet_validCondition_success() throws NoOutletInformationFieldChangeException {
@@ -668,7 +668,7 @@ public class EditOutletCommandParserTest {
         assertNotEquals(modelManager, differentModelManager);
     }
 ```
-###### \java\seedu\ptman\model\outlet\NameTest.java
+###### /java/seedu/ptman/model/outlet/NameTest.java
 ``` java
 public class NameTest {
 
@@ -732,7 +732,7 @@ public class NameTest {
     }
 }
 ```
-###### \java\seedu\ptman\model\outlet\OperatingHoursTest.java
+###### /java/seedu/ptman/model/outlet/OperatingHoursTest.java
 ``` java
 public class OperatingHoursTest {
 
@@ -861,7 +861,7 @@ public class OperatingHoursTest {
     }
 }
 ```
-###### \java\seedu\ptman\model\outlet\OutletContactTest.java
+###### /java/seedu/ptman/model/outlet/OutletContactTest.java
 ``` java
 public class OutletContactTest {
 
@@ -899,7 +899,7 @@ public class OutletContactTest {
     }
 }
 ```
-###### \java\seedu\ptman\model\outlet\OutletEmailTest.java
+###### /java/seedu/ptman/model/outlet/OutletEmailTest.java
 ``` java
 public class OutletEmailTest {
 
@@ -965,7 +965,7 @@ public class OutletEmailTest {
     }
 }
 ```
-###### \java\seedu\ptman\model\outlet\OutletInformationTest.java
+###### /java/seedu/ptman/model/outlet/OutletInformationTest.java
 ``` java
 public class OutletInformationTest {
 
@@ -1110,7 +1110,7 @@ public class OutletInformationTest {
     }
 }
 ```
-###### \java\seedu\ptman\model\PartTimeManagerTest.java
+###### /java/seedu/ptman/model/PartTimeManagerTest.java
 ``` java
     @Test
     public void encryptLocalStorage_dataNotEncrypted_encryptSuccessfully() {
@@ -1125,7 +1125,7 @@ public class OutletInformationTest {
         assertFalse(partTimeManager.getOutletInformation().getEncryptionMode());
     }
 ```
-###### \java\seedu\ptman\storage\StorageManagerTest.java
+###### /java/seedu/ptman/storage/StorageManagerTest.java
 ``` java
     @Test
     public void outletInformationReadSave() throws Exception {
@@ -1202,7 +1202,7 @@ public class OutletInformationTest {
     }
 
 ```
-###### \java\seedu\ptman\storage\XmlAdaptedOutletInformationTest.java
+###### /java/seedu/ptman/storage/XmlAdaptedOutletInformationTest.java
 ``` java
 public class XmlAdaptedOutletInformationTest {
     private static final String DECRYPTED = OutletInformation.DATA_NOT_ENCRYPTED_MESSAGE;
@@ -1371,7 +1371,7 @@ public class XmlAdaptedOutletInformationTest {
     }
 }
 ```
-###### \java\seedu\ptman\storage\XmlOutletInformationStorageTest.java
+###### /java/seedu/ptman/storage/XmlOutletInformationStorageTest.java
 ``` java
 public class XmlOutletInformationStorageTest {
     private static final String TEST_DATA_FOLDER =
@@ -1504,7 +1504,7 @@ public class XmlOutletInformationStorageTest {
     }
 }
 ```
-###### \java\seedu\ptman\storage\XmlPartTimeManagerStorageTest.java
+###### /java/seedu/ptman/storage/XmlPartTimeManagerStorageTest.java
 ``` java
     @Test
     public void backupPartTimeManager_nullPartTimeManager_throwsNullPointerException() {

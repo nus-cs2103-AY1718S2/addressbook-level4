@@ -31,7 +31,8 @@ public class ExportCommand extends Command {
             + PREFIX_EMAIL + "email@example.com";
 
     public static final String MESSAGE_SAVE_SUCCESS = "Timetable is successfully exported!";
-    public static final String MESSAGE_EMAIL_SUCCESS = "Timetable is successfully sent to your email!";
+    public static final String MESSAGE_EMAIL_SUCCESS = "Timetable is sent to your email."
+            + "Please check your internet connection if you fail to receive the email.";
 
     private final Email emailToSendImageTo;
 

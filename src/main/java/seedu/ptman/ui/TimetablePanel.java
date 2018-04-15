@@ -246,16 +246,16 @@ public class TimetablePanel extends UiPart<Region> {
         if (currentEmployee != null) {
             entryType = getEntryTypeEmployee(shift);
         } else {
-            entryType = getEntryTypeMain(shift);
+            entryType = getEntryTypeDefault(shift);
         }
         entryType.addEntry(shiftEntry);
     }
 
     /**
-     * @return the entryType (a Calendar object) for the shift in the main timetable view, which reflects
+     * @return the entryType (a Calendar object) for the shift in the default timetable view, which reflects
      * the color of the shift in the timetableView.
      */
-    private Calendar getEntryTypeMain(Shift shift) {
+    private Calendar getEntryTypeDefault(Shift shift) {
         float ratio = (float) shift.getSlotsLeft() / (float) shift.getCapacity().getCapacity();
         if (ratio <= 0) {
             return timetableFull;
@@ -306,7 +306,7 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * Replaces the timetable view with a new timetable, with shifts taken by the employee being highlighted
+     * Replaces the timetable view with a new timetable, with shifts applied by the employee being highlighted
      * @param employee
      */
     private void loadEmployeeTimetable(Employee employee) {
@@ -315,7 +315,7 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * Replaces the timetable view with a default timetable with no employee being selected.
+     * Replaces the timetable view with a default timetable without any employee being selected.
      */
     private void loadDefaultTimetable() {
         currentEmployee = null;
@@ -323,7 +323,7 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * Replaces timetableView with a new timetable with updated shift and outlet information
+     * Replaces timetableView with a new timetable with updated shift and outlet information.
      */
     private void updateTimetableView() {
         setCurrentDisplayedDate();
@@ -345,7 +345,7 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * Initialises all the Calendar objects
+     * Initialises all the Calendar objects (These are our timetable entries)
      */
     private void initialiseEntries() {
         timetableAvail = new Calendar("Available");

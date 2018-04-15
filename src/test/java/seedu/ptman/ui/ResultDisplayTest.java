@@ -11,6 +11,7 @@ import org.junit.Test;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.ptman.commons.events.ui.NewResultAvailableEvent;
 
+//@@author hzxcaryn
 public class ResultDisplayTest extends GuiUnitTest {
 
     private static final NewResultAvailableEvent NEW_RESULT_EVENT_SUCCESS =

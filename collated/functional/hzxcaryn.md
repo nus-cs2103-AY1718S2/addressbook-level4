@@ -1,5 +1,5 @@
 # hzxcaryn
-###### \java\seedu\ptman\commons\events\model\UserModeChangedEvent.java
+###### /java/seedu/ptman/commons/events/model/UserModeChangedEvent.java
 ``` java
 /**
  * Indicates that the user mode has changed. (Admin mode or not)
@@ -19,7 +19,7 @@ public class UserModeChangedEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\ptman\commons\events\ui\ExportTimetableAsImageAndEmailRequestEvent.java
+###### /java/seedu/ptman/commons/events/ui/ExportTimetableAsImageAndEmailRequestEvent.java
 ``` java
 /**
  * An event requesting to export the timetable view as an image and email it to the given email
@@ -41,7 +41,7 @@ public class ExportTimetableAsImageAndEmailRequestEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\ptman\commons\events\ui\ExportTimetableAsImageRequestEvent.java
+###### /java/seedu/ptman/commons/events/ui/ExportTimetableAsImageRequestEvent.java
 ``` java
 /**
  * An event requesting to export the timetable view as an image locally
@@ -60,7 +60,7 @@ public class ExportTimetableAsImageRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\ptman\commons\events\ui\TimetableWeekChangeRequestEvent.java
+###### /java/seedu/ptman/commons/events/ui/TimetableWeekChangeRequestEvent.java
 ``` java
 /**
  * Indicates a request to change the timetable view to the next or previous week.
@@ -92,7 +92,7 @@ public class TimetableWeekChangeRequestEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\ptman\commons\services\EmailService.java
+###### /java/seedu/ptman/commons/services/EmailService.java
 ``` java
     /**
      * Send exported timetable image as an attachment to user
@@ -102,13 +102,12 @@ public class TimetableWeekChangeRequestEvent extends BaseEvent {
      */
     public void sendTimetableAttachment(String email, String filename) throws MessagingException {
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(senderEmailTimetable));
+        message.setFrom(new InternetAddress(senderEmail));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
         message.setSubject("[PTMan] My Timetable");
 
         BodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setText("Dear Valued PTMan user,\n\nAttached is your exported timetable.\n"
-                + "Thank you for using PTMan and have a nice day!\n\nBest Regards,\nThe PTMan Team");
+        messageBodyPart.setText(timetableMessageBody);
 
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(messageBodyPart);
@@ -126,7 +125,7 @@ public class TimetableWeekChangeRequestEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\ptman\commons\util\DateUtil.java
+###### /java/seedu/ptman/commons/util/DateUtil.java
 ``` java
     /**
      * Given a {@code date}, returns the date of the week's Thursday
@@ -172,7 +171,7 @@ public class TimetableWeekChangeRequestEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\ptman\logic\commands\ExportCommand.java
+###### /java/seedu/ptman/logic/commands/ExportCommand.java
 ``` java
 /**
  * Exports current timetable view as an image locally
@@ -193,7 +192,8 @@ public class ExportCommand extends Command {
             + PREFIX_EMAIL + "email@example.com";
 
     public static final String MESSAGE_SAVE_SUCCESS = "Timetable is successfully exported!";
-    public static final String MESSAGE_EMAIL_SUCCESS = "Timetable is successfully sent to your email!";
+    public static final String MESSAGE_EMAIL_SUCCESS = "Timetable is sent to your email."
+            + "Please check your internet connection if you fail to receive the email.";
 
     private final Email emailToSendImageTo;
 
@@ -244,7 +244,7 @@ public class ExportCommand extends Command {
 
 }
 ```
-###### \java\seedu\ptman\logic\commands\ViewShiftCommand.java
+###### /java/seedu/ptman/logic/commands/ViewShiftCommand.java
 ``` java
 /**
  * Lists all employees in PTMan that belongs to the input shift to the user.
@@ -292,7 +292,7 @@ public class ViewShiftCommand extends Command {
     }
 }
 ```
-###### \java\seedu\ptman\logic\LogicManager.java
+###### /java/seedu/ptman/logic/LogicManager.java
 ``` java
     @Override
     public OutletInformation getOutletInformation() {
@@ -334,7 +334,7 @@ public class ViewShiftCommand extends Command {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\ExportCommandParser.java
+###### /java/seedu/ptman/logic/parser/ExportCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ExportCommand object
@@ -365,7 +365,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\ViewShiftCommandParser.java
+###### /java/seedu/ptman/logic/parser/ViewShiftCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ViewShiftCommand object
@@ -388,7 +388,7 @@ public class ViewShiftCommandParser implements Parser<ViewShiftCommand> {
     }
 }
 ```
-###### \java\seedu\ptman\model\ModelManager.java
+###### /java/seedu/ptman/model/ModelManager.java
 ``` java
     @Override
     public void setFilteredShiftListToWeek(LocalDate date) {
@@ -397,7 +397,7 @@ public class ViewShiftCommandParser implements Parser<ViewShiftCommand> {
     }
 
 ```
-###### \java\seedu\ptman\model\util\SampleDataUtil.java
+###### /java/seedu/ptman/model/util/SampleDataUtil.java
 ``` java
 /**
  * Contains utility methods for populating {@code PartTimeManager} with sample data.
@@ -579,7 +579,7 @@ public class SampleDataUtil {
 
 }
 ```
-###### \java\seedu\ptman\ui\AdminModeDisplay.java
+###### /java/seedu/ptman/ui/AdminModeDisplay.java
 ``` java
 /**
  * Admin mode display of the app. Displays whether the user is in admin mode or not.
@@ -624,7 +624,7 @@ public class AdminModeDisplay extends UiPart<Region> {
 
 }
 ```
-###### \java\seedu\ptman\ui\EmployeeListPanel.java
+###### /java/seedu/ptman/ui/EmployeeListPanel.java
 ``` java
     /**
      * Scrolls to the top of the {@code EmployeeListPanel} and deselect any current selection.
@@ -647,7 +647,7 @@ public class AdminModeDisplay extends UiPart<Region> {
     }
 
 ```
-###### \java\seedu\ptman\ui\MainWindow.java
+###### /java/seedu/ptman/ui/MainWindow.java
 ``` java
     private final KeyCombination keyCtrlShiftLeft =
             new KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHIFT_DOWN, KeyCombination.SHORTCUT_DOWN);
@@ -657,7 +657,7 @@ public class AdminModeDisplay extends UiPart<Region> {
             new KeyCodeCombination(KeyCode.DOWN, KeyCombination.SHIFT_DOWN, KeyCombination.SHORTCUT_DOWN);
 
 ```
-###### \java\seedu\ptman\ui\MainWindow.java
+###### /java/seedu/ptman/ui/MainWindow.java
 ``` java
     /**
      * Listens to the {@code keyEvent} that requests to navigate to the prev/next timetable view and handles it.
@@ -682,7 +682,35 @@ public class AdminModeDisplay extends UiPart<Region> {
     }
 
 ```
-###### \java\seedu\ptman\ui\PtmanLogoDisplay.java
+###### /java/seedu/ptman/ui/OutletDetailsPanel.java
+``` java
+    private void setOutletName(String name) {
+        outletNamePanelHeader.setText(name);
+    }
+
+    private void setOutletInformation(String operatingHours, String outletContact, String outletEmail) {
+        this.operatingHours.setText(operatingHours + "    ");
+        this.outletContact.setText(outletContact + "    ");
+        this.outletEmail.setText(outletEmail);
+    }
+
+```
+###### /java/seedu/ptman/ui/OutletDetailsPanel.java
+``` java
+    @Subscribe
+    private void handleOutletInformationChangedEvent(OutletInformationChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> setOutletInformation(event.operatingHours, event.outletContact, event.outletEmail));
+    }
+
+    @Subscribe
+    private void handleOutletNameChangedEvent(OutletNameChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> setOutletName(event.message));
+    }
+
+```
+###### /java/seedu/ptman/ui/PtmanLogoDisplay.java
 ``` java
 /**
  * Displays the PTMan logo at the left side of the command box.
@@ -712,7 +740,7 @@ public class PtmanLogoDisplay extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\ptman\ui\TimetablePanel.java
+###### /java/seedu/ptman/ui/TimetablePanel.java
 ``` java
 /**
  * Displays the GUI Timetable.
@@ -907,16 +935,16 @@ public class TimetablePanel extends UiPart<Region> {
         if (currentEmployee != null) {
             entryType = getEntryTypeEmployee(shift);
         } else {
-            entryType = getEntryTypeMain(shift);
+            entryType = getEntryTypeDefault(shift);
         }
         entryType.addEntry(shiftEntry);
     }
 
     /**
-     * @return the entryType (a Calendar object) for the shift in the main timetable view, which reflects
+     * @return the entryType (a Calendar object) for the shift in the default timetable view, which reflects
      * the color of the shift in the timetableView.
      */
-    private Calendar getEntryTypeMain(Shift shift) {
+    private Calendar getEntryTypeDefault(Shift shift) {
         float ratio = (float) shift.getSlotsLeft() / (float) shift.getCapacity().getCapacity();
         if (ratio <= 0) {
             return timetableFull;
@@ -967,7 +995,7 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * Replaces the timetable view with a new timetable, with shifts taken by the employee being highlighted
+     * Replaces the timetable view with a new timetable, with shifts applied by the employee being highlighted
      * @param employee
      */
     private void loadEmployeeTimetable(Employee employee) {
@@ -976,7 +1004,7 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * Replaces the timetable view with a default timetable with no employee being selected.
+     * Replaces the timetable view with a default timetable without any employee being selected.
      */
     private void loadDefaultTimetable() {
         currentEmployee = null;
@@ -984,7 +1012,7 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * Replaces timetableView with a new timetable with updated shift and outlet information
+     * Replaces timetableView with a new timetable with updated shift and outlet information.
      */
     private void updateTimetableView() {
         setCurrentDisplayedDate();
@@ -1006,7 +1034,7 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     /**
-     * Initialises all the Calendar objects
+     * Initialises all the Calendar objects (These are our timetable entries)
      */
     private void initialiseEntries() {
         timetableAvail = new Calendar("Available");
@@ -1093,6 +1121,12 @@ public class TimetablePanel extends UiPart<Region> {
     }
 
     @Subscribe
+    private void handleOutletInformationChangedEvent(OutletInformationChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event) + ": Rescaling timetable view....");
+        Platform.runLater(() -> updateTimetableView());
+    }
+
+    @Subscribe
     private void handleEmployeePanelSelectionChangedEvent(EmployeePanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
@@ -1139,20 +1173,20 @@ public class TimetablePanel extends UiPart<Region> {
 
 }
 ```
-###### \resources\view\AdminModeDisplay.fxml
+###### /resources/view/AdminModeDisplay.fxml
 ``` fxml
 <StackPane styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <Label fx:id="adminModeDisplay" />
 </StackPane>
 ```
-###### \resources\view\EmployeeListCard.fxml
+###### /resources/view/EmployeeListCard.fxml
 ``` fxml
       <StackPane minWidth="45" prefWidth="45" maxWidth="45">
         <Circle fx:id="idCircle" radius="18" fill="transparent" stroke="#5AC2BC"/>
         <Label fx:id="id" styleClass="cell_big_label"/>
       </StackPane>
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
         <HBox styleClass="pane-with-border">
           <StackPane VBox.vgrow="NEVER" fx:id="ptmanLogoDisplayPlaceholder" maxWidth="50">
@@ -1209,7 +1243,7 @@ public class TimetablePanel extends UiPart<Region> {
   </scene>
 </fx:root>
 ```
-###### \resources\view\OutletDetailsPanel.fxml
+###### /resources/view/OutletDetailsPanel.fxml
 ``` fxml
 <StackPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <VBox>
@@ -1223,13 +1257,13 @@ public class TimetablePanel extends UiPart<Region> {
     </VBox>
 </StackPane>
 ```
-###### \resources\view\PtmanLogoDisplay.fxml
+###### /resources/view/PtmanLogoDisplay.fxml
 ``` fxml
 <StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <ImageView fx:id="ptmanLogoView" />
 </StackPane>
 ```
-###### \resources\view\PtmanTheme.css
+###### /resources/view/PtmanTheme.css
 ``` css
 /* Fonts */
 @font-face {
@@ -1754,7 +1788,7 @@ public class TimetablePanel extends UiPart<Region> {
     -fx-background-color: #FFC107;
 }
 ```
-###### \resources\view\TimetablePanel.fxml
+###### /resources/view/TimetablePanel.fxml
 ``` fxml
 
 <?import javafx.scene.control.Button?>

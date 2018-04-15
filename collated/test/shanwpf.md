@@ -1,5 +1,5 @@
 # shanwpf
-###### \java\seedu\ptman\commons\util\DateUtilTest.java
+###### /java/seedu/ptman/commons/util/DateUtilTest.java
 ``` java
 public class DateUtilTest {
     @Rule
@@ -36,7 +36,7 @@ public class DateUtilTest {
     }
 
 ```
-###### \java\seedu\ptman\logic\commands\AddShiftCommandIntegrationTest.java
+###### /java/seedu/ptman/logic/commands/AddShiftCommandIntegrationTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code AddShiftCommand}.
@@ -95,7 +95,7 @@ public class AddShiftCommandIntegrationTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\AddShiftCommandTest.java
+###### /java/seedu/ptman/logic/commands/AddShiftCommandTest.java
 ``` java
 public class AddShiftCommandTest {
 
@@ -383,7 +383,7 @@ public class AddShiftCommandTest {
 
 }
 ```
-###### \java\seedu\ptman\logic\commands\ApplyCommandTest.java
+###### /java/seedu/ptman/logic/commands/ApplyCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for ApplyCommand.
@@ -593,7 +593,7 @@ public class ApplyCommandTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\DeleteShiftCommandTest.java
+###### /java/seedu/ptman/logic/commands/DeleteShiftCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -735,7 +735,7 @@ public class DeleteShiftCommandTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\UnapplyCommandTest.java
+###### /java/seedu/ptman/logic/commands/UnapplyCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
@@ -976,7 +976,7 @@ public class UnapplyCommandTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\AddShiftCommandParserTest.java
+###### /java/seedu/ptman/logic/parser/AddShiftCommandParserTest.java
 ``` java
 public class AddShiftCommandParserTest {
     private AddShiftCommandParser parser = new AddShiftCommandParser();
@@ -1060,7 +1060,7 @@ public class AddShiftCommandParserTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\ApplyCommandParserTest.java
+###### /java/seedu/ptman/logic/parser/ApplyCommandParserTest.java
 ``` java
 public class ApplyCommandParserTest {
 
@@ -1084,7 +1084,7 @@ public class ApplyCommandParserTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\DeleteShiftCommandParserTest.java
+###### /java/seedu/ptman/logic/parser/DeleteShiftCommandParserTest.java
 ``` java
 public class DeleteShiftCommandParserTest {
 
@@ -1102,7 +1102,7 @@ public class DeleteShiftCommandParserTest {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\ParserUtilTest.java
+###### /java/seedu/ptman/logic/parser/ParserUtilTest.java
 ``` java
     @Test
     public void parseTime_null_throwsNullPointerException() {
@@ -1174,7 +1174,7 @@ public class DeleteShiftCommandParserTest {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseSecondIndex("1 -1"));
     }
 ```
-###### \java\seedu\ptman\logic\parser\PartTimeManagerParserTest.java
+###### /java/seedu/ptman/logic/parser/PartTimeManagerParserTest.java
 ``` java
     @Test
     public void parseCommand_addShift() throws Exception {
@@ -1236,7 +1236,7 @@ public class DeleteShiftCommandParserTest {
         assertEquals(new UnapplyCommand(INDEX_FIRST_EMPLOYEE, INDEX_FIRST_SHIFT, Optional.of(new Password())), command);
     }
 ```
-###### \java\seedu\ptman\logic\parser\UnapplyCommandParserTest.java
+###### /java/seedu/ptman/logic/parser/UnapplyCommandParserTest.java
 ``` java
 public class UnapplyCommandParserTest {
 
@@ -1261,7 +1261,7 @@ public class UnapplyCommandParserTest {
     }
 }
 ```
-###### \java\seedu\ptman\model\PartTimeManagerTest.java
+###### /java/seedu/ptman/model/PartTimeManagerTest.java
 ``` java
     @Test
     public void resetData_withDuplicateShifts_throwsAssertionError() {
@@ -1275,7 +1275,7 @@ public class UnapplyCommandParserTest {
         partTimeManager.resetData(newData);
     }
 ```
-###### \java\seedu\ptman\model\shift\CapacityTest.java
+###### /java/seedu/ptman/model/shift/CapacityTest.java
 ``` java
 public class CapacityTest {
 
@@ -1337,7 +1337,7 @@ public class CapacityTest {
     }
 }
 ```
-###### \java\seedu\ptman\model\shift\DateTest.java
+###### /java/seedu/ptman/model/shift/DateTest.java
 ``` java
 public class DateTest {
 
@@ -1414,7 +1414,7 @@ public class DateTest {
     }
 }
 ```
-###### \java\seedu\ptman\model\shift\ShiftTest.java
+###### /java/seedu/ptman/model/shift/ShiftTest.java
 ``` java
 public class ShiftTest {
     @Rule
@@ -1506,7 +1506,7 @@ public class ShiftTest {
 
 }
 ```
-###### \java\seedu\ptman\model\shift\TimeTest.java
+###### /java/seedu/ptman/model/shift/TimeTest.java
 ``` java
 public class TimeTest {
 
@@ -1568,7 +1568,7 @@ public class TimeTest {
     }
 }
 ```
-###### \java\seedu\ptman\model\shift\UniqueShiftListTest.java
+###### /java/seedu/ptman/model/shift/UniqueShiftListTest.java
 ``` java
 public class UniqueShiftListTest {
     @Rule
@@ -1640,7 +1640,7 @@ public class UniqueShiftListTest {
     }
 }
 ```
-###### \java\seedu\ptman\storage\XmlAdaptedShiftTest.java
+###### /java/seedu/ptman/storage/XmlAdaptedShiftTest.java
 ``` java
 public class XmlAdaptedShiftTest {
     private static final String INVALID_DATE = "1-1-18";
@@ -1794,7 +1794,7 @@ public class XmlAdaptedShiftTest {
     }
 }
 ```
-###### \java\seedu\ptman\testutil\ShiftBuilder.java
+###### /java/seedu/ptman/testutil/ShiftBuilder.java
 ``` java
 /**
  * A utility class to help with building Shift objects.
@@ -1877,7 +1877,7 @@ public class ShiftBuilder {
 
 }
 ```
-###### \java\seedu\ptman\testutil\ShiftUtil.java
+###### /java/seedu/ptman/testutil/ShiftUtil.java
 ``` java
 /**
  * A utility class for Shift.
@@ -1910,7 +1910,7 @@ public class ShiftUtil {
     }
 }
 ```
-###### \java\seedu\ptman\testutil\TypicalShifts.java
+###### /java/seedu/ptman/testutil/TypicalShifts.java
 ``` java
 /**
  * A utility class containing a list of {@code Shift} objects to be used in tests.

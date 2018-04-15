@@ -1,5 +1,5 @@
 # shanwpf
-###### \java\seedu\ptman\commons\util\DateUtil.java
+###### /java/seedu/ptman/commons/util/DateUtil.java
 ``` java
 /**
  * Utility methods for handling dates
@@ -33,7 +33,7 @@ public class DateUtil {
     }
 
 ```
-###### \java\seedu\ptman\logic\commands\AddShiftCommand.java
+###### /java/seedu/ptman/logic/commands/AddShiftCommand.java
 ``` java
 /**
  * Adds a shift to PTMan.
@@ -106,7 +106,7 @@ public class AddShiftCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\ApplyCommand.java
+###### /java/seedu/ptman/logic/commands/ApplyCommand.java
 ``` java
 /**
  * Registers an employee to a shift identified using their last displayed index from PTMan.
@@ -222,7 +222,7 @@ public class ApplyCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\DeleteShiftCommand.java
+###### /java/seedu/ptman/logic/commands/DeleteShiftCommand.java
 ``` java
 /**
  * Deletes a shift identified using it's last displayed index in the timetable.
@@ -288,7 +288,7 @@ public class DeleteShiftCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\ptman\logic\commands\UnapplyCommand.java
+###### /java/seedu/ptman/logic/commands/UnapplyCommand.java
 ``` java
 /**
  * Registers an employee to a shift identified using their last displayed index from PTMan.
@@ -394,7 +394,7 @@ public class UnapplyCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\AddShiftCommandParser.java
+###### /java/seedu/ptman/logic/parser/AddShiftCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddShiftCommand object
@@ -432,7 +432,7 @@ public class AddShiftCommandParser implements Parser<AddShiftCommand> {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\ApplyCommandParser.java
+###### /java/seedu/ptman/logic/parser/ApplyCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ApplyCommand object
@@ -458,7 +458,7 @@ public class ApplyCommandParser implements Parser<ApplyCommand> {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\DeleteShiftCommandParser.java
+###### /java/seedu/ptman/logic/parser/DeleteShiftCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteShiftCommand object
@@ -481,7 +481,7 @@ public class DeleteShiftCommandParser implements Parser<DeleteShiftCommand> {
     }
 }
 ```
-###### \java\seedu\ptman\logic\parser\UnapplyCommandParser.java
+###### /java/seedu/ptman/logic/parser/UnapplyCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UnapplyCommand object
@@ -508,7 +508,7 @@ public class UnapplyCommandParser implements Parser<UnapplyCommand> {
 
 }
 ```
-###### \java\seedu\ptman\model\ModelManager.java
+###### /java/seedu/ptman/model/ModelManager.java
 ``` java
     @Override
     public void addShift(Shift shift) throws DuplicateShiftException {
@@ -550,13 +550,13 @@ public class UnapplyCommandParser implements Parser<UnapplyCommand> {
     }
 
 ```
-###### \java\seedu\ptman\model\PartTimeManager.java
+###### /java/seedu/ptman/model/PartTimeManager.java
 ``` java
     public void setShifts(List<Shift> shifts) throws DuplicateShiftException {
         this.shifts.setShifts(shifts);
     }
 ```
-###### \java\seedu\ptman\model\PartTimeManager.java
+###### /java/seedu/ptman/model/PartTimeManager.java
 ``` java
     /**
      * Removes {@code key} from all shifts
@@ -605,14 +605,14 @@ public class UnapplyCommandParser implements Parser<UnapplyCommand> {
         shifts.setShift(target, editedShift);
     }
 ```
-###### \java\seedu\ptman\model\PartTimeManager.java
+###### /java/seedu/ptman/model/PartTimeManager.java
 ``` java
     @Override
     public ObservableList<Shift> getShiftList() {
         return shifts.asObservableList();
     }
 ```
-###### \java\seedu\ptman\model\shift\Capacity.java
+###### /java/seedu/ptman/model/shift/Capacity.java
 ``` java
 /**
  * Represents a shift's capacity
@@ -662,7 +662,7 @@ public class Capacity {
     }
 }
 ```
-###### \java\seedu\ptman\model\shift\Date.java
+###### /java/seedu/ptman/model/shift/Date.java
 ``` java
 /**
  * Represents a shift's date
@@ -739,7 +739,7 @@ public class Date {
     }
 }
 ```
-###### \java\seedu\ptman\model\shift\exceptions\DuplicateShiftException.java
+###### /java/seedu/ptman/model/shift/exceptions/DuplicateShiftException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Shift objects.
@@ -750,21 +750,21 @@ public class DuplicateShiftException extends DuplicateDataException {
     }
 }
 ```
-###### \java\seedu\ptman\model\shift\exceptions\ShiftFullException.java
+###### /java/seedu/ptman/model/shift/exceptions/ShiftFullException.java
 ``` java
 /**
  * Signals that the operation is attempting to add an employee to a full shift
  */
 public class ShiftFullException extends Exception {}
 ```
-###### \java\seedu\ptman\model\shift\exceptions\ShiftNotFoundException.java
+###### /java/seedu/ptman/model/shift/exceptions/ShiftNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified shift.
  */
 public class ShiftNotFoundException extends Exception {}
 ```
-###### \java\seedu\ptman\model\shift\Shift.java
+###### /java/seedu/ptman/model/shift/Shift.java
 ``` java
 /**
  * Represents a shift that employees can work in.
@@ -931,7 +931,7 @@ public class Shift {
     }
 }
 ```
-###### \java\seedu\ptman\model\shift\Time.java
+###### /java/seedu/ptman/model/shift/Time.java
 ``` java
 /**
  * Represents a shift's start or end time.
@@ -1002,7 +1002,7 @@ public class Time {
     }
 }
 ```
-###### \java\seedu\ptman\model\shift\UniqueShiftList.java
+###### /java/seedu/ptman/model/shift/UniqueShiftList.java
 ``` java
 /**
  * A list of shifts that enforces uniqueness between its elements and does not allow nulls.
@@ -1111,7 +1111,7 @@ public class UniqueShiftList implements Iterable<Shift> {
     }
 }
 ```
-###### \java\seedu\ptman\storage\XmlAdaptedShift.java
+###### /java/seedu/ptman/storage/XmlAdaptedShift.java
 ``` java
 /**
  * JAXB-friendly version of the Shift.

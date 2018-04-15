@@ -32,7 +32,7 @@ image::hzxcaryn.jpg[width="150", align="left"]
 {empty}[http://github.com/hzxcaryn[github]] [<<hzxcaryn#, portfolio>>]
 
 Role: Developer +
-Responsibilities: U Component + Integration + Documentation
+Responsibilities: UI Component + Integration + Documentation
 
 '''
 

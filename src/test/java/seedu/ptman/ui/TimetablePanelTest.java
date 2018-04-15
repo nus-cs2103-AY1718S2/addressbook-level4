@@ -78,25 +78,8 @@ public class TimetablePanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() throws DuplicateShiftException {
-        // Event stubs
-        employeePanelSelectionChangedEventAliceStub =
-                new EmployeePanelSelectionChangedEvent(new EmployeeCard(ALICE, 0));
-        employeePanelSelectionChangedEventNullStub = new EmployeePanelSelectionChangedEvent(null);
-
-        exportTimetableAsImageRequestEventStub =
-                new ExportTimetableAsImageRequestEvent(TIMETABLE_IMAGE_FILE_NAME_FIRST_TEST);
-        exportTimetableAsImageAndEmailRequestEventStub = new ExportTimetableAsImageAndEmailRequestEvent(
-                TIMETABLE_IMAGE_FILE_NAME_SECOND_TEST, TIMETABLE_IMAGE_EMAIL_TEST);
-
-        timetableWeekChangeRequestEventPrevStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.PREVIOUS);
-        timetableWeekChangeRequestEventNextStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.NEXT);
-        timetableWeekChangeRequestEventCurrStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.CURRENT);
-
-        testFilePathFirst = Paths.get("." + File.separator + TIMETABLE_IMAGE_FILE_NAME_FIRST_TEST + "."
-                + TIMETABLE_IMAGE_FILE_FORMAT);
-        testFilePathNameSecond = "." + File.separator + TIMETABLE_IMAGE_FILE_NAME_SECOND_TEST + "."
-                + TIMETABLE_IMAGE_FILE_FORMAT;
-        testFilePathSecond = Paths.get(testFilePathNameSecond);
+        setUpAllEventStubs();
+        setUpTestFiles();
 
         Model model = new ModelManager(TYPICAL_PTMAN, new UserPrefs(), TYPICAL_OUTLET);
         logic = new LogicManager(model);
@@ -115,26 +98,27 @@ public class TimetablePanelTest extends GuiUnitTest {
         assertEquals(timetablePanelHandle.getSelectedPage(), timetablePanelHandle.getWeekPage());
         assertEquals(startingDate, timetablePanelHandle.getTimetableDate());
 
-        // Default timetable view: Displays all shifts
-        List<Entry> defaultEntries = timetablePanelHandle.getTimetableEntries();
+        // Default timetable view: Displays all shifts in the week in default mode
+        List<Entry> defaultEntries = timetablePanelHandle.getTimetableEntriesFromDefaultMode();
         for (int i = 0; i < TYPICAL_SHIFTS.size(); i++) {
             Shift expectedShift = TYPICAL_SHIFTS.get(i);
             Entry actualEntry = defaultEntries.get(i);
             assertEntryDisplaysShift(expectedShift, actualEntry, i + 1);
         }
 
-        // Associated shifts of employee highlighted
+        // Associated shifts of employee highlighted: Displays all shifts in selected employee mode
         postNow(employeePanelSelectionChangedEventAliceStub);
-        List<Entry> entriesAfterSelectionEventAlice = timetablePanelHandle.getTimetableEntries();
+        List<Entry> entriesAfterSelectionEventAlice =
+                timetablePanelHandle.getTimetableEntriesFromSelectedEmployeeMode();
         for (int i = 0; i < TYPICAL_SHIFTS.size(); i++) {
             Shift expectedShift = TYPICAL_SHIFTS.get(i);
             Entry actualEntry = entriesAfterSelectionEventAlice.get(i);
             assertEntryDisplaysShift(expectedShift, actualEntry, i + 1);
         }
 
-        // Load back to default timetable view: Displays current week view
+        // Loads back to default timetable view: Displays all shifts in the week in default mode
         postNow(employeePanelSelectionChangedEventNullStub);
-        List<Entry> entriesAfterSelectionEventNull = timetablePanelHandle.getTimetableEntries();
+        List<Entry> entriesAfterSelectionEventNull = timetablePanelHandle.getTimetableEntriesFromDefaultMode();
         for (int i = 0; i < logic.getFilteredShiftList().size(); i++) {
             Shift expectedShift = TYPICAL_SHIFTS.get(i);
             Entry actualEntry = entriesAfterSelectionEventNull.get(i);
@@ -199,6 +183,36 @@ public class TimetablePanelTest extends GuiUnitTest {
         } catch (IOException e) {
             throw new AssertionError("Error deleting test files.");
         }
+    }
+
+    /**
+     * Prepares all event stubs required for the tests
+     */
+    private void setUpAllEventStubs() {
+        // Event stubs
+        employeePanelSelectionChangedEventAliceStub =
+                new EmployeePanelSelectionChangedEvent(new EmployeeCard(ALICE, 0));
+        employeePanelSelectionChangedEventNullStub = new EmployeePanelSelectionChangedEvent(null);
+
+        exportTimetableAsImageRequestEventStub =
+                new ExportTimetableAsImageRequestEvent(TIMETABLE_IMAGE_FILE_NAME_FIRST_TEST);
+        exportTimetableAsImageAndEmailRequestEventStub = new ExportTimetableAsImageAndEmailRequestEvent(
+                TIMETABLE_IMAGE_FILE_NAME_SECOND_TEST, TIMETABLE_IMAGE_EMAIL_TEST);
+
+        timetableWeekChangeRequestEventPrevStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.PREVIOUS);
+        timetableWeekChangeRequestEventNextStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.NEXT);
+        timetableWeekChangeRequestEventCurrStub = new TimetableWeekChangeRequestEvent(WeekChangeRequest.CURRENT);
+    }
+
+    /**
+     * Prepares all required test files that will be used to test the exporting of timetable
+     */
+    private void setUpTestFiles() {
+        testFilePathFirst = Paths.get("." + File.separator + TIMETABLE_IMAGE_FILE_NAME_FIRST_TEST + "."
+                + TIMETABLE_IMAGE_FILE_FORMAT);
+        testFilePathNameSecond = "." + File.separator + TIMETABLE_IMAGE_FILE_NAME_SECOND_TEST + "."
+                + TIMETABLE_IMAGE_FILE_FORMAT;
+        testFilePathSecond = Paths.get(testFilePathNameSecond);
     }
 
 }

@@ -25,10 +25,11 @@ import javax.mail.internet.MimeMultipart;
 public class EmailService {
     private static EmailService singleInstance = new EmailService();
 
-    private final String senderEmailReset = "ptmanager.reset@gmail.com";
-    private final String senderEmailTimetable = "ptmanager.timetable@gmail.com";
+    private final String senderEmail = "ptmanager.noreply@gmail.com";
     private final String password = "DEFAULT!1";
 
+    private final String timetableMessageBody = "Dear Valued PTMan User,\n\nAttached is your exported timetable.\n"
+            + "Thank you for using PTMan and have a nice day!\n\nBest Regards,\nThe PTMan Team";
 
     private Session session;
 
@@ -43,7 +44,7 @@ public class EmailService {
         session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(senderEmailReset, password);
+                        return new PasswordAuthentication(senderEmail, password);
                     }
                 });
     }
@@ -61,7 +62,7 @@ public class EmailService {
      */
     public void sendResetPasswordMessage(String name, String email, String newPassword) throws MessagingException {
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(senderEmailReset));
+        message.setFrom(new InternetAddress(senderEmail));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
         message.setSubject("[PTMan] Password Reset");
         message.setText("Hi " + name + ", \n\n" + "Your password has been reset: " + newPassword + "\n\n"
@@ -78,13 +79,12 @@ public class EmailService {
      */
     public void sendTimetableAttachment(String email, String filename) throws MessagingException {
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(senderEmailTimetable));
+        message.setFrom(new InternetAddress(senderEmail));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
         message.setSubject("[PTMan] My Timetable");
 
         BodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setText("Dear Valued PTMan user,\n\nAttached is your exported timetable.\n"
-                + "Thank you for using PTMan and have a nice day!\n\nBest Regards,\nThe PTMan Team");
+        messageBodyPart.setText(timetableMessageBody);
 
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(messageBodyPart);

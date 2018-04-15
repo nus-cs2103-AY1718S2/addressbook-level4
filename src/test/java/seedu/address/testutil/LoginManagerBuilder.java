@@ -4,6 +4,7 @@ import seedu.address.model.LoginManager;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
+//@@author Pearlissa
 /**
  * A utility class to help with building LoginManager objects.
  * Example usage: <br>

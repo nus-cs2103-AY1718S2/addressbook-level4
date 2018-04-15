@@ -1,6 +1,7 @@
 = Tan Joon Kai, Daniel - Project Portfolio
 
 :imagesDir: ../images
+:stylesDir: ../stylesheets
 :repoURL: https://github.com/CS2103JAN2018-F09-B1/main
 
 == Project: Your TA
@@ -27,7 +28,7 @@ Your TA is a desktop contact and task manager application used to manage the man
 
 ** Justification: *Your TA* is made for teaching assistants in universities, the matriculation number field and the `find` command supporting this field provides more user friendliness when searching for a student.
 
-* *Code contributed*: link:{repoURL}/collated/functional/JoonKai1995.md[functional], link:{repoURL}/collated/test/JoonKai1995.md[test].
+* *Code contributed*: [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/functional/JoonKai1995.md[Functional]] [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/test/JoonKai1995.md[Test]].
 
 * *Other contributions*:
 
@@ -79,7 +80,7 @@ Current date: 15-04-2018 +
 The application initially starts with no tasks:
 
 .Initial application view. +
-image::UiFromDelete.png[width="800"]
+image::UIFromDelete.png[width="800"]
 
 Command entered: `addTask title/Grade Exams desc/Grade mid-terms by/20-04-2018 priority/2` +
 This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure 30).

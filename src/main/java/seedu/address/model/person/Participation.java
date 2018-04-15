@@ -12,7 +12,7 @@ import seedu.address.model.person.exceptions.IllegalMarksException;
 public class Participation {
 
     public static final String MESSAGE_PARTICIPATION_CONSTRAINTS =
-            "Participation marks cannot be negative or over 100!";
+            "Participation marks must be between 0 to 100 inclusive!";
     public static final String UI_DISPLAY_HEADER = "Participation marks: ";
 
     public final Integer threshold;

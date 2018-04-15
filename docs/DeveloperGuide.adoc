@@ -16,28 +16,33 @@ By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Your TA is an address book application designed to amplify the capabilities of a university teaching assistant or tutor.
+Your TA is an address book application designed to enhance the capabilities of a university Teaching Assistant (TA) or tutor.
+
 It aims to provide all the essential functions needed to manage the administrative duties of handling a class as well as
-to aid the tutor to better connect with the class. It includes a calendar, scheduling capabilities, as well as the ability to mark
+to aid the tutor to better connect with the class. +
+
+It includes a calendar, scheduling capabilities, as well as the ability to mark
 attendance and participation.
 
-== How to contribute to Your TA?
+== How to Contribute to Your TA
 
 === New developers
 
 You may wish to refer to Section 3: <<Setting up, Setting up>>
-to properly set up the Your TA project file.
+to properly set up the *Your TA* project file.
 
-Read through the rest of the guide to familiarise yourself with how Your TA components functions together.
+Read through the rest of the guide to familiarise yourself with how *Your TA* components functions together.
 
 Try making some enhancements or edits to a component and make a pull request (PR) to our repo! We will take a look at your PR and
-give you some feedback or even merge your code if it's great.
+give you some feedback or even merge your code if it's a good working enhancement.
 
 === Experienced developers
 
 The developer guide contains the design of the models that make up the program. Each section also details how each and every functionality
-is implemented and how it interacts with the different components. We would greatly appreciate your help in fine-tuning the components and also
-welcome any suggestions or feedback to improve Your TA.
+is implemented and how it interacts with the different components. +
+
+We would greatly appreciate your help in fine-tuning the components and also
+welcome any suggestions or feedback to improve *Your TA*.
 
 == Setting Up
 
@@ -170,7 +175,7 @@ The rest of the App consists of the following five components:
 * <<Design-Model,*`Model`*>>: Holds the data of the app in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
-Do note that each of the last four components
+Do note that each of the components
 
 * Defines its _API_ in an `interface` with the same name as the component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -204,7 +209,9 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 The sections below give more details of each component.
 
 [[Design-Login]]
-=== Login Component
+=== Login component
+Before access to the application is granted, the user is required to log in with their `Username` and `Password` (see Figure 5).
+
 .Interactions for Login Component
 image::Login.png[width="800"]
 
@@ -380,9 +387,10 @@ This section describes some noteworthy details on how certain features are imple
 The login feature is initialized upon startup of the application, through `LoginStorage` and `LoginManager` and is facilitated by the `LoginUi`. +
 It supports multiple accounts whereby one user cannot access the application content of another user by creating multiple `.xml` storage files. +
 
+.Structure of the Login System
 image::LoginDiagram.png[width="800"]
 
-As seen from the diagram, upon opening the application, the user is prompted to enter their `Username` and `Password`. The `LoginManager` fetches the data of existing `User` objects, before putting them into a Hashmap<Username, User> as shown below. +
+As seen from the Figure 12, upon opening the application, the user is prompted to enter their `Username` and `Password`. The `LoginManager` fetches the data of existing `User` objects, before putting them into a Hashmap<Username, User> as shown below. +
 
 [source,java]
 ----
@@ -440,6 +448,14 @@ If the user is a new (username does not exist), they should simply enter their d
 ** Pros: More user-friendly, able to implement a username field, along with a password field and, especially a field for password confirmation.
 ** Cons: Need to further add onto UI.
 
+===== Aspect: Managing existing users
+* **Alternative 1 (current choice)**: `User` is immutable
+** Pros: Easier to keep track of `User`.
+** Cons: Highly inflexible, not user-friendly.
+* **Alternative 2**: `User` to be mutable, can be edited or deleted
+** Pros: Users can change their usernames/passwords if they feel their credentials may be insecure.
+** Cons: Need for rigorous salting/hashing if repeated usernames/passwords are allowed.
+
 ===== Aspect: `User` identification
 * **Alternative 1 (current choice)**: `Username` is case-sensitive
 ** Pros: "Johndoe" and "johndoe" are different usernames and different accounts with the same name can be created.
@@ -448,7 +464,7 @@ If the user is a new (username does not exist), they should simply enter their d
 ** Pros: Users will not have to worry about whether they signed up with a different `Username`.
 ** Cons: Less usernames are available.
 
-===== Aspect: `Username` and `Password` Representation
+===== Aspect: `Username` and `Password` representation
 * **Alternative 1 (current choice)**: `Username` and `Password` only allow alphanumeric characters
 ** Pros: Easy authentication, no need to worry about corner cases.
 ** Cons: Less room for different usernames and passwords, not as secure.
@@ -456,7 +472,7 @@ If the user is a new (username does not exist), they should simply enter their d
 ** Pros: More secure, less prone to security issues.
 ** Cons: Need for more rigorous testing to ensure no corner cases are left out.
 
-===== Aspect: Salting Passwords/Encryption of Files
+===== Aspect: Salting passwords/encryption of files
 * **Alternative 1 (current choice)**: No encryption/salting implemented
 ** Pros: Ease of editing information by administrator.
 ** Cons: Security issues, easy to find data path and retrieve files.
@@ -631,7 +647,7 @@ This utilizes the `MarkCommand` command to update the participation marks of a `
 
 The user will input a command, `markPart INDEX marks/DIGITS`, to the application to update the marks.
 
-The following figure 12 and paragraph below shows the sequence of how the `MarkCommand` command functions:
+The following figure 13 and paragraph below shows the sequence of how the `MarkCommand` command functions:
 
 .MarkCommand Sequence Diagram
 image::MarkCommandSequenceDiagram.png[width="700"]
@@ -675,14 +691,14 @@ image::MarkCommandSequenceDiagram.png[width="700"]
 === Display picture
 
 Users are able to add a display picture for any person within the application. The user can utilise 3 different commands (`add`, `edit` and `updateDP`) to create and specify a display image for the person.
-It fully supports the `undo` and `redo` commands as well. It adds a drop shadow around the frame to indicate the level of participation (see above section 5.3) of the person.
+It fully supports the `undo` and `redo` commands. It adds a drop shadow around the frame to indicate the level of participation (see above <<Participation, section 5.4 Participation>>) of the person.
 
 This feature allows the user to enter a path to their selected image file when entering any of the above 3 commands and copies the image into the `data/displayPic` folder.
 
 It utilises the `DisplayPicStorage` class to handle all image storage related operations.
 
 It also makes use of the `Participation` feature to display a colored shadow around the display picture.
-This image will be shown in the application next to the details of the person as seen in figure 13 below.
+This image will be shown in the application next to the details of the person as seen in figure 14 below.
 
 .Display Picture example
 image::displaypic_personcard.PNG[width="250"]
@@ -709,7 +725,7 @@ For persons that were not specified a `dp/` during the `add` command, the `Displ
 The display picture can also be changed by using the `edit` or `updateDP` commands.
 The implementation of the UpdateDisplayCommand (`updateDP`) command closely follows the `edit` command, hence we will only showcase the implementation of the `UpdateDP` command.
 
-The following figure 14 is the sequence diagram of the `updateDP` command to show how it functions:
+The following figure 15 is the sequence diagram of the `updateDP` command to show how it functions:
 
 .UpdateDisplayCommand Sequence Diagram
 image::UpdateDisplayCommandSequenceDiagram.png[width="800"]
@@ -723,7 +739,7 @@ image::UpdateDisplayCommandSequenceDiagram.png[width="800"]
 
 To fully support the `undo` and `redo` commands, image files cannot be immediately deleted when it is not in use by the `UI`.
 
-To work around this, a new class `UniqueItemList` was added to the model of the `AddressBook` as seen below in Figure 15.
+To work around this, a new class `UniqueItemList` was added to the model of the `AddressBook` as seen below in Figure 16.
 
 .AddressBook Class Diagram
 image::AddressBookClass.png[width="600"]
@@ -764,7 +780,7 @@ which is stored in `src/resources/images/displayPic` as `default.png`.
 If a valid path to an image is provided, the image will be processed and copied over to the `data` folder where the `addressbook.xml` is stored as well.
 
 The filename of the image copied over will be a <<sha-256,SHA-256>> hash. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.
-The following activity diagram in Figure 16 shows how the files are saved:
+The following activity diagram in Figure 17 shows how the files are saved:
 
 .Activity diagram for storing image files
 image::StoreDisplayPictureActivityDiagram.png[width="800"]

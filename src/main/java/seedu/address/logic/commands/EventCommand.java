@@ -20,7 +20,7 @@ public class EventCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "event";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the desk board. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to desk board. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_START_DATETIME + " START DATETIME "

@@ -34,7 +34,7 @@ SellIt is a desktop addressbook and calendar application built for salesmen. It 
 *** Created issues and issues tags on GitHub
 *** Created the team and repo on Github
 *** Added Travis support on Github
-*** Updates screenshot on readme
+*** Updated screenshot on readme
 *** Adds Coverall support and updated badge
 
 == Contributions to the User Guide

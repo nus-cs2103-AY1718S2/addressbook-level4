@@ -300,6 +300,44 @@ public class EventCommandTest {
 
 }
 ```
+###### \java\seedu\address\logic\commands\OverdueCommandTest.java
+``` java
+public class OverdueCommandTest {
+
+    private Model model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+
+    @Test
+    public void execute_noOverdueTask() {
+        String expectedMessage = String.format(SHOWN_OVERDUE_MESSAGE, 0);
+        OverdueCommand command = prepareCommand();
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code OverdueCommand}.
+     */
+    private OverdueCommand prepareCommand() {
+        OverdueCommand command = new OverdueCommand();
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     *     - the command feedback is equal to {@code expectedMessage}<br>
+     *     - the {@code FilteredList<Activity>} is equal to {@code expectedList}<br>
+     *     - the {@code DeskBoard} in model remains the same after executing the {@code command}
+     */
+    private void assertCommandSuccess(OverdueCommand command, String expectedMessage, List<Activity> expectedList) {
+        DeskBoard expectedDeskBoard = new DeskBoard(model.getDeskBoard());
+        CommandResult commandResult = command.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredActivityList());
+        assertEquals(expectedDeskBoard, model.getDeskBoard());
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\RemoveCommandTest.java
 ``` java
 /**
@@ -638,6 +676,27 @@ public class EventTestConstants {
     public static final String INVALID_TASK_DATE_TIME_DESC = " " + PREFIX_DATE_TIME + "2018-03-04 17:00";
     public static final String INVALID_TASK_REMARK_DESC = " " + PREFIX_REMARK + ""; // '' not allowed
     public static final String INVALID_TASK_TAG_DESC = " " + PREFIX_TAG + "CS2106*"; // '*' not allowed in tags
+}
+```
+###### \java\seedu\address\logic\OverdueTagPredicateTest.java
+``` java
+public class OverdueTagPredicateTest {
+
+    @Test
+    public void test_tagContainsOverdue_returnsTrue() {
+        // task has only one tag
+        OverdueTagPredicate predicate = new OverdueTagPredicate();
+        assertTrue(predicate.test(new TaskBuilder().withTags("Overdue").build()));
+
+        // task has multiple tags
+        assertTrue(predicate.test(new TaskBuilder().withTags("Overdue", "Important").build()));
+    }
+
+    @Test
+    public void test_tagContainsNoOverdue_returnsFalse() {
+        OverdueTagPredicate predicate = new OverdueTagPredicate();
+        assertFalse(predicate.test(new TaskBuilder().withTags("Important").build()));
+    }
 }
 ```
 ###### \java\seedu\address\logic\parser\DeskBoardParserTest.java

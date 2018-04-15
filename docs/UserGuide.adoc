@@ -38,18 +38,34 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ui-start.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+.  Type your selected command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  If you still feel unfamiliar with the commands, you may make use of the Menu at the top of the application.
-The various menu items have keyboard shortcuts that can be used to speed up your workflow as well!
+.  If you would like more detailed information about the commands, you may take a look at the <<Command Summary, Command Summary>>.
+Keyboard shortcuts and aliases are also available for you to speed up your workflow!
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`ty: c n: John Doe p: 98765432 e: johnd@example.com a: John street, block 123, #01-01` : adds a `Customer` named `John Doe` to the database.
-* **`delete`**`3` : deletes the third contact shown in the current list
-* *`exit`* : exits the application
+====
+ list
+
+_Lists all persons._
+====
+====
+ add ty: c n: Xiao Ming p: 88888888 e: xiao@ming.com a: The Fullerton s: today d: 7 June 2018 m: 31415926535897 i: 9.71 t: richxiaoming t: HighSES t: mingdynasty
+
+_Adds a new `Customer` named "Xiao Ming"._
+====
+====
+ delete 3
+
+Deletes the third person displayed in the current view.
+====
+====
+ exit
+
+_Exits the application._
+====
 
 //@@author melvintzw
 == Known Issues
@@ -138,7 +154,7 @@ is specified when adding a customer.
 // end::commandsummary[]
 == Feature details
 
-=== Displaying the home view : kbd:[F1] [[home]]
+=== Displaying the home view : kbd:[F1] [since v1.5] [[home]]
 
 [NOTE]
 ====
@@ -549,35 +565,37 @@ _The `redo` command fails as there are no `undo` commands executed previously._
  redo (reapplies the "clear" command)
 ====
 <<Command Summary, Back to Command Summary>>
+//@@author
 
-***
+// tag::v2features[]
+//@@author melvintzw
 == Features coming in v2.0
 
 *Improvements to existing features:*
 
 * `Find` Command: Searching fields specific to Runners and Customers.
 * `Find` Command: ability to filter the currently displayed list further
-* `Locate` Command: ability to select by Index when there're conflicts
+* `Locate` Command: ability to select by index when there are conflicts
 
 *Other New Features:*
 
-_Functional:_
-
-* `Unassign` customers from a runner
-* Add multiple persons by inputting a file
-* `Schedule` dates for runners to visit customers
-* Change the status of customers (whether they've paid or not)
-* Display countdown timers for Customers' due dates
-* `Sort` customers and runners by certain fields
-* More useful statistics on the home page
-
-_Cosmetic:_
-
-* Improvement of the UI to display one list of Customers and a separate list of Runners
-* Aesthetic improvements for the display of data
-* `Theme` command to choose and switch between UI theme/colours
+* *Functional:*
+** `Unassign` customers from a runner
+** Add multiple persons by inputting a file
+** `Schedule` dates for runners to visit customers
+** Change the status of customers (whether they've paid or not)
+** Display countdown timers for Customers' due dates
+** `Sort` customers and runners by certain fields
+** More useful statistics on the home page
+* *Cosmetic:*
+** Improvement of the UI to display one list of Customers and a separate list of Runners
+** Aesthetic improvements for the display of data
+** `Theme` command to choose and switch between UI theme/colours
+//@@author
+// end::v2features[]
 
 // tag::FAQ[]
+//@@author jonleeyz
 == FAQ
 
 [qanda]
@@ -590,13 +608,16 @@ The state of the database is saved in the hard disk automatically after any comm
 Therefore, there is no need to save manually.
 
 How can I report a bug or suggest improvements to this application?::
-Open an issue https://github.com/CS2103JAN2018-F12-B4/main/issues[here]! We would love to hear your feedback.
+Open an issue https://github.com/CS2103JAN2018-F12-B4/main/issues[here]! We would love to hear your feedback! :)
+
+What if I am not a loan shark boss yet?::
+Work hard and collect more protection money! Maybe one day you'll make it! ;)
 
 What if I am a law enforcement officer?::
 Huat Ah Finance Pte Ltd takes no responsibility for the actions of its users.
 We just like to make software that makes a positive impact on the world! :)
 
-What if I am not a loan shark boss yet?::
-Work hard and collect more protection money! Maybe one day you'll make it! ;)
-// end::FAQ[]
+*On a serious note, this is just a student project with a humourous stance.*
+
 //@@author
+// end::FAQ[]

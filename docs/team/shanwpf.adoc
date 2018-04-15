@@ -52,8 +52,6 @@ To enable user interaction with this feature, various commands that manipulate s
 
 include::../UserGuide.adoc[tag=shiftmanager]
 
-include::../UserGuide.adoc[tag=shiftemployee]
-
 == Contributions to the Developer Guide
 
 |===

@@ -1,6 +1,5 @@
 package seedu.address.model;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
@@ -18,7 +17,7 @@ public interface Login {
      * @param password
      * @throws UserNotFoundException
      */
-    void authenticate(String username, String password) throws UserNotFoundException, IllegalValueException;
+    void authenticate(String username, String password) throws UserNotFoundException, DuplicateUserException;
 
     /**
      * Loads addressbook storage of the user and initializes addressbook.

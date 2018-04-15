@@ -342,16 +342,14 @@
 }
 
 #tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
-/* @@author kengsengg */
+
 #tags .red {
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-background-color: red;
 }
 
@@ -366,7 +364,7 @@
 }
 
 #tags .green {
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-background-color: green;
 }
 
@@ -375,28 +373,28 @@
     -fx-background-color: blue;
 }
 
-#tags .violet {
+#tags .salmon {
     -fx-text-fill: black;
-    -fx-background-color: violet;
+    -fx-background-color: salmon;
 }
 
-#tags indigo {
+#tags .brown {
     -fx-text-fill: white;
-    -fx-background-color: indigo;
+    -fx-background-color: saddlebrown;
 }
 
-#tags indigo {
+#tags .purple {
     -fx-text-fill: white;
     -fx-background-color: purple;
 }
 
-#tags indigo {
-    -fx-text-fill: black;
-    -fx-background-color: pink;
+#tags .teal {
+    -fx-text-fill: white;
+    -fx-background-color: teal;
 }
 
-#tags indigo {
-    -fx-text-fill: white;
-    -fx-background-color: grey;
+#tags .lime {
+    -fx-text-fill: black;
+    -fx-background-color: lime;
 }
-/* @@author */
+

@@ -12,6 +12,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 //import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
@@ -44,7 +45,7 @@ public class EditCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    /* @Test
+    @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Person editedPerson = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
@@ -57,7 +58,7 @@ public class EditCommandTest {
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
-    */
+
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
         Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
@@ -75,10 +76,8 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(lastPerson, editedPerson);
-
-        //assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
-    /*
+
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() throws IOException {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
@@ -90,7 +89,7 @@ public class EditCommandTest {
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
-*/
+
     @Test
     public void execute_filteredList_success() throws Exception {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
@@ -104,8 +103,6 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        //assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -185,40 +182,6 @@ public class EditCommandTest {
         }
 
     }
-
-    /**
-     * 1. Edits a {@code Person} from a filtered list.
-     * 2. Undo the edit.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously edited person in the
-     * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the edit. This ensures {@code RedoCommand} edits the person object regardless of indexing.
-     */
-    /*
-    @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonEdited() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Person editedPerson = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        showPersonAtIndex(model, INDEX_SECOND_PERSON);
-        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // edit -> edits second person in unfiltered person list / first person in filtered person list
-        editCommand.execute();
-        undoRedoStack.push(editCommand);
-
-        // undo -> reverts addressbook back to previous state and filtered person list to show all persons
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        expectedModel.updatePerson(personToEdit, editedPerson);
-        assertNotEquals(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), personToEdit);
-        // redo -> edits same second person in unfiltered person list
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-    */
 
     @Test
     public void equals() throws Exception {

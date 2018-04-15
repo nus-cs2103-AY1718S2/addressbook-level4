@@ -26,7 +26,6 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 
 import seedu.address.model.person.Person;
@@ -111,7 +110,6 @@ public class ModelManager extends ComponentManager implements Model {
             htmlString = htmlString.replace("Class Not Specified", tagList.get(0).tagForBrowser());
         }
 
-
         List<Subject> subjectList = person.getSubjectArray();
         int listSize = subjectList.size();
         System.out.println(person.getSubjects());
@@ -135,6 +133,47 @@ public class ModelManager extends ComponentManager implements Model {
         }
         htmlString = htmlString.replace("STUDENTS SCORE", scoreString);
 
+        // L1B4A
+        int scoreL1B4A = person.calculateL1B4A();
+        String scoreL1B4AString = "-";
+        if (scoreL1B4A == 0) {
+            scoreL1B4AString = "-";
+        } else {
+            scoreL1B4AString = Integer.toString(scoreL1B4A);
+        }
+        htmlString = htmlString.replace("STUDENTS L1B4A", scoreL1B4AString);
+
+        //L1B4B
+
+        int scoreL1B4B = person.calculateL1B4B();
+        String scoreL1B4BString = "-";
+        if (scoreL1B4B == 0) {
+            scoreL1B4BString = "-";
+        } else {
+            scoreL1B4BString = Integer.toString(scoreL1B4B);
+        }
+        htmlString = htmlString.replace("STUDENTS L1B4B", scoreL1B4BString);
+
+        //L1B4C
+        int scoreL1B4C = person.calculateL1B4C();
+        String scoreL1B4CString = "-";
+        if (scoreL1B4C == 0) {
+            scoreL1B4CString = "-";
+        } else {
+            scoreL1B4CString = Integer.toString(scoreL1B4C);
+        }
+        htmlString = htmlString.replace("STUDENTS L1B4C", scoreL1B4CString);
+
+        //L1B4D
+        int scoreL1B4D = person.calculateL1B4D();
+        String scoreL1B4DString = "-";
+        if (scoreL1B4D == 0) {
+            scoreL1B4DString = "-";
+        } else {
+            scoreL1B4DString = Integer.toString(scoreL1B4D);
+        }
+        htmlString = htmlString.replace("STUDENTS L1B4D", scoreL1B4DString);
+
         // ADD CCA
         String ccaString = person.getCca().getValue();
         htmlString = htmlString.replace("CCA", ccaString);
@@ -155,15 +194,15 @@ public class ModelManager extends ComponentManager implements Model {
 
         // NOK Details
 
-        String nokName = person.getNameOfKin().toString();
+        String nokName = person.getNextOfKin().fullName;
         htmlString = htmlString.replace("NOK Name", nokName);
-        /*
-        String nokEmail = person.getNextOfKin().getEmail().toString();
+        String nokGender = person.getNextOfKin().remark;
+        htmlString = htmlString.replace("NOK Gender", nokGender);
+        String nokEmail = person.getNextOfKin().email;
         htmlString = htmlString.replace("NOK Email", nokEmail);
-
-        String nokPhone = person.getNextOfKin().getPhone().toString();
+        String nokPhone = person.getNextOfKin().phone;
         htmlString = htmlString.replace("NOK Phone", nokPhone);
-        */
+
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write(htmlString);
         bw.close();
@@ -209,12 +248,6 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void addNextOfKin(NextOfKin nextOfKin) throws DuplicatePersonException {
-        addressBook.addNextOfKin(nextOfKin);
-
     }
 
     @Override

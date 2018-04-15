@@ -381,16 +381,16 @@ Can only renew book that has been borrowed
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-=== Add an account : `addAccount` [TO BE IMPLEMENTED]
+=== Add an account : `addAccount`
 
 Add a given account to the list of accounts +
-Format: `addAccount n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
+Format: `addAccount n/NAME u/USERNAME p/PASSWORD m/MATRICNUMBER l/PRIVILEGE LEVEL` +
 Privilege Level: 2(Librarian)
 
 Examples:
 
-* `addAccount n/Jack Morgan m/A0123456J u/jack p/jack123 l/1`
-* `addAccount n/Tom Madison m/A1234567T u/tom p/tom123 l/2`
+* `addAccount n/Jack Morgan u/jack p/jack123 m/A0123456J I/1`
+* `addAccount n/Tom Madison u/tom p/tom123 m/A1234567T  I/2`
 
 [TIP]
 Press TAB after writing `addAccount` to use the auto-complete function.
@@ -399,7 +399,7 @@ Examples:
 
 * `addAccount` --> (press TAB) --> `addAccount n/ m/ u/ p/ l/ `
 
-=== Deleting an account : `deletea` [TO BE IMPLEMENTED]
+=== Deleting an account : `deleteAccount`
 
 Deletes the specified account from the list of accounts. +
 Format: `delete USERNAME` +
@@ -412,10 +412,10 @@ Privilege Level: 2(Librarian)
 
 Examples:
 
-* `delete A1234567J` +
-Deletes account linked to A1234567J --> (Jack Morgan).
-* `delete A0123456M` +
-Deletes the account linked to A0123456M.
+* `delete jackmorgan` +
+Deletes account linked to Jack Morgan.
+* `delete tommy` +
+Deletes the account linked to Tommy.
 
 === Exiting the program : `exit`
 
@@ -463,9 +463,9 @@ e.g. `borrow 1`
 e.g. `return 2`
 * *reserve* : `reserve INDEX` +
 e.g. `reserve 2`
-* *addaAccount* : `addAccount n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
+* *addAccount* : `addAccount n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
 e.g. `addAccount n/Jack Morgan m/A0123456J u/jack p/jack123 l/1`
-* *deletea* : `delete USERNAME` +
+* *deleteAccount* : `deleteAccount USERNAME` +
 e.g. `delete A0123456M`
 * *cleara* : `cleara`
 

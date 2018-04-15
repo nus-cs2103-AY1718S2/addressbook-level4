@@ -143,6 +143,12 @@ public class AddressBookTest {
         public ObservableList<Tag> getTagList() {
             return tags;
         }
+
+        //@@author XavierMaYuqian
+        @Override
+        public String getPassword() {
+            return null;
+        }
     }
 
 }

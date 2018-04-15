@@ -8,14 +8,16 @@
 
 == Overview
 
-SellIT is a desktop address book application used for businessman doing his business all around the world. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Sell IT is for salesmen who prefer to use a desktop app for managing their clients. More importantly, Sell IT is optimized for those who prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Sell IT can get your contact management tasks done faster than traditional GUI apps. It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the login/logout & reset password function*
+* *Major enhancement*: added *the lock/unlock & reset password function*
 ** What it does: allows the user to lock the addressbook when he/she does not need to use it and unlock the addressbook with password when he/she needs to use it. And the user can also change the password when neccessary.
 ** Justification: This feature improves the product significantly because a user may needs privacy and wants to protect his personal data. This improve the security of the APP.
 ** Highlights: This enhancement does not affect existing commands and commands to be added in future. For future added features, just make sure it does not violate any requirements by this feature
+
+* *Minor enhancement*: added a list appointment command that can list all appointment.
 
 * *Minor enhancement*: added a sort command that can sort in alphabetical order.
 
@@ -23,28 +25,18 @@ SellIT is a desktop address book application used for businessman doing his busi
 
 * *Minor enhancement*: added a comment feature which allows the sales person to add the notes of their clients.
 
-* *Minor enhancement*: added a total person at status bar to show the total number of persons in the address book.
-
 * *Minor enhancement*: added an export command that can export all the people in the address book to a csv file.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/functional/XavierMaYuqian.md[Functional code]] [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/test/XavierMaYuqian.md[Test code]]
 
 * *Other contributions*:
 
-** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Modified the GUI so that the total number of contacts is shown at the status bar (Pull request https://github.com/CS2103JAN2018-W10-B2/main/pull/29[29])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Added my own features and use cases into the developer guide and user guide.
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F14-B1/main/issues/139[139], https://github.com/CS2103JAN2018-F14-B1/main/issues/149[149])
 
 == Contributions to the User Guide
 
@@ -65,6 +57,8 @@ include::../UserGuide.adoc[tag=deletetag]
 
 include::../UserGuide.adoc[tag=export]
 
+include::../UserGuide.adoc[tag=listappointment]
+
 == Contributions to the Developer Guide
 
 |===
@@ -75,14 +69,13 @@ include::../DeveloperGuide.adoc[tag=Login/Logout]
 
 include::../DeveloperGuide.adoc[tag=SortCommand]
 
-include::../DeveloperGuide.adoc[tag=DeleteTag]
+include::../DeveloperGuide.adoc[tag=ExportCommand]
 
-include::../DeveloperGuide.adoc[tag=TotalPersonStatusBar]
+include::../DeveloperGuide.adoc[tag=ListAppointment]
+
+include::../DeveloperGuide.adoc[tag=DeleteTag]
 
 include::../DeveloperGuide.adoc[tag=AddComment]
 
-include::../UserGuide.adoc[tag=ExportCommand]
+include::../DeveloperGuide.adoc[tag=XavierMaYuqianTestCases]
 
-== PROJECT: PowerPointLabs
-
----

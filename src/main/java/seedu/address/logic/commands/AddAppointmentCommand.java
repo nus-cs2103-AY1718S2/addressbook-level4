@@ -42,7 +42,7 @@ public class AddAppointmentCommand extends UndoableCommand {
             + PREFIX_TIMEZONE + "America/New_York";
 
     public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This appointment already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the address book";
 
     private Appointment toAdd;
     private final AppointmentName name;
@@ -50,7 +50,7 @@ public class AddAppointmentCommand extends UndoableCommand {
     private final List<Index> indexes;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an AddAppointmentCommand to add the specified {@code Appointment}
      */
     public AddAppointmentCommand(AppointmentName name, AppointmentTime time, List<Index> indexes) {
         requireNonNull(name);
@@ -68,7 +68,7 @@ public class AddAppointmentCommand extends UndoableCommand {
             model.addAppointment(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateAppointmentException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         }
 
     }

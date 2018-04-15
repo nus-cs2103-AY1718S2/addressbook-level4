@@ -3,6 +3,9 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.util.Arrays;
+import java.util.TimeZone;
+
 //@@author glorialaw
 /**
  * Represents a person's timezone in the address book.
@@ -17,8 +20,6 @@ public class CustTimeZone {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String TIMEZONE_VALIDATION_REGEX = "[^\\s].*";
-
     //will convert from string to TimeZone when calendar is implemented
     public final String timeZone;
 
@@ -29,10 +30,14 @@ public class CustTimeZone {
     }
 
     /**
-     * Returns true if a given string is a valid time zone.
+     * Returns true if a given string is a valid time zone. Some short abbreviations are not supported such as SGT.
+     * Corrected with the if statement.
      */
     public static boolean isValidTimeZone(String test) {
-        return test.matches(TIMEZONE_VALIDATION_REGEX);
+        if (test.toUpperCase().equals("SGT")) {
+            test = "Asia/Singapore";
+        }
+        return Arrays.asList(TimeZone.getAvailableIDs()).contains(test);
     }
 
     @Override

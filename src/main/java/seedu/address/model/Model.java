@@ -9,7 +9,7 @@ import seedu.address.model.entry.CalendarEntry;
 import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
 import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -90,7 +90,7 @@ public interface Model {
     /**
      * Adds order to list of orders.
      */
-    void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException;
+    void addOrderToOrderList(Order orderToAdd) throws DuplicateOrderException;
 
     //@@author SuxianAlicia
     /**
@@ -126,17 +126,17 @@ public interface Model {
     /**
      * Replaces the given order {@code target} with {@code editedOrder}.
      *
-     * @throws UniqueOrderList.DuplicateOrderException if updating the order's details causes the order to be
+     * @throws DuplicateOrderException if updating the order's details causes the order to be
      *  equivalent to another existing order in the list.
      * @throws OrderNotFoundException if {@code target} could not be found in the list.
      */
     void updateOrder(Order target, Order editedOrder)
-            throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException;
+            throws DuplicateOrderException, OrderNotFoundException;
 
     /**
      * Updates the order status of {@code target} with {@code orderStatus}.
      */
     void updateOrderStatus(Order target, String orderStatus)
-            throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException;
+            throws DuplicateOrderException, OrderNotFoundException;
 
 }

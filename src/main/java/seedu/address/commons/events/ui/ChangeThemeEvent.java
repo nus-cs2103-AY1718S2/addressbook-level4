@@ -8,7 +8,7 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class ChangeThemeEvent extends BaseEvent {
 
-    private String theme;
+    private final String theme;
 
     public ChangeThemeEvent(String theme) {
         this.theme = theme;

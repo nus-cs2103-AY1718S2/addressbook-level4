@@ -1,3 +1,4 @@
+//@@author amad-person
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -39,7 +40,7 @@ public class AddOrderCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrderCommand.MESSAGE_USAGE);
 
-    private AddOrderCommandParser parser = new AddOrderCommandParser();
+    private final AddOrderCommandParser parser = new AddOrderCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {

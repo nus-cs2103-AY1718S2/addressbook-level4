@@ -35,7 +35,7 @@ import seedu.address.model.order.Order;
 public class ChangeOrderStatusCommandTest {
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     private Model model;
 

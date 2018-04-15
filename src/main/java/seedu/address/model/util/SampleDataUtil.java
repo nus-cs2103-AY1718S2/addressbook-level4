@@ -13,7 +13,7 @@ import seedu.address.model.order.OrderInformation;
 import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -84,7 +84,7 @@ public class SampleDataUtil {
             return sampleAb;
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("sample data cannot contain duplicate persons", dpe);
-        } catch (UniqueOrderList.DuplicateOrderException doe) {
+        } catch (DuplicateOrderException doe) {
             throw new AssertionError("sample data cannot contain duplicate orders", doe);
         }
     }

@@ -24,7 +24,7 @@ import seedu.address.model.order.OrderInformation;
 import seedu.address.model.order.OrderStatus;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
 
 /**
@@ -79,7 +79,7 @@ public class EditOrderCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.updateOrder(orderToEdit, editedOrder);
-        } catch (UniqueOrderList.DuplicateOrderException doe) {
+        } catch (DuplicateOrderException doe) {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);
         } catch (OrderNotFoundException onfe) {
             throw new AssertionError("The target order cannot be missing.");

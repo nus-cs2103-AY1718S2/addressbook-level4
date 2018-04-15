@@ -1,3 +1,4 @@
+//@@author amad-person
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -11,7 +12,7 @@ import seedu.address.logic.commands.DeleteOrderCommand;
 
 public class DeleteOrderCommandParserTest {
 
-    private DeleteOrderCommandParser parser = new DeleteOrderCommandParser();
+    private final DeleteOrderCommandParser parser = new DeleteOrderCommandParser();
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {

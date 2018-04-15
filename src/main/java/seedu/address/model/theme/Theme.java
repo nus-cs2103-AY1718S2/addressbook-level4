@@ -31,12 +31,12 @@ public class Theme {
     /**
      * Constructs a {@code currentTheme}.
      *
-     * @param currentTheme a valid theme.
+     * @param currentThemeVersion a valid theme.
      */
-    public Theme(String currentTheme) {
-        requireNonNull(currentTheme);
-        checkArgument(isValidTheme(currentTheme), MESSAGE_THEME_CONSTRAINTS);
-        this.currentTheme = currentTheme;
+    public Theme(String currentThemeVersion) {
+        requireNonNull(currentThemeVersion);
+        checkArgument(isValidTheme(currentThemeVersion), MESSAGE_THEME_CONSTRAINTS);
+        currentTheme = currentThemeVersion;
     }
 
     /**
@@ -93,6 +93,7 @@ public class Theme {
             // new theme file path
             String newThemeCssFilePath;
 
+            // find new theme file path based on theme version
             switch (newTheme) {
             case DARK_THEME_KEYWORD:
                 newThemeCssFilePath = DARK_THEME_CSS_FILE_PATH;
@@ -106,6 +107,7 @@ public class Theme {
                 newThemeCssFilePath = DARK_THEME_CSS_FILE_PATH;
             }
 
+            // add new stylesheet to scene
             scene.getStylesheets().add(newThemeCssFilePath);
             primaryStage.setScene(scene);
         }

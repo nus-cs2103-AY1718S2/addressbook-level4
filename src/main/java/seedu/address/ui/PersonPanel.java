@@ -124,6 +124,10 @@ public class PersonPanel extends UiPart<Region> {
     //@@author
 
     //@@author amad-person
+
+    /**
+     * Sets all image icons.
+     */
     private void setIcons() {
         Image phoneIconImage = new Image(MainApp.class.getResourceAsStream("/images/phone_icon.png"));
         phoneIcon.setImage(phoneIconImage);
@@ -141,6 +145,9 @@ public class PersonPanel extends UiPart<Region> {
         groupIcon.setImage(groupIconImage);
     }
 
+    /**
+     * Sets image sizes for all icons used in person panel.
+     */
     private void setImageSizeForAllImages() {
         phoneIcon.setFitWidth(ICON_WIDTH);
         phoneIcon.setFitHeight(ICON_HEIGHT);

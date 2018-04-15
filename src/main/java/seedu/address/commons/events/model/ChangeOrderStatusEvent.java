@@ -9,9 +9,9 @@ import seedu.address.model.order.Order;
  * Represents a request to change the order status of an existing order in the application.
  */
 public class ChangeOrderStatusEvent extends BaseEvent {
-    private Index index;
-    private Order targetOrder;
-    private String orderStatus;
+    private final Index index;
+    private final Order targetOrder;
+    private final String orderStatus;
 
     public ChangeOrderStatusEvent(Index index, Order targetOrder, String orderStatus) {
         this.index = index;

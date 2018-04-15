@@ -36,7 +36,7 @@ public class ChangeOrderStatusCommandParser implements Parser<ChangeOrderStatusC
         try {
             OrderStatus orderStatus = ParserUtil.parseOrderStatus(argMultimap
                     .getValue(PREFIX_ORDER_STATUS)).get();
-            return new ChangeOrderStatusCommand(index, orderStatus.getCurrentOrderStatus());
+            return new ChangeOrderStatusCommand(index, orderStatus.getOrderStatusValue());
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeOrderStatusCommand.MESSAGE_USAGE)

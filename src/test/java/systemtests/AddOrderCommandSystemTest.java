@@ -39,7 +39,7 @@ import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.OrderBuilder;
 import seedu.address.testutil.OrderUtil;
@@ -186,6 +186,7 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
                 + QUANTITY_DESC_COMPUTER + INVALID_DELIVERY_DATE_DESC;
         assertCommandFailure(command, DeliveryDate.MESSAGE_DELIVERY_DATE_CONSTRAINTS);
     }
+    //@@author
 
     /**
      * Executes the {@code AddOrderCommand} that adds {@code toAdd} to the model and asserts that the:<br>
@@ -205,6 +206,7 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(OrderUtil.getAddOrderCommand(index.getZeroBased(), toAdd), index, toAdd);
     }
 
+    //@@author amad-person
     /**
      * Performs the same verification as {@code assertCommandSuccess(Index, Order)}. Executes {@code command}
      * instead.
@@ -216,7 +218,7 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
 
         try {
             expectedModel.addOrderToOrderList(toAdd);
-        } catch (UniqueOrderList.DuplicateOrderException dpe) {
+        } catch (DuplicateOrderException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
         String expectedResultMessage = String.format(
@@ -224,6 +226,7 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
+    //@@author
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Index, Order)} except asserts that

@@ -45,14 +45,14 @@ public class OrderStatus {
     /**
      * Returns the current order status.
      */
-    public String getCurrentOrderStatus() {
+    public String getOrderStatusValue() {
         return this.orderStatus;
     }
 
     /**
      * Sets the current order status.
      */
-    public void setCurrentOrderStatus(String newOrderStatus) {
+    public void setOrderStatusValue(String newOrderStatus) {
         requireNonNull(newOrderStatus);
         if (isValidOrderStatus(newOrderStatus)) {
             this.orderStatus = newOrderStatus;
@@ -68,7 +68,7 @@ public class OrderStatus {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof OrderStatus // instanceof handles nulls
-                && this.getCurrentOrderStatus().equals(((OrderStatus) other).getCurrentOrderStatus())); // state check
+                && this.getOrderStatusValue().equals(((OrderStatus) other).getOrderStatusValue())); // state check
     }
 
     @Override

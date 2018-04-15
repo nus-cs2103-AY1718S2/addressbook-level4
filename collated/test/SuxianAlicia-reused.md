@@ -1,5 +1,5 @@
 # SuxianAlicia-reused
-###### \java\seedu\address\logic\parser\DeleteEntryCommandParserTest.java
+###### /java/seedu/address/logic/parser/DeleteEntryCommandParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -26,7 +26,7 @@ public class DeleteEntryCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\DeleteGroupCommandParserTest.java
+###### /java/seedu/address/logic/parser/DeleteGroupCommandParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -53,7 +53,7 @@ public class DeleteGroupCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\DeletePreferenceCommandParserTest.java
+###### /java/seedu/address/logic/parser/DeletePreferenceCommandParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;

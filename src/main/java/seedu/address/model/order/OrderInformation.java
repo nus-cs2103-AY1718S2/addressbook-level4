@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class OrderInformation {
     public static final String MESSAGE_ORDER_INFORMATION_CONSTRAINTS =
-            "Order information should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Order information should only contain alphanumeric characters and spaces, and it should not be blank.";
 
     public static final String ORDER_INFORMATION_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 

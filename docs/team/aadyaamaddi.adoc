@@ -20,15 +20,21 @@ It also showcases my documentation skills by including relevant extracts written
 
 == 3. Summary of Contributions
 
-* *Major enhancement*: added the ability to *manage customer orders*.
+*Major enhancement*: added the ability to *manage customer orders*.
+
 ** Functionality: Orders can be added, edited, and deleted. A list of current orders can be viewed. Orders can also be marked as ongoing or fulfilled.
 ** Justification: This feature will be essential for salespersons as they would want to keep track of customer orders. Salespersons will be able to view relevant information about customer orders in a single place.
-** Highlights: This enhancement affects commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing model and UI of the application.
-* *Minor enhancement*: added the ability to switch between themes provided in the application.
+** Highlights: This enhancement required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing model and UI of the application.
+Additionally, this enhancement will affect commands to be implemented in the future.
+
+*Minor enhancement*: added the ability to *switch between themes* provided in the application.
+
 ** Functionality: Theme of the application can be switched between 'light' or 'dark' themes.
-** Justification: This feature will allow the salesperson to customize the application to suit their needs.
-* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/functional/amad-person.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/test/amad-person.md[Test code]]
-* *Other contributions*:
+** Justification: This feature will allow salespersons to customize the application to suit their needs.
+
+*Code contributed*: [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/functional/amad-person.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/test/amad-person.md[Test code]]
+
+*Other contributions*:
 
 ** Project management:
 *** Managed releases `v1.2` - `v1.5rc` (4 releases) on GitHub.
@@ -59,6 +65,8 @@ include::../UserGuide.adoc[tag=userguideorders]
 
 #End of Extract (from User Guide)#
 
+---
+
 === 4.2. Minor Enhancement : Change Themes
 
 This section contains extracts from the UserGuide related to changing themes.
@@ -75,13 +83,37 @@ include::../UserGuide.adoc[tag=userguidethemes]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-#Start of Extract (from Developer Guide)#
+=== 5.1. Major Enhancement : Order Management
+
+This section contains extracts from the DeveloperGuide related to order management.
+
+#Start of Extract 1 (from Developer Guide)#
 
 include::../DeveloperGuide.adoc[tag=ordermanagementintro]
 
+#End of Extract 1 (from Developer Guide)#
+
+#Start of Extract 2 (from Developer Guide)#
+
 include::../DeveloperGuide.adoc[tag=addingorders]
 
-include::../DeveloperGuide.adoc[tag=otherinfo-orders]
+#End of Extract 2 (from Developer Guide)#
+
+#Start of Extract 3 (from Developer Guide)#
+
+include::../DeveloperGuide.adoc[tag=designcons-orders]
+
+#End of Extract 3 (from Developer Guide)#
+
+---
+
+=== 5.2. Minor Enhancement : Change Themes
+
+This section contains extracts from the DeveloperGuide related to changing themes.
+
+#Start of Extract (from Developer Guide)#
+
+include::../DeveloperGuide.adoc[tag=changingthemes]
 
 #End of Extract (from Developer Guide)#
 
@@ -91,7 +123,9 @@ include::../DeveloperGuide.adoc[tag=otherinfo-orders]
 |_Given below are other sections I contributed to the User Guide._
 |===
 
-=== Proposed Feature : Viewing Customer Statistics
+=== A.1. Proposed Feature : Viewing Customer Statistics
+
+This section contains extracts from the UserGuide related to a proposed feature for displaying customer statistics.
 
 #Start of Extract (from User Guide)#
 
@@ -99,7 +133,9 @@ include::../UserGuide.adoc[tag=customerstats]
 
 #End of Extract (from User Guide)#
 
-=== Proposed Feature : Sending Promotions
+=== A.2. Proposed Feature : Sending Promotions
+
+This section contains extracts from the UserGuide related to a proposed feature for sending promotions to customers.
 
 #Start of Extract (from User Guide)#
 
@@ -113,7 +149,9 @@ include::../UserGuide.adoc[tag=sendingpromos]
 |_Given below are other sections I contributed to the Developer Guide._
 |===
 
-=== Major Enhancement : Order Management
+=== B.1. Major Enhancement : Order Management
+
+This section contains other extracts from the DeveloperGuide related to order management.
 
 #Start of Extract (from Developer Guide)#
 
@@ -123,9 +161,13 @@ include::../DeveloperGuide.adoc[tag=changeorderstatus]
 
 include::../DeveloperGuide.adoc[tag=deletingorders]
 
+include::../DeveloperGuide.adoc[tag=otherinfo-orders]
+
 #End of Extract (from Developer Guide)#
 
-=== Proposed Feature : Data Encryption
+=== B.2. Proposed Feature : Data Encryption
+
+This section contains extracts from the DeveloperGuide related to a proposed feature for encrypting application data.
 
 #Start of Extract (from Developer Guide)#
 

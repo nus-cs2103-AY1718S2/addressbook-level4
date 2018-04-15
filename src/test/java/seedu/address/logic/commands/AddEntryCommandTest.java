@@ -29,7 +29,7 @@ import seedu.address.model.entry.CalendarEntry;
 import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
 import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -169,13 +169,13 @@ public class AddEntryCommandTest {
 
         @Override
         public void updateOrder(Order target, Order editedOrder)
-                throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+                throws DuplicateOrderException, OrderNotFoundException {
             fail("This method should not be called.");
         }
 
         @Override
         public void updateOrderStatus(Order target, String orderStatus)
-                throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+                throws DuplicateOrderException, OrderNotFoundException {
             fail("This method should not be called.");
         }
 

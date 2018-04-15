@@ -1,5 +1,5 @@
 # SuxianAlicia-reused
-###### \java\seedu\address\model\tag\UniqueGroupList.java
+###### /java/seedu/address/model/tag/UniqueGroupList.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -151,7 +151,7 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 }
 ```
-###### \java\seedu\address\model\tag\UniquePreferenceList.java
+###### /java/seedu/address/model/tag/UniquePreferenceList.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -304,7 +304,7 @@ public class UniquePreferenceList implements Iterable<Preference> {
     }
 }
 ```
-###### \resources\view\CalendarEntryCard.fxml
+###### /resources/view/CalendarEntryCard.fxml
 ``` fxml
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -343,7 +343,7 @@ public class UniquePreferenceList implements Iterable<Preference> {
     </GridPane>
 </HBox>
 ```
-###### \resources\view\CalendarEntryListPanel.fxml
+###### /resources/view/CalendarEntryListPanel.fxml
 ``` fxml
 
 <?import javafx.scene.control.ListView?>

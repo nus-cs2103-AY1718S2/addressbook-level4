@@ -11,13 +11,15 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 
 public class UniqueOrderListTest {
+
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void equals() throws UniqueOrderList.DuplicateOrderException {
+    public void equals() throws DuplicateOrderException {
         UniqueOrderList firstOrderList = new UniqueOrderList();
         firstOrderList.add(BOOKS);
         UniqueOrderList secondOrderList = new UniqueOrderList();
@@ -35,7 +37,7 @@ public class UniqueOrderListTest {
 
     @Test
     public void asOrderInsensitiveList_compareListsWithSameItemsInDiffOrder_assertEqual()
-            throws UniqueOrderList.DuplicateOrderException {
+            throws DuplicateOrderException {
         UniqueOrderList firstOrderList = new UniqueOrderList();
         firstOrderList.add(BOOKS);
         firstOrderList.add(CHOCOLATES);
@@ -55,9 +57,9 @@ public class UniqueOrderListTest {
 
     @Test
     public void asUniqueList_addDuplicateOrder_throwsDuplicateOrderException()
-            throws UniqueOrderList.DuplicateOrderException {
+            throws DuplicateOrderException {
         UniqueOrderList uniqueOrderList = new UniqueOrderList();
-        thrown.expect(UniqueOrderList.DuplicateOrderException.class);
+        thrown.expect(DuplicateOrderException.class);
         uniqueOrderList.add(BOOKS);
         uniqueOrderList.add(BOOKS);
     }

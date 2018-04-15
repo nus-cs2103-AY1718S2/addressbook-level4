@@ -582,7 +582,6 @@ These commands are described in more detail in the sections below. +
 // tag::addingorders[]
 ===== Adding Orders
 
----
 The `AddOrderCommand` adds an order to list of orders in ContactSails.
 
 The figure below shows the sequence diagram for adding an order.
@@ -616,7 +615,6 @@ The order added will be displayed in the OrderListPanel in ContactSails.
 // tag::editingorders[]
 ===== Editing Orders
 
----
 The `EditOrderCommand` edits the `targetOrder` with the provided information which is specified by its `index`
 in the last shown listing of orders. The order will be updated with the new values given by the user.
 
@@ -637,7 +635,6 @@ The new order is now stored in ContactSails in the place of the old order.
 // tag::changeorderstatus[]
 ===== Changing OrderStatus
 
----
 The `ChangeOrderStatusCommand` changes the `OrderStatus` field of an `Order` object to either `ongoing` or `done`.
 The `order` object is obtained by using its `index` in the last shown listing of orders.
 
@@ -654,7 +651,6 @@ and re-adding a new stylesheet with the appropriate colours to that `OrderCard`.
 // tag::deletingorders[]
 ===== Deleting Orders
 
----
 The `DeleteOrderCommand` deletes the order specified by its `index` in the last shown listing of orders.
 The figure below shows the sequence diagram for changing an order's status.
 
@@ -664,10 +660,9 @@ image::DeleteOrderSeqDiagram.png[width="600" align="center"]
 The above method deletes `orderToDelete` from the `model` of the address book and the resulting list of orders is displayed.
 // end::deletingorders[]
 
-// tag::deletingorders[]
+// tag::otherinfo-orders[]
 ===== Storing Orders
 
----
 Storing orders in the application data file is very similar to that of storing persons.
 The `XmlAdaptedOrder` class is used to convert the `Order` objects in the `model` to JAXB-friendly `XmlAdaptedOrder` objects
 that can be stored in the `.xml` data file. When the application starts up, this class is also used to convert the `XmlAdaptedOrder` objects
@@ -675,7 +670,6 @@ into a `model`-friendly `Order` objects.
 
 ===== Displaying Orders In GUI
 
----
 A single `Order` is displayed using an `OrderListCard`. The list of all orders in the address book is then displayed in a list
 using the `OrderListPanel`, which contains an `OrderListView` of multiple `OrderListCards`.
 // end::otherinfo-orders[]
@@ -692,7 +686,7 @@ using the `OrderListPanel`, which contains an `OrderListView` of multiple `Order
 ** Pros: Duplicate orders (with the same information except the person associated with it) will just be stored as a single order in memory.
 If multiple persons have the same order, there will be multiple references to one Order object. This reduces memory usage.
 ** Cons: Harder to implement as updating or deleting orders for one person must not affect orders of another person having the same order.
-// tag::designconsorders[]
+// end::designcons-orders[]
 
 // tag::changingthemes[]
 === Changing Themes
@@ -721,6 +715,7 @@ Given below is a high level sequence diagram for the `ChangeThemeCommand`.
 image::HighLevelSequenceDiagramChangeTheme.png[width="500" align="center"]
 
 When the user exits the application, the current theme version will be stored in the `preferences.json` file as shown in the code snippet below.
+
 ----
 {
   "guiSettings" : {
@@ -737,6 +732,7 @@ Storing the theme in the `preferences.json` enables the theme change to be persi
 ==== Design Considerations
 
 ===== Aspect: Storing theme version
+
 * **Alternative 1 (current choice):** Encapsulate the theme version in a `Theme` object.
 ** Pros: Relevant attributes and methods will be encapsulated in a single class.
 ** Cons: Higher memory overhead.
@@ -761,6 +757,7 @@ The actual encryption/decryption will be done using the `org.apache.xml.security
 
 ===== Aspect: Time of encryption of XML data file
 
+---
 * **Alternative 1:** Encrypt/decrypt the whole file each time there is an update to what information needs to stored.
 ** Pros: A new secret key can be used for each encryption/decryption, which would make it more secure against tampering or outsider access.
 ** Cons: Encryption of data file for every minor change can reduce the performance of the application.
@@ -1843,7 +1840,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
 
 === Deleting a person
 
@@ -1856,15 +1852,106 @@ _{ more test cases ... }_
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect `delete` commands to try:
+   ** `delete` (no index specified) +
+   ** `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Adding an Order
 
-=== Saving data
+. *Adding an order*
 
-. *Dealing with missing/corrupted data files*
+.. Prerequisites:
+** List persons using the `list` or `find` commands.
+** There should be at least one person listed.
+.. Test case: `orderadd 1 i/NBA 2k18 pr/59.99 q/1 d/14-04-2018` +
+   Expected: Order is added to order list and displayed. Details of the added order shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `orderadd 1 i/NBA 2k18 pr/59.99 q/1 d/14-04-2018` +
+   Expected: Duplicate order is not added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect `orderadd` commands to try:
+    ** `orderadd 1 pr/59.99 q/1 d/14-04-2018` (compulsory field missing) +
+    ** `orderadd 1 i/NBA 2k18 pr/12.34.56 q/1 d/14-04-2018` (invalid price) +
+    ** `orderadd 1 i/NBA 2k18 pr/59.99 q/1 d/29-02-2018` (invalid date) +
+    ** `orderadd 2 i/NBA 2k18 pr/59.99 q/1 d/14-04-2018` (duplicate order not added to different person) +
+   Expected: Similar to previous.
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+=== Editing an Order
 
-_{ more test cases ... }_
+. *Editing an order*
+
+.. Prerequisites:
+** List orders using the `orderlist` command.
+** There should be at least one order listed.
+.. Test case: `orderedit 1 q/10 d/16-04-2018` +
+   Expected: Order in order list is edited and and updated order is displayed. Details of the edited order shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `orderedit 2 i/NBA 2k18 pr/59.99 q/1 d/16-04-2018` +
+   Expected: Assuming you have successfully edited the `NBA 2k18` order with the command in Step 1.b., this command will not
+   execute as it would result in a duplicate order.
+   Error details shown in the status message. Status bar remains the same.
+.. Other incorrect `orderedit` commands to try:
+    ** `orderedit 1 pr/12.34.56` (invalid price) +
+    ** `orderedit 1 d/29-02-2018` (invalid date) +
+    ** `orderedit x q/15` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+=== Changing Order Status
+
+. *Changing status of an order*
+
+.. Prerequisites:
+** List orders using the `orderlist` command.
+** There should be at least one order listed.
+.. Test case: `orderstatus 1 os/done` (if the current order status is `ongoing`) +
+   Expected: Order status of order is updated and and order card colour is changed to green. Success message shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `orderstatus 1 os/ongoing` (if the current order status is `done`) +
+   Expected: Order status of order is updated and and order card colour is changed to red. Success message shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `orderstatus 1 os/fulfilled` +
+   Expected: Order status not updated. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect `orderstatus` commands to try:
+    ** `orderstatus 1 os/` (empty status) +
+    ** `orderstatus x os/done` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+=== Deleting an Order
+
+. *Deleting an order*
+
+.. Prerequisites:
+** List orders using the `orderlist` command.
+** There should be at least one order listed.
+.. Test case: `orderdelete 1` +
+   Expected: Order is deleted. Details of deleted order shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `orderdelete 0` +
+   Expected: No order is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect `orderdelete` commands to try:
+    ** `orderdelete` (no index specified) +
+    ** `orderdelete x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+=== Changing the Theme
+
+. *Changing to light theme*
+
+.. Prerequisites:
+** Current theme should not be the light theme.
+** Use `theme dark` to switch to the dark theme.
+.. Test case: `theme light` +
+   Expected: Theme changed to light version. Success message shown in status message. Status bar is not updated.
+.. Test case: `theme day` +
+   Expected: Theme not changed. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect `theme` commands to try:
+    ** `theme` (no version specified) +
+   Expected: Similar to previous.
+
+. *Changing to dark theme*
+
+.. Prerequisites:
+** Current theme should not be the dark theme.
+** Use `theme light` to switch to the light theme.
+.. Test case: `theme dark` +
+   Expected: Theme changed to dark version. Success message shown in status message. Status bar is not updated.
+.. Test case: `theme night` +
+   Expected: Theme not changed. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect `theme` commands to try:
+    ** `theme` (no version specified) +
+   Expected: Similar to previous.

@@ -10,8 +10,8 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
 
 /**
@@ -162,14 +162,4 @@ public class UniqueOrderList implements Iterable<Order> {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
     }
-
-    /**
-     * Signals that an operation would have violated the 'no duplicates' property of the list.
-     */
-    public static class DuplicateOrderException extends DuplicateDataException {
-        public DuplicateOrderException() {
-            super("Operation would result in duplicate orders");
-        }
-    }
-
 }

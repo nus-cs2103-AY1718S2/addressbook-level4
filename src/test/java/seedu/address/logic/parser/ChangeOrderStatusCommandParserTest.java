@@ -16,7 +16,7 @@ import seedu.address.logic.commands.ChangeOrderStatusCommand;
 
 public class ChangeOrderStatusCommandParserTest {
 
-    private ChangeOrderStatusCommandParser parser = new ChangeOrderStatusCommandParser();
+    private final ChangeOrderStatusCommandParser parser = new ChangeOrderStatusCommandParser();
 
     @Test
     public void parse_validArgs_returnsChangeOrderStatusThemeCommand() {

@@ -55,7 +55,7 @@ public class XmlAdaptedOrder {
      */
     public XmlAdaptedOrder(Order source) {
         orderInformation = source.getOrderInformation().toString();
-        orderStatus = source.getOrderStatus().getCurrentOrderStatus();
+        orderStatus = source.getOrderStatus().getOrderStatusValue();
         price = source.getPrice().toString();
         quantity = source.getQuantity().toString();
         deliveryDate = source.getDeliveryDate().toString();
@@ -67,6 +67,7 @@ public class XmlAdaptedOrder {
      * @throws IllegalValueException if any data constraints are violated in the adapted order's fields.
      */
     public Order toModelType() throws IllegalValueException {
+        // convert order information
         if (this.orderInformation == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     OrderInformation.class.getSimpleName()));
@@ -76,6 +77,7 @@ public class XmlAdaptedOrder {
         }
         final OrderInformation orderInformation = new OrderInformation(this.orderInformation);
 
+        // convert order status
         if (this.orderStatus == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     OrderStatus.class.getSimpleName()));
@@ -85,6 +87,7 @@ public class XmlAdaptedOrder {
         }
         final OrderStatus orderStatus = new OrderStatus(this.orderStatus);
 
+        // convert price
         if (this.price == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Price.class.getSimpleName()));
         }
@@ -94,6 +97,7 @@ public class XmlAdaptedOrder {
         }
         final Price price = new Price(this.price);
 
+        // convert quantity
         if (this.quantity == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Quantity.class.getSimpleName()));
@@ -104,6 +108,7 @@ public class XmlAdaptedOrder {
         }
         final Quantity quantity = new Quantity(this.quantity);
 
+        // convert delivery date
         if (this.deliveryDate == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     DeliveryDate.class.getSimpleName()));

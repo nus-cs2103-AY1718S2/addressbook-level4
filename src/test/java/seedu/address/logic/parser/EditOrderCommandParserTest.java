@@ -1,3 +1,4 @@
+//@@author amad-person
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -48,7 +49,7 @@ public class EditOrderCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditOrderCommand.MESSAGE_USAGE);
 
-    private EditOrderCommandParser parser = new EditOrderCommandParser();
+    private final EditOrderCommandParser parser = new EditOrderCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
@@ -100,6 +101,7 @@ public class EditOrderCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_PRICE_DESC + INVALID_QUANTITY_DESC
                 + VALID_ORDER_INFORMATION_COMPUTER, Price.MESSAGE_PRICE_CONSTRAINTS);
     }
+    //@@author
 
     @Test
     public void parse_allFieldsSpecified_success() {
@@ -117,6 +119,7 @@ public class EditOrderCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
+    //@@author amad-person
     @Test
     public void parse_someFieldsSpecified_success() {
         Index targetIndex = INDEX_FIRST_ORDER;

@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 public class DeliveryDate {
 
     public static final String MESSAGE_DELIVERY_DATE_CONSTRAINTS =
-            "Date should be DD-MM-YYYY, and it should not be blank";
+            "Date should be DD-MM-YYYY, and it should not be invalid or blank.";
 
     public static final String DELIVERY_DATE_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}"; // format
     public static final String DELIVERY_DATE_VALIDATION_DATE_FORMAT = "dd-MM-yyyy"; // legal dates

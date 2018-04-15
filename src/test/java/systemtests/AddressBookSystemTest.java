@@ -39,7 +39,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.testutil.TypicalCalendarEntries;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.CommandBox;
@@ -91,7 +91,7 @@ public abstract class AddressBookSystemTest {
             ab.addOrderToOrderList(CHOCOLATES);
             ab.addOrderToOrderList(FACEWASH);
             ab.addOrderToOrderList(SHOES);
-        } catch (UniqueOrderList.DuplicateOrderException doe) {
+        } catch (DuplicateOrderException doe) {
             throw new AssertionError("not possible");
         }
 

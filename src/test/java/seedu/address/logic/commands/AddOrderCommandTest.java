@@ -40,7 +40,7 @@ import seedu.address.model.entry.CalendarEntry;
 import seedu.address.model.entry.exceptions.CalendarEntryNotFoundException;
 import seedu.address.model.entry.exceptions.DuplicateCalendarEntryException;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -58,7 +58,7 @@ import seedu.address.testutil.OrderBuilder;
 public class AddOrderCommandTest {
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     private Model model;
 
@@ -167,13 +167,13 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public void updateOrder(Order target, Order editedOrder) throws UniqueOrderList.DuplicateOrderException {
+        public void updateOrder(Order target, Order editedOrder) throws DuplicateOrderException {
             fail("This method should not be called.");
         }
 
         @Override
         public void updateOrderStatus(Order target, String orderStatus)
-                throws UniqueOrderList.DuplicateOrderException, OrderNotFoundException {
+                throws DuplicateOrderException, OrderNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -230,7 +230,7 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public void addOrderToOrderList(Order orderToAdd) throws UniqueOrderList.DuplicateOrderException {
+        public void addOrderToOrderList(Order orderToAdd) throws DuplicateOrderException {
             fail("This method should not be called.");
         }
 
@@ -263,8 +263,8 @@ public class AddOrderCommandTest {
      */
     private class ModelStubThrowingDuplicateOrderException extends ModelStub {
         @Override
-        public void addOrderToOrderList(Order order) throws UniqueOrderList.DuplicateOrderException {
-            throw new UniqueOrderList.DuplicateOrderException();
+        public void addOrderToOrderList(Order order) throws DuplicateOrderException {
+            throw new DuplicateOrderException();
         }
 
         @Override
@@ -285,7 +285,7 @@ public class AddOrderCommandTest {
         final ArrayList<Order> ordersAdded = new ArrayList<>();
 
         @Override
-        public void addOrderToOrderList(Order order) throws UniqueOrderList.DuplicateOrderException {
+        public void addOrderToOrderList(Order order) throws DuplicateOrderException {
             requireNonNull(order);
             ordersAdded.add(order);
         }

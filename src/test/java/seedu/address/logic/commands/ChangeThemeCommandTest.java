@@ -28,7 +28,7 @@ import seedu.address.model.UserPrefs;
 public class ChangeThemeCommandTest {
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     private UserPrefs userPrefs;
     private GuiSettings guiSettings;

@@ -16,6 +16,7 @@ public class Price {
                     + "Maximum value allowed for price is 1000000.00";
 
     public static final String PRICE_VALIDATION_REGEX = "[0-9]+([.][0-9]{1,2})?";
+    public static final double MAX_PERMISSIBLE_PRICE = 1000000.00;
 
     private final String price;
 
@@ -36,7 +37,7 @@ public class Price {
     public static boolean isValidPrice(String test) {
         requireNonNull(test);
 
-        if (!test.matches(PRICE_VALIDATION_REGEX) || Double.valueOf(test) > 1000000.00) {
+        if (!test.matches(PRICE_VALIDATION_REGEX) || Double.valueOf(test) > MAX_PERMISSIBLE_PRICE) {
             return false;
         } else {
             return true;

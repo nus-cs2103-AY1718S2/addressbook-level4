@@ -16,7 +16,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayOrderListEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.person.Person;
 
 /**
@@ -70,7 +70,7 @@ public class AddOrderCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addOrderToOrderList(orderToAdd);
-        } catch (UniqueOrderList.DuplicateOrderException doe) {
+        } catch (DuplicateOrderException doe) {
             throw new CommandException(MESSAGE_ORDER_NOT_ADDED);
         }
 

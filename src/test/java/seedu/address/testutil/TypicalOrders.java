@@ -24,7 +24,7 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
@@ -97,7 +97,7 @@ public class TypicalOrders {
         for (Order order : getTypicalOrders()) {
             try {
                 ab.addOrderToOrderList(order);
-            } catch (UniqueOrderList.DuplicateOrderException doe) {
+            } catch (DuplicateOrderException doe) {
                 throw new AssertionError("not possible");
             }
         }

@@ -31,7 +31,7 @@ import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderInformation;
 import seedu.address.model.order.Price;
 import seedu.address.model.order.Quantity;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
 import seedu.address.testutil.OrderBuilder;
 
@@ -148,7 +148,7 @@ public class EditOrderCommandSystemTest extends AddressBookSystemTest {
             expectedModel.updateOrder(
                     expectedModel.getFilteredOrderList().get(toEdit.getZeroBased()), editedOrder);
             expectedModel.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
-        } catch (UniqueOrderList.DuplicateOrderException | OrderNotFoundException e) {
+        } catch (DuplicateOrderException | OrderNotFoundException e) {
             throw new IllegalArgumentException(
                     "editedOrder is a duplicate in expectedModel, or it isn't found in the model.");
         }
@@ -184,6 +184,7 @@ public class EditOrderCommandSystemTest extends AddressBookSystemTest {
         }
         assertStatusBarUnchangedExceptSyncStatus();
     }
+    //@@author
 
     /**
      * Executes {@code command} and in addition,<br>

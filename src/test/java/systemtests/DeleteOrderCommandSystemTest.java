@@ -117,7 +117,7 @@ public class DeleteOrderCommandSystemTest extends AddressBookSystemTest {
      * 1. Asserts that the command box displays an empty string.<br>
      * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the browser url and selected card remains unchanged.<br>
+     * 4. Asserts that the selected card remains unchanged.<br>
      * 5. Asserts that the status bar's sync status changes.<br>
      * 6. Asserts that the command box has the default style class.<br>
      * Verifications 1 to 3 are performed by
@@ -127,6 +127,7 @@ public class DeleteOrderCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
     }
+    //@@author
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url

@@ -15,7 +15,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.ChangeOrderStatusEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.order.Order;
-import seedu.address.model.order.UniqueOrderList;
+import seedu.address.model.order.exceptions.DuplicateOrderException;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
 
 /**
@@ -57,7 +57,7 @@ public class ChangeOrderStatusCommand extends UndoableCommand {
 
         try {
             model.updateOrderStatus(orderForChangeStatus, orderStatus);
-        } catch (UniqueOrderList.DuplicateOrderException doe) {
+        } catch (DuplicateOrderException doe) {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);
         } catch (OrderNotFoundException onfe) {
             throw new AssertionError("The target order cannot be missing.");

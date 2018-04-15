@@ -23,7 +23,7 @@ public class XmlAdaptedOrderTest {
     private static final String INVALID_DELIVERY_DATE = "50-12-2010";
 
     private static final String VALID_ORDER_INFORMATION = BOOKS.getOrderInformation().toString();
-    private static final String VALID_ORDER_STATUS = BOOKS.getOrderStatus().getCurrentOrderStatus();
+    private static final String VALID_ORDER_STATUS = BOOKS.getOrderStatus().getOrderStatusValue();
     private static final String VALID_PRICE = BOOKS.getPrice().toString();
     private static final String VALID_QUANTITY = BOOKS.getQuantity().toString();
     private static final String VALID_DELIVERY_DATE = BOOKS.getDeliveryDate().toString();

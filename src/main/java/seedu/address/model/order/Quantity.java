@@ -15,6 +15,7 @@ public class Quantity {
 
     // Only positive integers are allowed
     public static final String QUANTITY_VALIDATION_REGEX = "^[0-9]*[1-9][0-9]*$";
+    public static final int MAX_PERMISSIBLE_QUANTITY = 1000000;
 
     private final String quantity;
 
@@ -35,7 +36,7 @@ public class Quantity {
     public static boolean isValidQuantity(String test) {
         requireNonNull(test);
 
-        if (!test.matches(QUANTITY_VALIDATION_REGEX) || Integer.valueOf(test) > 1000000) {
+        if (!test.matches(QUANTITY_VALIDATION_REGEX) || Integer.valueOf(test) > MAX_PERMISSIBLE_QUANTITY) {
             return false;
         } else {
             return true;

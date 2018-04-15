@@ -26,10 +26,10 @@ public class OrderUtil {
      */
     public static String getOrderDetails(Order order) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_ORDER_INFORMATION + order.getOrderInformation().toString() + " ");
-        sb.append(PREFIX_PRICE + order.getPrice().toString() + " ");
-        sb.append(PREFIX_QUANTITY + order.getQuantity().toString() + " ");
-        sb.append(PREFIX_DELIVERY_DATE + order.getDeliveryDate().toString());
+        sb.append(PREFIX_ORDER_INFORMATION).append(order.getOrderInformation().toString()).append(" ");
+        sb.append(PREFIX_PRICE).append(order.getPrice().toString()).append(" ");
+        sb.append(PREFIX_QUANTITY).append(order.getQuantity().toString()).append(" ");
+        sb.append(PREFIX_DELIVERY_DATE).append(order.getDeliveryDate().toString());
         return sb.toString();
     }
 }

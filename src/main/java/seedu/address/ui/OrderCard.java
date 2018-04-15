@@ -65,7 +65,7 @@ public class OrderCard extends UiPart<Region> {
         this.order = order;
         id.setText(displayedIndex + ". ");
         orderInformation.setText(order.getOrderInformation().toString());
-        orderStatus.setText(order.getOrderStatus().getCurrentOrderStatus().toUpperCase());
+        orderStatus.setText(order.getOrderStatus().getOrderStatusValue().toUpperCase());
         setPriceAndQuantity(order);
         setTotalPrice(order);
         deliveryDate.setText("Deliver By: " + order.getDeliveryDate().toString());
@@ -83,6 +83,9 @@ public class OrderCard extends UiPart<Region> {
         return false;
     }
 
+    /**
+     * Sets text for price and quantity label.
+     */
     private void setPriceAndQuantity(Order order) {
         double priceValue = Double.valueOf(order.getPrice().toString());
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
@@ -91,10 +94,16 @@ public class OrderCard extends UiPart<Region> {
                 + " X " + order.getQuantity().toString());
     }
 
+    /**
+     * Sets text for total price label.
+     */
     private void setTotalPrice(Order order) {
         totalPrice.setText("Total: S$" + getTotalPrice(order.getPrice(), order.getQuantity()));
     }
 
+    /**
+     * Calculates total price of order.
+     */
     private String getTotalPrice(Price price, Quantity quantity) {
         double priceValue = Double.valueOf(price.toString());
         int quantityValue = Integer.valueOf(quantity.toString());
@@ -105,6 +114,9 @@ public class OrderCard extends UiPart<Region> {
         return String.valueOf(decimalFormat.format(totalPrice));
     }
 
+    /**
+     * Sets image sizes for all icons used in order card.
+     */
     private void setImageSizeForAllImages() {
         orderStatusIcon.setFitWidth(ICON_WIDTH);
         orderStatusIcon.setFitHeight(ICON_HEIGHT);

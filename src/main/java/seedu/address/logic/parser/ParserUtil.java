@@ -245,8 +245,6 @@ public class ParserUtil {
     /**
      * Parses a {@code String locations} into {@code String formattedLocations}
      * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given command and alias are invalid.
      */
     public static String parseLocations(String locations) {
         requireNonNull(locations);

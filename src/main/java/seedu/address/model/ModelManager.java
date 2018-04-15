@@ -90,7 +90,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateDeskBoardChanged();
     }
 
-    //@@author YuanQQLer
+    //@@author YuanQLLer
     @Override
     public synchronized void updateActivity(Activity target, Activity editedActivity)
             throws DuplicateActivityException, ActivityNotFoundException {

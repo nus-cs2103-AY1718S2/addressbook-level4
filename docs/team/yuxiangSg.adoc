@@ -55,6 +55,15 @@ include::../UserGuide.adoc[tag=task]
 |===
 
 include::../DeveloperGuide.adoc[tag=add_appointment]
+
+Updated Diagrams to reflect the changes to original application
+
 include::../DeveloperGuide.adoc[tag=model]
+
 include::../DeveloperGuide.adoc[tag=ui]
+
+Instructions for Manual Testing
+
+include::../DeveloperGuide.adoc[tag=appointmentTest]
+
 

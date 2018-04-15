@@ -193,28 +193,27 @@ Adds an appointment to the Smart Insurance Collection calendar +
 Format: `add_appointment n/NAME S/START DATE TIME E/END DATE TIME`
 
 [TIP]
-The date time must be entered in the d/MM/yyyy HH:mm format+
+The date time must be entered in the d/MM/yyyy HH:mm format +
 The name given to the appointment as its title must be unique
 
 Examples:
 
 * `add_appointment n/meet John S/11/09/2018 15:00  E/11/09/2018 16:00`
 
-=== remove existing appointment : `remove_appointment`
+=== Removing existing appointment : `remove_appointment`
 
 Removes appointment whose title match the given search text +
 Format: `remove_appointment ST/SEARCH TEXT`
 
 [TIP]
-only the title is searched, appointment with the title that match the given search text will be removed
-This works as we enforces unique titles for appointments.
+Only the title is searched, appointment with the title that match the given search text will be removed.
+This works as we enforce unique titles for appointments.
 
 Examples:
 
-* `remove_appointment ST/Title of the appointment`
+* `remove_appointment ST/TITLE OF APPOINTMENT TO BE REMOVED`
 
 === Editing an appointment: `edit_appointment`
-
 edit an existing appointment in the Smart Insurance Collection calendar +
 Format: `edit_appointment ST/SEARCH TEXT n/NEW NAME S/NEW START DATE TIME E/NEW END DATE TIME`
 
@@ -228,10 +227,10 @@ Examples:
 
 * `edit_appointment ST/meet James n/meet John S/11/09/2018 15:00  E/11/09/2018 16:00`
 
-=== Look At a Date: `look`
+=== Looking At a Date: `look`
 
 look at a specific date, the Calendar GUI will focus on the date +
-Format: `look DF/18/03/2018`
+Format: `look DF/DATE`
 
 [TIP]
 Note that the date format must be in d/MM/yyyy
@@ -240,11 +239,13 @@ Examples:
 
 * `look DF/11/09/2018`
 
-=== Back to calendar Month View: `back`
+=== Back to Calendar Month View: `back`
 
 set the Calendar View to Month View +
 Format: `back`
+
 // end::appointment[]
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -440,20 +441,17 @@ There is no need to save manually.
 - Prediction of purchasing power
 - Enhanced Calendar features
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
-
 // tag::task[]
-=== add task to task pad`[coming in v2.0]`
-the user is allowed to use command line to add a task to the task pad GUI  specifying the task title , task details
 
-=== remove task on task pad`[coming in v2.0]`
-the user is allowed to use command line to remove a task to the task pad GUI  specifying the task index
+=== Adding task to task pad `[coming in v2.0]`
+the user is allowed to use command line to add a task to a task pad GUI by specifying the task title and task details
+
+=== Removing task on task pad `[coming in v2.0]`
+the user is allowed to use command line to remove a task on the task pad GUI by specifying the task index on the list
+
 // end::task[]
-=== Predict Purchasing Power
+
+=== Predict Purchasing Power `[coming in v2.0]`
 
 - User is able to type "Predict" get potential customer's expected spending based on the existing data
 - After new data has been entered, users are able to re-predict and retrain the model

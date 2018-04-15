@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.time.LocalDate;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -10,12 +9,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import seedu.address.commons.core.ComponentManager;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.BirthdayNotificationEvent;
 import seedu.address.commons.events.ui.PasswordCorrectEvent;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.logic.commands.BirthdaysCommand;
 import seedu.address.model.Model;
 import seedu.address.storage.Storage;
 
@@ -100,20 +96,8 @@ public class PasswordUiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handlePasswordCorrectEvent(PasswordCorrectEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        ui.start(primaryStage);
-        autoOpenBirthdayNotification();
+        ui.start(primaryStage); (
+                (UiManager) ui).openBirthdayNotification();
     }
 
-    /**
-     * Opens birthday notification
-     * Called after UI is called
-     */
-    private void autoOpenBirthdayNotification() {
-        LocalDate currentDate = LocalDate.now();
-
-        if (model != null) {
-            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand
-                    .parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate), currentDate));
-        }
-    }
 }

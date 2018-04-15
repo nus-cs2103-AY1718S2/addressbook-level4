@@ -69,4 +69,8 @@ include::../DeveloperGuide.adoc[tag=password]
 
 == Proposed - Password Recovery
 
+|===
+|_Given below are the proposed features for v2.0._
+|===
+
 include::../DeveloperGuide.adoc[tag=password]

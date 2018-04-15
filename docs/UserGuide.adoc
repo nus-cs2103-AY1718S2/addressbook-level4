@@ -67,10 +67,12 @@ image::Ui.png[width="790"]
 You will be interacting with Medeina mainly through the CLI. This section will help you to get familiarize with Medeina's CLI in no time.
 
 === Command format used in Medeina
-The following image illustrates the command format used in Medeina. 
+The following image illustrates the command format used in Medeina. You can refer to the table below for more information.
 
 .Command format
-image::commandSyntax.png[width="500"]
+image::commandSyntax.png[width="600"]
+
+
 
 [width="100%", cols="15%,<45%a,<40%", options="header"]
 |=====
@@ -85,33 +87,33 @@ a| * Medeina's syntax starts with a command word.
 .^a|Alias
 | `a`, `f`, `d`, `cls`, `h`
 a| * Aliases can be used to replace command words.
-* They help to reduce typing.
+* They help you to reduce typing.
 
 .^a|Options
-| `**-o**`, `**-p**`, `**-a**`
+| `**-o**`, `**-p**`, `**-a**`, `**-fo**`, `**-fp**`, `**-fa**`, `**-y**`
 a| * Options are used in `add`, `edit`, `find`, `delete` and `listappt` commands.
-* They are specified by the user to execute variants of a command. For example in figure 2, `**-p**` option denotes editing a pet patient.
-* If there are multiple options used in a command, order must be preserved.
+* You can specify them to execute variants of a command. For example in figure 2, `**-p**` option denotes editing a pet patient.
+* If there are multiple options used in a command, the order must be preserved.
 
 .^a|Index
 | `1`, `2`, any number
 a| * Index is used in `edit` and `delete` commands.
 * Index is used to refer to a particular contact, pet patient or appointment you would like to  `edit` or `delete`.
-* Please refer to figure 1 to find out where you can see indexes.
+* Please refer to figure 1 to find out where indexes are found.
 
 .^a|Prefixes
 | `n/`, `p/`, `nr/`, `e/`, `s/`, `t/`
-a| * Prefixes mark the start of a parameter. 
+a| * Prefix marks the start of a parameter. 
 * Indicate the type of parameter expected by Medeina e.g. `nr/` will expect NRIC as parameter, and `e/` will expect an email address as parameter. 
 
 .^a|Parameters
 | In `nr/NRIC`, `NRIC` represents the parameter
-a| * Values to be supplied by the user
-* Parameters are represented by words in upper case in this guide and in error messages. 
+a| * Values supplied by you
+* Parameters are represented by words in upper case. 
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 .^a|Tag
-| `Any parameter marked by `t/` prefix
+| Any parameter marked by `t/` prefix
 a| * In this guide and also in error messages, when tag is bounded in square brackets e.g. `n/NAME [t/TAG]`, it means that tag is optional. You can specify `n/John Doe t/friend` or as `n/John Doe`.
 * `[t/TAG]...` denotes multiple tags can be supplied by the user e.g. `t/friend`, `t/friend t/family` etc.
 |=====
@@ -122,12 +124,13 @@ a| * In this guide and also in error messages, when tag is bounded in square bra
 .Medeina's autocomplete for command words, prefixes and options
 image::autocomplete.png[width="500"]
 
+
 Medeina comes with an autocomplete feature in the CLI to help you manage your contacts, pet patients and appointments faster. 
 
 * Medeina supports autocomplete for command words, options, prefixes, and parameters such as tags, NRIC, pet patient name, species, breed, colour and blood type.
 * Autocomplete will provide suggestions for NRIC when you are adding a new pet patient or new appointment, assigning pet patient under another contact using the edit command, and finding a contact by NRIC.
 * Autocomplete will provide suggestions for pet patient name when you are adding an appointment.
-* Suggestions for species, breed, colour and blood type will be shown when their corresponding prefixes is detected.
+* Suggestions for tags, species, breed, colour and blood type will be shown when their corresponding prefixes is detected.
 * Autocomplete matching is case-insensitive e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
 * You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the drop-down menu.
 * Press kbd:[Enter] to select an autocomplete suggestion in the drop-down menu.

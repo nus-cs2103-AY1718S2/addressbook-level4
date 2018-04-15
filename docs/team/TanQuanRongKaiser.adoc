@@ -15,7 +15,7 @@ It is a simple Java application intended for social workers to help them plan th
 
 *Major enhancement*: added a *authentication feature* and *multi-user capability*
 
-** What it does:
+** *What it does:*
 *** *Authentication feature*: Users can login and logout from their application with a unique username and password.
 
 *** *Multi-user Capability*: The application now supports multiple users, each having their own contacts and SLAP.
@@ -25,7 +25,7 @@ reports are sensitive data, having to authenticate first helps to maintain a lev
 it converts the application from single-user to multi-user, hence allow for multiple social workers to use the app. This is useful
 in the scenario, where there is a mandate to use a single company laptop.
 
-*** Highlights: The authentication and multi-user feature requires an in-depth analysis of the previous architecture before implementation.
+*** *Highlights*: The authentication and multi-user feature requires an in-depth analysis of the previous architecture before implementation.
 It involves editing in almost all of the components with more emphasis on the Model and Storage components. An understanding of the n-tier
 architecture is needed as the User Database mimics thats of the AddressBook. It is also a step towards making it a centralised application
 that could be used by institutes of social workers.
@@ -48,13 +48,13 @@ This is a crucial feature of the application for social workers to store their i
 
 ** Project Management
 
-*** Managed released v1.4 - v1.5rc (2 releases) on GitHub
+*** Managed released v1.4 - v1.5 (3 releases) on GitHub
 
 ** Documentation:
-*** Did rearrangement to existing contents of the User Guide (TODO: update link: https://github.com[#14])
+*** Did rearrangement to existing contents of the User Guide [https://github.com/CS2103JAN2018-T15-B3/main/pull/115/commits/d8448448eefcf8dfaf6341e999c549b037d95f41[#14]]
 
 ** Community:
-*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-W11-B2/main/issues/144[1])
+*** Reported bugs and suggestions for other teams in the class (Examples: https://github.com/CS2103JAN2018-W11-B2/main/issues/144[1])
 
 
 == Contributions to the User Guide
@@ -63,6 +63,8 @@ This is a crucial feature of the application for social workers to store their i
 |===
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
+
+=== Features
 
 include::../UserGuide.adoc[tag=authentication]
 
@@ -75,12 +77,18 @@ include::../UserGuide.adoc[tag=sessionlog]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
+=== Design and Implementation
+
 include::../DeveloperGuide.adoc[tag=multiuser]
 
 include::../DeveloperGuide.adoc[tag=authentication]
 
 include::../DeveloperGuide.adoc[tag=dataencryption]
 
+=== Use Cases
+
 include::../DeveloperGuide.adoc[tag=kaiserUseCases]
+
+=== Instructions for Manual Tests
 
 include::../DeveloperGuide.adoc[tag=kaiserManualTests]

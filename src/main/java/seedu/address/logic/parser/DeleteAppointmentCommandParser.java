@@ -16,6 +16,9 @@ import seedu.address.model.appointment.DateTime;
 public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentCommand> {
 
     private static final int NO_OF_ARGUMENTS = 3;
+    private static final int PATIENT_INDEX_INDEX = 0;
+    private static final int DATE_INDEX = 1;
+    private static final int TIME_INDEX = 2;
 
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteAppointmentCommand
@@ -39,8 +42,9 @@ public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentC
         }
 
         try {
-            Index targetPatientIndex = ParserUtil.parseIndex(argsArray[0]);
-            DateTime appointmentDateTime = ParserUtil.parseDateTime(argsArray[1] + " " + argsArray[2]);
+            Index targetPatientIndex = ParserUtil.parseIndex(argsArray[PATIENT_INDEX_INDEX]);
+            DateTime appointmentDateTime = ParserUtil.parseDateTime(argsArray[DATE_INDEX] + " "
+                    + argsArray[TIME_INDEX]);
             return new DeleteAppointmentCommand(targetPatientIndex, appointmentDateTime);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,

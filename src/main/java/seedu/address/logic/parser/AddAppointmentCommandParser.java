@@ -6,6 +6,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.Arrays;
 
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
@@ -16,6 +18,9 @@ import seedu.address.model.patient.NameContainsKeywordsPredicate;
 public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
 
     private static final int NO_OF_ARGUMENTS = 3;
+    private static final int PATIENT_INDEX_INDEX = 0;
+    private static final int DATE_INDEX = 1;
+    private static final int TIME_INDEX = 2;
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddAppointmentCommandParser
@@ -38,6 +43,13 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddAppointmentCommand.MESSAGE_USAGE));
         }
+
+        try {
+            Index targetPatientIndex = ParserUtil.parseIndex(argsArray[PATIENT_INDEX_INDEX]);
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+
         return new AddAppointmentCommand(new NameContainsKeywordsPredicate(Arrays.asList(argsArray)), argsArray[1],
                 argsArray[2]);
     }

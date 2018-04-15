@@ -24,7 +24,8 @@ public class DeleteAppointmentCommand extends Command {
             + "DATE TIME (24-hour clock) \n "
             + "Example: " + COMMAND_WORD + "1 2/4/2018 1300";
 
-    public static final String MESSAGE_DELETE_SUCCESS = "The appointment is canceled";
+    public static final String MESSAGE_DELETE_SUCCESS = "The appointment is canceled. \n "
+            + "Enter view appointment command to get updated calendar view.";
 
     public static final String MESSAGE_APPOINTMENT_INDEX_INVALID = "The appointment index provided is invalid";
 

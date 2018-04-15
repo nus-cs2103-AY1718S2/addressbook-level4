@@ -32,7 +32,6 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void openHelpWindow() {
-        String password = getModel().getPassword();
         UnlockCommand testUnlockCommand = new UnlockCommand();
         testUnlockCommand.setTestMode(true);
         testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());

@@ -18,22 +18,25 @@ By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
+Ever feels overwhelmed in managing all your employees? +
+Ever wants to keep track of all the tasks you have assigned to your employees?
+
+Employees Tracker (E.T.) comes to the rescue!
+
+Employees Tracker is a *Human Resource Manager* application that helps managers to manage their subordinates. It has 2 main functionalities: providing information about employees, as well as helping in tracking the tasks assigned to each employee.
+
 This user guide serves to guide you so that you are able to use utilize Employees Tracker to its fullest extent.
 
-Employees Tracker (E.T.) is a *Human Resource Manager* application that helps managers to manage their subordinates. Its has 2 main functionalities: providing information about employees, as well as helping in tracking the tasks assigned to each employee.
-
-Its User Interface (UI) is a hybrid of Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). That said, ET will suit you better if you can type fast and are familiar with CLI.
-
-Without further ado, let's see what ET can do!  Jump to the <<Quick Start>> to get started.
+Jump to <<Quick Start>> to get started!
 
 // tag::quickStart[]
 == Quick Start
-This section contains essential information and instructions to help you to start using Employees Tracker quickly.
+This section contains essential information and instructions to help you to start using E.T. quickly.
 
 === Setting up
-If you are using ET for the first time, please set up ET by following the instructions below carefully.
+If you are using E.T. for the first time, please set up E.T. by following the instructions below carefully:
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure you have Java version `1.8.0_60` or later installed in your computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
@@ -41,34 +44,35 @@ This app will not work with earlier versions of Java 8.
 +
 . Ensure that you have access to the internet.
 .  Download the latest `et-employeestracker.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Employees Tracker.
-.  Double-click the file to start the app. The GUI should appear in a few seconds, as shown in _Figure 1_.
+.  Copy the file to the folder you want to use as the home folder for your E.T.
+.  Double-click the file to start the app. The user interface should appear in a few seconds, as shown in _Figure 1_.
 +
-.Graphical User Interface (GUI)
+.User Interface.
 image::Ui_locked.png[width="790"]
 +
-. Type command `unlock` and press kbd:[Enter] to execute the unlock command. You will be greeted by a pop-up window as shown in _Figure 2_.
+. Type `unlock` in E.T. and press kbd:[Enter] to unlock E.T. You will be greeted by a pop-up window as shown in _Figure 2_.
 +
-.Pop-up Window on top of ET
+.Pop-up window on top of E.T.
 image::password_box.png[width="790"]
 +
-. Type default password `admin` in the pop-up window and press kbd:[Enter] or the left-click on the `Unlock` button at the bottom right corner of the pop-up window. The pop-up window will then disappear.
-. Type `authenET` and press kbd:[Enter]. You will be directed to an authorizing web page as shown in _Figure 3_.
+. Type the default password `admin` in the pop-up window and press kbd:[Enter] or left-click on the `Unlock` button at the bottom right corner of the pop-up window. The pop-up window will then disappear.
+. Type `authenET` in E.T. and press kbd:[Enter] to authorize E.T. You will be directed to an authorization web page as shown in _Figure 3_.
 
 +
-.Authorizing web page
+.Authorization web page.
 image::authorize_ET.png[width="790"]
 +
-. Press `allow` at the bottom right corner. Closes your browser and return to ET once you see a web page with a confirmation message similar to that in _Figure 4_.
+. Click on `allow` at the bottom right corner.
+. Close your browser and return to E.T. once you see a web page with a confirmation message similar to that in _Figure 4_.
 +
-.Confirmation message
+.Confirmation message.
 image::login_done.png[width="790"]
 
 
 [NOTE]
-The above instructions are only for first-time users. However, because ET is locked by default for security purposes, you will need to follow step 4, 5, 6 for every time you open ET in the future. Of course, if you have changed your password, then you will need to execute step 6 with your new password.
+The above instructions are only for first-time users. However, because E.T. is locked by default for security purposes, you will need to follow step 4, 5, 6 for every time you open E.T. in the future. Of course, if you have changed your password, then you will need to execute step 6 with your new password.
 
-After setting up, you can start using ET by typing commands and press kbd:[Enter] to execute it. +
+After setting up, you can start using E.T. by typing commands and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 ****
@@ -77,7 +81,7 @@ Some example commands you can try:
 * `list` +
 lists all employees.
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
-adds an employee named `John Doe` to Employees Tracker.
+adds an employee named `John Doe` to E.T.
 * `delete 3` +
 deletes the 3^rd^ contact shown in the current list.
 * `exit` +
@@ -87,54 +91,58 @@ Refer to <<Commands>> for more details on commands.
 
 === Knowing the User Interface
 
-_Figure 5_ shows the 5 major components of the user interface of Employees Tracker (ET):
+The User Interface will be the application’s interface that you will interact with. E.T. has a Graphical User Interface (GUI) instead of a Command Line Interface (CLI).
 
-* Command Box:where you type in commands
-* Result Display Box: where ET shows text result to you
-* Employees List Panel: where the list of all employees is shown
-* Employee's Profile Panel: where the details of the selected employee is shown
-* Notification cards: where ET reminds you about events
+_Figure 5_ shows the 5 major components of the GUI of E.T. :
 
-.User Interface
-image::UiLabelled.jpg[width="790"]
+* *Command Box*: where you type in commands.
+* *Result Display Box*: where E.T. shows text result to you.
+* *Employees List Panel*: where the list of all employees is shown.
+* *Employee's Profile Panel*: where the details of the selected employee is shown.
+* *Notification cards*: where E.T. reminds you about events.
+
+
+.Graphical User Interface (GUI).
+image::UiLabelled.png[width="800"]
+
 
 === Reading the result display box
 
 The result display box shows 3 types of information:
 
-* Error messages in [red]#red#, if the command you entered does not exists or does not match the pre-defined format.
+* Error messages in [red]#red# if the command you entered does not exists or does not match the pre-defined format.
 * Hints about the format and usage of the command in [maroon]#maroon#.
-* Statuses of Employees Tracker in [maroon]#maroon#, if your command is processed successfully.
+* Status of E.T. in [maroon]#maroon# if your command is processed successfully.
 
 [NOTE]
-Whenever you type keyword of a command in the `Command Box`, ET will provide [maroon]#hints# about its usage.
+Whenever you type keyword of a command in the `Command Box`, E.T. will provide [maroon]#hints# about its usage.
 
 === Understanding the notifications
-ET has a 2 phase notification system, i.e. there will be 2 notification cards popping up to remind you of each event.
+E.T. has a 2 phase notification system, i.e. there will be 2 notification cards popping up to remind you of each event:
 
 * The first phase notification will pop out in a [blue]#blue# notification card, on the day of expiry, as shown in _Figure 6_.
 * The second phase notification will pop out in a [red]#red# notification card, at the exact time of expiry, as shown in _Figure 7_.
 
-.First phase notification card
+.First phase notification card.
 image::card_blue.png[width=""]
 
-.Second phase notification card
+.Second phase notification card.
 image::card_red.png[width=""]
 
-For example, suppose you have assigned a task to Alex which will due on 15^th^ Apr 2018 0032 hrs. When you open ET for the first time in the morning of 15^th^ Apr 2018, you will be notified that Alex has a task that will due on *today* in a [blue]#blue# notification card. Later at 0032 hrs of 15^th^ Apr 2018, you will receive the second phase notification in [red]#red#, informing you that Alex should have finished the task by *now* .
+For example, suppose you have assigned a task to Alex which will due on 15^th^ Apr 2018 0032 hrs. When you open E.T. for the first time in the morning of 15^th^ Apr 2018, you will be notified that Alex has a task that will due on *today* in a [blue]#blue# notification card. Later at 0032 hrs of 15^th^ Apr 2018, you will receive the second phase notification in [red]#red#, informing you that Alex should have finished the task by *now*.
 
 Notification cards will disappear from the screen after 5 seconds and will be stored in the `Notification Center`. If you want to refer to them later, use `noti` command or double press kbd:[Shift] to open the `Notification Center`.
 
-Also, if you minimizes ET to use other software, ET is capable of showing notification cards in your computer's system (e.g. Windows, Mac, Linux, etc.), as shown in _Figure 8_. However, this feature may not work on some computer systems.
+Also, if you minimizes E.T. to use other software, E.T. is capable of showing notification cards in your computer's system (e.g. Windows, Mac, Linux, etc.), as shown in _Figure 8_. However, this feature may not work on some computer systems.
 
-.ET shows notification card about event expiry even if you are using other programs.
+.E.T. shows notification card about event expiry even if you are using other programs.
 image::card_windows.png[width=""]
 
 // end::quickStart[]
 
 [[Commands]]
 == Commands
-This section lists all Employees Tracker's command.
+This section lists all E.T.'s command.
 
 ====
 *Command Format*
@@ -147,37 +155,101 @@ This section lists all Employees Tracker's command.
 ====
 
 // tag::unlock[]
-=== Logging in : `unlock`
-Unlocks Employees Tracker. +
+=== Unlocking E.T. : `unlock`
+Unlocks E.T. +
 Format: `unlock`
 
 [NOTE]
 ====
-* You need to enter the password in a pop-up dialog and it must match the application's unlock password.
-* The initial default unlock password is 'admin', refer to <<Setting the application unlock password: `setPassword` `[Since v1.3]`>> if you want to change your password.
+* You need to enter the password in a pop-up window and it must match the application's password.
+* The initial default password is 'admin'.
 ====
 
 Examples:
 
 * `unlock` +
-A dialog will pop up like below in _Figure 9_. +
-Fill in the input box with matching unlock password to unlock ET.
+A pop-up window will appear as shown in _Figure 9_. +
+Fill in the input box with matching password to unlock E.T.
 
-.Pop-up unlock dialog.
+.Unlock pop-up window.
 image::unlock_dialog.png[width="790"][height="200"]
 // end::unlock[]
 
+// tag::lock[]
+=== Locking E.T.: `lock`
+
+Locks E.T., so that the data is protected without the need of closing the program or shutting down your computer. +
+Format: `lock`
+
+[NOTE]
+=====
+E.T. will not respond to any command other than `unlock` when it is locked.
+=====
+
+Examples:
+
+* `lock` +
+Locks E.T. +
+All information in E.T. will be hidden when it is locked as shown in _Figure 10_ below.
+
+.Information is hidden when E.T. is locked.
+image::lock_screen.png[width="300"][height="400"]
+// end::lock[]
+
+=== Setting E.T.'s password: `setPassword`
+
+Sets E.T.'s password. +
+Format: `setPassword`
+
+[NOTE]
+====
+* You can press kbd:[Tab] to switch the selection between the window elements.
+* You need to enter both old and new password in a pop-up window, and old password must match current password.
+* The new password can contain any character *except comma(,)*.
+====
+
+Examples:
+
+* `setPassword` +
+A pop-up window will appear as shown in _Figure 11_. +
+Fill in the input boxes with matching old password and new password.
+
+.Set password pop-up window.
+image::setPassword_dialog.png[width="790"][height="200"]
+
+// tag::auth[]
+=== Authorizing E.T. : `authenET`
+
+Gets the permission to allow E.T. to access your Google calendar. +
+Format: `authenET`
+// end::auth[]
+
 === Viewing help : `help`
 
-Displays the user guide, which is this document, as shown in _Figure 10. +
+Displays the user guide, which is this document, as shown in _Figure 12_. +
 Format: `help`
 
 .The user guide.
 image::user_guide.png[width=""]
 
+=== Changing the theme of E.T.: `changeTheme`
+
+Changes E.T.'s theme to bright or dark. +
+Format: `changeTheme (bright | dark)`
+
+[NOTE]
+====
+`changeTheme` command is not undoable.
+====
+
+Examples:
+
+* `changeTheme bright` +
+Changes E.T.'s theme to bright theme
+
 === Adding an employee: `add`
 
-Adds an employee to Employees Tracker +
+Adds an employee to E.T. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
@@ -186,14 +258,14 @@ An employee can have any number of tags (including 0).
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
-Adds John Doe with the information given into Employees Tracker.
+Adds John Doe with the information given into E.T.
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal` +
-Adds Betsy Crowe with the information given into Employees Tracker.
+Adds Betsy Crowe with the information given into E.T.
 
 // tag::addphoto[]
 === Adding a profile photo to an employee: `addPhoto`
 
-Adds a profile photo to an existing employee in E.T.. +
+Adds a profile photo to an existing employee in E.T. +
 Format: `addPhoto INDEX`
 
 ****
@@ -203,43 +275,136 @@ Format: `addPhoto INDEX`
 * The acceptable photo types are .jpg, .jpeg, .png and .bmp.
 ****
 
-Examples:
-
-* `list` +
-`addPhoto 1` +
-Adds a photo to the 1st employee in the last employees listing.
-
 [NOTE]
 ====
 This command will automatically copy the file you chosed to the application's data folder if it does not exist. Once
 the photo is copied, you should not delete it from that folder manually.
 ====
+
+Examples:
+
+* `list` +
+`addPhoto 1` +
+Adds a photo to the 1st employee in the last employees listing.
 // end::addphoto[]
-
-// tag::auth[]
-=== Authorizing Employees Tracker : `authenET`
-
-Get the permission to allow E.T. to access your google calendar. +
-
-Format: `authenET`
-// end::auth[]
 
 === Listing all employees : `list`
 
-Shows a list of all employees as shown in _Figure 11_. +
+Shows a list of all employees as shown in _Figure 13_. +
 Format: `list`
-
-[NOTE]
-====
-Rating will be shown as `-` if the employee is yet to be rated.
-====
 
 .List of employees.
 image::employeesList.png[width="790"][height="200"]
 
+// tag::sort[]
+=== Sorting the employees by any field: `sort`
+
+Sorts existing employees by any field +
+Format: `sort FIELD`
+
+****
+* Employees are sorted by any existing field in alphabetical order. Note that rate field will be sorted in descending order.
+* The field entered must be one of the following: `name`, `phone`, `email`, `address`, `rate`, `tag`.
+* Sorting is case-insensitive.
+* Sorted result is stored permanently. If you want to revert to the previous ordering, please refer to <<Undoing previous command : `undo`>>.
+****
+
+Examples:
+
+* `sort name` +
+Sort the employees by name in alphabetical order (case-insensitive).
+* `sort rate` +
+Sort the employees by rating in descending order.
+// end::sort[]
+
+// tag::find[]
+=== Searching for employees: `find`
+
+Finds employees whose name, tags, rating, or all of those contain any of the given keyphrases. +
+Format: `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/NAME_KEYPHRASE]... [t/TAG_KEYPHRASE]... [r/RATING_KEYPHRASE]...`
+
+****
+* The search is case insensitive, e.g. `n/hANs` will match `Hans`
+* The order of the keyphrase does not matter, e.g. `n/Hans Bo` will match `Bo Hans`
+* The search does not match exactly all the words in a phrase in sequential order, but only finds any phrase that contains the specified keyphrase's words without sequential order, e.g. `n/Hans Bo` will match `Jonathan Bo Hans`
+* The search only matches full word, e.g. `n/Han` will not match `Hans`
+* Searching by multiple criteria will yield the result of employees that match all of them, e.g. +
+** `n/Hans Bo t/Sales` will match `Hans Bo` with tag `Sales` but not `Hans Bo` with tag `Marketing` or `John Doe` with tag `Sales` +
+** `n/Hans Bo n/John Doe t/Sales t/Marketing` will match only `Hans Bo | Sales` or `Hans Bo | Marketing` or `John Doe | Sales` or `John Doe | Marketing`
+****
+
+Examples:
+
+* `find n/John` +
+Returns all employees having name `John`. +
+e.g. `john` and `John Doe`
+* `find n/Betsy Tim John` +
+Returns all employees with name that contains `Betsy Tim John` without any sequential order. +
+e.g. `Caroline John Tim Betsy` and `Betsy Tim John`
+* `find n/Betsy n/Tim n/John` +
+Returns all employees with name that contains either `Betsy`, `Tim`, or `John` +
+e.g. `Betsy`, `Tim`, `John`, `Betsy Toe`, `John Cook`, and `Tim John`
+* `find n/John t/Developer iOS r/3` +
+Returns all employees with name `John`, both tags `Developer` and `iOS`, and rating of 3 +
+e.g. `John | Developer, iOS | 3`
+* `find n/John t/Sales t/Associate` +
+Returns all employees having both names `John` and either tags `Sales` or `Associate` +
+e.g. `John Doe | Sales`, `John Dick| Associate`, `John | Friends, Associate`, and `John Dare | Sales, Associate, Newbie`
+// end::find[]
+
+=== Selecting an employee : `select`
+
+Selects the employee identified by the index number used in the last employees listing. +
+Format: `select INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* Loads the employee's name, address, calendar, and reviews at the specified `INDEX`.
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2^nd^ employee in E.T.
+* `find Betsy` +
+`select 1` +
+Selects the 1^st^ employee in the results of the `find` command.
+
+[NOTE]
+If `Calendar` in employee's `Profile Panel` looks something similar to _Figure 14_, it means you will have to sign in to your *Google Account* from there. This is because for security purposes, you will be required to sign in every time you close E.T. and open it again,
+
+.Signing in to Google account at the Calendar row.
+image::sign_in.png[width="790"][height="200"]
+
+=== Deleting an employee : `delete`
+
+Deletes the specified employee from E.T. whose calendar will also be deleted. +
+Format: `delete INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2^nd^ employee and his calendar in E.T.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1^st^ employee and his calendar in the results of the `find` command.
+
+=== Clearing all entries : `clear`
+
+Clears all entries from E.T. +
+Format: `clear`
+
 === Editing an employee : `edit`
 
-Edits an existing employee in Employees Tracker. +
+Edits an existing employee in E.T. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/RATING] [t/TAG]...`
 
 ****
@@ -258,26 +423,10 @@ Edits the phone number and email address of the 1^st^ employee to be `91234567` 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2^nd^ employee to be `Betsy Crower` and clears all existing tags.
 
-// tag::export[]
-=== Exporting the employees : `export`
-
-Exports current employees in ET to a csv(Excel) file named "employees.csv" inside data folder. +
-Format: `export`
-
-****
-* Make sure that the employees.csv is not open in your computer before execute `export`.
-****
-
-Examples:
-
-* `export` +
-Current employees in ET will be exported.
-// end::export[]
-
 // tag::rate[]
 === Rating an employee : `rate`
 
-Updates the rating of an existing employee in Employees Tracker. +
+Updates the rating of an existing employee in E.T. +
 Format: `rate INDEX RATING`
 
 ****
@@ -285,7 +434,7 @@ Format: `rate INDEX RATING`
 * The index *must be a positive integer* 1, 2, 3, ...
 * Both INDEX and RATING must be provided.
 * Existing rating will be updated to the input RATING.
-* RATING must be a positive integer between 1 and 5, i.e. 1, 2, 3, 4 or 5.
+* RATING must be a positive integer between 1 and 5, i.e. 1, 2, 3, 4, or 5.
 ****
 
 [NOTE]
@@ -304,10 +453,10 @@ Gives the 1^st^ employee in the last employees listing a 5-stars rating.
 Gives the 2^nd^ employee in the list of Alex(s) a 2-stars rating.
 // end::rate[]
 
-// tag::emer7[]
+// tag::review[]
 === Reviewing an employee : `review`
 
-Assigns a review to an existing employee in Employees Tracker. +
+Assigns a review to an existing employee in E.T. +
 Format: `review INDEX`
 
 ****
@@ -315,104 +464,23 @@ Format: `review INDEX`
 * The index *must be a positive integer*, i.e. 1, 2, 3, ...
 * The reviewer must be a valid email address.
 * The review can contain any character without length limitation.
-* A review will be tied to a single reviewer. [Implemented in V1.4]
+* A review will be tied to a single reviewer.
 ****
 
 Examples:
 
 * `list` +
-ET shows a list of all employees. +
 `review 1` +
 Gives the 1^st^ employee in the last employees listing a review. +
 * `find n/Alex` +
-ET shows a list of employees whose name contains the word `Alex`. +
 `review 2` +
 Gives the 2^nd^ employee in the list of Alex(s) a review. +
 
-_Figure 12_ shows a pop-up dialog box that will appear after user executes the `review` command. The dialog box will prompts the user to enter the user's identity (as a reviewer) and the review.
+A pop-up window will appear after user executes the `review` command as shown in _Figure 15_. The window will prompts user to enter user's email (as a reviewer) and the review.
 
-.A pop-up dialog box.
+.Review pop-up window.
 image::review_dialog.png[width=""]
-
-=== Searching for employees: `find`
-
-Finds employees whose name, tags, rating, or all of those contain any of the given keyphrases. +
-Format: `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/NAME_KEYPHRASE]... [t/TAG_KEYPHRASE]... [r/RATING_KEYPHRASE]...`
-
-****
-* The search is case insensitive, e.g. `n/hANs` will match `Hans`
-* The order of the keyphrase does not matter, e.g. `n/Hans Bo` will match `Bo Hans`
-* The search does not match exactly all the words in a phrase in sequential order, but only finds any phrase that contains the specified keyphrase's words without sequential order, e.g. `n/Hans Bo` will match `Jonathan Bo Hans`
-* The search only matches full word, e.g. `n/Han` will not match `Hans`
-* Searching by multiple criteria will yield the result of employees that match all of them, e.g. +
-** `n/Hans Bo t/Sales` will match `Hans Bo` with tag `Sales` but not `Hans Bo` with tag `Enemy` or `John Doe` with tag `Friends` +
-** `n/Hans Bo n/John Doe t/Sales t/Marketing` will match only `Hans Bo | Sales` or `Hans Bo | Marketing` or `John Doe | Sales` or `John Doe | Marketing`
-****
-
-Examples:
-
-* `find n/John` +
-Returns all employees having name `John`. +
-e.g. `john` and `John Doe`
-* `find n/Betsy Tim John` +
-Returns all employees with name that contains `Betsy Tim John` without any sequential order. +
-e.g. `Caroline John Tim Betsy` and `Betsy Tim John`
-* `find n/Betsy n/Tim n/John` +
-Returns all employees with name that contains either `Betsy`, `Tim`, or `John` +
-e.g. `Betsy`, `Tim`, `John`, `Betsy Toe`, `John Cook`, and `Tim John`
-* `find n/John t/Friends Colleagues r/3` +
-Returns all employees with name `John`, both tags `Friends` and `Colleagues`, and rating of 3 +
-e.g. `John | Friends, Colleagues | 3`
-* `find n/John t/Friends t/Colleagues` +
-Returns all employees having both names `John` and either tags `Friends` or `Colleagues` +
-e.g. `John Doe | Friends`, `John Dick| Colleagues`, `John | Friends, Colleagues`, and `John Dare | Friends, Colleagues, OweMoneys`
-// end::emer7[]
-
-=== Deleting an employee : `delete`
-
-Deletes the specified employee from Employees Tracker whose calendar will also be deleted. +
-Format: `delete INDEX`
-
-****
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2^nd^ employee and his calendar in Employees Tracker.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1^st^ employee and his calendar in the results of the `find` command.
-
-=== Selecting an employee : `select`
-
-Selects the employee identified by the index number used in the last employees listing. +
-Format: `select INDEX`
-
-****
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-* Loads the employee's name, address, calendar, and reviews at the specified `INDEX`.
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2^nd^ employee in Employees Tracker.
-* `find Betsy` +
-`select 1` +
-Selects the 1^st^ employee in the results of the `find` command.
-
-[NOTE]
-If `Calendar` in `Employee's Profile Panel` looks something similar to _Figure 13_, it means you will have to sign in to your *Google work account* from there. This is because for security purposes, you will be required to sign in once for every time you close Employees Tracker and open it again,
-
-.Signing in to Google account at the Calendar row
-image::sign_in.png[width="790"][height="200"]
-
+// end::review[]
 
 === Listing entered commands : `history`
 
@@ -427,12 +495,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores Employees Tracker to the state before the previous _undoable_ command was executed. +
+Restores E.T. to the state before the previous _undoable command_ was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify Employees Tracker's content (`add`, `delete`, `edit` and `clear`).
+_Undoable commands_ are commands that modify E.T.'s content (`add`, `addPhoto`, `clear`, `delete`, `dismiss`, `edit`, `email`, `rate`, `review`, and `sort`).
 ====
 
 Examples:
@@ -483,28 +551,6 @@ Reapplies the `delete 1` command. +
 Reapplies the `clear` command.
 // end::undoredo[]
 
-
-// tag::lock[]
-=== Locking Employees Tracker: `lock`
-
-Locks Employees Tracker, so that the data is protected without the need of closing the program or shutting down your computer. +
-Format: `lock`
-
-Examples:
-
-* `lock` +
-Locks Employees Tracker.
-
-[NOTE]
-=====
-* Employees Tracker will not respond to any command other than `unlock` when it is locked.
-* After you locked Employees Tracker, you won't see any information on the User Interface. All information will be hiding when Employees Tracker is locked. Refer to _Figure 14_ below.
-=====
-
-.Hiding information when Employees Tracker is locked.
-image::lock_screen.png[width="300"][height="400"]
-// end::lock[]
-
 // tag::ct[]
 === Viewing my own calendar: `myCalendar`
 
@@ -524,58 +570,17 @@ Format: `todoList`
 Examples:
 
 * `todoList` +
-Shows the to-do-list in a pop-up window. Refer to _Figure 15_ below.
+A pop-up window will appear as shown in _Figure 16_.
 
-.To-do list window.
+.To-do list pop-up window.
 image::todoList.png[width="300"][height="400"]
 // end::ct[]
 
-=== Setting the application unlock password: `setPassword`
-
-Sets E.T.'s unlock password. +
-Format: `setPassword`
-
-[NOTE]
-====
-* You can press kbd:[Tab] to switch the selection between the dialog elements.
-* You need to enter both old and new password in a pop-up dialog, and old password must match current application's unlock password.
-* The new password can contain any character *except comma(,)*.
-====
-
-Examples:
-
-* `setPassword` +
-A dialog will pop up like below in _Figure 16_. Fill in the input boxes with matched old password and new password.
-
-.Pop-up set password dialog
-image::setPassword_dialog.png[width="790"][height="200"]
-
-// tag::sort[]
-=== Sorting the employees by any existing field: `sort`
-
-Sorts existing employees by any field +
-Format: `sort FIELD`
-
-****
-* Sort the employees by any existing field in alphabetical order, note that rate field will be sorted in descending order.
-* The field entered must be one of the following: `name`, `phone`, `email`, `address`, `rate`, `tag`.
-* Sorting is case-insensitive.
-* The sorted results is stored permanently. If you want to revert to the previous ordering, please refer to <<Undoing previous command : `undo`>>
-****
-
-Examples:
-
-* `sort name` +
-Sort the employees by name in alphabetical order (case-insensitive).
-* `sort rate` +
-Sort the employees by rating in descending order.
-// end::sort[]
-
 // tag::addevent[]
-=== Adding an event on one employee's timetable: `addEvent`
+=== Adding an event to an employee's calendar: `addEvent`
 
 Adds an event to the employee identified by the index number used in the last employees listing. +
-Format: `addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION`
+Format: `addEvent INDEX title/TITLE loca/LOCATION stime/STARTTIME etime/ENDTIME descrip/DESCRIPTION`
 
 ****
 * `STARTTIME` and `ENDTIME` *must be in the format `YYYY-MM-DDTHH-MM-SS`*, which corresponds to year, month, day, hour, minute and second.
@@ -587,14 +592,14 @@ Examples:
 
 * `list` +
 `addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event` +
-Adds the event to 2^nd^ employee's calendar in the list.
+Adds the event to 2^nd^ employee in the list calendar.
 
 // end::addevent[]
 
 // tag::deleteevent[]
-=== Deleting an event in one employee's timetable: `deleteEvent`
+=== Deleting an event in an employee's calendar: `deleteEvent`
 
-Deletes an event with specified title which is the first occurrence in the timetable of employee identified by the index number used in the last employees listing. +
+Deletes an event with specified title which is the first occurrence in the calendar of employee identified by the index number used in the last employees listing. +
 Format: `deleteEvent INDEX TITLE`
 
 ****
@@ -606,43 +611,14 @@ Format: `deleteEvent INDEX TITLE`
 Examples:
 
 * `list` +
-`deleteEvent 2 Test Event` +
-Deletes the event with title "Test Event" in 2^nd^ employee's timetable.
+`deleteEvent 2 Project Meeting` +
+Deletes the event with title "Project Meeting" in 2^nd^ employee in the list calendar.
 // end::deleteevent[]
-
-=== Changing the theme of Employees Tracker: `changeTheme`
-
-Changes the theme of ET to bright or dark.
-Format: `changeTheme THEME`
-
-****
-* The change of theme will be effective immediately.
-* the `THEME` parameter must be one of the following: bright, dark.
-****
-
-Examples:
-
-* `changeTheme bright` +
-Changes the theme of ET to bright theme
-
-
-=== Clearing all entries : `clear`
-
-Clears all entries from Employees Tracker. +
-Format: `clear`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
-[NOTE]
-ET saves data automatically in the hard disk after any command that changes the data. There is no need to save manually before exit.
 
 // tag::ns[]
 === Toggling the notification center : `noti`
 
-Shows the notification panel if it is hidden; hides the notification center if it is shown. +
+Shows the notification center if it is hidden or hides the notification center if it is shown. +
 Format: `noti`
 
 [TIP]
@@ -667,7 +643,7 @@ Format: `email INDEX`
 === Reminding an employee through WhatsApp : `emailall`
 
 Opens up the email app of the computer to send a reminder email to all persons who has a task ended. +
-Format: `email INDEX`
+Format: `emailall INDEX`
 
 [NOTE]
 =====
@@ -675,6 +651,31 @@ Format: `email INDEX`
 * The recipient of the email will be set to the email address of all employees who has task(s) ended.
 =====
 // end::ns[]
+
+// tag::export[]
+=== Exporting the employees : `export`
+
+Exports current employees in E.T. to a .csv (Excel) file named "employees.csv" inside data folder. +
+Format: `export`
+
+[NOTE]
+=====
+Make sure that the employees.csv is not open in your computer before executing `export`.
+=====
+
+Examples:
+
+* `export` +
+Current employees in E.T. will be exported.
+// end::export[]
+
+=== Exiting E.T. : `exit`
+
+Exits E.T. +
+Format: `exit`
+
+[NOTE]
+E.T. saves data automatically in the hard disk after any command that changes the data. There is no need to save manually before exit.
 
 === Upcoming features
 
@@ -691,20 +692,22 @@ Employees Tracker will ensure data security by encrypting data files.
 You will be able to group employees according to the projects that they are working on and address the whole team with the group name.
 
 
+
 == Frequently Asked Questions (FAQ)
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Employees Tracker folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous E.T. folder.
 
 == Command Summary
-This section summarizes the usage of all Employees Tracker's commands.
+This section summarizes the usage of all E.T.'s commands.
 
 |===
 |*Command* |*Format* |*Example*
 |*Add* |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` |`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-|*AddEvent* |`addEvent INDEX title/TITLE loca/LOCATION stime/STRATTIME etime/ENDTIME descrip/DESCRIPTION` |`addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event`
+|*AddEvent* |`addEvent INDEX title/TITLE loca/LOCATION stime/STARTTIME etime/ENDTIME descrip/DESCRIPTION` |`addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event`
 |*AddPhoto* |`addPhoto INDEX` |
 |*Authentication* |`authenET` |
+|*ChangeTheme* |`changeTheme THEME` |`changeTheme dark`
 |*Clear* |`clear` |
 |*Delete* |`delete INDEX` |`delete 3`
 |*DeleteEvent* |`deleteEvent INDEX TITLE` |`deleteEvent 1 event title`
@@ -724,7 +727,8 @@ This section summarizes the usage of all Employees Tracker's commands.
 |*Review* |`review INDEX` |`review 2`
 |*Select* |`select INDEX` |`select 2`
 |*SetPassword* |`setPassword OLD_PASSWORD NEW_PASSWORD ` |`setPassword admin 12345`
+|*Sort* |`sort FIELD` |`sort name`
 |*TodoList* |`todoList` |
 |*Undo* |`undo` |
-|*Unlock* |`unlock PASSWORD` |`unlock admin`
+|*Unlock* |`unlock` |
 |===

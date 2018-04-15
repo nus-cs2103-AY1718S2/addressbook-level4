@@ -121,7 +121,7 @@ public class PersonBuilder {
         this.photoName = photoName;
         return this;
     }
-    //@@author crizyli
+    //@@author
 
     /**
      * Sets the {@code Rating} of the {@code Person} that we are building.

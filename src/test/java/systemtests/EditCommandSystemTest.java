@@ -136,7 +136,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* --------------------- Performing edit operation while a person card is selected -------------------------- */
 
         /* Case: selects first card in the person list, edit a person -> edited, card selection remains unchanged but
-         * browser url changes
+         * detail panel changes
          */
         showAllPersons();
         index = INDEX_FIRST_PERSON;
@@ -144,7 +144,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
-        // browser's url is updated to reflect the new person's name
+        // detail panel is updated to reflect the new person's name
         assertCommandSuccess(command, index, AMY, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
@@ -207,7 +207,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Index, Person, Index)} except that
-     * the browser url and selected card remain unchanged.
+     * the detail panel and selected card remain unchanged.
      * @param toEdit the index of the current model's filtered list
      * @see EditCommandSystemTest#assertCommandSuccess(String, Index, Person, Index)
      */
@@ -245,7 +245,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * 1. Asserts that the command box displays an empty string.<br>
      * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the browser url and selected card update accordingly depending on the card.<br>
+     * 4. Asserts that the detail panel and selected card update accordingly depending on the card.<br>
      * 5. Asserts that the status bar's sync status changes.<br>
      * 6. Asserts that the command box has the default style class.<br>
      * Verifications 1 to 3 are performed by
@@ -274,7 +274,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * 1. Asserts that the command box displays an empty string.<br>
      * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the browser url and selected card update accordingly depending on the card at
+     * 4. Asserts that the detail panel and selected card update accordingly depending on the card at
      * {@code expectedSelectedCardIndex}.<br>
      * 5. Asserts that the status bar's sync status changes.<br>
      * 6. Asserts that the command box has the default style class.<br>
@@ -302,7 +302,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * 1. Asserts that the command box displays {@code command}.<br>
      * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
      * 3. Asserts that the model related components equal to the current model.<br>
-     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 4. Asserts that the detail panel, selected card and status bar remain unchanged.<br>
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>

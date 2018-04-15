@@ -25,7 +25,9 @@ public class DeleteCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted employee: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Employee has been permanently deleted with"
+            + " his calendar, please DO NOT undo this command, or his calendar will become invalid. "
+            + " Instead, you can mannualy add it back. \nDeleted Employee: %1$s";
 
     private final Index targetIndex;
 

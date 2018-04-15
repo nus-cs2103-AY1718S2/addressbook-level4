@@ -1371,6 +1371,158 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Show a student's dashboard
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The student index is invalid
++
+[none]
+** 1a1. Codeducator shows an error message.
+
+
+[discrete]
+=== Use case: Add a milestone to a dashboard
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
+3. User requests to add a specific milestone to the dashboard of that student.
+4. Codeducator adds the milestone to the dashboard of that student.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The milestone is a duplicate of an existing milestone in the dashboard.
++
+[none]
+** 3a1. Codeducator shows an error message.
++
+
+
+[discrete]
+=== Use case: Add a task to a milestone in a dashboard
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
+3. User requests to add a specific task to a milestone in the dashboard of that student.
+4. Codeducator adds the task to the milestone in the dashboard of that student.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The task is a duplicate of an existing task in the milestone.
++
+[none]
+** 3a1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Delete a milestone in a dashboard
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
+3. User requests to delete a milestone in the dashboard of that student.
+4. Codeducator deletes the milestone in the dashboard of that student.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given student index is invalid
++
+[none]
+** 3a1. Codeducator shows an error message.
+
+* 3b. The given milestone index is invalid
++
+[none]
+** 3b1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Delete a task in a milestone in the dashboard
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
+3. User requests to delete a task in a milestone in the dashboard of that student.
+4. Codeducator deletes the task in the milestone in the dashboard of that student.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given student index is invalid
++
+[none]
+** 3a1. Codeducator shows an error message.
+
+* 3b. The given milestone index is invalid
++
+[none]
+** 3b1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The given task index is invalid
++
+[none]
+** 3c1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Mark a task in a milestone as completed
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
+3. User requests to mark a task in a milestone in the dashboard of that student as completed.
+4. Codeducator marks the task in the milestone in the dashboard of that student as completed.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given student index is invalid
++
+[none]
+** 3a1. Codeducator shows an error message.
+
+* 3b. The given milestone index is invalid
++
+[none]
+** 3b1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The given task index is invalid
++
+[none]
+** 3c1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
 _{More to be added}_
 
 [appendix]

@@ -1131,7 +1131,7 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th activity in Desk Board. The current state of Desk Board is saved before the `delete 5` command executes.
 The `delete 5` command will then be pushed onto the `undoStack`
-(the current state is saved together with the command) as shown in _Figure 37_ below:
+(the current state is saved together with the command) as shown in _Figure 37_ below.
 
 .Undo and redo starting stack diagram
 image::UndoRedoStartingStackDiagram.png[width="800"]

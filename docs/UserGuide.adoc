@@ -392,7 +392,7 @@ Adds the 1st student in the address book to favourites.
 
 *Step 2*: Once you have found the student you want to add to your favourites, type `fav` into the command box, followed by the `INDEX` of the student in the list. Press kbd:[Enter] to execute it.
 
-.Entering the `fav` command followed by the `INDEX` of the student to add to favourites
+.Entering the `fav` command followed by the `INDEX` 1 of the student to add to favourites
 image::fav1_screenshot.png[width="800"]
 
 *Step 3*: You have succeeded in adding the student as favourite when you see "Student added to favourites: [STUDENT'S NAME]" in the result box and the student's name being highlighted in orange.
@@ -403,7 +403,7 @@ image::fav2_screenshot.png[width="800"]
 [WARNING]
 The student `INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
 
-.Error message displayed when an invalid student index is entered
+.Error message displayed when an invalid `INDEX` 10 is entered. There are less than 10 students in the student contact list.
 image::fav3_screenshot.png[width="800"]
 
 ==== Removing a student from favourites : `unfav`
@@ -429,7 +429,7 @@ Removes the 1st student in the address book from favourites.
 
 *Step 2*: Once you have found the student you want to remove from your favourites, type `unfav` into the command box, followed by the `INDEX` of the student in the list. Press kbd:[Enter] to execute it.
 
-.Entering the `unfav` command followed by the `INDEX` of the student to remove from favourites.
+.Entering the `unfav` command followed by the `INDEX` 1 of the student to remove from favourites.
 image::unfav1_screenshot.png[width="800"]
 
 *Step 3*: You have succeeded in removing the student from favourites when you see "Student removed from favourites: [STUDENT'S NAME]" in the result box.
@@ -440,7 +440,7 @@ image::unfav2_screenshot.png[width="800"]
 [WARNING]
 The student `INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
 
-.Error message displayed when an invalid student index is entered
+.Error message displayed when an invalid `INDEX` 10 is entered. There are less than 10 students in the list of favourite students.
 image::unfav3_screenshot.png[width="800"]
 
 // end::favUnfav[]
@@ -813,7 +813,7 @@ Shows the dashboard of the 1st student in the address book.
 
 *Step 2*: Once you have found the student, type `showDB` into the command box, followed by the `STUDENT_INDEX` of the student in the list. Press kbd:[Enter] to execute it.
 
-.Entering the `showDB` command followed by the `STUDENT_INDEX` of the student whose dashboard you wish to view
+.Entering the `showDB` command followed by the `STUDENT_INDEX` 1 of the student whose dashboard you wish to view
 image::showDB1_screenshot.png[width="800"]
 
 *Step 3*: You have succeeded in viewing the student's dashboard if you see the message "Selected Dashboard of Student: `STUDENT_INDEX` " in the result box, with the dashboard containing the student's name appearing on the right panel.
@@ -824,7 +824,7 @@ image::showDB2_screenshot.png[width="800"]
 [WARNING]
 The student `INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
 
-.Error message displayed when an invalid student index is entered
+.Error message displayed when an invalid `STUDENT_INDEX` 10 is entered. There are less than 10 students in the student contact list.
 image::showDB3_screenshot.png[width="800"]
 
 
@@ -854,7 +854,7 @@ Adds a milestone to the dashboard of the 1st student in the address book. The mi
 
 *Step 2*: Once you can view the student's dashboard, type `addMS` in the command box, followed by the `STUDENT_INDEX`, `MILESTONE_DUE_DATE` and `DESCRIPTION_OF_MILESTONE`. Press kbd:[Enter] to execute it.
 
-.Entering the `addMS` command, followed by the `STUDENT_INDEX`, `MILESTONE_DUE_DATE` and `DESCRIPTION_OF_MILESTONE`
+.Entering the `addMS` command, followed by the `STUDENT_INDEX` as "1", `MILESTONE_DUE_DATE` as "23/05/2018 23:59" and `DESCRIPTION_OF_MILESTONE` as "Learn Arrays"
 image::addMS1_screenshot.png[width="800"]
 
 *Step 3*: You have succeeded in adding the milestone to the student's dashboard if you see the message "Milestone added to Student's Dashboard:" followed by the description of the milestone you have added in the result box.
@@ -866,13 +866,13 @@ image::addMS2_screenshot.png[width="800"]
 [WARNING]
 The `STUDENT_INDEX` provided must be valid. Otherwise, an error message "The student index provided is invalid" will be displayed in the result box at *Step 3*.
 
-.Error message displayed when an invalid `STUDENT_INDEX` is entered
+.Error message displayed when an invalid `STUDENT_INDEX` 10 is entered. There are less than 10 students in the student contact list.
 image::addMS3_screenshot.png[width="800"]
 
 [WARNING]
 The `MILESTONE_DUE_DATE` provided must have a valid calendar date and follows the specified format. Otherwise, an error message shown in the figure below will be displayed in the result box at *Step 3*. +
 
-.Error message displayed when an invalid `MILESTONE_DUE_DATE` is entered
+.Error message displayed when an invalid `MILESTONE_DUE_DATE` "31/02/2018 23:59" is entered. There is no 31/02/2018 in the calendar.
 image::addMS4_screenshot.png[width="800"]
 
 
@@ -902,7 +902,7 @@ Deletes the 1st milestone from the dashboard of the 1st student in the address b
 
 *Step 2*: Once you can view the student's dashboard, type `deleteMS` in the command box, followed by the `STUDENT_INDEX` and `MILESTONE_INDEX`. Press kbd:[Enter] to execute it.
 
-.Entering the `deleteMS` command, followed by the `STUDENT_INDEX` and `MILESTONE_INDEX`
+.Entering the `deleteMS` command, followed by the `STUDENT_INDEX` as "1" and `MILESTONE_INDEX` as "1"
 image::deleteMS1_screenshot.png[width="800"]
 
 *Step 3*: You have succeeded in deleting the milestone if you see the message "Deleted milestone:" followed by the description of the milestone in the result box. The milestone will also no longer be on the dashboard of the student.
@@ -913,7 +913,7 @@ image::deleteMS2_screenshot.png[width="800"]
 [WARNING]
 The `STUDENT_INDEX` and `MILESTONE_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
 
-.Error message displayed when invalid `STUDENT_INDEX` and `MILESTONE_INDEX` are entered
+.Error message displayed when invalid `STUDENT_INDEX` "10" and `MILESTONE_INDEX` "10" are entered
 image::deleteMS3_screenshot.png[width="800"]
 
 ==== Adding a task to a milestone: `addTask`
@@ -942,7 +942,7 @@ Adds a task to the 1st milestone in the dashboard of the 1st student in the addr
 
 *Step 2*: Once you can view the student's dashboard, type `addTask` in the command box, followed by `STUDENT_INDEX`, `MILESTONE_INDEX`, `NAME_OF_TASK` and `DESCRIPTION_OF_TASK`. Press kbd:[Enter] to execute it.
 
-.Entering the command `addTask`, followed by the `STUDENT_INDEX`, `MILESTONE_INDEX`, `NAME_OF_TASK` and `DESCRIPTION_OF_TASK`
+.Entering the command `addTask`, followed by the `STUDENT_INDEX` as "1", `MILESTONE_INDEX` as "1", `NAME_OF_TASK` as "Learn Array Syntax"  and `DESCRIPTION_OF_TASK` as "Student to refer to the textbook"
 image::addTask1_screenshot.png[width="800"]
 
 *Step 3*: You have succeeded in adding the task to the milestone if you see the message "New task added:" followed by the description of the task you have added in the result box. The new task will also appear in the task list of the milestone.
@@ -953,7 +953,7 @@ image::addTask2_screenshot.png[width="800"]
 [WARNING]
 The `STUDENT_INDEX` and `MILESTONE_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
 
-.Error message displayed when invalid `STUDENT_INDEX` and `MILESTONE_INDEX` are entered
+.Error message displayed when invalid `STUDENT_INDEX` "10" and `MILESTONE_INDEX` "10" are entered
 image::addTask3_screenshot.png[width="800"]
 
 ==== Deleting a task from a milestone: `deleteTask`
@@ -984,7 +984,7 @@ Deletes the 1st task in the 1st milestone. The milestone is in the dashboard of 
 
 *Step 2*: Once you can view the student's dashboard, type `deleteTask` in the command box, followed by `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX`. Press kbd:[Enter] to execute it.
 
-.Entering the command `deleteTask`, followed by the `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX`
+.Entering the command `deleteTask`, followed by the `STUDENT_INDEX` as "1", `MILESTONE_INDEX` as "1" and `TASK_INDEX` as "1"
 image::deleteTask1_screenshot.png[width="800"]
 
 *Step 3*: You have succeeded in deleting the task from the milestone if you see the message: "Deleted task:" followed by the description of the task you deleted in the result box. The task will also no longer be in the task list of the milestone.
@@ -995,7 +995,7 @@ image::deleteTask2_screenshot.png[width="800"]
 [WARNING]
 The `STUDENT_INDEX`, `MILESTONE_INDEX`, and `TASK_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
 
-.Error message displayed when invalid `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX` are entered
+.Error message displayed when invalid `STUDENT_INDEX` "10", `MILESTONE_INDEX` "10" and `TASK_INDEX` "10" are entered
 image::deleteTask3_screenshot.png[width="800"]
 
 ==== Marking a task as completed: `checkTask`
@@ -1029,7 +1029,7 @@ Marks the 1st task in the 1st milestone as completed. The milestone is in the da
 
 *Step 2*: Once you can view the student's dashboard, type `checkTask` in the command box, followed by `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX`. Press kbd:[Enter] to execute it.
 
-.Entering the command `checkTask`, followed by the `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX`
+.Entering the command `checkTask`, followed by the `STUDENT_INDEX` as "1", `MILESTONE_INDEX` as "1" and `TASK_INDEX` as "1"
 image::checkTask1_screenshot.png[width="800"]
 
 *Step 3*: You have succeeded in marking the task as completed if you see the message "Task `TASK_INDEX` marked as completed in milestone `MILESTONE_INDEX` ".
@@ -1047,7 +1047,7 @@ image::checkTask4_screenshot.png[width="800"]
 [WARNING]
 The `STUDENT_INDEX`, `MILESTONE_INDEX`, and `TASK_INDEX` provided must be valid. Otherwise, an error message "One or more of the provided indexes are invalid" will be displayed in the result box at *Step 3*.
 
-.Error message displayed when invalid `STUDENT_INDEX`, `MILESTONE_INDEX` and `TASK_INDEX` are entered
+.Error message displayed when invalid `STUDENT_INDEX` "10", `MILESTONE_INDEX` "10" and `TASK_INDEX` "10" are entered
 image::checkTask3_screenshot.png[width="800"]
 
 // end::dashboard[]

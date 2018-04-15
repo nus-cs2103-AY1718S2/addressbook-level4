@@ -246,7 +246,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         //schedule all notification
         for (Notification n: getAddressBook().getNotificationsList()) {
-            System.out.println("Scheduling all notification");
             indicateNotificationAdded(n);
         }
     }

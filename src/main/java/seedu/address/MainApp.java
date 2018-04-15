@@ -124,10 +124,6 @@ public class MainApp extends Application {
     }
     //@@author
 
-    private void initNotifications() {
-        model.findAllSavedNotifications();
-    }
-
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
         return applicationParameters.get(parameterName);

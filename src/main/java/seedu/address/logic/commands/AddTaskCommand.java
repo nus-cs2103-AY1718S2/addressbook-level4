@@ -47,8 +47,6 @@ public class AddTaskCommand extends UndoableCommand {
         requireNonNull(model);
         model.addTask(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-
-
     }
 
     @Override

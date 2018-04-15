@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 import org.junit.Test;
 
@@ -31,7 +30,7 @@ public class DeadlineTest {
     @Test
     public void constructor_invalidDeadline_throwsDateTimeParseException() {
         String invalidDeadline = "";
-        Assert.assertThrows(DateTimeParseException.class, () -> new Deadline(invalidDeadline));
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Deadline(invalidDeadline));
     }
 
     @Test

@@ -294,10 +294,9 @@ The tag must be a valid tag name that is assigned to at least one student in the
 
 Examples:
 
-* `tagreplace t/Class1A t/Class2A` or `tr t/Class1A t/Class2A` +
-Replaces the 'Class 1A' tag from every student in _EduBuddy_ with 'Class 2A'.
-
 image::TagReplaceCommand.png[width="650"]
+* `tagreplace t/3G t/4G` or `tr t/3G t/4G` +
+Replaces the '3G' tag from every student in _EduBuddy_ with 'Class 4G'.
 // end::tags[]
 
 *_return to <<toc,Table of Contents>>_*
@@ -316,11 +315,11 @@ Format: `addremark INDEX r/REMARK`
 ****
 
 Examples:
+
+image::AddRemarkCommand.png[width="650"]
 * `list` +
 `addremark 3 r/Geo Rep` +
 Adds a remark, Geo Rep, to the 3rd student in EduBuddy.
-
-image::AddRemarkCommand.png[width="650"]
 
 === Deleting a remark : `deleteremark` [since v1.4]
 
@@ -578,35 +577,6 @@ Returns the L1B4-A score obtained by the student based on his/her grades.
 
 *_return to <<toc,Table of Contents>>_*
 
-// tag::cca[]
-=== Editing the details of CCA of a student : `cca` [since v1.5]
-edits the CCA details of the student in _EduBuddy_. +
-Format: `cca INDEX cca/CCA pos/POSITION` +
-You will be able to see the success message, +
-`CCA added: CCA: POSITION` +
-`Person: NAME`
-
-[NOTE]
--Adds the CCA details to the student at the specified `INDEX`
-if the student does not have any cca details. +
--Edits the CCA details of the student at the specified `INDEX.` +
--The index refers to the index number shown in the most recent listing.
-
-[IMPORTANT]
-`INDEX` *must be a positive integer*: 1, 2, 3, ...
-
-Examples:
-
-* `list` +
-`cca 2 cca/Basketball pos/Member` +
-Adds the cca details(cca basketball with the position member) to the 2nd student in _EduBuddy_.
-* `find Betsy` +
-`cca 1 cca/Choir pos/Member` +
-Adds the cca details(cca Choir with the position member) to the 1st student in the results of the `find` command.
-
-*_return to <<toc,Table of Contents>>_*
-// tag::cca[]
-
 // tag::injuries[]
 === Adding a injury history to a student : `addinjuries` [since v1.5]
 Adds an injury history to the student of the specified index, in the student records in _EduBuddy_. +
@@ -630,6 +600,16 @@ Adds the injury, dislocated right shoulder to the 2nd student in _EduBuddy_.
 * `find Betsy` +
 `addinjuries 1 injuries/Right Ligament Tear` +
 Adds the injury, right ligament tear to the 1st student in the results of the `find` command.
+
+image::InjuriesBeforeAdd.png[width="800"]
+Figure 5. Before the command `addinjuries 1 injuries/Right Ligament Tear` was entered.
+
+image::AddInjuriesSuccessMessage.png[width="800"]
+Figure 6. Success message when the command is entered successfully.
+
+image::InjuriesAfterAdd.png[width="800"]
+
+Figure 7. After the command is successfully entered.
 
 *_return to <<toc,Table of Contents>>_*
 
@@ -656,16 +636,61 @@ Deletes the injury history,torn ligament from the 2nd student in _EduBuddy_.
 * `find Betsy` +
 `deleteinjuries 1 injuries/Dislocated Shoulder` +
 Deletes the injury history from the 1st student in the results of the `find` command.
+
+image::DeleteInjuriesSuccessMessage.png[width="400"]
+Figure 8. The success message when command is successfully entered.
+
+image::DeleteInjuriesCommand.png[width="800"]
+Figure 9. After the command is successfully entered.
+
 // end::injuries[]
 
 *_return to <<toc,Table of Contents>>_*
+
+// tag::cca[]
+=== Editing the details of CCA of a student : `cca` [since v1.5]
+edits the CCA details of the student in _EduBuddy_. +
+Format: `cca INDEX cca/CCA pos/POSITION` +
+You will be able to see the success message, +
+`CCA added: CCA: POSITION` +
+`Person: NAME`
+
+[NOTE]
+-Adds the CCA details to the student at the specified `INDEX`
+if the student does not have any cca details. +
+-Edits the CCA details of the student at the specified `INDEX.` +
+-The index refers to the index number shown in the most recent listing.
+
+[IMPORTANT]
+`INDEX` *must be a positive integer*: 1, 2, 3, ...
+
+Examples:
+
+* `list` +
+`cca 2 cca/Basketball pos/Member` +
+Adds the cca details(cca basketball with the position member) to the 2nd student in _EduBuddy_.
+* `find Betsy` +
+`cca 1 cca/Choir pos/Member` +
+Adds the cca details(cca Choir with the position member) to the 1st student in the results of the `find` command.
+
+image::BeforeAddingCca.png[width="400"]
+Figure 10. Before adding CCA to Betsy.
+
+image::AddCcaSuccessMessage.png[width="400"]
+Figure 10. The success message when command is successfully entered.
+
+image::AfterAddingCca.png[width="800"]
+Figure 11. After the command is successfully entered.
+
+*_return to <<toc,Table of Contents>>_*
+// tag::cca[]
 
 // tag::NextofKin[]
 === Editing the details of the next of kin of a student : `nok` [since v1.5]
 Edits a next of kin details of the student in _EduBuddy_. +
 Format: `nok INDEX n/NAME p/PHONE [e/EMAIL] r/RELATIONSHIP` +
 You will be able to see the success message, +
-`Next of Kin: NAME Phone: PHONE Email: EMAIL REMARK: Father` +
+`Next of Kin: NAME Phone: PHONE Email: EMAIL Remark: Father` +
 `Person: NAME`
 
 [NOTE]
@@ -687,6 +712,15 @@ of the 2nd student in _EduBuddy_.
 `nok 1 n/Dave p/96784561 r/Father` +
 Edits the next of kin details(name, phone number and relationship)
 of the 1st student in the results of the `find` command.
+
+image::BeforeAddingNOK.png[width="400"]
+Figure 10. Before adding the next of kin details to Betsy.
+
+image::AddNOKSuccessMessage.png[width="400"]
+Figure 10. The success message when command is successfully entered.
+
+image::AfterAddingNOK.png[width="800"]
+Figure 11. After the command is successfully entered.
 
 // tag::NextofKin[]
 

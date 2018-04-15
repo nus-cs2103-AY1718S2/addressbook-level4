@@ -49,6 +49,8 @@ include::../UserGuide.adoc[tag = cca]
 
 include::../UserGuide.adoc[tag = injuries]
 
+include::../UserGuide.adoc[tag = NextofKin]
+
 == Contributions to the Developer Guide
 
 |===
@@ -58,3 +60,11 @@ include::../UserGuide.adoc[tag = injuries]
 include::../DeveloperGuide.adoc[tag = TagReplace]
 
 include::../DeveloperGuide.adoc[tag = remark]
+
+include::../DeveloperGuide.adoc[tag = InjuriesHistory]
+
+include::../DeveloperGuide.adoc[tag = Cca]
+
+include::../DeveloperGuide.adoc[tag = NOK]
+
+

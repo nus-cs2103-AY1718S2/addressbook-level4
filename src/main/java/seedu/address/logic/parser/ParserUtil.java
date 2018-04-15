@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.building.Building.retrieveNusBuildingIfExist;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.MapCommand;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.building.Building;
 import seedu.address.model.person.Address;
@@ -238,6 +240,41 @@ public class ParserUtil {
 
         }
         return new Alias(command, alias);
+    }
+
+    /**
+     * Parses a {@code String locations} into {@code String formattedLocations}
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseLocations(String locations) {
+        requireNonNull(locations);
+        String[] locationsArray = locations.split(MapCommand.SPLIT_TOKEN);
+        checkForAndRetrieveNusBuildings(locationsArray);
+        return identifyNumberOfSpecifiedLocations(locationsArray);
+    }
+
+    /**
+     * Identifies if one or more locations are specified in the user input
+     */
+    private static String identifyNumberOfSpecifiedLocations(String[] locationsArray) {
+        String parsedLocations = "";
+        if (locationsArray.length >= MapCommand.TWO_LOCATIONS_WORD_LENGTH) {
+            parsedLocations = String.join(MapCommand.SPLIT_TOKEN, locationsArray);
+        } else {
+            parsedLocations = locationsArray[MapCommand.FIRST_LOCATION_INDEX];
+        }
+        return parsedLocations;
+    }
+
+
+    /**
+     * Creates a MapCommand to pass locations to Google Maps
+     */
+    private static void checkForAndRetrieveNusBuildings(String[] locationsArray) {
+        for (int i = 0; i < locationsArray.length; i++) {
+            locationsArray[i] = locationsArray[i].trim();
+            locationsArray[i] = retrieveNusBuildingIfExist(locationsArray[i]);
+        }
     }
 
     /**

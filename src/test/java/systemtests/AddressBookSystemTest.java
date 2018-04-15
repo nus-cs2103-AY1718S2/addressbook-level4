@@ -40,6 +40,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.alias.Alias;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.CommandBox;
 import seedu.address.ui.GoogleMapsDisplay;
@@ -174,9 +175,9 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Deletes all persons in the address book.
+     * Deletes all persons and aliases in the address book.
      */
-    protected void deleteAllPersons() {
+    protected void deleteAllPersonsAndAliases() {
         executeCommand(ClearCommand.COMMAND_WORD);
         assertEquals(0, getModel().getAddressBook().getPersonList().size());
     }
@@ -197,7 +198,7 @@ public abstract class AddressBookSystemTest {
 
     //@@author jingyinno
     protected void assertTableDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
-                                               String[][] table) {
+                                               Alias[][] table) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         GuiTestAssert.assertTableContent(getAliasList().getTables(), table);

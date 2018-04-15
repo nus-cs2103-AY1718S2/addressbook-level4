@@ -404,6 +404,39 @@ image::ModelClassDiagram.png[width="800"]
 ** Cons: Affects Import command, to import `UserPrefsStorage` as well, than just importing `addressbook.xml`
 // end::customizedalias[]
 
+// tag::mapconsiderations[]
+=== Google Maps feature
+==== Current Implementation
+
+We are using the Google Maps Browser and passing the location(s) specified by the user into the URL, and then connecting to the internet to retrieve the Google Maps with the respective location(s).
+We have implemented two functionalities for the Google Maps: Address locator and locations navigator.
+
+* For one location specified, the "https://www.google.com/maps/search/" URL prefix is used.
+* For more than one locations specified, the "https://www.google.com/maps/dir/" url prefix is used.
+
+When a location specified by the user is an NUS building e.g. S1, our application compares the input with the list of NUS buildings to check from, and recognizes it as an NUS building.
+The location is replaced with its respective postal code and passed to form the Google Maps URL.
+
+==== Design Considerations
+
+===== Aspect: Google Maps implementation
+* **Alternative 1 (current choice):** Use Google Maps in browser
+** Pros: Requires a re-setup of project to link with the Google API.
+** Cons: Browser mode (Google Lite Maps) does not support some advanced Google Maps features.
+(But these additional features are not used in this project and thus having the browser implementation fulfils the intended functionality)
+* **Alternative 2:** Use Google Maps API
+** Pros: Google Maps in the application will have the complete set of features.
+** Cons: May cause a longer loading time for the application and Google Maps browser.
+
+===== Aspect: Saving NUS buildings' addresses
+* **Alternative 1 (current choice):** Saving the postal codes of NUS buildings in the Building class
+** Pros: Easy to implement. Since there is only one set of fixed NUS buildings and postal codes, both can be stored as lists in the same class.
+** Cons: Need to have a method that finds the correct postal code for a building from the lists.
+* **Alternative 2:** Creating a new class to store postal codes/addresses of NUS buildings
+** Pros: The code looks neater. Every building will have an `Address` class to store their postal codes/addresses.
+** Cons: Need to maintain a `Building` list, where each `Building` contains the `Address` class.
+// end::mapconsiderations[]
+
 // tag::dataencryption[]
 ===  Data Encryption
 ==== Current Implementation
@@ -940,7 +973,7 @@ b. Require developers to download those libraries manually (this creates extra w
 |Name |Minor Enhancement |Major Enhancement
 |Lee Yong Ler | Adding of `TimeTable` class and into the `Person` class. This allows user to enter their time table into the address book, making it easy for them to know their time table.|Data encryption system to allow the `addressbook.xml` to be encrypted when not in use. A `password` command will also be added for user to key in their own password. This ensure that the privacy of users are respected and information in the address book is confidential. NUS students would be able to store sensitive information like time table without fear of them leaking.
 |Loh Cai Jun | Implementing Model and Storage component of Vacant study rooms finder feature to help user to find vacant study rooms nearby. | Importing, exporting, and uploading StardyTogether file feature to allow user to transfer selected data to other users, transfer to different computers, store and restore backup of StardyTogether easily.
-|Ong Jing Yin | Designing UI for finding vacant venues feature. UI will display a table of timings for the requested location, with information about whether the venue is vacant or not |Customized alias to allow users to set their own short cuts or intuitive naming for existing commands, to cater to their own preference.
+|Ong Jing Yin | Implementing the Logic and UI component of the Vacant Room Finder feature. Users can view the vacancy status of all the rooms in the building they have requested for. Implementing the Google Maps Feature to nagivate locations within and outside of NUS easily.|Creating the Customized Alias Feature which allows users to set their own short cuts or intuitive naming for all existing commands to enhance the personalization and user-friendliness of our application.
 |Wayne Neo| In charge of Model and Logic for Timetable. User can enter their timetable and compare their timetables to find common slots for easy 'stardying' together| Birthdays system helps User to keep track of their friend's birthdays and remind them promptly if its their birthday today
 |=======================================================================
 
@@ -972,6 +1005,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |busy student |be able to remove my customized short forms |reuse keys
 
+|`* * *` |busy student |be able to view all my customized short forms |refer to them should I forget the short forms I had previously set
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
@@ -983,6 +1018,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user who is concerned about privacy |change the password used |security is not compromised
 
 |`* * *` |student who studies in school |be able to find rooms that I can study in |save time finding rooms
+
+|`* * *` |student who studies in school |be able to know the locations of NUS buildings |save time locating the place
+
+|`* * *` |student |be able to nagivate locations within and outside of NUS easily |find my way around quickly
 
 |`* * *`|user| be able to transfer data between computers |  share my data with others and change computers seamlessly
 
@@ -1040,9 +1079,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to find an available venue
-2.  StardyTogether prompts user to input a faculty
-3.  User requests venues near this faculty
-4.  StardyTogether prints out a list of available venues near the specified faculty
+2.  StardyTogether prompts user to input a building
+3.  User requests building name
+4.  StardyTogether prints out a list of rooms with their vacancy status
 +
 Use case ends.
 
@@ -1059,18 +1098,49 @@ Use case resumes at step 2
 * 3a. The given location is invalid.
 +
 [none]
-** 3a1. StardyTogether shows an error message.
+** 3a1. StardyTogether displays an error message.
 +
 Use case resumes at step 2.
 
 * 4a. StardyTogether cannot retrieve the information online
 +
 [none]
-** 4a1. StardyTogether shows an error message
+** 4a1. StardyTogether displays an error message
 ** 4a2. StardyTogether attempts to reconnect
 ** 4a3. If problem persists, StardyTogether directs User to troubleshooting
 +
 Use case ends
+
+[discrete]
+=== Use case: Add alias
+*MSS*
+
+1.  User requests to create an alias for a command
+2.  StardyTogether prompts user to input a building
+3.  User requests command and alias
+4.  StardyTogether adds the command and alias pairing successfully
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Incorrect number of arguments specified.
++
+[none]
+** 3a1. StardyTogether displays an error message.
++
+Use case resumes at step 3.
+
+* 4a. Invalid command or alias specified.
++
+[none]
+** 4a1. StardyTogether displays an error message
+** 4a2. User re-enters command and alias
+Steps 4a1-4a2 are repeated until the command and alias entered are valid.
++
+Use case ends
+
 
 _{More to be added}_
 
@@ -1079,6 +1149,7 @@ _{More to be added}_
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should have internet connection.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Address book must be able to be picked up with 2 hours of usage.
 .  Color Scheme must be pleasing to the eyes.

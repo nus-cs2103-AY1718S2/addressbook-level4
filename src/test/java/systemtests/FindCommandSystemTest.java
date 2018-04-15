@@ -142,7 +142,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardDeselected();
 
         /* Case: find person in empty address book -> 0 persons found */
-        deleteAllPersons();
+        deleteAllPersonsAndAliases();
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, DANIEL);

@@ -12,20 +12,14 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showActivityAtIndex;
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_DATE_TIME_CS2010_QUIZ;
-import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_DATE_TIME_MA2108_HOMEWORK;
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_NAME_CS2010_QUIZ;
-import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_NAME_MA2108_HOMEWORK;
-import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_REMARK_CS2010_QUIZ;
-import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_REMARK_MA2108_HOMEWORK;
-import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_TAG_CS2010;
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_TAG_MA2108;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
 
-//import org.junit.Test;
-
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -94,7 +88,10 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
-    @Test
+    //TODO: TEST
+    /**
+     * Test
+     */
     public void execute_filteredList_success() throws Exception {
         showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
 

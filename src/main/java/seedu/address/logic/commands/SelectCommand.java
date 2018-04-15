@@ -6,7 +6,6 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToEventListRequestEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.JumpToTaskListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.activity.Activity;
@@ -59,7 +58,7 @@ public class SelectCommand extends Command {
             EventsCenter.getInstance().post(new JumpToEventListRequestEvent(targetIndex));
             result = new CommandResult(String.format(MESSAGE_SELECT_ACTIVITY_SUCCESS, targetIndex.getOneBased()));
         } else {
-            assert false: "Type is neither task or event, this should not happened!";
+            assert false : "Type is neither task or event, this should not happened!";
         }
         return result;
     }

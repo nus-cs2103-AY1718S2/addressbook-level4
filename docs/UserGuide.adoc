@@ -187,7 +187,7 @@ Examples:
 
 * `lock` +
 Locks E.T. +
-All information in E.T. will be hidden when it is locked as shown in _Figure 14_ below.
+All information in E.T. will be hidden when it is locked as shown in _Figure 10_ below.
 
 .Information is hidden when E.T. is locked.
 image::lock_screen.png[width="300"][height="400"]
@@ -208,7 +208,7 @@ Format: `setPassword`
 Examples:
 
 * `setPassword` +
-A pop-up window will appear as shown in _Figure 16_. +
+A pop-up window will appear as shown in _Figure 11_. +
 Fill in the input boxes with matching old password and new password.
 
 .Set password pop-up window.
@@ -223,7 +223,7 @@ Format: `authenET`
 
 === Viewing help : `help`
 
-Displays the user guide, which is this document, as shown in _Figure 10_. +
+Displays the user guide, which is this document, as shown in _Figure 12_. +
 Format: `help`
 
 .The user guide.
@@ -287,7 +287,7 @@ Adds a photo to the 1st employee in the last employees listing.
 
 === Listing all employees : `list`
 
-Shows a list of all employees as shown in _Figure 11_. +
+Shows a list of all employees as shown in _Figure 13_. +
 Format: `list`
 
 .List of employees.
@@ -370,7 +370,7 @@ Selects the 2^nd^ employee in E.T.
 Selects the 1^st^ employee in the results of the `find` command.
 
 [NOTE]
-If `Calendar` in employee's `Profile Panel` looks something similar to _Figure 13_, it means you will have to sign in to your *Google Account* from there. This is because for security purposes, you will be required to sign in every time you close E.T. and open it again,
+If `Calendar` in employee's `Profile Panel` looks something similar to _Figure 14_, it means you will have to sign in to your *Google Account* from there. This is because for security purposes, you will be required to sign in every time you close E.T. and open it again,
 
 .Signing in to Google account at the Calendar row.
 image::sign_in.png[width="790"][height="200"]
@@ -472,7 +472,7 @@ Gives the 1^st^ employee in the last employees listing a review. +
 `review 2` +
 Gives the 2^nd^ employee in the list of Alex(s) a review. +
 
-A pop-up window will appear after user executes the `review` command as shown in _Figure 12_. The window will prompts user to enter user's email (as a reviewer) and the review.
+A pop-up window will appear after user executes the `review` command as shown in _Figure 15_. The window will prompts user to enter user's email (as a reviewer) and the review.
 
 .Review pop-up window.
 image::review_dialog.png[width=""]
@@ -566,7 +566,7 @@ Format: `todoList`
 Examples:
 
 * `todoList` +
-A pop-up window will appear as shown in _Figure 15_.
+A pop-up window will appear as shown in _Figure 16_.
 
 .To-do list pop-up window.
 image::todoList.png[width="300"][height="400"]

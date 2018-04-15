@@ -175,7 +175,7 @@ public class EmailCommandTest {
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_EMAIL_SENT, 0);
+        String expectedMessage = String.format(MESSAGE_PERSONS_NOT_FOUND);
         EmailCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
@@ -236,38 +236,38 @@ public class EmailCommandTest {
 
     @Test
     public void parseCommand_deleteTemplate() throws Exception {
-        DeleteTemplateCommand command = new DeleteTemplateCommand("test");
+        DeleteTemplateCommand command = new DeleteTemplateCommand(VALID_PURPOSE);
         DeleteTemplateCommand parsedCommand =
-                (DeleteTemplateCommand) parser.parseCommand("deletetemplate test");
+                (DeleteTemplateCommand) parser.parseCommand(
+                        DeleteTemplateCommand.COMMAND_WORD + PURPOSE_DESC);
         assertEquals(command, parsedCommand);
     }
 
     @Test
     public void parseCommand_deleteTemplateAlias() throws Exception {
-        DeleteTemplateCommand command = new DeleteTemplateCommand("test");
+        DeleteTemplateCommand command = new DeleteTemplateCommand(VALID_PURPOSE);
         DeleteTemplateCommand parsedCommand =
-                (DeleteTemplateCommand) parser.parseCommand("dt test");
+                (DeleteTemplateCommand) parser.parseCommand(
+                        DeleteTemplateCommand.COMMAND_ALIAS + PURPOSE_DESC);
         assertEquals(command, parsedCommand);
     }
 
     @Test
     public void parseCommand_email() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "test");
-        String[] nameKeywordArray = new String[]{ "foo" };
-        EmailCommand command = (EmailCommand) parser.parseCommand(
-                EmailCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        String[] nameKeywordArray = new String[]{ VALID_NAME_BOB };
+        String userInput = EmailCommand.COMMAND_WORD + NAME_DESC_BOB + PURPOSE_DESC;
+        EmailCommand command = (EmailCommand) parser.parseCommand(userInput);
         assertEquals(new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywordArray)),
-                "test"), command);
+                VALID_PURPOSE), command);
     }
 
     @Test
     public void parseCommand_emailAlias() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "test");
-        String[] nameKeywordArray = new String[]{ "foo" };
-        EmailCommand command = (EmailCommand) parser.parseCommand(
-                EmailCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        String[] nameKeywordArray = new String[]{ VALID_NAME_BOB };
+        String userInput = EmailCommand.COMMAND_ALIAS + NAME_DESC_BOB + PURPOSE_DESC;
+        EmailCommand command = (EmailCommand) parser.parseCommand(userInput);
         assertEquals(new EmailCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywordArray)),
-                "test"), command);
+                VALID_PURPOSE), command);
     }
 
 ```
@@ -317,9 +317,9 @@ public class DeleteTemplateCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        String purpose = "test";
-        assertParseSuccess(parser,  PREAMBLE_WHITESPACE + purpose,
-                new DeleteTemplateCommand(purpose));
+        String purpose = PURPOSE_DESC;
+        assertParseSuccess(parser,  PREAMBLE_WHITESPACE + PURPOSE_DESC,
+                new DeleteTemplateCommand(VALID_PURPOSE));
     }
 
     @Test
@@ -327,13 +327,6 @@ public class DeleteTemplateCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTemplateCommand.MESSAGE_USAGE);
 
         assertParseFailure(parser, "", expectedMessage);
-    }
-
-    @Test
-    public void parse_tooManyFields_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTemplateCommand.MESSAGE_USAGE);
-
-        assertParseFailure(parser, "this and that", expectedMessage);
     }
 }
 ```

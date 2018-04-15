@@ -55,7 +55,7 @@ public class ExportContactsCommandTest {
     public void addressBookParser_inputCommandAndAlias_returnsExportContactsCommand() throws Exception {
         AddressBookParser ap = new AddressBookParser();
         ExportContactsCommand e1 = (ExportContactsCommand) ap.parseCommand ("ec");
-        ExportContactsCommand e2 = (ExportContactsCommand) ap.parseCommand("export_contacts");
+        ExportContactsCommand e2 = (ExportContactsCommand) ap.parseCommand("exportcontacts");
 
         assertNotNull(e1);
         assertNotNull(e2);
@@ -258,7 +258,7 @@ public class ImportContactsCommandTest {
     @Test
     public void addressBookParser_giveCorrectImport_returnImportContactCommand() throws Exception {
         AddressBookParser abp = new AddressBookParser();
-        assertNotNull(abp.parseCommand("import_contacts ..."));
+        assertNotNull(abp.parseCommand("importcontacts ..."));
         assertNotNull(abp.parseCommand("ic ..."));
     }
 
@@ -455,7 +455,7 @@ public class SortCommandTest {
     public void callSortParser_createAddressBookParser_returnSortCommand() throws ParseException {
         AddressBookParser abp = new AddressBookParser();
         Command sc1 = abp.parseCommand("sort");
-        Command sc2 = abp.parseCommand("sort_by_name");
+        Command sc2 = abp.parseCommand("so");
 
         requireNonNull(sc1);
         requireNonNull(sc2);

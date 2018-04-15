@@ -33,7 +33,7 @@ public class ExportContactsCommand extends UndoableCommand {
 
     public static final String FS = File.separator;
     public static final String MESSAGE_SUCCESS = "Contacts successfully exported.\n";
-    public static final String COMMAND_WORD = "export_contacts";
+    public static final String COMMAND_WORD = "exportcontacts";
     public static final String COMMAND_ALIAS = "ec";
 
     private Path writeToPath;
@@ -154,7 +154,7 @@ import seedu.address.model.tag.Tag;
  * and https://github.com/callicoder/java-read-write-csv-file
  */
 public final class ImportContactsCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "import_contacts";
+    public static final String COMMAND_WORD = "importcontacts";
     public static final String COMMAND_ALIAS = "ic";
     public static final String MESSAGE_SUCCESS = "Contacts successfully imported.\n";
     public static final String MESSAGE_FILE_SUCCESS_OPEN = "File was successfully opened.\n";
@@ -349,8 +349,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  * alphabetically
  */
 public class SortCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "sort_by_name";
-    public static final String COMMAND_ALIAS = "sort";
+    public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "so";
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
@@ -396,12 +396,12 @@ import seedu.address.logic.commands.ExportContactsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Class to parse the export_contacts command
+ * Class to parse the exportcontacts command
  */
 public class ExportContactsCommandParser implements Parser<ExportContactsCommand> {
 
     public static final String FAILED_TO_PARSE =
-            "Failed to parse import_contacts command";
+            "Failed to parse importcontacts command";
 
     /**
      * Parses the given {@code String} of arguments in the context of the ExportContactsCommand
@@ -429,14 +429,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 
 /**
- * Class to parse the import_contacts command
+ * Class to parse the importcontacts command
  */
 public class ImportContactsCommandParser implements Parser<ImportContactsCommand> {
     /**
      * Self explanitory.
      */
     public static final String FAILED_TO_PARSE =
-            "Failed to parse import_contacts command";
+            "Failed to parse importcontacts command";
 
     /**
      * Parses the given {@code String} of arguments in the context of the ImportContactsCommand
@@ -473,11 +473,9 @@ public class ImportContactsCommandParser implements Parser<ImportContactsCommand
 ``` java
     /**
      * Sorts the addressbook lexographically by users' first name
-     * @throws Exception if {@code predicate} is null.
+     * @throws DuplicatePersonException if user already exists in model.
      */
     void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException;
-
-}
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java

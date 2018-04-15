@@ -594,7 +594,7 @@ Fastis uses `ListTagMembersCommand` ,which resides under `Logic` to facilitate t
 tag.
 
 .Sequence diagram of list tag members command
-image:listGroupMemberSequenceDiagram.png[width="800"] +
+image:listTagMemberSequenceDiagram.png[width="800"] +
 When user types in command line `ListTagMembers` or `lTM` , Fastis will use the keyword provided to search for the
 tag and list out all members under the same  tag.
 

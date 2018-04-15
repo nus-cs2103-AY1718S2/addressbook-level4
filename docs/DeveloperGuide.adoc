@@ -641,13 +641,15 @@ The feature supports the display and retrieval of addresses as a marker and of d
 
 Each map is loaded a separately as independent `MapPanels` with their own `MapManager`, located in `logic` folder managing them. Switching out of feature will unload the respective `MapPanel`, required due to limitations of API used.
 
+image::MapPanelSelectionSequenceDiagram.png[width="800"]
+
+The above sequence diagram represents the process of loading and setting a new marker on the map panel within Person Details panel.
 The feature can create markers to pin beneficiary location on map and also display suggested navigation routes between event locations.
 
-TODO: INSERT FINALISED DIAGRAM HERE
+As the Map Panel is a UI component, adopting the event-driven approach, we have made it such that the parent of the Map Panel
+listens for the `PersonPanelSelectionChangeEvent` to signal the child Map Panel to load a load/set a new address on the map.
 
-The Map View feature will involve the UI component as while as the Model component.
-
-TODO: SECTION INCOMPLETE
+The Google geocoding service helps to translate the string address into a proper Geocode request for Google to process.
 
 ==== Design Considerations
 
@@ -681,15 +683,15 @@ Feature includes a list of scheduled events for the specified day in addition to
 
 `Daily Scheduler` feature involves two separate sections,`Events List Display` and `Navigation`. The display portion focuses on retrieving events of the specified date whereas the navigation portion seeks to retrieve suggested routes between those events.
 
-TODO: INSERT FINALISED DIAGRAM HERE
-
 The `Daily Scheduler` feature will involve the UI component as while as the Model component, and makes use of `OAuthManager` to get required events.
+The OAuthManager is only used in the parser of the navigate command to retrieve the relevant event pairs.
 
-TODO: SECTION INCOMPLETE
+image::LoadDirectionsSequenceDiagram.png[width="800"]
 
-==== Design Considerations
+The above sequence diagram represents the process of loading and setting new direction markers on the map panel within Daily Scheduler panel.
+This happens after the parsing and doing the execution of `navigate` command where `LoadDirectionsEvent` is posted as an event.
 
-TODO: SECTION INCOMPLETE
+The DailySchedulerPanel, being the parent of the directionPanel, listens for the event and will update the map panel accordingly.
 
 // end::dailyScheduler[]
 
@@ -1839,7 +1841,7 @@ _{ more test cases ... }_
 
 === Calendar Tools
 .  Displaying the calendar within a WebView
-.. Notes: The signed in user within the WebView is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the WebView is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
 .. Test case: `calendar-launch` and not logged in +
    Expected: Error log command states that you must be logged in to use the command.
 .. Test case: `View > Open Calendar` and not logged in +
@@ -1856,7 +1858,7 @@ _{ more test cases ... }_
    Expected: All calendar windows close and user is logged out from signed-in calendar sessions (verify by logging as any user).
 
 .  Displaying the calendar within the scene switcher
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
 .. Test case: `switch calendar` and not logged in +
    Expected: Switch case states that you must be logged in to use the command.
 .. Test case: `switch calendar` and logged in +
@@ -1865,15 +1867,15 @@ _{ more test cases ... }_
    Expected: User is signed out from the calendar scene session (verify by logging in as any user).
 
 .  Reauthenticating Oauth certificate for calendar use
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
 .. Test case: `reauthenticate` and not logged in +
    Expected: Reauthenticate command states that you must be logged in to use the command.
 .. Test case: `reauthenticate` and logged in +
    Expected: System default browser is launched and user is asked to select an account to authenticate the SLAP app to manage. Failure to do so will freeze the application. Once permission has been granted, a test event will be added and deleted.
 
 .  Adding a calendar event
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
-.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
 .. Test case: `calendar-add` and not logged in +
    Expected: calendar-add command states that you must be logged in to use the feature.
 .. Test case: `calendar-add` and logged in +
@@ -1888,17 +1890,17 @@ _{ more test cases ... }_
    Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will freeze the application. calendar-add command will add event to authorized Google Calendar and show the user the event details with a link to the event.
 
 .  Listing upcoming calendar events in the command results box
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
-.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
 .. Test case: `calendar-list` and not logged in +
    Expected: calendar-list command states that you must be logged in to use the feature.
 .. Test case: `calendar-list` and logged in +
    Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will free the application. Assuming a valid certificate is obtained, if the user has any upcoming events, they will be displayed (up to 250). Otherwise, the command will state that no upcoming events were found.
 
 .  Deleting a calendar event
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
 .. Prerequisites: List all upcoming events using the `calendar-list` command or list events for a particular say using `show-schedule d/DATE`. A non-zero amount of events is required in either case.
-.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
 .. Test case: `calendar-delete 1` and not logged in +
    Expected: calendar-list command states that you must be logged in to use the feature.
 .. Test case: `calendar-delete 1` and logged in and neither `calendar-list` nor `show-schedule` has been run +
@@ -1913,8 +1915,8 @@ _{ more test cases ... }_
 
 // tag::showScheduleTesting[]
 .  Display the user's events for a particular day in the command results box
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
-.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
 .. Test case: `show-schedule d/May 5` +
    Expected: If there are calendar events for this date, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
 .. Test case: `show-schedule d/On Tuesday` +

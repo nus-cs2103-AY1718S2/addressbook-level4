@@ -2048,7 +2048,7 @@ Adding a person specified by the command line input with required person prefixe
    Expected: No person is added. Essential `NAME` field is missing. Error details are displayed in result display box.
 . Other incorrect add commands to try: `add`, `add x` (where x is any input) +
    Expected: Similar to previous.
-   
+
 === Adding a to-do
 
 Adding a to-do with content specified by the command line input.
@@ -2056,14 +2056,14 @@ Adding a to-do with content specified by the command line input.
 . Prerequisites: To-do with the content specified by user must not already be in Fastis.
 . Test case: `addToDo Do homework` +
    Expected: New to-do with content `Do homework` will be added to Fastis. Successful adding of to-do `Do homework` will be reflected in the result display box.
-. Test case: `Submit assignment - + -` +
+. Test case: `addToDo Submit assignment - + -` +
    Expected: No to-do is added. To-do content must be alphanumeric. Error details are displayed in the result display box.
 . Other incorrect commands: `addToDo Submit assignment!` +
    Expected: Similar to previous.
 . To-do `Do homework` already existed. +
    Test case: `addToDo Do homework` +
    Expected: Error details are displayed in status bar that to-do already exists.
-   
+
 === Deleting a to-do
 
 Deleting a to-do while all to-dos are listed
@@ -2073,9 +2073,9 @@ Deleting a to-do while all to-dos are listed
    Expected: First to-do is deleted from the list. Details of the deleted to-do are shown in the result display box. Timestamp of the last update in the status bar is updated.
 . Test case: `deleteToDo 0` +
    Expected: No to-do is deleted. Error details are shown in the result display box. Status bar remains the same.
-. Other incorrect deleteToDo commands to try: `deleteToDo Swim`, `deleteToDo x` (where `x` is larger than the list size) _{give more}_ +
+. Other incorrect deleteToDo commands to try: `deleteToDo Swim`, `deleteToDo x` (where `x` is larger than the list size) +
    Expected: Similar to previous.
-   
+
 === Checking a to-do
 
 Checking a to-do while all to-dos are listed
@@ -2085,9 +2085,9 @@ Checking a to-do while all to-dos are listed
    Expected: First to-do status is changed to "done". Details of the checked to-do are shown in the result display box. Timestamp of the last update in the status bar is updated.
 . Test case: `check 0` +
    Expected: No to-do is checked. Error details are shown in the result display box. Status bar remains the same.
-. Other incorrect check commands to try: `check Swim`, `check x` (where `x` is larger than the list size) _{give more}_ +
+. Other incorrect check commands to try: `check Swim`, `check x` (where `x` is larger than the list size) +
    Expected: Similar to previous.
-   
+
 === Unchecking a to-do
 
 Unchecking a to-do while all to-dos are listed
@@ -2097,9 +2097,9 @@ Unchecking a to-do while all to-dos are listed
    Expected: First to-do status is changed to "undone". Details of the unchecked to-do are shown in the result display box. Timestamp of the last update in the status bar is updated.
 . Test case: `uncheck 0` +
    Expected: No to-do is unchecked. Error details are shown in the result display box. Status bar remains the same.
-. Other incorrect uncheck commands to try: `uncheck Swim`, `uncheck x` (where `x` is larger than the list size) _{give more}_ +
+. Other incorrect uncheck commands to try: `uncheck Swim`, `uncheck x` (where `x` is larger than the list size) +
    Expected: Similar to previous.
-   
+
 === Editing a to-do
 
 Editing a to-do while all to-dos are listed
@@ -2109,7 +2109,7 @@ Editing a to-do while all to-dos are listed
    Expected: First to-do content is changed to "Do homework". Details of the edited to-do are shown in the result display box. Timestamp of the last update in the status bar is updated.
 . Test case: `editToDo 0 c/Do homework` +
    Expected: No to-do is edited. Error details are shown in the result display box. Status bar remains the same.
-. Other incorrect editToDo commands to try: `editToDo c/Swim`, `editToDo x c/Swim` (where `x` is larger than the list size) _{give more}_ +
+. Other incorrect editToDo commands to try: `editToDo c/Swim`, `editToDo x c/Swim` (where `x` is larger than the list size) +
    Expected: Similar to previous.
 
 === Adding a group

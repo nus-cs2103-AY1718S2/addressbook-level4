@@ -9,7 +9,7 @@ import javafx.scene.layout.Region;
 
 //@@author AzuraAiR
 /**
- * A ui for the status bar that is displayed at the header of the application.
+ * A ui for the birthday list that is displayed at the InfoPanel after `birthdays` is called
  */
 public class BirthdayList extends UiPart<Region> {
 

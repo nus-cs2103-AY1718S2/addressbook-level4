@@ -77,12 +77,8 @@ public class UniqueTaskList implements Iterable<Task> {
         if (index == -1) {
             throw new TaskNotFoundException();
         }
-        internalList.set(index, editedTask);
-        int indexCalendar = calendarList[target.getDeadline().diff][target.getDeadlineDay()].indexOf(target);
-        if (indexCalendar == -1) {
-            throw new TaskNotFoundException();
-        }
-        calendarList[target.getDeadline().diff][target.getDeadlineDay()].set(indexCalendar, editedTask);
+        remove(target);
+        add(editedTask);
     }
 
     /**
@@ -100,7 +96,16 @@ public class UniqueTaskList implements Iterable<Task> {
         return taskFoundAndDeleted;
     }
 
-    //@@author
+    /**
+     * Sorts the tasks in the list in date order
+     */
+    public void sortList() {
+        requireNonNull(internalList);
+
+        FXCollections.sort(internalList);
+    }
+
+    //@@author JoonKai1995
     public void setTasks(UniqueTaskList replacement) {
         this.internalList.setAll(replacement.internalList);
         for (int i = 0; i < 7; i++) {
@@ -110,6 +115,7 @@ public class UniqueTaskList implements Iterable<Task> {
         }
     }
 
+    //@@author Wu Di
     public void setTasks(List<Task> tasks) {
         requireAllNonNull(tasks);
         final UniqueTaskList replacement = new UniqueTaskList();

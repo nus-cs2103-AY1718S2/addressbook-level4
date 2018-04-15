@@ -168,3 +168,39 @@ public class EmailCommandTest {
     }
 }
 ```
+###### \FileUtil.java
+``` java
+//Unused due to other teammate's feature breaking the original intention, originally from FileUtil
+public static boolean isSameFile(File file1, File file2) throws IOException {
+    if (file1.length() != file2.length()) {
+        return false;
+    }
+
+    BufferedInputStream bisO = new BufferedInputStream(new FileInputStream(file1));
+    BufferedInputStream bisN = new BufferedInputStream(new FileInputStream(file2));
+    byte[] bufferO = new byte[4096];
+    byte[] bufferN = new byte[4096];
+    int fileBytes1 = bisO.read(bufferO);
+    bisN.read(bufferN);
+    while (fileBytes1 != -1) {
+        if (!Arrays.equals(bufferO, bufferN)) {
+            bisO.close();
+            bisN.close();
+            return false;
+        }
+        fileBytes1 = bisO.read(bufferO);
+        bisN.read(bufferN);
+    }
+    bisO.close();
+    bisN.close();
+    return true;
+}
+```
+###### \UnsupportDesktopException.java
+``` java
+public class UnsupportDesktopException extends CommandException {
+    public UnsupportDesktopException(String message) {
+        super(message);
+    }
+}
+```

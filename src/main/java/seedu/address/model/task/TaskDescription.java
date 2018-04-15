@@ -28,7 +28,7 @@ public class TaskDescription {
      */
     public TaskDescription(String description) {
         assert description != null : MESSAGE_DESCRIPTION_CONSTRAINTS;
-        checkArgument(isValidDescription(description));
+        checkArgument(isValidDescription(description), MESSAGE_DESCRIPTION_CONSTRAINTS);
         this.value = description;
         if (value.length() <= 20) {
             shortDesc = value;

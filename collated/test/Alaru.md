@@ -366,11 +366,16 @@ public class ParticipationTest {
         Assert.assertThrows(NullPointerException.class, () -> Participation.isValidParticipation(null));
 
         // invalid participation
-        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("")); // empty string
-        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation(" ")); // spaces only
-        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("^")); // only non-alphanumeric characters
-        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("abcd")); // contains alpha characters
-        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("peter*")); // contains non-alphanumeric characters
+        // empty string
+        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation(""));
+        // spaces only
+        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation(" "));
+        // only non-alphanumeric characters
+        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("^"));
+        // contains alpha characters
+        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("abcd"));
+        // contains non-alphanumeric characters
+        Assert.assertThrows(IllegalMarksException.class, () -> Participation.isValidParticipation("peter*"));
         assertFalse(Participation.isValidParticipation("101")); // over limit
         assertFalse(Participation.isValidParticipation("-500")); // below limit
 
@@ -404,15 +409,4 @@ public class UniqueItemListTest {
         assertEquals(uniqueItemList, otherItemList);
     }
 }
-```
-###### \java\systemtests\EditCommandSystemTest.java
-``` java
-        /* Case: invalid display pic (missing) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_DISPLAY_DESC,
-                DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
-
-        /* Case: invalid display pic (not image) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " "
-                        + INDEX_FIRST_PERSON.getOneBased() + INVALID_DISPLAY_TYPE_DESC,
-                DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
 ```

@@ -26,6 +26,16 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private String username;
+
+    public LogicManager(Model model, String username) {
+        this.model = model;
+        history = new CommandHistory();
+        this.username = username;
+        addressBookParser = new AddressBookParser();
+        undoRedoStack = new UndoRedoStack();
+        clearRedundantImages();
+    }
 
     public LogicManager(Model model) {
         this.model = model;
@@ -35,14 +45,16 @@ public class LogicManager extends ComponentManager implements Logic {
         clearRedundantImages();
     }
 
+    //@@author Alaru
     /**
      * Clears the data folder of redundant images
      */
     public void clearRedundantImages() {
+        logger.info("Deleting any unused display pictures");
         DeleteUtil.clearImageFiles(model.getItemList(), model.getFilteredPersonList());
-        logger.info("Deleting unused display pictures");
         model.clearDeleteItems();
     }
+    //@@author
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
@@ -78,6 +90,7 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(history.getHistory());
     }
 
+    //@@author Wu Di
     @Override
     public void setTabPane(TabPane tabPane) {
         addressBookParser.setTabPane(tabPane);

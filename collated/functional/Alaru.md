@@ -3,6 +3,8 @@
 ``` java
 public class DeleteUtil {
 
+    private static final Logger logger = LogsCenter.getLogger(DeleteUtil.class);
+
     /**
      * Goes through the list of files to be deleted and only deletes those that are not in use
      * @param itemsToDelete List of items (files) to delete
@@ -12,13 +14,17 @@ public class DeleteUtil {
         for (String item : itemsToDelete) {
             boolean notUsed = true;
             for (Person p : persons) {
-                if (p.getDisplayPic().toString().equals(item) || p.getDisplayPic().isDefault()) {
+                if (p.getDisplayPic().toString().equals(item) || item.equals(DisplayPic.DEFAULT_DISPLAY_PIC)) {
                     notUsed = false;
                     break;
                 }
             }
             if (notUsed) {
-                deleteFile(item);
+                if (deleteFile(item)) {
+                    logger.info("Successfully deleted image at " + item + " from disk.");
+                } else {
+                    logger.info("Unsuccessful in deleting image at " + item + " from disk.");
+                }
             }
         }
     }
@@ -27,9 +33,9 @@ public class DeleteUtil {
      * Delete a file at the given filepath.
      * @param filepath where the file is located.
      */
-    public static void deleteFile(String filepath) {
+    public static boolean deleteFile(String filepath) {
         File toDelete = new File(filepath);
-        toDelete.delete();
+        return toDelete.delete();
     }
 }
 ```
@@ -47,37 +53,9 @@ public class DeleteUtil {
     }
 
     /**
-     * Checks if the two given files are binary equivalent.
-     * @param file1 is a file on harddisk
-     * @param file2 is a different file from @code file1 on the harddisk
-     * @return whether the two files given are equal
-     * @throws IOException when there is an issue reading from either file
-     */
-    public static boolean isSameFile(File file1, File file2) throws IOException {
-        if (file1.length() != file2.length()) {
-            return false;
-        }
-
-        BufferedInputStream bisO = new BufferedInputStream(new FileInputStream(file1));
-        BufferedInputStream bisN = new BufferedInputStream(new FileInputStream(file2));
-        byte[] bufferO = new byte[4096];
-        byte[] bufferN = new byte[4096];
-        int fileBytes1 = bisO.read(bufferO);
-        bisN.read(bufferN);
-        while (fileBytes1 != -1) {
-            if (!Arrays.equals(bufferO, bufferN)) {
-                return false;
-            }
-            fileBytes1 = bisO.read(bufferO);
-            bisN.read(bufferN);
-        }
-        return true;
-    }
-
-    /**
      * Copies a file over. The new file will be binary equivalent to the original.
      */
-    public static void copyFile(String origFile, File outputFile) throws  IOException {
+    public static void copyFile(String origFile, File outputFile) throws IOException {
         byte[] buffer = new byte[4096];
         createIfMissing(outputFile);
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(origFile));
@@ -125,17 +103,11 @@ public class HashUtil {
 
     /**
      * Turns a byte array into a string hex code
+     * toHex() code referenced from:
+     * https://stackoverflow.com/questions/36162622/how-do-i-generate-a-hash-code-with-hash-sha256-in-java
      * @param hashValue is a byte array
      * @return A hex encode of a byte array
      */
-```
-###### \java\seedu\address\logic\commands\exceptions\UnsupportDesktopException.java
-``` java
-public class UnsupportDesktopException extends CommandException {
-    public UnsupportDesktopException(String message) {
-        super(message);
-    }
-}
 ```
 ###### \java\seedu\address\logic\commands\MarkCommand.java
 ``` java
@@ -250,7 +222,7 @@ public class UpdateDisplayCommand extends UndoableCommand {
     public UpdateDisplayCommand(Index index, DisplayPic dp) {
         requireNonNull(index);
         requireNonNull(dp);
-        this.targetIndex = index;
+        targetIndex = index;
         this.dp = dp;
     }
 
@@ -315,6 +287,17 @@ public class UpdateDisplayCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\LogicManager.java
+``` java
+    /**
+     * Clears the data folder of redundant images
+     */
+    public void clearRedundantImages() {
+        logger.info("Deleting any unused display pictures");
+        DeleteUtil.clearImageFiles(model.getItemList(), model.getFilteredPersonList());
+        model.clearDeleteItems();
+    }
+```
 ###### \java\seedu\address\logic\parser\MarkCommandParser.java
 ``` java
 public class MarkCommandParser implements Parser<MarkCommand> {
@@ -362,7 +345,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
      */
     public static DisplayPic parseDisplayPic(String displayPic)
             throws IllegalValueException {
-        if (displayPic == null) {
+        if (displayPic.equals("")) {
             return new DisplayPic();
         } else {
             String trimmedDisplayPath = displayPic.trim();
@@ -575,12 +558,11 @@ public class DisplayPic {
     public static final String MESSAGE_DISPLAY_PIC_NO_EXTENSION =
             "The filepath should point to a file with an extension.";
 
-    public final String originalPath;
+    public final String originalFilePath;
     private String value;
 
     public DisplayPic() {
-        this.originalPath = DEFAULT_DISPLAY_PIC;
-        this.value = DEFAULT_DISPLAY_PIC;
+        value = originalFilePath = DEFAULT_DISPLAY_PIC;
     }
 
     /**
@@ -593,20 +575,32 @@ public class DisplayPic {
         checkArgument(DisplayPicStorage.isValidPath(filePath), MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
         checkArgument(DisplayPicStorage.hasValidExtension(filePath), MESSAGE_DISPLAY_PIC_NO_EXTENSION);
         checkArgument(DisplayPicStorage.isValidImage(filePath), MESSAGE_DISPLAY_PIC_NOT_IMAGE);
-        this.originalPath = filePath;
-        this.value = filePath;
+        value = originalFilePath = filePath;
+    }
+
+    /**
+     * Creates the duplicated image filename.
+     */
+    public String getSaveDisplay(String personDetails) throws IllegalValueException {
+        if (value.equals(DEFAULT_DISPLAY_PIC)) {
+            return value;
+        }
+        String fileType = FileUtil.getFileType(value);
+        String uniqueFileName = DisplayPicStorage.generateDisplayPicName(personDetails, value, fileType);
+        value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
+        return uniqueFileName;
     }
 
     /**
      * Saves the display picture to the specified storage location.
      */
-    public void saveDisplay(String personDetails) throws IllegalValueException {
-        if (originalPath.equals(DEFAULT_DISPLAY_PIC)) {
+    public void saveDisplay(String uniqueName) throws IllegalValueException {
+        if (value.equals(DEFAULT_DISPLAY_PIC)) {
             return;
         }
-        String fileType = FileUtil.getFileType(originalPath);
-        String uniqueFileName = DisplayPicStorage.saveDisplayPic(personDetails, originalPath, fileType);
-        this.value = DEFAULT_IMAGE_LOCATION + uniqueFileName + '.' + fileType;
+        String fileType = FileUtil.getFileType(value);
+        DisplayPicStorage.saveDisplayPic(uniqueName, originalFilePath, fileType);
+        value = DEFAULT_IMAGE_LOCATION + uniqueName + '.' + fileType;
     }
 
     public void updateToDefault() {
@@ -648,7 +642,8 @@ public class IllegalMarksException extends IllegalArgumentException {
 ``` java
 public class Participation {
 
-    public static final String MESSAGE_PARTICIPATION_CONSTRAINTS = "Participation marks cannot be negative or over 100!";
+    public static final String MESSAGE_PARTICIPATION_CONSTRAINTS =
+            "Participation marks cannot be negative or over 100!";
     public static final String UI_DISPLAY_HEADER = "Participation marks: ";
 
     public final Integer threshold;
@@ -684,6 +679,11 @@ public class Participation {
         return (value >= threshold);
     }
 
+    /**
+     * Validates the participation mark
+     * @param value
+     * @return true if it is valid
+     */
     public static boolean isValidParticipation(String value) {
         requireNonNull(value);
         try {
@@ -723,6 +723,8 @@ public class DisplayPicStorage {
     public static final String SAVE_LOCATION = "data/displayPic/";
     public static final String INTERNAL_DEFAULT_PIC_SAVE_LOCATION = "/images/displayPic/default.png";
 
+    private static final Logger logger = LogsCenter.getLogger(DisplayPicStorage.class);
+
     /**
      * Returns true if a given string points to a valid file.
      */
@@ -744,22 +746,27 @@ public class DisplayPicStorage {
         try {
             InputStream imageStream = ImageIO.class.getResourceAsStream(test);
             if (imageStream == null) {
-                try {
-                    BufferedImage image = ImageIO.read(new File(test));
-                    return image != null;
-                } catch (IOException e3) {
-                    return false;
-                }
+                return openImage(test);
             }
             BufferedImage image = ImageIO.read(imageStream);
             return image != null;
-        } catch (IOException e) {
-            try {
-                BufferedImage image = ImageIO.read(new File(test));
-                return image != null;
-            } catch (IOException e2) {
-                return false;
-            }
+        } catch (IOException ioe) {
+            return openImage(test);
+        }
+    }
+
+
+    /**
+     * Attempts to open a file to see if it is an image
+     * @param filepath is the path to a file
+     * @return whether the file located at the specified filepath is a valid image file
+     */
+    private static boolean openImage(String filepath) {
+        try {
+            BufferedImage image = ImageIO.read(new File(filepath));
+            return image != null;
+        } catch (IOException ioe) {
+            return false;
         }
     }
 
@@ -776,33 +783,35 @@ public class DisplayPicStorage {
     }
 
     /**
+     * Creates a unique and unused file name to store the image file as
+     * @param name is the unique details of a person
+     * @param filePath the filepath of the image to read from
+     * @param fileType the extension of the imagefile
+     * @return a String that will be used as the filename and is unique
+     * @throws IllegalValueException the filepath is an illegal value
+     */
+    public static String generateDisplayPicName(String name, String filePath, String fileType)
+            throws IllegalValueException {
+        String uniqueFileName = HashUtil.generateUniqueName(name);
+        File toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
+        while (FileUtil.isFileExists(toSave)) {
+            uniqueFileName = HashUtil.generateUniqueName(uniqueFileName);
+            toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
+        }
+        return uniqueFileName;
+    }
+
+    /**
      * Tries to save a copy of the image provided by the user into a default location.
-     * @param name the name of the new image file
+     * @param uniqueName the name of the new image file
      * @param filePath the location of the current image file
      * @param fileType the file extension of the current image file
-     * @return the filename of the image
      */
-    public static String saveDisplayPic(String name, String filePath, String fileType) throws IllegalValueException {
-        try {
-            boolean sameFile = false;
-            File input = new File(filePath);
-            String uniqueFileName = HashUtil.generateUniqueName(name);
-            File toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
-            while (FileUtil.isFileExists(toSave)) {
-                if (FileUtil.isSameFile(input, toSave)) {
-                    sameFile = true;
-                    break;
-                }
-                uniqueFileName = HashUtil.generateUniqueName(uniqueFileName);
-                toSave = new File(SAVE_LOCATION + uniqueFileName + '.' + fileType);
-            }
-            if (!sameFile) {
-                FileUtil.copyImage(filePath, toSave);
-            }
-            return uniqueFileName;
-        } catch (IOException | IllegalValueException exc) {
-            throw new IllegalValueException("Unable to write file");
-        }
+    public static void saveDisplayPic(String uniqueName, String filePath, String fileType)
+            throws IllegalValueException {
+        File toSave = new File(SAVE_LOCATION + uniqueName + '.' + fileType);
+        FileUtil.copyImage(filePath, toSave);
+        logger.info("Successfully saved " + uniqueName + '.' + fileType + " to disk.");
     }
 
     /**
@@ -816,6 +825,8 @@ public class DisplayPicStorage {
         } else {
             String filePath = dp.toString();
             if (!DisplayPicStorage.isValidPath(filePath) || !DisplayPicStorage.isValidImage(filePath)) {
+                logger.fine("Unable to open image at : " + dp.toString()
+                        + ", retrieving default display picture.");
                 return AppUtil.getImage(INTERNAL_DEFAULT_PIC_SAVE_LOCATION);
             }
             File input = new File(dp.toString());
@@ -830,7 +841,8 @@ public class DisplayPicStorage {
     public static DisplayPic toSaveDisplay(DisplayPic display1, DisplayPic display2, String details) {
         if (!display1.equals(display2)) {
             try {
-                display1.saveDisplay(details);
+                String uniqueName = display1.getSaveDisplay(details);
+                display1.saveDisplay(uniqueName);
                 return display1;
             } catch (IllegalValueException ive) {
                 display1.updateToDefault();

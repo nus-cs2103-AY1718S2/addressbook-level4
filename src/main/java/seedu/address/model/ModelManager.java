@@ -33,10 +33,25 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Task> filteredTasks;
     private final ArrayList<String> filteredDeleteItems;
     private final ObservableList<Task>[][] calendarTaskLists;
+    private String username;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, String username) {
+        super();
+        requireAllNonNull(addressBook, userPrefs);
+
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+
+        this.addressBook = new AddressBook(addressBook);
+        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
+        filteredDeleteItems = new ArrayList<>(this.addressBook.getItemList());
+        calendarTaskLists = this.addressBook.getCalendarList();
+        this.username = username;
+    }
+
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
@@ -51,9 +66,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), "");
     }
-
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
@@ -97,7 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addTask(Task task) {
         addressBook.addTask(task);
-        updateFilteredTaskList(PREDICATE_SHOW_ALL_CURRENT_TASKS);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         indicateAddressBookChanged();
     }
 
@@ -128,6 +142,11 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updateTask(target, editedTask);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortTasks() {
+        addressBook.sortTaskList();
     }
 
     //@@author

@@ -250,6 +250,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.sortList();
     }
 
+    public void sortTaskList() {
+        tasks.sortList();
+    }
+
     @Override
     public ObservableList<Task> getTaskList() {
         return tasks.asObservableList();
@@ -276,8 +280,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
-                && this.tasks.equals(((AddressBook) other).tasks);
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.tasks.equals(((AddressBook) other).tasks));
     }
 
     @Override

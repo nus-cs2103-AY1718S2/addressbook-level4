@@ -30,7 +30,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_DISPLAY_PIC + "[IMAGE TO DISPLAY PICTURE] "
+            + PREFIX_DISPLAY_PIC + "[IMAGE TO DISPLAY PICTURE] \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_MATRIC_NUMBER + "A1234567J "
@@ -59,9 +59,10 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
+            String uniqueImageName = toAdd.getDisplayPic().getSaveDisplay(toAdd.getDetails());
             model.addPerson(toAdd);
             //Only save the display picture here
-            toAdd.getDisplayPic().saveDisplay(toAdd.getDetails());
+            toAdd.getDisplayPic().saveDisplay(uniqueImageName);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);

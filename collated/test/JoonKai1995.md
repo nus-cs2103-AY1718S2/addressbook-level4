@@ -1,36 +1,45 @@
 # JoonKai1995
-###### /java/seedu/address/ui/CalendarViewTest.java
+###### \java\seedu\address\model\task\DeadlineTest.java
 ``` java
-public class CalendarViewTest extends GuiUnitTest {
+public class DeadlineTest {
+
+    private LocalDate now = LocalDate.now();
+    private LocalDate yesterday = now.minusDays(1);
+    private LocalDate tomorrow = now.plusDays(1);
+    private String dateYesterday = yesterday.toString();
+    private String correctDateYesterday = dateYesterday.substring(8, 10) + "-" + dateYesterday.substring(5, 7)
+        + "-" + dateYesterday.substring(0, 4);
+    private String dateTomorrow = tomorrow.toString();
+    private String correctDateTomorrow = dateTomorrow.substring(8, 10) + "-" + dateTomorrow.substring(5, 7)
+        + "-" + dateTomorrow.substring(0, 4);
 
     @Test
-    public void display() {
-        // no tags
-        ObservableList<Task>[][] lists = new ObservableList[1][1];
-        lists[0][0] = FXCollections.observableArrayList();
-        CalendarView calendar = new CalendarView(lists);
-        uiPartRule.setUiPart(calendar);
-        YearMonth yearMonth = YearMonth.now();
-        String correctTitle = yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear());
-        assertCalendarTitle(calendar, correctTitle);
-
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Deadline(null));
     }
 
-    /**
-     * Asserts that {@code personCard} displays the details of {@code expectedPerson} correctly and matches
-     * {@code expectedId}.
-     */
-    private void assertCalendarTitle(CalendarView calendar, String expectedTitle) {
-        guiRobot.pauseForHuman();
+    @Test
+    public void constructor_invalidDeadline_throwsDateTimeParseException() {
+        String invalidDeadline = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Deadline(invalidDeadline));
+    }
 
-        CalendarViewHandle calendarViewHandle = new CalendarViewHandle(calendar.getRoot());
+    @Test
+    public void isValidDeadline() {
+        // invalid dates
+        assertFalse(Deadline.isValidDeadline("")); // empty string
+        assertFalse(Deadline.isValidDeadline(" ")); // spaces only
+        assertFalse(Deadline.isValidDeadline("91")); // numbers
+        assertFalse(Deadline.isValidDeadline("02/04/2017")); // / instead of -
+        assertFalse(Deadline.isValidDeadline(correctDateYesterday)); // scheduled yesterday
 
-        // verify id is displayed correctly
-        assertEquals(expectedTitle, calendarViewHandle.getCalendarTitle());
+        // valid dates
+        assertTrue(Deadline.isValidDeadline(correctDateTomorrow));
     }
 }
+
 ```
-###### /java/seedu/address/model/task/PriorityTest.java
+###### \java\seedu\address\model\task\PriorityTest.java
 ``` java
 public class PriorityTest {
 
@@ -62,7 +71,7 @@ public class PriorityTest {
 }
 
 ```
-###### /java/seedu/address/model/task/TaskDescriptionTest.java
+###### \java\seedu\address\model\task\TaskDescriptionTest.java
 ``` java
 public class TaskDescriptionTest {
 
@@ -93,48 +102,76 @@ public class TaskDescriptionTest {
         assertTrue(TaskDescription.isValidDescription("12345")); // numbers only
         assertTrue(TaskDescription.isValidDescription("peter the 2nd")); // alphanumeric characters
         assertTrue(TaskDescription.isValidDescription("Capital Tan")); // with capital letters
-        assertTrue(TaskDescription.isValidDescription("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(TaskDescription.isValidDescription("David Roger Jackson Ray Jr 2nd")); // long desc
     }
 }
 
 ```
-###### /java/seedu/address/model/task/DeadlineTest.java
+###### \java\seedu\address\model\task\TitleTest.java
 ``` java
-public class DeadlineTest {
-
-    private LocalDate now = LocalDate.now();
-    private LocalDate yesterday = now.minusDays(1);
-    private LocalDate tomorrow = now.plusDays(1);
-    private String dateYesterday = yesterday.toString();
-    private String correctDateYesterday = dateYesterday.substring(8, 10) + "-" + dateYesterday.substring(5, 7)
-        + "-" + dateYesterday.substring(0, 4);
-    private String dateTomorrow = tomorrow.toString();
-    private String correctDateTomorrow = dateTomorrow.substring(8, 10) + "-" + dateTomorrow.substring(5, 7)
-        + "-" + dateTomorrow.substring(0, 4);
+public class TitleTest {
 
     @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Deadline(null));
+    public void constructor_null_throwsAssertionError() {
+        Assert.assertThrows(NullPointerException.class, () -> new Title(null));
     }
 
     @Test
-    public void constructor_invalidDeadline_throwsDateTimeParseException() {
-        String invalidDeadline = "";
-        Assert.assertThrows(DateTimeParseException.class, () -> new Deadline(invalidDeadline));
+    public void constructor_invalidDescription_throwsIllegalArgumentException() {
+        String invalidTitle = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Title(invalidTitle));
     }
 
     @Test
-    public void isValidDeadline() {
-        // invalid dates
-        assertFalse(Deadline.isValidDeadline("")); // empty string
-        assertFalse(Deadline.isValidDeadline(" ")); // spaces only
-        assertFalse(Deadline.isValidDeadline("91")); // numbers
-        assertFalse(Deadline.isValidDeadline("02/04/2017")); // / instead of -
-        assertFalse(Deadline.isValidDeadline(correctDateYesterday)); // scheduled yesterday
+    public void isValidDescription() {
+        // null name
+        Assert.assertThrows(NullPointerException.class, () -> Title.isValidTitle(null));
 
-        // valid dates
-        assertTrue(Deadline.isValidDeadline(correctDateTomorrow));
+        // invalid name
+        assertFalse(Title.isValidTitle("")); // empty string
+        assertFalse(Title.isValidTitle(" ")); // spaces only
+        assertFalse(Title.isValidTitle("^")); // only non-alphanumeric characters
+        assertFalse(Title.isValidTitle("peter*")); // contains non-alphanumeric characters
+
+        // valid name
+        assertTrue(Title.isValidTitle("peter jack")); // alphabets only
+        assertTrue(Title.isValidTitle("12345")); // numbers only
+        assertTrue(Title.isValidTitle("peter the 2nd")); // alphanumeric characters
+        assertTrue(Title.isValidTitle("Capital Tan")); // with capital letters
+        assertTrue(Title.isValidTitle("David Roger Jackson Ray Jr 2nd")); // long titles
     }
 }
 
+
+```
+###### \java\seedu\address\ui\CalendarViewTest.java
+``` java
+public class CalendarViewTest extends GuiUnitTest {
+
+    @Test
+    public void display() {
+        // no tags
+        ObservableList<Task>[][] lists = new ObservableList[1][1];
+        lists[0][0] = FXCollections.observableArrayList();
+        CalendarView calendar = new CalendarView(lists);
+        uiPartRule.setUiPart(calendar);
+        YearMonth yearMonth = YearMonth.now();
+        String correctTitle = yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear());
+        assertCalendarTitle(calendar, correctTitle);
+
+    }
+
+    /**
+     * Asserts that {@code personCard} displays the details of {@code expectedPerson} correctly and matches
+     * {@code expectedId}.
+     */
+    private void assertCalendarTitle(CalendarView calendar, String expectedTitle) {
+        guiRobot.pauseForHuman();
+
+        CalendarViewHandle calendarViewHandle = new CalendarViewHandle(calendar.getRoot());
+
+        // verify id is displayed correctly
+        assertEquals(expectedTitle, calendarViewHandle.getCalendarTitle());
+    }
+}
 ```

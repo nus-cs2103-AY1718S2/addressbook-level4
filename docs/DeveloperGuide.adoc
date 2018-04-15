@@ -230,15 +230,17 @@ The `Model`,
 [[Design-Storage]]
 === Storage component
 
+The following diagram displays the structure of the Storage component. +
+
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component:
 
-* can save `UserPref` objects in json format and read it back.
-* can save Medeina's Address Book data in xml format and read it back.
+* can save `UserPref` objects in json format and read it back;
+* can save Medeina's data in `xml` format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -476,46 +478,389 @@ Keeping to one main command is simpler and more user-friendly as compared to hav
 
 // end::addcommandDG[]
 
-// tag::addPetPatient[]
-=== Adding a Pet Patient
+// tag::editcommandDG[]
+=== Edit Command
+
+This command allows a user to edit `Person`, `PetPatient` and `Appointment` objects.
 
 ==== Current Implementation
-Currently, adding of pet patients is achieved by `AddPetPatientCommand`. It allows the user to add the details of pet patients, and subsequently stores the details within the storage file.
 
-The implementation of `AddPetPatientCommand` is rather similar to that of `AddCommand`.
+Below is a sequence diagram detailing the interaction between the various classes upon invocation of the `edit` command.
 
-[NOTE]
-`AddPetPatientCommand`, as well as `AddCommand`, extends `UndoableCommand`.
-----
-public class AddPetPatientCommand extends UndoableCommand {
-	// logic for AddPetPatientCommand
+.Sequence Diagram for Edit Command
+image::EditCommandSequenceDiagram.png[width="800"]
+
+We examine the flow of events, starting when the command goes through `EditCommandParser` for parsing. The type of information provided by the user will be
+identified through the use of regular expression `Pattern` objects. +
+
+[source,java]
+-----
+private static final Pattern EDIT_COMMAND_FORMAT_PERSON = Pattern.compile("-(o)+(?<personInfo>.*)");
+private static final Pattern EDIT_COMMAND_FORMAT_PET_PATIENT = Pattern.compile("-(p)+(?<petPatientInfo>.*)");
+private static final Pattern EDIT_COMMAND_FORMAT_APPOINTMENT = Pattern.compile("-(a)+(?<appointmentInfo>.*)");
+-----
+
+For instance, if the user has keyed in `edit -p 1 nr/S1234567Z` (same command as in the sequence diagram), then through the matching of the `Pattern` objects,
+we will know that the user intends to edit a `PetPatient` object, since it matches the pattern
+ `-(p)+(?<petPatientInfo>.*)`. +
+
+Depending on which case matches (refer to code snippet below), we will then call the relevant parsing method for the
+information provided by the user. Following the example from above, since the user has supplied the `-p` argument,
+further parsing of the information will be done in the `parsePetPatient` method.
+
+[source,java]
+-----
+public EditCommand parse(String args) throws ParseException {
+    String trimmedArgs = args.trim();
+
+    ...
+
+    // Edit existing pet patient
+    final Matcher matcherForPetPatient = EDIT_COMMAND_FORMAT_PET_PATIENT.matcher(trimmedArgs);
+    if (matcherForPetPatient.matches()) {
+        String petPatientInfo = matcherForPetPatient.group("petPatientInfo");
+        return parsePetPatient(petPatientInfo);
+    }
+
+    ...
+
+    // throws exception for invalid format
+    throw new ParseException(
+        String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE)
+        );
 }
-----
-This brings us to the next section on the design considerations of AddPetPatientCommand.
+-----
+
+The further parsing of the information in `parsePerson()`, `parsePetPatient()` and `parseAppointment()` will require
+the use of `EditPersonDescriptor`, `EditPetPatientDescriptor` and `EditAppointmentDescriptor` respectively to create
+the final objects to be replaced in the corresponding lists located inside `AddressBook`. +
+
+The descriptor objects are used primarily for the transfer of information to the corresponding `Person`, `PetPatient`
+or `Appointment` object. +
+
+Using the example as explained previously, a new `EditPetPatientDescriptor` object will be created, and the relevant
+information is retrieved out. Since only `PREFIX_NRIC` is present (`nr/`), then only the `ownerNric` field in
+`EditPetPatientDescriptor` will be set.
+
+[source,java]
+-----
+public EditCommand parsePetPatient(String petPatientInfo) throws ParseException {
+
+    ...
+
+    EditPetPatientDescriptor editPetPatientDescriptor = new EditPetPatientDescriptor();
+    try {
+        ParserUtil.parsePetPatientName(argMultimap.getValue(PREFIX_NAME))
+                .ifPresent(editPetPatientDescriptor::setName);
+        ParserUtil.parseSpecies(argMultimap.getValue(PREFIX_SPECIES))
+                .ifPresent(editPetPatientDescriptor::setSpecies);
+        ParserUtil.parseBreed(argMultimap.getValue(PREFIX_BREED))
+                .ifPresent(editPetPatientDescriptor::setBreed);
+        ParserUtil.parseColour(argMultimap.getValue(PREFIX_COLOUR))
+                .ifPresent(editPetPatientDescriptor::setColour);
+        ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE))
+                .ifPresent(editPetPatientDescriptor::setBloodType);
+        ParserUtil.parseNric(argMultimap.getValue(PREFIX_NRIC))
+                .ifPresent(editPetPatientDescriptor::setOwnerNric);
+        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG))
+                .ifPresent(editPetPatientDescriptor::setTags);
+    } catch (IllegalValueException ive) {
+        throw new ParseException(ive.getMessage(), ive);
+    }
+
+    ...
+
+    return new EditCommand(index, editPetPatientDescriptor);
+}
+-----
+
+The relevant descriptor will be passed over to `EditCommand` at the end of the function, as can be seen above. +
+
+Within `EditCommand`, there are a few private variables specified. One of the key things to note is that we are using
+an `enum` to identify the type of object that we are editing. After the relevant method is called for `EditCommand`,
+the index, type and descriptor will be set in the created `EditCommand` object, as can be seen in the code snippet below.
+
+[source,java]
+-----
+public enum Type { EDIT_PERSON, EDIT_PET_PATIENT, EDIT_APPOINTMENT };
+
+private Index index;
+private EditPersonDescriptor editPersonDescriptor;
+private EditPetPatientDescriptor editPetPatientDescriptor;
+private EditAppointmentDescriptor editAppointmentDescriptor;
+private Type type;
+
+private Person personToEdit; // original
+private Person editedPerson; // edited
+private PetPatient petPatientToEdit;
+private PetPatient editedPetPatient;
+private Appointment appointmentToEdit;
+private Appointment editedAppointment;
+
+...
+
+public EditCommand(Index index, EditPetPatientDescriptor editPetPatientDescriptor) {
+        requireNonNull(index);
+        requireNonNull(editPetPatientDescriptor);
+
+        this.index = index;
+        this.editPetPatientDescriptor = new EditPetPatientDescriptor(
+                                            editPetPatientDescriptor
+                                            );
+        this.type = EDIT_PET_PATIENT;
+}
+-----
+
+After this stage, the descriptors are processed based on the type using a switch (not shown). For instance, since the
+user is editing a pet patient, then using the index of the pet patient in the last shown list, the `PetPatient` object
+to be modified will be retrieved. Using the information from the descriptor, a new `PetPatient` object will be created,
+so that we can replace the edited object in the list of `PetPatients`. The modified fields will come from the
+`EditPetPatientDescriptor` object, while the unmodified fields will come from the old `PetPatient` object, as can be
+seen in the code snippet below.
+
+[source,java]
+-----
+protected void preprocessUndoableCommandForPetPatient() throws CommandException {
+    List<PetPatient> lastShownPetPatientList = model.getFilteredPetPatientList();
+
+    if (index.getZeroBased() >= lastShownPetPatientList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PET_PATIENT_DISPLAYED_INDEX);
+    }
+
+    petPatientToEdit = lastShownPetPatientList.get(index.getZeroBased());
+    editedPetPatient = createEditedPetPatient(petPatientToEdit, editPetPatientDescriptor);
+}
+
+private static PetPatient createEditedPetPatient(PetPatient petPatientToEdit,
+                                                     EditPetPatientDescriptor editPetPatientDescriptor) {
+    assert petPatientToEdit != null;
+
+    PetPatientName updatedName = editPetPatientDescriptor.getName().orElse(petPatientToEdit.getName());
+    Species updatedSpecies = editPetPatientDescriptor.getSpecies().orElse(petPatientToEdit.getSpecies());
+    Breed updatedBreed = editPetPatientDescriptor.getBreed().orElse(petPatientToEdit.getBreed());
+    Colour updatedColour = editPetPatientDescriptor.getColour().orElse(petPatientToEdit.getColour());
+    BloodType updatedBloodType = editPetPatientDescriptor.getBloodType().orElse(petPatientToEdit.getBloodType());
+    Nric updatedOwnerNric = editPetPatientDescriptor.getOwnerNric().orElse(petPatientToEdit.getOwner());
+    Set<Tag> updatedTags = editPetPatientDescriptor.getTags().orElse(petPatientToEdit.getTags());
+
+    return new PetPatient(
+            updatedName,
+            updatedSpecies,
+            updatedBreed,
+            updatedColour,
+            updatedBloodType,
+            updatedOwnerNric,
+            updatedTags
+    );
+}
+-----
+
+Now that the relevant object has been created, it will go through a series of checks to ensure the validity of the data
+that the user has keyed in. This will be detailed under the next section, <<Edit-Command-Design-Consideration-Dependency-Resolution>>. +
+
+Finally, the relevant listing will be updated, so that the user can see the changes immediately in the Medeina
+application. A success message will be returned if the command has been executed fully with no errors.
+
+[source,java]
+-----
+public CommandResult executeUndoableCommand() throws CommandException {
+    try {
+        switch (type) {
+        case EDIT_PERSON:
+            resolvePersonDependencies();
+            model.updatePerson(personToEdit, editedPerson);
+            break;
+        case EDIT_PET_PATIENT:
+            resolvePetPatientDependencies();
+            model.updatePetPatient(petPatientToEdit, editedPetPatient);
+            break;
+        case EDIT_APPOINTMENT:
+            checkForClashes();
+            checkForSameAppointmentTiming();
+            checkForConcurrentAppointments();
+            checkForPastAppointment();
+            model.updateAppointment(appointmentToEdit, editedAppointment);
+            break;
+        default:
+            break;
+        }
+    } catch (DuplicatePersonException dpe) {
+    ...
+    }
+    switch (type) {
+    case EDIT_PERSON:
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+    case EDIT_PET_PATIENT:
+        model.updateFilteredPetPatientList(PREDICATE_SHOW_ALL_PET_PATIENTS);
+        return new CommandResult(String.format(MESSAGE_EDIT_PET_PATIENT_SUCCESS, editedPetPatient));
+    case EDIT_APPOINTMENT:
+        model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        return new CommandResult(String.format(MESSAGE_EDIT_APPOINTMENT_SUCCESS, editedAppointment));
+    default:
+        return null;
+    }
+}
+-----
+
+Below is the activity diagram for `edit` command to give us a better insight on how all the above-mentioned operations work together.
+
+.Activity Diagram for Edit Command
+image::EditActivityDiagram.png[width="800"]
+
 
 ==== Design Considerations
 
-===== Aspect: Implementation of AddPetPatientCommand
+===== Consolidating Similar Commands
 
-* **Alternative 1 (current choice):** The command extends `UndoableCommand`
-** Pros: We can make use of the undo / redo function that was previously implemented. This also allows our users to correct any mistakes that they might have made while keying in the information of the pet patients.
-** Cons: Developers who join our team in the future may have trouble understanding the code base (since we have both `UndoableCommand` and `Command`).
+Initially, we have considered having multiple commands for adding of `Person`, `PetPatient` and `Appointment` objects.
+For example:
 
-* **Alternative 2:** The command extends `Command` instead.
-** Pros: We simplify the code base by removing the use of `UndoableCommand`.
-** Cons: Users are unable to undo their mistakes. Instead, they will have to go through the hassle of editing / deleting pet patients to resolve the error on their part.
+* Editing a Person: `editperson`
+* Editing a PetPatient: `editpetpatient`
+* Editing an Appointment: `editappointment`
+
+However, implementing the logic this way will make typing very inefficient for users, since the commands are extremely long.
+This defeats the main purpose of our CLI-centered application. +
+
+As such, to make things simpler, and also more user friendly for our users, we have decided to consolidate these
+3 variants into just one single command, with the use of an option to indicate which object the user is trying to edit. +
+
+Below is the final command syntax for `edit` command after taking this into consideration:
+
+* Editing a Person: `edit *-o* INDEX [n/CONTACT_NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [nr/NRIC] [t/TAGS]...`
+* Editing a PetPatient : `edit *-p* INDEX [n/PET_PATIENT_NAME] [s/SPECIES] [b/BREED] [c/COLOUR] [bt/BLOOD_TYPE] [t/TAGS]...`
+* Editing an Appointment : `edit *-a* INDEX [d/YYYY-MM-DD HH:MM] [r/REMARK] [t/TAGS]...`
+
+[[Edit-Command-Design-Consideration-Dependency-Resolution]]
+===== Resolution of Dependencies
+
+The problem with editing the various fields of an object is the breaking of dependencies that it might have with other objects. +
+
+The various dependencies and / or other considerations are listed in the table below:
+
+[cols="20, 80", options="header"]
+|=====
+| Object
+| Dependency / Considerations
+
+.^a|Person
+a|* If editing name, phone, email, address: no problems posed.
+* If editing person's NRIC: all pets and their respective appointments under specified person must also be modified (NRIC fields). Retrieve all pets and appointments with said NRIC and update accordingly.
+
+.^a|PetPatient
+a|* If editing species, breed, colour, blood type: no problems posed.
+* If editing name: search for and update all related appointments.
+* If editing owner's NRIC: Check if NRIC exists. If yes, search and update all relevant appointments. If no, throw an exception.
+* If editing both name and owner's NRIC: Check if NRIC exists. If yes, search and update all relevant appointments. If no, throw an exception. Also, search for and update all related appointments under the specified pet's name.
+
+.^a|Appointment
+a|* If editing remark, type: no problems posed.
+* If editing date and time of appointment:
+** Check for clashes (existing appointment at that time slot).
+** Check for concurrent appointments.
+** Check whether stated date and time is in the past.
+|=====
+
+These dependencies are resolved within Medeina for our users' convenience. +
+
+We will now show two notable examples of dependency resolution in Medeina.
+
+====== Resolving PetPatient Dependencies with Name and Owner NRIC
+
+Resolution of PetPatient dependencies is required when changing its name or its owner's NRIC. The code to resolve these
+dependencies is as follows:
+
+[source,java]
+-----
+private void resolvePetPatientDependencies() throws CommandException,
+            AppointmentNotFoundException, DuplicateAppointmentException {
+
+    Nric oldNric = petPatientToEdit.getOwner();
+    Nric newNric = editedPetPatient.getOwner();
+    PetPatientName oldPetName = petPatientToEdit.getName();
+    PetPatientName newPetName = editedPetPatient.getName();
+
+    if (!oldNric.equals(newNric)) { // nric edited, I want to change owner
+        Person newOwner = model.getPersonWithNric(newNric); // new owner must exist
+        if (newOwner == null) {
+            throw new CommandException("New owner must exist first before updating pet patient's owner NRIC!");
+        }
+        // we only update nric for appointments for that specific pet patient!
+        // this is because it might be an owner transfer. If there are some other pets under the previous owner,
+        // he/she may still be holding on to these pets.
+        updateAppointmentByOwnerNricForSpecificPetName(oldNric, newNric, oldPetName);
+    }
+    if (!oldPetName.equals(newPetName)) { // name edited
+        updateAppointmentByPetPatientName(newNric, oldPetName, newPetName);
+    }
+}
+-----
+
+In the code snippet above, we note that a check has been done for whether the old owner's NRIC and the new owner's NRIC are
+equivalent. If they are not, this tells us that the owner's NRIC has been changed, and we search through the list of Persons
+to check if the new owner with the specified NRIC exists. If it exists, then we update all the appointments tied to the pet patient
+to the new owner. +
+
+If the new pet patient's name is not equivalent to the old pet patient's name, it means that the user has edited it, and hence
+we update all appointments for the selected pet patient to be tied to the new pet patient's name as supplied by the user.
+
+====== Checking for Concurrent Appointments
+
+Checking for concurrent appointments is another key part of the `edit` command, where we have to ensure that appointments
+do not overlap with each other. The relevant code for the checking for concurrent appointments is shown below:
+
+[source,java]
+-----
+private void checkForConcurrentAppointments() throws ConcurrentAppointmentException {
+    LocalDateTime oldDateTime = appointmentToEdit.getDateTime();
+    LocalDateTime newDateTime = editedAppointment.getDateTime();
+
+    if (model.hasConcurrentAppointment(oldDateTime, newDateTime)) {
+        throw new ConcurrentAppointmentException();
+    }
+}
+
+public boolean hasConcurrentAppointment(LocalDateTime oldDateTime, LocalDateTime newDateTime) {
+    for (Appointment a : addressBook.getAppointmentList()) {
+        LocalDateTime dateTime = a.getDateTime();
+        if (newDateTime.isAfter(dateTime)
+                && newDateTime.isBefore(dateTime.plusMinutes(30))
+                && !dateTime.equals(oldDateTime)) {
+            return true;
+        }
+        if (newDateTime.isBefore(dateTime)
+                && newDateTime.plusMinutes(30).isAfter(dateTime)
+                && !dateTime.equals(oldDateTime)) {
+            return true;
+        }
+    }
+    return false;
+}
+-----
+
+The main checking for concurrent appointments is done in the method `hasConcurrentAppointment()` within `ModelManager`.
+We loop through the entire list of appointments, and check whether there is any overlap in timing for both before and after
+every appointment in the list.
 
 ==== Current Limitations
-As of now, the linking of pet patients to their respective owners (and also appointments) has not been implemented.
 
-The implementation of `PetPatient` tags (i.e. having a separate list of tags from `Person`) is currently ongoing; as such, there is no support for tagging of pet patients yet.
+As of now, we do not have a list for past appointments, and a separate list for future appointments. +
+
+As such, this will make the looping through of the appointments as previously mentioned very slow, as more and more appointments are added to the list.
 
 ==== Future Work
-Future work on this feature will address the current limitations that we have.
 
-Linking of pet patients to their respective owners and appointments will be implemented. Tagging of the pet patients will also be implemented, as this is crucial to the searching of medical history of pets for the user.
+One of the limitations that we want to address will be the separation of past and future appointments. This is for greater
+efficiency when we loop through appointments for editing.
 
-// end::addPetPatient[]
+Also, as of now, pet patients only have the following fields: name, species, breed, colour, blood type, owner NRIC and tags.
+It is our desire that Medeina be able to handle most of the tasks as required by veterinarians and their assistants, and
+this will include the ability to view and update a pet patient's medical history so that Medeina can be an all-in-one
+application for our users. As such, one of the key future improvements to the current `edit` command will be the ability to update a
+pet patient's medical history. +
+
+// end::editcommandDG[]
 
 
 // tag::ListPets[]
@@ -1313,13 +1658,17 @@ a|
 This allows Vets to change the application's appearance to better suit their preferences and working environment (e.g. dark theme for night time)
 
 |Chia Le Jing|
-*PetPatient class and all its relevant features*
+*Implement edit command*
 
-Commands such as add, edit, delete, find. Also includes the storage of pet patient's data into the associated .xml file. |
+Supports the editing of Person, PetPatient and Appointment objects. Also resolve all dependencies between all these objects as required. |
 
-*Implement backup function for local databases and the cloud (for v2.0)*
+*Implement Pet Patient and all its relevant classes*
 
-Allows local files to be backed up with the latest copy (in case of corruption of data). Also allows data to be backed up to the cloud for future use.
+Crucial for the backbone of the entire application, as all the key commands (add, edit, delete and find) makes use of PetPatients objects.
+
+*Implement storage of PetPatient objects*
+
+Essential for the proper storage and retrieval of PetPatient objects.
 
 |Wynona Kaan |
 *Find by Contact or Pet Patient*

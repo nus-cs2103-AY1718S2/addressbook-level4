@@ -8,13 +8,13 @@
 
 == Overview
 
-Medeina is a desktop application designed for veterinarians and their assistants to manage their contacts, pet patients and appointments details. Users mainly interact with Medeina using a Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created with JavaFX so that users can visualise the data easily. It is written in Java, and has about 20 kLoC.
+Medeina is a desktop application designed for veterinarians and their assistants to manage contacts, pet patients and appointments. Users mainly interact with Medeina using a Command Line Interface. Medeina has a Graphical User Interface created with JavaFX. It is written in Java, and has about 20 kLoC.
 
 == Summary of contributions
 
 * *Major enhancement*: added *the ability to delete and force delete*
 ** What it does: Can delete appointments, pet patients and contacts. Additionally, forcefully deleting pet patients and owners (and its dependencies).
-** Justification: User can delete obsolete information. User does not need to delete every dependency manually, but can just use the force option to immediately delete all dependencies.
+** Justification: Users can delete obsolete information. Users does not need to delete every dependency manually, but can just use the force option to immediately delete all dependencies.
 ** Highlights: Implementation for the force option was difficult as it required safe deletion of dependencies before an element that has dependencies can be deleted.
 
 * *Major enhancement*: added *the ability find owners, pet patients and multiple prefixes of information*
@@ -31,8 +31,7 @@ Medeina is a desktop application designed for veterinarians and their assistants
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.4` (1 release) on GitHub.
-*** Consistently contributed to achieve weekly milestone from `v1.1` - `v1.5rc`.
+*** Managed releases `v1.4` (1 release) on GitHub, Consistently contributed to achieve weekly milestone from `v1.1` - `v1.5rc`.
 ** Documentation
 *** Improved user-friendliness in the User Guide by adding prefaces, Touched up on `v2.0` upcoming functions in the User Guide. (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/79[#79])
 *** Updated the Developer Guide with new images to demonstrate the Model Component, as well as update obsolete information in Medeina. (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/243[#243], Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/5[#5])
@@ -42,7 +41,7 @@ Medeina is a desktop application designed for veterinarians and their assistants
 == Contributions to the User Guide
 
 |===
-|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|_Given below are some sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
 include::../UserGuide.adoc[tag=find]
@@ -50,7 +49,7 @@ include::../UserGuide.adoc[tag=find]
 == Contributions to the Developer Guide
 
 |===
-|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|_Given below are some sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
 include::../DeveloperGuide.adoc[tag=listappt]

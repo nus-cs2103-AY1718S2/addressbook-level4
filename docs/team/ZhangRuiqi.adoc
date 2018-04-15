@@ -14,9 +14,9 @@ HuatAh! is a desktop loan shark manager application. It has a GUI but most of th
 
 * *Major enhancement*: added the feature of locating a person on Google Map
 ** What it does: allows the user to locate a person using any fields of a person (e.g, name/phone/email...) on Google Map, and it perfectly helps the user to keep track of the person.
-** Justification: Allowing the target users of this app - loan shark managers, to know where their customers are important because it's both cost-efficient and time-efficient to assign the customers to the nearest runners.
+** Justification: Allowing the target users of this app - loan shark managers, to know where their customers are is very important because it's both cost-efficient and time-efficient to assign the customers to the nearest runners if the managers can see the location of the customers on a map.
 ** Highlights: This enhancement includes the use Google Map which allows for much more future possibilities to integrate with Google. It makes integrating with other Google functions in the future easier.
-** Credits: _https://github.com/CS2103AUG2017-F11-B3/main/blob/master/src/main/java/seedu/address/logic/commands/GmapCommand.java_
+** Credits: Google Maps URLs
 
 * *Minor enhancement*: added alias for command that allows the user to use a command more easily, minor change to ui-app logo
 
@@ -34,8 +34,10 @@ HuatAh! is a desktop loan shark manager application. It has a GUI but most of th
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com[#74], https://github.com[#76], https://github.com[#9]
 *** PRs approved of: https://github.com/CS2103JAN2018-F12-B4/main/pull/136
-*** Contributed to forum discussions (examples:  https://github.com[76], https://github.com[9]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3]) (To be edited)
+*** Contributed to forum discussions: https://github.com/CS2103JAN2018-F12-B4/main/issues/96
+*** Reported bugs and suggestions for other teams in the class:
+https://github.com/CS2103JAN2018-W13-B2/main/issues/129,
+https://github.com/CS2103JAN2018-F12-B4/main/pull/183
 ** Tools:
 *** Integrated Google Map to the project (https://github.com[#42])
 
@@ -49,7 +51,8 @@ HuatAh! is a desktop loan shark manager application. It has a GUI but most of th
 
 |===
 
-include::../UserGuide.adoc[tag=export]
+include::../UserGuide.adoc[tag=locatecommand]
+
 
 == Contributions to the Developer Guide
 
@@ -58,10 +61,9 @@ include::../UserGuide.adoc[tag=export]
 
 |===
 
-include::../DeveloperGuide.adoc[tag=export]
-
-== PROJECT: PowerPointLabs
-
+include::../DeveloperGuide.adoc[tag=locatecommand]
+include::../DeveloperGuide.adoc[tag=alias]
+include::../DeveloperGuide.adoc[tag=userstories]
 ---
 
 

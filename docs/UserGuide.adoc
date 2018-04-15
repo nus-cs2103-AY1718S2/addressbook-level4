@@ -443,6 +443,8 @@ _Returns all persons with phone number "91234567"._
 ====
 <<Command Summary, Back to Command Summary>>
 
+//@@author zhangriqi
+//tag::locatecommand[]
 ***
 === Displaying a person's address using Google Maps : `locate`, kbd:[Ctrl+L] [[locate]]
 
@@ -494,7 +496,8 @@ _Locates the address "Blk 30" on Google Maps and displays the person with that a
 _Locates any persons with phone number "91234567" and displays the address associated with the first result on Google Maps._
 ====
 <<Command Summary, Back to Command Summary>>
-
+//@@author
+//end::locatecommand[]
 ***
 === Selecting and displaying details about a person : `select`, kbd:[Ctrl+S] [since v1.4] [[select]]
 

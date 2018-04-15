@@ -22,7 +22,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class AddCommand extends UndoableCommand implements PopulatableCommand {
 
     public static final String COMMAND_WORD = "add";
+    //@@author zhangriqi
     public static final String COMMAND_ALIAS = "i";
+    //@@author
     public static final String COMMAND_TEMPLATE = COMMAND_WORD + " " + PREFIX_TYPE + "  " + PREFIX_NAME + "  "
             + PREFIX_PHONE + "  " + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  " + PREFIX_OWESTARTDATE + "  "
             + PREFIX_OWEDUEDATE + "  " + PREFIX_MONEY_BORROWED + "  " + PREFIX_INTEREST + "  " + PREFIX_TAG + " ";

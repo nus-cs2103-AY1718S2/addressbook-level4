@@ -493,8 +493,11 @@ The rationale for improving the `find` command is the fact that users of an appl
 It was important to make sure that the `find` command would search through fields other than the Name of the Person, as relevant information may be contained in other fields.
 
 It was also important to be able to specify the field the user was interested in searching as this would increase the relevance of search results or reduce the occurence of irrelevant results. For example, if I searched "Baker" and there was a contact whose address was "Baker Street" and there was another contact who had been tagged as "Baker" I would receive two search results. But if I wanted to only view contacts who had been _tagged_ as "Baker", then I need only enter the specifier `-t` to increase the relevance of the results. This becomes more important as the size of the addressbook gets larger. Having more relevant results also increases the speed at which a user can use the application.
+
 //end::FindCommandEnhancement[]
 
+//@@author zhangriqi
+//tag::locatecommand[]
 === Locate on Google Map
 
 The `locate` command accepts a specifier, such as `-t` or `-p` as the first argument to the program to search through a specific field. `LocateCommandParser` then recognises the specifers and constructs the correct `LocateCommand` object with the correct `Predicate<Person>`. `LocateCommand.execute()` is then called, and it searches for the keywords in the correct fields according to the Predicate that was passed to it.
@@ -503,11 +506,18 @@ Then it gets the address of the person specified by the parameter and pass it to
 `LocateCommand` relies on `LocateRequestEvent` which is handled by `BrowserPanel` to call the appropriate method for loading `Person` address using Google Map.
 
 The current implementation enables the user to search through all fields in a Person. If there're more than one person with the same specifier passed in by the user, it automatically locates the address of the person on top of the filteredList and ask the user to be more specific given the filtered list.
-For example, `Locate Alex` will locate the first person on the filtered list and present a message for the user to select one from the listed persons.
+`locate` will locate the first person on the filtered list and present a message for the user to select one from the listed persons.
 
-image::locate_same_specifier.png[width="800"]
+For example, `locate` a person without address will return a red error message.
+
+image::locate1.png[width="800"]
 
 Locate command is implemented this way:
+
+The sequence diagram for locate command is presented below:
+
+image::locateSequencediagram.png[width="800"]
+
 [source,java]
 ----
 public LocateCommand(Predicate<Person> predicate) {
@@ -540,12 +550,45 @@ With loadUrl, the Google Map url is passed to 'BrowserPanel'to display the locat
 
 As we can see from the picture below, once the command is executed, the location is presented on Google Map is loaded in the BrowserPanel.
 
-image::interface_of_locate.png[width="800"]
+image::locate2.png[width="800"]
 
 ==== Rationale
 The rationale for implementing the `locate` command is that there's actual need of the users to find a person as easily as possible while using this application. By locating the person on Google Map in this application, the user can directly see the location of a person instead of a simple line of address that's not so useful.
 
 It was important to make sure that the `locate` command would use parameters other than the Index, as relevant information may be more easily to be obtained.
+//@@author
+//end::locatecommand[]
+
+//@@author zhangriqi
+//tag::alias[]
+=== Add Command Alias Enhancement
+In the original enhancement, all the command must be in full text to be considered as a valid command.
+----
+public class AddCommand extends UndoableCommand implements PopulatableCommand {
+
+    public static final String COMMAND_WORD = "add";
+    //@@author zhangriqi
+    public static final String COMMAND_ALIAS = "i";
+    //@@author
+
+     public CommandResult executeUndoableCommand() throws CommandException {
+            requireNonNull(model);
+            try {
+                model.addPerson(toAdd);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            } catch (DuplicatePersonException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            }
+
+        }
+----
+
+The alias command for all other commands will follow a similar implementation.
+
+==== Rationale
+This feature is implemented to allow a user to enter a command without specifying the entire word of the command.
+//@@author
+//end::alias[]
 
 //@@author jonleeyz
 // tag::tagcolours[]
@@ -1217,7 +1260,8 @@ Major: Implement UI element and methods for displaying summary statistics and re
 
 Minor: Recolouring of the GUI to improve look and feel
 
-
+//@@author zhangriqi
+//tag::userstories[]
 [appendix]
 == User Stories
 
@@ -1290,8 +1334,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 
 |=======================================================================
-
-_{More to be added}_
+//@@author
+//end::userstories[]
 
 [appendix]
 == Use Cases

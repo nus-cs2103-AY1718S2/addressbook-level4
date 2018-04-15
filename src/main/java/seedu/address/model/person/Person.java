@@ -150,8 +150,7 @@ public class Person {
                 && otherPerson.getUniversity().equals(this.getUniversity())
                 && otherPerson.getExpectedGraduationYear().equals(this.getExpectedGraduationYear())
                 && otherPerson.getMajor().equals(this.getMajor())
-                && otherPerson.getGradePointAverage().equals(this.getGradePointAverage())
-                && otherPerson.getComment().equals(this.getComment());
+                && otherPerson.getGradePointAverage().equals(this.getGradePointAverage());
     }
 
     /**
@@ -169,7 +168,8 @@ public class Person {
                 && otherPerson.getRating().equals(this.getRating())
                 && otherPerson.getResume().equals(this.getResume())
                 && otherPerson.getInterviewDate().equals(this.getInterviewDate())
-                && otherPerson.getStatus().equals(this.getStatus());
+                && otherPerson.getStatus().equals(this.getStatus())
+                && otherPerson.getComment().equals(this.getComment());
     }
 
     @Override
